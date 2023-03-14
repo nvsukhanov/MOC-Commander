@@ -1,6 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { GamepadConnectListener, ExtractTokenType, GamepadMapperFactoryService, TICKER } from '../../engine';
-import { map, switchMap } from 'rxjs';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -14,7 +12,4 @@ import { RouterOutlet } from '@angular/router';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LayoutComponent {
-    constructor(
-    ) {
-    }
 }

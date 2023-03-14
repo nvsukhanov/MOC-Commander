@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class AnimationFrameTickerService implements ITicker {
-    private isRunning: boolean = false
+    private isRunning = false
     private ticker$: Subject<number> = new Subject<number>();
 
     public get tick$(): Observable<number> {
