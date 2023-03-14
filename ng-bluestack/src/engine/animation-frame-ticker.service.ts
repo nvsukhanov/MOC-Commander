@@ -1,4 +1,4 @@
-import { ITicker } from './types';
+import { ITicker } from '../app/types';
 import { Observable, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 

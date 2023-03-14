@@ -6,6 +6,6 @@ export const CONNECT_CONTROLLER_ROUTE = 'connect-controller'
 
 export const ROUTES: Routes = [
     { path: '', component: MainComponent, pathMatch: 'full' },
-    { path: CONNECT_CONTROLLER_ROUTE, loadChildren: () => import('./connect-controller').then((mod) => mod.ConnectControllerComponent) },
+    { path: CONNECT_CONTROLLER_ROUTE, loadComponent: () => import('./connect-controller').then((mod) => mod.ConnectControllerComponent) },
     { path: '**', component: NotFoundComponent }
 ];

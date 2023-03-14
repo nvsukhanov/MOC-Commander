@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ControlsModule } from './controls';
 import { AnimationFrameTickerService } from './animation-frame-ticker.service';
-import { TICKER } from './types';
+import { TICKER } from '../app/types';
 
 @NgModule({
     imports: [

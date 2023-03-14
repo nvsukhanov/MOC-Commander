@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { IControlMapper } from '../i-control-mapper';
 import { GamepadMapper } from './gamepad-mapper';
-import { ExtractTokenType, NAVIGATOR } from '../../types';
+import { ExtractTokenType, NAVIGATOR } from '../../../app/types';
 import { ExampleGamepadProfileService } from './example-gamepad-profile.service';
 import { IGamepadProfile } from './i-gamepad-profile';
 

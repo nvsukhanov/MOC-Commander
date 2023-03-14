@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IGamepadProfile } from './i-gamepad-profile';
 import { IControlAction } from '../i-control-action';
-import { IVector } from '../../types';
+import { IVector } from '../../../app/types';
 
 @Injectable()
 export class ExampleGamepadProfileService implements IGamepadProfile {

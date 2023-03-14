@@ -1,6 +1,6 @@
 import { IControlMapper } from '../i-control-mapper';
 import { IControlAction } from '../i-control-action';
-import { ExtractTokenType, NAVIGATOR } from '../../types';
+import { ExtractTokenType, NAVIGATOR } from '../../../app/types';
 import { IGamepadProfile } from './i-gamepad-profile';
 
 export class GamepadMapper implements IControlMapper {
