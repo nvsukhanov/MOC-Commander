@@ -1,6 +1,7 @@
-<mat-toolbar>
-    <a mat-button [routerLink]="connectControllerRoute">Connect controller</a>
+<mat-toolbar class="toolbar">
+    <a mat-button [routerLink]="connectControllerRoute">{{ 'configureController$' | l10n }}</a>
 </mat-toolbar>
-<div>
+<div class="main">
     <router-outlet></router-outlet>
 </div>
+

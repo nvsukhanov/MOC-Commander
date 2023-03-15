@@ -3,6 +3,8 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { CONNECT_CONTROLLER_ROUTE } from '../routes';
+import { MatTableModule } from '@angular/material/table';
+import { L10nPipe } from '../l10n';
 
 @Component({
     standalone: true,
@@ -13,7 +15,9 @@ import { CONNECT_CONTROLLER_ROUTE } from '../routes';
         RouterOutlet,
         MatToolbarModule,
         MatButtonModule,
-        RouterLink
+        RouterLink,
+        MatTableModule,
+        L10nPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
