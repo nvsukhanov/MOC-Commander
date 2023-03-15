@@ -1,6 +1,6 @@
 <mat-form-field [appearance]="'fill'">
     <mat-label>{{ l10nService.configureController$ | async }}</mat-label>
-    <mat-select [value]="controllerType">
+    <mat-select (valueChange)="onSelect($event)" [value]="stringifiedValue">
         <mat-option *ngFor="let kv of controllerTypes | keyvalue" [value]="kv.key">{{ kv.value | l10n }}</mat-option>
     </mat-select>
 

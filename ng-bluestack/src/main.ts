@@ -5,7 +5,11 @@ import { ROUTES } from './app/routes';
 import { provideL10n } from './app/l10n';
 import { provideStore } from '@ngrx/store';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { CONTROLLER_CONFIG_REDUCERS, IState } from './app/store';
+import { ConfigureControllerEffects, CONTROLLER_CONFIG_REDUCERS, IState } from './app/store';
+import { provideEffects } from '@ngrx/effects';
+import { provideGamepadMappers } from './app/mappings';
+import { isDevMode } from '@angular/core';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 bootstrapApplication(LayoutComponent, {
     providers: [
@@ -14,6 +18,15 @@ bootstrapApplication(LayoutComponent, {
         provideStore<IState>({
             controller: CONTROLLER_CONFIG_REDUCERS
         }),
-        provideNoopAnimations()
+        provideEffects(ConfigureControllerEffects),
+        provideNoopAnimations(),
+        provideGamepadMappers(),
+        provideStoreDevtools({
+            maxAge: 25,
+            logOnly: !isDevMode(),
+            autoPause: true,
+            trace: false,
+            traceLimit: 75,
+        }),
     ]
 });

@@ -1,0 +1,22 @@
+<ng-container *ngIf="(isControllerConnected$ | async) === false">
+    <app-controller-type-select #selectedControllerType [ngModel]="connectedControllerType$ | ngrxPush"></app-controller-type-select>
+    <button (click)="onControllerListeningStart(selectedControllerType.value)"
+            *ngIf="isControllerTypeSelected(selectedControllerType.value)"
+            mat-button>
+        {{ isControllerTypeSelected(selectedControllerType.value) }}
+    </button>
+</ng-container>
+
+<div *ngIf="(controllerConfig$ | async) as controllerConfig">
+    <div *ngIf="controllerConfig.nameL10nKey">
+        {{ controllerConfig.nameL10nKey | l10n }}
+    </div>
+    <div>
+        <button (click)="onDisconnectController(controllerConfig.index)" [color]="'warn'" mat-button>{{ 'controllerDisconnect$' | l10n }}</button>
+    </div>
+    <div [ngSwitch]="connectedControllerType$ | async">
+        <ng-template *ngSwitchCase="controllerTypes.GamePad">
+            that's a gamepad
+        </ng-template>
+    </div>
+</div>
