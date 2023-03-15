@@ -31,7 +31,8 @@ export const CONTROLLER_CONFIG_REDUCERS = createReducer(
                 ...state,
                 controllerType: ControllerType.Unassigned,
                 gamepadController: { ...INITIAL_STATE.controller.gamepadController },
-                connectionState: ControllerConnectionState.NotConnected
+                connectionState: ControllerConnectionState.NotConnected,
+                controllerState: []
             };
         } else {
             return state;

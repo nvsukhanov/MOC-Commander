@@ -3,7 +3,7 @@ import { GamepadControllerConfig, IState } from '../i-state';
 import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ACTION_CONTROLLER_READ, ACTIONS_CONFIGURE_CONTROLLER } from '../actions';
-import { animationFrameScheduler, filter, fromEvent, interval, map, merge, Observable, switchMap, takeUntil, withLatestFrom } from 'rxjs';
+import { animationFrameScheduler, filter, fromEvent, interval, map, NEVER, Observable, switchMap, withLatestFrom } from 'rxjs';
 import { ControllerAxisState, ControllerButtonState, ExtractTokenType, WINDOW } from '../../types';
 import { SELECTED_GAMEPAD_INDEX } from '../controller-selectors';
 
@@ -16,12 +16,14 @@ export const GAMEPAD_MAPPER = new InjectionToken<IGamepadMapper>('GAMEPAD_MAPPER
 @Injectable()
 export class ConfigureControllerEffects {
     public readonly readGamepad$ = createEffect(() => this.actions$.pipe(
-        ofType(ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected),
-        switchMap(() => interval(0, animationFrameScheduler)),
-        takeUntil(this.actions$.pipe(ofType(ACTIONS_CONFIGURE_CONTROLLER.disconnectGamepad))),
+        ofType(ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected, ACTIONS_CONFIGURE_CONTROLLER.disconnectGamepad),
         withLatestFrom(this.store.select(SELECTED_GAMEPAD_INDEX)),
-        filter(([ , index ]) => index !== null),
-        map(([ , index ]) => {
+        switchMap(([ e, index ]) => e.type === ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected.type
+                                    ? interval(0, animationFrameScheduler).pipe(map(() => index))
+                                    : NEVER
+        ),
+        filter((index) => index !== null),
+        map((index) => {
             const gamepad = this.window.navigator.getGamepads()[index as number]; // TODO: get rid of null & remove casts
             if (!gamepad) {
                 return ACTIONS_CONFIGURE_CONTROLLER.disconnectGamepad({ index: index as number });
@@ -32,26 +34,37 @@ export class ConfigureControllerEffects {
         })
     ));
 
-    private readonly gamepadConnectedEvent = 'gamepadconnected';
-
     public readonly startGamepadListening$ = createEffect(() => this.actions$.pipe(
-        ofType(ACTIONS_CONFIGURE_CONTROLLER.listenForGamepad),
-        switchMap(() => fromEvent(this.window, this.gamepadConnectedEvent) as Observable<GamepadEvent>),
-        switchMap((gamepad) => interval(0, animationFrameScheduler).pipe(map(() => gamepad))),
-        takeUntil(merge(
-            this.actions$.pipe(ofType(ACTIONS_CONFIGURE_CONTROLLER.cancelListeningForGamepad)),
-            this.actions$.pipe(ofType(ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected)),
-        )),
+        ofType(
+            ACTIONS_CONFIGURE_CONTROLLER.listenForGamepad,
+            ACTIONS_CONFIGURE_CONTROLLER.cancelListeningForGamepad,
+            ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected
+        ),
+        switchMap((e) => e.type === ACTIONS_CONFIGURE_CONTROLLER.listenForGamepad.type ? interval(0, animationFrameScheduler) : NEVER),
+        map(() => this.window.navigator.getGamepads().find((g) => !!g)),
+        filter((g) => !!g),
         map((e) => {
             for (const mapper of this.gamepadMappers) {
-                const result = mapper.mapGamepadToConfig(e.gamepad);
+                const result = mapper.mapGamepadToConfig(e as Gamepad);
                 if (result) {
                     return result;
                 }
             }
-            throw new Error(`unsupported gamepad ${e.gamepad.id}`);
+            throw new Error(`unsupported gamepad ${e}`);
         }),
-        map((gamepad) => ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected({ gamepad })) // TODO: handle error
+        map((gamepad) => ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected({ gamepad })), // TODO: handle error
+    ));
+
+    private readonly gamepadConnectedEvent = 'gamepadconnected';
+    private readonly gamepadDisconnectedEvent = 'gamepaddisconnected';
+
+    public readonly listenToGamepadDisconnects$ = createEffect(() => this.actions$.pipe(
+        ofType(ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected, ACTIONS_CONFIGURE_CONTROLLER.gamepadDisconnected),
+        switchMap((e) => e.type === ACTIONS_CONFIGURE_CONTROLLER.gamepadDisconnected.type
+                         ? fromEvent(this.window, this.gamepadDisconnectedEvent) as Observable<GamepadEvent>
+                         : NEVER
+        ),
+        map((e: GamepadEvent) => ACTIONS_CONFIGURE_CONTROLLER.disconnectGamepad({ index: e.gamepad.index }))
     ));
 
     constructor(
