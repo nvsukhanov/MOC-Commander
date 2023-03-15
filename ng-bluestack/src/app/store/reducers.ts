@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { IState } from './i-state';
-import { ACTIONS_CONFIGURE_CONTROLLER } from './actions';
+import { ACTION_CONTROLLER_READ, ACTIONS_CONFIGURE_CONTROLLER } from './actions';
 import { ControllerType } from '../types';
 
 export const INITIAL_STATE: IState = {
@@ -30,5 +30,6 @@ export const CONTROLLER_CONFIG_REDUCERS = createReducer(
         } else {
             return state;
         }
-    })
+    }),
+    on(ACTION_CONTROLLER_READ, (state, props) => ({ ...state, controllerState: props.state }))
 );

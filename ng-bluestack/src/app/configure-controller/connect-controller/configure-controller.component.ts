@@ -9,7 +9,7 @@ import {
     SELECT_IS_CONTROLLER_CONNECTED
 } from '../../store';
 import { Store } from '@ngrx/store';
-import { AsyncPipe, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
+import { AsyncPipe, JsonPipe, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { MAPPING_CONTROLLER_TO_L10N } from '../../mappings/controller-type-to-l10n';
 import { filter, map } from 'rxjs';
 import { ControllerType } from '../../types';
@@ -32,7 +32,8 @@ import { PushModule } from '@ngrx/component';
         NgSwitchCase,
         FormsModule,
         PushModule,
-        NgSwitch
+        NgSwitch,
+        JsonPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -40,3 +40,8 @@ export const SELECT_CONTROLLER_STATE = createSelector(
     SELECT_CONTROLLER_FEATURE,
     (state) => state.controllerState
 );
+
+export const SELECTED_GAMEPAD_INDEX = createSelector(
+    SELECT_CONTROLLER_FEATURE,
+    (state) => state.gamepadController.index
+);

@@ -1,5 +1,6 @@
-import { createActionGroup, emptyProps, props } from '@ngrx/store';
+import { createAction, createActionGroup, emptyProps, props } from '@ngrx/store';
 import { GamepadControllerConfig } from './i-state';
+import { ControllerState } from '../types';
 
 export const ACTIONS_CONFIGURE_CONTROLLER = createActionGroup({
     source: 'configure controller',
@@ -13,3 +14,5 @@ export const ACTIONS_CONFIGURE_CONTROLLER = createActionGroup({
         'Gamepad disconnected': props<{ id: string }>()
     }
 });
+
+export const ACTION_CONTROLLER_READ = createAction('read controller', props<{ state: ControllerState[] }>());

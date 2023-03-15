@@ -2,9 +2,10 @@ import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { GamepadControllerConfig, IState } from '../i-state';
 import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { ACTIONS_CONFIGURE_CONTROLLER } from '../actions';
-import { fromEvent, map, Observable, switchMap, takeUntil } from 'rxjs';
-import { ExtractTokenType, WINDOW } from '../../types';
+import { ACTION_CONTROLLER_READ, ACTIONS_CONFIGURE_CONTROLLER } from '../actions';
+import { animationFrameScheduler, filter, fromEvent, interval, map, Observable, switchMap, takeUntil, tap, withLatestFrom } from 'rxjs';
+import { ControllerAxisState, ControllerButtonState, ExtractTokenType, WINDOW } from '../../types';
+import { SELECTED_GAMEPAD_INDEX } from '../controller-selectors';
 
 export interface IGamepadMapper {
     mapGamepadToConfig(gamepad: Gamepad): GamepadControllerConfig | null;
@@ -14,6 +15,23 @@ export const GAMEPAD_MAPPER = new InjectionToken<IGamepadMapper>('GAMEPAD_MAPPER
 
 @Injectable()
 export class ConfigureControllerEffects {
+    public readonly readGamepad$ = createEffect(() => this.actions$.pipe(
+        ofType(ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected),
+        switchMap(() => interval(0, animationFrameScheduler)),
+        takeUntil(this.actions$.pipe(ofType(ACTIONS_CONFIGURE_CONTROLLER.disconnectGamepad))),
+        withLatestFrom(this.store.select(SELECTED_GAMEPAD_INDEX)),
+        filter(([ , index ]) => index !== null),
+        map(([ , index ]) => {
+            const gamepad = this.window.navigator.getGamepads()[index as number]; // TODO: get rid of null & remove casts
+            if (!gamepad) {
+                return ACTIONS_CONFIGURE_CONTROLLER.disconnectGamepad({ index: index as number });
+            }
+            const buttons: ControllerButtonState[] = gamepad.buttons.map((button, index) => ({ type: 'button', value: button.value, index }));
+            const axes: ControllerAxisState[] = gamepad.axes.map((value, index) => ({ type: 'axis', value, index }));
+            return ACTION_CONTROLLER_READ({ state: [ ...buttons, ...axes ] });
+        })
+    ));
+
     private readonly gamepadConnectedEvent = 'gamepadconnected';
 
     public readonly startGamepadListening$ = createEffect(() => this.actions$.pipe(
