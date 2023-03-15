@@ -2,11 +2,12 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ControllerTypeSelectComponent } from '../controller-type-select';
 import {
     ACTIONS_CONFIGURE_CONTROLLER,
+    ControllerConnectionState,
     IState,
     SELECT_CONTROLLER_CONFIG,
+    SELECT_CONTROLLER_CONNECTION_STATE,
     SELECT_CONTROLLER_STATE,
-    SELECT_CONTROLLER_TYPE,
-    SELECT_IS_CONTROLLER_CONNECTED
+    SELECT_CONTROLLER_TYPE
 } from '../../store';
 import { Store } from '@ngrx/store';
 import { AsyncPipe, JsonPipe, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
@@ -16,7 +17,7 @@ import { ControllerType } from '../../types';
 import { MatButtonModule } from '@angular/material/button';
 import { L10nPipe } from '../../l10n';
 import { FormsModule } from '@angular/forms';
-import { PushModule } from '@ngrx/component';
+import { LetModule, PushModule } from '@ngrx/component';
 
 @Component({
     standalone: true,
@@ -33,12 +34,13 @@ import { PushModule } from '@ngrx/component';
         FormsModule,
         PushModule,
         NgSwitch,
-        JsonPipe
+        JsonPipe,
+        LetModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConfigureControllerComponent implements OnDestroy {
-    public readonly isControllerConnected$ = this.store.select(SELECT_IS_CONTROLLER_CONNECTED);
+    public readonly controllerConnectionState$ = this.store.select(SELECT_CONTROLLER_CONNECTION_STATE);
 
     public readonly connectedControllerType$ = this.store.select(SELECT_CONTROLLER_TYPE);
     public readonly controllerTypes = ControllerType;
@@ -49,6 +51,7 @@ export class ConfigureControllerComponent implements OnDestroy {
     )
     public readonly controllerConfig$ = this.store.select(SELECT_CONTROLLER_CONFIG);
     public readonly controllerState$ = this.store.select(SELECT_CONTROLLER_STATE);
+    public readonly controllerConnectionStates = ControllerConnectionState;
 
     constructor(
         private readonly store: Store<IState>
@@ -67,6 +70,10 @@ export class ConfigureControllerComponent implements OnDestroy {
         if (index !== null) { // TODO: maybe we can avoid using null in the state
             this.store.dispatch(ACTIONS_CONFIGURE_CONTROLLER.disconnectGamepad({ index }));
         }
+    }
+
+    public cancelListening(): void {
+        this.store.dispatch(ACTIONS_CONFIGURE_CONTROLLER.cancelListeningForGamepad());
     }
 
     public onControllerListeningStart(controllerType: ControllerType | null): void {

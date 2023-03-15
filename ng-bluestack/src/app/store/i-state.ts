@@ -1,9 +1,16 @@
 import { ControllerState, ControllerType } from '../types';
 import { L10nService } from '../l10n';
 
+export enum ControllerConnectionState {
+    NotConnected,
+    WaitingForConnect,
+    Connected
+}
+
 export interface IState {
     controller: {
         controllerType: ControllerType;
+        connectionState: ControllerConnectionState;
         gamepadController: GamepadControllerConfig;
         controllerState: ControllerState[];
     }
@@ -30,7 +37,6 @@ export type ControllerSingularAxisGroup = {
 }
 
 export type GamepadControllerConfig = {
-    isConnected: boolean;
     index: number | null;
     nameL10nKey: keyof L10nService | null;
     axisGroups: Array<ControllerAxisGroup | ControllerSingularAxisGroup>;

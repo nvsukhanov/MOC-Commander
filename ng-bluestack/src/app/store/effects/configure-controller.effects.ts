@@ -3,7 +3,7 @@ import { GamepadControllerConfig, IState } from '../i-state';
 import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ACTION_CONTROLLER_READ, ACTIONS_CONFIGURE_CONTROLLER } from '../actions';
-import { animationFrameScheduler, filter, fromEvent, interval, map, Observable, switchMap, takeUntil, tap, withLatestFrom } from 'rxjs';
+import { animationFrameScheduler, filter, fromEvent, interval, map, merge, Observable, switchMap, takeUntil, withLatestFrom } from 'rxjs';
 import { ControllerAxisState, ControllerButtonState, ExtractTokenType, WINDOW } from '../../types';
 import { SELECTED_GAMEPAD_INDEX } from '../controller-selectors';
 
@@ -37,7 +37,11 @@ export class ConfigureControllerEffects {
     public readonly startGamepadListening$ = createEffect(() => this.actions$.pipe(
         ofType(ACTIONS_CONFIGURE_CONTROLLER.listenForGamepad),
         switchMap(() => fromEvent(this.window, this.gamepadConnectedEvent) as Observable<GamepadEvent>),
-        takeUntil(this.actions$.pipe(ofType(ACTIONS_CONFIGURE_CONTROLLER.cancelListeningForGamepad))),
+        switchMap((gamepad) => interval(0, animationFrameScheduler).pipe(map(() => gamepad))),
+        takeUntil(merge(
+            this.actions$.pipe(ofType(ACTIONS_CONFIGURE_CONTROLLER.cancelListeningForGamepad)),
+            this.actions$.pipe(ofType(ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected)),
+        )),
         map((e) => {
             for (const mapper of this.gamepadMappers) {
                 const result = mapper.mapGamepadToConfig(e.gamepad);

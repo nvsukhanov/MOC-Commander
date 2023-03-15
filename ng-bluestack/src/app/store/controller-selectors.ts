@@ -9,18 +9,9 @@ export const SELECT_CONTROLLER_TYPE = createSelector(
     (state) => state.controllerType
 );
 
-export const SELECT_IS_CONTROLLER_CONNECTED = createSelector(
+export const SELECT_CONTROLLER_CONNECTION_STATE = createSelector(
     SELECT_CONTROLLER_FEATURE,
-    (state) => {
-        switch (state.controllerType) {
-            case ControllerType.Unassigned:
-                return false;
-            case null:
-                return false;
-            case ControllerType.GamePad:
-                return state.gamepadController.isConnected;
-        }
-    }
+    (state) => state.connectionState
 );
 
 export const SELECT_CONTROLLER_CONFIG = createSelector(

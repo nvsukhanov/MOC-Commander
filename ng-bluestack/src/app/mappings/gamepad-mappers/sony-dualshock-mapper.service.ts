@@ -12,7 +12,6 @@ export class SonyDualshockMapperService implements IGamepadMapper {
         let result: GamepadControllerConfig | null = null;
         if (this.ids.has(gamepad.id)) {
             result = {
-                isConnected: true,
                 index: gamepad.index,
                 nameL10nKey: 'dualshockName$',
                 axisGroups: [
