@@ -1,12 +1,12 @@
-export type ControllerAction = ControllerButtonAction | ControllerAxisAction;
+export type ControllerState = ControllerButtonState | ControllerAxisState;
 
-export type ControllerButtonAction = {
+export type ControllerButtonState = {
     readonly type: 'button',
     readonly code: number;
     readonly modifier?: number;
 }
 
-export type ControllerAxisAction = {
+export type ControllerAxisState = {
     readonly type: 'axis',
     readonly name: string;
     readonly value: number;

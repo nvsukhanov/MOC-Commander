@@ -1,11 +1,39 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ControllerTypeSelectComponent } from '../controller-type-select';
+import { IState, SELECT_CONTROLLER_TYPE, SELECT_IS_CONTROLLER_CONNECTED } from '../../store';
+import { Store } from '@ngrx/store';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { MAPPING_CONTROLLER_TO_L10N } from '../../mappings/controller-type-to-l10n';
+import { filter, map } from 'rxjs';
+import { ControllerType } from '../../types';
+import { MatButtonModule } from '@angular/material/button';
+import { L10nPipe } from '../../l10n';
 
 @Component({
     standalone: true,
     selector: 'app-connect-controller',
     templateUrl: './connect-controller.component.html',
-    styleUrls: ['./connect-controller.component.scss'],
+    styleUrls: [ './connect-controller.component.scss' ],
+    imports: [
+        ControllerTypeSelectComponent,
+        NgIf,
+        AsyncPipe,
+        MatButtonModule,
+        L10nPipe
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConnectControllerComponent {
+    public readonly isControllerConnected$ = this.store.select(SELECT_IS_CONTROLLER_CONNECTED);
+    public readonly connectedControllerType$ = this.store.select(SELECT_CONTROLLER_TYPE);
+    public readonly controllerTypeL10n$ = this.connectedControllerType$.pipe(
+        filter((t) => t !== null),
+        map((t) => this.controllerToL10nMap[t as ControllerType])
+    )
+    public readonly controllerToL10nMap = MAPPING_CONTROLLER_TO_L10N;
+
+    constructor(
+        private readonly store: Store<IState>
+    ) {
+    }
 }

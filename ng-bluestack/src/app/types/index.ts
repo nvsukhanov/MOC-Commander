@@ -1,13 +1,16 @@
 import { InjectionToken } from '@angular/core';
+
 export * from './i-ticker';
 export * from './i-vector';
+export * from './controller-type';
+export * from './controller-state';
 
 export type ExtractTokenType<T> = T extends InjectionToken<infer K> ? K : never;
 
 export const WINDOW = new InjectionToken('window', {
-    factory: () => window
+    factory: (): Window => window
 });
 
 export const NAVIGATOR = new InjectionToken('navigator', {
-    factory: () => window.navigator
+    factory: (): Navigator => window.navigator
 });

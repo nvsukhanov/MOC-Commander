@@ -6,6 +6,7 @@ export class L10nService {
     public readonly configureController$ = new BehaviorSubject('Configure controller');
     public readonly selectControllerType$ = new BehaviorSubject('Select controller type');
 
-    public readonly keyboardController$ = new BehaviorSubject('Keyboard');
-    public readonly gamepadController$ = new BehaviorSubject('Gamepad');
+    public readonly controllerTypeUnassigned$ = new BehaviorSubject('Unassigned');
+    public readonly controllerTypeGamepad$ = new BehaviorSubject('Gamepad');
+    public readonly controllerDisconnect$ = new BehaviorSubject('Disconnect');
 }

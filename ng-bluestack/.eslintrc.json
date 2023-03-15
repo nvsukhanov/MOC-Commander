@@ -30,6 +30,9 @@
             "prefix": "app",
             "style": "kebab-case"
           }
+        ],
+        "@typescript-eslint/explicit-function-return-type": [
+          "error"
         ]
       }
     },

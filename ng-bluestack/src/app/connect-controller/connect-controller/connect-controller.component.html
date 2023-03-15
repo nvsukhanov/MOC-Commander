@@ -1,1 +1,8 @@
-connect controller
+<ng-container *ngIf="(isControllerConnected$ | async) === false">
+    <app-controller-type-select></app-controller-type-select>
+</ng-container>
+
+<div *ngIf="isControllerConnected$ | async">
+    controller is connected
+    <button mat-button [color]="'warn'">{{ 'controllerDisconnect$' | l10n }}</button>
+</div>
