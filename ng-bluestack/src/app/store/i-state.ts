@@ -1,4 +1,4 @@
-import { ControllerState, ControllerType } from '../types';
+import { ControllerAxisState, ControllerButtonState, ControllerType } from '../types';
 import { L10nService } from '../l10n';
 
 export enum ControllerConnectionState {
@@ -7,12 +7,23 @@ export enum ControllerConnectionState {
     Connected
 }
 
+export type ControllerAxesState = {
+    [index in number]: ControllerAxisState
+};
+
+export type ControllerButtonsState = {
+    [index in number]: ControllerButtonState
+};
+
 export interface IState {
     controller: {
         controllerType: ControllerType;
         connectionState: ControllerConnectionState;
-        gamepadController: GamepadControllerConfig;
-        controllerState: ControllerState[];
+        gamepadConfig: GamepadControllerConfig;
+        controllerState: {
+            axes: ControllerAxesState,
+            buttons: ControllerButtonsState
+        };
     }
 }
 

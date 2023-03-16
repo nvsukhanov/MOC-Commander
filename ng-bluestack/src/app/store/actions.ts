@@ -1,6 +1,5 @@
 import { createAction, createActionGroup, emptyProps, props } from '@ngrx/store';
-import { GamepadControllerConfig } from './i-state';
-import { ControllerState } from '../types';
+import { ControllerAxesState, ControllerButtonsState, GamepadControllerConfig } from './i-state';
 
 export const ACTIONS_CONFIGURE_CONTROLLER = createActionGroup({
     source: 'configure controller',
@@ -15,4 +14,7 @@ export const ACTIONS_CONFIGURE_CONTROLLER = createActionGroup({
     }
 });
 
-export const ACTION_CONTROLLER_READ = createAction('read controller', props<{ state: ControllerState[] }>());
+export const ACTION_CONTROLLER_READ = createAction('read controller', props<{
+    axes: ControllerAxesState,
+    buttons: ControllerButtonsState
+}>());

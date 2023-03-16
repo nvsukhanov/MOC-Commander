@@ -19,7 +19,7 @@ export const SELECT_CONTROLLER_CONFIG = createSelector(
     (state) => {
         switch (state.controllerType) {
             case ControllerType.GamePad:
-                return state.gamepadController;
+                return state.gamepadConfig;
             case ControllerType.Unassigned:
             case null:
                 return null;
@@ -34,5 +34,5 @@ export const SELECT_CONTROLLER_STATE = createSelector(
 
 export const SELECTED_GAMEPAD_INDEX = createSelector(
     SELECT_CONTROLLER_FEATURE,
-    (state) => state.gamepadController.index
+    (state) => state.gamepadConfig.index
 );

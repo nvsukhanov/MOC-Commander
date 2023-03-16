@@ -1,10 +1,10 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
-import { GamepadControllerConfig, IState } from '../i-state';
+import { ControllerAxesState, ControllerButtonsState, GamepadControllerConfig, IState } from '../i-state';
 import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ACTION_CONTROLLER_READ, ACTIONS_CONFIGURE_CONTROLLER } from '../actions';
 import { animationFrameScheduler, filter, fromEvent, interval, map, NEVER, Observable, switchMap, withLatestFrom } from 'rxjs';
-import { ControllerAxisState, ControllerButtonState, ExtractTokenType, WINDOW } from '../../types';
+import { ExtractTokenType, WINDOW } from '../../types';
 import { SELECTED_GAMEPAD_INDEX } from '../controller-selectors';
 
 export interface IGamepadMapper {
@@ -28,9 +28,26 @@ export class ConfigureControllerEffects {
             if (!gamepad) {
                 return ACTIONS_CONFIGURE_CONTROLLER.disconnectGamepad({ index: index as number });
             }
-            const buttons: ControllerButtonState[] = gamepad.buttons.map((button, index) => ({ type: 'button', value: button.value, index }));
-            const axes: ControllerAxisState[] = gamepad.axes.map((value, index) => ({ type: 'axis', value, index }));
-            return ACTION_CONTROLLER_READ({ state: [ ...buttons, ...axes ] });
+            const buttons: ControllerButtonsState = gamepad.buttons.reduce((acc, val, index) => {
+                return {
+                    ...acc,
+                    [index]: {
+                        value: Math.round(val.value * 100),
+                        index: index
+                    }
+                }
+            }, {} as ControllerButtonsState);
+
+            const axes: ControllerAxesState = gamepad.axes.reduce((acc, val, index) => {
+                return {
+                    ...acc,
+                    [index]: {
+                        value: Math.round(val * 100),
+                        index: index
+                    }
+                }
+            }, {} as ControllerAxesState);
+            return ACTION_CONTROLLER_READ({ axes, buttons });
         })
     ));
 

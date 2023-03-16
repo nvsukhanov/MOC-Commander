@@ -7,38 +7,48 @@ export const INITIAL_STATE: IState = {
     controller: {
         controllerType: ControllerType.Unassigned,
         connectionState: ControllerConnectionState.NotConnected,
-        gamepadController: {
+        gamepadConfig: {
             index: null,
             nameL10nKey: null,
             axisGroups: [],
             buttons: []
         },
-        controllerState: [],
+        controllerState: {
+            axes: {},
+            buttons: {}
+        }
     }
 }
 
 export const CONTROLLER_CONFIG_REDUCERS = createReducer(
     INITIAL_STATE['controller'],
-    on(ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected, (state, props) => ({
+    on(ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected, (state, props): IState['controller'] => ({
         ...state,
         controllerType: ControllerType.GamePad,
-        gamepadController: props.gamepad,
+        gamepadConfig: props.gamepad,
         connectionState: ControllerConnectionState.Connected
     })),
-    on(ACTIONS_CONFIGURE_CONTROLLER.disconnectGamepad, (state, props) => {
-        if (state.gamepadController?.index === props.index) {
+    on(ACTIONS_CONFIGURE_CONTROLLER.disconnectGamepad, (state, props): IState['controller'] => {
+        if (state.gamepadConfig?.index === props.index) {
             return {
                 ...state,
                 controllerType: ControllerType.Unassigned,
-                gamepadController: { ...INITIAL_STATE.controller.gamepadController },
+                gamepadConfig: { ...INITIAL_STATE.controller.gamepadConfig },
                 connectionState: ControllerConnectionState.NotConnected,
-                controllerState: []
+                controllerState: {
+                    axes: {},
+                    buttons: {}
+                }
             };
         } else {
             return state;
         }
     }),
-    on(ACTIONS_CONFIGURE_CONTROLLER.listenForGamepad, (state) => ({ ...state, connectionState: ControllerConnectionState.WaitingForConnect })),
-    on(ACTION_CONTROLLER_READ, (state, props) => ({ ...state, controllerState: props.state })),
-    on(ACTIONS_CONFIGURE_CONTROLLER.cancelListeningForGamepad, (state) => ({ ...state, connectionState: ControllerConnectionState.NotConnected }))
+    on(ACTIONS_CONFIGURE_CONTROLLER.listenForGamepad, (state): IState['controller'] =>
+        ({ ...state, connectionState: ControllerConnectionState.WaitingForConnect })
+    ),
+    on(ACTION_CONTROLLER_READ, (state, props): IState['controller'] => ({ ...state, controllerState: props })),
+    on(ACTIONS_CONFIGURE_CONTROLLER.cancelListeningForGamepad, (state): IState['controller'] =>
+        ({ ...state, connectionState: ControllerConnectionState.NotConnected })
+    )
 );
