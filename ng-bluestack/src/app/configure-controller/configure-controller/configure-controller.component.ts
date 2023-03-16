@@ -50,7 +50,8 @@ export class ConfigureControllerComponent implements OnDestroy {
     public readonly controllerTypeL10n$ = this.connectedControllerType$.pipe(
         filter((t) => t !== null),
         map((t) => this.controllerToL10nMap[t as ControllerType])
-    )
+    );
+
     public readonly controllerConfig$ = this.store.select(SELECT_CONTROLLER_CONFIG);
     public readonly controllerState$ = this.store.select(SELECT_CONTROLLER_STATE);
     public readonly controllerConnectionStates = ControllerConnectionState;
@@ -81,7 +82,7 @@ export class ConfigureControllerComponent implements OnDestroy {
     public onControllerListeningStart(controllerType: ControllerType | null): void {
         switch (controllerType) {
             case ControllerType.GamePad:
-                this.store.dispatch(ACTIONS_CONFIGURE_CONTROLLER.listenForGamepad())
+                this.store.dispatch(ACTIONS_CONFIGURE_CONTROLLER.listenForGamepad());
                 break;
             case ControllerType.Unassigned:
             case null:

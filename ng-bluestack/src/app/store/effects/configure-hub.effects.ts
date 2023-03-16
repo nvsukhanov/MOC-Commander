@@ -38,8 +38,8 @@ export class ConfigureHubEffects {
 
     public readonly connectGatt$ = createEffect(() => this.actions.pipe(
         ofType(ACTIONS_CONFIGURE_HUB.deviceConnected),
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         switchMap((action) =>
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             fromPromise(action.device.gatt!.connect()).pipe(
                 map((server) => ACTIONS_CONFIGURE_HUB.gattConnected({ device: action.device, server })),
                 catchError((e) => this.withLog(e, ACTIONS_CONFIGURE_HUB.gattCannotBeConnected({ device: action.device })))
@@ -71,10 +71,9 @@ export class ConfigureHubEffects {
             ...ACTION_CONFIGURE_HUB_TERMINATION
         ),
         switchMap((action) => {
-                console.log(action.type);
                 if (action.type === ACTIONS_CONFIGURE_HUB.gattConnected.type) {
                     const subj = new Subject<void>();
-                    action.device.ongattserverdisconnected = () => subj.next(); // addEventListener doesn't work on device, seems like not implemented yet
+                    action.device.ongattserverdisconnected = (): void => subj.next(); // addEventListener doesn't work on device, seems like not implemented yet
                     return subj;
                 } else {
                     return NEVER;

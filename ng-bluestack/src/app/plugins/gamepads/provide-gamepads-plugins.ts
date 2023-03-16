@@ -9,5 +9,5 @@ export function provideGamepadsPlugins(): EnvironmentProviders {
         { provide: GamepadPlugin, useClass: ControllerDualshockPluginService, multi: true },
         ControllerDefaultPluginService,
         GamepadPluginsService,
-    ])
+    ]);
 }

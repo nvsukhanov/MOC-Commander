@@ -36,7 +36,7 @@ export class ConfigureControllerEffects {
                         value: val.value,
                         index: index
                     }
-                }
+                };
             }, {} as ControllerButtonsState);
 
             const axes: ControllerAxesState = gamepad.axes.reduce((acc, val, index) => {
@@ -46,7 +46,7 @@ export class ConfigureControllerEffects {
                         value: val,
                         index: index
                     }
-                }
+                };
             }, {} as ControllerAxesState);
             return ACTION_CONTROLLER_READ({ axes, buttons });
         })

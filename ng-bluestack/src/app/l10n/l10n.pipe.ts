@@ -26,7 +26,7 @@ export class L10nPipe implements PipeTransform, OnDestroy {
             ).subscribe((v) => {
                 this.value = v;
                 this.cdRef.markForCheck();
-            })
+            });
             this.key = key;
         }
         return this.value;
@@ -38,7 +38,7 @@ export class L10nPipe implements PipeTransform, OnDestroy {
 
     private getObservable(origKey: keyof L10nService): Observable<string> {
         if (this.isObservable(origKey)) {
-            return this.l10nService[origKey] as Observable<string>
+            return this.l10nService[origKey] as Observable<string>;
         }
         const missingKeyWarning = `l10n key is missing: ${origKey}`;
         console.warn(missingKeyWarning);

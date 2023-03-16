@@ -16,7 +16,7 @@ export class ControllerDualshockPluginService extends GamepadPlugin {
         return this.ids.has(id);
     }
 
-    protected mapSpecificFields(gamepad: Gamepad): Pick<GamepadControllerConfig, 'axes' | 'buttons' | 'nameL10nKey'> {
+    protected mapSpecificFields(): Pick<GamepadControllerConfig, 'axes' | 'buttons' | 'nameL10nKey'> {
         return {
             nameL10nKey: 'dualshockName$',
             axes: [
@@ -34,8 +34,6 @@ export class ControllerDualshockPluginService extends GamepadPlugin {
                 { index: 3, nameL10nKey: 'dualshockButtonTriangle$' },
                 { index: 4, nameL10nKey: 'dualshockL1$' },
                 { index: 5, nameL10nKey: 'dualshockR1$' },
-                // { index: 6, nameL10nKey: 'dualshockL2$' },
-                // { index: 7, nameL10nKey: 'dualshockR2$' },
                 { index: 8, nameL10nKey: 'dualshockButtonShare$' },
                 { index: 9, nameL10nKey: 'dualshockButtonOptions$' },
                 { index: 10, nameL10nKey: 'dualshockButtonLeftStick$' },
