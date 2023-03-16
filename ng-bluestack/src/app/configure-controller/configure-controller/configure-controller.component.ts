@@ -23,8 +23,8 @@ import { ControllerGamepadViewComponent } from '../controller-gamepad-view';
 @Component({
     standalone: true,
     selector: 'app-configure-controller',
-    templateUrl: './conntect-controller.component.html',
-    styleUrls: [ './conntect-controller.component.scss' ],
+    templateUrl: './configure-controller.component.html',
+    styleUrls: [ './configure-controller.component.scss' ],
     imports: [
         ControllerTypeSelectComponent,
         NgIf,
@@ -41,7 +41,7 @@ import { ControllerGamepadViewComponent } from '../controller-gamepad-view';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ConntectControllerComponent implements OnDestroy {
+export class ConfigureControllerComponent implements OnDestroy {
     public readonly controllerConnectionState$ = this.store.select(SELECT_CONTROLLER_CONNECTION_STATE);
 
     public readonly connectedControllerType$ = this.store.select(SELECT_CONTROLLER_TYPE);

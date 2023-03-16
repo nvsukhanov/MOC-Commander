@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import { CONNECT_CONTROLLER_ROUTE } from '../routes';
+import { CONFIGURE_CONTROLLER_ROUTE, CONFIGURE_HUB_ROUTE } from '../routes';
 import { MatTableModule } from '@angular/material/table';
 import { L10nPipe } from '../l10n';
 
@@ -22,5 +22,6 @@ import { L10nPipe } from '../l10n';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LayoutComponent {
-    public readonly connectControllerRoute = CONNECT_CONTROLLER_ROUTE;
+    public readonly configureControllerRoute = CONFIGURE_CONTROLLER_ROUTE;
+    public readonly configureHubRoute = CONFIGURE_HUB_ROUTE;
 }

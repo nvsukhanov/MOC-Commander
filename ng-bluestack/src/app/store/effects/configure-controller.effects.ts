@@ -65,7 +65,6 @@ export class ConfigureControllerEffects {
         map((gamepad) => ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected({ gamepad }))
     ));
 
-    private readonly gamepadConnectedEvent = 'gamepadconnected';
     private readonly gamepadDisconnectedEvent = 'gamepaddisconnected';
 
     public readonly listenToGamepadDisconnects$ = createEffect(() => this.actions$.pipe(

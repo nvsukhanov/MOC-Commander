@@ -3,7 +3,7 @@ import { L10nService } from '../l10n';
 
 export enum ControllerConnectionState {
     NotConnected,
-    WaitingForConnect,
+    Listening,
     Connected
 }
 

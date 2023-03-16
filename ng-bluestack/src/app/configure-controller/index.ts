@@ -1,1 +1,1 @@
-export * from './connect-controller';
+export * from './configure-controller';

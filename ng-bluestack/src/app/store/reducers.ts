@@ -46,10 +46,15 @@ export const CONTROLLER_CONFIG_REDUCERS = createReducer(
         }
     }),
     on(ACTIONS_CONFIGURE_CONTROLLER.listenForGamepad, (state): IState['controller'] =>
-        ({ ...state, connectionState: ControllerConnectionState.WaitingForConnect })
+        ({ ...state, connectionState: ControllerConnectionState.Listening })
     ),
     on(ACTION_CONTROLLER_READ, (state, props): IState['controller'] => ({ ...state, controllerState: props })),
-    on(ACTIONS_CONFIGURE_CONTROLLER.cancelListeningForGamepad, (state): IState['controller'] =>
-        ({ ...state, connectionState: ControllerConnectionState.NotConnected })
+    on(ACTIONS_CONFIGURE_CONTROLLER.cancelListeningForGamepad, (state): IState['controller'] => {
+            if (state.connectionState === ControllerConnectionState.Listening) {
+                return { ...state, connectionState: ControllerConnectionState.NotConnected };
+            } else {
+                return state;
+            }
+        }
     )
 );

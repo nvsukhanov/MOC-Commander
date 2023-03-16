@@ -4,6 +4,8 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable()
 export class L10nService {
     public readonly configureController$ = new BehaviorSubject('Configure controller');
+    public readonly configureHub$ = new BehaviorSubject('Configure hub');
+
     public readonly selectControllerType$ = new BehaviorSubject('Select controller type');
     public readonly connectToController$ = new BehaviorSubject('Connect');
     public readonly cancelListeningForController$ = new BehaviorSubject('Cancel listening');

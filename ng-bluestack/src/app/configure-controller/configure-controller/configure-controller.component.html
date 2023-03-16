@@ -10,7 +10,7 @@
         </button>
     </ng-container>
 
-    <ng-container *ngSwitchCase="controllerConnectionStates.WaitingForConnect">
+    <ng-container *ngSwitchCase="controllerConnectionStates.Listening">
         <button (click)="cancelListening()" mat-button>
             {{ 'cancelListeningForController$' | l10n }}
         </button>
