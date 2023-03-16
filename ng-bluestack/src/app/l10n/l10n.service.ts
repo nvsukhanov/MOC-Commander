@@ -31,6 +31,10 @@ export class L10nService {
     public readonly dualshockButtonLeft$ = new BehaviorSubject('Left');
     public readonly dualshockButtonRight$ = new BehaviorSubject('Right');
     public readonly dualshockButtonTouchpad$ = new BehaviorSubject('Touchpad pressed');
+    public readonly dualshockLeftStickXAxis$ = new BehaviorSubject('Left stick X-axis');
+    public readonly dualshockLeftStickYAxis$ = new BehaviorSubject('Left stick Y-axis');
+    public readonly dualshockRightStickXAxis$ = new BehaviorSubject('Right stick X-axis');
+    public readonly dualshockRightStickYAxis$ = new BehaviorSubject('Right stick Y-axis');
 
     public readonly controllerLeftStick$ = new BehaviorSubject('Left stick');
     public readonly controllerRightStick$ = new BehaviorSubject('Right stick');

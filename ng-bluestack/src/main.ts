@@ -7,9 +7,9 @@ import { provideStore } from '@ngrx/store';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { ConfigureControllerEffects, CONTROLLER_CONFIG_REDUCERS, IState } from './app/store';
 import { provideEffects } from '@ngrx/effects';
-import { provideGamepadMappers } from './app/mappings';
 import { isDevMode } from '@angular/core';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { provideGamepadsPlugins } from './app/plugins';
 
 bootstrapApplication(LayoutComponent, {
     providers: [
@@ -20,7 +20,7 @@ bootstrapApplication(LayoutComponent, {
         }),
         provideEffects(ConfigureControllerEffects),
         provideNoopAnimations(),
-        provideGamepadMappers(),
+        provideGamepadsPlugins(),
         provideStoreDevtools({
             maxAge: 25,
             logOnly: !isDevMode(),

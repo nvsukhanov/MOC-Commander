@@ -6,6 +6,7 @@ import { ACTION_CONTROLLER_READ, ACTIONS_CONFIGURE_CONTROLLER } from '../actions
 import { animationFrameScheduler, filter, fromEvent, interval, map, NEVER, Observable, switchMap, withLatestFrom } from 'rxjs';
 import { ExtractTokenType, WINDOW } from '../../types';
 import { SELECTED_GAMEPAD_INDEX } from '../controller-selectors';
+import { GAMEPAD_PLUGIN } from '../../plugins';
 
 export interface IGamepadMapper {
     mapGamepadToConfig(gamepad: Gamepad): GamepadControllerConfig | null;
@@ -60,14 +61,14 @@ export class ConfigureControllerEffects {
         switchMap((e) => e.type === ACTIONS_CONFIGURE_CONTROLLER.listenForGamepad.type ? interval(0, animationFrameScheduler) : NEVER),
         map(() => this.window.navigator.getGamepads().find((g) => !!g)),
         filter((g) => !!g),
-        map((e) => {
-            for (const mapper of this.gamepadMappers) {
-                const result = mapper.mapGamepadToConfig(e as Gamepad);
-                if (result) {
-                    return result;
-                }
+        map((gamepad) => {
+            const mapping = this.gamepadPlugins
+                                .find((p) => p.controllerIdMatch((gamepad as Gamepad).id))
+                                ?.mapToDefaultConfig(gamepad as Gamepad);
+            if (mapping) {
+                return mapping;
             }
-            throw new Error(`unsupported gamepad ${e}`);
+            throw new Error(`unsupported gamepad ${gamepad}`);
         }),
         map((gamepad) => ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected({ gamepad })), // TODO: handle error
     ));
@@ -88,7 +89,7 @@ export class ConfigureControllerEffects {
         private readonly actions$: Actions,
         private readonly store: Store<IState>,
         @Inject(WINDOW) private readonly window: Window,
-        @Inject(GAMEPAD_MAPPER) private gamepadMappers: ReadonlyArray<ExtractTokenType<typeof GAMEPAD_MAPPER>>
+        @Inject(GAMEPAD_PLUGIN) private gamepadPlugins: ReadonlyArray<ExtractTokenType<typeof GAMEPAD_PLUGIN>>
     ) {
     }
 }
