@@ -1,4 +1,4 @@
-import { ControllerConnectionState, HubDiscoveryState, IState } from './i-state';
+import { ControllerConnectionState, HubConnectionState, IState } from './i-state';
 import { ControllerType } from '../types';
 
 export const INITIAL_STATE: IState = {
@@ -18,6 +18,6 @@ export const INITIAL_STATE: IState = {
         }
     },
     hub: {
-        connectionState: HubDiscoveryState.NotConnected
+        connectionState: HubConnectionState.NotConnected
     }
 }

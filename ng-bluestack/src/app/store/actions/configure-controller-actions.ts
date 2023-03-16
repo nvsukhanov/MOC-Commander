@@ -2,7 +2,7 @@ import { createAction, createActionGroup, emptyProps, props } from '@ngrx/store'
 import { ControllerAxesState, ControllerButtonsState, GamepadControllerConfig } from '../i-state';
 
 export const ACTIONS_CONFIGURE_CONTROLLER = createActionGroup({
-    source: 'configure controller',
+    source: 'ACTIONS_CONFIGURE_CONTROLLER',
     events: {
         'Listen for gamepad': emptyProps(),
         'Listening for gamepad started': emptyProps(),

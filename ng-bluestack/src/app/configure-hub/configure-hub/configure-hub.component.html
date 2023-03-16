@@ -1,1 +1,3 @@
 <button (click)="connect()" mat-button>Connect</button>
+
+<ng-container *ngIf="(connectionState$ | async) !== connectionStates.NotConnected">CONNECTED!</ng-container>

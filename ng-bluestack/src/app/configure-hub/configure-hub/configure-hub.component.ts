@@ -1,8 +1,9 @@
-/// <reference types="web-bluetooth" />
-
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { NAVIGATOR } from '../../types';
 import { MatButtonModule } from '@angular/material/button';
+import { ACTIONS_CONFIGURE_HUB, HubConnectionState, IState, SELECT_HUB_CONNECTION_STATE } from '../../store';
+import { Store } from '@ngrx/store';
+import { AsyncPipe, NgIf } from '@angular/common';
 
 @Component({
     standalone: true,
@@ -10,41 +11,23 @@ import { MatButtonModule } from '@angular/material/button';
     templateUrl: './configure-hub.component.html',
     styleUrls: [ './configure-hub.component.scss' ],
     imports: [
-        MatButtonModule
+        MatButtonModule,
+        AsyncPipe,
+        NgIf
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConfigureHubComponent {
+    public readonly connectionStates = HubConnectionState;
+    public readonly connectionState$ = this.store.select(SELECT_HUB_CONNECTION_STATE);
+
     constructor(
-        @Inject(NAVIGATOR) private readonly navigator: Navigator
+        @Inject(NAVIGATOR) private readonly navigator: Navigator,
+        private readonly store: Store<IState>
     ) {
     }
 
-    public async connect(): Promise<void> {
-        const LPF2_HUB_SERVICE_UUID = '00001623-1212-EFDE-1623-785FEABCD123'.toLowerCase();
-        const LPF2_SERVICE_CHARACTERISTIC = '00001624-1212-EFDE-1623-785FEABCD123'.toLowerCase();
-
-        const p = await this.navigator.bluetooth.requestDevice({
-            filters: [
-                {
-                    services: [
-                        LPF2_HUB_SERVICE_UUID
-                    ]
-                }
-            ],
-            optionalServices: [
-                'battery_service',
-                'device_information'
-            ]
-        });
-        console.log('discovery completed, connecting');
-        console.log(p);
-        if (p.gatt) {
-            console.log('got gatt');
-            const server = await p.gatt.connect();
-            const service = await server.getPrimaryService(LPF2_HUB_SERVICE_UUID);
-            const char = await service.getCharacteristics();
-            console.log(char);
-        }
+    public connect(): void {
+        this.store.dispatch(ACTIONS_CONFIGURE_HUB.startDiscovery());
     }
 }

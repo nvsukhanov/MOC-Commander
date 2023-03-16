@@ -1,12 +1,12 @@
 import { ControllerAxisState, ControllerButtonState, ControllerType } from '../types';
 import { L10nService } from '../l10n';
 
-export enum HubDiscoveryState {
+export enum HubConnectionState {
     NotConnected,
     Searching,
     DeviceConnected,
     GattConnected,
-    PrimaryServiceDiscovered,
+    PrimaryServiceConnected,
     PrimaryCharacteristicConnected
 }
 
@@ -18,7 +18,7 @@ export interface IState {
         controllerState: ControllerState;
     },
     hub: {
-        connectionState: HubDiscoveryState
+        connectionState: HubConnectionState
     }
 }
 
