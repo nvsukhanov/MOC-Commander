@@ -1,6 +1,27 @@
 import { ControllerAxisState, ControllerButtonState, ControllerType } from '../types';
 import { L10nService } from '../l10n';
 
+export enum HubDiscoveryState {
+    NotConnected,
+    Searching,
+    DeviceConnected,
+    GattConnected,
+    PrimaryServiceDiscovered,
+    PrimaryCharacteristicConnected
+}
+
+export interface IState {
+    controller: {
+        controllerType: ControllerType;
+        connectionState: ControllerConnectionState;
+        gamepadConfig: GamepadControllerConfig;
+        controllerState: ControllerState;
+    },
+    hub: {
+        connectionState: HubDiscoveryState
+    }
+}
+
 export enum ControllerConnectionState {
     NotConnected,
     Listening,
@@ -18,15 +39,6 @@ export type ControllerButtonsState = {
 export type ControllerState = {
     axes: ControllerAxesState;
     buttons: ControllerButtonsState;
-}
-
-export interface IState {
-    controller: {
-        controllerType: ControllerType;
-        connectionState: ControllerConnectionState;
-        gamepadConfig: GamepadControllerConfig;
-        controllerState: ControllerState;
-    }
 }
 
 export type GamepadButtonConfig = {

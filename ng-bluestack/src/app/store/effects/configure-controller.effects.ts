@@ -5,7 +5,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ACTION_CONTROLLER_READ, ACTIONS_CONFIGURE_CONTROLLER } from '../actions';
 import { animationFrameScheduler, filter, fromEvent, interval, map, NEVER, Observable, switchMap, withLatestFrom } from 'rxjs';
 import { WINDOW } from '../../types';
-import { SELECTED_GAMEPAD_INDEX } from '../controller-selectors';
+import { SELECTED_GAMEPAD_INDEX } from '../selectors';
 import { GamepadPluginsService } from '../../plugins';
 
 export interface IGamepadMapper {

@@ -5,7 +5,7 @@ import { ROUTES } from './app/routes';
 import { provideL10n } from './app/l10n';
 import { provideStore } from '@ngrx/store';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { ConfigureControllerEffects, CONTROLLER_CONFIG_REDUCERS, IState } from './app/store';
+import { CONFIGURE_CONTROLLER_REDUCER, CONFIGURE_HUB_REDUCERS, ConfigureControllerEffects, IState } from './app/store';
 import { provideEffects } from '@ngrx/effects';
 import { isDevMode } from '@angular/core';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
@@ -16,7 +16,8 @@ bootstrapApplication(LayoutComponent, {
         provideRouter(ROUTES),
         provideL10n(), // TODO: replace later with a proper l10n library e.g. angular-l10n
         provideStore<IState>({
-            controller: CONTROLLER_CONFIG_REDUCERS
+            controller: CONFIGURE_CONTROLLER_REDUCER,
+            hub: CONFIGURE_HUB_REDUCERS
         }),
         provideEffects(ConfigureControllerEffects),
         provideNoopAnimations(),

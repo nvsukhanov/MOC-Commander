@@ -1,27 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
-import { ControllerConnectionState, IState } from './i-state';
-import { ACTION_CONTROLLER_READ, ACTIONS_CONFIGURE_CONTROLLER } from './actions';
-import { ControllerType } from '../types';
+import { ControllerConnectionState, IState } from '../i-state';
+import { ACTION_CONTROLLER_READ, ACTIONS_CONFIGURE_CONTROLLER } from '../actions';
+import { ControllerType } from '../../types';
+import { INITIAL_STATE } from '../initial-state';
 
-export const INITIAL_STATE: IState = {
-    controller: {
-        controllerType: ControllerType.Unassigned,
-        connectionState: ControllerConnectionState.NotConnected,
-        gamepadConfig: {
-            index: null,
-            id: '',
-            nameL10nKey: null,
-            axes: [],
-            buttons: []
-        },
-        controllerState: {
-            axes: {},
-            buttons: {}
-        }
-    }
-}
-
-export const CONTROLLER_CONFIG_REDUCERS = createReducer(
+export const CONFIGURE_CONTROLLER_REDUCER = createReducer(
     INITIAL_STATE['controller'],
     on(ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected, (state, props): IState['controller'] => ({
         ...state,
