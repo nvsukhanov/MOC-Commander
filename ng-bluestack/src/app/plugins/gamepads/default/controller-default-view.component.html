@@ -1,0 +1,11 @@
+<div>
+    <div>
+        {{ 'genericGamepad$' | l10n }}
+    </div>
+    <div *ngFor="let axis of axes">
+        {{ 'genericGamepadAxis$' | l10n }} {{ axis.index }} : {{ axis.value }}
+    </div>
+    <div *ngFor="let button of buttons">
+        {{ 'genericGamepadButton$' | l10n }} {{ button.index }} : {{ button.isPressed }}
+    </div>
+</div>

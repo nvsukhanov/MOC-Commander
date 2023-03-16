@@ -12,7 +12,7 @@ export class L10nService {
     public readonly controllerTypeGamepad$ = new BehaviorSubject('Gamepad');
     public readonly controllerDisconnect$ = new BehaviorSubject('Disconnect');
 
-    public readonly dualshockName$ = new BehaviorSubject('Dualshock');
+    public readonly dualshockName$ = new BehaviorSubject('Dualshock'); // TODO: move to corresponding plugin
     public readonly dualshockL1$ = new BehaviorSubject('L1');
     public readonly dualshockL2$ = new BehaviorSubject('L2');
     public readonly dualshockR1$ = new BehaviorSubject('R1');
@@ -36,6 +36,7 @@ export class L10nService {
     public readonly dualshockRightStickXAxis$ = new BehaviorSubject('Right stick X-axis');
     public readonly dualshockRightStickYAxis$ = new BehaviorSubject('Right stick Y-axis');
 
-    public readonly controllerLeftStick$ = new BehaviorSubject('Left stick');
-    public readonly controllerRightStick$ = new BehaviorSubject('Right stick');
+    public readonly genericGamepad$ = new BehaviorSubject('Generic gamepad');
+    public readonly genericGamepadAxis$ = new BehaviorSubject('Axis');
+    public readonly genericGamepadButton$ = new BehaviorSubject('Button');
 }

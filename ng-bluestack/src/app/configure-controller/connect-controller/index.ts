@@ -1,1 +1,1 @@
-export * from './configure-controller.component';
+export * from './conntect-controller.component';

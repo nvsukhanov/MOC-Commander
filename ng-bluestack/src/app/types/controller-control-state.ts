@@ -1,4 +1,4 @@
-export type ControllerState = ControllerButtonState | ControllerAxisState;
+export type ControllerControlState = ControllerButtonState | ControllerAxisState;
 
 export type ControllerButtonState = {
     readonly index: number;

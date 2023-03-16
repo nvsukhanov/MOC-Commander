@@ -4,9 +4,9 @@ import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ACTION_CONTROLLER_READ, ACTIONS_CONFIGURE_CONTROLLER } from '../actions';
 import { animationFrameScheduler, filter, fromEvent, interval, map, NEVER, Observable, switchMap, withLatestFrom } from 'rxjs';
-import { ExtractTokenType, WINDOW } from '../../types';
+import { WINDOW } from '../../types';
 import { SELECTED_GAMEPAD_INDEX } from '../controller-selectors';
-import { GAMEPAD_PLUGIN } from '../../plugins';
+import { GamepadPluginsService } from '../../plugins';
 
 export interface IGamepadMapper {
     mapGamepadToConfig(gamepad: Gamepad): GamepadControllerConfig | null;
@@ -33,7 +33,7 @@ export class ConfigureControllerEffects {
                 return {
                     ...acc,
                     [index]: {
-                        value: Math.round(val.value * 100),
+                        value: val.value,
                         index: index
                     }
                 }
@@ -43,7 +43,7 @@ export class ConfigureControllerEffects {
                 return {
                     ...acc,
                     [index]: {
-                        value: Math.round(val * 100),
+                        value: val,
                         index: index
                     }
                 }
@@ -61,16 +61,8 @@ export class ConfigureControllerEffects {
         switchMap((e) => e.type === ACTIONS_CONFIGURE_CONTROLLER.listenForGamepad.type ? interval(0, animationFrameScheduler) : NEVER),
         map(() => this.window.navigator.getGamepads().find((g) => !!g)),
         filter((g) => !!g),
-        map((gamepad) => {
-            const mapping = this.gamepadPlugins
-                                .find((p) => p.controllerIdMatch((gamepad as Gamepad).id))
-                                ?.mapToDefaultConfig(gamepad as Gamepad);
-            if (mapping) {
-                return mapping;
-            }
-            throw new Error(`unsupported gamepad ${gamepad}`);
-        }),
-        map((gamepad) => ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected({ gamepad })), // TODO: handle error
+        map((gamepad) => this.gamepadPlugins.getPlugin((gamepad as Gamepad).id).mapToDefaultConfig(gamepad as Gamepad)),
+        map((gamepad) => ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected({ gamepad }))
     ));
 
     private readonly gamepadConnectedEvent = 'gamepadconnected';
@@ -89,7 +81,7 @@ export class ConfigureControllerEffects {
         private readonly actions$: Actions,
         private readonly store: Store<IState>,
         @Inject(WINDOW) private readonly window: Window,
-        @Inject(GAMEPAD_PLUGIN) private gamepadPlugins: ReadonlyArray<ExtractTokenType<typeof GAMEPAD_PLUGIN>>
+        private readonly gamepadPlugins: GamepadPluginsService
     ) {
     }
 }

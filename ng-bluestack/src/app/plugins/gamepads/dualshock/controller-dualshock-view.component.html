@@ -1,0 +1,13 @@
+<div>
+    <div>
+        {{ 'dualshockName$' | l10n }}
+    </div>
+    <div *ngFor="let axis of axes">
+        {{ axis.l10nKey | l10n }} : {{ axis.value }}
+    </div>
+
+    <div *ngFor="let button of buttons">
+        {{ button.l10nKey | l10n }} : {{ button.isPressed }}
+    </div>
+</div>
+

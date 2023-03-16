@@ -15,15 +15,17 @@ export type ControllerButtonsState = {
     [index in number]: ControllerButtonState
 };
 
+export type ControllerState = {
+    axes: ControllerAxesState;
+    buttons: ControllerButtonsState;
+}
+
 export interface IState {
     controller: {
         controllerType: ControllerType;
         connectionState: ControllerConnectionState;
         gamepadConfig: GamepadControllerConfig;
-        controllerState: {
-            axes: ControllerAxesState,
-            buttons: ControllerButtonsState
-        };
+        controllerState: ControllerState;
     }
 }
 
@@ -32,15 +34,25 @@ export type GamepadButtonConfig = {
     nameL10nKey?: keyof L10nService;
 }
 
-export type ControllerAxisConfig = {
+export type GamepadButtonAxisConfig = {
+    isButton: true;
+    buttonIndex: number;
+    nameL10nKey?: keyof L10nService;
+}
+
+export type GamepadNormalAxisConfig = {
+    isButton: false;
     index: number;
     nameL10nKey?: keyof L10nService;
 }
 
+export type GamepadAxisConfig = GamepadButtonAxisConfig | GamepadNormalAxisConfig;
+
 export type GamepadControllerConfig = {
     index: number | null;
+    id: string;
     nameL10nKey?: keyof L10nService | null;
-    axisGroups: Array<ControllerAxisConfig>;
+    axes: Array<GamepadAxisConfig>;
     buttons: Array<GamepadButtonConfig>;
 }
 

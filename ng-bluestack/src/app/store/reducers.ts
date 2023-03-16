@@ -9,8 +9,9 @@ export const INITIAL_STATE: IState = {
         connectionState: ControllerConnectionState.NotConnected,
         gamepadConfig: {
             index: null,
+            id: '',
             nameL10nKey: null,
-            axisGroups: [],
+            axes: [],
             buttons: []
         },
         controllerState: {

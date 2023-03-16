@@ -11,19 +11,20 @@ import {
 } from '../../store';
 import { Store } from '@ngrx/store';
 import { AsyncPipe, JsonPipe, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
-import { MAPPING_CONTROLLER_TO_L10N } from '../../mappings/controller-type-to-l10n';
+import { MAPPING_CONTROLLER_TO_L10N } from '../../mappings';
 import { filter, map } from 'rxjs';
 import { ControllerType } from '../../types';
 import { MatButtonModule } from '@angular/material/button';
 import { L10nPipe } from '../../l10n';
 import { FormsModule } from '@angular/forms';
 import { LetModule, PushModule } from '@ngrx/component';
+import { ControllerGamepadViewComponent } from '../controller-gamepad-view';
 
 @Component({
     standalone: true,
     selector: 'app-configure-controller',
-    templateUrl: './configure-controller.component.html',
-    styleUrls: [ './configure-controller.component.scss' ],
+    templateUrl: './conntect-controller.component.html',
+    styleUrls: [ './conntect-controller.component.scss' ],
     imports: [
         ControllerTypeSelectComponent,
         NgIf,
@@ -35,11 +36,12 @@ import { LetModule, PushModule } from '@ngrx/component';
         PushModule,
         NgSwitch,
         JsonPipe,
-        LetModule
+        LetModule,
+        ControllerGamepadViewComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ConfigureControllerComponent implements OnDestroy {
+export class ConntectControllerComponent implements OnDestroy {
     public readonly controllerConnectionState$ = this.store.select(SELECT_CONTROLLER_CONNECTION_STATE);
 
     public readonly connectedControllerType$ = this.store.select(SELECT_CONTROLLER_TYPE);

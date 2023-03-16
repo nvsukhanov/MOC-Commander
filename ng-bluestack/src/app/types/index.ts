@@ -3,7 +3,7 @@ import { InjectionToken } from '@angular/core';
 export * from './i-ticker';
 export * from './i-vector';
 export * from './controller-type';
-export * from './controller-state';
+export * from './controller-control-state';
 
 export type ExtractTokenType<T> = T extends InjectionToken<infer K> ? K : never;
 

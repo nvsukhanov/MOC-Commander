@@ -8,7 +8,7 @@ export const ROUTES: Routes = [
     { path: '', component: MainComponent, pathMatch: 'full' },
     {
         path: CONNECT_CONTROLLER_ROUTE,
-        loadComponent: () => import('./configure-controller').then((mod) => mod.ConfigureControllerComponent),
+        loadComponent: () => import('./configure-controller').then((mod) => mod.ConntectControllerComponent),
     },
     { path: '**', component: NotFoundComponent }
 ];

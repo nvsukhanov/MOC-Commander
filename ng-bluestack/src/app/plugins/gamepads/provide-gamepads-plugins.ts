@@ -1,9 +1,13 @@
 import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
 import { ControllerDualshockPluginService } from './dualshock';
-import { GAMEPAD_PLUGIN } from './i-gamepad-plugin';
+import { ControllerDefaultPluginService } from './default';
+import { GamepadPluginsService } from './gamepad-plugins.service';
+import { GamepadPlugin } from './gamepad-plugin';
 
 export function provideGamepadsPlugins(): EnvironmentProviders {
     return makeEnvironmentProviders([
-        { provide: GAMEPAD_PLUGIN, useClass: ControllerDualshockPluginService, multi: true }
+        { provide: GamepadPlugin, useClass: ControllerDualshockPluginService, multi: true },
+        ControllerDefaultPluginService,
+        GamepadPluginsService,
     ])
 }

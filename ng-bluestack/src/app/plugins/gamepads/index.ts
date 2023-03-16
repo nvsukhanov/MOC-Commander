@@ -1,3 +1,3 @@
-export * from './i-gamepad-plugin';
+export * from './gamepad-plugin';
 export * from './provide-gamepads-plugins';
-export * from './dualshock';
+export * from './gamepad-plugins.service';

@@ -26,9 +26,10 @@
                     <button (click)="onDisconnectController(controllerConfig.index)" [color]="'warn'" mat-button>{{ 'controllerDisconnect$' | l10n }}</button>
                 </div>
                 <div [ngSwitch]="connectedControllerType$ | async">
-                    <div *ngSwitchCase="controllerTypes.GamePad">
-                        gamepad: {{ controllerState$ | async | json }}
-                    </div>
+                    <app-controller-gamepad-view *ngSwitchCase="controllerTypes.GamePad"
+                                                 [controllerConfig]="controllerConfig"
+                                                 [controllerState]="controllerState$ | async"
+                    ></app-controller-gamepad-view>
                 </div>
             </ng-container>
         </ng-container>
