@@ -6,8 +6,17 @@ import { CONFIGURE_CONTROLLER_ROUTE, CONFIGURE_HUB_ROUTE } from '../routes';
 import { MatTableModule } from '@angular/material/table';
 import { L10nPipe } from '../l10n';
 import { Store } from '@ngrx/store';
-import { IState, SELECT_BLUETOOTH_AVAILABILITY } from '../store';
+import {
+    ControllerConnectionState,
+    HubConnectionState,
+    IState,
+    SELECT_BLUETOOTH_AVAILABILITY,
+    SELECT_CONTROLLER_CONNECTION_STATE,
+    SELECT_HUB_CONNECTION_STATE
+} from '../store';
 import { AsyncPipe } from '@angular/common';
+import { StatusBarComponent } from '../status-bar';
+import { map } from 'rxjs';
 
 @Component({
     standalone: true,
@@ -21,14 +30,23 @@ import { AsyncPipe } from '@angular/common';
         RouterLink,
         MatTableModule,
         L10nPipe,
-        AsyncPipe
+        AsyncPipe,
+        StatusBarComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LayoutComponent {
     public readonly configureControllerRoute = CONFIGURE_CONTROLLER_ROUTE;
     public readonly configureHubRoute = CONFIGURE_HUB_ROUTE;
+
     public isBluetoothAvailable$ = this.store.select(SELECT_BLUETOOTH_AVAILABILITY);
+    public isControllerConnected$ = this.store.select(SELECT_CONTROLLER_CONNECTION_STATE).pipe(
+        map((t) => t === ControllerConnectionState.Connected)
+    );
+
+    public isHubConnected$ = this.store.select(SELECT_HUB_CONNECTION_STATE).pipe(
+        map((t) => t === HubConnectionState.Connected)
+    );
 
     constructor(
         private readonly store: Store<IState>

@@ -12,7 +12,13 @@
         {{ 'configureHub$' | l10n }}
     </a>
 </mat-toolbar>
+
 <div class="main">
     <router-outlet></router-outlet>
 </div>
 
+<app-status-bar-component [isControllerConnected]="isControllerConnected$ | async"
+                          [isHubConnected]="isHubConnected$ | async"
+                          class="status-bar"
+>
+</app-status-bar-component>
