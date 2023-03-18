@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class L10nService {
+    public readonly bluetoothIsNotAvailable$ = new BehaviorSubject('Bluetooth is not available');
     public readonly configureController$ = new BehaviorSubject('Configure controller');
     public readonly configureHub$ = new BehaviorSubject('Configure hub');
 

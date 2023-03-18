@@ -15,6 +15,9 @@ export interface IState {
     },
     hub: {
         connectionState: HubConnectionState
+    },
+    bluetoothAvailability: {
+        isAvailable: boolean;
     }
 }
 

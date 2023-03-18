@@ -1,1 +1,3 @@
-main
+<ng-container *ngIf="(bluetoothAvailability$ | async) === false">
+    {{ 'bluetoothIsNotAvailable$' | l10n }}
+</ng-container>

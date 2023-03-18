@@ -3,15 +3,25 @@ import { LayoutComponent } from './app/layout';
 import { provideRouter } from '@angular/router';
 import { ROUTES } from './app/routes';
 import { provideL10n } from './app/l10n';
-import { provideStore } from '@ngrx/store';
+import { provideStore, Store } from '@ngrx/store';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { CONFIGURE_CONTROLLER_REDUCER, CONFIGURE_HUB_REDUCERS, ConfigureControllerEffects, ConfigureHubEffects, IState } from './app/store';
+import {
+    BLUETOOTH_AVAILABILITY_REDUCERS,
+    bluetoothAvailabilityCheckFactory,
+    CONFIGURE_CONTROLLER_REDUCER,
+    CONFIGURE_HUB_REDUCERS,
+    ConfigureControllerEffects,
+    ConfigureHubEffects,
+    IState
+} from './app/store';
 import { provideEffects } from '@ngrx/effects';
-import { importProvidersFrom, isDevMode } from '@angular/core';
+import { APP_INITIALIZER, importProvidersFrom, isDevMode } from '@angular/core';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideGamepadsPlugins } from './app/plugins';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { provideLpf2 } from './app/lego-hub';
+import { NAVIGATOR } from './app/types';
+import { BluetoothAvailabilityGuardService } from './app/bluetooth-availability-guard.service';
 
 bootstrapApplication(LayoutComponent, {
     providers: [
@@ -19,7 +29,8 @@ bootstrapApplication(LayoutComponent, {
         provideL10n(), // TODO: replace later with a proper l10n library e.g. angular-l10n
         provideStore<IState>({
             controller: CONFIGURE_CONTROLLER_REDUCER,
-            hub: CONFIGURE_HUB_REDUCERS
+            hub: CONFIGURE_HUB_REDUCERS,
+            bluetoothAvailability: BLUETOOTH_AVAILABILITY_REDUCERS
         }),
         provideEffects(
             ConfigureControllerEffects,
@@ -35,6 +46,8 @@ bootstrapApplication(LayoutComponent, {
             traceLimit: 75,
         }),
         importProvidersFrom(MatSnackBarModule),
-        provideLpf2()
+        provideLpf2(),
+        { provide: APP_INITIALIZER, useFactory: bluetoothAvailabilityCheckFactory, deps: [ NAVIGATOR, Store ], multi: true },
+        BluetoothAvailabilityGuardService
     ]
 });

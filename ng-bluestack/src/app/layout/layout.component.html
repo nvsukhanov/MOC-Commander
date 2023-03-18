@@ -1,6 +1,16 @@
 <mat-toolbar [color]="'primary'" class="toolbar">
-    <a [routerLink]="configureControllerRoute" mat-button>{{ 'configureController$' | l10n }}</a>
-    <a [routerLink]="configureHubRoute" mat-button>{{ 'configureHub$' | l10n }}</a>
+    <a [disabled]="(isBluetoothAvailable$ | async) === false"
+       [routerLink]="configureControllerRoute"
+       mat-button
+    >
+        {{ 'configureController$' | l10n }}
+    </a>
+    <a [disabled]="(isBluetoothAvailable$ | async) === false"
+       [routerLink]="configureHubRoute"
+       mat-button
+    >
+        {{ 'configureHub$' | l10n }}
+    </a>
 </mat-toolbar>
 <div class="main">
     <router-outlet></router-outlet>
