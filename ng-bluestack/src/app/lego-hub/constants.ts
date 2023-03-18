@@ -5,3 +5,10 @@ const _LEGO_SERVICES_UUIDS = {
 };
 
 export const LEGO_SERVICES_UUIDS: Readonly<typeof _LEGO_SERVICES_UUIDS> = _LEGO_SERVICES_UUIDS;
+
+export const LPF2_DISCOVERY_OPTIONS: RequestDeviceOptions = {
+    filters: [ {
+        services: [ LEGO_SERVICES_UUIDS.LPF2PrimaryService ]
+    } ],
+    optionalServices: [ LEGO_SERVICES_UUIDS.batteryService, LEGO_SERVICES_UUIDS.deviceInformation ]
+};

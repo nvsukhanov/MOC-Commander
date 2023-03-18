@@ -11,6 +11,7 @@ import { importProvidersFrom, isDevMode } from '@angular/core';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideGamepadsPlugins } from './app/plugins';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { provideLpf2 } from './app/lego-hub';
 
 bootstrapApplication(LayoutComponent, {
     providers: [
@@ -33,6 +34,7 @@ bootstrapApplication(LayoutComponent, {
             trace: false,
             traceLimit: 75,
         }),
-        importProvidersFrom(MatSnackBarModule)
+        importProvidersFrom(MatSnackBarModule),
+        provideLpf2()
     ]
 });

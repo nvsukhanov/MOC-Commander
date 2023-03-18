@@ -41,4 +41,10 @@ export class L10nService {
     public readonly genericGamepad$ = new BehaviorSubject('Generic gamepad');
     public readonly genericGamepadAxis$ = new BehaviorSubject('Axis');
     public readonly genericGamepadButton$ = new BehaviorSubject('Button');
+
+    public readonly hubConnectionError$ = new BehaviorSubject('Hub connection error');
+    public readonly hubGattUnavailable$ = new BehaviorSubject('Hub GATT is not available');
+    public readonly hubGattConnectionError$ = new BehaviorSubject('Hub GATT connection failed');
+    public readonly hubConnectionCancelled$ = new BehaviorSubject('Hub connection was cancelled by user');
+    public readonly hubDisconnected$ = new BehaviorSubject('Hub has been disconnected');
 }

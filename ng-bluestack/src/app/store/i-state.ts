@@ -3,11 +3,7 @@ import { L10nService } from '../l10n';
 
 export enum HubConnectionState {
     NotConnected,
-    Searching,
-    DeviceConnected,
-    GattConnected,
-    PrimaryServiceConnected,
-    PrimaryCharacteristicConnected
+    Connected,
 }
 
 export interface IState {
