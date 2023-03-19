@@ -39,6 +39,28 @@ export class L10nService {
     public readonly dualshockRightStickXAxis$ = new BehaviorSubject('Right stick X-axis');
     public readonly dualshockRightStickYAxis$ = new BehaviorSubject('Right stick Y-axis');
 
+    public readonly xbox360Name$ = new BehaviorSubject('XBox 360'); // TODO: move to corresponding plugin
+    public readonly xbox360LB$ = new BehaviorSubject('L1');
+    public readonly xbox360RT$ = new BehaviorSubject('RT');
+    public readonly xbox360RB$ = new BehaviorSubject('R1');
+    public readonly xbox360LT$ = new BehaviorSubject('LT');
+    public readonly xbox360ButtonA$ = new BehaviorSubject('A');
+    public readonly xbox360ButtonB$ = new BehaviorSubject('B');
+    public readonly xbox360ButtonX$ = new BehaviorSubject('X');
+    public readonly xbox360ButtonY$ = new BehaviorSubject('Y');
+    public readonly xbox360ButtonLeftStick$ = new BehaviorSubject('Left stick press');
+    public readonly xbox360ButtonRightStick$ = new BehaviorSubject('Right stick press');
+    public readonly xbox360ButtonShare$ = new BehaviorSubject('Share');
+    public readonly xbox360ButtonMenu$ = new BehaviorSubject('Menu');
+    public readonly xbox360ButtonUp$ = new BehaviorSubject('Up');
+    public readonly xbox360ButtonDown$ = new BehaviorSubject('Down');
+    public readonly xbox360ButtonLeft$ = new BehaviorSubject('Left');
+    public readonly xbox360ButtonRight$ = new BehaviorSubject('Right');
+    public readonly xbox360LeftStickXAxis$ = new BehaviorSubject('Left stick X-axis');
+    public readonly xbox360LeftStickYAxis$ = new BehaviorSubject('Left stick Y-axis');
+    public readonly xbox360RightStickXAxis$ = new BehaviorSubject('Right stick X-axis');
+    public readonly xbox360RightStickYAxis$ = new BehaviorSubject('Right stick Y-axis');
+
     public readonly genericGamepad$ = new BehaviorSubject('Generic gamepad');
     public readonly genericGamepadAxis$ = new BehaviorSubject('Axis');
     public readonly genericGamepadButton$ = new BehaviorSubject('Button');
