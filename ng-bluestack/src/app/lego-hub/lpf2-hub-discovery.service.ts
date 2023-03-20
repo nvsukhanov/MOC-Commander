@@ -5,15 +5,15 @@ import { LEGO_SERVICES_UUIDS, LPF2_CHARACTERISTICS_UUID, LPF2_DISCOVERY_OPTIONS 
 import { Lpf2HubFactoryService } from './lpf2-hub-factory.service';
 import { Lpf2ConnectionErrorFactoryService } from './errors';
 import { Observable } from 'rxjs';
+import { ILegoHubConfig, LEGO_HUB_CONFIG } from './i-lego-hub-config';
 
 @Injectable()
 export class Lpf2HubDiscoveryService {
-    private readonly maxGattConnectionRetries = 5;
-
     constructor(
         @Inject(NAVIGATOR) private readonly navigator: ExtractTokenType<typeof NAVIGATOR>,
         private readonly lpf2HubFactoryService: Lpf2HubFactoryService,
-        private readonly lpf2ConnectionErrorFactoryService: Lpf2ConnectionErrorFactoryService
+        private readonly lpf2ConnectionErrorFactoryService: Lpf2ConnectionErrorFactoryService,
+        @Inject(LEGO_HUB_CONFIG) private readonly config: ILegoHubConfig
     ) {
     }
 
@@ -36,7 +36,7 @@ export class Lpf2HubDiscoveryService {
     private async connectGattServer(device: BluetoothDevice): Promise<BluetoothRemoteGATTServer> {
         let gatt: BluetoothRemoteGATTServer | null = null;
 
-        for (let i = 0; i < this.maxGattConnectionRetries && !gatt; i++) {
+        for (let i = 0; i < this.config.maxGattConnectRetries && !gatt; i++) {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             gatt = await device.gatt!.connect().catch(() => null);
         }
