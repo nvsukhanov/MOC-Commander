@@ -37,10 +37,7 @@
         "semi": "error",
         "lines-between-class-members": "off",
         "@typescript-eslint/lines-between-class-members": [
-          "error",
-          {
-            "exceptAfterSingleLine": true
-          }
+          "error"
         ],
         "no-console": [
           "error",

@@ -19,6 +19,7 @@ import { L10nPipe } from '../../l10n';
 import { FormsModule } from '@angular/forms';
 import { LetModule, PushModule } from '@ngrx/component';
 import { ControllerGamepadViewComponent } from '../controller-gamepad-view';
+import { ControllerKeyboardViewComponent } from '../controller-keyboard-view';
 
 @Component({
     standalone: true,
@@ -37,7 +38,8 @@ import { ControllerGamepadViewComponent } from '../controller-gamepad-view';
         NgSwitch,
         JsonPipe,
         LetModule,
-        ControllerGamepadViewComponent
+        ControllerGamepadViewComponent,
+        ControllerKeyboardViewComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -45,15 +47,20 @@ export class ConfigureControllerComponent implements OnDestroy {
     public readonly controllerConnectionState$ = this.store.select(SELECT_CONTROLLER_CONNECTION_STATE);
 
     public readonly connectedControllerType$ = this.store.select(SELECT_CONTROLLER_TYPE);
+
     public readonly controllerTypes = ControllerType;
+
     public readonly controllerToL10nMap = MAPPING_CONTROLLER_TO_L10N;
+
     public readonly controllerTypeL10n$ = this.connectedControllerType$.pipe(
         filter((t) => t !== null),
         map((t) => this.controllerToL10nMap[t as ControllerType])
     );
 
     public readonly controllerConfig$ = this.store.select(SELECT_CONTROLLER_CONFIG);
+
     public readonly controllerState$ = this.store.select(SELECT_CONTROLLER_STATE);
+
     public readonly controllerConnectionStates = ControllerConnectionState;
 
     constructor(
@@ -69,10 +76,14 @@ export class ConfigureControllerComponent implements OnDestroy {
         return type !== null && type !== ControllerType.Unassigned;
     }
 
-    public onDisconnectController(index: number | null): void {
+    public disconnectGamepad(index: number | null): void {
         if (index !== null) { // TODO: maybe we can avoid using null in the state
             this.store.dispatch(ACTIONS_CONFIGURE_CONTROLLER.disconnectGamepad({ index }));
         }
+    }
+
+    public disconnectKeyboard(): void {
+        this.store.dispatch(ACTIONS_CONFIGURE_CONTROLLER.keyboardDisconnected());
     }
 
     public cancelListening(): void {
@@ -83,6 +94,9 @@ export class ConfigureControllerComponent implements OnDestroy {
         switch (controllerType) {
             case ControllerType.GamePad:
                 this.store.dispatch(ACTIONS_CONFIGURE_CONTROLLER.listenForGamepad());
+                break;
+            case ControllerType.Keyboard:
+                this.store.dispatch(ACTIONS_CONFIGURE_CONTROLLER.keyboardConnected());
                 break;
             case ControllerType.Unassigned:
             case null:

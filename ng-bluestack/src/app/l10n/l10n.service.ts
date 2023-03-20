@@ -13,6 +13,7 @@ export class L10nService {
 
     public readonly controllerTypeUnassigned$ = new BehaviorSubject('Unassigned');
     public readonly controllerTypeGamepad$ = new BehaviorSubject('Gamepad');
+    public readonly controllerTypeKeyboard$ = new BehaviorSubject('Keyboard');
     public readonly controllerDisconnect$ = new BehaviorSubject('Disconnect');
 
     public readonly dualshockName$ = new BehaviorSubject('Dualshock'); // TODO: move to corresponding plugin

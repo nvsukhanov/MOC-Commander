@@ -16,21 +16,37 @@
         </button>
     </ng-container>
 
-    <ng-container *ngSwitchCase="controllerConnectionStates.Connected">
-        <ng-container *ngrxLet="controllerConfig$ | async as controllerConfig">
-            <ng-container *ngIf="controllerConfig">
-                <div *ngIf="controllerConfig.nameL10nKey">
-                    {{ controllerConfig.nameL10nKey | l10n }}
+    <ng-container *ngIf="controllerConnectionStates.Connected">
+        <ng-container [ngSwitch]="connectedControllerType$ | async">
+            <ng-container *ngSwitchCase="controllerTypes.GamePad">
+                <ng-container *ngrxLet="controllerConfig$ | async as controllerConfig">
+                    <ng-container *ngIf="controllerConfig">
+                        <div *ngIf="controllerConfig.nameL10nKey">
+                            {{ controllerConfig.nameL10nKey | l10n }}
+                        </div>
+                        <div>
+                            <button (click)="disconnectGamepad(controllerConfig.index)" [color]="'warn'"
+                                    mat-button>{{ 'controllerDisconnect$' | l10n }}</button>
+                        </div>
+                        <div [ngSwitch]="connectedControllerType$ | async">
+                            <app-controller-gamepad-view *ngSwitchCase="controllerTypes.GamePad"
+                                                         [controllerConfig]="controllerConfig"
+                                                         [controllerState]="controllerState$ | async"
+                            ></app-controller-gamepad-view>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+            <ng-container *ngSwitchCase="controllerTypes.Keyboard">
+                <div>
+                    {{ 'controllerTypeKeyboard$' | l10n }}
                 </div>
                 <div>
-                    <button (click)="onDisconnectController(controllerConfig.index)" [color]="'warn'" mat-button>{{ 'controllerDisconnect$' | l10n }}</button>
+                    <button (click)="disconnectKeyboard()" [color]="'warn'"
+                            mat-button>{{ 'controllerDisconnect$' | l10n }}</button>
                 </div>
-                <div [ngSwitch]="connectedControllerType$ | async">
-                    <app-controller-gamepad-view *ngSwitchCase="controllerTypes.GamePad"
-                                                 [controllerConfig]="controllerConfig"
-                                                 [controllerState]="controllerState$ | async"
-                    ></app-controller-gamepad-view>
-                </div>
+                <app-controller-keyboard-view *ngSwitchCase="controllerTypes.Keyboard"
+                                              [controllerState]="controllerState$ | async"></app-controller-keyboard-view>
             </ng-container>
         </ng-container>
     </ng-container>

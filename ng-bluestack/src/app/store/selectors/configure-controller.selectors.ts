@@ -20,6 +20,7 @@ export const SELECT_CONTROLLER_CONFIG = createSelector(
             case ControllerType.GamePad:
                 return state.gamepadConfig;
             case ControllerType.Unassigned:
+            case ControllerType.Keyboard:
             case null:
                 return null;
         }

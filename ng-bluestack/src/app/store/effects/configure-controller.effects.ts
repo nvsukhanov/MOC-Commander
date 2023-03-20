@@ -2,10 +2,10 @@ import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { ControllerAxesState, ControllerButtonsState, GamepadControllerConfig, IState } from '../i-state';
 import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { ACTION_CONTROLLER_READ, ACTIONS_CONFIGURE_CONTROLLER } from '../actions';
-import { animationFrameScheduler, filter, fromEvent, interval, map, NEVER, Observable, switchMap, withLatestFrom } from 'rxjs';
+import { ACTION_CONTROLLER_READ, ACTION_KEYBOARD_EVENTS, ACTIONS_CONFIGURE_CONTROLLER } from '../actions';
+import { animationFrameScheduler, filter, fromEvent, interval, map, NEVER, Observable, switchMap, tap, withLatestFrom } from 'rxjs';
 import { WINDOW } from '../../types';
-import { SELECTED_GAMEPAD_INDEX } from '../selectors';
+import { SELECT_CONTROLLER_STATE, SELECTED_GAMEPAD_INDEX } from '../selectors';
 import { GamepadPluginsService } from '../../plugins';
 
 export interface IGamepadMapper {
@@ -63,6 +63,42 @@ export class ConfigureControllerEffects {
         filter((g) => !!g),
         map((gamepad) => this.gamepadPlugins.getPlugin((gamepad as Gamepad).id).mapToDefaultConfig(gamepad as Gamepad)),
         map((gamepad) => ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected({ gamepad }))
+    ));
+
+    private readonly keyDownEventName = 'keydown';
+
+    public readonly keyboardKeyDownListener$ = createEffect(() => this.actions$.pipe(
+        ofType(ACTIONS_CONFIGURE_CONTROLLER.keyboardConnected, ACTIONS_CONFIGURE_CONTROLLER.keyboardDisconnected),
+        switchMap((a) => a.type === ACTIONS_CONFIGURE_CONTROLLER.keyboardConnected.type
+                         ? (fromEvent(this.window, this.keyDownEventName) as Observable<KeyboardEvent>).pipe(
+                tap((e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }),
+                withLatestFrom(this.store.select(SELECT_CONTROLLER_STATE)),
+                filter(([ event, state ]) => !state.buttons[event.keyCode] || state.buttons[event.keyCode].value === 0)
+            )
+                         : NEVER
+        ),
+        map(([ event ]) => ACTION_KEYBOARD_EVENTS.keyDown({ code: event.keyCode }))
+    ));
+
+    private readonly keyUpEventName = 'keyup';
+
+    public readonly keyboardKeyUpListener$ = createEffect(() => this.actions$.pipe(
+        ofType(ACTIONS_CONFIGURE_CONTROLLER.keyboardConnected, ACTIONS_CONFIGURE_CONTROLLER.keyboardDisconnected),
+        switchMap((a) => a.type === ACTIONS_CONFIGURE_CONTROLLER.keyboardConnected.type
+                         ? (fromEvent(this.window, this.keyUpEventName) as Observable<KeyboardEvent>).pipe(
+                tap((e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }),
+                withLatestFrom(this.store.select(SELECT_CONTROLLER_STATE)),
+                filter(([ event, state ]) => !!state.buttons[event.keyCode] && state.buttons[event.keyCode].value !== 0)
+            )
+                         : NEVER
+        ),
+        map(([ event ]) => ACTION_KEYBOARD_EVENTS.keyUp({ code: event.keyCode }))
     ));
 
     private readonly gamepadDisconnectedEvent = 'gamepaddisconnected';

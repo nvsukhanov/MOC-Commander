@@ -22,7 +22,8 @@ export enum HubConnectionState {
 
 export enum ControllerType {
     Unassigned,
-    GamePad
+    GamePad,
+    Keyboard
 }
 
 export type ControllerButtonState = {
@@ -80,4 +81,3 @@ export type GamepadControllerConfig = {
     axes: Array<GamepadAxisConfig>;
     buttons: Array<GamepadButtonConfig>;
 }
-

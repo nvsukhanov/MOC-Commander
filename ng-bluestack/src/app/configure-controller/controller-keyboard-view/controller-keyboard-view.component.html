@@ -1,0 +1,7 @@
+<ng-container *ngIf="controllerState">
+    <ng-container *ngFor="let v of controllerState.buttons | keyvalue">
+        <div *ngIf="v.value.value">
+            {{ v.key }}
+        </div>
+    </ng-container>
+</ng-container>
