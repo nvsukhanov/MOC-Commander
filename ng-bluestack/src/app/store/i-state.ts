@@ -1,10 +1,4 @@
-import { ControllerAxisState, ControllerButtonState, ControllerType } from '../types';
 import { L10nService } from '../l10n';
-
-export enum HubConnectionState {
-    NotConnected,
-    Connected,
-}
 
 export interface IState {
     controller: {
@@ -19,6 +13,26 @@ export interface IState {
     bluetoothAvailability: {
         isAvailable: boolean;
     }
+}
+
+export enum HubConnectionState {
+    NotConnected,
+    Connected,
+}
+
+export enum ControllerType {
+    Unassigned,
+    GamePad
+}
+
+export type ControllerButtonState = {
+    readonly index: number;
+    readonly value: number;
+}
+
+export type ControllerAxisState = {
+    readonly index: number;
+    readonly value: number;
 }
 
 export enum ControllerConnectionState {

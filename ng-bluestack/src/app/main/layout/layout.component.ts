@@ -1,10 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { CONFIGURE_CONTROLLER_ROUTE, CONFIGURE_HUB_ROUTE } from '../routes';
-import { MatTableModule } from '@angular/material/table';
-import { L10nPipe } from '../l10n';
+import { RouterOutlet } from '@angular/router';
+import { L10nPipe } from '../../l10n';
 import { Store } from '@ngrx/store';
 import {
     ControllerConnectionState,
@@ -13,10 +9,12 @@ import {
     SELECT_BLUETOOTH_AVAILABILITY,
     SELECT_CONTROLLER_CONNECTION_STATE,
     SELECT_HUB_CONNECTION_STATE
-} from '../store';
+} from '../../store';
 import { AsyncPipe } from '@angular/common';
 import { StatusBarComponent } from '../status-bar';
 import { map } from 'rxjs';
+import { NavigationComponent } from '../navigation';
+import { PushModule } from '@ngrx/component';
 
 @Component({
     standalone: true,
@@ -25,20 +23,15 @@ import { map } from 'rxjs';
     styleUrls: [ './layout.component.scss' ],
     imports: [
         RouterOutlet,
-        MatToolbarModule,
-        MatButtonModule,
-        RouterLink,
-        MatTableModule,
         L10nPipe,
         AsyncPipe,
-        StatusBarComponent
+        StatusBarComponent,
+        NavigationComponent,
+        PushModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LayoutComponent {
-    public readonly configureControllerRoute = CONFIGURE_CONTROLLER_ROUTE;
-    public readonly configureHubRoute = CONFIGURE_HUB_ROUTE;
-
     public isBluetoothAvailable$ = this.store.select(SELECT_BLUETOOTH_AVAILABILITY);
     public isControllerConnected$ = this.store.select(SELECT_CONTROLLER_CONNECTION_STATE).pipe(
         map((t) => t === ControllerConnectionState.Connected)

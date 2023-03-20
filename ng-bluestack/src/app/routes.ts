@@ -1,15 +1,14 @@
 import { Routes, UrlTree } from '@angular/router';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { MainComponent } from './main';
+import { EmptyViewComponent, NotFoundComponent } from './main';
 import { inject } from '@angular/core';
-import { BluetoothAvailabilityGuardService } from './bluetooth-availability-guard.service';
+import { BluetoothAvailabilityGuardService } from './bluetooth-availability';
 import { Observable } from 'rxjs';
 
 export const CONFIGURE_CONTROLLER_ROUTE = 'configure-controller';
 export const CONFIGURE_HUB_ROUTE = 'configure-hub';
 
 export const ROUTES: Routes = [
-    { path: '', component: MainComponent, pathMatch: 'full' },
+    { path: '', component: EmptyViewComponent, pathMatch: 'full' },
     {
         path: CONFIGURE_CONTROLLER_ROUTE,
         loadComponent: () => import('./configure-controller').then((mod) => mod.ConfigureControllerComponent),

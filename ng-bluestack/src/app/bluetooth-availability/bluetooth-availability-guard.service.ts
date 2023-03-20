@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { IState, SELECT_BLUETOOTH_AVAILABILITY } from './store';
+import { IState, SELECT_BLUETOOTH_AVAILABILITY } from '../store';
 import { map } from 'rxjs';
 
 @Injectable()

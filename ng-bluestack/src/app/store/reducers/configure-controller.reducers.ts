@@ -1,7 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import { ControllerConnectionState, IState } from '../i-state';
+import { ControllerConnectionState, ControllerType, IState } from '../i-state';
 import { ACTION_CONTROLLER_READ, ACTIONS_CONFIGURE_CONTROLLER } from '../actions';
-import { ControllerType } from '../../types';
 import { INITIAL_STATE } from '../initial-state';
 
 export const CONFIGURE_CONTROLLER_REDUCER = createReducer(

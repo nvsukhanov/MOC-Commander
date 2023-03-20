@@ -1,0 +1,14 @@
+<mat-toolbar [color]="'primary'" class="toolbar">
+    <a [disabled]="isBluetoothAvailable === false"
+       [routerLink]="configureControllerRoute"
+       mat-button
+    >
+        {{ 'configureController$' | l10n }}
+    </a>
+    <a [disabled]="isBluetoothAvailable === false"
+       [routerLink]="configureHubRoute"
+       mat-button
+    >
+        {{ 'configureHub$' | l10n }}
+    </a>
+</mat-toolbar>

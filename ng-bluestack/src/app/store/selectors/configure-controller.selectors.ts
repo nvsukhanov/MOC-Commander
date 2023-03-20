@@ -1,6 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { IState } from '../i-state';
-import { ControllerType } from '../../types';
+import { ControllerType, IState } from '../i-state';
 
 export const SELECT_CONTROLLER_FEATURE = createFeatureSelector<IState['controller']>('controller');
 

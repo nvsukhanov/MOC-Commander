@@ -1,5 +1,4 @@
-import { ControllerConnectionState, HubConnectionState, IState } from './i-state';
-import { ControllerType } from '../types';
+import { ControllerConnectionState, ControllerType, HubConnectionState, IState } from './i-state';
 
 export const INITIAL_STATE: IState = {
     controller: {

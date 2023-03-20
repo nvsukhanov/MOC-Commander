@@ -1,0 +1,13 @@
+<mat-toolbar>
+    <span class="offset"></span>
+    <mat-chip-listbox>
+        <ng-container [ngSwitch]="isControllerConnected">
+            <mat-chip-option *ngSwitchCase="true" [selectable]="false" selected>{{ 'controllerIsConnectedStatusChip$' | l10n }}</mat-chip-option>
+            <mat-chip-option *ngSwitchDefault [selectable]="false">{{ 'controllerIsNotConnectedStatusChip$' | l10n }}</mat-chip-option>
+        </ng-container>
+        <ng-container [ngSwitch]="isHubConnected">
+            <mat-chip-option *ngSwitchCase="true" [selectable]="false" selected>{{ 'hubIsConnectedStatusChip$' | l10n }}</mat-chip-option>
+            <mat-chip-option *ngSwitchDefault [selectable]="false">{{ 'hubIsNotConnectedStatusChip$' | l10n }}</mat-chip-option>
+        </ng-container>
+    </mat-chip-listbox>
+</mat-toolbar>

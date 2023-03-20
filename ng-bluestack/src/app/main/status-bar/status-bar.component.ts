@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AsyncPipe, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
-import { L10nPipe, L10nService } from '../l10n';
+import { L10nPipe, L10nService } from '../../l10n';
 
 @Component({
     standalone: true,

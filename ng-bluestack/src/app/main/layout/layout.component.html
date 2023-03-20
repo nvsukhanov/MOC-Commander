@@ -1,0 +1,13 @@
+<nav class="toolbar">
+    <app-navigation-component [isBluetoothAvailable]="isBluetoothAvailable$ | ngrxPush"></app-navigation-component>
+</nav>
+
+<main class="main">
+    <router-outlet></router-outlet>
+</main>
+
+<footer class="status-bar">
+    <app-status-bar-component [isControllerConnected]="isControllerConnected$ | async"
+                              [isHubConnected]="isHubConnected$ | async"
+    ></app-status-bar-component>
+</footer>

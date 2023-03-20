@@ -1,5 +1,5 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { LayoutComponent } from './app/layout';
+import { LayoutComponent } from './app/main/layout';
 import { provideRouter } from '@angular/router';
 import { ROUTES } from './app/routes';
 import { provideL10n } from './app/l10n';
@@ -21,7 +21,7 @@ import { provideGamepadsPlugins } from './app/plugins';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { provideLpf2 } from './app/lego-hub';
 import { NAVIGATOR } from './app/types';
-import { BluetoothAvailabilityGuardService } from './app/bluetooth-availability-guard.service';
+import { BluetoothAvailabilityGuardService } from './app/bluetooth-availability';
 
 bootstrapApplication(LayoutComponent, {
     providers: [

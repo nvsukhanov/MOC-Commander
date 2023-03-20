@@ -3,6 +3,7 @@ import { ControllerTypeSelectComponent } from '../controller-type-select';
 import {
     ACTIONS_CONFIGURE_CONTROLLER,
     ControllerConnectionState,
+    ControllerType,
     IState,
     SELECT_CONTROLLER_CONFIG,
     SELECT_CONTROLLER_CONNECTION_STATE,
@@ -13,7 +14,6 @@ import { Store } from '@ngrx/store';
 import { AsyncPipe, JsonPipe, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { MAPPING_CONTROLLER_TO_L10N } from '../../mappings';
 import { filter, map } from 'rxjs';
-import { ControllerType } from '../../types';
 import { MatButtonModule } from '@angular/material/button';
 import { L10nPipe } from '../../l10n';
 import { FormsModule } from '@angular/forms';
