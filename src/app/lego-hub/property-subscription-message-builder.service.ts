@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HubMessageTypes, HubPropertyActions, SubscribableHubProperties } from './constants';
 import { MessageHeaderAppenderService } from './message-header-appender.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class PropertySubscriptionMessageBuilderService {
     constructor(
         private readonly messageHeaderAppenderService: MessageHeaderAppenderService

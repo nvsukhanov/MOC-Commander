@@ -8,7 +8,7 @@ export type BluetoothDeviceWithGatt = Omit<BluetoothDevice, 'gatt'> & {
     readonly gatt: BluetoothRemoteGATTServer;
 };
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class LpuHubFactoryService {
     constructor(
         private readonly characteristicsMessengerFactoryService: LpuCharacteristicsMessengerFactoryService,
