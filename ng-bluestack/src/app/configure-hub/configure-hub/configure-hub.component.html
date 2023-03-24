@@ -1,3 +1,12 @@
-<button (click)="connect()" mat-button>Connect</button>
-
-<ng-container *ngIf="(connectionState$ | async) !== connectionStates.NotConnected">CONNECTED!</ng-container>
+<ng-container [ngSwitch]="connectionState$ | async">
+    <button (click)="connect()"
+            *ngSwitchCase="false"
+            mat-button
+    >
+        Connect
+    </button>
+    <ng-container *ngSwitchCase="true">
+        {{ 'hubIsConnected$' | l10n }}
+        <button (click)="disconnect()" mat-button>{{ 'hubDisconnect$' | l10n }}</button>
+    </ng-container>
+</ng-container>

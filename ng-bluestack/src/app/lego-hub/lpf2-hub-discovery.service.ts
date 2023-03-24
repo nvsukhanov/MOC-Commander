@@ -1,14 +1,16 @@
 import { Inject, Injectable } from '@angular/core';
 import { ExtractTokenType, NAVIGATOR } from '../types';
-import { Lpf2Device } from './lpf2-device';
-import { LEGO_SERVICES_UUIDS, LPF2_CHARACTERISTICS_UUID, LPF2_DISCOVERY_OPTIONS } from './constants';
-import { Lpf2HubFactoryService } from './lpf2-hub-factory.service';
+import { Lpf2Hub } from './lpf2-hub';
+import { Lpf2Tree } from './constants';
+import { BluetoothDeviceWithGatt, Lpf2HubFactoryService } from './lpf2-hub-factory.service';
 import { Lpf2ConnectionErrorFactoryService } from './errors';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import { ILegoHubConfig, LEGO_HUB_CONFIG } from './i-lego-hub-config';
 
 @Injectable()
 export class Lpf2HubDiscoveryService {
+    private readonly gattServerDisconnectEventName = 'gattserverdisconnected';
+
     constructor(
         @Inject(NAVIGATOR) private readonly navigator: ExtractTokenType<typeof NAVIGATOR>,
         private readonly lpf2HubFactoryService: Lpf2HubFactoryService,
@@ -17,28 +19,29 @@ export class Lpf2HubDiscoveryService {
     ) {
     }
 
-    public async discoverL2PF(): Promise<Lpf2Device> {
+    public async discoverLpf2Hub(): Promise<Lpf2Hub> {
         const device = await this.connectDevice();
-        const gatt = await this.connectGattServer(device);
+        return this.connectToHub(device);
+    }
 
-        // coneect to service
-        const srv = await gatt.getPrimaryService(LEGO_SERVICES_UUIDS.LPF2PrimaryService);
-        const char = await srv.getCharacteristic(LPF2_CHARACTERISTICS_UUID);
+    private async connectToHub(device: BluetoothDeviceWithGatt): Promise<Lpf2Hub> {
+        const gatt = await this.connectGattServer(device);
 
         return this.lpf2HubFactoryService.createLpf2Gatt(
             new Observable<void>((subscriber) => {
-                device.ongattserverdisconnected = (): void => subscriber.next();
-            }),
+                device.addEventListener(this.gattServerDisconnectEventName, () => subscriber.next());
+            }).pipe(
+                shareReplay()
+            ),
             gatt
         );
     }
 
-    private async connectGattServer(device: BluetoothDevice): Promise<BluetoothRemoteGATTServer> {
+    private async connectGattServer(device: BluetoothDeviceWithGatt): Promise<BluetoothRemoteGATTServer> {
         let gatt: BluetoothRemoteGATTServer | null = null;
 
         for (let i = 0; i < this.config.maxGattConnectRetries && !gatt; i++) {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            gatt = await device.gatt!.connect().catch(() => null);
+            gatt = await device.gatt.connect().catch(() => null);
         }
         if (!gatt) {
             throw this.lpf2ConnectionErrorFactoryService.createGattConnectionError();
@@ -46,11 +49,19 @@ export class Lpf2HubDiscoveryService {
         return gatt;
     }
 
-    private async connectDevice(): Promise<BluetoothDevice> {
+    private async connectDevice(): Promise<BluetoothDeviceWithGatt> {
         let device: BluetoothDevice;
 
         try {
-            device = await this.navigator.bluetooth.requestDevice(LPF2_DISCOVERY_OPTIONS);
+            device = await this.navigator.bluetooth.requestDevice({
+                filters: [
+                    { services: [ Lpf2Tree.services.primary.id ] }
+                ],
+                optionalServices: [
+                    Lpf2Tree.services.battery.id,
+                    Lpf2Tree.services.deviceInformation.id
+                ]
+            });
         } catch (e) {
             throw this.lpf2ConnectionErrorFactoryService.createConnectionCancelledByUserError();
         }
@@ -58,14 +69,14 @@ export class Lpf2HubDiscoveryService {
         if (!device) {
             throw this.lpf2ConnectionErrorFactoryService.createConnectionCancelledByUserError();
         }
-        this.ensureGattPresent(device);
-
-        return device;
-    }
-
-    private ensureGattPresent(device: BluetoothDevice): void {
-        if (!device.gatt) {
+        if (this.isDeviceWithGatt(device)) {
+            return device;
+        } else {
             throw this.lpf2ConnectionErrorFactoryService.createGattUnavailableError();
         }
+    }
+
+    private isDeviceWithGatt(device: BluetoothDevice | BluetoothDeviceWithGatt): device is BluetoothDeviceWithGatt {
+        return !!device.gatt;
     }
 }

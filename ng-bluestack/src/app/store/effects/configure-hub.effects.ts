@@ -6,18 +6,18 @@ import { ExtractTokenType, NAVIGATOR } from '../../types';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ACTION_CONFIGURE_HUB_TERMINATION, ACTIONS_CONFIGURE_HUB } from '../actions';
 import { IState } from '../i-state';
-import { catchError, map, NEVER, Observable, of, switchMap, tap } from 'rxjs';
+import { catchError, map, NEVER, of, switchMap, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { fromPromise } from 'rxjs/internal/observable/innerFrom';
-import { TypedAction } from '@ngrx/store/src/models';
 import { Lpf2HubDiscoveryService, Lpf2HubStorageService } from '../../lego-hub';
 
 @Injectable()
 export class ConfigureHubEffects {
     public readonly startListening$ = createEffect(() => this.actions.pipe(
         ofType(ACTIONS_CONFIGURE_HUB.startDiscovery),
-        switchMap(() => fromPromise(this.lpf2HubDiscoveryService.discoverL2PF())),
+        switchMap(() => fromPromise(this.lpf2HubDiscoveryService.discoverLpf2Hub())),
+        tap((d) => this.lpf2HubStorageService.registerHub(d)),
         map(() => ACTIONS_CONFIGURE_HUB.deviceConnected()),
         catchError((error) => of(ACTIONS_CONFIGURE_HUB.deviceConnectFailed({ error })))
     ));
@@ -33,15 +33,25 @@ export class ConfigureHubEffects {
             ...ACTION_CONFIGURE_HUB_TERMINATION
         ),
         switchMap((action) => {
-                if (action.type === ACTIONS_CONFIGURE_HUB.deviceDisconnected.type) {
-                    return this.lpf2HubStorageService.getGatt().onDisconnect$;
+                if (action.type === ACTIONS_CONFIGURE_HUB.deviceConnected.type) {
+                    return this.lpf2HubStorageService.getHub().onDisconnect$;
                 } else {
                     return NEVER;
                 }
             }
         ),
+        tap(() => this.lpf2HubStorageService.removeHub()),
         map(() => ACTIONS_CONFIGURE_HUB.deviceDisconnected())
     ));
+
+    public userRequestedHubDisconnection$ = createEffect(() => this.actions.pipe(
+        ofType(
+            ACTIONS_CONFIGURE_HUB.userRequestedHubDisconnection
+        ),
+        tap(() => {
+            this.lpf2HubStorageService.getHub().disconnect();
+        })
+    ), { dispatch: false });
 
     constructor(
         @Inject(NAVIGATOR) private readonly navigator: ExtractTokenType<typeof NAVIGATOR>,
@@ -51,10 +61,5 @@ export class ConfigureHubEffects {
         private readonly lpf2HubDiscoveryService: Lpf2HubDiscoveryService,
         private readonly lpf2HubStorageService: Lpf2HubStorageService
     ) {
-    }
-
-    private withLog<T extends string>(e: Error, a: TypedAction<T>): Observable<TypedAction<T>> {  // TODO: make proper logging service
-        console.error(e);
-        return of(a);
     }
 }

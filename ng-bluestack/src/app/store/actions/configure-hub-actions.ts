@@ -7,6 +7,7 @@ export const ACTIONS_CONFIGURE_HUB = createActionGroup({
         'device connected': emptyProps(),
         'device disconnected': emptyProps(),
         'device connect failed': props<{ error: Error }>(),
+        'user requested hub disconnection': emptyProps()
     }
 });
 
