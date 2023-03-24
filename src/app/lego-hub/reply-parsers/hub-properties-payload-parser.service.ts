@@ -3,7 +3,7 @@ import { HubPropertyReply, HubReply } from './hub-reply';
 import { IReplyParser } from './i-reply-parser';
 import { HubMessageTypes, HubProperties } from '../constants';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class HubPropertiesPayloadParserService implements IReplyParser {
     private readonly hubPropertyLength = 1;
 
@@ -22,7 +22,6 @@ export class HubPropertiesPayloadParserService implements IReplyParser {
             return null;
         }
         const data = payload.slice(this.hubPropertyLength + this.operationLength);
-        console.log(data.join(' '));
         return this.hubPropertiesParser[hubProperty](data);
     }
 

@@ -4,12 +4,14 @@ import { PropertySubscriptionMessageBuilderService } from './property-subscripti
 import { ReplyParserService } from './reply-parsers';
 import { LpuCharacteristicsMessenger } from './lpu-characteristics-messenger';
 import { Observable } from 'rxjs';
+import { LoggingService } from '../logging';
 
 @Injectable({ providedIn: 'root' })
 export class LpuHubPropertiesFactoryService {
     constructor(
         private readonly propertySubscriptionMessageBuilderService: PropertySubscriptionMessageBuilderService,
         private readonly replyParserService: ReplyParserService,
+        private readonly logging: LoggingService
     ) {
     }
 
@@ -23,7 +25,8 @@ export class LpuHubPropertiesFactoryService {
             this.propertySubscriptionMessageBuilderService,
             this.replyParserService,
             characteristic,
-            messenger
+            messenger,
+            this.logging,
         );
     }
 }

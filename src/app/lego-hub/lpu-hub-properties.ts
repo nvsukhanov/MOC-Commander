@@ -3,6 +3,7 @@ import { HubMessageTypes, HubProperties, SubscribableHubProperties } from './con
 import { PropertySubscriptionMessageBuilderService } from './property-subscription-message-builder.service';
 import { ReplyParserService } from './reply-parsers';
 import { LpuCharacteristicsMessenger } from './lpu-characteristics-messenger';
+import { LoggingService } from '../logging';
 
 export class LpuHubProperties {
     private readonly characteristicValueChangedEventName = 'characteristicvaluechanged';
@@ -53,7 +54,8 @@ export class LpuHubProperties {
         private readonly propertySubscriptionMessageBuilderService: PropertySubscriptionMessageBuilderService,
         private readonly replyParserService: ReplyParserService,
         private readonly primaryCharacteristic: BluetoothRemoteGATTCharacteristic,
-        private readonly messenger: LpuCharacteristicsMessenger
+        private readonly messenger: LpuCharacteristicsMessenger,
+        private readonly logging: LoggingService
     ) {
     }
 
@@ -69,7 +71,7 @@ export class LpuHubProperties {
         if (!this.notificationStarted) {
             await this.primaryCharacteristic.startNotifications();
         }
-        console.log('notifications started');
+        this.logging.debug('characteristic notifications started');
     }
 
     private async subscribeToProperty(characteristic: SubscribableHubProperties): Promise<void> {

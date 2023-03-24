@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HubMessageTypes } from '../constants';
+import { LoggingService } from '../../logging';
 
 export type ParsedMessageResult = {
     messageType: HubMessageTypes,
     payload: Uint8Array
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class MessageDissectorService {
     private readonly messageTypeLength = 1;
 
@@ -18,10 +19,15 @@ export class MessageDissectorService {
 
     private readonly availableRawMessageTypes = new Set(Object.values(HubMessageTypes));
 
+    constructor(
+        private readonly logging: LoggingService
+    ) {
+    }
+
     public parse(message: Uint8Array): ParsedMessageResult | null {
         const messageType = message[this.getMessageTypeOffset(message)];
         if (!this.availableRawMessageTypes.has(messageType)) {
-            console.warn('unknown message type', messageType, 'at', this.getMessageTypeOffset(message), 'in', message.join(' ')); // TODO: proper logging
+            this.logging.warning('unknown message type', messageType, 'at', this.getMessageTypeOffset(message), 'in', message.join(' '));
             return null;
         }
         return {

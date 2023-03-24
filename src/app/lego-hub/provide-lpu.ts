@@ -6,6 +6,7 @@ import { LpuCharacteristicsMessengerFactoryService } from './lpu-characteristics
 import { LpuHubPropertiesFactoryService } from './lpu-hub-properties-factory.service';
 import { MessageHeaderAppenderService } from './message-header-appender.service';
 import { PropertySubscriptionMessageBuilderService } from './property-subscription-message-builder.service';
+import { HubPropertiesPayloadParserService, MessageDissectorService, ReplyParserService } from './reply-parsers';
 
 export function provideLpu(): EnvironmentProviders {
     return makeEnvironmentProviders([
@@ -16,7 +17,10 @@ export function provideLpu(): EnvironmentProviders {
             LpuCharacteristicsMessengerFactoryService,
             LpuHubPropertiesFactoryService,
             MessageHeaderAppenderService,
-            PropertySubscriptionMessageBuilderService
+            PropertySubscriptionMessageBuilderService,
+            ReplyParserService,
+            MessageDissectorService,
+            HubPropertiesPayloadParserService
         ]
     ]);
 }

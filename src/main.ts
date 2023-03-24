@@ -10,6 +10,7 @@ import { provideGamepadsPlugins } from './app/plugins';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { provideLpu } from './app/lego-hub';
 import { BluetoothAvailabilityGuardService } from './app/bluetooth-availability';
+import { LOG_LEVEL, LogLevel } from './app/logging';
 
 bootstrapApplication(LayoutComponent, {
     providers: [
@@ -20,6 +21,7 @@ bootstrapApplication(LayoutComponent, {
         importProvidersFrom(MatSnackBarModule),
         provideLpu(),
         provideApplicationStore(),
-        BluetoothAvailabilityGuardService
+        BluetoothAvailabilityGuardService,
+        { provide: LOG_LEVEL, useValue: LogLevel.Debug }
     ]
 });
