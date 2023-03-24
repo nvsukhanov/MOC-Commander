@@ -1,37 +1,23 @@
-import { DeepReadonly } from '../types';
+export const HUB_SERVICE_UUID = '00001623-1212-efde-1623-785feabcd123';
+export const HUB_CHARACTERISTIC_UUID = '00001624-1212-efde-1623-785feabcd123';
 
-type BleTree = {
-    services: {
-        [k in string]: {
-            id: string,
-            characteristics: {
-                [p in string]: {
-                    uuid: string
-                }
-            }
-        }
-    }
-};
+export enum HubMessageTypes {
+    hubProperties = 0x01
+}
 
-const _LpuTree = {
-    services: {
-        primary: {
-            id: '00001623-1212-efde-1623-785feabcd123',
-            characteristics: {
-                primary: {
-                    uuid: '00001624-1212-efde-1623-785feabcd123'
-                }
-            }
-        },
-        battery: {
-            id: 'battery_service',
-            characteristics: {}
-        },
-        deviceInformation: {
-            id: 'device_information',
-            characteristics: {}
-        }
-    }
-};
+export enum HubPropertyActions {
+    setProperty = 0x01,
+    enableUpdates = 0x02,
+    disableUpdates = 0x03,
+    reset = 0x04,
+    requestUpdate = 0x05,
+    update = 0x06
+}
 
-export const LpuTree: DeepReadonly<typeof _LpuTree & BleTree> = _LpuTree;
+export enum HubProperties {
+    name = 0x01,
+    rssi = 0x05,
+    batteryVoltage = 0x06
+}
+
+export type SubscribableHubProperties = HubProperties.name | HubProperties.rssi | HubProperties.batteryVoltage;

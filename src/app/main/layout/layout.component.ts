@@ -8,6 +8,7 @@ import {
     IState,
     SELECT_BLUETOOTH_AVAILABILITY,
     SELECT_CONTROLLER_CONNECTION_STATE,
+    SELECT_HUB_BATTERY_LEVEL,
     SELECT_HUB_CONNECTION_STATE
 } from '../../store';
 import { AsyncPipe } from '@angular/common';
@@ -41,6 +42,8 @@ export class LayoutComponent {
     public isHubConnected$ = this.store.select(SELECT_HUB_CONNECTION_STATE).pipe(
         map((t) => t === HubConnectionState.Connected)
     );
+
+    public batteryLevel$ = this.store.select(SELECT_HUB_BATTERY_LEVEL);
 
     constructor(
         private readonly store: Store<IState>

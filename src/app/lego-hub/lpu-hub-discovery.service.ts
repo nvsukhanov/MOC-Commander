@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 import { ExtractTokenType, NAVIGATOR } from '../types';
 import { LpuHub } from './lpu-hub';
-import { LpuTree } from './constants';
+import { HUB_SERVICE_UUID } from './constants';
 import { BluetoothDeviceWithGatt, LpuHubFactoryService } from './lpu-hub-factory.service';
 import { LpuConnectionErrorFactoryService } from './errors';
-import { Observable, shareReplay } from 'rxjs';
+import { fromEvent, map } from 'rxjs';
 import { ILegoHubConfig, LEGO_HUB_CONFIG } from './i-lego-hub-config';
 
 @Injectable()
@@ -28,11 +28,7 @@ export class LpuHubDiscoveryService {
         const gatt = await this.connectGattServer(device);
 
         return this.lpuHubFactoryService.createLpuGatt(
-            new Observable<void>((subscriber) => {
-                device.addEventListener(this.gattServerDisconnectEventName, () => subscriber.next());
-            }).pipe(
-                shareReplay()
-            ),
+            fromEvent(device, this.gattServerDisconnectEventName).pipe(map(() => void 0)),
             gatt
         );
     }
@@ -55,11 +51,7 @@ export class LpuHubDiscoveryService {
         try {
             device = await this.navigator.bluetooth.requestDevice({
                 filters: [
-                    { services: [ LpuTree.services.primary.id ] }
-                ],
-                optionalServices: [
-                    LpuTree.services.battery.id,
-                    LpuTree.services.deviceInformation.id
+                    { services: [ HUB_SERVICE_UUID ] }
                 ]
             });
         } catch (e) {

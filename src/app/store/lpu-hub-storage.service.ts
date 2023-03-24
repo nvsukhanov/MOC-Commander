@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { LpuHub } from './lpu-hub';
+import { LpuHub, LpuHubDiscoveryService } from '../lego-hub';
 
 @Injectable()
 export class LpuHubStorageService {
     private hub?: LpuHub;
 
-    public registerHub(
-        hub: LpuHub
-    ): void {
-        if (this.hub) {
-            throw new Error('there is a hub that is already registered');
-        }
-        this.hub = hub;
+    constructor(
+        private readonly lpuHubDiscoveryService: LpuHubDiscoveryService,
+    ) {
+    }
+
+    public async discoverHub(): Promise<void> {
+        this.hub = await this.lpuHubDiscoveryService.discoverHub();
     }
 
     public getHub(): LpuHub {

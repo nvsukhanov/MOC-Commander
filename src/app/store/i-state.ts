@@ -8,7 +8,8 @@ export interface IState {
         controllerState: ControllerState;
     },
     hub: {
-        connectionState: HubConnectionState
+        connectionState: HubConnectionState,
+        batteryLevel: number | null;
     },
     bluetoothAvailability: {
         isAvailable: boolean;
@@ -18,6 +19,8 @@ export interface IState {
 export enum HubConnectionState {
     NotConnected,
     Connected,
+    Connecting,
+    Disconnecting
 }
 
 export enum ControllerType {

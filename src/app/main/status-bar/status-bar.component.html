@@ -6,7 +6,15 @@
             <mat-chip-option *ngSwitchDefault [selectable]="false">{{ 'controllerIsNotConnectedStatusChip$' | l10n }}</mat-chip-option>
         </ng-container>
         <ng-container [ngSwitch]="isHubConnected">
-            <mat-chip-option *ngSwitchCase="true" [selectable]="false" selected>{{ 'hubIsConnectedStatusChip$' | l10n }}</mat-chip-option>
+            <ng-container *ngSwitchCase="true">
+                <mat-chip-option [selectable]="false" selected>{{ 'hubIsConnectedStatusChip$' | l10n }}</mat-chip-option>
+                <mat-chip-option [selectable]="false"
+                                 selected
+                >
+                    {{ 'batteryLevel$' | l10n }} {{ batteryLevel$ | async }}
+                </mat-chip-option>
+            </ng-container>
+
             <mat-chip-option *ngSwitchDefault [selectable]="false">{{ 'hubIsNotConnectedStatusChip$' | l10n }}</mat-chip-option>
         </ng-container>
     </mat-chip-listbox>

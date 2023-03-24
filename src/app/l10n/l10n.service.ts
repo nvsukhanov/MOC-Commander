@@ -137,5 +137,13 @@ export class L10nService {
 
     public readonly hubIsConnectedStatusChip$ = new BehaviorSubject('Hub connected');
 
+    public readonly hubIsConnectingStatusChip$ = new BehaviorSubject('Connecting hub');
+
+    public readonly hubIsDisconnectingStatusChip$ = new BehaviorSubject('Disconnecting hub');
+
     public readonly hubIsNotConnectedStatusChip$ = new BehaviorSubject('Hub is not connected');
+
+    public readonly batteryLevel$ = new BehaviorSubject('Battery:');
+
+    public readonly batteryLevelNotAvailable$ = new BehaviorSubject('...');
 }
