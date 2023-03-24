@@ -16,7 +16,9 @@ import { GamepadPluginsService, IGamepadViewComponent } from '../../plugins';
 })
 export class ControllerGamepadViewComponent {
     private gamepadViewComponentRef?: ComponentRef<IGamepadViewComponent>;
+
     private gamepadControllerConfig?: GamepadControllerConfig;
+
     private gamepadControllerState?: ControllerState;
 
     constructor(

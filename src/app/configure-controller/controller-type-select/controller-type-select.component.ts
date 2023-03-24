@@ -26,6 +26,7 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
 })
 export class ControllerTypeSelectComponent implements ControlValueAccessor {
     public readonly controllerTypes = MAPPING_CONTROLLER_TO_L10N;
+
     private _disabled = false;
 
     constructor(

@@ -22,6 +22,7 @@ import { L10nPipe, L10nService } from '../../l10n';
 })
 export class StatusBarComponent {
     @Input() public isControllerConnected: boolean | null = null;
+
     @Input() public isHubConnected: boolean | null = null;
 
     public get controllerConnectedBadgeL10nKey(): keyof L10nService {

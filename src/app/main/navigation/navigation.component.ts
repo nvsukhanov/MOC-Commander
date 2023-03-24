@@ -22,5 +22,6 @@ export class NavigationComponent {
     @Input() public isBluetoothAvailable?: boolean;
 
     public readonly configureControllerRoute = CONFIGURE_CONTROLLER_ROUTE;
+
     public readonly configureHubRoute = CONFIGURE_HUB_ROUTE;
 }

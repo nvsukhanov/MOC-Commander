@@ -5,9 +5,11 @@ export abstract class GamepadView<TAxisData = unknown, TButtonData = unknown> {
     protected abstract cdRef: ChangeDetectorRef
 
     private configuration?: GamepadControllerConfig;
+
     private state?: ControllerState;
 
     private axisData: TAxisData[] = [];
+
     private buttonsData: TButtonData[] = [];
 
     public get axes(): ReadonlyArray<Readonly<TAxisData>> {

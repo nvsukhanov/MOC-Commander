@@ -33,6 +33,7 @@ import { PushModule } from '@ngrx/component';
 })
 export class LayoutComponent {
     public isBluetoothAvailable$ = this.store.select(SELECT_BLUETOOTH_AVAILABILITY);
+
     public isControllerConnected$ = this.store.select(SELECT_CONTROLLER_CONNECTION_STATE).pipe(
         map((t) => t === ControllerConnectionState.Connected)
     );

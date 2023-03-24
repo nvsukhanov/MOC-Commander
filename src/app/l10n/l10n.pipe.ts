@@ -9,7 +9,9 @@ import { BehaviorSubject, distinctUntilChanged, Observable, Subscription } from 
 })
 export class L10nPipe implements PipeTransform, OnDestroy {
     private key?: keyof L10nService;
+
     private value = '';
+
     private sub?: Subscription;
 
     constructor(
