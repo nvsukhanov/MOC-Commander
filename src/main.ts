@@ -19,7 +19,7 @@ import { APP_INITIALIZER, importProvidersFrom, isDevMode } from '@angular/core';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideGamepadsPlugins } from './app/plugins';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { provideLpf2 } from './app/lego-hub';
+import { provideLpu } from './app/lego-hub';
 import { NAVIGATOR } from './app/types';
 import { BluetoothAvailabilityGuardService } from './app/bluetooth-availability';
 
@@ -46,7 +46,7 @@ bootstrapApplication(LayoutComponent, {
             traceLimit: 75,
         }),
         importProvidersFrom(MatSnackBarModule),
-        provideLpf2(),
+        provideLpu(),
         { provide: APP_INITIALIZER, useFactory: bluetoothAvailabilityCheckFactory, deps: [ NAVIGATOR, Store ], multi: true },
         BluetoothAvailabilityGuardService
     ]

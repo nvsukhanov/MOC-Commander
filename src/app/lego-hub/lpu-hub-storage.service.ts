@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Lpf2Hub } from './lpf2-hub';
+import { LpuHub } from './lpu-hub';
 
 @Injectable()
-export class Lpf2HubStorageService {
-    private hub?: Lpf2Hub;
+export class LpuHubStorageService {
+    private hub?: LpuHub;
 
     public registerHub(
-        hub: Lpf2Hub
+        hub: LpuHub
     ): void {
         if (this.hub) {
             throw new Error('there is a hub that is already registered');
@@ -14,7 +14,7 @@ export class Lpf2HubStorageService {
         this.hub = hub;
     }
 
-    public getHub(): Lpf2Hub {
+    public getHub(): LpuHub {
         if (!this.hub) {
             throw new Error('Hub is not registered');
         }

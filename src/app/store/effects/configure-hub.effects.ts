@@ -10,14 +10,14 @@ import { catchError, map, NEVER, of, switchMap, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { fromPromise } from 'rxjs/internal/observable/innerFrom';
-import { Lpf2HubDiscoveryService, Lpf2HubStorageService } from '../../lego-hub';
+import { LpuHubDiscoveryService, LpuHubStorageService } from '../../lego-hub';
 
 @Injectable()
 export class ConfigureHubEffects {
     public readonly startListening$ = createEffect(() => this.actions.pipe(
         ofType(ACTIONS_CONFIGURE_HUB.startDiscovery),
-        switchMap(() => fromPromise(this.lpf2HubDiscoveryService.discoverLpf2Hub())),
-        tap((d) => this.lpf2HubStorageService.registerHub(d)),
+        switchMap(() => fromPromise(this.lpuHubDiscoveryService.discoverHub())),
+        tap((d) => this.lpuHubStorageService.registerHub(d)),
         map(() => ACTIONS_CONFIGURE_HUB.deviceConnected()),
         catchError((error) => of(ACTIONS_CONFIGURE_HUB.deviceConnectFailed({ error })))
     ));
@@ -34,13 +34,13 @@ export class ConfigureHubEffects {
         ),
         switchMap((action) => {
                 if (action.type === ACTIONS_CONFIGURE_HUB.deviceConnected.type) {
-                    return this.lpf2HubStorageService.getHub().onDisconnect$;
+                    return this.lpuHubStorageService.getHub().onDisconnect$;
                 } else {
                     return NEVER;
                 }
             }
         ),
-        tap(() => this.lpf2HubStorageService.removeHub()),
+        tap(() => this.lpuHubStorageService.removeHub()),
         map(() => ACTIONS_CONFIGURE_HUB.deviceDisconnected())
     ));
 
@@ -49,7 +49,7 @@ export class ConfigureHubEffects {
             ACTIONS_CONFIGURE_HUB.userRequestedHubDisconnection
         ),
         tap(() => {
-            this.lpf2HubStorageService.getHub().disconnect();
+            this.lpuHubStorageService.getHub().disconnect();
         })
     ), { dispatch: false });
 
@@ -58,8 +58,8 @@ export class ConfigureHubEffects {
         private readonly actions: Actions,
         private readonly store: Store<IState>,
         private readonly snackBar: MatSnackBar,
-        private readonly lpf2HubDiscoveryService: Lpf2HubDiscoveryService,
-        private readonly lpf2HubStorageService: Lpf2HubStorageService
+        private readonly lpuHubDiscoveryService: LpuHubDiscoveryService,
+        private readonly lpuHubStorageService: LpuHubStorageService
     ) {
     }
 }

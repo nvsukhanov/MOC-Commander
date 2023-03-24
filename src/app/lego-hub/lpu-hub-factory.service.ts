@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Lpf2Hub } from './lpf2-hub';
+import { LpuHub } from './lpu-hub';
 import { Observable } from 'rxjs';
 
 export type BluetoothDeviceWithGatt = Omit<BluetoothDevice, 'gatt'> & {
@@ -7,11 +7,11 @@ export type BluetoothDeviceWithGatt = Omit<BluetoothDevice, 'gatt'> & {
 };
 
 @Injectable({ providedIn: 'root' })
-export class Lpf2HubFactoryService {
-    public createLpf2Gatt(
+export class LpuHubFactoryService {
+    public createLpuGatt(
         onDisconnected$: Observable<void>,
         device: BluetoothRemoteGATTServer
-    ): Lpf2Hub {
-        return new Lpf2Hub(onDisconnected$, device);
+    ): LpuHub {
+        return new LpuHub(onDisconnected$, device);
     }
 }

@@ -13,7 +13,7 @@ type BleTree = {
     }
 };
 
-const _Lpf2Tree = {
+const _LpuTree = {
     services: {
         primary: {
             id: '00001623-1212-efde-1623-785feabcd123',
@@ -34,4 +34,4 @@ const _Lpf2Tree = {
     }
 };
 
-export const Lpf2Tree: DeepReadonly<typeof _Lpf2Tree & BleTree> = _Lpf2Tree;
+export const LpuTree: DeepReadonly<typeof _LpuTree & BleTree> = _LpuTree;

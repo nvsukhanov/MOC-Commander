@@ -1,10 +1,10 @@
 import { from, Observable, shareReplay, switchMap, takeUntil } from 'rxjs';
-import { Lpf2Tree } from './constants';
+import { LpuTree } from './constants';
 
-export class Lpf2Hub {
+export class LpuHub {
     private servicesMap: Map<string, BluetoothRemoteGATTService> = new Map();
 
-    private primaryServiceDiscovery$ = from(this.gatt.getPrimaryService(Lpf2Tree.services.primary.id)).pipe(
+    private primaryServiceDiscovery$ = from(this.gatt.getPrimaryService(LpuTree.services.primary.id)).pipe(
         shareReplay(),
         takeUntil(this.onDisconnect$)
     );
