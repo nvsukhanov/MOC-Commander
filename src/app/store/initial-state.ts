@@ -18,7 +18,9 @@ export const INITIAL_STATE: IState = {
     },
     hub: {
         connectionState: HubConnectionState.NotConnected,
-        batteryLevel: null
+        batteryLevel: null,
+        name: null,
+        rssiLevel: null
     },
     bluetoothAvailability: {
         isAvailable: false

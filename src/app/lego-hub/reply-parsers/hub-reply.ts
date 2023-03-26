@@ -1,12 +1,22 @@
-import { HubMessageTypes, HubProperties } from '../constants';
+import { HubMessageType, HubProperty } from '../constants';
 
 export type BatteryLevelReply = {
-    propertyType: HubProperties.batteryVoltage,
+    propertyType: HubProperty.batteryVoltage,
     level: number
 }
 
+export type RssiLevelReply = {
+    propertyType: HubProperty.rssi,
+    level: number
+}
+
+export type NameReply = {
+    propertyType: HubProperty.name,
+    name: string
+}
+
 export type HubPropertyReply = {
-    type: HubMessageTypes.hubProperties,
-} & BatteryLevelReply;
+    type: HubMessageType.hubProperties,
+} & (BatteryLevelReply | RssiLevelReply | NameReply);
 
 export type HubReply = HubPropertyReply;

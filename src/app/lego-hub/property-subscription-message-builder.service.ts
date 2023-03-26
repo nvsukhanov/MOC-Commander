@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HubMessageTypes, HubPropertyActions, SubscribableHubProperties } from './constants';
+import { HubMessageType, HubPropertyAction, SubscribableHubProperties } from './constants';
 import { MessageHeaderAppenderService } from './message-header-appender.service';
 
 @Injectable()
@@ -11,9 +11,9 @@ export class PropertySubscriptionMessageBuilderService {
 
     public composeSubscribeMessage(property: SubscribableHubProperties): Uint8Array {
         const payload = Uint8Array.from([
-            HubMessageTypes.hubProperties,
+            HubMessageType.hubProperties,
             property,
-            HubPropertyActions.enableUpdates
+            HubPropertyAction.enableUpdates
         ]);
 
         return this.messageHeaderAppenderService.wrapPayload(payload);
@@ -21,9 +21,9 @@ export class PropertySubscriptionMessageBuilderService {
 
     public composeUnsubscribeMessage(property: SubscribableHubProperties): Uint8Array {
         const payload = Uint8Array.from([
-            HubMessageTypes.hubProperties,
+            HubMessageType.hubProperties,
             property,
-            HubPropertyActions.disableUpdates
+            HubPropertyAction.disableUpdates
         ]);
 
         return this.messageHeaderAppenderService.wrapPayload(payload);

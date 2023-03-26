@@ -33,7 +33,25 @@ export class ConfigureHubEffects {
                          ? this.lpuHubStorageService.getHub().hubProperties.batteryLevel$
                          : of(null)
         ),
-        map((level) => ACTIONS_CONFIGURE_HUB.batteryLevelUpdate({ level }))
+        map((batteryLevel) => ACTIONS_CONFIGURE_HUB.batteryLevelUpdate({ batteryLevel }))
+    ));
+
+    public readonly readRssiLevel = createEffect(() => this.actions.pipe(
+        ofType(ACTIONS_CONFIGURE_HUB.connected, ACTIONS_CONFIGURE_HUB.disconnected),
+        switchMap((d) => d.type === ACTIONS_CONFIGURE_HUB.connected.type
+                         ? this.lpuHubStorageService.getHub().hubProperties.rssiLevel$
+                         : of(null)
+        ),
+        map((rssiLevel) => ACTIONS_CONFIGURE_HUB.rssiLevelUpdate({ rssiLevel }))
+    ));
+
+    public readonly nameLevel = createEffect(() => this.actions.pipe(
+        ofType(ACTIONS_CONFIGURE_HUB.connected, ACTIONS_CONFIGURE_HUB.disconnected),
+        switchMap((d) => d.type === ACTIONS_CONFIGURE_HUB.connected.type
+                         ? this.lpuHubStorageService.getHub().hubProperties.name$
+                         : of(null)
+        ),
+        map((name) => ACTIONS_CONFIGURE_HUB.nameUpdate({ name }))
     ));
 
     public readonly deviceConnectFailedNotification$ = createEffect(() => this.actions.pipe(

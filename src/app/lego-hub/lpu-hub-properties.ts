@@ -1,5 +1,5 @@
-import { from, fromEvent, map, Observable, shareReplay, Subscription, switchMap, takeUntil } from 'rxjs';
-import { HubMessageTypes, HubProperties, SubscribableHubProperties } from './constants';
+import { from, fromEvent, map, Observable, shareReplay, switchMap, takeUntil } from 'rxjs';
+import { HubMessageType, HubProperty, SubscribableHubProperties } from './constants';
 import { PropertySubscriptionMessageBuilderService } from './property-subscription-message-builder.service';
 import { ReplyParserService } from './reply-parsers';
 import { LpuCharacteristicsMessenger } from './lpu-characteristics-messenger';
@@ -13,14 +13,11 @@ export class LpuHubProperties {
     private readonly characteristicUnsubscribeHandlers = new Map<SubscribableHubProperties, () => Promise<void>>();
 
     private readonly characteristicReplies = new Observable<Uint8Array>((subscriber) => {
-        let sub: Subscription;
-        this.ensureNotificationStarted().then(() => {
-            sub = fromEvent(this.primaryCharacteristic, this.characteristicValueChangedEventName).subscribe((e) => {
-                const value = this.getValueFromEvent(e);
-                if (value) {
-                    subscriber.next(value);
-                }
-            });
+        const sub = fromEvent(this.primaryCharacteristic, this.characteristicValueChangedEventName).subscribe((e) => {
+            const value = this.getValueFromEvent(e);
+            if (value) {
+                subscriber.next(value);
+            }
         });
         return (): void => {
             sub?.unsubscribe;
@@ -32,12 +29,52 @@ export class LpuHubProperties {
     public batteryLevel$ = new Observable<null | number>((subscriber) => {
         subscriber.next(null);
 
-        const sub = from(this.subscribeToProperty(HubProperties.batteryVoltage)).pipe(
+        const sub = from(this.subscribeToProperty(HubProperty.batteryVoltage)).pipe(
             switchMap(() => this.characteristicReplies),
             map((d) => this.replyParserService.parseMessage(d)),
         ).subscribe((d) => {
-            if (!!d && d.type === HubMessageTypes.hubProperties && d.propertyType === HubProperties.batteryVoltage) {
+            if (!!d && d.type === HubMessageType.hubProperties && d.propertyType === HubProperty.batteryVoltage) {
                 subscriber.next(d.level);
+            }
+        });
+
+        return (): void => {
+            sub.unsubscribe();
+        };
+    }).pipe(
+        takeUntil(this.onHubDisconnected$),
+        shareReplay({ refCount: true, bufferSize: 1 })
+    );
+
+    public rssiLevel$ = new Observable<null | number>((subscriber) => {
+        subscriber.next(null);
+
+        const sub = from(this.subscribeToProperty(HubProperty.rssi)).pipe(
+            switchMap(() => this.characteristicReplies),
+            map((d) => this.replyParserService.parseMessage(d)),
+        ).subscribe((d) => {
+            if (!!d && d.type === HubMessageType.hubProperties && d.propertyType === HubProperty.rssi) {
+                subscriber.next(d.level);
+            }
+        });
+
+        return (): void => {
+            sub.unsubscribe();
+        };
+    }).pipe(
+        takeUntil(this.onHubDisconnected$),
+        shareReplay({ refCount: true, bufferSize: 1 })
+    );
+
+    public name$ = new Observable<null | string>((subscriber) => {
+        subscriber.next(null);
+
+        const sub = from(this.subscribeToProperty(HubProperty.name)).pipe(
+            switchMap(() => this.characteristicReplies),
+            map((d) => this.replyParserService.parseMessage(d)),
+        ).subscribe((d) => {
+            if (!!d && d.type === HubMessageType.hubProperties && d.propertyType === HubProperty.name) {
+                subscriber.next(d.name);
             }
         });
 
@@ -75,13 +112,14 @@ export class LpuHubProperties {
     }
 
     private async subscribeToProperty(characteristic: SubscribableHubProperties): Promise<void> {
+        await this.ensureNotificationStarted();
         if (this.characteristicUnsubscribeHandlers.has(characteristic)) {
             return;
         }
-        const message = this.propertySubscriptionMessageBuilderService.composeSubscribeMessage(HubProperties.batteryVoltage);
+        const message = this.propertySubscriptionMessageBuilderService.composeSubscribeMessage(characteristic);
         await this.messenger.send(message);
         this.characteristicUnsubscribeHandlers.set(characteristic, async (): Promise<void> => {
-            this.propertySubscriptionMessageBuilderService.composeUnsubscribeMessage(HubProperties.batteryVoltage);
+            this.propertySubscriptionMessageBuilderService.composeUnsubscribeMessage(characteristic);
             await this.messenger.send(message);
         });
     }

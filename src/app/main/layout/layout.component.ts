@@ -9,7 +9,8 @@ import {
     SELECT_BLUETOOTH_AVAILABILITY,
     SELECT_CONTROLLER_CONNECTION_STATE,
     SELECT_HUB_BATTERY_LEVEL,
-    SELECT_HUB_CONNECTION_STATE
+    SELECT_HUB_CONNECTION_STATE,
+    SELECT_HUB_RSSI_LEVEL
 } from '../../store';
 import { AsyncPipe } from '@angular/common';
 import { StatusBarComponent } from '../status-bar';
@@ -44,6 +45,8 @@ export class LayoutComponent {
     );
 
     public batteryLevel$ = this.store.select(SELECT_HUB_BATTERY_LEVEL);
+
+    public rssiLevel$ = this.store.select(SELECT_HUB_RSSI_LEVEL);
 
     constructor(
         private readonly store: Store<IState>

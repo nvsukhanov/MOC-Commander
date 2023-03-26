@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HubReply } from './hub-reply';
 import { MessageDissectorService } from './message-dissector.service';
-import { HubMessageTypes } from '../constants';
+import { HubMessageType } from '../constants';
 import { IReplyParser } from './i-reply-parser';
 import { HubPropertiesPayloadParserService } from './hub-properties-payload-parser.service';
 import { LoggingService } from '../../logging';
 
 @Injectable()
 export class ReplyParserService {
-    private readonly messageTypeParsers: { [k in HubMessageTypes]: IReplyParser } = {
-        [HubMessageTypes.hubProperties]: this.propertiesPayloadParserService
+    private readonly messageTypeParsers: { [k in HubMessageType]: IReplyParser } = {
+        [HubMessageType.hubProperties]: this.propertiesPayloadParserService
     };
 
     constructor(

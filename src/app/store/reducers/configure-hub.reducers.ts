@@ -9,5 +9,7 @@ export const CONFIGURE_HUB_REDUCERS = createReducer(
     on(ACTIONS_CONFIGURE_HUB.connecting, (state) => ({ ...state, connectionState: HubConnectionState.Connecting })),
     on(ACTIONS_CONFIGURE_HUB.userRequestedHubDisconnection, (state) => ({ ...state, connectionState: HubConnectionState.Disconnecting })),
     on(ACTIONS_CONFIGURE_HUB.disconnected, (state) => ({ ...state, connectionState: HubConnectionState.NotConnected })),
-    on(ACTIONS_CONFIGURE_HUB.batteryLevelUpdate, (state, data) => ({ ...state, batteryLevel: data.level }))
+    on(ACTIONS_CONFIGURE_HUB.batteryLevelUpdate, (state, data) => ({ ...state, batteryLevel: data.batteryLevel })),
+    on(ACTIONS_CONFIGURE_HUB.rssiLevelUpdate, (state, data) => ({ ...state, rssiLevel: data.rssiLevel })),
+    on(ACTIONS_CONFIGURE_HUB.nameUpdate, (state, data) => ({ ...state, name: data.name }))
 );

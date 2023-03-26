@@ -32,11 +32,18 @@ export class StatusBarComponent {
     ) {
     }
 
-    private _batteryLevel: Observable<string> = this.l10nService.batteryLevelNotAvailable$;
+    private _batteryLevel: Observable<string> = this.l10nService.hubPropertyDataNotAvailable$;
 
     @Input()
     public set batteryLevel(v: null | number) {
-        this._batteryLevel = v === null ? this.l10nService.batteryLevelNotAvailable$ : of(v.toString());
+        this._batteryLevel = v === null ? this.l10nService.hubPropertyDataNotAvailable$ : of(v.toString());
+    }
+
+    private _rssiLevel: Observable<string> = this.l10nService.hubPropertyDataNotAvailable$;
+
+    @Input()
+    public set rssiLevel(v: null | number) {
+        this._rssiLevel = v === null ? this.l10nService.hubPropertyDataNotAvailable$ : of(v.toString());
     }
 
     public get controllerConnectedBadgeL10nKey(): keyof L10nService {
@@ -49,5 +56,9 @@ export class StatusBarComponent {
 
     public get batteryLevel$(): Observable<string> {
         return this._batteryLevel;
+    }
+
+    public get rssiLevel$(): Observable<string> {
+        return this._rssiLevel;
     }
 }

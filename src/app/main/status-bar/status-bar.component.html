@@ -13,6 +13,11 @@
                 >
                     {{ 'batteryLevel$' | l10n }} {{ batteryLevel$ | async }}
                 </mat-chip-option>
+                <mat-chip-option [selectable]="false"
+                                 selected
+                >
+                    {{ 'rssiLevel$' | l10n }} {{ rssiLevel$ | async }}
+                </mat-chip-option>
             </ng-container>
 
             <mat-chip-option *ngSwitchDefault [selectable]="false">{{ 'hubIsNotConnectedStatusChip$' | l10n }}</mat-chip-option>

@@ -10,6 +10,8 @@ export interface IState {
     hub: {
         connectionState: HubConnectionState,
         batteryLevel: number | null;
+        name: string | null;
+        rssiLevel: number | null;
     },
     bluetoothAvailability: {
         isAvailable: boolean;

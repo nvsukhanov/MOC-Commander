@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HubMessageTypes } from '../constants';
+import { HubMessageType } from '../constants';
 import { LoggingService } from '../../logging';
 
 export type ParsedMessageResult = {
-    messageType: HubMessageTypes,
+    messageType: HubMessageType,
     payload: Uint8Array
 }
 
@@ -17,7 +17,7 @@ export class MessageDissectorService {
 
     private readonly hubIdLength = 1; // https://lego.github.io/lego-ble-wireless-protocol-docs/index.html#common-message-header
 
-    private readonly availableRawMessageTypes = new Set(Object.values(HubMessageTypes));
+    private readonly availableRawMessageTypes = new Set(Object.values(HubMessageType));
 
     constructor(
         private readonly logging: LoggingService

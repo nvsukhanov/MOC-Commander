@@ -145,5 +145,7 @@ export class L10nService {
 
     public readonly batteryLevel$ = new BehaviorSubject('Battery:');
 
-    public readonly batteryLevelNotAvailable$ = new BehaviorSubject('...');
+    public readonly rssiLevel$ = new BehaviorSubject('Signal strength:');
+
+    public readonly hubPropertyDataNotAvailable$ = new BehaviorSubject('...');
 }

@@ -10,7 +10,9 @@ export const ACTIONS_CONFIGURE_HUB = createActionGroup({
         'disconnected': emptyProps(),
         'device connect failed': props<{ error: Error }>(),
         'user requested hub disconnection': emptyProps(),
-        'battery level update': props<{ level: null | number }>()
+        'battery level update': props<{ batteryLevel: null | number }>(),
+        'rssi level update': props<{ rssiLevel: null | number }>(),
+        'name update': props<{ name: null | string }>()
     }
 });
 
