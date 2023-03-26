@@ -22,11 +22,14 @@ export class LpuHub {
 
     private hubDisconnectSubscription?: Subscription;
 
+    private onUnloadHandler?: () => void;
+
     constructor(
         private readonly onHubDisconnect: Observable<void>,
         private readonly gatt: BluetoothRemoteGATTServer,
         private readonly characteristicsMessengerFactoryService: LpuCharacteristicsMessengerFactoryService,
-        private readonly propertiesFactoryService: LpuHubPropertiesFactoryService
+        private readonly propertiesFactoryService: LpuHubPropertiesFactoryService,
+        private readonly window: Window
     ) {
     }
 
@@ -55,9 +58,17 @@ export class LpuHub {
             this.onDisconnected.next();
         });
         this.onConnected.next();
+        this.onUnloadHandler = (): void => {
+            this.gatt.disconnect();
+        };
+        this.window.addEventListener('beforeunload', this.onUnloadHandler);
     }
 
     public async dispose(): Promise<void> {
+        if (this.onUnloadHandler) {
+            this.window.removeEventListener('beforeunload', this.onUnloadHandler);
+        }
+
         await this._hubProperties?.disconnect();
         this.hubDisconnectSubscription?.unsubscribe();
         this.gatt.disconnect();

@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { LpuHub } from './lpu-hub';
 import { Observable } from 'rxjs';
 import { LpuCharacteristicsMessengerFactoryService } from './lpu-characteristics-messenger-factory.service';
 import { LpuHubPropertiesFactoryService } from './lpu-hub-properties-factory.service';
+import { WINDOW } from '../types';
 
 export type BluetoothDeviceWithGatt = Omit<BluetoothDevice, 'gatt'> & {
     readonly gatt: BluetoothRemoteGATTServer;
@@ -12,7 +13,8 @@ export type BluetoothDeviceWithGatt = Omit<BluetoothDevice, 'gatt'> & {
 export class LpuHubFactoryService {
     constructor(
         private readonly characteristicsMessengerFactoryService: LpuCharacteristicsMessengerFactoryService,
-        private readonly propertiesFactoryService: LpuHubPropertiesFactoryService
+        private readonly propertiesFactoryService: LpuHubPropertiesFactoryService,
+        @Inject(WINDOW) private readonly window: Window
     ) {
     }
 
@@ -24,7 +26,8 @@ export class LpuHubFactoryService {
             onDisconnected$,
             device,
             this.characteristicsMessengerFactoryService,
-            this.propertiesFactoryService
+            this.propertiesFactoryService,
+            this.window
         );
     }
 }
