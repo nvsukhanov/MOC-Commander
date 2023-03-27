@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { ControllerState, GamepadAxisConfig, GamepadButtonConfig } from '../../../store';
 import { NgForOf } from '@angular/common';
 import { GamepadView } from '../gamepad-view';
-import { L10nPipe } from '../../../l10n';
+import { TranslocoModule } from '@ngneat/transloco';
 
 type AxisData = {
     index: number;
@@ -20,7 +20,7 @@ type ButtonData = {
     styleUrls: [ './controller-default-view.component.scss' ],
     imports: [
         NgForOf,
-        L10nPipe
+        TranslocoModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

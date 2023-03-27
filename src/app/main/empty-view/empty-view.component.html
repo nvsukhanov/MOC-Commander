@@ -1,0 +1,3 @@
+<ng-container *ngIf="(bluetoothAvailability$ | ngrxPush) === false">
+    <app-bluetooth-not-available></app-bluetooth-not-available>
+</ng-container>

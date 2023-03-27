@@ -1,0 +1,11 @@
+{
+  "connect": "Connect",
+  "connectingState": "Connecting...",
+  "disconnectingState": "Disconnecting...",
+  "connectedState": "Connected",
+  "disconnect": "Disconnect",
+  "hubConnectionError": "Hub connection error",
+  "hubGattUnavailable": "Hub GATT is unavailable",
+  "hubConnectionCancelled": "Hub connection has been cancelled by user",
+  "hubGattConnectionError": "Hub GATT connection error"
+}

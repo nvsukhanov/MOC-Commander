@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ACTIONS_CONFIGURE_HUB, HubConnectionState, IState, SELECT_HUB_CONNECTION_STATE } from '../../store';
 import { Store } from '@ngrx/store';
 import { AsyncPipe, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
-import { L10nPipe, L10nService } from '../../l10n';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
     standalone: true,
@@ -15,9 +15,9 @@ import { L10nPipe, L10nService } from '../../l10n';
         MatButtonModule,
         AsyncPipe,
         NgIf,
-        L10nPipe,
         NgSwitch,
-        NgSwitchCase
+        NgSwitchCase,
+        TranslocoModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -29,7 +29,6 @@ export class ConfigureHubComponent {
     constructor(
         @Inject(NAVIGATOR) private readonly navigator: Navigator,
         private readonly store: Store<IState>,
-        private readonly l10n: L10nService
     ) {
     }
 

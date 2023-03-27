@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ControllerType } from '../../store';
-import { L10nPipe, L10nService } from '../../l10n';
 import { MatSelectModule } from '@angular/material/select';
 import { AsyncPipe, KeyValuePipe, NgForOf } from '@angular/common';
 import { MAPPING_CONTROLLER_TO_L10N } from '../../mappings';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
     standalone: true,
@@ -15,8 +15,8 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
         KeyValuePipe,
         NgForOf,
         AsyncPipe,
-        L10nPipe,
-        FormsModule
+        FormsModule,
+        TranslocoModule
     ],
     styleUrls: [ './controller-type-select.component.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,11 +28,6 @@ export class ControllerTypeSelectComponent implements ControlValueAccessor {
     public readonly controllerTypes = MAPPING_CONTROLLER_TO_L10N;
 
     private _disabled = false;
-
-    constructor(
-        public readonly l10nService: L10nService,
-    ) {
-    }
 
     private _value: ControllerType | null = null;
 

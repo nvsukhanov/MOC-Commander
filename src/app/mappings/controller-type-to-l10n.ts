@@ -1,8 +1,8 @@
 import { ControllerType } from '../store';
-import { L10nService } from '../l10n';
+import { CONFIGURE_CONTROLLER_I18N_SCOPE } from '../i18n';
 
-export const MAPPING_CONTROLLER_TO_L10N: Readonly<{ [type in ControllerType]: keyof L10nService }> = {
-    [ControllerType.Unassigned]: 'controllerTypeUnassigned$',
-    [ControllerType.GamePad]: 'controllerTypeGamepad$',
-    [ControllerType.Keyboard]: 'controllerTypeKeyboard$',
+export const MAPPING_CONTROLLER_TO_L10N: Readonly<{ [type in ControllerType]: string }> = {
+    [ControllerType.Unassigned]: [ CONFIGURE_CONTROLLER_I18N_SCOPE, 'typeUnassigned' ].join('.'),
+    [ControllerType.GamePad]: [ CONFIGURE_CONTROLLER_I18N_SCOPE, 'typeGamepad' ].join('.'),
+    [ControllerType.Keyboard]: [ CONFIGURE_CONTROLLER_I18N_SCOPE, 'typeKeyboard' ].join('.')
 };

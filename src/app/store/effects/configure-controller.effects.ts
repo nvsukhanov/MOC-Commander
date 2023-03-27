@@ -59,7 +59,7 @@ export class ConfigureControllerEffects {
             ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected
         ),
         switchMap((e) => e.type === ACTIONS_CONFIGURE_CONTROLLER.listenForGamepad.type ? interval(0, animationFrameScheduler) : NEVER),
-        map(() => this.window.navigator.getGamepads().find((g) => !!g)),
+        map(() => this.window.navigator.getGamepads().find((g) => !!g && g.buttons.some((b) => b.pressed))),
         filter((g) => !!g),
         map((gamepad) => this.gamepadPlugins.getPlugin((gamepad as Gamepad).id).mapToDefaultConfig(gamepad as Gamepad)),
         map((gamepad) => ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected({ gamepad }))

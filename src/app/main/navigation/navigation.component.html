@@ -3,12 +3,12 @@
        [routerLink]="configureControllerRoute"
        mat-button
     >
-        {{ 'configureController$' | l10n }}
+        {{ 'configureController' | transloco }}
     </a>
     <a [disabled]="isBluetoothAvailable === false"
        [routerLink]="configureHubRoute"
        mat-button
     >
-        {{ 'configureHub$' | l10n }}
+        {{ 'configureHub' | transloco }}
     </a>
 </mat-toolbar>

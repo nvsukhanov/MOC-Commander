@@ -3,16 +3,16 @@
             *ngSwitchCase="connectionStates.NotConnected"
             mat-button
     >
-        Connect
+        {{ 'configureHub.connect' | transloco }}
     </button>
     <ng-container *ngSwitchCase="connectionStates.Connecting">
-        {{ 'hubIsConnectingStatusChip$' | l10n }}
+        {{ 'configureHub.connectingState' | transloco }}
     </ng-container>
     <ng-container *ngSwitchCase="connectionStates.Disconnecting">
-        {{ 'hubIsDisconnectingStatusChip$' | l10n }}
+        {{ 'configureHub.disconnectingState' | transloco }}
     </ng-container>
     <ng-container *ngSwitchCase="connectionStates.Connected">
-        {{ 'hubIsConnected$' | l10n }}
-        <button (click)="disconnect()" mat-button>{{ 'hubDisconnect$' | l10n }}</button>
+        {{ 'configureHub.connectedState' | transloco }}
+        <button (click)="disconnect()" mat-button>{{ 'configureHub.disconnect' | transloco }}</button>
     </ng-container>
 </ng-container>

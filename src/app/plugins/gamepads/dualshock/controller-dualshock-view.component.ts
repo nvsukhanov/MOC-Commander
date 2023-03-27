@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { ControllerState, GamepadAxisConfig, GamepadButtonConfig } from '../../../store';
-import { L10nPipe, L10nService } from '../../../l10n';
 import { GamepadView } from '../gamepad-view';
 import { NgForOf } from '@angular/common';
+import { TranslocoModule } from '@ngneat/transloco';
 
 type AxisData = {
-    l10nKey: keyof L10nService;
+    l10nKey: string;
     value: number;
 }
 
 type ButtonData = {
-    l10nKey: keyof L10nService;
+    l10nKey: string;
     isPressed: boolean;
 }
 
@@ -20,7 +20,7 @@ type ButtonData = {
     styleUrls: [ './controller-dualshock-view.component.scss' ],
     imports: [
         NgForOf,
-        L10nPipe
+        TranslocoModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

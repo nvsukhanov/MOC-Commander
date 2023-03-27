@@ -1,0 +1,12 @@
+{
+  "configureController": "Configure controller",
+  "bluetoothIsNotAvailable": "Bluetooth is not available",
+  "pageNotFound": "Page not found",
+  "configureHub": "Configure hub",
+  "controllerIsConnected": "Controller is connected",
+  "controllerIsNotConnected": "Controller is not connected",
+  "hubIsConnected": "Hub is connected",
+  "hubIsNotConnected": "Hub is not connected",
+  "batteryLevel": "Battery: {level}%",
+  "rssiLevel": "Signal: {level}"
+}

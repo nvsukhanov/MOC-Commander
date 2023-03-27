@@ -1,1 +1,1 @@
-export * from './controller-xbox260-plugin.service';
+export * from './controller-xbox360-plugin.service';

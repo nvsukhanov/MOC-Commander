@@ -56,7 +56,7 @@ export class ConfigureHubEffects {
 
     public readonly deviceConnectFailedNotification$ = createEffect(() => this.actions.pipe(
         ofType(ACTIONS_CONFIGURE_HUB.deviceConnectFailed),
-        tap((e) => this.snackBar.open(e.error.message))
+        tap((e) => this.snackBar.open(e.error.l10nKey))
     ), { dispatch: false });
 
     public deviceDisconnect$ = createEffect(() => this.actions.pipe(

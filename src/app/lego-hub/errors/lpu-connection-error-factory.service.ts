@@ -1,27 +1,21 @@
 import { Injectable } from '@angular/core';
 import { LpuConnectionError } from './lpu-connection-error';
-import { L10nService } from '../../l10n';
 
 @Injectable()
 export class LpuConnectionErrorFactoryService {
-    constructor(
-        private l10nService: L10nService
-    ) {
-    }
-
     public createConnectionError(): LpuConnectionError {
-        return new LpuConnectionError(this.l10nService.hubConnectionError$.value);
+        return new LpuConnectionError('Hub connection error', 'hubConnectionError');
     }
 
     public createGattUnavailableError(): LpuConnectionError {
-        return new LpuConnectionError(this.l10nService.hubGattUnavailable$.value);
+        return new LpuConnectionError('Hub GATT is unavailable', 'hubGattUnavailable');
     }
 
     public createConnectionCancelledByUserError(): LpuConnectionError {
-        return new LpuConnectionError(this.l10nService.hubConnectionCancelled$.value);
+        return new LpuConnectionError('Hub connection has been cancelled by user"', 'hubConnectionCancelled');
     }
 
     public createGattConnectionError(): LpuConnectionError {
-        return new LpuConnectionError(this.l10nService.hubGattConnectionError$.value);
+        return new LpuConnectionError('Hub GATT connection error', 'hubGattConnectionError');
     }
 }

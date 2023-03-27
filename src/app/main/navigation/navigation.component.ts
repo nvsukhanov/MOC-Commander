@@ -3,7 +3,7 @@ import { CONFIGURE_CONTROLLER_ROUTE, CONFIGURE_HUB_ROUTE } from '../../routes';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { L10nPipe } from '../../l10n';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
     standalone: true,
@@ -14,7 +14,7 @@ import { L10nPipe } from '../../l10n';
         MatToolbarModule,
         RouterLink,
         MatButtonModule,
-        L10nPipe
+        TranslocoModule,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

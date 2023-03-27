@@ -1,13 +1,13 @@
 <div>
     <div>
-        {{ 'xbox360Name$' | l10n }}
+        {{ 'gamepadPlugins.xbox360.name' | transloco }}
     </div>
     <div *ngFor="let axis of axes">
-        {{ axis.l10nKey | l10n }} : {{ axis.value }}
+        {{ axis.l10nKey | transloco }} : {{ axis.value }}
     </div>
 
     <div *ngFor="let button of buttons">
-        {{ button.l10nKey | l10n }} : {{ button.isPressed }}
+        {{ button.l10nKey | transloco }} : {{ 'gamepadPlugins.gamepadButtonState' | transloco: button }}
     </div>
 </div>
 

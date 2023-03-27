@@ -26,7 +26,7 @@ export class LpuHubProperties {
         shareReplay({ refCount: true })
     );
 
-    public batteryLevel$ = new Observable<null | number>((subscriber) => {
+    public batteryLevel$ = new Observable<number | null>((subscriber) => {
         subscriber.next(null);
 
         const sub = from(this.subscribeToProperty(HubProperty.batteryVoltage)).pipe(
@@ -46,7 +46,7 @@ export class LpuHubProperties {
         shareReplay({ refCount: true, bufferSize: 1 })
     );
 
-    public rssiLevel$ = new Observable<null | number>((subscriber) => {
+    public rssiLevel$ = new Observable<number | null>((subscriber) => {
         subscriber.next(null);
 
         const sub = from(this.subscribeToProperty(HubProperty.rssi)).pipe(
@@ -66,7 +66,7 @@ export class LpuHubProperties {
         shareReplay({ refCount: true, bufferSize: 1 })
     );
 
-    public name$ = new Observable<null | string>((subscriber) => {
+    public name$ = new Observable<string | null>((subscriber) => {
         subscriber.next(null);
 
         const sub = from(this.subscribeToProperty(HubProperty.name)).pipe(

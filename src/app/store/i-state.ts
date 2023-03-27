@@ -1,5 +1,3 @@
-import { L10nService } from '../l10n';
-
 export interface IState {
     controller: {
         controllerType: ControllerType;
@@ -62,19 +60,19 @@ export type ControllerState = {
 
 export type GamepadButtonConfig = {
     index: number;
-    nameL10nKey?: keyof L10nService;
+    nameL10nKey?: string;
 }
 
 export type GamepadButtonAxisConfig = {
     isButton: true;
     buttonIndex: number;
-    nameL10nKey?: keyof L10nService;
+    nameL10nKey?: string;
 }
 
 export type GamepadNormalAxisConfig = {
     isButton: false;
     index: number;
-    nameL10nKey?: keyof L10nService;
+    nameL10nKey?: string;
 }
 
 export type GamepadAxisConfig = GamepadButtonAxisConfig | GamepadNormalAxisConfig;
@@ -82,7 +80,7 @@ export type GamepadAxisConfig = GamepadButtonAxisConfig | GamepadNormalAxisConfi
 export type GamepadControllerConfig = {
     index: number | null;
     id: string;
-    nameL10nKey?: keyof L10nService | null;
+    nameL10nKey?: string | null;
     axes: Array<GamepadAxisConfig>;
     buttons: Array<GamepadButtonConfig>;
 }

@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { L10nPipe } from '../../l10n';
 import { Store } from '@ngrx/store';
 import {
     ControllerConnectionState,
@@ -12,11 +11,11 @@ import {
     SELECT_HUB_CONNECTION_STATE,
     SELECT_HUB_RSSI_LEVEL
 } from '../../store';
-import { AsyncPipe } from '@angular/common';
 import { StatusBarComponent } from '../status-bar';
 import { map } from 'rxjs';
 import { NavigationComponent } from '../navigation';
-import { PushModule } from '@ngrx/component';
+import { LetModule, PushModule } from '@ngrx/component';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
     standalone: true,
@@ -25,13 +24,13 @@ import { PushModule } from '@ngrx/component';
     styleUrls: [ './layout.component.scss' ],
     imports: [
         RouterOutlet,
-        L10nPipe,
-        AsyncPipe,
         StatusBarComponent,
         NavigationComponent,
-        PushModule
+        PushModule,
+        LetModule,
+        TranslocoModule
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent {
     public isBluetoothAvailable$ = this.store.select(SELECT_BLUETOOTH_AVAILABILITY);

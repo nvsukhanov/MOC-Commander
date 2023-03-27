@@ -2,7 +2,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IState, SELECT_BLUETOOTH_AVAILABILITY } from '../../store';
 import { Store } from '@ngrx/store';
 import { AsyncPipe, NgIf } from '@angular/common';
-import { L10nPipe, L10nService } from '../../l10n';
+import { BluetoothNotAvailableComponent } from '../../bluetooth-availability';
+import { PushModule } from '@ngrx/component';
 
 @Component({
     standalone: true,
@@ -12,7 +13,8 @@ import { L10nPipe, L10nService } from '../../l10n';
     imports: [
         NgIf,
         AsyncPipe,
-        L10nPipe
+        BluetoothNotAvailableComponent,
+        PushModule,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -21,7 +23,6 @@ export class EmptyViewComponent {
 
     constructor(
         private store: Store<IState>,
-        public readonly l10n: L10nService
     ) {
     }
 }

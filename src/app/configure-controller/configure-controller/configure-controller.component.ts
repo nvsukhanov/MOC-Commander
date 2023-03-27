@@ -15,11 +15,11 @@ import { AsyncPipe, JsonPipe, NgIf, NgSwitch, NgSwitchCase } from '@angular/comm
 import { MAPPING_CONTROLLER_TO_L10N } from '../../mappings';
 import { filter, map } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
-import { L10nPipe } from '../../l10n';
 import { FormsModule } from '@angular/forms';
 import { LetModule, PushModule } from '@ngrx/component';
 import { ControllerGamepadViewComponent } from '../controller-gamepad-view';
 import { ControllerKeyboardViewComponent } from '../controller-keyboard-view';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
     standalone: true,
@@ -31,7 +31,6 @@ import { ControllerKeyboardViewComponent } from '../controller-keyboard-view';
         NgIf,
         AsyncPipe,
         MatButtonModule,
-        L10nPipe,
         NgSwitchCase,
         FormsModule,
         PushModule,
@@ -39,7 +38,8 @@ import { ControllerKeyboardViewComponent } from '../controller-keyboard-view';
         JsonPipe,
         LetModule,
         ControllerGamepadViewComponent,
-        ControllerKeyboardViewComponent
+        ControllerKeyboardViewComponent,
+        TranslocoModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -64,7 +64,7 @@ export class ConfigureControllerComponent implements OnDestroy {
     public readonly controllerConnectionStates = ControllerConnectionState;
 
     constructor(
-        private readonly store: Store<IState>
+        private readonly store: Store<IState>,
     ) {
     }
 

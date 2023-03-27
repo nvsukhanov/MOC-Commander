@@ -1,11 +1,11 @@
 <div>
     <div>
-        {{ 'genericGamepad$' | l10n }}
+        {{ 'gamepadPlugins.unknownGamepad' | transloco }}
     </div>
     <div *ngFor="let axis of axes">
-        {{ 'genericGamepadAxis$' | l10n }} {{ axis.index }} : {{ axis.value }}
+        {{ 'gamepadPlugins.genericGamepadAxisData' | transloco: axis }}
     </div>
     <div *ngFor="let button of buttons">
-        {{ 'genericGamepadButton$' | l10n }} {{ button.index }} : {{ button.isPressed }}
+        {{ 'gamepadPlugins.genericGamepadButtonData' | transloco: button }} : {{ 'gamepadPlugins.gamepadButtonState' | transloco: button }}
     </div>
 </div>
