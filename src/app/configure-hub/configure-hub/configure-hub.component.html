@@ -1,4 +1,4 @@
-<ng-container [ngSwitch]="connectionState$ | async">
+<ng-container [ngSwitch]="connectionState$ | ngrxPush">
     <button (click)="connect()"
             *ngSwitchCase="connectionStates.NotConnected"
             mat-button

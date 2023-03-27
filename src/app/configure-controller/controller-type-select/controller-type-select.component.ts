@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ControllerType } from '../../store';
 import { MatSelectModule } from '@angular/material/select';
-import { AsyncPipe, KeyValuePipe, NgForOf } from '@angular/common';
+import { KeyValuePipe, NgForOf } from '@angular/common';
 import { MAPPING_CONTROLLER_TO_L10N } from '../../mappings';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TranslocoModule } from '@ngneat/transloco';
@@ -14,7 +14,6 @@ import { TranslocoModule } from '@ngneat/transloco';
         MatSelectModule,
         KeyValuePipe,
         NgForOf,
-        AsyncPipe,
         FormsModule,
         TranslocoModule
     ],

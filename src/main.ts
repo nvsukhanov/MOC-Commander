@@ -22,6 +22,6 @@ bootstrapApplication(LayoutComponent, {
         provideLpu(),
         provideApplicationStore(),
         BluetoothAvailabilityGuardService,
-        { provide: LOG_LEVEL, useValue: isDevMode() ? LogLevel.Debug : LogLevel.Warning }
+        { provide: LOG_LEVEL, useValue: isDevMode() ? LogLevel.Debug : LogLevel.Warning },
     ]
 });

@@ -15,8 +15,6 @@ export class LpuCharacteristicsMessenger {
         const promise = this.queue.then(() => {
             this.logging.debug('sending', payload.join(' '));
             return this.characteristic.writeValue(payload);
-        }).then(() => {
-            this.logging.debug('sent', payload.join(' '));
         });
         this.queue = promise;
         return promise;

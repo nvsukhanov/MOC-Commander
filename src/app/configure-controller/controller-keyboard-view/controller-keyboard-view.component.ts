@@ -16,5 +16,5 @@ import { JsonPipe, KeyValuePipe, NgForOf, NgIf } from '@angular/common';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControllerKeyboardViewComponent {
-    @Input() public controllerState: ControllerState | null = null;
+    @Input() public controllerState?: ControllerState;
 }

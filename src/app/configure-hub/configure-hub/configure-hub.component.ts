@@ -3,8 +3,9 @@ import { NAVIGATOR } from '../../types';
 import { MatButtonModule } from '@angular/material/button';
 import { ACTIONS_CONFIGURE_HUB, HubConnectionState, IState, SELECT_HUB_CONNECTION_STATE } from '../../store';
 import { Store } from '@ngrx/store';
-import { AsyncPipe, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
+import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
+import { PushModule } from '@ngrx/component';
 
 @Component({
     standalone: true,
@@ -13,11 +14,11 @@ import { TranslocoModule } from '@ngneat/transloco';
     styleUrls: [ './configure-hub.component.scss' ],
     imports: [
         MatButtonModule,
-        AsyncPipe,
         NgIf,
         NgSwitch,
         NgSwitchCase,
-        TranslocoModule
+        TranslocoModule,
+        PushModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

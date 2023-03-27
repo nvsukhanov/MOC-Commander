@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IState, SELECT_BLUETOOTH_AVAILABILITY } from '../../store';
 import { Store } from '@ngrx/store';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { BluetoothNotAvailableComponent } from '../../bluetooth-availability';
 import { PushModule } from '@ngrx/component';
 
@@ -12,7 +12,6 @@ import { PushModule } from '@ngrx/component';
     styleUrls: [ './empty-view.component.scss' ],
     imports: [
         NgIf,
-        AsyncPipe,
         BluetoothNotAvailableComponent,
         PushModule,
     ],

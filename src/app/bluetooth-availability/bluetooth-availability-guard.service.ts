@@ -7,7 +7,7 @@ import { map } from 'rxjs';
 @Injectable()
 export class BluetoothAvailabilityGuardService {
     public readonly guard$ = this.store.select(SELECT_BLUETOOTH_AVAILABILITY).pipe(
-        map((v) => v ? true : this.router.parseUrl(''))
+        map((v) => v || this.router.parseUrl(''))
     );
 
     constructor(

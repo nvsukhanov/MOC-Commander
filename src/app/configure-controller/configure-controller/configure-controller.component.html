@@ -1,4 +1,4 @@
-<ng-container *transloco="let t; " [ngSwitch]="controllerConnectionState$ | async">
+<ng-container *transloco="let t; " [ngSwitch]="controllerConnectionState$ | ngrxPush">
     <ng-container *ngSwitchCase="controllerConnectionStates.NotConnected">
         <app-controller-type-select #selectedControllerType
                                     [ngModel]="connectedControllerType$ | ngrxPush"
@@ -17,9 +17,9 @@
     </ng-container>
 
     <ng-container *ngIf="controllerConnectionStates.Connected">
-        <ng-container [ngSwitch]="connectedControllerType$ | async">
+        <ng-container [ngSwitch]="connectedControllerType$ | ngrxPush">
             <ng-container *ngSwitchCase="controllerTypes.GamePad">
-                <ng-container *ngrxLet="controllerConfig$ | async as controllerConfig">
+                <ng-container *ngrxLet="controllerConfig$ as controllerConfig">
                     <ng-container *ngIf="controllerConfig">
                         <div *ngIf="controllerConfig.nameL10nKey">
                             {{ controllerConfig.nameL10nKey | transloco }}
@@ -28,10 +28,10 @@
                             <button (click)="disconnectGamepad(controllerConfig.index)" [color]="'warn'"
                                     mat-button>{{ 'configureController.disconnect' | transloco }}</button>
                         </div>
-                        <div [ngSwitch]="connectedControllerType$ | async">
+                        <div [ngSwitch]="connectedControllerType$ | ngrxPush">
                             <app-controller-gamepad-view *ngSwitchCase="controllerTypes.GamePad"
                                                          [controllerConfig]="controllerConfig"
-                                                         [controllerState]="controllerState$ | async"
+                                                         [controllerState]="controllerState$ | ngrxPush"
                             ></app-controller-gamepad-view>
                         </div>
                     </ng-container>
@@ -46,7 +46,7 @@
                             mat-button>{{ 'configureController.disconnect' | transloco }}</button>
                 </div>
                 <app-controller-keyboard-view *ngSwitchCase="controllerTypes.Keyboard"
-                                              [controllerState]="controllerState$ | async"></app-controller-keyboard-view>
+                                              [controllerState]="controllerState$ | ngrxPush"></app-controller-keyboard-view>
             </ng-container>
         </ng-container>
     </ng-container>

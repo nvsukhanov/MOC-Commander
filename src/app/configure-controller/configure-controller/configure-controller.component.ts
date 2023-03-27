@@ -11,7 +11,7 @@ import {
     SELECT_CONTROLLER_TYPE
 } from '../../store';
 import { Store } from '@ngrx/store';
-import { AsyncPipe, JsonPipe, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
+import { JsonPipe, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { MAPPING_CONTROLLER_TO_L10N } from '../../mappings';
 import { filter, map } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,7 +29,6 @@ import { TranslocoModule } from '@ngneat/transloco';
     imports: [
         ControllerTypeSelectComponent,
         NgIf,
-        AsyncPipe,
         MatButtonModule,
         NgSwitchCase,
         FormsModule,

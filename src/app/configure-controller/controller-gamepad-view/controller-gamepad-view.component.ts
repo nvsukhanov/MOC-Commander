@@ -42,7 +42,7 @@ export class ControllerGamepadViewComponent {
     }
 
     @Input()
-    public set controllerState(state: ControllerState | null) {
+    public set controllerState(state: ControllerState | undefined) {
         const guardedState = state ?? { axes: {}, buttons: {} };
         if (this.gamepadViewComponentRef) {
             this.gamepadControllerState = guardedState;
