@@ -4,7 +4,7 @@ import { provideRouter } from '@angular/router';
 import { ROUTES } from './app/routes';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideApplicationStore } from './app/store';
-import { importProvidersFrom } from '@angular/core';
+import { importProvidersFrom, isDevMode } from '@angular/core';
 import { provideGamepadsPlugins } from './app/plugins';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { provideLpu } from './app/lego-hub';
@@ -22,6 +22,6 @@ bootstrapApplication(LayoutComponent, {
         provideLpu(),
         provideApplicationStore(),
         BluetoothAvailabilityGuardService,
-        { provide: LOG_LEVEL, useValue: LogLevel.Debug }, // TODO: should consider dev/prod mode
+        { provide: LOG_LEVEL, useValue: isDevMode() ? LogLevel.Debug : LogLevel.Warning }
     ]
 });

@@ -1,6 +1,3 @@
-/// <reference types="web-bluetooth" />
-// TODO: ambient typing?
-
 import { Inject, Injectable } from '@angular/core';
 import { ExtractTokenType, NAVIGATOR } from '../../types';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
