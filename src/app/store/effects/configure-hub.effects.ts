@@ -24,24 +24,6 @@ export class ConfigureHubEffects {
         catchError((error) => of(ACTIONS_CONFIGURE_HUB.deviceConnectFailed({ error })))
     ));
 
-    public readonly readBatteryLevel = createEffect(() => this.actions.pipe(
-        ofType(ACTIONS_CONFIGURE_HUB.connected, ACTIONS_CONFIGURE_HUB.disconnected),
-        switchMap((d) => d.type === ACTIONS_CONFIGURE_HUB.connected.type
-                         ? this.lpuHubStorageService.getHub().hubProperties.batteryLevel$
-                         : of(null)
-        ),
-        map((batteryLevel) => ACTIONS_CONFIGURE_HUB.batteryLevelUpdate({ batteryLevel }))
-    ));
-
-    public readonly readRssiLevel = createEffect(() => this.actions.pipe(
-        ofType(ACTIONS_CONFIGURE_HUB.connected, ACTIONS_CONFIGURE_HUB.disconnected),
-        switchMap((d) => d.type === ACTIONS_CONFIGURE_HUB.connected.type
-                         ? this.lpuHubStorageService.getHub().hubProperties.rssiLevel$
-                         : of(null)
-        ),
-        map((rssiLevel) => ACTIONS_CONFIGURE_HUB.rssiLevelUpdate({ rssiLevel }))
-    ));
-
     public readonly deviceConnectFailedNotification$ = createEffect(() => this.actions.pipe(
         ofType(ACTIONS_CONFIGURE_HUB.deviceConnectFailed),
         tap((e) => this.snackBar.open(e.error.l10nKey))

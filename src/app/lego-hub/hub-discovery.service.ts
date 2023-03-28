@@ -1,30 +1,30 @@
 import { Inject, Injectable } from '@angular/core';
 import { ExtractTokenType, NAVIGATOR } from '../types';
-import { LpuHub } from './lpu-hub';
+import { Hub } from './hub';
 import { HUB_SERVICE_UUID } from './constants';
-import { BluetoothDeviceWithGatt, LpuHubFactoryService } from './lpu-hub-factory.service';
+import { BluetoothDeviceWithGatt, HubFactoryService } from './hub-factory.service';
 import { LpuConnectionErrorFactoryService } from './errors';
 import { fromEvent, map } from 'rxjs';
 import { ILegoHubConfig, LEGO_HUB_CONFIG } from './i-lego-hub-config';
 
 @Injectable()
-export class LpuHubDiscoveryService {
+export class HubDiscoveryService {
     private readonly gattServerDisconnectEventName = 'gattserverdisconnected';
 
     constructor(
         @Inject(NAVIGATOR) private readonly navigator: ExtractTokenType<typeof NAVIGATOR>,
-        private readonly lpuHubFactoryService: LpuHubFactoryService,
+        private readonly lpuHubFactoryService: HubFactoryService,
         private readonly lpuConnectionErrorFactoryService: LpuConnectionErrorFactoryService,
         @Inject(LEGO_HUB_CONFIG) private readonly config: ILegoHubConfig
     ) {
     }
 
-    public async discoverHub(): Promise<LpuHub> {
+    public async discoverHub(): Promise<Hub> {
         const device = await this.connectDevice();
         return this.connectToHub(device);
     }
 
-    private async connectToHub(device: BluetoothDeviceWithGatt): Promise<LpuHub> {
+    private async connectToHub(device: BluetoothDeviceWithGatt): Promise<Hub> {
         const gatt = await this.connectGattServer(device);
 
         return this.lpuHubFactoryService.createLpuGatt(

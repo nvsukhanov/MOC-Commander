@@ -1,7 +1,7 @@
-import { HubMessageType, HubPropertyOperation, PropertyAvailableForOperation } from '../constants';
-import { IHubMessageBody } from './i-hub-message-body';
+import { HubMessageType, HubPropertyOperation, PropertyAvailableForOperation } from '../../constants';
+import { IHubMessageBody } from '../i-hub-message-body';
 
-export class HubPropertyUpstreamMessageBody<TOperation extends HubPropertyOperation, TProperty extends PropertyAvailableForOperation<TOperation>>
+export class HubUpstreamPropertyMessageBody<TOperation extends HubPropertyOperation, TProperty extends PropertyAvailableForOperation<TOperation>>
     implements IHubMessageBody {
     public messageType = HubMessageType.hubProperties;
 
