@@ -2,7 +2,8 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TRANSLOCO_SCOPE, TranslocoModule } from '@ngneat/transloco';
+import { CONFIGURE_HUB_I18N_SCOPE } from '../../i18n';
 
 @Component({
     standalone: true,
@@ -17,6 +18,9 @@ import { TranslocoModule } from '@ngneat/transloco';
         NgSwitchDefault,
         NgIf,
         TranslocoModule,
+    ],
+    providers: [
+        { provide: TRANSLOCO_SCOPE, useValue: CONFIGURE_HUB_I18N_SCOPE, multi: true }
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

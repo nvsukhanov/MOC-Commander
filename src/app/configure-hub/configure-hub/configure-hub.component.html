@@ -14,5 +14,6 @@
     <ng-container *ngSwitchCase="connectionStates.Connected">
         {{ 'configureHub.connectedState' | transloco }}
         <button (click)="disconnect()" mat-button>{{ 'configureHub.disconnect' | transloco }}</button>
+        <app-hub-view></app-hub-view>
     </ng-container>
 </ng-container>

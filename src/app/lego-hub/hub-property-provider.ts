@@ -1,52 +1,48 @@
-import { from, fromEvent, Observable, shareReplay, switchMap, takeUntil } from 'rxjs';
+import { from, Observable, shareReplay, switchMap, takeUntil } from 'rxjs';
 import { HubMessageType, HubProperty, SubscribableHubProperties } from './constants';
 import {
-    HubDownstreamMessageDissectorService,
-    HubDownstreamReplyParserService,
+    HubDownstreamMessageDissector,
+    HubDownstreamPropertiesReplyParserService,
+    HubDownstreamPropertyMessageBody,
     HubMessage,
-    HubPropertyDownstreamMessageBody,
-    HubPropertyUpstreamMessageFactoryService
+    HubUpstreamPropertyMessageFactoryService
 } from './messages';
-import { LpuCharacteristicsMessenger } from './lpu-characteristics-messenger';
+import { HubCharacteristicsMessenger } from './hub-characteristics-messenger';
 import { LoggingService } from '../logging';
 
-export class LpuHubProperties {
+export class HubPropertyProvider {
     public batteryLevel$ = this.createPropertyStream(HubProperty.batteryVoltage);
 
     public rssiLevel$ = this.createPropertyStream(HubProperty.rssi);
 
-    private readonly characteristicValueChangedEventName = 'characteristicvaluechanged';
-
-    private notificationStarted = false;
-
     private readonly characteristicUnsubscribeHandlers = new Map<SubscribableHubProperties, () => Promise<void>>();
 
-    private readonly characteristicReplies = new Observable<HubMessage<HubPropertyDownstreamMessageBody>>((subscriber) => {
-        const sub = fromEvent(this.primaryCharacteristic, this.characteristicValueChangedEventName).subscribe((e) => {
-            const rawMessage = this.getValueFromEvent(e);
-            if (rawMessage) {
-                try {
-                    subscriber.next(this.messageDissector.dissect(rawMessage));
-                } catch (e) {
-                    this.logging.debug(e);
-                }
+    private readonly propertiesReplies = new Observable<HubMessage<HubDownstreamPropertyMessageBody>>((subscriber) => {
+        const sub = this.characteristicDataStream.subscribe((rawMessage) => {
+            if (!rawMessage || !this.messageDissector.messageTypeMatches(rawMessage)) {
+                return;
+            }
+            try {
+                subscriber.next(this.messageDissector.dissect(rawMessage));
+            } catch (e) {
+                this.logging.debug(e, rawMessage);
             }
         });
         return (): void => {
             sub?.unsubscribe();
         };
     }).pipe(
-        shareReplay({ refCount: true })
+        shareReplay({ refCount: true, bufferSize: 1 })
     );
 
     constructor(
         private readonly onHubDisconnected$: Observable<void>,
-        private readonly propertySubscriptionMessageBuilderService: HubPropertyUpstreamMessageFactoryService,
-        private readonly replyParserService: HubDownstreamReplyParserService,
-        private readonly primaryCharacteristic: BluetoothRemoteGATTCharacteristic,
-        private readonly messenger: LpuCharacteristicsMessenger,
+        private readonly propertySubscriptionMessageBuilderService: HubUpstreamPropertyMessageFactoryService,
+        private readonly replyParserService: HubDownstreamPropertiesReplyParserService,
+        private readonly characteristicDataStream: Observable<Uint8Array>,
+        private readonly messenger: HubCharacteristicsMessenger,
         private readonly logging: LoggingService,
-        private readonly messageDissector: HubDownstreamMessageDissectorService
+        private readonly messageDissector: HubDownstreamMessageDissector<HubDownstreamPropertyMessageBody>
     ) {
     }
 
@@ -54,21 +50,11 @@ export class LpuHubProperties {
         for (const unsubscribeHandler of this.characteristicUnsubscribeHandlers.values()) {
             await unsubscribeHandler();
         }
-        await this.primaryCharacteristic.stopNotifications();
-        this.notificationStarted = false;
-    }
-
-    private async ensureNotificationStarted(): Promise<void> {
-        if (!this.notificationStarted) {
-            await this.primaryCharacteristic.startNotifications();
-        }
-        this.logging.debug('characteristic notifications started');
     }
 
     private async sendSubscibeMessage(
         property: SubscribableHubProperties
     ): Promise<void> {
-        await this.ensureNotificationStarted();
         if (this.characteristicUnsubscribeHandlers.has(property)) {
             return;
         }
@@ -80,20 +66,12 @@ export class LpuHubProperties {
         });
     }
 
-    private getValueFromEvent(event: Event): null | Uint8Array {
-        const buffer = (event.target as BluetoothRemoteGATTCharacteristic).value?.buffer;
-        if (!buffer) {
-            return null;
-        }
-        return new Uint8Array(buffer);
-    }
-
     private createPropertyStream(trackedProperty: SubscribableHubProperties): Observable<number | null> {
         return new Observable<number | null>((subscriber) => {
             subscriber.next(null);
 
             const sub = from(this.sendSubscibeMessage(trackedProperty)).pipe(
-                switchMap(() => this.characteristicReplies),
+                switchMap(() => this.propertiesReplies),
             ).subscribe((message) => {
                 const reply = this.replyParserService.parseMessage(message);
                 if (!!reply && reply.type === HubMessageType.hubProperties && reply.propertyType === trackedProperty) {

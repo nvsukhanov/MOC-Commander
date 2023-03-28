@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HubPropertyReply, HubReply } from './hub-reply';
-import { HubMessageType, HubProperty } from '../constants';
-import { HubMessage, HubPropertyDownstreamMessageBody } from './index';
-import { IHubDownstreamMessageValueParser } from './i-hub-downstream-message-value-parser';
+import { HubPropertyReply, HubReply } from '../hub-reply';
+import { HubMessageType, HubProperty } from '../../constants';
+import { HubDownstreamPropertyMessageBody, HubMessage } from '../index';
+import { IHubDownstreamReplyParser } from '../i-hub-downstream-reply-parser';
 
 @Injectable()
-export class HubDownstreamPropertiesValueParserService implements IHubDownstreamMessageValueParser {
+export class HubDownstreamPropertiesReplyParserService implements IHubDownstreamReplyParser {
     private readonly hubPropertyLength = 1;
 
     private readonly operationLength = 1;
@@ -15,7 +15,7 @@ export class HubDownstreamPropertiesValueParserService implements IHubDownstream
         [HubProperty.rssi]: (v) => this.parseRssiLevel(v),
     };
 
-    public parseMessage(message: HubMessage<HubPropertyDownstreamMessageBody>): HubReply {
+    public parseMessage(message: HubMessage<HubDownstreamPropertyMessageBody>): HubReply {
         if (!this.hubPropertyValueParser[message.body.hubProperty]) {
             throw new Error(`missing parser for property type: ${message.body.hubProperty}`);
         }

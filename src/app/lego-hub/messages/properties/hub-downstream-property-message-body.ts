@@ -1,7 +1,7 @@
-import { IHubMessageBody } from './i-hub-message-body';
-import { HubMessageType, HubProperty } from '../constants';
+import { IHubMessageBody } from '../i-hub-message-body';
+import { HubMessageType, HubProperty } from '../../constants';
 
-export class HubPropertyDownstreamMessageBody implements IHubMessageBody {
+export class HubDownstreamPropertyMessageBody implements IHubMessageBody {
     public readonly messageType = HubMessageType.hubProperties;
 
     constructor(

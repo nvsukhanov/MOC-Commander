@@ -1,7 +1,7 @@
 import { LoggingService } from '../logging';
 import { HubMessage, IHubMessageBody } from './messages';
 
-export class LpuCharacteristicsMessenger {
+export class HubCharacteristicsMessenger {
     private queue: Promise<unknown> = Promise.resolve(); // TODO: replace with more sophisticated queue (with queue size tracking)
 
     constructor(

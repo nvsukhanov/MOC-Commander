@@ -1,4 +1,4 @@
-import { HubMessageType, HubProperty } from '../constants';
+import { HubAttachIoEvent, HubIOType, HubMessageType, HubProperty } from '../constants';
 
 export type BatteryLevelReply = {
     propertyType: HubProperty.batteryVoltage,
@@ -14,4 +14,28 @@ export type HubPropertyReply = {
     type: HubMessageType.hubProperties,
 } & (BatteryLevelReply | RssiLevelReply);
 
-export type HubReply = HubPropertyReply;
+export type HubAttachedIoReply = {
+    type: HubMessageType.hubAttachedIO,
+    portId: number;
+    event: HubAttachIoEvent.Attached;
+    ioTypeId: HubIOType;
+}
+
+export type HubAttachedVirtualIoReply = {
+    type: HubMessageType.hubAttachedIO,
+    portId: number;
+    event: HubAttachIoEvent.AttachedVirtual;
+    ioTypeId: HubIOType;
+    portIdA: number;
+    portIdB: number;
+}
+
+export type HubDetachedIoReply = {
+    type: HubMessageType.hubAttachedIO,
+    portId: number;
+    event: HubAttachIoEvent.Detached;
+}
+
+export type HubIOEventReply = HubAttachedIoReply | HubAttachedVirtualIoReply | HubDetachedIoReply;
+
+export type HubReply = HubPropertyReply | HubIOEventReply;

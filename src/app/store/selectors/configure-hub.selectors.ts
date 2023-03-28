@@ -17,3 +17,8 @@ export const SELECT_HUB_RSSI_LEVEL = createSelector(
     SELECT_HUB_FEATURE,
     (state) => state.rssiLevel
 );
+
+export const SELECT_ATTACHED_IOS = createSelector(
+    SELECT_HUB_FEATURE,
+    (state) => state.attachedIOs
+);

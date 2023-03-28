@@ -13,9 +13,16 @@ export const CONFIGURE_HUB_REDUCERS = createReducer(
         connectionState: HubConnectionState.NotConnected,
         batteryLevel: null,
         rssiLevel: null,
-        name: null
+        name: null,
+        attachedIOs: {}
     })),
     on(ACTIONS_CONFIGURE_HUB.batteryLevelUpdate, (state, data) => ({ ...state, batteryLevel: data.batteryLevel })),
     on(ACTIONS_CONFIGURE_HUB.rssiLevelUpdate, (state, data) => ({ ...state, rssiLevel: data.rssiLevel })),
-    on(ACTIONS_CONFIGURE_HUB.nameUpdate, (state, data) => ({ ...state, name: data.name }))
+    on(ACTIONS_CONFIGURE_HUB.registerio, (state, data) => ({ ...state, attachedIOs: { ...state.attachedIOs, [data.portId]: { ioType: data.ioType } } })),
+    on(ACTIONS_CONFIGURE_HUB.unregisterio, (state, data) => {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { [data.portId]: _, ...remainingIOs } = state.attachedIOs;
+            return { ...state, attachedIOs: remainingIOs };
+        }
+    )
 );
