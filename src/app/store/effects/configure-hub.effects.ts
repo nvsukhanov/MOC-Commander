@@ -42,15 +42,6 @@ export class ConfigureHubEffects {
         map((rssiLevel) => ACTIONS_CONFIGURE_HUB.rssiLevelUpdate({ rssiLevel }))
     ));
 
-    public readonly nameLevel = createEffect(() => this.actions.pipe(
-        ofType(ACTIONS_CONFIGURE_HUB.connected, ACTIONS_CONFIGURE_HUB.disconnected),
-        switchMap((d) => d.type === ACTIONS_CONFIGURE_HUB.connected.type
-                         ? this.lpuHubStorageService.getHub().hubProperties.name$
-                         : of(null)
-        ),
-        map((name) => ACTIONS_CONFIGURE_HUB.nameUpdate({ name }))
-    ));
-
     public readonly deviceConnectFailedNotification$ = createEffect(() => this.actions.pipe(
         ofType(ACTIONS_CONFIGURE_HUB.deviceConnectFailed),
         tap((e) => this.snackBar.open(e.error.l10nKey))
