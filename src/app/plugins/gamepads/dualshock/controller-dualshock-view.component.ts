@@ -26,9 +26,9 @@ type ButtonData = {
 })
 export class ControllerDualshockViewComponent extends GamepadView<AxisData, ButtonData> {
     constructor(
-        protected readonly cdRef: ChangeDetectorRef
+        cdRef: ChangeDetectorRef
     ) {
-        super();
+        super(cdRef);
     }
 
     protected buildAxesData(config: GamepadAxisConfig[], state: ControllerState): AxisData[] {

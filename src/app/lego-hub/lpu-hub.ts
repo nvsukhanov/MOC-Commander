@@ -6,10 +6,6 @@ import { LpuHubPropertiesFactoryService } from './lpu-hub-properties-factory.ser
 import { LpuHubProperties } from './lpu-hub-properties';
 
 export class LpuHub {
-    private onConnected = new ReplaySubject<void>(1);
-
-    public onConnected$: Observable<void> = this.onConnected;
-
     private onDisconnected = new ReplaySubject<void>(1);
 
     public onDisconnected$: Observable<void> = this.onDisconnected;
@@ -57,7 +53,6 @@ export class LpuHub {
         ).subscribe(() => {
             this.onDisconnected.next();
         });
-        this.onConnected.next();
         this.onUnloadHandler = (): void => {
             this.gatt.disconnect();
         };

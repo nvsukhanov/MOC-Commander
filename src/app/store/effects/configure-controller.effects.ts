@@ -1,5 +1,5 @@
-import { Inject, Injectable, InjectionToken } from '@angular/core';
-import { ControllerAxesState, ControllerButtonsState, GamepadControllerConfig, IState } from '../i-state';
+import { Inject, Injectable } from '@angular/core';
+import { ControllerAxesState, ControllerButtonsState, IState } from '../i-state';
 import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ACTION_CONTROLLER_READ, ACTION_KEYBOARD_EVENTS, ACTIONS_CONFIGURE_CONTROLLER } from '../actions';
@@ -7,12 +7,6 @@ import { animationFrameScheduler, filter, fromEvent, interval, map, NEVER, Obser
 import { WINDOW } from '../../types';
 import { SELECT_CONTROLLER_STATE, SELECTED_GAMEPAD_INDEX } from '../selectors';
 import { GamepadPluginsService } from '../../plugins';
-
-export interface IGamepadMapper {
-    mapGamepadToConfig(gamepad: Gamepad): GamepadControllerConfig | null;
-}
-
-export const GAMEPAD_MAPPER = new InjectionToken<IGamepadMapper>('GAMEPAD_MAPPER');
 
 @Injectable()
 export class ConfigureControllerEffects {

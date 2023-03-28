@@ -20,7 +20,7 @@ export class LpuHubProperties {
             }
         });
         return (): void => {
-            sub?.unsubscribe;
+            sub?.unsubscribe();
         };
     }).pipe(
         shareReplay({ refCount: true })

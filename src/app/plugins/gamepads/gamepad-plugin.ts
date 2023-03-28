@@ -1,12 +1,6 @@
 import { Type } from '@angular/core';
-import { ControllerState, GamepadControllerConfig } from '../../store';
+import { GamepadControllerConfig } from '../../store';
 import { GamepadView } from './gamepad-view';
-
-export interface IGamepadViewComponent {
-    writeConfiguration(config: GamepadControllerConfig): void;
-
-    writeGamepadState(state: ControllerState): void;
-}
 
 export abstract class GamepadPlugin {
     abstract readonly configViewType: Type<GamepadView>;

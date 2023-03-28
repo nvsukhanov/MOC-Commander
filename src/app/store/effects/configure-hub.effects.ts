@@ -56,7 +56,7 @@ export class ConfigureHubEffects {
         tap((e) => this.snackBar.open(e.error.l10nKey))
     ), { dispatch: false });
 
-    public deviceDisconnect$ = createEffect(() => this.actions.pipe(
+    public readonly deviceDisconnect$ = createEffect(() => this.actions.pipe(
         ofType(
             ACTIONS_CONFIGURE_HUB.connected,
             ...ACTION_CONFIGURE_HUB_TERMINATION
@@ -73,7 +73,7 @@ export class ConfigureHubEffects {
         map(() => ACTIONS_CONFIGURE_HUB.disconnected())
     ));
 
-    public userRequestedHubDisconnection$ = createEffect(() => this.actions.pipe(
+    public readonly userRequestedHubDisconnection$ = createEffect(() => this.actions.pipe(
         ofType(
             ACTIONS_CONFIGURE_HUB.userRequestedHubDisconnection
         ),

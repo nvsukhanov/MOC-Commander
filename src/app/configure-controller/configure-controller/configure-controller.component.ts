@@ -12,8 +12,6 @@ import {
 } from '../../store';
 import { Store } from '@ngrx/store';
 import { JsonPipe, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
-import { MAPPING_CONTROLLER_TO_L10N } from '../../mappings';
-import { filter, map } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { LetModule, PushModule } from '@ngrx/component';
@@ -48,13 +46,6 @@ export class ConfigureControllerComponent implements OnDestroy {
     public readonly connectedControllerType$ = this.store.select(SELECT_CONTROLLER_TYPE);
 
     public readonly controllerTypes = ControllerType;
-
-    public readonly controllerToL10nMap = MAPPING_CONTROLLER_TO_L10N;
-
-    public readonly controllerTypeL10n$ = this.connectedControllerType$.pipe(
-        filter((t) => t !== null),
-        map((t) => this.controllerToL10nMap[t as ControllerType])
-    );
 
     public readonly controllerConfig$ = this.store.select(SELECT_CONTROLLER_CONFIG);
 

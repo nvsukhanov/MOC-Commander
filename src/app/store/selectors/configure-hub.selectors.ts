@@ -13,11 +13,6 @@ export const SELECT_HUB_BATTERY_LEVEL = createSelector(
     (state) => state.batteryLevel
 );
 
-export const SELECT_HUB_NAME = createSelector(
-    SELECT_HUB_FEATURE,
-    (state) => state.name
-);
-
 export const SELECT_HUB_RSSI_LEVEL = createSelector(
     SELECT_HUB_FEATURE,
     (state) => state.rssiLevel

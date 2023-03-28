@@ -25,11 +25,10 @@ type ButtonData = {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControllerDefaultViewComponent extends GamepadView<AxisData, ButtonData> {
-
     constructor(
-        protected readonly cdRef: ChangeDetectorRef
+        cdRef: ChangeDetectorRef
     ) {
-        super();
+        super(cdRef);
     }
 
     protected buildAxesData(config: GamepadAxisConfig[], state: ControllerState): AxisData[] {

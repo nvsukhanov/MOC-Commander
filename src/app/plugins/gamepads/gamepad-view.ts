@@ -2,7 +2,6 @@ import { ControllerState, GamepadAxisConfig, GamepadButtonConfig, GamepadControl
 import { ChangeDetectorRef } from '@angular/core';
 
 export abstract class GamepadView<TAxisData = unknown, TButtonData = unknown> {
-    protected abstract cdRef: ChangeDetectorRef
 
     private configuration?: GamepadControllerConfig;
 
@@ -11,6 +10,11 @@ export abstract class GamepadView<TAxisData = unknown, TButtonData = unknown> {
     private axisData: TAxisData[] = [];
 
     private buttonsData: TButtonData[] = [];
+
+    protected constructor(
+        private readonly cdRef: ChangeDetectorRef
+    ) {
+    }
 
     public get axes(): ReadonlyArray<Readonly<TAxisData>> {
         return this.axisData;

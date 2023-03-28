@@ -11,7 +11,7 @@ export type ParsedMessageResult = {
 export class MessageDissectorService {
     private readonly messageTypeLength = 1;
 
-    private readonly shortHeaderLenght = 1;
+    private readonly shortHeaderLength = 1;
 
     private readonly longHeaderLength = 2;
 
@@ -43,7 +43,7 @@ export class MessageDissectorService {
     }
 
     private getMessageTypeOffset(message: Uint8Array): number {
-        const headerLength = message[0] >= 127 ? this.longHeaderLength : this.shortHeaderLenght;
+        const headerLength = message[0] >= 127 ? this.longHeaderLength : this.shortHeaderLength;
         return headerLength + this.hubIdLength;
     }
 

@@ -19,7 +19,7 @@
     <ng-container *ngIf="controllerConnectionStates.Connected">
         <ng-container [ngSwitch]="connectedControllerType$ | ngrxPush">
             <ng-container *ngSwitchCase="controllerTypes.GamePad">
-                <ng-container *ngrxLet="controllerConfig$ as controllerConfig">
+                <ng-container *ngrxLet="controllerConfig$ | ngrxPush as controllerConfig">
                     <ng-container *ngIf="controllerConfig">
                         <div *ngIf="controllerConfig.nameL10nKey">
                             {{ controllerConfig.nameL10nKey | transloco }}

@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, ComponentRef, Input, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ComponentRef, Input, ViewChild, ViewContainerRef } from '@angular/core';
 import { ControllerState, GamepadControllerConfig } from '../../store';
 import { JsonPipe, NgIf } from '@angular/common';
-import { GamepadPluginsService, IGamepadViewComponent } from '../../plugins';
+import { GamepadPluginsService } from '../../plugins';
+import { GamepadView } from '../../plugins/gamepads/gamepad-view';
 
 @Component({
     standalone: true,
@@ -15,7 +16,9 @@ import { GamepadPluginsService, IGamepadViewComponent } from '../../plugins';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControllerGamepadViewComponent {
-    private gamepadViewComponentRef?: ComponentRef<IGamepadViewComponent>;
+    @ViewChild('gamepadView', { read: ViewContainerRef, static: true }) public viewContainer!: ViewContainerRef;
+
+    private gamepadViewComponentRef?: ComponentRef<GamepadView>;
 
     private gamepadControllerConfig?: GamepadControllerConfig;
 
@@ -23,7 +26,6 @@ export class ControllerGamepadViewComponent {
 
     constructor(
         private readonly gamepadPlugins: GamepadPluginsService,
-        private readonly viewContainer: ViewContainerRef
     ) {
     }
 
