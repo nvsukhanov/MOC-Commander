@@ -1,3 +1,5 @@
+import { HubIOType } from '../lego-hub';
+
 export interface IState {
     controller: {
         controllerType: ControllerType;
@@ -10,9 +12,16 @@ export interface IState {
         batteryLevel: number | null;
         name: string | null;
         rssiLevel: number | null;
+        attachedIOs: AttachedIOs;
     },
     bluetoothAvailability: {
         isAvailable: boolean;
+    }
+}
+
+export type AttachedIOs = {
+    [portId in number]: {
+        ioType: HubIOType;
     }
 }
 

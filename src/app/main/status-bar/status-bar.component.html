@@ -12,13 +12,13 @@
                                  [selectable]="false"
                                  selected
                 >
-                    {{ 'batteryLevel' | transloco: {level: batteryLevel} }}
+                    {{ 'configureHub.batteryLevel' | transloco: {level: batteryLevel} }}
                 </mat-chip-option>
                 <mat-chip-option *ngIf="rssiLevel !== null"
                                  [selectable]="false"
                                  selected
                 >
-                    {{ 'rssiLevel' | transloco: {level: rssiLevel} }}
+                    {{ 'configureHub.rssiLevel' | transloco: {level: rssiLevel} }}
                 </mat-chip-option>
             </ng-container>
 

@@ -5,16 +5,26 @@ import { Store } from '@ngrx/store';
 import { IState } from '../i-state';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LpuHubStorageService } from '../lpu-hub-storage.service';
-import { switchMap, tap } from 'rxjs';
+import { NEVER, of, switchMap } from 'rxjs';
 import { ACTIONS_CONFIGURE_HUB } from '../actions';
+import { HubAttachIoEvent, HubMessageType, HubReply } from '../../lego-hub';
 
 @Injectable()
 export class ReadHubAttachedIoEffects {
-    public readAllAttachedIo$ = createEffect(() => this.actions.pipe(
+    public readAttachIoEvents$ = createEffect(() => this.actions.pipe(
         ofType(ACTIONS_CONFIGURE_HUB.connected),
         switchMap(() => this.lpuHubStorageService.getHub().hubAttachedIO.attachedIoReplies),
-        tap((d) => console.log('rcvd', d))
-    ), { dispatch: false });
+        switchMap((r: HubReply) => {
+            if (r.type !== HubMessageType.hubAttachedIO) {
+                return NEVER;
+            }
+            if (r.event === HubAttachIoEvent.Attached) {
+                return of(ACTIONS_CONFIGURE_HUB.registerio({ portId: r.portId, ioType: r.ioTypeId }));
+            } else {
+                return of(ACTIONS_CONFIGURE_HUB.unregisterio({ portId: r.portId }));
+            }
+        })
+    ));
 
     constructor(
         @Inject(NAVIGATOR) private readonly navigator: ExtractTokenType<typeof NAVIGATOR>,

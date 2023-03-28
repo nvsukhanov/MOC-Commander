@@ -6,7 +6,5 @@
   "controllerIsConnected": "Controller is connected",
   "controllerIsNotConnected": "Controller is not connected",
   "hubIsConnected": "Hub is connected",
-  "hubIsNotConnected": "Hub is not connected",
-  "batteryLevel": "Battery: {level}%",
-  "rssiLevel": "Signal: {level}"
+  "hubIsNotConnected": "Hub is not connected"
 }

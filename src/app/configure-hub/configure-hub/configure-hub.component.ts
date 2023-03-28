@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { PushModule } from '@ngrx/component';
+import { HubViewComponent } from '../hub-view';
 
 @Component({
     standalone: true,
@@ -18,7 +19,8 @@ import { PushModule } from '@ngrx/component';
         NgSwitch,
         NgSwitchCase,
         TranslocoModule,
-        PushModule
+        PushModule,
+        HubViewComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

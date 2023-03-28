@@ -1,0 +1,3 @@
+<div *ngFor="let data of ioData$ | ngrxPush">
+    port {{ data.portId }} io {{ data.l10nKey | transloco }}
+</div>
