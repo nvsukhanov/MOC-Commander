@@ -10,6 +10,13 @@ import {
 import { LpuCharacteristicsMessenger } from './lpu-characteristics-messenger';
 import { LoggingService } from '../logging';
 
+enum CharacteristicNotificationState {
+    NotStarted,
+    Starting,
+    Started,
+    Stopping,
+}
+
 export class LpuHubProperties {
     public batteryLevel$ = this.createPropertyStream(HubProperty.batteryVoltage);
 
@@ -17,18 +24,18 @@ export class LpuHubProperties {
 
     private readonly characteristicValueChangedEventName = 'characteristicvaluechanged';
 
-    private notificationStarted = false;
+    private notificationState: CharacteristicNotificationState = CharacteristicNotificationState.NotStarted;
 
     private readonly characteristicUnsubscribeHandlers = new Map<SubscribableHubProperties, () => Promise<void>>();
 
     private readonly characteristicReplies = new Observable<HubMessage<HubPropertyDownstreamMessageBody>>((subscriber) => {
-        const sub = fromEvent(this.primaryCharacteristic, this.characteristicValueChangedEventName).subscribe((e) => {
-            const rawMessage = this.getValueFromEvent(e);
+        const sub = fromEvent(this.primaryCharacteristic, this.characteristicValueChangedEventName).subscribe((event) => {
+            const rawMessage = this.getValueFromEvent(event);
             if (rawMessage) {
                 try {
                     subscriber.next(this.messageDissector.dissect(rawMessage));
                 } catch (e) {
-                    this.logging.debug(e);
+                    this.logging.debug(e, event);
                 }
             }
         });
@@ -54,21 +61,35 @@ export class LpuHubProperties {
         for (const unsubscribeHandler of this.characteristicUnsubscribeHandlers.values()) {
             await unsubscribeHandler();
         }
-        await this.primaryCharacteristic.stopNotifications();
-        this.notificationStarted = false;
+        this.notificationState = CharacteristicNotificationState.Stopping;
+        try {
+            await this.primaryCharacteristic.stopNotifications();
+            this.notificationState = CharacteristicNotificationState.NotStarted;
+        } catch (e) {
+            this.notificationState = CharacteristicNotificationState.Started;
+            throw e;
+        }
     }
 
-    private async ensureNotificationStarted(): Promise<void> {
-        if (!this.notificationStarted) {
-            await this.primaryCharacteristic.startNotifications();
+    public async startNotificationListening(): Promise<void> {
+        if (this.notificationState === CharacteristicNotificationState.NotStarted) {
+            this.logging.debug('Starting notifications listening');
+            this.notificationState = CharacteristicNotificationState.Starting;
+            try {
+                await this.primaryCharacteristic.startNotifications();
+                this.logging.debug('Notifications listening started');
+                this.notificationState = CharacteristicNotificationState.Started;
+            } catch (e) {
+                this.notificationState = CharacteristicNotificationState.NotStarted;
+                throw e;
+            }
         }
-        this.logging.debug('characteristic notifications started');
     }
 
     private async sendSubscibeMessage(
         property: SubscribableHubProperties
     ): Promise<void> {
-        await this.ensureNotificationStarted();
+        await this.startNotificationListening();
         if (this.characteristicUnsubscribeHandlers.has(property)) {
             return;
         }

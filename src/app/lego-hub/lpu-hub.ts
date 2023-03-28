@@ -47,6 +47,7 @@ export class LpuHub {
             this.primaryCharacteristic,
             this.messenger
         );
+        await this._hubProperties.startNotificationListening();
 
         this.hubDisconnectSubscription = this.onHubDisconnect.pipe(
             take(1)
