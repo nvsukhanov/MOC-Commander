@@ -10,13 +10,8 @@ export type RssiLevelReply = {
     level: number
 }
 
-export type NameReply = {
-    propertyType: HubProperty.name,
-    name: string
-}
-
 export type HubPropertyReply = {
     type: HubMessageType.hubProperties,
-} & (BatteryLevelReply | RssiLevelReply | NameReply);
+} & (BatteryLevelReply | RssiLevelReply);
 
 export type HubReply = HubPropertyReply;

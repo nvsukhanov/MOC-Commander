@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LpuHubProperties } from './lpu-hub-properties';
-import { PropertySubscriptionMessageBuilderService } from './property-subscription-message-builder.service';
-import { ReplyParserService } from './reply-parsers';
+import { HubDownstreamMessageDissectorService, HubDownstreamReplyParserService, HubPropertyUpstreamMessageFactoryService } from './messages';
 import { LpuCharacteristicsMessenger } from './lpu-characteristics-messenger';
 import { Observable } from 'rxjs';
 import { LoggingService } from '../logging';
@@ -9,9 +8,10 @@ import { LoggingService } from '../logging';
 @Injectable({ providedIn: 'root' })
 export class LpuHubPropertiesFactoryService {
     constructor(
-        private readonly propertySubscriptionMessageBuilderService: PropertySubscriptionMessageBuilderService,
-        private readonly replyParserService: ReplyParserService,
-        private readonly logging: LoggingService
+        private readonly propertySubscriptionMessageBuilderService: HubPropertyUpstreamMessageFactoryService,
+        private readonly replyParserService: HubDownstreamReplyParserService,
+        private readonly logging: LoggingService,
+        private readonly messageDissector: HubDownstreamMessageDissectorService
     ) {
     }
 
@@ -27,6 +27,7 @@ export class LpuHubPropertiesFactoryService {
             characteristic,
             messenger,
             this.logging,
+            this.messageDissector
         );
     }
 }

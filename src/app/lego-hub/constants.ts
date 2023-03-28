@@ -5,7 +5,7 @@ export enum HubMessageType {
     hubProperties = 0x01
 }
 
-export enum HubPropertyAction {
+export enum HubPropertyOperation {
     setProperty = 0x01,
     enableUpdates = 0x02,
     disableUpdates = 0x03,
@@ -15,9 +15,13 @@ export enum HubPropertyAction {
 }
 
 export enum HubProperty {
-    name = 0x01,
     rssi = 0x05,
-    batteryVoltage = 0x06
+    batteryVoltage = 0x06,
 }
 
-export type SubscribableHubProperties = HubProperty.name | HubProperty.rssi | HubProperty.batteryVoltage;
+export type SubscribableHubProperties = HubProperty.rssi | HubProperty.batteryVoltage;
+export type PropertyAvailableForOperation<Operation extends HubPropertyOperation> =
+    Operation extends HubPropertyOperation.enableUpdates | HubPropertyOperation.disableUpdates
+    ? SubscribableHubProperties
+    : HubProperty;
+

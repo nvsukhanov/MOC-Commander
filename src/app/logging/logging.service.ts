@@ -29,7 +29,7 @@ export class LoggingService {
         }
     }
 
-    public error(...error: ReadonlyArray<unknown>): void {
+    public error(error: Error): void {
         if (this.canWrite(LogLevel.Error)) {
             console.error(error);
         }

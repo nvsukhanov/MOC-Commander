@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HubMessageType } from '../constants';
-import { LoggingService } from '../../logging';
+import { HubMessage, HubPropertyDownstreamMessageBody, HubPropertyDownstreamMessageFactoryService } from './index';
 
-export type ParsedMessageResult = {
+export type DissectedMessageResult = {
     messageType: HubMessageType,
     payload: Uint8Array
 }
 
 @Injectable()
-export class MessageDissectorService {
+export class HubDownstreamMessageDissectorService {
     private readonly messageTypeLength = 1;
 
     private readonly shortHeaderLength = 1;
@@ -20,20 +20,14 @@ export class MessageDissectorService {
     private readonly availableRawMessageTypes = new Set(Object.values(HubMessageType));
 
     constructor(
-        private readonly logging: LoggingService
+        private hh: HubPropertyDownstreamMessageFactoryService
     ) {
     }
 
-    public parse(message: Uint8Array): ParsedMessageResult | null {
-        const messageType = message[this.getMessageTypeOffset(message)];
-        if (!this.availableRawMessageTypes.has(messageType)) {
-            this.logging.warning('unknown message type', messageType, 'at', this.getMessageTypeOffset(message), 'in', message.join(' '));
-            return null;
-        }
-        return {
-            messageType,
-            payload: this.getPayload(message)
-        };
+    public dissect(rawMessage: Uint8Array): HubMessage<HubPropertyDownstreamMessageBody> {
+        const messageType = rawMessage[this.getMessageTypeOffset(rawMessage)];
+        this.guardKnownMessageType(messageType);
+        return this.hh.createMessage(this.getPayload(rawMessage));
     }
 
     private getPayload(message: Uint8Array): Uint8Array {
@@ -49,5 +43,11 @@ export class MessageDissectorService {
 
     private getMessagePayloadOffset(message: Uint8Array): number {
         return this.getMessageTypeOffset(message) + this.messageTypeLength;
+    }
+
+    private guardKnownMessageType(messageType: HubMessageType): void {
+        if (!this.availableRawMessageTypes.has(messageType)) {
+            throw new Error(`unknown message type ${messageType}`);
+        }
     }
 }
