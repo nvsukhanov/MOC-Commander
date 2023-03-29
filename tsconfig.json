@@ -23,7 +23,9 @@
       "dom"
     ],
     "types": [
-      "web-bluetooth"
+      "web-bluetooth",
+      "jest",
+      "node"
     ]
   },
   "angularCompilerOptions": {
