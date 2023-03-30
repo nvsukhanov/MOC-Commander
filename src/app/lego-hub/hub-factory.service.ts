@@ -1,10 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { Hub } from './hub';
 import { Observable } from 'rxjs';
-import { HubCharacteristicsMessengerFactoryService } from './hub-characteristics-messenger-factory.service';
-import { HubPropertyProviderFactoryService } from './hub-property-provider-factory.service';
 import { WINDOW } from '../types';
-import { HubAttachedIoProviderFactoryService } from './hub-attached-io-provider-factory.service';
+import { AttachedIoFeatureFactoryService, HubPropertiesFeatureFactoryService, OutboundMessengerFactoryService } from './messages';
 
 export type BluetoothDeviceWithGatt = Omit<BluetoothDevice, 'gatt'> & {
     readonly gatt: BluetoothRemoteGATTServer;
@@ -13,9 +11,9 @@ export type BluetoothDeviceWithGatt = Omit<BluetoothDevice, 'gatt'> & {
 @Injectable()
 export class HubFactoryService {
     constructor(
-        private readonly characteristicsMessengerFactoryService: HubCharacteristicsMessengerFactoryService,
-        private readonly attachedIoProviderFactoryService: HubAttachedIoProviderFactoryService,
-        private readonly propertiesFactoryService: HubPropertyProviderFactoryService,
+        private readonly outboundMessengerFactoryService: OutboundMessengerFactoryService,
+        private readonly attachedIoProviderFactoryService: AttachedIoFeatureFactoryService,
+        private readonly propertiesFactoryService: HubPropertiesFeatureFactoryService,
         @Inject(WINDOW) private readonly window: Window
     ) {
     }
@@ -27,7 +25,7 @@ export class HubFactoryService {
         return new Hub(
             onDisconnected$,
             device,
-            this.characteristicsMessengerFactoryService,
+            this.outboundMessengerFactoryService,
             this.propertiesFactoryService,
             this.attachedIoProviderFactoryService,
             this.window

@@ -1,3 +1,3 @@
-export * from './hub-downstream-attached-io-message-body';
-export * from './hub-downstream-attached-io-message-factory.service';
-export * from './hub-downstream-attached-io-reply-parser.service';
+export * from './attached-io-feature';
+export * from './attached-io-feature-factory.service';
+export * from './attached-io-reply-parser.service';

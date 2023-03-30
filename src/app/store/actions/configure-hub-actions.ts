@@ -1,6 +1,6 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { LpuConnectionError } from '../../lego-hub/errors';
-import { HubIOType } from '../../lego-hub';
+import { IOType } from '../../lego-hub';
 
 export const ACTIONS_CONFIGURE_HUB = createActionGroup({
     source: 'ACTIONS_CONFIGURE_HUB',
@@ -14,7 +14,7 @@ export const ACTIONS_CONFIGURE_HUB = createActionGroup({
         'user requested hub disconnection': emptyProps(),
         'battery level update': props<{ batteryLevel: null | number }>(),
         'rssi level update': props<{ rssiLevel: null | number }>(),
-        'registerIO': props<{ portId: number, ioType: HubIOType }>(),
+        'registerIO': props<{ portId: number, ioType: IOType }>(),
         'unregisterIO': props<{ portId: number }>(),
     }
 });
