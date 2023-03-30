@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HubCharacteristicsMessenger } from './hub-characteristics-messenger';
-import { LoggingService } from '../logging';
+import { OutboundMessenger } from './outbound-messenger';
+import { LoggingService } from '../../logging';
 
 @Injectable()
-export class HubCharacteristicsMessengerFactoryService {
+export class OutboundMessengerFactoryService {
     constructor(
         private readonly logging: LoggingService
     ) {
@@ -11,8 +11,8 @@ export class HubCharacteristicsMessengerFactoryService {
 
     public create(
         characteristic: BluetoothRemoteGATTCharacteristic
-    ): HubCharacteristicsMessenger {
-        return new HubCharacteristicsMessenger(
+    ): OutboundMessenger {
+        return new OutboundMessenger(
             characteristic,
             this.logging
         );

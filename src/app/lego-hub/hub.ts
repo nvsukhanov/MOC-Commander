@@ -1,11 +1,13 @@
-import { EMPTY, fromEvent, map, Observable, of, ReplaySubject, Subscription, switchMap, take } from 'rxjs';
+import { Observable, ReplaySubject, Subscription, take } from 'rxjs';
 import { HUB_CHARACTERISTIC_UUID, HUB_SERVICE_UUID } from './constants';
-import { HubCharacteristicsMessenger } from './hub-characteristics-messenger';
-import { HubCharacteristicsMessengerFactoryService } from './hub-characteristics-messenger-factory.service';
-import { HubPropertyProviderFactoryService } from './hub-property-provider-factory.service';
-import { HubPropertyProvider } from './hub-property-provider';
-import { HubAttachedIoProviderFactoryService } from './hub-attached-io-provider-factory.service';
-import { HubAttachedIoProvider } from './hub-attached-io-provider';
+import {
+    AttachedIoFeature,
+    AttachedIoFeatureFactoryService,
+    HubPropertiesFeature,
+    HubPropertiesFeatureFactoryService,
+    OutboundMessenger,
+    OutboundMessengerFactoryService
+} from './messages';
 
 export class Hub {
     private onDisconnected = new ReplaySubject<void>(1);
@@ -16,58 +18,54 @@ export class Hub {
 
     private primaryCharacteristic?: BluetoothRemoteGATTCharacteristic;
 
-    private messenger?: HubCharacteristicsMessenger;
+    private messenger?: OutboundMessenger;
 
     private hubDisconnectSubscription?: Subscription;
 
     private onUnloadHandler?: () => void;
 
-    private readonly characteristicValueChangedEventName = 'characteristicvaluechanged';
-
     constructor(
         private readonly onHubDisconnect: Observable<void>,
         private readonly gatt: BluetoothRemoteGATTServer,
-        private readonly characteristicsMessengerFactoryService: HubCharacteristicsMessengerFactoryService,
-        private readonly propertiesFactoryService: HubPropertyProviderFactoryService,
-        private readonly attachedIoProviderFactoryService: HubAttachedIoProviderFactoryService,
+        private readonly characteristicsMessengerFactoryService: OutboundMessengerFactoryService,
+        private readonly propertiesFactoryService: HubPropertiesFeatureFactoryService,
+        private readonly attachedIoProviderFactoryService: AttachedIoFeatureFactoryService,
         private readonly window: Window
     ) {
     }
 
-    private _hubProperties?: HubPropertyProvider;
+    private _hubProperties?: HubPropertiesFeature;
 
-    public get hubProperties(): HubPropertyProvider {
+    public get hubProperties(): HubPropertiesFeature {
         if (!this._hubProperties) {
             throw new Error('not connected yet'); // TODO: meaningful error handling
         }
         return this._hubProperties;
     }
 
-    private _hubAttachedIO?: HubAttachedIoProvider;
+    private _attachedIO?: AttachedIoFeature;
 
-    public get hubAttachedIO(): HubAttachedIoProvider {
-        if (!this._hubAttachedIO) {
+    public get attachedIO(): AttachedIoFeature {
+        if (!this._attachedIO) {
             throw new Error('not connected yet'); // TODO: meaningful error handling
         }
-        return this._hubAttachedIO;
+        return this._attachedIO;
     }
 
     public async connect(): Promise<void> {
         this.primaryService = await this.gatt.getPrimaryService(HUB_SERVICE_UUID);
         this.primaryCharacteristic = await this.primaryService.getCharacteristic(HUB_CHARACTERISTIC_UUID);
         this.messenger = this.characteristicsMessengerFactoryService.create(this.primaryCharacteristic);
-        const characteristicDataStream$ = fromEvent(this.primaryCharacteristic, this.characteristicValueChangedEventName).pipe(
-            map((e) => this.getValueFromEvent(e)),
-            switchMap((value) => value ? of(value) : EMPTY)
-        );
+
         this._hubProperties = this.propertiesFactoryService.create(
             this.onDisconnected,
             this.messenger,
-            characteristicDataStream$
+            this.primaryCharacteristic
         );
-        this._hubAttachedIO = this.attachedIoProviderFactoryService.create(
+
+        this._attachedIO = this.attachedIoProviderFactoryService.create(
             this.onHubDisconnect,
-            characteristicDataStream$
+            this.primaryCharacteristic
         );
         await this.primaryCharacteristic.startNotifications();
 
@@ -91,13 +89,5 @@ export class Hub {
         await this._hubProperties?.disconnect();
         this.hubDisconnectSubscription?.unsubscribe();
         this.gatt.disconnect();
-    }
-
-    private getValueFromEvent(event: Event): null | Uint8Array {
-        const buffer = (event.target as BluetoothRemoteGATTCharacteristic).value?.buffer;
-        if (!buffer) {
-            return null;
-        }
-        return new Uint8Array(buffer);
     }
 }

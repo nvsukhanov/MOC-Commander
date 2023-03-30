@@ -7,18 +7,18 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { LpuHubStorageService } from '../lpu-hub-storage.service';
 import { NEVER, of, switchMap } from 'rxjs';
 import { ACTIONS_CONFIGURE_HUB } from '../actions';
-import { HubAttachIoEvent, HubMessageType, HubReply } from '../../lego-hub';
+import { AttachIoEvent, InboundMessage, MessageType } from '../../lego-hub';
 
 @Injectable()
 export class ReadHubAttachedIoEffects {
     public readAttachIoEvents$ = createEffect(() => this.actions.pipe(
         ofType(ACTIONS_CONFIGURE_HUB.connected),
-        switchMap(() => this.lpuHubStorageService.getHub().hubAttachedIO.attachedIoReplies),
-        switchMap((r: HubReply) => {
-            if (r.type !== HubMessageType.hubAttachedIO) {
+        switchMap(() => this.lpuHubStorageService.getHub().attachedIO.attachedIoReplies$),
+        switchMap((r: InboundMessage) => {
+            if (r.messageType !== MessageType.attachedIO) {
                 return NEVER;
             }
-            if (r.event === HubAttachIoEvent.Attached) {
+            if (r.event === AttachIoEvent.Attached) {
                 return of(ACTIONS_CONFIGURE_HUB.registerio({ portId: r.portId, ioType: r.ioTypeId }));
             } else {
                 return of(ACTIONS_CONFIGURE_HUB.unregisterio({ portId: r.portId }));

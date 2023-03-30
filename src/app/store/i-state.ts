@@ -1,4 +1,4 @@
-import { HubIOType } from '../lego-hub';
+import { IOType } from '../lego-hub';
 
 export interface IState {
     controller: {
@@ -21,7 +21,7 @@ export interface IState {
 
 export type AttachedIOs = {
     [portId in number]: {
-        ioType: HubIOType;
+        ioType: IOType;
     }
 }
 
