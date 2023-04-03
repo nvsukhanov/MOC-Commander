@@ -4,13 +4,14 @@ export const HUB_CHARACTERISTIC_UUID = '00001624-1212-efde-1623-785feabcd123';
 export enum MessageType {
     properties = 0x01,
     attachedIO = 0x04,
-    portInformationRequest = 0x21,
+    portInformationRequest = 0x21, // 33
+    portInformation = 0x43, // 67
+    portValue = 0x45, // 69
 }
 
-export enum HubPortInformationRequestType {
+export enum PortInformationRequestType {
     portValue = 0x00,
     modeInformation = 0x01,
-    possibleModeCombinations = 0x02,
 }
 
 export enum AttachIoEvent {

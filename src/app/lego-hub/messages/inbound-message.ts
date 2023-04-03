@@ -30,4 +30,20 @@ export type AttachedIODetachInboundMessage = {
 
 export type AttachedIOInboundMessage = AttachedIoAttachInboundMessage | AttachedIOAttachVirtualInboundMessage | AttachedIODetachInboundMessage;
 
-export type InboundMessage = HubPropertyInboundMessage | AttachedIOInboundMessage;
+export type PortValueInboundMessage = {
+    messageType: MessageType.portValue,
+    portId: number;
+    payload: Uint8Array
+}
+
+export type PortModeInboundMessage = {
+    messageType: MessageType.portInformation,
+    portId: number;
+    payload: Uint8Array
+}
+
+export type InboundMessage =
+    HubPropertyInboundMessage
+    | AttachedIOInboundMessage
+    | PortModeInboundMessage
+    | PortValueInboundMessage;

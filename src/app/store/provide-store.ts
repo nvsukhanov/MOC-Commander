@@ -2,7 +2,7 @@ import { APP_INITIALIZER, EnvironmentProviders, isDevMode, makeEnvironmentProvid
 import { IState } from './i-state';
 import { BLUETOOTH_AVAILABILITY_REDUCERS, CONFIGURE_CONTROLLER_REDUCER, CONFIGURE_HUB_REDUCERS } from './reducers';
 import { provideEffects } from '@ngrx/effects';
-import { ConfigureControllerEffects, ConfigureHubEffects, ReadHubAttachedIoEffects, ReadHubPropertiesEffects } from './effects';
+import { ConfigureControllerEffects, ConfigureHubEffects, ReadHubAttachedIoEffects, ReadHubPropertiesEffects, ReadPortInformationEffects } from './effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { NAVIGATOR } from '../types';
@@ -20,7 +20,8 @@ export function provideApplicationStore(): EnvironmentProviders {
             ConfigureControllerEffects,
             ConfigureHubEffects,
             ReadHubPropertiesEffects,
-            ReadHubAttachedIoEffects
+            ReadHubAttachedIoEffects,
+            ReadPortInformationEffects
         ),
         provideStoreDevtools({
             maxAge: 25,

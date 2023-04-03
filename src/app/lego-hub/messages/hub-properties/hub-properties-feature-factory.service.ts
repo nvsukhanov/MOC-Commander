@@ -6,6 +6,8 @@ import { LoggingService } from '../../../logging';
 import { InboundMessageListenerFactoryService } from '../inbound-message-listener-factory.service';
 import { HubPropertiesReplyParserService } from './hub-properties-reply-parser.service';
 import { HubPropertiesOutboundMessageFactoryService } from './hub-properties-outbound-message-factory.service';
+import { MessageType } from '../../constants';
+import { RawMessage } from '../raw-message';
 
 @Injectable()
 export class HubPropertiesFeatureFactoryService {
@@ -18,12 +20,12 @@ export class HubPropertiesFeatureFactoryService {
     }
 
     public create(
+        characteristicDataStream: Observable<RawMessage<MessageType>>,
         onHubDisconnected: Observable<void>,
         messenger: OutboundMessenger,
-        characteristic: BluetoothRemoteGATTCharacteristic
     ): HubPropertiesFeature {
         const repliesProvider = this.featureMessageProviderFactoryService.create(
-            characteristic,
+            characteristicDataStream,
             this.replyParserService,
             onHubDisconnected,
         );

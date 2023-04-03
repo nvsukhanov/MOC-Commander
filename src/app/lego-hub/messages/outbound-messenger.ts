@@ -1,16 +1,25 @@
 import { LoggingService } from '../../logging';
 import { MessageType } from '../constants';
 import { RawMessage } from './raw-message';
+import { Inject } from '@angular/core';
+import { ILegoHubConfig, LEGO_HUB_CONFIG } from '../i-lego-hub-config';
 
 export class OutboundMessenger {
     private queue: Promise<unknown> = Promise.resolve(); // TODO: replace with more sophisticated queue (with queue size tracking)
 
     private readonly messageTypeLength = 1;
 
+    private readonly dumpMessageTypesSet: ReadonlySet<MessageType>;
+
     constructor(
         private readonly characteristic: BluetoothRemoteGATTCharacteristic,
-        private readonly logging: LoggingService
+        private readonly logging: LoggingService,
+        @Inject(LEGO_HUB_CONFIG) private readonly config: ILegoHubConfig,
     ) {
+        this.dumpMessageTypesSet = new Set(this.config.dumpOutgoingMessageType === 'all'
+                                           ? []
+                                           : this.config.dumpOutgoingMessageType
+        );
     }
 
     public send(
@@ -19,8 +28,15 @@ export class OutboundMessenger {
         const header = this.composeHeader(message);
         const packet = this.concatTypedArrays(header, message.payload);
         const promise = this.queue.then(() => {
-            this.logging.debug('sending', packet.join(' '));
-            return this.characteristic.writeValue(packet);
+            return this.characteristic.writeValue(packet).then(() => {
+                if (this.config.dumpOutgoingMessageType === 'all' || this.dumpMessageTypesSet.has(message.header.messageType)) {
+                    this.logging.debug(`Sent message of type ${message.header.messageType} with payload ${message.payload.join(' ')}`);
+                }
+            }).catch((error) => {
+                this.logging.error(`Failed to send message of type ${message.header.messageType} with payload ${message.payload.join(' ')}`);
+                this.logging.error(error);
+                throw error;
+            });
         });
         this.queue = promise;
         return promise;
