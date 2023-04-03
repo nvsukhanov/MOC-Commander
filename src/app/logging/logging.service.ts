@@ -29,7 +29,7 @@ export class LoggingService {
         }
     }
 
-    public error(error: Error): void {
+    public error(error: Error | string): void {
         if (this.canWrite(LogLevel.Error)) {
             console.error(error);
         }

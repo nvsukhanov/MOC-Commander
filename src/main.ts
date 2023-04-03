@@ -11,6 +11,7 @@ import { provideLegoHubEnvironment } from './app/lego-hub';
 import { BluetoothAvailabilityGuardService } from './app/bluetooth-availability';
 import { LOG_LEVEL, LogLevel } from './app/logging';
 import { provideI18n } from './app/i18n';
+import { LEGO_HUB_CONFIG } from './app/lego-hub/i-lego-hub-config';
 
 bootstrapApplication(LayoutComponent, {
     providers: [
@@ -23,5 +24,11 @@ bootstrapApplication(LayoutComponent, {
         provideApplicationStore(),
         BluetoothAvailabilityGuardService,
         { provide: LOG_LEVEL, useValue: isDevMode() ? LogLevel.Debug : LogLevel.Warning },
+        {
+            provide: LEGO_HUB_CONFIG,
+            useValue: {
+                maxGattConnectRetries: 5,
+            }
+        },
     ]
 });

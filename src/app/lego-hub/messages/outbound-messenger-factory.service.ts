@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { OutboundMessenger } from './outbound-messenger';
 import { LoggingService } from '../../logging';
+import { ILegoHubConfig, LEGO_HUB_CONFIG } from '../i-lego-hub-config';
 
 @Injectable()
 export class OutboundMessengerFactoryService {
     constructor(
-        private readonly logging: LoggingService
+        private readonly logging: LoggingService,
+        @Inject(LEGO_HUB_CONFIG) private readonly config: ILegoHubConfig,
     ) {
     }
 
@@ -14,7 +16,8 @@ export class OutboundMessengerFactoryService {
     ): OutboundMessenger {
         return new OutboundMessenger(
             characteristic,
-            this.logging
+            this.logging,
+            this.config
         );
     }
 }

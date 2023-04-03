@@ -3,6 +3,8 @@ import { AttachedIoFeature } from './attached-io-feature';
 import { InboundMessageListenerFactoryService } from '../inbound-message-listener-factory.service';
 import { AttachedIoReplyParserService } from './attached-io-reply-parser.service';
 import { Observable } from 'rxjs';
+import { RawMessage } from '../raw-message';
+import { MessageType } from '../../constants';
 
 @Injectable()
 export class AttachedIoFeatureFactoryService {
@@ -13,11 +15,11 @@ export class AttachedIoFeatureFactoryService {
     }
 
     public create(
+        characteristicDataStream: Observable<RawMessage<MessageType>>,
         onHubDisconnected: Observable<void>,
-        characteristic: BluetoothRemoteGATTCharacteristic
     ): AttachedIoFeature {
         const repliesProvider = this.messageListenerFactoryService.create(
-            characteristic,
+            characteristicDataStream,
             this.replyParserService,
             onHubDisconnected,
         );
