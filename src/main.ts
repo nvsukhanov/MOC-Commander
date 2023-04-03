@@ -7,7 +7,7 @@ import { provideApplicationStore } from './app/store';
 import { importProvidersFrom, isDevMode } from '@angular/core';
 import { provideGamepadsPlugins } from './app/plugins';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MessageType, provideLegoHubEnvironment } from './app/lego-hub';
+import { provideLegoHubEnvironment } from './app/lego-hub';
 import { BluetoothAvailabilityGuardService } from './app/bluetooth-availability';
 import { LOG_LEVEL, LogLevel } from './app/logging';
 import { provideI18n } from './app/i18n';
@@ -28,7 +28,6 @@ bootstrapApplication(LayoutComponent, {
             provide: LEGO_HUB_CONFIG,
             useValue: {
                 maxGattConnectRetries: 5,
-                dumpIncomingMessageType: [ MessageType.portValueSingle ],
             }
         },
     ]
