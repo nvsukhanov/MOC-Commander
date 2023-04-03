@@ -5,12 +5,12 @@ import { RawMessage } from '../raw-message';
 import { InboundMessage } from '../inbound-message';
 
 @Injectable()
-export class PortValueReplyParserService implements IReplyParser<MessageType.portValue> {
-    public readonly messageType = MessageType.portValue;
+export class PortValueReplyParserService implements IReplyParser<MessageType.portValueSingle> {
+    public readonly messageType = MessageType.portValueSingle;
 
     public parseMessage(
-        message: RawMessage<MessageType.portValue>
-    ): InboundMessage & { messageType: MessageType.portValue } {
+        message: RawMessage<MessageType.portValueSingle>
+    ): InboundMessage & { messageType: MessageType.portValueSingle } {
         return {
             messageType: this.messageType,
             portId: message.payload[0],

@@ -18,11 +18,37 @@ export const CONFIGURE_HUB_REDUCERS = createReducer(
     })),
     on(ACTIONS_CONFIGURE_HUB.batteryLevelUpdate, (state, data) => ({ ...state, batteryLevel: data.batteryLevel })),
     on(ACTIONS_CONFIGURE_HUB.rssiLevelUpdate, (state, data) => ({ ...state, rssiLevel: data.rssiLevel })),
-    on(ACTIONS_CONFIGURE_HUB.registerio, (state, data) => ({ ...state, attachedIOs: { ...state.attachedIOs, [data.portId]: { ioType: data.ioType } } })),
+    on(ACTIONS_CONFIGURE_HUB.registerio, (state, data) => ({
+        ...state,
+        attachedIOs: {
+            ...state.attachedIOs,
+            [data.portId]: { ioType: data.ioType, value: [], modesInformation: null }
+        }
+    })),
     on(ACTIONS_CONFIGURE_HUB.unregisterio, (state, data) => {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const { [data.portId]: _, ...remainingIOs } = state.attachedIOs;
             return { ...state, attachedIOs: remainingIOs };
         }
-    )
+    ),
+    on(ACTIONS_CONFIGURE_HUB.portValueUpdate, (state, data) => ({
+        ...state,
+        attachedIOs: {
+            ...state.attachedIOs,
+            [data.portId]: {
+                ...state.attachedIOs[data.portId],
+                value: data.value
+            }
+        }
+    })),
+    on(ACTIONS_CONFIGURE_HUB.portModeInformationUpdate, (state, data) => ({
+        ...state,
+        attachedIOs: {
+            ...state.attachedIOs,
+            [data.portId]: {
+                ...state.attachedIOs[data.portId],
+                modesInformation: data.modesInformation
+            }
+        }
+    }))
 );

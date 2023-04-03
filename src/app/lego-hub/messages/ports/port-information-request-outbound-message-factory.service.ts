@@ -27,7 +27,7 @@ export class PortInformationRequestOutboundMessageFactoryService {
             },
             payload: Uint8Array.from([
                 portId,
-                PortInformationRequestType.modeInformation
+                PortInformationRequestType.modeInfo
             ])
         };
     }

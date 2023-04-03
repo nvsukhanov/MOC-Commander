@@ -1,15 +1,15 @@
-import { EMPTY, Observable, of, switchMap } from 'rxjs';
-import { InboundMessageListener } from '../inbound-message-listener';
-import { MessageType } from '../../constants';
+import { Observable } from 'rxjs';
 import { PortInformationRequestOutboundMessageFactoryService } from './port-information-request-outbound-message-factory.service';
-import { PortModeInboundMessage, PortValueInboundMessage } from '../inbound-message';
+import { PortInformationInboundMessageTypes, PortValueInboundMessage } from '../inbound-message';
 import { OutboundMessenger } from '../outbound-messenger';
+import { MessageType } from '../../constants';
+import { InboundMessageListener } from '../inbound-message-listener';
 
 export class PortsFeature {
     constructor(
         private readonly messageFactoryService: PortInformationRequestOutboundMessageFactoryService,
         private readonly portModeInboundMessageListener: InboundMessageListener<MessageType.portInformation>,
-        private readonly portValueInboundMessageListener: InboundMessageListener<MessageType.portValue>,
+        private readonly portValueInboundMessageListener: InboundMessageListener<MessageType.portValueSingle>,
         private readonly messenger: OutboundMessenger
     ) {
     }
@@ -26,25 +26,11 @@ export class PortsFeature {
         return this.messenger.send(this.messageFactoryService.createPortModeRequest(portId));
     }
 
-    public listenForPortValue$(
-        portId: number
-    ): Observable<PortValueInboundMessage> {
-        return this.portValueInboundMessageListener.replies$.pipe(
-            // here and below we use switchMap to filter out messages that are not relevant to us
-            // rxjs filter has a problem with type narrowing, so we use switchMap instead
-            switchMap((m) => m.portId === portId ? of(m) : EMPTY
-            ),
-        );
+    public listenAllPortValues$(): Observable<PortValueInboundMessage> {
+        return this.portValueInboundMessageListener.replies$;
     }
 
-    public listenForPortMode$(
-        portId: number
-    ): Observable<PortModeInboundMessage> {
-        return this.portModeInboundMessageListener.replies$.pipe(
-            switchMap((m) => {
-                    return m.portId === portId ? of(m) : EMPTY;
-                }
-            )
-        );
+    public listenAllPortModes$(): Observable<PortInformationInboundMessageTypes> {
+        return this.portModeInboundMessageListener.replies$;
     }
 }

@@ -3,7 +3,7 @@ import { IState, SELECT_ATTACHED_IOS } from '../../store';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 import { MAPPING_HUB_IO_TYPE_TO_L10N } from '../../mappings';
-import { NgForOf } from '@angular/common';
+import { JsonPipe, NgForOf } from '@angular/common';
 import { PushModule } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 
@@ -15,7 +15,8 @@ import { TranslocoModule } from '@ngneat/transloco';
     imports: [
         NgForOf,
         PushModule,
-        TranslocoModule
+        TranslocoModule,
+        JsonPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -23,7 +24,9 @@ export class HubViewComponent {
     public readonly ioData$ = this.store.select(SELECT_ATTACHED_IOS).pipe(
         map((ios) => Object.entries(ios).map(([ portId, data ]) => ({
             portId: portId,
-            l10nKey: MAPPING_HUB_IO_TYPE_TO_L10N[data.ioType]
+            l10nKey: MAPPING_HUB_IO_TYPE_TO_L10N[data.ioType],
+            value: data.value,
+            modesInformation: data.modesInformation
         })))
     );
 

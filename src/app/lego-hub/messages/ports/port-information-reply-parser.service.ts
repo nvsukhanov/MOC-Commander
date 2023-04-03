@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { IReplyParser } from '../i-reply-parser';
-import { MessageType } from '../../constants';
-import { InboundMessage } from '../inbound-message';
+import { MessageType, PortInformationReplyType } from '../../constants';
+import { InboundMessage, PortInformationModeInfoInboundMessage } from '../inbound-message';
 import { RawMessage } from '../raw-message';
+import { concatUint8ToUint16, readBitAtPosition } from '../../helpers';
 
 @Injectable()
 export class PortInformationReplyParserService implements IReplyParser<MessageType.portInformation> {
@@ -11,10 +12,50 @@ export class PortInformationReplyParserService implements IReplyParser<MessageTy
     public parseMessage(
         message: RawMessage<MessageType.portInformation>
     ): InboundMessage & { messageType: MessageType.portInformation } {
+        const informationType: PortInformationReplyType = message.payload[1];
+        switch (informationType) {
+            case PortInformationReplyType.modeInfo:
+                return this.parseInformationTypeReply(message);
+            default:
+                throw new Error(`Unknown port information reply type: ${informationType}`);
+        }
+    }
+
+    private parseInformationTypeReply(
+        message: RawMessage<MessageType.portInformation>
+    ): PortInformationModeInfoInboundMessage {
+        const capabilities = message.payload[2];
+        const totalModeCount = message.payload[3];
+
+        const inputModesValue = concatUint8ToUint16(message.payload[5], message.payload[4]); // TODO: verify this
+        const inputModes: number[] = [];
+        for (let i = 0; i < 15; i++) {
+            if (readBitAtPosition(inputModesValue, i)) {
+                inputModes.push(i);
+            }
+        }
+
+        const outputModesValue = concatUint8ToUint16(message.payload[6], message.payload[7]); // TODO: verify this
+        const outputModes: number[] = [];
+        for (let i = 0; i < 15; i++) {
+            if (readBitAtPosition(outputModesValue, i)) {
+                outputModes.push(i);
+            }
+        }
+
         return {
             messageType: this.messageType,
             portId: message.payload[0],
-            payload: message.payload.slice(2)
+            informationType: PortInformationReplyType.modeInfo,
+            capabilities: {
+                output: readBitAtPosition(capabilities, 0),
+                input: readBitAtPosition(capabilities, 1),
+                logicalCombinable: readBitAtPosition(capabilities, 2),
+                logicalSynchronizable: readBitAtPosition(capabilities, 3),
+            },
+            totalModeCount,
+            inputModes,
+            outputModes,
         };
     }
 

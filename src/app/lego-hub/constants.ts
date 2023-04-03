@@ -6,12 +6,16 @@ export enum MessageType {
     attachedIO = 0x04,
     portInformationRequest = 0x21, // 33
     portInformation = 0x43, // 67
-    portValue = 0x45, // 69
+    portValueSingle = 0x45, // 69
 }
 
 export enum PortInformationRequestType {
     portValue = 0x00,
-    modeInformation = 0x01,
+    modeInfo = 0x01,
+}
+
+export enum PortInformationReplyType {
+    modeInfo = 0x01,
 }
 
 export enum AttachIoEvent {

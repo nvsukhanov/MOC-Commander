@@ -19,9 +19,23 @@ export interface IState {
     }
 }
 
+export type AttachedIOModesInformation = {
+    capabilities: {
+        output: boolean;
+        input: boolean;
+        logicalCombinable: boolean;
+        logicalSynchronizable: boolean;
+    };
+    totalModeCount: number;
+    inputModes: number[];
+    outputModes: number[];
+}
+
 export type AttachedIOs = {
     [portId in number]: {
         ioType: IOType;
+        value: number[],
+        modesInformation: AttachedIOModesInformation | null;
     }
 }
 

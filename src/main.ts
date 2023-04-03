@@ -28,8 +28,7 @@ bootstrapApplication(LayoutComponent, {
             provide: LEGO_HUB_CONFIG,
             useValue: {
                 maxGattConnectRetries: 5,
-                dumpIncomingMessageType: [ MessageType.portValue, MessageType.portInformation ],
-                dumpOutgoingMessageType: [ MessageType.portInformationRequest ]
+                dumpIncomingMessageType: [ MessageType.portValueSingle ],
             }
         },
     ]
