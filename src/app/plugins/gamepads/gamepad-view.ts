@@ -16,6 +16,10 @@ export abstract class GamepadView<TAxisData = unknown, TButtonData = unknown> {
     ) {
     }
 
+    protected abstract buildAxesData(config: GamepadAxisConfig[], state: ControllerState): TAxisData[];
+
+    protected abstract buildButtonsData(config: GamepadButtonConfig[], state: ControllerState): TButtonData[];
+
     public get axes(): ReadonlyArray<Readonly<TAxisData>> {
         return this.axisData;
     }
@@ -33,10 +37,6 @@ export abstract class GamepadView<TAxisData = unknown, TButtonData = unknown> {
         this.state = state;
         this.updateData();
     }
-
-    protected abstract buildAxesData(config: GamepadAxisConfig[], state: ControllerState): TAxisData[];
-
-    protected abstract buildButtonsData(config: GamepadButtonConfig[], state: ControllerState): TButtonData[];
 
     private updateData(): void {
         if (this.configuration && this.state) {

@@ -7,6 +7,8 @@ export abstract class GamepadPlugin {
 
     abstract controllerIdMatch(id: string): boolean;
 
+    protected abstract mapSpecificFields(gamepad: Gamepad): Pick<GamepadControllerConfig, 'axes' | 'buttons' | 'nameL10nKey'>;
+
     public mapToDefaultConfig(gamepad: Gamepad): GamepadControllerConfig {
         return {
             id: gamepad.id,
@@ -14,6 +16,4 @@ export abstract class GamepadPlugin {
             ...this.mapSpecificFields(gamepad)
         };
     }
-
-    protected abstract mapSpecificFields(gamepad: Gamepad): Pick<GamepadControllerConfig, 'axes' | 'buttons' | 'nameL10nKey'>;
 }

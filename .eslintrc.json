@@ -47,6 +47,31 @@
               "error"
             ]
           }
+        ],
+        "@typescript-eslint/member-ordering": [
+          "error",
+          {
+            "default": [
+              "public-static-field",
+              "protected-static-field",
+              "private-static-field",
+              "public-static-method",
+              "protected-static-method",
+              "private-static-method",
+              "public-abstract-field",
+              "protected-abstract-field",
+              "public-instance-field",
+              "protected-instance-field",
+              "private-instance-field",
+              "constructor",
+              "public-abstract-method",
+              "protected-abstract-method",
+              ["get", "set"],
+              "public-instance-method",
+              "protected-instance-method",
+              "private-instance-method"
+            ]
+          }
         ]
       }
     },

@@ -13,9 +13,9 @@ import {
 } from './messages';
 
 export class Hub {
-    private onDisconnected = new ReplaySubject<void>(1);
+    public onDisconnected$: Observable<void>;
 
-    public onDisconnected$: Observable<void> = this.onDisconnected;
+    private onDisconnected = new ReplaySubject<void>(1);
 
     private primaryService?: BluetoothRemoteGATTService;
 
@@ -27,6 +27,12 @@ export class Hub {
 
     private onUnloadHandler?: () => void;
 
+    private _hubProperties?: HubPropertiesFeature;
+
+    private _attachedIO?: AttachedIoFeature;
+
+    private _ports?: PortsFeature;
+
     constructor(
         private readonly onHubDisconnect: Observable<void>,
         private readonly gatt: BluetoothRemoteGATTServer,
@@ -37,9 +43,8 @@ export class Hub {
         private readonly characteristicsDataStreamFactoryService: CharacteristicDataStreamFactoryService,
         private readonly window: Window
     ) {
+        this.onDisconnected$ = this.onDisconnected;
     }
-
-    private _hubProperties?: HubPropertiesFeature;
 
     public get hubProperties(): HubPropertiesFeature {
         if (!this._hubProperties) {
@@ -48,16 +53,12 @@ export class Hub {
         return this._hubProperties;
     }
 
-    private _attachedIO?: AttachedIoFeature;
-
     public get attachedIO(): AttachedIoFeature {
         if (!this._attachedIO) {
             throw new Error('not connected yet'); // TODO: meaningful error handling
         }
         return this._attachedIO;
     }
-
-    private _ports?: PortsFeature;
 
     public get ports(): PortsFeature {
         if (!this._ports) {
