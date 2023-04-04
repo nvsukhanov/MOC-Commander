@@ -1,0 +1,11 @@
+<div *ngrxLet="attachedIos$ | ngrxPush as attachedIos">
+    <div *ngIf="!attachedIos">
+        none attached
+    </div>
+    <div *ngIf="attachedIos">
+        <div *ngFor="let attachedIo of attachedIos;">
+            <div>Port {{ attachedIo.config.portId }}</div>
+            <ng-container [appIoPortRenderer]="attachedIo"></ng-container>
+        </div>
+    </div>
+</div>

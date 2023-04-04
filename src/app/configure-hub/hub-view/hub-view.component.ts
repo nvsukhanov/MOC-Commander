@@ -6,6 +6,7 @@ import { MAPPING_HUB_IO_TYPE_TO_L10N } from '../../mappings';
 import { JsonPipe, NgForOf } from '@angular/common';
 import { PushModule } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
+import { HubIoViewComponent } from '../io-port';
 
 @Component({
     standalone: true,
@@ -16,7 +17,8 @@ import { TranslocoModule } from '@ngneat/transloco';
         NgForOf,
         PushModule,
         TranslocoModule,
-        JsonPipe
+        JsonPipe,
+        HubIoViewComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
