@@ -29,7 +29,6 @@ export class IoMotorComponent implements IIoPortRenderer {
     }
 
     public setConfig(config: IIoPortRendererConfig): void {
-        console.log('IoMotorComponent.setConfig', config);
         this._config = config;
         this.cdRef.markForCheck();
     }
