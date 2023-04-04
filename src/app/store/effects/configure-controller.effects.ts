@@ -59,8 +59,6 @@ export class ConfigureControllerEffects {
         map((gamepad) => ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected({ gamepad }))
     ));
 
-    private readonly keyDownEventName = 'keydown';
-
     public readonly keyboardKeyDownListener$ = createEffect(() => this.actions$.pipe(
         ofType(ACTIONS_CONFIGURE_CONTROLLER.keyboardConnected, ACTIONS_CONFIGURE_CONTROLLER.keyboardDisconnected),
         switchMap((a) => a.type === ACTIONS_CONFIGURE_CONTROLLER.keyboardConnected.type
@@ -76,8 +74,6 @@ export class ConfigureControllerEffects {
         ),
         map(([ event ]) => ACTION_KEYBOARD_EVENTS.keyDown({ code: event.keyCode }))
     ));
-
-    private readonly keyUpEventName = 'keyup';
 
     public readonly keyboardKeyUpListener$ = createEffect(() => this.actions$.pipe(
         ofType(ACTIONS_CONFIGURE_CONTROLLER.keyboardConnected, ACTIONS_CONFIGURE_CONTROLLER.keyboardDisconnected),
@@ -95,8 +91,6 @@ export class ConfigureControllerEffects {
         map(([ event ]) => ACTION_KEYBOARD_EVENTS.keyUp({ code: event.keyCode }))
     ));
 
-    private readonly gamepadDisconnectedEvent = 'gamepaddisconnected';
-
     public readonly listenToGamepadDisconnects$ = createEffect(() => this.actions$.pipe(
         ofType(ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected, ACTIONS_CONFIGURE_CONTROLLER.gamepadDisconnected),
         switchMap((e) => e.type === ACTIONS_CONFIGURE_CONTROLLER.gamepadDisconnected.type
@@ -105,6 +99,12 @@ export class ConfigureControllerEffects {
         ),
         map((e: GamepadEvent) => ACTIONS_CONFIGURE_CONTROLLER.disconnectGamepad({ index: e.gamepad.index }))
     ));
+
+    private readonly keyDownEventName = 'keydown';
+
+    private readonly keyUpEventName = 'keyup';
+
+    private readonly gamepadDisconnectedEvent = 'gamepaddisconnected';
 
     constructor(
         private readonly actions$: Actions,
