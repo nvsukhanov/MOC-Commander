@@ -1,16 +1,7 @@
 import { Observable, ReplaySubject, Subscription, take } from 'rxjs';
 import { HUB_CHARACTERISTIC_UUID, HUB_SERVICE_UUID } from './constants';
-import {
-    AttachedIoFeature,
-    AttachedIoFeatureFactoryService,
-    CharacteristicDataStreamFactoryService,
-    HubPropertiesFeature,
-    HubPropertiesFeatureFactoryService,
-    OutboundMessenger,
-    OutboundMessengerFactoryService,
-    PortsFeature,
-    PortsFeatureFactoryService
-} from './messages';
+import { CharacteristicDataStreamFactoryService, OutboundMessenger, OutboundMessengerFactoryService } from './messages';
+import { HubPropertiesFeature, HubPropertiesFeatureFactoryService, IoFeature, IoFeatureFactoryService } from './features';
 
 export class Hub {
     public onDisconnected$: Observable<void>;
@@ -29,17 +20,14 @@ export class Hub {
 
     private _hubProperties?: HubPropertiesFeature;
 
-    private _attachedIO?: AttachedIoFeature;
-
-    private _ports?: PortsFeature;
+    private _ports?: IoFeature;
 
     constructor(
         private readonly onHubDisconnect: Observable<void>,
         private readonly gatt: BluetoothRemoteGATTServer,
         private readonly characteristicsMessengerFactoryService: OutboundMessengerFactoryService,
         private readonly propertiesFactoryService: HubPropertiesFeatureFactoryService,
-        private readonly attachedIoProviderFactoryService: AttachedIoFeatureFactoryService,
-        private readonly portInformationProviderFactoryService: PortsFeatureFactoryService,
+        private readonly portInformationProviderFactoryService: IoFeatureFactoryService,
         private readonly characteristicsDataStreamFactoryService: CharacteristicDataStreamFactoryService,
         private readonly window: Window
     ) {
@@ -53,14 +41,7 @@ export class Hub {
         return this._hubProperties;
     }
 
-    public get attachedIO(): AttachedIoFeature {
-        if (!this._attachedIO) {
-            throw new Error('not connected yet'); // TODO: meaningful error handling
-        }
-        return this._attachedIO;
-    }
-
-    public get ports(): PortsFeature {
+    public get ports(): IoFeature {
         if (!this._ports) {
             throw new Error('not connected yet'); // TODO: meaningful error handling
         }
@@ -77,11 +58,6 @@ export class Hub {
             dataStream,
             this.onDisconnected,
             this.messenger,
-        );
-
-        this._attachedIO = this.attachedIoProviderFactoryService.create(
-            dataStream,
-            this.onHubDisconnect,
         );
 
         this._ports = this.portInformationProviderFactoryService.create(

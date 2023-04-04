@@ -1,9 +1,7 @@
 import { filter, from, Observable, share, switchMap } from 'rxjs';
-import { HubProperty, MessageType, SubscribableHubProperties } from '../../constants';
-import { OutboundMessenger } from '../outbound-messenger';
-import { LoggingService } from '../../../logging';
-import { InboundMessageListener } from '../inbound-message-listener';
-import { HubPropertiesOutboundMessageFactoryService } from './hub-properties-outbound-message-factory.service';
+import { HubProperty, MessageType, SubscribableHubProperties } from '../constants';
+import { HubPropertiesOutboundMessageFactoryService, InboundMessageListener, OutboundMessenger } from '../messages';
+import { LoggingService } from '../../logging';
 
 export class HubPropertiesFeature {
     public batteryLevel$ = this.createPropertyStream(HubProperty.batteryVoltage);

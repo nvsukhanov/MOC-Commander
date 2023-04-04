@@ -22,7 +22,7 @@ export const CONFIGURE_HUB_REDUCERS = createReducer(
         ...state,
         attachedIOs: {
             ...state.attachedIOs,
-            [data.portId]: { ioType: data.ioType, value: [], modesInformation: null }
+            [data.portId]: { ioType: data.ioType, value: [], inputModes: {}, outputModes: {} }
         }
     })),
     on(ACTIONS_CONFIGURE_HUB.unregisterio, (state, data) => {
@@ -47,7 +47,8 @@ export const CONFIGURE_HUB_REDUCERS = createReducer(
             ...state.attachedIOs,
             [data.portId]: {
                 ...state.attachedIOs[data.portId],
-                modesInformation: data.modesInformation
+                inputModes: data.inputModes,
+                outputModes: data.outputModes
             }
         }
     }))

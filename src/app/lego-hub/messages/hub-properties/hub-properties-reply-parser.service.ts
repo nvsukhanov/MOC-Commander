@@ -37,7 +37,9 @@ export class HubPropertiesReplyParserService implements IReplyParser<MessageType
         return {
             messageType: MessageType.properties,
             propertyType: HubProperty.rssi,
-            level: payload[0] << 24 >> 24 // rssi is a int8 stored as uint8, so we have to convert it, ref: https://lego.github.io/lego-ble-wireless-protocol-docs/index.html#hub-property-payload
+            // rssi is a int8 stored as uint8, so we have to convert it,
+            // ref: https://lego.github.io/lego-ble-wireless-protocol-docs/index.html#hub-property-payload
+            level: payload[0] << 24 >> 24
         };
     }
 }

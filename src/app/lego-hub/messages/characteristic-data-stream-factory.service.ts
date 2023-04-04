@@ -29,7 +29,10 @@ export class CharacteristicDataStreamFactoryService {
             map((rawMessage) => this.dissector.dissect(rawMessage)),
             tap((message) => {
                 if (this.config.dumpIncomingMessageType === 'all' || this.dumpMessageTypesSet.has(message.header.messageType)) {
-                    this.logging.debug(`Recieved message of type ${message.header.messageType} with payload ${message.payload.join(' ')}`);
+                    this.logging.debug(
+                        `Recieved message of type '${MessageType[message.header.messageType] ?? message.header.messageType}'`,
+                        `with payload ${message.payload.join(' ')}`
+                    );
                 }
             }),
             share()
