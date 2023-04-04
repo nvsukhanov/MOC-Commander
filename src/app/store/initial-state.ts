@@ -1,4 +1,5 @@
 import { ControllerConnectionState, ControllerType, HubConnectionState, IState } from './i-state';
+import { ATTACHED_IO_ENTITY_ADAPTER } from './entity-adapters';
 
 export const INITIAL_STATE: IState = {
     controller: {
@@ -21,7 +22,7 @@ export const INITIAL_STATE: IState = {
         batteryLevel: null,
         name: null,
         rssiLevel: null,
-        attachedIOs: {}
+        attachedIOs: ATTACHED_IO_ENTITY_ADAPTER.getInitialState()
     },
     bluetoothAvailability: {
         isAvailable: false

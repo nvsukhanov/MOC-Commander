@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { IState } from '../i-state';
-import { IIoPortRendererConfig } from '../../configure-hub/io-port/i-io-port-renderer';
+import { ATTACHED_ENTITY_SELECTORS } from '../entity-adapters';
 
 export const SELECT_HUB_FEATURE = createFeatureSelector<IState['hub']>('hub');
 
@@ -24,17 +24,22 @@ export const SELECT_ATTACHED_IOS = createSelector(
     (state) => state.attachedIOs
 );
 
-export const SELECT_IO_PORT_CONFIG = createSelector(  // TODO: use ngrx entity
+export const SELECT_ATTACHED_IOS_LIST = createSelector(
     SELECT_ATTACHED_IOS,
-    (state) => [ ...Object.entries(state) ].map(([ portId, ioConfig ]) => {
+    ATTACHED_ENTITY_SELECTORS.selectAll
+);
+
+export const SELECT_IO_PORT_CONFIG = createSelector(
+    SELECT_ATTACHED_IOS_LIST,
+    (state) => state.map((ioConfig) => {
         return {
             type: ioConfig.ioType,
             config: {
-                portId: Number(portId), // TODO: Remove this hack
+                portId: ioConfig.portId,
                 inputModes: ioConfig.inputModes,
                 outputModes: ioConfig.outputModes,
                 value: ioConfig.value
-            } as IIoPortRendererConfig
+            }
         };
     })
 );
