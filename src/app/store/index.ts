@@ -7,3 +7,4 @@ export * from './selectors';
 export * from './bluetooth-availability-check-factory';
 export * from './lpu-hub-storage.service';
 export * from './provide-store';
+export { ATTACHED_IO_ENTITY_ADAPTER } from './entity-adapters';

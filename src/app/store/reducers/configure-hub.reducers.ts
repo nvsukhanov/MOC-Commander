@@ -2,6 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import { INITIAL_STATE } from '../initial-state';
 import { ACTIONS_CONFIGURE_HUB } from '../actions';
 import { HubConnectionState } from '../i-state';
+import { ATTACHED_IO_ENTITY_ADAPTER } from '../entity-adapters';
 
 export const CONFIGURE_HUB_REDUCERS = createReducer(
     INITIAL_STATE['hub'],
@@ -14,42 +15,43 @@ export const CONFIGURE_HUB_REDUCERS = createReducer(
         batteryLevel: null,
         rssiLevel: null,
         name: null,
-        attachedIOs: {}
+        attachedIOs: ATTACHED_IO_ENTITY_ADAPTER.getInitialState()
     })),
     on(ACTIONS_CONFIGURE_HUB.batteryLevelUpdate, (state, data) => ({ ...state, batteryLevel: data.batteryLevel })),
     on(ACTIONS_CONFIGURE_HUB.rssiLevelUpdate, (state, data) => ({ ...state, rssiLevel: data.rssiLevel })),
     on(ACTIONS_CONFIGURE_HUB.registerio, (state, data) => ({
         ...state,
-        attachedIOs: {
-            ...state.attachedIOs,
-            [data.portId]: { ioType: data.ioType, value: [], inputModes: {}, outputModes: {} }
-        }
+        attachedIOs: ATTACHED_IO_ENTITY_ADAPTER.addOne({
+            portId: data.portId,
+            ioType: data.ioType,
+            value: [],
+            inputModes: {},
+            outputModes: {}
+        }, state.attachedIOs),
     })),
     on(ACTIONS_CONFIGURE_HUB.unregisterio, (state, data) => {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { [data.portId]: _, ...remainingIOs } = state.attachedIOs;
-            return { ...state, attachedIOs: remainingIOs };
+            return { ...state, attachedIOs: ATTACHED_IO_ENTITY_ADAPTER.removeOne(data.portId, state.attachedIOs) };
         }
     ),
     on(ACTIONS_CONFIGURE_HUB.portValueUpdate, (state, data) => ({
         ...state,
-        attachedIOs: {
-            ...state.attachedIOs,
-            [data.portId]: {
-                ...state.attachedIOs[data.portId],
-                value: data.value
-            }
-        }
+        attachedIOs: ATTACHED_IO_ENTITY_ADAPTER.updateOne({
+                id: data.portId,
+                changes: {
+                    value: data.value
+                }
+            }, state.attachedIOs
+        )
     })),
     on(ACTIONS_CONFIGURE_HUB.portModeInformationUpdate, (state, data) => ({
         ...state,
-        attachedIOs: {
-            ...state.attachedIOs,
-            [data.portId]: {
-                ...state.attachedIOs[data.portId],
-                inputModes: data.inputModes,
-                outputModes: data.outputModes
-            }
-        }
+        attachedIOs: ATTACHED_IO_ENTITY_ADAPTER.updateOne({
+                id: data.portId,
+                changes: {
+                    inputModes: data.inputModes,
+                    outputModes: data.outputModes
+                }
+            }, state.attachedIOs
+        )
     }))
 );

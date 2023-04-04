@@ -1,2 +1,2 @@
 export * from './configure-hub';
-export * from './io-port';
+export * from './hub-io';
