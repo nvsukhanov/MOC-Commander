@@ -5,8 +5,22 @@ export enum MessageType {
     properties = 0x01,
     attachedIO = 0x04,
     portInformationRequest = 0x21, // 33
+    portModeInformationRequest = 0x22, // 34
     portInformation = 0x43, // 67
+    portModeInformation = 0x44, // 68
     portValueSingle = 0x45, // 69
+}
+
+export enum PortModeInformationType {
+    name = 0x00,
+    rawRange = 0x01,
+    pctRange = 0x02,
+    siRange = 0x03,
+    symbol = 0x04,
+    mapping = 0x05,
+    motorBias = 0x07,
+    capabilityBits = 0x08,
+    valueFormat = 0x09,
 }
 
 export enum PortInformationRequestType {
@@ -57,6 +71,27 @@ export enum HubPropertyOperation {
 export enum HubProperty {
     rssi = 0x05,
     batteryVoltage = 0x06,
+}
+
+export enum PortModeName {
+    speed = 'SPEED',
+    position = 'POS',
+    absolutePosition = 'APOS',
+    power = 'POWER',
+    color = 'COL O',
+    rgb = 'RGB O',
+    currentS = 'CUR S',
+    currentL = 'CUR L',
+    voltageS = 'VLT S',
+    voltageL = 'VLT L',
+}
+
+export enum PortModeSymbol {
+    percent = 'PCT',
+    degree = 'DEG',
+    milliAmps = 'mA',
+    milliVolts = 'mV',
+    generic = ''
 }
 
 export type SubscribableHubProperties = HubProperty.rssi | HubProperty.batteryVoltage;

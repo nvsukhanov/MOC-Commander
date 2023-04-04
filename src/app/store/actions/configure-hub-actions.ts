@@ -1,7 +1,7 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { LpuConnectionError } from '../../lego-hub/errors';
 import { IOType } from '../../lego-hub';
-import { AttachedIOModesInformation } from '../i-state';
+import { PortModeData } from '../i-state';
 
 export const ACTIONS_CONFIGURE_HUB = createActionGroup({
     source: 'ACTIONS_CONFIGURE_HUB',
@@ -18,7 +18,7 @@ export const ACTIONS_CONFIGURE_HUB = createActionGroup({
         'registerIO': props<{ portId: number, ioType: IOType }>(),
         'unregisterIO': props<{ portId: number }>(),
         'port value update': props<{ portId: number, value: number[] }>(),
-        'port mode information update': props<{ portId: number, modesInformation: AttachedIOModesInformation }>(),
+        'port mode information update': props<{ portId: number, inputModes: PortModeData, outputModes: PortModeData }>(),
     }
 });
 

@@ -1,4 +1,4 @@
-import { IOType } from '../lego-hub';
+import { IOType, PortModeName, PortModeSymbol } from '../lego-hub';
 
 export interface IState {
     controller: {
@@ -19,23 +19,19 @@ export interface IState {
     }
 }
 
-export type AttachedIOModesInformation = {
-    capabilities: {
-        output: boolean;
-        input: boolean;
-        logicalCombinable: boolean;
-        logicalSynchronizable: boolean;
-    };
-    totalModeCount: number;
-    inputModes: number[];
-    outputModes: number[];
+export type PortModeData = {
+    [mode in number]: {
+        name: PortModeName;
+        symbol: PortModeSymbol;
+    }
 }
 
 export type AttachedIOs = {
     [portId in number]: {
         ioType: IOType;
         value: number[],
-        modesInformation: AttachedIOModesInformation | null;
+        inputModes: PortModeData;
+        outputModes: PortModeData;
     }
 }
 

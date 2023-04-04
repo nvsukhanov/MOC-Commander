@@ -35,7 +35,7 @@ export class PortInformationReplyParserService implements IReplyParser<MessageTy
             }
         }
 
-        const outputModesValue = concatUint8ToUint16(message.payload[6], message.payload[7]); // TODO: verify this
+        const outputModesValue = concatUint8ToUint16(message.payload[7], message.payload[6]); // TODO: verify this
         const outputModes: number[] = [];
         for (let i = 0; i < 15; i++) {
             if (readBitAtPosition(outputModesValue, i)) {

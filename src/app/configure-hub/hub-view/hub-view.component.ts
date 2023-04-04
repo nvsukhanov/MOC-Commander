@@ -26,7 +26,10 @@ export class HubViewComponent {
             portId: portId,
             l10nKey: MAPPING_HUB_IO_TYPE_TO_L10N[data.ioType],
             value: data.value,
-            modesInformation: data.modesInformation
+            modes: {
+                inputModes: data.inputModes,
+                outputModes: data.outputModes,
+            }
         })))
     );
 

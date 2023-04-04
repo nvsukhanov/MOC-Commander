@@ -3,9 +3,8 @@ import { HubDiscoveryService } from './hub-discovery.service';
 import { HubFactoryService } from './hub-factory.service';
 import { LpuConnectionErrorFactoryService } from './errors';
 import {
-    AttachedIoFeatureFactoryService,
     AttachedIoReplyParserService,
-    HubPropertiesFeatureFactoryService,
+    CharacteristicDataStreamFactoryService,
     HubPropertiesOutboundMessageFactoryService,
     HubPropertiesReplyParserService,
     InboundMessageDissectorService,
@@ -13,10 +12,11 @@ import {
     OutboundMessengerFactoryService,
     PortInformationReplyParserService,
     PortInformationRequestOutboundMessageFactoryService,
-    PortsFeatureFactoryService,
+    PortModeInformationReplyParserService,
+    PortModeInformationRequestOutboundMessageFactoryService,
     PortValueReplyParserService
 } from './messages';
-import { CharacteristicDataStreamFactoryService } from './messages/characteristic-data-stream-factory.service';
+import { HubPropertiesFeatureFactoryService, IoFeatureFactoryService } from './features';
 
 export function provideLegoHubEnvironment(): EnvironmentProviders {
     return makeEnvironmentProviders([
@@ -24,7 +24,6 @@ export function provideLegoHubEnvironment(): EnvironmentProviders {
             HubDiscoveryService,
             HubFactoryService,
             LpuConnectionErrorFactoryService,
-            AttachedIoFeatureFactoryService,
             AttachedIoReplyParserService,
             HubPropertiesOutboundMessageFactoryService,
             HubPropertiesFeatureFactoryService,
@@ -32,11 +31,13 @@ export function provideLegoHubEnvironment(): EnvironmentProviders {
             OutboundMessengerFactoryService,
             InboundMessageListenerFactoryService,
             InboundMessageDissectorService,
-            PortsFeatureFactoryService,
+            IoFeatureFactoryService,
             PortInformationReplyParserService,
             PortInformationRequestOutboundMessageFactoryService,
             CharacteristicDataStreamFactoryService,
-            PortValueReplyParserService
+            PortValueReplyParserService,
+            PortModeInformationRequestOutboundMessageFactoryService,
+            PortModeInformationReplyParserService
         ]
     ]);
 }

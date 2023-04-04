@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HubPropertiesFeature } from './hub-properties-feature';
-import { OutboundMessenger } from '../outbound-messenger';
+import { LoggingService } from '../../logging';
+import {
+    HubPropertiesOutboundMessageFactoryService,
+    HubPropertiesReplyParserService,
+    InboundMessageListenerFactoryService,
+    OutboundMessenger,
+    RawMessage
+} from '../messages';
 import { Observable } from 'rxjs';
-import { LoggingService } from '../../../logging';
-import { InboundMessageListenerFactoryService } from '../inbound-message-listener-factory.service';
-import { HubPropertiesReplyParserService } from './hub-properties-reply-parser.service';
-import { HubPropertiesOutboundMessageFactoryService } from './hub-properties-outbound-message-factory.service';
-import { MessageType } from '../../constants';
-import { RawMessage } from '../raw-message';
+import { MessageType } from '../constants';
+import { HubPropertiesFeature } from './hub-properties-feature';
 
 @Injectable()
 export class HubPropertiesFeatureFactoryService {
