@@ -6,6 +6,7 @@ import {
     OutboundMessenger,
     PortInformationReplyParserService,
     PortInformationRequestOutboundMessageFactoryService,
+    PortInputFormatSetupSingleOutboundMessageFactoryService,
     PortModeInformationReplyParserService,
     PortModeInformationRequestOutboundMessageFactoryService,
     PortValueReplyParserService,
@@ -23,6 +24,7 @@ export class IoFeatureFactoryService {
         private readonly portValueReplyParserService: PortValueReplyParserService,
         private readonly attachedIoReplyParserService: AttachedIoReplyParserService,
         private readonly portModeInformationOutboundMessageFactoryService: PortModeInformationRequestOutboundMessageFactoryService,
+        private readonly portInputFormatSetupSingleOutboundMessageFactoryService: PortInputFormatSetupSingleOutboundMessageFactoryService,
         private readonly portModeInformationReplyParserService: PortModeInformationReplyParserService,
     ) {
     }
@@ -63,6 +65,7 @@ export class IoFeatureFactoryService {
             attachedIOMessageListener,
             portModeInformationMessageListener,
             this.portModeInformationOutboundMessageFactoryService,
+            this.portInputFormatSetupSingleOutboundMessageFactoryService,
             messenger,
         );
     }

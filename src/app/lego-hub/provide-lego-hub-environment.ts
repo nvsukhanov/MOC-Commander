@@ -12,11 +12,13 @@ import {
     OutboundMessengerFactoryService,
     PortInformationReplyParserService,
     PortInformationRequestOutboundMessageFactoryService,
+    PortInputFormatSetupSingleOutboundMessageFactoryService,
     PortModeInformationReplyParserService,
     PortModeInformationRequestOutboundMessageFactoryService,
+    PortOperationsOutboundMessageFactoryService,
     PortValueReplyParserService
 } from './messages';
-import { HubPropertiesFeatureFactoryService, IoFeatureFactoryService } from './features';
+import { HubPropertiesFeatureFactoryService, IoFeatureFactoryService, MotorFeatureFactoryService } from './features';
 
 export function provideLegoHubEnvironment(): EnvironmentProviders {
     return makeEnvironmentProviders([
@@ -37,7 +39,10 @@ export function provideLegoHubEnvironment(): EnvironmentProviders {
             CharacteristicDataStreamFactoryService,
             PortValueReplyParserService,
             PortModeInformationRequestOutboundMessageFactoryService,
-            PortModeInformationReplyParserService
+            PortModeInformationReplyParserService,
+            MotorFeatureFactoryService,
+            PortOperationsOutboundMessageFactoryService,
+            PortInputFormatSetupSingleOutboundMessageFactoryService
         ]
     ]);
 }

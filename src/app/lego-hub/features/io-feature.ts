@@ -3,6 +3,7 @@ import {
     InboundMessageListener,
     OutboundMessenger,
     PortInformationRequestOutboundMessageFactoryService,
+    PortInputFormatSetupSingleOutboundMessageFactoryService,
     PortModeInformationInboundMessageTypes,
     PortModeInformationRequestOutboundMessageFactoryService
 } from '../messages';
@@ -32,8 +33,23 @@ export class IoFeature {
         private readonly attachedIOInboundMessageListener: InboundMessageListener<MessageType.attachedIO>,
         private readonly portModeInformationInboundMessageListener: InboundMessageListener<MessageType.portModeInformation>,
         private readonly portModeInformationOutboundMessageFactoryService: PortModeInformationRequestOutboundMessageFactoryService,
+        private readonly portInputFormatSetupSingleOutboundMessageFactoryService: PortInputFormatSetupSingleOutboundMessageFactoryService,
         private readonly messenger: OutboundMessenger
     ) {
+    }
+
+    public setPortInputFormat(
+        portId: number,
+        mode: number,
+        deltaInterval: number,
+        notificationEnabled: boolean = false
+    ): Promise<void> {
+        return this.messenger.send(this.portInputFormatSetupSingleOutboundMessageFactoryService.createMessage(
+            portId,
+            mode,
+            deltaInterval,
+            notificationEnabled
+        ));
     }
 
     public getPortModeInformationReplies$<T extends PortModeInformationType>(

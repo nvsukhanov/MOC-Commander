@@ -81,6 +81,12 @@
                     {
                         "code": 160
                     }
+                ],
+                "@typescript-eslint/no-inferrable-types": [
+                    "error",
+                    {
+                        "ignoreParameters": true
+                    }
                 ]
             }
         },
