@@ -28,18 +28,29 @@ export class OutboundMessenger {
         const header = this.composeHeader(message);
         const packet = this.concatTypedArrays(header, message.payload);
         const promise = this.queue.then(() => {
-            return this.characteristic.writeValue(packet).then(() => {
-                if (this.config.dumpOutgoingMessageType === 'all' || this.dumpMessageTypesSet.has(message.header.messageType)) {
-                    this.logging.debug(`Sent message of type ${message.header.messageType} with payload ${message.payload.join(' ')}`);
-                }
-            }).catch((error) => {
-                this.logging.error(`Failed to send message of type ${message.header.messageType} with payload ${message.payload.join(' ')}`);
+            if (this.config.dumpOutgoingMessageType === 'all' || this.dumpMessageTypesSet.has(message.header.messageType)) {
+                const preparedMessage = this.formatMessageForDump(message);
+                this.logging.debug(`Sending message of type ${preparedMessage.messageType} with payload ${preparedMessage.payload}`);
+            }
+            return this.characteristic.writeValueWithResponse(packet).catch((error) => {
+                const preparedMessage = this.formatMessageForDump(message);
+                this.logging.error(`Failed to send message of type ${preparedMessage.messageType} with payload ${preparedMessage.payload}`);
                 this.logging.error(error);
                 throw error;
             });
         });
         this.queue = promise;
         return promise;
+    }
+
+    private formatMessageForDump(message: RawMessage<MessageType>): { messageType: string, payload: string } {
+        const messageType = `${this.numberToHex(message.header.messageType)} (${MessageType[message.header.messageType]})`;
+        const payload = [ ...message.payload ].map((v) => this.numberToHex(v)).join(' ');
+        return { messageType, payload };
+    }
+
+    private numberToHex(number: number): string {
+        return `0x${number.toString(16).padStart(2, '0')}`;
     }
 
     private composeHeader(

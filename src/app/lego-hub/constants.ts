@@ -6,9 +6,11 @@ export enum MessageType {
     attachedIO = 0x04,
     portInformationRequest = 0x21, // 33
     portModeInformationRequest = 0x22, // 34
+    portInputFormatSetupSingle = 0x41, // 65
     portInformation = 0x43, // 67
     portModeInformation = 0x44, // 68
     portValueSingle = 0x45, // 69
+    portOutputCommand = 0x81, // 129
 }
 
 export enum PortModeInformationType {
@@ -92,6 +94,27 @@ export enum PortModeSymbol {
     milliAmps = 'mA',
     milliVolts = 'mV',
     generic = ''
+}
+
+export enum PortOperationStartupInformation {
+    bufferIfNecessary = 0b00000000,
+    executeImmediately = 0b00010000
+}
+
+export enum PortOperationCompletionInformation {
+    noAction = 0b00000000,
+    commandFeedback = 0b00000001,
+}
+
+export enum MotorProfile {
+    dontUseProfiles = 0b00000000,
+    useAccelerationProfile = 0b00000001,
+    useDecelerationProfile = 0b00000010,
+    useAccelerationAndDecelerationProfiles = 0b00000011,
+}
+
+export enum MotorSubCommand {
+    startSpeed = 0x07,
 }
 
 export type SubscribableHubProperties = HubProperty.rssi | HubProperty.batteryVoltage;

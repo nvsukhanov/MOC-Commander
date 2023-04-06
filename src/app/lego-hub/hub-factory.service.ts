@@ -3,7 +3,7 @@ import { Hub } from './hub';
 import { Observable } from 'rxjs';
 import { WINDOW } from '../types';
 import { CharacteristicDataStreamFactoryService, OutboundMessengerFactoryService } from './messages';
-import { HubPropertiesFeatureFactoryService, IoFeatureFactoryService } from './features';
+import { HubPropertiesFeatureFactoryService, IoFeatureFactoryService, MotorFeatureFactoryService } from './features';
 
 export type BluetoothDeviceWithGatt = Omit<BluetoothDevice, 'gatt'> & {
     readonly gatt: BluetoothRemoteGATTServer;
@@ -16,6 +16,7 @@ export class HubFactoryService {
         private readonly propertiesFactoryService: HubPropertiesFeatureFactoryService,
         private readonly portInformationProviderFactoryService: IoFeatureFactoryService,
         private readonly characteristicsDataStreamFactoryService: CharacteristicDataStreamFactoryService,
+        private readonly motorFeatureFactoryService: MotorFeatureFactoryService,
         @Inject(WINDOW) private readonly window: Window
     ) {
     }
@@ -31,6 +32,7 @@ export class HubFactoryService {
             this.propertiesFactoryService,
             this.portInformationProviderFactoryService,
             this.characteristicsDataStreamFactoryService,
+            this.motorFeatureFactoryService,
             this.window
         );
     }

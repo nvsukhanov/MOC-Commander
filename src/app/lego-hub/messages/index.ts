@@ -11,3 +11,5 @@ export * from './raw-message';
 export * from './characteristic-data-stream-factory.service';
 export * from './port-mode-information';
 export * from './port-information';
+export * from './port-operations';
+export * from './port-input-format-setup-single';

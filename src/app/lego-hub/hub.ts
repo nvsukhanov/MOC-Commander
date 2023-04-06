@@ -1,7 +1,14 @@
 import { Observable, ReplaySubject, Subscription, take } from 'rxjs';
 import { HUB_CHARACTERISTIC_UUID, HUB_SERVICE_UUID } from './constants';
 import { CharacteristicDataStreamFactoryService, OutboundMessenger, OutboundMessengerFactoryService } from './messages';
-import { HubPropertiesFeature, HubPropertiesFeatureFactoryService, IoFeature, IoFeatureFactoryService } from './features';
+import {
+    HubPropertiesFeature,
+    HubPropertiesFeatureFactoryService,
+    IoFeature,
+    IoFeatureFactoryService,
+    MotorFeature,
+    MotorFeatureFactoryService
+} from './features';
 
 export class Hub {
     public onDisconnected$: Observable<void>;
@@ -22,6 +29,8 @@ export class Hub {
 
     private _ports?: IoFeature;
 
+    private _motor?: MotorFeature;
+
     constructor(
         private readonly onHubDisconnect: Observable<void>,
         private readonly gatt: BluetoothRemoteGATTServer,
@@ -29,6 +38,7 @@ export class Hub {
         private readonly propertiesFactoryService: HubPropertiesFeatureFactoryService,
         private readonly portInformationProviderFactoryService: IoFeatureFactoryService,
         private readonly characteristicsDataStreamFactoryService: CharacteristicDataStreamFactoryService,
+        private readonly motorFeatureFactoryService: MotorFeatureFactoryService,
         private readonly window: Window
     ) {
         this.onDisconnected$ = this.onDisconnected;
@@ -48,6 +58,13 @@ export class Hub {
         return this._ports;
     }
 
+    public get motor(): MotorFeature {
+        if (!this._motor) {
+            throw new Error('not connected yet'); // TODO: meaningful error handling
+        }
+        return this._motor;
+    }
+
     public async connect(): Promise<void> {
         this.primaryService = await this.gatt.getPrimaryService(HUB_SERVICE_UUID);
         this.primaryCharacteristic = await this.primaryService.getCharacteristic(HUB_CHARACTERISTIC_UUID);
@@ -63,6 +80,10 @@ export class Hub {
         this._ports = this.portInformationProviderFactoryService.create(
             dataStream,
             this.onHubDisconnect,
+            this.messenger
+        );
+
+        this._motor = this.motorFeatureFactoryService.createMotorFeature(
             this.messenger
         );
 
