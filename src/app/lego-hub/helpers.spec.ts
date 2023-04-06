@@ -1,4 +1,4 @@
-import { concatUint8ToUint16, readBitAtPosition } from './helpers';
+import { concatUint8ToUint16, numberToUint32LEArray, readBitAtPosition } from './helpers';
 
 describe('Helpers', () => {
     describe('readBitAtPosition', () => {
@@ -30,6 +30,13 @@ describe('Helpers', () => {
             expect(concatUint8ToUint16(0x01, 0x02)).toBe(0x0102);
             expect(concatUint8ToUint16(0x10, 0x20)).toBe(0x1020);
             expect(concatUint8ToUint16(0x11, 0x22)).toBe(0x1122);
+        });
+    });
+
+    describe('numberToUint32LEArray', () => {
+        it('should convert a number to an array of 4 uint8', () => {
+            expect(numberToUint32LEArray(0x01020304)).toEqual([ 0x04, 0x03, 0x02, 0x01 ]);
+            expect(numberToUint32LEArray(0x11223344)).toEqual([ 0x44, 0x33, 0x22, 0x11 ]);
         });
     });
 });

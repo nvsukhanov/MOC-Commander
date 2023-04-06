@@ -27,6 +27,10 @@ export class IoMotorComponent implements IIoPortRenderer {
     ) {
     }
 
+    public get config(): IIoPortRendererConfig | undefined {
+        return this._config;
+    }
+
     public onStart(): void {
         if (this._config) {
             this.store.dispatch(MOTOR_OPERATIONS_ACTIONS.startMotorRotation({
@@ -37,10 +41,6 @@ export class IoMotorComponent implements IIoPortRenderer {
                 completionMode: PortOperationCompletionInformation.commandFeedback
             }));
         }
-    }
-
-    public get config(): IIoPortRendererConfig | undefined {
-        return this._config;
     }
 
     public setConfig(config: IIoPortRendererConfig): void {
