@@ -12,22 +12,22 @@ export const CONFIGURE_CONTROLLER_REDUCER = createReducer(
         gamepadConfig: props.gamepad,
         connectionState: ControllerConnectionState.Connected
     })),
-    on(ACTIONS_CONFIGURE_CONTROLLER.disconnectGamepad, (state, props): IState['controller'] => {
-        if (state.gamepadConfig?.index === props.index) {
-            return {
-                ...state,
-                controllerType: ControllerType.Unassigned,
-                gamepadConfig: { ...INITIAL_STATE.controller.gamepadConfig },
-                connectionState: ControllerConnectionState.NotConnected,
-                controllerState: {
-                    axes: {},
-                    buttons: {}
-                }
-            };
-        } else {
-            return state;
-        }
-    }),
+    // on(ACTIONS_CONFIGURE_CONTROLLER.disconnectGamepad, (state, props): IState['controller'] => {
+    //     if (state.gamepadConfig?.index === props.index) {
+    //         return {
+    //             ...state,
+    //             controllerType: ControllerType.Unassigned,
+    //             gamepadConfig: { ...INITIAL_STATE.controller.gamepadConfig },
+    //             connectionState: ControllerConnectionState.NotConnected,
+    //             controllerState: {
+    //                 axes: {},
+    //                 buttons: {}
+    //             }
+    //         };
+    //     } else {
+    //         return state;
+    //     }
+    // }),
     on(ACTIONS_CONFIGURE_CONTROLLER.listenForGamepad, (state): IState['controller'] =>
         ({ ...state, connectionState: ControllerConnectionState.Listening })
     ),
@@ -65,10 +65,10 @@ export const CONFIGURE_CONTROLLER_REDUCER = createReducer(
         connectionState: ControllerConnectionState.Connected,
         controllerType: ControllerType.Keyboard
     })),
-    on(ACTIONS_CONFIGURE_CONTROLLER.keyboardDisconnected, (state) => ({
+    on(ACTIONS_CONFIGURE_CONTROLLER.disconnectController, (state) => ({
         ...state,
         connectionState: ControllerConnectionState.NotConnected,
-        controllerType: ControllerType.Keyboard,
+        controllerType: ControllerType.Unassigned,
         controllerState: {
             axes: [],
             buttons: {}

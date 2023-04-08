@@ -1,20 +1,14 @@
 :host {
-    display: grid;
-    grid-template-columns: 50px 1fr 50px;
-    grid-template-rows: min-content auto min-content;
+    display: block;
     width: 100%;
     height: 100%;
 }
 
-.toolbar {
-    grid-column: span 3;
+.container {
+    width: 100%;
+    height: 100%;
 }
 
-.main {
-    grid-column: 2;
-    padding: 20px 0;
-}
-
-.status-bar {
-    grid-column: span 3;
+.sidenav {
+    width: 500px;
 }

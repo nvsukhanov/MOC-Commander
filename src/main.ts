@@ -8,9 +8,9 @@ import { importProvidersFrom, isDevMode } from '@angular/core';
 import { provideGamepadsPlugins } from './app/plugins';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MessageType, provideLegoHubEnvironment } from './app/lego-hub';
-import { BluetoothAvailabilityGuardService } from './app/bluetooth-availability';
 import { LOG_LEVEL, LogLevel } from './app/logging';
-import { provideI18n } from './app/i18n';
+import { CONFIGURE_CONTROLLER_I18N_SCOPE, CONFIGURE_HUB_I18N_SCOPE, GAMEPAD_PLUGINS_I18N_SCOPE, provideI18n } from './app/i18n';
+import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
 
 bootstrapApplication(LayoutComponent, {
     providers: [
@@ -24,7 +24,9 @@ bootstrapApplication(LayoutComponent, {
             dumpIncomingMessageType: 'all',
         }),
         provideApplicationStore(),
-        BluetoothAvailabilityGuardService,
         { provide: LOG_LEVEL, useValue: isDevMode() ? LogLevel.Debug : LogLevel.Warning },
+        { provide: TRANSLOCO_SCOPE, useValue: CONFIGURE_CONTROLLER_I18N_SCOPE, multi: true },
+        { provide: TRANSLOCO_SCOPE, useValue: GAMEPAD_PLUGINS_I18N_SCOPE, multi: true },
+        { provide: TRANSLOCO_SCOPE, useValue: CONFIGURE_HUB_I18N_SCOPE, multi: true },
     ]
 });

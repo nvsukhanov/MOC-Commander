@@ -3,8 +3,6 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { MOTOR_OPERATIONS_ACTIONS } from '../actions';
 import { LpuHubStorageService } from '../lpu-hub-storage.service';
 import { tap } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { IState } from '../i-state';
 
 @Injectable()
 export class MotorOperationsEffects {
@@ -25,7 +23,6 @@ export class MotorOperationsEffects {
     public constructor(
         private readonly actions$: Actions,
         private readonly lpuHubStorageService: LpuHubStorageService,
-        private readonly store: Store<IState>
     ) {
     }
 }
