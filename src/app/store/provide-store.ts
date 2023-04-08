@@ -9,6 +9,7 @@ import {
     ReadHubAttachedIoEffects,
     ReadHubPropertiesEffects,
     ReadPortInformationEffects,
+    SetHubPortModeEffects,
 } from './effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
@@ -29,7 +30,8 @@ export function provideApplicationStore(): EnvironmentProviders {
             ReadHubPropertiesEffects,
             ReadHubAttachedIoEffects,
             ReadPortInformationEffects,
-            MotorOperationsEffects
+            MotorOperationsEffects,
+            SetHubPortModeEffects
         ),
         provideStoreDevtools({
             maxAge: 25,

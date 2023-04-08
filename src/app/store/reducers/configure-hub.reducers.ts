@@ -25,8 +25,9 @@ export const CONFIGURE_HUB_REDUCERS = createReducer(
             portId: data.portId,
             ioType: data.ioType,
             value: [],
-            inputModes: {},
-            outputModes: {}
+            availableInputModes: {},
+            availableOutputModes: {},
+            currentInputPortMode: null,
         }, state.attachedIOs),
     })),
     on(ACTIONS_CONFIGURE_HUB.unregisterio, (state, data) => {
@@ -48,10 +49,21 @@ export const CONFIGURE_HUB_REDUCERS = createReducer(
         attachedIOs: ATTACHED_IO_ENTITY_ADAPTER.updateOne({
                 id: data.portId,
                 changes: {
-                    inputModes: data.inputModes,
-                    outputModes: data.outputModes
+                    availableInputModes: data.inputModes,
+                    availableOutputModes: data.outputModes,
+                    currentInputPortMode: data.currentMode,
                 }
             }, state.attachedIOs
         )
-    }))
+    })),
+    on(ACTIONS_CONFIGURE_HUB.portModeSetCompleted, (state, data) => ({
+        ...state,
+        attachedIOs: ATTACHED_IO_ENTITY_ADAPTER.updateOne({
+            id: data.portId,
+            changes: {
+                currentInputPortMode: data.mode,
+                value: []
+            }
+        }, state.attachedIOs)
+    })),
 );

@@ -19,8 +19,9 @@ import {
     PortValueReplyParserService
 } from './messages';
 import { HubPropertiesFeatureFactoryService, IoFeatureFactoryService, MotorFeatureFactoryService } from './features';
+import { ILegoHubConfig, LEGO_HUB_CONFIG, mergeConfig } from './i-lego-hub-config';
 
-export function provideLegoHubEnvironment(): EnvironmentProviders {
+export function provideLegoHubEnvironment(config: Partial<ILegoHubConfig>): EnvironmentProviders {
     return makeEnvironmentProviders([
         [
             HubDiscoveryService,
@@ -42,7 +43,8 @@ export function provideLegoHubEnvironment(): EnvironmentProviders {
             PortModeInformationReplyParserService,
             MotorFeatureFactoryService,
             PortOperationsOutboundMessageFactoryService,
-            PortInputFormatSetupSingleOutboundMessageFactoryService
+            PortInputFormatSetupSingleOutboundMessageFactoryService,
+            { provide: LEGO_HUB_CONFIG, useValue: mergeConfig(config) }
         ]
     ]);
 }

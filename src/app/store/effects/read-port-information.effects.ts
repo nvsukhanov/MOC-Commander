@@ -21,9 +21,9 @@ export class ReadPortInformationEffects {
 
     public listenPortModeChanges$ = createEffect(() => this.actions$.pipe(
         ofType(ACTIONS_CONFIGURE_HUB.connected, ACTIONS_CONFIGURE_HUB.disconnected),
-        switchMap((e) => e.type === ACTIONS_CONFIGURE_HUB.connected.type
-                         ? this.lpuHubStorageService.getHub().ports.portModeReplies$
-                         : EMPTY
+        switchMap((e) => e.type !== ACTIONS_CONFIGURE_HUB.connected.type
+                         ? EMPTY
+                         : this.lpuHubStorageService.getHub().ports.portModeReplies$
         ),
         map((v) => {
             this.portModeInformationListeners[v.portId]?.unsubscribe();
@@ -45,10 +45,12 @@ export class ReadPortInformationEffects {
                         modeSymbolsMap.set(c.mode, c.symbol as PortModeSymbol);
                     }
                 }
-                const result: { portId: number, inputModes: PortModeData, outputModes: PortModeData } = {
+                const result: { portId: number, inputModes: PortModeData, outputModes: PortModeData, currentMode: PortModeName } = {
                     portId: v.portId,
                     inputModes: {},
                     outputModes: {},
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    currentMode: modeNamesMap.get(v.currentModeId)!
                 };
                 for (const mode of v.inputModes) {
                     if (modeNamesMap.has(mode) && modeSymbolsMap.has(mode)) {

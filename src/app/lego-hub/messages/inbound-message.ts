@@ -46,6 +46,7 @@ export type PortInformationModeInfoInboundMessage = {
         logicalCombinable: boolean;
         logicalSynchronizable: boolean;
     };
+    currentModeId: number;
     totalModeCount: number;
     inputModes: number[];
     outputModes: number[];
