@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IState, SELECT_BLUETOOTH_AVAILABILITY } from '../../store';
 import { Store } from '@ngrx/store';
 import { NgIf } from '@angular/common';
-import { BluetoothNotAvailableComponent } from '../../bluetooth-availability';
 import { PushModule } from '@ngrx/component';
 
 @Component({
@@ -12,7 +11,6 @@ import { PushModule } from '@ngrx/component';
     styleUrls: [ './empty-view.component.scss' ],
     imports: [
         NgIf,
-        BluetoothNotAvailableComponent,
         PushModule,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush

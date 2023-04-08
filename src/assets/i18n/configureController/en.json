@@ -1,10 +1,9 @@
 {
-  "connect": "Connect to controller",
-  "selectType": "Select controller type",
-  "typeUnassigned": "Unassigned",
-  "typeGamepad": "Gamepad",
-  "typeKeyboard": "Keyboard",
-  "cancelListening": "Cancel listening for controller",
-  "keyboardController": "Keyboard",
-  "disconnect": "Disconnect controller"
+    "selectType": "Select controller type",
+    "typeUnassigned": "Unassigned",
+    "typeGamepad": "Gamepad",
+    "typeKeyboard": "Keyboard",
+    "cancelListening": "Cancel listening for controller",
+    "keyboardController": "Keyboard",
+    "disconnect": "Disconnect controller"
 }

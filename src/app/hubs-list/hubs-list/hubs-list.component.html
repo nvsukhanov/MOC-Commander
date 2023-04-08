@@ -1,0 +1,32 @@
+<mat-accordion>
+    <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{ 'hubsList' | transloco }}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-list *ngrxLet="connectedHubs$ | ngrxPush; let connectedHubs">
+            <ng-container *ngIf="connectedHubs?.length; else noHubConnected">
+                <mat-list-item *ngFor="let hub of connectedHubs; trackBy: hubTrackByFn">
+                    <app-hubs-list-item [name]="hub.name"
+                                        [batteryLevel]="hub.batteryLevel"
+                                        [rssiLevel]="hub.rssiLevel"
+                                        (disconnect)="disconnectHub(hub.id)"
+                    ></app-hubs-list-item>
+                </mat-list-item>
+            </ng-container>
+            <ng-template #noHubConnected>
+                <mat-list-item>
+                    {{ 'noHubConnected' | transloco }}
+                </mat-list-item>
+            </ng-template>
+        </mat-list>
+        <mat-action-row>
+            <button mat-button
+                    [disabled]="!(canAddHub$ | ngrxPush)"
+                    (click)="addHub()">
+                {{ 'discoverHub' | transloco }}
+            </button>
+        </mat-action-row>
+    </mat-expansion-panel>
+</mat-accordion>

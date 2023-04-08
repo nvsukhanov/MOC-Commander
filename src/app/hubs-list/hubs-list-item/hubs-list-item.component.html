@@ -1,0 +1,18 @@
+<div class="hub-name">
+    {{ name }}
+</div>
+<div class="battery-level" *ngIf="batteryLevel !== null">
+    <mat-icon [title]="batteryLevel">{{ batteryLevelIcon }}</mat-icon>
+</div>
+<div class="rssi-level" *ngIf="rssiLevel !== null">
+    <mat-icon [title]="rssiLevel">{{ rssiLevelIcon }}</mat-icon>
+</div>
+<div class="disconnect-button">
+    <button mat-icon-button
+            color="accent"
+            [title]="'hubDisconnect' | transloco"
+            (click)="onDisconnectClick()">
+        >
+        <mat-icon>delete</mat-icon>
+    </button>
+</div>

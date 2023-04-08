@@ -1,10 +1,13 @@
 {
-  "configureController": "Configure controller",
-  "bluetoothIsNotAvailable": "Bluetooth is not available",
-  "pageNotFound": "Page not found",
-  "configureHub": "Configure hub",
-  "controllerIsConnected": "Controller is connected",
-  "controllerIsNotConnected": "Controller is not connected",
-  "hubIsConnected": "Hub is connected",
-  "hubIsNotConnected": "Hub is not connected"
+    "appTitle": "Web LPU",
+    "controllersList": "Controllers",
+    "addController": "Add controller",
+    "cancelAddController": "Cancel add",
+    "disconnectController": "Disconnect controller",
+    "noControllerConnected": "No controller connected",
+    "hubsList": "Hubs",
+    "discoverHub": "Discover hub",
+    "disconnectHub": "Disconnect hub",
+    "noHubConnected": "No hub connected",
+    "bluetoothIsNotAvailable": "Bluetooth is not available"
 }

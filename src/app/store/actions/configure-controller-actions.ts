@@ -12,7 +12,8 @@ export const ACTIONS_CONFIGURE_CONTROLLER = createActionGroup({
         'Listening for gamepad canceled': emptyProps(),
         'Gamepad connected': props<{ gamepad: GamepadControllerConfig }>(),
         'Disconnect gamepad': props<{ index: number }>(),
-        'Gamepad disconnected': props<{ id: string }>()
+        'Gamepad disconnected': props<{ id: string }>(),
+        'disconnect controller': emptyProps(),
     }
 });
 

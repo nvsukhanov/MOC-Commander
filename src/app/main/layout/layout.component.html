@@ -1,20 +1,14 @@
-<nav class="toolbar">
-    <app-navigation-component [isBluetoothAvailable]="isBluetoothAvailable$ | ngrxPush"></app-navigation-component>
-</nav>
+<mat-drawer-container class="container" autosize>
+    <mat-drawer mode="side" [opened]="true" class="sidenav">
+        <mat-toolbar color="primary">
+            {{ 'appTitle' | transloco }}
+        </mat-toolbar>
 
-<main class="main">
-    <router-outlet></router-outlet>
-</main>
+        <app-controllers-list></app-controllers-list>
+        <app-hubs-list></app-hubs-list>
+    </mat-drawer>
 
-<footer *ngrxLet="{
-    battery: batteryLevel$,
-    isControllerConnected: isControllerConnected$,
-    rssiLevel: rssiLevel$,
-    isHubConnected: isHubConnected$
-   }; let data" class="status-bar">
-    <app-status-bar-component [batteryLevel]="data.battery"
-                              [isControllerConnected]="data.isControllerConnected"
-                              [isHubConnected]="data.isHubConnected"
-                              [rssiLevel]="data.rssiLevel"
-    ></app-status-bar-component>
-</footer>
+    <main class="main">
+        <router-outlet></router-outlet>
+    </main>
+</mat-drawer-container>

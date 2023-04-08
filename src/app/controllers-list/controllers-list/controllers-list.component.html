@@ -1,0 +1,45 @@
+<mat-accordion>
+    <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{ 'controllersList' | transloco }}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <mat-list *ngrxLet="connectedControllers$ | ngrxPush; let connectedControllers">
+            <ng-container *ngIf="connectedControllers?.length; else noConnectedControllers">
+                <mat-list-item *ngFor="let connectedController of connectedControllers; trackBy: controllerTrackById">
+                    <app-controllers-list-item [name]="connectedController.nameL10nKey"
+                                               [type]="connectedController.type"
+                                               (disconnect)="disconnectController(connectedController.id)"
+                    ></app-controllers-list-item>
+                </mat-list-item>
+            </ng-container>
+            <ng-template #noConnectedControllers>
+                <mat-list-item>
+                    {{ 'noControllerConnected' | transloco}}
+                </mat-list-item>
+            </ng-template>
+        </mat-list>
+
+        <mat-action-row [ngSwitch]="controllerConnectionState$ | ngrxPush">
+            <ng-container *ngSwitchCase="controllerConnectionStates.NotConnected">
+                <button mat-button [matMenuTriggerFor]="addControllerMenu">
+                    {{ 'addController' | transloco }}
+                </button>
+                <mat-menu #addControllerMenu="matMenu">
+                    <button *ngFor="let controller of connectableControllers"
+                            mat-menu-item
+                            (click)="addController(controller.type)">
+                        {{ controller.l10nKey | transloco }}
+                    </button>
+                </mat-menu>
+            </ng-container>
+            <button *ngSwitchCase="controllerConnectionStates.Listening"
+                    mat-button
+                    (click)="cancelAddController()">
+                {{ 'cancelAddController' | transloco }}
+            </button>
+        </mat-action-row>
+    </mat-expansion-panel>
+</mat-accordion>

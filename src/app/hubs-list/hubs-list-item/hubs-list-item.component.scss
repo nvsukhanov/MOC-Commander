@@ -1,0 +1,20 @@
+:host {
+    display: flex;
+    align-items: center;
+}
+
+.hub-name {
+    flex: 1;
+}
+
+.battery-level {
+    margin-left: 10px;
+}
+
+.rssi-level {
+    margin-left: 10px;
+}
+
+.disconnect-button {
+    margin-left: 10px;
+}

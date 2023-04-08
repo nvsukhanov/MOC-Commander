@@ -1,0 +1,13 @@
+<div *ngIf="type" class="type">
+    {{ controllerTypeMap[type] | transloco }}
+</div>
+<div *ngIf="name" class="name">
+    {{ name | transloco }}
+</div>
+<button mat-icon-button
+        color="accent"
+        [title]="'disconnectController' | transloco"
+        (click)="disconnectController()"
+>
+    <mat-icon>delete</mat-icon>
+</button>
