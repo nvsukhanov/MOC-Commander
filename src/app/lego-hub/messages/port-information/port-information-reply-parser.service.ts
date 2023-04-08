@@ -27,7 +27,7 @@ export class PortInformationReplyParserService implements IReplyParser<MessageTy
         const capabilities = message.payload[2];
         const totalModeCount = message.payload[3];
 
-        const inputModesValue = concatUint8ToUint16(message.payload[5], message.payload[4]); // TODO: verify this
+        const inputModesValue = concatUint8ToUint16(message.payload[5], message.payload[4]);
         const inputModes: number[] = [];
         for (let i = 0; i < 15; i++) {
             if (readBitAtPosition(inputModesValue, i)) {
@@ -35,7 +35,7 @@ export class PortInformationReplyParserService implements IReplyParser<MessageTy
             }
         }
 
-        const outputModesValue = concatUint8ToUint16(message.payload[7], message.payload[6]); // TODO: verify this
+        const outputModesValue = concatUint8ToUint16(message.payload[7], message.payload[6]);
         const outputModes: number[] = [];
         for (let i = 0; i < 15; i++) {
             if (readBitAtPosition(outputModesValue, i)) {
@@ -47,6 +47,7 @@ export class PortInformationReplyParserService implements IReplyParser<MessageTy
             messageType: this.messageType,
             portId: message.payload[0],
             informationType: PortInformationReplyType.modeInfo,
+            currentModeId: message.payload[1],
             capabilities: {
                 output: readBitAtPosition(capabilities, 0),
                 input: readBitAtPosition(capabilities, 1),

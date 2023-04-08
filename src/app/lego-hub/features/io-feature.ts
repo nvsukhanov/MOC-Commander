@@ -41,14 +41,14 @@ export class IoFeature {
     public setPortInputFormat(
         portId: number,
         mode: number,
-        deltaInterval: number,
-        notificationEnabled: boolean = false
+        notificationEnabled: boolean,
+        deltaInterval?: number,
     ): Promise<void> {
         return this.messenger.send(this.portInputFormatSetupSingleOutboundMessageFactoryService.createMessage(
             portId,
             mode,
+            notificationEnabled,
             deltaInterval,
-            notificationEnabled
         ));
     }
 

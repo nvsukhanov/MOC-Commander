@@ -4,6 +4,8 @@ import { MessageType, MotorProfile, MotorSubCommand, PortOperationCompletionInfo
 
 @Injectable()
 export class PortOperationsOutboundMessageFactoryService {
+    private readonly brakeSpeedValue = 126;
+
     private readonly minMotorSpeed = -100;
 
     private readonly maxMotorSpeed = 100;
@@ -16,9 +18,9 @@ export class PortOperationsOutboundMessageFactoryService {
         portId: number,
         speed: number,
         power: number = 100,
-        profile: MotorProfile,
-        startupMode: PortOperationStartupInformation,
-        completionMode: PortOperationCompletionInformation,
+        profile: MotorProfile = MotorProfile.dontUseProfiles,
+        startupMode: PortOperationStartupInformation = PortOperationStartupInformation.bufferIfNecessary,
+        completionMode: PortOperationCompletionInformation = PortOperationCompletionInformation.commandFeedback,
     ): RawMessage<MessageType.portOutputCommand> {
         if (speed > this.maxMotorSpeed || speed < this.minMotorSpeed) {
             throw new Error(`Speed must be between ${this.minMotorSpeed} and ${this.maxMotorSpeed}`);

@@ -4,7 +4,7 @@ import { MotorProfile, PortOperationCompletionInformation, PortOperationStartupI
 export const MOTOR_OPERATIONS_ACTIONS = createActionGroup({
     source: 'MOTOR_OPERATIONS_ACTIONS',
     events: {
-        'start motor rotation': props<{
+        'set motor speed': props<{
             portId: number,
             speed: number,
             power?: number,

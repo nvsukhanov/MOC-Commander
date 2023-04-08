@@ -31,8 +31,9 @@ export type AttachedIOs = {
     portId: number;
     ioType: IOType;
     value: number[],
-    inputModes: PortModeData;
-    outputModes: PortModeData;
+    availableInputModes: PortModeData;
+    availableOutputModes: PortModeData;
+    currentInputPortMode: PortModeName | null;
 }
 
 export enum HubConnectionState {

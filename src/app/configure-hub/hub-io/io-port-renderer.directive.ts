@@ -1,12 +1,12 @@
 import { ComponentRef, Directive, Input, ViewContainerRef } from '@angular/core';
-import { IIoPortRenderer, IIoPortRendererConfig } from './i-io-port-renderer';
+import { IoPortRendererBase, IoPortRendererConfig } from './io-port-renderer';
 import { IOType } from '../../lego-hub';
 import { IoPortViewComponentResolverService } from './io-port-view-component-resolver.service';
 import { UnknownIoComponent } from './renderers';
 
 type RenderedComponentDescriptor = {
     ioType: IOType;
-    componentRef: ComponentRef<IIoPortRenderer>;
+    componentRef: ComponentRef<IoPortRendererBase>;
 }
 
 @Directive({
@@ -25,7 +25,7 @@ export class IoPortRendererDirective {
     }
 
     @Input('appIoPortRenderer')
-    public set ioType({ type, config }: { type: IOType, config: IIoPortRendererConfig }) {
+    public set ioType({ type, config }: { type: IOType, config: IoPortRendererConfig }) {
         const resolvedComponentType = this.resolver.resolveComponentType(type);
 
         if (this.componentDescriptor?.ioType === type) {
