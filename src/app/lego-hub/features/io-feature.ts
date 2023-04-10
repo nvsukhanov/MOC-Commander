@@ -1,16 +1,19 @@
-import { filter, Observable, share } from 'rxjs';
+import { filter, Observable, share, take } from 'rxjs';
 import {
+    AttachedIOInboundMessage,
     InboundMessageListener,
     OutboundMessenger,
     PortInformationRequestOutboundMessageFactoryService,
     PortInputFormatSetupSingleOutboundMessageFactoryService,
+    PortModeInboundMessage,
     PortModeInformationInboundMessageTypes,
-    PortModeInformationRequestOutboundMessageFactoryService
+    PortModeInformationRequestOutboundMessageFactoryService,
+    PortValueInboundMessage
 } from '../messages';
 import { MessageType, PortModeInformationType } from '../constants';
 
 export class IoFeature {
-    public readonly attachedIoReplies$ = this.attachedIOInboundMessageListener.replies$.pipe(
+    public readonly attachedIoReplies$: Observable<AttachedIOInboundMessage> = this.attachedIOInboundMessageListener.replies$.pipe(
         share()
     );
 
@@ -38,6 +41,14 @@ export class IoFeature {
     ) {
     }
 
+    public getPortValueUpdates$(
+        portId: number
+    ): Observable<PortValueInboundMessage> {
+        return this.portValueReplies$.pipe(
+            filter((d) => d.portId === portId)
+        );
+    }
+
     public setPortInputFormat(
         portId: number,
         mode: number,
@@ -52,13 +63,15 @@ export class IoFeature {
         ));
     }
 
-    public getPortModeInformationReplies$<T extends PortModeInformationType>(
+    public getPortModeInformation$<T extends PortModeInformationType>(
         portId: number,
         mode: number,
         modeInformationType: T
     ): Observable<PortModeInformationInboundMessageTypes & { modeInformationType: T }> {
-        return this.portModeInformationReplies$.pipe(
-            filter((r) => r.portId === portId && r.mode === mode && r.modeInformationType === modeInformationType)
+        this.requestPortModeInformation(portId, mode, modeInformationType);
+        return (this.portModeInformationReplies$ as Observable<PortModeInformationInboundMessageTypes & { modeInformationType: T }>).pipe(
+            filter((r) => r.modeInformationType === modeInformationType),
+            take(1)
         ) as Observable<PortModeInformationInboundMessageTypes & { modeInformationType: T }>;
     }
 
@@ -74,15 +87,11 @@ export class IoFeature {
         ));
     }
 
-    public requestPortValueInformation(
-        portId: number
-    ): Promise<void> {
-        return this.messenger.send(this.messageFactoryService.createPortValueRequest(portId));
-    }
-
-    public requestPortMode(
-        portId: number
-    ): Promise<void> {
-        return this.messenger.send(this.messageFactoryService.createPortModeRequest(portId));
+    public getPortModes$(portId: number): Observable<PortModeInboundMessage> {
+        this.messenger.send(this.messageFactoryService.createPortModeRequest(portId));
+        return this.portModeReplies$.pipe(
+            filter((r) => r.portId === portId),
+            take(1),
+        );
     }
 }

@@ -11,7 +11,7 @@
                     <app-hubs-list-item [name]="hub.name"
                                         [batteryLevel]="hub.batteryLevel"
                                         [rssiLevel]="hub.rssiLevel"
-                                        (disconnect)="disconnectHub(hub.id)"
+                                        (disconnect)="disconnectHub(hub.hubId)"
                     ></app-hubs-list-item>
                 </mat-list-item>
             </ng-container>
@@ -24,7 +24,7 @@
         <mat-action-row>
             <button mat-button
                     [disabled]="!(canAddHub$ | ngrxPush)"
-                    (click)="addHub()">
+                    (click)="startDiscovery()">
                 {{ 'discoverHub' | transloco }}
             </button>
         </mat-action-row>

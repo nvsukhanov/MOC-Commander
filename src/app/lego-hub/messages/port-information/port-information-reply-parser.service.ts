@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IReplyParser } from '../i-reply-parser';
 import { MessageType, PortInformationReplyType } from '../../constants';
-import { InboundMessage, PortInformationModeInfoInboundMessage } from '../inbound-message';
+import { InboundMessage, PortModeInboundMessage } from '../inbound-message';
 import { RawMessage } from '../raw-message';
 import { concatUint8ToUint16, readBitAtPosition } from '../../helpers';
 
@@ -23,7 +23,7 @@ export class PortInformationReplyParserService implements IReplyParser<MessageTy
 
     private parseInformationTypeReply(
         message: RawMessage<MessageType.portInformation>
-    ): PortInformationModeInfoInboundMessage {
+    ): PortModeInboundMessage {
         const capabilities = message.payload[2];
         const totalModeCount = message.payload[3];
 

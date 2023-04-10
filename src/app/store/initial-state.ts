@@ -1,5 +1,11 @@
-import { ControllerConnectionState, ControllerType, HubConnectionState, IState } from './i-state';
-import { ATTACHED_IO_ENTITY_ADAPTER } from './entity-adapters';
+import { ControllerConnectionState, ControllerType, IState } from './i-state';
+import {
+    HUB_ATTACHED_IOS_ENTITY_ADAPTER,
+    HUB_IO_DATA_ENTITY_ADAPTER,
+    HUB_PORT_INPUT_MODES_BY_REVISION_ENTITY_ADAPTER,
+    HUB_PORT_MODE_INFO,
+    HUBS_ENTITY_ADAPTER
+} from './entity-adapters';
 
 export const INITIAL_STATE: IState = {
     controller: {
@@ -17,13 +23,11 @@ export const INITIAL_STATE: IState = {
             buttons: {}
         }
     },
-    hub: {
-        connectionState: HubConnectionState.NotConnected,
-        batteryLevel: null,
-        name: null,
-        rssiLevel: null,
-        attachedIOs: ATTACHED_IO_ENTITY_ADAPTER.getInitialState()
-    },
+    hubs: HUBS_ENTITY_ADAPTER.getInitialState(),
+    hubAttachedIOs: HUB_ATTACHED_IOS_ENTITY_ADAPTER.getInitialState(),
+    hubPortInputModesByRevision: HUB_PORT_INPUT_MODES_BY_REVISION_ENTITY_ADAPTER.getInitialState(),
+    hubIOdata: HUB_IO_DATA_ENTITY_ADAPTER.getInitialState(),
+    hubPortModeInfo: HUB_PORT_MODE_INFO.getInitialState(),
     bluetoothAvailability: {
         isAvailable: false
     }

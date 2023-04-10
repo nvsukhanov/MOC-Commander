@@ -21,7 +21,7 @@ bootstrapApplication(LayoutComponent, {
         importProvidersFrom(MatSnackBarModule),
         provideLegoHubEnvironment({
             dumpOutgoingMessageType: [ MessageType.portOutputCommand, MessageType.portInputFormatSetupSingle ],
-            dumpIncomingMessageType: 'all',
+            dumpIncomingMessageType: [ MessageType.portInformation ],
         }),
         provideApplicationStore(),
         { provide: LOG_LEVEL, useValue: isDevMode() ? LogLevel.Debug : LogLevel.Warning },

@@ -21,11 +21,15 @@ export class HubFactoryService {
     ) {
     }
 
-    public createLpuGatt(
+    public createHub(
+        id: string,
+        name: string | undefined,
         onDisconnected$: Observable<void>,
         device: BluetoothRemoteGATTServer
     ): Hub {
         return new Hub(
+            id,
+            name,
             onDisconnected$,
             device,
             this.outboundMessengerFactoryService,

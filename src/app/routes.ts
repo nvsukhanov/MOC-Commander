@@ -17,28 +17,6 @@ export const ROUTES: Routes = [
             { provide: TRANSLOCO_SCOPE, useValue: CONFIGURE_HUB_I18N_SCOPE, multi: true },
         ]
     },
-    // {
-    //     path: CONFIGURE_CONTROLLER_ROUTE,
-    //     loadComponent: () => import('./configure-controller').then((mod) => mod.ConfigureControllerComponent),
-    //     canActivate: [
-    //         (): Observable<boolean | UrlTree> => inject(BluetoothAvailabilityGuardService).guard$
-    //     ],
-    //     providers: [
-    //         importProvidersFrom(TranslocoModule),
-    //         { provide: TRANSLOCO_SCOPE, useValue: CONFIGURE_CONTROLLER_I18N_SCOPE, multi: true },
-    //         { provide: TRANSLOCO_SCOPE, useValue: GAMEPAD_PLUGINS_I18N_SCOPE, multi: true },
-    //     ]
-    // },
-    // {
-    //     path: CONFIGURE_HUB_ROUTE,
-    //     loadComponent: () => import('./configure-hub').then((mod) => mod.ConfigureHubComponent),
-    //     canActivate: [
-    //         (): Observable<boolean | UrlTree> => inject(BluetoothAvailabilityGuardService).guard$
-    //     ],
-    //     providers: [
-    //         { provide: TRANSLOCO_SCOPE, useValue: CONFIGURE_HUB_I18N_SCOPE },
-    //     ]
-    // },
     {
         path: '**',
         component: NotFoundComponent,

@@ -44,7 +44,9 @@ export class AttachedIoReplyParserService implements IReplyParser<MessageType.at
             messageType: MessageType.attachedIO,
             portId: this.getPortId(payload),
             event: AttachIoEvent.Attached,
-            ioTypeId: this.getIoTypeId(payload)
+            ioTypeId: this.getIoTypeId(payload),
+            hardwareRevision: payload.slice(4, 7).join('.'),
+            softwareRevision: payload.slice(8, 11).join('.'),
         };
     }
 

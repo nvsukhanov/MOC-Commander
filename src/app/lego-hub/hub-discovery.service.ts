@@ -21,13 +21,15 @@ export class HubDiscoveryService {
 
     public async discoverHub(): Promise<Hub> {
         const device = await this.connectDevice();
-        return this.connectToHub(device);
+        return this.connectToHubGatt(device);
     }
 
-    private async connectToHub(device: BluetoothDeviceWithGatt): Promise<Hub> {
+    private async connectToHubGatt(device: BluetoothDeviceWithGatt): Promise<Hub> {
         const gatt = await this.connectGattServer(device);
 
-        return this.lpuHubFactoryService.createLpuGatt(
+        return this.lpuHubFactoryService.createHub(
+            device.id,
+            device.name,
             fromEvent(device, this.gattServerDisconnectEventName).pipe(map(() => void 0)),
             gatt
         );

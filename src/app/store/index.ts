@@ -5,6 +5,6 @@ export * from './actions';
 export * from './reducers';
 export * from './selectors';
 export * from './bluetooth-availability-check-factory';
-export * from './lpu-hub-storage.service';
+export * from './hub-storage.service';
 export * from './provide-store';
-export { ATTACHED_IO_ENTITY_ADAPTER } from './entity-adapters';
+export { HUB_ATTACHED_IOS_ENTITY_ADAPTER } from './entity-adapters';
