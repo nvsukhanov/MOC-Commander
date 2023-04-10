@@ -12,26 +12,10 @@ export const CONFIGURE_CONTROLLER_REDUCER = createReducer(
         gamepadConfig: props.gamepad,
         connectionState: ControllerConnectionState.Connected
     })),
-    // on(ACTIONS_CONFIGURE_CONTROLLER.disconnectGamepad, (state, props): IState['controller'] => {
-    //     if (state.gamepadConfig?.index === props.index) {
-    //         return {
-    //             ...state,
-    //             controllerType: ControllerType.Unassigned,
-    //             gamepadConfig: { ...INITIAL_STATE.controller.gamepadConfig },
-    //             connectionState: ControllerConnectionState.NotConnected,
-    //             controllerState: {
-    //                 axes: {},
-    //                 buttons: {}
-    //             }
-    //         };
-    //     } else {
-    //         return state;
-    //     }
-    // }),
     on(ACTIONS_CONFIGURE_CONTROLLER.listenForGamepad, (state): IState['controller'] =>
         ({ ...state, connectionState: ControllerConnectionState.Listening })
     ),
-    on(ACTION_CONTROLLER_READ, (state, props): IState['controller'] => ({ ...state, controllerState: props })),
+    on(ACTION_CONTROLLER_READ, (state, props): IState['controller'] => ({ ...state, controllerState: { axes: props.axes, buttons: props.buttons } })),
     on(ACTIONS_CONFIGURE_CONTROLLER.cancelListeningForGamepad, (state): IState['controller'] => {
             if (state.connectionState === ControllerConnectionState.Listening) {
                 return { ...state, connectionState: ControllerConnectionState.NotConnected };

@@ -26,7 +26,7 @@ export const HUB_PORT_MODE_INFO: EntityAdapter<PortModeInfo> = createEntityAdapt
 });
 
 export const hubPortModeInfoIdFn = (hardwareRevision: string, softwareRevision: string, modeId: number, ioType: IOType): string =>
-    `${hardwareRevision}/${softwareRevision}/${modeId}`;
+    `${hardwareRevision}/${softwareRevision}/${modeId}/${ioType}`;
 
 export const HUB_PORT_INPUT_MODES_BY_REVISION_ENTITY_ADAPTER: EntityAdapter<PortInputModesByRevision> = createEntityAdapter<PortInputModesByRevision>({
     selectId: (mode) => portInputModesByRevisionIdFn(mode.hardwareRevision, mode.softwareRevision, mode.ioType),

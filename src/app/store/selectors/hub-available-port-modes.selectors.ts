@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { IState } from '../i-state';
 import { HUB_PORT_MODE_INFO, hubPortModeInfoIdFn } from '../entity-adapters';
