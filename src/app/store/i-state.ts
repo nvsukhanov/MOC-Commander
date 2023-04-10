@@ -8,39 +8,52 @@ export interface IState {
         gamepadConfig: GamepadControllerConfig;
         controllerState: ControllerState;
     },
-    hub: {
-        connectionState: HubConnectionState,
-        batteryLevel: number | null;
-        name: string | null;
-        rssiLevel: number | null;
-        attachedIOs: EntityState<AttachedIOs>;
-    },
+    hubs: EntityState<HubConfiguration>,
+    hubAttachedIOs: EntityState<AttachedIOs>,
+    hubPortInputModesByRevision: EntityState<PortInputModesByRevision>,
+    hubIOdata: EntityState<HubIoValue>,
+    hubPortModeInfo: EntityState<PortModeInfo>
     bluetoothAvailability: {
         isAvailable: boolean;
     }
 }
 
-export type PortModeData = {
-    [mode in number]: {
-        name: PortModeName;
-        symbol: PortModeSymbol;
-    }
+export type PortInputModesByRevision = {
+    hardwareRevision: string;
+    softwareRevision: string;
+    ioType: IOType;
+    inputModes: number[];
+}
+
+export type HubConfiguration = {
+    hubId: string;
+    name: string;
+    batteryLevel: number | null;
+    rssiLevel: number | null;
+}
+
+export type HubIoValue = {
+    hubId: string;
+    portId: number;
+    modeId: number;
+    values: number[];
+}
+
+export type PortModeInfo = {
+    hardwareRevision: string;
+    softwareRevision: string;
+    modeId: number;
+    ioType: IOType;
+    name: PortModeName;
+    symbol: PortModeSymbol;
 }
 
 export type AttachedIOs = {
+    hubId: string;
     portId: number;
     ioType: IOType;
-    value: number[],
-    availableInputModes: PortModeData;
-    availableOutputModes: PortModeData;
-    currentInputPortMode: PortModeName | null;
-}
-
-export enum HubConnectionState {
-    NotConnected,
-    Connected,
-    Connecting,
-    Disconnecting
+    hardwareRevision: string;
+    softwareRevision: string;
 }
 
 export enum ControllerType {

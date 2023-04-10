@@ -32,6 +32,8 @@ export class Hub {
     private _motor?: MotorFeature;
 
     constructor(
+        public readonly id: string,
+        public readonly name: string | undefined,
         private readonly onHubDisconnect: Observable<void>,
         private readonly gatt: BluetoothRemoteGATTServer,
         private readonly characteristicsMessengerFactoryService: OutboundMessengerFactoryService,
