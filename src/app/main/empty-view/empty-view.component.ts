@@ -1,6 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IState, SELECT_BLUETOOTH_AVAILABILITY } from '../../store';
-import { Store } from '@ngrx/store';
 import { NgIf } from '@angular/common';
 import { PushModule } from '@ngrx/component';
 
@@ -16,10 +14,4 @@ import { PushModule } from '@ngrx/component';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EmptyViewComponent {
-    public readonly bluetoothAvailability$ = this.store.select(SELECT_BLUETOOTH_AVAILABILITY);
-
-    constructor(
-        private store: Store<IState>,
-    ) {
-    }
 }

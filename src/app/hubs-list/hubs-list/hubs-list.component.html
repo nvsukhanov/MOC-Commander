@@ -8,7 +8,8 @@
         <mat-list *ngrxLet="connectedHubs$ | ngrxPush; let connectedHubs">
             <ng-container *ngIf="connectedHubs?.length; else noHubConnected">
                 <mat-list-item *ngFor="let hub of connectedHubs; trackBy: hubTrackByFn">
-                    <app-hubs-list-item [name]="hub.name"
+                    <app-hubs-list-item [hubId]="hub.hubId"
+                                        [name]="hub.name"
                                         [batteryLevel]="hub.batteryLevel"
                                         [rssiLevel]="hub.rssiLevel"
                                         (disconnect)="disconnectHub(hub.hubId)"

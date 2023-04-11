@@ -1,8 +1,8 @@
 import { createActionGroup, props } from '@ngrx/store';
 import { IOType } from '../../lego-hub';
 
-export const HUB_PORT_INPUT_MODES_BY_REVISION_ACTIONS = createActionGroup({
-    source: 'HUB_PORT_INPUT_MODES_BY_REVISION_ACTIONS',
+export const HUB_IO_OUTPUT_MODES = createActionGroup({
+    source: 'HUB_IO_OUTPUT_MODES',
     events: {
         'port modes received': props<{ hardwareRevision: string, softwareRevision: string, ioType: IOType, modes: number[] }>(),
     }
