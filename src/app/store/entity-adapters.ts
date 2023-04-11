@@ -1,10 +1,19 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
-import { AttachedIOs, HubConfiguration, HubIoOutputModes, HubIoValue, PortModeInfo } from './i-state';
+import {
+    AttachedIOs,
+    GamepadAxisState,
+    GamepadButtonState,
+    GamepadConfig,
+    HubConfiguration,
+   HubIoOutputModes, HubIoValue,
+
+    PortModeInfo
+} from './i-state';
 import { IOType } from '../lego-hub';
 
 export const HUB_ATTACHED_IOS_ENTITY_ADAPTER: EntityAdapter<AttachedIOs> = createEntityAdapter<AttachedIOs>({
-    selectId: (io: Pick<AttachedIOs, 'hubId' | 'portId'>) => hubAttachedIosIdFn(io.hubId, io.portId),
+    selectId: (io) => hubAttachedIosIdFn(io.hubId, io.portId),
     sortComparer: (a, b) => a.portId - b.portId
 });
 
@@ -34,3 +43,22 @@ export const HUB_IO_OUTPUT_MODES_ENTITY_ADAPTER: EntityAdapter<HubIoOutputModes>
 
 export const hubIOOutputModesIdFn = (hardwareRevision: string, softwareRevision: string, ioType: IOType) =>
     `${hardwareRevision}/${softwareRevision}/${ioType}`;
+
+export const GAMEPADS_ENTITY_ADAPTER: EntityAdapter<GamepadConfig> = createEntityAdapter<GamepadConfig>({
+    selectId: (gamepad) => gamepad.gamepadIndex,
+    sortComparer: (a, b) => a.gamepadIndex - b.gamepadIndex
+});
+
+export const GAMEPAD_AXES_STATES_ENTITY_ADAPTER: EntityAdapter<GamepadAxisState> = createEntityAdapter<GamepadAxisState>({
+    selectId: (state) => gamepadAxisIdFn(state.gamepadIndex, state.axisIndex),
+    sortComparer: (a, b) => a.axisIndex - b.axisIndex
+});
+
+export const gamepadAxisIdFn = (gamepadIndex: number, axisIndex: number) => `${gamepadIndex}/${axisIndex}`;
+
+export const GAMEPAD_BUTTONS_STATES_ENTITY_ADAPTER: EntityAdapter<GamepadButtonState> = createEntityAdapter<GamepadButtonState>({
+    selectId: (state) => gamepadButtonIdFn(state.gamepadIndex, state.buttonIndex),
+    sortComparer: (a, b) => a.buttonIndex - b.buttonIndex
+});
+
+export const gamepadButtonIdFn = (gamepadIndex: number, buttonIndex: number) => `${gamepadIndex}/${buttonIndex}`;

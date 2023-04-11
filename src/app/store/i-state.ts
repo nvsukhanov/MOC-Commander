@@ -3,12 +3,9 @@ import { EntityState } from '@ngrx/entity';
 import { RouterState } from '@ngrx/router-store';
 
 export interface IState {
-    controller: {
-        controllerType: ControllerType;
-        connectionState: ControllerConnectionState;
-        gamepadConfig: GamepadControllerConfig;
-        controllerState: ControllerState;
-    },
+    gamepads: EntityState<GamepadConfig>;
+    gamepadAxesState: EntityState<GamepadAxisState>;
+    gamepadButtonsState: EntityState<GamepadButtonState>;
     hubs: EntityState<HubConfiguration>,
     hubAttachedIOs: EntityState<AttachedIOs>,
     hubIOOutputModes: EntityState<HubIoOutputModes>,
@@ -58,64 +55,39 @@ export type AttachedIOs = {
     softwareRevision: string;
 }
 
-export enum ControllerType {
-    Unassigned,
-    GamePad,
-    Keyboard
+export type GamepadConfig = {
+    gamepadIndex: number;
+    name: string;
+    nameL10nKey?: string;
+    axes: Array<GamepadAxisConfig>;
+    buttons: Array<GamepadButtonConfig>;
 }
 
-export type ControllerButtonState = {
-    readonly index: number;
-    readonly value: number;
+export type GamepadAxisState = {
+    gamepadIndex: number;
+    axisIndex: number;
+    value: number;
 }
 
-export type ControllerAxisState = {
-    readonly index: number;
-    readonly value: number;
+export type GamepadButtonState = {
+    gamepadIndex: number;
+    buttonIndex: number;
+    value: number;
 }
 
-export enum ControllerConnectionState {
-    NotConnected,
-    Listening,
-    Connected
+export type GamepadAxisConfig = {
+    index: number;
+    nameL10nKey?: string;
 }
 
-export type ControllerAxesState = {
-    [index in number]: ControllerAxisState
-};
-
-export type ControllerButtonsState = {
-    [index in number]: ControllerButtonState
-};
-
-export type ControllerState = {
-    axes: ControllerAxesState;
-    buttons: ControllerButtonsState;
+export enum GamepadButtonType {
+    Button,
+    Trigger
 }
 
 export type GamepadButtonConfig = {
     index: number;
+    buttonType: GamepadButtonType;
     nameL10nKey?: string;
 }
 
-export type GamepadButtonAxisConfig = {
-    isButton: true;
-    buttonIndex: number;
-    nameL10nKey?: string;
-}
-
-export type GamepadNormalAxisConfig = {
-    isButton: false;
-    index: number;
-    nameL10nKey?: string;
-}
-
-export type GamepadAxisConfig = GamepadButtonAxisConfig | GamepadNormalAxisConfig;
-
-export type GamepadControllerConfig = {
-    index: number | null;
-    id: string;
-    nameL10nKey?: string | null;
-    axes: Array<GamepadAxisConfig>;
-    buttons: Array<GamepadButtonConfig>;
-}

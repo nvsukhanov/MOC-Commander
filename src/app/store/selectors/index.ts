@@ -5,3 +5,4 @@ export * from './hub-attached-io.selectors';
 export * from './hub-io-data.selectors';
 export * from './hub-io-output-modes.selectors';
 export * from './router.selectors';
+export * from './gamepad.selectors';

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GamepadControllerConfig } from '../../../store';
+import { GamepadButtonType, GamepadConfig } from '../../../store';
 import { ControllerXbox360ViewComponent } from './controller-xbox360-view.component';
 import { GamepadPlugin } from '../gamepad-plugin';
 import { createGamepadL10nKey } from '../create-gamepad-l10n-key';
@@ -18,32 +18,32 @@ export class ControllerXbox360PluginService extends GamepadPlugin {
         return this.ids.has(id);
     }
 
-    protected mapSpecificFields(): Pick<GamepadControllerConfig, 'axes' | 'buttons' | 'nameL10nKey'> {
+    protected mapSpecificFields(): Pick<GamepadConfig, 'axes' | 'buttons' | 'nameL10nKey'> {
         return {
             nameL10nKey: this.createXbox360L10nKey('name'),
             axes: [
-                { nameL10nKey: this.createXbox360L10nKey('leftStickXAxis'), index: 0, isButton: false },
-                { nameL10nKey: this.createXbox360L10nKey('leftStickYAxis'), index: 1, isButton: false },
-                { nameL10nKey: this.createXbox360L10nKey('rightStickXAxis'), index: 2, isButton: false },
-                { nameL10nKey: this.createXbox360L10nKey('rightStickYAxis'), index: 3, isButton: false },
-                { nameL10nKey: this.createXbox360L10nKey('lTrigger'), buttonIndex: 6, isButton: true },
-                { nameL10nKey: this.createXbox360L10nKey('rTrigger'), buttonIndex: 7, isButton: true },
+                { nameL10nKey: this.createXbox360L10nKey('leftStickXAxis'), index: 0 },
+                { nameL10nKey: this.createXbox360L10nKey('leftStickYAxis'), index: 1 },
+                { nameL10nKey: this.createXbox360L10nKey('rightStickXAxis'), index: 2 },
+                { nameL10nKey: this.createXbox360L10nKey('rightStickYAxis'), index: 3 },
             ],
             buttons: [
-                { index: 0, nameL10nKey: this.createXbox360L10nKey('buttonA') },
-                { index: 1, nameL10nKey: this.createXbox360L10nKey('buttonB') },
-                { index: 2, nameL10nKey: this.createXbox360L10nKey('buttonX') },
-                { index: 3, nameL10nKey: this.createXbox360L10nKey('buttonY') },
-                { index: 4, nameL10nKey: this.createXbox360L10nKey('lBumper') },
-                { index: 5, nameL10nKey: this.createXbox360L10nKey('rBumper') },
-                { index: 8, nameL10nKey: this.createXbox360L10nKey('buttonShare') },
-                { index: 9, nameL10nKey: this.createXbox360L10nKey('buttonMenu') },
-                { index: 10, nameL10nKey: this.createXbox360L10nKey('leftStickPress') },
-                { index: 11, nameL10nKey: this.createXbox360L10nKey('rightStickPress') },
-                { index: 12, nameL10nKey: this.createXbox360L10nKey('buttonDpadUp') },
-                { index: 13, nameL10nKey: this.createXbox360L10nKey('buttonDpadDown') },
-                { index: 14, nameL10nKey: this.createXbox360L10nKey('buttonDpadLeft') },
-                { index: 15, nameL10nKey: this.createXbox360L10nKey('buttonDpadRight') },
+                { index: 0, nameL10nKey: this.createXbox360L10nKey('buttonA'), buttonType: GamepadButtonType.Button },
+                { index: 1, nameL10nKey: this.createXbox360L10nKey('buttonB'), buttonType: GamepadButtonType.Button },
+                { index: 2, nameL10nKey: this.createXbox360L10nKey('buttonX'), buttonType: GamepadButtonType.Button },
+                { index: 3, nameL10nKey: this.createXbox360L10nKey('buttonY'), buttonType: GamepadButtonType.Button },
+                { index: 4, nameL10nKey: this.createXbox360L10nKey('lBumper'), buttonType: GamepadButtonType.Button },
+                { index: 5, nameL10nKey: this.createXbox360L10nKey('rBumper'), buttonType: GamepadButtonType.Button },
+                { index: 6, nameL10nKey: this.createXbox360L10nKey('lTrigger'), buttonType: GamepadButtonType.Trigger },
+                { index: 7, nameL10nKey: this.createXbox360L10nKey('rTrigger'), buttonType: GamepadButtonType.Trigger },
+                { index: 8, nameL10nKey: this.createXbox360L10nKey('buttonShare'), buttonType: GamepadButtonType.Button },
+                { index: 9, nameL10nKey: this.createXbox360L10nKey('buttonMenu'), buttonType: GamepadButtonType.Button },
+                { index: 10, nameL10nKey: this.createXbox360L10nKey('leftStickPress'), buttonType: GamepadButtonType.Button },
+                { index: 11, nameL10nKey: this.createXbox360L10nKey('rightStickPress'), buttonType: GamepadButtonType.Button },
+                { index: 12, nameL10nKey: this.createXbox360L10nKey('buttonDpadUp'), buttonType: GamepadButtonType.Button },
+                { index: 13, nameL10nKey: this.createXbox360L10nKey('buttonDpadDown'), buttonType: GamepadButtonType.Button },
+                { index: 14, nameL10nKey: this.createXbox360L10nKey('buttonDpadLeft'), buttonType: GamepadButtonType.Button },
+                { index: 15, nameL10nKey: this.createXbox360L10nKey('buttonDpadRight'), buttonType: GamepadButtonType.Button },
             ]
         };
     }

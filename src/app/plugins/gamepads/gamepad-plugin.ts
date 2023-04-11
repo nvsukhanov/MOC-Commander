@@ -1,5 +1,5 @@
 import { Type } from '@angular/core';
-import { GamepadControllerConfig } from '../../store';
+import { GamepadConfig } from '../../store';
 import { GamepadView } from './gamepad-view';
 
 export abstract class GamepadPlugin {
@@ -7,12 +7,12 @@ export abstract class GamepadPlugin {
 
     abstract controllerIdMatch(id: string): boolean;
 
-    protected abstract mapSpecificFields(gamepad: Gamepad): Pick<GamepadControllerConfig, 'axes' | 'buttons' | 'nameL10nKey'>;
+    protected abstract mapSpecificFields(gamepad: Gamepad): Pick<GamepadConfig, 'axes' | 'buttons' | 'nameL10nKey'>;
 
-    public mapToDefaultConfig(gamepad: Gamepad): GamepadControllerConfig {
+    public mapToDefaultConfig(gamepad: Gamepad): GamepadConfig {
         return {
-            id: gamepad.id,
-            index: gamepad.index,
+            name: gamepad.id,
+            gamepadIndex: gamepad.index,
             ...this.mapSpecificFields(gamepad)
         };
     }

@@ -1,5 +1,8 @@
-import { ControllerConnectionState, ControllerType, IState } from './i-state';
+import { IState } from './i-state';
 import {
+    GAMEPAD_AXES_STATES_ENTITY_ADAPTER,
+    GAMEPAD_BUTTONS_STATES_ENTITY_ADAPTER,
+    GAMEPADS_ENTITY_ADAPTER,
     HUB_ATTACHED_IOS_ENTITY_ADAPTER,
     HUB_IO_DATA_ENTITY_ADAPTER,
     HUB_IO_OUTPUT_MODES_ENTITY_ADAPTER,
@@ -9,21 +12,9 @@ import {
 import { RouterState } from '@ngrx/router-store';
 
 export const INITIAL_STATE: IState = {
-    controller: {
-        controllerType: ControllerType.Unassigned,
-        connectionState: ControllerConnectionState.NotConnected,
-        gamepadConfig: {
-            index: null,
-            id: '',
-            nameL10nKey: null,
-            axes: [],
-            buttons: []
-        },
-        controllerState: {
-            axes: {},
-            buttons: {}
-        }
-    },
+    gamepads: GAMEPADS_ENTITY_ADAPTER.getInitialState(),
+    gamepadAxesState: GAMEPAD_AXES_STATES_ENTITY_ADAPTER.getInitialState(),
+    gamepadButtonsState: GAMEPAD_BUTTONS_STATES_ENTITY_ADAPTER.getInitialState(),
     hubs: HUBS_ENTITY_ADAPTER.getInitialState(),
     hubAttachedIOs: HUB_ATTACHED_IOS_ENTITY_ADAPTER.getInitialState(),
     hubIOOutputModes: HUB_IO_OUTPUT_MODES_ENTITY_ADAPTER.getInitialState(),
