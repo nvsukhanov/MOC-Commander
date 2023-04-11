@@ -6,8 +6,13 @@
         {{ axis.l10nKey | transloco }} : {{ axis.value }}
     </div>
 
-    <div *ngFor="let button of buttons">
-        {{ button.l10nKey | transloco }} : {{ 'gamepadPlugins.gamepadButtonState' | transloco: button }}
+    <div *ngFor="let button of buttons" [ngSwitch]="button.isTrigger">
+        <ng-container *ngSwitchCase="true">
+            {{ button.l10nKey | transloco }} : {{ button.value }}
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+            {{ button.l10nKey | transloco }} : {{ 'gamepadPlugins.gamepadButtonState' | transloco: button }}
+        </ng-container>
     </div>
 </div>
 

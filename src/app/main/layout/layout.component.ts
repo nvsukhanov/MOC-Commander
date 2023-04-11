@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { IState } from '../../store';
+import { GAMEPAD_ACTIONS, IState } from '../../store';
 import { LetModule, PushModule } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { ControllersListComponent } from '../../controllers-list';
@@ -26,9 +26,13 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LayoutComponent {
+export class LayoutComponent implements OnInit {
     constructor(
         private readonly store: Store<IState>
     ) {
+    }
+
+    public ngOnInit(): void {
+        this.store.dispatch(GAMEPAD_ACTIONS.listenGamepadConnected());
     }
 }

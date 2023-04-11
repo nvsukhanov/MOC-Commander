@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { ControllerState, GamepadAxisConfig, GamepadButtonConfig } from '../../../store';
+import { GamepadAxisConfig, GamepadAxisState, GamepadButtonConfig, GamepadButtonState, GamepadButtonType } from '../../../store';
 import { GamepadView } from '../gamepad-view';
-import { NgForOf } from '@angular/common';
+import { NgForOf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 
 type AxisData = {
@@ -11,7 +11,8 @@ type AxisData = {
 
 type ButtonData = {
     l10nKey: string;
-    isPressed: boolean;
+    value: number;
+    isTrigger: boolean;
 }
 
 @Component({
@@ -20,7 +21,10 @@ type ButtonData = {
     styleUrls: [ './controller-xbox360-view.component.scss' ],
     imports: [
         NgForOf,
-        TranslocoModule
+        TranslocoModule,
+        NgSwitch,
+        NgSwitchCase,
+        NgSwitchDefault
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -31,20 +35,20 @@ export class ControllerXbox360ViewComponent extends GamepadView<AxisData, Button
         super(cdRef);
     }
 
-    protected buildAxesData(config: GamepadAxisConfig[], state: ControllerState): AxisData[] {
-        return config.map((axis) => ({
+    protected buildAxesData(config: GamepadAxisConfig[], state: GamepadAxisState[]): AxisData[] {
+        return state.map((axis) => ({
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            l10nKey: axis.nameL10nKey!, // always defined, TODO: can be fixed by stricter service typing
-            value: axis.isButton ? state.buttons[axis.buttonIndex]?.value : state.axes[axis.index]?.value
+            l10nKey: config[axis.axisIndex].nameL10nKey!, // always defined, TODO: can be fixed by stricter service typing
+            value: axis.value
         }));
     }
 
-    protected buildButtonsData(config: GamepadButtonConfig[], state: ControllerState): ButtonData[] {
-        return config.map((button) => ({
+    protected buildButtonsData(config: GamepadButtonConfig[], state: GamepadButtonState[]): ButtonData[] {
+        return state.map((button) => ({
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            l10nKey: button.nameL10nKey!, // always defined, TODO: can be fixed by stricter service typing
-            isPressed: (state.buttons[button.index]?.value ?? 0) > 0
+            l10nKey: config[button.buttonIndex].nameL10nKey!, // always defined, TODO: can be fixed by stricter service typing
+            value: button.value,
+            isTrigger: config[button.buttonIndex].buttonType === GamepadButtonType.Trigger
         }));
     }
-
 }

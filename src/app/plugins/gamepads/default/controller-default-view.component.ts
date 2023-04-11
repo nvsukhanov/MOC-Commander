@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { ControllerState, GamepadAxisConfig, GamepadButtonConfig } from '../../../store';
+import { GamepadAxisConfig, GamepadAxisState, GamepadButtonConfig, GamepadButtonState } from '../../../store';
 import { NgForOf } from '@angular/common';
 import { GamepadView } from '../gamepad-view';
 import { TranslocoModule } from '@ngneat/transloco';
@@ -31,20 +31,11 @@ export class ControllerDefaultViewComponent extends GamepadView<AxisData, Button
         super(cdRef);
     }
 
-    protected buildAxesData(config: GamepadAxisConfig[], state: ControllerState): AxisData[] {
-        return config.map((axisConfig, index) => ({
-            index,
-
-            value: axisConfig.isButton
-                   ? state.buttons[axisConfig.buttonIndex]?.value ?? 0
-                   : state.axes[axisConfig.index]?.value ?? 0 // state cannot be undefined here
-        }));
+    protected buildAxesData(config: GamepadAxisConfig[], state: GamepadAxisState[]): AxisData[] {
+        return state.map((axisState) => ({ index: axisState.axisIndex, value: axisState.value }));
     }
 
-    protected buildButtonsData(config: GamepadButtonConfig[], state: ControllerState): ButtonData[] {
-        return config.map((buttonsConfig, index) => ({
-            index,
-            isPressed: (state.buttons[buttonsConfig.index]?.value ?? 0) > 0 // state cannot be undefined here
-        }));
+    protected buildButtonsData(config: GamepadButtonConfig[], state: GamepadButtonState[]): ButtonData[] {
+        return state.map((buttonState) => ({ index: buttonState.buttonIndex, isPressed: buttonState.value > 0 }));
     }
 }

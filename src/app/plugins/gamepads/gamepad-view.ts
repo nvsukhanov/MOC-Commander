@@ -1,11 +1,13 @@
-import { ControllerState, GamepadAxisConfig, GamepadButtonConfig, GamepadControllerConfig } from '../../store';
+import { GamepadAxisConfig, GamepadAxisState, GamepadButtonConfig, GamepadButtonState, GamepadConfig } from '../../store';
 import { ChangeDetectorRef } from '@angular/core';
 
 export abstract class GamepadView<TAxisData = unknown, TButtonData = unknown> {
 
-    private configuration?: GamepadControllerConfig;
+    private configuration?: GamepadConfig;
 
-    private state?: ControllerState;
+    private axisState?: GamepadAxisState[];
+
+    private buttonState?: GamepadButtonState[];
 
     private axisData: TAxisData[] = [];
 
@@ -16,9 +18,9 @@ export abstract class GamepadView<TAxisData = unknown, TButtonData = unknown> {
     ) {
     }
 
-    protected abstract buildAxesData(config: GamepadAxisConfig[], state: ControllerState): TAxisData[];
+    protected abstract buildAxesData(config: GamepadAxisConfig[], state: GamepadAxisState[]): TAxisData[];
 
-    protected abstract buildButtonsData(config: GamepadButtonConfig[], state: ControllerState): TButtonData[];
+    protected abstract buildButtonsData(config: GamepadButtonConfig[], state: GamepadButtonState[]): TButtonData[];
 
     public get axes(): ReadonlyArray<Readonly<TAxisData>> {
         return this.axisData;
@@ -28,20 +30,21 @@ export abstract class GamepadView<TAxisData = unknown, TButtonData = unknown> {
         return this.buttonsData;
     }
 
-    public writeConfiguration(config: GamepadControllerConfig): void {
+    public writeConfiguration(config: GamepadConfig): void {
         this.configuration = config;
         this.updateData();
     }
 
-    public writeGamepadState(state: ControllerState): void {
-        this.state = state;
+    public writeGamepadState(axisState: GamepadAxisState[], buttonState: GamepadButtonState[]): void {
+        this.axisState = axisState;
+        this.buttonState = buttonState;
         this.updateData();
     }
 
     private updateData(): void {
-        if (this.configuration && this.state) {
-            this.axisData = this.buildAxesData(this.configuration.axes, this.state);
-            this.buttonsData = this.buildButtonsData(this.configuration.buttons, this.state);
+        if (this.configuration && this.axisState && this.buttonState) {
+            this.axisData = this.buildAxesData(this.configuration.axes, this.axisState);
+            this.buttonsData = this.buildButtonsData(this.configuration.buttons, this.buttonState);
         } else {
             this.axisData = [];
             this.buttonsData = [];
