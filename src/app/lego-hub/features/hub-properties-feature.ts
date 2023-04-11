@@ -1,4 +1,4 @@
-import { filter, from, Observable, share, switchMap } from 'rxjs';
+import { filter, from, Observable, share, switchMap, tap } from 'rxjs';
 import { HubProperty, MessageType, SubscribableHubProperties } from '../constants';
 import { HubPropertiesOutboundMessageFactoryService, InboundMessageListener, OutboundMessenger } from '../messages';
 import { LoggingService } from '../../logging';
@@ -24,6 +24,11 @@ export class HubPropertiesFeature {
         }
     }
 
+    public requestPropertyUpdate(property: HubProperty): Promise<void> {
+        const message = this.messageFactoryService.requestPropertyUpdate(property);
+        return this.messenger.send(message);
+    }
+
     private async sendSubscribeMessage(
         property: SubscribableHubProperties
     ): Promise<void> {
@@ -41,6 +46,7 @@ export class HubPropertiesFeature {
     private createPropertyStream(trackedProperty: SubscribableHubProperties): Observable<number> {
         return new Observable<number>((subscriber) => {
             const sub = from(this.sendSubscribeMessage(trackedProperty)).pipe(
+                tap(() => this.requestPropertyUpdate(trackedProperty)),
                 switchMap(() => this.messageListener.replies$),
                 filter((reply) => reply.propertyType === trackedProperty),
             ).subscribe((message) => {
