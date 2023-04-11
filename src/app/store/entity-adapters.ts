@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
-import { AttachedIOs, HubConfiguration, HubIoValue, PortInputModesByRevision, PortModeInfo } from './i-state';
+import { AttachedIOs, HubConfiguration, HubIoOutputModes, HubIoValue, PortModeInfo } from './i-state';
 import { IOType } from '../lego-hub';
 
 export const HUB_ATTACHED_IOS_ENTITY_ADAPTER: EntityAdapter<AttachedIOs> = createEntityAdapter<AttachedIOs>({
-    selectId: (io) => hubAttachedIosIdFn(io.hubId, io.portId),
+    selectId: (io: Pick<AttachedIOs, 'hubId' | 'portId'>) => hubAttachedIosIdFn(io.hubId, io.portId),
     sortComparer: (a, b) => a.portId - b.portId
 });
 
@@ -28,9 +28,9 @@ export const HUB_PORT_MODE_INFO: EntityAdapter<PortModeInfo> = createEntityAdapt
 export const hubPortModeInfoIdFn = (hardwareRevision: string, softwareRevision: string, modeId: number, ioType: IOType): string =>
     `${hardwareRevision}/${softwareRevision}/${modeId}/${ioType}`;
 
-export const HUB_PORT_INPUT_MODES_BY_REVISION_ENTITY_ADAPTER: EntityAdapter<PortInputModesByRevision> = createEntityAdapter<PortInputModesByRevision>({
-    selectId: (mode) => portInputModesByRevisionIdFn(mode.hardwareRevision, mode.softwareRevision, mode.ioType),
+export const HUB_IO_OUTPUT_MODES_ENTITY_ADAPTER: EntityAdapter<HubIoOutputModes> = createEntityAdapter<HubIoOutputModes>({
+    selectId: (mode) => hubIOOutputModesIdFn(mode.hardwareRevision, mode.softwareRevision, mode.ioType),
 });
 
-export const portInputModesByRevisionIdFn = (hardwareRevision: string, softwareRevision: string, ioType: IOType) =>
+export const hubIOOutputModesIdFn = (hardwareRevision: string, softwareRevision: string, ioType: IOType) =>
     `${hardwareRevision}/${softwareRevision}/${ioType}`;

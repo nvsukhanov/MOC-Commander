@@ -1,18 +1,26 @@
-<div class="hub-name">
+<a mat-line [routerLink]="hubViewHref" class="hub-name">
     {{ name }}
-</div>
-<div class="battery-level" *ngIf="batteryLevel !== null">
-    <mat-icon [title]="batteryLevel">{{ batteryLevelIcon }}</mat-icon>
-</div>
-<div class="rssi-level" *ngIf="rssiLevel !== null">
-    <mat-icon [title]="rssiLevel">{{ rssiLevelIcon }}</mat-icon>
-</div>
-<div class="disconnect-button">
-    <button mat-icon-button
-            color="accent"
-            [title]="'disconnectHub' | transloco"
-            (click)="onDisconnectClick()">
-        >
-        <mat-icon>delete</mat-icon>
-    </button>
-</div>
+</a>
+
+<mat-icon *ngIf="batteryLevel !== null"
+          class="battery-level"
+          [title]="batteryLevel"
+>
+    {{ batteryLevelIcon }}
+</mat-icon>
+
+<mat-icon *ngIf="rssiLevel !== null"
+          class="rssi-level"
+          [title]="rssiLevel"
+>
+    {{ rssiLevelIcon }}
+</mat-icon>
+
+<button mat-icon-button
+        color="accent"
+        class="disconnect-button"
+        [title]="'disconnectHub' | transloco"
+        (click)="onDisconnectClick()"
+>
+    <mat-icon>delete</mat-icon>
+</button>

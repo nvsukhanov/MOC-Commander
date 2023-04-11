@@ -1,5 +1,6 @@
 import { IOType, PortModeName, PortModeSymbol } from '../lego-hub';
 import { EntityState } from '@ngrx/entity';
+import { RouterState } from '@ngrx/router-store';
 
 export interface IState {
     controller: {
@@ -10,19 +11,20 @@ export interface IState {
     },
     hubs: EntityState<HubConfiguration>,
     hubAttachedIOs: EntityState<AttachedIOs>,
-    hubPortInputModesByRevision: EntityState<PortInputModesByRevision>,
+    hubIOOutputModes: EntityState<HubIoOutputModes>,
     hubIOdata: EntityState<HubIoValue>,
     hubPortModeInfo: EntityState<PortModeInfo>
     bluetoothAvailability: {
         isAvailable: boolean;
-    }
+    },
+    router: RouterState;
 }
 
-export type PortInputModesByRevision = {
+export type HubIoOutputModes = {
     hardwareRevision: string;
     softwareRevision: string;
     ioType: IOType;
-    inputModes: number[];
+    outputModes: number[];
 }
 
 export type HubConfiguration = {

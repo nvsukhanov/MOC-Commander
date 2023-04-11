@@ -6,14 +6,14 @@ import { Store } from '@ngrx/store';
 import { tap, withLatestFrom, zip } from 'rxjs';
 import { HUB_PORT_MODE_INFO_ACTIONS } from '../actions/hub-port-mode-info.actions';
 import { PortModeInformationName, PortModeInformationSymbol, PortModeInformationType, PortModeName, PortModeSymbol } from '../../lego-hub';
-import { SELECT_IOS_ALL } from '../selectors';
-import { HUB_PORT_INPUT_MODES_BY_REVISION_ACTIONS } from '../actions';
+import { HUB_ATTACHED_IO_SELECTORS } from '../selectors';
+import { HUB_IO_OUTPUT_MODES } from '../actions';
 
 @Injectable()
 export class HubPortModeInfoEffects {
     public loadPortModesInfo$ = createEffect(() => this.actions$.pipe(
-        ofType(HUB_PORT_INPUT_MODES_BY_REVISION_ACTIONS.portModesReceived),
-        withLatestFrom(this.store.select(SELECT_IOS_ALL)),
+        ofType(HUB_IO_OUTPUT_MODES.portModesReceived),
+        withLatestFrom(this.store.select(HUB_ATTACHED_IO_SELECTORS.selectIOsAll)),
         tap(([ action, ios ]) => {
             const matchingIO = ios.find((io) => io.softwareRevision === action.softwareRevision
                 && io.hardwareRevision === action.hardwareRevision

@@ -5,14 +5,14 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ACTION_CONTROLLER_READ, ACTION_KEYBOARD_EVENTS, ACTIONS_CONFIGURE_CONTROLLER } from '../actions';
 import { animationFrameScheduler, filter, fromEvent, interval, map, NEVER, Observable, switchMap, tap, withLatestFrom } from 'rxjs';
 import { WINDOW } from '../../types';
-import { SELECT_CONTROLLER_STATE, SELECTED_GAMEPAD_INDEX } from '../selectors';
+import { CONTROLLER_SELECTORS } from '../selectors';
 import { GamepadPluginsService } from '../../plugins';
 
 @Injectable()
 export class ConfigureControllerEffects {
     public readonly readGamepad$ = createEffect(() => this.actions$.pipe(
         ofType(ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected, ACTIONS_CONFIGURE_CONTROLLER.disconnectGamepad),
-        withLatestFrom(this.store.select(SELECTED_GAMEPAD_INDEX)),
+        withLatestFrom(this.store.select(CONTROLLER_SELECTORS.selectGamepadIndex)),
         switchMap(([ e, index ]) => e.type === ACTIONS_CONFIGURE_CONTROLLER.gamepadConnected.type
                                     ? interval(0, animationFrameScheduler).pipe(map(() => index))
                                     : NEVER
@@ -67,7 +67,7 @@ export class ConfigureControllerEffects {
                     e.preventDefault();
                     e.stopPropagation();
                 }),
-                withLatestFrom(this.store.select(SELECT_CONTROLLER_STATE)),
+                withLatestFrom(this.store.select(CONTROLLER_SELECTORS.selectControllerState)),
                 filter(([ event, state ]) => !state.buttons[event.keyCode] || state.buttons[event.keyCode].value === 0)
             )
                          : NEVER
@@ -83,7 +83,7 @@ export class ConfigureControllerEffects {
                     e.preventDefault();
                     e.stopPropagation();
                 }),
-                withLatestFrom(this.store.select(SELECT_CONTROLLER_STATE)),
+                withLatestFrom(this.store.select(CONTROLLER_SELECTORS.selectControllerState)),
                 filter(([ event, state ]) => !!state.buttons[event.keyCode] && state.buttons[event.keyCode].value !== 0)
             )
                          : NEVER

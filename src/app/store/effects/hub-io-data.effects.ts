@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { HUB_IO_DATA_ACTIONS, HUBS_ACTIONS } from '../actions';
 import { Subscription, tap } from 'rxjs';
 import { HubStorageService } from '../hub-storage.service';
-import { SELECT_PORT_IO_DATA } from '../selectors';
+import { HUB_IO_DATA_SELECTORS } from '../selectors';
 import { IState } from '../i-state';
 import { Store } from '@ngrx/store';
 
@@ -24,7 +24,7 @@ export class HubIoDataEffects {
     public readonly unsubscribeFromPortValues$ = createEffect(() => this.actions$.pipe(
         ofType(HUB_IO_DATA_ACTIONS.unsubscribeFromPortValues),
         tap((action) => {
-            this.store.select(SELECT_PORT_IO_DATA(action.hubId, action.portId)).subscribe((d) => {
+            this.store.select(HUB_IO_DATA_SELECTORS.selectPortIOData(action.hubId, action.portId)).subscribe((d) => {
                 if (!d) {
                     return;
                 }
@@ -47,7 +47,7 @@ export class HubIoDataEffects {
             }
             const subscriptionKey = action.portId;
             if (action.type === HUB_IO_DATA_ACTIONS.subscribeToPortValuesSuccess.type) {
-                const subscription = this.store.select(SELECT_PORT_IO_DATA(action.hubId, action.portId)).subscribe((d) => {
+                const subscription = this.store.select(HUB_IO_DATA_SELECTORS.selectPortIOData(action.hubId, action.portId)).subscribe((d) => {
                     if (!d) {
                         return;
                     }

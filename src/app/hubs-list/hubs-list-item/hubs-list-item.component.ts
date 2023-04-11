@@ -3,6 +3,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
+import { MatLineModule } from '@angular/material/core';
+import { RouterLink } from '@angular/router';
+import { HUB_VIEW_ROUTE } from '../../routes';
 
 @Component({
     standalone: true,
@@ -13,7 +16,9 @@ import { NgIf } from '@angular/common';
         MatButtonModule,
         MatIconModule,
         TranslocoModule,
-        NgIf
+        NgIf,
+        MatLineModule,
+        RouterLink
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -25,6 +30,8 @@ export class HubsListItemComponent {
     @Input() public rssiLevel: number | null = null;
 
     @Output() public readonly disconnect = new EventEmitter<void>();
+
+    private _hubViewHref: string[] = [];
 
     public get batteryLevelIcon(): string {
         if (this.batteryLevel === null) {
@@ -67,6 +74,15 @@ export class HubsListItemComponent {
             return 'network_wifi_1_bar';
         }
         return 'signal_wifi_bad';
+    }
+
+    @Input()
+    public set hubId(value: string | undefined) {
+        this._hubViewHref = value ? [ HUB_VIEW_ROUTE, value ] : [];
+    }
+
+    public get hubViewHref(): string[] {
+        return this._hubViewHref;
     }
 
     public onDisconnectClick(): void {

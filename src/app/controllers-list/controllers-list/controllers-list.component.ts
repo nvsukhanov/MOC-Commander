@@ -6,14 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { KeyValuePipe, NgForOf, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { MatOptionModule } from '@angular/material/core';
 import { TranslocoModule } from '@ngneat/transloco';
-import {
-    ACTIONS_CONFIGURE_CONTROLLER,
-    ControllerConnectionState,
-    ControllerType,
-    IState,
-    SELECT_CONNECTED_CONTROLLERS,
-    SELECT_CONTROLLER_CONNECTION_STATE
-} from '../../store';
+import { ACTIONS_CONFIGURE_CONTROLLER, CONTROLLER_SELECTORS, ControllerConnectionState, ControllerType, IState } from '../../store';
 import { Store } from '@ngrx/store';
 import { CONFIGURE_CONTROLLER_I18N_SCOPE } from '../../i18n';
 import { MatIconModule } from '@angular/material/icon';
@@ -52,9 +45,9 @@ export class ControllersListComponent {
 
     public readonly controllerConnectionStates = ControllerConnectionState;
 
-    public readonly controllerConnectionState$ = this.store.select(SELECT_CONTROLLER_CONNECTION_STATE);
+    public readonly controllerConnectionState$ = this.store.select(CONTROLLER_SELECTORS.selectControllerConnectionState);
 
-    public readonly connectedControllers$ = this.store.select(SELECT_CONNECTED_CONTROLLERS);
+    public readonly connectedControllers$ = this.store.select(CONTROLLER_SELECTORS.selectConnectedControllers);
 
     constructor(
         private readonly store: Store<IState>,

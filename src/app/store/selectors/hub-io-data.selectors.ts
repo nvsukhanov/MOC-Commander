@@ -5,12 +5,13 @@ import { HUB_IO_DATA_ENTITY_ADAPTER, hubIODataIdFn } from '../entity-adapters';
 
 const SELECT_HUB_IO_DATA_FEATURE = createFeatureSelector<IState['hubIOdata']>('hubIOData');
 
+const HUB_IO_DATA_ADAPTER_SELECTORS = HUB_IO_DATA_ENTITY_ADAPTER.getSelectors();
+
 const SELECT_HUB_IO_DATA_ENTITIES = createSelector(
     SELECT_HUB_IO_DATA_FEATURE,
-    HUB_IO_DATA_ENTITY_ADAPTER.getSelectors().selectEntities
+    HUB_IO_DATA_ADAPTER_SELECTORS.selectEntities
 );
 
-export const SELECT_PORT_IO_DATA = (hubId: string, portId: number) => createSelector(
-    SELECT_HUB_IO_DATA_ENTITIES,
-    (state) => state[hubIODataIdFn(hubId, portId)]
-);
+export const HUB_IO_DATA_SELECTORS = {
+    selectPortIOData: (hubId: string, portId: number) => createSelector(SELECT_HUB_IO_DATA_ENTITIES, (state) => state[hubIODataIdFn(hubId, portId)]),
+} as const;

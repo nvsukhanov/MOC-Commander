@@ -5,24 +5,18 @@ import {
     CONFIGURE_CONTROLLER_REDUCER,
     HUB_ATTACHED_IOS_REDUCERS,
     HUB_IO_DATA_REDUCERS,
-    HUB_PORT_INPUT_MODES_BY_REVISION_REDUCERS,
+    HUB_IO_OUTPUT_MODES_REDUCER,
     HUB_PORT_MODE_INFO_REDUCERS,
     HUBS_REDUCERS
 } from './reducers';
 import { provideEffects } from '@ngrx/effects';
-import {
-    ConfigureControllerEffects,
-    HubAttachedIOsEffects,
-    HubIoDataEffects,
-    HubPortInputModesByRevisionEffects,
-    HubPortModeInfoEffects,
-    HubsEffects,
-} from './effects';
+import { ConfigureControllerEffects, HubAttachedIOsEffects, HubIoDataEffects, HubIOOutputModesEffects, HubPortModeInfoEffects, HubsEffects, } from './effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { NAVIGATOR } from '../types';
 import { provideStore, Store } from '@ngrx/store';
 import { HubStorageService } from './hub-storage.service';
+import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 
 export function provideApplicationStore(): EnvironmentProviders {
     return makeEnvironmentProviders([
@@ -30,17 +24,18 @@ export function provideApplicationStore(): EnvironmentProviders {
             controller: CONFIGURE_CONTROLLER_REDUCER,
             hubs: HUBS_REDUCERS,
             hubAttachedIOs: HUB_ATTACHED_IOS_REDUCERS,
-            hubPortInputModesByRevision: HUB_PORT_INPUT_MODES_BY_REVISION_REDUCERS,
+            hubIOOutputModes: HUB_IO_OUTPUT_MODES_REDUCER,
             hubIOdata: HUB_IO_DATA_REDUCERS,
             hubPortModeInfo: HUB_PORT_MODE_INFO_REDUCERS,
-            bluetoothAvailability: BLUETOOTH_AVAILABILITY_REDUCERS
+            bluetoothAvailability: BLUETOOTH_AVAILABILITY_REDUCERS,
+            router: routerReducer
         }),
         provideEffects(
             ConfigureControllerEffects,
             HubAttachedIOsEffects,
             HubPortModeInfoEffects,
             HubIoDataEffects,
-            HubPortInputModesByRevisionEffects,
+            HubIOOutputModesEffects,
             HubsEffects,
         ),
         provideStoreDevtools({
@@ -51,6 +46,7 @@ export function provideApplicationStore(): EnvironmentProviders {
             traceLimit: 75,
         }),
         { provide: APP_INITIALIZER, useFactory: bluetoothAvailabilityCheckFactory, deps: [ NAVIGATOR, Store ], multi: true },
-        HubStorageService
+        HubStorageService,
+        provideRouterStore()
     ]);
 }
