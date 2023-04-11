@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { GAMEPAD_ACTIONS, IState } from '../../store';
+import { GAMEPAD_ACTIONS } from '../../store';
 import { LetModule, PushModule } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { ControllersListComponent } from '../../controllers-list';
@@ -28,7 +28,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 })
 export class LayoutComponent implements OnInit {
     constructor(
-        private readonly store: Store<IState>
+        private readonly store: Store
     ) {
     }
 

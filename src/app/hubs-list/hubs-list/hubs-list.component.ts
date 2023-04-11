@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
-import { BLUETOOTH_AVAILABILITY_SELECTORS, HUBS_ACTIONS, HUBS_SELECTORS, IState } from '../../store';
+import { BLUETOOTH_AVAILABILITY_SELECTORS, HUBS_ACTIONS, HUBS_SELECTORS } from '../../store';
 import { MatListModule } from '@angular/material/list';
 import { LetModule, PushModule } from '@ngrx/component';
 import { NgForOf, NgIf } from '@angular/common';
@@ -33,7 +33,7 @@ export class HubsListComponent {
     public readonly canAddHub$ = this.store.select(BLUETOOTH_AVAILABILITY_SELECTORS.isAvailable);
 
     constructor(
-        private readonly store: Store<IState>
+        private readonly store: Store
     ) {
     }
 

@@ -38,10 +38,8 @@ export class HubPropertiesFeature {
         });
     }
 
-    private createPropertyStream(trackedProperty: SubscribableHubProperties): Observable<number | null> {
-        return new Observable<number | null>((subscriber) => {
-            subscriber.next(null);
-
+    private createPropertyStream(trackedProperty: SubscribableHubProperties): Observable<number> {
+        return new Observable<number>((subscriber) => {
             const sub = from(this.sendSubscribeMessage(trackedProperty)).pipe(
                 switchMap(() => this.messageListener.replies$),
                 filter((reply) => reply.propertyType === trackedProperty),
