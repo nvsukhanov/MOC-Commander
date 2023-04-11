@@ -1,4 +1,3 @@
-export * from './controller.selectors';
 export * from './hubs.selectors';
 export * from './bluetooth-availability.selectors';
 export * from './hub-attached-io.selectors';
