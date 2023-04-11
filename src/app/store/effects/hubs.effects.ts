@@ -1,27 +1,28 @@
 import { Inject, Injectable } from '@angular/core';
 import { ExtractTokenType, NAVIGATOR } from '../../types';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, mergeMap, of, Subscription, switchMap, takeUntil, tap } from 'rxjs';
+import { map, mergeMap, Subscription, switchMap, takeUntil, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HubStorageService } from '../hub-storage.service';
 import { HUBS_ACTIONS } from '../actions';
+import { LpuConnectionError } from '../../lego-hub/errors';
 
 @Injectable()
 export class HubsEffects {
     public readonly startListening$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.startDiscovery),
-            switchMap(() => this.hubStorage.discoverHub()),
-            switchMap((hub) => {
-                return this.hubStorage.getHub(hub.id).connect().then(() => ({ hubId: hub.id, name: hub.name ?? '' }))
-                           .catch((error) => {
-                               this.hubStorage.removeHub(hub.id);
-                               throw error;
-                           });
+            mergeMap(async () => {
+                const hub = await this.hubStorage.discoverHub();
+                try {
+                    await hub.connect();
+                } catch (error: unknown) {
+                    this.hubStorage.removeHub(hub.id);
+                    return HUBS_ACTIONS.deviceConnectFailed({ error: new LpuConnectionError('Hub connection failed', 'hubConnectionFailed') });
+                }
+                return HUBS_ACTIONS.connected({ hubId: hub.id, name: hub.name ?? '' });
             }),
-            map((data) => HUBS_ACTIONS.connected(data)),
-            catchError((error) => of(HUBS_ACTIONS.deviceConnectFailed({ error })))
         );
     });
 
