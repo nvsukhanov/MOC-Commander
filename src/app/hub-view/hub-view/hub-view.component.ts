@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { HUBS_SELECTORS, IState, ROUTER_SELECTORS } from '../../store';
+import { HUBS_SELECTORS, ROUTER_SELECTORS } from '../../store';
 import { Store } from '@ngrx/store';
 import { PushModule } from '@ngrx/component';
 import { EMPTY, switchMap } from 'rxjs';
@@ -22,7 +22,7 @@ export class HubViewComponent {
     );
 
     constructor(
-        private readonly store: Store<IState>
+        private readonly store: Store
     ) {
     }
 }

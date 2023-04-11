@@ -1,8 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { ExtractTokenType, NAVIGATOR } from '../../types';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { IState } from '../i-state';
-import { catchError, map, of, Subscription, switchMap, tap } from 'rxjs';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { catchError, map, mergeMap, of, Subscription, switchMap, takeUntil, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HubStorageService } from '../hub-storage.service';
@@ -10,55 +9,71 @@ import { HUBS_ACTIONS } from '../actions';
 
 @Injectable()
 export class HubsEffects {
-    public readonly startListening$ = createEffect(() => this.actions$.pipe(
-        ofType(HUBS_ACTIONS.startDiscovery),
-        switchMap(() => this.hubStorage.discoverHub()),
-        switchMap((hub) => {
-            return this.hubStorage.getHub(hub.id).connect().then(() => ({ hubId: hub.id, name: hub.name ?? '' }))
-                       .catch((error) => {
-                           this.hubStorage.removeHub(hub.id);
-                           throw error;
-                       });
-        }),
-        tap(({ hubId }) => {
-            const rssiLevelSubscription = this.hubStorage.getHub(hubId).hubProperties.rssiLevel$.subscribe(rssiLevel => {
-                this.store.dispatch(HUBS_ACTIONS.rssiLevelReceived({ hubId, rssiLevel }));
-            });
-            this.hubRssiLevelSubscriptions.set(hubId, rssiLevelSubscription);
-            const batteryLevelSubscription = this.hubStorage.getHub(hubId).hubProperties.batteryLevel$.subscribe(batteryLevel => {
-                this.store.dispatch(HUBS_ACTIONS.batteryLevelReceived({ hubId, batteryLevel }));
-            });
-            this.hubBatteryLevelSubscriptions.set(hubId, batteryLevelSubscription);
-        }),
-        map((data) => HUBS_ACTIONS.connected(data)),
-        catchError((error) => of(HUBS_ACTIONS.deviceConnectFailed({ error })))
-    ));
+    public readonly startListening$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(HUBS_ACTIONS.startDiscovery),
+            switchMap(() => this.hubStorage.discoverHub()),
+            switchMap((hub) => {
+                return this.hubStorage.getHub(hub.id).connect().then(() => ({ hubId: hub.id, name: hub.name ?? '' }))
+                           .catch((error) => {
+                               this.hubStorage.removeHub(hub.id);
+                               throw error;
+                           });
+            }),
+            map((data) => HUBS_ACTIONS.connected(data)),
+            catchError((error) => of(HUBS_ACTIONS.deviceConnectFailed({ error })))
+        );
+    });
 
-    public readonly deviceConnectFailedNotification$ = createEffect(() => this.actions$.pipe(
-        ofType(HUBS_ACTIONS.deviceConnectFailed),
-        tap((e) => this.snackBar.open(e.error.l10nKey))
-    ), { dispatch: false });
+    public listenToBatteryLevelOnConnect$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(HUBS_ACTIONS.connected),
+            mergeMap((a) => this.hubStorage.getHub(a.hubId).hubProperties.batteryLevel$.pipe(
+                takeUntil(this.actions$.pipe(ofType(HUBS_ACTIONS.disconnected))),
+                map((batteryLevel) => HUBS_ACTIONS.batteryLevelReceived({ hubId: a.hubId, batteryLevel }))
+            ))
+        );
+    });
 
-    public readonly listenDeviceDisconnect$ = createEffect(() => this.actions$.pipe(
-        ofType(HUBS_ACTIONS.connected),
-        tap(({ hubId }) => {
-            this.hubStorage.getHub(hubId).onDisconnected$.subscribe(() => {
-                this.hubBatteryLevelSubscriptions.get(hubId)?.unsubscribe();
-                this.hubBatteryLevelSubscriptions.delete(hubId);
-                this.hubRssiLevelSubscriptions.get(hubId)?.unsubscribe();
-                this.hubRssiLevelSubscriptions.delete(hubId);
-                this.hubStorage.removeHub(hubId);
+    public listenToRssiLevelOnConnect$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(HUBS_ACTIONS.connected),
+            mergeMap((a) => this.hubStorage.getHub(a.hubId).hubProperties.rssiLevel$.pipe(
+                takeUntil(this.actions$.pipe(ofType(HUBS_ACTIONS.disconnected))),
+                map((rssiLevel) => HUBS_ACTIONS.rssiLevelReceived({ hubId: a.hubId, rssiLevel }))
+            ))
+        );
+    });
 
-                this.store.dispatch(HUBS_ACTIONS.disconnected({ hubId }));
-            });
-        })
-    ), { dispatch: false });
+    public readonly deviceConnectFailedNotification$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(HUBS_ACTIONS.deviceConnectFailed),
+            tap((e) => this.snackBar.open(e.error.l10nKey))
+        );
+    }, { dispatch: false });
 
-    public readonly userRequestedHubDisconnection$ = createEffect(() => this.actions$.pipe(
-        ofType(HUBS_ACTIONS.userRequestedHubDisconnection),
-        switchMap((a) => this.hubStorage.getHub(a.hubId).dispose().then(() => a.hubId)),
-        map((id) => HUBS_ACTIONS.disconnected({ hubId: id }))
-    ));
+    public readonly listenDeviceDisconnect$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(HUBS_ACTIONS.connected),
+            concatLatestFrom((action) => this.hubStorage.getHub(action.hubId).onDisconnected$),
+            tap(([ action ]) => {
+                this.hubBatteryLevelSubscriptions.get(action.hubId)?.unsubscribe();
+                this.hubBatteryLevelSubscriptions.delete(action.hubId);
+                this.hubRssiLevelSubscriptions.get(action.hubId)?.unsubscribe();
+                this.hubRssiLevelSubscriptions.delete(action.hubId);
+                this.hubStorage.removeHub(action.hubId);
+            }),
+            map(([ action ]) => HUBS_ACTIONS.disconnected({ hubId: action.hubId }))
+        );
+    });
+
+    public readonly userRequestedHubDisconnection$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(HUBS_ACTIONS.userRequestedHubDisconnection),
+            switchMap((a) => this.hubStorage.getHub(a.hubId).dispose().then(() => a.hubId)),
+            map((id) => HUBS_ACTIONS.disconnected({ hubId: id }))
+        );
+    });
 
     private readonly hubBatteryLevelSubscriptions = new Map<string, Subscription>();
 
@@ -67,7 +82,7 @@ export class HubsEffects {
     constructor(
         @Inject(NAVIGATOR) private readonly navigator: ExtractTokenType<typeof NAVIGATOR>,
         private readonly actions$: Actions,
-        private readonly store: Store<IState>,
+        private readonly store: Store,
         private readonly snackBar: MatSnackBar,
         private readonly hubStorage: HubStorageService
     ) {
