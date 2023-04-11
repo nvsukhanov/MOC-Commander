@@ -9,5 +9,6 @@
     "discoverHub": "Discover hub",
     "disconnectHub": "Disconnect hub",
     "noHubConnected": "No hub connected",
-    "bluetoothIsNotAvailable": "Bluetooth is not available"
+    "bluetoothIsNotAvailable": "Bluetooth is not available",
+    "hubConnectionFailed": "Hub connection failed"
 }
