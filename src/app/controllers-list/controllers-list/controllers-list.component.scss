@@ -1,4 +1,12 @@
 :host {
     display: block;
     padding-top: 3px;
+
+    .mat-accordion > .mat-expansion-panel-spacing {
+        margin-bottom: 20px;
+    }
+
+    .mat-accordion > .mat-expansion-panel {
+        border-radius: 0;
+    }
 }

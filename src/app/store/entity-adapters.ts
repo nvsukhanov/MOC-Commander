@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
-import { AttachedIOs, GamepadAxisState, GamepadButtonState, GamepadConfig, HubConfiguration, HubIoOutputModes, HubIoValue, PortModeInfo } from './i-state';
+import { AttachedIO, GamepadAxisState, GamepadButtonState, GamepadConfig, HubConfiguration, HubIoOutputModes, HubIoValue, PortModeInfo } from './i-state';
 import { IOType } from '../lego-hub';
 
-export const HUB_ATTACHED_IOS_ENTITY_ADAPTER: EntityAdapter<AttachedIOs> = createEntityAdapter<AttachedIOs>({
+export const HUB_ATTACHED_IOS_ENTITY_ADAPTER: EntityAdapter<AttachedIO> = createEntityAdapter<AttachedIO>({
     selectId: (io) => hubAttachedIosIdFn(io.hubId, io.portId),
     sortComparer: (a, b) => a.portId - b.portId
 });

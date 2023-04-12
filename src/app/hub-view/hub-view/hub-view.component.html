@@ -1,1 +1,11 @@
-selected hub: {{ selectedHub$ | ngrxPush | json }}
+<app-hub-properties-view [hub]="selectedHub$ | ngrxPush"
+                         (disconnect)="disconnectHub()"
+></app-hub-properties-view>
+
+<div *ngIf="selectedHubIOs$ | ngrxPush; let hubIOs"
+     class="io-grid">
+    <app-hub-port-view *ngFor="let hubIO of hubIOs; trackBy: hubIoTrackByFn"
+                       class="io-grid-item"
+                       [io]="hubIO">
+    </app-hub-port-view>
+</div>
