@@ -10,5 +10,12 @@
     "disconnectHub": "Disconnect hub",
     "noHubConnected": "No hub connected",
     "bluetoothIsNotAvailable": "Bluetooth is not available",
-    "hubConnectionFailed": "Hub connection failed"
+    "hubConnectionFailed": "Hub connection failed",
+    "hubBatteryLevel": "Battery: {batteryLevel}%",
+    "hubBatteryLevelUnknown": "Battery level unknown",
+    "hubRSSILevel": "RSSI: {rssiLevel}",
+    "hubRSSILevelUnknown": "RSSI unknown",
+    "hubPort": "Port {portId}",
+    "hubIOHardwareRevision": "Hardware revision: {hardwareRevision}",
+    "hubIOSoftwareRevision": "Software revision: {softwareRevision}"
 }

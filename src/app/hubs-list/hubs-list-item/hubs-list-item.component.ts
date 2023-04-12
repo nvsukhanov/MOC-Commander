@@ -41,22 +41,24 @@ export class HubsListItemComponent {
         if (this.batteryLevel >= 90) {
             return 'battery_full';
         }
-
+        if (this.batteryLevel >= 75) {
+            return 'battery_6_bar';
+        }
         if (this.batteryLevel >= 60) {
-            return 'battery_90';
+            return 'battery_5_bar';
         }
-
+        if (this.batteryLevel >= 45) {
+            return 'battery_4_bar';
+        }
         if (this.batteryLevel >= 30) {
-            return 'battery_60';
+            return 'battery_3_bar';
         }
-
-        if (this.batteryLevel >= 10) {
-            return 'battery_30';
+        if (this.batteryLevel >= 15) {
+            return 'battery_2_bar';
         }
-
-        return 'battery_alert';
+        return 'battery_0_bar';
     }
-
+    
     public get rssiLevelIcon(): string {
         if (this.rssiLevel === null || this.rssiLevel >= 0) {
             return 'signal_wifi_statusbar_null';

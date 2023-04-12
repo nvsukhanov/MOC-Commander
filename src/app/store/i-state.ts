@@ -7,7 +7,7 @@ export interface IState {
     gamepadAxesState: EntityState<GamepadAxisState>;
     gamepadButtonsState: EntityState<GamepadButtonState>;
     hubs: EntityState<HubConfiguration>,
-    hubAttachedIOs: EntityState<AttachedIOs>,
+    hubAttachedIOs: EntityState<AttachedIO>,
     hubIOOutputModes: EntityState<HubIoOutputModes>,
     hubIOdata: EntityState<HubIoValue>,
     hubPortModeInfo: EntityState<PortModeInfo>
@@ -47,7 +47,7 @@ export type PortModeInfo = {
     symbol: PortModeSymbol;
 }
 
-export type AttachedIOs = {
+export type AttachedIO = {
     hubId: string;
     portId: number;
     ioType: IOType;

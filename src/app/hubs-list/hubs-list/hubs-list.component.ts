@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { BLUETOOTH_AVAILABILITY_SELECTORS, HUBS_ACTIONS, HUBS_SELECTORS } from '../../store';
 import { MatListModule } from '@angular/material/list';
 import { LetModule, PushModule } from '@ngrx/component';
-import { NgForOf, NgIf } from '@angular/common';
+import { JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { HubsListItemComponent } from '../hubs-list-item';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -23,7 +23,8 @@ import { MatButtonModule } from '@angular/material/button';
         NgIf,
         HubsListItemComponent,
         NgForOf,
-        MatButtonModule
+        MatButtonModule,
+        JsonPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

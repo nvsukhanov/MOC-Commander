@@ -1,9 +1,16 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { HUBS_SELECTORS, ROUTER_SELECTORS } from '../../store';
+import { AttachedIO, HUB_ATTACHED_IO_SELECTORS, HubConfiguration, HUBS_ACTIONS, HUBS_SELECTORS, ROUTER_SELECTORS } from '../../store';
 import { Store } from '@ngrx/store';
-import { PushModule } from '@ngrx/component';
-import { EMPTY, switchMap } from 'rxjs';
-import { JsonPipe } from '@angular/common';
+import { LetModule, PushModule } from '@ngrx/component';
+import { EMPTY, Observable, switchMap, take } from 'rxjs';
+import { JsonPipe, NgForOf, NgIf } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDividerModule } from '@angular/material/divider';
+import { TranslocoModule } from '@ngneat/transloco';
+import { HubPropertiesViewComponent } from '../hub-properties-view';
+import { HubPortViewComponent } from '../hub-port-view';
 
 @Component({
     standalone: true,
@@ -12,17 +19,46 @@ import { JsonPipe } from '@angular/common';
     styleUrls: [ './hub-view.component.scss' ],
     imports: [
         PushModule,
-        JsonPipe
+        JsonPipe,
+        MatCardModule,
+        LetModule,
+        MatButtonModule,
+        NgIf,
+        NgForOf,
+        MatGridListModule,
+        MatDividerModule,
+        TranslocoModule,
+        HubPropertiesViewComponent,
+        HubPortViewComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HubViewComponent {
-    public readonly selectedHub$ = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
+    public readonly selectedHub$: Observable<HubConfiguration | undefined> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
         switchMap((id) => id === undefined ? EMPTY : this.store.select(HUBS_SELECTORS.selectHub(id)))
+    );
+
+    public readonly selectedHubIOs$: Observable<AttachedIO[] | undefined> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
+        switchMap((id) => id === undefined ? EMPTY : this.store.select(HUB_ATTACHED_IO_SELECTORS.selectHubIOs(id)))
     );
 
     constructor(
         private readonly store: Store
     ) {
+    }
+
+    public disconnectHub(): void {
+        this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
+            take(1)
+        ).subscribe((id) => {
+            if (id === undefined) {
+                return;
+            }
+            this.store.dispatch(HUBS_ACTIONS.userRequestedHubDisconnection({ hubId: id }));
+        });
+    }
+
+    public hubIoTrackByFn(index: number, item: AttachedIO): string {
+        return `${item.portId}/${item.ioType}`;
     }
 }
