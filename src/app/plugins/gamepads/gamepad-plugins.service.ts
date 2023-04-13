@@ -5,7 +5,7 @@ import { GamepadPlugin } from './gamepad-plugin';
 @Injectable()
 export class GamepadPluginsService {
     constructor(
-        @Inject(GamepadPlugin) private readonly gamepadPlugins: ReadonlyArray<GamepadPlugin>,
+        @Inject(GamepadPlugin) private readonly gamepadPlugins: readonly GamepadPlugin[],
         private readonly defaultPlugin: ControllerDefaultPluginService
     ) {
     }

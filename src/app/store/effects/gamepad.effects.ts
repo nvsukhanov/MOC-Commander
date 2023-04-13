@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
 import { GamepadAxisState, GamepadButtonState } from '../i-state';
-import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { GAMEPAD_ACTIONS } from '../actions';
 import { animationFrameScheduler, fromEvent, interval, map, Observable, switchMap } from 'rxjs';
@@ -45,7 +44,6 @@ export class GamepadEffects {
 
     constructor(
         private readonly actions$: Actions,
-        private readonly store: Store,
         @Inject(WINDOW) private readonly window: Window,
         private readonly gamepadPlugins: GamepadPluginsService
     ) {

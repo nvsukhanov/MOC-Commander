@@ -1,8 +1,6 @@
-import { Inject, Injectable } from '@angular/core';
-import { ExtractTokenType, NAVIGATOR } from '../../types';
+import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap, Subscription, switchMap, takeUntil, tap } from 'rxjs';
-import { Store } from '@ngrx/store';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HubStorageService } from '../hub-storage.service';
 import { HUBS_ACTIONS } from '../actions';
@@ -81,9 +79,7 @@ export class HubsEffects {
     private readonly hubRssiLevelSubscriptions = new Map<string, Subscription>();
 
     constructor(
-        @Inject(NAVIGATOR) private readonly navigator: ExtractTokenType<typeof NAVIGATOR>,
         private readonly actions$: Actions,
-        private readonly store: Store,
         private readonly snackBar: MatSnackBar,
         private readonly hubStorage: HubStorageService
     ) {

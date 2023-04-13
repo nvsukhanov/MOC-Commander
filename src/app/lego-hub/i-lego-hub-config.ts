@@ -3,8 +3,8 @@ import { MessageType } from './constants';
 
 export interface ILegoHubConfig {
     readonly maxGattConnectRetries: number;
-    readonly dumpIncomingMessageType: 'all' | ReadonlyArray<MessageType>;
-    readonly dumpOutgoingMessageType: 'all' | ReadonlyArray<MessageType>;
+    readonly dumpIncomingMessageType: 'all' | readonly MessageType[];
+    readonly dumpOutgoingMessageType: 'all' | readonly MessageType[];
     readonly minimumAllowedIOPollInterval: number;
 }
 
