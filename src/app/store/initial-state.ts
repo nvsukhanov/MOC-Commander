@@ -5,7 +5,7 @@ import {
     GAMEPADS_ENTITY_ADAPTER,
     HUB_ATTACHED_IOS_ENTITY_ADAPTER,
     HUB_IO_DATA_ENTITY_ADAPTER,
-    HUB_IO_OUTPUT_MODES_ENTITY_ADAPTER,
+    HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER,
     HUB_PORT_MODE_INFO,
     HUBS_ENTITY_ADAPTER
 } from './entity-adapters';
@@ -17,7 +17,7 @@ export const INITIAL_STATE: IState = {
     gamepadButtonsState: GAMEPAD_BUTTONS_STATES_ENTITY_ADAPTER.getInitialState(),
     hubs: HUBS_ENTITY_ADAPTER.getInitialState(),
     hubAttachedIOs: HUB_ATTACHED_IOS_ENTITY_ADAPTER.getInitialState(),
-    hubIOOutputModes: HUB_IO_OUTPUT_MODES_ENTITY_ADAPTER.getInitialState(),
+    hubIOSupportedModes: HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER.getInitialState(),
     hubIOdata: HUB_IO_DATA_ENTITY_ADAPTER.getInitialState(),
     hubPortModeInfo: HUB_PORT_MODE_INFO.getInitialState(),
     bluetoothAvailability: {

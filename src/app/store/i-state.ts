@@ -8,7 +8,7 @@ export interface IState {
     gamepadButtonsState: EntityState<GamepadButtonState>;
     hubs: EntityState<HubConfiguration>,
     hubAttachedIOs: EntityState<AttachedIO>,
-    hubIOOutputModes: EntityState<HubIoOutputModes>,
+    hubIOSupportedModes: EntityState<HubIoSupportedModes>,
     hubIOdata: EntityState<HubIoValue>,
     hubPortModeInfo: EntityState<PortModeInfo>
     bluetoothAvailability: {
@@ -17,11 +17,12 @@ export interface IState {
     router: RouterState;
 }
 
-export type HubIoOutputModes = {
+export type HubIoSupportedModes = {
     hardwareRevision: string;
     softwareRevision: string;
     ioType: IOType;
-    outputModes: number[];
+    portInputModes: number[];
+    portOutputModes: number[];
 }
 
 export type HubConfiguration = {

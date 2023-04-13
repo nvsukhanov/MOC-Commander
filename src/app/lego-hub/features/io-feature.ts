@@ -70,7 +70,7 @@ export class IoFeature {
     ): Observable<PortModeInformationInboundMessageTypes & { modeInformationType: T }> {
         this.requestPortModeInformation(portId, mode, modeInformationType);
         return (this.portModeInformationReplies$ as Observable<PortModeInformationInboundMessageTypes & { modeInformationType: T }>).pipe(
-            filter((r) => r.modeInformationType === modeInformationType),
+            filter((r) => r.modeInformationType === modeInformationType && r.portId === portId && r.mode === mode),
             take(1)
         ) as Observable<PortModeInformationInboundMessageTypes & { modeInformationType: T }>;
     }
