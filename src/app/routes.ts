@@ -3,7 +3,8 @@ import { EmptyViewComponent, NotFoundComponent } from './main';
 import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
 import { CONFIGURE_CONTROLLER_I18N_SCOPE, GAMEPAD_PLUGINS_I18N_SCOPE, HUB_IO_I18N_SCOPE } from './i18n';
 
-export const HUB_VIEW_ROUTE = 'hub-view';
+export const HUB_VIEW_ROUTE = 'hub';
+export const CONTROL_SCHEME_VIEW_ROUTE = 'control-scheme';
 
 export const ROUTES: Routes = [
     {
@@ -22,6 +23,10 @@ export const ROUTES: Routes = [
         providers: [
             { provide: TRANSLOCO_SCOPE, useValue: HUB_IO_I18N_SCOPE, multi: true },
         ]
+    },
+    {
+        path: [ CONTROL_SCHEME_VIEW_ROUTE, ':id' ].join('/'),
+        loadComponent: () => import('./control-scheme-view').then(m => m.ControlSchemeViewComponent),
     },
     {
         path: '**',

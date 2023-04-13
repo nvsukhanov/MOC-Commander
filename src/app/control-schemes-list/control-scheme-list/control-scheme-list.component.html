@@ -1,0 +1,31 @@
+<mat-accordion>
+    <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{ 'controlSchemesList' | transloco }}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <mat-list *ngrxLet="controlSchemes$ | ngrxPush; let controlSchemes">
+            <ng-container *ngIf="controlSchemes?.length; else noControlSchemes">
+                <mat-list-item *ngFor="let scheme of controlSchemes; trackBy: trackSchemeById">
+                    <app-control-scheme-list-item [name]="scheme.name"
+                                                  [schemeId]="scheme.id"
+                                                  (delete)="onDelete(scheme.id)"
+                    ></app-control-scheme-list-item>
+                </mat-list-item>
+            </ng-container>
+            <ng-template #noControlSchemes>
+                <mat-list-item>
+                    {{ 'noControlSchemes' | transloco}}
+                </mat-list-item>
+            </ng-template>
+        </mat-list>
+        <mat-action-row>
+            <button mat-button
+                    (click)="onCreate()">
+                {{ 'createScheme' | transloco }}
+            </button>
+        </mat-action-row>
+    </mat-expansion-panel>
+</mat-accordion>

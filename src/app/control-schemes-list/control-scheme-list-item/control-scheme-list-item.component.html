@@ -1,0 +1,12 @@
+<a mat-line [routerLink]="schemeViewHref" class="name">
+    {{ name }}
+</a>
+
+<button mat-icon-button
+        color="accent"
+        class="delete-button"
+        [title]="'deleteScheme' | transloco"
+        (click)="onDeleteClick()"
+>
+    <mat-icon>delete</mat-icon>
+</button>
