@@ -3,14 +3,12 @@ import { filter, map, Observable, takeUntil } from 'rxjs';
 import { IReplyParser } from './i-reply-parser';
 import { RawMessage } from './raw-message';
 import { InboundMessage } from './inbound-message';
-import { LoggingService } from '../../logging';
 
 export class InboundMessageListener<TMessageType extends MessageType> {
     constructor(
         private readonly characteristicDataStream: Observable<RawMessage<MessageType>>,
         private readonly replyParserService: IReplyParser<TMessageType>,
         private readonly onDisconnected$: Observable<void>,
-        private readonly logger: LoggingService,
     ) {
     }
 

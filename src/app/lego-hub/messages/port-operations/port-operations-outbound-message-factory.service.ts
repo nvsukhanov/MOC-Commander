@@ -4,8 +4,6 @@ import { MessageType, MotorProfile, MotorSubCommand, PortOperationCompletionInfo
 
 @Injectable()
 export class PortOperationsOutboundMessageFactoryService {
-    private readonly brakeSpeedValue = 126;
-
     private readonly minMotorSpeed = -100;
 
     private readonly maxMotorSpeed = 100;
