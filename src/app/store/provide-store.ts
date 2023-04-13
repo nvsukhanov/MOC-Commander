@@ -12,7 +12,7 @@ import {
     HUBS_REDUCERS
 } from './reducers';
 import { provideEffects } from '@ngrx/effects';
-import { GamepadEffects, HubAttachedIOsEffects, HubIoDataEffects, HubIOOutputModesEffects, HubPortModeInfoEffects, HubsEffects, } from './effects';
+import { GamepadEffects, HubAttachedIOsEffects, HubIoDataEffects, HubIOSupportedModesEffects, HubPortModeInfoEffects, HubsEffects, } from './effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { NAVIGATOR } from '../types';
@@ -28,7 +28,7 @@ export function provideApplicationStore(): EnvironmentProviders {
             gamepadButtonsState: GAMEPAD_BUTTONS_STATE_REDUCERS,
             hubs: HUBS_REDUCERS,
             hubAttachedIOs: HUB_ATTACHED_IOS_REDUCERS,
-            hubIOOutputModes: HUB_IO_OUTPUT_MODES_REDUCER,
+            hubIOSupportedModes: HUB_IO_OUTPUT_MODES_REDUCER,
             hubIOdata: HUB_IO_DATA_REDUCERS,
             hubPortModeInfo: HUB_PORT_MODE_INFO_REDUCERS,
             bluetoothAvailability: BLUETOOTH_AVAILABILITY_REDUCERS,
@@ -39,11 +39,11 @@ export function provideApplicationStore(): EnvironmentProviders {
             HubAttachedIOsEffects,
             HubPortModeInfoEffects,
             HubIoDataEffects,
-            HubIOOutputModesEffects,
+            HubIOSupportedModesEffects,
             HubsEffects,
         ),
         provideStoreDevtools({
-            maxAge: 25,
+            maxAge: 100,
             logOnly: !isDevMode(),
             autoPause: true,
             trace: false,

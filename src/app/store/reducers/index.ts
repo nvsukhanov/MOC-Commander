@@ -5,5 +5,5 @@ export * from './gamepad-buttons-state.reducer';
 export * from './hub-port-mode-info.reducers';
 export * from './hub-io-data.reducers';
 export * from './hub-attached-ios.reducers';
-export * from './hub-io-output-modes.reducers';
+export * from './hub-io-supported-modes.reducers';
 export * from './hubs.reducers';

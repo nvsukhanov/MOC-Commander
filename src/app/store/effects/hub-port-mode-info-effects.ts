@@ -6,13 +6,13 @@ import { map, mergeMap, zip } from 'rxjs';
 import { HUB_PORT_MODE_INFO_ACTIONS } from '../actions/hub-port-mode-info.actions';
 import { PortModeInformationName, PortModeInformationSymbol, PortModeInformationType, PortModeName, PortModeSymbol } from '../../lego-hub';
 import { HUB_ATTACHED_IO_SELECTORS } from '../selectors';
-import { HUB_IO_OUTPUT_MODES } from '../actions';
+import { HUB_IO_SUPPORTED_MODES } from '../actions';
 
 @Injectable()
 export class HubPortModeInfoEffects {
     public loadPortModesInfo$ = createEffect(() => {
         return this.actions$.pipe(
-            ofType(HUB_IO_OUTPUT_MODES.portModesReceived),
+            ofType(HUB_IO_SUPPORTED_MODES.portModesReceived),
             concatLatestFrom(() => this.store.select(HUB_ATTACHED_IO_SELECTORS.selectIOsAll)),
             mergeMap(([ action, ios ]) => {
                 const matchingIO = ios.find((io) => io.softwareRevision === action.softwareRevision
@@ -23,13 +23,15 @@ export class HubPortModeInfoEffects {
                     throw new Error('No hub found with matching IO');
                 }
                 const portApi = this.hubStorage.getHub(matchingIO.hubId).ports;
+                const concatenatedPortModeIds = [ ...new Set([ ...action.portOutputModes, ...action.portInputModes ]) ];
+
                 return zip(
-                    ...action.modes.map((mode) => portApi.getPortModeInformation$(matchingIO.portId, mode, PortModeInformationType.name)),
-                    ...action.modes.map((mode) => portApi.getPortModeInformation$(matchingIO.portId, mode, PortModeInformationType.symbol)),
+                    ...concatenatedPortModeIds.map((mode) => portApi.getPortModeInformation$(matchingIO.portId, mode, PortModeInformationType.name)),
+                    ...concatenatedPortModeIds.map((mode) => portApi.getPortModeInformation$(matchingIO.portId, mode, PortModeInformationType.symbol)),
                 ).pipe(
                     map((data) => {
-                        const names = data.slice(0, action.modes.length) as PortModeInformationName[];
-                        const symbols = data.slice(action.modes.length) as PortModeInformationSymbol[];
+                        const names = data.slice(0, concatenatedPortModeIds.length) as PortModeInformationName[];
+                        const symbols = data.slice(concatenatedPortModeIds.length) as PortModeInformationSymbol[];
                         const dataSets = names.map((nameMode, index) => ({
                             modeId: nameMode.mode,
                             ioType: action.ioType,

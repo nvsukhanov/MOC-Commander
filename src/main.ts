@@ -20,8 +20,8 @@ bootstrapApplication(LayoutComponent, {
         provideGamepadsPlugins(),
         importProvidersFrom(MatSnackBarModule),
         provideLegoHubEnvironment({
-            dumpOutgoingMessageType: [ MessageType.portOutputCommand, MessageType.portInputFormatSetupSingle ],
-            dumpIncomingMessageType: [ MessageType.portInformation ],
+            dumpOutgoingMessageType: [ MessageType.portModeInformationRequest ],
+            dumpIncomingMessageType: [ MessageType.portModeInformation ],
         }),
         provideApplicationStore(),
         { provide: LOG_LEVEL, useValue: isDevMode() ? LogLevel.Debug : LogLevel.Warning },

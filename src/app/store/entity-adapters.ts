@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
-import { AttachedIO, GamepadAxisState, GamepadButtonState, GamepadConfig, HubConfiguration, HubIoOutputModes, HubIoValue, PortModeInfo } from './i-state';
+import { AttachedIO, GamepadAxisState, GamepadButtonState, GamepadConfig, HubConfiguration, HubIoSupportedModes, HubIoValue, PortModeInfo } from './i-state';
 import { IOType } from '../lego-hub';
 
 export const HUB_ATTACHED_IOS_ENTITY_ADAPTER: EntityAdapter<AttachedIO> = createEntityAdapter<AttachedIO>({
@@ -33,11 +33,11 @@ export function hubPortModeInfoIdFn(hardwareRevision: string, softwareRevision: 
     return `${hardwareRevision}/${softwareRevision}/${modeId}/${ioType}`;
 }
 
-export const HUB_IO_OUTPUT_MODES_ENTITY_ADAPTER: EntityAdapter<HubIoOutputModes> = createEntityAdapter<HubIoOutputModes>({
-    selectId: (mode) => hubIOOutputModesIdFn(mode.hardwareRevision, mode.softwareRevision, mode.ioType),
+export const HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER: EntityAdapter<HubIoSupportedModes> = createEntityAdapter<HubIoSupportedModes>({
+    selectId: (mode) => hubIOSupportedModesIdFn(mode.hardwareRevision, mode.softwareRevision, mode.ioType),
 });
 
-export function hubIOOutputModesIdFn(hardwareRevision: string, softwareRevision: string, ioType: IOType): string {
+export function hubIOSupportedModesIdFn(hardwareRevision: string, softwareRevision: string, ioType: IOType): string {
     return `${hardwareRevision}/${softwareRevision}/${ioType}`;
 }
 
