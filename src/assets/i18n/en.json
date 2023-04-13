@@ -17,5 +17,9 @@
     "hubRSSILevelUnknown": "RSSI unknown",
     "hubPort": "Port {portId}",
     "hubIOHardwareRevision": "Hardware revision: {hardwareRevision}",
-    "hubIOSoftwareRevision": "Software revision: {softwareRevision}"
+    "hubIOSoftwareRevision": "Software revision: {softwareRevision}",
+    "controlSchemesList": "Control schemes",
+    "noControlSchemes": "No control schemes",
+    "createScheme": "Create scheme",
+    "deleteScheme": "Delete scheme"
 }

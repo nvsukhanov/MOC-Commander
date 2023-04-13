@@ -8,6 +8,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterOutlet } from '@angular/router';
 import { HubsListComponent } from '../../hubs-list';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { ControlSchemeListComponent } from '../../control-schemes-list';
 
 @Component({
     standalone: true,
@@ -23,6 +24,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
         RouterOutlet,
         HubsListComponent,
         MatSidenavModule,
+        ControlSchemeListComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

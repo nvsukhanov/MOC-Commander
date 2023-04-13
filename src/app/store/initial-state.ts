@@ -1,5 +1,6 @@
 import { IState } from './i-state';
 import {
+    CONTROL_SCHEMES_ENTITY_ADAPTER,
     GAMEPAD_AXES_STATES_ENTITY_ADAPTER,
     GAMEPAD_BUTTONS_STATES_ENTITY_ADAPTER,
     GAMEPADS_ENTITY_ADAPTER,
@@ -12,6 +13,7 @@ import {
 import { RouterState } from '@ngrx/router-store';
 
 export const INITIAL_STATE: IState = {
+    controlSchemes: CONTROL_SCHEMES_ENTITY_ADAPTER.getInitialState(),
     gamepads: GAMEPADS_ENTITY_ADAPTER.getInitialState(),
     gamepadAxesState: GAMEPAD_AXES_STATES_ENTITY_ADAPTER.getInitialState(),
     gamepadButtonsState: GAMEPAD_BUTTONS_STATES_ENTITY_ADAPTER.getInitialState(),

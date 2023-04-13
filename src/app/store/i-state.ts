@@ -3,6 +3,7 @@ import { EntityState } from '@ngrx/entity';
 import { RouterState } from '@ngrx/router-store';
 
 export interface IState {
+    controlSchemes: EntityState<ControlScheme>;
     gamepads: EntityState<GamepadConfig>;
     gamepadAxesState: EntityState<GamepadAxisState>;
     gamepadButtonsState: EntityState<GamepadButtonState>;
@@ -15,6 +16,11 @@ export interface IState {
         isAvailable: boolean;
     },
     router: RouterState;
+}
+
+export type ControlScheme = {
+    id: string;
+    name: string;
 }
 
 export type HubIoSupportedModes = {

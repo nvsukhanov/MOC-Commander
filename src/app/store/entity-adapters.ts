@@ -1,6 +1,16 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
-import { AttachedIO, GamepadAxisState, GamepadButtonState, GamepadConfig, HubConfiguration, HubIoSupportedModes, HubIoValue, PortModeInfo } from './i-state';
+import {
+    AttachedIO,
+    ControlScheme,
+    GamepadAxisState,
+    GamepadButtonState,
+    GamepadConfig,
+    HubConfiguration,
+    HubIoSupportedModes,
+    HubIoValue,
+    PortModeInfo
+} from './i-state';
 import { IOType } from '../lego-hub';
 
 export const HUB_ATTACHED_IOS_ENTITY_ADAPTER: EntityAdapter<AttachedIO> = createEntityAdapter<AttachedIO>({
@@ -63,3 +73,7 @@ export const GAMEPAD_BUTTONS_STATES_ENTITY_ADAPTER: EntityAdapter<GamepadButtonS
 export function gamepadButtonIdFn(gamepadIndex: number, buttonIndex: number): string {
     return `${gamepadIndex}/${buttonIndex}`;
 }
+
+export const CONTROL_SCHEMES_ENTITY_ADAPTER: EntityAdapter<ControlScheme> = createEntityAdapter<ControlScheme>({
+    selectId: (scheme) => scheme.id,
+});

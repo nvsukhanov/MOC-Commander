@@ -2,6 +2,7 @@ import { APP_INITIALIZER, EnvironmentProviders, isDevMode, makeEnvironmentProvid
 import { IState } from './i-state';
 import {
     BLUETOOTH_AVAILABILITY_REDUCERS,
+    CONTROL_SCHEME_REDUCERS,
     GAMEPAD_AXES_STATE_REDUCERS,
     GAMEPAD_BUTTONS_STATE_REDUCERS,
     GAMEPAD_REDUCERS,
@@ -23,6 +24,7 @@ import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 export function provideApplicationStore(): EnvironmentProviders {
     return makeEnvironmentProviders([
         provideStore<IState>({
+            controlSchemes: CONTROL_SCHEME_REDUCERS,
             gamepads: GAMEPAD_REDUCERS,
             gamepadAxesState: GAMEPAD_AXES_STATE_REDUCERS,
             gamepadButtonsState: GAMEPAD_BUTTONS_STATE_REDUCERS,

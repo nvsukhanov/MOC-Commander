@@ -7,3 +7,4 @@ export * from './hub-io-data.reducers';
 export * from './hub-attached-ios.reducers';
 export * from './hub-io-supported-modes.reducers';
 export * from './hubs.reducers';
+export * from './control-scheme.reducers';

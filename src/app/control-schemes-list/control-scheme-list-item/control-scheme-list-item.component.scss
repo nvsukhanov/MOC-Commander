@@ -1,0 +1,12 @@
+:host {
+    display: flex;
+    align-items: center;
+}
+
+.name {
+    flex: 1;
+}
+
+.delete-button {
+    margin-left: 10px;
+}
