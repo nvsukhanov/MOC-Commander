@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap, Subscription, switchMap, takeUntil, tap } from 'rxjs';
+import { filter, map, mergeMap, Subscription, switchMap, takeUntil, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HubStorageService } from '../hub-storage.service';
 import { HUBS_ACTIONS } from '../actions';
 import { LpuConnectionError } from '../../lego-hub/errors';
+import { Router } from '@angular/router';
+import { HUB_VIEW_ROUTE } from '../../routes';
+import { HubProperty } from '../../lego-hub';
 
 @Injectable()
 export class HubsEffects {
@@ -24,12 +27,32 @@ export class HubsEffects {
         );
     });
 
+    public requestHubTypeOnConnect$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(HUBS_ACTIONS.connected),
+            mergeMap((action) => {
+                const hub = this.hubStorage.getHub(action.hubId);
+                return hub.hubProperties.readPropertyValue$(HubProperty.systemTypeId).pipe(
+                    takeUntil(this.actions$.pipe(ofType(HUBS_ACTIONS.disconnected), filter((a) => a.hubId === action.hubId))),
+                    map((message) => HUBS_ACTIONS.hubTypeReceived({ hubId: action.hubId, hubType: message.hubType }))
+                );
+            })
+        );
+    });
+
+    public navigateToHubView$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(HUBS_ACTIONS.connected),
+            tap((a) => this.router.navigate([ HUB_VIEW_ROUTE, a.hubId ]))
+        );
+    }, { dispatch: false });
+
     public listenToBatteryLevelOnConnect$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.connected),
             mergeMap((a) => this.hubStorage.getHub(a.hubId).hubProperties.batteryLevel$.pipe(
                 takeUntil(this.actions$.pipe(ofType(HUBS_ACTIONS.disconnected))),
-                map((batteryLevel) => HUBS_ACTIONS.batteryLevelReceived({ hubId: a.hubId, batteryLevel }))
+                map((message) => HUBS_ACTIONS.batteryLevelReceived({ hubId: a.hubId, batteryLevel: message.level }))
             ))
         );
     });
@@ -39,7 +62,7 @@ export class HubsEffects {
             ofType(HUBS_ACTIONS.connected),
             mergeMap((a) => this.hubStorage.getHub(a.hubId).hubProperties.rssiLevel$.pipe(
                 takeUntil(this.actions$.pipe(ofType(HUBS_ACTIONS.disconnected))),
-                map((rssiLevel) => HUBS_ACTIONS.rssiLevelReceived({ hubId: a.hubId, rssiLevel }))
+                map((message) => HUBS_ACTIONS.rssiLevelReceived({ hubId: a.hubId, rssiLevel: message.level }))
             ))
         );
     });
@@ -81,7 +104,8 @@ export class HubsEffects {
     constructor(
         private readonly actions$: Actions,
         private readonly snackBar: MatSnackBar,
-        private readonly hubStorage: HubStorageService
+        private readonly hubStorage: HubStorageService,
+        private readonly router: Router
     ) {
     }
 }

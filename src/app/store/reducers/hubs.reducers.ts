@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { HUBS_ENTITY_ADAPTER } from '../entity-adapters';
 import { HUBS_ACTIONS } from '../actions';
+import { HubType } from '../../lego-hub';
 
 export const HUBS_REDUCERS = createReducer(
     HUBS_ENTITY_ADAPTER.getInitialState(),
@@ -10,6 +11,7 @@ export const HUBS_REDUCERS = createReducer(
             name: data.name,
             batteryLevel: null,
             rssiLevel: null,
+            hubType: HubType.Unknown,
         }, state)),
     on(HUBS_ACTIONS.disconnected,
         HUBS_ACTIONS.userRequestedHubDisconnection,
@@ -31,4 +33,12 @@ export const HUBS_REDUCERS = createReducer(
         },
         state
     )),
+    on(HUBS_ACTIONS.hubTypeReceived, (state, data) => HUBS_ENTITY_ADAPTER.updateOne({
+            id: data.hubId,
+            changes: {
+                hubType: data.hubType,
+            }
+        },
+        state
+    ))
 );

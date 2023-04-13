@@ -1,1 +1,1 @@
-export * from './controller-scheme-view';
+export * from './control-scheme-view';

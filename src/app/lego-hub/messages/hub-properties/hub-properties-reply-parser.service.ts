@@ -1,8 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HubProperty, MessageType } from '../../constants';
+import { HUB_DEVICE_TYPE_MAP, HubProperty, HubType, MessageType } from '../../constants';
 import { IReplyParser } from '../i-reply-parser';
 import { RawMessage } from '../raw-message';
-import { HubPropertyInboundMessage, InboundMessage } from '../inbound-message';
+import {
+    HubPropertyBatteryInboundMessage,
+    HubPropertyInboundMessage,
+    HubPropertyRssiInboundMessage,
+    HubPropertySystemTypeIdInboundMessage,
+    InboundMessage
+} from '../inbound-message';
 
 @Injectable()
 export class HubPropertiesReplyParserService implements IReplyParser<MessageType.properties> {
@@ -12,10 +18,11 @@ export class HubPropertiesReplyParserService implements IReplyParser<MessageType
 
     private readonly operationLength = 1;
 
-    private readonly hubPropertyValueParser: { [k in HubProperty]: (payload: Uint8Array) => HubPropertyInboundMessage } = {
-        [HubProperty.batteryVoltage]: (v) => this.parseBatteryData(v),
-        [HubProperty.rssi]: (v) => this.parseRssiLevel(v),
-    };
+    private readonly hubPropertyValueParser = {
+        [HubProperty.batteryVoltage]: (v): HubPropertyBatteryInboundMessage => this.parseBatteryData(v),
+        [HubProperty.rssi]: (v): HubPropertyRssiInboundMessage => this.parseRssiLevel(v),
+        [HubProperty.systemTypeId]: (v): HubPropertySystemTypeIdInboundMessage => this.parseSystemTypeId(v)
+    } satisfies { [k in HubProperty]: (payload: Uint8Array) => HubPropertyInboundMessage };
 
     public parseMessage(
         message: RawMessage<MessageType.properties>
@@ -25,7 +32,7 @@ export class HubPropertiesReplyParserService implements IReplyParser<MessageType
         return this.hubPropertyValueParser[propertyType](payload);
     }
 
-    private parseBatteryData(payload: Uint8Array): HubPropertyInboundMessage {
+    private parseBatteryData(payload: Uint8Array): HubPropertyBatteryInboundMessage {
         return {
             messageType: MessageType.properties,
             propertyType: HubProperty.batteryVoltage,
@@ -33,13 +40,29 @@ export class HubPropertiesReplyParserService implements IReplyParser<MessageType
         };
     }
 
-    private parseRssiLevel(payload: Uint8Array): HubPropertyInboundMessage {
+    private parseRssiLevel(payload: Uint8Array): HubPropertyRssiInboundMessage {
         return {
             messageType: MessageType.properties,
             propertyType: HubProperty.rssi,
             // rssi is a int8 stored as uint8, so we have to convert it,
             // ref: https://lego.github.io/lego-ble-wireless-protocol-docs/index.html#hub-property-payload
             level: payload[0] << 24 >> 24
+        };
+    }
+
+    private parseSystemTypeId(payload: Uint8Array): HubPropertySystemTypeIdInboundMessage {
+        const systemTypeId = payload[0];
+        if (!(systemTypeId in HUB_DEVICE_TYPE_MAP)) {
+            return {
+                messageType: MessageType.properties,
+                propertyType: HubProperty.systemTypeId,
+                hubType: HubType.Unknown
+            };
+        }
+        return {
+            messageType: MessageType.properties,
+            propertyType: HubProperty.systemTypeId,
+            hubType: HUB_DEVICE_TYPE_MAP[payload[0] as keyof typeof HUB_DEVICE_TYPE_MAP]
         };
     }
 }

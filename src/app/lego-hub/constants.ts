@@ -73,7 +73,25 @@ export enum HubPropertyOperation {
 export enum HubProperty {
     rssi = 0x05,
     batteryVoltage = 0x06,
+    systemTypeId = 0x0B, // 11
 }
+
+export enum HubType {
+    WeDoHub,
+    DuploTrain,
+    BoostHub,
+    TwoPortHub,
+    TwoPortHandset,
+    Unknown
+}
+
+export const HUB_DEVICE_TYPE_MAP = {
+    [0b00000000]: HubType.WeDoHub,
+    [0b00100000]: HubType.DuploTrain,
+    [0b01000000]: HubType.BoostHub,
+    [0b01000001]: HubType.TwoPortHub,
+    [0b01000010]: HubType.TwoPortHandset,
+} satisfies { [k in number]: HubType };
 
 export enum PortModeName {
     speed = 'SPEED',

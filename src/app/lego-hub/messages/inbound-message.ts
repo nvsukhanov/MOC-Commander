@@ -1,10 +1,28 @@
-import { AttachIoEvent, HubProperty, IOType, MessageType, PortInformationReplyType, PortModeInformationType } from '../constants';
+import { AttachIoEvent, HubProperty, HubType, IOType, MessageType, PortInformationReplyType, PortModeInformationType } from '../constants';
 
-export type HubPropertyInboundMessage = {
+export type HubPropertyBaseInboundMessage = {
     messageType: MessageType.properties,
-    propertyType: HubProperty;
+}
+
+export type HubPropertyBatteryInboundMessage = {
+    messageType: MessageType.properties,
+    propertyType: HubProperty.batteryVoltage;
     level: number;
-};
+} & HubPropertyBaseInboundMessage;
+
+export type HubPropertyRssiInboundMessage = {
+    messageType: MessageType.properties,
+    propertyType: HubProperty.rssi;
+    level: number;
+} & HubPropertyBaseInboundMessage;
+
+export type HubPropertySystemTypeIdInboundMessage = {
+    messageType: MessageType.properties,
+    propertyType: HubProperty.systemTypeId;
+    hubType: HubType;
+}
+
+export type HubPropertyInboundMessage = HubPropertyBatteryInboundMessage | HubPropertyRssiInboundMessage | HubPropertySystemTypeIdInboundMessage;
 
 export type AttachedIoAttachInboundMessage = {
     messageType: MessageType.attachedIO,

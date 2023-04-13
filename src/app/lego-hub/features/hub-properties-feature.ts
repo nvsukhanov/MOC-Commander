@@ -1,6 +1,6 @@
-import { filter, from, Observable, share, switchMap, tap } from 'rxjs';
+import { filter, from, map, Observable, share, switchMap, tap } from 'rxjs';
 import { HubProperty, MessageType, SubscribableHubProperties } from '../constants';
-import { HubPropertiesOutboundMessageFactoryService, InboundMessageListener, OutboundMessenger } from '../messages';
+import { HubPropertiesOutboundMessageFactoryService, HubPropertyInboundMessage, InboundMessageListener, OutboundMessenger } from '../messages';
 import { LoggingService } from '../../logging';
 
 export class HubPropertiesFeature {
@@ -24,9 +24,13 @@ export class HubPropertiesFeature {
         }
     }
 
-    public requestPropertyUpdate(property: HubProperty): Promise<void> {
+    public readPropertyValue$<T extends HubProperty>(property: T): Observable<HubPropertyInboundMessage & { propertyType: T }> {
         const message = this.messageFactoryService.requestPropertyUpdate(property);
-        return this.messenger.send(message);
+        this.messenger.send(message);
+        return this.messageListener.replies$.pipe(
+            filter((reply) => reply.propertyType === property),
+            map((reply) => reply as HubPropertyInboundMessage & { propertyType: T })
+        );
     }
 
     private async sendSubscribeMessage(
@@ -43,14 +47,19 @@ export class HubPropertiesFeature {
         });
     }
 
-    private createPropertyStream(trackedProperty: SubscribableHubProperties): Observable<number> {
-        return new Observable<number>((subscriber) => {
+    private createPropertyStream<T extends SubscribableHubProperties>(
+        trackedProperty: T
+    ): Observable<HubPropertyInboundMessage & { propertyType: T }> {
+        return new Observable<HubPropertyInboundMessage & { propertyType: T }>((subscriber) => {
             const sub = from(this.sendSubscribeMessage(trackedProperty)).pipe(
-                tap(() => this.requestPropertyUpdate(trackedProperty)),
+                tap(() => {
+                    const message = this.messageFactoryService.requestPropertyUpdate(trackedProperty);
+                    this.messenger.send(message);
+                }),
                 switchMap(() => this.messageListener.replies$),
                 filter((reply) => reply.propertyType === trackedProperty),
             ).subscribe((message) => {
-                subscriber.next(message.level);
+                subscriber.next(message as HubPropertyInboundMessage & { propertyType: T });
             });
 
             return (): void => {
