@@ -4,6 +4,10 @@ import { RouterState } from '@ngrx/router-store';
 
 export interface IState {
     controlSchemes: EntityState<ControlScheme>;
+    controlSchemeBindings: EntityState<ControlSchemeBinding>;
+    controlSchemeConfigurationState: {
+        isListening: boolean;
+    };
     gamepads: EntityState<GamepadConfig>;
     gamepadAxesState: EntityState<GamepadAxisState>;
     gamepadButtonsState: EntityState<GamepadButtonState>;
@@ -18,8 +22,18 @@ export interface IState {
     router: RouterState;
 }
 
+export type ControlSchemeBinding = {
+    id: string;
+    schemeId: string;
+    gamepadId: number | null;
+    gamepadInputMethod: GamepadInputMethod;
+    gamepadAxisId: number | null;
+    gamepadButtonId: number | null;
+}
+
 export type ControlScheme = {
     id: string;
+    index: number;
     name: string;
 }
 
@@ -85,6 +99,11 @@ export type GamepadButtonState = {
 export type GamepadAxisConfig = {
     index: number;
     nameL10nKey?: string;
+}
+
+export enum GamepadInputMethod {
+    Axis,
+    Button
 }
 
 export enum GamepadButtonType {

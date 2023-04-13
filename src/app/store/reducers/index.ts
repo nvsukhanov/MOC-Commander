@@ -8,3 +8,5 @@ export * from './hub-attached-ios.reducers';
 export * from './hub-io-supported-modes.reducers';
 export * from './hubs.reducers';
 export * from './control-scheme.reducers';
+export * from './control-scheme-bindings.reducers';
+export * from './control-scheme-configuration-state.reducers';

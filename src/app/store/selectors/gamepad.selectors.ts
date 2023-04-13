@@ -6,7 +6,6 @@ const GAMEPAD_FEATURE_SELECTOR = createFeatureSelector<IState['gamepads']>('game
 
 const GAMEPAD_ENTITY_SELECTORS = GAMEPADS_ENTITY_ADAPTER.getSelectors();
 
-export const SELECT_GAMEPAD_LIST = createSelector(
-    GAMEPAD_FEATURE_SELECTOR,
-    GAMEPAD_ENTITY_SELECTORS.selectAll
-);
+export const GAMEPAD_SELECTORS = {
+    selectAll: createSelector(GAMEPAD_FEATURE_SELECTOR, GAMEPAD_ENTITY_SELECTORS.selectAll)
+} as const;

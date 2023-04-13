@@ -2,6 +2,8 @@ import { APP_INITIALIZER, EnvironmentProviders, isDevMode, makeEnvironmentProvid
 import { IState } from './i-state';
 import {
     BLUETOOTH_AVAILABILITY_REDUCERS,
+    CONTROL_SCHEME_BINDINGS_REDUCERS,
+    CONTROL_SCHEME_CONFIGURATION_STATE_REDUCERS,
     CONTROL_SCHEME_REDUCERS,
     GAMEPAD_AXES_STATE_REDUCERS,
     GAMEPAD_BUTTONS_STATE_REDUCERS,
@@ -13,7 +15,16 @@ import {
     HUBS_REDUCERS
 } from './reducers';
 import { provideEffects } from '@ngrx/effects';
-import { GamepadEffects, HubAttachedIOsEffects, HubIoDataEffects, HubIOSupportedModesEffects, HubPortModeInfoEffects, HubsEffects, } from './effects';
+import {
+    ControlSchemeBindingsEffects,
+    ControlSchemeEffects,
+    GamepadEffects,
+    HubAttachedIOsEffects,
+    HubIoDataEffects,
+    HubIOSupportedModesEffects,
+    HubPortModeInfoEffects,
+    HubsEffects,
+} from './effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { NAVIGATOR } from '../types';
@@ -25,6 +36,8 @@ export function provideApplicationStore(): EnvironmentProviders {
     return makeEnvironmentProviders([
         provideStore<IState>({
             controlSchemes: CONTROL_SCHEME_REDUCERS,
+            controlSchemeBindings: CONTROL_SCHEME_BINDINGS_REDUCERS,
+            controlSchemeConfigurationState: CONTROL_SCHEME_CONFIGURATION_STATE_REDUCERS,
             gamepads: GAMEPAD_REDUCERS,
             gamepadAxesState: GAMEPAD_AXES_STATE_REDUCERS,
             gamepadButtonsState: GAMEPAD_BUTTONS_STATE_REDUCERS,
@@ -43,6 +56,8 @@ export function provideApplicationStore(): EnvironmentProviders {
             HubIoDataEffects,
             HubIOSupportedModesEffects,
             HubsEffects,
+            ControlSchemeEffects,
+            ControlSchemeBindingsEffects,
         ),
         provideStoreDevtools({
             maxAge: 100,
