@@ -18,12 +18,14 @@ import { RouterLink } from '@angular/router';
         MatLineModule,
         NgIf,
         TranslocoModule,
-        RouterLink
+        RouterLink,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeListItemComponent {
     @Input() public name = '';
+
+    @Input() public isActive = false;
 
     @Output() public readonly delete = new EventEmitter<void>();
 

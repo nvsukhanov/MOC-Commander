@@ -1,7 +1,31 @@
-<div>
-    this is scheme view
-</div>
-<div>
-    {{ selectedScheme$ | ngrxPush | json }}
-</div>
+<ng-container *ngIf="selectedScheme$ | ngrxPush; let scheme; else schemeNotFound">
+    <mat-toolbar [color]="'primary'">
+        <mat-toolbar-row>
+            <span>{{ scheme.name }}</span>
+            <span class="spacer"></span>
+            <button mat-button *ngIf="canAddBinding$ | ngrxPush" (click)="addBinding(scheme.id)">
+                {{ 'addSchemeBinding' | transloco }}
+            </button>
+            <button mat-button *ngIf="canCancelBinding$ | ngrxPush" (click)="cancelAddBinging()">
+                {{ 'cancelAddSchemeBinding' | transloco }}
+            </button>
+            <span *ngIf="shouldShowBindingHelp$ | ngrxPush">
+                <mat-icon [title]="'createBindingHelp' | transloco">
+                    help_outline
+                </mat-icon>
+            </span>
 
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <section class="bindings-container">
+        <app-control-scheme-binding-view *ngFor="let binding of selectSchemeBindings$ | ngrxPush; trackBy: schemeBindingTrackByFn"
+                                         class="scheme-binding-view"
+                                         [binding]="binding">
+        </app-control-scheme-binding-view>
+    </section>
+</ng-container>
+
+<ng-template #schemeNotFound>
+    <app-not-found></app-not-found>
+</ng-template>

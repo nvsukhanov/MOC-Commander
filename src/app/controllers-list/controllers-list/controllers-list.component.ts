@@ -6,7 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { KeyValuePipe, NgForOf, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { MatOptionModule } from '@angular/material/core';
 import { TranslocoModule } from '@ngneat/transloco';
-import { GamepadConfig, SELECT_GAMEPAD_LIST } from '../../store';
+import { GAMEPAD_SELECTORS, GamepadConfig } from '../../store';
 import { Store } from '@ngrx/store';
 import { MatIconModule } from '@angular/material/icon';
 import { LetModule, PushModule } from '@ngrx/component';
@@ -37,7 +37,7 @@ import { MatListModule } from '@angular/material/list';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControllersListComponent {
-    public readonly connectedControllers$ = this.store.select(SELECT_GAMEPAD_LIST);
+    public readonly connectedControllers$ = this.store.select(GAMEPAD_SELECTORS.selectAll);
 
     constructor(
         private readonly store: Store,
