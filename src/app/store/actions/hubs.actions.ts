@@ -1,5 +1,6 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { LpuConnectionError } from '../../lego-hub/errors';
+import { HubType } from '../../lego-hub';
 
 export const HUBS_ACTIONS = createActionGroup({
     source: 'HUBS_ACTIONS',
@@ -15,5 +16,6 @@ export const HUBS_ACTIONS = createActionGroup({
         'rssi level subscribe': props<{ hubId: string }>(),
         'rssi level received': props<{ hubId: string, rssiLevel: null | number }>(),
         'rssi level unsubscribe': props<{ hubId: string }>(),
+        'hub type received': props<{ hubId: string, hubType: HubType }>(),
     }
 });

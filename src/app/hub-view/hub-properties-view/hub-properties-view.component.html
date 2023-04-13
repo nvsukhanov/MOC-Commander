@@ -1,6 +1,13 @@
 <mat-card *ngIf="hub">
     <mat-card-header>
-        <mat-card-subtitle>PLACE HUB TYPE NAME HERE</mat-card-subtitle>
+        <mat-card-subtitle>
+            <ng-container *ngIf="hubTypeL10nMap[hub.hubType]; let hubTypeL10nKey; else hubTypeUnknown">
+                {{ hubTypeL10nKey | transloco }}
+            </ng-container>
+            <ng-template #hubTypeUnknown>
+                {{ 'hubTypeUnknown' | transloco }}
+            </ng-template>
+        </mat-card-subtitle>
         <mat-card-title>{{ hub.name }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>

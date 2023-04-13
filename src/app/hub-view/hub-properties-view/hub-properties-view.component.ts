@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
+import { HUB_TYPE_TO_L10N_MAPPING } from '../../mappings';
 
 @Component({
     standalone: true,
@@ -24,6 +25,8 @@ export class HubPropertiesViewComponent {
     @Input() public hub: HubConfiguration | undefined;
 
     @Output() public readonly disconnect = new EventEmitter<void>();
+
+    public readonly hubTypeL10nMap = HUB_TYPE_TO_L10N_MAPPING;
 
     public onDisconnect(): void {
         this.disconnect.emit();

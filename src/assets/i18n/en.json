@@ -9,6 +9,7 @@
   "discoverHub": "Discover hub",
   "disconnectHub": "Disconnect hub",
   "noHubConnected": "No hub connected",
+  "hubIsNotConnected": "Hub is not connected",
   "bluetoothIsNotAvailable": "Bluetooth is not available",
   "hubConnectionFailed": "Hub connection failed",
   "hubBatteryLevel": "Battery: {batteryLevel}%",
@@ -25,5 +26,12 @@
   "addSchemeBinding": "Add binding",
   "cancelAddSchemeBinding": "Cancel add",
   "createBindingHelp": "Move the controller's stick or press a button to create a binding",
-  "pageNotFound": "Page not found"
+  "pageNotFound": "Page not found",
+  "schemeIsNotFound": "Scheme is not found",
+  "hubTypeBoost": "Boost Hub",
+  "hubTypeWeDo": "WeDo Hub",
+  "hubTypeDuploTrain": "Duplo Train",
+  "hubTypeTwoPortHub": "Two-port Hub",
+  "hubTypeTwoPortHandset": "Two-port Handset",
+  "hubTypeUnknown": "Unknown hub type"
 }

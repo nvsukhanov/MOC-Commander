@@ -1,11 +1,20 @@
-<app-hub-properties-view [hub]="selectedHub$ | ngrxPush"
-                         (disconnect)="disconnectHub()"
-></app-hub-properties-view>
+<section *ngIf="selectedHub$ | ngrxPush; let hub; else hubNotFound"
+         class="hub-view">
+    <app-hub-properties-view [hub]="hub"
+                             (disconnect)="disconnectHub()"
+    ></app-hub-properties-view>
 
-<div *ngIf="selectedHubIOs$ | ngrxPush; let hubIOs"
-     class="io-grid">
-    <app-hub-port-view *ngFor="let hubIO of hubIOs; trackBy: hubIoTrackByFn"
-                       class="io-grid-item"
-                       [io]="hubIO">
-    </app-hub-port-view>
-</div>
+    <div *ngIf="selectedHubIOs$ | ngrxPush; let hubIOs"
+         class="io-grid">
+        <app-hub-port-view *ngFor="let hubIO of hubIOs; trackBy: hubIoTrackByFn"
+                           class="io-grid-item"
+                           [io]="hubIO">
+        </app-hub-port-view>
+    </div>
+</section>
+
+<ng-template #hubNotFound>
+    <section class="hub-is-not-connected">
+        <h2>{{ 'hubIsNotConnected' | transloco }}</h2>
+    </section>
+</ng-template>

@@ -1,4 +1,4 @@
-import { IOType, PortModeName, PortModeSymbol } from '../lego-hub';
+import { HubType, IOType, PortModeName, PortModeSymbol } from '../lego-hub';
 import { EntityState } from '@ngrx/entity';
 import { RouterState } from '@ngrx/router-store';
 
@@ -50,6 +50,7 @@ export type HubConfiguration = {
     name: string;
     batteryLevel: number | null;
     rssiLevel: number | null;
+    hubType: HubType;
 }
 
 export type HubIoValue = {
