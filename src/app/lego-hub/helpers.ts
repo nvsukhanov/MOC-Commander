@@ -14,3 +14,7 @@ export function numberToUint32LEArray(value: number): number[] {
         (value >> 24) & 0xff
     ];
 }
+
+export function readUint16LEArrayAsNumber(value: Uint8Array): number {
+    return (value[1] << 8) + value[0];
+}
