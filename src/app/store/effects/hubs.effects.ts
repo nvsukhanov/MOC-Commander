@@ -74,6 +74,16 @@ export class HubsEffects {
         );
     });
 
+    public listerToButtonStateOnConnect$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(HUBS_ACTIONS.connected),
+            mergeMap((a) => this.hubStorage.get(a.hubId).properties.buttonState$.pipe(
+                takeUntil(this.hubStorage.get(a.hubId).beforeDisconnect$),
+                map((message) => HUBS_ACTIONS.buttonStateReceived({ hubId: a.hubId, isPressed: message.isPressed }))
+            ))
+        );
+    });
+
     public readonly deviceConnectFailedNotification$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.deviceConnectFailed),

@@ -2,6 +2,18 @@
     {{ name }}
 </a>
 
+<ng-container *ngIf="isButtonPressed; else buttonNotPressed">
+    <mat-icon [title]="'hubButtonStateTitle' | transloco"
+              class="button-state">radio_button_checked
+    </mat-icon>
+</ng-container>
+
+<ng-template #buttonNotPressed>
+    <mat-icon [title]="'hubButtonStateTitle' | transloco"
+              class="button-state">radio_button_off
+    </mat-icon>
+</ng-template>
+
 <mat-icon *ngIf="batteryLevel !== null"
           class="battery-level"
           [title]="batteryLevel"

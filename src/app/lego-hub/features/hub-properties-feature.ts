@@ -8,6 +8,8 @@ export class HubPropertiesFeature {
 
     public rssiLevel$ = this.createPropertyStream(HubProperty.rssi);
 
+    public buttonState$ = this.createPropertyStream(HubProperty.button);
+
     private readonly characteristicUnsubscribeHandlers = new Map<SubscribableHubProperties, () => Promise<void>>();
 
     constructor(

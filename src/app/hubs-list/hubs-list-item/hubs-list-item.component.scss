@@ -7,14 +7,9 @@
     flex: 1;
 }
 
-.battery-level {
-    margin-left: 10px;
-}
-
-.rssi-level {
-    margin-left: 10px;
-}
-
+.battery-level,
+.rssi-level,
+.button-state,
 .disconnect-button {
     margin-left: 10px;
 }

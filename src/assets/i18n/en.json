@@ -17,6 +17,8 @@
   "hubBatteryLevelUnknown": "Battery level unknown",
   "hubRSSILevel": "RSSI: {rssiLevel}",
   "hubRSSILevelUnknown": "RSSI unknown",
+  "hubButtonStateTitle": "Button state",
+  "hubButtonState": "Button: {isButtonPressed, select, true {pressed} other {released}}",
   "hubPort": "Port {portId}",
   "hubIOHardwareRevision": "Hardware revision: {hardwareRevision}",
   "hubIOSoftwareRevision": "Software revision: {softwareRevision}",

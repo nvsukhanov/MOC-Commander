@@ -4,6 +4,7 @@ import { IReplyParser } from '../i-reply-parser';
 import { RawMessage } from '../raw-message';
 import {
     HubPropertyBatteryInboundMessage,
+    HubPropertyButtonStateInboundMessage,
     HubPropertyInboundMessage,
     HubPropertyRssiInboundMessage,
     HubPropertySystemTypeIdInboundMessage,
@@ -21,7 +22,8 @@ export class HubPropertiesReplyParserService implements IReplyParser<MessageType
     private readonly hubPropertyValueParser = {
         [HubProperty.batteryVoltage]: (v): HubPropertyBatteryInboundMessage => this.parseBatteryData(v),
         [HubProperty.rssi]: (v): HubPropertyRssiInboundMessage => this.parseRssiLevel(v),
-        [HubProperty.systemTypeId]: (v): HubPropertySystemTypeIdInboundMessage => this.parseSystemTypeId(v)
+        [HubProperty.systemTypeId]: (v): HubPropertySystemTypeIdInboundMessage => this.parseSystemTypeId(v),
+        [HubProperty.button]: (v): HubPropertyButtonStateInboundMessage => this.parseButtonState(v),
     } satisfies { [k in HubProperty]: (payload: Uint8Array) => HubPropertyInboundMessage };
 
     public parseMessage(
@@ -63,6 +65,14 @@ export class HubPropertiesReplyParserService implements IReplyParser<MessageType
             messageType: MessageType.properties,
             propertyType: HubProperty.systemTypeId,
             hubType: HUB_DEVICE_TYPE_MAP[payload[0] as keyof typeof HUB_DEVICE_TYPE_MAP]
+        };
+    }
+
+    private parseButtonState(payload: Uint8Array): HubPropertyButtonStateInboundMessage {
+        return {
+            messageType: MessageType.properties,
+            propertyType: HubProperty.button,
+            isPressed: payload[0] === 1
         };
     }
 }
