@@ -1,22 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Hub, HubDiscoveryService } from '../lego-hub';
+import { Hub } from '../lego-hub';
+import { ConsoleLoggingService } from '../logging';
 
 @Injectable()
 export class HubStorageService {
     private hubsMap: Map<string, Hub> = new Map();
 
     constructor(
-        private readonly lpuHubDiscoveryService: HubDiscoveryService,
+        private logger: ConsoleLoggingService
     ) {
     }
 
-    public async discoverHub(): Promise<Hub> {
-        const hub = await this.lpuHubDiscoveryService.discoverHub();
+    public store(hub: Hub): void {
+        if (this.hubsMap.has(hub.id)) {
+            throw new Error(`Hub with id=${hub.id} is already registered`);
+        }
+        this.logger.debug(`[HubStorage] Storing hub`, hub.id);
         this.hubsMap.set(hub.id, hub);
-        return hub;
     }
 
-    public getHub(id: string): Hub {
+    public get(id: string): Hub {
         const hub = this.hubsMap.get(id);
         if (!hub) {
             throw new Error(`Hub with id=${id} is not registered`);
@@ -25,6 +28,7 @@ export class HubStorageService {
     }
 
     public removeHub(id: string): void {
+        this.logger.debug('[HubStorage] Removing hub from storage', id);
         this.hubsMap.delete(id);
     }
 }

@@ -1,4 +1,4 @@
-import { LoggingService } from '../../logging';
+import { ILogger } from '../../logging';
 import { MessageType } from '../constants';
 import { RawMessage } from './raw-message';
 import { Inject } from '@angular/core';
@@ -13,7 +13,7 @@ export class OutboundMessenger {
 
     constructor(
         private readonly characteristic: BluetoothRemoteGATTCharacteristic,
-        private readonly logging: LoggingService,
+        private readonly logging: ILogger,
         @Inject(LEGO_HUB_CONFIG) private readonly config: ILegoHubConfig,
     ) {
         this.dumpMessageTypesSet = new Set(this.config.dumpOutgoingMessageType === 'all'

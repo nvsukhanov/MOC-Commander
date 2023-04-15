@@ -12,6 +12,7 @@
   "hubIsNotConnected": "Hub is not connected",
   "bluetoothIsNotAvailable": "Bluetooth is not available",
   "hubConnectionFailed": "Hub connection failed",
+  "unknownHubConnectionError": "Unknown hub connection error",
   "hubBatteryLevel": "Battery: {batteryLevel}%",
   "hubBatteryLevelUnknown": "Battery level unknown",
   "hubRSSILevel": "RSSI: {rssiLevel}",

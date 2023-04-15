@@ -41,7 +41,7 @@ export class IoFeature {
     ) {
     }
 
-    public getPortValueUpdates$(
+    public listenPortValueUpdates$(
         portId: number
     ): Observable<PortValueInboundMessage> {
         return this.portValueReplies$.pipe(
@@ -63,6 +63,14 @@ export class IoFeature {
         ));
     }
 
+    public getPortModes$(portId: number): Observable<PortModeInboundMessage> {
+        this.messenger.send(this.messageFactoryService.createPortModeRequest(portId));
+        return this.portModeReplies$.pipe(
+            filter((r) => r.portId === portId),
+            take(1),
+        );
+    }
+
     public getPortModeInformation$<T extends PortModeInformationType>(
         portId: number,
         mode: number,
@@ -75,7 +83,7 @@ export class IoFeature {
         ) as Observable<PortModeInformationInboundMessageTypes & { modeInformationType: T }>;
     }
 
-    public requestPortModeInformation(
+    private requestPortModeInformation(
         portId: number,
         mode: number,
         modeInformationType: PortModeInformationType
@@ -85,13 +93,5 @@ export class IoFeature {
             mode,
             modeInformationType
         ));
-    }
-
-    public getPortModes$(portId: number): Observable<PortModeInboundMessage> {
-        this.messenger.send(this.messageFactoryService.createPortModeRequest(portId));
-        return this.portModeReplies$.pipe(
-            filter((r) => r.portId === portId),
-            take(1),
-        );
     }
 }

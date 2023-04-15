@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { HUB_ATTACHED_IOS_ACTIONS, HUB_IO_SUPPORTED_MODES } from '../actions';
-import { filter, map, mergeMap, switchMap, take } from 'rxjs';
+import { filter, map, mergeMap, switchMap, take, takeUntil } from 'rxjs';
 import { HUB_IO_SUPPORTED_MODES_SELECTORS } from '../selectors';
 import { HubStorageService } from '../hub-storage.service';
 
@@ -17,9 +17,10 @@ export class HubIOSupportedModesEffects {
                     action.softwareRevision,
                     action.ioType)
                 ).pipe(
+                    takeUntil(this.hubStorage.get(action.hubId).beforeDisconnect$),
                     take(1),
                     filter((data) => !data),
-                    switchMap(() => this.hubStorage.getHub(action.hubId).ports.getPortModes$(action.portId)),
+                    switchMap(() => this.hubStorage.get(action.hubId).ports.getPortModes$(action.portId)),
                     map((modesData) => HUB_IO_SUPPORTED_MODES.portModesReceived({
                         hardwareRevision: action.hardwareRevision,
                         softwareRevision: action.softwareRevision,

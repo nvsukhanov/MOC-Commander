@@ -2,9 +2,10 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { LOG_LEVEL, LogLevel } from './log-levels';
 import { ExtractTokenType } from '../types';
+import { ILogger } from './i-logger';
 
 @Injectable({ providedIn: 'root' })
-export class LoggingService {
+export class ConsoleLoggingService implements ILogger {
     constructor(
         @Optional() @Inject(LOG_LEVEL) private configuredLogLevel: ExtractTokenType<typeof LOG_LEVEL> = LogLevel.Info
     ) {

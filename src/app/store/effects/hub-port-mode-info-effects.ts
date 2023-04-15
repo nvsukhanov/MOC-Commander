@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HubStorageService } from '../hub-storage.service';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { map, mergeMap, zip } from 'rxjs';
+import { map, mergeMap, takeUntil, zip } from 'rxjs';
 import { HUB_PORT_MODE_INFO_ACTIONS } from '../actions/hub-port-mode-info.actions';
 import { PortModeInformationName, PortModeInformationSymbol, PortModeInformationType, PortModeName, PortModeSymbol } from '../../lego-hub';
 import { HUB_ATTACHED_IO_SELECTORS } from '../selectors';
@@ -22,13 +22,14 @@ export class HubPortModeInfoEffects {
                 if (!matchingIO) {
                     throw new Error('No hub found with matching IO');
                 }
-                const portApi = this.hubStorage.getHub(matchingIO.hubId).ports;
+                const portApi = this.hubStorage.get(matchingIO.hubId).ports;
                 const concatenatedPortModeIds = [ ...new Set([ ...action.portOutputModes, ...action.portInputModes ]) ];
 
                 return zip(
                     ...concatenatedPortModeIds.map((mode) => portApi.getPortModeInformation$(matchingIO.portId, mode, PortModeInformationType.name)),
                     ...concatenatedPortModeIds.map((mode) => portApi.getPortModeInformation$(matchingIO.portId, mode, PortModeInformationType.symbol)),
                 ).pipe(
+                    takeUntil(this.hubStorage.get(matchingIO.hubId).beforeDisconnect$),
                     map((data) => {
                         const names = data.slice(0, concatenatedPortModeIds.length) as PortModeInformationName[];
                         const symbols = data.slice(concatenatedPortModeIds.length) as PortModeInformationSymbol[];
