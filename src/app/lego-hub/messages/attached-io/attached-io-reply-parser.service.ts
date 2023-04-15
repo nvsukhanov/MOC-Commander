@@ -8,6 +8,7 @@ import {
     AttachedIODetachInboundMessage,
     AttachedIOInboundMessage
 } from '../inbound-message';
+import { readUint16LEArrayAsNumber } from '../../helpers';
 
 @Injectable()
 export class AttachedIoReplyParserService implements IReplyParser<MessageType.attachedIO> {
@@ -45,8 +46,8 @@ export class AttachedIoReplyParserService implements IReplyParser<MessageType.at
             portId: this.getPortId(payload),
             event: AttachIoEvent.Attached,
             ioTypeId: this.getIoTypeId(payload),
-            hardwareRevision: payload.slice(4, 7).join('.'),
-            softwareRevision: payload.slice(8, 11).join('.'),
+            hardwareRevision: this.decodeVersion(payload.slice(4, 7)),
+            softwareRevision: this.decodeVersion(payload.slice(8, 11)),
         };
     }
 
@@ -79,6 +80,14 @@ export class AttachedIoReplyParserService implements IReplyParser<MessageType.at
 
     private getEventId(data: Uint8Array): AttachIoEvent {
         return data[this.eventIdOffset];
+    }
+
+    private decodeVersion(data: Uint8Array): string {
+        const majorVersion = data[0] >> 4;
+        const minorVersion = data[0] & 0b00001111;
+        const bugFixingNumber = data[1];
+        const buildNumber = readUint16LEArrayAsNumber(data.slice(2, 4));
+        return `${majorVersion}.${minorVersion}.${bugFixingNumber}.${buildNumber}`;
     }
 
 }
