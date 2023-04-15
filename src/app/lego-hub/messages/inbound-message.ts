@@ -5,24 +5,29 @@ export type HubPropertyBaseInboundMessage = {
 }
 
 export type HubPropertyBatteryInboundMessage = {
-    messageType: MessageType.properties,
     propertyType: HubProperty.batteryVoltage;
     level: number;
 } & HubPropertyBaseInboundMessage;
 
 export type HubPropertyRssiInboundMessage = {
-    messageType: MessageType.properties,
     propertyType: HubProperty.rssi;
     level: number;
 } & HubPropertyBaseInboundMessage;
 
 export type HubPropertySystemTypeIdInboundMessage = {
-    messageType: MessageType.properties,
     propertyType: HubProperty.systemTypeId;
     hubType: HubType;
-}
+} & HubPropertyBaseInboundMessage;
 
-export type HubPropertyInboundMessage = HubPropertyBatteryInboundMessage | HubPropertyRssiInboundMessage | HubPropertySystemTypeIdInboundMessage;
+export type HubPropertyButtonStateInboundMessage = {
+    propertyType: HubProperty.button;
+    isPressed: boolean;
+} & HubPropertyBaseInboundMessage;
+
+export type HubPropertyInboundMessage = HubPropertyBatteryInboundMessage
+    | HubPropertyRssiInboundMessage
+    | HubPropertySystemTypeIdInboundMessage
+    | HubPropertyButtonStateInboundMessage;
 
 export type AttachedIoAttachInboundMessage = {
     messageType: MessageType.attachedIO,

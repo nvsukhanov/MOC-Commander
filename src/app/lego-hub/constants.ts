@@ -71,6 +71,7 @@ export enum HubPropertyOperation {
 }
 
 export enum HubProperty {
+    button = 0x02,
     rssi = 0x05,
     batteryVoltage = 0x06,
     systemTypeId = 0x0B, // 11
@@ -135,4 +136,4 @@ export enum MotorSubCommand {
     startSpeed = 0x07,
 }
 
-export type SubscribableHubProperties = HubProperty.rssi | HubProperty.batteryVoltage;
+export type SubscribableHubProperties = HubProperty.rssi | HubProperty.batteryVoltage | HubProperty.button;

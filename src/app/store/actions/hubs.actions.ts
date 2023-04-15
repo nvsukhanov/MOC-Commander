@@ -16,6 +16,9 @@ export const HUBS_ACTIONS = createActionGroup({
         'rssi level subscribe': props<{ hubId: string }>(),
         'rssi level received': props<{ hubId: string, rssiLevel: null | number }>(),
         'rssi level unsubscribe': props<{ hubId: string }>(),
+        'button state subscribe': props<{ hubId: string }>(),
+        'button state received': props<{ hubId: string, isPressed: boolean }>(),
+        'button state unsubscribe': props<{ hubId: string }>(),
         'hub type received': props<{ hubId: string, hubType: HubType }>(),
     }
 });

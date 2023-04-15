@@ -11,6 +11,9 @@
         <mat-card-title>{{ hub.name }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
+        <p>
+            {{ 'hubButtonState' | transloco: hub }}
+        </p>
         <p *ngIf="hub.batteryLevel !== null; else batteryLevelUnknown">
             {{ 'hubBatteryLevel' | transloco: hub }}
         </p>

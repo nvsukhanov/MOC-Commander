@@ -29,6 +29,8 @@ export class HubsListItemComponent {
 
     @Input() public rssiLevel: number | null = null;
 
+    @Input() public isButtonPressed = false;
+
     @Output() public readonly disconnect = new EventEmitter<void>();
 
     private _hubViewHref: string[] = [];
@@ -58,7 +60,7 @@ export class HubsListItemComponent {
         }
         return 'battery_0_bar';
     }
-    
+
     public get rssiLevelIcon(): string {
         if (this.rssiLevel === null || this.rssiLevel >= 0) {
             return 'signal_wifi_statusbar_null';

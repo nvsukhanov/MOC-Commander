@@ -51,6 +51,7 @@ export type HubConfiguration = {
     batteryLevel: number | null;
     rssiLevel: number | null;
     hubType: HubType;
+    isButtonPressed: boolean;
 }
 
 export type HubIoValue = {
