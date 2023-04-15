@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
-import { LoggingService } from './logging.service';
+import { ConsoleLoggingService } from './console-logging.service';
 import { LogLevel } from './log-levels';
 
 describe('LoggingService', () => {
-    let subject: LoggingService;
+    let subject: ConsoleLoggingService;
     let error: Error;
 
     beforeEach(() => {
@@ -20,7 +20,7 @@ describe('LoggingService', () => {
 
     describe('debug level', () => {
         beforeEach(() => {
-            subject = new LoggingService(LogLevel.Debug);
+            subject = new ConsoleLoggingService(LogLevel.Debug);
         });
 
         it('should write debug messages', () => {
@@ -46,7 +46,7 @@ describe('LoggingService', () => {
 
     describe('info level', () => {
         beforeEach(() => {
-            subject = new LoggingService(LogLevel.Info);
+            subject = new ConsoleLoggingService(LogLevel.Info);
         });
 
         it('should write debug messages', () => {
@@ -72,7 +72,7 @@ describe('LoggingService', () => {
 
     describe('warning level', () => {
         beforeEach(() => {
-            subject = new LoggingService(LogLevel.Warning);
+            subject = new ConsoleLoggingService(LogLevel.Warning);
         });
 
         it('should write debug messages', () => {
@@ -98,7 +98,7 @@ describe('LoggingService', () => {
 
     describe('error level', () => {
         beforeEach(() => {
-            subject = new LoggingService(LogLevel.Error);
+            subject = new ConsoleLoggingService(LogLevel.Error);
         });
 
         it('should not write debug messages', () => {

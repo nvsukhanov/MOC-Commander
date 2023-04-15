@@ -2,7 +2,7 @@ import { EMPTY, fromEvent, map, Observable, of, share, switchMap, tap } from 'rx
 import { Inject, Injectable } from '@angular/core';
 import { InboundMessageDissectorService, RawMessage } from './index';
 import { MessageType } from '../constants';
-import { LoggingService } from '../../logging';
+import { ILogger } from '../../logging';
 import { ILegoHubConfig, LEGO_HUB_CONFIG } from '../i-lego-hub-config';
 
 @Injectable()
@@ -13,7 +13,6 @@ export class CharacteristicDataStreamFactoryService {
 
     constructor(
         private readonly dissector: InboundMessageDissectorService,
-        private readonly logging: LoggingService,
         @Inject(LEGO_HUB_CONFIG) private readonly config: ILegoHubConfig,
     ) {
         this.dumpMessageTypesSet = new Set(this.config.dumpIncomingMessageType === 'all'
@@ -22,7 +21,10 @@ export class CharacteristicDataStreamFactoryService {
         );
     }
 
-    public create(characteristic: BluetoothRemoteGATTCharacteristic): Observable<RawMessage<MessageType>> {
+    public create(
+        characteristic: BluetoothRemoteGATTCharacteristic,
+        logger: ILogger
+    ): Observable<RawMessage<MessageType>> {
         return fromEvent(characteristic, this.characteristicValueChangedEventName).pipe(
             map((e) => this.getValueFromEvent(e)),
             switchMap((value) => value ? of(value) : EMPTY),
@@ -30,7 +32,7 @@ export class CharacteristicDataStreamFactoryService {
             tap((message) => {
                 if (this.config.dumpIncomingMessageType === 'all' || this.dumpMessageTypesSet.has(message.header.messageType)) {
                     const messageData = this.formatMessageForDump(message);
-                    this.logging.debug(
+                    logger.debug(
                         `Recieved message of type '${messageData.messageType}'`,
                         `with payload ${messageData.payload}`
                     );

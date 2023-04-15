@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LoggingService } from '../../logging';
+import { ILogger } from '../../logging';
 import {
     HubPropertiesOutboundMessageFactoryService,
     HubPropertiesReplyParserService,
@@ -14,7 +14,6 @@ import { HubPropertiesFeature } from './hub-properties-feature';
 @Injectable()
 export class HubPropertiesFeatureFactoryService {
     constructor(
-        private readonly logging: LoggingService,
         private readonly featureMessageProviderFactoryService: InboundMessageListenerFactoryService,
         private readonly replyParserService: HubPropertiesReplyParserService,
         private readonly messageFactoryService: HubPropertiesOutboundMessageFactoryService,
@@ -25,6 +24,7 @@ export class HubPropertiesFeatureFactoryService {
         characteristicDataStream: Observable<RawMessage<MessageType>>,
         onHubDisconnected: Observable<void>,
         messenger: OutboundMessenger,
+        logger: ILogger
     ): HubPropertiesFeature {
         const repliesProvider = this.featureMessageProviderFactoryService.create(
             characteristicDataStream,
@@ -34,7 +34,7 @@ export class HubPropertiesFeatureFactoryService {
         return new HubPropertiesFeature(
             this.messageFactoryService,
             messenger,
-            this.logging,
+            logger,
             repliesProvider,
         );
     }

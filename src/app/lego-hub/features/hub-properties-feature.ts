@@ -1,7 +1,7 @@
 import { filter, from, map, Observable, share, switchMap, tap } from 'rxjs';
 import { HubProperty, MessageType, SubscribableHubProperties } from '../constants';
 import { HubPropertiesOutboundMessageFactoryService, HubPropertyInboundMessage, InboundMessageListener, OutboundMessenger } from '../messages';
-import { LoggingService } from '../../logging';
+import { ILogger } from '../../logging';
 
 export class HubPropertiesFeature {
     public batteryLevel$ = this.createPropertyStream(HubProperty.batteryVoltage);
@@ -13,7 +13,7 @@ export class HubPropertiesFeature {
     constructor(
         private readonly messageFactoryService: HubPropertiesOutboundMessageFactoryService,
         private readonly messenger: OutboundMessenger,
-        private readonly logging: LoggingService,
+        private readonly logging: ILogger,
         private readonly messageListener: InboundMessageListener<MessageType.properties>
     ) {
     }
@@ -24,7 +24,7 @@ export class HubPropertiesFeature {
         }
     }
 
-    public readPropertyValue$<T extends HubProperty>(property: T): Observable<HubPropertyInboundMessage & { propertyType: T }> {
+    public getPropertyValue$<T extends HubProperty>(property: T): Observable<HubPropertyInboundMessage & { propertyType: T }> {
         const message = this.messageFactoryService.requestPropertyUpdate(property);
         this.messenger.send(message);
         return this.messageListener.replies$.pipe(
@@ -51,6 +51,7 @@ export class HubPropertiesFeature {
         trackedProperty: T
     ): Observable<HubPropertyInboundMessage & { propertyType: T }> {
         return new Observable<HubPropertyInboundMessage & { propertyType: T }>((subscriber) => {
+            this.logging.debug('subscribing to property stream', HubProperty[trackedProperty]);
             const sub = from(this.sendSubscribeMessage(trackedProperty)).pipe(
                 tap(() => {
                     const message = this.messageFactoryService.requestPropertyUpdate(trackedProperty);
@@ -63,7 +64,7 @@ export class HubPropertiesFeature {
             });
 
             return (): void => {
-                this.logging.debug('unsubscribing from property stream', trackedProperty);
+                this.logging.debug('unsubscribing from property stream', HubProperty[trackedProperty]);
                 sub.unsubscribe();
             };
         }).pipe(

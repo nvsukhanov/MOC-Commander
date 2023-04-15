@@ -1,2 +1,3 @@
 export * from './log-levels';
-export * from './logging.service';
+export * from './console-logging.service';
+export * from './i-logger';
