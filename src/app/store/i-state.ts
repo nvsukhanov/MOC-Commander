@@ -22,6 +22,23 @@ export interface IState {
     router: RouterState;
 }
 
+export type ControlSchemeEditState = {
+    schemeId: string | null;
+    bindings: Array<{
+        bindingId: string | null;
+        input: {
+            gamepadId: number;
+            gamepadInputMethod: GamepadInputMethod;
+            gamepadAxisId: number | null;
+            gamepadButtonId: number | null;
+        } | null;
+        output: {
+            hubId: string;
+            portId: number;
+        }
+    }>
+}
+
 export type ControlSchemeBinding = {
     id: string;
     schemeId: string;
@@ -29,6 +46,7 @@ export type ControlSchemeBinding = {
     gamepadInputMethod: GamepadInputMethod;
     gamepadAxisId: number | null;
     gamepadButtonId: number | null;
+    hubId: string | null;
 }
 
 export type ControlScheme = {
@@ -81,7 +99,7 @@ export type AttachedIO = {
 export type GamepadConfig = {
     gamepadIndex: number;
     name: string;
-    nameL10nKey?: string;
+    nameL10nKey: string;
     axes: Array<GamepadAxisConfig>;
     buttons: Array<GamepadButtonConfig>;
 }
@@ -100,7 +118,7 @@ export type GamepadButtonState = {
 
 export type GamepadAxisConfig = {
     index: number;
-    nameL10nKey?: string;
+    nameL10nKey: string;
 }
 
 export enum GamepadInputMethod {
@@ -116,6 +134,6 @@ export enum GamepadButtonType {
 export type GamepadButtonConfig = {
     index: number;
     buttonType: GamepadButtonType;
-    nameL10nKey?: string;
+    nameL10nKey: string;
 }
 

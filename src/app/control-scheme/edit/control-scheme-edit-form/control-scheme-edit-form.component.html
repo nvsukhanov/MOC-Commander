@@ -1,0 +1,15 @@
+<mat-card *ngFor="let binding of form.controls.bindings.controls">
+    <app-control-scheme-binding-input [inputConfig]="binding.value['input']"></app-control-scheme-binding-input>
+</mat-card>
+
+<mat-card>
+    <mat-card-actions>
+        <button mat-button *ngIf="canAddBinding$ | ngrxPush" (click)="addBinding()">
+            {{ 'addSchemeBinding' | transloco }}
+        </button>
+        <button mat-button *ngIf="canCancelBinding$ | ngrxPush" (click)="cancelAddBinging()">
+            {{ 'cancelAddSchemeBinding' | transloco }}
+        </button>
+    </mat-card-actions>
+</mat-card>
+

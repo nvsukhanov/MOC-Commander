@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { CONTROL_SCHEME_SELECTORS } from '../selectors';
 import { map } from 'rxjs';
 import { Router } from '@angular/router';
-import { CONTROL_SCHEME_VIEW_ROUTE } from '../../routes';
+import { CONTROL_SCHEME_ROUTE } from '../../routes';
 
 @Injectable()
 export class ControlSchemeEffects {
@@ -27,7 +27,7 @@ export class ControlSchemeEffects {
     public readonly schemeCreated$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(CONTROL_SCHEME_ACTIONS.created),
-            map(({ id }) => this.router.navigate([ CONTROL_SCHEME_VIEW_ROUTE, id ]))
+            map(({ id }) => this.router.navigate([ CONTROL_SCHEME_ROUTE, id ]))
         );
     }, { dispatch: false });
 

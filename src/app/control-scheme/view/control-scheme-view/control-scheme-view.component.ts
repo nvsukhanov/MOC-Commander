@@ -6,13 +6,12 @@ import {
     CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS,
     CONTROL_SCHEME_SELECTORS,
     ControlScheme,
-    ControlSchemeBinding,
     ROUTER_SELECTORS
-} from '../../store';
+} from '../../../store';
 import { Store } from '@ngrx/store';
 import { PushModule } from '@ngrx/component';
-import { JsonPipe, NgForOf, NgIf } from '@angular/common';
-import { NotFoundComponent } from '../../main';
+import { AsyncPipe, JsonPipe, NgForOf, NgIf } from '@angular/common';
+import { NotFoundComponent } from '../../../main';
 import { ControlSchemeBindingViewComponent } from '../control-scheme-binding-view';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoModule } from '@ngneat/transloco';
@@ -36,7 +35,8 @@ import { MatIconModule } from '@angular/material/icon';
         TranslocoModule,
         MatToolbarModule,
         MatListModule,
-        MatIconModule
+        MatIconModule,
+        AsyncPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -45,27 +45,29 @@ export class ControlSchemeViewComponent implements OnDestroy {
         switchMap((id) => id === undefined ? EMPTY : this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(id))),
     );
 
-    public readonly selectSchemeBindings$: Observable<ControlSchemeBinding[]> = this.selectedScheme$.pipe(
-        switchMap((scheme) => scheme === undefined ? EMPTY : this.store.select(CONTROL_BINDING_SCHEME_SELECTORS.selectBySchemeId(scheme.id))),
+    public readonly selectSchemeBindings$ = this.selectedScheme$.pipe(
+        switchMap((scheme) => scheme === undefined ? EMPTY : this.store.select(
+            CONTROL_BINDING_SCHEME_SELECTORS.selectFullSchemeBindingDataBySchemeId(scheme.id))
+        ),
     );
 
     public readonly canAddBinding$ = this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.canAddBinding);
 
-    public readonly shouldShowBindingHelp$ = this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.shouldShowBindingHelp);
-
     public readonly canCancelBinding$ = this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.canCancelBinding);
+
+    public readonly shouldShowBindingHelp$ = this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.shouldShowBindingHelp);
 
     constructor(
         private readonly store: Store
     ) {
     }
 
-    public schemeBindingTrackByFn(index: number, binding: ControlSchemeBinding): string {
-        return binding.id;
+    public schemeBindingTrackByFn(index: number, { bindingId }: { bindingId: string }): string {
+        return bindingId;
     }
 
     public addBinding(schemeId: string): void {
-        this.store.dispatch(CONTROL_SCHEME_BINDINGS_ACTIONS.gamepadInputListen({ schemeId }));
+        this.store.dispatch(CONTROL_SCHEME_BINDINGS_ACTIONS.gamepadInputListen());
     }
 
     public cancelAddBinging(): void {

@@ -1,8 +1,8 @@
 {
   "unknownGamepad": "Unknown gamepad",
-  "genericGamepadAxisData": "Axis {index}",
-  "genericGamepadButtonData": "Button {index}",
-  "gamepadButtonState": "{ isPressed, select, true {Pressed} other {Released} }",
+  "genericGamepadAxisName": "Axis {index}",
+  "genericGamepadButtonName": "Button {index}",
+  "gamepadButtonState": "{ value, select, 1 {Pressed} other {Released} }",
   "dualshock": {
     "name": "Dualshock",
     "leftStickXAxis": "Left stick X-axis",

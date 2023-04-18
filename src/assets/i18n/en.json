@@ -36,5 +36,8 @@
   "hubTypeDuploTrain": "Duplo Train",
   "hubTypeTwoPortHub": "Two-port Hub",
   "hubTypeTwoPortHandset": "Two-port Handset",
-  "hubTypeUnknown": "Unknown hub type"
+  "hubTypeUnknown": "Unknown hub type",
+  "controlSchemeCreateToolbarTitle": "Create control scheme",
+  "bindingHubIsNotAttachedOption": "Hub is not attached",
+  "bindingSelectHubToAttachTitle": "Select hub to attach"
 }

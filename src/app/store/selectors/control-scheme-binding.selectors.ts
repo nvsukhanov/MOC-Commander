@@ -2,6 +2,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { IState } from '../i-state';
 import { CONTROL_SCHEME_BINDING_ADAPTER } from '../entity-adapters';
+import { GAMEPAD_SELECTORS } from './gamepad.selectors';
 
 const CONTROL_BINDING_SCHEME_FEATURE_SELECTOR = createFeatureSelector<IState['controlSchemeBindings']>('controlSchemeBindings');
 
@@ -14,5 +15,20 @@ const CONTROL_BINDING_SCHEME_SELECT_ALL = createSelector(
 
 export const CONTROL_BINDING_SCHEME_SELECTORS = {
     selectAll: CONTROL_BINDING_SCHEME_SELECT_ALL,
-    selectBySchemeId: (id: string) => createSelector(CONTROL_BINDING_SCHEME_SELECT_ALL, (state) => state.filter((binding) => binding.schemeId === id))
+    selectBySchemeId: (id: string) => createSelector(CONTROL_BINDING_SCHEME_SELECT_ALL, (state) => state.filter((binding) => binding.schemeId === id)),
+    selectFullSchemeBindingDataBySchemeId: (id: string) => createSelector(
+        CONTROL_BINDING_SCHEME_SELECTORS.selectBySchemeId(id),
+        GAMEPAD_SELECTORS.selectAll,
+        (bindings, gamepads) => bindings.map((binding) => {
+            const gamepadData = gamepads.find((gamepad) => gamepad.gamepadIndex === binding.gamepadId);
+            return {
+                bindingId: binding.id,
+                gamepad: {
+                    gamepadId: binding.gamepadId,
+                    gamepadNameL10nKey: gamepadData?.nameL10nKey,
+                    gamepadName: gamepadData?.nameL10nKey
+                }
+            };
+        })
+    ),
 };

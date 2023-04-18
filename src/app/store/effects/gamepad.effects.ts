@@ -1,10 +1,12 @@
 import { Inject, Injectable } from '@angular/core';
 import { GamepadAxisState, GamepadButtonState } from '../i-state';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { CONTROL_SCHEME_BINDINGS_ACTIONS, GAMEPAD_ACTIONS } from '../actions';
-import { animationFrames, fromEvent, map, Observable, switchMap, takeUntil } from 'rxjs';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { GAMEPAD_ACTIONS } from '../actions';
+import { animationFrames, bufferCount, fromEvent, map, Observable, switchMap, takeUntil } from 'rxjs';
 import { WINDOW } from '../../types';
 import { GamepadPluginsService } from '../../plugins';
+import { Store } from '@ngrx/store';
+import { GAMEPAD_SELECTORS } from '../selectors';
 
 @Injectable()
 export class GamepadEffects {
@@ -29,14 +31,25 @@ export class GamepadEffects {
         );
     });
 
+    public readonly controlReadGamepads$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(GAMEPAD_ACTIONS.gamepadConnected, GAMEPAD_ACTIONS.gamepadDisconnected),
+            concatLatestFrom(() => this.store.select(GAMEPAD_SELECTORS.selectAll)),
+            map(([ , gamepads ]) => {
+                return gamepads.length > 0
+                       ? GAMEPAD_ACTIONS.gamepadsReadStart()
+                       : GAMEPAD_ACTIONS.gamepadsReadStop();
+            })
+        );
+    });
+
     public readonly readGamepads$ = createEffect(() => {
         return this.actions$.pipe(
-            ofType(GAMEPAD_ACTIONS.gamepadsReadStart, CONTROL_SCHEME_BINDINGS_ACTIONS.gamepadInputListen),
+            ofType(GAMEPAD_ACTIONS.gamepadsReadStart),
             switchMap(() => animationFrames().pipe(
+                bufferCount(this.readGamepadNthFrames),
                 takeUntil(this.actions$.pipe(ofType(
                     GAMEPAD_ACTIONS.gamepadsReadStop,
-                    CONTROL_SCHEME_BINDINGS_ACTIONS.gamepadInputStopListening,
-                    CONTROL_SCHEME_BINDINGS_ACTIONS.gamepadInputReceived
                 )))
             )),
             map(() => {
@@ -56,8 +69,11 @@ export class GamepadEffects {
         );
     });
 
+    private readonly readGamepadNthFrames = 2; // TODO: move to config?
+
     constructor(
         private readonly actions$: Actions,
+        private readonly store: Store,
         @Inject(WINDOW) private readonly window: Window,
         private readonly gamepadPlugins: GamepadPluginsService
     ) {

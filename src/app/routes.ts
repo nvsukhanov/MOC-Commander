@@ -4,7 +4,9 @@ import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
 import { CONFIGURE_CONTROLLER_I18N_SCOPE, GAMEPAD_PLUGINS_I18N_SCOPE, HUB_IO_I18N_SCOPE } from './i18n';
 
 export const HUB_VIEW_ROUTE = 'hub';
-export const CONTROL_SCHEME_VIEW_ROUTE = 'control-scheme';
+export const CONTROL_SCHEME_ROUTE = 'control-scheme';
+export const CONTROL_SCHEME_CREATE_SUBROUTE = 'create';
+export const CONTROL_SCHEME_EDIT_SUBROUTE = 'edit';
 
 export const ROUTES: Routes = [
     {
@@ -25,8 +27,19 @@ export const ROUTES: Routes = [
         ]
     },
     {
-        path: [ CONTROL_SCHEME_VIEW_ROUTE, ':id' ].join('/'),
-        loadComponent: () => import('./control-scheme-view').then(m => m.ControlSchemeViewComponent),
+        path: [ CONTROL_SCHEME_ROUTE, CONTROL_SCHEME_CREATE_SUBROUTE ].join('/'),
+        loadComponent: () => import('./control-scheme/create').then(m => m.ControlSchemeCreateComponent),
+        pathMatch: 'full',
+    },
+    {
+        path: [ CONTROL_SCHEME_ROUTE, ':id' ].join('/'),
+        loadComponent: () => import('./control-scheme/view').then(m => m.ControlSchemeViewComponent),
+        pathMatch: 'full',
+    },
+    {
+        path: [ CONTROL_SCHEME_ROUTE, ':id', CONTROL_SCHEME_EDIT_SUBROUTE ].join('/'),
+        loadComponent: () => import('./control-scheme/edit').then(m => m.ControlSchemeEditComponent),
+        pathMatch: 'full'
     },
     {
         path: '**',

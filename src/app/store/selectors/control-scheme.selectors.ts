@@ -13,5 +13,5 @@ const CONTROL_SCHEME_SELECT_ENTITIES = createSelector(
 
 export const CONTROL_SCHEME_SELECTORS = {
     selectAll: createSelector(CONTROL_SCHEME_FEATURE_SELECTOR, CONTROL_SCHEME_ENTITY_SELECTORS.selectAll),
-    selectScheme: (id: string) => createSelector(CONTROL_SCHEME_SELECT_ENTITIES, (state) => state[id])
+    selectScheme: (id: string) => createSelector(CONTROL_SCHEME_SELECT_ENTITIES, (state) => state[id]),
 } as const;
