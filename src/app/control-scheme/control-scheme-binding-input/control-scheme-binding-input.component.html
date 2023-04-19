@@ -1,5 +1,5 @@
 <div>
-    {{ (gamepadConfig$ | ngrxPush)?.nameL10nKey | transloco }}
+    {{ gamepadNameL10nKey$ | ngrxPush | transloco }}
 </div>
 
 <ng-container [ngSwitch]="inputMethod$ | ngrxPush">

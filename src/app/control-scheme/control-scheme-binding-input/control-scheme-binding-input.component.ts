@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { BehaviorSubject, EMPTY, map, Observable, switchMap } from 'rxjs';
+import { map, NEVER, Observable, of, startWith, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
     GAMEPAD_AXES_STATE_SELECTORS,
@@ -9,26 +9,33 @@ import {
     GamepadButtonConfig,
     GamepadButtonState,
     GamepadButtonType,
-    GamepadConfig,
     GamepadInputMethod
 } from '../../store';
 import { JsonPipe, NgSwitch, NgSwitchCase } from '@angular/common';
 import { LetModule, PushModule } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
+import { FormControl, FormGroup } from '@angular/forms';
 
-export type ControlSchemeAxisBindingInputConfig = {
-    readonly gamepadId: number;
-    readonly inputMethod: GamepadInputMethod.Axis;
-    readonly gamepadAxisId: number
-}
+// export type ControlSchemeAxisBindingInputConfig = {
+//     readonly gamepadId: number;
+//     readonly inputMethod: GamepadInputMethod.Axis;
+//     readonly gamepadAxisId: number
+// }
+//
+// export type ControlSchemeButtonBindingInputConfig = {
+//     readonly gamepadId: number;
+//     readonly inputMethod: GamepadInputMethod.Button;
+//     readonly gamepadButtonId: number
+// }
+//
+// export type ControlSchemeBindingInputConfig = ControlSchemeAxisBindingInputConfig | ControlSchemeButtonBindingInputConfig;
 
-export type ControlSchemeButtonBindingInputConfig = {
-    readonly gamepadId: number;
-    readonly inputMethod: GamepadInputMethod.Button;
-    readonly gamepadButtonId: number
-}
-
-export type ControlSchemeBindingInputConfig = ControlSchemeAxisBindingInputConfig | ControlSchemeButtonBindingInputConfig;
+export type ControlSchemeBindingInputControl = FormGroup<{
+    gamepadId: FormControl<number>,
+    gamepadInputMethod: FormControl<GamepadInputMethod>,
+    gamepadAxisId: FormControl<number>,
+    gamepadButtonId: FormControl<number>,
+}>;
 
 @Component({
     standalone: true,
@@ -46,69 +53,97 @@ export type ControlSchemeBindingInputConfig = ControlSchemeAxisBindingInputConfi
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeBindingInputComponent {
-    public readonly gamepadConfig$: Observable<GamepadConfig | undefined>;
-
-    public readonly inputMethod$: Observable<GamepadInputMethod | undefined>;
-
-    public readonly axisConfig$: Observable<GamepadAxisConfig | undefined>;
-
-    public readonly axisValue$: Observable<number | undefined>;
-
-    public readonly buttonConfig$: Observable<GamepadButtonConfig | undefined>;
-
-    public readonly buttonValue$: Observable<GamepadButtonState | undefined>;
-
     public readonly inputMethods = GamepadInputMethod;
 
     public readonly gamepadButtonsTypes = GamepadButtonType;
 
-    private readonly inputConfig$ = new BehaviorSubject<ControlSchemeBindingInputConfig | undefined>(undefined);
+    private _gamepadNameL10nKey$: Observable<string> = NEVER;
+
+    private _inputMethod$: Observable<GamepadInputMethod> = NEVER;
+
+    private _axisConfig$: Observable<GamepadAxisConfig | undefined> = NEVER;
+
+    private _axisValue$: Observable<number | undefined> = NEVER;
+
+    private _buttonConfig$: Observable<GamepadButtonConfig | undefined> = NEVER;
+
+    private _buttonValue$: Observable<GamepadButtonState | undefined> = NEVER;
 
     constructor(
         private readonly store: Store
     ) {
-        this.inputMethod$ = this.inputConfig$.pipe(
-            map((config) => config?.inputMethod)
-        );
+    }
 
-        this.axisConfig$ = this.inputConfig$.pipe(
-            switchMap((config) => config !== undefined && config.inputMethod === GamepadInputMethod.Axis
-                                  ? this.store.select(GAMEPAD_SELECTORS.selectAxisConfigByIndex(config.gamepadId, config.gamepadAxisId))
-                                  : EMPTY
-            )
-        );
+    public get gamepadNameL10nKey$(): Observable<string> {
+        return this._gamepadNameL10nKey$;
+    }
 
-        this.axisValue$ = this.inputConfig$.pipe(
-            switchMap((config) => config !== undefined && config.inputMethod === GamepadInputMethod.Axis
-                                  ? this.store.select(GAMEPAD_AXES_STATE_SELECTORS.selectValueByIndex(config.gamepadId, config.gamepadAxisId))
-                                  : EMPTY
-            )
-        );
+    public get inputMethod$(): Observable<GamepadInputMethod> {
+        return this._inputMethod$;
+    }
 
-        this.buttonConfig$ = this.inputConfig$.pipe(
-            switchMap((config) => config !== undefined && config.inputMethod === GamepadInputMethod.Button
-                                  ? this.store.select(GAMEPAD_SELECTORS.selectButtonConfigByIndex(config.gamepadId, config.gamepadButtonId))
-                                  : EMPTY
-            )
-        );
+    public get axisConfig$(): Observable<GamepadAxisConfig | undefined> {
+        return this._axisConfig$;
+    }
 
-        this.buttonValue$ = this.inputConfig$.pipe(
-            switchMap((config) => config !== undefined && config.inputMethod === GamepadInputMethod.Button
-                                  ? this.store.select(GAMEPAD_BUTTONS_STATE_SELECTORS.selectByIndex(config.gamepadId, config.gamepadButtonId))
-                                  : EMPTY
-            )
-        );
+    public get axisValue$(): Observable<number | undefined> {
+        return this._axisValue$;
+    }
 
-        this.gamepadConfig$ = this.inputConfig$.pipe(
-            switchMap((config) => config !== undefined
-                                  ? this.store.select(GAMEPAD_SELECTORS.selectById(config.gamepadId))
-                                  : EMPTY
-            )
-        );
+    public get buttonConfig$(): Observable<GamepadButtonConfig | undefined> {
+        return this._buttonConfig$;
+    }
+
+    public get buttonValue$(): Observable<GamepadButtonState | undefined> {
+        return this._buttonValue$;
     }
 
     @Input()
-    public set inputConfig(config: ControlSchemeBindingInputConfig | undefined) {
-        this.inputConfig$.next(config);
+    public set formGroup(formGroup: ControlSchemeBindingInputControl) {
+        this._gamepadNameL10nKey$ = formGroup.controls.gamepadId.valueChanges.pipe(
+            startWith(formGroup.controls.gamepadId.value),
+            switchMap((gamepadId) => this.store.select(GAMEPAD_SELECTORS.selectById(gamepadId))),
+            map((gamepad) => gamepad?.nameL10nKey ?? '')
+        );
+
+        this._inputMethod$ = formGroup.controls.gamepadInputMethod.valueChanges.pipe(
+            startWith(formGroup.controls.gamepadInputMethod.value),
+        );
+
+        this._axisConfig$ = formGroup.controls.gamepadInputMethod.valueChanges.pipe(
+            startWith(formGroup.controls.gamepadInputMethod.value),
+            switchMap((inputMethod) =>
+                inputMethod === GamepadInputMethod.Axis
+                ? this.store.select(GAMEPAD_SELECTORS.selectAxisConfigByIndex(formGroup.controls.gamepadId.value, formGroup.controls.gamepadAxisId.value))
+                : of(undefined)
+            )
+        );
+
+        this._axisValue$ = formGroup.controls.gamepadInputMethod.valueChanges.pipe(
+            startWith(formGroup.controls.gamepadInputMethod.value),
+            switchMap((inputMethod) =>
+                inputMethod === GamepadInputMethod.Axis
+                ? this.store.select(GAMEPAD_AXES_STATE_SELECTORS.selectValueByIndex(formGroup.controls.gamepadId.value, formGroup.controls.gamepadAxisId.value))
+                : of(undefined)
+            )
+        );
+
+        this._buttonConfig$ = formGroup.controls.gamepadInputMethod.valueChanges.pipe(
+            startWith(formGroup.controls.gamepadInputMethod.value),
+            switchMap((inputMethod) =>
+                inputMethod === GamepadInputMethod.Button
+                ? this.store.select(GAMEPAD_SELECTORS.selectButtonConfigByIndex(formGroup.controls.gamepadId.value, formGroup.controls.gamepadButtonId.value))
+                : of(undefined)
+            )
+        );
+
+        this._buttonValue$ = formGroup.controls.gamepadInputMethod.valueChanges.pipe(
+            startWith(formGroup.controls.gamepadInputMethod.value),
+            switchMap((inputMethod) =>
+                inputMethod === GamepadInputMethod.Button
+                ? this.store.select(GAMEPAD_BUTTONS_STATE_SELECTORS.selectByIndex(formGroup.controls.gamepadId.value, formGroup.controls.gamepadButtonId.value))
+                : of(undefined)
+            )
+        );
     }
 }

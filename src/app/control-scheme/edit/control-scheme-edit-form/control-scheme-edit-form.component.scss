@@ -3,7 +3,13 @@
     flex-direction: column;
 }
 
-.binding-config {
+.binding-config, .binding-actions {
+    &:not(:last-child) {
+        margin-bottom: 20px;
+    }
+}
+
+.binding-config-row {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-gap: 20px;

@@ -1,7 +1,7 @@
-<ng-container *ngrxLet="config$ | ngrxPush; let config">
+<ng-container *ngIf="formGroup">
     <mat-form-field>
         <mat-label>Hub</mat-label>
-        <mat-select [value]="config?.hubId">
+        <mat-select [formControl]="formGroup.controls.hubId">
             <mat-option *ngFor="let hubConfiguration of (hubsList$ | ngrxPush)"
                         [value]="hubConfiguration.hubId">
                 {{ hubConfiguration.name }}

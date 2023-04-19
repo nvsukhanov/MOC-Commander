@@ -4,7 +4,6 @@ import {
     CONTROL_SCHEME_BINDINGS_ACTIONS,
     CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS,
     ControlSchemeEditState,
-    GamepadInputMethod,
     HUB_ATTACHED_IO_SELECTORS,
     HUBS_SELECTORS
 } from '../../../store';
@@ -16,8 +15,16 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { of, Subject, take, takeUntil } from 'rxjs';
 import { Actions, concatLatestFrom, ofType } from '@ngrx/effects';
-import { ControlSchemeBindingInputComponent, ControlSchemeBindingInputConfig } from '../../control-scheme-binding-input/control-scheme-binding-input.component';
-import { ControlSchemeBindingOutputComponent, ControlSchemeBindingOutputConfig } from '../../control-scheme-binding-output';
+import {
+    ControlSchemeBindingInputComponent,
+    ControlSchemeBindingInputControl
+} from '../../control-scheme-binding-input/control-scheme-binding-input.component';
+import { ControlSchemeBindingOutputComponent, ControlSchemeBindingOutputControl } from '../../control-scheme-binding-output';
+
+type BindingForm = FormGroup<{
+    input: ControlSchemeBindingInputControl,
+    output: ControlSchemeBindingOutputControl
+}>;
 
 @Component({
     standalone: true,
@@ -40,7 +47,7 @@ import { ControlSchemeBindingOutputComponent, ControlSchemeBindingOutputConfig }
 export class ControlSchemeEditFormComponent implements OnDestroy {
     public readonly form = this.formBuilder.group({
         schemeId: [ '' ],
-        bindings: this.formBuilder.array<FormGroup>([])
+        bindings: this.formBuilder.array<BindingForm>([])
     });
 
     public readonly canAddBinding$ = this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.canAddBinding);
@@ -58,7 +65,23 @@ export class ControlSchemeEditFormComponent implements OnDestroy {
 
     @Input()
     public set scheme(scheme: ControlSchemeEditState) {
-        this.form.patchValue(scheme);
+        this.form.patchValue({
+            schemeId: scheme.schemeId,
+            bindings: scheme.bindings.map(binding => ({
+                input: {
+                    gamepadId: binding.input.gamepadId,
+                    gamepadInputMethod: binding.input.gamepadInputMethod,
+                    gamepadAxisId: binding.input.gamepadAxisId ?? 0,
+                    gamepadButtonId: binding.input.gamepadButtonId ?? 0,
+                },
+                output: {
+                    hubId: binding.output.hubId,
+                    portId: binding.output.portId,
+                    portModeId: binding.output.portModeId,
+
+                }
+            }))
+        });
         this.form.markAsPristine();
     }
 
@@ -81,27 +104,18 @@ export class ControlSchemeEditFormComponent implements OnDestroy {
                 : of(undefined)
             ),
         ).subscribe(([ [ action, hubs ], ios ]) => { // TODO: something is really wrong here
-            const inputConfig: ControlSchemeBindingInputConfig = action.inputMethod === GamepadInputMethod.Axis
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                                                                 ? {
-                    gamepadId: action.gamepadId,
-                    inputMethod: GamepadInputMethod.Axis,
-                    gamepadAxisId: action.gamepadAxisId!
-                }
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                                                                 : {
-                    gamepadId: action.gamepadId,
-                    inputMethod: GamepadInputMethod.Button,
-                    gamepadButtonId: action.gamepadButtonId!
-                };
-            const outputConfig: ControlSchemeBindingOutputConfig = {
-                hubId: hubs.length === 1 ? hubs[0].hubId : undefined,
-                portId: ios?.portId,
-                portModeId: ios?.portModeId,
-            };
-            const binging = this.formBuilder.group({
-                input: inputConfig,
-                output: outputConfig
+            const binging: BindingForm = this.formBuilder.group({
+                input: this.formBuilder.group({
+                    gamepadId: this.formBuilder.control(action.gamepadId, { nonNullable: true }),
+                    gamepadInputMethod: this.formBuilder.control(action.inputMethod, { nonNullable: true }),
+                    gamepadAxisId: this.formBuilder.control(action.gamepadAxisId ?? 0, { nonNullable: true }),
+                    gamepadButtonId: this.formBuilder.control(action.gamepadButtonId ?? 0, { nonNullable: true }),
+                }),
+                output: this.formBuilder.group({
+                    hubId: this.formBuilder.control(hubs.length === 1 ? hubs[0].hubId : null),
+                    portId: this.formBuilder.control(ios?.portId ?? null),
+                    portModeId: this.formBuilder.control(ios?.portModeId ?? null),
+                })
             });
             this.form.controls.bindings.push(binging);
         });

@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { HUBS_SELECTORS } from '../../store';
 import { MatSelectModule } from '@angular/material/select';
 import { LetModule, PushModule } from '@ngrx/component';
-import { NgForOf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
-export type ControlSchemeBindingOutputConfig = {
-    readonly hubId?: string;
-    readonly portId?: number;
-    readonly portModeId?: number;
-}
+export type ControlSchemeBindingOutputControl = FormGroup<{
+    hubId: FormControl<string | null>,
+    portId: FormControl<number | null>,
+    portModeId: FormControl<number | null>,
+}>
 
 @Component({
     standalone: true,
@@ -21,25 +21,19 @@ export type ControlSchemeBindingOutputConfig = {
         MatSelectModule,
         LetModule,
         PushModule,
-        NgForOf
+        NgForOf,
+        ReactiveFormsModule,
+        NgIf
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeBindingOutputComponent {
-    public readonly config$: Observable<ControlSchemeBindingOutputConfig | undefined>;
+    @Input() public formGroup?: ControlSchemeBindingOutputControl;
 
     public readonly hubsList$ = this.store.select(HUBS_SELECTORS.selectHubs);
-
-    private readonly _configSubject = new BehaviorSubject<ControlSchemeBindingOutputConfig | undefined>(undefined);
 
     constructor(
         private readonly store: Store
     ) {
-        this.config$ = this._configSubject;
-    }
-
-    @Input()
-    public set outputConfig(config: ControlSchemeBindingOutputConfig | undefined) {
-        this._configSubject.next(config);
     }
 }

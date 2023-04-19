@@ -31,10 +31,11 @@ export type ControlSchemeEditState = {
             gamepadInputMethod: GamepadInputMethod;
             gamepadAxisId: number | null;
             gamepadButtonId: number | null;
-        } | null;
+        };
         output: {
             hubId: string;
             portId: number;
+            portModeId: number;
         }
     }>
 }
