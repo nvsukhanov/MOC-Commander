@@ -1,21 +1,25 @@
-<div>
-    {{ gamepadNameL10nKey$ | ngrxPush | transloco }}
-</div>
+<mat-card class="binding-input">
+    <mat-card-header>
+        <mat-card-title>{{ 'bindingInputSection' | transloco }}</mat-card-title>
+        <mat-card-subtitle>{{ gamepadNameL10nKey$ | ngrxPush | transloco }}</mat-card-subtitle>
+    </mat-card-header>
 
-<ng-container [ngSwitch]="inputMethod$ | ngrxPush">
-    <ng-container *ngSwitchCase="inputMethods.Button">
-        <ng-container *ngrxLet="buttonConfig$ | ngrxPush; let buttonConfig">
-            <ng-container [ngSwitch]="buttonConfig!.buttonType">
-                <div *ngSwitchCase="gamepadButtonsTypes.Button">
-                    {{ (buttonConfig$ | ngrxPush)?.nameL10nKey | transloco }} | {{ 'gamepadPlugins.gamepadButtonState' | transloco: (buttonValue$ | ngrxPush) }}
-                </div>
-                <div *ngSwitchCase="gamepadButtonsTypes.Trigger">
-                    {{ (buttonConfig$ | ngrxPush)?.nameL10nKey | transloco }} | {{ (buttonValue$ | ngrxPush)?.value }}
-                </div>
+    <mat-card-content [ngSwitch]="inputMethod$ | ngrxPush">
+        <ng-container *ngSwitchCase="inputMethods.Button">
+            <ng-container *ngrxLet="buttonConfig$ | ngrxPush; let buttonConfig">
+                <ng-container [ngSwitch]="buttonConfig!.buttonType">
+                    <div *ngSwitchCase="gamepadButtonsTypes.Button">
+                        {{ (buttonConfig$ | ngrxPush)?.nameL10nKey | transloco }}
+                        | {{ 'gamepadPlugins.gamepadButtonState' | transloco: (buttonValue$ | ngrxPush) }}
+                    </div>
+                    <div *ngSwitchCase="gamepadButtonsTypes.Trigger">
+                        {{ (buttonConfig$ | ngrxPush)?.nameL10nKey | transloco }} | {{ (buttonValue$ | ngrxPush)?.value }}
+                    </div>
+                </ng-container>
             </ng-container>
         </ng-container>
-    </ng-container>
-    <ng-container *ngSwitchCase="inputMethods.Axis">
-        {{ (axisConfig$ | ngrxPush)?.nameL10nKey | transloco }} | {{ axisValue$ | ngrxPush }}
-    </ng-container>
-</ng-container>
+        <ng-container *ngSwitchCase="inputMethods.Axis">
+            {{ (axisConfig$ | ngrxPush)?.nameL10nKey | transloco }} | {{ axisValue$ | ngrxPush }}
+        </ng-container>
+    </mat-card-content>
+</mat-card>

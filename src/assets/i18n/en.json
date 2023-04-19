@@ -27,6 +27,7 @@
   "createScheme": "Create scheme",
   "deleteScheme": "Delete scheme",
   "addSchemeBinding": "Add binding",
+  "saveScheme": "Save scheme",
   "cancelAddSchemeBinding": "Cancel add",
   "createBindingHelp": "Move the controller's stick or press a button to create a binding",
   "pageNotFound": "Page not found",
@@ -39,5 +40,13 @@
   "hubTypeUnknown": "Unknown hub type",
   "controlSchemeCreateToolbarTitle": "Create control scheme",
   "bindingHubIsNotAttachedOption": "Hub is not attached",
-  "bindingSelectHubToAttachTitle": "Select hub to attach"
+  "bindingSelectHubToAttachTitle": "Select hub to attach",
+  "hubIOOperationModeLinear": "Linear",
+  "hubIOOperationModeServo": "Servo",
+  "hubIOOperationModeSetColor": "Set color",
+  "bindingInputSection": "Input",
+  "bindingOutputSection": "Output",
+  "bindingOutputSectionPortLabel": "Port",
+  "bindingOutputSectionOperationModeLabel": "Operation mode",
+  "bindingConfigurationSection": "Configuration"
 }

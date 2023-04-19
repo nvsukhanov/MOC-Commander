@@ -1,6 +1,7 @@
 import { HubType, IOType, PortModeName, PortModeSymbol } from '../lego-hub';
 import { EntityState } from '@ngrx/entity';
 import { RouterState } from '@ngrx/router-store';
+import { HubIoOperationMode } from './hub-io-operation-mode';
 
 export interface IState {
     controlSchemes: EntityState<ControlScheme>;
@@ -26,6 +27,7 @@ export type ControlSchemeEditState = {
     schemeId: string | null;
     bindings: Array<{
         bindingId: string | null;
+        name: string;
         input: {
             gamepadId: number;
             gamepadInputMethod: GamepadInputMethod;
@@ -35,7 +37,7 @@ export type ControlSchemeEditState = {
         output: {
             hubId: string;
             portId: number;
-            portModeId: number;
+            operationMode: HubIoOperationMode;
         }
     }>
 }

@@ -7,22 +7,27 @@
     </mat-card-content>
 </mat-card>
 
-<mat-card *ngFor="let binding of form.controls.bindings.controls" class="binding-config">
-    <mat-card-content>
-        <section class="binding-config-row">
-            <app-control-scheme-binding-input [formGroup]="binding.controls.input"></app-control-scheme-binding-input>
-            <app-control-scheme-binding-output [formGroup]="binding.controls.output"></app-control-scheme-binding-output>
-        </section>
-    </mat-card-content>
-</mat-card>
+<section class="binding-config" *ngFor="let binding of form.controls.bindings.controls">
+    <app-control-scheme-binding-input [formGroup]="binding.controls.input"></app-control-scheme-binding-input>
+    <app-control-scheme-binding-output [formGroup]="binding"></app-control-scheme-binding-output>
+</section>
 
 <mat-card class="binding-actions">
     <mat-card-actions>
-        <button mat-button *ngIf="canAddBinding$ | ngrxPush" (click)="addBinding()">
+        <button mat-button
+                *ngIf="canAddBinding$ | ngrxPush"
+                (click)="addBinding()">
             {{ 'addSchemeBinding' | transloco }}
         </button>
-        <button mat-button *ngIf="canCancelBinding$ | ngrxPush" (click)="cancelAddBinging()">
+        <button mat-button
+                *ngIf="canCancelBinding$ | ngrxPush"
+                (click)="cancelAddBinging()">
             {{ 'cancelAddSchemeBinding' | transloco }}
+        </button>
+        <button mat-button
+                [disabled]="form.invalid"
+                (click)="onSave()">
+            {{ 'saveScheme' | transloco }}
         </button>
     </mat-card-actions>
 </mat-card>

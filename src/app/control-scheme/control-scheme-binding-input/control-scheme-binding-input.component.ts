@@ -15,6 +15,8 @@ import { JsonPipe, NgSwitch, NgSwitchCase } from '@angular/common';
 import { LetModule, PushModule } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
 
 // export type ControlSchemeAxisBindingInputConfig = {
 //     readonly gamepadId: number;
@@ -48,7 +50,9 @@ export type ControlSchemeBindingInputControl = FormGroup<{
         JsonPipe,
         LetModule,
         NgSwitchCase,
-        TranslocoModule
+        TranslocoModule,
+        MatCardModule,
+        MatListModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

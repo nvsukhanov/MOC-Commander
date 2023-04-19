@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
     CONTROL_SCHEME_BINDINGS_ACTIONS,
     CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS,
@@ -20,6 +20,7 @@ import {
     ControlSchemeBindingInputControl
 } from '../../control-scheme-binding-input/control-scheme-binding-input.component';
 import { ControlSchemeBindingOutputComponent, ControlSchemeBindingOutputControl } from '../../control-scheme-binding-output';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 type BindingForm = FormGroup<{
     input: ControlSchemeBindingInputControl,
@@ -40,14 +41,17 @@ type BindingForm = FormGroup<{
         NgForOf,
         JsonPipe,
         ControlSchemeBindingInputComponent,
-        ControlSchemeBindingOutputComponent
+        ControlSchemeBindingOutputComponent,
+        MatExpansionModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeEditFormComponent implements OnDestroy {
+    @Output() public readonly save = new EventEmitter<ControlSchemeEditState>();
+
     public readonly form = this.formBuilder.group({
-        schemeId: [ '' ],
-        bindings: this.formBuilder.array<BindingForm>([])
+        schemeId: this.formBuilder.control<string | null>(null),
+        bindings: this.formBuilder.array<BindingForm>([], Validators.required)
     });
 
     public readonly canAddBinding$ = this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.canAddBinding);
@@ -66,7 +70,7 @@ export class ControlSchemeEditFormComponent implements OnDestroy {
     @Input()
     public set scheme(scheme: ControlSchemeEditState) {
         this.form.patchValue({
-            schemeId: scheme.schemeId,
+            schemeId: scheme.schemeId ?? null,
             bindings: scheme.bindings.map(binding => ({
                 input: {
                     gamepadId: binding.input.gamepadId,
@@ -77,8 +81,7 @@ export class ControlSchemeEditFormComponent implements OnDestroy {
                 output: {
                     hubId: binding.output.hubId,
                     portId: binding.output.portId,
-                    portModeId: binding.output.portModeId,
-
+                    operationMode: binding.output.operationMode,
                 }
             }))
         });
@@ -97,24 +100,24 @@ export class ControlSchemeEditFormComponent implements OnDestroy {
             takeUntil(this.onDestroy$),
             takeUntil(this.actions.pipe(ofType(CONTROL_SCHEME_BINDINGS_ACTIONS.gamepadInputStopListening))),
             take(1),
-            concatLatestFrom(() => this.store.select(HUBS_SELECTORS.selectHubs)),
+            concatLatestFrom(() => this.store.select(HUBS_SELECTORS.selectHubs).pipe()),
             concatLatestFrom(([ action, hubs ]) =>
                 hubs.length === 1
-                ? this.store.select(HUB_ATTACHED_IO_SELECTORS.selectFirstIOControllableByMethod(hubs[0].hubId, action.inputMethod))
-                : of(undefined)
+                ? this.store.select(HUB_ATTACHED_IO_SELECTORS.selectIOsControllableByMethod(hubs[0].hubId, action.inputMethod))
+                : of([])
             ),
         ).subscribe(([ [ action, hubs ], ios ]) => { // TODO: something is really wrong here
             const binging: BindingForm = this.formBuilder.group({
                 input: this.formBuilder.group({
-                    gamepadId: this.formBuilder.control(action.gamepadId, { nonNullable: true }),
-                    gamepadInputMethod: this.formBuilder.control(action.inputMethod, { nonNullable: true }),
-                    gamepadAxisId: this.formBuilder.control(action.gamepadAxisId ?? 0, { nonNullable: true }),
-                    gamepadButtonId: this.formBuilder.control(action.gamepadButtonId ?? 0, { nonNullable: true }),
+                    gamepadId: this.formBuilder.control(action.gamepadId, { nonNullable: true, validators: [ Validators.required ] }),
+                    gamepadInputMethod: this.formBuilder.control(action.inputMethod, { nonNullable: true, validators: [ Validators.required ] }),
+                    gamepadAxisId: this.formBuilder.control(action.gamepadAxisId ?? 0, { nonNullable: true, validators: [ Validators.required ] }),
+                    gamepadButtonId: this.formBuilder.control(action.gamepadButtonId ?? 0, { nonNullable: true, validators: [ Validators.required ] }),
                 }),
                 output: this.formBuilder.group({
-                    hubId: this.formBuilder.control(hubs.length === 1 ? hubs[0].hubId : null),
-                    portId: this.formBuilder.control(ios?.portId ?? null),
-                    portModeId: this.formBuilder.control(ios?.portModeId ?? null),
+                    hubId: this.formBuilder.control(hubs.length === 1 ? hubs[0].hubId : null, { validators: [ Validators.required ] }),
+                    portId: this.formBuilder.control(ios[0]?.ioConfig.portId ?? null, { validators: [ Validators.required ] }),
+                    operationMode: this.formBuilder.control(ios[0]?.operationModes[0] ?? null, { validators: [ Validators.required ] }),
                 })
             });
             this.form.controls.bindings.push(binging);
@@ -123,5 +126,9 @@ export class ControlSchemeEditFormComponent implements OnDestroy {
 
     public cancelAddBinging(): void {
         this.store.dispatch(CONTROL_SCHEME_BINDINGS_ACTIONS.gamepadInputStopListening());
+    }
+
+    public onSave(): void {
+        this.save.emit(this.form.value as ControlSchemeEditState);
     }
 }

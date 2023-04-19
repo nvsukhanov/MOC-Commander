@@ -4,13 +4,11 @@
 }
 
 .binding-config, .binding-actions {
-    &:not(:last-child) {
-        margin-bottom: 20px;
-    }
+    margin-top: 20px;
 }
 
-.binding-config-row {
+.binding-config {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: minmax(200px, 1fr) minmax(600px, 3fr);
     grid-gap: 20px;
 }
