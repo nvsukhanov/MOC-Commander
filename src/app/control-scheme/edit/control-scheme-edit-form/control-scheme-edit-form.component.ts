@@ -17,6 +17,7 @@ import { Store } from '@ngrx/store';
 import { of, Subject, take, takeUntil } from 'rxjs';
 import { Actions, concatLatestFrom, ofType } from '@ngrx/effects';
 import { ControlSchemeBindingInputComponent, ControlSchemeBindingInputConfig } from '../../control-scheme-binding-input/control-scheme-binding-input.component';
+import { ControlSchemeBindingOutputComponent, ControlSchemeBindingOutputConfig } from '../../control-scheme-binding-output';
 
 @Component({
     standalone: true,
@@ -31,7 +32,8 @@ import { ControlSchemeBindingInputComponent, ControlSchemeBindingInputConfig } f
         TranslocoModule,
         NgForOf,
         JsonPipe,
-        ControlSchemeBindingInputComponent
+        ControlSchemeBindingInputComponent,
+        ControlSchemeBindingOutputComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -92,15 +94,15 @@ export class ControlSchemeEditFormComponent implements OnDestroy {
                     inputMethod: GamepadInputMethod.Button,
                     gamepadButtonId: action.gamepadButtonId!
                 };
+            const outputConfig: ControlSchemeBindingOutputConfig = {
+                hubId: hubs.length === 1 ? hubs[0].hubId : undefined,
+                portId: ios?.portId,
+                portModeId: ios?.portModeId,
+            };
             const binging = this.formBuilder.group({
                 input: inputConfig,
-                output: {
-                    hubId: [ hubs.length === 1 ? hubs[0].hubId : null ],
-                    ioData: [ ios ?? null ]
-                }
-
+                output: outputConfig
             });
-
             this.form.controls.bindings.push(binging);
         });
     }

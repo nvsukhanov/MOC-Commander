@@ -17,15 +17,15 @@ import { LetModule, PushModule } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 
 export type ControlSchemeAxisBindingInputConfig = {
-    gamepadId: number;
-    inputMethod: GamepadInputMethod.Axis;
-    gamepadAxisId: number
+    readonly gamepadId: number;
+    readonly inputMethod: GamepadInputMethod.Axis;
+    readonly gamepadAxisId: number
 }
 
 export type ControlSchemeButtonBindingInputConfig = {
-    gamepadId: number;
-    inputMethod: GamepadInputMethod.Button;
-    gamepadButtonId: number
+    readonly gamepadId: number;
+    readonly inputMethod: GamepadInputMethod.Button;
+    readonly gamepadButtonId: number
 }
 
 export type ControlSchemeBindingInputConfig = ControlSchemeAxisBindingInputConfig | ControlSchemeButtonBindingInputConfig;

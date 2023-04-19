@@ -1,0 +1,11 @@
+<ng-container *ngrxLet="config$ | ngrxPush; let config">
+    <mat-form-field>
+        <mat-label>Hub</mat-label>
+        <mat-select [value]="config?.hubId">
+            <mat-option *ngFor="let hubConfiguration of (hubsList$ | ngrxPush)"
+                        [value]="hubConfiguration.hubId">
+                {{ hubConfiguration.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</ng-container>

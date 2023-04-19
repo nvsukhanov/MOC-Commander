@@ -58,10 +58,10 @@ export class GamepadEffects {
                 const buttonsState: GamepadButtonState[] = [];
                 gamepads.forEach((gamepad) => {
                     gamepad.axes.forEach((axis, axisIndex) => {
-                        axesState.push({ gamepadIndex: gamepad.index, axisIndex: axisIndex, value: axis });
+                        axesState.push({ gamepadIndex: gamepad.index, axisIndex: axisIndex, value: +axis.toFixed(this.inputValuePrecision) });
                     });
                     gamepad.buttons.forEach((button, buttonIndex) => {
-                        buttonsState.push({ gamepadIndex: gamepad.index, buttonIndex: buttonIndex, value: button.value });
+                        buttonsState.push({ gamepadIndex: gamepad.index, buttonIndex: buttonIndex, value: +button.value.toFixed(this.inputValuePrecision) });
                     });
                 });
                 return GAMEPAD_ACTIONS.updateGamepadsValues({ axesState: axesState, buttonsState: buttonsState });
@@ -70,6 +70,8 @@ export class GamepadEffects {
     });
 
     private readonly readGamepadNthFrames = 2; // TODO: move to config?
+
+    private readonly inputValuePrecision = 2; // TODO: move to config?
 
     constructor(
         private readonly actions$: Actions,

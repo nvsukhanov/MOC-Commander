@@ -1,5 +1,10 @@
 <mat-card *ngFor="let binding of form.controls.bindings.controls">
-    <app-control-scheme-binding-input [inputConfig]="binding.value['input']"></app-control-scheme-binding-input>
+    <mat-card-content>
+        <section class="binding-config">
+            <app-control-scheme-binding-input [inputConfig]="binding.controls['input'].value"></app-control-scheme-binding-input>
+            <app-control-scheme-binding-output [outputConfig]="binding.controls['output'].value"></app-control-scheme-binding-output>
+        </section>
+    </mat-card-content>
 </mat-card>
 
 <mat-card>
