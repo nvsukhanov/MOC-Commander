@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatLineModule } from '@angular/material/core';
 import { NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { CONTROL_SCHEME_VIEW_ROUTE } from '../../routes';
+import { CONTROL_SCHEME_ROUTE } from '../../routes';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -33,7 +33,7 @@ export class ControlSchemeListItemComponent {
 
     @Input()
     public set schemeId(value: string | undefined) {
-        this._schemeViewHref = value ? [ CONTROL_SCHEME_VIEW_ROUTE, value ] : [];
+        this._schemeViewHref = value ? [ CONTROL_SCHEME_ROUTE, value ] : [];
     }
 
     public get schemeViewHref(): string[] {

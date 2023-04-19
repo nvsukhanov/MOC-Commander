@@ -1,0 +1,12 @@
+<mat-form-field appearance="fill">
+    <mat-label>{{ 'bindingSelectHubToAttachTitle' | transloco }}</mat-label>
+    <mat-select [(value)]="value">
+        <mat-option *ngFor="let hub of knownHubs"
+                    [value]="hub.hubId">
+            {{ hub.name }}
+        </mat-option>
+        <mat-option [value]="null">
+            {{ 'bindingHubIsNotAttachedOption' }}
+        </mat-option>
+    </mat-select>
+</mat-form-field>

@@ -8,6 +8,8 @@ import { Store } from '@ngrx/store';
 import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlScheme } from '../../store';
 import { ControlSchemeListItemComponent } from '../control-scheme-list-item';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
+import { CONTROL_SCHEME_CREATE_SUBROUTE, CONTROL_SCHEME_ROUTE } from '../../routes';
 
 @Component({
     standalone: true,
@@ -32,6 +34,7 @@ export class ControlSchemeListComponent {
 
     constructor(
         private readonly store: Store,
+        private readonly router: Router
     ) {
     }
 
@@ -44,6 +47,6 @@ export class ControlSchemeListComponent {
     }
 
     public onCreate(): void {
-        this.store.dispatch(CONTROL_SCHEME_ACTIONS.create());
+        this.router.navigate([ CONTROL_SCHEME_ROUTE, CONTROL_SCHEME_CREATE_SUBROUTE ]);
     }
 }

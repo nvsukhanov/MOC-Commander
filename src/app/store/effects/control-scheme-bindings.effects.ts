@@ -22,11 +22,10 @@ export class ControlSchemeBindingsEffects {
                     map((gamepadAxisState) => CONTROL_SCHEME_BINDINGS_ACTIONS.gamepadInputReceived({
                             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                             gamepadId: gamepadAxisState!.gamepadIndex,
-                            inputType: GamepadInputMethod.Axis,
+                            inputMethod: GamepadInputMethod.Axis,
                             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                             gamepadAxisId: gamepadAxisState!.axisIndex,
                             gamepadButtonId: null,
-                            schemeId: action.schemeId
                         })
                     )
                 ),
@@ -40,11 +39,10 @@ export class ControlSchemeBindingsEffects {
                     map((gamepadButtonsStates) => CONTROL_SCHEME_BINDINGS_ACTIONS.gamepadInputReceived({
                             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                             gamepadId: gamepadButtonsStates!.gamepadIndex,
-                            inputType: GamepadInputMethod.Button,
+                            inputMethod: GamepadInputMethod.Button,
                             gamepadAxisId: null,
                             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                             gamepadButtonId: gamepadButtonsStates!.buttonIndex,
-                            schemeId: action.schemeId
                         })
                     )
                 ),

@@ -4,8 +4,6 @@ import { catchError, fromEvent, map, mergeMap, of, takeUntil, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HubStorageService } from '../hub-storage.service';
 import { HUBS_ACTIONS } from '../actions';
-import { Router } from '@angular/router';
-import { HUB_VIEW_ROUTE } from '../../routes';
 import { HubDiscoveryService, HubProperty } from '../../lego-hub';
 import { HubFactoryService } from '../../lego-hub/hub-factory.service';
 import { WINDOW } from '../../types';
@@ -46,13 +44,6 @@ export class HubsEffects {
             })
         );
     });
-
-    public navigateToHubView$ = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(HUBS_ACTIONS.connected),
-            tap((a) => this.router.navigate([ HUB_VIEW_ROUTE, a.hubId ]))
-        );
-    }, { dispatch: false });
 
     public listenToBatteryLevelOnConnect$ = createEffect(() => {
         return this.actions$.pipe(
@@ -118,7 +109,6 @@ export class HubsEffects {
         private readonly hubDiscovery: HubDiscoveryService,
         private readonly hubFactoryService: HubFactoryService,
         private readonly hubStorage: HubStorageService,
-        private readonly router: Router,
         @Inject(WINDOW) private readonly window: Window
     ) {
     }

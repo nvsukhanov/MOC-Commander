@@ -19,7 +19,7 @@
     </mat-toolbar>
 
     <section class="bindings-container">
-        <app-control-scheme-binding-view *ngFor="let binding of selectSchemeBindings$ | ngrxPush; trackBy: schemeBindingTrackByFn"
+        <app-control-scheme-binding-view *ngFor="let binding of selectSchemeBindings$ | async; trackBy: schemeBindingTrackByFn"
                                          class="scheme-binding-view"
                                          [binding]="binding">
         </app-control-scheme-binding-view>

@@ -15,8 +15,16 @@ export class ControllerDefaultPluginService extends GamepadPlugin {
     protected mapSpecificFields(gamepad: Gamepad): Pick<GamepadConfig, 'axes' | 'buttons' | 'nameL10nKey'> {
         return {
             nameL10nKey: createGamepadL10nKey('unknownGamepad'),
-            axes: gamepad.axes.map((v, index) => ({ index, isButton: false })),
-            buttons: gamepad.buttons.map((v, index) => ({ index, buttonType: GamepadButtonType.Button }))
+            axes: gamepad.axes.map((v, index) => ({
+                index,
+                isButton: false,
+                nameL10nKey: 'genericGamepadAxisName'
+            })),
+            buttons: gamepad.buttons.map((v, index) => ({
+                index,
+                buttonType: GamepadButtonType.Button,
+                nameL10nKey: 'genericGamepadButtonName'
+            }))
         };
     }
 }

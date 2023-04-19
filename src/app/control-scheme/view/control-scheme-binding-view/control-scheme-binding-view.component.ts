@@ -1,7 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { ControlSchemeBinding } from '../../store';
 import { JsonPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
+import { ExtractSelectorFactoryReturnType } from '../../../types';
+import { CONTROL_BINDING_SCHEME_SELECTORS } from '../../../store';
+
+type BindingData = ExtractSelectorFactoryReturnType<typeof CONTROL_BINDING_SCHEME_SELECTORS.selectFullSchemeBindingDataBySchemeId> extends Array<infer T>
+                   ? T
+                   : never;
 
 @Component({
     standalone: true,
@@ -15,5 +20,5 @@ import { MatCardModule } from '@angular/material/card';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeBindingViewComponent {
-    @Input() public binding: ControlSchemeBinding | undefined;
+    @Input() public binding: BindingData | undefined;
 }

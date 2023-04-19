@@ -1,0 +1,14 @@
+:host {
+    display: flex;
+    flex-direction: column;
+}
+
+.binding-config, .binding-actions {
+    margin-top: 20px;
+}
+
+.binding-config {
+    display: grid;
+    grid-template-columns: minmax(200px, 1fr) minmax(600px, 3fr);
+    grid-gap: 20px;
+}
