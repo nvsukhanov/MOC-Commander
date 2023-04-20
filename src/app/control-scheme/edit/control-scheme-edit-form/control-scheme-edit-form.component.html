@@ -1,12 +1,3 @@
-<mat-card>
-    <mat-card-header>
-        <mat-card-title>Debug</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <pre>{{ form.value | json }}</pre>
-    </mat-card-content>
-</mat-card>
-
 <section class="binding-config" *ngFor="let binding of form.controls.bindings.controls">
     <app-control-scheme-binding-input [formGroup]="binding.controls.input"></app-control-scheme-binding-input>
     <app-control-scheme-binding-output [formGroup]="binding"></app-control-scheme-binding-output>
@@ -32,3 +23,15 @@
     </mat-card-actions>
 </mat-card>
 
+<mat-accordion class="scheme-raw">
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Raw scheme
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-card-content>
+            <pre>{{ form.value | json }}</pre>
+        </mat-card-content>
+    </mat-expansion-panel>
+</mat-accordion>

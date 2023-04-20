@@ -5,4 +5,6 @@
     </mat-toolbar-row>
 </mat-toolbar>
 
-<app-control-scheme-edit-form class="edit-form"></app-control-scheme-edit-form>
+<app-control-scheme-edit-form class="edit-form"
+                              (save)="onSave($event)"
+></app-control-scheme-edit-form>

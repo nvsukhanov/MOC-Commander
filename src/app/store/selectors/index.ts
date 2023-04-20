@@ -8,6 +8,5 @@ export * from './gamepad.selectors';
 export * from './control-scheme.selectors';
 export * from './gamepad-axes-state.selectors';
 export * from './gamepad-buttons-state.selectors';
-export * from './control-scheme-binding.selectors';
 export * from './control-scheme-configuration-state.selectors';
 export * from './hub-port-mode-info.selectors';

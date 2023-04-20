@@ -18,25 +18,11 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 
-// export type ControlSchemeAxisBindingInputConfig = {
-//     readonly gamepadId: number;
-//     readonly inputMethod: GamepadInputMethod.Axis;
-//     readonly gamepadAxisId: number
-// }
-//
-// export type ControlSchemeButtonBindingInputConfig = {
-//     readonly gamepadId: number;
-//     readonly inputMethod: GamepadInputMethod.Button;
-//     readonly gamepadButtonId: number
-// }
-//
-// export type ControlSchemeBindingInputConfig = ControlSchemeAxisBindingInputConfig | ControlSchemeButtonBindingInputConfig;
-
 export type ControlSchemeBindingInputControl = FormGroup<{
     gamepadId: FormControl<number>,
     gamepadInputMethod: FormControl<GamepadInputMethod>,
-    gamepadAxisId: FormControl<number>,
-    gamepadButtonId: FormControl<number>,
+    gamepadAxisId: FormControl<number | null>,
+    gamepadButtonId: FormControl<number | null>,
 }>;
 
 @Component({
@@ -118,7 +104,11 @@ export class ControlSchemeBindingInputComponent {
             startWith(formGroup.controls.gamepadInputMethod.value),
             switchMap((inputMethod) =>
                 inputMethod === GamepadInputMethod.Axis
-                ? this.store.select(GAMEPAD_SELECTORS.selectAxisConfigByIndex(formGroup.controls.gamepadId.value, formGroup.controls.gamepadAxisId.value))
+                ? this.store.select(GAMEPAD_SELECTORS.selectAxisConfigByIndex(
+                    formGroup.controls.gamepadId.value,
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    formGroup.controls.gamepadAxisId.value!
+                ))
                 : of(undefined)
             )
         );
@@ -127,7 +117,11 @@ export class ControlSchemeBindingInputComponent {
             startWith(formGroup.controls.gamepadInputMethod.value),
             switchMap((inputMethod) =>
                 inputMethod === GamepadInputMethod.Axis
-                ? this.store.select(GAMEPAD_AXES_STATE_SELECTORS.selectValueByIndex(formGroup.controls.gamepadId.value, formGroup.controls.gamepadAxisId.value))
+                ? this.store.select(GAMEPAD_AXES_STATE_SELECTORS.selectValueByIndex(
+                    formGroup.controls.gamepadId.value,
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    formGroup.controls.gamepadAxisId.value!
+                ))
                 : of(undefined)
             )
         );
@@ -136,7 +130,11 @@ export class ControlSchemeBindingInputComponent {
             startWith(formGroup.controls.gamepadInputMethod.value),
             switchMap((inputMethod) =>
                 inputMethod === GamepadInputMethod.Button
-                ? this.store.select(GAMEPAD_SELECTORS.selectButtonConfigByIndex(formGroup.controls.gamepadId.value, formGroup.controls.gamepadButtonId.value))
+                ? this.store.select(GAMEPAD_SELECTORS.selectButtonConfigByIndex(
+                    formGroup.controls.gamepadId.value,
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    formGroup.controls.gamepadButtonId.value!
+                ))
                 : of(undefined)
             )
         );
@@ -145,7 +143,11 @@ export class ControlSchemeBindingInputComponent {
             startWith(formGroup.controls.gamepadInputMethod.value),
             switchMap((inputMethod) =>
                 inputMethod === GamepadInputMethod.Button
-                ? this.store.select(GAMEPAD_BUTTONS_STATE_SELECTORS.selectByIndex(formGroup.controls.gamepadId.value, formGroup.controls.gamepadButtonId.value))
+                ? this.store.select(GAMEPAD_BUTTONS_STATE_SELECTORS.selectByIndex(
+                    formGroup.controls.gamepadId.value,
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    formGroup.controls.gamepadButtonId.value!
+                ))
                 : of(undefined)
             )
         );

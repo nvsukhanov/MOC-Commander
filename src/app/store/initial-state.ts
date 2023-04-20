@@ -1,6 +1,5 @@
 import { IState } from './i-state';
 import {
-    CONTROL_SCHEME_BINDING_ADAPTER,
     CONTROL_SCHEMES_ENTITY_ADAPTER,
     GAMEPAD_AXES_STATES_ENTITY_ADAPTER,
     GAMEPAD_BUTTONS_STATES_ENTITY_ADAPTER,
@@ -15,7 +14,6 @@ import { RouterState } from '@ngrx/router-store';
 
 export const INITIAL_STATE: IState = {
     controlSchemes: CONTROL_SCHEMES_ENTITY_ADAPTER.getInitialState(),
-    controlSchemeBindings: CONTROL_SCHEME_BINDING_ADAPTER.getInitialState(),
     controlSchemeConfigurationState: {
         isListening: false
     },
