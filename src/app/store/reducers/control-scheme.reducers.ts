@@ -12,5 +12,8 @@ export const CONTROL_SCHEME_REDUCERS = createReducer(
             index: nextIndex,
             bindings
         }, state);
+    }),
+    on(CONTROL_SCHEME_ACTIONS.delete, (state, { id }) => {
+        return CONTROL_SCHEMES_ENTITY_ADAPTER.removeOne(id, state);
     })
 );

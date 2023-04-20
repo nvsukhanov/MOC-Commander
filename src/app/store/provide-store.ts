@@ -26,27 +26,39 @@ import {
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { NAVIGATOR } from '../types';
-import { provideStore, Store } from '@ngrx/store';
+import { Action, ActionReducer, ActionReducerMap, MetaReducer, provideStore, Store } from '@ngrx/store';
 import { HubStorageService } from './hub-storage.service';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { GAMEPAD_ACTIONS } from './actions';
+import { localStorageSync } from 'ngrx-store-localstorage';
+
+const REDUCERS: ActionReducerMap<IState> = {
+    controlSchemes: CONTROL_SCHEME_REDUCERS,
+    controlSchemeConfigurationState: CONTROL_SCHEME_CONFIGURATION_STATE_REDUCERS,
+    gamepads: GAMEPAD_REDUCERS,
+    gamepadAxesState: GAMEPAD_AXES_STATE_REDUCERS,
+    gamepadButtonsState: GAMEPAD_BUTTONS_STATE_REDUCERS,
+    hubs: HUBS_REDUCERS,
+    hubAttachedIOs: HUB_ATTACHED_IOS_REDUCERS,
+    hubIOSupportedModes: HUB_IO_OUTPUT_MODES_REDUCER,
+    hubIOdata: HUB_IO_DATA_REDUCERS,
+    hubPortModeInfo: HUB_PORT_MODE_INFO_REDUCERS,
+    bluetoothAvailability: BLUETOOTH_AVAILABILITY_REDUCERS,
+    router: routerReducer
+};
+
+export function localStorageSyncReducer(reducer: ActionReducer<IState>): ActionReducer<IState> {
+    return localStorageSync({
+        keys: [ 'controlSchemes' ] satisfies Array<keyof IState>,
+        rehydrate: true
+    })(reducer);
+}
+
+const metaReducers: Array<MetaReducer<IState, Action>> = [ localStorageSyncReducer ];
 
 export function provideApplicationStore(): EnvironmentProviders {
     return makeEnvironmentProviders([
-        provideStore<IState>({
-            controlSchemes: CONTROL_SCHEME_REDUCERS,
-            controlSchemeConfigurationState: CONTROL_SCHEME_CONFIGURATION_STATE_REDUCERS,
-            gamepads: GAMEPAD_REDUCERS,
-            gamepadAxesState: GAMEPAD_AXES_STATE_REDUCERS,
-            gamepadButtonsState: GAMEPAD_BUTTONS_STATE_REDUCERS,
-            hubs: HUBS_REDUCERS,
-            hubAttachedIOs: HUB_ATTACHED_IOS_REDUCERS,
-            hubIOSupportedModes: HUB_IO_OUTPUT_MODES_REDUCER,
-            hubIOdata: HUB_IO_DATA_REDUCERS,
-            hubPortModeInfo: HUB_PORT_MODE_INFO_REDUCERS,
-            bluetoothAvailability: BLUETOOTH_AVAILABILITY_REDUCERS,
-            router: routerReducer
-        }),
+        provideStore<IState>(REDUCERS, { metaReducers }),
         provideEffects(
             GamepadEffects,
             HubAttachedIOsEffects,
