@@ -5,7 +5,6 @@ import { HubIoOperationMode } from './hub-io-operation-mode';
 
 export interface IState {
     controlSchemes: EntityState<ControlScheme>;
-    controlSchemeBindings: EntityState<ControlSchemeBinding>;
     controlSchemeConfigurationState: {
         isListening: boolean;
     };
@@ -23,39 +22,25 @@ export interface IState {
     router: RouterState;
 }
 
-export type ControlSchemeEditState = {
-    schemeId: string | null;
-    bindings: Array<{
-        bindingId: string | null;
-        name: string;
-        input: {
-            gamepadId: number;
-            gamepadInputMethod: GamepadInputMethod;
-            gamepadAxisId: number | null;
-            gamepadButtonId: number | null;
-        };
-        output: {
-            hubId: string;
-            portId: number;
-            operationMode: HubIoOperationMode;
-        }
-    }>
-}
-
 export type ControlSchemeBinding = {
-    id: string;
-    schemeId: string;
-    gamepadId: number | null;
-    gamepadInputMethod: GamepadInputMethod;
-    gamepadAxisId: number | null;
-    gamepadButtonId: number | null;
-    hubId: string | null;
+    input: {
+        gamepadId: number;
+        gamepadInputMethod: GamepadInputMethod;
+        gamepadAxisId: number | null;
+        gamepadButtonId: number | null;
+    };
+    output: {
+        hubId: string;
+        portId: number;
+        operationMode: HubIoOperationMode;
+    }
 }
 
 export type ControlScheme = {
     id: string;
     index: number;
     name: string;
+    bindings: ControlSchemeBinding[];
 }
 
 export type HubIoSupportedModes = {

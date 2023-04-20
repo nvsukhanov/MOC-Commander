@@ -7,3 +7,4 @@ export * from './selectors';
 export * from './bluetooth-availability-check-factory';
 export * from './hub-storage.service';
 export * from './provide-store';
+export * from './hub-io-operation-mode';

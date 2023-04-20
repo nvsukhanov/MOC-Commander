@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AttachedIO, HUB_ATTACHED_IO_SELECTORS, HUBS_SELECTORS } from '../../store';
+import { AttachedIO, HUB_ATTACHED_IO_SELECTORS, HubIoOperationMode, HUBS_SELECTORS } from '../../store';
 import { MatSelectModule } from '@angular/material/select';
 import { LetModule, PushModule } from '@ngrx/component';
 import { NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
@@ -9,16 +9,14 @@ import { combineLatest, map, Observable, of, shareReplay, startWith, Subscriptio
 import { IOType } from '../../lego-hub';
 import { ControlSchemeBindingInputControl } from '../control-scheme-binding-input/control-scheme-binding-input.component';
 import { TranslocoModule } from '@ngneat/transloco';
-import { IoTypeToL10nKeyPipe } from '../../mappings/io-type-to-l10n-key.pipe';
-import { HubIoOperationMode } from '../../store/hub-io-operation-mode';
-import { IoOperationTypeToL10nKeyPipe } from '../../mappings';
+import { IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '../../mappings';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 
 export type ControlSchemeBindingOutputControl = FormGroup<{
-    hubId: FormControl<string | null>,
-    portId: FormControl<number | null>,
-    operationMode: FormControl<HubIoOperationMode | null>,
+    hubId: FormControl<string>,
+    portId: FormControl<number>,
+    operationMode: FormControl<HubIoOperationMode>,
 }>
 
 @Component({
@@ -111,10 +109,6 @@ export class ControlSchemeBindingOutputComponent {
             }),
             shareReplay({ bufferSize: 1, refCount: true })
         );
-
-        this.selectedPortChangeTrackingSubscription = outputGroup.controls.portId.valueChanges.subscribe(() => {
-            outputGroup.controls.operationMode.setValue(null);
-        });
     }
 
     public get formControl(): ControlSchemeBindingOutputControl | undefined {

@@ -3,7 +3,6 @@ import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import {
     AttachedIO,
     ControlScheme,
-    ControlSchemeBinding,
     GamepadAxisState,
     GamepadButtonState,
     GamepadConfig,
@@ -79,11 +78,3 @@ export const CONTROL_SCHEMES_ENTITY_ADAPTER: EntityAdapter<ControlScheme> = crea
     selectId: (scheme) => scheme.id,
     sortComparer: (a, b) => a.index - b.index
 });
-
-export const CONTROL_SCHEME_BINDING_ADAPTER: EntityAdapter<ControlSchemeBinding> = createEntityAdapter<ControlSchemeBinding>({
-    selectId: (scheme) => controlSchemeIdFn(scheme.schemeId, scheme.id),
-});
-
-export function controlSchemeIdFn(schemeId: string, bindingId: string): string {
-    return `${schemeId}/${bindingId}`;
-}
