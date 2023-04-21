@@ -2,6 +2,7 @@ import { HubType, IOType, PortModeName, PortModeSymbol } from '../lego-hub';
 import { EntityState } from '@ngrx/entity';
 import { RouterState } from '@ngrx/router-store';
 import { HubIoOperationMode } from './hub-io-operation-mode';
+import { PortCommandTask } from '../control-scheme/task-composer/port-command-task';
 
 export interface IState {
     controlSchemes: EntityState<ControlScheme>;
@@ -17,8 +18,11 @@ export interface IState {
     hubs: EntityState<HubConfiguration>,
     hubAttachedIOs: EntityState<AttachedIO>,
     hubIOSupportedModes: EntityState<HubIoSupportedModes>,
-    hubIOdata: EntityState<HubIoValue>,
-    hubPortModeInfo: EntityState<PortModeInfo>
+    hubIOState: EntityState<HubIOState>,
+    hubPortModeInfo: EntityState<PortModeInfo>,
+    hubPortTasks: {
+        queue: PortCommandTask[]
+    },
     bluetoothAvailability: {
         isAvailable: boolean;
     },
@@ -63,10 +67,10 @@ export type HubConfiguration = {
     isButtonPressed: boolean;
 }
 
-export type HubIoValue = {
+export type HubIOState = {
     hubId: string;
     portId: number;
-    modeId: number;
+    operationMode: HubIoOperationMode;
     values: number[];
 }
 

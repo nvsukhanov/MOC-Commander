@@ -3,7 +3,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { IState } from '../i-state';
 import { HUB_IO_DATA_ENTITY_ADAPTER, hubIODataIdFn } from '../entity-adapters';
 
-const SELECT_HUB_IO_DATA_FEATURE = createFeatureSelector<IState['hubIOdata']>('hubIOData');
+const SELECT_HUB_IO_DATA_FEATURE = createFeatureSelector<IState['hubIOState']>('hubIOData');
 
 const HUB_IO_DATA_ADAPTER_SELECTORS = HUB_IO_DATA_ENTITY_ADAPTER.getSelectors();
 
