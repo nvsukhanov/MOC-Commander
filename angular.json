@@ -35,7 +35,8 @@
             ],
             "allowedCommonJsDependencies": [
               "@messageformat/core",
-              "flat"
+              "flat",
+              "deepmerge"
             ],
             "scripts": []
           },

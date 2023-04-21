@@ -14,7 +14,7 @@ import { MessageType, PortModeInformationType } from '../constants';
 
 export class IoFeature {
     public readonly attachedIoReplies$: Observable<AttachedIOInboundMessage> = this.attachedIOInboundMessageListener.replies$.pipe(
-        share()
+        share() // TODO: warning! Hub sends connected IOs immediately after connection. Maybe we should change API?
     );
 
     public readonly portValueReplies$ = this.portValueInboundMessageListener.replies$.pipe(

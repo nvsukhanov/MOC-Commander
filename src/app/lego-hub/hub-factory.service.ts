@@ -101,7 +101,7 @@ export class HubFactoryService {
         });
 
         return new Hub(
-            device.id,
+            device.id, // TODO: Warning! it seem like device id changes after battery replacement. Should use primary mac?
             device.name,
             propertiesFeature,
             portsFeature,

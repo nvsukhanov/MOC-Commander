@@ -24,7 +24,7 @@ export const HUB_ATTACHED_IO_SELECTORS = {
     ),
     selectIOsControllableByMethod: (hubId: string, inputMethod: GamepadInputMethod) => createSelector(
         HUB_ATTACHED_IO_SELECTORS.selectHubIOs(hubId),
-        HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesRecord,
+        HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
         HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
         (ios, supportedModes, portModeData) => {
             const applicablePortModes: Set<PortModeName> = new Set(Object.values(HUB_IO_CONTROL_METHODS[inputMethod]));
@@ -48,7 +48,7 @@ export const HUB_ATTACHED_IO_SELECTORS = {
     ),
     selectHubIOOperationModes: (hubId: string, portId: number, inputMethod: GamepadInputMethod) => createSelector(
         HUB_ATTACHED_IO_SELECTORS.selectIOAtPort(hubId, portId),
-        HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesRecord,
+        HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
         HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
         (io, supportedModes, portModeData) => {
             if (io) {
@@ -61,7 +61,7 @@ export const HUB_ATTACHED_IO_SELECTORS = {
 
 function getHubIOOperationModes(
     io: AttachedIO,
-    supportedModes: ReturnType<typeof HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesRecord>,
+    supportedModes: ReturnType<typeof HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities>,
     portModeData: ReturnType<typeof HUB_PORT_MODE_INFO_SELECTORS.selectEntities>,
     inputMethod: GamepadInputMethod
 ): HubIoOperationMode[] {

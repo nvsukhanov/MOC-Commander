@@ -1,5 +1,20 @@
 <ng-container *ngIf="selectedScheme$ | ngrxPush; let scheme; else schemeNotFound">
     {{ scheme | json }}
+
+    <mat-card *ngrxLet="canRunScheme$ | ngrxPush; let canRunScheme">
+        <ng-container [ngSwitch]="canRunScheme!.canRun">
+            <mat-card-actions *ngSwitchCase="true">
+                <button mat-button
+                        (click)="runScheme(scheme.id)">
+                    Run
+                </button>
+            </mat-card-actions>
+            <mat-card-content *ngSwitchCase="false">
+                <pre>{{ canRunScheme | json }}</pre>
+            </mat-card-content>
+        </ng-container>
+
+    </mat-card>
 </ng-container>
 
 <ng-template #schemeNotFound>

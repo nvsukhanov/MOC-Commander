@@ -9,3 +9,4 @@ export * from './hub-io-supported-modes.reducers';
 export * from './hubs.reducers';
 export * from './control-scheme.reducers';
 export * from './control-scheme-configuration-state.reducers';
+export * from './control-scheme-runner.reducers';
