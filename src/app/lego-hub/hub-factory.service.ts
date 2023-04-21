@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
 import { Hub } from './hub';
-import { from, fromEvent, map, NEVER, Observable, shareReplay, Subject, take, takeUntil, tap } from 'rxjs';
+import { firstValueFrom, from, fromEvent, map, NEVER, Observable, shareReplay, Subject, take, takeUntil, tap } from 'rxjs';
 import { CharacteristicDataStreamFactoryService, OutboundMessengerFactoryService } from './messages';
 import { HubPropertiesFeatureFactoryService, IoFeatureFactoryService, MotorFeatureFactoryService } from './features';
-import { HUB_CHARACTERISTIC_UUID, HUB_SERVICE_UUID } from './constants';
+import { HUB_CHARACTERISTIC_UUID, HUB_SERVICE_UUID, HubProperty } from './constants';
 import { ILegoHubConfig, LEGO_HUB_CONFIG } from './i-lego-hub-config';
 import { LpuConnectionErrorFactoryService } from './errors';
 import { HubLoggerFactoryService } from './logging';
@@ -32,7 +32,7 @@ export class HubFactoryService {
         device: BluetoothDeviceWithGatt,
         externalDisconnectEvents$: Observable<unknown> = NEVER
     ): Promise<Hub> {
-        const hubLogger = this.hubLoggerFactory.createHubLogger(device.id);
+        const hubLogger = this.hubLoggerFactory.createHubLogger(device.name ?? device.id);
         hubLogger.debug('Connecting to GATT server');
         const gatt = await this.connectGattServer(device);
         hubLogger.debug('Connected to GATT server');
@@ -66,6 +66,8 @@ export class HubFactoryService {
             messenger,
             hubLogger
         );
+
+        const hubPrimaryMacReply = await firstValueFrom(propertiesFeature.getPropertyValue$(HubProperty.primaryMacAddress));
 
         const portsFeature = this.portInformationProviderFactoryService.create(
             dataStream,
@@ -101,7 +103,7 @@ export class HubFactoryService {
         });
 
         return new Hub(
-            device.id, // TODO: Warning! it seem like device id changes after battery replacement. Should use primary mac?
+            hubPrimaryMacReply.macAddress,
             device.name,
             propertiesFeature,
             portsFeature,

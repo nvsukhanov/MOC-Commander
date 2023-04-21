@@ -8,7 +8,7 @@ export class HubLogger implements ILogger {
     }
 
     public debug(...debug: unknown[]): void {
-        this.logger.debug(`[Hub ${this.deviceId}]`, ...debug);
+        this.logger.debug(`[${this.deviceId}]`, ...debug);
     }
 
     public error(error: Error | string): void {
@@ -16,7 +16,7 @@ export class HubLogger implements ILogger {
     }
 
     public info(...info: unknown[]): void {
-        this.logger.info(`[Hub ${this.deviceId}]`, ...info);
+        this.logger.info(`[${this.deviceId}]`, ...info);
     }
 
     public warning(...warning: unknown[]): void {
