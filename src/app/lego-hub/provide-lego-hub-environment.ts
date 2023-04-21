@@ -18,9 +18,9 @@ import {
     PortOperationsOutboundMessageFactoryService,
     PortValueReplyParserService
 } from './messages';
-import { HubPropertiesFeatureFactoryService, IoFeatureFactoryService, MotorFeatureFactoryService } from './features';
+import { AttachedIoRepliesCacheFactoryService, HubPropertiesFeatureFactoryService, IoFeatureFactoryService, MotorFeatureFactoryService } from './features';
 import { ILegoHubConfig, LEGO_HUB_CONFIG, mergeConfig } from './i-lego-hub-config';
-import { HubLoggerFactoryService } from './logging/hub-logger-factory.service';
+import { HubLoggerFactoryService } from './logging';
 
 export function provideLegoHubEnvironment(config: Partial<ILegoHubConfig>): EnvironmentProviders {
     return makeEnvironmentProviders([
@@ -46,6 +46,7 @@ export function provideLegoHubEnvironment(config: Partial<ILegoHubConfig>): Envi
             PortOperationsOutboundMessageFactoryService,
             PortInputFormatSetupSingleOutboundMessageFactoryService,
             HubLoggerFactoryService,
+            AttachedIoRepliesCacheFactoryService,
             { provide: LEGO_HUB_CONFIG, useValue: mergeConfig(config) }
         ]
     ]);
