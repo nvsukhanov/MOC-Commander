@@ -7,7 +7,7 @@ import { HubStorageService } from '../hub-storage.service';
 
 @Injectable()
 export class HubAttachedIOsEffects {
-    public readonly bbb$ = createEffect(() => {
+    public readonly listenAttachedIOsReplies$ = createEffect(() => {
         return this.actions.pipe(
             ofType(HUBS_ACTIONS.connected),
             mergeMap((action) => {

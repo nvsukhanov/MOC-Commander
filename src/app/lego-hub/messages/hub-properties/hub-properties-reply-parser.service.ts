@@ -6,6 +6,7 @@ import {
     HubPropertyBatteryInboundMessage,
     HubPropertyButtonStateInboundMessage,
     HubPropertyInboundMessage,
+    HubPropertyPrimaryMacAddressInboundMessage,
     HubPropertyRssiInboundMessage,
     HubPropertySystemTypeIdInboundMessage,
     InboundMessage
@@ -24,6 +25,7 @@ export class HubPropertiesReplyParserService implements IReplyParser<MessageType
         [HubProperty.rssi]: (v): HubPropertyRssiInboundMessage => this.parseRssiLevel(v),
         [HubProperty.systemTypeId]: (v): HubPropertySystemTypeIdInboundMessage => this.parseSystemTypeId(v),
         [HubProperty.button]: (v): HubPropertyButtonStateInboundMessage => this.parseButtonState(v),
+        [HubProperty.primaryMacAddress]: (v): HubPropertyPrimaryMacAddressInboundMessage => this.parsePrimaryMacAddress(v)
     } satisfies { [k in HubProperty]: (payload: Uint8Array) => HubPropertyInboundMessage };
 
     public parseMessage(
@@ -73,6 +75,14 @@ export class HubPropertiesReplyParserService implements IReplyParser<MessageType
             messageType: MessageType.properties,
             propertyType: HubProperty.button,
             isPressed: payload[0] === 1
+        };
+    }
+
+    private parsePrimaryMacAddress(payload: Uint8Array): HubPropertyPrimaryMacAddressInboundMessage {
+        return {
+            messageType: MessageType.properties,
+            propertyType: HubProperty.primaryMacAddress,
+            macAddress: [ ...payload ].map((v: number) => v.toString(16).padStart(2, '0')).join(':')
         };
     }
 }

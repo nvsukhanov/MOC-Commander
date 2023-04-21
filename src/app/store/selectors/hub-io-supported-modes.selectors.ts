@@ -9,16 +9,16 @@ const HUB_IO_SUPPORTED_MODES_FEATURE_SELECTOR = createFeatureSelector<IState['hu
 const HUB_IO_SUPPORTED_MODES_ADAPTER_SELECTORS = HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER.getSelectors();
 
 export const HUB_IO_SUPPORTED_MODES_SELECTORS = {
-    selectOSuppoertedModesList: createSelector(
+    selectIOSupportedModesList: createSelector(
         HUB_IO_SUPPORTED_MODES_FEATURE_SELECTOR,
         HUB_IO_SUPPORTED_MODES_ADAPTER_SELECTORS.selectAll
     ),
-    selectIOSupportedModesRecord: createSelector(
+    selectIOSupportedModesEntities: createSelector(
         HUB_IO_SUPPORTED_MODES_FEATURE_SELECTOR,
         HUB_IO_SUPPORTED_MODES_ADAPTER_SELECTORS.selectEntities
     ),
     selectHubIOOutputModes: (hardwareRevision: string, softwareRevision: string, ioType: IOType) => createSelector(
-        HUB_IO_SUPPORTED_MODES_SELECTORS.selectOSuppoertedModesList,
+        HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesList,
         (state) => state.find((item) => item.hardwareRevision === hardwareRevision && item.softwareRevision === softwareRevision && item.ioType === ioType)
     )
 } as const;

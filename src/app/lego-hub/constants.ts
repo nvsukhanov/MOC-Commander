@@ -75,6 +75,7 @@ export enum HubProperty {
     rssi = 0x05,
     batteryVoltage = 0x06,
     systemTypeId = 0x0B, // 11
+    primaryMacAddress = 0x0D, // 13
 }
 
 export enum HubType {

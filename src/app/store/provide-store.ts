@@ -4,6 +4,7 @@ import {
     BLUETOOTH_AVAILABILITY_REDUCERS,
     CONTROL_SCHEME_CONFIGURATION_STATE_REDUCERS,
     CONTROL_SCHEME_REDUCERS,
+    CONTROL_SCHEME_RUNNER_REDUCERS,
     GAMEPAD_AXES_STATE_REDUCERS,
     GAMEPAD_BUTTONS_STATE_REDUCERS,
     GAMEPAD_REDUCERS,
@@ -16,6 +17,7 @@ import {
 import { provideEffects } from '@ngrx/effects';
 import {
     ControlSchemeEffects,
+    ControlSchemeRunnerEffects,
     GamepadEffects,
     HubAttachedIOsEffects,
     HubIoDataEffects,
@@ -35,6 +37,7 @@ import { localStorageSync } from 'ngrx-store-localstorage';
 const REDUCERS: ActionReducerMap<IState> = {
     controlSchemes: CONTROL_SCHEME_REDUCERS,
     controlSchemeConfigurationState: CONTROL_SCHEME_CONFIGURATION_STATE_REDUCERS,
+    controlSchemeRunnerState: CONTROL_SCHEME_RUNNER_REDUCERS,
     gamepads: GAMEPAD_REDUCERS,
     gamepadAxesState: GAMEPAD_AXES_STATE_REDUCERS,
     gamepadButtonsState: GAMEPAD_BUTTONS_STATE_REDUCERS,
@@ -67,6 +70,7 @@ export function provideApplicationStore(): EnvironmentProviders {
             HubIOSupportedModesEffects,
             HubsEffects,
             ControlSchemeEffects,
+            ControlSchemeRunnerEffects
         ),
         provideStoreDevtools({
             maxAge: 100,

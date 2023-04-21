@@ -14,5 +14,6 @@ const SELECT_HUBS_LIST = HUBS_ENTITY_ADAPTER.getSelectors().selectAll;
 
 export const HUBS_SELECTORS = {
     selectHubs: createSelector(SELECT_HUBS_FEATURE, SELECT_HUBS_LIST),
+    selectHubsIds: createSelector(SELECT_HUBS_FEATURE, HUBS_ENTITY_ADAPTER.getSelectors().selectIds),
     selectHub: (hubId: string) => createSelector(SELECT_HUBS_ENTITIES, (state) => state[hubId])
 } as const;

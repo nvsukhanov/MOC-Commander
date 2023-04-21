@@ -16,8 +16,7 @@ export class InboundMessageListener<TMessageType extends MessageType> {
         return this.characteristicDataStream.pipe(
             filter((message) => message.header.messageType === this.replyParserService.messageType),
             map((message) => this.replyParserService.parseMessage(message as RawMessage<TMessageType>)),
-            takeUntil(this.onDisconnected$),
+            takeUntil(this.onDisconnected$)
         );
     }
-
 }

@@ -24,10 +24,16 @@ export type HubPropertyButtonStateInboundMessage = {
     isPressed: boolean;
 } & HubPropertyBaseInboundMessage;
 
+export type HubPropertyPrimaryMacAddressInboundMessage = {
+    propertyType: HubProperty.primaryMacAddress;
+    macAddress: string;
+} & HubPropertyBaseInboundMessage
+
 export type HubPropertyInboundMessage = HubPropertyBatteryInboundMessage
     | HubPropertyRssiInboundMessage
     | HubPropertySystemTypeIdInboundMessage
-    | HubPropertyButtonStateInboundMessage;
+    | HubPropertyButtonStateInboundMessage
+    | HubPropertyPrimaryMacAddressInboundMessage;
 
 export type AttachedIoAttachInboundMessage = {
     messageType: MessageType.attachedIO,
