@@ -7,8 +7,8 @@ import {
     GamepadButtonState,
     GamepadConfig,
     HubConfiguration,
+    HubIOState,
     HubIoSupportedModes,
-    HubIoValue,
     PortModeInfo
 } from './i-state';
 import { IOType } from '../lego-hub';
@@ -27,7 +27,7 @@ export const HUBS_ENTITY_ADAPTER: EntityAdapter<HubConfiguration> = createEntity
     sortComparer: (a, b) => a.hubId.localeCompare(b.hubId)
 });
 
-export const HUB_IO_DATA_ENTITY_ADAPTER: EntityAdapter<HubIoValue> = createEntityAdapter<HubIoValue>({
+export const HUB_IO_DATA_ENTITY_ADAPTER: EntityAdapter<HubIOState> = createEntityAdapter<HubIOState>({
     selectId: (io) => hubIODataIdFn(io.hubId, io.portId),
 });
 

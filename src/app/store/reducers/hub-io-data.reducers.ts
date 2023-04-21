@@ -12,13 +12,5 @@ export const HUB_IO_DATA_REDUCERS = createReducer(
         },
         state
     )),
-    on(HUB_IO_DATA_ACTIONS.subscribeToPortValuesSuccess, (state, data) => HUB_IO_DATA_ENTITY_ADAPTER.updateOne({
-            id: hubIODataIdFn(data.hubId, data.portId),
-            changes: {
-                modeId: data.modeId
-            }
-        },
-        state
-    )),
     on(HUBS_ACTIONS.disconnected, (state, data) => HUB_IO_DATA_ENTITY_ADAPTER.removeMany((d) => d.hubId === data.hubId, state))
 );

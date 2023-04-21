@@ -10,3 +10,4 @@ export * from './hubs.reducers';
 export * from './control-scheme.reducers';
 export * from './control-scheme-configuration-state.reducers';
 export * from './control-scheme-runner.reducers';
+export * from './hub-port-task.reducers';

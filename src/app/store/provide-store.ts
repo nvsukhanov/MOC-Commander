@@ -12,6 +12,7 @@ import {
     HUB_IO_DATA_REDUCERS,
     HUB_IO_OUTPUT_MODES_REDUCER,
     HUB_PORT_MODE_INFO_REDUCERS,
+    HUB_PORT_TASK_REDUCERS,
     HUBS_REDUCERS
 } from './reducers';
 import { provideEffects } from '@ngrx/effects';
@@ -20,9 +21,9 @@ import {
     ControlSchemeRunnerEffects,
     GamepadEffects,
     HubAttachedIOsEffects,
-    HubIoDataEffects,
     HubIOSupportedModesEffects,
     HubPortModeInfoEffects,
+    HubPortTasksEffects,
     HubsEffects,
 } from './effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
@@ -44,8 +45,9 @@ const REDUCERS: ActionReducerMap<IState> = {
     hubs: HUBS_REDUCERS,
     hubAttachedIOs: HUB_ATTACHED_IOS_REDUCERS,
     hubIOSupportedModes: HUB_IO_OUTPUT_MODES_REDUCER,
-    hubIOdata: HUB_IO_DATA_REDUCERS,
+    hubIOState: HUB_IO_DATA_REDUCERS,
     hubPortModeInfo: HUB_PORT_MODE_INFO_REDUCERS,
+    hubPortTasks: HUB_PORT_TASK_REDUCERS,
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_REDUCERS,
     router: routerReducer
 };
@@ -66,11 +68,11 @@ export function provideApplicationStore(): EnvironmentProviders {
             GamepadEffects,
             HubAttachedIOsEffects,
             HubPortModeInfoEffects,
-            HubIoDataEffects,
             HubIOSupportedModesEffects,
             HubsEffects,
             ControlSchemeEffects,
-            ControlSchemeRunnerEffects
+            ControlSchemeRunnerEffects,
+            HubPortTasksEffects
         ),
         provideStoreDevtools({
             maxAge: 100,

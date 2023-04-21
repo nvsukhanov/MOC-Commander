@@ -26,10 +26,13 @@ export const INITIAL_STATE: IState = {
     hubs: HUBS_ENTITY_ADAPTER.getInitialState(),
     hubAttachedIOs: HUB_ATTACHED_IOS_ENTITY_ADAPTER.getInitialState(),
     hubIOSupportedModes: HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER.getInitialState(),
-    hubIOdata: HUB_IO_DATA_ENTITY_ADAPTER.getInitialState(),
+    hubIOState: HUB_IO_DATA_ENTITY_ADAPTER.getInitialState(),
     hubPortModeInfo: HUB_PORT_MODE_INFO.getInitialState(),
+    hubPortTasks: {
+        queue: []
+    },
     bluetoothAvailability: {
         isAvailable: false
     },
     router: RouterState.Full,
-} as const;
+};
