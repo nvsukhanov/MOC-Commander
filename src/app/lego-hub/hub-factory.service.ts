@@ -19,7 +19,7 @@ export class HubFactoryService {
     constructor(
         private readonly outboundMessengerFactoryService: OutboundMessengerFactoryService,
         private readonly propertiesFactoryService: HubPropertiesFeatureFactoryService,
-        private readonly portInformationProviderFactoryService: IoFeatureFactoryService,
+        private readonly ioFeatureFactoryService: IoFeatureFactoryService,
         private readonly characteristicsDataStreamFactoryService: CharacteristicDataStreamFactoryService,
         private readonly motorFeatureFactoryService: MotorFeatureFactoryService,
         @Inject(LEGO_HUB_CONFIG) private readonly config: ILegoHubConfig,
@@ -42,9 +42,8 @@ export class HubFactoryService {
             hubLogger.debug(device.id, 'Got primary service');
             primaryCharacteristic = await primaryService.getCharacteristic(HUB_CHARACTERISTIC_UUID);
             hubLogger.debug(device.id, 'Got primary characteristic');
-            await primaryCharacteristic.startNotifications();
-            hubLogger.debug(device.id, 'Started primary characteristic notifications');
         } catch (e) {
+            hubLogger.debug(device.id, 'Disconnecting from gatt due to error', e);
             gatt.disconnect();
             throw this.lpuConnectionErrorFactoryService.createConnectionError();
         }
@@ -60,6 +59,12 @@ export class HubFactoryService {
         const messenger = this.outboundMessengerFactoryService.create(primaryCharacteristic, hubLogger);
         const dataStream = this.characteristicsDataStreamFactoryService.create(primaryCharacteristic, hubLogger);
 
+        const ioFeature = this.ioFeatureFactoryService.create(
+            dataStream,
+            gattDisconnected$,
+            messenger
+        );
+
         const propertiesFeature = this.propertiesFactoryService.create(
             dataStream,
             gattDisconnected$,
@@ -67,17 +72,14 @@ export class HubFactoryService {
             hubLogger
         );
 
-        const hubPrimaryMacReply = await firstValueFrom(propertiesFeature.getPropertyValue$(HubProperty.primaryMacAddress));
-
-        const portsFeature = this.portInformationProviderFactoryService.create(
-            dataStream,
-            gattDisconnected$,
-            messenger
-        );
-
         const motorFeature = this.motorFeatureFactoryService.createMotorFeature(
             messenger
         );
+
+        await primaryCharacteristic.startNotifications();
+        hubLogger.debug(device.id, 'Started primary characteristic notifications');
+
+        const hubPrimaryMacReply = await firstValueFrom(propertiesFeature.getPropertyValue$(HubProperty.primaryMacAddress));
 
         const hubDisconnectMethod: () => Observable<void> = () => {
             hubLogger.debug('Disconnection invoked');
@@ -106,7 +108,7 @@ export class HubFactoryService {
             hubPrimaryMacReply.macAddress,
             device.name,
             propertiesFeature,
-            portsFeature,
+            ioFeature,
             motorFeature,
             beforeDisconnect$,
             gattDisconnected$,
