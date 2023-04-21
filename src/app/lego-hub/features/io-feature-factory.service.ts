@@ -14,6 +14,7 @@ import {
 } from '../messages';
 import { Observable } from 'rxjs';
 import { MessageType } from '../constants';
+import { AttachedIoRepliesCacheFactoryService } from './attached-io-replies-cache-factory.service';
 
 @Injectable()
 export class IoFeatureFactoryService {
@@ -26,6 +27,7 @@ export class IoFeatureFactoryService {
         private readonly portModeInformationOutboundMessageFactoryService: PortModeInformationRequestOutboundMessageFactoryService,
         private readonly portInputFormatSetupSingleOutboundMessageFactoryService: PortInputFormatSetupSingleOutboundMessageFactoryService,
         private readonly portModeInformationReplyParserService: PortModeInformationReplyParserService,
+        private readonly attachedIoRepliesCacheFactoryService: AttachedIoRepliesCacheFactoryService,
     ) {
     }
 
@@ -67,6 +69,8 @@ export class IoFeatureFactoryService {
             this.portModeInformationOutboundMessageFactoryService,
             this.portInputFormatSetupSingleOutboundMessageFactoryService,
             messenger,
+            this.attachedIoRepliesCacheFactoryService,
+            onHubDisconnected,
         );
     }
 }

@@ -11,11 +11,10 @@ import {
     PortValueInboundMessage
 } from '../messages';
 import { MessageType, PortModeInformationType } from '../constants';
+import { AttachedIoRepliesCacheFactoryService } from './attached-io-replies-cache-factory.service';
 
 export class IoFeature {
-    public readonly attachedIoReplies$: Observable<AttachedIOInboundMessage> = this.attachedIOInboundMessageListener.replies$.pipe(
-        share() // TODO: warning! Hub sends connected IOs immediately after connection. Maybe we should change API?
-    );
+    public readonly attachedIoReplies$: Observable<AttachedIOInboundMessage>;
 
     public readonly portValueReplies$ = this.portValueInboundMessageListener.replies$.pipe(
         share()
@@ -37,8 +36,17 @@ export class IoFeature {
         private readonly portModeInformationInboundMessageListener: InboundMessageListener<MessageType.portModeInformation>,
         private readonly portModeInformationOutboundMessageFactoryService: PortModeInformationRequestOutboundMessageFactoryService,
         private readonly portInputFormatSetupSingleOutboundMessageFactoryService: PortInputFormatSetupSingleOutboundMessageFactoryService,
-        private readonly messenger: OutboundMessenger
+        private readonly messenger: OutboundMessenger,
+        private readonly attachedIoRepliesCacheFactoryService: AttachedIoRepliesCacheFactoryService,
+        private readonly onDisconnected$: Observable<void>,
     ) {
+        const cache = this.attachedIoRepliesCacheFactoryService.create(
+            this.attachedIOInboundMessageListener.replies$,
+            this.onDisconnected$,
+        );
+        this.attachedIoReplies$ = cache.replies$.pipe(
+            share()
+        );
     }
 
     public listenPortValueUpdates$(
