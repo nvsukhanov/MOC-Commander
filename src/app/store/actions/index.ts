@@ -5,4 +5,3 @@ export * from './hub-attached-ios.actions';
 export * from './hubs.actions';
 export * from './hub-io-supported-modes.actions';
 export * from './control-scheme.actions';
-export * from './control-scheme-runner.actions';

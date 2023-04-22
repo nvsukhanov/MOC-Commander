@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HUB_PORT_TASKS_ACTIONS } from '../actions/hub-port-tasks.actions';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { CONTROL_SCHEME_RUNNER_ACTIONS } from '../actions';
 import { combineLatest, EMPTY, filter, map, of, switchMap } from 'rxjs';
 import { IPortCommandTaskComposer, PortCommandTask, PortCommandTaskComposerFactoryService } from '../../control-scheme';
 import { CONTROL_SCHEME_SELECTORS } from '../selectors';
 import { Store } from '@ngrx/store';
+import { CONTROL_SCHEME_ACTIONS } from '../actions';
 
 @Injectable()
 export class HubPortTasksEffects {
     public readonly clearTasksQueueOnSchemeRunningStop$ = createEffect(() => {
         return this.actions$.pipe(
-            ofType(CONTROL_SCHEME_RUNNER_ACTIONS.stopRunning),
+            ofType(CONTROL_SCHEME_ACTIONS.stopRunning),
             map(() => HUB_PORT_TASKS_ACTIONS.clearQueue()),
         );
     });
 
     public readonly startComposingTasks$ = createEffect(() => {
         return this.actions$.pipe(
-            ofType(CONTROL_SCHEME_RUNNER_ACTIONS.runScheme),
+            ofType(CONTROL_SCHEME_ACTIONS.runScheme),
             concatLatestFrom((action) => this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(action.schemeId))),
             switchMap(([ , scheme ]) => {
                 if (scheme) {

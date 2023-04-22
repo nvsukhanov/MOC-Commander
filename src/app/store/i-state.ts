@@ -9,8 +9,8 @@ export interface IState {
     controlSchemeConfigurationState: {
         isListening: boolean;
     };
-    controlSchemeRunnerState: {
-        runSchemeId: string | null;
+    controlSchemeRunningState: {
+        runningSchemeId: string | null;
     };
     gamepads: EntityState<GamepadConfig>;
     gamepadAxesState: EntityState<GamepadAxisState>;

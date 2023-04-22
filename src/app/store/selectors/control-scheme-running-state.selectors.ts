@@ -11,7 +11,7 @@ import { Dictionary } from '@ngrx/entity';
 import { hubAttachedIosIdFn, hubIOSupportedModesIdFn, hubPortModeInfoIdFn } from '../entity-adapters';
 import { HUB_PORT_MODE_INFO_SELECTORS } from './hub-port-mode-info.selectors';
 
-const CONTROL_SCHEME_RUNNER_FEATURE_SELECTOR = createFeatureSelector<IState['controlSchemeRunnerState']>('controlSchemeRunnerState');
+const CONTROL_SCHEME_RUNNING_STATE_FEATURE_SELECTOR = createFeatureSelector<IState['controlSchemeRunningState']>('controlSchemeRunningState');
 
 export enum ControlSchemeUnableToRunReason {
     AlreadyRunning = 'AlreadyRunning',
@@ -32,13 +32,13 @@ export type CanRunSchemeResultNegative = {
 
 export type CanRunSchemeResult = CanRunSchemeResultPositive | CanRunSchemeResultNegative;
 
-export const CONTROL_SCHEME_RUNNER_SELECTORS = {
+export const CONTROL_SCHEME_RUNNING_STATE_SELECTORS = {
     selectRunSchemeId: createSelector(
-        CONTROL_SCHEME_RUNNER_FEATURE_SELECTOR,
-        (state) => state.runSchemeId
+        CONTROL_SCHEME_RUNNING_STATE_FEATURE_SELECTOR,
+        (state) => state.runningSchemeId
     ),
     canRunScheme: (schemeId: string) => createSelector(
-        CONTROL_SCHEME_RUNNER_SELECTORS.selectRunSchemeId,
+        CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunSchemeId,
         HUBS_SELECTORS.selectHubsIds,
         HUB_ATTACHED_IO_SELECTORS.selectIOsEntities,
         HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
