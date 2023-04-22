@@ -18,7 +18,6 @@ import {
 import { provideEffects } from '@ngrx/effects';
 import {
     ControlSchemeEffects,
-    ControlSchemeRunnerEffects,
     GamepadEffects,
     HubAttachedIOsEffects,
     HubIOSupportedModesEffects,
@@ -38,7 +37,7 @@ import { localStorageSync } from 'ngrx-store-localstorage';
 const REDUCERS: ActionReducerMap<IState> = {
     controlSchemes: CONTROL_SCHEME_REDUCERS,
     controlSchemeConfigurationState: CONTROL_SCHEME_CONFIGURATION_STATE_REDUCERS,
-    controlSchemeRunnerState: CONTROL_SCHEME_RUNNER_REDUCERS,
+    controlSchemeRunningState: CONTROL_SCHEME_RUNNER_REDUCERS,
     gamepads: GAMEPAD_REDUCERS,
     gamepadAxesState: GAMEPAD_AXES_STATE_REDUCERS,
     gamepadButtonsState: GAMEPAD_BUTTONS_STATE_REDUCERS,
@@ -71,7 +70,6 @@ export function provideApplicationStore(): EnvironmentProviders {
             HubIOSupportedModesEffects,
             HubsEffects,
             ControlSchemeEffects,
-            ControlSchemeRunnerEffects,
             HubPortTasksEffects
         ),
         provideStoreDevtools({

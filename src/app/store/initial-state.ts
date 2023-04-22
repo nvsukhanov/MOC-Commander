@@ -17,8 +17,8 @@ export const INITIAL_STATE: IState = {
     controlSchemeConfigurationState: {
         isListening: false
     },
-    controlSchemeRunnerState: {
-        runSchemeId: null
+    controlSchemeRunningState: {
+        runningSchemeId: null
     },
     gamepads: GAMEPADS_ENTITY_ADAPTER.getInitialState(),
     gamepadAxesState: GAMEPAD_AXES_STATES_ENTITY_ADAPTER.getInitialState(),

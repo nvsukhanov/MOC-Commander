@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { EMPTY, Observable, switchMap } from 'rxjs';
 import {
     CanRunSchemeResult,
-    CONTROL_SCHEME_RUNNER_ACTIONS,
-    CONTROL_SCHEME_RUNNER_SELECTORS,
+    CONTROL_SCHEME_ACTIONS,
+    CONTROL_SCHEME_RUNNING_STATE_SELECTORS,
     CONTROL_SCHEME_SELECTORS,
     ControlScheme,
     ROUTER_SELECTORS
@@ -39,7 +39,7 @@ export class ControlSchemeViewComponent {
     );
 
     public readonly canRunScheme$: Observable<CanRunSchemeResult> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
-        switchMap((id) => id === undefined ? EMPTY : this.store.select(CONTROL_SCHEME_RUNNER_SELECTORS.canRunScheme(id))),
+        switchMap((id) => id === undefined ? EMPTY : this.store.select(CONTROL_SCHEME_RUNNING_STATE_SELECTORS.canRunScheme(id))),
     );
 
     constructor(
@@ -48,6 +48,6 @@ export class ControlSchemeViewComponent {
     }
 
     public runScheme(schemeId: string): void {
-        this.store.dispatch(CONTROL_SCHEME_RUNNER_ACTIONS.runScheme({ schemeId }));
+        this.store.dispatch(CONTROL_SCHEME_ACTIONS.runScheme({ schemeId }));
     }
 }
