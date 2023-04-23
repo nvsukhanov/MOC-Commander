@@ -6,6 +6,7 @@ export type PortCommandTask = PortCommandSetLinearSpeedTask;
 
 export type PortCommandSetLinearSpeedTask = {
     taskType: PortCommandTaskType.SetSpeed,
+    hubId: string,
     portId: number,
     speed: number,
 }

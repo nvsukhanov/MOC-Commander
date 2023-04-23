@@ -12,6 +12,7 @@ import {
     PortModeInfo
 } from './i-state';
 import { IOType } from '../lego-hub';
+import { PortCommandTask } from '../control-scheme';
 
 export const HUB_ATTACHED_IOS_ENTITY_ADAPTER: EntityAdapter<AttachedIO> = createEntityAdapter<AttachedIO>({
     selectId: (io) => hubAttachedIosIdFn(io.hubId, io.portId),
@@ -78,3 +79,11 @@ export const CONTROL_SCHEMES_ENTITY_ADAPTER: EntityAdapter<ControlScheme> = crea
     selectId: (scheme) => scheme.id,
     sortComparer: (a, b) => a.index - b.index
 });
+
+export const LAST_EXECUTED_TASKS_ENTITY_ADAPTER: EntityAdapter<PortCommandTask> = createEntityAdapter<PortCommandTask>({
+    selectId: (task) => lastExecutedTaskIdFn(task.hubId, task.portId),
+});
+
+export function lastExecutedTaskIdFn(hubId: string, portId: number): string {
+    return `${hubId}/${portId}`;
+}

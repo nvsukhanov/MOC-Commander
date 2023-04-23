@@ -33,12 +33,12 @@ export type CanRunSchemeResultNegative = {
 export type CanRunSchemeResult = CanRunSchemeResultPositive | CanRunSchemeResultNegative;
 
 export const CONTROL_SCHEME_RUNNING_STATE_SELECTORS = {
-    selectRunSchemeId: createSelector(
+    selectRunningSchemeId: createSelector(
         CONTROL_SCHEME_RUNNING_STATE_FEATURE_SELECTOR,
         (state) => state.runningSchemeId
     ),
     canRunScheme: (schemeId: string) => createSelector(
-        CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunSchemeId,
+        CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId,
         HUBS_SELECTORS.selectHubsIds,
         HUB_ATTACHED_IO_SELECTORS.selectIOsEntities,
         HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
