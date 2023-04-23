@@ -35,7 +35,7 @@ export class HubPortTasksEffects {
             concatLatestFrom((action) => this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(action.schemeId))),
             switchMap(([ , scheme ]) => {
                 if (scheme) {
-                    return combineLatest([
+                    return combineLatest([ // TODO: do not use combineLatest, make unified selector
                         of(scheme),
                         ...scheme.bindings.map((binding) => this.store.select(CONTROL_SCHEME_SELECTORS.selectSchemeBindingInputValue(scheme.id, binding)))
                     ]);
@@ -51,13 +51,14 @@ export class HubPortTasksEffects {
             }),
             concatLatestFrom(() => this.store.select(HUB_PORT_TASKS_SELECTORS.selectQueue)),
             concatLatestFrom(() => this.store.select(HUB_PORT_TASKS_SELECTORS.selectLastExecutedTasksEntities)),
-            map(([ [ nextTasks, queue ], lastExecutedTasks ]) => {  // TODO: that seems really wrong
+            map(([ [ nextTasks, queue ], lastExecutedTasks ]) => {  // TODO: that array within an array seems really wrong
                 const modelledQueue = [ ...queue ];
 
                 // due to possible multiple control binding to a single port we need to compress the queue in order to eliminate
                 // possible contradictions in the queue
                 const compactedNextTasks = this.queueCompressor.compress(nextTasks);
 
+                // TODO: move next block to a service maybe?
                 compactedNextTasks.forEach((nextTask) => {
                     const lastTaskOfKindInQueue = [ ...modelledQueue ].reverse().find((task) => task.taskType === nextTask.taskType);
                     if (!lastTaskOfKindInQueue) {
@@ -84,15 +85,13 @@ export class HubPortTasksEffects {
         return this.actions$.pipe(
             ofType(CONTROL_SCHEME_ACTIONS.runScheme, CONTROL_SCHEME_ACTIONS.stopRunning),
             switchMap((a) => a.type === CONTROL_SCHEME_ACTIONS.runScheme.type
-                             ? animationFrames()
+                             ? animationFrames() // TODO: replace with a meaningful scheduler
                              : EMPTY
             ),
             concatLatestFrom(() => this.store.select(HUB_PORT_TASKS_SELECTORS.selectFirstTask)),
             map(([ , task ]) => task),
             filter((task) => !!task),
-            exhaustMap((task) => {
-                return this.taskExecutor.executeTask(task, this.hubStorage.get(task.hubId)).then(() => task);
-            }),
+            exhaustMap((task) => this.taskExecutor.executeTask(task, this.hubStorage.get(task.hubId)).then(() => task)),
             map((task) => HUB_PORT_TASKS_ACTIONS.markTaskAsExecuted({ task }))
         );
     });
