@@ -42,6 +42,8 @@ export class ControlSchemeViewComponent {
         switchMap((id) => id === undefined ? EMPTY : this.store.select(CONTROL_SCHEME_RUNNING_STATE_SELECTORS.canRunScheme(id))),
     );
 
+    public readonly runningSchemeId$: Observable<string | null> = this.store.select(CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId);
+
     constructor(
         private readonly store: Store
     ) {
@@ -49,5 +51,9 @@ export class ControlSchemeViewComponent {
 
     public runScheme(schemeId: string): void {
         this.store.dispatch(CONTROL_SCHEME_ACTIONS.runScheme({ schemeId }));
+    }
+
+    public stopRunningScheme(): void {
+        this.store.dispatch(CONTROL_SCHEME_ACTIONS.stopRunning());
     }
 }

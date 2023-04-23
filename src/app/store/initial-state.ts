@@ -8,7 +8,8 @@ import {
     HUB_IO_DATA_ENTITY_ADAPTER,
     HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER,
     HUB_PORT_MODE_INFO,
-    HUBS_ENTITY_ADAPTER
+    HUBS_ENTITY_ADAPTER,
+    LAST_EXECUTED_TASKS_ENTITY_ADAPTER
 } from './entity-adapters';
 import { RouterState } from '@ngrx/router-store';
 
@@ -29,7 +30,8 @@ export const INITIAL_STATE: IState = {
     hubIOState: HUB_IO_DATA_ENTITY_ADAPTER.getInitialState(),
     hubPortModeInfo: HUB_PORT_MODE_INFO.getInitialState(),
     hubPortTasks: {
-        queue: []
+        queue: [],
+        lastExecutedTasks: LAST_EXECUTED_TASKS_ENTITY_ADAPTER.getInitialState()
     },
     bluetoothAvailability: {
         isAvailable: false
