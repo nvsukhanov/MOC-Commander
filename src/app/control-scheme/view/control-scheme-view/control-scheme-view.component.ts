@@ -6,6 +6,7 @@ import {
     CONTROL_SCHEME_RUNNING_STATE_SELECTORS,
     CONTROL_SCHEME_SELECTORS,
     ControlScheme,
+    HUB_PORT_TASKS_SELECTORS,
     ROUTER_SELECTORS
 } from '../../../store';
 import { Store } from '@ngrx/store';
@@ -14,7 +15,6 @@ import { JsonPipe, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { HUB_PORT_TASKS_SELECTORS } from '../../../store/selectors/hub-port-tasks.selectors';
 
 @Component({
     standalone: true,
@@ -75,6 +75,4 @@ export class ControlSchemeViewComponent {
     public stopRunningScheme(): void {
         this.store.dispatch(CONTROL_SCHEME_ACTIONS.stopRunning());
     }
-
-    protected readonly max = max;
 }
