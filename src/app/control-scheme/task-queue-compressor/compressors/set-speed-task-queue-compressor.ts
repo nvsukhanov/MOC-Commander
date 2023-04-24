@@ -3,33 +3,31 @@ import { PortCommandSetLinearSpeedTask, PortCommandTask, PortCommandTaskType } f
 
 export class SetSpeedTaskQueueCompressor implements ITaskSpecificQueueCompressor {
     public compress(queue: PortCommandTask[]): PortCommandTask[] {
-        let data: {
-            firstCommand: PortCommandSetLinearSpeedTask,
-            lastCommand: PortCommandSetLinearSpeedTask,
-            firstCommandIndex: number,
-        } | undefined;
+        const lastCommandsOfTypeMap = new Map<string, PortCommandSetLinearSpeedTask>();
+        const commandHashMap = new Map<PortCommandSetLinearSpeedTask, string>(
+            queue.map((command) => [ command, this.outputHash(command) ])
+        );
 
-        for (let i = 0; i < queue.length; i++) {
-            const command = queue[i];
+        for (let index = queue.length - 1; index >= 0; index--) {
+            const command = queue[index];
             if (command.taskType === PortCommandTaskType.SetSpeed) {
-                if (data) {
-                    data.lastCommand = command;
-                } else {
-                    data = {
-                        firstCommand: command,
-                        lastCommand: command,
-                        firstCommandIndex: i,
-                    };
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                const hash = commandHashMap.get(command)!;
+                if (!lastCommandsOfTypeMap.has(hash)) {
+                    lastCommandsOfTypeMap.set(hash, command);
                 }
             }
         }
 
-        if (data && data.firstCommand !== data.lastCommand) {
-            const compressedTask: PortCommandSetLinearSpeedTask = { ...data.firstCommand, speed: data.lastCommand.speed };
-            const filteredQueue = queue.filter((command) => command.taskType !== PortCommandTaskType.SetSpeed);
-            filteredQueue.splice(data.firstCommandIndex, 0, compressedTask);
-            return filteredQueue;
-        }
-        return queue;
+        return queue.filter((command) => {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            const commandHash = commandHashMap.get(command)!;
+            const lastCommand = lastCommandsOfTypeMap.get(commandHash);
+            return !lastCommand || lastCommand === command;
+        });
+    }
+
+    private outputHash(command: PortCommandSetLinearSpeedTask): string {
+        return `${command.hubId}/${command.portId}`;
     }
 }
