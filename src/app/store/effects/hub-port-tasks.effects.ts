@@ -19,6 +19,7 @@ import { CONTROL_SCHEME_ACTIONS } from '../actions';
 import { HUB_PORT_TASKS_SELECTORS } from '../selectors/hub-port-tasks.selectors';
 import { HubStorageService } from '../hub-storage.service';
 import { lastExecutedTaskIdFn } from '../entity-adapters';
+import { Dictionary } from '@ngrx/entity';
 
 @Injectable()
 export class HubPortTasksEffects {
@@ -35,7 +36,7 @@ export class HubPortTasksEffects {
             concatLatestFrom((action) => this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(action.schemeId))),
             switchMap(([ , scheme ]) => {
                 if (scheme) {
-                    return combineLatest([ // TODO: do not use combineLatest, make unified selector
+                    return combineLatest([
                         of(scheme),
                         ...scheme.bindings.map((binding) => this.store.select(CONTROL_SCHEME_SELECTORS.selectSchemeBindingInputValue(scheme.id, binding)))
                     ]);
@@ -51,32 +52,7 @@ export class HubPortTasksEffects {
             }),
             concatLatestFrom(() => this.store.select(HUB_PORT_TASKS_SELECTORS.selectQueue)),
             concatLatestFrom(() => this.store.select(HUB_PORT_TASKS_SELECTORS.selectLastExecutedTasksEntities)),
-            map(([ [ nextTasks, queue ], lastExecutedTasks ]) => {  // TODO: that array within an array seems really wrong
-                const modelledQueue = [ ...queue ];
-
-                // due to possible multiple control binding to a single port we need to compress the queue in order to eliminate
-                // possible contradictions in the queue
-                const compactedNextTasks = this.queueCompressor.compress(nextTasks);
-
-                // TODO: move next block to a service maybe?
-                compactedNextTasks.forEach((nextTask) => {
-                    const lastTaskOfKindInQueue = [ ...modelledQueue ].reverse().find((task) => task.taskType === nextTask.taskType);
-                    if (!lastTaskOfKindInQueue) {
-                        const lastExecutedCommandOfKind = lastExecutedTasks[lastExecutedTaskIdFn(nextTask.hubId, nextTask.portId)];
-                        if (!lastExecutedCommandOfKind
-                            || lastExecutedCommandOfKind.taskType !== nextTask.taskType
-                            || !this.taskSuppressor.shouldSuppressTask(nextTask, lastExecutedCommandOfKind)
-                        ) {
-                            modelledQueue.push(nextTask);
-                        }
-                    } else if (!this.taskSuppressor.shouldSuppressTask(nextTask, lastTaskOfKindInQueue)) {
-                        modelledQueue.push(nextTask);
-                    }
-                });
-                return [ queue, modelledQueue.slice(queue.length) ];
-            }),
-            filter(([ , newTasks ]) => newTasks.length > 0),
-            map(([ queue, newTasks ]) => this.queueCompressor.compress([ ...queue, ...newTasks ])),
+            map(([ [ nextTasks, queue ], lastExecutedTasks ]) => this.trimQueue(nextTasks, queue, lastExecutedTasks)),
             map((queue) => HUB_PORT_TASKS_ACTIONS.setQueue({ tasks: queue })),
         ) as Observable<Action>;
     });
@@ -117,5 +93,33 @@ export class HubPortTasksEffects {
         this.taskSuppressor = taskSuppressorFactory.create();
         this.taskExecutor = taskExecutorFactory.create();
         this.queueCompressor = queueCompresorFactory.create();
+    }
+
+    private trimQueue(
+        nextTasks: PortCommandTask[],
+        queue: PortCommandTask[],
+        lastExecutedTasks: Dictionary<PortCommandTask>
+    ): PortCommandTask[] {
+        const modelledQueue = [ ...queue ];
+
+        nextTasks.forEach((nextTask) => {
+            const lastTaskOfKindInQueue = [ ...modelledQueue ].reverse().find((task) => task.taskType === nextTask.taskType
+                && task.hubId === nextTask.hubId
+                && task.portId === nextTask.portId
+            );
+            if (!lastTaskOfKindInQueue) {
+                const lastExecutedCommandOfKind = lastExecutedTasks[lastExecutedTaskIdFn(nextTask.hubId, nextTask.portId)];
+                if (!lastExecutedCommandOfKind
+                    || lastExecutedCommandOfKind.taskType !== nextTask.taskType
+                    || !this.taskSuppressor.shouldSuppressTask(nextTask, lastExecutedCommandOfKind)
+                ) {
+                    modelledQueue.push(nextTask);
+                }
+            } else if (!this.taskSuppressor.shouldSuppressTask(nextTask, lastTaskOfKindInQueue)) {
+                modelledQueue.push(nextTask);
+            }
+        });
+
+        return this.queueCompressor.compress(modelledQueue);
     }
 }

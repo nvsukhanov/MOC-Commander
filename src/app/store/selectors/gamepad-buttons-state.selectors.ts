@@ -6,11 +6,21 @@ const GAMEPAD_BUTTONS_STATE_FEATURE_SELECTOR = createFeatureSelector<IState['gam
 
 const GAMEPAD_BUTTONS_STATE_ENTITY_SELECTORS = GAMEPAD_BUTTONS_STATES_ENTITY_ADAPTER.getSelectors();
 
+const GAMEPAD_BUTTONS_SELECT_ALL = createSelector(GAMEPAD_BUTTONS_STATE_FEATURE_SELECTOR, GAMEPAD_BUTTONS_STATE_ENTITY_SELECTORS.selectAll);
+
+const GAMEPAD_BUTTON_BINDING_THRESHOLD = 0.9;
+
 export const GAMEPAD_BUTTONS_STATE_SELECTORS = {
-    selectAll: createSelector(GAMEPAD_BUTTONS_STATE_FEATURE_SELECTOR, GAMEPAD_BUTTONS_STATE_ENTITY_SELECTORS.selectAll),
+    selectAll: GAMEPAD_BUTTONS_SELECT_ALL,
     selectEntities: createSelector(GAMEPAD_BUTTONS_STATE_FEATURE_SELECTOR, GAMEPAD_BUTTONS_STATE_ENTITY_SELECTORS.selectEntities),
     selectByIndex: (gamepadIndex: number, buttonIndex: number) => createSelector(
         GAMEPAD_BUTTONS_STATE_SELECTORS.selectEntities,
         (state) => state[gamepadButtonIdFn(gamepadIndex, buttonIndex)]
     ),
+    selectFistBinding: createSelector(
+        GAMEPAD_BUTTONS_SELECT_ALL,
+        (states) => {
+            return states.find((state) => state.value >= GAMEPAD_BUTTON_BINDING_THRESHOLD);
+        }
+    )
 } as const;

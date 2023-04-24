@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { GamepadAxisState, GamepadButtonState, GamepadInputMethod } from '../i-state';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { GAMEPAD_ACTIONS } from '../actions';
-import { animationFrames, bufferCount, filter, fromEvent, map, merge, Observable, skipUntil, switchMap, takeUntil } from 'rxjs';
+import { filter, fromEvent, interval, map, merge, Observable, switchMap, takeUntil } from 'rxjs';
 import { WINDOW } from '../../types';
 import { GamepadPluginsService } from '../../plugins';
 import { Store } from '@ngrx/store';
@@ -46,8 +46,7 @@ export class GamepadEffects {
     public readonly readGamepads$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(GAMEPAD_ACTIONS.gamepadsReadStart),
-            switchMap(() => animationFrames().pipe(
-                bufferCount(this.readGamepadNthFrames),
+            switchMap(() => this.gamepadReadScheduler.pipe(
                 takeUntil(this.actions$.pipe(ofType(
                     GAMEPAD_ACTIONS.gamepadsReadStop,
                 )))
@@ -73,13 +72,11 @@ export class GamepadEffects {
         return this.actions$.pipe(
             ofType(GAMEPAD_ACTIONS.gamepadWaitForUserInput),
             switchMap(() => merge(
-                this.store.select(GAMEPAD_AXES_STATE_SELECTORS.selectAll).pipe(
-                    skipUntil(this.actions$.pipe(ofType(GAMEPAD_ACTIONS.updateGamepadsValues))),
+                this.store.select(GAMEPAD_AXES_STATE_SELECTORS.selectFistBinding).pipe(
+                    filter((v) => !!v),
                     takeUntil(this.actions$.pipe(
                         ofType(GAMEPAD_ACTIONS.gamepadWaitForUserInputCancel, GAMEPAD_ACTIONS.gamepadUserInputReceived))
                     ),
-                    map((gamepadAxesStates) => gamepadAxesStates.find((s) => Math.abs(s.value) > this.inputReceiveThreshold)),
-                    filter((gamepadAxisState) => gamepadAxisState !== undefined),
                     map((gamepadAxisState) => GAMEPAD_ACTIONS.gamepadUserInputReceived({
                             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                             gamepadId: gamepadAxisState!.gamepadIndex,
@@ -90,13 +87,11 @@ export class GamepadEffects {
                         })
                     )
                 ),
-                this.store.select(GAMEPAD_BUTTONS_STATE_SELECTORS.selectAll).pipe(
-                    skipUntil(this.actions$.pipe(ofType(GAMEPAD_ACTIONS.updateGamepadsValues))),
+                this.store.select(GAMEPAD_BUTTONS_STATE_SELECTORS.selectFistBinding).pipe(
+                    filter((v) => !!v),
                     takeUntil(this.actions$.pipe(
                         ofType(GAMEPAD_ACTIONS.gamepadWaitForUserInputCancel, GAMEPAD_ACTIONS.gamepadUserInputReceived))
                     ),
-                    map((gamepadButtonsStates) => gamepadButtonsStates.find((s) => Math.abs(s.value) > this.inputReceiveThreshold)),
-                    filter((gamepadButtonsStates) => gamepadButtonsStates !== undefined),
                     map((gamepadButtonsStates) => GAMEPAD_ACTIONS.gamepadUserInputReceived({
                             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                             gamepadId: gamepadButtonsStates!.gamepadIndex,
@@ -110,11 +105,9 @@ export class GamepadEffects {
             )));
     });
 
-    private readonly readGamepadNthFrames = 2; // TODO: move to config?
-
     private readonly inputValuePrecision = 2; // TODO: move to config?
 
-    private readonly inputReceiveThreshold = 0.9;
+    private readonly gamepadReadScheduler: Observable<unknown>;
 
     constructor(
         private readonly actions$: Actions,
@@ -122,5 +115,6 @@ export class GamepadEffects {
         @Inject(WINDOW) private readonly window: Window,
         private readonly gamepadPlugins: GamepadPluginsService
     ) {
+        this.gamepadReadScheduler = interval(1000 / 10);
     }
 }
