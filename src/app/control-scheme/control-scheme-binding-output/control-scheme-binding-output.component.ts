@@ -62,6 +62,7 @@ export class ControlSchemeBindingOutputComponent {
 
     @Input()
     public set formGroup(formGroup: FormGroup<{
+        id: FormControl<string>,
         input: ControlSchemeBindingInputControl,
         output: ControlSchemeBindingOutputControl
     }>) {

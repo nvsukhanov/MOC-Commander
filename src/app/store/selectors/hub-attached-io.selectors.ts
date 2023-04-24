@@ -59,7 +59,7 @@ export const HUB_ATTACHED_IO_SELECTORS = {
     )
 } as const;
 
-function getHubIOOperationModes(
+export function getHubIOOperationModes(
     io: AttachedIO,
     supportedModes: ReturnType<typeof HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities>,
     portModeData: ReturnType<typeof HUB_PORT_MODE_INFO_SELECTORS.selectEntities>,

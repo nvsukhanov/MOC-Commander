@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnDestroy, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS, ControlScheme, GAMEPAD_ACTIONS, HUB_ATTACHED_IO_SELECTORS, HUBS_SELECTORS } from '../../../store';
 import { MatCardModule } from '@angular/material/card';
@@ -15,10 +15,12 @@ import {
 } from '../../control-scheme-binding-input/control-scheme-binding-input.component';
 import { ControlSchemeBindingOutputComponent, ControlSchemeBindingOutputControl } from '../../control-scheme-binding-output';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { WINDOW } from '../../../types';
 
 export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
 
 type BindingForm = FormGroup<{
+    id: FormControl<string>,
     input: ControlSchemeBindingInputControl,
     output: ControlSchemeBindingOutputControl
 }>;
@@ -65,6 +67,7 @@ export class ControlSchemeEditFormComponent implements OnDestroy {
         private readonly formBuilder: FormBuilder,
         private readonly store: Store,
         private readonly actions: Actions,
+        @Inject(WINDOW) private readonly window: Window
     ) {
     }
 
@@ -92,12 +95,13 @@ export class ControlSchemeEditFormComponent implements OnDestroy {
                 ? this.store.select(HUB_ATTACHED_IO_SELECTORS.selectIOsControllableByMethod(hubs[0].hubId, action.inputMethod))
                 : of([])
             ),
-        ).subscribe(([ [ action, hubs ], ios ]) => { // TODO: something is really wrong here
+        ).subscribe(([ [ action ], ios ]) => { // TODO: something is really wrong here
             const io = ios[0];
             if (!io) {
                 return; // TODO: notify on no matching IO
             }
             const binging: BindingForm = this.formBuilder.group({
+                id: this.formBuilder.control(this.window.crypto.randomUUID(), { nonNullable: true }),
                 input: this.formBuilder.group({
                     gamepadId: this.formBuilder.control(action.gamepadId, { nonNullable: true, validators: [ Validators.required ] }),
                     gamepadInputMethod: this.formBuilder.control(action.inputMethod, { nonNullable: true, validators: [ Validators.required ] }),

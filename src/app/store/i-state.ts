@@ -34,6 +34,7 @@ export interface IState {
 }
 
 export type ControlSchemeBinding = {
+    id: string;
     input: {
         gamepadId: number;
         gamepadInputMethod: GamepadInputMethod;
