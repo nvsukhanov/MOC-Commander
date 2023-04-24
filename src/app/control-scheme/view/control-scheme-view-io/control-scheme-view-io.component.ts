@@ -1,10 +1,16 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ControlSchemeBinding, IOBindingValidationResults } from '../../../store';
-import { PortCommandTask } from '../../task-composer';
 import { JsonPipe, NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatIconModule } from '@angular/material/icon';
+import { PortCommandTask } from '../../../types';
+import { PORT_TASK_TYPE_TO_L10N } from '../../../mappings';
+
+type LastExecutedTaskTemplateDate = {
+    taskTypeL10nKey: string;
+    task: PortCommandTask;
+}
 
 @Component({
     standalone: true,
@@ -23,7 +29,23 @@ import { MatIconModule } from '@angular/material/icon';
 export class ControlSchemeViewIoComponent {
     @Input() public binding?: ControlSchemeBinding;
 
-    @Input() public lastExecutedTask?: PortCommandTask;
-
     @Input() public validation?: IOBindingValidationResults;
+
+    private _lastExecutedTaskTemplateData?: LastExecutedTaskTemplateDate;
+
+    @Input()
+    public set lastExecutedTask(v: PortCommandTask | undefined) {
+        if (v) {
+            this._lastExecutedTaskTemplateData = {
+                taskTypeL10nKey: PORT_TASK_TYPE_TO_L10N[v.taskType],
+                task: v
+            };
+        } else {
+            this._lastExecutedTaskTemplateData = undefined;
+        }
+    }
+
+    public get lastExecutedTaskTemplateData(): LastExecutedTaskTemplateDate | undefined {
+        return this._lastExecutedTaskTemplateData;
+    }
 }

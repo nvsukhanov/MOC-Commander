@@ -6,20 +6,19 @@ import {
     IPortCommandTaskComposer,
     ITaskExecutor,
     ITaskSuppressor,
-    PortCommandTask,
     PortCommandTaskComposerFactoryService,
     TaskExecutorFactoryService,
     TaskQueueCompressor,
     TaskQueueCompressorFactoryService,
     TaskSuppressorFactory,
 } from '../../control-scheme';
-import { CONTROL_SCHEME_SELECTORS } from '../selectors';
+import { CONTROL_SCHEME_SELECTORS, HUB_PORT_TASKS_SELECTORS } from '../selectors';
 import { Action, Store } from '@ngrx/store';
 import { CONTROL_SCHEME_ACTIONS } from '../actions';
-import { HUB_PORT_TASKS_SELECTORS } from '../selectors/hub-port-tasks.selectors';
 import { HubStorageService } from '../hub-storage.service';
 import { lastExecutedTaskIdFn } from '../entity-adapters';
 import { Dictionary } from '@ngrx/entity';
+import { PortCommandTask } from '../../types';
 
 @Injectable()
 export class HubPortTasksEffects {

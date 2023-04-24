@@ -1,5 +1,5 @@
 import { createActionGroup, props } from '@ngrx/store';
-import { PortCommandTask } from '../../control-scheme';
+import { PortCommandTask } from '../../types';
 
 export const HUB_PORT_TASKS_ACTIONS = createActionGroup({
     source: 'Hub Port Tasks',

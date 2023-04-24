@@ -1,6 +1,6 @@
 import { TaskExecutor } from '../task-executor';
 import { Hub } from '../../../lego-hub';
-import { PortCommandTask } from '../../task-composer';
+import { PortCommandTask } from '../../../types';
 
 export class SetSpeedExecutor extends TaskExecutor {
     protected handle(

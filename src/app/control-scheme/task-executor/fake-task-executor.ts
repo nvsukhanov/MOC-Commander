@@ -1,7 +1,7 @@
 import { ITaskExecutor } from './i-task-executor';
-import { PortCommandTask } from '../task-composer';
 import { Hub } from '../../lego-hub';
 import { ILogger } from '../../logging';
+import { PortCommandTask } from '../../types';
 
 export class FakeTaskExecutor implements ITaskExecutor {
     constructor(
