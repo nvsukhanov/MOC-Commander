@@ -4,13 +4,13 @@ import { CONTROL_SCHEMES_ENTITY_ADAPTER, hubAttachedIosIdFn, lastExecutedTaskIdF
 import { GAMEPAD_AXES_STATE_SELECTORS } from './gamepad-axes-state.selectors';
 import { GAMEPAD_BUTTONS_STATE_SELECTORS } from './gamepad-buttons-state.selectors';
 import { HUB_PORT_TASKS_SELECTORS } from './hub-port-tasks.selectors';
-import { PortCommandSetLinearSpeedTask } from '../../control-scheme';
 import { HUBS_SELECTORS } from './hubs.selectors';
 import { getHubIOOperationModes, HUB_ATTACHED_IO_SELECTORS } from './hub-attached-io.selectors';
 import { HUB_IO_SUPPORTED_MODES_SELECTORS } from './hub-io-supported-modes.selectors';
 import { HUB_PORT_MODE_INFO_SELECTORS } from './hub-port-mode-info.selectors';
 import { GAMEPAD_SELECTORS } from './gamepad.selectors';
 import { CONTROL_SCHEME_RUNNING_STATE_SELECTORS } from './control-scheme-running-state.selectors';
+import { PortCommandSetLinearSpeedTask } from '../../types';
 
 const CONTROL_SCHEME_FEATURE_SELECTOR = createFeatureSelector<IState['controlSchemes']>('controlSchemes');
 
@@ -150,8 +150,9 @@ export const CONTROL_SCHEME_SELECTORS = {
     ),
     canRunScheme: (schemeId: string) => createSelector(
         CONTROL_SCHEME_SELECTORS.validateScheme(schemeId),
-        (validationResult): boolean => {
-            return !Object.values(validationResult).some((v) => v);
+        CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId,
+        (validationResult, runningSchemeId): boolean => {
+            return !Object.values(validationResult).some((v) => v) && runningSchemeId === null;
         }
     ),
     selectSchemeIOData: (schemeId: string) => createSelector(

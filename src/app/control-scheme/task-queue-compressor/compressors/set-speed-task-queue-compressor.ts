@@ -1,5 +1,5 @@
 import { ITaskSpecificQueueCompressor } from '../i-task-specific-queue-compressor';
-import { PortCommandSetLinearSpeedTask, PortCommandTask, PortCommandTaskType } from '../../task-composer';
+import { PortCommandSetLinearSpeedTask, PortCommandTask, PortCommandTaskType } from '../../../types';
 
 export class SetSpeedTaskQueueCompressor implements ITaskSpecificQueueCompressor {
     public compress(queue: PortCommandTask[]): PortCommandTask[] {

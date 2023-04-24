@@ -53,16 +53,10 @@ export class ControlSchemeViewComponent {
                           : this.store.select(CONTROL_SCHEME_SELECTORS.canRunScheme(id))),
     );
 
-    public readonly isCurrentControlSchemeRunning$: Observable<boolean> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
-        concatLatestFrom(() => this.store.select(CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId)),
+    public readonly isCurrentControlSchemeRunning$: Observable<boolean> = this.store.select(CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId).pipe(
+        concatLatestFrom(() => this.store.select(ROUTER_SELECTORS.selectRouteParam('id'))),
     ).pipe(
-        map(([ id, runningSchemeId ]) => runningSchemeId !== null && id === runningSchemeId)
-    );
-
-    public readonly isAnotherControlSchemeRunning$: Observable<boolean> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
-        concatLatestFrom(() => this.store.select(CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId)),
-    ).pipe(
-        map(([ id, runningSchemeId ]) => runningSchemeId !== null && id !== runningSchemeId)
+        map(([ id, runningSchemeId ]) => runningSchemeId !== null && id === runningSchemeId),
     );
 
     public readonly queueLength$ = this.store.select(HUB_PORT_TASKS_SELECTORS.selectQueueLength);

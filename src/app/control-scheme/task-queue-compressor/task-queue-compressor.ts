@@ -1,5 +1,5 @@
 import { ITaskSpecificQueueCompressor } from './i-task-specific-queue-compressor';
-import { PortCommandTask } from '../task-composer';
+import { PortCommandTask } from '../../types';
 
 export class TaskQueueCompressor {
     constructor(

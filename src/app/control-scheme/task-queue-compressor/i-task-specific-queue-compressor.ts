@@ -1,4 +1,4 @@
-import { PortCommandTask } from '../task-composer';
+import { PortCommandTask } from '../../types';
 
 export interface ITaskSpecificQueueCompressor {
     compress(queue: PortCommandTask[]): PortCommandTask[];

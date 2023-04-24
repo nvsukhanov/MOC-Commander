@@ -1,6 +1,6 @@
 import { ITaskExecutor } from './i-task-executor';
-import { PortCommandTask } from '../task-composer';
 import { Hub } from '../../lego-hub';
+import { PortCommandTask } from '../../types';
 
 export abstract class TaskExecutor implements ITaskExecutor {
     private next?: TaskExecutor;

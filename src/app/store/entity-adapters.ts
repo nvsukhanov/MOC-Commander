@@ -12,7 +12,7 @@ import {
     PortModeInfo
 } from './i-state';
 import { IOType } from '../lego-hub';
-import { PortCommandTask } from '../control-scheme';
+import { PortCommandTask } from '../types';
 
 export const HUB_ATTACHED_IOS_ENTITY_ADAPTER: EntityAdapter<AttachedIO> = createEntityAdapter<AttachedIO>({
     selectId: (io) => hubAttachedIosIdFn(io.hubId, io.portId),
