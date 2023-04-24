@@ -6,7 +6,7 @@ import { ILogger } from '../../logging';
 export class HubPropertiesFeature {
     public batteryLevel$ = this.createPropertyStream(HubProperty.batteryVoltage);
 
-    public rssiLevel$ = this.createPropertyStream(HubProperty.rssi);
+    public rssiLevel$ = this.createPropertyStream(HubProperty.RSSI);
 
     public buttonState$ = this.createPropertyStream(HubProperty.button);
 

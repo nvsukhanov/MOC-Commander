@@ -10,7 +10,7 @@ export const HUBS_REDUCERS = createReducer(
             hubId: data.hubId,
             name: data.name,
             batteryLevel: null,
-            rssiLevel: null,
+            RSSI: null,
             hubType: HubType.Unknown,
             isButtonPressed: false
         }, state)),
@@ -29,7 +29,7 @@ export const HUBS_REDUCERS = createReducer(
     on(HUBS_ACTIONS.rssiLevelReceived, (state, data) => HUBS_ENTITY_ADAPTER.updateOne({
             id: data.hubId,
             changes: {
-                rssiLevel: data.rssiLevel,
+                RSSI: data.RSSI,
             }
         },
         state

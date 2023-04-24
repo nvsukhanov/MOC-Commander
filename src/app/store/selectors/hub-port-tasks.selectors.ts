@@ -12,6 +12,7 @@ export const HUB_PORT_TASKS_SELECTORS = {
     selectQueueLength: createSelector(HUB_PORT_TASKS_FEATURE_SELECTOR, (state) => state.queue.length),
     lastTaskExecutionTime: createSelector(HUB_PORT_TASKS_FEATURE_SELECTOR, (state) => Math.round(state.lastTaskExecutionTime)),
     selectTotalTasksExecuted: createSelector(HUB_PORT_TASKS_FEATURE_SELECTOR, (state) => state.totalTasksExecuted),
+    selectMaxQueueLength: createSelector(HUB_PORT_TASKS_FEATURE_SELECTOR, (state) => state.maxQueueLength),
     selectFirstTask: createSelector(HUB_PORT_TASKS_FEATURE_SELECTOR, (state) => state.queue[0]),
     selectLastExecutedTasksEntities: createSelector(
         createSelector(HUB_PORT_TASKS_FEATURE_SELECTOR, (state) => state.lastExecutedTasks),

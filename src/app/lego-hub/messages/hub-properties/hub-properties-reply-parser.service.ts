@@ -22,7 +22,7 @@ export class HubPropertiesReplyParserService implements IReplyParser<MessageType
 
     private readonly hubPropertyValueParser = {
         [HubProperty.batteryVoltage]: (v): HubPropertyBatteryInboundMessage => this.parseBatteryData(v),
-        [HubProperty.rssi]: (v): HubPropertyRssiInboundMessage => this.parseRssiLevel(v),
+        [HubProperty.RSSI]: (v): HubPropertyRssiInboundMessage => this.parseRssiLevel(v),
         [HubProperty.systemTypeId]: (v): HubPropertySystemTypeIdInboundMessage => this.parseSystemTypeId(v),
         [HubProperty.button]: (v): HubPropertyButtonStateInboundMessage => this.parseButtonState(v),
         [HubProperty.primaryMacAddress]: (v): HubPropertyPrimaryMacAddressInboundMessage => this.parsePrimaryMacAddress(v)
@@ -47,7 +47,7 @@ export class HubPropertiesReplyParserService implements IReplyParser<MessageType
     private parseRssiLevel(payload: Uint8Array): HubPropertyRssiInboundMessage {
         return {
             messageType: MessageType.properties,
-            propertyType: HubProperty.rssi,
+            propertyType: HubProperty.RSSI,
             // rssi is a int8 stored as uint8, so we have to convert it,
             // ref: https://lego.github.io/lego-ble-wireless-protocol-docs/index.html#hub-property-payload
             level: payload[0] << 24 >> 24

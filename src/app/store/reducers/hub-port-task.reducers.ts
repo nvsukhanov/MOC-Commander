@@ -19,6 +19,7 @@ export const HUB_PORT_TASK_REDUCERS = createReducer(
             queue: state.queue.filter((t) => t !== task),
             totalTasksExecuted: state.totalTasksExecuted + 1,
             lastTaskExecutionTime: taskExecutionDuration,
+            maxQueueLength: Math.max(state.maxQueueLength, state.queue.length),
             lastExecutedTasks: LAST_EXECUTED_TASKS_ENTITY_ADAPTER.upsertOne(task, state.lastExecutedTasks)
         };
     }),
