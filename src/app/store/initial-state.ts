@@ -31,6 +31,8 @@ export const INITIAL_STATE: IState = {
     hubPortModeInfo: HUB_PORT_MODE_INFO.getInitialState(),
     hubPortTasks: {
         queue: [],
+        totalTasksExecuted: 0,
+        lastTaskExecutionTime: 0,
         lastExecutedTasks: LAST_EXECUTED_TASKS_ENTITY_ADAPTER.getInitialState()
     },
     bluetoothAvailability: {

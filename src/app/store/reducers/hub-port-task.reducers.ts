@@ -13,9 +13,12 @@ export const HUB_PORT_TASK_REDUCERS = createReducer(
         };
     }),
     on(HUB_PORT_TASKS_ACTIONS.markTaskAsExecuted, (state, { task }) => {
+        const taskExecutionDuration = Date.now() - task.createdAt;
         return {
             ...state,
             queue: state.queue.filter((t) => t !== task),
+            totalTasksExecuted: state.totalTasksExecuted + 1,
+            lastTaskExecutionTime: taskExecutionDuration,
             lastExecutedTasks: LAST_EXECUTED_TASKS_ENTITY_ADAPTER.upsertOne(task, state.lastExecutedTasks)
         };
     }),

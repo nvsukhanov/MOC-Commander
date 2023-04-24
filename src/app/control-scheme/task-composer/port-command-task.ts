@@ -9,4 +9,5 @@ export type PortCommandSetLinearSpeedTask = {
     hubId: string,
     portId: number,
     speed: number,
+    createdAt: number,
 }
