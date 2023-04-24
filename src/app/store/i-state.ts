@@ -22,6 +22,8 @@ export interface IState {
     hubPortModeInfo: EntityState<PortModeInfo>,
     hubPortTasks: {
         queue: PortCommandTask[],
+        totalTasksExecuted: number,
+        lastTaskExecutionTime: number,
         lastExecutedTasks: EntityState<PortCommandTask>
     },
     bluetoothAvailability: {

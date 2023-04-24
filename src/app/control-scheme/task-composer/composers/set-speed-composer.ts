@@ -22,6 +22,7 @@ export class SetSpeedComposer extends PortCommandTaskComposer {
             portId: binding.output.portId,
             hubId: binding.output.hubId,
             speed: minNormalizedSpeed,
+            createdAt: Date.now(),
         };
     }
 }

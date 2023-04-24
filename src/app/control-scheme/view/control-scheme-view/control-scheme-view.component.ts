@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { EMPTY, Observable, switchMap } from 'rxjs';
+import { bufferCount, EMPTY, map, max, Observable, switchMap } from 'rxjs';
 import {
     CanRunSchemeResult,
     CONTROL_SCHEME_ACTIONS,
     CONTROL_SCHEME_RUNNING_STATE_SELECTORS,
     CONTROL_SCHEME_SELECTORS,
     ControlScheme,
+    HUB_PORT_TASKS_SELECTORS,
     ROUTER_SELECTORS
 } from '../../../store';
 import { Store } from '@ngrx/store';
@@ -43,6 +44,24 @@ export class ControlSchemeViewComponent {
     );
 
     public readonly runningSchemeId$: Observable<string | null> = this.store.select(CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId);
+
+    public readonly queueLength$ = this.store.select(HUB_PORT_TASKS_SELECTORS.selectQueueLength);
+
+    public readonly maxQueueLength$ = this.store.select(HUB_PORT_TASKS_SELECTORS.selectQueueLength).pipe(
+        max()
+    );
+
+    public readonly maxTaskExecutionTime$ = this.store.select(HUB_PORT_TASKS_SELECTORS.lastTaskExecutionTime).pipe(
+        max()
+    );
+
+    public readonly lastFiveTaskAverageExecutionTime$ = this.store.select(HUB_PORT_TASKS_SELECTORS.lastTaskExecutionTime).pipe(
+        bufferCount(5, 1),
+        // eslint-disable-next-line @ngrx/avoid-mapping-selectors
+        map((v) => v.reduce((acc, val) => acc + val, 0) / 5)
+    );
+
+    public readonly totalTasksExecuted$ = this.store.select(HUB_PORT_TASKS_SELECTORS.selectTotalTasksExecuted);
 
     constructor(
         private readonly store: Store

@@ -1,5 +1,20 @@
 <ng-container *ngIf="selectedScheme$ | ngrxPush; let scheme; else schemeNotFound">
     {{ scheme | json }}
+    <div>
+        Queue length: {{ queueLength$ | ngrxPush }}
+    </div>
+    <div>
+        Max queue length: {{ maxQueueLength$ | ngrxPush }}
+    </div>
+    <div>
+        Max task execution time: {{ maxTaskExecutionTime$ | ngrxPush }}ms
+    </div>
+    <div>
+        Total tasks executed: {{ totalTasksExecuted$ | ngrxPush }}
+    </div>
+    <div>
+        Last five tasks average task execution time: {{ lastFiveTaskAverageExecutionTime$ | ngrxPush }}ms
+    </div>
 
     <mat-card>
         <mat-card-actions>

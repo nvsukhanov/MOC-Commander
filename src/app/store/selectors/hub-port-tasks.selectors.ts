@@ -9,6 +9,9 @@ const LAST_EXECUTED_TASKS_ENTITY_SELECTORS = LAST_EXECUTED_TASKS_ENTITY_ADAPTER.
 
 export const HUB_PORT_TASKS_SELECTORS = {
     selectQueue: createSelector(HUB_PORT_TASKS_FEATURE_SELECTOR, (state) => state.queue),
+    selectQueueLength: createSelector(HUB_PORT_TASKS_FEATURE_SELECTOR, (state) => state.queue.length),
+    lastTaskExecutionTime: createSelector(HUB_PORT_TASKS_FEATURE_SELECTOR, (state) => Math.round(state.lastTaskExecutionTime)),
+    selectTotalTasksExecuted: createSelector(HUB_PORT_TASKS_FEATURE_SELECTOR, (state) => state.totalTasksExecuted),
     selectFirstTask: createSelector(HUB_PORT_TASKS_FEATURE_SELECTOR, (state) => state.queue[0]),
     selectLastExecutedTasksEntities: createSelector(
         createSelector(HUB_PORT_TASKS_FEATURE_SELECTOR, (state) => state.lastExecutedTasks),
