@@ -1,0 +1,16 @@
+:host {
+    display: block;
+}
+
+.io-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &-validation-errors {
+        display: flex;
+        flex-direction: row;
+        flex-grow: 1;
+        justify-content: flex-end;
+    }
+}

@@ -1,8 +1,16 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { ControlSchemeBinding, GamepadInputMethod, IState } from '../i-state';
-import { CONTROL_SCHEMES_ENTITY_ADAPTER } from '../entity-adapters';
+import { CONTROL_SCHEMES_ENTITY_ADAPTER, hubAttachedIosIdFn, lastExecutedTaskIdFn } from '../entity-adapters';
 import { GAMEPAD_AXES_STATE_SELECTORS } from './gamepad-axes-state.selectors';
 import { GAMEPAD_BUTTONS_STATE_SELECTORS } from './gamepad-buttons-state.selectors';
+import { HUB_PORT_TASKS_SELECTORS } from './hub-port-tasks.selectors';
+import { PortCommandSetLinearSpeedTask } from '../../control-scheme';
+import { HUBS_SELECTORS } from './hubs.selectors';
+import { getHubIOOperationModes, HUB_ATTACHED_IO_SELECTORS } from './hub-attached-io.selectors';
+import { HUB_IO_SUPPORTED_MODES_SELECTORS } from './hub-io-supported-modes.selectors';
+import { HUB_PORT_MODE_INFO_SELECTORS } from './hub-port-mode-info.selectors';
+import { GAMEPAD_SELECTORS } from './gamepad.selectors';
+import { CONTROL_SCHEME_RUNNING_STATE_SELECTORS } from './control-scheme-running-state.selectors';
 
 const CONTROL_SCHEME_FEATURE_SELECTOR = createFeatureSelector<IState['controlSchemes']>('controlSchemes');
 
@@ -12,6 +20,30 @@ const CONTROL_SCHEME_SELECT_ENTITIES = createSelector(
     CONTROL_SCHEME_FEATURE_SELECTOR,
     CONTROL_SCHEME_ENTITY_SELECTORS.selectEntities
 );
+
+export type SchemeValidationResult = {
+    schemeMissing: boolean;
+    anotherSchemeIsRunning: boolean;
+    gamepadMissing: boolean;
+    hubMissing: boolean;
+    ioMissing: boolean;
+    ioCapabilitiesMismatch: boolean;
+}
+
+export type IOBindingValidationResults = {
+    bindingId: string;
+    gamepadMissing: boolean;
+    hubMissing: boolean;
+    ioMissing: boolean;
+    ioCapabilitiesMismatch: boolean;
+};
+
+export type ControlSchemeViewIOData = {
+    schemeId: string,
+    binding: ControlSchemeBinding,
+    latestExecutedTask: PortCommandSetLinearSpeedTask | undefined,
+    validationData: IOBindingValidationResults
+};
 
 export const CONTROL_SCHEME_SELECTORS = {
     selectAll: createSelector(CONTROL_SCHEME_FEATURE_SELECTOR, CONTROL_SCHEME_ENTITY_SELECTORS.selectAll),
@@ -40,5 +72,109 @@ export const CONTROL_SCHEME_SELECTORS = {
                 return 0;
             }
         }
-    )
+    ),
+    validateSchemeIOBindings: (schemeId: string) => createSelector(
+        CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
+        HUB_PORT_TASKS_SELECTORS.selectLastExecutedTasksEntities,
+        HUBS_SELECTORS.selectHubsIds,
+        HUB_ATTACHED_IO_SELECTORS.selectIOsEntities,
+        HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
+        HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
+        GAMEPAD_SELECTORS.selectAll,
+        (scheme, tasks, hubIds, iosEntities, ioSupportedModesEntities, portModeInfoEntities, gamepads): IOBindingValidationResults[] => {
+            if (scheme === undefined) {
+                return [] as IOBindingValidationResults[];
+            }
+            const hubIdsSet = new Set([ ...hubIds ]);
+            const gamepadIds = new Set([ ...gamepads.map((g) => g.gamepadIndex) ]);
+
+            const result: IOBindingValidationResults[] = scheme.bindings.map((binding) => {
+                const bindingValidationResult: IOBindingValidationResults = {
+                    bindingId: binding.id,
+                    gamepadMissing: !gamepadIds.has(binding.input.gamepadId),
+                    hubMissing: !hubIdsSet.has(binding.output.hubId),
+                    ioMissing: true,
+                    ioCapabilitiesMismatch: true
+                };
+
+                if (!bindingValidationResult.hubMissing) {
+                    const io = iosEntities[hubAttachedIosIdFn(binding.output.hubId, binding.output.portId)];
+                    if (io) {
+                        bindingValidationResult.ioMissing = false;
+                        const ioOperationModes = getHubIOOperationModes(
+                            io,
+                            ioSupportedModesEntities,
+                            portModeInfoEntities,
+                            binding.input.gamepadInputMethod
+                        );
+                        bindingValidationResult.ioCapabilitiesMismatch = !ioOperationModes.includes(binding.output.operationMode);
+                    }
+                }
+
+                return bindingValidationResult;
+            });
+            return result;
+        }
+    ),
+    validateScheme: (schemeId: string) => createSelector(
+        CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId,
+        CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
+        CONTROL_SCHEME_SELECTORS.validateSchemeIOBindings(schemeId),
+        (alreadyRunningSchemeId, scheme, ioValidationResults): SchemeValidationResult => {
+            let canRunResultNegative: SchemeValidationResult = {
+                schemeMissing: false,
+                anotherSchemeIsRunning: false,
+                gamepadMissing: false,
+                hubMissing: false,
+                ioMissing: false,
+                ioCapabilitiesMismatch: false,
+            };
+
+            if (alreadyRunningSchemeId !== null && alreadyRunningSchemeId !== schemeId) {
+                canRunResultNegative.anotherSchemeIsRunning = true;
+            }
+            if (!scheme) {
+                canRunResultNegative.schemeMissing = false;
+            }
+
+            canRunResultNegative = ioValidationResults.reduce((acc, cur) => {
+                acc.gamepadMissing = acc.gamepadMissing || cur.gamepadMissing;
+                acc.hubMissing = acc.hubMissing || cur.hubMissing;
+                acc.ioMissing = acc.ioMissing || cur.ioMissing;
+                acc.ioCapabilitiesMismatch = acc.ioCapabilitiesMismatch || cur.ioCapabilitiesMismatch;
+                return acc;
+            }, canRunResultNegative);
+
+            return canRunResultNegative;
+        }
+    ),
+    canRunScheme: (schemeId: string) => createSelector(
+        CONTROL_SCHEME_SELECTORS.validateScheme(schemeId),
+        (validationResult): boolean => {
+            return !Object.values(validationResult).some((v) => v);
+        }
+    ),
+    selectSchemeIOData: (schemeId: string) => createSelector(
+        CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
+        CONTROL_SCHEME_SELECTORS.validateSchemeIOBindings(schemeId),
+        HUB_PORT_TASKS_SELECTORS.selectLastExecutedTasksEntities,
+        HUBS_SELECTORS.selectHubsIds,
+        (scheme, validationResult, tasks): ControlSchemeViewIOData[] => {
+            if (scheme === undefined) {
+                return [];
+            }
+            const validationMap = new Map(validationResult.map((r) => [ r.bindingId, r ]));
+
+            return scheme.bindings.map((binding) => {
+                const task = tasks[lastExecutedTaskIdFn(binding.output.hubId, binding.output.portId)];
+                return {
+                    schemeId: schemeId,
+                    binding: binding,
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    validationData: validationMap.get(binding.id)!,
+                    latestExecutedTask: task,
+                } satisfies ControlSchemeViewIOData;
+            });
+        }
+    ),
 } as const;

@@ -1,0 +1,45 @@
+<mat-card *ngIf="binding">
+    <mat-card-header>
+        <mat-card-title>
+            {{ 'bindingOutputSectionPortLabel' | transloco }} {{ binding.output.portId }}
+        </mat-card-title>
+        <div *ngIf="validation"
+             class="io-header-validation-errors">
+            <mat-icon *ngIf="validation.gamepadMissing"
+                      color="warn"
+                      [title]="'schemeBindingValidationGamepadMissing' | transloco"
+            >
+                gamepad
+            </mat-icon>
+            <mat-icon *ngIf="validation.hubMissing"
+                      color="warn"
+                      [title]="'schemeBindingValidationHubMissing' | transloco"
+            >
+                device_hub
+            </mat-icon>
+            <mat-icon *ngIf="validation.ioMissing"
+                      color="warn"
+                      [title]="'schemeBindingValidationHubIOIsMissing' | transloco"
+            >
+                settings_input_hdmi
+            </mat-icon>
+            <mat-icon *ngIf="validation.ioCapabilitiesMismatch"
+                      color="warn"
+                      [title]="'schemeBindingValidationHubIOIsMissing' | transloco"
+            >
+                settings_input_svideo
+            </mat-icon>
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+        <pre>
+            {{ binding | json }}
+        </pre>
+        <pre *ngIf="lastExecutedTask">
+            {{ lastExecutedTask | json }}
+        </pre>
+        <pre *ngIf="validation">
+            {{ validation | json }}
+        </pre>
+    </mat-card-content>
+</mat-card>
