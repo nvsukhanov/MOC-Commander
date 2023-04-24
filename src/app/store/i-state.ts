@@ -24,6 +24,7 @@ export interface IState {
         queue: PortCommandTask[],
         totalTasksExecuted: number,
         lastTaskExecutionTime: number,
+        maxQueueLength: number,
         lastExecutedTasks: EntityState<PortCommandTask>
     },
     bluetoothAvailability: {
@@ -65,7 +66,7 @@ export type HubConfiguration = {
     hubId: string;
     name: string;
     batteryLevel: number | null;
-    rssiLevel: number | null;
+    RSSI: number | null;
     hubType: HubType;
     isButtonPressed: boolean;
 }

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, fromEvent, map, mergeMap, of, takeUntil, tap } from 'rxjs';
+import { catchError, fromEvent, interval, map, mergeMap, of, startWith, switchMap, takeUntil, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HubStorageService } from '../hub-storage.service';
 import { HUBS_ACTIONS } from '../actions';
@@ -48,8 +48,10 @@ export class HubsEffects {
     public listenToBatteryLevelOnConnect$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.connected),
-            mergeMap((a) => this.hubStorage.get(a.hubId).properties.batteryLevel$.pipe(
+            mergeMap((a) => interval(this.hubBatteryPollInterval).pipe(
+                startWith(0),
                 takeUntil(this.hubStorage.get(a.hubId).beforeDisconnect$),
+                switchMap(() => this.hubStorage.get(a.hubId).properties.getPropertyValue$(HubProperty.batteryVoltage)),
                 map((message) => HUBS_ACTIONS.batteryLevelReceived({ hubId: a.hubId, batteryLevel: message.level }))
             ))
         );
@@ -58,9 +60,11 @@ export class HubsEffects {
     public listenToRssiLevelOnConnect$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.connected),
-            mergeMap((a) => this.hubStorage.get(a.hubId).properties.rssiLevel$.pipe(
+            mergeMap((a) => interval(this.hubRSSIPollInterval).pipe(
+                startWith(0),
                 takeUntil(this.hubStorage.get(a.hubId).beforeDisconnect$),
-                map((message) => HUBS_ACTIONS.rssiLevelReceived({ hubId: a.hubId, rssiLevel: message.level }))
+                switchMap(() => this.hubStorage.get(a.hubId).properties.getPropertyValue$(HubProperty.RSSI)),
+                map((message) => HUBS_ACTIONS.rssiLevelReceived({ hubId: a.hubId, RSSI: message.level }))
             ))
         );
     });
@@ -102,6 +106,10 @@ export class HubsEffects {
             ))
         );
     });
+
+    private readonly hubBatteryPollInterval = 20000; // TODO: move to config
+
+    private readonly hubRSSIPollInterval = 5000; // TODO: move to config
 
     constructor(
         private readonly actions$: Actions,

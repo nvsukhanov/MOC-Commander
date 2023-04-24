@@ -20,7 +20,7 @@
         <ng-template #batteryLevelUnknown>
             <p>{{ 'hubBatteryLevelUnknown' | transloco }}</p>
         </ng-template>
-        <p *ngIf="hub.rssiLevel !== null; else rssiLevelUnknown">
+        <p *ngIf="hub.RSSI !== null; else rssiLevelUnknown">
             {{ 'hubRSSILevel' | transloco: hub }}
         </p>
         <ng-template #rssiLevelUnknown>

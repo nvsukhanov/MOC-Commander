@@ -33,6 +33,7 @@ export const INITIAL_STATE: IState = {
         queue: [],
         totalTasksExecuted: 0,
         lastTaskExecutionTime: 0,
+        maxQueueLength: 0,
         lastExecutedTasks: LAST_EXECUTED_TASKS_ENTITY_ADAPTER.getInitialState()
     },
     bluetoothAvailability: {

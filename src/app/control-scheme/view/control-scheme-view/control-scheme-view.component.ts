@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { bufferCount, EMPTY, map, max, Observable, switchMap } from 'rxjs';
+import { bufferCount, EMPTY, map, Observable, switchMap } from 'rxjs';
 import {
     CanRunSchemeResult,
     CONTROL_SCHEME_ACTIONS,
@@ -47,16 +47,10 @@ export class ControlSchemeViewComponent {
 
     public readonly queueLength$ = this.store.select(HUB_PORT_TASKS_SELECTORS.selectQueueLength);
 
-    public readonly maxQueueLength$ = this.store.select(HUB_PORT_TASKS_SELECTORS.selectQueueLength).pipe(
-        max()
-    );
+    public readonly maxQueueLength$ = this.store.select(HUB_PORT_TASKS_SELECTORS.selectMaxQueueLength);
 
-    public readonly maxTaskExecutionTime$ = this.store.select(HUB_PORT_TASKS_SELECTORS.lastTaskExecutionTime).pipe(
-        max()
-    );
-
-    public readonly lastFiveTaskAverageExecutionTime$ = this.store.select(HUB_PORT_TASKS_SELECTORS.lastTaskExecutionTime).pipe(
-        bufferCount(5, 1),
+    public readonly lastTenTaskAverageExecutionTime$ = this.store.select(HUB_PORT_TASKS_SELECTORS.lastTaskExecutionTime).pipe(
+        bufferCount(10, 1),
         // eslint-disable-next-line @ngrx/avoid-mapping-selectors
         map((v) => v.reduce((acc, val) => acc + val, 0) / 5)
     );

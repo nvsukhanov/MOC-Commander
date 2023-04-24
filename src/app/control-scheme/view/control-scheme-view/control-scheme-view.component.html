@@ -7,13 +7,10 @@
         Max queue length: {{ maxQueueLength$ | ngrxPush }}
     </div>
     <div>
-        Max task execution time: {{ maxTaskExecutionTime$ | ngrxPush }}ms
-    </div>
-    <div>
         Total tasks executed: {{ totalTasksExecuted$ | ngrxPush }}
     </div>
     <div>
-        Last five tasks average task execution time: {{ lastFiveTaskAverageExecutionTime$ | ngrxPush }}ms
+        Last 10 tasks average task execution time: {{ lastTenTaskAverageExecutionTime$ | ngrxPush }}ms
     </div>
 
     <mat-card>

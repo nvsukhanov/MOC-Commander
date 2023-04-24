@@ -10,7 +10,7 @@ export type HubPropertyBatteryInboundMessage = {
 } & HubPropertyBaseInboundMessage;
 
 export type HubPropertyRssiInboundMessage = {
-    propertyType: HubProperty.rssi;
+    propertyType: HubProperty.RSSI;
     level: number;
 } & HubPropertyBaseInboundMessage;
 
