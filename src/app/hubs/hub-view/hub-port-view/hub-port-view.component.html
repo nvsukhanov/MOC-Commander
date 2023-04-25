@@ -1,7 +1,7 @@
 <mat-card *ngIf="io">
     <mat-card-header>
         <mat-card-subtitle>{{ 'hubPort' | transloco: io }}</mat-card-subtitle>
-        <mat-card-title>{{ io.ioType | ioTypeToI18nKey | transloco }}</mat-card-title>
+        <mat-card-title>{{ io.ioType | ioTypeToL10nKey | transloco }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <p>

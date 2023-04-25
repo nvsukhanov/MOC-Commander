@@ -2,6 +2,13 @@ import { Injectable } from '@angular/core';
 import { HUB_PORT_TASKS_ACTIONS } from '../actions/hub-port-tasks.actions';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { animationFrames, combineLatest, EMPTY, exhaustMap, filter, map, Observable, of, switchMap } from 'rxjs';
+import { CONTROL_SCHEME_SELECTORS, HUB_PORT_TASKS_SELECTORS } from '../selectors';
+import { Action, Store } from '@ngrx/store';
+import { CONTROL_SCHEME_ACTIONS } from '../actions';
+import { HubStorageService } from '../hub-storage.service';
+import { lastExecutedTaskIdFn } from '../entity-adapters';
+import { Dictionary } from '@ngrx/entity';
+import { PortCommandTask } from '../../types';
 import {
     IPortCommandTaskComposer,
     ITaskExecutor,
@@ -10,15 +17,8 @@ import {
     TaskExecutorFactoryService,
     TaskQueueCompressor,
     TaskQueueCompressorFactoryService,
-    TaskSuppressorFactory,
-} from '../../control-scheme';
-import { CONTROL_SCHEME_SELECTORS, HUB_PORT_TASKS_SELECTORS } from '../selectors';
-import { Action, Store } from '@ngrx/store';
-import { CONTROL_SCHEME_ACTIONS } from '../actions';
-import { HubStorageService } from '../hub-storage.service';
-import { lastExecutedTaskIdFn } from '../entity-adapters';
-import { Dictionary } from '@ngrx/entity';
-import { PortCommandTask } from '../../types';
+    TaskSuppressorFactory
+} from '../../tasks-processing';
 
 @Injectable()
 export class HubPortTasksEffects {

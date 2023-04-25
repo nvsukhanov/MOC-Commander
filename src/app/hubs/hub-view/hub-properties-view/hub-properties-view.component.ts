@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { HubConfiguration } from '../../store';
+import { HubConfiguration } from '../../../store';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { HUB_TYPE_TO_L10N_MAPPING } from '../../mappings';
+import { HUB_TYPE_TO_L10N_MAPPING } from '../../../mappings';
 
 @Component({
     standalone: true,

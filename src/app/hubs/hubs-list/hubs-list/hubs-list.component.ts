@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
-import { BLUETOOTH_AVAILABILITY_SELECTORS, HUBS_ACTIONS, HUBS_SELECTORS } from '../../store';
+import { BLUETOOTH_AVAILABILITY_SELECTORS, HUBS_ACTIONS, HUBS_SELECTORS } from '../../../store';
 import { MatListModule } from '@angular/material/list';
 import { LetModule, PushModule } from '@ngrx/component';
 import { JsonPipe, NgForOf, NgIf } from '@angular/common';

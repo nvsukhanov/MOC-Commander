@@ -6,7 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { KeyValuePipe, NgForOf, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { MatOptionModule } from '@angular/material/core';
 import { TranslocoModule } from '@ngneat/transloco';
-import { GAMEPAD_SELECTORS, GamepadConfig } from '../../store';
+import { GAMEPAD_SELECTORS, GamepadConfig } from '../../../store';
 import { Store } from '@ngrx/store';
 import { MatIconModule } from '@angular/material/icon';
 import { LetModule, PushModule } from '@ngrx/component';

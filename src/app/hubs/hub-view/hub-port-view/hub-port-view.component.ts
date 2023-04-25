@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { AttachedIO } from '../../store';
+import { AttachedIO } from '../../../store';
 import { MatCardModule } from '@angular/material/card';
 import { NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { IOTypeToI18nKey } from '../io-type-to-i18b-key.pipe';
+import { IoTypeToL10nKeyPipe } from '../../../mappings';
 
 @Component({
     standalone: true,
@@ -14,7 +14,7 @@ import { IOTypeToI18nKey } from '../io-type-to-i18b-key.pipe';
         MatCardModule,
         NgIf,
         TranslocoModule,
-        IOTypeToI18nKey,
+        IoTypeToL10nKeyPipe,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

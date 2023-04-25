@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AttachedIO, HUB_ATTACHED_IO_SELECTORS, HubConfiguration, HUBS_ACTIONS, HUBS_SELECTORS, ROUTER_SELECTORS } from '../../store';
+import { AttachedIO, HUB_ATTACHED_IO_SELECTORS, HubConfiguration, HUBS_ACTIONS, HUBS_SELECTORS, ROUTER_SELECTORS } from '../../../store';
 import { Store } from '@ngrx/store';
 import { LetModule, PushModule } from '@ngrx/component';
 import { EMPTY, Observable, switchMap, take } from 'rxjs';
@@ -12,7 +12,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { TranslocoModule } from '@ngneat/transloco';
 import { HubPropertiesViewComponent } from '../hub-properties-view';
 import { HubPortViewComponent } from '../hub-port-view';
-import { NotFoundComponent } from '../../main';
+import { NotFoundComponent } from '../../../not-found';
 
 @Component({
     standalone: true,

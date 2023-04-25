@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
-import { EmptyViewComponent, NotFoundComponent } from './main';
+import { EmptyViewComponent } from './main';
 import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
 import { CONFIGURE_CONTROLLER_I18N_SCOPE, GAMEPAD_PLUGINS_I18N_SCOPE, HUB_IO_I18N_SCOPE } from './i18n';
+import { NotFoundComponent } from './not-found';
 
 export const HUB_VIEW_ROUTE = 'hub';
 export const CONTROL_SCHEME_ROUTE = 'control-scheme';
@@ -21,7 +22,7 @@ export const ROUTES: Routes = [
     },
     {
         path: [ HUB_VIEW_ROUTE, ':id' ].join('/'),
-        loadComponent: () => import('./hub-view/hub-view').then(m => m.HubViewComponent),
+        loadComponent: () => import('./hubs').then(m => m.HubViewComponent),
         providers: [
             { provide: TRANSLOCO_SCOPE, useValue: HUB_IO_I18N_SCOPE, multi: true },
         ]

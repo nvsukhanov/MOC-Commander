@@ -5,7 +5,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
 import { MatLineModule } from '@angular/material/core';
 import { RouterLink } from '@angular/router';
-import { HUB_VIEW_ROUTE } from '../../routes';
+import { HUB_VIEW_ROUTE } from '../../../routes';
 
 @Component({
     standalone: true,
