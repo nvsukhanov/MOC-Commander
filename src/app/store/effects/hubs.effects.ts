@@ -4,10 +4,18 @@ import { catchError, from, fromEvent, interval, map, mergeMap, Observable, of, s
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HubStorageService } from '../hub-storage.service';
 import { HUBS_ACTIONS } from '../actions';
-import { HubDiscoveryService, HubFactoryService, HubProperty, LpuConnectionError, LpuConnectionErrorFactoryService } from '../../lego-hub';
+import {
+    HubDiscoveryService,
+    HubFactoryService,
+    HubProperty,
+    LoggingMiddlewareFactoryService,
+    LpuConnectionError,
+    LpuConnectionErrorFactoryService
+} from '../../lego-hub';
 import { WINDOW } from '../../types';
 import { Action } from '@ngrx/store';
 import { TranslocoService } from '@ngneat/transloco';
+import { ConsoleLoggingService } from '../../logging';
 
 @Injectable()
 export class HubsEffects {
@@ -106,16 +114,32 @@ export class HubsEffects {
         private readonly hubStorage: HubStorageService,
         private readonly translocoService: TranslocoService,
         private readonly lpuConnectionErrorFactory: LpuConnectionErrorFactoryService,
+        private readonly logger: ConsoleLoggingService,
+        private readonly loggingMiddlewareFactory: LoggingMiddlewareFactoryService,
         @Inject(WINDOW) private readonly window: Window
     ) {
     }
 
     private hubDiscovery$(): Observable<Action> {
         return from(this.hubDiscovery.discoverHub()).pipe(
-            switchMap((device) => this.hubFactoryService.connectToHub(
-                device,
-                fromEvent(this.window, 'beforeunload')
-            )),
+            switchMap((device) => {
+                const incomingLoggerMiddleware = this.loggingMiddlewareFactory.create(
+                    this.logger,
+                    `[${device.name}] Incoming`,
+                    'all'
+                );
+                const outgoingLoggerMiddleware = this.loggingMiddlewareFactory.create(
+                    this.logger,
+                    `[${device.name}] Outgoing`,
+                    'all'
+                );
+                return this.hubFactoryService.connectToHub(
+                    device,
+                    fromEvent(this.window, 'beforeunload'),
+                    [ incomingLoggerMiddleware ],
+                    [ outgoingLoggerMiddleware ]
+                );
+            }),
             switchMap((hub) => hub.properties.getPropertyValue$(HubProperty.primaryMacAddress).pipe(
                 catchError((e: unknown) => hub.disconnect().pipe(switchMap(() => throwError(() => e)))),
                 tap((macAddressReply) => this.hubStorage.store(hub, macAddressReply.macAddress)),

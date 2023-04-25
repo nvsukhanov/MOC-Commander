@@ -1,23 +1,16 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { OutboundMessenger } from './outbound-messenger';
-import { ILogger } from '../../logging';
-import { ILegoHubConfig, LEGO_HUB_CONFIG } from '../i-lego-hub-config';
+import { IMessageMiddleware } from '../i-message-middleware';
 
 @Injectable()
 export class OutboundMessengerFactoryService {
-    constructor(
-        @Inject(LEGO_HUB_CONFIG) private readonly config: ILegoHubConfig,
-    ) {
-    }
-
     public create(
         characteristic: BluetoothRemoteGATTCharacteristic,
-        logger: ILogger
+        messageMiddleware: IMessageMiddleware[]
     ): OutboundMessenger {
         return new OutboundMessenger(
             characteristic,
-            logger,
-            this.config
+            messageMiddleware
         );
     }
 }

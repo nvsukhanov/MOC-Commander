@@ -8,6 +8,7 @@ import { ILegoHubConfig, LEGO_HUB_CONFIG } from './i-lego-hub-config';
 import { LpuConnectionErrorFactoryService } from './errors';
 import { HubLoggerFactoryService } from './logging';
 import { ILogger } from '../logging';
+import { IMessageMiddleware } from './i-message-middleware';
 
 export type BluetoothDeviceWithGatt = Omit<BluetoothDevice, 'gatt'> & {
     readonly gatt: BluetoothRemoteGATTServer;
@@ -31,7 +32,9 @@ export class HubFactoryService {
 
     public async connectToHub(
         device: BluetoothDeviceWithGatt,
-        externalDisconnectEvents$: Observable<unknown> = NEVER
+        externalDisconnectEvents$: Observable<unknown> = NEVER,
+        incomingMessageMiddleware: IMessageMiddleware[] = [],
+        outgoingMessageMiddleware: IMessageMiddleware[] = []
     ): Promise<Hub> {
         const hubLogger = this.hubLoggerFactory.createHubLogger(device.name ?? device.id);
         hubLogger.debug('Connecting to GATT server');
@@ -43,7 +46,14 @@ export class HubFactoryService {
             hubLogger.debug('Got primary service');
             primaryCharacteristic = await primaryService.getCharacteristic(HUB_CHARACTERISTIC_UUID);
             hubLogger.debug('Got primary characteristic');
-            return await this.createHub(hubLogger, primaryCharacteristic, device, externalDisconnectEvents$);
+            return await this.createHub(
+                hubLogger,
+                primaryCharacteristic,
+                device,
+                incomingMessageMiddleware,
+                outgoingMessageMiddleware,
+                externalDisconnectEvents$
+            );
         } catch (e) {
             if (e instanceof Error) {
                 hubLogger.debug('Disconnecting from gatt due to error');
@@ -58,6 +68,8 @@ export class HubFactoryService {
         hubLogger: ILogger,
         primaryCharacteristic: BluetoothRemoteGATTCharacteristic,
         device: BluetoothDeviceWithGatt,
+        incomingMessageMiddleware: IMessageMiddleware[],
+        outgoingMessageMiddleware: IMessageMiddleware[],
         externalDisconnectEvents$: Observable<unknown> = NEVER
     ): Promise<Hub> {
         const gattDisconnected$ = fromEvent(device, this.gattServerDisconnectEventName).pipe(
@@ -68,8 +80,8 @@ export class HubFactoryService {
 
         const beforeDisconnect$ = new Subject<void>();
 
-        const messenger = this.outboundMessengerFactoryService.create(primaryCharacteristic, hubLogger);
-        const dataStream = this.characteristicsDataStreamFactoryService.create(primaryCharacteristic, hubLogger);
+        const messenger = this.outboundMessengerFactoryService.create(primaryCharacteristic, outgoingMessageMiddleware);
+        const dataStream = this.characteristicsDataStreamFactoryService.create(primaryCharacteristic, incomingMessageMiddleware);
 
         const ioFeature = this.ioFeatureFactoryService.create(
             dataStream,

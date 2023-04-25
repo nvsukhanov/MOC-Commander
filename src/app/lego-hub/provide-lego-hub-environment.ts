@@ -22,7 +22,7 @@ import { AttachedIoRepliesCacheFactoryService, HubPropertiesFeatureFactoryServic
 import { ILegoHubConfig, LEGO_HUB_CONFIG, mergeConfig } from './i-lego-hub-config';
 import { HubLoggerFactoryService } from './logging';
 
-export function provideLegoHubEnvironment(config: Partial<ILegoHubConfig>): EnvironmentProviders {
+export function provideLegoHubEnvironment(config: Partial<ILegoHubConfig> = {}): EnvironmentProviders {
     return makeEnvironmentProviders([
         [
             HubDiscoveryService,

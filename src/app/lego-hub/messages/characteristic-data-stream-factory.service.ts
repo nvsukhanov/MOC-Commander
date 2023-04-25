@@ -1,55 +1,29 @@
-import { EMPTY, fromEvent, map, Observable, of, share, switchMap, tap } from 'rxjs';
-import { Inject, Injectable } from '@angular/core';
+import { EMPTY, fromEvent, map, Observable, of, share, switchMap } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { InboundMessageDissectorService, RawMessage } from './index';
 import { MessageType } from '../constants';
-import { ILogger } from '../../logging';
-import { ILegoHubConfig, LEGO_HUB_CONFIG } from '../i-lego-hub-config';
+import { IMessageMiddleware } from '../i-message-middleware';
 
 @Injectable()
 export class CharacteristicDataStreamFactoryService {
     private readonly characteristicValueChangedEventName = 'characteristicvaluechanged';
 
-    private readonly dumpMessageTypesSet: ReadonlySet<MessageType>;
-
     constructor(
         private readonly dissector: InboundMessageDissectorService,
-        @Inject(LEGO_HUB_CONFIG) private readonly config: ILegoHubConfig,
     ) {
-        this.dumpMessageTypesSet = new Set(this.config.dumpIncomingMessageType === 'all'
-                                           ? []
-                                           : this.config.dumpIncomingMessageType
-        );
     }
 
     public create(
         characteristic: BluetoothRemoteGATTCharacteristic,
-        logger: ILogger
+        messageMiddleware: IMessageMiddleware[]
     ): Observable<RawMessage<MessageType>> {
         return fromEvent(characteristic, this.characteristicValueChangedEventName).pipe(
             map((e) => this.getValueFromEvent(e)),
             switchMap((value) => value ? of(value) : EMPTY),
-            map((rawMessage) => this.dissector.dissect(rawMessage)),
-            tap((message) => {
-                if (this.config.dumpIncomingMessageType === 'all' || this.dumpMessageTypesSet.has(message.header.messageType)) {
-                    const messageData = this.formatMessageForDump(message);
-                    logger.debug(
-                        `Recieved message of type '${messageData.messageType}'`,
-                        `with payload ${messageData.payload}`
-                    );
-                }
-            }),
+            map((uint8Message) => this.dissector.dissect(uint8Message)),
+            map((message) => messageMiddleware.reduce((acc, middleware) => middleware.handle(acc), message)),
             share()
         );
-    }
-
-    private formatMessageForDump(message: RawMessage<MessageType>): { messageType: string, payload: string } { // TODO: deduplicate code
-        const messageType = `${this.numberToHex(message.header.messageType)} (${MessageType[message.header.messageType]})`;
-        const payload = [ ...message.payload ].map((v) => this.numberToHex(v)).join(' ');
-        return { messageType, payload };
-    }
-
-    private numberToHex(number: number): string { // TODO: deduplicate code
-        return `0x${number.toString(16).padStart(2, '0')}`;
     }
 
     private getValueFromEvent(event: Event): null | Uint8Array {
