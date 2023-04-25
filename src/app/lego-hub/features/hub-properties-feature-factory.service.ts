@@ -10,6 +10,7 @@ import {
 import { Observable } from 'rxjs';
 import { MessageType } from '../constants';
 import { HubPropertiesFeature } from './hub-properties-feature';
+import { LpuConnectionErrorFactoryService } from '../errors';
 
 @Injectable()
 export class HubPropertiesFeatureFactoryService {
@@ -17,6 +18,7 @@ export class HubPropertiesFeatureFactoryService {
         private readonly featureMessageProviderFactoryService: InboundMessageListenerFactoryService,
         private readonly replyParserService: HubPropertiesReplyParserService,
         private readonly messageFactoryService: HubPropertiesOutboundMessageFactoryService,
+        private readonly errorsFactory: LpuConnectionErrorFactoryService
     ) {
     }
 
@@ -36,6 +38,7 @@ export class HubPropertiesFeatureFactoryService {
             messenger,
             logger,
             repliesProvider,
+            this.errorsFactory
         );
     }
 }

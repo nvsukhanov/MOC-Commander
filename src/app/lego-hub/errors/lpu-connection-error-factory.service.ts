@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
 import { LpuConnectionError } from './lpu-connection-error';
+import { HubProperty } from '../constants';
 
 @Injectable()
 export class LpuConnectionErrorFactoryService {
     public createConnectionError(): LpuConnectionError {
         return new LpuConnectionError('Hub connection error', 'hubConnectionError');
+    }
+
+    public createUnableToGetPropertyError(property: HubProperty): LpuConnectionError {
+        return new LpuConnectionError('Unable to get primary MAC address', 'hubErrorUnableToGetProperty', { property: HubProperty[property] });
     }
 
     public createGattUnavailableError(): LpuConnectionError {
