@@ -1,7 +1,8 @@
-import { filter, from, map, Observable, share, switchMap, tap } from 'rxjs';
+import { catchError, filter, from, map, Observable, share, switchMap, take, tap, timeout } from 'rxjs';
 import { HubProperty, MessageType, SubscribableHubProperties } from '../constants';
 import { HubPropertiesOutboundMessageFactoryService, HubPropertyInboundMessage, InboundMessageListener, OutboundMessenger } from '../messages';
 import { ILogger } from '../../logging';
+import { LpuConnectionErrorFactoryService } from '../errors';
 
 export class HubPropertiesFeature {
     public batteryLevel$ = this.createPropertyStream(HubProperty.batteryVoltage);
@@ -12,11 +13,16 @@ export class HubPropertiesFeature {
 
     private readonly characteristicUnsubscribeHandlers = new Map<SubscribableHubProperties, () => Promise<void>>();
 
+    private readonly maxGetPropertyRetries = 5;
+
+    private readonly propertyRequestTimeoutMs = 500;
+
     constructor(
         private readonly messageFactoryService: HubPropertiesOutboundMessageFactoryService,
         private readonly messenger: OutboundMessenger,
         private readonly logging: ILogger,
-        private readonly messageListener: InboundMessageListener<MessageType.properties>
+        private readonly messageListener: InboundMessageListener<MessageType.properties>,
+        private readonly errorsFactory: LpuConnectionErrorFactoryService
     ) {
     }
 
@@ -27,12 +33,7 @@ export class HubPropertiesFeature {
     }
 
     public getPropertyValue$<T extends HubProperty>(property: T): Observable<HubPropertyInboundMessage & { propertyType: T }> {
-        const message = this.messageFactoryService.requestPropertyUpdate(property);
-        this.messenger.send(message);
-        return this.messageListener.replies$.pipe(
-            filter((reply) => reply.propertyType === property),
-            map((reply) => reply as HubPropertyInboundMessage & { propertyType: T })
-        );
+        return this.getPropertyValueWithRetries$(property, 0);
     }
 
     private async sendSubscribeMessage(
@@ -42,7 +43,7 @@ export class HubPropertiesFeature {
             return;
         }
         const message = this.messageFactoryService.createSubscriptionMessage(property);
-        await this.messenger.send(message);
+        this.messenger.send(message);
         this.characteristicUnsubscribeHandlers.set(property, async (): Promise<void> => {
             this.messageFactoryService.createUnsubscriptionMessage(property);
             await this.messenger.send(message);
@@ -71,6 +72,32 @@ export class HubPropertiesFeature {
             };
         }).pipe(
             share()
+        );
+    }
+
+    private getPropertyValueWithRetries$<T extends HubProperty>(
+        property: T,
+        attempt: number
+    ): Observable<HubPropertyInboundMessage & { propertyType: T }> {
+        if (attempt > this.maxGetPropertyRetries) {
+            throw this.errorsFactory.createUnableToGetPropertyError(property);
+        }
+        return new Observable<HubPropertyInboundMessage & { propertyType: T }>((subscriber) => {
+            const sub = this.messageListener.replies$.pipe(
+                filter((reply) => reply.propertyType === property),
+                map((reply) => reply as HubPropertyInboundMessage & { propertyType: T }),
+                take(1)
+            ).subscribe((v) => {
+                subscriber.next(v);
+                subscriber.complete();
+            });
+
+            const message = this.messageFactoryService.requestPropertyUpdate(property);
+            this.messenger.send(message);
+            return () => sub.unsubscribe();
+        }).pipe(
+            timeout(this.propertyRequestTimeoutMs),
+            catchError(() => this.getPropertyValueWithRetries$(property, attempt + 1))
         );
     }
 }

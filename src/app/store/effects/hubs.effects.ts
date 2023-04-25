@@ -1,34 +1,20 @@
 import { Inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, fromEvent, interval, map, mergeMap, of, startWith, switchMap, takeUntil, tap } from 'rxjs';
+import { catchError, from, fromEvent, interval, map, mergeMap, Observable, of, startWith, switchMap, takeUntil, tap, throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HubStorageService } from '../hub-storage.service';
 import { HUBS_ACTIONS } from '../actions';
-import { HubDiscoveryService, HubProperty } from '../../lego-hub';
-import { HubFactoryService } from '../../lego-hub/hub-factory.service';
+import { HubDiscoveryService, HubFactoryService, HubProperty, LpuConnectionError, LpuConnectionErrorFactoryService } from '../../lego-hub';
 import { WINDOW } from '../../types';
-import { LpuConnectionError } from '../../lego-hub/errors';
+import { Action } from '@ngrx/store';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Injectable()
 export class HubsEffects {
     public readonly startListening$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.startDiscovery),
-            mergeMap(async () => {
-                const device = await this.hubDiscovery.discoverHub();
-                const hub = await this.hubFactoryService.createHub(
-                    device,
-                    fromEvent(this.window, 'beforeunload')
-                );
-                this.hubStorage.store(hub);
-                return HUBS_ACTIONS.connected({ hubId: hub.id, name: hub.name ?? '' });
-            }),
-            catchError((error: unknown) => {
-                if (error instanceof LpuConnectionError) {
-                    return of(HUBS_ACTIONS.deviceConnectFailed({ error }));
-                }
-                return of(HUBS_ACTIONS.deviceConnectFailed({ error: new LpuConnectionError('Unknown error', 'unknownHubConnectionError') }));
-            })
+            mergeMap(() => this.hubDiscovery$())
         );
     });
 
@@ -82,7 +68,8 @@ export class HubsEffects {
     public readonly deviceConnectFailedNotification$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.deviceConnectFailed),
-            tap((e) => this.snackBar.open(e.error.l10nKey))
+            switchMap((e) => this.translocoService.selectTranslate(e.error.l10nKey, e.error.translationParams)),
+            tap((message) => this.snackBar.open(message, 'OK', { duration: 5000 }))
         );
     }, { dispatch: false });
 
@@ -117,7 +104,29 @@ export class HubsEffects {
         private readonly hubDiscovery: HubDiscoveryService,
         private readonly hubFactoryService: HubFactoryService,
         private readonly hubStorage: HubStorageService,
+        private readonly translocoService: TranslocoService,
+        private readonly lpuConnectionErrorFactory: LpuConnectionErrorFactoryService,
         @Inject(WINDOW) private readonly window: Window
     ) {
+    }
+
+    private hubDiscovery$(): Observable<Action> {
+        return from(this.hubDiscovery.discoverHub()).pipe(
+            switchMap((device) => this.hubFactoryService.connectToHub(
+                device,
+                fromEvent(this.window, 'beforeunload')
+            )),
+            switchMap((hub) => hub.properties.getPropertyValue$(HubProperty.primaryMacAddress).pipe(
+                catchError((e: unknown) => hub.disconnect().pipe(switchMap(() => throwError(() => e)))),
+                tap((macAddressReply) => this.hubStorage.store(hub, macAddressReply.macAddress)),
+                map((macAddressReply) => HUBS_ACTIONS.connected({ hubId: macAddressReply.macAddress, name: hub.name ?? '' })),
+            )),
+            catchError((error: unknown) => {
+                if (error instanceof LpuConnectionError) {
+                    return of(HUBS_ACTIONS.deviceConnectFailed({ error }));
+                }
+                return of(HUBS_ACTIONS.deviceConnectFailed({ error: this.lpuConnectionErrorFactory.createConnectionError() }));
+            })
+        );
     }
 }

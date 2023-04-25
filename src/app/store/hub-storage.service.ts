@@ -11,12 +11,12 @@ export class HubStorageService {
     ) {
     }
 
-    public store(hub: Hub): void {
-        if (this.hubsMap.has(hub.id)) {
-            throw new Error(`Hub with id=${hub.id} is already registered`);
+    public store(hub: Hub, id: string): void {
+        if (this.hubsMap.has(id)) {
+            throw new Error(`Hub with id=${id} is already registered`);
         }
-        this.logger.debug(`[HubStorage] Storing hub`, hub.id);
-        this.hubsMap.set(hub.id, hub);
+        this.logger.debug(`[HubStorage] Storing hub`, id);
+        this.hubsMap.set(id, hub);
     }
 
     public get(id: string): Hub {

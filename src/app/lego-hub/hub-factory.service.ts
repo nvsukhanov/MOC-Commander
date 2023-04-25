@@ -1,12 +1,13 @@
 import { Inject, Injectable } from '@angular/core';
 import { Hub } from './hub';
-import { firstValueFrom, from, fromEvent, map, NEVER, Observable, shareReplay, Subject, take, takeUntil, tap } from 'rxjs';
+import { from, fromEvent, map, NEVER, Observable, shareReplay, Subject, take, takeUntil, tap } from 'rxjs';
 import { CharacteristicDataStreamFactoryService, OutboundMessengerFactoryService } from './messages';
 import { HubPropertiesFeatureFactoryService, IoFeatureFactoryService, MotorFeatureFactoryService } from './features';
-import { HUB_CHARACTERISTIC_UUID, HUB_SERVICE_UUID, HubProperty } from './constants';
+import { HUB_CHARACTERISTIC_UUID, HUB_SERVICE_UUID } from './constants';
 import { ILegoHubConfig, LEGO_HUB_CONFIG } from './i-lego-hub-config';
 import { LpuConnectionErrorFactoryService } from './errors';
 import { HubLoggerFactoryService } from './logging';
+import { ILogger } from '../logging';
 
 export type BluetoothDeviceWithGatt = Omit<BluetoothDevice, 'gatt'> & {
     readonly gatt: BluetoothRemoteGATTServer;
@@ -28,7 +29,7 @@ export class HubFactoryService {
     ) {
     }
 
-    public async createHub(
+    public async connectToHub(
         device: BluetoothDeviceWithGatt,
         externalDisconnectEvents$: Observable<unknown> = NEVER
     ): Promise<Hub> {
@@ -39,15 +40,26 @@ export class HubFactoryService {
         let primaryCharacteristic: BluetoothRemoteGATTCharacteristic;
         try {
             const primaryService = await gatt.getPrimaryService(HUB_SERVICE_UUID);
-            hubLogger.debug(device.id, 'Got primary service');
+            hubLogger.debug('Got primary service');
             primaryCharacteristic = await primaryService.getCharacteristic(HUB_CHARACTERISTIC_UUID);
-            hubLogger.debug(device.id, 'Got primary characteristic');
+            hubLogger.debug('Got primary characteristic');
+            return await this.createHub(hubLogger, primaryCharacteristic, device, externalDisconnectEvents$);
         } catch (e) {
-            hubLogger.debug(device.id, 'Disconnecting from gatt due to error', e);
+            if (e instanceof Error) {
+                hubLogger.debug('Disconnecting from gatt due to error');
+                hubLogger.error(e);
+            }
             gatt.disconnect();
             throw this.lpuConnectionErrorFactoryService.createConnectionError();
         }
+    }
 
+    private async createHub(
+        hubLogger: ILogger,
+        primaryCharacteristic: BluetoothRemoteGATTCharacteristic,
+        device: BluetoothDeviceWithGatt,
+        externalDisconnectEvents$: Observable<unknown> = NEVER
+    ): Promise<Hub> {
         const gattDisconnected$ = fromEvent(device, this.gattServerDisconnectEventName).pipe(
             tap(() => hubLogger.debug('GATT server disconnected')),
             map(() => void 0),
@@ -77,9 +89,7 @@ export class HubFactoryService {
         );
 
         await primaryCharacteristic.startNotifications();
-        hubLogger.debug(device.id, 'Started primary characteristic notifications');
-
-        const hubPrimaryMacReply = await firstValueFrom(propertiesFeature.getPropertyValue$(HubProperty.primaryMacAddress));
+        hubLogger.debug('Started primary characteristic notifications');
 
         const hubDisconnectMethod: () => Observable<void> = () => {
             hubLogger.debug('Disconnection invoked');
@@ -88,7 +98,7 @@ export class HubFactoryService {
                 map(() => void 0),
                 tap(() => {
                     hubLogger.debug('Stopped primary characteristic notifications');
-                    gatt.disconnect();
+                    device.gatt.disconnect();
                     hubLogger.debug('Disconnected from GATT server');
                 }),
                 take(1)
@@ -105,7 +115,7 @@ export class HubFactoryService {
         });
 
         return new Hub(
-            hubPrimaryMacReply.macAddress,
+            device.id,
             device.name,
             propertiesFeature,
             ioFeature,

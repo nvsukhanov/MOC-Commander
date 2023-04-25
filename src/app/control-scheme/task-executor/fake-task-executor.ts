@@ -11,7 +11,7 @@ export class FakeTaskExecutor implements ITaskExecutor {
     }
 
     public executeTask(task: PortCommandTask, hub: Hub): Promise<void> {
-        this.logger.debug('Executing task', JSON.stringify(task), 'on hub', hub.id);
+        this.logger.debug('Executing task', JSON.stringify(task), 'on hub', hub.name);
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve();
