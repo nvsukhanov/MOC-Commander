@@ -8,9 +8,8 @@ import { LoggingMiddleware } from './logging-middleware';
 export class LoggingMiddlewareFactoryService {
     public create(
         logger: ILogger,
-        prefix: string,
         logMessageTypes: MessageType[] | 'all' = 'all'
     ): IMessageMiddleware {
-        return new LoggingMiddleware(logger, prefix, logMessageTypes);
+        return new LoggingMiddleware(logger, logMessageTypes);
     }
 }

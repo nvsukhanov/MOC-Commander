@@ -8,7 +8,6 @@ export class LoggingMiddleware implements IMessageMiddleware {
 
     constructor(
         private readonly logger: ILogger,
-        private readonly prefix: string,
         private readonly logMessageTypes: MessageType[] | 'all'
     ) {
         this.logMessageTypesSet = new Set(logMessageTypes === 'all' ? [] : logMessageTypes);
@@ -18,7 +17,6 @@ export class LoggingMiddleware implements IMessageMiddleware {
         if (this.logMessageTypes === 'all' || this.logMessageTypesSet.has(message.header.messageType)) {
             const messageData = this.formatMessageForDump(message);
             this.logger.debug(
-                this.prefix,
                 `message type '${messageData.messageType}',`,
                 `payload ${messageData.payload}`
             );
