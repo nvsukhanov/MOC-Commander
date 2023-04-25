@@ -3,12 +3,12 @@ import { Store } from '@ngrx/store';
 import { GAMEPAD_ACTIONS } from '../../store';
 import { LetModule, PushModule } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
-import { ControllersListComponent } from '../../controllers';
+import { ControllersListComponent } from '../../controllers/controllers-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterOutlet } from '@angular/router';
-import { HubsListComponent } from '../../hubs';
+import { HubsListComponent } from '../../hubs/hubs-list';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { ControlSchemeListComponent } from '../../control-scheme';
+import { ControlSchemeListComponent } from '../../control-schemes/control-scheme-list';
 
 @Component({
     standalone: true,

@@ -22,24 +22,24 @@ export const ROUTES: Routes = [
     },
     {
         path: [ HUB_VIEW_ROUTE, ':id' ].join('/'),
-        loadComponent: () => import('./hubs').then(m => m.HubViewComponent),
+        loadComponent: () => import('./hubs/hub-view').then(m => m.HubViewComponent),
         providers: [
             { provide: TRANSLOCO_SCOPE, useValue: HUB_IO_I18N_SCOPE, multi: true },
         ]
     },
     {
         path: [ CONTROL_SCHEME_ROUTE, CONTROL_SCHEME_CREATE_SUBROUTE ].join('/'),
-        loadComponent: () => import('./control-scheme/create').then(m => m.ControlSchemeCreateComponent),
+        loadComponent: () => import('./control-schemes/create').then(m => m.ControlSchemeCreateComponent),
         pathMatch: 'full',
     },
     {
         path: [ CONTROL_SCHEME_ROUTE, ':id' ].join('/'),
-        loadComponent: () => import('./control-scheme/view').then(m => m.ControlSchemeViewComponent),
+        loadComponent: () => import('./control-schemes/view').then(m => m.ControlSchemeViewComponent),
         pathMatch: 'full',
     },
     {
         path: [ CONTROL_SCHEME_ROUTE, ':id', CONTROL_SCHEME_EDIT_SUBROUTE ].join('/'),
-        loadComponent: () => import('./control-scheme/edit').then(m => m.ControlSchemeEditComponent),
+        loadComponent: () => import('./control-schemes/edit').then(m => m.ControlSchemeEditComponent),
         pathMatch: 'full'
     },
     {
