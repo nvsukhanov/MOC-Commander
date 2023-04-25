@@ -9,7 +9,7 @@ import { combineLatest, map, Observable, of, shareReplay, startWith, Subscriptio
 import { IOType } from '../../lego-hub';
 import { ControlSchemeBindingInputControl } from '../control-scheme-binding-input/control-scheme-binding-input.component';
 import { TranslocoModule } from '@ngneat/transloco';
-import { IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '../../mappings';
+import { IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '../../i18n';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 

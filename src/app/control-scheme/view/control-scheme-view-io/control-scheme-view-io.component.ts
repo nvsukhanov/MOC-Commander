@@ -5,7 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatIconModule } from '@angular/material/icon';
 import { PortCommandTask } from '../../../types';
-import { PORT_TASK_TYPE_TO_L10N } from '../../../mappings';
+import { PORT_TASK_TYPE_TO_L10N } from '../../../i18n';
 
 type LastExecutedTaskTemplateDate = {
     taskTypeL10nKey: string;

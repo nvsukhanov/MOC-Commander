@@ -3,7 +3,7 @@ import { AttachedIO } from '../../../store';
 import { MatCardModule } from '@angular/material/card';
 import { NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { IoTypeToL10nKeyPipe } from '../../../mappings';
+import { IoTypeToL10nKeyPipe } from '../../../i18n';
 
 @Component({
     standalone: true,
