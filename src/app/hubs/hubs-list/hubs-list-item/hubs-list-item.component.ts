@@ -6,6 +6,7 @@ import { NgIf } from '@angular/common';
 import { MatLineModule } from '@angular/material/core';
 import { RouterLink } from '@angular/router';
 import { HUB_ROUTE } from '../../../routes';
+import { EllipsisTitleDirective } from '../../../common';
 
 @Component({
     standalone: true,
@@ -18,7 +19,8 @@ import { HUB_ROUTE } from '../../../routes';
         TranslocoModule,
         NgIf,
         MatLineModule,
-        RouterLink
+        RouterLink,
+        EllipsisTitleDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

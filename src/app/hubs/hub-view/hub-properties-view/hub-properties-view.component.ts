@@ -8,6 +8,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { HUB_TYPE_TO_L10N_MAPPING } from '../../../i18n';
 import { HUB_EDIT_SUBROUTE } from '../../../routes';
 import { RouterLink } from '@angular/router';
+import { EllipsisTitleDirective } from '../../../common';
 
 @Component({
     standalone: true,
@@ -20,7 +21,8 @@ import { RouterLink } from '@angular/router';
         MatDividerModule,
         NgIf,
         TranslocoModule,
-        RouterLink
+        RouterLink,
+        EllipsisTitleDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -6,6 +6,7 @@ import { NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { CONTROL_SCHEME_ROUTE } from '../../routes';
 import { RouterLink } from '@angular/router';
+import { EllipsisTitleDirective } from '../../common';
 
 @Component({
     standalone: true,
@@ -19,6 +20,7 @@ import { RouterLink } from '@angular/router';
         NgIf,
         TranslocoModule,
         RouterLink,
+        EllipsisTitleDirective,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
