@@ -74,7 +74,7 @@ export class HubEditFormComponent {
     }
 
     public get hubConfiguration(): HubConfiguration | undefined {
-        return this._hubConfiguration!;
+        return this._hubConfiguration;
     }
 
     public get viewPath(): string[] {

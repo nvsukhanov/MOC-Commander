@@ -5,6 +5,10 @@
     {{ name }}
 </a>
 
+<mat-icon *ngIf="isActive"
+          [title]="'controlSchemeIsActive' | transloco">power
+</mat-icon>
+
 <button mat-icon-button
         color="accent"
         class="delete-button"

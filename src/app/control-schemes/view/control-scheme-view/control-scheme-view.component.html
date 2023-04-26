@@ -6,7 +6,8 @@
         <span class="spacer"></span>
         <mat-icon *ngIf="composeValidationErrorMessage$ | ngrxPush; let validationMessage"
                   [title]="validationMessage"
-        >question_mark
+                  [color]="'accent'"
+        >report
         </mat-icon>
         <button mat-stroked-button
                 class="toolbar-button"

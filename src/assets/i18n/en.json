@@ -30,6 +30,7 @@
   "hubIOHardwareRevision": "Hardware revision: {hardwareRevision}",
   "hubIOSoftwareRevision": "Software revision: {softwareRevision}",
   "controlSchemesList": "Control schemes",
+  "controlSchemeIsActive": "Control scheme is active",
   "noControlSchemes": "No control schemes",
   "createScheme": "Create scheme",
   "deleteScheme": "Delete scheme",
