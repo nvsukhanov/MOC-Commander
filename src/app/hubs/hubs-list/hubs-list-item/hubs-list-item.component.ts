@@ -31,6 +31,8 @@ export class HubsListItemComponent {
 
     @Input() public isButtonPressed = false;
 
+    @Input() public hasCommunication = false;
+
     @Output() public readonly disconnect = new EventEmitter<void>();
 
     private _hubViewHref: string[] = [];

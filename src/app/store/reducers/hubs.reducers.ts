@@ -12,7 +12,8 @@ export const HUBS_REDUCERS = createReducer(
             batteryLevel: null,
             RSSI: null,
             hubType: HubType.Unknown,
-            isButtonPressed: false
+            isButtonPressed: false,
+            hasCommunication: false
         }, state)),
     on(HUBS_ACTIONS.disconnected,
         HUBS_ACTIONS.userRequestedHubDisconnection,
@@ -49,5 +50,12 @@ export const HUBS_REDUCERS = createReducer(
             }
         },
         state
-    ))
+    )),
+    on(HUBS_ACTIONS.setHasCommunication, (state, data) => HUBS_ENTITY_ADAPTER.updateOne({
+            id: data.hubId,
+            changes: {
+                hasCommunication: data.hasCommunication,
+            }
+        }, state
+    )),
 );

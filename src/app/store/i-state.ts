@@ -70,6 +70,7 @@ export type HubConfiguration = {
     RSSI: number | null;
     hubType: HubType;
     isButtonPressed: boolean;
+    hasCommunication: boolean;
 }
 
 export type HubIOState = {
