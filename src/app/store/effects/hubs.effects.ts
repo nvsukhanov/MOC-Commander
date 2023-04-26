@@ -15,7 +15,7 @@ import {
 import { WINDOW } from '../../types';
 import { Action, Store } from '@ngrx/store';
 import { TranslocoService } from '@ngneat/transloco';
-import { ConsoleLoggingService } from '../../logging';
+import { PrefixedConsoleLoggerFactoryService } from '../../logging';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../hub-communication-notifier-middleware-factory.service';
 import { Router } from '@angular/router';
 import { ROUTER_SELECTORS } from '../selectors';
@@ -139,7 +139,7 @@ export class HubsEffects {
         private readonly hubStorage: HubStorageService,
         private readonly translocoService: TranslocoService,
         private readonly lpuConnectionErrorFactory: LpuConnectionErrorFactoryService,
-        private readonly logger: ConsoleLoggingService,
+        private readonly prefixedConsoleLoggerFactoryService: PrefixedConsoleLoggerFactoryService,
         private readonly loggingMiddlewareFactory: LoggingMiddlewareFactoryService,
         private readonly communicationNotifierMiddlewareFactory: HubCommunicationNotifierMiddlewareFactoryService,
         @Inject(WINDOW) private readonly window: Window
@@ -150,13 +150,11 @@ export class HubsEffects {
         return from(this.hubDiscovery.discoverHub()).pipe(
             switchMap((device) => {
                 const incomingLoggerMiddleware = this.loggingMiddlewareFactory.create(
-                    this.logger,
-                    `[${device.name}] Incoming`,
+                    this.prefixedConsoleLoggerFactoryService.create(`[${device.name}] Received`),
                     'all'
                 );
                 const outgoingLoggerMiddleware = this.loggingMiddlewareFactory.create(
-                    this.logger,
-                    `[${device.name}] Outgoing`,
+                    this.prefixedConsoleLoggerFactoryService.create(`[${device.name}] Sending`),
                     'all'
                 );
                 const communicationNotifierMiddleware = this.communicationNotifierMiddlewareFactory.create();
