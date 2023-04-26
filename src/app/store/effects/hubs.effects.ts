@@ -13,9 +13,10 @@ import {
     LpuConnectionErrorFactoryService
 } from '../../lego-hub';
 import { WINDOW } from '../../types';
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { TranslocoService } from '@ngneat/transloco';
 import { ConsoleLoggingService } from '../../logging';
+import { HubCommunicationNotifierMiddlewareFactoryService } from '../hub-communication-notifier-middleware-factory.service';
 
 @Injectable()
 export class HubsEffects {
@@ -108,6 +109,7 @@ export class HubsEffects {
 
     constructor(
         private readonly actions$: Actions,
+        private readonly store: Store,
         private readonly snackBar: MatSnackBar,
         private readonly hubDiscovery: HubDiscoveryService,
         private readonly hubFactoryService: HubFactoryService,
@@ -116,6 +118,7 @@ export class HubsEffects {
         private readonly lpuConnectionErrorFactory: LpuConnectionErrorFactoryService,
         private readonly logger: ConsoleLoggingService,
         private readonly loggingMiddlewareFactory: LoggingMiddlewareFactoryService,
+        private readonly communicationNotifierMiddlewareFactory: HubCommunicationNotifierMiddlewareFactoryService,
         @Inject(WINDOW) private readonly window: Window
     ) {
     }
@@ -133,16 +136,28 @@ export class HubsEffects {
                     `[${device.name}] Outgoing`,
                     'all'
                 );
+                const communicationNotifierMiddleware = this.communicationNotifierMiddlewareFactory.create();
+
                 return this.hubFactoryService.connectToHub(
                     device,
                     fromEvent(this.window, 'beforeunload'),
-                    [ incomingLoggerMiddleware ],
-                    [ outgoingLoggerMiddleware ]
-                );
+                    [ incomingLoggerMiddleware, communicationNotifierMiddleware ],
+                    [ outgoingLoggerMiddleware, communicationNotifierMiddleware ]
+                ).then((hub) => ({
+                    hub,
+                    communicationNotifierMiddleware
+                }));
             }),
-            switchMap((hub) => hub.properties.getPropertyValue$(HubProperty.primaryMacAddress).pipe(
+            switchMap(({ hub, communicationNotifierMiddleware }) => hub.properties.getPropertyValue$(HubProperty.primaryMacAddress).pipe(
                 catchError((e: unknown) => hub.disconnect().pipe(switchMap(() => throwError(() => e)))),
-                tap((macAddressReply) => this.hubStorage.store(hub, macAddressReply.macAddress)),
+                tap((macAddressReply) => {
+                    communicationNotifierMiddleware.communicationNotifier$.pipe(
+                        takeUntil(hub.disconnected$)
+                    ).subscribe((v) => {
+                        this.store.dispatch(HUBS_ACTIONS.setHasCommunication({ hubId: macAddressReply.macAddress, hasCommunication: v }));
+                    });
+                    this.hubStorage.store(hub, macAddressReply.macAddress);
+                }),
                 map((macAddressReply) => HUBS_ACTIONS.connected({ hubId: macAddressReply.macAddress, name: hub.name ?? '' })),
             )),
             catchError((error: unknown) => {

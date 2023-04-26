@@ -28,6 +28,11 @@
     {{ rssiLevelIcon }}
 </mat-icon>
 
+<mat-icon class="has-communication-icon"
+          [class.muted]="!hasCommunication"
+>multiple_stop
+</mat-icon>
+
 <button mat-icon-button
         color="accent"
         class="disconnect-button"

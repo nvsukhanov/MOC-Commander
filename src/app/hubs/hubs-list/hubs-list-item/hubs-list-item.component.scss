@@ -10,6 +10,11 @@
 .battery-level,
 .rssi-level,
 .button-state,
-.disconnect-button {
+.disconnect-button,
+.has-communication-icon {
     margin-left: 10px;
+}
+
+.has-communication-icon.muted {
+    opacity: 30%;
 }
