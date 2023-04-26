@@ -1,11 +1,13 @@
-<mat-accordion>
+<mat-accordion *ngrxLet="connectedHubs$ | ngrxPush; let connectedHubs">
     <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header>
             <mat-panel-title>
+                <mat-icon class="header-icon">memory</mat-icon>
                 {{ 'hubsList' | transloco }}
+                ({{ connectedHubs?.length ?? 0 }})
             </mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-list *ngrxLet="connectedHubs$ | ngrxPush; let connectedHubs">
+        <mat-list>
             <ng-container *ngIf="connectedHubs?.length; else noHubConnected">
                 <mat-list-item *ngFor="let hub of connectedHubs; trackBy: hubTrackByFn">
                     <app-hubs-list-item [hubId]="hub.hubId"

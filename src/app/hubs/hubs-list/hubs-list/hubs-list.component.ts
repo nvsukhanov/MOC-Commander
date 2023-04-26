@@ -8,6 +8,7 @@ import { LetModule, PushModule } from '@ngrx/component';
 import { JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { HubsListItemComponent } from '../hubs-list-item';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     standalone: true,
@@ -24,7 +25,8 @@ import { MatButtonModule } from '@angular/material/button';
         HubsListItemComponent,
         NgForOf,
         MatButtonModule,
-        JsonPipe
+        JsonPipe,
+        MatIconModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -12,6 +12,7 @@ import { GAMEPAD_SELECTORS } from './gamepad.selectors';
 import { CONTROL_SCHEME_RUNNING_STATE_SELECTORS } from './control-scheme-running-state.selectors';
 import { PortCommandSetLinearSpeedTask } from '../../common';
 import { ROUTER_SELECTORS } from './router.selectors';
+import { IOType } from '../../lego-hub';
 
 const CONTROL_SCHEME_FEATURE_SELECTOR = createFeatureSelector<IState['controlSchemes']>('controlSchemes');
 
@@ -20,6 +21,11 @@ const CONTROL_SCHEME_ENTITY_SELECTORS = CONTROL_SCHEMES_ENTITY_ADAPTER.getSelect
 const CONTROL_SCHEME_SELECT_ENTITIES = createSelector(
     CONTROL_SCHEME_FEATURE_SELECTOR,
     CONTROL_SCHEME_ENTITY_SELECTORS.selectEntities
+);
+
+const CONTROL_SCHEME_SELECT_ALL = createSelector(
+    CONTROL_SCHEME_FEATURE_SELECTOR,
+    CONTROL_SCHEME_ENTITY_SELECTORS.selectAll
 );
 
 export type SchemeValidationResult = {
@@ -42,13 +48,24 @@ export type IOBindingValidationResults = {
 export type ControlSchemeViewIOData = {
     schemeId: string,
     binding: ControlSchemeBinding,
+    ioType?: IOType,
     latestExecutedTask: PortCommandSetLinearSpeedTask | undefined,
     validationData: IOBindingValidationResults
 };
 
 export const CONTROL_SCHEME_SELECTORS = {
-    selectAll: createSelector(CONTROL_SCHEME_FEATURE_SELECTOR, CONTROL_SCHEME_ENTITY_SELECTORS.selectAll),
+    selectAll: CONTROL_SCHEME_SELECT_ALL,
     selectEntities: createSelector(CONTROL_SCHEME_FEATURE_SELECTOR, CONTROL_SCHEME_ENTITY_SELECTORS.selectEntities),
+    selectSchemesList: createSelector(
+        CONTROL_SCHEME_SELECT_ALL,
+        CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId,
+        (schemes, runningSchemeId) => {
+            return schemes.map((scheme) => ({
+                ...scheme,
+                isRunning: scheme.id === runningSchemeId
+            }));
+        }
+    ),
     selectScheme: (id: string) => createSelector(CONTROL_SCHEME_SELECT_ENTITIES, (state) => state[id]),
     selectSchemeBinding: (schemeId: string, bindingIndex: number) => createSelector(
         CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
@@ -161,18 +178,21 @@ export const CONTROL_SCHEME_SELECTORS = {
         CONTROL_SCHEME_SELECTORS.validateSchemeIOBindings(schemeId),
         HUB_PORT_TASKS_SELECTORS.selectLastExecutedTasksEntities,
         CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId,
-        (scheme, validationResult, tasks, runningSchemeId): ControlSchemeViewIOData[] => {
+        HUB_ATTACHED_IO_SELECTORS.selectIOsEntities,
+        (scheme, validationResult, tasks, runningSchemeId, attachedIOs): ControlSchemeViewIOData[] => {
             if (scheme === undefined) {
                 return [];
             }
             const validationMap = new Map(validationResult.map((r) => [ r.bindingId, r ]));
 
             return scheme.bindings.map((binding) => {
+                const ioType = attachedIOs[hubAttachedIosIdFn(binding.output.hubId, binding.output.portId)]?.ioType;
                 const task = runningSchemeId === schemeId
                              ? tasks[lastExecutedTaskIdFn(binding.output.hubId, binding.output.portId)]
                              : undefined;
                 return {
                     schemeId: schemeId,
+                    ioType,
                     binding: binding,
                     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     validationData: validationMap.get(binding.id)!,

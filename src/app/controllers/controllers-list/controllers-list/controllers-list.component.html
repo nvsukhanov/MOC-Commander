@@ -1,12 +1,14 @@
-<mat-accordion>
+<mat-accordion *ngrxLet="connectedControllers$ | ngrxPush; let connectedControllers">
     <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header>
             <mat-panel-title>
+                <mat-icon class="header-icon">gamepad</mat-icon>
                 {{ 'controllersList' | transloco }}
+                ({{ connectedControllers?.length ?? 0 }})
             </mat-panel-title>
         </mat-expansion-panel-header>
 
-        <mat-list *ngrxLet="connectedControllers$ | ngrxPush; let connectedControllers">
+        <mat-list>
             <ng-container *ngIf="connectedControllers?.length; else noConnectedControllers">
                 <mat-list-item *ngFor="let connectedController of connectedControllers; trackBy: controllerTrackById">
                     <app-controllers-list-item [name]="connectedController.nameL10nKey"></app-controllers-list-item>

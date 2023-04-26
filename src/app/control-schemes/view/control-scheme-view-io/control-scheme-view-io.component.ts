@@ -5,7 +5,8 @@ import { MatCardModule } from '@angular/material/card';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatIconModule } from '@angular/material/icon';
 import { PortCommandTask } from '../../../common';
-import { PORT_TASK_TYPE_TO_L10N } from '../../../i18n';
+import { IoTypeToL10nKeyPipe, PORT_TASK_TYPE_TO_L10N } from '../../../i18n';
+import { IOType } from '../../../lego-hub';
 
 type LastExecutedTaskTemplateDate = {
     taskTypeL10nKey: string;
@@ -22,12 +23,15 @@ type LastExecutedTaskTemplateDate = {
         JsonPipe,
         MatCardModule,
         TranslocoModule,
-        MatIconModule
+        MatIconModule,
+        IoTypeToL10nKeyPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeViewIoComponent {
     @Input() public binding?: ControlSchemeBinding;
+
+    @Input() public ioType?: IOType;
 
     @Input() public validation?: IOBindingValidationResults;
 

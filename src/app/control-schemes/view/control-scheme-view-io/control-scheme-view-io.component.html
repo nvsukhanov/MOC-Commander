@@ -15,7 +15,7 @@
                       color="warn"
                       [title]="'schemeBindingValidationHubMissing' | transloco"
             >
-                device_hub
+                memory
             </mat-icon>
             <mat-icon *ngIf="!validation.hubMissing && validation.ioMissing"
                       color="warn"
@@ -32,8 +32,11 @@
         </div>
     </mat-card-header>
     <mat-card-content>
+        <p *ngIf="ioType !== undefined">
+            {{ ioType | ioTypeToL10nKey | transloco }}
+        </p>
         <ng-container *ngIf="lastExecutedTaskTemplateData">
-            {{ lastExecutedTaskTemplateData.taskTypeL10nKey | transloco: lastExecutedTaskTemplateData.task }}
+            <p>{{ lastExecutedTaskTemplateData.taskTypeL10nKey | transloco: lastExecutedTaskTemplateData.task }}</p>
         </ng-container>
     </mat-card-content>
 </mat-card>

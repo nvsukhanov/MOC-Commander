@@ -10,6 +10,7 @@ import { ControlSchemeListItemComponent } from '../control-scheme-list-item';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { CONTROL_SCHEME_CREATE_SUBROUTE, CONTROL_SCHEME_ROUTE } from '../../routes';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     standalone: true,
@@ -25,12 +26,13 @@ import { CONTROL_SCHEME_CREATE_SUBROUTE, CONTROL_SCHEME_ROUTE } from '../../rout
         PushModule,
         TranslocoModule,
         ControlSchemeListItemComponent,
-        MatButtonModule
+        MatButtonModule,
+        MatIconModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeListComponent {
-    public readonly controlSchemes$ = this.store.select(CONTROL_SCHEME_SELECTORS.selectAll);
+    public readonly controlSchemes$ = this.store.select(CONTROL_SCHEME_SELECTORS.selectSchemesList);
 
     constructor(
         private readonly store: Store,

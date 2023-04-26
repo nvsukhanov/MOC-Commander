@@ -1,16 +1,19 @@
-<mat-accordion>
+<mat-accordion *ngrxLet="controlSchemes$ | ngrxPush; let controlSchemes">
     <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header>
             <mat-panel-title>
+                <mat-icon class="header-icon">display_settings</mat-icon>
                 {{ 'controlSchemesList' | transloco }}
+                ({{ controlSchemes?.length ?? 0}})
             </mat-panel-title>
         </mat-expansion-panel-header>
 
-        <mat-list *ngrxLet="controlSchemes$ | ngrxPush; let controlSchemes">
+        <mat-list>
             <ng-container *ngIf="controlSchemes?.length; else noControlSchemes">
                 <mat-list-item *ngFor="let scheme of controlSchemes; trackBy: trackSchemeById">
                     <app-control-scheme-list-item [name]="scheme.name"
                                                   [schemeId]="scheme.id"
+                                                  [isActive]="scheme.isRunning"
                                                   (delete)="onDelete(scheme.id)"
                     ></app-control-scheme-list-item>
                 </mat-list-item>
