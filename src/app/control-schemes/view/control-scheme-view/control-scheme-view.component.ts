@@ -1,13 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { bufferCount, combineLatest, map, Observable, of, switchMap } from 'rxjs';
-import {
-    CONTROL_SCHEME_ACTIONS,
-    CONTROL_SCHEME_RUNNING_STATE_SELECTORS,
-    CONTROL_SCHEME_SELECTORS,
-    ControlScheme,
-    HUB_PORT_TASKS_SELECTORS,
-    ROUTER_SELECTORS,
-} from '../../../store';
+import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlScheme, HUB_PORT_TASKS_SELECTORS, ROUTER_SELECTORS, } from '../../../store';
 import { Store } from '@ngrx/store';
 import { LetModule, PushModule } from '@ngrx/component';
 import { JsonPipe, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
@@ -17,7 +10,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { concatLatestFrom } from '@ngrx/effects';
 import { ControlSchemeViewIoListComponent } from '../control-scheme-view-io-list';
 
 @Component({
@@ -43,21 +35,17 @@ import { ControlSchemeViewIoListComponent } from '../control-scheme-view-io-list
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeViewComponent {
-    public readonly selectedScheme$: Observable<ControlScheme | undefined> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
-        switchMap((id) => id === undefined ? of(undefined) : this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(id))),
+    public readonly selectedScheme$: Observable<ControlScheme | undefined> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
+        switchMap((id) => id === null ? of(undefined) : this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(id))),
     );
 
-    public readonly canRunScheme$: Observable<boolean> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
-        switchMap((id) => id === undefined
+    public readonly canRunScheme$: Observable<boolean> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
+        switchMap((id) => id === null
                           ? of(false)
                           : this.store.select(CONTROL_SCHEME_SELECTORS.canRunScheme(id))),
     );
 
-    public readonly isCurrentControlSchemeRunning$: Observable<boolean> = this.store.select(CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId).pipe(
-        concatLatestFrom(() => this.store.select(ROUTER_SELECTORS.selectRouteParam('id'))),
-    ).pipe(
-        map(([ id, runningSchemeId ]) => runningSchemeId !== null && id === runningSchemeId),
-    );
+    public readonly isCurrentControlSchemeRunning$ = this.store.select(CONTROL_SCHEME_SELECTORS.isCurrentControlSchemeRunning);
 
     public readonly queueLength$ = this.store.select(HUB_PORT_TASKS_SELECTORS.selectQueueLength);
 
@@ -69,14 +57,17 @@ export class ControlSchemeViewComponent {
         map((v) => v.reduce((acc, val) => acc + val, 0) / 10)
     );
 
-    public readonly bindingsWithLatestExecutedTasks$ = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
-        switchMap((id) => id === undefined ? of([]) : this.store.select(CONTROL_SCHEME_SELECTORS.selectSchemeIOData(id))
-        ));
+    public readonly bindingsWithLatestExecutedTasks$ = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
+        switchMap((id) => id === null
+                          ? of([])
+                          : this.store.select(CONTROL_SCHEME_SELECTORS.selectSchemeIOData(id))
+        )
+    );
 
     public readonly totalTasksExecuted$ = this.store.select(HUB_PORT_TASKS_SELECTORS.selectTotalTasksExecuted);
 
-    public composeValidationErrorMessage$: Observable<string> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
-        switchMap((id) => id === undefined
+    public composeValidationErrorMessage$: Observable<string> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
+        switchMap((id) => id === null
                           ? of(null)
                           : this.store.select(CONTROL_SCHEME_SELECTORS.validateScheme(id))
         ),
@@ -111,7 +102,6 @@ export class ControlSchemeViewComponent {
     }
 
     public stopRunningScheme(): void {
-        2;
         this.store.dispatch(CONTROL_SCHEME_ACTIONS.stopRunning());
     }
 }
