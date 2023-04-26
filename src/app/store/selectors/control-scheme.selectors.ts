@@ -11,6 +11,7 @@ import { HUB_PORT_MODE_INFO_SELECTORS } from './hub-port-mode-info.selectors';
 import { GAMEPAD_SELECTORS } from './gamepad.selectors';
 import { CONTROL_SCHEME_RUNNING_STATE_SELECTORS } from './control-scheme-running-state.selectors';
 import { PortCommandSetLinearSpeedTask } from '../../types';
+import { ROUTER_SELECTORS } from './router.selectors';
 
 const CONTROL_SCHEME_FEATURE_SELECTOR = createFeatureSelector<IState['controlSchemes']>('controlSchemes');
 
@@ -159,15 +160,17 @@ export const CONTROL_SCHEME_SELECTORS = {
         CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
         CONTROL_SCHEME_SELECTORS.validateSchemeIOBindings(schemeId),
         HUB_PORT_TASKS_SELECTORS.selectLastExecutedTasksEntities,
-        HUBS_SELECTORS.selectHubsIds,
-        (scheme, validationResult, tasks): ControlSchemeViewIOData[] => {
+        CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId,
+        (scheme, validationResult, tasks, runningSchemeId): ControlSchemeViewIOData[] => {
             if (scheme === undefined) {
                 return [];
             }
             const validationMap = new Map(validationResult.map((r) => [ r.bindingId, r ]));
 
             return scheme.bindings.map((binding) => {
-                const task = tasks[lastExecutedTaskIdFn(binding.output.hubId, binding.output.portId)];
+                const task = runningSchemeId === schemeId
+                             ? tasks[lastExecutedTaskIdFn(binding.output.hubId, binding.output.portId)]
+                             : undefined;
                 return {
                     schemeId: schemeId,
                     binding: binding,
@@ -178,4 +181,9 @@ export const CONTROL_SCHEME_SELECTORS = {
             });
         }
     ),
+    isCurrentControlSchemeRunning: createSelector(
+        CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId,
+        ROUTER_SELECTORS.selectRouteParam('id'),
+        (runningSchemeId, schemeId) => runningSchemeId !== null && runningSchemeId === schemeId
+    )
 } as const;
