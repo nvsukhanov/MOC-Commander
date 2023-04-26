@@ -4,7 +4,8 @@ import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
 import { CONFIGURE_CONTROLLER_I18N_SCOPE, GAMEPAD_PLUGINS_I18N_SCOPE, HUB_IO_I18N_SCOPE } from './i18n';
 import { NotFoundComponent } from './not-found';
 
-export const HUB_VIEW_ROUTE = 'hub';
+export const HUB_ROUTE = 'hub';
+export const HUB_EDIT_SUBROUTE = 'edit';
 export const CONTROL_SCHEME_ROUTE = 'control-scheme';
 export const CONTROL_SCHEME_CREATE_SUBROUTE = 'create';
 export const CONTROL_SCHEME_EDIT_SUBROUTE = 'edit';
@@ -21,8 +22,17 @@ export const ROUTES: Routes = [
         ]
     },
     {
-        path: [ HUB_VIEW_ROUTE, ':id' ].join('/'),
+        path: [ HUB_ROUTE, ':id' ].join('/'),
         loadComponent: () => import('./hubs/hub-view').then(m => m.HubViewComponent),
+        pathMatch: 'full',
+        providers: [
+            { provide: TRANSLOCO_SCOPE, useValue: HUB_IO_I18N_SCOPE, multi: true },
+        ]
+    },
+    {
+        path: [ HUB_ROUTE, ':id', HUB_EDIT_SUBROUTE ].join('/'),
+        loadComponent: () => import('./hubs/hub-edit').then(m => m.HubEditComponent),
+        pathMatch: 'full',
         providers: [
             { provide: TRANSLOCO_SCOPE, useValue: HUB_IO_I18N_SCOPE, multi: true },
         ]

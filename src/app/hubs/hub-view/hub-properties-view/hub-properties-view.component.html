@@ -1,27 +1,27 @@
-<mat-card *ngIf="hub">
+<mat-card *ngIf="configuration">
     <mat-card-header>
         <mat-card-subtitle>
-            <ng-container *ngIf="hubTypeL10nMap[hub.hubType]; let hubTypeL10nKey; else hubTypeUnknown">
+            <ng-container *ngIf="hubTypeL10nMap[configuration.hubType]; let hubTypeL10nKey; else hubTypeUnknown">
                 {{ hubTypeL10nKey | transloco }}
             </ng-container>
             <ng-template #hubTypeUnknown>
                 {{ 'hubTypeUnknown' | transloco }}
             </ng-template>
         </mat-card-subtitle>
-        <mat-card-title>{{ hub.name }}</mat-card-title>
+        <mat-card-title>{{ configuration.name }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <p>
-            {{ 'hubButtonState' | transloco: hub }}
+            {{ 'hubButtonState' | transloco: configuration }}
         </p>
-        <p *ngIf="hub.batteryLevel !== null; else batteryLevelUnknown">
-            {{ 'hubBatteryLevel' | transloco: hub }}
+        <p *ngIf="configuration.batteryLevel !== null; else batteryLevelUnknown">
+            {{ 'hubBatteryLevel' | transloco: configuration }}
         </p>
         <ng-template #batteryLevelUnknown>
             <p>{{ 'hubBatteryLevelUnknown' | transloco }}</p>
         </ng-template>
-        <p *ngIf="hub.RSSI !== null; else rssiLevelUnknown">
-            {{ 'hubRSSILevel' | transloco: hub }}
+        <p *ngIf="configuration.RSSI !== null; else rssiLevelUnknown">
+            {{ 'hubRSSILevel' | transloco: configuration }}
         </p>
         <ng-template #rssiLevelUnknown>
             <p>{{ 'hubRSSILevelUnknown' | transloco }}</p>
@@ -29,6 +29,7 @@
         <mat-divider></mat-divider>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-button (click)="onDisconnect()">Disconnect</button>
+        <a [routerLink]="[hubEditSubroute]" mat-button>{{ 'editHub' | transloco }}</a>
+        <button mat-button (click)="onDisconnect()">{{ 'disconnectHub' | transloco }}</button>
     </mat-card-actions>
 </mat-card>

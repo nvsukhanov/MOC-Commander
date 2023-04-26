@@ -70,7 +70,10 @@ export enum HubPropertyOperation {
     update = 0x06
 }
 
+export const MAX_NAME_SIZE = 14;
+
 export enum HubProperty {
+    advertisingName = 0x01,
     button = 0x02,
     RSSI = 0x05,
     batteryVoltage = 0x06,
@@ -137,4 +140,6 @@ export enum MotorSubCommand {
     startSpeed = 0x07,
 }
 
-export type SubscribableHubProperties = HubProperty.RSSI | HubProperty.batteryVoltage | HubProperty.button;
+export type SubscribableHubProperties = HubProperty.RSSI | HubProperty.batteryVoltage | HubProperty.button | HubProperty.advertisingName;
+
+export type WritableHubProperties = HubProperty.advertisingName;

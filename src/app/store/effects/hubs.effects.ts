@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, from, fromEvent, interval, map, mergeMap, Observable, of, startWith, switchMap, takeUntil, tap, throwError } from 'rxjs';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { catchError, filter, from, fromEvent, interval, map, mergeMap, Observable, of, startWith, switchMap, takeUntil, tap, throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HubStorageService } from '../hub-storage.service';
 import { HUBS_ACTIONS } from '../actions';
@@ -17,6 +17,9 @@ import { Action, Store } from '@ngrx/store';
 import { TranslocoService } from '@ngneat/transloco';
 import { ConsoleLoggingService } from '../../logging';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../hub-communication-notifier-middleware-factory.service';
+import { Router } from '@angular/router';
+import { ROUTER_SELECTORS } from '../selectors';
+import { HUB_ROUTE } from '../../routes';
 
 @Injectable()
 export class HubsEffects {
@@ -103,6 +106,25 @@ export class HubsEffects {
         );
     });
 
+    public readonly requestSetHubName$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(HUBS_ACTIONS.requestSetHubName),
+            mergeMap((a) => from(this.hubStorage.get(a.hubId).properties.setHubAdvertisingName(a.name)).pipe(
+                switchMap(() => this.hubStorage.get(a.hubId).properties.getPropertyValue$(HubProperty.advertisingName)),
+                map((message) => HUBS_ACTIONS.hubNameSet({ hubId: a.hubId, name: message.advertisingName }))
+            ))
+        );
+    });
+
+    public readonly closeEditPageOnSaveCompleted$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(HUBS_ACTIONS.hubNameSet),
+            concatLatestFrom(() => this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedHubId)),
+            filter(([ a, b ]) => a.hubId === b),
+            tap(([ , hubId ]) => this.router.navigate([ HUB_ROUTE, hubId ]))
+        );
+    }, { dispatch: false });
+
     private readonly hubBatteryPollInterval = 20000; // TODO: move to config
 
     private readonly hubRSSIPollInterval = 5000; // TODO: move to config
@@ -110,6 +132,7 @@ export class HubsEffects {
     constructor(
         private readonly actions$: Actions,
         private readonly store: Store,
+        private readonly router: Router,
         private readonly snackBar: MatSnackBar,
         private readonly hubDiscovery: HubDiscoveryService,
         private readonly hubFactoryService: HubFactoryService,

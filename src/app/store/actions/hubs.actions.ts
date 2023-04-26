@@ -1,6 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { LpuConnectionError } from '../../lego-hub/errors';
-import { HubType } from '../../lego-hub';
+import { HubType, LpuConnectionError } from '../../lego-hub';
 
 export const HUBS_ACTIONS = createActionGroup({
     source: 'HUBS_ACTIONS',
@@ -21,5 +20,7 @@ export const HUBS_ACTIONS = createActionGroup({
         'button state unsubscribe': props<{ hubId: string }>(),
         'hub type received': props<{ hubId: string, hubType: HubType }>(),
         'set has communication': props<{ hubId: string, hasCommunication: boolean }>(),
+        'request set hub name': props<{ hubId: string, name: string }>(),
+        'hub name set': props<{ hubId: string, name: string }>()
     }
 });

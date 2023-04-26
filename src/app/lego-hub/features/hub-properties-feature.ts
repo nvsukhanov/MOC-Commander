@@ -1,5 +1,5 @@
 import { catchError, filter, from, map, Observable, share, switchMap, take, tap, timeout } from 'rxjs';
-import { HubProperty, MessageType, SubscribableHubProperties } from '../constants';
+import { HubProperty, MAX_NAME_SIZE, MessageType, SubscribableHubProperties } from '../constants';
 import { HubPropertiesOutboundMessageFactoryService, HubPropertyInboundMessage, InboundMessageListener, OutboundMessenger } from '../messages';
 import { ILogger } from '../../logging';
 import { LpuConnectionErrorFactoryService } from '../errors';
@@ -24,6 +24,17 @@ export class HubPropertiesFeature {
         private readonly messageListener: InboundMessageListener<MessageType.properties>,
         private readonly errorsFactory: LpuConnectionErrorFactoryService
     ) {
+    }
+
+    public setHubAdvertisingName(
+        advertisingName: string
+    ): Promise<void> {
+        if (advertisingName.length > MAX_NAME_SIZE || advertisingName.length === 0) {
+            throw this.errorsFactory.createInvalidPropertyValueError(HubProperty.advertisingName, advertisingName);
+        }
+        const charCodes = advertisingName.split('').map((char) => char.charCodeAt(0));
+        const message = this.messageFactoryService.setProperty(HubProperty.advertisingName, charCodes);
+        return this.messenger.send(message);
     }
 
     public async disconnect(): Promise<void> {
