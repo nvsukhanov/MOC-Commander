@@ -3,7 +3,7 @@ import { GamepadAxisState, GamepadButtonState, GamepadInputMethod } from '../i-s
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { GAMEPAD_ACTIONS } from '../actions';
 import { filter, fromEvent, interval, map, merge, Observable, switchMap, takeUntil } from 'rxjs';
-import { WINDOW } from '../../types';
+import { WINDOW } from '../../common';
 import { GamepadPluginsService } from '../../plugins';
 import { Store } from '@ngrx/store';
 import { GAMEPAD_AXES_STATE_SELECTORS, GAMEPAD_BUTTONS_STATE_SELECTORS, GAMEPAD_SELECTORS } from '../selectors';

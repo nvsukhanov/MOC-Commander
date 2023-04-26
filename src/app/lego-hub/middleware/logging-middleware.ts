@@ -1,4 +1,4 @@
-import { ILogger } from '../../logging';
+import { ILogger } from '../../common';
 import { IMessageMiddleware } from '../i-message-middleware';
 import { RawMessage } from '../messages';
 import { MessageType } from '../constants';

@@ -12,7 +12,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { TranslocoModule } from '@ngneat/transloco';
 import { HubPropertiesViewComponent } from '../hub-properties-view';
 import { HubPortViewComponent } from '../hub-port-view';
-import { NotFoundComponent } from '../../../not-found';
+import { NotFoundComponent } from '../../../common';
 
 @Component({
     standalone: true,

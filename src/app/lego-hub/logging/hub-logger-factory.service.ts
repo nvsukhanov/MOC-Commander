@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HubLogger } from './hub-logger.service';
-import { ConsoleLoggingService, ILogger } from '../../logging';
+import { ConsoleLoggingService, ILogger } from '../../common';
 
 @Injectable()
 export class HubLoggerFactoryService {

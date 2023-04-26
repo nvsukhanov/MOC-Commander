@@ -12,10 +12,9 @@ import {
     LpuConnectionError,
     LpuConnectionErrorFactoryService
 } from '../../lego-hub';
-import { WINDOW } from '../../types';
+import { PrefixedConsoleLoggerFactoryService, WINDOW } from '../../common';
 import { Action, Store } from '@ngrx/store';
 import { TranslocoService } from '@ngneat/transloco';
-import { PrefixedConsoleLoggerFactoryService } from '../../logging';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../hub-communication-notifier-middleware-factory.service';
 import { Router } from '@angular/router';
 import { ROUTER_SELECTORS } from '../selectors';

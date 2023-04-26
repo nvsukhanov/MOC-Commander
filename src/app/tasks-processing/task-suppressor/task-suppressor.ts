@@ -1,5 +1,5 @@
 import { ITaskSuppressor } from './i-task-suppressor';
-import { PortCommandTask } from '../../types';
+import { PortCommandTask } from '../../common';
 
 export abstract class TaskSuppressor implements ITaskSuppressor {
     private next?: TaskSuppressor;

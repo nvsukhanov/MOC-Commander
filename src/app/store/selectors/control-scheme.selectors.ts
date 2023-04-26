@@ -10,7 +10,7 @@ import { HUB_IO_SUPPORTED_MODES_SELECTORS } from './hub-io-supported-modes.selec
 import { HUB_PORT_MODE_INFO_SELECTORS } from './hub-port-mode-info.selectors';
 import { GAMEPAD_SELECTORS } from './gamepad.selectors';
 import { CONTROL_SCHEME_RUNNING_STATE_SELECTORS } from './control-scheme-running-state.selectors';
-import { PortCommandSetLinearSpeedTask } from '../../types';
+import { PortCommandSetLinearSpeedTask } from '../../common';
 import { ROUTER_SELECTORS } from './router.selectors';
 
 const CONTROL_SCHEME_FEATURE_SELECTOR = createFeatureSelector<IState['controlSchemes']>('controlSchemes');

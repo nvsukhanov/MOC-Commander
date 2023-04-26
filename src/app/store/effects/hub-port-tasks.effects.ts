@@ -8,7 +8,7 @@ import { CONTROL_SCHEME_ACTIONS } from '../actions';
 import { HubStorageService } from '../hub-storage.service';
 import { lastExecutedTaskIdFn } from '../entity-adapters';
 import { Dictionary } from '@ngrx/entity';
-import { PortCommandTask } from '../../types';
+import { PortCommandTask } from '../../common';
 import {
     IPortCommandTaskComposer,
     ITaskExecutor,

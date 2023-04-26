@@ -28,7 +28,7 @@ import {
 } from './effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
-import { NAVIGATOR } from '../types';
+import { NAVIGATOR } from '../common';
 import { Action, ActionReducer, ActionReducerMap, MetaReducer, provideStore, Store } from '@ngrx/store';
 import { HubStorageService } from './hub-storage.service';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';

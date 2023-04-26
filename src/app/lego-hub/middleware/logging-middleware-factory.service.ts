@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IMessageMiddleware } from '../i-message-middleware';
 import { MessageType } from '../constants';
-import { ILogger } from '../../logging';
+import { ILogger } from '../../common';
 import { LoggingMiddleware } from './logging-middleware';
 
 @Injectable({ providedIn: 'root' })

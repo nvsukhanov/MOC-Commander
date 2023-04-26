@@ -1,7 +1,7 @@
 import { catchError, filter, from, map, Observable, share, switchMap, take, tap, timeout } from 'rxjs';
 import { HubProperty, MAX_NAME_SIZE, MessageType, SubscribableHubProperties } from '../constants';
 import { HubPropertiesOutboundMessageFactoryService, HubPropertyInboundMessage, InboundMessageListener, OutboundMessenger } from '../messages';
-import { ILogger } from '../../logging';
+import { ILogger } from '../../common';
 import { LpuConnectionErrorFactoryService } from '../errors';
 
 export class HubPropertiesFeature {

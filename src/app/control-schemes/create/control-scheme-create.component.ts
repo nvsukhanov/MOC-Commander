@@ -8,7 +8,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { BindingFormResult, ControlSchemeEditFormComponent } from '../edit';
 import { Store } from '@ngrx/store';
 import { CONTROL_SCHEME_ACTIONS } from '../../store';
-import { WINDOW } from '../../types';
+import { WINDOW } from '../../common';
 
 @Component({
     standalone: true,

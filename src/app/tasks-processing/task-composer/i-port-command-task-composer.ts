@@ -1,5 +1,5 @@
 import { ControlSchemeBinding } from '../../store';
-import { PortCommandTask } from '../../types/port-command-task';
+import { PortCommandTask } from '../../common';
 
 export interface IPortCommandTaskComposer {
     composeTask(

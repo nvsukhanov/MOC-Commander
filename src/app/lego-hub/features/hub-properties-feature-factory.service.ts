@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ILogger } from '../../logging';
+import { ILogger } from '../../common';
 import {
     HubPropertiesOutboundMessageFactoryService,
     HubPropertiesReplyParserService,

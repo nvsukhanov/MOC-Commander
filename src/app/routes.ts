@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { EmptyViewComponent } from './main';
 import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
 import { CONFIGURE_CONTROLLER_I18N_SCOPE, GAMEPAD_PLUGINS_I18N_SCOPE, HUB_IO_I18N_SCOPE } from './i18n';
-import { NotFoundComponent } from './not-found';
+import { NotFoundComponent } from './common';
 
 export const HUB_ROUTE = 'hub';
 export const HUB_EDIT_SUBROUTE = 'edit';

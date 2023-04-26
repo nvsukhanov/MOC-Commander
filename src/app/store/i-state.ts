@@ -2,7 +2,7 @@ import { HubType, IOType, PortModeName, PortModeSymbol } from '../lego-hub';
 import { EntityState } from '@ngrx/entity';
 import { RouterState } from '@ngrx/router-store';
 import { HubIoOperationMode } from './hub-io-operation-mode';
-import { PortCommandTask } from '../types';
+import { PortCommandTask } from '../common';
 
 export interface IState {
     controlSchemes: EntityState<ControlScheme>;

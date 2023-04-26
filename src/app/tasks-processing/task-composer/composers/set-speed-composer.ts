@@ -1,7 +1,7 @@
 import { PortCommandTaskComposer } from '../port-command-task-composer';
 import { ControlSchemeBinding, HubIoOperationMode } from '../../../store';
 import { MotorFeature } from '../../../lego-hub/features';
-import { PortCommandSetLinearSpeedTask, PortCommandTaskType } from '../../../types';
+import { PortCommandSetLinearSpeedTask, PortCommandTaskType } from '../../../common';
 
 export class SetSpeedComposer extends PortCommandTaskComposer {
     public static readonly minAbsSpeed = 10;
