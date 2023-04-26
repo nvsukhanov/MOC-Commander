@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { ExtractTokenType, NAVIGATOR } from '../types';
+import { ExtractTokenType, NAVIGATOR } from '../common';
 import { HUB_SERVICE_UUID } from './constants';
 import { BluetoothDeviceWithGatt } from './hub-factory.service';
 import { LpuConnectionErrorFactoryService } from './errors';

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { WINDOW } from '../types';
+import { WINDOW } from './types';
 import { fromEvent, share } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })

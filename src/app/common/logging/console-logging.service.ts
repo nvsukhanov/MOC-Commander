@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { Inject, Injectable, Optional } from '@angular/core';
 import { LOG_LEVEL, LogLevel } from './log-levels';
-import { ExtractTokenType } from '../../types';
+import { ExtractTokenType } from '../types';
 import { ILogger } from './i-logger';
 
 @Injectable({ providedIn: 'root' })

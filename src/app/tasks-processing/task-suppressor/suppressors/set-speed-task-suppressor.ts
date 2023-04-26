@@ -1,6 +1,6 @@
 import { TaskSuppressor } from '../task-suppressor';
 import { MotorFeature } from '../../../lego-hub/features';
-import { PortCommandTask, PortCommandTaskType } from '../../../types';
+import { PortCommandTask, PortCommandTaskType } from '../../../common';
 
 export class SetSpeedTaskSuppressor extends TaskSuppressor {
     public static readonly speedThreshold = 10;

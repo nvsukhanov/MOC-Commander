@@ -15,7 +15,7 @@ import {
 } from '../../control-scheme-binding-input/control-scheme-binding-input.component';
 import { ControlSchemeBindingOutputComponent, ControlSchemeBindingOutputControl } from '../../control-scheme-binding-output';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { WINDOW } from '../../../types';
+import { WINDOW } from '../../../common';
 import { MatInputModule } from '@angular/material/input';
 
 export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
