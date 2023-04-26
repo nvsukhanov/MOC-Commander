@@ -27,13 +27,19 @@ export type HubPropertyButtonStateInboundMessage = {
 export type HubPropertyPrimaryMacAddressInboundMessage = {
     propertyType: HubProperty.primaryMacAddress;
     macAddress: string;
-} & HubPropertyBaseInboundMessage
+} & HubPropertyBaseInboundMessage;
+
+export type HubPropertyAdvertisingNameInboundMessage = {
+    propertyType: HubProperty.advertisingName;
+    advertisingName: string;
+} & HubPropertyBaseInboundMessage;
 
 export type HubPropertyInboundMessage = HubPropertyBatteryInboundMessage
     | HubPropertyRssiInboundMessage
     | HubPropertySystemTypeIdInboundMessage
     | HubPropertyButtonStateInboundMessage
-    | HubPropertyPrimaryMacAddressInboundMessage;
+    | HubPropertyPrimaryMacAddressInboundMessage
+    | HubPropertyAdvertisingNameInboundMessage;
 
 export type AttachedIoAttachInboundMessage = {
     messageType: MessageType.attachedIO,

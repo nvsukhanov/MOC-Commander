@@ -27,6 +27,9 @@ export interface IState {
         maxQueueLength: number,
         lastExecutedTasks: EntityState<PortCommandTask>
     },
+    hubEditFormActiveSaves: {
+        hubIds: string[]
+    },
     bluetoothAvailability: {
         isAvailable: boolean;
     },

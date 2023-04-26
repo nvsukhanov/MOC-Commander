@@ -36,6 +36,9 @@ export const INITIAL_STATE: IState = {
         maxQueueLength: 0,
         lastExecutedTasks: LAST_EXECUTED_TASKS_ENTITY_ADAPTER.getInitialState()
     },
+    hubEditFormActiveSaves: {
+        hubIds: []
+    },
     bluetoothAvailability: {
         isAvailable: false
     },

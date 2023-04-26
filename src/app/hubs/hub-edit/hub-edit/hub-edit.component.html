@@ -1,0 +1,12 @@
+<ng-container *ngIf="editedHubConfiguration$ | ngrxPush; let hubConfiguration; else hubNotFound">
+    <app-hub-edit-form [hubConfiguration]="hubConfiguration"
+                       [isSaving]="isSaving$ | ngrxPush"
+                       (save)="onSave($event)"
+    ></app-hub-edit-form>
+</ng-container>
+
+<ng-template #hubNotFound>
+    <section class="hub-is-not-connected">
+        <h2>{{ 'hubIsNotConnected' | transloco }}</h2>
+    </section>
+</ng-template>

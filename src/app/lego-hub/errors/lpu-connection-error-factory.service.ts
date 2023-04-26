@@ -12,6 +12,10 @@ export class LpuConnectionErrorFactoryService {
         return new LpuConnectionError('Unable to get primary MAC address', 'hubErrorUnableToGetProperty', { property: HubProperty[property] });
     }
 
+    public createInvalidPropertyValueError(property: HubProperty, value: number[] | number | string | string[]): LpuConnectionError {
+        return new LpuConnectionError('Invalid property value', 'hubErrorInvalidPropertyValue', { property: HubProperty[property], value: value.toString() });
+    }
+
     public createGattUnavailableError(): LpuConnectionError {
         return new LpuConnectionError('Hub GATT is unavailable', 'hubGattUnavailable');
     }

@@ -3,6 +3,7 @@ import { HUB_DEVICE_TYPE_MAP, HubProperty, HubType, MessageType } from '../../co
 import { IReplyParser } from '../i-reply-parser';
 import { RawMessage } from '../raw-message';
 import {
+    HubPropertyAdvertisingNameInboundMessage,
     HubPropertyBatteryInboundMessage,
     HubPropertyButtonStateInboundMessage,
     HubPropertyInboundMessage,
@@ -25,7 +26,8 @@ export class HubPropertiesReplyParserService implements IReplyParser<MessageType
         [HubProperty.RSSI]: (v): HubPropertyRssiInboundMessage => this.parseRssiLevel(v),
         [HubProperty.systemTypeId]: (v): HubPropertySystemTypeIdInboundMessage => this.parseSystemTypeId(v),
         [HubProperty.button]: (v): HubPropertyButtonStateInboundMessage => this.parseButtonState(v),
-        [HubProperty.primaryMacAddress]: (v): HubPropertyPrimaryMacAddressInboundMessage => this.parsePrimaryMacAddress(v)
+        [HubProperty.primaryMacAddress]: (v): HubPropertyPrimaryMacAddressInboundMessage => this.parsePrimaryMacAddress(v),
+        [HubProperty.advertisingName]: (v): HubPropertyAdvertisingNameInboundMessage => this.parseAdvertisingName(v)
     } satisfies { [k in HubProperty]: (payload: Uint8Array) => HubPropertyInboundMessage };
 
     public parseMessage(
@@ -83,6 +85,14 @@ export class HubPropertiesReplyParserService implements IReplyParser<MessageType
             messageType: MessageType.properties,
             propertyType: HubProperty.primaryMacAddress,
             macAddress: [ ...payload ].map((v: number) => v.toString(16).padStart(2, '0')).join(':')
+        };
+    }
+
+    private parseAdvertisingName(payload: Uint8Array): HubPropertyAdvertisingNameInboundMessage {
+        return {
+            messageType: MessageType.properties,
+            propertyType: HubProperty.advertisingName,
+            advertisingName: [ ...payload ].map((v) => String.fromCharCode(v)).join('')
         };
     }
 }

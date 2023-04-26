@@ -1,6 +1,6 @@
 <section *ngIf="selectedHub$ | ngrxPush; let hub; else hubNotFound"
          class="hub-view">
-    <app-hub-properties-view [hub]="hub"
+    <app-hub-properties-view [configuration]="hub"
                              (disconnect)="disconnectHub()"
     ></app-hub-properties-view>
 

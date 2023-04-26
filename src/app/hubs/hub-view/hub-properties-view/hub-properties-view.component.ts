@@ -6,6 +6,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { HUB_TYPE_TO_L10N_MAPPING } from '../../../i18n';
+import { HUB_EDIT_SUBROUTE } from '../../../routes';
+import { RouterLink } from '@angular/router';
 
 @Component({
     standalone: true,
@@ -17,16 +19,19 @@ import { HUB_TYPE_TO_L10N_MAPPING } from '../../../i18n';
         MatCardModule,
         MatDividerModule,
         NgIf,
-        TranslocoModule
+        TranslocoModule,
+        RouterLink
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HubPropertiesViewComponent {
-    @Input() public hub: HubConfiguration | undefined;
+    @Input() public configuration: HubConfiguration | undefined;
 
     @Output() public readonly disconnect = new EventEmitter<void>();
 
     public readonly hubTypeL10nMap = HUB_TYPE_TO_L10N_MAPPING;
+
+    public readonly hubEditSubroute = HUB_EDIT_SUBROUTE;
 
     public onDisconnect(): void {
         this.disconnect.emit();

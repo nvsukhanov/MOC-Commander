@@ -2,7 +2,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { LayoutComponent } from './app/main/layout';
 import { provideRouter } from '@angular/router';
 import { ROUTES } from './app/routes';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideApplicationStore } from './app/store';
 import { importProvidersFrom, isDevMode } from '@angular/core';
 import { provideGamepadsPlugins } from './app/plugins';
@@ -16,7 +16,7 @@ bootstrapApplication(LayoutComponent, {
     providers: [
         provideRouter(ROUTES),
         provideI18n(),
-        provideNoopAnimations(),
+        provideAnimations(),
         provideGamepadsPlugins(),
         importProvidersFrom(MatSnackBarModule),
         provideLegoHubEnvironment(),
