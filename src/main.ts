@@ -8,7 +8,7 @@ import { importProvidersFrom, isDevMode } from '@angular/core';
 import { provideGamepadsPlugins } from './app/plugins';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { provideLegoHubEnvironment } from './app/lego-hub';
-import { LOG_LEVEL, LogLevel } from './app/logging';
+import { LOG_LEVEL, LogLevel } from './app/common/logging';
 import { CONFIGURE_CONTROLLER_I18N_SCOPE, GAMEPAD_PLUGINS_I18N_SCOPE, HUB_IO_I18N_SCOPE, provideI18n } from './app/i18n';
 import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
 

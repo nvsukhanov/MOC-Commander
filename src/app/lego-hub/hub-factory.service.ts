@@ -7,7 +7,7 @@ import { HUB_CHARACTERISTIC_UUID, HUB_SERVICE_UUID } from './constants';
 import { ILegoHubConfig, LEGO_HUB_CONFIG } from './i-lego-hub-config';
 import { LpuConnectionErrorFactoryService } from './errors';
 import { HubLoggerFactoryService } from './logging';
-import { ILogger } from '../logging';
+import { ILogger } from '../common';
 import { IMessageMiddleware } from './i-message-middleware';
 
 export type BluetoothDeviceWithGatt = Omit<BluetoothDevice, 'gatt'> & {

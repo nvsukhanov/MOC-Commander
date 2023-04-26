@@ -1,4 +1,4 @@
-import { ConsoleLoggingService, ILogger } from '../../logging';
+import { ConsoleLoggingService, ILogger } from '../../common';
 
 export class HubLogger implements ILogger {
     constructor(

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Hub } from '../lego-hub';
-import { ConsoleLoggingService } from '../logging';
+import { ConsoleLoggingService } from '../common';
 
 @Injectable()
 export class HubStorageService {

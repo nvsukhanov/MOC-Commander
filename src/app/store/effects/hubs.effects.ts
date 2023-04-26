@@ -15,7 +15,7 @@ import {
 import { WINDOW } from '../../types';
 import { Action, Store } from '@ngrx/store';
 import { TranslocoService } from '@ngneat/transloco';
-import { PrefixedConsoleLoggerFactoryService } from '../../logging';
+import { PrefixedConsoleLoggerFactoryService } from '../../common';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../hub-communication-notifier-middleware-factory.service';
 import { Router } from '@angular/router';
 import { ROUTER_SELECTORS } from '../selectors';
