@@ -5,7 +5,7 @@ import { HUB_EDIT_FORM_ACTIVE_SAVES_SELECTORS, HUBS_ACTIONS, HUBS_SELECTORS, ROU
 import { LetModule, PushModule } from '@ngrx/component';
 import { Observable, of, switchMap } from 'rxjs';
 import { NgIf } from '@angular/common';
-import { NotFoundComponent } from '../../../not-found';
+import { NotFoundComponent } from '../../../common';
 import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
