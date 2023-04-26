@@ -8,7 +8,9 @@
                 {{ 'hubTypeUnknown' | transloco }}
             </ng-template>
         </mat-card-subtitle>
-        <mat-card-title>{{ configuration.name }}</mat-card-title>
+        <mat-card-title appEllipsisTitle>
+            {{ configuration.name }}
+        </mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <p>

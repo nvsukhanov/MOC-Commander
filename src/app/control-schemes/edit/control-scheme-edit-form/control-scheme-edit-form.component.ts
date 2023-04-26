@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnDestroy, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS, ControlScheme, GAMEPAD_ACTIONS, HUB_ATTACHED_IO_SELECTORS, HUBS_SELECTORS } from '../../../store';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,6 +16,7 @@ import {
 import { ControlSchemeBindingOutputComponent, ControlSchemeBindingOutputControl } from '../../control-scheme-binding-output';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { WINDOW } from '../../../types';
+import { MatInputModule } from '@angular/material/input';
 
 export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
 
@@ -45,7 +46,9 @@ type EditSchemeForm = FormGroup<{
         JsonPipe,
         ControlSchemeBindingInputComponent,
         ControlSchemeBindingOutputComponent,
-        MatExpansionModule
+        MatExpansionModule,
+        MatInputModule,
+        ReactiveFormsModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -53,7 +56,7 @@ export class ControlSchemeEditFormComponent implements OnDestroy {
     @Output() public readonly save = new EventEmitter<BindingFormResult>();
 
     public readonly form: EditSchemeForm = this.formBuilder.group({
-        name: this.formBuilder.control<string>('Unnamed scheme', { nonNullable: true }),
+        name: this.formBuilder.control<string>('', [ Validators.required ]) as FormControl<string>,
         bindings: this.formBuilder.array<BindingForm>([], Validators.required)
     });
 

@@ -17,13 +17,13 @@
             >
                 device_hub
             </mat-icon>
-            <mat-icon *ngIf="validation.ioMissing"
+            <mat-icon *ngIf="!validation.hubMissing && validation.ioMissing"
                       color="warn"
                       [title]="'schemeBindingValidationHubIOIsMissing' | transloco"
             >
                 settings_input_hdmi
             </mat-icon>
-            <mat-icon *ngIf="validation.ioCapabilitiesMismatch"
+            <mat-icon *ngIf="!validation.hubMissing && !validation.ioMissing && validation.ioCapabilitiesMismatch"
                       color="warn"
                       [title]="'schemeBindingValidationHubIOCapabilitiesMismatch' | transloco"
             >

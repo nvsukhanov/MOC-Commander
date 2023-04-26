@@ -64,6 +64,7 @@
   "schemeTaskMaximumEncounteredQueueLength": "Maximum queue length:",
   "totalTasksExecuted": "Total tasks executed:",
   "lastTenTasksAverageExecutionTime": "Last 10 tasks average execution time (ms):",
+  "schemeEditNameField": "Control scheme name",
   "schemeValidationAnotherSchemeIsRunning": "Another control scheme is running",
   "schemeValidationHubMissing": "Some hubs are missing",
   "schemeValidationIOMissing": "Some IOs are missing",

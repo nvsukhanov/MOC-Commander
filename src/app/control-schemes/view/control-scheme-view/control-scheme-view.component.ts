@@ -11,6 +11,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { ControlSchemeViewIoListComponent } from '../control-scheme-view-io-list';
+import { EllipsisTitleDirective } from '../../../common';
 
 @Component({
     standalone: true,
@@ -31,6 +32,7 @@ import { ControlSchemeViewIoListComponent } from '../control-scheme-view-io-list
         MatExpansionModule,
         MatIconModule,
         ControlSchemeViewIoListComponent,
+        EllipsisTitleDirective,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

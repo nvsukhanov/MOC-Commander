@@ -7,3 +7,7 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.mat-mdc-card-header-text {
+    overflow: hidden; // allow ellipsis in card header
+}

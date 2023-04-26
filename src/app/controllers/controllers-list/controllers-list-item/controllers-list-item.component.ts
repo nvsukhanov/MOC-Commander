@@ -3,6 +3,7 @@ import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatIconModule } from '@angular/material/icon';
+import { EllipsisTitleDirective } from '../../../common';
 
 @Component({
     standalone: true,
@@ -13,7 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
         NgIf,
         MatButtonModule,
         TranslocoModule,
-        MatIconModule
+        MatIconModule,
+        EllipsisTitleDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
