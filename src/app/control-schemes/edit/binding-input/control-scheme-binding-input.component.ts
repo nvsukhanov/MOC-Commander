@@ -10,7 +10,7 @@ import {
     GamepadButtonState,
     GamepadButtonType,
     GamepadInputMethod
-} from '../../store';
+} from '../../../store';
 import { JsonPipe, NgSwitch, NgSwitchCase } from '@angular/common';
 import { LetModule, PushModule } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';

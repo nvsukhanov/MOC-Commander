@@ -1,6 +1,6 @@
 import { TaskSuppressor } from '../task-suppressor';
-import { MotorFeature } from '../../../lego-hub/features';
 import { PortCommandTask, PortCommandTaskType } from '../../../common';
+import { MOTOR_LIMITS } from '../../../lego-hub';
 
 export class SetSpeedTaskSuppressor extends TaskSuppressor {
     public static readonly speedThreshold = 10;
@@ -12,7 +12,7 @@ export class SetSpeedTaskSuppressor extends TaskSuppressor {
         if (task.taskType !== PortCommandTaskType.SetSpeed) {
             return null;
         }
-        if ((Math.abs(task.speed) === MotorFeature.maxSpeed || task.speed === 0) && lastTaskOfKindInQueue.speed !== task.speed) {
+        if ((Math.abs(task.speed) === MOTOR_LIMITS.maxAbsSpeed || task.speed === 0) && lastTaskOfKindInQueue.speed !== task.speed) {
             return false;
         }
         return Math.abs(task.speed - lastTaskOfKindInQueue.speed) < SetSpeedTaskSuppressor.speedThreshold;

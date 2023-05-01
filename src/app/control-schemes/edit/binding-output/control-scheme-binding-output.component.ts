@@ -1,23 +1,34 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AttachedIO, HUB_ATTACHED_IO_SELECTORS, HubIoOperationMode, HUBS_SELECTORS } from '../../store';
+import { AttachedIO, HUB_ATTACHED_IO_SELECTORS, HubIoOperationMode, HUBS_SELECTORS } from '../../../store';
 import { MatSelectModule } from '@angular/material/select';
 import { LetModule, PushModule } from '@ngrx/component';
 import { NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { combineLatest, map, Observable, of, shareReplay, startWith, Subscription, switchMap } from 'rxjs';
-import { IOType } from '../../lego-hub';
-import { ControlSchemeBindingInputControl } from '../control-scheme-binding-input/control-scheme-binding-input.component';
+import { IOType } from '../../../lego-hub';
+import { ControlSchemeBindingInputControl } from '../binding-input';
 import { TranslocoModule } from '@ngneat/transloco';
-import { IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '../../i18n';
+import { IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '../../../i18n';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import { RenderEditOutputConfigurationDirective } from '../edit-output-configuration';
 
-export type ControlSchemeBindingOutputControl = FormGroup<{
+export type LinearOutputConfigurationForm = FormGroup<{
+    maxSpeed: FormControl<number>,
+    isToggle: FormControl<boolean>,
+    invert: FormControl<boolean>,
+    power: FormControl<number>
+}>;
+
+export type ControlSchemeBindingOutputLinearControl = FormGroup<{
     hubId: FormControl<string>,
     portId: FormControl<number>,
-    operationMode: FormControl<HubIoOperationMode>,
-}>
+    operationMode: FormControl<HubIoOperationMode.Linear>,
+    configuration: LinearOutputConfigurationForm
+}>;
+
+export type ControlSchemeBindingOutputControl = ControlSchemeBindingOutputLinearControl;
 
 @Component({
     standalone: true,
@@ -38,14 +49,17 @@ export type ControlSchemeBindingOutputControl = FormGroup<{
         NgSwitchDefault,
         IoOperationTypeToL10nKeyPipe,
         MatCardModule,
-        MatListModule
+        MatListModule,
+        RenderEditOutputConfigurationDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeBindingOutputComponent {
     public readonly hubsList$ = this.store.select(HUBS_SELECTORS.selectHubs);
 
-    private _formGroup?: ControlSchemeBindingOutputControl;
+    private _outputFormControl?: ControlSchemeBindingOutputControl;
+
+    private _inputFormControl?: ControlSchemeBindingInputControl;
 
     private _availableIOs$: Observable<AttachedIO[]> = of([]);
 
@@ -69,7 +83,7 @@ export class ControlSchemeBindingOutputComponent {
         this.selectedPortChangeTrackingSubscription?.unsubscribe();
         const inputGroup = formGroup.controls.input;
         const outputGroup = formGroup.controls.output;
-        this._formGroup = outputGroup;
+        this._outputFormControl = outputGroup;
 
         this._ioType$ = combineLatest([
             outputGroup.controls.hubId.valueChanges.pipe(startWith(outputGroup.controls.hubId.value)),
@@ -110,10 +124,16 @@ export class ControlSchemeBindingOutputComponent {
             }),
             shareReplay({ bufferSize: 1, refCount: true })
         );
+
+        this._inputFormControl = inputGroup;
     }
 
-    public get formControl(): ControlSchemeBindingOutputControl | undefined {
-        return this._formGroup;
+    public get inputFormControl(): ControlSchemeBindingInputControl | undefined {
+        return this._inputFormControl;
+    }
+
+    public get outputFormControl(): ControlSchemeBindingOutputLinearControl | undefined {
+        return this._outputFormControl;
     }
 
     public get ioType$(): Observable<IOType | null> {

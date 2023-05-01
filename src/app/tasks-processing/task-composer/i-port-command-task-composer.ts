@@ -5,5 +5,6 @@ export interface IPortCommandTaskComposer {
     composeTask(
         binding: ControlSchemeBinding,
         inputValue: number,
+        previousTask?: PortCommandTask,
     ): PortCommandTask | null;
 }

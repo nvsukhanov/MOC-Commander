@@ -1,11 +1,7 @@
 import { OutboundMessenger, PortOperationsOutboundMessageFactoryService } from '../messages';
-import { MotorProfile, PortOperationCompletionInformation, PortOperationStartupInformation } from '../constants';
+import { MOTOR_LIMITS, MotorProfile, PortOperationCompletionInformation, PortOperationStartupInformation } from '../constants';
 
 export class MotorFeature {
-    public static readonly maxSpeed = 100;
-
-    public static readonly maxPower = 100;
-
     constructor(
         private readonly messenger: OutboundMessenger,
         private readonly portOperationsOutboundMessageFactoryService: PortOperationsOutboundMessageFactoryService,
@@ -15,13 +11,13 @@ export class MotorFeature {
     public setSpeed(
         portId: number,
         speed: number,
-        power: number = MotorFeature.maxPower,
+        power: number = MOTOR_LIMITS.maxPower,
         profile: MotorProfile = MotorProfile.dontUseProfiles,
         startupMode: PortOperationStartupInformation = PortOperationStartupInformation.executeImmediately,
         completionMode: PortOperationCompletionInformation = PortOperationCompletionInformation.commandFeedback,
     ): Promise<void> {
-        if (Math.abs(speed) > MotorFeature.maxSpeed) {
-            throw new Error(`Speed must be between ${-MotorFeature.maxSpeed} and ${MotorFeature.maxSpeed}`);
+        if (Math.abs(speed) > MOTOR_LIMITS.maxAbsSpeed) { // TODO: clamp speed & power
+            throw new Error(`Speed must be between ${-MOTOR_LIMITS.maxAbsSpeed} and ${MOTOR_LIMITS.maxAbsSpeed}`);
         }
         return this.messenger.send(this.portOperationsOutboundMessageFactoryService.startRotation(
             portId,

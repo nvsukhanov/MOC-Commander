@@ -42,16 +42,24 @@ export class HubPortTasksEffects {
                 }
                 return EMPTY;
             }),
-            map(([ scheme, ...bindingValues ]) => {
+            concatLatestFrom(() => this.store.select(HUB_PORT_TASKS_SELECTORS.selectLastExecutedTasksEntities)),
+            map(([ [ scheme, ...bindingValues ], lastExecutedTasksEntities ]) => {
                 const tasks = scheme.bindings.map((binding, index) => {
                     const value = bindingValues[index];
-                    return this.taskComposer.composeTask(binding, value);
+                    const lastExecutedBindingTask = lastExecutedTasksEntities[lastExecutedTaskIdFn(binding.output.hubId, binding.output.portId)];
+                    return this.taskComposer.composeTask(
+                        binding,
+                        value,
+                        lastExecutedBindingTask
+                    );
                 });
-                return tasks.filter((task) => !!task) as PortCommandTask[];
+                return [
+                    tasks.filter((task) => !!task) as PortCommandTask[],
+                    lastExecutedTasksEntities
+                ] as [ PortCommandTask[], Dictionary<PortCommandTask> ];
             }),
             concatLatestFrom(() => this.store.select(HUB_PORT_TASKS_SELECTORS.selectQueue)),
-            concatLatestFrom(() => this.store.select(HUB_PORT_TASKS_SELECTORS.selectLastExecutedTasksEntities)),
-            map(([ [ nextTasks, queue ], lastExecutedTasks ]) => this.trimQueue(nextTasks, queue, lastExecutedTasks)),
+            map(([ [ nextTasks, lastExecutedTasks ], queue ]) => this.trimQueue(nextTasks, queue, lastExecutedTasks)),
             map((queue) => HUB_PORT_TASKS_ACTIONS.setQueue({ tasks: queue })),
         ) as Observable<Action>;
     });
