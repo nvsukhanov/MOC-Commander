@@ -75,5 +75,11 @@
   "schemeBindingValidationHubMissing": "Attached hub is missing",
   "schemeBindingValidationHubIOIsMissing": "Attached device is missing",
   "schemeBindingValidationHubIOCapabilitiesMismatch": "Attached device has incompatible capabilities",
-  "portCommandTaskTypeSetLinearSpeed": "Speed: {speed}"
+  "portCommandTaskTypeSetLinearSpeed": "Speed: {speed}",
+  "schemeOutputBindingNoConfigurationRequired": "No configuration required",
+  "schemeOutputBindingConfigurationLinearToggleParameter": "Treat button as switch",
+  "schemeOutputBindingConfigurationLinearSpeedParameter": "Speed",
+  "schemeOutputBindingConfigurationLinearMaximumSpeedParameter": "Maximum speed",
+  "schemeOutputBindingConfigurationLinearInvertParameter": "Invert",
+  "schemeOutputBindingConfigurationLinearPowerParameter": "Output power"
 }

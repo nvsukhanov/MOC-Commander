@@ -41,7 +41,7 @@ export type BindingLinearOutput = {
     portId: number;
     operationMode: HubIoOperationMode.Linear;
     configuration: {
-        speed: number;
+        maxSpeed: number;
         isToggle: boolean;
         invert: boolean;
         power: number;

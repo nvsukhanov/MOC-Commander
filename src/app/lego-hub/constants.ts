@@ -119,6 +119,13 @@ export enum PortModeSymbol {
     generic = ''
 }
 
+export const MOTOR_LIMITS = {
+    maxAbsSpeed: 100,
+    minAbsSpeed: 15,
+    minPower: 10,
+    maxPower: 100,
+};
+
 export enum PortOperationStartupInformation {
     bufferIfNecessary = 0b00000000,
     executeImmediately = 0b00010000

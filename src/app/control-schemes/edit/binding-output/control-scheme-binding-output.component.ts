@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { AttachedIO, HUB_ATTACHED_IO_SELECTORS, HubIoOperationMode, HUBS_SELECTORS } from '../../../store';
 import { MatSelectModule } from '@angular/material/select';
 import { LetModule, PushModule } from '@ngrx/component';
-import { JsonPipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
+import { NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { combineLatest, map, Observable, of, shareReplay, startWith, Subscription, switchMap } from 'rxjs';
 import { IOType } from '../../../lego-hub';
@@ -12,9 +12,10 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '../../../i18n';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import { RenderEditOutputConfigurationDirective } from '../edit-output-configuration';
 
 export type LinearOutputConfigurationForm = FormGroup<{
-    speed: FormControl<number>,
+    maxSpeed: FormControl<number>,
     isToggle: FormControl<boolean>,
     invert: FormControl<boolean>,
     power: FormControl<number>
@@ -49,14 +50,16 @@ export type ControlSchemeBindingOutputControl = ControlSchemeBindingOutputLinear
         IoOperationTypeToL10nKeyPipe,
         MatCardModule,
         MatListModule,
-        JsonPipe
+        RenderEditOutputConfigurationDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeBindingOutputComponent {
     public readonly hubsList$ = this.store.select(HUBS_SELECTORS.selectHubs);
 
-    private _formGroup?: ControlSchemeBindingOutputControl;
+    private _outputFormControl?: ControlSchemeBindingOutputControl;
+
+    private _inputFormControl?: ControlSchemeBindingInputControl;
 
     private _availableIOs$: Observable<AttachedIO[]> = of([]);
 
@@ -80,7 +83,7 @@ export class ControlSchemeBindingOutputComponent {
         this.selectedPortChangeTrackingSubscription?.unsubscribe();
         const inputGroup = formGroup.controls.input;
         const outputGroup = formGroup.controls.output;
-        this._formGroup = outputGroup;
+        this._outputFormControl = outputGroup;
 
         this._ioType$ = combineLatest([
             outputGroup.controls.hubId.valueChanges.pipe(startWith(outputGroup.controls.hubId.value)),
@@ -121,10 +124,16 @@ export class ControlSchemeBindingOutputComponent {
             }),
             shareReplay({ bufferSize: 1, refCount: true })
         );
+
+        this._inputFormControl = inputGroup;
     }
 
-    public get formControl(): ControlSchemeBindingOutputLinearControl | undefined {
-        return this._formGroup;
+    public get inputFormControl(): ControlSchemeBindingInputControl | undefined {
+        return this._inputFormControl;
+    }
+
+    public get outputFormControl(): ControlSchemeBindingOutputLinearControl | undefined {
+        return this._outputFormControl;
     }
 
     public get ioType$(): Observable<IOType | null> {

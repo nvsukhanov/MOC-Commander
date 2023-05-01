@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnDestroy, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS, ControlScheme, GAMEPAD_ACTIONS, HUB_ATTACHED_IO_SELECTORS, HUBS_SELECTORS } from '../../../store';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,25 +9,15 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { of, Subject, take, takeUntil } from 'rxjs';
 import { Actions, concatLatestFrom, ofType } from '@ngrx/effects';
-import { ControlSchemeBindingInputComponent, ControlSchemeBindingInputControl } from '../binding-input';
-import { ControlSchemeBindingOutputComponent, ControlSchemeBindingOutputLinearControl } from '../binding-output';
+import { ControlSchemeBindingInputComponent } from '../binding-input';
+import { ControlSchemeBindingOutputComponent } from '../binding-output';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { WINDOW } from '../../../common'; // TODO: create alias for this
 import { MatInputModule } from '@angular/material/input';
 import { ControlSchemeOutputFormFactoryService } from './control-scheme-output-form-factory.service';
+import { BindingForm, EditSchemeForm } from '../types';
 
 export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
-
-type BindingForm = FormGroup<{
-    id: FormControl<string>,
-    input: ControlSchemeBindingInputControl,
-    output: ControlSchemeBindingOutputLinearControl
-}>;
-
-type EditSchemeForm = FormGroup<{
-    name: FormControl<string>,
-    bindings: FormArray<BindingForm>
-}>;
 
 @Component({
     standalone: true,

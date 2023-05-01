@@ -11,5 +11,6 @@ export type PortCommandSetLinearSpeedTask = {
     bindingId: string,
     isNeutral: boolean,
     speed: number,
+    power: number,
     createdAt: number,
 }

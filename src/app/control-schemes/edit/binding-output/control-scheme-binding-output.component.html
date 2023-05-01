@@ -1,4 +1,4 @@
-<ng-container *ngIf="formControl">
+<ng-container *ngIf="outputFormControl && inputFormControl">
     <mat-card>
         <mat-card-header>
             <mat-card-title>{{ 'bindingOutputSection' | transloco }}</mat-card-title>
@@ -7,7 +7,7 @@
         <mat-card-content>
             <mat-form-field>
                 <mat-label>Hub</mat-label>
-                <mat-select [formControl]="formControl.controls.hubId">
+                <mat-select [formControl]="outputFormControl.controls.hubId">
                     <mat-option *ngFor="let hubConfiguration of (hubsList$ | ngrxPush)"
                                 [value]="hubConfiguration.hubId">
                         {{ hubConfiguration.name }}
@@ -16,9 +16,9 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>{{ 'bindingOutputSectionPortLabel' | transloco }}</mat-label>
-                <mat-select [formControl]="formControl.controls.portId">
+                <mat-select [formControl]="outputFormControl.controls.portId">
                     <mat-select-trigger>
-                        {{ formControl.controls.portId.value }}: {{ (ioType$ | ngrxPush)! | ioTypeToL10nKey | transloco }}
+                        {{ outputFormControl.controls.portId.value }}: {{ (ioType$ | ngrxPush)! | ioTypeToL10nKey | transloco }}
                     </mat-select-trigger>
                     <mat-option *ngFor="let io of (availableIOs$ | ngrxPush)"
                                 [value]="io.portId">
@@ -29,7 +29,7 @@
 
             <mat-form-field>
                 <mat-label>{{ 'bindingOutputSectionOperationModeLabel' | transloco }}</mat-label>
-                <mat-select [formControl]="formControl.controls.operationMode">
+                <mat-select [formControl]="outputFormControl.controls.operationMode">
                     <mat-option *ngFor="let ioOperationMode of availableIOOperationModes$ | ngrxPush"
                                 [value]="ioOperationMode">
                         {{ ioOperationMode | ioOperationTypeToL10nKey | transloco }}
@@ -46,7 +46,10 @@
         </mat-card-header>
 
         <mat-card-content>
-            <pre>{{ formControl.controls.configuration.getRawValue() | json }}</pre>
+            <section appRenderEditOutputConfiguration
+                     [outputFormControl]="outputFormControl"
+                     [inputFormControl]="inputFormControl"
+            ></section>
         </mat-card-content>
     </mat-card>
 </ng-container>

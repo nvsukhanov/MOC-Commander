@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AttachedIO, HubIoOperationMode } from '../../../store';
 import { ControlSchemeBindingOutputControl, ControlSchemeBindingOutputLinearControl } from '../binding-output';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MotorFeature } from '../../../lego-hub';
+import { MOTOR_LIMITS } from '../../../lego-hub';
 
 @Injectable({ providedIn: 'root' })
 export class ControlSchemeOutputFormFactoryService {
@@ -32,22 +32,22 @@ export class ControlSchemeOutputFormFactoryService {
             portId: this.formBuilder.control(io.portId, { nonNullable: true, validators: [ Validators.required ] }),
             operationMode: this.formBuilder.control(operationMode, { nonNullable: true, validators: [ Validators.required ] }),
             configuration: this.formBuilder.group({
-                speed: this.formBuilder.control(MotorFeature.maxSpeed, {
+                maxSpeed: this.formBuilder.control(MOTOR_LIMITS.maxAbsSpeed, {
                     nonNullable: true,
                     validators: [
                         Validators.required,
-                        Validators.min(0),
-                        Validators.max(MotorFeature.maxSpeed)
+                        Validators.min(MOTOR_LIMITS.minAbsSpeed),
+                        Validators.max(MOTOR_LIMITS.maxAbsSpeed)
                     ]
                 }),
                 isToggle: this.formBuilder.control(false, { nonNullable: true }),
                 invert: this.formBuilder.control(false, { nonNullable: true }),
-                power: this.formBuilder.control(MotorFeature.maxPower, {
+                power: this.formBuilder.control(MOTOR_LIMITS.maxPower, {
                     nonNullable: true,
                     validators: [
                         Validators.required,
-                        Validators.min(0),
-                        Validators.max(MotorFeature.maxPower)
+                        Validators.min(MOTOR_LIMITS.minPower),
+                        Validators.max(MOTOR_LIMITS.maxPower)
                     ]
                 })
             })

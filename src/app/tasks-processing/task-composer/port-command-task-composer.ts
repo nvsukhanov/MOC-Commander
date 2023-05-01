@@ -8,18 +8,20 @@ export abstract class PortCommandTaskComposer implements IPortCommandTaskCompose
     protected abstract handle(
         binding: ControlSchemeBinding,
         inputValue: number,
+        previousTask?: PortCommandTask,
     ): PortCommandTask | null;
 
     public composeTask(
         binding: ControlSchemeBinding,
         inputValue: number,
+        previousTask?: PortCommandTask,
     ): PortCommandTask | null {
-        const result = this.handle(binding, inputValue);
+        const result = this.handle(binding, inputValue, previousTask);
         if (result) {
             return result;
         }
         if (this.next) {
-            return this.next.composeTask(binding, inputValue);
+            return this.next.composeTask(binding, inputValue, previousTask);
         }
         return null;
     }
