@@ -1,23 +1,33 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AttachedIO, HUB_ATTACHED_IO_SELECTORS, HubIoOperationMode, HUBS_SELECTORS } from '../../store';
+import { AttachedIO, HUB_ATTACHED_IO_SELECTORS, HubIoOperationMode, HUBS_SELECTORS } from '../../../store';
 import { MatSelectModule } from '@angular/material/select';
 import { LetModule, PushModule } from '@ngrx/component';
-import { NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
+import { JsonPipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { combineLatest, map, Observable, of, shareReplay, startWith, Subscription, switchMap } from 'rxjs';
-import { IOType } from '../../lego-hub';
-import { ControlSchemeBindingInputControl } from '../control-scheme-binding-input/control-scheme-binding-input.component';
+import { IOType } from '../../../lego-hub';
+import { ControlSchemeBindingInputControl } from '../binding-input';
 import { TranslocoModule } from '@ngneat/transloco';
-import { IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '../../i18n';
+import { IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '../../../i18n';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 
-export type ControlSchemeBindingOutputControl = FormGroup<{
+export type LinearOutputConfigurationForm = FormGroup<{
+    speed: FormControl<number>,
+    isToggle: FormControl<boolean>,
+    invert: FormControl<boolean>,
+    power: FormControl<number>
+}>;
+
+export type ControlSchemeBindingOutputLinearControl = FormGroup<{
     hubId: FormControl<string>,
     portId: FormControl<number>,
-    operationMode: FormControl<HubIoOperationMode>,
-}>
+    operationMode: FormControl<HubIoOperationMode.Linear>,
+    configuration: LinearOutputConfigurationForm
+}>;
+
+export type ControlSchemeBindingOutputControl = ControlSchemeBindingOutputLinearControl;
 
 @Component({
     standalone: true,
@@ -38,7 +48,8 @@ export type ControlSchemeBindingOutputControl = FormGroup<{
         NgSwitchDefault,
         IoOperationTypeToL10nKeyPipe,
         MatCardModule,
-        MatListModule
+        MatListModule,
+        JsonPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -112,7 +123,7 @@ export class ControlSchemeBindingOutputComponent {
         );
     }
 
-    public get formControl(): ControlSchemeBindingOutputControl | undefined {
+    public get formControl(): ControlSchemeBindingOutputLinearControl | undefined {
         return this._formGroup;
     }
 

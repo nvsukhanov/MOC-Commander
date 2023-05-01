@@ -1,2 +1,2 @@
-export * from './control-scheme-edit';
-export * from './control-scheme-edit-form';
+export * from './control-scheme-edit.component';
+export * from './edit-form';

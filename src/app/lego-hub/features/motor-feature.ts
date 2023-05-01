@@ -2,9 +2,9 @@ import { OutboundMessenger, PortOperationsOutboundMessageFactoryService } from '
 import { MotorProfile, PortOperationCompletionInformation, PortOperationStartupInformation } from '../constants';
 
 export class MotorFeature {
-    public static readonly maxSpeed = 100;
+    public static readonly maxSpeed = 100; // TODO: move to constants
 
-    public static readonly maxPower = 100;
+    public static readonly maxPower = 100; // TODO: move to constants
 
     constructor(
         private readonly messenger: OutboundMessenger,

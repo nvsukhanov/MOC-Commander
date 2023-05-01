@@ -45,6 +45,8 @@
             <mat-card-title>{{ 'bindingConfigurationSection' | transloco }}</mat-card-title>
         </mat-card-header>
 
-        <mat-card-content>some content will be here</mat-card-content>
+        <mat-card-content>
+            <pre>{{ formControl.controls.configuration.getRawValue() | json }}</pre>
+        </mat-card-content>
     </mat-card>
 </ng-container>

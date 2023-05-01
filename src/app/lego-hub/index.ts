@@ -7,3 +7,4 @@ export * from './messages';
 export * from './errors';
 export * from './hub-factory.service';
 export * from './middleware';
+export * from './features';
