@@ -28,6 +28,8 @@ import { TranslocoModule } from '@ngneat/transloco';
 export class LinearOutputConfigurationEditComponent implements IOutputConfigurationRenderer<HubIoOperationMode.Linear> {
     public readonly gamepadInputMethod = GamepadInputMethod;
 
+    protected readonly GamepadInputMethod = GamepadInputMethod;
+
     private _outputBinding?: ControlSchemeBindingOutputLinearControl;
 
     private _inputMethodControl?: FormControl<GamepadInputMethod>;
@@ -62,6 +64,4 @@ export class LinearOutputConfigurationEditComponent implements IOutputConfigurat
             this.cd.detectChanges();
         }
     }
-
-    protected readonly GamepadInputMethod = GamepadInputMethod;
 }

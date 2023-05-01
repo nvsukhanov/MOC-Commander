@@ -3,6 +3,8 @@ import { PortModeName } from '../lego-hub';
 
 export enum HubIoOperationMode {
     Linear = 'linear',
+    // Servo = 'servo',
+    // SetColor = 'set-color',
 }
 
 export const HUB_IO_CONTROL_METHODS: { [k in GamepadInputMethod]: { [p in HubIoOperationMode]?: PortModeName } } = {
