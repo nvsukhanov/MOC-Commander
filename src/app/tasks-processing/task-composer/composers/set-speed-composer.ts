@@ -4,6 +4,8 @@ import { MOTOR_LIMITS } from '../../../lego-hub';
 import { PortCommandSetLinearSpeedTask, PortCommandTask, PortCommandTaskType } from '../../../common';
 
 export class SetSpeedComposer extends PortCommandTaskComposer {
+    private readonly speedSnapToZero = 15;
+
     protected handle(
         binding: ControlSchemeBinding,
         inputValue: number,
@@ -70,6 +72,6 @@ export class SetSpeedComposer extends PortCommandTaskComposer {
     private snapSpeedToZero(
         speed: number,
     ): number {
-        return Math.abs(speed) < MOTOR_LIMITS.minAbsSpeed ? 0 : speed;
+        return Math.abs(speed) < this.speedSnapToZero ? 0 : speed;
     }
 }

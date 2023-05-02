@@ -1,5 +1,5 @@
 import { OutboundMessenger, PortOperationsOutboundMessageFactoryService } from '../messages';
-import { MOTOR_LIMITS, MotorProfile, PortOperationCompletionInformation, PortOperationStartupInformation } from '../constants';
+import { MOTOR_LIMITS, MotorProfile, MotorServoEndState, PortOperationCompletionInformation, PortOperationStartupInformation } from '../constants';
 
 export class MotorFeature {
     constructor(
@@ -16,9 +16,6 @@ export class MotorFeature {
         startupMode: PortOperationStartupInformation = PortOperationStartupInformation.executeImmediately,
         completionMode: PortOperationCompletionInformation = PortOperationCompletionInformation.commandFeedback,
     ): Promise<void> {
-        if (Math.abs(speed) > MOTOR_LIMITS.maxAbsSpeed) { // TODO: clamp speed & power
-            throw new Error(`Speed must be between ${-MOTOR_LIMITS.maxAbsSpeed} and ${MOTOR_LIMITS.maxAbsSpeed}`);
-        }
         return this.messenger.send(this.portOperationsOutboundMessageFactoryService.startRotation(
             portId,
             speed,
@@ -26,6 +23,39 @@ export class MotorFeature {
             profile,
             startupMode,
             completionMode
+        ));
+    }
+
+    public goToAbsoluteDegree(
+        portId: number,
+        absoluteDegree: number,
+        speed: number = MOTOR_LIMITS.maxAbsSpeed,
+        power: number = MOTOR_LIMITS.maxPower,
+        endState: MotorServoEndState = MotorServoEndState.hold,
+        profile: MotorProfile = MotorProfile.dontUseProfiles,
+        startupMode: PortOperationStartupInformation = PortOperationStartupInformation.executeImmediately,
+        completionMode: PortOperationCompletionInformation = PortOperationCompletionInformation.commandFeedback,
+    ): Promise<void> {
+        return this.messenger.send(this.portOperationsOutboundMessageFactoryService.goToAbsolutePosition(
+            portId,
+            absoluteDegree,
+            speed,
+            power,
+            endState,
+            profile,
+            startupMode,
+            completionMode
+        ));
+    }
+
+    // sets absolute zero degree position of motor (relative to current position)
+    public setAbsoluteZeroDegree(
+        portId: number,
+        absolutePosition: number,
+    ): Promise<void> {
+        return this.messenger.send(this.portOperationsOutboundMessageFactoryService.presetEncoder(
+            portId,
+            absolutePosition,
         ));
     }
 }
