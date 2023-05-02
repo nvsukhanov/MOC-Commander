@@ -121,10 +121,18 @@ export enum PortModeSymbol {
 
 export const MOTOR_LIMITS = {
     maxAbsSpeed: 100,
-    minAbsSpeed: 15,
-    minPower: 10,
+    minAbsSpeed: -100,
+    minPower: 0,
     maxPower: 100,
+    minRawAngle: -0x7FFFFFF, // -2147483647
+    maxRawAngle: 0x7FFFFFF, // 2147483647
 };
+
+export enum MotorServoEndState {
+    float = 0x00,
+    hold = 0x7e, // 126
+    brake = 0x7f, // 127
+}
 
 export enum PortOperationStartupInformation {
     bufferIfNecessary = 0b00000000,
@@ -143,8 +151,14 @@ export enum MotorProfile {
     useAccelerationAndDecelerationProfiles = 0b00000011,
 }
 
-export enum MotorSubCommand {
+export enum OutputSubCommand {
     startSpeed = 0x07,
+    gotoAbsolutePosition = 0x0D, // 13
+    writeDirectModeData = 0x51, // 81
+}
+
+export enum WriteDirectModeDataSubCommand {
+    presetEncoder = 0x02,
 }
 
 export type SubscribableHubProperties = HubProperty.RSSI | HubProperty.batteryVoltage | HubProperty.button | HubProperty.advertisingName;

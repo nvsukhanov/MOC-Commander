@@ -36,7 +36,7 @@ export class ControlSchemeOutputFormFactoryService {
                     nonNullable: true,
                     validators: [
                         Validators.required,
-                        Validators.min(MOTOR_LIMITS.minAbsSpeed),
+                        Validators.min(0),
                         Validators.max(MOTOR_LIMITS.maxAbsSpeed)
                     ]
                 }),
