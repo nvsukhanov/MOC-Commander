@@ -5,12 +5,18 @@
 
 .scheme-raw,
 .binding-actions,
-.binding-config {
-    margin-top: 20px;
+.binding {
+    margin-bottom: 20px;
 }
 
-.binding-config {
+.binding-details {
     display: grid;
-    grid-template-columns: minmax(200px, 1fr) minmax(600px, 3fr);
+    grid-template-columns: minmax(200px, 1fr) 1px minmax(200px, 1fr) 1px minmax(200px, 1fr);
     grid-gap: 20px;
+    margin: 0 10px;
+}
+
+.binding-actions {
+    display: flex;
+    justify-content: flex-end;
 }

@@ -10,7 +10,8 @@ import {
     HubProperty,
     LoggingMiddlewareFactoryService,
     LpuConnectionError,
-    LpuConnectionErrorFactoryService
+    LpuConnectionErrorFactoryService,
+    MessageType
 } from '../../lego-hub';
 import { PrefixedConsoleLoggerFactoryService, WINDOW } from '../../common';
 import { Action, Store } from '@ngrx/store';
@@ -150,11 +151,11 @@ export class HubsEffects {
             switchMap((device) => {
                 const incomingLoggerMiddleware = this.loggingMiddlewareFactory.create(
                     this.prefixedConsoleLoggerFactoryService.create(`[${device.name}] Received`),
-                    'all'
+                    [ MessageType.properties ]
                 );
                 const outgoingLoggerMiddleware = this.loggingMiddlewareFactory.create(
                     this.prefixedConsoleLoggerFactoryService.create(`[${device.name}] Sending`),
-                    'all'
+                    [ MessageType.properties ]
                 );
                 const communicationNotifierMiddleware = this.communicationNotifierMiddlewareFactory.create();
 

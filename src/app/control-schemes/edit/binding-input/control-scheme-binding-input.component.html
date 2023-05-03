@@ -1,25 +1,39 @@
-<mat-card class="binding-input">
-    <mat-card-header>
-        <mat-card-title>{{ 'bindingInputSection' | transloco }}</mat-card-title>
-        <mat-card-subtitle>{{ gamepadNameL10nKey$ | ngrxPush | transloco }}</mat-card-subtitle>
-    </mat-card-header>
+<h2>
+    {{ 'bindingInputSection' | transloco }}
+</h2>
 
-    <mat-card-content [ngSwitch]="inputMethod$ | ngrxPush">
-        <ng-container *ngSwitchCase="inputMethods.Button">
-            <ng-container *ngrxLet="buttonConfig$ | ngrxPush; let buttonConfig">
-                <ng-container [ngSwitch]="buttonConfig!.buttonType">
-                    <div *ngSwitchCase="gamepadButtonsTypes.Button">
-                        {{ (buttonConfig$ | ngrxPush)?.nameL10nKey | transloco }}
-                        | {{ 'gamepadPlugins.gamepadButtonState' | transloco: (buttonValue$ | ngrxPush) }}
-                    </div>
-                    <div *ngSwitchCase="gamepadButtonsTypes.Trigger">
-                        {{ (buttonConfig$ | ngrxPush)?.nameL10nKey | transloco }} | {{ (buttonValue$ | ngrxPush)?.value }}
-                    </div>
-                </ng-container>
+<p>
+    {{ gamepadNameL10nKey$ | ngrxPush | transloco }}
+</p>
+
+<section [ngSwitch]="inputMethod$ | ngrxPush">
+    <ng-container *ngSwitchCase="inputMethods.Button">
+        <ng-container *ngIf="buttonConfig$ | ngrxPush; let buttonConfig; else noButtonConfig">
+            <ng-container [ngSwitch]="buttonConfig!.buttonType">
+                <div *ngSwitchCase="gamepadButtonsTypes.Button">
+                    {{ (buttonConfig$ | ngrxPush)?.nameL10nKey | transloco }}
+                    | {{ 'gamepadPlugins.gamepadButtonState' | transloco: (buttonValue$ | ngrxPush) }}
+                </div>
+                <div *ngSwitchCase="gamepadButtonsTypes.Trigger">
+                    {{ (buttonConfig$ | ngrxPush)?.nameL10nKey | transloco }} | {{ (buttonValue$ | ngrxPush)?.value }}
+                </div>
             </ng-container>
         </ng-container>
-        <ng-container *ngSwitchCase="inputMethods.Axis">
-            {{ (axisConfig$ | ngrxPush)?.nameL10nKey | transloco }} | {{ axisValue$ | ngrxPush }}
-        </ng-container>
-    </mat-card-content>
-</mat-card>
+        <ng-template #noButtonConfig>
+            <p>
+                {{ 'bindingInputButtonOfUnknownGamepad' | transloco }}
+            </p>
+        </ng-template>
+    </ng-container>
+    <ng-container *ngSwitchCase="inputMethods.Axis">
+        <p *ngIf="axisConfig$ | ngrxPush; let axisConfig; else noAxisConfig">
+            {{ axisConfig.nameL10nKey | transloco }} | {{ axisValue$ | ngrxPush }}
+        </p>
+        <ng-template #noAxisConfig>
+            <p>
+                {{ 'bindingInputAxisOfUnknownGamepad' | transloco }}
+            </p>
+        </ng-template>
+
+    </ng-container>
+</section>

@@ -55,7 +55,7 @@ const REDUCERS: ActionReducerMap<IState> = {
 
 export function localStorageSyncReducer(reducer: ActionReducer<IState>): ActionReducer<IState> {
     return localStorageSync({
-        keys: [ 'controlSchemes' ] satisfies Array<keyof IState>,
+        keys: [ 'controlSchemes', 'hubIOSupportedModes', 'hubPortModeInfo' ] satisfies Array<keyof IState>,
         rehydrate: true
     })(reducer);
 }

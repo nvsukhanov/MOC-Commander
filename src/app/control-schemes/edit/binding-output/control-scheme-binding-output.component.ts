@@ -10,9 +10,9 @@ import { IOType } from '../../../lego-hub';
 import { ControlSchemeBindingInputControl } from '../binding-input';
 import { TranslocoModule } from '@ngneat/transloco';
 import { IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '../../../i18n';
-import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { RenderEditOutputConfigurationDirective } from '../edit-output-configuration';
+import { BindingForm } from '../types';
 
 export type LinearOutputConfigurationForm = FormGroup<{
     maxSpeed: FormControl<number>,
@@ -48,7 +48,6 @@ export type ControlSchemeBindingOutputControl = ControlSchemeBindingOutputLinear
         NgSwitchCase,
         NgSwitchDefault,
         IoOperationTypeToL10nKeyPipe,
-        MatCardModule,
         MatListModule,
         RenderEditOutputConfigurationDirective
     ],
@@ -75,11 +74,7 @@ export class ControlSchemeBindingOutputComponent {
     }
 
     @Input()
-    public set formGroup(formGroup: FormGroup<{
-        id: FormControl<string>,
-        input: ControlSchemeBindingInputControl,
-        output: ControlSchemeBindingOutputControl
-    }>) {
+    public set formGroup(formGroup: BindingForm) {
         this.selectedPortChangeTrackingSubscription?.unsubscribe();
         const inputGroup = formGroup.controls.input;
         const outputGroup = formGroup.controls.output;

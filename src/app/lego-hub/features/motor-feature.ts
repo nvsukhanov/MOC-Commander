@@ -29,7 +29,7 @@ export class MotorFeature {
     public goToAbsoluteDegree(
         portId: number,
         absoluteDegree: number,
-        speed: number = MOTOR_LIMITS.maxAbsSpeed,
+        speed: number = MOTOR_LIMITS.maxSpeed,
         power: number = MOTOR_LIMITS.maxPower,
         endState: MotorServoEndState = MotorServoEndState.hold,
         profile: MotorProfile = MotorProfile.dontUseProfiles,

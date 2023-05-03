@@ -11,7 +11,7 @@ import {
     GamepadButtonType,
     GamepadInputMethod
 } from '../../../store';
-import { JsonPipe, NgSwitch, NgSwitchCase } from '@angular/common';
+import { JsonPipe, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { LetModule, PushModule } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -38,7 +38,8 @@ export type ControlSchemeBindingInputControl = FormGroup<{
         NgSwitchCase,
         TranslocoModule,
         MatCardModule,
-        MatListModule
+        MatListModule,
+        NgIf
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -89,7 +90,7 @@ export class ControlSchemeBindingInputComponent {
     }
 
     @Input()
-    public set formGroup(formGroup: ControlSchemeBindingInputControl) {
+    public set inputFormGroup(formGroup: ControlSchemeBindingInputControl) {
         this._gamepadNameL10nKey$ = formGroup.controls.gamepadId.valueChanges.pipe(
             startWith(formGroup.controls.gamepadId.value),
             switchMap((gamepadId) => this.store.select(GAMEPAD_SELECTORS.selectById(gamepadId))),

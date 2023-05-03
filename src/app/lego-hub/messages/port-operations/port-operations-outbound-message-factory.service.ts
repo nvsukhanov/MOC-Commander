@@ -16,11 +16,11 @@ import { numberToUint32LEArray } from '../../helpers';
 export class PortOperationsOutboundMessageFactoryService {
     public startRotation(
         portId: number,
-        speed: number = MOTOR_LIMITS.maxAbsSpeed,
+        speed: number = MOTOR_LIMITS.maxSpeed,
         power: number = MOTOR_LIMITS.maxPower,
         profile: MotorProfile = MotorProfile.dontUseProfiles,
         startupMode: PortOperationStartupInformation = PortOperationStartupInformation.bufferIfNecessary,
-        completionMode: PortOperationCompletionInformation = PortOperationCompletionInformation.commandFeedback,
+        completionMode: PortOperationCompletionInformation = PortOperationCompletionInformation.noAction,
     ): RawMessage<MessageType.portOutputCommand> {
         this.ensureSpeedIsWithinLimits(speed);
         this.ensurePowerIsWithinLimits(power);
@@ -43,12 +43,12 @@ export class PortOperationsOutboundMessageFactoryService {
     public goToAbsolutePosition(
         portId: number,
         absolutePosition: number,
-        speed: number = MOTOR_LIMITS.maxAbsSpeed,
+        speed: number = MOTOR_LIMITS.maxSpeed,
         power: number = MOTOR_LIMITS.maxPower,
         endState: MotorServoEndState = MotorServoEndState.hold,
         profile: MotorProfile = MotorProfile.dontUseProfiles,
         startupMode: PortOperationStartupInformation = PortOperationStartupInformation.bufferIfNecessary,
-        completionMode: PortOperationCompletionInformation = PortOperationCompletionInformation.commandFeedback,
+        completionMode: PortOperationCompletionInformation = PortOperationCompletionInformation.noAction,
     ): RawMessage<MessageType.portOutputCommand> {
         this.ensureSpeedIsWithinLimits(speed);
         this.ensurePowerIsWithinLimits(power);
@@ -92,8 +92,8 @@ export class PortOperationsOutboundMessageFactoryService {
     }
 
     private ensureSpeedIsWithinLimits(speed: number): void {
-        if (speed > MOTOR_LIMITS.maxAbsSpeed || speed < MOTOR_LIMITS.minAbsSpeed) {
-            throw new Error(`Speed must be between ${MOTOR_LIMITS.minAbsSpeed} and ${MOTOR_LIMITS.maxAbsSpeed}`);
+        if (speed > MOTOR_LIMITS.maxSpeed || speed < MOTOR_LIMITS.minSpeed) {
+            throw new Error(`Speed must be between ${MOTOR_LIMITS.minSpeed} and ${MOTOR_LIMITS.maxSpeed}`);
         }
     }
 

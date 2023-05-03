@@ -24,6 +24,12 @@
         >
             {{ 'stopScheme' | transloco }}
         </button>
+        <a *ngIf="!(isCurrentControlSchemeRunning$ | ngrxPush)"
+           mat-stroked-button
+           class="toolbar-button"
+           [routerLink]="schemeEditSubroute">
+            {{ 'editScheme' | transloco }}
+        </a>
     </mat-toolbar>
 
     <section class="running-scheme-view">

@@ -32,5 +32,18 @@ export const ROUTER_SELECTORS = {
             }
             return null;
         }
-    )
+    ),
+    selectCurrentlyEditedSchemeId: createSelector(
+        BASE_ROUTER_SELECTORS.selectCurrentRoute,
+        (route: ActivatedRouteSnapshot | undefined) => { // TODO: looks fragile, must be a better way to do this
+            if (route
+                && route.url.length === 3
+                && route.url[0].path === CONTROL_SCHEME_ROUTE
+                && route.url[2].path === CONTROL_SCHEME_EDIT_SUBROUTE
+            ) {
+                return route.url[1].path;
+            }
+            return null;
+        }
+    ),
 } as const;

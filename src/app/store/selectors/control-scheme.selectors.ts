@@ -201,6 +201,10 @@ export const CONTROL_SCHEME_SELECTORS = {
             });
         }
     ),
+    isSchemeRunning: (schemeId: string) => createSelector(
+        CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId,
+        (runningSchemeId) => runningSchemeId === schemeId
+    ),
     isCurrentControlSchemeRunning: createSelector(
         CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId,
         ROUTER_SELECTORS.selectRouteParam('id'),

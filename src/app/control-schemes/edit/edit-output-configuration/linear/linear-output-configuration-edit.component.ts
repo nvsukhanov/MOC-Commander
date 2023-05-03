@@ -9,6 +9,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ControlSchemeBindingInputControl } from '../../binding-input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslocoModule } from '@ngneat/transloco';
+import { MatSliderModule } from '@angular/material/slider';
+import { MOTOR_LIMITS } from '../../../../lego-hub';
 
 @Component({
     standalone: true,
@@ -21,11 +23,18 @@ import { TranslocoModule } from '@ngneat/transloco';
         NgIf,
         ReactiveFormsModule,
         MatSlideToggleModule,
-        TranslocoModule
+        TranslocoModule,
+        MatSliderModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LinearOutputConfigurationEditComponent implements IOutputConfigurationRenderer<HubIoOperationMode.Linear> {
+    public readonly motorLimits = MOTOR_LIMITS;
+
+    public readonly motorSpeedStep = 10;
+
+    public readonly motorPowerStep = 10;
+
     public readonly gamepadInputMethod = GamepadInputMethod;
 
     protected readonly GamepadInputMethod = GamepadInputMethod;

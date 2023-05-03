@@ -1,1 +1,29 @@
-edit
+<ng-container *ngIf="currentlyEditedScheme$ | ngrxPush; let scheme; else schemeNotFound">
+    <mat-toolbar [color]="'primary'" class="toolbar">
+        <span>{{ 'controlSchemeEditToolbarTitle' | transloco: scheme }}</span>
+        <span class="spacer"></span>
+        <button mat-stroked-button
+                class="toolbar-button"
+                [disabled]="!form.isValid || !!(isSchemeRunning$ | ngrxPush)"
+                (click)="onSave(form.getFormValue())">
+            {{ 'saveEditedScheme' | transloco }}
+        </button>
+        <a mat-stroked-button
+           class="toolbar-button"
+           [routerLink]="['..']"
+           [disabled]="!!(isSchemeRunning$ | ngrxPush)"
+        >
+            {{ 'cancelEditScheme' | transloco }}
+        </a>
+    </mat-toolbar>
+    <app-control-scheme-edit-form class="edit-form"
+                                  #form
+                                  [scheme]="scheme"
+    ></app-control-scheme-edit-form>
+</ng-container>
+
+<ng-template #schemeNotFound>
+    <section class="scheme-is-not-found">
+        <h2>{{ 'schemeIsNotFound' | transloco }}</h2>
+    </section>
+</ng-template>

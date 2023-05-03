@@ -25,10 +25,11 @@
             </ng-template>
         </mat-list>
         <mat-action-row>
-            <button mat-button
-                    (click)="onCreate()">
+            <a mat-button
+               [routerLink]="createSchemeRoute"
+               [disabled]="!(canCreateScheme$ | ngrxPush)">
                 {{ 'createScheme' | transloco }}
-            </button>
+            </a>
         </mat-action-row>
     </mat-expansion-panel>
 </mat-accordion>

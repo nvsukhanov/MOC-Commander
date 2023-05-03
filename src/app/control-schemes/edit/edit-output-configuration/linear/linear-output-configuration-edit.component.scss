@@ -1,3 +1,24 @@
 mat-form-field {
     width: 300px;
 }
+
+.slider-label {
+    display: flex;
+    justify-content: space-between;
+
+    &-description {
+        font-weight: 400;
+    }
+
+    &-value {
+        font-weight: 600;
+    }
+}
+
+.slider {
+    width: calc(100% - 8px);
+}
+
+.parameter-section {
+    margin-bottom: 20px;
+}

@@ -1,31 +1,48 @@
 <ng-container *ngIf="outputBinding">
-    <p>
-        <mat-slide-toggle *ngIf="inputMethodControl?.value === gamepadInputMethod.Button"
-                          [formControl]="outputBinding.controls.configuration.controls.isToggle">
+    <section *ngIf="inputMethodControl?.value === gamepadInputMethod.Button"
+             class="parameter-section"
+    >
+        <mat-slide-toggle [formControl]="outputBinding.controls.configuration.controls.isToggle">
             {{ 'schemeOutputBindingConfigurationLinearToggleParameter' | transloco }}
         </mat-slide-toggle>
-    </p>
-    <mat-form-field>
-        <mat-label *ngIf="inputMethodControl?.value === GamepadInputMethod.Button; else maximumSpeedLabel">
-            {{ 'schemeOutputBindingConfigurationLinearSpeedParameter' | transloco }}
-        </mat-label>
-        <ng-template #maximumSpeedLabel>
-            <mat-label>
-                {{ 'schemeOutputBindingConfigurationLinearMaximumSpeedParameter' | transloco }}
-            </mat-label>
-        </ng-template>
-        <input matInput type="text" [formControl]="outputBinding.controls.configuration.controls.maxSpeed">
-    </mat-form-field>
-    <p>
+    </section>
+    <section class="parameter-section">
         <mat-slide-toggle [formControl]="outputBinding.controls.configuration.controls.invert">
             {{ 'schemeOutputBindingConfigurationLinearInvertParameter' | transloco }}
         </mat-slide-toggle>
-    </p>
+    </section>
+    <section class="parameter-section">
+        <div class="slider-label">
+            <label class="slider-label-description">
+                <ng-container *ngIf="inputMethodControl?.value === GamepadInputMethod.Button; else maximumSpeedLabel">
+                    {{ 'schemeOutputBindingConfigurationLinearSpeedParameter' | transloco }}
+                </ng-container>
+                <ng-template #maximumSpeedLabel>
+                    {{ 'schemeOutputBindingConfigurationLinearMaximumSpeedParameter' | transloco }}
+                </ng-template>
+            </label>
+            <label class="slider-label-value">{{ outputBinding.controls.configuration.controls.maxSpeed.value }}</label>
+        </div>
+        <mat-slider class="slider"
+                    [max]="motorLimits.maxSpeed"
+                    [min]="0"
+                    [step]="motorSpeedStep">
+            <input matSliderThumb [formControl]="outputBinding.controls.configuration.controls.maxSpeed"/>
+        </mat-slider>
+    </section>
+    <section class="parameter-section">
+        <div class="slider-label">
+            <label class="slider-label-description">
+                {{ 'schemeOutputBindingConfigurationLinearPowerParameter' | transloco }}
+            </label>
+            <label class="slider-label-value">{{ outputBinding.controls.configuration.controls.power.value }}</label>
+        </div>
 
-    <mat-form-field>
-        <mat-label>
-            {{ 'schemeOutputBindingConfigurationLinearPowerParameter' | transloco }}
-        </mat-label>
-        <input matInput type="text" [formControl]="outputBinding.controls.configuration.controls.power">
-    </mat-form-field>
+        <mat-slider class="slider"
+                    [max]="motorLimits.maxPower"
+                    [min]="motorLimits.minPower"
+                    [step]="motorPowerStep">
+            <input matSliderThumb [formControl]="outputBinding.controls.configuration.controls.power"/>
+        </mat-slider>
+    </section>
 </ng-container>

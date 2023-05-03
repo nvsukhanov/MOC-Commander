@@ -15,5 +15,14 @@ export const CONTROL_SCHEME_REDUCERS = createReducer(
     }),
     on(CONTROL_SCHEME_ACTIONS.delete, (state, { id }) => {
         return CONTROL_SCHEMES_ENTITY_ADAPTER.removeOne(id, state);
-    })
+    }),
+    on(CONTROL_SCHEME_ACTIONS.update, (state, { id, name, bindings }) => {
+        return CONTROL_SCHEMES_ENTITY_ADAPTER.updateOne({
+            id,
+            changes: {
+                name,
+                bindings
+            }
+        }, state);
+    }),
 );
