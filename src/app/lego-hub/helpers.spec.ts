@@ -1,4 +1,4 @@
-import { concatUint8ToUint16, numberToUint32LEArray, readBitAtPosition, readUint16LEArrayAsNumber } from './helpers';
+import { concatUint8Arrays, concatUint8ToUint16, numberToUint32LEArray, readBitAtPosition, readNumberFromUint8LEArray } from './helpers';
 
 describe('Helpers', () => {
     describe('readBitAtPosition', () => {
@@ -40,9 +40,19 @@ describe('Helpers', () => {
         });
     });
 
-    describe('readUint16LEArrayAsNumber', () => {
-        it('should convert an Uint8Array of 2 uint8 to a single uint16 with LE', () => {
-            expect(readUint16LEArrayAsNumber(Uint8Array.from([ 0b11110000, 0b00001111 ]))).toBe(0b0000111111110000);
+    describe('readNumberFromUint8LEArray', () => {
+        it('should convert an LE array of 4 uint8 to a number', () => {
+            expect(readNumberFromUint8LEArray(new Uint8Array([ 0x04, 0x03, 0x02, 0x01 ]))).toBe(0x01020304);
+            expect(readNumberFromUint8LEArray(new Uint8Array([ 0x44, 0x33, 0x22, 0x11 ]))).toBe(0x11223344);
+        });
+    });
+
+    describe('concatUint8Arrays', () => {
+        it('should concat multiple Uint8Arrays', () => {
+            expect(concatUint8Arrays(
+                new Uint8Array([ 0x01, 0x02 ]),
+                new Uint8Array([ 0x03, 0x04 ]))
+            ).toEqual(new Uint8Array([ 0x01, 0x02, 0x03, 0x04 ]));
         });
     });
 });

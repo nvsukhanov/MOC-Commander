@@ -1,4 +1,4 @@
-import { AttachIoEvent, HubProperty, HubType, IOType, MessageType, PortInformationReplyType, PortModeInformationType } from '../constants';
+import { AttachIoEvent, HubProperty, HubType, IOType, MessageType, PortInformationReplyType, PortModeInformationType, PortModeName } from '../constants';
 
 export type HubPropertyBaseInboundMessage = {
     messageType: MessageType.properties,
@@ -67,11 +67,21 @@ export type AttachedIODetachInboundMessage = {
 
 export type AttachedIOInboundMessage = AttachedIoAttachInboundMessage | AttachedIOAttachVirtualInboundMessage | AttachedIODetachInboundMessage;
 
-export type PortValueInboundMessage = {
-    messageType: MessageType.portValueSingle,
+export type PortValueAbsolutePositionInboundMessage = {
+    messageType: MessageType.portValueSingle;
     portId: number;
-    payload: Uint8Array
+    modeName: PortModeName.absolutePosition;
+    absolutePosition: number;
 }
+
+export type PortValueSpeedInboundMessage = {
+    messageType: MessageType.portValueSingle;
+    portId: number;
+    modeName: PortModeName.speed;
+    speed: number;
+}
+
+export type PortValueInboundMessage = PortValueAbsolutePositionInboundMessage | PortValueSpeedInboundMessage;
 
 export type PortModeInboundMessage = {
     messageType: MessageType.portInformation,

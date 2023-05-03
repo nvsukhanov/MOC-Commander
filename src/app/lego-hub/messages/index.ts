@@ -13,3 +13,4 @@ export * from './port-mode-information';
 export * from './port-information';
 export * from './port-operations';
 export * from './port-input-format-setup-single';
+export * from './port-value';

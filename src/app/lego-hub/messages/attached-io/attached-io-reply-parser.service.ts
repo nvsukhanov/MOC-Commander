@@ -8,7 +8,7 @@ import {
     AttachedIODetachInboundMessage,
     AttachedIOInboundMessage
 } from '../inbound-message';
-import { readUint16LEArrayAsNumber } from '../../helpers';
+import { readNumberFromUint8LEArray } from '../../helpers';
 
 @Injectable()
 export class AttachedIoReplyParserService implements IReplyParser<MessageType.attachedIO> {
@@ -86,7 +86,7 @@ export class AttachedIoReplyParserService implements IReplyParser<MessageType.at
         const majorVersion = data[0] >> 4;
         const minorVersion = data[0] & 0b00001111;
         const bugFixingNumber = data[1];
-        const buildNumber = readUint16LEArrayAsNumber(data.slice(2, 4));
+        const buildNumber = readNumberFromUint8LEArray(data.slice(2, 4));
         return `${majorVersion}.${minorVersion}.${bugFixingNumber}.${buildNumber}`;
     }
 

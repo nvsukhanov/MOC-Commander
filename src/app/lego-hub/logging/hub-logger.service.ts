@@ -20,6 +20,6 @@ export class HubLogger implements ILogger {
     }
 
     public warning(...warning: unknown[]): void {
-        this.logger.warning(`[Hub ${this.deviceId}]`, ...warning);
+        this.logger.warning(`[${this.deviceId}]`, ...warning);
     }
 }

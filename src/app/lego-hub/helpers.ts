@@ -15,6 +15,25 @@ export function numberToUint32LEArray(value: number): number[] {
     ];
 }
 
-export function readUint16LEArrayAsNumber(value: Uint8Array): number {
-    return (value[1] << 8) + value[0];
+export function readNumberFromUint8LEArray(value: Uint8Array): number {
+    return value.reduce((acc, val, index) => acc + (val << (index * 8)), 0);
+}
+
+export function convertUint8ToSignedInt(value: number): number {
+    return value > 127 ? value - 256 : value;
+}
+
+export function convertUint32ToSignedInt(value: number): number {
+    return value > 2147483647 ? value - 4294967296 : value;
+}
+
+export function concatUint8Arrays(...a: Uint8Array[]): Uint8Array {
+    const totalLength = a.reduce((acc, val) => acc + val.length, 0);
+    const result = new Uint8Array(totalLength);
+    let offset = 0;
+    for (const arr of a) {
+        result.set(arr, offset);
+        offset += arr.length;
+    }
+    return result;
 }
