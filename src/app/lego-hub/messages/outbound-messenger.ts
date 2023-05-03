@@ -1,62 +1,63 @@
 import { MessageType } from '../constants';
 import { RawMessage } from './raw-message';
 import { IMessageMiddleware } from '../i-message-middleware';
-import { catchError, Observable, retry, tap, timeout } from 'rxjs';
-import { fromPromise } from 'rxjs/internal/observable/innerFrom';
+import { catchError, firstValueFrom, from, Observable, retry, switchMap, tap, timeout } from 'rxjs';
 import { InboundMessage } from './inbound-message';
 import { ILogger } from '../../common';
 import { concatUint8Arrays } from '../helpers';
+import { ILegoHubConfig } from '../i-lego-hub-config';
 
 export class OutboundMessenger {
     private queue: Promise<unknown> = Promise.resolve(); // TODO: replace with more sophisticated queue (with queue size tracking)
 
     private readonly messageTypeLength = 1;
 
-    private readonly defaultTimeout = 500;  // TODO: move to config
-
-    private readonly defaultRetriesCount = 5; // TODO: move to config
-
     constructor(
         private readonly characteristic: BluetoothRemoteGATTCharacteristic,
         private readonly messageMiddleware: IMessageMiddleware[],
-        private readonly logger: ILogger
+        private readonly logger: ILogger,
+        private readonly config: ILegoHubConfig
     ) {
     }
 
-    public send(
+    public sendWithoutResponse(
         message: RawMessage<MessageType>
     ): Promise<void> {
-        const processedMessage = this.processMessageThroughMiddleware(message);
-        const packet = this.buildPacket(processedMessage);
-        return this.enqueuePacket(packet);
+        return this.enqueueOperation(this.createSendOperation(message));
     }
 
-    public send$(
+    public sendWithoutResponse$(
         message: RawMessage<MessageType>,
     ): Observable<void> {
-        return fromPromise(this.send(message));
+        return from(this.sendWithoutResponse(message));
     }
 
     public sendAndReceive$<TInboundMessage extends InboundMessage>(
         message: RawMessage<MessageType>,
-        listener$: Observable<TInboundMessage>,
-        timeoutMs: number = this.defaultTimeout,
-        retries: number = this.defaultRetriesCount
+        listener$: Observable<TInboundMessage>
     ): Observable<TInboundMessage> {
         const stream = new Observable<TInboundMessage>((subscriber) => {
-            this.send(message);
-            const sub = listener$.subscribe((message) => subscriber.next(message));
+
+            const sendOp = this.createSendOperation(message);
+
+            const sub = from(sendOp()).pipe(
+                switchMap(() => listener$)
+            ).subscribe((message) => {
+                subscriber.next(message);
+                subscriber.complete();
+                sub.unsubscribe();
+            });
             return () => sub.unsubscribe();
         });
         let retryFired = false;
-        return stream.pipe(
-            timeout(timeoutMs),
+        const request = stream.pipe(
+            timeout(this.config.outboundMessageReplyTimeout),
             catchError((e) => {
                 this.logger.warning(`Expected response for message of type ${message.header.messageType} was not received. Resending request...`);
                 retryFired = true;
                 throw e;
             }),
-            retry(retries), // TODO: replace with exponential backoff
+            retry(this.config.outboundMessageRetriesCount),
             tap(() => {
                 if (retryFired) {
                     this.logger.warning(`Expected response for message of type ${message.header.messageType} was received after retrying`);
@@ -67,28 +68,28 @@ export class OutboundMessenger {
                 throw e;
             })
         );
+
+        return from(this.enqueueOperation(() => firstValueFrom(request)));
     }
 
-    private processMessageThroughMiddleware(
+    private createSendOperation(
         message: RawMessage<MessageType>
-    ): RawMessage<MessageType> {
-        return this.messageMiddleware.reduce((acc, middleware) => middleware.handle(acc), message);
+    ): () => Promise<void> {
+        return (): Promise<void> => {
+            this.messageMiddleware.reduce((acc, middleware) => middleware.handle(acc), message);
+            const header = this.composeHeader(message);
+            const packet = concatUint8Arrays(header, message.payload);
+            return this.characteristic.writeValueWithoutResponse(packet);
+        };
     }
 
-    private buildPacket(
-        message: RawMessage<MessageType>
-    ): Uint8Array {
-        const header = this.composeHeader(message);
-        return concatUint8Arrays(header, message.payload);
-    }
-
-    private enqueuePacket(
-        message: Uint8Array
-    ): Promise<void> {
-        const promise = this.queue.then(() => {
-            return this.characteristic.writeValueWithResponse(message);
+    private enqueueOperation<T>(
+        op: () => Promise<T>
+    ): Promise<T> {
+        const promise = this.queue.then(() => op());
+        this.queue = promise.catch((e) => {
+            this.logger.error(e);
         });
-        this.queue = promise;
         return promise;
     }
 

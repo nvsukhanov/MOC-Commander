@@ -16,7 +16,7 @@ export class MotorFeature {
         startupMode: PortOperationStartupInformation = PortOperationStartupInformation.bufferIfNecessary,
         completionMode: PortOperationCompletionInformation = PortOperationCompletionInformation.commandFeedback,
     ): Promise<void> {
-        return this.messenger.send(this.portOperationsOutboundMessageFactoryService.startRotation(
+        return this.messenger.sendWithoutResponse(this.portOperationsOutboundMessageFactoryService.startRotation(
             portId,
             speed,
             power,
@@ -36,7 +36,7 @@ export class MotorFeature {
         startupMode: PortOperationStartupInformation = PortOperationStartupInformation.bufferIfNecessary,
         completionMode: PortOperationCompletionInformation = PortOperationCompletionInformation.commandFeedback,
     ): Promise<void> {
-        return this.messenger.send(this.portOperationsOutboundMessageFactoryService.goToAbsolutePosition(
+        return this.messenger.sendWithoutResponse(this.portOperationsOutboundMessageFactoryService.goToAbsolutePosition(
             portId,
             absoluteDegree,
             speed,
@@ -57,7 +57,7 @@ export class MotorFeature {
             // Setting absolute zero to 0 is a no-op (because it's relative to current absolute position),
             return Promise.resolve();
         }
-        return this.messenger.send(this.portOperationsOutboundMessageFactoryService.presetEncoder(
+        return this.messenger.sendWithoutResponse(this.portOperationsOutboundMessageFactoryService.presetEncoder(
             portId,
             // We use negative value here because:
             // 1. presetting encoder sets absolute zero relative to current absolute motor position
