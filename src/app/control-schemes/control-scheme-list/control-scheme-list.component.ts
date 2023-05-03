@@ -5,10 +5,10 @@ import { MatListModule } from '@angular/material/list';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
-import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlScheme } from '../../store';
+import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS, CONTROL_SCHEME_SELECTORS, ControlScheme } from '../../store';
 import { ControlSchemeListItemComponent } from '../control-scheme-list-item';
 import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { CONTROL_SCHEME_CREATE_SUBROUTE, CONTROL_SCHEME_ROUTE } from '../../routes';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -27,16 +27,20 @@ import { MatIconModule } from '@angular/material/icon';
         TranslocoModule,
         ControlSchemeListItemComponent,
         MatButtonModule,
-        MatIconModule
+        MatIconModule,
+        RouterLink
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeListComponent {
     public readonly controlSchemes$ = this.store.select(CONTROL_SCHEME_SELECTORS.selectSchemesList);
 
+    public readonly canCreateScheme$ = this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.canAddBinding);
+
+    public readonly createSchemeRoute = [ CONTROL_SCHEME_ROUTE, CONTROL_SCHEME_CREATE_SUBROUTE ];
+
     constructor(
         private readonly store: Store,
-        private readonly router: Router
     ) {
     }
 
@@ -46,9 +50,5 @@ export class ControlSchemeListComponent {
 
     public onDelete(id: string): void {
         this.store.dispatch(CONTROL_SCHEME_ACTIONS.delete({ id }));
-    }
-
-    public onCreate(): void {
-        this.router.navigate([ CONTROL_SCHEME_ROUTE, CONTROL_SCHEME_CREATE_SUBROUTE ]);
     }
 }

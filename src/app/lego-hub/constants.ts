@@ -120,13 +120,13 @@ export enum PortModeSymbol {
 }
 
 export const MOTOR_LIMITS = {
-    maxAbsSpeed: 100,
-    minAbsSpeed: -100,
+    maxSpeed: 100,
+    minSpeed: -100,
     minPower: 0,
     maxPower: 100,
     minRawAngle: -0x7FFFFFF, // -2147483647
     maxRawAngle: 0x7FFFFFF, // 2147483647
-};
+} as const;
 
 export enum MotorServoEndState {
     float = 0x00,

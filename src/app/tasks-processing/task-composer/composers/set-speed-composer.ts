@@ -32,7 +32,7 @@ export class SetSpeedComposer extends PortCommandTaskComposer {
             portId: binding.output.portId,
             hubId: binding.output.hubId,
             speed: targetSpeed,
-            power: binding.output.configuration.power,
+            power: targetSpeed !== 0 ? binding.output.configuration.power : 0,
             bindingId: binding.id,
             isNeutral: targetSpeed === 0 || binding.output.configuration.isToggle,
             createdAt: Date.now(),
@@ -53,7 +53,7 @@ export class SetSpeedComposer extends PortCommandTaskComposer {
 
         const clampedSpeed = this.clampSpeed(
             inputValue * direction * maxAbsSpeed,
-            Math.min(maxAbsSpeed, MOTOR_LIMITS.maxAbsSpeed),
+            Math.min(maxAbsSpeed, MOTOR_LIMITS.maxSpeed),
         );
 
         return this.snapSpeedToZero(clampedSpeed);

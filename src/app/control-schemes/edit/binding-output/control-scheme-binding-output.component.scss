@@ -1,9 +1,14 @@
 :host {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 mat-form-field {
     width: 300px;
+}
+
+.output-form-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }

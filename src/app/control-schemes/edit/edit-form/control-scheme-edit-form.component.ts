@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnDestroy, Output } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, Inject, Input, OnDestroy } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS, ControlScheme, GAMEPAD_ACTIONS, HUB_ATTACHED_IO_SELECTORS, HUBS_SELECTORS } from '../../../store';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,8 +14,12 @@ import { ControlSchemeBindingOutputComponent } from '../binding-output';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { WINDOW } from '../../../common'; // TODO: create alias for this
 import { MatInputModule } from '@angular/material/input';
-import { ControlSchemeOutputFormFactoryService } from './control-scheme-output-form-factory.service';
-import { BindingForm, EditSchemeForm } from '../types';
+import { ControlSchemeFormFactoryService } from './control-scheme-form-factory.service';
+import { EditSchemeForm } from '../types';
+import { ControlSchemeBindingConfigurationComponent } from '../binding-config';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
 
@@ -36,17 +40,19 @@ export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
         ControlSchemeBindingOutputComponent,
         MatExpansionModule,
         MatInputModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        ControlSchemeBindingConfigurationComponent,
+        MatDividerModule,
+        MatIconModule,
+        MatProgressBarModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeEditFormComponent implements OnDestroy {
-    @Output() public readonly save = new EventEmitter<BindingFormResult>();
-
-    public readonly form: EditSchemeForm = this.formBuilder.group({
-        name: this.formBuilder.control<string>('', [ Validators.required ]) as FormControl<string>,
-        bindings: this.formBuilder.array<BindingForm>([], Validators.required)
-    });
+    public readonly form = this.controlSchemeFormFactoryService.createEditSchemeForm(
+        this.window.crypto.randomUUID(),
+        'New Scheme' // TODO: translate
+    );
 
     public readonly canAddBinding$ = this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.canAddBinding);
 
@@ -55,18 +61,40 @@ export class ControlSchemeEditFormComponent implements OnDestroy {
     private readonly onDestroy$ = new Subject<void>();
 
     constructor(
-        private readonly formBuilder: FormBuilder,
         private readonly store: Store,
         private readonly actions: Actions,
         @Inject(WINDOW) private readonly window: Window,
-        private readonly bindingOutputFormFactory: ControlSchemeOutputFormFactoryService
+        private readonly controlSchemeFormFactoryService: ControlSchemeFormFactoryService
     ) {
+    }
+
+    public get isValid(): boolean {
+        return this.form.valid;
     }
 
     @Input()
     public set scheme(scheme: ControlScheme) {
+        this.form.reset();
         this.form.patchValue(scheme);
+        scheme.bindings.forEach(binding => {
+            const binging = this.controlSchemeFormFactoryService.createBindingForm(
+                binding.id,
+                binding.input.gamepadId,
+                binding.input.gamepadInputMethod,
+                binding.input.gamepadAxisId,
+                binding.input.gamepadButtonId,
+                binding.output.hubId,
+                binding.output.portId,
+                binding.output.operationMode,
+                binding.output.configuration
+            );
+            this.form.controls.bindings.push(binging);
+        });
         this.form.markAsPristine();
+    }
+
+    public getFormValue(): BindingFormResult {
+        return this.form.getRawValue();
     }
 
     public ngOnDestroy(): void {
@@ -92,25 +120,25 @@ export class ControlSchemeEditFormComponent implements OnDestroy {
             if (!io) {
                 return; // TODO: notify on no matching IO
             }
-            const binging: BindingForm = this.formBuilder.group({
-                id: this.formBuilder.control(this.window.crypto.randomUUID(), { nonNullable: true }),
-                input: this.formBuilder.group({
-                    gamepadId: this.formBuilder.control(action.gamepadId, { nonNullable: true, validators: [ Validators.required ] }),
-                    gamepadInputMethod: this.formBuilder.control(action.inputMethod, { nonNullable: true, validators: [ Validators.required ] }),
-                    gamepadAxisId: this.formBuilder.control(action.gamepadAxisId ?? null),
-                    gamepadButtonId: this.formBuilder.control(action.gamepadButtonId ?? null),
-                }),
-                output: this.bindingOutputFormFactory.create(io.ioConfig, io.operationModes[0])
-            });
+            const binging = this.controlSchemeFormFactoryService.createBindingForm(
+                this.window.crypto.randomUUID(),
+                action.gamepadId,
+                action.inputMethod,
+                action.gamepadAxisId,
+                action.gamepadButtonId,
+                ios[0].ioConfig.hubId,
+                ios[0].ioConfig.portId,
+                ios[0].operationModes[0]
+            );
             this.form.controls.bindings.push(binging);
         });
     }
 
-    public cancelAddBinging(): void {
-        this.store.dispatch(GAMEPAD_ACTIONS.gamepadWaitForUserInputCancel());
+    public removeBindingIndex(index: number): void {
+        this.form.controls.bindings.removeAt(index);
     }
 
-    public onSave(): void {
-        this.save.emit(this.form.getRawValue());
+    public cancelAddBinging(): void {
+        this.store.dispatch(GAMEPAD_ACTIONS.gamepadWaitForUserInputCancel());
     }
 }

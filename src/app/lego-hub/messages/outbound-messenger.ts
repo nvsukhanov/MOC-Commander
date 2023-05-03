@@ -56,7 +56,7 @@ export class OutboundMessenger {
                 retryFired = true;
                 throw e;
             }),
-            retry(retries),
+            retry(retries), // TODO: replace with exponential backoff
             tap(() => {
                 if (retryFired) {
                     this.logger.warning(`Expected response for message of type ${message.header.messageType} was received after retrying`);
@@ -86,7 +86,7 @@ export class OutboundMessenger {
         message: Uint8Array
     ): Promise<void> {
         const promise = this.queue.then(() => {
-            return this.characteristic.writeValueWithoutResponse(message);
+            return this.characteristic.writeValueWithResponse(message);
         });
         this.queue = promise;
         return promise;

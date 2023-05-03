@@ -9,6 +9,7 @@ export type BindingForm = FormGroup<{
 }>;
 
 export type EditSchemeForm = FormGroup<{
+    id: FormControl<string>,
     name: FormControl<string>,
     bindings: FormArray<BindingForm>
 }>;

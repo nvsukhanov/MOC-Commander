@@ -4,7 +4,17 @@
     height: 100%;
 }
 
+.spacer {
+    flex: 1;
+}
+
 .edit-form {
-    margin: 20px;
+    padding: 20px;
     flex-grow: 1;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.toolbar {
+    flex-shrink: 0;
 }

@@ -9,9 +9,16 @@ import { Store } from '@ngrx/store';
 
 @Injectable()
 export class ControlSchemeEffects {
-    public readonly schemeCreate$ = createEffect(() => {
+    public readonly schemeCreated$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(CONTROL_SCHEME_ACTIONS.create),
+            tap((data) => this.router.navigate([ CONTROL_SCHEME_ROUTE, data.id ])),
+        );
+    }, { dispatch: false });
+
+    public readonly schemeUpdated$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(CONTROL_SCHEME_ACTIONS.update),
             tap((data) => this.router.navigate([ CONTROL_SCHEME_ROUTE, data.id ])),
         );
     }, { dispatch: false });

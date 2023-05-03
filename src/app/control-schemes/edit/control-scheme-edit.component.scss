@@ -1,0 +1,33 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.spacer {
+    flex: 1;
+}
+
+.edit-form {
+    padding: 20px;
+    flex-grow: 1;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.scheme-is-not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.toolbar-button {
+    margin-left: 10px;
+}
+
+.toolbar {
+    flex-shrink: 0;
+}
