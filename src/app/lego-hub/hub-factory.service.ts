@@ -80,7 +80,7 @@ export class HubFactoryService {
 
         const beforeDisconnect$ = new Subject<void>();
 
-        const messenger = this.outboundMessengerFactoryService.create(primaryCharacteristic, outgoingMessageMiddleware);
+        const messenger = this.outboundMessengerFactoryService.create(primaryCharacteristic, outgoingMessageMiddleware, hubLogger);
         const dataStream = this.characteristicsDataStreamFactoryService.create(primaryCharacteristic, incomingMessageMiddleware);
 
         const ioFeature = this.ioFeatureFactoryService.create(

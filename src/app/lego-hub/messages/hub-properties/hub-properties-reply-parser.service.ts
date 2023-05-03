@@ -12,6 +12,7 @@ import {
     HubPropertySystemTypeIdInboundMessage,
     InboundMessage
 } from '../inbound-message';
+import { convertUint8ToSignedInt } from '../../helpers';
 
 @Injectable()
 export class HubPropertiesReplyParserService implements IReplyParser<MessageType.properties> {
@@ -52,7 +53,7 @@ export class HubPropertiesReplyParserService implements IReplyParser<MessageType
             propertyType: HubProperty.RSSI,
             // rssi is a int8 stored as uint8, so we have to convert it,
             // ref: https://lego.github.io/lego-ble-wireless-protocol-docs/index.html#hub-property-payload
-            level: payload[0] << 24 >> 24
+            level: convertUint8ToSignedInt(payload[0])
         };
     }
 

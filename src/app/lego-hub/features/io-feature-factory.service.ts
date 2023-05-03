@@ -9,12 +9,13 @@ import {
     PortInputFormatSetupSingleOutboundMessageFactoryService,
     PortModeInformationReplyParserService,
     PortModeInformationRequestOutboundMessageFactoryService,
-    PortValueReplyParserService,
+    PortValueReplyParserResolverService,
     RawMessage
 } from '../messages';
 import { Observable } from 'rxjs';
 import { MessageType } from '../constants';
 import { AttachedIoRepliesCacheFactoryService } from './attached-io-replies-cache-factory.service';
+import { IoFeaturePortValueListenerFactory } from './io-feature-port-value-listener-factory';
 
 @Injectable()
 export class IoFeatureFactoryService {
@@ -22,12 +23,12 @@ export class IoFeatureFactoryService {
         private readonly messageFactoryService: PortInformationRequestOutboundMessageFactoryService,
         private readonly inboundMessageListenerFactory: InboundMessageListenerFactoryService,
         private readonly portInformationRequestReplyParserService: PortInformationReplyParserService,
-        private readonly portValueReplyParserService: PortValueReplyParserService,
         private readonly attachedIoReplyParserService: AttachedIoReplyParserService,
         private readonly portModeInformationOutboundMessageFactoryService: PortModeInformationRequestOutboundMessageFactoryService,
         private readonly portInputFormatSetupSingleOutboundMessageFactoryService: PortInputFormatSetupSingleOutboundMessageFactoryService,
         private readonly portModeInformationReplyParserService: PortModeInformationReplyParserService,
         private readonly attachedIoRepliesCacheFactoryService: AttachedIoRepliesCacheFactoryService,
+        private readonly portValueReplyParserResolverService: PortValueReplyParserResolverService
     ) {
     }
 
@@ -42,10 +43,11 @@ export class IoFeatureFactoryService {
             onHubDisconnected,
         );
 
-        const portValueMessageListener = this.inboundMessageListenerFactory.create(
+        const portValueListenerFactory = new IoFeaturePortValueListenerFactory(
+            this.inboundMessageListenerFactory,
+            this.portValueReplyParserResolverService,
             characteristicDataStream,
-            this.portValueReplyParserService,
-            onHubDisconnected,
+            onHubDisconnected
         );
 
         const attachedIOMessageListener = this.inboundMessageListenerFactory.create(
@@ -63,7 +65,7 @@ export class IoFeatureFactoryService {
         return new IoFeature(
             this.messageFactoryService,
             portInformationMessageListener,
-            portValueMessageListener,
+            portValueListenerFactory,
             attachedIOMessageListener,
             portModeInformationMessageListener,
             this.portModeInformationOutboundMessageFactoryService,

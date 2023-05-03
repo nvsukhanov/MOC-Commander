@@ -16,7 +16,9 @@ import {
     PortModeInformationReplyParserService,
     PortModeInformationRequestOutboundMessageFactoryService,
     PortOperationsOutboundMessageFactoryService,
-    PortValueReplyParserService
+    PortValueAbsolutePositionReplyParserService,
+    PortValueReplyParserResolverService,
+    PortValueSpeedReplyParserService
 } from './messages';
 import { AttachedIoRepliesCacheFactoryService, HubPropertiesFeatureFactoryService, IoFeatureFactoryService, MotorFeatureFactoryService } from './features';
 import { ILegoHubConfig, LEGO_HUB_CONFIG, mergeConfig } from './i-lego-hub-config';
@@ -39,7 +41,7 @@ export function provideLegoHubEnvironment(config: Partial<ILegoHubConfig> = {}):
             PortInformationReplyParserService,
             PortInformationRequestOutboundMessageFactoryService,
             CharacteristicDataStreamFactoryService,
-            PortValueReplyParserService,
+            PortValueAbsolutePositionReplyParserService,
             PortModeInformationRequestOutboundMessageFactoryService,
             PortModeInformationReplyParserService,
             MotorFeatureFactoryService,
@@ -47,6 +49,8 @@ export function provideLegoHubEnvironment(config: Partial<ILegoHubConfig> = {}):
             PortInputFormatSetupSingleOutboundMessageFactoryService,
             HubLoggerFactoryService,
             AttachedIoRepliesCacheFactoryService,
+            PortValueReplyParserResolverService,
+            PortValueSpeedReplyParserService,
             { provide: LEGO_HUB_CONFIG, useValue: mergeConfig(config) }
         ]
     ]);
