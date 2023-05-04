@@ -36,11 +36,11 @@ export interface IState {
     router: RouterState;
 }
 
-export type BindingLinearOutput = {
+export type BindingLinearOutputState = {
     hubId: string;
     portId: number;
     operationMode: HubIoOperationMode.Linear;
-    configuration: {
+    linearConfig: {
         maxSpeed: number;
         isToggle: boolean;
         invert: boolean;
@@ -48,7 +48,20 @@ export type BindingLinearOutput = {
     }
 }
 
-export type BindingOutput = BindingLinearOutput;
+export type BindingServoOutputState = {
+    hubId: string;
+    portId: number;
+    operationMode: HubIoOperationMode.Servo;
+    servoConfig: {
+        minAngle: number;
+        maxAngle: number;
+        speed: number;
+        power: number;
+        invert: boolean;
+    }
+}
+
+export type BindingOutputState = BindingLinearOutputState | BindingServoOutputState;
 
 export type ControlSchemeBinding = {
     id: string;
@@ -58,7 +71,7 @@ export type ControlSchemeBinding = {
         gamepadAxisId: number | null;
         gamepadButtonId: number | null;
     };
-    output: BindingOutput;
+    output: BindingOutputState;
 }
 
 export type ControlScheme = {

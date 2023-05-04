@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BindingLinearOutput, BindingOutput, GamepadInputMethod, HubIoOperationMode } from '../../../store';
-import { ControlSchemeBindingOutputControl, ControlSchemeBindingOutputLinearControl, LinearOutputConfigurationForm } from '../binding-output';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { BindingLinearOutputState, BindingOutputState, BindingServoOutputState, GamepadInputMethod, HubIoOperationMode } from '../../../store';
+import { ControlSchemeBindingOutputForm, LinearOutputConfiguration, ServoOutputConfiguration } from '../binding-output';
+import { FormBuilder, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MOTOR_LIMITS } from '../../../lego-hub';
 import { BindingForm, EditSchemeForm } from '../types';
-import { ControlSchemeBindingInputControl } from '../binding-input';
+import { ControlSchemeBindingInputForm } from '../binding-input';
 
 @Injectable({ providedIn: 'root' })
 export class ControlSchemeFormFactoryService {
@@ -33,43 +33,123 @@ export class ControlSchemeFormFactoryService {
         hubId: string,
         portId: number,
         operationMode: HubIoOperationMode,
-        configuration?: BindingOutput['configuration']
+        initialState?: BindingOutputState
     ): BindingForm {
-        const inputControl: ControlSchemeBindingInputControl = this.formBuilder.group({
+        const inputControl: ControlSchemeBindingInputForm = this.formBuilder.group({
             gamepadId: this.formBuilder.control(gamepadId, { nonNullable: true, validators: [ Validators.required ] }),
             gamepadInputMethod: this.formBuilder.control(inputMethod, { nonNullable: true, validators: [ Validators.required ] }),
             gamepadAxisId: this.formBuilder.control(gamepadAxisId ?? null),
             gamepadButtonId: this.formBuilder.control(gamepadButtonId ?? null),
         });
 
+        const outputFrom: ControlSchemeBindingOutputForm = this.createOutputControlForm(
+            hubId,
+            portId,
+            operationMode,
+            initialState
+        );
+
         return this.formBuilder.group({
             id: this.formBuilder.control(id, { nonNullable: true }),
             input: inputControl,
-            output: this.createOutputControlForm(hubId, portId, operationMode, configuration)
-        });
+            output: outputFrom
+        }) as BindingForm;
     }
 
     private createOutputControlForm(
         hubId: string,
         portId: number,
         operationMode: HubIoOperationMode,
-        configuration?: BindingOutput['configuration']
-    ): ControlSchemeBindingOutputControl {
-        switch (operationMode) {
-            case HubIoOperationMode.Linear:
-                return this.buildLinearOutputControlForm(hubId, portId, operationMode, configuration);
-            default:
-                throw new Error(`Unsupported operation mode: ${operationMode}`);
+        outputState?: BindingOutputState
+    ): ControlSchemeBindingOutputForm {
+        return this.formBuilder.group({
+            hubId: this.formBuilder.control(hubId, { nonNullable: true, validators: [ Validators.required ] }),
+            portId: this.formBuilder.control(portId, { nonNullable: true, validators: [ Validators.required ] }),
+            operationMode: this.formBuilder.control<HubIoOperationMode>(operationMode, { nonNullable: true, validators: [ Validators.required ] }),
+            linearConfig: this.buildLinearOutputControlForm(
+                hubId,
+                portId,
+                outputState?.operationMode === HubIoOperationMode.Linear ? outputState.linearConfig : undefined
+            ),
+            servoConfig: this.buildServoOutputControlForm(
+                hubId,
+                portId,
+                outputState?.operationMode === HubIoOperationMode.Servo ? outputState.servoConfig : undefined
+            )
+        });
+    }
+
+    private buildServoOutputControlForm(
+        hubId: string,
+        portId: number,
+        initialConfiguration?: BindingServoOutputState['servoConfig']
+    ): ServoOutputConfiguration {
+        return this.formBuilder.group({
+            minAngle: this.formBuilder.control<number>(initialConfiguration?.minAngle ?? -MOTOR_LIMITS.maxServoDegreesRange / 2, {
+                nonNullable: true,
+                validators: [
+                    Validators.required,
+                ]
+            }),
+            maxAngle: this.formBuilder.control<number>(initialConfiguration?.maxAngle ?? MOTOR_LIMITS.maxServoDegreesRange / 2, {
+                nonNullable: true,
+                validators: [
+                    Validators.required,
+                ]
+            }),
+            speed: this.formBuilder.control<number>(initialConfiguration?.speed ?? MOTOR_LIMITS.maxSpeed, {
+                nonNullable: true,
+                validators: [
+                    Validators.required,
+                    Validators.min(0),
+                    Validators.max(MOTOR_LIMITS.maxSpeed)
+                ]
+            }),
+            power: this.formBuilder.control<number>(initialConfiguration?.power ?? MOTOR_LIMITS.maxPower, {
+                nonNullable: true,
+                validators: [
+                    Validators.required,
+                    Validators.min(MOTOR_LIMITS.minPower),
+                    Validators.max(MOTOR_LIMITS.maxPower)
+                ]
+            }),
+            invert: this.formBuilder.control<boolean>(initialConfiguration?.invert ?? false, { nonNullable: true }),
+        }, {
+            validators: [ this.validateServoConfiguration as ValidatorFn ]
+        });
+    }
+
+    private validateServoConfiguration(
+        form: ServoOutputConfiguration
+    ): ValidationErrors | null {
+        const errors: ValidationErrors = {};
+        let hasErrors = false;
+        if (form.controls.minAngle.value > form.controls.maxAngle.value) {
+            errors['overlapping'] = true;
+            hasErrors = true;
         }
+
+        if (Math.abs(form.controls.minAngle.value - form.controls.maxAngle.value) < MOTOR_LIMITS.minServoDegreesRange) {
+            errors['belowMinimumRange'] = true;
+            hasErrors = true;
+        }
+
+        if (Math.abs(form.controls.minAngle.value - form.controls.maxAngle.value) > MOTOR_LIMITS.maxServoDegreesRange) {
+            errors['aboveMaximumRange'] = true;
+            hasErrors = true;
+        }
+        if (hasErrors) {
+            return errors;
+        }
+        return null;
     }
 
     private buildLinearOutputControlForm(
         hubId: string,
         portId: number,
-        operationMode: HubIoOperationMode,
-        initialConfiguration?: BindingLinearOutput['configuration']
-    ): ControlSchemeBindingOutputLinearControl {
-        const configuration: LinearOutputConfigurationForm = this.formBuilder.group({
+        initialConfiguration?: BindingLinearOutputState['linearConfig']
+    ): LinearOutputConfiguration {
+        return this.formBuilder.group({
             maxSpeed: this.formBuilder.control<number>(initialConfiguration?.maxSpeed ?? MOTOR_LIMITS.maxSpeed, {
                 nonNullable: true,
                 validators: [
@@ -88,13 +168,6 @@ export class ControlSchemeFormFactoryService {
                     Validators.max(MOTOR_LIMITS.maxPower)
                 ]
             })
-        });
-
-        return this.formBuilder.group({
-            hubId: this.formBuilder.control(hubId, { nonNullable: true, validators: [ Validators.required ] }),
-            portId: this.formBuilder.control(portId, { nonNullable: true, validators: [ Validators.required ] }),
-            operationMode: this.formBuilder.control(operationMode, { nonNullable: true, validators: [ Validators.required ] }),
-            configuration
         });
     }
 }

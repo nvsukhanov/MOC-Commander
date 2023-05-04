@@ -15,16 +15,16 @@ export class SetSpeedComposer extends PortCommandTaskComposer {
             return null;
         }
 
-        if (binding.output.configuration.isToggle && inputValue === 0) {
+        if (binding.output.linearConfig.isToggle && inputValue === 0) {
             return null;
         }
 
         const targetSpeed = this.calculateSpeed(
             inputValue,
-            binding.output.configuration.maxSpeed,
+            binding.output.linearConfig.maxSpeed,
             previousTask?.bindingId === binding.id ? previousTask.speed : undefined,
-            binding.output.configuration.isToggle,
-            binding.output.configuration.invert,
+            binding.output.linearConfig.isToggle,
+            binding.output.linearConfig.invert,
         );
 
         return {
@@ -32,9 +32,9 @@ export class SetSpeedComposer extends PortCommandTaskComposer {
             portId: binding.output.portId,
             hubId: binding.output.hubId,
             speed: targetSpeed,
-            power: targetSpeed !== 0 ? binding.output.configuration.power : 0,
+            power: targetSpeed !== 0 ? binding.output.linearConfig.power : 0,
             bindingId: binding.id,
-            isNeutral: targetSpeed === 0 || binding.output.configuration.isToggle,
+            isNeutral: targetSpeed === 0 || binding.output.linearConfig.isToggle,
             createdAt: Date.now(),
         } satisfies PortCommandSetLinearSpeedTask;
     }

@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IOutputConfigurationRenderer } from '../i-output-configuration-renderer';
-import { HubIoOperationMode } from '../../../../store';
 import { TranslocoModule } from '@ngneat/transloco';
 import { EllipsisTitleDirective } from '../../../../common';
 
@@ -15,5 +14,5 @@ import { EllipsisTitleDirective } from '../../../../common';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OutputNoConfigurationComponent implements IOutputConfigurationRenderer<HubIoOperationMode> {
+export class OutputNoConfigurationComponent implements IOutputConfigurationRenderer {
 }

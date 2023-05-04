@@ -1,11 +1,12 @@
 import { ComponentRef, Directive, Input, OnDestroy, Type, ViewContainerRef } from '@angular/core';
-import { ControlSchemeBindingOutputControl } from '../binding-output';
+import { ControlSchemeBindingOutputForm } from '../binding-output';
 import { HubIoOperationMode } from '../../../store';
 import { IOutputConfigurationRenderer } from './i-output-configuration-renderer';
 import { OutputNoConfigurationComponent } from './no-configuration';
-import { startWith, Subscription } from 'rxjs';
-import { ControlSchemeBindingInputControl } from '../binding-input';
+import { Observable, startWith, Subscription } from 'rxjs';
+import { ControlSchemeBindingInputForm } from '../binding-input';
 import { LinearOutputConfigurationEditComponent } from './linear';
+import { ServoOutputConfigurationEditComponent } from './servo';
 
 @Directive({
     standalone: true,
@@ -13,19 +14,20 @@ import { LinearOutputConfigurationEditComponent } from './linear';
     exportAs: 'appRenderEditOutputConfiguration'
 })
 export class RenderEditOutputConfigurationDirective implements OnDestroy {
-    private readonly renderers: { [k in HubIoOperationMode]?: Type<IOutputConfigurationRenderer<k>> } = {
-        [HubIoOperationMode.Linear]: LinearOutputConfigurationEditComponent
+    private readonly renderers: { [k in HubIoOperationMode]?: Type<IOutputConfigurationRenderer> } = {
+        [HubIoOperationMode.Linear]: LinearOutputConfigurationEditComponent,
+        [HubIoOperationMode.Servo]: ServoOutputConfigurationEditComponent
     };
 
-    private _inputFormControl?: ControlSchemeBindingInputControl;
+    private _inputFormControl?: ControlSchemeBindingInputForm;
 
     private readonly noConfigurationRenderer = OutputNoConfigurationComponent;
 
     private operationMode?: HubIoOperationMode;
 
-    private _outputFormControl?: ControlSchemeBindingOutputControl;
+    private _outputFormControl?: ControlSchemeBindingOutputForm;
 
-    private renderer?: ComponentRef<IOutputConfigurationRenderer<HubIoOperationMode>>;
+    private renderer?: ComponentRef<IOutputConfigurationRenderer>;
 
     private sub?: Subscription;
 
@@ -36,7 +38,7 @@ export class RenderEditOutputConfigurationDirective implements OnDestroy {
 
     @Input()
     public set inputFormControl(
-        v: ControlSchemeBindingInputControl
+        v: ControlSchemeBindingInputForm
     ) {
         this._inputFormControl = v;
         this.updateRenderer();
@@ -44,13 +46,15 @@ export class RenderEditOutputConfigurationDirective implements OnDestroy {
 
     @Input()
     public set outputFormControl(
-        v: ControlSchemeBindingOutputControl
+        v: ControlSchemeBindingOutputForm
     ) {
         this._outputFormControl = v;
         this.sub?.unsubscribe();
-        this.sub = v.controls.operationMode.valueChanges.pipe(
+
+        const opModeChanges = v.controls.operationMode.valueChanges as Observable<HubIoOperationMode>;
+        this.sub = opModeChanges.pipe(
             startWith(v.controls.operationMode.value)
-        ).subscribe((operationMode) => {
+        ).subscribe((operationMode: HubIoOperationMode) => {
             this.operationMode = operationMode;
             this.updateRenderer();
         });
@@ -85,7 +89,7 @@ export class RenderEditOutputConfigurationDirective implements OnDestroy {
 
     private resolveRenderer(
         operationMode: HubIoOperationMode
-    ): Type<IOutputConfigurationRenderer<HubIoOperationMode>> {
+    ): Type<IOutputConfigurationRenderer> {
         const renderer = this.renderers[operationMode];
 
         if (!renderer) {

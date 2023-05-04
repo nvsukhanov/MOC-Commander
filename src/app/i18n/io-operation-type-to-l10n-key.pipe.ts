@@ -9,7 +9,7 @@ import { HubIoOperationMode } from '../store';
 export class IoOperationTypeToL10nKeyPipe implements PipeTransform {
     private readonly mapping: { [k in HubIoOperationMode]: string } = {
         [HubIoOperationMode.Linear]: 'hubIOOperationModeLinear',
-        // [HubIoOperationMode.Servo]: 'hubIOOperationModeServo',
+        [HubIoOperationMode.Servo]: 'hubIOOperationModeServo',
         // [HubIoOperationMode.SetColor]: 'hubIOOperationModeSetColor',
     };
 
