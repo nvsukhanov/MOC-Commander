@@ -83,6 +83,7 @@
   "schemeBindingValidationHubIOIsMissing": "Attached device is missing",
   "schemeBindingValidationHubIOCapabilitiesMismatch": "Attached device has incompatible capabilities",
   "portCommandTaskTypeSetLinearSpeed": "Speed: {speed}",
+  "portCommandTaskTypeServo": "Angle: {angle}",
   "schemeOutputBindingNoConfigurationRequired": "No configuration required",
   "schemeOutputBindingConfigurationLinearToggleParameter": "Treat button as switch",
   "schemeOutputBindingConfigurationLinearSpeedParameter": "Speed",

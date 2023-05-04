@@ -93,19 +93,19 @@ export class PortOperationsOutboundMessageFactoryService {
 
     private ensureSpeedIsWithinLimits(speed: number): void {
         if (speed > MOTOR_LIMITS.maxSpeed || speed < MOTOR_LIMITS.minSpeed) {
-            throw new Error(`Speed must be between ${MOTOR_LIMITS.minSpeed} and ${MOTOR_LIMITS.maxSpeed}`);
+            throw new Error(`Speed must be between ${MOTOR_LIMITS.minSpeed} and ${MOTOR_LIMITS.maxSpeed}. Got ${speed}`);
         }
     }
 
     private ensurePowerIsWithinLimits(power: number): void {
         if (power > MOTOR_LIMITS.maxPower || power < MOTOR_LIMITS.minPower) {
-            throw new Error(`Power must be between ${MOTOR_LIMITS.minPower} and ${MOTOR_LIMITS.maxPower}`);
+            throw new Error(`Power must be between ${MOTOR_LIMITS.minPower} and ${MOTOR_LIMITS.maxPower}. Got ${power}`);
         }
     }
 
     private ensureAbsolutePositionIsWithinLimits(absolutePosition: number): void {
         if (absolutePosition > MOTOR_LIMITS.maxRawAngle || absolutePosition < MOTOR_LIMITS.minRawAngle) {
-            throw new Error(`Absolute position must be between ${MOTOR_LIMITS.minRawAngle} and ${MOTOR_LIMITS.maxRawAngle}`);
+            throw new Error(`Absolute position must be between ${MOTOR_LIMITS.minRawAngle} and ${MOTOR_LIMITS.maxRawAngle}. Got ${absolutePosition}`);
         }
     }
 
