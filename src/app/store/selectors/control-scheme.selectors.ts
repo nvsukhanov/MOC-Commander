@@ -10,7 +10,7 @@ import { HUB_IO_SUPPORTED_MODES_SELECTORS } from './hub-io-supported-modes.selec
 import { HUB_PORT_MODE_INFO_SELECTORS } from './hub-port-mode-info.selectors';
 import { GAMEPAD_SELECTORS } from './gamepad.selectors';
 import { CONTROL_SCHEME_RUNNING_STATE_SELECTORS } from './control-scheme-running-state.selectors';
-import { PortCommandSetLinearSpeedTask } from '../../common';
+import { PortCommandTask } from '../../common';
 import { ROUTER_SELECTORS } from './router.selectors';
 import { IOType } from '../../lego-hub';
 
@@ -49,7 +49,7 @@ export type ControlSchemeViewIOData = {
     schemeId: string,
     binding: ControlSchemeBinding,
     ioType?: IOType,
-    latestExecutedTask: PortCommandSetLinearSpeedTask | undefined,
+    latestExecutedTask: PortCommandTask | undefined,
     validationData: IOBindingValidationResults
 };
 
@@ -59,7 +59,10 @@ export const CONTROL_SCHEME_SELECTORS = {
     selectSchemesList: createSelector(
         CONTROL_SCHEME_SELECT_ALL,
         CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId,
-        (schemes, runningSchemeId) => {
+        (
+            schemes,
+            runningSchemeId
+        ) => {
             return schemes.map((scheme) => ({
                 ...scheme,
                 isRunning: scheme.id === runningSchemeId
@@ -67,18 +70,30 @@ export const CONTROL_SCHEME_SELECTORS = {
         }
     ),
     selectScheme: (id: string) => createSelector(CONTROL_SCHEME_SELECT_ENTITIES, (state) => state[id]),
-    selectSchemeBinding: (schemeId: string, bindingIndex: number) => createSelector(
+    selectSchemeBinding: (
+        schemeId: string,
+        bindingIndex: number
+    ) => createSelector(
         CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
         (scheme) => scheme?.bindings[bindingIndex]
     ),
-    selectSchemeBindingInput: (schemeId: string, bindingIndex: number) => createSelector(
+    selectSchemeBindingInput: (
+        schemeId: string,
+        bindingIndex: number
+    ) => createSelector(
         CONTROL_SCHEME_SELECTORS.selectSchemeBinding(schemeId, bindingIndex),
         (binding) => binding?.input
     ),
-    selectSchemeBindingInputValue: (schemeId: string, binding: ControlSchemeBinding) => createSelector(
+    selectSchemeBindingInputValue: (
+        schemeId: string,
+        binding: ControlSchemeBinding
+    ) => createSelector(
         GAMEPAD_AXES_STATE_SELECTORS.selectAll,
         GAMEPAD_BUTTONS_STATE_SELECTORS.selectAll,
-        (axes, buttons) => {
+        (
+            axes,
+            buttons
+        ) => {
             const input = binding.input;
             if (input?.gamepadInputMethod === GamepadInputMethod.Axis) {
                 const axis = axes.find((a) => a.gamepadIndex === input.gamepadId && a.axisIndex === input.gamepadAxisId);
@@ -99,7 +114,15 @@ export const CONTROL_SCHEME_SELECTORS = {
         HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
         HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
         GAMEPAD_SELECTORS.selectAll,
-        (scheme, tasks, hubIds, iosEntities, ioSupportedModesEntities, portModeInfoEntities, gamepads): IOBindingValidationResults[] => {
+        (
+            scheme,
+            tasks,
+            hubIds,
+            iosEntities,
+            ioSupportedModesEntities,
+            portModeInfoEntities,
+            gamepads
+        ): IOBindingValidationResults[] => {
             if (scheme === undefined) {
                 return [] as IOBindingValidationResults[];
             }
@@ -138,7 +161,11 @@ export const CONTROL_SCHEME_SELECTORS = {
         CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId,
         CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
         CONTROL_SCHEME_SELECTORS.validateSchemeIOBindings(schemeId),
-        (alreadyRunningSchemeId, scheme, ioValidationResults): SchemeValidationResult => {
+        (
+            alreadyRunningSchemeId,
+            scheme,
+            ioValidationResults
+        ): SchemeValidationResult => {
             let canRunResultNegative: SchemeValidationResult = {
                 schemeMissing: false,
                 anotherSchemeIsRunning: false,
@@ -155,7 +182,10 @@ export const CONTROL_SCHEME_SELECTORS = {
                 canRunResultNegative.schemeMissing = false;
             }
 
-            canRunResultNegative = ioValidationResults.reduce((acc, cur) => {
+            canRunResultNegative = ioValidationResults.reduce((
+                acc,
+                cur
+            ) => {
                 acc.gamepadMissing = acc.gamepadMissing || cur.gamepadMissing;
                 acc.hubMissing = acc.hubMissing || cur.hubMissing;
                 acc.ioMissing = acc.ioMissing || cur.ioMissing;
@@ -169,7 +199,10 @@ export const CONTROL_SCHEME_SELECTORS = {
     canRunScheme: (schemeId: string) => createSelector(
         CONTROL_SCHEME_SELECTORS.validateScheme(schemeId),
         CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId,
-        (validationResult, runningSchemeId): boolean => {
+        (
+            validationResult,
+            runningSchemeId
+        ): boolean => {
             return !Object.values(validationResult).some((v) => v) && runningSchemeId === null;
         }
     ),
@@ -179,7 +212,13 @@ export const CONTROL_SCHEME_SELECTORS = {
         HUB_PORT_TASKS_SELECTORS.selectLastExecutedTasksEntities,
         CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId,
         HUB_ATTACHED_IO_SELECTORS.selectIOsEntities,
-        (scheme, validationResult, tasks, runningSchemeId, attachedIOs): ControlSchemeViewIOData[] => {
+        (
+            scheme,
+            validationResult,
+            tasks,
+            runningSchemeId,
+            attachedIOs
+        ): ControlSchemeViewIOData[] => {
             if (scheme === undefined) {
                 return [];
             }
@@ -208,6 +247,9 @@ export const CONTROL_SCHEME_SELECTORS = {
     isCurrentControlSchemeRunning: createSelector(
         CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId,
         ROUTER_SELECTORS.selectRouteParam('id'),
-        (runningSchemeId, schemeId) => runningSchemeId !== null && runningSchemeId === schemeId
+        (
+            runningSchemeId,
+            schemeId
+        ) => runningSchemeId !== null && runningSchemeId === schemeId
     )
 } as const;
