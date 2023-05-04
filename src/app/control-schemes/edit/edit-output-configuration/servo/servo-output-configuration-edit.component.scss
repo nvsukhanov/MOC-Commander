@@ -1,0 +1,34 @@
+.slider-label {
+    display: flex;
+
+    &-description {
+        font-weight: 400;
+        flex: 1;
+    }
+
+    &-description-centered {
+        font-weight: 400;
+        flex: 1;
+        display: flex;
+        justify-content: center;
+    }
+
+    &-value-left {
+        font-weight: 600;
+        width: 100px;
+    }
+
+    &-value-right {
+        font-weight: 600;
+        width: 100px;
+        text-align: right;
+    }
+}
+
+.slider {
+    width: calc(100% - 8px);
+}
+
+.parameter-section {
+    margin-bottom: 20px;
+}

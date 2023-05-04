@@ -2,12 +2,12 @@
     <section *ngIf="inputMethodControl?.value === gamepadInputMethod.Button"
              class="parameter-section"
     >
-        <mat-slide-toggle [formControl]="outputBinding.controls.configuration.controls.isToggle">
+        <mat-slide-toggle [formControl]="outputBinding.controls.linearConfig.controls.isToggle">
             {{ 'schemeOutputBindingConfigurationLinearToggleParameter' | transloco }}
         </mat-slide-toggle>
     </section>
     <section class="parameter-section">
-        <mat-slide-toggle [formControl]="outputBinding.controls.configuration.controls.invert">
+        <mat-slide-toggle [formControl]="outputBinding.controls.linearConfig.controls.invert">
             {{ 'schemeOutputBindingConfigurationLinearInvertParameter' | transloco }}
         </mat-slide-toggle>
     </section>
@@ -21,13 +21,12 @@
                     {{ 'schemeOutputBindingConfigurationLinearMaximumSpeedParameter' | transloco }}
                 </ng-template>
             </label>
-            <label class="slider-label-value">{{ outputBinding.controls.configuration.controls.maxSpeed.value }}</label>
+            <label class="slider-label-value">{{ outputBinding.controls.linearConfig.controls.maxSpeed.value }}</label>
         </div>
         <mat-slider class="slider"
                     [max]="motorLimits.maxSpeed"
-                    [min]="0"
-                    [step]="motorSpeedStep">
-            <input matSliderThumb [formControl]="outputBinding.controls.configuration.controls.maxSpeed"/>
+                    [min]="0">
+            <input matSliderThumb [formControl]="outputBinding.controls.linearConfig.controls.maxSpeed"/>
         </mat-slider>
     </section>
     <section class="parameter-section">
@@ -35,14 +34,13 @@
             <label class="slider-label-description">
                 {{ 'schemeOutputBindingConfigurationLinearPowerParameter' | transloco }}
             </label>
-            <label class="slider-label-value">{{ outputBinding.controls.configuration.controls.power.value }}</label>
+            <label class="slider-label-value">{{ outputBinding.controls.linearConfig.controls.power.value }}</label>
         </div>
 
         <mat-slider class="slider"
                     [max]="motorLimits.maxPower"
-                    [min]="motorLimits.minPower"
-                    [step]="motorPowerStep">
-            <input matSliderThumb [formControl]="outputBinding.controls.configuration.controls.power"/>
+                    [min]="motorLimits.minPower">
+            <input matSliderThumb [formControl]="outputBinding.controls.linearConfig.controls.power"/>
         </mat-slider>
     </section>
 </ng-container>

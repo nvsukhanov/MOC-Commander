@@ -1,11 +1,11 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { ControlSchemeBindingInputControl } from './binding-input';
-import { ControlSchemeBindingOutputLinearControl } from './binding-output';
+import { ControlSchemeBindingInputForm } from './binding-input';
+import { ControlSchemeBindingOutputForm } from './binding-output';
 
 export type BindingForm = FormGroup<{
     id: FormControl<string>,
-    input: ControlSchemeBindingInputControl,
-    output: ControlSchemeBindingOutputLinearControl
+    input: ControlSchemeBindingInputForm,
+    output: ControlSchemeBindingOutputForm
 }>;
 
 export type EditSchemeForm = FormGroup<{

@@ -7,28 +7,37 @@ import { NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { combineLatest, map, Observable, of, shareReplay, startWith, Subscription, switchMap } from 'rxjs';
 import { IOType } from '../../../lego-hub';
-import { ControlSchemeBindingInputControl } from '../binding-input';
+import { ControlSchemeBindingInputForm } from '../binding-input';
 import { TranslocoModule } from '@ngneat/transloco';
 import { IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '../../../i18n';
 import { MatListModule } from '@angular/material/list';
 import { RenderEditOutputConfigurationDirective } from '../edit-output-configuration';
 import { BindingForm } from '../types';
 
-export type LinearOutputConfigurationForm = FormGroup<{
+export type LinearOutputConfiguration = FormGroup<{
     maxSpeed: FormControl<number>,
     isToggle: FormControl<boolean>,
     invert: FormControl<boolean>,
     power: FormControl<number>
 }>;
 
-export type ControlSchemeBindingOutputLinearControl = FormGroup<{
-    hubId: FormControl<string>,
-    portId: FormControl<number>,
-    operationMode: FormControl<HubIoOperationMode.Linear>,
-    configuration: LinearOutputConfigurationForm
+export type ServoOutputConfiguration = FormGroup<{
+    minAngle: FormControl<number>,
+    maxAngle: FormControl<number>,
+    speed: FormControl<number>,
+    power: FormControl<number>,
+    invert: FormControl<boolean>,
 }>;
 
-export type ControlSchemeBindingOutputControl = ControlSchemeBindingOutputLinearControl;
+export type ControlSchemeBindingOutputForm = FormGroup<{
+    hubId: FormControl<string>,
+    portId: FormControl<number>,
+    operationMode: FormControl<HubIoOperationMode>,
+    linearConfig: LinearOutputConfiguration,
+    servoConfig: ServoOutputConfiguration
+}>;
+
+export type InferFormGroup<T extends FormGroup> = T extends FormGroup<infer U> ? U : never;
 
 @Component({
     standalone: true,
@@ -56,9 +65,9 @@ export type ControlSchemeBindingOutputControl = ControlSchemeBindingOutputLinear
 export class ControlSchemeBindingOutputComponent {
     public readonly hubsList$ = this.store.select(HUBS_SELECTORS.selectHubs);
 
-    private _outputFormControl?: ControlSchemeBindingOutputControl;
+    private _outputFormControl?: ControlSchemeBindingOutputForm;
 
-    private _inputFormControl?: ControlSchemeBindingInputControl;
+    private _inputFormControl?: ControlSchemeBindingInputForm;
 
     private _availableIOs$: Observable<AttachedIO[]> = of([]);
 
@@ -123,11 +132,11 @@ export class ControlSchemeBindingOutputComponent {
         this._inputFormControl = inputGroup;
     }
 
-    public get inputFormControl(): ControlSchemeBindingInputControl | undefined {
+    public get inputFormControl(): ControlSchemeBindingInputForm | undefined {
         return this._inputFormControl;
     }
 
-    public get outputFormControl(): ControlSchemeBindingOutputLinearControl | undefined {
+    public get outputFormControl(): ControlSchemeBindingOutputForm | undefined {
         return this._outputFormControl;
     }
 

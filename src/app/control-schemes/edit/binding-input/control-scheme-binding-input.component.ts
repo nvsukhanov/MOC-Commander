@@ -18,7 +18,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 
-export type ControlSchemeBindingInputControl = FormGroup<{
+export type ControlSchemeBindingInputForm = FormGroup<{
     gamepadId: FormControl<number>,
     gamepadInputMethod: FormControl<GamepadInputMethod>,
     gamepadAxisId: FormControl<number | null>,
@@ -90,7 +90,7 @@ export class ControlSchemeBindingInputComponent {
     }
 
     @Input()
-    public set inputFormGroup(formGroup: ControlSchemeBindingInputControl) {
+    public set inputFormGroup(formGroup: ControlSchemeBindingInputForm) {
         this._gamepadNameL10nKey$ = formGroup.controls.gamepadId.valueChanges.pipe(
             startWith(formGroup.controls.gamepadId.value),
             switchMap((gamepadId) => this.store.select(GAMEPAD_SELECTORS.selectById(gamepadId))),

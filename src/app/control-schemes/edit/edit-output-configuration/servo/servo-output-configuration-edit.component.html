@@ -1,0 +1,51 @@
+<ng-container *ngIf="outputBinding">
+    <section class="parameter-section">
+        <mat-slide-toggle [formControl]="outputBinding.controls.servoConfig.controls.invert">
+            {{ 'schemeOutputBindingConfigurationServoInvertParameter' | transloco }}
+        </mat-slide-toggle>
+    </section>
+    <section class="parameter-section">
+        <div class="slider-label">
+            <label class="slider-label-value-left">{{ outputBinding.controls.servoConfig.controls.minAngle.value }}</label>
+            <label class="slider-label-description-centered">
+                {{ 'schemeOutputBindingConfigurationServoAngleRange' | transloco }}
+            </label>
+            <label class="slider-label-value-right">{{ outputBinding.controls.servoConfig.controls.maxAngle.value }}</label>
+        </div>
+
+        <mat-slider class="slider"
+                    [max]="motorlimits.maxServoDegreesRange / 2"
+                    [min]="-motorlimits.maxServoDegreesRange / 2">
+            <input matSliderStartThumb [formControl]="outputBinding.controls.servoConfig.controls.minAngle"/>
+            <input matSliderEndThumb [formControl]="outputBinding.controls.servoConfig.controls.maxAngle"/>
+        </mat-slider>
+    </section>
+
+    <section class="parameter-section">
+        <div class="slider-label">
+            <label class="slider-label-description">
+                {{ 'schemeOutputBindingConfigurationServoSpeedParameter' | transloco }}
+            </label>
+            <label class="slider-label-value-right">{{ outputBinding.controls.servoConfig.controls.speed.value }}</label>
+        </div>
+        <mat-slider class="slider"
+                    [max]="motorlimits.maxSpeed"
+                    [min]="0">
+            <input matSliderThumb [formControl]="outputBinding.controls.servoConfig.controls.speed"/>
+        </mat-slider>
+    </section>
+
+    <section class="parameter-section">
+        <div class="slider-label">
+            <label class="slider-label-description">
+                {{ 'schemeOutputBindingConfigurationServoPowerParameter' | transloco }}
+            </label>
+            <label class="slider-label-value-right">{{ outputBinding.controls.servoConfig.controls.power.value }}</label>
+        </div>
+        <mat-slider class="slider"
+                    [max]="motorlimits.maxPower"
+                    [min]="0">
+            <input matSliderThumb [formControl]="outputBinding.controls.servoConfig.controls.power"/>
+        </mat-slider>
+    </section>
+</ng-container>

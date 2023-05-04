@@ -88,5 +88,9 @@
   "schemeOutputBindingConfigurationLinearSpeedParameter": "Speed",
   "schemeOutputBindingConfigurationLinearMaximumSpeedParameter": "Maximum speed",
   "schemeOutputBindingConfigurationLinearInvertParameter": "Invert",
-  "schemeOutputBindingConfigurationLinearPowerParameter": "Output power"
+  "schemeOutputBindingConfigurationLinearPowerParameter": "Output power",
+  "schemeOutputBindingConfigurationServoAngleRange": "Servo range (deg)",
+  "schemeOutputBindingConfigurationServoInvertParameter": "Invert",
+  "schemeOutputBindingConfigurationServoSpeedParameter": "Speed",
+  "schemeOutputBindingConfigurationServoPowerParameter": "Power"
 }

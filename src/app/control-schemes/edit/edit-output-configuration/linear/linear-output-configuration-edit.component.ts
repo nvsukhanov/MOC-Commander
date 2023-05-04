@@ -1,16 +1,14 @@
 import { IOutputConfigurationRenderer } from '../i-output-configuration-renderer';
-import { GamepadInputMethod, HubIoOperationMode } from '../../../../store';
-import { ControlSchemeBindingOutputLinearControl } from '../../binding-output';
+import { GamepadInputMethod } from '../../../../store';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { NgIf } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ControlSchemeBindingInputControl } from '../../binding-input';
+import { ControlSchemeBindingInputForm } from '../../binding-input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatSliderModule } from '@angular/material/slider';
 import { MOTOR_LIMITS } from '../../../../lego-hub';
+import { ControlSchemeBindingOutputForm } from '../../binding-output';
 
 @Component({
     standalone: true,
@@ -18,8 +16,6 @@ import { MOTOR_LIMITS } from '../../../../lego-hub';
     templateUrl: './linear-output-configuration-edit.component.html',
     styleUrls: [ './linear-output-configuration-edit.component.scss' ],
     imports: [
-        MatFormFieldModule,
-        MatInputModule,
         NgIf,
         ReactiveFormsModule,
         MatSlideToggleModule,
@@ -28,18 +24,14 @@ import { MOTOR_LIMITS } from '../../../../lego-hub';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LinearOutputConfigurationEditComponent implements IOutputConfigurationRenderer<HubIoOperationMode.Linear> {
+export class LinearOutputConfigurationEditComponent implements IOutputConfigurationRenderer {
     public readonly motorLimits = MOTOR_LIMITS;
-
-    public readonly motorSpeedStep = 10;
-
-    public readonly motorPowerStep = 10;
 
     public readonly gamepadInputMethod = GamepadInputMethod;
 
     protected readonly GamepadInputMethod = GamepadInputMethod;
 
-    private _outputBinding?: ControlSchemeBindingOutputLinearControl;
+    private _outputBinding?: ControlSchemeBindingOutputForm;
 
     private _inputMethodControl?: FormControl<GamepadInputMethod>;
 
@@ -48,7 +40,7 @@ export class LinearOutputConfigurationEditComponent implements IOutputConfigurat
     ) {
     }
 
-    public get outputBinding(): ControlSchemeBindingOutputLinearControl | undefined {
+    public get outputBinding(): ControlSchemeBindingOutputForm | undefined {
         return this._outputBinding;
     }
 
@@ -57,7 +49,7 @@ export class LinearOutputConfigurationEditComponent implements IOutputConfigurat
     }
 
     public setOutputFormControl(
-        outputBinding: ControlSchemeBindingOutputLinearControl
+        outputBinding: ControlSchemeBindingOutputForm
     ): void {
         if (outputBinding !== this._outputBinding) {
             this._outputBinding = outputBinding;
@@ -66,7 +58,7 @@ export class LinearOutputConfigurationEditComponent implements IOutputConfigurat
     }
 
     public setInputFormControl(
-        inputFormControl: ControlSchemeBindingInputControl
+        inputFormControl: ControlSchemeBindingInputForm
     ): void {
         if (inputFormControl.controls.gamepadInputMethod !== this._inputMethodControl) {
             this._inputMethodControl = inputFormControl.controls.gamepadInputMethod;

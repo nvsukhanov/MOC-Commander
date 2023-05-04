@@ -86,7 +86,7 @@ export class ControlSchemeEditFormComponent implements OnDestroy {
                 binding.output.hubId,
                 binding.output.portId,
                 binding.output.operationMode,
-                binding.output.configuration
+                binding.output
             );
             this.form.controls.bindings.push(binging);
         });

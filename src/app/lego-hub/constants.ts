@@ -126,6 +126,8 @@ export const MOTOR_LIMITS = {
     maxPower: 100,
     minRawAngle: -0x7FFFFFF, // -2147483647
     maxRawAngle: 0x7FFFFFF, // 2147483647
+    minServoDegreesRange: 15,
+    maxServoDegreesRange: 360,
 } as const;
 
 export enum MotorServoEndState {
