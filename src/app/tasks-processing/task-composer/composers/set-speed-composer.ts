@@ -14,7 +14,7 @@ export class SetSpeedComposer extends PortCommandTaskComposer {
         if (binding.output.operationMode !== HubIoOperationMode.Linear) {
             return null;
         }
-        console.log(binding);
+
         if (binding.output.linearConfig.isToggle && inputValue === 0) {
             return null;
         }
