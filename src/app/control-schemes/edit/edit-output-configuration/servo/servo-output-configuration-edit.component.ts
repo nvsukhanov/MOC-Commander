@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { IOutputConfigurationRenderer } from '../i-output-configuration-renderer';
 import { ControlSchemeBindingOutputForm } from '../../binding-output';
 import { NgIf } from '@angular/common';
-import { MOTOR_LIMITS } from '../../../../lego-hub';
+import { MOTOR_LIMITS } from '@nvsukhanov/poweredup-api';
 import { MatSliderModule } from '@angular/material/slider';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslocoModule } from '@ngneat/transloco';

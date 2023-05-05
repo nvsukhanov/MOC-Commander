@@ -1,7 +1,7 @@
 import { PortCommandTaskComposer } from '../port-command-task-composer';
 import { PortCommandServoTask, PortCommandTaskType } from '../../../common';
 import { BindingServoOutputState, ControlSchemeBinding, HubIoOperationMode } from '../../../store';
-import { MotorServoEndState } from '../../../lego-hub';
+import { MotorServoEndState } from '@nvsukhanov/poweredup-api';
 
 export class ServoComposer extends PortCommandTaskComposer {
     private readonly snappingThreshold = 5;

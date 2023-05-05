@@ -5,7 +5,7 @@ import { JsonPipe, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { MAX_NAME_SIZE } from '../../../lego-hub';
+import { MAX_NAME_SIZE } from '@nvsukhanov/poweredup-api';
 import { TranslocoModule } from '@ngneat/transloco';
 import { HUB_ROUTE } from '../../../routes';
 import { RouterLink } from '@angular/router';

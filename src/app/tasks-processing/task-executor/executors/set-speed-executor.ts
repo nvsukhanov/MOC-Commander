@@ -1,5 +1,5 @@
 import { TaskExecutor } from '../task-executor';
-import { Hub, MotorProfile, PortOperationCompletionInformation, PortOperationStartupInformation } from '../../../lego-hub';
+import { Hub, MotorProfile, PortOperationCompletionInformation, PortOperationStartupInformation } from '@nvsukhanov/poweredup-api';
 import { PortCommandTask, PortCommandTaskType } from '../../../common';
 
 export class SetSpeedExecutor extends TaskExecutor {

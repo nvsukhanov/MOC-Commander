@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { HUBS_ENTITY_ADAPTER } from '../entity-adapters';
 import { HUBS_ACTIONS } from '../actions';
-import { HubType } from '../../lego-hub';
+import { HubType } from '@nvsukhanov/poweredup-api';
 
 export const HUBS_REDUCERS = createReducer(
     HUBS_ENTITY_ADAPTER.getInitialState(),

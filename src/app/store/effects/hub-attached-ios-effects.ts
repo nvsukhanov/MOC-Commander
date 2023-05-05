@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { HUB_ATTACHED_IOS_ACTIONS, HUBS_ACTIONS } from '../actions';
 import { map, mergeMap, takeUntil } from 'rxjs';
-import { AttachIoEvent } from '../../lego-hub';
+import { AttachIoEvent } from '@nvsukhanov/poweredup-api';
 import { HubStorageService } from '../hub-storage.service';
 
 @Injectable()

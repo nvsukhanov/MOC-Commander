@@ -1,6 +1,6 @@
 import { PortCommandTaskComposer } from '../port-command-task-composer';
 import { ControlSchemeBinding, HubIoOperationMode } from '../../../store';
-import { MOTOR_LIMITS } from '../../../lego-hub';
+import { MOTOR_LIMITS } from '@nvsukhanov/poweredup-api';
 import { PortCommandSetLinearSpeedTask, PortCommandTask, PortCommandTaskType } from '../../../common';
 
 export class SetSpeedComposer extends PortCommandTaskComposer {

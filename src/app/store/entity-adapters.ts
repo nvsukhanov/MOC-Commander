@@ -11,7 +11,7 @@ import {
     HubIoSupportedModes,
     PortModeInfo
 } from './i-state';
-import { IOType } from '../lego-hub';
+import { IOType } from '@nvsukhanov/poweredup-api';
 import { PortCommandTask } from '../common';
 
 export const HUB_ATTACHED_IOS_ENTITY_ADAPTER: EntityAdapter<AttachedIO> = createEntityAdapter<AttachedIO>({

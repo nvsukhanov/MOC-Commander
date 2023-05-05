@@ -2,12 +2,20 @@ name: CI
 on: push
 jobs:
   build:
+
     timeout-minutes: 5
     runs-on: ${{ fromJSON('["ubuntu-latest", "self-hosted"]')[github.repository == 'github/docs-internal'] }}
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          always-auth: true
+          registry-url: 'https://registry.npmjs.org'
+          node-version: '18.15.x'
       - name: Install modules
         run: npm install
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       - name: Run lint
         run: npm run lint
       - name: Run tests

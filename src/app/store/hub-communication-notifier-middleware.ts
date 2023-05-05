@@ -1,6 +1,5 @@
-import { IMessageMiddleware } from '../lego-hub/i-message-middleware';
+import { IMessageMiddleware, MessageType, RawMessage } from '@nvsukhanov/poweredup-api';
 import { map, mergeWith, Observable, of, Subject, switchMap, timer } from 'rxjs';
-import { MessageType, RawMessage } from '../lego-hub';
 
 export class HubCommunicationNotifierMiddleware implements IMessageMiddleware {
     public readonly communicationNotifier$: Observable<boolean>;

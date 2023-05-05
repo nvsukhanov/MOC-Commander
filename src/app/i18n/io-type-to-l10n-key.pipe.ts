@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IOType } from '../lego-hub';
+import { IOType } from '@nvsukhanov/poweredup-api';
 import { HUB_IO_I18N_SCOPE } from './index';
 
 @Pipe({

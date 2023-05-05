@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BindingLinearOutputState, BindingOutputState, BindingServoOutputState, GamepadInputMethod, HubIoOperationMode } from '../../../store';
 import { ControlSchemeBindingOutputForm, LinearOutputConfiguration, ServoOutputConfiguration } from '../binding-output';
 import { FormBuilder, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { MOTOR_LIMITS } from '../../../lego-hub';
+import { MOTOR_LIMITS } from '@nvsukhanov/poweredup-api';
 import { BindingForm, EditSchemeForm } from '../types';
 import { ControlSchemeBindingInputForm } from '../binding-input';
 

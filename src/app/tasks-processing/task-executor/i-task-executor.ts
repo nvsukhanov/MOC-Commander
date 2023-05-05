@@ -1,4 +1,4 @@
-import { Hub } from '../../lego-hub';
+import { Hub } from '@nvsukhanov/poweredup-api';
 import { PortCommandTask } from '../../common';
 
 export interface ITaskExecutor {

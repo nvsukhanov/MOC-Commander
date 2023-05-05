@@ -1,5 +1,5 @@
 import { createActionGroup, props } from '@ngrx/store';
-import { IOType } from '../../lego-hub';
+import { IOType } from '@nvsukhanov/poweredup-api';
 
 export const HUB_IO_SUPPORTED_MODES = createActionGroup({
     source: 'HUB_IO_OUTPUT_MODES',
