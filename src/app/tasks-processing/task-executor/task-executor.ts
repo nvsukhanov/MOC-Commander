@@ -1,5 +1,5 @@
 import { ITaskExecutor } from './i-task-executor';
-import { Hub } from '../../lego-hub';
+import { Hub } from '@nvsukhanov/poweredup-api';
 import { PortCommandTask } from '../../common';
 
 export abstract class TaskExecutor implements ITaskExecutor {

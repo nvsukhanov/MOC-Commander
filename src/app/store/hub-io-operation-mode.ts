@@ -1,5 +1,5 @@
 import { GamepadInputMethod } from './i-state';
-import { PortModeName } from '../lego-hub';
+import { PortModeName } from '@nvsukhanov/poweredup-api';
 
 export enum HubIoOperationMode {
     Linear = 'linear',

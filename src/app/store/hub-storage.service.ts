@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Hub } from '../lego-hub';
+import { Hub } from '@nvsukhanov/poweredup-api';
 import { ConsoleLoggingService } from '../common';
 
 @Injectable()

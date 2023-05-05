@@ -1,4 +1,4 @@
-import { HubType } from '../lego-hub';
+import { HubType } from '@nvsukhanov/poweredup-api';
 
 export const HUB_TYPE_TO_L10N_MAPPING: Readonly<{ [type in HubType]: string }> = {
     [HubType.BoostHub]: 'hubTypeBoost',

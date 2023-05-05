@@ -1,5 +1,5 @@
 import { createActionGroup, props } from '@ngrx/store';
-import { IOType, PortModeName, PortModeSymbol } from '../../lego-hub';
+import { IOType, PortModeName, PortModeSymbol } from '@nvsukhanov/poweredup-api';
 
 export const HUB_PORT_MODE_INFO_ACTIONS = createActionGroup({
     source: 'HUB_PORT_MODE_INFO_ACTIONS',

@@ -1,24 +1,17 @@
 import { Inject, Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { catchError, filter, from, fromEvent, interval, map, mergeMap, Observable, of, startWith, switchMap, takeUntil, tap, throwError } from 'rxjs';
+import { catchError, filter, from, fromEvent, interval, map, mergeMap, Observable, of, startWith, switchMap, takeUntil, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HubStorageService } from '../hub-storage.service';
 import { HUBS_ACTIONS } from '../actions';
-import {
-    HubDiscoveryService,
-    HubFactoryService,
-    HubProperty,
-    LoggingMiddlewareFactoryService,
-    LpuConnectionError,
-    LpuConnectionErrorFactoryService
-} from '../../lego-hub';
-import { PrefixedConsoleLoggerFactoryService, WINDOW } from '../../common';
+import { NAVIGATOR, WINDOW } from '../../common';
 import { Action, Store } from '@ngrx/store';
 import { TranslocoService } from '@ngneat/transloco';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../hub-communication-notifier-middleware-factory.service';
 import { Router } from '@angular/router';
 import { ROUTER_SELECTORS } from '../selectors';
 import { HUB_ROUTE } from '../../routes';
+import { connectHub, ConnectionError, HubProperty, LoggingMiddleware } from '@nvsukhanov/poweredup-api';
 
 @Injectable()
 export class HubsEffects {
@@ -133,43 +126,26 @@ export class HubsEffects {
         private readonly store: Store,
         private readonly router: Router,
         private readonly snackBar: MatSnackBar,
-        private readonly hubDiscovery: HubDiscoveryService,
-        private readonly hubFactoryService: HubFactoryService,
         private readonly hubStorage: HubStorageService,
         private readonly translocoService: TranslocoService,
-        private readonly lpuConnectionErrorFactory: LpuConnectionErrorFactoryService,
-        private readonly prefixedConsoleLoggerFactoryService: PrefixedConsoleLoggerFactoryService,
-        private readonly loggingMiddlewareFactory: LoggingMiddlewareFactoryService,
         private readonly communicationNotifierMiddlewareFactory: HubCommunicationNotifierMiddlewareFactoryService,
-        @Inject(WINDOW) private readonly window: Window
+        @Inject(WINDOW) private readonly window: Window,
+        @Inject(NAVIGATOR) private readonly navigator: Navigator
     ) {
     }
 
     private hubDiscovery$(): Observable<Action> {
-        return from(this.hubDiscovery.discoverHub()).pipe(
-            switchMap((device) => {
-                const incomingLoggerMiddleware = this.loggingMiddlewareFactory.create(
-                    this.prefixedConsoleLoggerFactoryService.create(`[${device.name}] Received`),
-                    'all'
-                );
-                const outgoingLoggerMiddleware = this.loggingMiddlewareFactory.create(
-                    this.prefixedConsoleLoggerFactoryService.create(`[${device.name}] Sending`),
-                    'all'
-                );
-                const communicationNotifierMiddleware = this.communicationNotifierMiddlewareFactory.create();
+        const incomingLoggerMiddleware = new LoggingMiddleware(console, 'all');
+        const outgoingLoggerMiddleware = new LoggingMiddleware(console, 'all');
+        const communicationNotifierMiddleware = this.communicationNotifierMiddlewareFactory.create();
 
-                return this.hubFactoryService.connectToHub(
-                    device,
-                    fromEvent(this.window, 'beforeunload'),
-                    [ incomingLoggerMiddleware, communicationNotifierMiddleware ],
-                    [ outgoingLoggerMiddleware, communicationNotifierMiddleware ]
-                ).then((hub) => ({
-                    hub,
-                    communicationNotifierMiddleware
-                }));
-            }),
-            switchMap(({ hub, communicationNotifierMiddleware }) => hub.properties.getPropertyValue$(HubProperty.primaryMacAddress).pipe(
-                catchError((e: unknown) => hub.disconnect().pipe(switchMap(() => throwError(() => e)))),
+        return from(connectHub(
+            this.navigator.bluetooth,
+            [ incomingLoggerMiddleware, communicationNotifierMiddleware ],
+            [ outgoingLoggerMiddleware, communicationNotifierMiddleware ],
+            fromEvent(this.window, 'beforeunload')
+        )).pipe(
+            switchMap((hub) => hub.properties.getPropertyValue$(HubProperty.primaryMacAddress).pipe(
                 tap((macAddressReply) => {
                     communicationNotifierMiddleware.communicationNotifier$.pipe(
                         takeUntil(hub.disconnected$)
@@ -178,13 +154,13 @@ export class HubsEffects {
                     });
                     this.hubStorage.store(hub, macAddressReply.macAddress);
                 }),
-                map((macAddressReply) => HUBS_ACTIONS.connected({ hubId: macAddressReply.macAddress, name: hub.name ?? '' })),
+                map((macAddressReply) => HUBS_ACTIONS.connected({ hubId: macAddressReply.macAddress, name: hub.properties.advertisingName ?? '' })),
             )),
             catchError((error: unknown) => {
-                if (error instanceof LpuConnectionError) {
+                if (error instanceof ConnectionError) {
                     return of(HUBS_ACTIONS.deviceConnectFailed({ error }));
                 }
-                return of(HUBS_ACTIONS.deviceConnectFailed({ error: this.lpuConnectionErrorFactory.createConnectionError() }));
+                throw error;
             })
         );
     }

@@ -1,6 +1,6 @@
 import { TaskExecutor } from '../task-executor';
 import { PortCommandTask, PortCommandTaskType } from '../../../common';
-import { Hub, MotorProfile, PortOperationCompletionInformation, PortOperationStartupInformation } from '../../../lego-hub';
+import { Hub, MotorProfile, PortOperationCompletionInformation, PortOperationStartupInformation } from '@nvsukhanov/poweredup-api';
 
 export class ServoExecutor extends TaskExecutor {
     protected handle(

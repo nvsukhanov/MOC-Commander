@@ -1,4 +1,4 @@
-import { MotorServoEndState } from '../../lego-hub';
+import { MotorServoEndState } from '@nvsukhanov/poweredup-api';
 
 export enum PortCommandTaskType {
     SetSpeed = 'SetSpeed',
