@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { MotorFeature } from './motor-feature';
-import { OutboundMessenger, PortOperationsOutboundMessageFactoryService } from '../messages';
+import { OutboundMessenger, PortOutputCommandOutboundMessageFactoryService } from '../messages';
 
 @Injectable()
 export class MotorFeatureFactoryService {
     constructor(
-        private readonly portOperationsOutboundMessageFactoryService: PortOperationsOutboundMessageFactoryService,
+        private readonly portOutputCommandOutboundMessageFactoryService: PortOutputCommandOutboundMessageFactoryService,
     ) {
     }
 
@@ -14,7 +14,7 @@ export class MotorFeatureFactoryService {
     ): MotorFeature {
         return new MotorFeature(
             messenger,
-            this.portOperationsOutboundMessageFactoryService
+            this.portOutputCommandOutboundMessageFactoryService
         );
     }
 }

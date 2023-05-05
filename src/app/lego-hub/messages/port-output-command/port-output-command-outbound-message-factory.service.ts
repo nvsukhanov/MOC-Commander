@@ -13,7 +13,7 @@ import {
 import { numberToUint32LEArray } from '../../helpers';
 
 @Injectable()
-export class PortOperationsOutboundMessageFactoryService {
+export class PortOutputCommandOutboundMessageFactoryService {
     public startRotation(
         portId: number,
         speed: number = MOTOR_LIMITS.maxSpeed,

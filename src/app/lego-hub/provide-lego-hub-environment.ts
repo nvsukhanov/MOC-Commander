@@ -15,7 +15,7 @@ import {
     PortInputFormatSetupSingleOutboundMessageFactoryService,
     PortModeInformationReplyParserService,
     PortModeInformationRequestOutboundMessageFactoryService,
-    PortOperationsOutboundMessageFactoryService,
+    PortOutputCommandOutboundMessageFactoryService,
     PortValueAbsolutePositionReplyParserService,
     PortValueReplyParserResolverService,
     PortValueSpeedReplyParserService
@@ -45,7 +45,7 @@ export function provideLegoHubEnvironment(config: Partial<ILegoHubConfig> = {}):
             PortModeInformationRequestOutboundMessageFactoryService,
             PortModeInformationReplyParserService,
             MotorFeatureFactoryService,
-            PortOperationsOutboundMessageFactoryService,
+            PortOutputCommandOutboundMessageFactoryService,
             PortInputFormatSetupSingleOutboundMessageFactoryService,
             HubLoggerFactoryService,
             AttachedIoRepliesCacheFactoryService,

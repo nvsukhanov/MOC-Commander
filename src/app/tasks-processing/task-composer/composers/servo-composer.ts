@@ -55,7 +55,7 @@ export class ServoComposer extends PortCommandTaskComposer {
             angle: Math.round(targetAngle),
             speed: Math.round(targetSpeed),
             power: outputState.servoConfig.power,
-            endState: MotorServoEndState.brake,
+            endState: MotorServoEndState.hold,
             createdAt: Date.now(),
         };
     }

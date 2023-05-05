@@ -5,8 +5,13 @@ import { ServoExecutor, SetSpeedExecutor } from './executors';
 @Injectable({ providedIn: 'root' })
 export class TaskExecutorFactoryService {
     public create(): ITaskExecutor {
-        return new SetSpeedExecutor().setNext(
-            new ServoExecutor()
-        );
+        return this.createChain();
+    }
+
+    private createChain(): ITaskExecutor {
+        const setSpeedExecutor = new SetSpeedExecutor();
+        const servoExecutor = new ServoExecutor();
+        setSpeedExecutor.setNext(servoExecutor);
+        return setSpeedExecutor;
     }
 }

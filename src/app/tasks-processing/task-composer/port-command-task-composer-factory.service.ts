@@ -5,8 +5,13 @@ import { ServoComposer, SetSpeedComposer } from './composers';
 @Injectable({ providedIn: 'root' })
 export class PortCommandTaskComposerFactoryService {
     public create(): IPortCommandTaskComposer {
-        return new SetSpeedComposer().setNext(
-            new ServoComposer()
-        );
+        return this.createChain();
+    }
+
+    private createChain(): IPortCommandTaskComposer {
+        const setSpeedComposer = new SetSpeedComposer();
+        const servoComposer = new ServoComposer();
+        setSpeedComposer.setNext(servoComposer);
+        return setSpeedComposer;
     }
 }

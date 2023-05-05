@@ -1,6 +1,6 @@
 import { TaskExecutor } from '../task-executor';
 import { PortCommandTask, PortCommandTaskType } from '../../../common';
-import { Hub } from '../../../lego-hub';
+import { Hub, MotorProfile, PortOperationCompletionInformation, PortOperationStartupInformation } from '../../../lego-hub';
 
 export class ServoExecutor extends TaskExecutor {
     protected handle(
@@ -13,7 +13,10 @@ export class ServoExecutor extends TaskExecutor {
                 task.angle,
                 task.speed,
                 task.power,
-                task.endState
+                task.endState,
+                MotorProfile.dontUseProfiles,
+                PortOperationStartupInformation.executeImmediately,
+                PortOperationCompletionInformation.noAction
             );
         }
         return null;
