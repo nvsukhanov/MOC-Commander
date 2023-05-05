@@ -1,10 +1,10 @@
-import { OutboundMessenger, PortOperationsOutboundMessageFactoryService } from '../messages';
+import { OutboundMessenger, PortOutputCommandOutboundMessageFactoryService } from '../messages';
 import { MOTOR_LIMITS, MotorProfile, MotorServoEndState, PortOperationCompletionInformation, PortOperationStartupInformation } from '../constants';
 
 export class MotorFeature {
     constructor(
         private readonly messenger: OutboundMessenger,
-        private readonly portOperationsOutboundMessageFactoryService: PortOperationsOutboundMessageFactoryService,
+        private readonly portOutputCommandOutboundMessageFactoryService: PortOutputCommandOutboundMessageFactoryService,
     ) {
     }
 
@@ -16,7 +16,7 @@ export class MotorFeature {
         startupMode: PortOperationStartupInformation = PortOperationStartupInformation.bufferIfNecessary,
         completionMode: PortOperationCompletionInformation = PortOperationCompletionInformation.commandFeedback,
     ): Promise<void> {
-        return this.messenger.sendWithoutResponse(this.portOperationsOutboundMessageFactoryService.startRotation(
+        return this.messenger.sendWithoutResponse(this.portOutputCommandOutboundMessageFactoryService.startRotation(
             portId,
             speed,
             power,
@@ -36,7 +36,7 @@ export class MotorFeature {
         startupMode: PortOperationStartupInformation = PortOperationStartupInformation.bufferIfNecessary,
         completionMode: PortOperationCompletionInformation = PortOperationCompletionInformation.commandFeedback,
     ): Promise<void> {
-        return this.messenger.sendWithoutResponse(this.portOperationsOutboundMessageFactoryService.goToAbsolutePosition(
+        return this.messenger.sendWithoutResponse(this.portOutputCommandOutboundMessageFactoryService.goToAbsolutePosition(
             portId,
             absoluteDegree,
             speed,
@@ -57,7 +57,7 @@ export class MotorFeature {
             // Setting absolute zero to 0 is a no-op (because it's relative to current absolute position),
             return Promise.resolve();
         }
-        return this.messenger.sendWithoutResponse(this.portOperationsOutboundMessageFactoryService.presetEncoder(
+        return this.messenger.sendWithoutResponse(this.portOutputCommandOutboundMessageFactoryService.presetEncoder(
             portId,
             // We use negative value here because:
             // 1. presetting encoder sets absolute zero relative to current absolute motor position

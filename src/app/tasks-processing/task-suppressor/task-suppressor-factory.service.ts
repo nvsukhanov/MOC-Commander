@@ -5,8 +5,13 @@ import { ServoTaskSuppressor, SetSpeedTaskSuppressor } from './suppressors';
 @Injectable({ providedIn: 'root' })
 export class TaskSuppressorFactory {
     public create(): ITaskSuppressor {
-        return new SetSpeedTaskSuppressor().setNext(
-            new ServoTaskSuppressor()
-        );
+        return this.createChain();
+    }
+
+    private createChain(): ITaskSuppressor {
+        const setSpeedSuppressor = new SetSpeedTaskSuppressor();
+        const servoSuppressor = new ServoTaskSuppressor();
+        setSpeedSuppressor.setNext(servoSuppressor);
+        return setSpeedSuppressor;
     }
 }
