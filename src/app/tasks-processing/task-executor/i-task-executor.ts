@@ -1,6 +1,6 @@
-import { Hub } from '@nvsukhanov/poweredup-api';
+import { IHub } from '@nvsukhanov/poweredup-api';
 import { PortCommandTask } from '../../common';
 
 export interface ITaskExecutor {
-    executeTask(task: PortCommandTask, hub: Hub): Promise<void>;
+    executeTask(task: PortCommandTask, hub: IHub): Promise<void>;
 }

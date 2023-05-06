@@ -1,5 +1,5 @@
 import { ITaskExecutor } from './i-task-executor';
-import { Hub } from '@nvsukhanov/poweredup-api';
+import { IHub } from '@nvsukhanov/poweredup-api';
 import { PortCommandTask } from '../../common';
 
 export abstract class TaskExecutor implements ITaskExecutor {
@@ -7,12 +7,12 @@ export abstract class TaskExecutor implements ITaskExecutor {
 
     protected abstract handle(
         task: PortCommandTask,
-        hub: Hub
+        hub: IHub
     ): Promise<void> | null;
 
     public executeTask(
         task: PortCommandTask,
-        hub: Hub
+        hub: IHub
     ): Promise<void> {
         const result = this.handle(
             task,

@@ -92,7 +92,7 @@ export class HubsEffects {
     public readonly userRequestedHubDisconnection$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.userRequestedHubDisconnection),
-            mergeMap((a) => this.hubStorage.get(a.hubId).disconnect().pipe(
+            mergeMap((a) => from(this.hubStorage.get(a.hubId).disconnect()).pipe(
                 map(() => HUBS_ACTIONS.disconnected({ hubId: a.hubId }))
             ))
         );
