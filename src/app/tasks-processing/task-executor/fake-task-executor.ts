@@ -1,5 +1,5 @@
 import { ITaskExecutor } from './i-task-executor';
-import { Hub } from '@nvsukhanov/poweredup-api';
+import { IHub } from '@nvsukhanov/poweredup-api';
 import { ILogger, PortCommandTask } from '../../common';
 
 export class FakeTaskExecutor implements ITaskExecutor {
@@ -9,7 +9,7 @@ export class FakeTaskExecutor implements ITaskExecutor {
     ) {
     }
 
-    public executeTask(task: PortCommandTask, hub: Hub): Promise<void> {
+    public executeTask(task: PortCommandTask, hub: IHub): Promise<void> {
         this.logger.debug('Executing task', JSON.stringify(task), 'on hub', hub.properties.advertisingName);
         return new Promise((resolve) => {
             setTimeout(() => {
