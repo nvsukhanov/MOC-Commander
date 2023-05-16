@@ -2,7 +2,7 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { LOG_LEVEL, LogLevel } from './log-levels';
 import { ExtractTokenType } from '../types';
-import { ILogger } from './i-logger';
+import { ILogger } from '@nvsukhanov/poweredup-api';
 
 @Injectable({ providedIn: 'root' })
 export class ConsoleLoggingService implements ILogger {
@@ -17,6 +17,12 @@ export class ConsoleLoggingService implements ILogger {
         }
     }
 
+    public log(...args: unknown[]): void {
+        if (this.canWrite(LogLevel.Debug)) {
+            console.log(...args);
+        }
+    }
+
     public info(...info: unknown[]): void {
         if (this.canWrite(LogLevel.Info)) {
             console.info(...info);
@@ -24,7 +30,7 @@ export class ConsoleLoggingService implements ILogger {
 
     }
 
-    public warning(...warning: unknown[]): void {
+    public warn(...warning: unknown[]): void {
         if (this.canWrite(LogLevel.Warning)) {
             console.warn(...warning);
         }

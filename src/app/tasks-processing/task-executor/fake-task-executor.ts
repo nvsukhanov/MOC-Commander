@@ -1,6 +1,7 @@
 import { ITaskExecutor } from './i-task-executor';
-import { IHub } from '@nvsukhanov/poweredup-api';
+import { PortCommandExecutionStatus } from '@nvsukhanov/poweredup-api';
 import { ILogger, PortCommandTask } from '../../common';
+import { debounceTime, from, Observable } from 'rxjs';
 
 export class FakeTaskExecutor implements ITaskExecutor {
     constructor(
@@ -9,12 +10,12 @@ export class FakeTaskExecutor implements ITaskExecutor {
     ) {
     }
 
-    public executeTask(task: PortCommandTask, hub: IHub): Promise<void> {
-        this.logger.debug('Executing task', JSON.stringify(task), 'on hub', hub.properties.advertisingName);
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve();
-            }, this.taskExecutionDuration);
-        });
+    public executeTask(
+        task: PortCommandTask,
+    ): Observable<PortCommandExecutionStatus> {
+        this.logger.debug('Executing task', JSON.stringify(task));
+        return from([ PortCommandExecutionStatus.InProgress, PortCommandExecutionStatus.Completed ]).pipe(
+            debounceTime(this.taskExecutionDuration / 2)
+        );
     }
 }

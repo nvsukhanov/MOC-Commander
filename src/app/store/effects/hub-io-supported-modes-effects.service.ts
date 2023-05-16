@@ -17,10 +17,10 @@ export class HubIOSupportedModesEffects {
                     action.softwareRevision,
                     action.ioType)
                 ).pipe(
-                    takeUntil(this.hubStorage.get(action.hubId).beforeDisconnect$),
+                    takeUntil(this.hubStorage.get(action.hubId).beforeDisconnect),
                     take(1),
                     filter((data) => !data),
-                    switchMap(() => this.hubStorage.get(action.hubId).ports.getPortModes$(action.portId)),
+                    switchMap(() => this.hubStorage.get(action.hubId).ports.getPortModes(action.portId)),
                     map((modesData) => HUB_IO_SUPPORTED_MODES.portModesReceived({
                         hardwareRevision: action.hardwareRevision,
                         softwareRevision: action.softwareRevision,

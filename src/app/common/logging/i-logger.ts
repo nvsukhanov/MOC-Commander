@@ -3,7 +3,7 @@ export interface ILogger {
 
     info(...info: unknown[]): void;
 
-    warning(...warning: unknown[]): void;
+    warn(...warning: unknown[]): void;
 
     error(error: Error | string): void;
 }

@@ -17,7 +17,7 @@ export class PrefixedConsoleLogger extends ConsoleLoggingService {
         super.info(this.prefix, ...info);
     }
 
-    public override warning(...warning: unknown[]): void {
-        super.warning(this.prefix, ...warning);
+    public override warn(...warning: unknown[]): void {
+        super.warn(this.prefix, ...warning);
     }
 }

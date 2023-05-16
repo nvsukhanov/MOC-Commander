@@ -74,7 +74,7 @@ export class HubPortTasksEffects {
             concatLatestFrom(() => this.store.select(HUB_PORT_TASKS_SELECTORS.selectFirstTask)),
             map(([ , task ]) => task),
             filter((task) => !!task),
-            exhaustMap((task) => this.taskExecutor.executeTask(task, this.hubStorage.get(task.hubId)).then(() => task)),
+            exhaustMap((task) => this.taskExecutor.executeTask(task, this.hubStorage.get(task.hubId)).pipe(map(() => task))),
             map((task) => HUB_PORT_TASKS_ACTIONS.markTaskAsExecuted({ task }))
         );
     });

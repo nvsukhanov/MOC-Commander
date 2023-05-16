@@ -1,4 +1,6 @@
-# Web-LPU
+# PoweredUp-Web
+
+[![GitHub license](https://img.shields.io/github/license/nvsukhanov/web-lpu)](
 
 [![CI Status](https://github.com/nvsukhanov/web-lpu/actions/workflows/ci.yml/badge.svg)](https://github.com/nvsukhanov/web-lpu/actions)
 
