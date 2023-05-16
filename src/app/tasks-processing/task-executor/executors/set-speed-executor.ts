@@ -1,20 +1,21 @@
 import { TaskExecutor } from '../task-executor';
-import { IHub, MotorProfile, PortOperationCompletionInformation, PortOperationStartupInformation } from '@nvsukhanov/poweredup-api';
+import { IHub, MotorUseProfile, PortCommandExecutionStatus } from '@nvsukhanov/poweredup-api';
 import { PortCommandTask, PortCommandTaskType } from '../../../common';
+import { Observable } from 'rxjs';
 
 export class SetSpeedExecutor extends TaskExecutor {
     protected handle(
         task: PortCommandTask,
         hub: IHub
-    ): Promise<void> | null {
+    ): Observable<PortCommandExecutionStatus> | null {
         if (task.taskType === PortCommandTaskType.SetSpeed) {
-            return hub.motor.setSpeed(
+            return hub.commands.setSpeed(
                 task.portId,
                 task.speed,
-                task.power,
-                MotorProfile.dontUseProfiles,
-                PortOperationStartupInformation.executeImmediately,
-                PortOperationCompletionInformation.noAction
+                {
+                    power: task.power,
+                    useProfile: MotorUseProfile.dontUseProfiles
+                }
             );
         }
         return null;

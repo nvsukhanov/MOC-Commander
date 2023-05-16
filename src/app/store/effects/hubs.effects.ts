@@ -1,17 +1,18 @@
 import { Inject, Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { catchError, filter, from, fromEvent, interval, map, mergeMap, Observable, of, startWith, switchMap, takeUntil, tap } from 'rxjs';
+import { catchError, combineLatestWith, filter, from, fromEvent, interval, map, mergeMap, Observable, of, startWith, switchMap, takeUntil, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HubStorageService } from '../hub-storage.service';
 import { HUBS_ACTIONS } from '../actions';
-import { NAVIGATOR, WINDOW } from '../../common';
+import { LogLevel, NAVIGATOR, WINDOW } from '../../common';
 import { Action, Store } from '@ngrx/store';
 import { TranslocoService } from '@ngneat/transloco';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../hub-communication-notifier-middleware-factory.service';
 import { Router } from '@angular/router';
 import { ROUTER_SELECTORS } from '../selectors';
 import { HUB_ROUTE } from '../../routes';
-import { connectHub, ConnectionError, HubProperty, LoggingMiddleware } from '@nvsukhanov/poweredup-api';
+import { connectHub, ConnectionError, IHub, LoggingMiddleware } from '@nvsukhanov/poweredup-api';
+import { PrefixedConsoleLogger } from '../../common/logging/prefixed-console-logger';
 
 @Injectable()
 export class HubsEffects {
@@ -27,9 +28,9 @@ export class HubsEffects {
             ofType(HUBS_ACTIONS.connected),
             mergeMap((action) => {
                 const hub = this.hubStorage.get(action.hubId);
-                return hub.properties.getPropertyValue$(HubProperty.systemTypeId).pipe(
-                    takeUntil(this.hubStorage.get(action.hubId).beforeDisconnect$),
-                    map((message) => HUBS_ACTIONS.hubTypeReceived({ hubId: action.hubId, hubType: message.hubType }))
+                return hub.properties.getSystemTypeId().pipe(
+                    takeUntil(this.hubStorage.get(action.hubId).beforeDisconnect),
+                    map((hubType) => HUBS_ACTIONS.hubTypeReceived({ hubId: action.hubId, hubType }))
                 );
             })
         );
@@ -40,9 +41,9 @@ export class HubsEffects {
             ofType(HUBS_ACTIONS.connected),
             mergeMap((a) => interval(this.hubBatteryPollInterval).pipe(
                 startWith(0),
-                takeUntil(this.hubStorage.get(a.hubId).beforeDisconnect$),
-                switchMap(() => this.hubStorage.get(a.hubId).properties.getPropertyValue$(HubProperty.batteryVoltage)),
-                map((message) => HUBS_ACTIONS.batteryLevelReceived({ hubId: a.hubId, batteryLevel: message.level }))
+                takeUntil(this.hubStorage.get(a.hubId).beforeDisconnect),
+                switchMap(() => this.hubStorage.get(a.hubId).properties.getBatteryLevel()),
+                map((batteryLevel) => HUBS_ACTIONS.batteryLevelReceived({ hubId: a.hubId, batteryLevel }))
             ))
         );
     });
@@ -52,9 +53,9 @@ export class HubsEffects {
             ofType(HUBS_ACTIONS.connected),
             mergeMap((a) => interval(this.hubRSSIPollInterval).pipe(
                 startWith(0),
-                takeUntil(this.hubStorage.get(a.hubId).beforeDisconnect$),
-                switchMap(() => this.hubStorage.get(a.hubId).properties.getPropertyValue$(HubProperty.RSSI)),
-                map((message) => HUBS_ACTIONS.rssiLevelReceived({ hubId: a.hubId, RSSI: message.level }))
+                takeUntil(this.hubStorage.get(a.hubId).beforeDisconnect),
+                switchMap(() => this.hubStorage.get(a.hubId).properties.getRSSILevel()),
+                map((RSSI) => HUBS_ACTIONS.rssiLevelReceived({ hubId: a.hubId, RSSI }))
             ))
         );
     });
@@ -62,9 +63,9 @@ export class HubsEffects {
     public listerToButtonStateOnConnect$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.connected),
-            mergeMap((a) => this.hubStorage.get(a.hubId).properties.buttonState$.pipe(
-                takeUntil(this.hubStorage.get(a.hubId).beforeDisconnect$),
-                map((message) => HUBS_ACTIONS.buttonStateReceived({ hubId: a.hubId, isPressed: message.isPressed }))
+            mergeMap((a) => this.hubStorage.get(a.hubId).properties.buttonState.pipe(
+                takeUntil(this.hubStorage.get(a.hubId).beforeDisconnect),
+                map((isPressed) => HUBS_ACTIONS.buttonStateReceived({ hubId: a.hubId, isPressed }))
             ))
         );
     });
@@ -80,7 +81,7 @@ export class HubsEffects {
     public readonly listenDeviceDisconnect$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.connected),
-            mergeMap((action) => this.hubStorage.get(action.hubId).disconnected$.pipe(
+            mergeMap((action) => this.hubStorage.get(action.hubId).disconnected.pipe(
                 tap(() => {
                     this.hubStorage.removeHub(action.hubId);
                 }),
@@ -102,8 +103,8 @@ export class HubsEffects {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.requestSetHubName),
             mergeMap((a) => from(this.hubStorage.get(a.hubId).properties.setHubAdvertisingName(a.name)).pipe(
-                switchMap(() => this.hubStorage.get(a.hubId).properties.getPropertyValue$(HubProperty.advertisingName)),
-                map((message) => HUBS_ACTIONS.hubNameSet({ hubId: a.hubId, name: message.advertisingName }))
+                switchMap(() => this.hubStorage.get(a.hubId).properties.getAdvertisingName()),
+                map((name) => HUBS_ACTIONS.hubNameSet({ hubId: a.hubId, name }))
             ))
         );
     });
@@ -135,30 +136,36 @@ export class HubsEffects {
     }
 
     private hubDiscovery$(): Observable<Action> {
-        const incomingLoggerMiddleware = new LoggingMiddleware(console, 'all');
-        const outgoingLoggerMiddleware = new LoggingMiddleware(console, 'all');
+        const incomingLoggerMiddleware = new LoggingMiddleware(new PrefixedConsoleLogger('in', LogLevel.Debug), 'all'); // TODO: replace w/ factory
+        const outgoingLoggerMiddleware = new LoggingMiddleware(new PrefixedConsoleLogger('out', LogLevel.Debug), 'all'); // TODO: replace w/ factory
         const communicationNotifierMiddleware = this.communicationNotifierMiddlewareFactory.create();
 
-        return from(connectHub(
+        return connectHub(
             this.navigator.bluetooth,
             [ incomingLoggerMiddleware, communicationNotifierMiddleware ],
             [ outgoingLoggerMiddleware, communicationNotifierMiddleware ],
             fromEvent(this.window, 'beforeunload')
-        )).pipe(
-            switchMap((hub) => hub.properties.getPropertyValue$(HubProperty.primaryMacAddress).pipe(
-                tap((macAddressReply) => {
-                    communicationNotifierMiddleware.communicationNotifier$.pipe(
-                        takeUntil(hub.disconnected$)
-                    ).subscribe((v) => {
-                        this.store.dispatch(HUBS_ACTIONS.setHasCommunication({ hubId: macAddressReply.macAddress, hasCommunication: v }));
-                    });
-                    this.hubStorage.store(hub, macAddressReply.macAddress);
-                }),
-                map((macAddressReply) => HUBS_ACTIONS.connected({ hubId: macAddressReply.macAddress, name: hub.properties.advertisingName ?? '' })),
-            )),
+        ).pipe(
+            switchMap((hub: IHub) => {
+                return of(hub).pipe(
+                    combineLatestWith(
+                        hub.properties.getPrimaryMacAddress(),
+                        hub.properties.getAdvertisingName()
+                    )
+                );
+            }),
+            tap(([ hub, macAddressReply ]) => {
+                communicationNotifierMiddleware.communicationNotifier$.pipe(
+                    takeUntil(hub.disconnected)
+                ).subscribe((v) => {
+                    this.store.dispatch(HUBS_ACTIONS.setHasCommunication({ hubId: macAddressReply, hasCommunication: v }));
+                });
+                this.hubStorage.store(hub, macAddressReply);
+            }),
+            map(([ , macAddressReply, name ]) => HUBS_ACTIONS.connected({ hubId: macAddressReply, name })),
             catchError((error: unknown) => {
                 if (error instanceof ConnectionError) {
-                    return of(HUBS_ACTIONS.deviceConnectFailed({ error }));
+                    return of(HUBS_ACTIONS.deviceConnectFailed({ error: error as ConnectionError }));
                 }
                 throw error;
             })

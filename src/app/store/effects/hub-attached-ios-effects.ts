@@ -11,8 +11,8 @@ export class HubAttachedIOsEffects {
         return this.actions.pipe(
             ofType(HUBS_ACTIONS.connected),
             mergeMap((action) => {
-                return this.hubStorage.get(action.hubId).ports.attachedIoReplies$.pipe(
-                    takeUntil(this.hubStorage.get(action.hubId).beforeDisconnect$),
+                return this.hubStorage.get(action.hubId).ports.onIoAttach().pipe(
+                    takeUntil(this.hubStorage.get(action.hubId).beforeDisconnect),
                     map((r) => {
                         if (r.event === AttachIoEvent.Attached) {
                             return HUB_ATTACHED_IOS_ACTIONS.registerio({

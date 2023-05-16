@@ -34,7 +34,7 @@ describe('LoggingService', () => {
         });
 
         it('should not write warning messages', () => {
-            subject.warning('test');
+            subject.warn('test');
             expect(console.warn).toHaveBeenCalledWith('test');
         });
 
@@ -60,7 +60,7 @@ describe('LoggingService', () => {
         });
 
         it('should not write warning messages', () => {
-            subject.warning('test');
+            subject.warn('test');
             expect(console.warn).toHaveBeenCalledWith('test');
         });
 
@@ -86,7 +86,7 @@ describe('LoggingService', () => {
         });
 
         it('should write warning messages', () => {
-            subject.warning('test');
+            subject.warn('test');
             expect(console.warn).toHaveBeenCalledWith('test');
         });
 
@@ -112,7 +112,7 @@ describe('LoggingService', () => {
         });
 
         it('should write warning messages', () => {
-            subject.warning(error);
+            subject.warn(error);
             expect(console.warn).not.toHaveBeenCalled();
         });
 

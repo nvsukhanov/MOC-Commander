@@ -1,22 +1,22 @@
 import { TaskExecutor } from '../task-executor';
 import { PortCommandTask, PortCommandTaskType } from '../../../common';
-import { IHub, MotorProfile, PortOperationCompletionInformation, PortOperationStartupInformation } from '@nvsukhanov/poweredup-api';
+import { IHub, MotorUseProfile, PortCommandExecutionStatus } from '@nvsukhanov/poweredup-api';
+import { Observable } from 'rxjs';
 
 export class ServoExecutor extends TaskExecutor {
     protected handle(
         task: PortCommandTask,
         hub: IHub
-    ): Promise<void> | null {
+    ): Observable<PortCommandExecutionStatus> | null {
         if (task.taskType === PortCommandTaskType.Servo) {
-            return hub.motor.goToAbsoluteDegree(
+            return hub.commands.goToAbsoluteDegree(
                 task.portId,
                 task.angle,
-                task.speed,
-                task.power,
-                task.endState,
-                MotorProfile.dontUseProfiles,
-                PortOperationStartupInformation.executeImmediately,
-                PortOperationCompletionInformation.noAction
+                {
+                    speed: task.speed,
+                    power: task.power,
+                    useProfile: MotorUseProfile.dontUseProfiles
+                }
             );
         }
         return null;

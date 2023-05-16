@@ -1,6 +1,7 @@
 import { ITaskExecutor } from './i-task-executor';
-import { IHub } from '@nvsukhanov/poweredup-api';
+import { IHub, PortCommandExecutionStatus } from '@nvsukhanov/poweredup-api';
 import { PortCommandTask } from '../../common';
+import { Observable, of } from 'rxjs';
 
 export abstract class TaskExecutor implements ITaskExecutor {
     private next?: TaskExecutor;
@@ -8,12 +9,12 @@ export abstract class TaskExecutor implements ITaskExecutor {
     protected abstract handle(
         task: PortCommandTask,
         hub: IHub
-    ): Promise<void> | null;
+    ): Observable<PortCommandExecutionStatus> | null;
 
     public executeTask(
         task: PortCommandTask,
         hub: IHub
-    ): Promise<void> {
+    ): Observable<PortCommandExecutionStatus> {
         const result = this.handle(
             task,
             hub
@@ -24,7 +25,7 @@ export abstract class TaskExecutor implements ITaskExecutor {
         if (this.next) {
             return this.next.executeTask(task, hub);
         }
-        return Promise.resolve();
+        return of(PortCommandExecutionStatus.Discarded);
     }
 
     public setNext(next: TaskExecutor): TaskExecutor {

@@ -26,10 +26,10 @@ export class HubPortModeInfoEffects {
                 const concatenatedPortModeIds = [ ...new Set([ ...action.portOutputModes, ...action.portInputModes ]) ];
 
                 return zip(
-                    ...concatenatedPortModeIds.map((mode) => portApi.getPortModeInformation$(matchingIO.portId, mode, PortModeInformationType.name)),
-                    ...concatenatedPortModeIds.map((mode) => portApi.getPortModeInformation$(matchingIO.portId, mode, PortModeInformationType.symbol)),
+                    ...concatenatedPortModeIds.map((mode) => portApi.getPortModeInformation(matchingIO.portId, mode, PortModeInformationType.name)),
+                    ...concatenatedPortModeIds.map((mode) => portApi.getPortModeInformation(matchingIO.portId, mode, PortModeInformationType.symbol)),
                 ).pipe(
-                    takeUntil(this.hubStorage.get(matchingIO.hubId).beforeDisconnect$),
+                    takeUntil(this.hubStorage.get(matchingIO.hubId).disconnected),
                     map((data) => {
                         const names = data.slice(0, concatenatedPortModeIds.length) as PortModeInformationName[];
                         const symbols = data.slice(concatenatedPortModeIds.length) as PortModeInformationSymbol[];
