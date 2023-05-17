@@ -20,13 +20,7 @@ export interface IState {
     hubIOSupportedModes: EntityState<HubIoSupportedModes>,
     hubIOState: EntityState<HubIOState>,
     hubPortModeInfo: EntityState<PortModeInfo>,
-    hubPortTasks: {
-        queue: PortCommandTask[],
-        totalTasksExecuted: number,
-        lastTaskExecutionTime: number,
-        maxQueueLength: number,
-        lastExecutedTasks: EntityState<PortCommandTask>
-    },
+    lastExecutedTasks: EntityState<PortCommandTask>,
     hubEditFormActiveSaves: {
         hubIds: string[]
     },

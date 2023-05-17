@@ -4,4 +4,4 @@ export * from './hub-attached-ios-effects';
 export * from './hub-io-supported-modes-effects.service';
 export * from './hubs.effects';
 export * from './control-scheme.effects';
-export * from './hub-port-tasks.effects';
+export * from './port-output-command-effects.service';

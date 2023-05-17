@@ -11,7 +11,7 @@ export class FakeTaskExecutorFactoryService {
     }
 
     public create(
-        taskExecutionDuration: number,
+        taskExecutionDuration: number = 100,
     ): ITaskExecutor {
         return new FakeTaskExecutor(
             taskExecutionDuration,
