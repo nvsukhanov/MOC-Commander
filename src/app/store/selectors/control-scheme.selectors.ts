@@ -70,20 +70,6 @@ export const CONTROL_SCHEME_SELECTORS = {
         }
     ),
     selectScheme: (id: string) => createSelector(CONTROL_SCHEME_SELECT_ENTITIES, (state) => state[id]),
-    selectSchemeBinding: (
-        schemeId: string,
-        bindingIndex: number
-    ) => createSelector(
-        CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
-        (scheme) => scheme?.bindings[bindingIndex]
-    ),
-    selectSchemeBindingInput: (
-        schemeId: string,
-        bindingIndex: number
-    ) => createSelector(
-        CONTROL_SCHEME_SELECTORS.selectSchemeBinding(schemeId, bindingIndex),
-        (binding) => binding?.input
-    ),
     selectSchemeBindingInputValue: (
         schemeId: string,
         binding: ControlSchemeBinding
@@ -129,7 +115,7 @@ export const CONTROL_SCHEME_SELECTORS = {
             const hubIdsSet = new Set([ ...hubIds ]);
             const gamepadIds = new Set([ ...gamepads.map((g) => g.gamepadIndex) ]);
 
-            const result: IOBindingValidationResults[] = scheme.bindings.map((binding) => {
+            return scheme.bindings.map((binding) => {
                 const bindingValidationResult: IOBindingValidationResults = {
                     bindingId: binding.id,
                     gamepadMissing: !gamepadIds.has(binding.input.gamepadId),
@@ -154,7 +140,6 @@ export const CONTROL_SCHEME_SELECTORS = {
 
                 return bindingValidationResult;
             });
-            return result;
         }
     ),
     validateScheme: (schemeId: string) => createSelector(

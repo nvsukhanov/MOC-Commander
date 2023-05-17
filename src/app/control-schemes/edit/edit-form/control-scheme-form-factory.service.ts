@@ -67,21 +67,15 @@ export class ControlSchemeFormFactoryService {
             portId: this.formBuilder.control(portId, { nonNullable: true, validators: [ Validators.required ] }),
             operationMode: this.formBuilder.control<HubIoOperationMode>(operationMode, { nonNullable: true, validators: [ Validators.required ] }),
             linearConfig: this.buildLinearOutputControlForm(
-                hubId,
-                portId,
                 outputState?.operationMode === HubIoOperationMode.Linear ? outputState.linearConfig : undefined
             ),
             servoConfig: this.buildServoOutputControlForm(
-                hubId,
-                portId,
                 outputState?.operationMode === HubIoOperationMode.Servo ? outputState.servoConfig : undefined
             )
         });
     }
 
     private buildServoOutputControlForm(
-        hubId: string,
-        portId: number,
         initialConfiguration?: BindingServoOutputState['servoConfig']
     ): ServoOutputConfiguration {
         return this.formBuilder.group({
@@ -145,8 +139,6 @@ export class ControlSchemeFormFactoryService {
     }
 
     private buildLinearOutputControlForm(
-        hubId: string,
-        portId: number,
         initialConfiguration?: BindingLinearOutputState['linearConfig']
     ): LinearOutputConfiguration {
         return this.formBuilder.group({

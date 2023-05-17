@@ -1,16 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
-import {
-    AttachedIO,
-    ControlScheme,
-    GamepadAxisState,
-    GamepadButtonState,
-    GamepadConfig,
-    HubConfiguration,
-    HubIOState,
-    HubIoSupportedModes,
-    PortModeInfo
-} from './i-state';
+import { AttachedIO, ControlScheme, GamepadAxisState, GamepadButtonState, GamepadConfig, HubConfiguration, HubIoSupportedModes, PortModeInfo } from './i-state';
 import { IOType } from '@nvsukhanov/poweredup-api';
 import { PortCommandTask } from '../common';
 
@@ -27,14 +17,6 @@ export const HUBS_ENTITY_ADAPTER: EntityAdapter<HubConfiguration> = createEntity
     selectId: (hub) => hub.hubId,
     sortComparer: (a, b) => a.hubId.localeCompare(b.hubId)
 });
-
-export const HUB_IO_DATA_ENTITY_ADAPTER: EntityAdapter<HubIOState> = createEntityAdapter<HubIOState>({
-    selectId: (io) => hubIODataIdFn(io.hubId, io.portId),
-});
-
-export function hubIODataIdFn(hubId: string, portId: number) {
-    return `${hubId}/${portId}`;
-}
 
 export const HUB_PORT_MODE_INFO: EntityAdapter<PortModeInfo> = createEntityAdapter<PortModeInfo>({
     selectId: (mode) => hubPortModeInfoIdFn(mode.hardwareRevision, mode.softwareRevision, mode.modeId, mode.ioType),

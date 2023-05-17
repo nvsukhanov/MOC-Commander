@@ -18,7 +18,6 @@ export interface IState {
     hubs: EntityState<HubConfiguration>,
     hubAttachedIOs: EntityState<AttachedIO>,
     hubIOSupportedModes: EntityState<HubIoSupportedModes>,
-    hubIOState: EntityState<HubIOState>,
     hubPortModeInfo: EntityState<PortModeInfo>,
     lastExecutedTasks: EntityState<PortCommandTask>,
     hubEditFormActiveSaves: {
@@ -91,16 +90,6 @@ export type HubConfiguration = {
     hubType: HubType;
     isButtonPressed: boolean;
     hasCommunication: boolean;
-}
-
-export type HubIOState = {
-    hubId: string;
-    portId: number;
-    lastExecutedTask: PortCommandTask | null,
-    actualState: {
-        portModeId: number | null;
-        values: number[];
-    }
 }
 
 export type PortModeInfo = {

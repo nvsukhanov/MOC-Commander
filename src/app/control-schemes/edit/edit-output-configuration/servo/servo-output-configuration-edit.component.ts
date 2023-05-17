@@ -23,7 +23,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ServoOutputConfigurationEditComponent implements IOutputConfigurationRenderer {
-    public readonly motorlimits = MOTOR_LIMITS;
+    public readonly motorLimits = MOTOR_LIMITS;
 
     private _outputBinding?: ControlSchemeBindingOutputForm;
 

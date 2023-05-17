@@ -3,7 +3,7 @@
         <span>{{ 'controlSchemeCreateToolbarTitle' | transloco }}</span>
         <span class="spacer"></span>
         <button mat-stroked-button
-                [disabled]="editForm.isValid === false"
+                [disabled]="!editForm.isValid"
                 (click)="onSave(editForm.getFormValue())"
         >
             {{ 'saveCreatedScheme' | transloco }}

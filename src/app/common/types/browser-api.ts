@@ -7,6 +7,3 @@ export const WINDOW = new InjectionToken('window', {
 export const NAVIGATOR = new InjectionToken('navigator', {
     factory: (): Navigator => window.navigator
 });
-
-export const BUTTON_RELEASED = 0;
-export const BUTTON_PRESSED = 1;

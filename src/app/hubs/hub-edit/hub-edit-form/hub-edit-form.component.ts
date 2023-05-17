@@ -35,7 +35,7 @@ export type HubEditFormSaveResult = {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HubEditFormComponent {
-    @Input() public isSaving?: boolean;
+    @Input() public isSaving: boolean | undefined;
 
     @Output() public readonly save = new EventEmitter<HubEditFormSaveResult>();
 

@@ -10,12 +10,12 @@
     </mat-card-content>
     <mat-card-actions>
         <button mat-button
-                [disabled]="form.invalid || isSaving"
+                [disabled]="isSaving || form.invalid"
                 (click)="onSave()"
         >{{ 'editHubFormSave' | transloco }}</button>
         <a mat-button
            [routerLink]="viewPath"
-           [disabled]="isSaving"
+           [disabled]="!!isSaving"
         >{{ 'editHubFormCancel' | transloco }}</a>
     </mat-card-actions>
     <mat-progress-bar *ngIf="isSaving"
