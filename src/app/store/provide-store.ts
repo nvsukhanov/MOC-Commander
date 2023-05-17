@@ -13,8 +13,8 @@ import {
     HUB_IO_DATA_REDUCERS,
     HUB_IO_OUTPUT_MODES_REDUCER,
     HUB_PORT_MODE_INFO_REDUCERS,
-    HUB_PORT_TASK_REDUCERS,
-    HUBS_REDUCERS
+    HUBS_REDUCERS,
+    LAST_EXECUTED_TASKS_REDUCER
 } from './reducers';
 import { provideEffects } from '@ngrx/effects';
 import {
@@ -23,8 +23,8 @@ import {
     HubAttachedIOsEffects,
     HubIOSupportedModesEffects,
     HubPortModeInfoEffects,
-    HubPortTasksEffects,
     HubsEffects,
+    PortOutputCommandEffects,
 } from './effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
@@ -47,7 +47,7 @@ const REDUCERS: ActionReducerMap<IState> = {
     hubIOSupportedModes: HUB_IO_OUTPUT_MODES_REDUCER,
     hubIOState: HUB_IO_DATA_REDUCERS,
     hubPortModeInfo: HUB_PORT_MODE_INFO_REDUCERS,
-    hubPortTasks: HUB_PORT_TASK_REDUCERS,
+    lastExecutedTasks: LAST_EXECUTED_TASKS_REDUCER,
     hubEditFormActiveSaves: HUB_EDIT_FORM_ACTIVE_SAVES_REDUCERS,
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_REDUCERS,
     router: routerReducer
@@ -72,7 +72,7 @@ export function provideApplicationStore(): EnvironmentProviders {
             HubIOSupportedModesEffects,
             HubsEffects,
             ControlSchemeEffects,
-            HubPortTasksEffects
+            PortOutputCommandEffects
         ),
         provideStoreDevtools({
             maxAge: 100,
