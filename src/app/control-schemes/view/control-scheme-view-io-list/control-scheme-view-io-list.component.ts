@@ -16,7 +16,7 @@ import { NgForOf, NgIf } from '@angular/common';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeViewIoListComponent {
-    @Input() public bindingsWithLatestExecutedTasks?: Array<ControlSchemeViewIOData>;
+    @Input() public bindingsWithLatestExecutedTasks: Array<ControlSchemeViewIOData> | undefined;
 
     public trackByFn(index: number, item: { schemeId: string }): string {
         return item.schemeId;

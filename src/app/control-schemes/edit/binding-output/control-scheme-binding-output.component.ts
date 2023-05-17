@@ -37,8 +37,6 @@ export type ControlSchemeBindingOutputForm = FormGroup<{
     servoConfig: ServoOutputConfiguration
 }>;
 
-export type InferFormGroup<T extends FormGroup> = T extends FormGroup<infer U> ? U : never;
-
 @Component({
     standalone: true,
     selector: 'app-control-scheme-binding-output',

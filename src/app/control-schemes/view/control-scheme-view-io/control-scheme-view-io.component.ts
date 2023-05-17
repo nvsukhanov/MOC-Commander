@@ -31,7 +31,7 @@ type LastExecutedTaskTemplateDate = {
 export class ControlSchemeViewIoComponent {
     @Input() public binding?: ControlSchemeBinding;
 
-    @Input() public ioType?: IOType;
+    @Input() public ioType: IOType | undefined;
 
     @Input() public validation?: IOBindingValidationResults;
 

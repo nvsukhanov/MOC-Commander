@@ -14,8 +14,8 @@
         </div>
 
         <mat-slider class="slider"
-                    [max]="motorlimits.maxServoDegreesRange / 2"
-                    [min]="-motorlimits.maxServoDegreesRange / 2">
+                    [max]="motorLimits.maxServoDegreesRange / 2"
+                    [min]="-motorLimits.maxServoDegreesRange / 2">
             <input matSliderStartThumb [formControl]="outputBinding.controls.servoConfig.controls.minAngle"/>
             <input matSliderEndThumb [formControl]="outputBinding.controls.servoConfig.controls.maxAngle"/>
         </mat-slider>
@@ -29,7 +29,7 @@
             <label class="slider-label-value-right">{{ outputBinding.controls.servoConfig.controls.speed.value }}</label>
         </div>
         <mat-slider class="slider"
-                    [max]="motorlimits.maxSpeed"
+                    [max]="motorLimits.maxSpeed"
                     [min]="0">
             <input matSliderThumb [formControl]="outputBinding.controls.servoConfig.controls.speed"/>
         </mat-slider>
@@ -43,7 +43,7 @@
             <label class="slider-label-value-right">{{ outputBinding.controls.servoConfig.controls.power.value }}</label>
         </div>
         <mat-slider class="slider"
-                    [max]="motorlimits.maxPower"
+                    [max]="motorLimits.maxPower"
                     [min]="0">
             <input matSliderThumb [formControl]="outputBinding.controls.servoConfig.controls.power"/>
         </mat-slider>

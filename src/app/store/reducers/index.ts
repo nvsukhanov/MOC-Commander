@@ -3,7 +3,6 @@ export * from './gamepads.reducers';
 export * from './gamepad-axes-state.reducers';
 export * from './gamepad-buttons-state.reducer';
 export * from './hub-port-mode-info.reducers';
-export * from './hub-io-state.reducers';
 export * from './hub-attached-ios.reducers';
 export * from './hub-io-supported-modes.reducers';
 export * from './hubs.reducers';

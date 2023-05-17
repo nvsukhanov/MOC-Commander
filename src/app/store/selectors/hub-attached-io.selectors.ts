@@ -68,7 +68,7 @@ export function getHubIOOperationModes(
     const outputModes = supportedModes[hubIOSupportedModesIdFn(io.hardwareRevision, io.softwareRevision, io.ioType)]?.portOutputModes;
 
     if (outputModes && outputModes.length > 0) {
-        const operationModes = outputModes.map((modeId) => {
+        return outputModes.map((modeId) => {
             const portModeId = hubPortModeInfoIdFn(io.hardwareRevision, io.softwareRevision, modeId, io.ioType);
             const portModeInfo = portModeData[portModeId];
             if (portModeInfo && Object.values(HUB_IO_CONTROL_METHODS[inputMethod]).includes(portModeInfo.name)) {
@@ -78,8 +78,6 @@ export function getHubIOOperationModes(
             }
             return [];
         }).flat();
-
-        return operationModes;
     }
     return [];
 }

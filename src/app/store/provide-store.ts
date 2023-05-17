@@ -10,7 +10,6 @@ import {
     GAMEPAD_REDUCERS,
     HUB_ATTACHED_IOS_REDUCERS,
     HUB_EDIT_FORM_ACTIVE_SAVES_REDUCERS,
-    HUB_IO_DATA_REDUCERS,
     HUB_IO_OUTPUT_MODES_REDUCER,
     HUB_PORT_MODE_INFO_REDUCERS,
     HUBS_REDUCERS,
@@ -29,7 +28,7 @@ import {
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { NAVIGATOR } from '../common';
-import { Action, ActionReducer, ActionReducerMap, MetaReducer, provideStore, Store } from '@ngrx/store';
+import { ActionReducer, ActionReducerMap, MetaReducer, provideStore, Store } from '@ngrx/store';
 import { HubStorageService } from './hub-storage.service';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { GAMEPAD_ACTIONS } from './actions';
@@ -45,7 +44,6 @@ const REDUCERS: ActionReducerMap<IState> = {
     hubs: HUBS_REDUCERS,
     hubAttachedIOs: HUB_ATTACHED_IOS_REDUCERS,
     hubIOSupportedModes: HUB_IO_OUTPUT_MODES_REDUCER,
-    hubIOState: HUB_IO_DATA_REDUCERS,
     hubPortModeInfo: HUB_PORT_MODE_INFO_REDUCERS,
     lastExecutedTasks: LAST_EXECUTED_TASKS_REDUCER,
     hubEditFormActiveSaves: HUB_EDIT_FORM_ACTIVE_SAVES_REDUCERS,
@@ -60,7 +58,7 @@ export function localStorageSyncReducer(reducer: ActionReducer<IState>): ActionR
     })(reducer);
 }
 
-const metaReducers: Array<MetaReducer<IState, Action>> = [ localStorageSyncReducer ];
+const metaReducers: Array<MetaReducer<IState>> = [ localStorageSyncReducer ];
 
 export function provideApplicationStore(): EnvironmentProviders {
     return makeEnvironmentProviders([
