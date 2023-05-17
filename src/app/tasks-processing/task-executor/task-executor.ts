@@ -25,7 +25,7 @@ export abstract class TaskExecutor implements ITaskExecutor {
         if (this.next) {
             return this.next.executeTask(task, hub);
         }
-        return of(PortCommandExecutionStatus.Discarded);
+        return of(PortCommandExecutionStatus.discarded);
     }
 
     public setNext(next: TaskExecutor): TaskExecutor {

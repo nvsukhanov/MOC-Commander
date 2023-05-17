@@ -14,7 +14,7 @@ export class FakeTaskExecutor implements ITaskExecutor {
         task: PortCommandTask,
     ): Observable<PortCommandExecutionStatus> {
         this.logger.debug('Executing task', JSON.stringify(task));
-        return from([ PortCommandExecutionStatus.InProgress, PortCommandExecutionStatus.Completed ]).pipe(
+        return from([ PortCommandExecutionStatus.inProgress, PortCommandExecutionStatus.completed ]).pipe(
             debounceTime(this.taskExecutionDuration / 2),
             take(2)
         );
