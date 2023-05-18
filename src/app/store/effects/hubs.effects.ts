@@ -11,7 +11,7 @@ import { HubCommunicationNotifierMiddlewareFactoryService } from '../hub-communi
 import { Router } from '@angular/router';
 import { ROUTER_SELECTORS } from '../selectors';
 import { HUB_ROUTE } from '../../routes';
-import { connectHub, ConnectionError, IHub, LoggingMiddleware } from '@nvsukhanov/poweredup-api';
+import { connectHub, ConnectionError, IHub, MessageLoggingMiddleware } from '@nvsukhanov/poweredup-api';
 import { PrefixedConsoleLogger } from '../../common/logging/prefixed-console-logger';
 
 @Injectable()
@@ -136,8 +136,8 @@ export class HubsEffects {
     }
 
     private hubDiscovery$(): Observable<Action> {
-        const incomingLoggerMiddleware = new LoggingMiddleware(new PrefixedConsoleLogger('<', LogLevel.Debug), 'all'); // TODO: replace w/ factory
-        const outgoingLoggerMiddleware = new LoggingMiddleware(new PrefixedConsoleLogger('>', LogLevel.Debug), 'all'); // TODO: replace w/ factory
+        const incomingLoggerMiddleware = new MessageLoggingMiddleware(new PrefixedConsoleLogger('<', LogLevel.Debug), 'all'); // TODO: replace w/ factory
+        const outgoingLoggerMiddleware = new MessageLoggingMiddleware(new PrefixedConsoleLogger('>', LogLevel.Debug), 'all'); // TODO: replace w/ factory
         const communicationNotifierMiddleware = this.communicationNotifierMiddlewareFactory.create();
 
         return connectHub(

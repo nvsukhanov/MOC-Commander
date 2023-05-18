@@ -1,5 +1,5 @@
 <ng-container *ngIf="selectedScheme$ | ngrxPush; let scheme; else schemeNotFound">
-    <mat-toolbar color="primary" *ngrxLet="canRunScheme$ | ngrxPush; let canRunScheme">
+    <mat-toolbar color="primary" *ngrxLet="canRunScheme$; let canRunScheme">
         <span appEllipsisTitle>
             {{ scheme.name }}
         </span>

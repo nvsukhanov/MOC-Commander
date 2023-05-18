@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { animationFrames, combineLatest, exhaustMap, filter, map, NEVER, of, switchMap, take } from 'rxjs';
+import { animationFrames, catchError, combineLatest, exhaustMap, filter, map, NEVER, of, switchMap, take, TimeoutError } from 'rxjs';
 import { CONTROL_SCHEME_SELECTORS, HUB_PORT_TASKS_SELECTORS } from '../selectors';
 import { Store } from '@ngrx/store';
 import { CONTROL_SCHEME_ACTIONS, HUB_PORT_TASKS_ACTIONS } from '../actions';
@@ -19,6 +19,7 @@ import { PortCommandTask } from '../../common';
 import { ControlSchemeBinding } from '../i-state';
 import { Dictionary } from '@ngrx/entity';
 import { HubStorageService } from '../hub-storage.service';
+import { PortCommandExecutionStatus } from '@nvsukhanov/poweredup-api';
 
 @Injectable()
 export class HubPortTasksEffects {
@@ -63,6 +64,13 @@ export class HubPortTasksEffects {
             map(([ , task ]) => task),
             filter((task) => !!task),
             exhaustMap((task) => this.taskExecutor.executeTask(task, this.hubStorage.get(task.hubId)).pipe(
+                catchError((error) => {
+                    if (error instanceof TimeoutError) {
+                        // Skipping task because of timeout is not a critical error and can be safely ignored
+                        return of(PortCommandExecutionStatus.executionError);
+                    }
+                    throw error;
+                }),
                 take(1),
                 map(() => HUB_PORT_TASKS_ACTIONS.markTaskAsExecuted({ task })),
             ))
