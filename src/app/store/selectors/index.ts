@@ -10,5 +10,5 @@ export * from './gamepad-buttons-state.selectors';
 export * from './control-scheme-configuration-state.selectors';
 export * from './hub-port-mode-info.selectors';
 export * from './control-scheme-running-state.selectors';
-export * from './last-executed-tasks.selectors';
+export * from './hub-port-tasks.selectors';
 export * from './hub-edit-form-active-saves.selectors';

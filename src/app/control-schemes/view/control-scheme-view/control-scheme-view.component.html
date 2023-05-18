@@ -33,6 +33,23 @@
     </mat-toolbar>
 
     <section class="running-scheme-view">
+        <mat-accordion *ngIf="isCurrentControlSchemeRunning$ | ngrxPush">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{ 'currentSchemeIsRunning' | transloco }}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{ 'currentRunningSchemeTasksQueueDetails' | transloco }}
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <p>{{ 'schemeTaskQueueCurrentLength' | transloco }} {{ queueLength$ | ngrxPush }}</p>
+                <p>{{ 'schemeTaskMaximumEncounteredQueueLength' | transloco }} {{ maxQueueLength$ | ngrxPush }}</p>
+                <p>{{ 'totalTasksExecuted' | transloco }} {{ totalTasksExecuted$ | ngrxPush }}</p>
+                <p>{{ 'lastTenTasksAverageExecutionTime' | transloco }}{{ lastTenTaskAverageExecutionTime$ | ngrxPush }}</p>
+            </mat-expansion-panel>
+        </mat-accordion>
+
         <section class="IOs">
             <app-control-scheme-view-io-list [bindingsWithLatestExecutedTasks]="bindingsWithLatestExecutedTasks$ | ngrxPush"
             ></app-control-scheme-view-io-list>

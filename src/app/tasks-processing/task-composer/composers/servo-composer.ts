@@ -4,11 +4,7 @@ import { BindingServoOutputState, ControlSchemeBinding, HubIoOperationMode } fro
 import { MotorServoEndState } from '@nvsukhanov/poweredup-api';
 
 export class ServoComposer extends PortCommandTaskComposer {
-    private readonly snappingThreshold = 10;
-
-    private readonly stickToZeroThreshold = 10;
-
-    private readonly stickToMaxThreshold = 10;
+    private readonly snappingThreshold = 5;
 
     protected handle(
         binding: ControlSchemeBinding,
@@ -39,25 +35,9 @@ export class ServoComposer extends PortCommandTaskComposer {
         maxAngle: number,
         minAngle: number
     ): number {
-        // There is no reason to move servo to new position if delta is less than threshold bc there of a natural limitations of servo's encoder
-        const snappedAngle = Math.round(targetAngle / this.snappingThreshold) * this.snappingThreshold;
-
-        // If target angle is close to zero, then we should stick to zero
-        if (Math.abs(snappedAngle - arcCenter) <= this.stickToZeroThreshold) {
-            return arcCenter;
-        }
-
-        // If target angle is close to max, then we should stick to max
-        if (Math.abs(snappedAngle - maxAngle) <= this.stickToMaxThreshold) {
-            return maxAngle;
-        }
-
-        // If target angle is close to min, then we should stick to min
-        if (Math.abs(snappedAngle - minAngle) <= this.stickToMaxThreshold) {
-            return minAngle;
-        }
-
-        return snappedAngle;
+        const snappedToZeroAngle = Math.abs(targetAngle - arcCenter) < this.snappingThreshold ? 0 : targetAngle;
+        const snappedToMaxAngle = Math.abs(snappedToZeroAngle - maxAngle) < this.snappingThreshold ? maxAngle : snappedToZeroAngle;
+        return Math.abs(snappedToMaxAngle - minAngle) < this.snappingThreshold ? minAngle : snappedToMaxAngle;
     }
 
     private composeServoTask(

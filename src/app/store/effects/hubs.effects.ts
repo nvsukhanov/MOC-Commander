@@ -99,7 +99,7 @@ export class HubsEffects {
         );
     });
 
-    public readonly requestSetHubName$ = createEffect(() => {
+    public readonly setHubName$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.requestSetHubName),
             mergeMap((a) => from(this.hubStorage.get(a.hubId).properties.setHubAdvertisingName(a.name)).pipe(
@@ -136,8 +136,8 @@ export class HubsEffects {
     }
 
     private hubDiscovery$(): Observable<Action> {
-        const incomingLoggerMiddleware = new LoggingMiddleware(new PrefixedConsoleLogger('in', LogLevel.Debug), 'all'); // TODO: replace w/ factory
-        const outgoingLoggerMiddleware = new LoggingMiddleware(new PrefixedConsoleLogger('out', LogLevel.Debug), 'all'); // TODO: replace w/ factory
+        const incomingLoggerMiddleware = new LoggingMiddleware(new PrefixedConsoleLogger('<', LogLevel.Debug), 'all'); // TODO: replace w/ factory
+        const outgoingLoggerMiddleware = new LoggingMiddleware(new PrefixedConsoleLogger('>', LogLevel.Debug), 'all'); // TODO: replace w/ factory
         const communicationNotifierMiddleware = this.communicationNotifierMiddlewareFactory.create();
 
         return connectHub(
