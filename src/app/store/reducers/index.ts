@@ -9,5 +9,5 @@ export * from './hubs.reducers';
 export * from './control-scheme.reducers';
 export * from './control-scheme-configuration-state.reducers';
 export * from './control-scheme-running-state.reducers';
-export * from './last-executed-tasks.reducers';
+export * from './hub-port-tasks.reducers';
 export * from './hub-edit-form-active-saves.reducers';

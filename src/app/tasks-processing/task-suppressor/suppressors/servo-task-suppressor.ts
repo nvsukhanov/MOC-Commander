@@ -2,6 +2,7 @@ import { TaskSuppressor } from '../task-suppressor';
 import { PortCommandTask, PortCommandTaskType } from '../../../common';
 
 export class ServoTaskSuppressor extends TaskSuppressor {
+    private readonly servoThresholdDegrees = 10;
 
     protected shouldSuppress<T extends PortCommandTask>(
         task: T,
@@ -18,6 +19,7 @@ export class ServoTaskSuppressor extends TaskSuppressor {
             return false;
         }
 
-        return task.angle === lastTaskOfKindInQueue.angle;
+        // TODO: potentially could suppress if angle is near arc's ends. need fix
+        return Math.abs(task.angle - lastTaskOfKindInQueue.angle) < this.servoThresholdDegrees;
     }
 }

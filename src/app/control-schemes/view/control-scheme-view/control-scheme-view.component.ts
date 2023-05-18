@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { combineLatest, map, Observable, of, switchMap } from 'rxjs';
-import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlScheme, ROUTER_SELECTORS, } from '../../../store';
+import { bufferCount, combineLatest, map, Observable, of, switchMap } from 'rxjs';
+import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlScheme, HUB_PORT_TASKS_SELECTORS, ROUTER_SELECTORS, } from '../../../store';
 import { Store } from '@ngrx/store';
 import { LetModule, PushModule } from '@ngrx/component';
 import { JsonPipe, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
@@ -54,12 +54,24 @@ export class ControlSchemeViewComponent {
 
     public readonly isCurrentControlSchemeRunning$ = this.store.select(CONTROL_SCHEME_SELECTORS.isCurrentControlSchemeRunning);
 
+    public readonly queueLength$ = this.store.select(HUB_PORT_TASKS_SELECTORS.selectQueueLength);
+
+    public readonly maxQueueLength$ = this.store.select(HUB_PORT_TASKS_SELECTORS.selectMaxQueueLength);
+
+    public readonly lastTenTaskAverageExecutionTime$ = this.store.select(HUB_PORT_TASKS_SELECTORS.lastTaskExecutionTime).pipe(
+        bufferCount(10, 1),
+        // eslint-disable-next-line @ngrx/avoid-mapping-selectors
+        map((v) => v.reduce((acc, val) => acc + val, 0) / 10)
+    );
+
     public readonly bindingsWithLatestExecutedTasks$ = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
         switchMap((id) => id === null
                           ? of([])
                           : this.store.select(CONTROL_SCHEME_SELECTORS.selectSchemeIOData(id))
         )
     );
+
+    public readonly totalTasksExecuted$ = this.store.select(HUB_PORT_TASKS_SELECTORS.selectTotalTasksExecuted);
 
     public composeValidationErrorMessage$: Observable<string> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
         switchMap((id) => id === null

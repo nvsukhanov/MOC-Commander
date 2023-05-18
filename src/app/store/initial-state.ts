@@ -27,7 +27,13 @@ export const INITIAL_STATE: IState = {
     hubAttachedIOs: HUB_ATTACHED_IOS_ENTITY_ADAPTER.getInitialState(),
     hubIOSupportedModes: HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER.getInitialState(),
     hubPortModeInfo: HUB_PORT_MODE_INFO.getInitialState(),
-    lastExecutedTasks: LAST_EXECUTED_TASKS_ENTITY_ADAPTER.getInitialState(),
+    hubPortTasks: {
+        queue: [],
+        totalTasksExecuted: 0,
+        lastTaskExecutionTime: 0,
+        maxQueueLength: 0,
+        lastExecutedTasks: LAST_EXECUTED_TASKS_ENTITY_ADAPTER.getInitialState()
+    },
     hubEditFormActiveSaves: {
         hubIds: []
     },

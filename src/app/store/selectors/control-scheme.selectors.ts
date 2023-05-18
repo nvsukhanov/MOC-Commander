@@ -3,7 +3,7 @@ import { ControlSchemeBinding, GamepadInputMethod, IState } from '../i-state';
 import { CONTROL_SCHEMES_ENTITY_ADAPTER, hubAttachedIosIdFn, lastExecutedTaskIdFn } from '../entity-adapters';
 import { GAMEPAD_AXES_STATE_SELECTORS } from './gamepad-axes-state.selectors';
 import { GAMEPAD_BUTTONS_STATE_SELECTORS } from './gamepad-buttons-state.selectors';
-import { HUB_PORT_TASKS_SELECTORS } from './last-executed-tasks.selectors';
+import { HUB_PORT_TASKS_SELECTORS } from './hub-port-tasks.selectors';
 import { HUBS_SELECTORS } from './hubs.selectors';
 import { getHubIOOperationModes, HUB_ATTACHED_IO_SELECTORS } from './hub-attached-io.selectors';
 import { HUB_IO_SUPPORTED_MODES_SELECTORS } from './hub-io-supported-modes.selectors';
