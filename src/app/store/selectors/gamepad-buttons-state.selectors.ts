@@ -17,6 +17,10 @@ export const GAMEPAD_BUTTONS_STATE_SELECTORS = {
         GAMEPAD_BUTTONS_STATE_SELECTORS.selectEntities,
         (state) => state[gamepadButtonIdFn(gamepadIndex, buttonIndex)]
     ),
+    selectValueByIndex: (gamepadIndex: number, buttonIndex: number) => createSelector(
+        GAMEPAD_BUTTONS_STATE_SELECTORS.selectEntities,
+        (state) => state[gamepadButtonIdFn(gamepadIndex, buttonIndex)]?.value
+    ),
     selectFistBinding: createSelector(
         GAMEPAD_BUTTONS_SELECT_ALL,
         (states) => {

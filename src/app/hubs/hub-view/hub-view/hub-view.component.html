@@ -1,20 +1,28 @@
-<section *ngIf="selectedHub$ | ngrxPush; let hub; else hubNotFound"
-         class="hub-view">
-    <app-hub-properties-view [configuration]="hub"
-                             (disconnect)="disconnectHub()"
-    ></app-hub-properties-view>
+<ng-container *ngIf="selectedHub$ | ngrxPush; let hub; else hubNotFound">
+    <app-feature-toolbar [title]="'viewHubToolbarTitle' | transloco: hub"></app-feature-toolbar>
 
-    <div *ngIf="selectedHubIOs$ | ngrxPush; let hubIOs"
-         class="io-grid">
-        <app-hub-port-view *ngFor="let hubIO of hubIOs; trackBy: hubIoTrackByFn"
-                           class="io-grid-item"
-                           [io]="hubIO">
-        </app-hub-port-view>
-    </div>
-</section>
+    <app-feature-content-container>
+        <section class="hub-view">
+            <app-hub-properties-view [configuration]="hub"
+                                     (disconnect)="disconnectHub()"
+            ></app-hub-properties-view>
+
+            <div *ngIf="selectedHubIOs$ | ngrxPush; let hubIOs"
+                 class="io-grid">
+                <app-hub-port-view *ngFor="let hubIO of hubIOs; trackBy: hubIoTrackByFn"
+                                   class="io-grid-item"
+                                   [io]="hubIO">
+                </app-hub-port-view>
+            </div>
+        </section>
+    </app-feature-content-container>
+</ng-container>
 
 <ng-template #hubNotFound>
-    <section class="hub-is-not-connected">
-        <h2>{{ 'hubIsNotConnected' | transloco }}</h2>
-    </section>
+    <app-feature-toolbar [title]="'viewNotConnectedHubToolbarTitle' | transloco"></app-feature-toolbar>
+    <app-feature-content-container>
+        <app-hub-is-not-connected-notification></app-hub-is-not-connected-notification>
+    </app-feature-content-container>
 </ng-template>
+
+

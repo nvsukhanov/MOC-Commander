@@ -1,16 +1,20 @@
-<mat-toolbar [color]="'primary'" class="toolbar">
-    <mat-toolbar-row>
-        <span>{{ 'controlSchemeCreateToolbarTitle' | transloco }}</span>
-        <span class="spacer"></span>
-        <button mat-stroked-button
-                [disabled]="!editForm.isValid"
-                (click)="onSave(editForm.getFormValue())"
-        >
-            {{ 'saveCreatedScheme' | transloco }}
-        </button>
-    </mat-toolbar-row>
-</mat-toolbar>
+<app-feature-toolbar [title]="'controlSchemeCreateToolbarTitle' | transloco">
+    <span class="spacer"></span>
+    <button mat-stroked-button
+            class="toolbar-button"
+            [disabled]="!editForm.isValid"
+            (click)="onSave(editForm.getFormValue())"
+    >
+        {{ 'saveCreatedScheme' | transloco }}
+    </button>
+    <a mat-stroked-button
+       class="toolbar-button"
+       [routerLink]="cancelRoute"
+    >
+        {{ 'cancelCreateScheme' | transloco }}
+    </a>
+</app-feature-toolbar>
 
-<app-control-scheme-edit-form class="edit-form"
-                              #editForm
-></app-control-scheme-edit-form>
+<app-feature-content-container>
+    <app-control-scheme-edit-form #editForm></app-control-scheme-edit-form>
+</app-feature-content-container>

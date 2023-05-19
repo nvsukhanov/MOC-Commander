@@ -1,10 +1,6 @@
-<a mat-line
-   [routerLink]="hubViewHref"
-   class="hub-name"
-   appEllipsisTitle
->
+<h3 class="hub-name" appEllipsisTitle>
     {{ name }}
-</a>
+</h3>
 
 <ng-container *ngIf="isButtonPressed; else buttonNotPressed">
     <mat-icon [title]="'hubButtonStateTitle' | transloco"
@@ -37,11 +33,17 @@
 >multiple_stop
 </mat-icon>
 
-<button mat-icon-button
-        color="accent"
+<a mat-button
+   class="view-button"
+   [routerLink]="hubViewHref"
+>
+    {{ 'viewHub' | transloco }}
+</a>
+
+<button mat-button
         class="disconnect-button"
         [title]="'disconnectHub' | transloco"
         (click)="onDisconnectClick()"
 >
-    <mat-icon>delete</mat-icon>
+    {{ 'disconnectHub' | transloco }}
 </button>

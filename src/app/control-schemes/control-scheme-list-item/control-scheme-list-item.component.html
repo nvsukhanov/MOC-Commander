@@ -1,19 +1,31 @@
-<a mat-line
-   appEllipsisTitle
-   [routerLink]="schemeViewHref"
-   class="name">
+<h3 class="name"
+    appEllipsisTitle
+>
     {{ name }}
-</a>
+</h3>
 
 <mat-icon *ngIf="isActive"
           [title]="'controlSchemeIsActive' | transloco">power
 </mat-icon>
 
-<button mat-icon-button
-        color="accent"
+<a mat-button
+   class="view-button"
+   [routerLink]="schemeViewHref"
+>
+    {{ 'viewScheme' | transloco }}
+</a>
+
+<a mat-button
+   class="edit-button"
+   [routerLink]="schemeEditHref"
+>
+    {{ 'editScheme' | transloco }}
+</a>
+
+<button mat-button
+        color="warn"
         class="delete-button"
-        [title]="'deleteScheme' | transloco"
         (click)="onDeleteClick()"
 >
-    <mat-icon>delete</mat-icon>
+    {{ 'deleteScheme' | transloco }}
 </button>

@@ -1,0 +1,44 @@
+<app-feature-toolbar [title]="'aboutPageTitle' | transloco"></app-feature-toolbar>
+
+<app-feature-content-container>
+    <section class="about-section">
+        <h3 class="about-section-title">
+            {{ 'aboutPageDisclaimerTitle' | transloco }}
+        </h3>
+        <p class="about-section-content">
+            {{ 'aboutPageLegalNotice' | transloco }}
+        </p>
+    </section>
+
+    <section class="about-section">
+        <h3 class="about-section-title">
+            {{ 'aboutPageLicenseTitle' | transloco }}
+        </h3>
+        <p class="about-section-content">
+            <a [href]="licenseURL">
+                {{ 'aboutPageLicenseText' | transloco }}
+            </a>
+        </p>
+    </section>
+
+    <section class="about-section">
+        <h3 class="about-section-title">
+            {{ 'aboutPageAuthorTitle' | transloco }}
+        </h3>
+        <p class="about-section-content">
+            <a [href]="authorProfileURL">{{ 'aboutPageAuthorName' | transloco }}</a>
+        </p>
+    </section>
+
+    <section class="about-section">
+        <h3 class="about-section-title">
+            {{ 'aboutPageSourcesTitle' | transloco }}
+        </h3>
+        <p class="about-section-content">
+            <a [href]="ngPoweredUpURL">{{ 'aboutPageGithubTitle' | transloco }}</a>
+        </p>
+        <p class="about-section-content">
+            <a [href]="rxPoweredUpURL">{{ 'aboutPageGithubApiTitle' | transloco }}</a>
+        </p>
+    </section>
+</app-feature-content-container>

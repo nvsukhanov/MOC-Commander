@@ -1,0 +1,57 @@
+:host {
+    display: block;
+    width: 100%;
+    box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.toolbar {
+    height: var(--main-toolbar-height);
+}
+
+.title {
+    display: flex;
+    align-items: center;
+}
+
+.nav {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+}
+
+.main-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-nav-items {
+    display: grid;
+    grid-column-gap: 20px;
+    grid-auto-flow: column;
+    grid-auto-columns: auto;
+}
+
+.right-side-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.about-button {
+    margin-left: 20px;
+}
+
+.counter {
+    opacity: 0.5;
+}
+
+.active-link {
+    background: rgba(0, 0, 0, .2);
+}

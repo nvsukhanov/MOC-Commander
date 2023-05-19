@@ -4,11 +4,15 @@ import { GAMEPAD_ACTIONS } from '../../store';
 import { LetModule, PushModule } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { ControllersListComponent } from '../../controllers/controllers-list';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterOutlet } from '@angular/router';
 import { HubsListComponent } from '../../hubs/hubs-list';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { ControlSchemeListComponent } from '../../control-schemes/control-scheme-list';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatBadgeModule } from '@angular/material/badge';
+import { NgIf } from '@angular/common';
+import { NavMenuComponent } from '../nav-menu/nav-menu.component';
 
 @Component({
     standalone: true,
@@ -20,11 +24,15 @@ import { ControlSchemeListComponent } from '../../control-schemes/control-scheme
         LetModule,
         TranslocoModule,
         ControllersListComponent,
-        MatToolbarModule,
         RouterOutlet,
         HubsListComponent,
-        MatSidenavModule,
         ControlSchemeListComponent,
+        MatTabsModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatBadgeModule,
+        NgIf,
+        NavMenuComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

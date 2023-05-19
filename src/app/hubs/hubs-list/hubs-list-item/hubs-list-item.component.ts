@@ -5,8 +5,8 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
 import { MatLineModule } from '@angular/material/core';
 import { RouterLink } from '@angular/router';
-import { HUB_ROUTE } from '../../../routes';
 import { EllipsisTitleDirective } from '../../../common';
+import { ROUTE_PATHS } from '../../../routes';
 
 @Component({
     standalone: true,
@@ -86,7 +86,7 @@ export class HubsListItemComponent {
 
     @Input()
     public set hubId(value: string | undefined) {
-        this._hubViewHref = value ? [ HUB_ROUTE, value ] : [];
+        this._hubViewHref = value ? [ '..', ROUTE_PATHS.hub, value ] : [];
     }
 
     public get hubViewHref(): string[] {

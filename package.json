@@ -1,12 +1,11 @@
 {
-  "name": "web-lpu",
-  "version": "0.0.0",
+  "name": "ngpoweredup",
+  "version": "0.1.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "ci": "npm run lint && npm run test:ci && npm run build",
-    "watch": "ng build --watch --configuration development",
     "test": "jest",
     "test:ci": "jest --runInBand",
     "lint": "ng lint"

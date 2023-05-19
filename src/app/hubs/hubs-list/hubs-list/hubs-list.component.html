@@ -1,37 +1,23 @@
-<mat-accordion *ngrxLet="connectedHubs$; let connectedHubs">
-    <mat-expansion-panel [expanded]="true">
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                <mat-icon class="header-icon">memory</mat-icon>
-                {{ 'hubsList' | transloco }}
-                ({{ connectedHubs?.length ?? 0 }})
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-list>
-            <ng-container *ngIf="connectedHubs?.length; else noHubConnected">
-                <mat-list-item *ngFor="let hub of connectedHubs; trackBy: hubTrackByFn">
-                    <app-hubs-list-item [hubId]="hub.hubId"
-                                        [name]="hub.name"
-                                        [batteryLevel]="hub.batteryLevel"
-                                        [rssiLevel]="hub.RSSI"
-                                        [isButtonPressed]="hub.isButtonPressed"
-                                        [hasCommunication]="hub.hasCommunication"
-                                        (disconnect)="disconnectHub(hub.hubId)"
-                    ></app-hubs-list-item>
-                </mat-list-item>
-            </ng-container>
-            <ng-template #noHubConnected>
-                <mat-list-item>
-                    {{ 'noHubConnected' | transloco }}
-                </mat-list-item>
-            </ng-template>
-        </mat-list>
-        <mat-action-row>
-            <button mat-button
-                    [disabled]="!(canAddHub$ | ngrxPush)"
-                    (click)="startDiscovery()">
-                {{ 'discoverHub' | transloco }}
-            </button>
-        </mat-action-row>
-    </mat-expansion-panel>
-</mat-accordion>
+<app-feature-toolbar [title]="'hubsList' | transloco"></app-feature-toolbar>
+
+<app-feature-content-container *ngrxLet="connectedHubs$ as connectedHubs">
+    <ng-container *ngIf="connectedHubs.length; else noConnectedHubs">
+        <ng-container *ngFor="let hub of connectedHubs; trackBy: hubTrackByFn; let last = last">
+            <mat-card class="hub-card">
+                <app-hubs-list-item [hubId]="hub.hubId"
+                                    [name]="hub.name"
+                                    [batteryLevel]="hub.batteryLevel"
+                                    [rssiLevel]="hub.RSSI"
+                                    [isButtonPressed]="hub.isButtonPressed"
+                                    [hasCommunication]="hub.hasCommunication"
+                                    (disconnect)="disconnectHub(hub.hubId)"
+                ></app-hubs-list-item>
+            </mat-card>
+            <mat-divider *ngIf="!last"></mat-divider>
+        </ng-container>
+    </ng-container>
+
+    <ng-template #noConnectedHubs>
+        <h3 class="no-hub-connected-notification-header">{{ 'noHubConnected' | transloco }}</h3>
+    </ng-template>
+</app-feature-content-container>

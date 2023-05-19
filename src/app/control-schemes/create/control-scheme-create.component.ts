@@ -8,6 +8,9 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { BindingFormResult, ControlSchemeEditFormComponent } from '../edit';
 import { Store } from '@ngrx/store';
 import { CONTROL_SCHEME_ACTIONS } from '../../store';
+import { FeatureContentContainerComponent, FeatureToolbarComponent } from '../../common';
+import { RouterLink } from '@angular/router';
+import { ROUTE_PATHS } from '../../routes';
 
 @Component({
     standalone: true,
@@ -21,11 +24,16 @@ import { CONTROL_SCHEME_ACTIONS } from '../../store';
         NgIf,
         PushModule,
         TranslocoModule,
-        ControlSchemeEditFormComponent
+        ControlSchemeEditFormComponent,
+        FeatureToolbarComponent,
+        FeatureContentContainerComponent,
+        RouterLink
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeCreateComponent {
+    public readonly cancelRoute = ROUTE_PATHS.controlSchemeList;
+
     constructor(
         private readonly store: Store,
     ) {

@@ -56,7 +56,7 @@ export class SetSpeedComposer extends PortCommandTaskComposer {
             Math.min(maxAbsSpeed, MOTOR_LIMITS.maxSpeed),
         );
 
-        return this.snapSpeedToZero(clampedSpeed);
+        return Math.round(this.snapSpeedToZero(clampedSpeed));
     }
 
     private clampSpeed(

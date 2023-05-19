@@ -1,6 +1,5 @@
 <ng-container *ngIf="currentlyEditedScheme$ | ngrxPush; let scheme; else schemeNotFound">
-    <mat-toolbar [color]="'primary'" class="toolbar">
-        <span>{{ 'controlSchemeEditToolbarTitle' | transloco: scheme }}</span>
+    <app-feature-toolbar [title]="'controlSchemeEditToolbarTitle' | transloco: scheme">
         <span class="spacer"></span>
         <button mat-stroked-button
                 class="toolbar-button"
@@ -15,15 +14,20 @@
         >
             {{ 'cancelEditScheme' | transloco }}
         </a>
-    </mat-toolbar>
-    <app-control-scheme-edit-form class="edit-form"
-                                  #form
-                                  [scheme]="scheme"
-    ></app-control-scheme-edit-form>
+    </app-feature-toolbar>
+
+    <app-feature-content-container>
+        <app-control-scheme-edit-form class="edit-form"
+                                      #form
+                                      [scheme]="scheme"
+        ></app-control-scheme-edit-form>
+    </app-feature-content-container>
 </ng-container>
 
 <ng-template #schemeNotFound>
-    <section class="scheme-is-not-found">
-        <h2>{{ 'schemeIsNotFound' | transloco }}</h2>
-    </section>
+    <app-feature-toolbar [title]="'controlSchemeEditNotFoundToolbarTitle' | ngrxPush"></app-feature-toolbar>
+
+    <app-feature-content-container>
+        <h3 class="scheme-is-not-found">{{ 'schemeIsNotFound' | transloco }}</h3>
+    </app-feature-content-container>
 </ng-template>

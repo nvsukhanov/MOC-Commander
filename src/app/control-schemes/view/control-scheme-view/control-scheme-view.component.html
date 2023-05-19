@@ -1,14 +1,15 @@
 <ng-container *ngIf="selectedScheme$ | ngrxPush; let scheme; else schemeNotFound">
-    <mat-toolbar color="primary" *ngrxLet="canRunScheme$; let canRunScheme">
-        <span appEllipsisTitle>
-            {{ scheme.name }}
-        </span>
+    <app-feature-toolbar *ngrxLet="canRunScheme$; let canRunScheme"
+                         [title]="'viewSchemeToolbarTitle' | transloco: scheme"
+    >
         <span class="spacer"></span>
         <mat-icon *ngIf="composeValidationErrorMessage$ | ngrxPush; let validationMessage"
                   [title]="validationMessage"
                   [color]="'accent'"
-        >report
+        >
+            report
         </mat-icon>
+
         <button mat-stroked-button
                 class="toolbar-button"
                 [disabled]="!canRunScheme"
@@ -24,15 +25,17 @@
         >
             {{ 'stopScheme' | transloco }}
         </button>
+
         <a *ngIf="!(isCurrentControlSchemeRunning$ | ngrxPush)"
            mat-stroked-button
            class="toolbar-button"
-           [routerLink]="schemeEditSubroute">
+           [routerLink]="schemeEditSubroute"
+        >
             {{ 'editScheme' | transloco }}
         </a>
-    </mat-toolbar>
+    </app-feature-toolbar>
 
-    <section class="running-scheme-view">
+    <app-feature-content-container>
         <mat-accordion *ngIf="isCurrentControlSchemeRunning$ | ngrxPush">
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
@@ -54,11 +57,13 @@
             <app-control-scheme-view-io-list [bindingsWithLatestExecutedTasks]="bindingsWithLatestExecutedTasks$ | ngrxPush"
             ></app-control-scheme-view-io-list>
         </section>
-    </section>
+    </app-feature-content-container>
 </ng-container>
 
 <ng-template #schemeNotFound>
-    <section class="scheme-is-not-found">
-        <h2>{{ 'schemeIsNotFound' | transloco }}</h2>
-    </section>
+    <app-feature-toolbar [title]="'viewSchemeNotFoundToolbarTitle' | transloco"></app-feature-toolbar>
+
+    <app-feature-content-container>
+        <h3 class="scheme-is-not-found">{{ 'schemeIsNotFound' | transloco }}</h3>
+    </app-feature-content-container>
 </ng-template>
