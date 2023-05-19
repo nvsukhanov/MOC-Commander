@@ -7,9 +7,9 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MAX_NAME_SIZE } from '@nvsukhanov/poweredup-api';
 import { TranslocoModule } from '@ngneat/transloco';
-import { HUB_ROUTE } from '../../../routes';
 import { RouterLink } from '@angular/router';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ROUTE_PATHS } from '../../../routes';
 
 export type HubEditFormSaveResult = {
     hubId: string;
@@ -64,7 +64,7 @@ export class HubEditFormComponent {
             if (this._hubConfiguration?.name !== v.name) {
                 this.form.patchValue(v);
                 this.form.controls.name.markAsPristine();
-                this._viewPath = [ '', HUB_ROUTE, v.hubId ];
+                this._viewPath = [ '', ROUTE_PATHS.hub, v.hubId ];
             }
         } else {
             this.form.reset();

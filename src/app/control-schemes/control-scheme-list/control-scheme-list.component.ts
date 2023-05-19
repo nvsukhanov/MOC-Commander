@@ -9,8 +9,10 @@ import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS, C
 import { ControlSchemeListItemComponent } from '../control-scheme-list-item';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
-import { CONTROL_SCHEME_CREATE_SUBROUTE, CONTROL_SCHEME_ROUTE } from '../../routes';
 import { MatIconModule } from '@angular/material/icon';
+import { ROUTE_PATHS } from '../../routes';
+import { FeatureContentContainerComponent, FeatureToolbarComponent } from '../../common';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     standalone: true,
@@ -28,7 +30,10 @@ import { MatIconModule } from '@angular/material/icon';
         ControlSchemeListItemComponent,
         MatButtonModule,
         MatIconModule,
-        RouterLink
+        RouterLink,
+        FeatureToolbarComponent,
+        FeatureContentContainerComponent,
+        MatCardModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -37,7 +42,7 @@ export class ControlSchemeListComponent {
 
     public readonly canCreateScheme$ = this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.canAddBinding);
 
-    public readonly createSchemeRoute = [ CONTROL_SCHEME_ROUTE, CONTROL_SCHEME_CREATE_SUBROUTE ];
+    public readonly createSchemeRoute = [ '..', ROUTE_PATHS.controlScheme, ROUTE_PATHS.controlSchemeCreateSubroute ];
 
     constructor(
         private readonly store: Store,

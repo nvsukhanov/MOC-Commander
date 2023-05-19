@@ -1,1 +1,1 @@
-export * from './controllers-list';
+export * from './controllers-list.component';

@@ -6,9 +6,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { HUB_TYPE_TO_L10N_MAPPING } from '../../../i18n';
-import { HUB_EDIT_SUBROUTE } from '../../../routes';
 import { RouterLink } from '@angular/router';
 import { EllipsisTitleDirective } from '../../../common';
+import { ROUTE_PATHS } from '../../../routes';
 
 @Component({
     standalone: true,
@@ -33,7 +33,7 @@ export class HubPropertiesViewComponent {
 
     public readonly hubTypeL10nMap = HUB_TYPE_TO_L10N_MAPPING;
 
-    public readonly hubEditSubroute = HUB_EDIT_SUBROUTE;
+    public readonly hubEditSubroute = ROUTE_PATHS.hubEditSubroute;
 
     public onDisconnect(): void {
         this.disconnect.emit();

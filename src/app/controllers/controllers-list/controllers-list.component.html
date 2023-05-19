@@ -1,0 +1,23 @@
+<app-feature-toolbar [title]="'controllersList' | transloco"></app-feature-toolbar>
+
+<app-feature-content-container *ngrxLet="connectedControllers$ as connectedControllers">
+    <ng-container *ngIf="connectedControllers.length; else noConnectedControllers">
+        <p class="detect-controller-notification-tips">{{ 'detectControllerTip' | transloco }}</p>
+        <mat-accordion>
+            <ng-container *ngFor="let connectedController of connectedControllers; trackBy: controllerTrackById">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{ connectedController.nameL10nKey | transloco }}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                </mat-expansion-panel>
+            </ng-container>
+        </mat-accordion>
+    </ng-container>
+
+    <ng-template #noConnectedControllers>
+        <h3 class="no-controller-connected-notification-header">{{ 'noControllerConnected' | transloco }}</h3>
+        <p class="detect-controller-notification-tips">{{ 'detectControllerTip' | transloco }}</p>
+    </ng-template>
+</app-feature-content-container>

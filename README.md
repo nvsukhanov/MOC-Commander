@@ -1,9 +1,9 @@
-# PoweredUp-Web
+# ngPoweredUP
 
-[![GitHub license](https://img.shields.io/github/license/nvsukhanov/web-lpu)](https://github.com/nvsukhanov/poweredup-web/blob/main/LICENSE.md)
-[![CI Status](https://github.com/nvsukhanov/web-lpu/actions/workflows/ci.yml/badge.svg)](https://github.com/nvsukhanov/poweredup-web/actions)
+[![GitHub license](https://img.shields.io/github/license/nvsukhanov/ngPoweredUP)](https://github.com/nvsukhanov/ngPoweredUP/blob/main/LICENSE.md)
+[![CI Status](https://github.com/nvsukhanov/ngPoweredUP/actions/workflows/ci.yml/badge.svg)](https://github.com/nvsukhanov/ngPoweredUP/actions)
 
-A web-interface for communicating with LEGO Powered Up hubs via browser's bluetooth stack (experimental)
+A web-interface for controlling LEGO Powered Up MOCs via browser's bluetooth stack (experimental)
 
 # Disclaimer
 

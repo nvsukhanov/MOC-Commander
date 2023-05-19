@@ -1,16 +1,17 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
-import { ControllersListItemComponent } from '../controllers-list-item';
 import { MatMenuModule } from '@angular/material/menu';
 import { KeyValuePipe, NgForOf, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { MatOptionModule } from '@angular/material/core';
 import { TranslocoModule } from '@ngneat/transloco';
-import { GAMEPAD_SELECTORS, GamepadConfig } from '../../../store';
+import { GAMEPAD_SELECTORS, GamepadConfig } from '../../store';
 import { Store } from '@ngrx/store';
 import { MatIconModule } from '@angular/material/icon';
 import { LetModule, PushModule } from '@ngrx/component';
 import { MatListModule } from '@angular/material/list';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { FeatureContentContainerComponent, FeatureToolbarComponent } from '../../common';
 
 @Component({
     standalone: true,
@@ -20,7 +21,6 @@ import { MatListModule } from '@angular/material/list';
     imports: [
         MatExpansionModule,
         MatButtonModule,
-        ControllersListItemComponent,
         MatMenuModule,
         KeyValuePipe,
         MatOptionModule,
@@ -32,7 +32,10 @@ import { MatListModule } from '@angular/material/list';
         NgSwitchCase,
         NgIf,
         MatListModule,
-        LetModule
+        LetModule,
+        MatToolbarModule,
+        FeatureToolbarComponent,
+        FeatureContentContainerComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

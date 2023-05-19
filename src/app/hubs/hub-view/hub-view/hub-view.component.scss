@@ -1,5 +1,5 @@
 :host {
-    display: block;
+    display: flex;
     height: 100%;
     width: 100%;
 }
@@ -22,11 +22,9 @@
     }
 }
 
-.hub-is-not-connected {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
+.hub-is-not-connected-notification {
+    font-weight: 300;
+    margin: 0;
+    padding: 10px 8px;
+    font-size: 20px;
 }

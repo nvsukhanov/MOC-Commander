@@ -10,6 +10,7 @@ import { PushModule } from '@ngrx/component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
+import { FeatureContentContainerComponent, FeatureToolbarComponent } from '../../common';
 
 @Component({
     standalone: true,
@@ -25,7 +26,9 @@ import { RouterLink } from '@angular/router';
         MatCardModule,
         JsonPipe,
         MatButtonModule,
-        RouterLink
+        RouterLink,
+        FeatureContentContainerComponent,
+        FeatureToolbarComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

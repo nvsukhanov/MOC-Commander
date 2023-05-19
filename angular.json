@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "web-lpu": {
+    "ngPoweredUP": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/web-lpu",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -59,10 +59,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "web-lpu:build:production"
+              "browserTarget": "ngPoweredUP:build:production"
             },
             "development": {
-              "browserTarget": "web-lpu:build:development"
+              "browserTarget": "ngPoweredUP:build:development"
             }
           },
           "defaultConfiguration": "development"

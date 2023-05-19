@@ -1,0 +1,16 @@
+:host {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    background-color: var(--gutter-color);
+    overflow: hidden;
+}
+
+.main {
+    width: 1280px;
+    margin-top: var(--feature-toolbar-height);
+    padding: var(--content-margin);
+    overflow-y: auto;
+    box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px rgba(0, 0, 0, 0.1411764706), 0 1px 18px rgba(0, 0, 0, 0.1215686275);
+    background-color: var(--content-background-color);
+}

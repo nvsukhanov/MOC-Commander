@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatLineModule } from '@angular/material/core';
 import { NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { CONTROL_SCHEME_ROUTE } from '../../routes';
+import { ROUTE_PATHS } from '../../routes';
 import { RouterLink } from '@angular/router';
 import { EllipsisTitleDirective } from '../../common';
 
@@ -31,15 +31,24 @@ export class ControlSchemeListItemComponent {
 
     @Output() public readonly delete = new EventEmitter<void>();
 
+    @Input() public canStartScheme = false;
+
     private _schemeViewHref: string[] = [];
+
+    private _schemeEditHref: string[] = [];
 
     @Input()
     public set schemeId(value: string | undefined) {
-        this._schemeViewHref = value ? [ CONTROL_SCHEME_ROUTE, value ] : [];
+        this._schemeViewHref = value ? [ '..', ROUTE_PATHS.controlScheme, value ] : [];
+        this._schemeEditHref = value ? [ '..', ROUTE_PATHS.controlScheme, value, ROUTE_PATHS.controlSchemeEditSubroute ] : [];
     }
 
     public get schemeViewHref(): string[] {
         return this._schemeViewHref;
+    }
+
+    public get schemeEditHref(): string[] {
+        return this._schemeEditHref;
     }
 
     public onDeleteClick(): void {

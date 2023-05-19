@@ -1,35 +1,28 @@
-<mat-accordion *ngrxLet="controlSchemes$; let controlSchemes">
-    <mat-expansion-panel [expanded]="true">
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                <mat-icon class="header-icon">display_settings</mat-icon>
-                {{ 'controlSchemesList' | transloco }}
-                ({{ controlSchemes?.length ?? 0}})
-            </mat-panel-title>
-        </mat-expansion-panel-header>
+<app-feature-toolbar [title]="'controlSchemesList' | transloco">
+    <span class="spacer"></span>
+    <a mat-raised-button
+       [routerLink]="createSchemeRoute"
+       [disabled]="!(canCreateScheme$ | ngrxPush)">
+        {{ 'createScheme' | transloco }}
+    </a>
+</app-feature-toolbar>
 
-        <mat-list>
-            <ng-container *ngIf="controlSchemes?.length; else noControlSchemes">
-                <mat-list-item *ngFor="let scheme of controlSchemes; trackBy: trackSchemeById">
-                    <app-control-scheme-list-item [name]="scheme.name"
-                                                  [schemeId]="scheme.id"
-                                                  [isActive]="scheme.isRunning"
-                                                  (delete)="onDelete(scheme.id)"
-                    ></app-control-scheme-list-item>
-                </mat-list-item>
-            </ng-container>
-            <ng-template #noControlSchemes>
-                <mat-list-item>
-                    {{ 'noControlSchemes' | transloco}}
-                </mat-list-item>
-            </ng-template>
-        </mat-list>
-        <mat-action-row>
-            <a mat-button
-               [routerLink]="createSchemeRoute"
-               [disabled]="!(canCreateScheme$ | ngrxPush)">
-                {{ 'createScheme' | transloco }}
-            </a>
-        </mat-action-row>
-    </mat-expansion-panel>
-</mat-accordion>
+<app-feature-content-container *ngrxLet="controlSchemes$; let controlSchemes">
+    <ng-container *ngIf="controlSchemes?.length; else noControlSchemes">
+        <mat-card *ngFor="let scheme of controlSchemes; trackBy: trackSchemeById"
+                  class="control-scheme-card"
+        >
+            <app-control-scheme-list-item [name]="scheme.name"
+                                          [schemeId]="scheme.id"
+                                          [isActive]="scheme.isRunning"
+                                          (delete)="onDelete(scheme.id)"
+            ></app-control-scheme-list-item>
+        </mat-card>
+    </ng-container>
+
+    <ng-template #noControlSchemes>
+        <h3 class="no-control-schemes-notification">
+            {{ 'noControlSchemes' | transloco}}
+        </h3>
+    </ng-template>
+</app-feature-content-container>

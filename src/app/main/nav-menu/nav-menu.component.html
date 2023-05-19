@@ -1,0 +1,79 @@
+<mat-toolbar color="primary" class="toolbar">
+    <nav class="nav">
+        <span class="title">
+            {{ 'appTitle' | transloco }}
+        </span>
+
+        <span class="main-nav">
+            <span class="main-nav-items">
+                <a mat-button
+                   [routerLink]="routePaths.controllerList"
+                   [routerLinkActive]="'active-link'"
+                >
+                    <mat-icon>
+                        gamepad
+                    </mat-icon>
+                    {{ 'controllersList' | transloco }}
+                    <span *ngIf="connectedControllersCount$ | ngrxPush; let count"
+                          class="counter"
+                    >
+                        ({{ count }})
+                    </span>
+                </a>
+                <a mat-button
+                   [routerLink]="routePaths.hubList"
+                   [routerLinkActive]="'active-link'"
+                >
+                    <mat-icon>
+                        memory
+                    </mat-icon>
+                    {{ 'hubsList' | transloco }}
+                    <span *ngIf="connectedHubCount$ | ngrxPush; let count"
+                          class="counter"
+                    >
+                        ({{ count }})
+                    </span>
+                </a>
+                <a mat-button
+                   [routerLink]="routePaths.controlSchemeList"
+                   [routerLinkActive]="'active-link'"
+                >
+                    <mat-icon>
+                        display_settings
+                    </mat-icon>
+                    {{ 'controlSchemesList' | transloco }}
+                    <span *ngIf="controlSchemesCount$ | ngrxPush; let count"
+                          class="counter"
+                    >
+                        ({{ count }})
+                    </span>
+                </a>
+            </span>
+        </span>
+
+        <span class="right-side-nav">
+            <button mat-mini-fab
+                    color="accent"
+                    [title]="'discoverHub' | transloco"
+                    [disabled]="!(canAddHub$ | ngrxPush)"
+                    (click)="startDiscovery()"
+            >
+                <mat-icon>
+                    bluetooth_searching
+                </mat-icon>
+            </button>
+
+            <a mat-icon-button
+               class="about-button"
+               [routerLink]="routePaths.about"
+               [routerLinkActive]="'active-link'"
+               [title]="'aboutPageButton' | transloco"
+               appEllipsisTitle
+            >
+                <mat-icon>
+                    info
+                </mat-icon>
+            </a>
+        </span>
+    </nav>
+</mat-toolbar>

@@ -12,7 +12,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { TranslocoModule } from '@ngneat/transloco';
 import { HubPropertiesViewComponent } from '../hub-properties-view';
 import { HubPortViewComponent } from '../hub-port-view';
-import { NotFoundComponent } from '../../../common';
+import { FeatureContentContainerComponent, FeatureToolbarComponent, NotFoundComponent } from '../../../common';
+import { HubIsNotConnectedNotificationComponent } from '../../../common/hub-is-not-connected-notification';
+import { Router } from '@angular/router';
+import { ROUTE_PATHS } from '../../../routes';
 
 @Component({
     standalone: true,
@@ -32,7 +35,10 @@ import { NotFoundComponent } from '../../../common';
         TranslocoModule,
         HubPropertiesViewComponent,
         HubPortViewComponent,
-        NotFoundComponent
+        NotFoundComponent,
+        FeatureToolbarComponent,
+        FeatureContentContainerComponent,
+        HubIsNotConnectedNotificationComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -46,7 +52,8 @@ export class HubViewComponent {
     );
 
     constructor(
-        private readonly store: Store
+        private readonly store: Store,
+        private readonly router: Router
     ) {
     }
 
@@ -59,6 +66,7 @@ export class HubViewComponent {
             }
             this.store.dispatch(HUBS_ACTIONS.userRequestedHubDisconnection({ hubId: id }));
         });
+        this.router.navigate([ ROUTE_PATHS.hubList ]);
     }
 
     public hubIoTrackByFn(index: number, item: AttachedIO): string {

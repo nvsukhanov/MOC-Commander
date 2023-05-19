@@ -10,7 +10,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../hub-communication-notifier-middleware-factory.service';
 import { Router } from '@angular/router';
 import { ROUTER_SELECTORS } from '../selectors';
-import { HUB_ROUTE } from '../../routes';
+import { ROUTE_PATHS } from '../../routes';
 import { connectHub, ConnectionError, IHub, MessageLoggingMiddleware } from '@nvsukhanov/poweredup-api';
 import { PrefixedConsoleLogger } from '../../common/logging/prefixed-console-logger';
 
@@ -114,7 +114,7 @@ export class HubsEffects {
             ofType(HUBS_ACTIONS.hubNameSet),
             concatLatestFrom(() => this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedHubId)),
             filter(([ a, b ]) => a.hubId === b),
-            tap(([ , hubId ]) => this.router.navigate([ HUB_ROUTE, hubId ]))
+            tap(([ , hubId ]) => this.router.navigate([ ROUTE_PATHS.hub, hubId ]))
         );
     }, { dispatch: false });
 

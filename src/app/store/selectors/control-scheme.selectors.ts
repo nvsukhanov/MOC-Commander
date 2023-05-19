@@ -69,6 +69,7 @@ export const CONTROL_SCHEME_SELECTORS = {
             }));
         }
     ),
+    selectSchemesCount: createSelector(CONTROL_SCHEME_FEATURE_SELECTOR, CONTROL_SCHEME_ENTITY_SELECTORS.selectTotal),
     selectScheme: (id: string) => createSelector(CONTROL_SCHEME_SELECT_ENTITIES, (state) => state[id]),
     selectSchemeBindingInputValue: (
         schemeId: string,

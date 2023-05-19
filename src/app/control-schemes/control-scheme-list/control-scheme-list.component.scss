@@ -1,16 +1,15 @@
 :host {
-    display: block;
-    padding-top: 3px;
-
-    .mat-accordion > .mat-expansion-panel-spacing {
-        margin-bottom: 20px;
-    }
-
-    .mat-accordion > .mat-expansion-panel {
-        border-radius: 0;
-    }
+    display: flex;
+    height: 100%;
 }
 
-.header-icon {
-    margin-right: 10px;
+.control-scheme-card + .control-scheme-card {
+    margin-top: 10px;
+}
+
+.no-control-schemes-notification {
+    font-weight: 300;
+    margin: 0;
+    padding: 10px 8px;
+    font-size: 20px;
 }

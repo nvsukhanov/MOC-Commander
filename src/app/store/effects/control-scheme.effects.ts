@@ -3,23 +3,23 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS } from '../actions';
 import { filter, map, tap } from 'rxjs';
 import { Router } from '@angular/router';
-import { CONTROL_SCHEME_ROUTE } from '../../routes';
 import { CONTROL_SCHEME_RUNNING_STATE_SELECTORS, CONTROL_SCHEME_SELECTORS } from '../selectors';
 import { Store } from '@ngrx/store';
+import { ROUTE_PATHS } from '../../routes';
 
 @Injectable()
 export class ControlSchemeEffects {
     public readonly schemeCreated$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(CONTROL_SCHEME_ACTIONS.create),
-            tap((data) => this.router.navigate([ CONTROL_SCHEME_ROUTE, data.id ])),
+            tap((data) => this.router.navigate([ ROUTE_PATHS.controlScheme, data.id ])),
         );
     }, { dispatch: false });
 
     public readonly schemeUpdated$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(CONTROL_SCHEME_ACTIONS.update),
-            tap((data) => this.router.navigate([ CONTROL_SCHEME_ROUTE, data.id ])),
+            tap((data) => this.router.navigate([ ROUTE_PATHS.controlScheme, data.id ])),
         );
     }, { dispatch: false });
 

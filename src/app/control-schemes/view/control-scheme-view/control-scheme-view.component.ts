@@ -11,9 +11,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { ControlSchemeViewIoListComponent } from '../control-scheme-view-io-list';
-import { EllipsisTitleDirective } from '../../../common';
+import { EllipsisTitleDirective, FeatureContentContainerComponent, FeatureToolbarComponent } from '../../../common';
 import { RouterLink } from '@angular/router';
-import { CONTROL_SCHEME_EDIT_SUBROUTE } from '../../../routes';
+import { ROUTE_PATHS } from '../../../routes';
 
 @Component({
     standalone: true,
@@ -36,11 +36,13 @@ import { CONTROL_SCHEME_EDIT_SUBROUTE } from '../../../routes';
         ControlSchemeViewIoListComponent,
         EllipsisTitleDirective,
         RouterLink,
+        FeatureToolbarComponent,
+        FeatureContentContainerComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeViewComponent {
-    public readonly schemeEditSubroute = CONTROL_SCHEME_EDIT_SUBROUTE;
+    public readonly schemeEditSubroute = ROUTE_PATHS.controlSchemeEditSubroute;
 
     public readonly selectedScheme$: Observable<ControlScheme | undefined> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
         switchMap((id) => id === null ? of(undefined) : this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(id))),
