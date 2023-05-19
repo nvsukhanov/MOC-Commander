@@ -1,4 +1,4 @@
-import { IHub, PortCommandExecutionStatus } from '@nvsukhanov/poweredup-api';
+import { IHub, PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 import { PortCommandTask } from '../../common';
 import { Observable } from 'rxjs';
 

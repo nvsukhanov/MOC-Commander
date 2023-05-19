@@ -1,4 +1,4 @@
-import { HubType, IOType, PortModeName, PortModeSymbol } from '@nvsukhanov/poweredup-api';
+import { HubType, IOType, PortModeName, PortModeSymbol } from '@nvsukhanov/rxpoweredup';
 import { EntityState } from '@ngrx/entity';
 import { RouterState } from '@ngrx/router-store';
 import { HubIoOperationMode } from './hub-io-operation-mode';

@@ -19,7 +19,7 @@ import { PortCommandTask } from '../../common';
 import { ControlSchemeBinding } from '../i-state';
 import { Dictionary } from '@ngrx/entity';
 import { HubStorageService } from '../hub-storage.service';
-import { PortCommandExecutionStatus } from '@nvsukhanov/poweredup-api';
+import { PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 
 @Injectable()
 export class HubPortTasksEffects {

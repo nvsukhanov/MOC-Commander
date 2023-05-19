@@ -2,7 +2,7 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { LOG_LEVEL, LogLevel } from './log-levels';
 import { ExtractTokenType } from '../types';
-import { ILogger } from '@nvsukhanov/poweredup-api';
+import { ILogger } from '@nvsukhanov/rxpoweredup';
 
 @Injectable({ providedIn: 'root' })
 export class ConsoleLoggingService implements ILogger {

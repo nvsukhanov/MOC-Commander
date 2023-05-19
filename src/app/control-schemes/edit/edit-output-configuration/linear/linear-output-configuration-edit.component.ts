@@ -7,7 +7,7 @@ import { ControlSchemeBindingInputForm } from '../../binding-input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatSliderModule } from '@angular/material/slider';
-import { MOTOR_LIMITS } from '@nvsukhanov/poweredup-api';
+import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { ControlSchemeBindingOutputForm } from '../../binding-output';
 
 @Component({

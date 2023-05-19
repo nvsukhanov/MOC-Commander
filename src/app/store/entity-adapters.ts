@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import { AttachedIO, ControlScheme, GamepadAxisState, GamepadButtonState, GamepadConfig, HubConfiguration, HubIoSupportedModes, PortModeInfo } from './i-state';
-import { IOType } from '@nvsukhanov/poweredup-api';
+import { IOType } from '@nvsukhanov/rxpoweredup';
 import { PortCommandTask } from '../common';
 
 export const HUB_ATTACHED_IOS_ENTITY_ADAPTER: EntityAdapter<AttachedIO> = createEntityAdapter<AttachedIO>({

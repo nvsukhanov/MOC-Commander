@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IOType } from '@nvsukhanov/poweredup-api';
+import { IOType } from '@nvsukhanov/rxpoweredup';
 import { HUB_IO_I18N_SCOPE } from './index';
 
 @Pipe({

@@ -1,5 +1,5 @@
 import { ITaskExecutor } from './i-task-executor';
-import { PortCommandExecutionStatus } from '@nvsukhanov/poweredup-api';
+import { PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 import { ILogger, PortCommandTask } from '../../common';
 import { debounceTime, from, Observable, take } from 'rxjs';
 
