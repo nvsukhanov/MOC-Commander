@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IHub } from '@nvsukhanov/poweredup-api';
+import { IHub } from '@nvsukhanov/rxpoweredup';
 import { ConsoleLoggingService } from '../common';
 
 @Injectable()

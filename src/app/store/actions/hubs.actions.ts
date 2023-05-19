@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { ConnectionError, HubType } from '@nvsukhanov/poweredup-api';
+import { ConnectionError, HubType } from '@nvsukhanov/rxpoweredup';
 
 export const HUBS_ACTIONS = createActionGroup({
     source: 'HUBS_ACTIONS',

@@ -1,6 +1,6 @@
 import { TaskExecutor } from '../task-executor';
 import { PortCommandTask, PortCommandTaskType } from '../../../common';
-import { IHub, MotorUseProfile, PortCommandExecutionStatus } from '@nvsukhanov/poweredup-api';
+import { IHub, MotorUseProfile, PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 import { Observable } from 'rxjs';
 
 export class ServoExecutor extends TaskExecutor {

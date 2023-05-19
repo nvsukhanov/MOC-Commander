@@ -6,7 +6,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { MatIconModule } from '@angular/material/icon';
 import { PortCommandTask } from '../../../common';
 import { IoTypeToL10nKeyPipe, PORT_TASK_TYPE_TO_L10N } from '../../../i18n';
-import { IOType } from '@nvsukhanov/poweredup-api';
+import { IOType } from '@nvsukhanov/rxpoweredup';
 
 type LastExecutedTaskTemplateDate = {
     taskTypeL10nKey: string;

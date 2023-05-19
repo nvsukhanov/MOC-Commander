@@ -1,4 +1,4 @@
-import { MotorServoEndState } from '@nvsukhanov/poweredup-api';
+import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 
 export enum PortCommandTaskType {
     SetSpeed = 'SetSpeed',

@@ -1,5 +1,5 @@
 import { createActionGroup, props } from '@ngrx/store';
-import { IOType } from '@nvsukhanov/poweredup-api';
+import { IOType } from '@nvsukhanov/rxpoweredup';
 
 export const HUB_ATTACHED_IOS_ACTIONS = createActionGroup({
     source: 'HUB_ATTACHED_IOS_ACTIONS',

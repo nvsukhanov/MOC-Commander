@@ -11,7 +11,7 @@ import { HubCommunicationNotifierMiddlewareFactoryService } from '../hub-communi
 import { Router } from '@angular/router';
 import { ROUTER_SELECTORS } from '../selectors';
 import { ROUTE_PATHS } from '../../routes';
-import { connectHub, ConnectionError, IHub, MessageLoggingMiddleware } from '@nvsukhanov/poweredup-api';
+import { connectHub, ConnectionError, IHub, MessageLoggingMiddleware } from '@nvsukhanov/rxpoweredup';
 import { PrefixedConsoleLogger } from '../../common/logging/prefixed-console-logger';
 
 @Injectable()

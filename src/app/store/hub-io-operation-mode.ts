@@ -1,5 +1,5 @@
 import { GamepadInputMethod } from './i-state';
-import { PortModeName } from '@nvsukhanov/poweredup-api';
+import { PortModeName } from '@nvsukhanov/rxpoweredup';
 
 export enum HubIoOperationMode {
     Linear = 'linear',
