@@ -4,13 +4,21 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgIf } from '@angular/common';
 import { PushModule } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
-import { BLUETOOTH_AVAILABILITY_SELECTORS, CONTROL_SCHEME_SELECTORS, GAMEPAD_SELECTORS, HUBS_ACTIONS, HUBS_SELECTORS } from '../../store';
+import {
+    BLUETOOTH_AVAILABILITY_SELECTORS,
+    CONTROL_SCHEME_SELECTORS,
+    GAMEPAD_SELECTORS,
+    HUB_DISCOVERY_STATE_SELECTORS,
+    HUBS_ACTIONS,
+    HUBS_SELECTORS
+} from '../../store';
 import { Store } from '@ngrx/store';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ROUTE_PATHS } from '../../routes';
 import { EllipsisTitleDirective } from '../../common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
     standalone: true,
@@ -27,7 +35,8 @@ import { MatBadgeModule } from '@angular/material/badge';
         RouterLinkActive,
         EllipsisTitleDirective,
         MatIconModule,
-        MatBadgeModule
+        MatBadgeModule,
+        MatProgressSpinnerModule,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -39,6 +48,8 @@ export class NavMenuComponent {
     public readonly controlSchemesCount$ = this.store.select(CONTROL_SCHEME_SELECTORS.selectSchemesCount);
 
     public readonly isBluetoothAvailable = this.store.select(BLUETOOTH_AVAILABILITY_SELECTORS.isAvailable);
+
+    public readonly isDiscoveryBusy$ = this.store.select(HUB_DISCOVERY_STATE_SELECTORS.isDiscoveryBusy);
 
     public readonly routePaths = ROUTE_PATHS;
 

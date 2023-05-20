@@ -9,6 +9,7 @@ import {
     GAMEPAD_BUTTONS_STATE_REDUCERS,
     GAMEPAD_REDUCERS,
     HUB_ATTACHED_IOS_REDUCERS,
+    HUB_DISCOVERY_STATE_REDUCERS,
     HUB_EDIT_FORM_ACTIVE_SAVES_REDUCERS,
     HUB_IO_OUTPUT_MODES_REDUCER,
     HUB_PORT_MODE_INFO_REDUCERS,
@@ -24,6 +25,7 @@ import {
     HubPortModeInfoEffects,
     HubPortTasksEffects,
     HubsEffects,
+    NotificationsEffects,
 } from './effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
@@ -43,6 +45,7 @@ const REDUCERS: ActionReducerMap<IState> = {
     gamepadAxesState: GAMEPAD_AXES_STATE_REDUCERS,
     gamepadButtonsState: GAMEPAD_BUTTONS_STATE_REDUCERS,
     hubs: HUBS_REDUCERS,
+    hubDiscoveryState: HUB_DISCOVERY_STATE_REDUCERS,
     hubAttachedIOs: HUB_ATTACHED_IOS_REDUCERS,
     hubIOSupportedModes: HUB_IO_OUTPUT_MODES_REDUCER,
     hubPortModeInfo: HUB_PORT_MODE_INFO_REDUCERS,
@@ -71,7 +74,8 @@ export function provideApplicationStore(): EnvironmentProviders {
             HubIOSupportedModesEffects,
             HubsEffects,
             ControlSchemeEffects,
-            HubPortTasksEffects
+            HubPortTasksEffects,
+            NotificationsEffects,
         ),
         provideStoreDevtools({
             maxAge: 100,

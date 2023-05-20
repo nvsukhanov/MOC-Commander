@@ -12,3 +12,5 @@ export * from './hub-port-mode-info.selectors';
 export * from './control-scheme-running-state.selectors';
 export * from './hub-port-tasks.selectors';
 export * from './hub-edit-form-active-saves.selectors';
+export * from './hub-discovery-state.selectors';
+export * from './global-progress-bar.selectors';

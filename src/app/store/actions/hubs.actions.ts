@@ -1,13 +1,13 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { ConnectionError, HubType } from '@nvsukhanov/rxpoweredup';
+import { HubType } from '@nvsukhanov/rxpoweredup';
 
 export const HUBS_ACTIONS = createActionGroup({
     source: 'HUBS_ACTIONS',
     events: {
         'start discovery': emptyProps(),
         'connected': props<{ hubId: string, name: string }>(),
-        'disconnected': props<{ hubId: string }>(),
-        'device connect failed': props<{ error: ConnectionError }>(),
+        'disconnected': props<{ hubId: string, name: string }>(),
+        'device connect failed': props<{ error: Error }>(),
         'user requested hub disconnection': props<{ hubId: string }>(),
         'battery level subscribe': props<{ hubId: string }>(),
         'battery level received': props<{ hubId: string, batteryLevel: null | number }>(),

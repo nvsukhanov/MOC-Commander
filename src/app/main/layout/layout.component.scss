@@ -13,3 +13,10 @@
     overflow: hidden;
     width: 100%;
 }
+
+.progress-bar {
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 0;
+}

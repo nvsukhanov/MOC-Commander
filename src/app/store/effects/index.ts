@@ -5,3 +5,4 @@ export * from './hub-io-supported-modes.effects';
 export * from './hubs.effects';
 export * from './control-scheme.effects';
 export * from './hub-port-tasks.effects';
+export * from './notifications.effects';

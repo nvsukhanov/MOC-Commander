@@ -11,3 +11,4 @@ export * from './control-scheme-configuration-state.reducers';
 export * from './control-scheme-running-state.reducers';
 export * from './hub-port-tasks.reducers';
 export * from './hub-edit-form-active-saves.reducers';
+export * from './hub-discovery-state.reducers';

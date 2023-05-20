@@ -1,17 +1,15 @@
 import { Inject, Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { catchError, combineLatestWith, filter, from, fromEvent, interval, map, mergeMap, Observable, of, startWith, switchMap, takeUntil, tap } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { HubStorageService } from '../hub-storage.service';
 import { HUBS_ACTIONS } from '../actions';
 import { LogLevel, NAVIGATOR, WINDOW } from '../../common';
 import { Action, Store } from '@ngrx/store';
-import { TranslocoService } from '@ngneat/transloco';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../hub-communication-notifier-middleware-factory.service';
 import { Router } from '@angular/router';
-import { ROUTER_SELECTORS } from '../selectors';
+import { HUBS_SELECTORS, ROUTER_SELECTORS } from '../selectors';
 import { ROUTE_PATHS } from '../../routes';
-import { connectHub, ConnectionError, IHub, MessageLoggingMiddleware } from '@nvsukhanov/rxpoweredup';
+import { connectHub, IHub, MessageLoggingMiddleware } from '@nvsukhanov/rxpoweredup';
 import { PrefixedConsoleLogger } from '../../common/logging/prefixed-console-logger';
 
 @Injectable()
@@ -70,14 +68,6 @@ export class HubsEffects {
         );
     });
 
-    public readonly deviceConnectFailedNotification$ = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(HUBS_ACTIONS.deviceConnectFailed),
-            switchMap((e) => this.translocoService.selectTranslate(e.error.l10nKey, e.error.translationParams)),
-            tap((message) => this.snackBar.open(message, 'OK', { duration: 5000 }))
-        );
-    }, { dispatch: false });
-
     public readonly listenDeviceDisconnect$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.connected),
@@ -85,7 +75,7 @@ export class HubsEffects {
                 tap(() => {
                     this.hubStorage.removeHub(action.hubId);
                 }),
-                map(() => HUBS_ACTIONS.disconnected({ hubId: action.hubId }))
+                map(() => HUBS_ACTIONS.disconnected({ hubId: action.hubId, name: action.name }))
             )),
         );
     });
@@ -93,9 +83,14 @@ export class HubsEffects {
     public readonly userRequestedHubDisconnection$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.userRequestedHubDisconnection),
-            mergeMap((a) => from(this.hubStorage.get(a.hubId).disconnect()).pipe(
-                map(() => HUBS_ACTIONS.disconnected({ hubId: a.hubId }))
-            ))
+            concatLatestFrom((action) => this.store.select(HUBS_SELECTORS.selectHub(action.hubId))),
+            filter(([ , hub ]) => !!hub),
+            mergeMap(([ action, hub ]) => {
+                return from(this.hubStorage.get(action.hubId).disconnect()).pipe(
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    map(() => HUBS_ACTIONS.disconnected({ hubId: hub!.hubId, name: hub!.name }))
+                );
+            })
         );
     });
 
@@ -126,9 +121,7 @@ export class HubsEffects {
         private readonly actions$: Actions,
         private readonly store: Store,
         private readonly router: Router,
-        private readonly snackBar: MatSnackBar,
         private readonly hubStorage: HubStorageService,
-        private readonly translocoService: TranslocoService,
         private readonly communicationNotifierMiddlewareFactory: HubCommunicationNotifierMiddlewareFactoryService,
         @Inject(WINDOW) private readonly window: Window,
         @Inject(NAVIGATOR) private readonly navigator: Navigator
@@ -165,11 +158,8 @@ export class HubsEffects {
                 this.hubStorage.store(hub, macAddressReply);
             }),
             map(([ , macAddressReply, name ]) => HUBS_ACTIONS.connected({ hubId: macAddressReply, name })),
-            catchError((error: unknown) => {
-                if (error instanceof ConnectionError) {
-                    return of(HUBS_ACTIONS.deviceConnectFailed({ error: error as ConnectionError }));
-                }
-                throw error;
+            catchError((error: Error) => {
+                return of(HUBS_ACTIONS.deviceConnectFailed({ error }));
             })
         );
     }
