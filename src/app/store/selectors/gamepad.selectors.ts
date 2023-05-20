@@ -10,6 +10,7 @@ export const GAMEPAD_SELECTORS = {
     selectAll: createSelector(GAMEPAD_FEATURE_SELECTOR, GAMEPAD_ENTITY_SELECTORS.selectAll),
     selectEntities: createSelector(GAMEPAD_FEATURE_SELECTOR, GAMEPAD_ENTITY_SELECTORS.selectEntities),
     selectGamepadsCount: createSelector(GAMEPAD_FEATURE_SELECTOR, GAMEPAD_ENTITY_SELECTORS.selectTotal),
+    selectIds: createSelector(GAMEPAD_FEATURE_SELECTOR, GAMEPAD_ENTITY_SELECTORS.selectIds),
     selectById: (id: number) => createSelector(GAMEPAD_SELECTORS.selectEntities, (entities) => entities[id]),
     selectAxisConfigByIndex: (gamepadIndex: number, axisIndex: number) => createSelector(
         GAMEPAD_SELECTORS.selectById(gamepadIndex),

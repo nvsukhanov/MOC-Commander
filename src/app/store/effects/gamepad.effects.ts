@@ -2,14 +2,15 @@ import { Inject, Injectable } from '@angular/core';
 import { GamepadAxisState, GamepadButtonState, GamepadInputMethod } from '../i-state';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { GAMEPAD_ACTIONS } from '../actions';
-import { filter, fromEvent, interval, map, merge, Observable, switchMap, takeUntil } from 'rxjs';
+import { filter, from, fromEvent, interval, map, merge, Observable, switchMap, takeUntil } from 'rxjs';
 import { WINDOW } from '../../common';
-import { GamepadPluginsService } from '../../plugins';
 import { Store } from '@ngrx/store';
 import { GAMEPAD_AXES_STATE_SELECTORS, GAMEPAD_BUTTONS_STATE_SELECTORS, GAMEPAD_SELECTORS } from '../selectors';
+import { GamepadPluginsService } from '../../plugins';
 
 @Injectable()
 export class GamepadEffects {
+
     public readonly gamepadDisconnectedEvent = 'gamepaddisconnected';
 
     public readonly gamepadConnectedEvent = 'gamepadconnected';
@@ -17,9 +18,21 @@ export class GamepadEffects {
     public readonly listenGamepadConnected$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(GAMEPAD_ACTIONS.listenGamepadConnected),
-            switchMap(() => (fromEvent(this.window, this.gamepadConnectedEvent) as Observable<GamepadEvent>)),
-            map((gamepadEvent) => this.gamepadPlugins.getPlugin(gamepadEvent.gamepad.id).mapToDefaultConfig(gamepadEvent.gamepad)),
-            map((gamepad) => GAMEPAD_ACTIONS.gamepadConnected({ gamepad: gamepad }))
+            switchMap(() => this.gamepadConnectionListenerScheduler$),
+            map(() => {
+                const gamepads = this.window.navigator.getGamepads().filter((d) => !!d) as Gamepad[];
+                return gamepads.filter((gamepad) => {
+                    return gamepad.axes.some((a) => a > 0.5) || gamepad.buttons.some((b) => b.value > 0.5);
+                });
+            }),
+            filter((r) => r.length > 0),
+            concatLatestFrom(() => this.store.select(GAMEPAD_SELECTORS.selectIds)),
+            map(([ gamepads, knownGamepadIds ]) => {
+                return gamepads.filter((g) => !(knownGamepadIds as number[]).includes(g.index));
+            }),
+            switchMap((gamepads) => from(gamepads)),
+            map((gamepad) => this.gamepadPlugins.getPlugin(gamepad.id).mapToDefaultConfig(gamepad)),
+            map((gamepadConfig) => GAMEPAD_ACTIONS.gamepadConnected({ gamepad: gamepadConfig }))
         );
     });
 
@@ -31,31 +44,19 @@ export class GamepadEffects {
         );
     });
 
-    public readonly controlReadGamepads$ = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(GAMEPAD_ACTIONS.gamepadConnected, GAMEPAD_ACTIONS.gamepadDisconnected),
-            concatLatestFrom(() => this.store.select(GAMEPAD_SELECTORS.selectAll)),
-            map(([ , gamepads ]) => {
-                return gamepads.length > 0
-                       ? GAMEPAD_ACTIONS.gamepadsReadStart()
-                       : GAMEPAD_ACTIONS.gamepadsReadStop();
-            })
-        );
-    });
-
     public readonly readGamepads$ = createEffect(() => {
         return this.actions$.pipe(
-            ofType(GAMEPAD_ACTIONS.gamepadsReadStart),
-            switchMap(() => this.gamepadReadScheduler.pipe(
-                takeUntil(this.actions$.pipe(ofType(
-                    GAMEPAD_ACTIONS.gamepadsReadStop,
-                )))
+            ofType(GAMEPAD_ACTIONS.gamepadConnected),
+            concatLatestFrom(() => this.store.select(GAMEPAD_SELECTORS.selectAll)),
+            switchMap(([ , gamepadConfigs ]) => this.gamepadReadScheduler$.pipe(
+                map(() => gamepadConfigs.map((g) => g.gamepadIndex))
             )),
-            map(() => {
+            map((gamepadIndices) => {
                 const gamepads = this.window.navigator.getGamepads().filter((d) => !!d) as Gamepad[];
+                const registeredGamepads = gamepads.filter((g) => gamepadIndices.includes(g.index));
                 const axesState: GamepadAxisState[] = [];
                 const buttonsState: GamepadButtonState[] = [];
-                gamepads.forEach((gamepad) => {
+                registeredGamepads.forEach((gamepad) => {
                     gamepad.axes.forEach((axis, axisIndex) => {
                         axesState.push({ gamepadIndex: gamepad.index, axisIndex: axisIndex, value: +axis.toFixed(this.inputValuePrecision) });
                     });
@@ -107,7 +108,9 @@ export class GamepadEffects {
 
     private readonly inputValuePrecision = 2; // TODO: move to config?
 
-    private readonly gamepadReadScheduler: Observable<unknown>;
+    private readonly gamepadReadScheduler$: Observable<unknown>;
+
+    private readonly gamepadConnectionListenerScheduler$: Observable<unknown>;
 
     constructor(
         private readonly actions$: Actions,
@@ -115,6 +118,7 @@ export class GamepadEffects {
         @Inject(WINDOW) private readonly window: Window,
         private readonly gamepadPlugins: GamepadPluginsService
     ) {
-        this.gamepadReadScheduler = interval(1000 / 10);
+        this.gamepadReadScheduler$ = interval(1000 / 10);
+        this.gamepadConnectionListenerScheduler$ = interval(1000 / 10);
     }
 }
