@@ -142,9 +142,11 @@ export class HubsEffects {
 
         return connectHub(
             this.navigator.bluetooth,
-            [ incomingLoggerMiddleware, communicationNotifierMiddleware ],
-            [ outgoingLoggerMiddleware, communicationNotifierMiddleware ],
-            fromEvent(this.window, 'beforeunload')
+            {
+                incomingMessageMiddleware: [ incomingLoggerMiddleware, communicationNotifierMiddleware ],
+                outgoingMessageMiddleware: [ outgoingLoggerMiddleware, communicationNotifierMiddleware ],
+                externalDisconnectEvents: fromEvent(this.window, 'beforeunload')
+            }
         ).pipe(
             switchMap((hub: IHub) => {
                 return of(hub).pipe(
