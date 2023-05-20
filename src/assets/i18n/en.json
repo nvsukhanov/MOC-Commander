@@ -112,5 +112,7 @@
   "aboutPageAuthorName": "Nikolai Sukhanov",
   "aboutPageSourcesTitle": "Sources",
   "aboutPageGithubTitle": "ngPoweredUP GitHub",
-  "aboutPageGithubApiTitle": "rxPoweredUP GitHub"
+  "aboutPageGithubApiTitle": "rxPoweredUP GitHub",
+  "bluetoothUnavailableToolbarTitle": "Bluetooth is not available",
+  "bluetoothUnavailableMessage": "Bluetooth is not available in your browser. For more information, please refer to"
 }

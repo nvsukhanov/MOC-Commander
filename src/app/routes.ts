@@ -14,6 +14,7 @@ export const ROUTE_PATHS = {
     controlSchemeCreateSubroute: 'create',
     controlSchemeEditSubroute: 'edit',
     about: 'about',
+    bluetoothUnavailable: 'bluetooth-unavailable',
 } as const;
 
 export const ROUTES: Routes = [
@@ -26,6 +27,11 @@ export const ROUTES: Routes = [
             { provide: TRANSLOCO_SCOPE, useValue: GAMEPAD_PLUGINS_I18N_SCOPE, multi: true },
             { provide: TRANSLOCO_SCOPE, useValue: HUB_IO_I18N_SCOPE, multi: true },
         ]
+    },
+    {
+        path: ROUTE_PATHS.bluetoothUnavailable,
+        loadComponent: () => import('./bluetooth-unavailable').then(m => m.BluetoothUnavailableComponent),
+        pathMatch: 'full',
     },
     {
         path: ROUTE_PATHS.controllerList,
