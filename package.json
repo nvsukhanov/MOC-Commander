@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "serve:intra": "ng serve --host 0.0.0.0",
     "build": "ng build",
     "ci": "npm run lint && npm run test:ci && npm run build",
     "test": "jest",

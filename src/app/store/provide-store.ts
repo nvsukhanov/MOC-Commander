@@ -33,6 +33,7 @@ import { HubStorageService } from './hub-storage.service';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { GAMEPAD_ACTIONS } from './actions';
 import { localStorageSync } from 'ngrx-store-localstorage';
+import { Router } from '@angular/router';
 
 const REDUCERS: ActionReducerMap<IState> = {
     controlSchemes: CONTROL_SCHEME_REDUCERS,
@@ -82,7 +83,7 @@ export function provideApplicationStore(): EnvironmentProviders {
                 GAMEPAD_ACTIONS.updateGamepadsValues.type
             ]
         }),
-        { provide: APP_INITIALIZER, useFactory: bluetoothAvailabilityCheckFactory, deps: [ NAVIGATOR, Store ], multi: true },
+        { provide: APP_INITIALIZER, useFactory: bluetoothAvailabilityCheckFactory, deps: [ NAVIGATOR, Store, Router ], multi: true },
         HubStorageService,
         provideRouterStore()
     ]);

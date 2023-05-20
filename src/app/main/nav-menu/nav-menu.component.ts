@@ -10,6 +10,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ROUTE_PATHS } from '../../routes';
 import { EllipsisTitleDirective } from '../../common';
 import { MatIconModule } from '@angular/material/icon';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @Component({
     standalone: true,
@@ -25,7 +26,8 @@ import { MatIconModule } from '@angular/material/icon';
         RouterLink,
         RouterLinkActive,
         EllipsisTitleDirective,
-        MatIconModule
+        MatIconModule,
+        MatBadgeModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -36,7 +38,7 @@ export class NavMenuComponent {
 
     public readonly controlSchemesCount$ = this.store.select(CONTROL_SCHEME_SELECTORS.selectSchemesCount);
 
-    public readonly canAddHub$ = this.store.select(BLUETOOTH_AVAILABILITY_SELECTORS.isAvailable);
+    public readonly isBluetoothAvailable = this.store.select(BLUETOOTH_AVAILABILITY_SELECTORS.isAvailable);
 
     public readonly routePaths = ROUTE_PATHS;
 

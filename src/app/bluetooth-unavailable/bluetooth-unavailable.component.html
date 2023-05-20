@@ -1,0 +1,7 @@
+<app-feature-toolbar [title]="'bluetoothUnavailableToolbarTitle' | transloco"></app-feature-toolbar>
+
+<app-feature-content-container>
+    <h3 class="no-bluetooth-notification">
+        {{ 'bluetoothUnavailableMessage' | transloco }} <a [href]="canIUseBluetoothLink">{{ canIUseBluetoothLink }}</a>
+    </h3>
+</app-feature-content-container>
