@@ -1,4 +1,5 @@
-<mat-toolbar color="primary" class="toolbar">
+<mat-toolbar color="primary"
+             class="toolbar">
     <nav class="nav">
         <span class="title">
             {{ 'appTitle' | transloco }}
@@ -52,17 +53,19 @@
         </span>
 
         <span class="right-side-nav">
-            <button *ngIf="isBluetoothAvailable | ngrxPush; else bluetoothUnavailable"
-                    mat-fab
-                    class="discover-hub-button"
-                    color="accent"
-                    [title]="'discoverHub' | transloco"
-                    (click)="startDiscovery()"
-            >
-                <mat-icon>
-                    bluetooth_searching
-                </mat-icon>
-            </button>
+            <ng-container *ngIf="isBluetoothAvailable | ngrxPush; else bluetoothUnavailable">
+                <button mat-fab
+                        class="discover-hub-button"
+                        color="accent"
+                        [title]="'discoverHub' | transloco"
+                        (click)="startDiscovery()"
+                        [disabled]="isDiscoveryBusy$ | ngrxPush"
+                >
+                    <mat-icon>
+                        bluetooth_searching
+                    </mat-icon>
+                </button>
+            </ng-container>
 
             <ng-template #bluetoothUnavailable>
                 <a mat-fab
@@ -91,4 +94,5 @@
             </a>
         </span>
     </nav>
+
 </mat-toolbar>

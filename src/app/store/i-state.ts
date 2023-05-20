@@ -16,6 +16,9 @@ export interface IState {
     gamepadAxesState: EntityState<GamepadAxisState>;
     gamepadButtonsState: EntityState<GamepadButtonState>;
     hubs: EntityState<HubConfiguration>,
+    hubDiscoveryState: {
+        discoveryState: HubDiscoveryState;
+    },
     hubAttachedIOs: EntityState<AttachedIO>,
     hubIOSupportedModes: EntityState<HubIoSupportedModes>,
     hubPortModeInfo: EntityState<PortModeInfo>,
@@ -33,6 +36,11 @@ export interface IState {
         isAvailable: boolean;
     },
     router: RouterState;
+}
+
+export enum HubDiscoveryState {
+    Idle = 'Idle',
+    Discovering = 'Discovering',
 }
 
 export type BindingLinearOutputState = {

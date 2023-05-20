@@ -1,4 +1,4 @@
-import { IState } from './i-state';
+import { HubDiscoveryState, IState } from './i-state';
 import {
     CONTROL_SCHEMES_ENTITY_ADAPTER,
     GAMEPAD_AXES_STATES_ENTITY_ADAPTER,
@@ -24,6 +24,9 @@ export const INITIAL_STATE: IState = {
     gamepadAxesState: GAMEPAD_AXES_STATES_ENTITY_ADAPTER.getInitialState(),
     gamepadButtonsState: GAMEPAD_BUTTONS_STATES_ENTITY_ADAPTER.getInitialState(),
     hubs: HUBS_ENTITY_ADAPTER.getInitialState(),
+    hubDiscoveryState: {
+        discoveryState: HubDiscoveryState.Idle
+    },
     hubAttachedIOs: HUB_ATTACHED_IOS_ENTITY_ADAPTER.getInitialState(),
     hubIOSupportedModes: HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER.getInitialState(),
     hubPortModeInfo: HUB_PORT_MODE_INFO.getInitialState(),
