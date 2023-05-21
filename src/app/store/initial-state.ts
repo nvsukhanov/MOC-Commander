@@ -40,6 +40,9 @@ export const INITIAL_STATE: IState = {
     hubEditFormActiveSaves: {
         hubIds: []
     },
+    servoCalibrationTaskState: {
+        calibrationInProgress: false
+    },
     bluetoothAvailability: {
         isAvailable: false
     },

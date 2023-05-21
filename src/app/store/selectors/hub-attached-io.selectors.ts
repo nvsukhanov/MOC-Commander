@@ -56,7 +56,25 @@ export const HUB_ATTACHED_IO_SELECTORS = {
             }
             return [];
         }
-    )
+    ),
+    selectHubPortInputModeForPortModeName: (hubId: string, portId: number, portModeName: PortModeName) => createSelector(
+        HUB_ATTACHED_IO_SELECTORS.selectIOAtPort(hubId, portId),
+        HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
+        HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
+        (io, supportedModes, portModeData) => {
+            if (io) {
+                const supportedInputModes = new Set(
+                    supportedModes[hubIOSupportedModesIdFn(io.hardwareRevision, io.softwareRevision, io.ioType)]?.portInputModes ?? []
+                );
+                if (supportedInputModes) {
+                    return Object.values(portModeData).find((portModeInfo) => {
+                        return portModeInfo?.name === portModeName && supportedInputModes.has(portModeInfo?.modeId);
+                    }) ?? null;
+                }
+            }
+            return null;
+        }
+    ),
 } as const;
 
 export function getHubIOOperationModes(

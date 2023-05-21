@@ -1,0 +1,18 @@
+<mat-card>
+    <mat-card-header>
+        <h1 class="calibration-title">
+            {{ 'servoCalibrationIsInProgress' | transloco }}
+        </h1>
+    </mat-card-header>
+    <mat-card-actions align="end">
+        <button mat-button
+                (click)="onCancel()"
+        >
+            {{ 'servoCalibrationCancel' | transloco }}
+        </button>
+    </mat-card-actions>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</mat-card>
+
+
+

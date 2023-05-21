@@ -32,6 +32,9 @@ export interface IState {
     hubEditFormActiveSaves: {
         hubIds: string[]
     },
+    servoCalibrationTaskState: {
+        calibrationInProgress: boolean;
+    },
     bluetoothAvailability: {
         isAvailable: boolean;
     },
