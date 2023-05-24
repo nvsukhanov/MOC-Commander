@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { HUB_ATTACHED_IOS_ENTITY_ADAPTER, hubAttachedIosIdFn, hubIOSupportedModesIdFn, hubPortModeInfoIdFn } from '../entity-adapters';
-import { AttachedIO, GamepadInputMethod, IState } from '../i-state';
+import { AttachedIO, GamepadInputMethod, HubIoSupportedModes, IState } from '../i-state';
 import { HUB_IO_SUPPORTED_MODES_SELECTORS } from './hub-io-supported-modes.selectors';
 import { HUB_IO_CONTROL_METHODS, HubIoOperationMode } from '../hub-io-operation-mode';
 import { HUB_PORT_MODE_INFO_SELECTORS } from './hub-port-mode-info.selectors';
-import { PortModeName } from '@nvsukhanov/rxpoweredup';
+import { IOType, PortModeName } from '@nvsukhanov/rxpoweredup';
 
 const SELECT_HUB_ATTACHED_IOS_FEATURE = createFeatureSelector<IState['hubAttachedIOs']>('hubAttachedIOs');
 
@@ -55,6 +55,59 @@ export const HUB_ATTACHED_IO_SELECTORS = {
                 return getHubIOOperationModes(io, supportedModes, portModeData, inputMethod);
             }
             return [];
+        }
+    ),
+    selectHubPortInputModeForPortModeName: (hubId: string, portId: number, portModeName: PortModeName) => createSelector(
+        HUB_ATTACHED_IO_SELECTORS.selectIOAtPort(hubId, portId),
+        HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
+        HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
+        (io, supportedModes, portModeData) => {
+            if (io) {
+                const supportedInputModes = new Set(
+                    supportedModes[hubIOSupportedModesIdFn(io.hardwareRevision, io.softwareRevision, io.ioType)]?.portInputModes ?? []
+                );
+                if (supportedInputModes) {
+                    return Object.values(portModeData).find((portModeInfo) => {
+                        return portModeInfo?.name === portModeName && supportedInputModes.has(portModeInfo?.modeId);
+                    }) ?? null;
+                }
+            }
+            return null;
+        }
+    ),
+    isIOAttached: (
+        hubId: string,
+        portId: number,
+        ioType: IOType
+    ) => createSelector(
+        HUB_ATTACHED_IO_SELECTORS.selectIOAtPort(hubId, portId),
+        (io) => {
+            return io?.ioType === ioType;
+        }
+    ),
+    canCalibrateServo: (
+        hubId: string,
+        portId: number,
+    ) => createSelector(
+        HUB_ATTACHED_IO_SELECTORS.selectIOAtPort(hubId, portId),
+        HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
+        HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
+        (io, supportedModesEntities, portModesEntities) => {
+            if (!io) {
+                return false;
+            }
+            const modesInfo: HubIoSupportedModes | undefined =
+                supportedModesEntities[hubIOSupportedModesIdFn(io.hardwareRevision, io.softwareRevision, io.ioType)];
+            if (!modesInfo) {
+                return false;
+            }
+            const portOutputModes = modesInfo.portOutputModes;
+            const portModes = new Set(...portOutputModes
+                .map((modeId) => portModesEntities[hubPortModeInfoIdFn(io.hardwareRevision, io.softwareRevision, modeId, io.ioType)])
+                .map((portModeInfo) => portModeInfo?.name)
+            );
+
+            return portModes.has(PortModeName.position) && portModes.has(PortModeName.absolutePosition);
         }
     )
 } as const;

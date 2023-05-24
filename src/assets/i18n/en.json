@@ -100,6 +100,7 @@
   "schemeOutputBindingConfigurationLinearInvertParameter": "Invert",
   "schemeOutputBindingConfigurationLinearPowerParameter": "Output power",
   "schemeOutputBindingConfigurationServoAngleRange": "Servo range (deg)",
+  "schemeOutputBindingConfigurationServoCenterOffset": "Center offset (deg)",
   "schemeOutputBindingConfigurationServoInvertParameter": "Invert",
   "schemeOutputBindingConfigurationServoSpeedParameter": "Speed",
   "schemeOutputBindingConfigurationServoPowerParameter": "Power",
@@ -114,5 +115,9 @@
   "aboutPageGithubTitle": "ngPoweredUP GitHub",
   "aboutPageGithubApiTitle": "rxPoweredUP GitHub",
   "bluetoothUnavailableToolbarTitle": "Bluetooth is not available",
-  "bluetoothUnavailableMessage": "Bluetooth is not available in your browser. For more information, please refer to"
+  "bluetoothUnavailableMessage": "Bluetooth is not available in your browser. For more information, please refer to",
+  "servoCalibrationIsInProgress": "Servo calibration is in progress",
+  "servoCalibrationError": "An error occurred during servo calibration",
+  "servoCalibrationCancel": "Cancel",
+  "servoCalibrateButtonTitle": "Calibrate"
 }

@@ -1,23 +1,50 @@
 <ng-container *ngIf="outputBinding">
     <section class="parameter-section">
+        <button mat-raised-button
+                color="primary"
+                [disabled]="!(canCalibrate$ | ngrxPush)"
+                (click)="calibrate()"
+        >
+            <mat-icon>
+                settings_suggest
+            </mat-icon>
+            {{ 'servoCalibrateButtonTitle' | transloco }}
+        </button>
+    </section>
+
+    <section class="parameter-section">
         <mat-slide-toggle [formControl]="outputBinding.controls.servoConfig.controls.invert">
             {{ 'schemeOutputBindingConfigurationServoInvertParameter' | transloco }}
         </mat-slide-toggle>
     </section>
+
     <section class="parameter-section">
         <div class="slider-label">
-            <label class="slider-label-value-left">{{ outputBinding.controls.servoConfig.controls.minAngle.value }}</label>
-            <label class="slider-label-description-centered">
+            <label class="slider-label-description">
+                {{ 'schemeOutputBindingConfigurationServoCenterOffset' | transloco }}
+            </label>
+            <label class="slider-label-value-right">{{ outputBinding.controls.servoConfig.controls.aposCenter.value }}</label>
+        </div>
+        <mat-slider class="slider"
+                    [min]="-motorLimits.maxServoDegreesRange / 2"
+                    [max]="motorLimits.maxServoDegreesRange / 2"
+        >
+            <input matSliderThumb [formControl]="outputBinding.controls.servoConfig.controls.aposCenter"/>
+        </mat-slider>
+    </section>
+
+    <section class="parameter-section">
+        <div class="slider-label">
+            <label class="slider-label-description">
                 {{ 'schemeOutputBindingConfigurationServoAngleRange' | transloco }}
             </label>
-            <label class="slider-label-value-right">{{ outputBinding.controls.servoConfig.controls.maxAngle.value }}</label>
+            <label class="slider-label-value-right">{{ outputBinding.controls.servoConfig.controls.range.value }}</label>
         </div>
-
         <mat-slider class="slider"
-                    [max]="motorLimits.maxServoDegreesRange / 2"
-                    [min]="-motorLimits.maxServoDegreesRange / 2">
-            <input matSliderStartThumb [formControl]="outputBinding.controls.servoConfig.controls.minAngle"/>
-            <input matSliderEndThumb [formControl]="outputBinding.controls.servoConfig.controls.maxAngle"/>
+                    [min]="motorLimits.minServoDegreesRange"
+                    [max]="motorLimits.maxServoDegreesRange"
+        >
+            <input matSliderThumb [formControl]="outputBinding.controls.servoConfig.controls.range"/>
         </mat-slider>
     </section>
 

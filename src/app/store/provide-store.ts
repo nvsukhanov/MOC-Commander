@@ -14,7 +14,8 @@ import {
     HUB_IO_OUTPUT_MODES_REDUCER,
     HUB_PORT_MODE_INFO_REDUCERS,
     HUB_PORT_TASKS_REDUCERS,
-    HUBS_REDUCERS
+    HUBS_REDUCERS,
+    SERVO_CALIBRATION_REDUCERS
 } from './reducers';
 import { provideEffects } from '@ngrx/effects';
 import {
@@ -26,6 +27,7 @@ import {
     HubPortTasksEffects,
     HubsEffects,
     NotificationsEffects,
+    ServoCalibrationEffects,
 } from './effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
@@ -33,7 +35,7 @@ import { NAVIGATOR } from '../common';
 import { ActionReducer, ActionReducerMap, MetaReducer, provideStore, Store } from '@ngrx/store';
 import { HubStorageService } from './hub-storage.service';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
-import { GAMEPAD_ACTIONS } from './actions';
+import { GAMEPAD_ACTIONS, HUBS_ACTIONS } from './actions';
 import { localStorageSync } from 'ngrx-store-localstorage';
 import { Router } from '@angular/router';
 
@@ -51,6 +53,7 @@ const REDUCERS: ActionReducerMap<IState> = {
     hubPortModeInfo: HUB_PORT_MODE_INFO_REDUCERS,
     hubPortTasks: HUB_PORT_TASKS_REDUCERS,
     hubEditFormActiveSaves: HUB_EDIT_FORM_ACTIVE_SAVES_REDUCERS,
+    servoCalibrationTaskState: SERVO_CALIBRATION_REDUCERS,
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_REDUCERS,
     router: routerReducer
 };
@@ -76,6 +79,7 @@ export function provideApplicationStore(): EnvironmentProviders {
             ControlSchemeEffects,
             HubPortTasksEffects,
             NotificationsEffects,
+            ServoCalibrationEffects
         ),
         provideStoreDevtools({
             maxAge: 100,
@@ -84,7 +88,10 @@ export function provideApplicationStore(): EnvironmentProviders {
             trace: false,
             traceLimit: 75,
             actionsBlocklist: [
-                GAMEPAD_ACTIONS.updateGamepadsValues.type
+                GAMEPAD_ACTIONS.updateGamepadsValues.type,
+                HUBS_ACTIONS.setHasCommunication.type,
+                HUBS_ACTIONS.rssiLevelReceived.type,
+                HUBS_ACTIONS.batteryLevelReceived.type
             ]
         }),
         { provide: APP_INITIALIZER, useFactory: bluetoothAvailabilityCheckFactory, deps: [ NAVIGATOR, Store, Router ], multi: true },

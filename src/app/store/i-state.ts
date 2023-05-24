@@ -32,6 +32,9 @@ export interface IState {
     hubEditFormActiveSaves: {
         hubIds: string[]
     },
+    servoCalibrationTaskState: {
+        calibrationInProgress: boolean;
+    },
     bluetoothAvailability: {
         isAvailable: boolean;
     },
@@ -60,8 +63,8 @@ export type BindingServoOutputState = {
     portId: number;
     operationMode: HubIoOperationMode.Servo;
     servoConfig: {
-        minAngle: number;
-        maxAngle: number;
+        range: number;
+        aposCenter: number;
         speed: number;
         power: number;
         invert: boolean;

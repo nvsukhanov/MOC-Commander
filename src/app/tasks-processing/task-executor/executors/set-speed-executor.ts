@@ -9,7 +9,7 @@ export class SetSpeedExecutor extends TaskExecutor {
         hub: IHub
     ): Observable<PortCommandExecutionStatus> | null {
         if (task.taskType === PortCommandTaskType.SetSpeed) {
-            return hub.commands.setSpeed(
+            return hub.motors.setSpeed(
                 task.portId,
                 task.speed,
                 {

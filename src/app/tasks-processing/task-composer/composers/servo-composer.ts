@@ -15,11 +15,13 @@ export class ServoComposer extends PortCommandTaskComposer {
             return null;
         }
 
-        const arcCenter = (outputConfig.servoConfig.maxAngle + outputConfig.servoConfig.minAngle) / 2;
-        const arcSize = outputConfig.servoConfig.maxAngle - outputConfig.servoConfig.minAngle;
+        const arcCenter = outputConfig.servoConfig.range / 2;
+        const arcSize = outputConfig.servoConfig.range;
         const targetAngle = inputValue * arcSize / 2 + arcCenter;
+        const minAngle = targetAngle - arcSize / 2;
+        const maxAngle = targetAngle + arcSize / 2;
 
-        const snappedAngle = this.snapAngle(targetAngle, arcCenter, outputConfig.servoConfig.maxAngle, outputConfig.servoConfig.minAngle);
+        const snappedAngle = this.snapAngle(targetAngle, arcCenter, minAngle, maxAngle);
 
         return this.composeServoTask(
             binding.id,
