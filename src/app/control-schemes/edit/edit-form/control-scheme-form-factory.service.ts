@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BindingLinearOutputState, BindingOutputState, BindingServoOutputState, GamepadInputMethod, HubIoOperationMode } from '../../../store';
 import { ControlSchemeBindingOutputForm, LinearOutputConfiguration, ServoOutputConfiguration } from '../binding-output';
-import { FormBuilder, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { BindingForm, EditSchemeForm } from '../types';
 import { ControlSchemeBindingInputForm } from '../binding-input';
@@ -79,16 +79,20 @@ export class ControlSchemeFormFactoryService {
         initialConfiguration?: BindingServoOutputState['servoConfig']
     ): ServoOutputConfiguration {
         return this.formBuilder.group({
-            minAngle: this.formBuilder.control<number>(initialConfiguration?.minAngle ?? -MOTOR_LIMITS.maxServoDegreesRange / 2, {
+            range: this.formBuilder.control<number>(initialConfiguration?.range ?? MOTOR_LIMITS.maxServoDegreesRange, {
                 nonNullable: true,
                 validators: [
                     Validators.required,
+                    Validators.min(0),
+                    Validators.max(MOTOR_LIMITS.maxServoDegreesRange),
                 ]
             }),
-            maxAngle: this.formBuilder.control<number>(initialConfiguration?.maxAngle ?? MOTOR_LIMITS.maxServoDegreesRange / 2, {
+            aposCenter: this.formBuilder.control<number>(0, {
                 nonNullable: true,
                 validators: [
                     Validators.required,
+                    Validators.min(-MOTOR_LIMITS.maxServoDegreesRange), // TODO: min APOS value
+                    Validators.max(MOTOR_LIMITS.maxServoDegreesRange), // TODO: max APOS value
                 ]
             }),
             speed: this.formBuilder.control<number>(initialConfiguration?.speed ?? MOTOR_LIMITS.maxSpeed, {
@@ -108,34 +112,7 @@ export class ControlSchemeFormFactoryService {
                 ]
             }),
             invert: this.formBuilder.control<boolean>(initialConfiguration?.invert ?? false, { nonNullable: true }),
-        }, {
-            validators: [ this.validateServoConfiguration as ValidatorFn ]
         });
-    }
-
-    private validateServoConfiguration(
-        form: ServoOutputConfiguration
-    ): ValidationErrors | null {
-        const errors: ValidationErrors = {};
-        let hasErrors = false;
-        if (form.controls.minAngle.value > form.controls.maxAngle.value) {
-            errors['overlapping'] = true;
-            hasErrors = true;
-        }
-
-        if (Math.abs(form.controls.minAngle.value - form.controls.maxAngle.value) < MOTOR_LIMITS.minServoDegreesRange) {
-            errors['belowMinimumRange'] = true;
-            hasErrors = true;
-        }
-
-        if (Math.abs(form.controls.minAngle.value - form.controls.maxAngle.value) > MOTOR_LIMITS.maxServoDegreesRange) {
-            errors['aboveMaximumRange'] = true;
-            hasErrors = true;
-        }
-        if (hasErrors) {
-            return errors;
-        }
-        return null;
     }
 
     private buildLinearOutputControlForm(

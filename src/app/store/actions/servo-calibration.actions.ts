@@ -5,7 +5,7 @@ export const SERVO_CALIBRATION_ACTIONS = createActionGroup({
     events: {
         'start calibration': props<{ hubId: string, portId: number, power: number }>(),
         'cancel calibration': emptyProps(),
-        'calibration finished': props<{ hubId: string, portId: number, min: number, max: number }>(),
+        'calibration finished': props<{ hubId: string, portId: number, aposCenter: number, range: number }>(),
         'calibration cancelled': emptyProps(),
         'calibration error': props<{ error: Error }>(),
     }

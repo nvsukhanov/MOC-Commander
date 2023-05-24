@@ -9,7 +9,7 @@ export class ServoExecutor extends TaskExecutor {
         hub: IHub
     ): Observable<PortCommandExecutionStatus> | null {
         if (task.taskType === PortCommandTaskType.Servo) {
-            return hub.commands.goToAbsoluteDegree(
+            return hub.motors.goToPosition(
                 task.portId,
                 task.angle,
                 {

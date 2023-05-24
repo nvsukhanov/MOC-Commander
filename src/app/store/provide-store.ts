@@ -35,7 +35,7 @@ import { NAVIGATOR } from '../common';
 import { ActionReducer, ActionReducerMap, MetaReducer, provideStore, Store } from '@ngrx/store';
 import { HubStorageService } from './hub-storage.service';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
-import { GAMEPAD_ACTIONS } from './actions';
+import { GAMEPAD_ACTIONS, HUBS_ACTIONS } from './actions';
 import { localStorageSync } from 'ngrx-store-localstorage';
 import { Router } from '@angular/router';
 
@@ -88,7 +88,10 @@ export function provideApplicationStore(): EnvironmentProviders {
             trace: false,
             traceLimit: 75,
             actionsBlocklist: [
-                GAMEPAD_ACTIONS.updateGamepadsValues.type
+                GAMEPAD_ACTIONS.updateGamepadsValues.type,
+                HUBS_ACTIONS.setHasCommunication.type,
+                HUBS_ACTIONS.rssiLevelReceived.type,
+                HUBS_ACTIONS.batteryLevelReceived.type
             ]
         }),
         { provide: APP_INITIALIZER, useFactory: bluetoothAvailabilityCheckFactory, deps: [ NAVIGATOR, Store, Router ], multi: true },

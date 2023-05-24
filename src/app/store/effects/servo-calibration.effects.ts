@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { SERVO_CALIBRATION_ACTIONS } from '../actions';
-import { bufferCount, catchError, concatWith, last, map, NEVER, Observable, of, race, switchMap, tap, timeout } from 'rxjs';
+import { bufferCount, catchError, concatWith, first, last, map, NEVER, Observable, of, race, switchMap, tap, timeout } from 'rxjs';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { ServoCalibrationDialogComponent } from '../../control-schemes/servo-calibration-dialog';
 import { Action, Store } from '@ngrx/store';
@@ -14,30 +14,44 @@ export class ServoCalibrationEffects {
     public readonly doCalibration$ = createEffect(() => {
         return this.actions.pipe(
             ofType(SERVO_CALIBRATION_ACTIONS.startCalibration),
-            concatLatestFrom((action) =>
-                this.store.select(HUB_ATTACHED_IO_SELECTORS.selectHubPortInputModeForPortModeName(action.hubId, action.portId, PortModeName.position))
-            ),
-            switchMap(([ action, portModeInfo ]) => {
-                if (portModeInfo === null) {
+            concatLatestFrom((action) => [
+                this.store.select(HUB_ATTACHED_IO_SELECTORS.selectHubPortInputModeForPortModeName(action.hubId, action.portId, PortModeName.position)),
+                this.store.select(HUB_ATTACHED_IO_SELECTORS.selectHubPortInputModeForPortModeName(action.hubId, action.portId, PortModeName.absolutePosition)),
+            ]),
+            switchMap(([ action, positionModeInfo, absolutePositionModeInfo ]) => {
+                if (absolutePositionModeInfo === null || positionModeInfo === null) {
                     return of(
                         SERVO_CALIBRATION_ACTIONS.calibrationError({ error: new Error('No position mode found') })
                     );
                 }
                 return race(
-                    this.doCalibration(action.hubId, action.portId, portModeInfo.modeId, action.power),
+                    this.doCalibration(
+                        action.hubId,
+                        action.portId,
+                        positionModeInfo.modeId,
+                        absolutePositionModeInfo.modeId,
+                        action.power
+                    ),
                     this.actions.pipe(ofType(SERVO_CALIBRATION_ACTIONS.cancelCalibration)).pipe(
                         map(() => SERVO_CALIBRATION_ACTIONS.calibrationCancelled())
                     )
+                ).pipe(
+                    catchError((error) => {
+                        console.error(error);
+                        return of(SERVO_CALIBRATION_ACTIONS.calibrationError({ error }));
+                    })
                 );
             }),
-            catchError((error) => of(SERVO_CALIBRATION_ACTIONS.calibrationError({ error })))
         );
     });
 
     public showCalibrationModal$ = createEffect(() => {
         return this.actions.pipe(
             ofType(SERVO_CALIBRATION_ACTIONS.startCalibration),
-            tap(() => {
+            switchMap(() => {
+                if (this.dialogRef) {
+                    this.dialogRef.close();
+                }
                 this.dialogRef = this.dialog.open(
                     ServoCalibrationDialogComponent,
                     {
@@ -45,8 +59,8 @@ export class ServoCalibrationEffects {
                         disableClose: true
                     }
                 );
+                return this.dialogRef.componentInstance?.cancel.asObservable() ?? NEVER;
             }),
-            switchMap(() => this.dialogRef?.componentInstance?.cancel ?? NEVER),
             map(() => SERVO_CALIBRATION_ACTIONS.cancelCalibration()),
         );
     });
@@ -79,6 +93,7 @@ export class ServoCalibrationEffects {
         hubId: string,
         portId: number,
         positionModeId: number,
+        absolutePositionModeId: number,
         power: number
     ): Observable<Action> {
         const hub = this.hubStorage.get(hubId);
@@ -87,26 +102,83 @@ export class ServoCalibrationEffects {
         }
 
         const probeReachability = (degree: number): Observable<number> => {
-            return hub.commands.goToAbsoluteDegree(portId, degree, { power, endState: MotorServoEndState.brake }).pipe(
-                concatWith(hub.ports.getPortValue(portId, positionModeId, PortModeName.position).pipe(
-                    map((r) => r.position)
-                )),
+            return hub.motors.goToPosition(portId, degree, { power, endState: MotorServoEndState.brake }).pipe(
+                concatWith(hub.motors.getPosition(portId, positionModeId)),
                 last()
             ) as Observable<number>;
         };
 
-        return probeReachability(-MOTOR_LIMITS.maxServoDegreesRange).pipe(
-            concatWith(probeReachability(MOTOR_LIMITS.maxServoDegreesRange)),
-            concatWith(probeReachability(-MOTOR_LIMITS.maxServoDegreesRange)),
-            concatWith(probeReachability(MOTOR_LIMITS.maxServoDegreesRange)),
-            concatWith(probeReachability(0)),
-            timeout(5000),
-            bufferCount(5),
-            map(([ min1, max1, min2, max2 ]) => {
-                const min = Math.min(min1, min2);
-                const max = Math.max(max1, max2);
-                return SERVO_CALIBRATION_ACTIONS.calibrationFinished({ hubId, portId, min, max });
+        return hub.motors.getPosition(portId, positionModeId).pipe(
+            last(),
+            concatWith(hub.motors.getAbsolutePosition(portId, absolutePositionModeId)),
+            bufferCount(2),
+            map(([ startRelativePosition, startAbsolutePosition ]) => ({
+                startRelativePosition,
+                startAbsolutePosition,
+                ccwLimit: startRelativePosition - MOTOR_LIMITS.maxServoDegreesRange,
+                cwLimit: startRelativePosition + MOTOR_LIMITS.maxServoDegreesRange
+            })),
+            switchMap(({ startAbsolutePosition, startRelativePosition, cwLimit, ccwLimit }) => {
+                return probeReachability(ccwLimit).pipe(
+                    concatWith(probeReachability(cwLimit)),
+                    concatWith(probeReachability(ccwLimit)),
+                    concatWith(probeReachability(cwLimit)),
+                    timeout(5000),
+                    bufferCount(4),
+                    map(([ min1, max1, min2, max2 ]) => {
+                        const min = Math.min(min1, min2);
+                        const max = Math.max(max1, max2);
+                        const ccwDistanceFromEncoderZero = min - startRelativePosition;
+                        const cwDistanceFromEncoderZero = max - startRelativePosition;
+                        const arcCenterFromEncoderZero = (ccwDistanceFromEncoderZero + cwDistanceFromEncoderZero) / 2;
+
+                        const servoRange = Math.min(
+                            Math.abs(ccwDistanceFromEncoderZero) + Math.abs(cwDistanceFromEncoderZero),
+                            MOTOR_LIMITS.maxServoDegreesRange
+                        );
+                        const arcAbsoluteCenter = servoRange === MOTOR_LIMITS.maxServoDegreesRange
+                                                  ? 0
+                                                  : this.transformRelativeDegToAbsoluteDeg(startAbsolutePosition + arcCenterFromEncoderZero);
+                        const arcCenterFromStart = servoRange === MOTOR_LIMITS.maxServoDegreesRange
+                                                   ? -startAbsolutePosition
+                                                   : (min + max) / 2;
+
+                        return {
+                            servoRange,
+                            arcCenterFromStart,
+                            arcAbsoluteCenter
+                        };
+                    }),
+                    switchMap((data) => hub.motors.goToPosition(
+                        portId,
+                        data.arcCenterFromStart,
+                        { power, endState: MotorServoEndState.float }
+                    ).pipe(
+                        first(),
+                        map(() => {
+                            return SERVO_CALIBRATION_ACTIONS.calibrationFinished({
+                                hubId,
+                                portId,
+                                aposCenter: data.arcAbsoluteCenter,
+                                range: data.servoRange
+                            });
+                        })
+                    ))
+                );
             }),
         );
+    }
+
+    private transformRelativeDegToAbsoluteDeg(
+        relativeDegrees: number
+    ): number {
+        const absoluteDegrees = relativeDegrees % 360;
+        if (absoluteDegrees > 180) {
+            return absoluteDegrees - 360;
+        }
+        if (absoluteDegrees < -180) {
+            return absoluteDegrees + 360;
+        }
+        return absoluteDegrees;
     }
 }

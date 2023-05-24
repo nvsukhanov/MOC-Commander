@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { catchError, combineLatestWith, filter, from, fromEvent, interval, map, mergeMap, Observable, of, startWith, switchMap, takeUntil, tap } from 'rxjs';
+import { catchError, combineLatestWith, filter, from, interval, map, mergeMap, Observable, of, startWith, switchMap, takeUntil, tap } from 'rxjs';
 import { HubStorageService } from '../hub-storage.service';
 import { HUBS_ACTIONS } from '../actions';
-import { LogLevel, NAVIGATOR, WINDOW } from '../../common';
+import { LogLevel, NAVIGATOR } from '../../common';
 import { Action, Store } from '@ngrx/store';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../hub-communication-notifier-middleware-factory.service';
 import { Router } from '@angular/router';
@@ -123,7 +123,6 @@ export class HubsEffects {
         private readonly router: Router,
         private readonly hubStorage: HubStorageService,
         private readonly communicationNotifierMiddlewareFactory: HubCommunicationNotifierMiddlewareFactoryService,
-        @Inject(WINDOW) private readonly window: Window,
         @Inject(NAVIGATOR) private readonly navigator: Navigator
     ) {
     }
@@ -138,7 +137,6 @@ export class HubsEffects {
             {
                 incomingMessageMiddleware: [ incomingLoggerMiddleware, communicationNotifierMiddleware ],
                 outgoingMessageMiddleware: [ outgoingLoggerMiddleware, communicationNotifierMiddleware ],
-                externalDisconnectEvents: fromEvent(this.window, 'beforeunload')
             }
         ).pipe(
             switchMap((hub: IHub) => {

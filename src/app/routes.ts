@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
-import { EmptyViewComponent } from './main';
 import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
-import { CONFIGURE_CONTROLLER_I18N_SCOPE, GAMEPAD_PLUGINS_I18N_SCOPE, HUB_IO_I18N_SCOPE } from './i18n';
+import { HUB_IO_I18N_SCOPE } from './i18n';
 import { NotFoundComponent } from './common';
 
 export const ROUTE_PATHS = {
@@ -20,13 +19,8 @@ export const ROUTE_PATHS = {
 export const ROUTES: Routes = [
     {
         path: '',
-        component: EmptyViewComponent,
+        redirectTo: ROUTE_PATHS.controllerList,
         pathMatch: 'full',
-        providers: [
-            { provide: TRANSLOCO_SCOPE, useValue: CONFIGURE_CONTROLLER_I18N_SCOPE, multi: true },
-            { provide: TRANSLOCO_SCOPE, useValue: GAMEPAD_PLUGINS_I18N_SCOPE, multi: true },
-            { provide: TRANSLOCO_SCOPE, useValue: HUB_IO_I18N_SCOPE, multi: true },
-        ]
     },
     {
         path: ROUTE_PATHS.bluetoothUnavailable,

@@ -3,9 +3,8 @@ import { HubConfiguration } from '../../../store';
 import { MatCardModule } from '@angular/material/card';
 import { JsonPipe, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { MAX_NAME_SIZE } from '@nvsukhanov/rxpoweredup';
 import { TranslocoModule } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -39,23 +38,29 @@ export class HubEditFormComponent {
 
     @Output() public readonly save = new EventEmitter<HubEditFormSaveResult>();
 
-    public readonly form = this.formBuilder.group({
-        hubId: this.formBuilder.control<string>('', { nonNullable: true }),
-        name: this.formBuilder.control<string>('', [
-            Validators.required,
-            Validators.minLength(1),
-            Validators.maxLength(MAX_NAME_SIZE),
-            Validators.pattern(/^[a-zA-Z0-9_.\s]+$/)
-        ])
-    });
+    public readonly form: FormGroup<{
+        hubId: FormControl<string>;
+        name: FormControl<string | null>;
+    }>;
 
     private _hubConfiguration?: HubConfiguration;
 
     private _viewPath: string[] = [];
 
+    private readonly maxHubNameLength = 14;
+
     constructor(
-        private readonly formBuilder: FormBuilder
+        formBuilder: FormBuilder
     ) {
+        this.form = formBuilder.group({
+            hubId: formBuilder.control<string>('', { nonNullable: true }),
+            name: formBuilder.control<string>('', [
+                Validators.required,
+                Validators.minLength(1),
+                Validators.maxLength(this.maxHubNameLength),
+                Validators.pattern(/^[a-zA-Z0-9_.\s]+$/)
+            ])
+        });
     }
 
     @Input()

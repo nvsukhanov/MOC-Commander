@@ -22,8 +22,8 @@ export type LinearOutputConfiguration = FormGroup<{
 }>;
 
 export type ServoOutputConfiguration = FormGroup<{
-    minAngle: FormControl<number>,
-    maxAngle: FormControl<number>,
+    range: FormControl<number>,
+    aposCenter: FormControl<number>,
     speed: FormControl<number>,
     power: FormControl<number>,
     invert: FormControl<boolean>,
