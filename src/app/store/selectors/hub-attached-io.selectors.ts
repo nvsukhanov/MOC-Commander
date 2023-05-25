@@ -102,10 +102,11 @@ export const HUB_ATTACHED_IO_SELECTORS = {
                 return false;
             }
             const portOutputModes = modesInfo.portOutputModes;
-            const portModes = new Set(...portOutputModes
+            const portModes = new Set(portOutputModes
                 .map((modeId) => portModesEntities[hubPortModeInfoIdFn(io.hardwareRevision, io.softwareRevision, modeId, io.ioType)])
                 .map((portModeInfo) => portModeInfo?.name)
-            );
+                .filter((portModeInfo) => !!portModeInfo)
+            ) as ReadonlySet<PortModeName>;
 
             return portModes.has(PortModeName.position) && portModes.has(PortModeName.absolutePosition);
         }

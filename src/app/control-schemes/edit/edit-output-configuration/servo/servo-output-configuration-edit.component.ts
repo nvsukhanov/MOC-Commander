@@ -89,13 +89,13 @@ export class ServoOutputConfigurationEditComponent implements IOutputConfigurati
         outputBinding: ControlSchemeBindingOutputForm
     ): void {
         if (outputBinding !== this._outputBinding) {
-            if (!outputBinding.value.hubId || !outputBinding.value.portId) {
-                this._canCalibrate$ = of(false);
-            } else {
+            if (outputBinding.value.hubId !== undefined && outputBinding.value.portId !== undefined) {
                 this._canCalibrate$ = this.store.select(HUB_ATTACHED_IO_SELECTORS.canCalibrateServo(
                     outputBinding.value.hubId,
                     outputBinding.value.portId
                 ));
+            } else {
+                this._canCalibrate$ = of(false);
             }
             this._outputBinding = outputBinding;
             this.cd.detectChanges();
