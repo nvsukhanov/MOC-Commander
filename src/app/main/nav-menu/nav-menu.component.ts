@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgIf } from '@angular/common';
-import { PushModule } from '@ngrx/component';
+import { PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import {
     BLUETOOTH_AVAILABILITY_SELECTORS,
@@ -29,7 +29,7 @@ import { RoutesBuilderService } from '../../routing';
         MatButtonModule,
         MatToolbarModule,
         NgIf,
-        PushModule,
+        PushPipe,
         TranslocoModule,
         RouterLink,
         RouterLinkActive,

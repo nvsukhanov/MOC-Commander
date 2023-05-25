@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy, TemplateRef, ViewChild }
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NgIf } from '@angular/common';
-import { PushModule } from '@ngrx/component';
+import { PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { BindingFormResult, ControlSchemeEditFormComponent } from '../edit';
 import { Store } from '@ngrx/store';
@@ -20,7 +20,7 @@ import { RoutesBuilderService } from '../../routing';
         MatButtonModule,
         MatIconModule,
         NgIf,
-        PushModule,
+        PushPipe,
         TranslocoModule,
         ControlSchemeEditFormComponent,
         RouterLink

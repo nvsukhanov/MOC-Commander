@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, HostBinding, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { GAMEPAD_ACTIONS, GLOBAL_PROGRESS_BAR_SELECTORS } from '../../store';
-import { LetModule, PushModule } from '@ngrx/component';
+import { LetDirective, PushPipe } from '@ngrx/component';
 import { RouterOutlet } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -15,8 +15,8 @@ import { NavMenuComponent } from '../nav-menu';
     templateUrl: './layout.component.html',
     styleUrls: [ './layout.component.scss' ],
     imports: [
-        PushModule,
-        LetModule,
+        PushPipe,
+        LetDirective,
         RouterOutlet,
         NgIf,
         MatProgressBarModule,

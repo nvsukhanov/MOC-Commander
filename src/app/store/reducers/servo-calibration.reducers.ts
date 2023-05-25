@@ -11,19 +11,19 @@ export const SERVO_CALIBRATION_REDUCERS = createReducer(
             calibrationInProgress: true
         };
     }),
-    on(SERVO_CALIBRATION_ACTIONS.calibrationFinished, (state, action): IState['servoCalibrationTaskState'] => {
+    on(SERVO_CALIBRATION_ACTIONS.calibrationFinished, (state): IState['servoCalibrationTaskState'] => {
         return {
             ...state,
             calibrationInProgress: false
         };
     }),
-    on(SERVO_CALIBRATION_ACTIONS.calibrationCancelled, (state, action): IState['servoCalibrationTaskState'] => {
+    on(SERVO_CALIBRATION_ACTIONS.calibrationCancelled, (state): IState['servoCalibrationTaskState'] => {
         return {
             ...state,
             calibrationInProgress: false
         };
     }),
-    on(SERVO_CALIBRATION_ACTIONS.calibrationError, (state, action): IState['servoCalibrationTaskState'] => {
+    on(SERVO_CALIBRATION_ACTIONS.calibrationError, (state): IState['servoCalibrationTaskState'] => {
         return {
             ...state,
             calibrationInProgress: false

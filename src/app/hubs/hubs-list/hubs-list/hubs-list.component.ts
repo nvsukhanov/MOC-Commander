@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { HUBS_ACTIONS, HUBS_SELECTORS } from '../../../store';
-import { LetModule, PushModule } from '@ngrx/component';
+import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgForOf, NgIf } from '@angular/common';
 import { HubsListItemComponent } from '../hubs-list-item';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,8 +17,8 @@ import { MatDividerModule } from '@angular/material/divider';
     styleUrls: [ './hubs-list.component.scss' ],
     imports: [
         TranslocoModule,
-        LetModule,
-        PushModule,
+        LetDirective,
+        PushPipe,
         NgIf,
         HubsListItemComponent,
         NgForOf,

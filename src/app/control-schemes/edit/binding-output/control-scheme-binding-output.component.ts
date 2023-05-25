@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AttachedIO, HUB_ATTACHED_IO_SELECTORS, HubIoOperationMode, HUBS_SELECTORS } from '../../../store';
 import { MatSelectModule } from '@angular/material/select';
-import { LetModule, PushModule } from '@ngrx/component';
+import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { combineLatest, map, Observable, of, shareReplay, startWith, Subscription, switchMap } from 'rxjs';
@@ -44,8 +44,8 @@ export type ControlSchemeBindingOutputForm = FormGroup<{
     styleUrls: [ './control-scheme-binding-output.component.scss' ],
     imports: [
         MatSelectModule,
-        LetModule,
-        PushModule,
+        LetDirective,
+        PushPipe,
         NgForOf,
         ReactiveFormsModule,
         NgIf,

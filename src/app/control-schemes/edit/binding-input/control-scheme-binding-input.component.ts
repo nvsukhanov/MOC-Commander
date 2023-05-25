@@ -12,7 +12,7 @@ import {
     GamepadInputMethod
 } from '../../../store';
 import { JsonPipe, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
-import { LetModule, PushModule } from '@ngrx/component';
+import { LetDirective, PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -32,9 +32,9 @@ export type ControlSchemeBindingInputForm = FormGroup<{
     styleUrls: [ './control-scheme-binding-input.component.scss' ],
     imports: [
         NgSwitch,
-        PushModule,
+        PushPipe,
         JsonPipe,
-        LetModule,
+        LetDirective,
         NgSwitchCase,
         TranslocoModule,
         MatCardModule,

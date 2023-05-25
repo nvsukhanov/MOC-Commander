@@ -2,7 +2,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AttachedIO, HUB_ATTACHED_IO_SELECTORS, HubConfiguration, HUBS_ACTIONS, HUBS_SELECTORS, ROUTER_SELECTORS } from '../../../store';
 import { Store } from '@ngrx/store';
-import { LetModule, PushModule } from '@ngrx/component';
+import { LetDirective, PushPipe } from '@ngrx/component';
 import { EMPTY, Observable, switchMap, take } from 'rxjs';
 import { NgForOf, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,8 +20,8 @@ import { RoutesBuilderService } from '../../../routing';
     templateUrl: './hub-view.component.html',
     styleUrls: [ './hub-view.component.scss' ],
     imports: [
-        PushModule,
-        LetModule,
+        PushPipe,
+        LetDirective,
         MatButtonModule,
         NgIf,
         NgForOf,
