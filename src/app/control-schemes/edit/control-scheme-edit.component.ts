@@ -5,7 +5,7 @@ import { map, Observable, of, Subscription, switchMap } from 'rxjs';
 import { BindingFormResult, ControlSchemeEditFormComponent } from './edit-form';
 import { TranslocoModule } from '@ngneat/transloco';
 import { JsonPipe, NgIf } from '@angular/common';
-import { PushModule } from '@ngrx/component';
+import { PushPipe } from '@ngrx/component';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { FeatureToolbarService } from '../../common';
@@ -20,7 +20,7 @@ import { RoutesBuilderService } from '../../routing';
         ControlSchemeEditFormComponent,
         TranslocoModule,
         NgIf,
-        PushModule,
+        PushPipe,
         JsonPipe,
         MatButtonModule,
         RouterLink,

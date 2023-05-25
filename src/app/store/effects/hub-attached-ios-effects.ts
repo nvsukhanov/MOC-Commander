@@ -16,7 +16,7 @@ export class HubAttachedIOsEffects {
                     filter((r) => r.event === AttachIoEvent.Attached),
                     map((r) => {
                         const attachMessage = r as AttachedIoAttachInboundMessage;
-                        return HUB_ATTACHED_IOS_ACTIONS.registerio({
+                        return HUB_ATTACHED_IOS_ACTIONS.registerIO({
                             portId: attachMessage.portId,
                             ioType: attachMessage.ioTypeId,
                             hardwareRevision: attachMessage.hardwareRevision,
@@ -35,7 +35,7 @@ export class HubAttachedIOsEffects {
             mergeMap((action) => {
                 return this.hubStorage.get(action.hubId).ports.onIoDetach().pipe(
                     takeUntil(this.hubStorage.get(action.hubId).beforeDisconnect),
-                    map((r) => HUB_ATTACHED_IOS_ACTIONS.unregisterio({ hubId: action.hubId, portId: r.portId }))
+                    map((r) => HUB_ATTACHED_IOS_ACTIONS.unregisterIO({ hubId: action.hubId, portId: r.portId }))
                 );
             })
         );

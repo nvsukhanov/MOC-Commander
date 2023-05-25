@@ -6,7 +6,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { GAMEPAD_SELECTORS, GamepadConfig } from '../../store';
 import { Store } from '@ngrx/store';
 import { MatIconModule } from '@angular/material/icon';
-import { LetModule, PushModule } from '@ngrx/component';
+import { LetDirective, PushPipe } from '@ngrx/component';
 
 @Component({
     standalone: true,
@@ -20,10 +20,10 @@ import { LetModule, PushModule } from '@ngrx/component';
         TranslocoModule,
         MatIconModule,
         NgSwitch,
-        PushModule,
+        PushPipe,
         NgSwitchCase,
         NgIf,
-        LetModule,
+        LetDirective,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -1,118 +1,118 @@
 {
-    "root": true,
-    "ignorePatterns": [
-        "projects/**/*"
-    ],
-    "overrides": [
-        {
-            "files": [
-                "*.ts"
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:@ngrx/all"
+      ],
+      "rules": {
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "app",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
+          }
+        ],
+        "@typescript-eslint/explicit-function-return-type": [
+          "error"
+        ],
+        "semi": "error",
+        "lines-between-class-members": "off",
+        "@typescript-eslint/lines-between-class-members": [
+          "error"
+        ],
+        "no-console": [
+          "error",
+          {
+            "allow": [
+              "warn",
+              "error"
+            ]
+          }
+        ],
+        "@typescript-eslint/member-ordering": [
+          "error",
+          {
+            "default": [
+              "public-static-field",
+              "protected-static-field",
+              "private-static-field",
+              "public-static-method",
+              "protected-static-method",
+              "private-static-method",
+              "public-abstract-field",
+              "protected-abstract-field",
+              "public-instance-field",
+              "protected-instance-field",
+              "private-instance-field",
+              "constructor",
+              "public-abstract-method",
+              "protected-abstract-method",
+              [
+                "get",
+                "set"
+              ],
+              "public-instance-method",
+              "protected-instance-method",
+              "private-instance-method"
+            ]
+          }
+        ],
+        "max-len": [
+          "error",
+          {
+            "code": 160
+          }
+        ],
+        "@typescript-eslint/no-inferrable-types": [
+          "error",
+          {
+            "ignoreParameters": true
+          }
+        ],
+        "@ngrx/prefix-selectors-with-select": "off",
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": "variable",
+            "modifiers": [
+              "const",
+              "exported"
             ],
-            "extends": [
-                "eslint:recommended",
-                "plugin:@typescript-eslint/recommended",
-                "plugin:@angular-eslint/recommended",
-                "plugin:@angular-eslint/template/process-inline-templates",
-                "plugin:@ngrx/all"
-            ],
-            "rules": {
-                "@angular-eslint/directive-selector": [
-                    "error",
-                    {
-                        "type": "attribute",
-                        "prefix": "app",
-                        "style": "camelCase"
-                    }
-                ],
-                "@angular-eslint/component-selector": [
-                    "error",
-                    {
-                        "type": "element",
-                        "prefix": "app",
-                        "style": "kebab-case"
-                    }
-                ],
-                "@typescript-eslint/explicit-function-return-type": [
-                    "error"
-                ],
-                "semi": "error",
-                "lines-between-class-members": "off",
-                "@typescript-eslint/lines-between-class-members": [
-                    "error"
-                ],
-                "no-console": [
-                    "error",
-                    {
-                        "allow": [
-                            "warn",
-                            "error"
-                        ]
-                    }
-                ],
-                "@typescript-eslint/member-ordering": [
-                    "error",
-                    {
-                        "default": [
-                            "public-static-field",
-                            "protected-static-field",
-                            "private-static-field",
-                            "public-static-method",
-                            "protected-static-method",
-                            "private-static-method",
-                            "public-abstract-field",
-                            "protected-abstract-field",
-                            "public-instance-field",
-                            "protected-instance-field",
-                            "private-instance-field",
-                            "constructor",
-                            "public-abstract-method",
-                            "protected-abstract-method",
-                            [
-                                "get",
-                                "set"
-                            ],
-                            "public-instance-method",
-                            "protected-instance-method",
-                            "private-instance-method"
-                        ]
-                    }
-                ],
-                "max-len": [
-                    "error",
-                    {
-                        "code": 160
-                    }
-                ],
-                "@typescript-eslint/no-inferrable-types": [
-                    "error",
-                    {
-                        "ignoreParameters": true
-                    }
-                ],
-                "@ngrx/prefix-selectors-with-select": "off",
-                "@typescript-eslint/naming-convention": [
-                    "error",
-                    {
-                        "selector": "variable",
-                        "modifiers": [
-                            "const",
-                            "exported"
-                        ],
-                        "format": [
-                            "UPPER_CASE"
-                        ]
-                    }
-                ]
-            }
-        },
-        {
-            "files": [
-                "*.html"
-            ],
-            "extends": [
-                "plugin:@angular-eslint/template/recommended"
-            ],
-            "rules": {}
-        }
-    ]
+            "format": [
+              "UPPER_CASE"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+      "rules": {}
+    }
+  ]
 }

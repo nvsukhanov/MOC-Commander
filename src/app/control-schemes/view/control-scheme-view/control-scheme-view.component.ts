@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy, TemplateRef, ViewChild }
 import { bufferCount, combineLatest, map, Observable, of, Subscription, switchMap } from 'rxjs';
 import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlScheme, HUB_PORT_TASKS_SELECTORS, ROUTER_SELECTORS, } from '../../../store';
 import { Store } from '@ngrx/store';
-import { LetModule, PushModule } from '@ngrx/component';
+import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { MatCardModule } from '@angular/material/card';
@@ -20,12 +20,12 @@ import { RoutesBuilderService } from '../../../routing';
     templateUrl: './control-scheme-view.component.html',
     styleUrls: [ './control-scheme-view.component.scss' ],
     imports: [
-        PushModule,
+        PushPipe,
         TranslocoModule,
         NgIf,
         MatCardModule,
         MatButtonModule,
-        LetModule,
+        LetDirective,
         NgSwitch,
         NgSwitchCase,
         MatIconModule,

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
-import { LetModule, PushModule } from '@ngrx/component';
+import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
@@ -18,10 +18,10 @@ import { RoutesBuilderService } from '../../routing';
     templateUrl: './control-scheme-list.component.html',
     styleUrls: [ './control-scheme-list.component.scss' ],
     imports: [
-        LetModule,
+        LetDirective,
         NgForOf,
         NgIf,
-        PushModule,
+        PushPipe,
         TranslocoModule,
         ControlSchemeListItemComponent,
         MatButtonModule,

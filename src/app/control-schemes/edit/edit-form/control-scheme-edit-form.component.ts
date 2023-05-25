@@ -4,7 +4,7 @@ import { CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS, ControlScheme, GAMEPAD_AC
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { JsonPipe, NgForOf, NgIf } from '@angular/common';
-import { PushModule } from '@ngrx/component';
+import { PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { of, Subject, take, takeUntil } from 'rxjs';
@@ -32,7 +32,7 @@ export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
         MatCardModule,
         MatButtonModule,
         NgIf,
-        PushModule,
+        PushPipe,
         TranslocoModule,
         NgForOf,
         JsonPipe,

@@ -4,7 +4,7 @@ import { HUB_ATTACHED_IOS_ACTIONS, HUBS_ACTIONS } from '../actions';
 
 export const HUB_ATTACHED_IOS_REDUCERS = createReducer(
     HUB_ATTACHED_IOS_ENTITY_ADAPTER.getInitialState(),
-    on(HUB_ATTACHED_IOS_ACTIONS.registerio, (state, data) => HUB_ATTACHED_IOS_ENTITY_ADAPTER.addOne({
+    on(HUB_ATTACHED_IOS_ACTIONS.registerIO, (state, data) => HUB_ATTACHED_IOS_ENTITY_ADAPTER.addOne({
             hubId: data.hubId,
             portId: data.portId,
             ioType: data.ioType,
@@ -13,7 +13,7 @@ export const HUB_ATTACHED_IOS_REDUCERS = createReducer(
         },
         state
     )),
-    on(HUB_ATTACHED_IOS_ACTIONS.unregisterio, (state, data) => HUB_ATTACHED_IOS_ENTITY_ADAPTER.removeOne(
+    on(HUB_ATTACHED_IOS_ACTIONS.unregisterIO, (state, data) => HUB_ATTACHED_IOS_ENTITY_ADAPTER.removeOne(
         hubAttachedIosIdFn(data.hubId, data.portId),
         state
     )),

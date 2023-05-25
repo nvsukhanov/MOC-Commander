@@ -13,7 +13,7 @@ import { Store } from '@ngrx/store';
 import { HUB_ATTACHED_IO_SELECTORS, SERVO_CALIBRATION_ACTIONS } from '../../../../store';
 import { Actions, ofType } from '@ngrx/effects';
 import { Observable, of, takeUntil } from 'rxjs';
-import { PushModule } from '@ngrx/component';
+import { PushPipe } from '@ngrx/component';
 
 @Component({
     standalone: true,
@@ -28,7 +28,7 @@ import { PushModule } from '@ngrx/component';
         MatSlideToggleModule,
         MatButtonModule,
         MatIconModule,
-        PushModule
+        PushPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

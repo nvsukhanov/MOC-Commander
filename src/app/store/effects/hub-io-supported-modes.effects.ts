@@ -10,7 +10,7 @@ import { HubStorageService } from '../hub-storage.service';
 export class HubIOSupportedModesEffects {
     public loadHubIOOutputModes$ = createEffect(() => {
         return this.actions$.pipe(
-            ofType(HUB_ATTACHED_IOS_ACTIONS.registerio),
+            ofType(HUB_ATTACHED_IOS_ACTIONS.registerIO),
             mergeMap((action) => {
                 return this.store.select(HUB_IO_SUPPORTED_MODES_SELECTORS.selectHubIOOutputModes(
                     action.hardwareRevision,
