@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostBinding, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { GAMEPAD_ACTIONS, GLOBAL_PROGRESS_BAR_SELECTORS } from '../../store';
 import { LetDirective, PushPipe } from '@ngrx/component';
@@ -6,7 +6,7 @@ import { RouterOutlet } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FeatureToolbarComponent, ScreenSizeObserverService } from '../../common';
-import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { NavMenuComponent } from '../nav-menu';
 
 @Component({
@@ -25,18 +25,34 @@ import { NavMenuComponent } from '../nav-menu';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LayoutComponent implements OnInit {
+export class LayoutComponent implements OnInit, OnDestroy {
     public readonly shouldShowProgressBar$ = this.store.select(GLOBAL_PROGRESS_BAR_SELECTORS.shouldShowProgressBar);
 
-    @HostBinding('class.isSmallScreen') public readonly isSmallScreen$: Observable<boolean> = this.screenSizeObserverService.isSmallScreen$;
+    private _isSmallScreen = false;
+
+    private sub?: Subscription;
 
     constructor(
         private readonly store: Store,
-        private readonly screenSizeObserverService: ScreenSizeObserverService
+        private readonly screenSizeObserverService: ScreenSizeObserverService,
+        private readonly cd: ChangeDetectorRef
     ) {
     }
 
+    @HostBinding('class.is-small-screen')
+    public get isSmallScreen(): boolean {
+        return this._isSmallScreen;
+    }
+
     public ngOnInit(): void {
+        this.sub = this.screenSizeObserverService.isSmallScreen$.subscribe((isSmallScreen) => {
+            this._isSmallScreen = isSmallScreen;
+            this.cd.markForCheck();
+        });
         this.store.dispatch(GAMEPAD_ACTIONS.listenGamepadConnected());
+    }
+
+    public ngOnDestroy(): void {
+        this.sub?.unsubscribe();
     }
 }
