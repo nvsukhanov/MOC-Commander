@@ -4,14 +4,28 @@
     height: 100%;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+
+    &.isSmallScreen {
+        flex-direction: column-reverse;
+    }
+
+    background-color: var(--background-color);
+    overflow: hidden;
 }
 
 .content {
-    margin-top: var(--main-toolbar-height);
+    &__toolbar-at-top {
+        margin-top: var(--main-toolbar-height);
+    }
+
+    max-width: 1280px;
+    width: calc(100% - 2 * var(--content-margin));
     flex-grow: 1;
     overflow: hidden;
-    width: 100%;
+    padding: var(--content-margin);
+    overflow-y: auto;
+    box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px rgba(0, 0, 0, 0.1411764706), 0 1px 18px rgba(0, 0, 0, 0.1215686275);
+    background-color: var(--content-background-color);
 }
 
 .progress-bar {

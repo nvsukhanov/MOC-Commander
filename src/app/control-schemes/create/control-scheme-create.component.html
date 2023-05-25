@@ -1,4 +1,6 @@
-<app-feature-toolbar [title]="'controlSchemeCreateToolbarTitle' | transloco">
+<app-control-scheme-edit-form #editForm></app-control-scheme-edit-form>
+
+<ng-template #controlsTemplate>
     <span class="spacer"></span>
     <button mat-stroked-button
             class="toolbar-button"
@@ -13,8 +15,4 @@
     >
         {{ 'cancelCreateScheme' | transloco }}
     </a>
-</app-feature-toolbar>
-
-<app-feature-content-container>
-    <app-control-scheme-edit-form #editForm></app-control-scheme-edit-form>
-</app-feature-content-container>
+</ng-template>

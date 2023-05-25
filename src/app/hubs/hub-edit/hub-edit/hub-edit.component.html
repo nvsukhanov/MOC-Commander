@@ -1,16 +1,10 @@
 <ng-container *ngIf="editedHubConfiguration$ | ngrxPush; let hubConfiguration; else hubNotFound">
-    <app-feature-toolbar [title]="'editHubToolbarTitle' | transloco: hubConfiguration"></app-feature-toolbar>
-    <app-feature-content-container>
-        <app-hub-edit-form [hubConfiguration]="hubConfiguration"
-                           [isSaving]="isSaving$ | ngrxPush"
-                           (save)="onSave($event)"
-        ></app-hub-edit-form>
-    </app-feature-content-container>
+    <app-hub-edit-form [hubConfiguration]="hubConfiguration"
+                       [isSaving]="isSaving$ | ngrxPush"
+                       (save)="onSave($event)"
+    ></app-hub-edit-form>
 </ng-container>
 
 <ng-template #hubNotFound>
-    <app-feature-toolbar [title]="'editHubNotFoundToolbarTitle' | transloco"></app-feature-toolbar>
-    <app-feature-content-container>
-        <app-hub-is-not-connected-notification></app-hub-is-not-connected-notification>
-    </app-feature-content-container>
+    <h3 class="hub-is-not-connected">{{ 'hubIsNotConnected' | transloco }}</h3>
 </ng-template>

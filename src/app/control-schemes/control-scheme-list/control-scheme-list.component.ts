@@ -1,7 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { LetModule, PushModule } from '@ngrx/component';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatListModule } from '@angular/material/list';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
@@ -11,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { ROUTE_PATHS } from '../../routes';
-import { FeatureContentContainerComponent, FeatureToolbarComponent } from '../../common';
+import { FeatureToolbarService } from '../../common';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
@@ -21,8 +19,6 @@ import { MatCardModule } from '@angular/material/card';
     styleUrls: [ './control-scheme-list.component.scss' ],
     imports: [
         LetModule,
-        MatExpansionModule,
-        MatListModule,
         NgForOf,
         NgIf,
         PushModule,
@@ -31,13 +27,11 @@ import { MatCardModule } from '@angular/material/card';
         MatButtonModule,
         MatIconModule,
         RouterLink,
-        FeatureToolbarComponent,
-        FeatureContentContainerComponent,
         MatCardModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ControlSchemeListComponent {
+export class ControlSchemeListComponent implements OnDestroy {
     public readonly controlSchemes$ = this.store.select(CONTROL_SCHEME_SELECTORS.selectSchemesList);
 
     public readonly canCreateScheme$ = this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.canAddBinding);
@@ -46,7 +40,21 @@ export class ControlSchemeListComponent {
 
     constructor(
         private readonly store: Store,
+        private readonly featureToolbarService: FeatureToolbarService,
     ) {
+    }
+
+    @ViewChild('controlsTemplate', { static: false, read: TemplateRef })
+    public set controlsTemplate(controls: TemplateRef<unknown> | null) {
+        if (controls) {
+            this.featureToolbarService.setControls(controls);
+        } else {
+            this.featureToolbarService.clearConfig();
+        }
+    }
+
+    public ngOnDestroy(): void {
+        this.featureToolbarService.clearConfig();
     }
 
     public trackSchemeById(index: number, scheme: ControlScheme): string {

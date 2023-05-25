@@ -5,9 +5,8 @@ import { HUB_EDIT_FORM_ACTIVE_SAVES_SELECTORS, HUBS_ACTIONS, HUBS_SELECTORS, ROU
 import { LetModule, PushModule } from '@ngrx/component';
 import { Observable, of, switchMap } from 'rxjs';
 import { NgIf } from '@angular/common';
-import { FeatureContentContainerComponent, FeatureToolbarComponent, NotFoundComponent } from '../../../common';
+import { NotFoundComponent } from '../../../common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { HubIsNotConnectedNotificationComponent } from '../../../common/hub-is-not-connected-notification';
 
 @Component({
     standalone: true,
@@ -21,9 +20,6 @@ import { HubIsNotConnectedNotificationComponent } from '../../../common/hub-is-n
         NgIf,
         NotFoundComponent,
         TranslocoModule,
-        FeatureToolbarComponent,
-        FeatureContentContainerComponent,
-        HubIsNotConnectedNotificationComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -1,14 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgIf } from '@angular/common';
 import { PushModule } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { BindingFormResult, ControlSchemeEditFormComponent } from '../edit';
 import { Store } from '@ngrx/store';
 import { CONTROL_SCHEME_ACTIONS } from '../../store';
-import { FeatureContentContainerComponent, FeatureToolbarComponent } from '../../common';
+import { FeatureToolbarService } from '../../common';
 import { RouterLink } from '@angular/router';
 import { ROUTE_PATHS } from '../../routes';
 
@@ -20,23 +19,34 @@ import { ROUTE_PATHS } from '../../routes';
     imports: [
         MatButtonModule,
         MatIconModule,
-        MatToolbarModule,
         NgIf,
         PushModule,
         TranslocoModule,
         ControlSchemeEditFormComponent,
-        FeatureToolbarComponent,
-        FeatureContentContainerComponent,
         RouterLink
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ControlSchemeCreateComponent {
+export class ControlSchemeCreateComponent implements OnDestroy {
     public readonly cancelRoute = ROUTE_PATHS.controlSchemeList;
 
     constructor(
         private readonly store: Store,
+        private readonly featureToolbarService: FeatureToolbarService,
     ) {
+    }
+
+    @ViewChild('controlsTemplate', { static: false, read: TemplateRef })
+    public set controlsTemplate(controls: TemplateRef<unknown> | null) {
+        if (controls) {
+            this.featureToolbarService.setControls(controls);
+        } else {
+            this.featureToolbarService.clearConfig();
+        }
+    }
+
+    public ngOnDestroy(): void {
+        this.featureToolbarService.clearConfig();
     }
 
     public onSave(formResult: BindingFormResult): void {

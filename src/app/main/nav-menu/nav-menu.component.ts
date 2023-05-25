@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgIf } from '@angular/common';
@@ -52,6 +52,8 @@ export class NavMenuComponent {
     public readonly isDiscoveryBusy$ = this.store.select(HUB_DISCOVERY_STATE_SELECTORS.isDiscoveryBusy);
 
     public readonly routePaths = ROUTE_PATHS;
+
+    @Input() public compact = false;
 
     constructor(
         private readonly store: Store
