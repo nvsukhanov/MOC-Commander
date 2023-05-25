@@ -8,7 +8,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { HUB_TYPE_TO_L10N_MAPPING } from '../../../i18n';
 import { RouterLink } from '@angular/router';
 import { EllipsisTitleDirective } from '../../../common';
-import { ROUTE_PATHS } from '../../../routes';
+import { RoutesBuilderService } from '../../../routing';
 
 @Component({
     standalone: true,
@@ -27,13 +27,32 @@ import { ROUTE_PATHS } from '../../../routes';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HubPropertiesViewComponent {
-    @Input() public configuration: HubConfiguration | undefined;
-
     @Output() public readonly disconnect = new EventEmitter<void>();
 
     public readonly hubTypeL10nMap = HUB_TYPE_TO_L10N_MAPPING;
 
-    public readonly hubEditSubroute = ROUTE_PATHS.hubEditSubroute;
+    private _hubEditRoute: string[] = [];
+
+    private _configuration: HubConfiguration | undefined;
+
+    constructor(
+        private readonly routesBuilderService: RoutesBuilderService,
+    ) {
+    }
+
+    @Input()
+    public set configuration(value: HubConfiguration | undefined) {
+        this._configuration = value;
+        this._hubEditRoute = value === undefined ? [] : this.routesBuilderService.hubEdit(value.hubId);
+    }
+
+    public get configuration(): HubConfiguration | undefined {
+        return this._configuration;
+    }
+
+    public get hubEditRoute(): string[] {
+        return this._hubEditRoute;
+    }
 
     public onDisconnect(): void {
         this.disconnect.emit();

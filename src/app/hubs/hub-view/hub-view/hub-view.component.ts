@@ -12,7 +12,7 @@ import { HubPropertiesViewComponent } from '../hub-properties-view';
 import { HubPortViewComponent } from '../hub-port-view';
 import { NotFoundComponent } from '../../../common';
 import { Router } from '@angular/router';
-import { ROUTE_PATHS } from '../../../routes';
+import { RoutesBuilderService } from '../../../routing';
 
 @Component({
     standalone: true,
@@ -44,7 +44,8 @@ export class HubViewComponent {
 
     constructor(
         private readonly store: Store,
-        private readonly router: Router
+        private readonly router: Router,
+        private readonly routesBuilderService: RoutesBuilderService
     ) {
     }
 
@@ -57,10 +58,13 @@ export class HubViewComponent {
             }
             this.store.dispatch(HUBS_ACTIONS.userRequestedHubDisconnection({ hubId: id }));
         });
-        this.router.navigate([ ROUTE_PATHS.hubList ]);
+        this.router.navigate(this.routesBuilderService.hubsList);
     }
 
-    public hubIoTrackByFn(index: number, item: AttachedIO): string {
+    public hubIoTrackByFn(
+        index: number,
+        item: AttachedIO
+    ): string {
         return `${item.portId}/${item.ioType}`;
     }
 }

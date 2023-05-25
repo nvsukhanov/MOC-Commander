@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlScheme, ROUTER_SELECTORS } from '../../store';
-import { Observable, of, Subscription, switchMap } from 'rxjs';
+import { map, Observable, of, Subscription, switchMap } from 'rxjs';
 import { BindingFormResult, ControlSchemeEditFormComponent } from './edit-form';
 import { TranslocoModule } from '@ngneat/transloco';
 import { JsonPipe, NgIf } from '@angular/common';
@@ -9,6 +9,7 @@ import { PushModule } from '@ngrx/component';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { FeatureToolbarService } from '../../common';
+import { RoutesBuilderService } from '../../routing';
 
 @Component({
     standalone: true,
@@ -35,11 +36,16 @@ export class ControlSchemeEditComponent implements OnDestroy {
         switchMap((i) => i === null ? of(false) : this.store.select(CONTROL_SCHEME_SELECTORS.isSchemeRunning(i)))
     );
 
+    public readonly cancelViewUrl$: Observable<string[]> = this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeId).pipe(
+        map((i) => i !== null ? this.routesBuilderService.controlSchemeView(i) : [])
+    );
+
     private sub?: Subscription;
 
     constructor(
         private readonly store: Store,
         private readonly featureToolbarService: FeatureToolbarService,
+        private readonly routesBuilderService: RoutesBuilderService
     ) {
     }
 

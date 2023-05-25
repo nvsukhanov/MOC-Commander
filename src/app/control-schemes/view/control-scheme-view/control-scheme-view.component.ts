@@ -11,8 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { ControlSchemeViewIoListComponent } from '../control-scheme-view-io-list';
 import { EllipsisTitleDirective, FeatureToolbarService } from '../../../common';
 import { RouterLink } from '@angular/router';
-import { ROUTE_PATHS } from '../../../routes';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { RoutesBuilderService } from '../../../routing';
 
 @Component({
     standalone: true,
@@ -37,8 +37,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeViewComponent implements OnDestroy {
-    public readonly schemeEditSubroute = ROUTE_PATHS.controlSchemeEditSubroute;
-
     public readonly selectedScheme$: Observable<ControlScheme | undefined> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
         switchMap((id) => id === null ? of(undefined) : this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(id))),
     );
@@ -47,6 +45,10 @@ export class ControlSchemeViewComponent implements OnDestroy {
         switchMap((id) => id === null
                           ? of(false)
                           : this.store.select(CONTROL_SCHEME_SELECTORS.canRunScheme(id))),
+    );
+
+    public readonly editSchemeRoute$ = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
+        map((id) => id === null ? [] : this.routesBuilderService.controlSchemeEdit(id)),
     );
 
     public readonly isCurrentControlSchemeRunning$ = this.store.select(CONTROL_SCHEME_SELECTORS.isCurrentControlSchemeRunning);
@@ -101,6 +103,7 @@ export class ControlSchemeViewComponent implements OnDestroy {
         private readonly store: Store,
         private readonly featureToolbarService: FeatureToolbarService,
         private readonly translocoService: TranslocoService,
+        private readonly routesBuilderService: RoutesBuilderService
     ) {
     }
 

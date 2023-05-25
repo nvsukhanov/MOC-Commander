@@ -6,7 +6,7 @@ import { NgIf } from '@angular/common';
 import { MatLineModule } from '@angular/material/core';
 import { RouterLink } from '@angular/router';
 import { EllipsisTitleDirective } from '../../../common';
-import { ROUTE_PATHS } from '../../../routes';
+import { RoutesBuilderService } from '../../../routing';
 
 @Component({
     standalone: true,
@@ -38,6 +38,11 @@ export class HubsListItemComponent {
     @Output() public readonly disconnect = new EventEmitter<void>();
 
     private _hubViewHref: string[] = [];
+
+    constructor(
+        private routesBuilderService: RoutesBuilderService,
+    ) {
+    }
 
     public get batteryLevelIcon(): string {
         if (this.batteryLevel === null) {
@@ -86,7 +91,12 @@ export class HubsListItemComponent {
 
     @Input()
     public set hubId(value: string | undefined) {
-        this._hubViewHref = value ? [ '..', ROUTE_PATHS.hub, value ] : [];
+        if (value === undefined) {
+            this._hubViewHref = [];
+            return;
+        } else {
+            this._hubViewHref = this.routesBuilderService.hubView(value);
+        }
     }
 
     public get hubViewHref(): string[] {

@@ -14,11 +14,11 @@ import {
 } from '../../store';
 import { Store } from '@ngrx/store';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ROUTE_PATHS } from '../../routes';
 import { EllipsisTitleDirective } from '../../common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RoutesBuilderService } from '../../routing';
 
 @Component({
     standalone: true,
@@ -51,12 +51,11 @@ export class NavMenuComponent {
 
     public readonly isDiscoveryBusy$ = this.store.select(HUB_DISCOVERY_STATE_SELECTORS.isDiscoveryBusy);
 
-    public readonly routePaths = ROUTE_PATHS;
-
     @Input() public compact = false;
 
     constructor(
-        private readonly store: Store
+        private readonly store: Store,
+        public readonly routesBuilderService: RoutesBuilderService
     ) {
     }
 

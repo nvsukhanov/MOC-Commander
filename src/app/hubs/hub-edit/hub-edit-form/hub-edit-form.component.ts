@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslocoModule } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { ROUTE_PATHS } from '../../../routes';
+import { RoutesBuilderService } from '../../../routing';
 
 export type HubEditFormSaveResult = {
     hubId: string;
@@ -50,6 +50,7 @@ export class HubEditFormComponent {
     private readonly maxHubNameLength = 14;
 
     constructor(
+        private routesBuilderService: RoutesBuilderService,
         formBuilder: FormBuilder
     ) {
         this.form = formBuilder.group({
@@ -69,7 +70,7 @@ export class HubEditFormComponent {
             if (this._hubConfiguration?.name !== v.name) {
                 this.form.patchValue(v);
                 this.form.controls.name.markAsPristine();
-                this._viewPath = [ '', ROUTE_PATHS.hub, v.hubId ];
+                this._viewPath = this.routesBuilderService.hubView(v.hubId);
             }
         } else {
             this.form.reset();

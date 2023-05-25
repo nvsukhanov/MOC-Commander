@@ -21,7 +21,7 @@
 <ng-template #controlsTemplate>
     <span class="spacer"></span>
     <a mat-raised-button
-       [routerLink]="createSchemeRoute"
+       [routerLink]="routesBuilderService.controlSchemesCreate"
        [disabled]="!(canCreateScheme$ | ngrxPush)">
         {{ 'createScheme' | transloco }}
     </a>

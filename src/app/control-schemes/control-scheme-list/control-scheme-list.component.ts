@@ -8,9 +8,9 @@ import { ControlSchemeListItemComponent } from '../control-scheme-list-item';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { ROUTE_PATHS } from '../../routes';
 import { FeatureToolbarService } from '../../common';
 import { MatCardModule } from '@angular/material/card';
+import { RoutesBuilderService } from '../../routing';
 
 @Component({
     standalone: true,
@@ -36,11 +36,10 @@ export class ControlSchemeListComponent implements OnDestroy {
 
     public readonly canCreateScheme$ = this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.canAddBinding);
 
-    public readonly createSchemeRoute = [ '..', ROUTE_PATHS.controlScheme, ROUTE_PATHS.controlSchemeCreateSubroute ];
-
     constructor(
         private readonly store: Store,
         private readonly featureToolbarService: FeatureToolbarService,
+        protected readonly routesBuilderService: RoutesBuilderService
     ) {
     }
 

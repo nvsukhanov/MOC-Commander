@@ -5,21 +5,21 @@ import { filter, map, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { CONTROL_SCHEME_RUNNING_STATE_SELECTORS, CONTROL_SCHEME_SELECTORS } from '../selectors';
 import { Store } from '@ngrx/store';
-import { ROUTE_PATHS } from '../../routes';
+import { RoutesBuilderService } from '../../routing';
 
 @Injectable()
 export class ControlSchemeEffects {
     public readonly schemeCreated$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(CONTROL_SCHEME_ACTIONS.create),
-            tap((data) => this.router.navigate([ ROUTE_PATHS.controlScheme, data.id ])),
+            tap((data) => this.router.navigate(this.routesBuilderService.controlSchemeView(data.id))),
         );
     }, { dispatch: false });
 
     public readonly schemeUpdated$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(CONTROL_SCHEME_ACTIONS.update),
-            tap((data) => this.router.navigate([ ROUTE_PATHS.controlScheme, data.id ])),
+            tap((data) => this.router.navigate(this.routesBuilderService.controlSchemeView(data.id))),
         );
     }, { dispatch: false });
 
@@ -57,6 +57,7 @@ export class ControlSchemeEffects {
         private readonly actions$: Actions,
         private readonly router: Router,
         private readonly store: Store,
+        private readonly routesBuilderService: RoutesBuilderService
     ) {
     }
 }

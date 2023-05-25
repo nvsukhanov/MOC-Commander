@@ -9,7 +9,7 @@ import { Store } from '@ngrx/store';
 import { CONTROL_SCHEME_ACTIONS } from '../../store';
 import { FeatureToolbarService } from '../../common';
 import { RouterLink } from '@angular/router';
-import { ROUTE_PATHS } from '../../routes';
+import { RoutesBuilderService } from '../../routing';
 
 @Component({
     standalone: true,
@@ -28,11 +28,10 @@ import { ROUTE_PATHS } from '../../routes';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeCreateComponent implements OnDestroy {
-    public readonly cancelRoute = ROUTE_PATHS.controlSchemeList;
-
     constructor(
         private readonly store: Store,
         private readonly featureToolbarService: FeatureToolbarService,
+        protected readonly routesBuilderService: RoutesBuilderService
     ) {
     }
 

@@ -5,7 +5,7 @@
     ></app-control-scheme-edit-form>
 
     <ng-template #controlsTemplate>
-        <ng-container *ngIf="currentlyEditedScheme$ | ngrxPush">
+        <ng-container *ngIf="currentlyEditedScheme$ | ngrxPush; let scheme">
             <button mat-stroked-button
                     class="toolbar-button"
                     [disabled]="!form.isValid || !!(isSchemeRunning$ | ngrxPush)"
@@ -14,7 +14,7 @@
             </button>
             <a mat-stroked-button
                class="toolbar-button"
-               [routerLink]="['..']"
+               [routerLink]="cancelViewUrl$ | ngrxPush"
                [disabled]="!!(isSchemeRunning$ | ngrxPush)"
             >
                 {{ 'cancelEditScheme' | transloco }}
