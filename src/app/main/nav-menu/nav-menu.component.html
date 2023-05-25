@@ -1,6 +1,10 @@
 <mat-toolbar color="primary"
-             class="toolbar">
-    <nav class="nav">
+             class="toolbar"
+             [class.toolbar__compact]="compact"
+>
+    <nav *ngIf="!compact; else compactNav"
+         class="nav"
+    >
         <span class="title">
             {{ 'appTitle' | transloco }}
         </span>
@@ -21,6 +25,7 @@
                         ({{ count }})
                     </span>
                 </a>
+
                 <a mat-button
                    [routerLink]="routePaths.hubList"
                    [routerLinkActive]="'active-link'"
@@ -35,6 +40,7 @@
                         ({{ count }})
                     </span>
                 </a>
+
                 <a mat-button
                    [routerLink]="routePaths.controlSchemeList"
                    [routerLinkActive]="'active-link'"
@@ -86,7 +92,6 @@
                [routerLink]="routePaths.about"
                [routerLinkActive]="'active-link'"
                [title]="'aboutPageButton' | transloco"
-               appEllipsisTitle
             >
                 <mat-icon>
                     info
@@ -94,5 +99,107 @@
             </a>
         </span>
     </nav>
-
 </mat-toolbar>
+
+<ng-template #compactNav>
+    <nav class="nav nav__compact">
+        <a mat-icon-button
+           [routerLink]="routePaths.controllerList"
+           [routerLinkActive]="'active-link'"
+           [title]="'controllersList' | transloco"
+        >
+            <mat-icon>
+                gamepad
+            </mat-icon>
+        </a>
+
+        <a mat-icon-button
+           [routerLink]="routePaths.hubList"
+           [routerLinkActive]="'active-link'"
+           [title]="'hubsList' | transloco"
+        >
+            <mat-icon>
+                memory
+            </mat-icon>
+        </a>
+
+        <a mat-icon-button
+           [routerLink]="routePaths.controlSchemeList"
+           [routerLinkActive]="'active-link'"
+           [title]="'controlSchemesList' | transloco"
+        >
+            <mat-icon>
+                display_settings
+            </mat-icon>
+        </a>
+
+        <ng-container *ngIf="isBluetoothAvailable | ngrxPush; else bluetoothUnavailable">
+            <button mat-fab
+                    color="accent"
+                    [title]="'discoverHub' | transloco"
+                    (click)="startDiscovery()"
+                    [disabled]="isDiscoveryBusy$ | ngrxPush"
+            >
+                <mat-icon>
+                    bluetooth_searching
+                </mat-icon>
+            </button>
+        </ng-container>
+
+        <ng-template #bluetoothUnavailable>
+            <a mat-fab
+               color="warn"
+               [routerLink]="routePaths.bluetoothUnavailable"
+               [title]="'bluetoothUnavailableToolbarTitle' | transloco"
+               appEllipsisTitle
+            >
+                <mat-icon>
+                    bluetooth_disabled
+                </mat-icon>
+            </a>
+        </ng-template>
+
+        <a mat-icon-button
+           [routerLink]="routePaths.about"
+           [routerLinkActive]="'active-link'"
+           [title]="'aboutPageButton' | transloco"
+        >
+            <mat-icon>
+                info
+            </mat-icon>
+        </a>
+    </nav>
+</ng-template>
+
+<ng-template #compactControllersButton>
+    <a mat-icon-button
+       [routerLink]="routePaths.controllerList"
+       [routerLinkActive]="'active-link'"
+    >
+        <mat-icon>
+            gamepad
+        </mat-icon>
+    </a>
+</ng-template>
+
+<ng-template #compactHubsButton>
+    <a mat-icon-button
+       [routerLink]="routePaths.hubList"
+       [routerLinkActive]="'active-link'"
+    >
+        <mat-icon>
+            memory
+        </mat-icon>
+    </a>
+</ng-template>
+
+<ng-template #compactControlSchemesButton>
+    <a mat-icon-button
+       [routerLink]="routePaths.controlSchemeList"
+       [routerLinkActive]="'active-link'"
+    >
+        <mat-icon>
+            display_settings
+        </mat-icon>
+    </a>
+</ng-template>

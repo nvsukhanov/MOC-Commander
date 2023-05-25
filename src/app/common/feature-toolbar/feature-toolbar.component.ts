@@ -1,6 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, TemplateRef } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslocoModule } from '@ngneat/transloco';
+import { Observable } from 'rxjs';
+import { FeatureToolbarService } from './feature-toolbar-service';
+import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { LetModule, PushModule } from '@ngrx/component';
 
 @Component({
     standalone: true,
@@ -9,10 +13,19 @@ import { TranslocoModule } from '@ngneat/transloco';
     styleUrls: [ './feature-toolbar.component.scss' ],
     imports: [
         MatToolbarModule,
-        TranslocoModule
+        TranslocoModule,
+        NgIf,
+        NgTemplateOutlet,
+        LetModule,
+        PushModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FeatureToolbarComponent {
-    @Input() public title = '';
+    public readonly controlsTemplate$: Observable<TemplateRef<unknown> | null> = this.featureToolbarService.controlsTemplate$;
+
+    constructor(
+        private readonly featureToolbarService: FeatureToolbarService,
+    ) {
+    }
 }

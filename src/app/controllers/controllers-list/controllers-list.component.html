@@ -1,6 +1,4 @@
-<app-feature-toolbar [title]="'controllersList' | transloco"></app-feature-toolbar>
-
-<app-feature-content-container *ngrxLet="connectedControllers$ as connectedControllers">
+<ng-container *ngrxLet="connectedControllers$ as connectedControllers">
     <ng-container *ngIf="connectedControllers.length; else noConnectedControllers">
         <p class="detect-controller-notification-tips">{{ 'detectControllerTip' | transloco }}</p>
         <mat-accordion>
@@ -20,4 +18,4 @@
         <h3 class="no-controller-connected-notification-header">{{ 'noControllerConnected' | transloco }}</h3>
         <p class="detect-controller-notification-tips">{{ 'detectControllerTip' | transloco }}</p>
     </ng-template>
-</app-feature-content-container>
+</ng-container>

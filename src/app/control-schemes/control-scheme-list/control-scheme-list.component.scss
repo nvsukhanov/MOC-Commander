@@ -1,6 +1,7 @@
 :host {
     display: flex;
     height: 100%;
+    flex-direction: column;
 }
 
 .control-scheme-card + .control-scheme-card {

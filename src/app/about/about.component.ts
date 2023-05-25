@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FeatureContentContainerComponent, FeatureToolbarComponent } from '../common';
 import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
@@ -8,9 +7,7 @@ import { TranslocoModule } from '@ngneat/transloco';
     templateUrl: './about.component.html',
     styleUrls: [ './about.component.scss' ],
     imports: [
-        FeatureToolbarComponent,
         TranslocoModule,
-        FeatureContentContainerComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

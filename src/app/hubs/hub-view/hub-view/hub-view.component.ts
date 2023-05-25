@@ -4,16 +4,13 @@ import { AttachedIO, HUB_ATTACHED_IO_SELECTORS, HubConfiguration, HUBS_ACTIONS, 
 import { Store } from '@ngrx/store';
 import { LetModule, PushModule } from '@ngrx/component';
 import { EMPTY, Observable, switchMap, take } from 'rxjs';
-import { JsonPipe, NgForOf, NgIf } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
+import { NgForOf, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
 import { TranslocoModule } from '@ngneat/transloco';
 import { HubPropertiesViewComponent } from '../hub-properties-view';
 import { HubPortViewComponent } from '../hub-port-view';
-import { FeatureContentContainerComponent, FeatureToolbarComponent, NotFoundComponent } from '../../../common';
-import { HubIsNotConnectedNotificationComponent } from '../../../common/hub-is-not-connected-notification';
+import { NotFoundComponent } from '../../../common';
 import { Router } from '@angular/router';
 import { ROUTE_PATHS } from '../../../routes';
 
@@ -24,21 +21,15 @@ import { ROUTE_PATHS } from '../../../routes';
     styleUrls: [ './hub-view.component.scss' ],
     imports: [
         PushModule,
-        JsonPipe,
-        MatCardModule,
         LetModule,
         MatButtonModule,
         NgIf,
         NgForOf,
-        MatGridListModule,
         MatDividerModule,
         TranslocoModule,
         HubPropertiesViewComponent,
         HubPortViewComponent,
         NotFoundComponent,
-        FeatureToolbarComponent,
-        FeatureContentContainerComponent,
-        HubIsNotConnectedNotificationComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -1,69 +1,63 @@
 <ng-container *ngIf="selectedScheme$ | ngrxPush; let scheme; else schemeNotFound">
-    <app-feature-toolbar *ngrxLet="canRunScheme$; let canRunScheme"
-                         [title]="'viewSchemeToolbarTitle' | transloco: scheme"
-    >
-        <span class="spacer"></span>
-        <mat-icon *ngIf="composeValidationErrorMessage$ | ngrxPush; let validationMessage"
-                  [title]="validationMessage"
-                  [color]="'accent'"
-        >
-            report
-        </mat-icon>
+    <ng-template #controlsTemplate>
+        <ng-container *ngrxLet="canRunScheme$; let canRunScheme">
+            <span class="spacer"></span>
+            <mat-icon *ngIf="composeValidationErrorMessage$ | ngrxPush; let validationMessage"
+                      [title]="validationMessage"
+                      [color]="'accent'"
+            >
+                report
+            </mat-icon>
 
-        <button mat-stroked-button
-                class="toolbar-button"
-                [disabled]="!canRunScheme"
-                (click)="runScheme(scheme.id)"
-        >
-            {{ 'runScheme' | transloco }}
-        </button>
+            <button mat-stroked-button
+                    class="toolbar-button"
+                    [disabled]="!canRunScheme"
+                    (click)="runScheme(scheme.id)"
+            >
+                {{ 'runScheme' | transloco }}
+            </button>
 
-        <button mat-stroked-button
-                class="toolbar-button"
-                [disabled]="!(isCurrentControlSchemeRunning$ | ngrxPush)"
-                (click)="stopRunningScheme()"
-        >
-            {{ 'stopScheme' | transloco }}
-        </button>
+            <button mat-stroked-button
+                    class="toolbar-button"
+                    [disabled]="!(isCurrentControlSchemeRunning$ | ngrxPush)"
+                    (click)="stopRunningScheme()"
+            >
+                {{ 'stopScheme' | transloco }}
+            </button>
 
-        <a *ngIf="!(isCurrentControlSchemeRunning$ | ngrxPush)"
-           mat-stroked-button
-           class="toolbar-button"
-           [routerLink]="schemeEditSubroute"
-        >
-            {{ 'editScheme' | transloco }}
-        </a>
-    </app-feature-toolbar>
+            <a *ngIf="!(isCurrentControlSchemeRunning$ | ngrxPush)"
+               mat-stroked-button
+               class="toolbar-button"
+               [routerLink]="schemeEditSubroute"
+            >
+                {{ 'editScheme' | transloco }}
+            </a>
+        </ng-container>
+    </ng-template>
 
-    <app-feature-content-container>
-        <mat-accordion *ngIf="isCurrentControlSchemeRunning$ | ngrxPush">
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        {{ 'currentSchemeIsRunning' | transloco }}
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        {{ 'currentRunningSchemeTasksQueueDetails' | transloco }}
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-                <p>{{ 'schemeTaskQueueCurrentLength' | transloco }} {{ queueLength$ | ngrxPush }}</p>
-                <p>{{ 'schemeTaskMaximumEncounteredQueueLength' | transloco }} {{ maxQueueLength$ | ngrxPush }}</p>
-                <p>{{ 'totalTasksExecuted' | transloco }} {{ totalTasksExecuted$ | ngrxPush }}</p>
-                <p>{{ 'lastTenTasksAverageExecutionTime' | transloco }}{{ lastTenTaskAverageExecutionTime$ | ngrxPush }}</p>
-            </mat-expansion-panel>
-        </mat-accordion>
+    <mat-accordion *ngIf="isCurrentControlSchemeRunning$ | ngrxPush">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{ 'currentSchemeIsRunning' | transloco }}
+                </mat-panel-title>
+                <mat-panel-description>
+                    {{ 'currentRunningSchemeTasksQueueDetails' | transloco }}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>{{ 'schemeTaskQueueCurrentLength' | transloco }} {{ queueLength$ | ngrxPush }}</p>
+            <p>{{ 'schemeTaskMaximumEncounteredQueueLength' | transloco }} {{ maxQueueLength$ | ngrxPush }}</p>
+            <p>{{ 'totalTasksExecuted' | transloco }} {{ totalTasksExecuted$ | ngrxPush }}</p>
+            <p>{{ 'lastTenTasksAverageExecutionTime' | transloco }}{{ lastTenTaskAverageExecutionTime$ | ngrxPush }}</p>
+        </mat-expansion-panel>
+    </mat-accordion>
 
-        <section class="IOs">
-            <app-control-scheme-view-io-list [bindingsWithLatestExecutedTasks]="bindingsWithLatestExecutedTasks$ | ngrxPush"
-            ></app-control-scheme-view-io-list>
-        </section>
-    </app-feature-content-container>
+    <section class="IOs">
+        <app-control-scheme-view-io-list [bindingsWithLatestExecutedTasks]="bindingsWithLatestExecutedTasks$ | ngrxPush"
+        ></app-control-scheme-view-io-list>
+    </section>
 </ng-container>
 
 <ng-template #schemeNotFound>
-    <app-feature-toolbar [title]="'viewSchemeNotFoundToolbarTitle' | transloco"></app-feature-toolbar>
-
-    <app-feature-content-container>
-        <h3 class="scheme-is-not-found">{{ 'schemeIsNotFound' | transloco }}</h3>
-    </app-feature-content-container>
+    <h3 class="scheme-is-not-found">{{ 'schemeIsNotFound' | transloco }}</h3>
 </ng-template>

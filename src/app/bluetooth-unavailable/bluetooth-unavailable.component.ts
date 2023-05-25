@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FeatureContentContainerComponent, FeatureToolbarComponent } from '../common';
 import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
@@ -8,13 +7,10 @@ import { TranslocoModule } from '@ngneat/transloco';
     templateUrl: './bluetooth-unavailable.component.html',
     styleUrls: [ './bluetooth-unavailable.component.scss' ],
     imports: [
-        FeatureToolbarComponent,
-        FeatureContentContainerComponent,
-        TranslocoModule
+        TranslocoModule,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BluetoothUnavailableComponent {
     public readonly canIUseBluetoothLink = 'https://caniuse.com/web-bluetooth';
-
 }

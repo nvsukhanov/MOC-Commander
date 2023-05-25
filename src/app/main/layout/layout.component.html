@@ -4,8 +4,10 @@
                   color="accent"
 ></mat-progress-bar>
 
-<app-nav-menu></app-nav-menu>
+<app-nav-menu [compact]="!!(isSmallScreen$ | ngrxPush)"></app-nav-menu>
 
-<div class="content">
+<app-feature-toolbar></app-feature-toolbar>
+
+<main class="content">
     <router-outlet></router-outlet>
-</div>
+</main>

@@ -1,13 +1,4 @@
-<app-feature-toolbar [title]="'controlSchemesList' | transloco">
-    <span class="spacer"></span>
-    <a mat-raised-button
-       [routerLink]="createSchemeRoute"
-       [disabled]="!(canCreateScheme$ | ngrxPush)">
-        {{ 'createScheme' | transloco }}
-    </a>
-</app-feature-toolbar>
-
-<app-feature-content-container *ngrxLet="controlSchemes$; let controlSchemes">
+<ng-container *ngrxLet="controlSchemes$; let controlSchemes">
     <ng-container *ngIf="controlSchemes?.length; else noControlSchemes">
         <mat-card *ngFor="let scheme of controlSchemes; trackBy: trackSchemeById"
                   class="control-scheme-card"
@@ -25,4 +16,13 @@
             {{ 'noControlSchemes' | transloco}}
         </h3>
     </ng-template>
-</app-feature-content-container>
+</ng-container>
+
+<ng-template #controlsTemplate>
+    <span class="spacer"></span>
+    <a mat-raised-button
+       [routerLink]="createSchemeRoute"
+       [disabled]="!(canCreateScheme$ | ngrxPush)">
+        {{ 'createScheme' | transloco }}
+    </a>
+</ng-template>

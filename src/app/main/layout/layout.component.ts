@@ -1,19 +1,13 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { GAMEPAD_ACTIONS, GLOBAL_PROGRESS_BAR_SELECTORS } from '../../store';
 import { LetModule, PushModule } from '@ngrx/component';
-import { TranslocoModule } from '@ngneat/transloco';
-import { ControllersListComponent } from '../../controllers/controllers-list';
 import { RouterOutlet } from '@angular/router';
-import { HubsListComponent } from '../../hubs/hubs-list';
-import { ControlSchemeListComponent } from '../../control-schemes/control-scheme-list';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatBadgeModule } from '@angular/material/badge';
 import { NgIf } from '@angular/common';
-import { NavMenuComponent } from '../nav-menu/nav-menu.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { FeatureToolbarComponent, ScreenSizeObserverService } from '../../common';
+import { Observable } from 'rxjs';
+import { NavMenuComponent } from '../nav-menu';
 
 @Component({
     standalone: true,
@@ -23,26 +17,22 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     imports: [
         PushModule,
         LetModule,
-        TranslocoModule,
-        ControllersListComponent,
         RouterOutlet,
-        HubsListComponent,
-        ControlSchemeListComponent,
-        MatTabsModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatBadgeModule,
         NgIf,
-        NavMenuComponent,
         MatProgressBarModule,
+        FeatureToolbarComponent,
+        NavMenuComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent implements OnInit {
     public readonly shouldShowProgressBar$ = this.store.select(GLOBAL_PROGRESS_BAR_SELECTORS.shouldShowProgressBar);
 
+    @HostBinding('class.isSmallScreen') public readonly isSmallScreen$: Observable<boolean> = this.screenSizeObserverService.isSmallScreen$;
+
     constructor(
-        private readonly store: Store
+        private readonly store: Store,
+        private readonly screenSizeObserverService: ScreenSizeObserverService
     ) {
     }
 

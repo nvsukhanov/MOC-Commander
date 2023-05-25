@@ -1,19 +1,18 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { bufferCount, combineLatest, map, Observable, of, switchMap } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { bufferCount, combineLatest, map, Observable, of, Subscription, switchMap } from 'rxjs';
 import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlScheme, HUB_PORT_TASKS_SELECTORS, ROUTER_SELECTORS, } from '../../../store';
 import { Store } from '@ngrx/store';
 import { LetModule, PushModule } from '@ngrx/component';
-import { JsonPipe, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
+import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { ControlSchemeViewIoListComponent } from '../control-scheme-view-io-list';
-import { EllipsisTitleDirective, FeatureContentContainerComponent, FeatureToolbarComponent } from '../../../common';
+import { EllipsisTitleDirective, FeatureToolbarService } from '../../../common';
 import { RouterLink } from '@angular/router';
 import { ROUTE_PATHS } from '../../../routes';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
     standalone: true,
@@ -22,7 +21,6 @@ import { ROUTE_PATHS } from '../../../routes';
     styleUrls: [ './control-scheme-view.component.scss' ],
     imports: [
         PushModule,
-        JsonPipe,
         TranslocoModule,
         NgIf,
         MatCardModule,
@@ -30,18 +28,15 @@ import { ROUTE_PATHS } from '../../../routes';
         LetModule,
         NgSwitch,
         NgSwitchCase,
-        MatToolbarModule,
-        MatExpansionModule,
         MatIconModule,
         ControlSchemeViewIoListComponent,
         EllipsisTitleDirective,
         RouterLink,
-        FeatureToolbarComponent,
-        FeatureContentContainerComponent,
+        MatExpansionModule,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ControlSchemeViewComponent {
+export class ControlSchemeViewComponent implements OnDestroy {
     public readonly schemeEditSubroute = ROUTE_PATHS.controlSchemeEditSubroute;
 
     public readonly selectedScheme$: Observable<ControlScheme | undefined> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
@@ -100,10 +95,34 @@ export class ControlSchemeViewComponent {
         }),
     );
 
+    private sub?: Subscription;
+
     constructor(
         private readonly store: Store,
-        private readonly translocoService: TranslocoService
+        private readonly featureToolbarService: FeatureToolbarService,
+        private readonly translocoService: TranslocoService,
     ) {
+    }
+
+    @ViewChild('controlsTemplate', { static: false, read: TemplateRef })
+    public set controlsTemplate(controls: TemplateRef<unknown> | null) {
+        this.sub?.unsubscribe();
+        if (!controls) {
+            return;
+        }
+        this.sub = this.selectedScheme$.subscribe((scheme) => {
+            if (scheme) {
+                this.featureToolbarService.setControls(controls);
+            } else {
+                this.featureToolbarService.clearConfig();
+            }
+
+        });
+    }
+
+    public ngOnDestroy(): void {
+        this.sub?.unsubscribe();
+        this.featureToolbarService.clearConfig();
     }
 
     public runScheme(schemeId: string): void {

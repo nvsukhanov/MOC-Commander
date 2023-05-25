@@ -2,14 +2,14 @@
     display: block;
     width: 100%;
     box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 2;
 }
 
 .toolbar {
     height: var(--main-toolbar-height);
+
+    &__compact {
+        height: var(--main-toolbar-compact-height);
+    }
 }
 
 .title {
@@ -21,6 +21,13 @@
     width: 100%;
     display: grid;
     grid-template-columns: 200px 1fr 200px;
+
+    &__compact {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+    }
 }
 
 .main-nav {
@@ -49,10 +56,14 @@
     margin-left: 20px;
 }
 
+.discover-hub-button {
+    border: 4px solid #162256;
+}
+
 .counter {
     opacity: 0.5;
 }
 
 .active-link {
-    background: rgba(0, 0, 0, .2);
+    //background: rgba(0, 0, 0, .2);
 }

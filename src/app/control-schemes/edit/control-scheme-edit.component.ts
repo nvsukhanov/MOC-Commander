@@ -1,16 +1,14 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlScheme, ROUTER_SELECTORS } from '../../store';
-import { Observable, of, switchMap } from 'rxjs';
+import { Observable, of, Subscription, switchMap } from 'rxjs';
 import { BindingFormResult, ControlSchemeEditFormComponent } from './edit-form';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslocoModule } from '@ngneat/transloco';
 import { JsonPipe, NgIf } from '@angular/common';
 import { PushModule } from '@ngrx/component';
-import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
-import { FeatureContentContainerComponent, FeatureToolbarComponent } from '../../common';
+import { FeatureToolbarService } from '../../common';
 
 @Component({
     standalone: true,
@@ -19,20 +17,16 @@ import { FeatureContentContainerComponent, FeatureToolbarComponent } from '../..
     styleUrls: [ './control-scheme-edit.component.scss' ],
     imports: [
         ControlSchemeEditFormComponent,
-        MatToolbarModule,
         TranslocoModule,
         NgIf,
         PushModule,
-        MatCardModule,
         JsonPipe,
         MatButtonModule,
         RouterLink,
-        FeatureContentContainerComponent,
-        FeatureToolbarComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ControlSchemeEditComponent {
+export class ControlSchemeEditComponent implements OnDestroy {
     public readonly currentlyEditedScheme$: Observable<ControlScheme | undefined> = this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeId).pipe(
         switchMap((i) => i === null ? of(undefined) : this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(i)))
     );
@@ -41,10 +35,32 @@ export class ControlSchemeEditComponent {
         switchMap((i) => i === null ? of(false) : this.store.select(CONTROL_SCHEME_SELECTORS.isSchemeRunning(i)))
     );
 
-    constructor(
-        private readonly store: Store
-    ) {
+    private sub?: Subscription;
 
+    constructor(
+        private readonly store: Store,
+        private readonly featureToolbarService: FeatureToolbarService,
+    ) {
+    }
+
+    @ViewChild('controlsTemplate', { static: false, read: TemplateRef })
+    public set controlsTemplate(controls: TemplateRef<unknown> | null) {
+        this.sub?.unsubscribe();
+        if (!controls) {
+            return;
+        }
+        this.sub = this.currentlyEditedScheme$.subscribe((scheme) => {
+            if (scheme) {
+                this.featureToolbarService.setControls(controls);
+            } else {
+                this.featureToolbarService.clearConfig();
+            }
+        });
+    }
+
+    public ngOnDestroy(): void {
+        this.sub?.unsubscribe();
+        this.featureToolbarService.clearConfig();
     }
 
     public onSave(data: BindingFormResult): void {
