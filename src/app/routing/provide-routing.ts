@@ -1,7 +1,7 @@
-import { provideRouter } from '@angular/router';
+import { provideRouter, withHashLocation } from '@angular/router';
 import { ROUTES } from './routes';
 import { EnvironmentProviders } from '@angular/core';
 
 export function provideRouting(): EnvironmentProviders {
-    return provideRouter(ROUTES);
+    return provideRouter(ROUTES, withHashLocation());
 }
