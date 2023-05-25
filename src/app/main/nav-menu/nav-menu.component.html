@@ -12,7 +12,7 @@
         <span class="main-nav">
             <span class="main-nav-items">
                 <a mat-button
-                   [routerLink]="routePaths.controllerList"
+                   [routerLink]="routesBuilderService.controllersList"
                    [routerLinkActive]="'active-link'"
                 >
                     <mat-icon>
@@ -27,7 +27,7 @@
                 </a>
 
                 <a mat-button
-                   [routerLink]="routePaths.hubList"
+                   [routerLink]="routesBuilderService.hubsList"
                    [routerLinkActive]="'active-link'"
                 >
                     <mat-icon>
@@ -42,7 +42,7 @@
                 </a>
 
                 <a mat-button
-                   [routerLink]="routePaths.controlSchemeList"
+                   [routerLink]="routesBuilderService.controlSchemesList"
                    [routerLinkActive]="'active-link'"
                 >
                     <mat-icon>
@@ -77,7 +77,7 @@
                 <a mat-fab
                    color="warn"
                    class="no-bluetooth-indicator"
-                   [routerLink]="routePaths.bluetoothUnavailable"
+                   [routerLink]="routesBuilderService.bluetoothUnavailable"
                    [title]="'bluetoothUnavailableToolbarTitle' | transloco"
                    appEllipsisTitle
                 >
@@ -89,7 +89,7 @@
 
             <a mat-icon-button
                class="about-button"
-               [routerLink]="routePaths.about"
+               [routerLink]="routesBuilderService.about"
                [routerLinkActive]="'active-link'"
                [title]="'aboutPageButton' | transloco"
             >
@@ -104,7 +104,7 @@
 <ng-template #compactNav>
     <nav class="nav nav__compact">
         <a mat-icon-button
-           [routerLink]="routePaths.controllerList"
+           [routerLink]="routesBuilderService.controllersList"
            [routerLinkActive]="'active-link'"
            [title]="'controllersList' | transloco"
         >
@@ -114,7 +114,7 @@
         </a>
 
         <a mat-icon-button
-           [routerLink]="routePaths.hubList"
+           [routerLink]="routesBuilderService.hubsList"
            [routerLinkActive]="'active-link'"
            [title]="'hubsList' | transloco"
         >
@@ -124,7 +124,7 @@
         </a>
 
         <a mat-icon-button
-           [routerLink]="routePaths.controlSchemeList"
+           [routerLink]="routesBuilderService.controlSchemesList"
            [routerLinkActive]="'active-link'"
            [title]="'controlSchemesList' | transloco"
         >
@@ -149,7 +149,7 @@
         <ng-template #bluetoothUnavailable>
             <a mat-fab
                color="warn"
-               [routerLink]="routePaths.bluetoothUnavailable"
+               [routerLink]="routesBuilderService.bluetoothUnavailable"
                [title]="'bluetoothUnavailableToolbarTitle' | transloco"
                appEllipsisTitle
             >
@@ -160,7 +160,7 @@
         </ng-template>
 
         <a mat-icon-button
-           [routerLink]="routePaths.about"
+           [routerLink]="routesBuilderService.about"
            [routerLinkActive]="'active-link'"
            [title]="'aboutPageButton' | transloco"
         >
@@ -171,35 +171,3 @@
     </nav>
 </ng-template>
 
-<ng-template #compactControllersButton>
-    <a mat-icon-button
-       [routerLink]="routePaths.controllerList"
-       [routerLinkActive]="'active-link'"
-    >
-        <mat-icon>
-            gamepad
-        </mat-icon>
-    </a>
-</ng-template>
-
-<ng-template #compactHubsButton>
-    <a mat-icon-button
-       [routerLink]="routePaths.hubList"
-       [routerLinkActive]="'active-link'"
-    >
-        <mat-icon>
-            memory
-        </mat-icon>
-    </a>
-</ng-template>
-
-<ng-template #compactControlSchemesButton>
-    <a mat-icon-button
-       [routerLink]="routePaths.controlSchemeList"
-       [routerLinkActive]="'active-link'"
-    >
-        <mat-icon>
-            display_settings
-        </mat-icon>
-    </a>
-</ng-template>

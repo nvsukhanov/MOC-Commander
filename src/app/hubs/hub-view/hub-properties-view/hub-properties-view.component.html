@@ -31,7 +31,7 @@
         <mat-divider></mat-divider>
     </mat-card-content>
     <mat-card-actions>
-        <a [routerLink]="[hubEditSubroute]" mat-button>{{ 'editHub' | transloco }}</a>
+        <a [routerLink]="hubEditRoute" mat-button>{{ 'editHub' | transloco }}</a>
         <button mat-button (click)="onDisconnect()">{{ 'disconnectHub' | transloco }}</button>
     </mat-card-actions>
 </mat-card>

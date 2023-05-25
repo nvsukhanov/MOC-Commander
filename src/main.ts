@@ -1,7 +1,5 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { LayoutComponent } from './app/main/layout';
-import { provideRouter } from '@angular/router';
-import { ROUTES } from './app/routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideApplicationStore } from './app/store';
 import { importProvidersFrom, isDevMode } from '@angular/core';
@@ -11,10 +9,11 @@ import { LOG_LEVEL, LogLevel } from './app/common/logging';
 import { CONFIGURE_CONTROLLER_I18N_SCOPE, GAMEPAD_PLUGINS_I18N_SCOPE, HUB_IO_I18N_SCOPE, provideI18n } from './app/i18n';
 import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
 import { DialogModule } from '@angular/cdk/dialog';
+import { provideRouting } from './app/routing';
 
 bootstrapApplication(LayoutComponent, {
     providers: [
-        provideRouter(ROUTES),
+        provideRouting(),
         provideI18n(),
         provideAnimations(),
         provideGamepadsPlugins(),

@@ -8,9 +8,9 @@ import { Action, Store } from '@ngrx/store';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../hub-communication-notifier-middleware-factory.service';
 import { Router } from '@angular/router';
 import { HUBS_SELECTORS, ROUTER_SELECTORS } from '../selectors';
-import { ROUTE_PATHS } from '../../routes';
 import { connectHub, IHub, MessageLoggingMiddleware } from '@nvsukhanov/rxpoweredup';
 import { PrefixedConsoleLogger } from '../../common/logging/prefixed-console-logger';
+import { RoutesBuilderService } from '../../routing';
 
 @Injectable()
 export class HubsEffects {
@@ -109,7 +109,8 @@ export class HubsEffects {
             ofType(HUBS_ACTIONS.hubNameSet),
             concatLatestFrom(() => this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedHubId)),
             filter(([ a, b ]) => a.hubId === b),
-            tap(([ , hubId ]) => this.router.navigate([ ROUTE_PATHS.hub, hubId ]))
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            tap(([ , hubId ]) => this.router.navigate(this.routesBuilderService.hubView(hubId!)))
         );
     }, { dispatch: false });
 
@@ -123,7 +124,8 @@ export class HubsEffects {
         private readonly router: Router,
         private readonly hubStorage: HubStorageService,
         private readonly communicationNotifierMiddlewareFactory: HubCommunicationNotifierMiddlewareFactoryService,
-        @Inject(NAVIGATOR) private readonly navigator: Navigator
+        @Inject(NAVIGATOR) private readonly navigator: Navigator,
+        private readonly routesBuilderService: RoutesBuilderService,
     ) {
     }
 

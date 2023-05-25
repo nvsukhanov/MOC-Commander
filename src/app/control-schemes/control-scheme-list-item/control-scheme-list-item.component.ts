@@ -4,9 +4,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatLineModule } from '@angular/material/core';
 import { NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { ROUTE_PATHS } from '../../routes';
 import { RouterLink } from '@angular/router';
 import { EllipsisTitleDirective } from '../../common';
+import { RoutesBuilderService } from '../../routing';
 
 @Component({
     standalone: true,
@@ -37,10 +37,15 @@ export class ControlSchemeListItemComponent {
 
     private _schemeEditHref: string[] = [];
 
+    constructor(
+        private readonly routesBuilder: RoutesBuilderService,
+    ) {
+    }
+
     @Input()
     public set schemeId(value: string | undefined) {
-        this._schemeViewHref = value ? [ '..', ROUTE_PATHS.controlScheme, value ] : [];
-        this._schemeEditHref = value ? [ '..', ROUTE_PATHS.controlScheme, value, ROUTE_PATHS.controlSchemeEditSubroute ] : [];
+        this._schemeViewHref = value ? this.routesBuilder.controlSchemeView(value) : [];
+        this._schemeEditHref = value ? this.routesBuilder.controlSchemeEdit(value) : [];
     }
 
     public get schemeViewHref(): string[] {
