@@ -105,6 +105,7 @@
   "aboutPageSourcesTitle": "Sources",
   "aboutPageGithubTitle": "ngPoweredUP GitHub",
   "aboutPageGithubApiTitle": "rxPoweredUP GitHub",
+  "aboutPageVersionTitle": "Version",
   "bluetoothUnavailableMessage": "It appears that your browser does not support the Web Bluetooth API",
   "bluetoothUnavailableLink": "For more information, please refer to",
   "servoCalibrationIsInProgress": "Servo calibration is in progress",

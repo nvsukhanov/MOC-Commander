@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslocoModule } from '@ngneat/transloco';
+import packageJson from '../../../package.json';
 
 @Component({
     standalone: true,
@@ -19,4 +20,6 @@ export class AboutComponent {
     public readonly rxPoweredUpURL = 'https://github.com/nvsukhanov/rxPoweredUP';
 
     public readonly licenseURL = 'https://github.com/nvsukhanov/ngPoweredUP/blob/main/LICENSE.md';
+
+    public readonly version = packageJson.version;
 }
