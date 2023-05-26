@@ -124,6 +124,7 @@ export type AttachedIO = {
     ioType: IOType;
     hardwareRevision: string;
     softwareRevision: string;
+    motorEncoderOffset: number | null;
 }
 
 export type GamepadConfig = {

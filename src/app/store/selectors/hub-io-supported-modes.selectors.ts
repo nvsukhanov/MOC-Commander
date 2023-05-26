@@ -17,8 +17,20 @@ export const HUB_IO_SUPPORTED_MODES_SELECTORS = {
         HUB_IO_SUPPORTED_MODES_FEATURE_SELECTOR,
         HUB_IO_SUPPORTED_MODES_ADAPTER_SELECTORS.selectEntities
     ),
-    selectHubIOOutputModes: (hardwareRevision: string, softwareRevision: string, ioType: IOType) => createSelector(
+    selectIOPortModes: (hardwareRevision: string, softwareRevision: string, ioType: IOType) => createSelector(
         HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesList,
-        (state) => state.find((item) => item.hardwareRevision === hardwareRevision && item.softwareRevision === softwareRevision && item.ioType === ioType)
+        (state) => {
+            return state.find(
+                (item) => item.hardwareRevision === hardwareRevision && item.softwareRevision === softwareRevision && item.ioType === ioType
+            ) ?? null;
+        }
+    ),
+    hasCachedIOPortModes: (hardwareRevision: string, softwareRevision: string, ioType: IOType) => createSelector(
+        HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesList,
+        (state) => {
+            return state.some(
+                (item) => item.hardwareRevision === hardwareRevision && item.softwareRevision === softwareRevision && item.ioType === ioType
+            );
+        }
     )
 } as const;
