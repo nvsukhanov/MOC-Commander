@@ -4,6 +4,7 @@ import {
     GAMEPAD_AXES_STATES_ENTITY_ADAPTER,
     GAMEPAD_BUTTONS_STATES_ENTITY_ADAPTER,
     GAMEPADS_ENTITY_ADAPTER,
+    HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER,
     HUB_ATTACHED_IOS_ENTITY_ADAPTER,
     HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER,
     HUB_PORT_MODE_INFO,
@@ -28,6 +29,7 @@ export const INITIAL_STATE: IState = {
         discoveryState: HubDiscoveryState.Idle
     },
     hubAttachedIOs: HUB_ATTACHED_IOS_ENTITY_ADAPTER.getInitialState(),
+    hubAttachedIOState: HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER.getInitialState(),
     hubIOSupportedModes: HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER.getInitialState(),
     hubPortModeInfo: HUB_PORT_MODE_INFO.getInitialState(),
     hubPortTasks: {

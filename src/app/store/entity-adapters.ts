@@ -1,6 +1,16 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
-import { AttachedIO, ControlScheme, GamepadAxisState, GamepadButtonState, GamepadConfig, HubConfiguration, HubIoSupportedModes, PortModeInfo } from './i-state';
+import {
+    AttachedIO,
+    AttachedIOState,
+    ControlScheme,
+    GamepadAxisState,
+    GamepadButtonState,
+    GamepadConfig,
+    HubConfiguration,
+    HubIoSupportedModes,
+    PortModeInfo
+} from './i-state';
 import { IOType } from '@nvsukhanov/rxpoweredup';
 import { PortCommandTask } from '../common';
 
@@ -69,3 +79,8 @@ export const LAST_EXECUTED_TASKS_ENTITY_ADAPTER: EntityAdapter<PortCommandTask> 
 export function lastExecutedTaskIdFn(hubId: string, portId: number): string {
     return `${hubId}/${portId}`;
 }
+
+export const HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER: EntityAdapter<AttachedIOState> = createEntityAdapter<AttachedIOState>({
+    selectId: (io) => hubAttachedIosIdFn(io.hubId, io.portId),
+});
+

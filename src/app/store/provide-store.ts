@@ -8,6 +8,7 @@ import {
     GAMEPAD_AXES_STATE_REDUCERS,
     GAMEPAD_BUTTONS_STATE_REDUCERS,
     GAMEPAD_REDUCERS,
+    HUB_ATTACHED_IO_STATE_REDUCERS,
     HUB_ATTACHED_IOS_REDUCERS,
     HUB_DISCOVERY_STATE_REDUCERS,
     HUB_EDIT_FORM_ACTIVE_SAVES_REDUCERS,
@@ -22,6 +23,7 @@ import {
     ControlSchemeEffects,
     GamepadEffects,
     HubAttachedIOsEffects,
+    HubAttachedIosStateEffects,
     HubIOSupportedModesEffects,
     HubPortModeInfoEffects,
     HubPortTasksEffects,
@@ -50,6 +52,7 @@ const REDUCERS: ActionReducerMap<IState> = {
     hubs: HUBS_REDUCERS,
     hubDiscoveryState: HUB_DISCOVERY_STATE_REDUCERS,
     hubAttachedIOs: HUB_ATTACHED_IOS_REDUCERS,
+    hubAttachedIOState: HUB_ATTACHED_IO_STATE_REDUCERS,
     hubIOSupportedModes: HUB_IO_OUTPUT_MODES_REDUCER,
     hubPortModeInfo: HUB_PORT_MODE_INFO_REDUCERS,
     hubPortTasks: HUB_PORT_TASKS_REDUCERS,
@@ -80,7 +83,8 @@ export function provideApplicationStore(): EnvironmentProviders {
             ControlSchemeEffects,
             HubPortTasksEffects,
             NotificationsEffects,
-            ServoCalibrationEffects
+            ServoCalibrationEffects,
+            HubAttachedIosStateEffects
         ),
         provideStoreDevtools({
             maxAge: 100,
