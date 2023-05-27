@@ -20,6 +20,7 @@ export interface IState {
         discoveryState: HubDiscoveryState;
     },
     hubAttachedIOs: EntityState<AttachedIO>,
+    hubAttachedIOState: EntityState<AttachedIOState>,
     hubIOSupportedModes: EntityState<HubIoSupportedModes>,
     hubPortModeInfo: EntityState<PortModeInfo>,
     hubPortTasks: {
@@ -39,6 +40,12 @@ export interface IState {
         isAvailable: boolean;
     },
     router: RouterState;
+}
+
+export type AttachedIOState = {
+    hubId: string;
+    portId: number;
+    motorEncoderOffset: number | null;
 }
 
 export enum HubDiscoveryState {
@@ -124,7 +131,6 @@ export type AttachedIO = {
     ioType: IOType;
     hardwareRevision: string;
     softwareRevision: string;
-    motorEncoderOffset: number | null;
 }
 
 export type GamepadConfig = {

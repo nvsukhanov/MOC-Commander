@@ -11,7 +11,6 @@ export const HUB_ATTACHED_IOS_ACTIONS = createActionGroup({
             hardwareRevision: string,
             softwareRevision: string,
         }>(),
-        'unregisterIO': props<{ hubId: string, portId: number }>(),
-        'motor encoder offset received': props<{ hubId: string, portId: number, offset: number }>(),
+        'unregisterIO': props<{ hubId: string, portId: number }>()
     }
 });

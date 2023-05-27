@@ -7,3 +7,4 @@ export * from './control-scheme.effects';
 export * from './hub-port-tasks.effects';
 export * from './notifications.effects';
 export * from './servo-calibration.effects';
+export * from './hub-attached-ios-state.effects';
