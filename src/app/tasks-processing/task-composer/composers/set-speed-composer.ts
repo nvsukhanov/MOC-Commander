@@ -1,5 +1,5 @@
 import { PortCommandTaskComposer } from '../port-command-task-composer';
-import { ControlSchemeBinding, HubIoOperationMode } from '../../../store';
+import { AttachedIOState, ControlSchemeBinding, HubIoOperationMode } from '../../../store';
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { PortCommandSetLinearSpeedTask, PortCommandTask, PortCommandTaskType } from '../../../common';
 
@@ -9,6 +9,7 @@ export class SetSpeedComposer extends PortCommandTaskComposer {
     protected handle(
         binding: ControlSchemeBinding,
         inputValue: number,
+        ioState: AttachedIOState,
         previousTask?: PortCommandTask,
     ): PortCommandSetLinearSpeedTask | null {
         if (binding.output.operationMode !== HubIoOperationMode.Linear) {

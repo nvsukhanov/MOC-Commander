@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { animationFrames, catchError, combineLatest, exhaustMap, filter, map, NEVER, of, switchMap, take, TimeoutError } from 'rxjs';
-import { CONTROL_SCHEME_SELECTORS, HUB_PORT_TASKS_SELECTORS } from '../selectors';
+import { CONTROL_SCHEME_SELECTORS, HUB_ATTACHED_IO_STATE_SELECTORS, HUB_PORT_TASKS_SELECTORS } from '../selectors';
 import { Store } from '@ngrx/store';
 import { CONTROL_SCHEME_ACTIONS, HUB_PORT_TASKS_ACTIONS } from '../actions';
 import {
@@ -14,9 +14,9 @@ import {
     TaskQueueCompressorFactoryService,
     TaskSuppressorFactory
 } from '../../tasks-processing';
-import { lastExecutedTaskIdFn } from '../entity-adapters';
+import { hubAttachedIosIdFn, lastExecutedTaskIdFn } from '../entity-adapters';
 import { PortCommandTask } from '../../common';
-import { ControlSchemeBinding } from '../i-state';
+import { AttachedIOState, ControlSchemeBinding } from '../i-state';
 import { Dictionary } from '@ngrx/entity';
 import { HubStorageService } from '../hub-storage.service';
 import { PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
@@ -40,11 +40,14 @@ export class HubPortTasksEffects {
                 }
                 return NEVER;
             }),
-            concatLatestFrom(() => this.store.select(HUB_PORT_TASKS_SELECTORS.selectLastExecutedTasksEntities)),
-            map(([ { scheme, bindingValues }, lastExecutedTasksEntities ]) => {
+            concatLatestFrom(() => [
+                this.store.select(HUB_PORT_TASKS_SELECTORS.selectLastExecutedTasksEntities),
+                this.store.select(HUB_ATTACHED_IO_STATE_SELECTORS.selectEntities),
+            ]),
+            map(([ { scheme, bindingValues }, lastExecutedTasksEntities, ioStateEntities ]) => {
                 return {
                     lastExecutedTasksEntities,
-                    tasks: this.composeTasks(scheme.bindings, bindingValues, lastExecutedTasksEntities)
+                    tasks: this.composeTasks(scheme.bindings, bindingValues, lastExecutedTasksEntities, ioStateEntities)
                 };
             }),
             concatLatestFrom(() => this.store.select(HUB_PORT_TASKS_SELECTORS.selectQueue)),
@@ -103,15 +106,18 @@ export class HubPortTasksEffects {
     private composeTasks(
         bindings: ControlSchemeBinding[],
         bindingValues: number[],
-        lastExecutedTasksEntities: Dictionary<PortCommandTask>
+        lastExecutedTasksEntities: Dictionary<PortCommandTask>,
+        ioStateEntities: Dictionary<AttachedIOState>
     ): PortCommandTask[] {
         return bindings.map((binding, index) => {
             const value = bindingValues[index];
             const lastExecutedBindingTask = lastExecutedTasksEntities[lastExecutedTaskIdFn(binding.output.hubId, binding.output.portId)];
+            const ioState = ioStateEntities[hubAttachedIosIdFn(binding.output.hubId, binding.output.portId)];
             return this.taskComposer.composeTask(
                 binding,
                 value,
-                lastExecutedBindingTask
+                ioState,
+                lastExecutedBindingTask,
             );
         }).filter((tasks) => !!tasks) as PortCommandTask[];
     }
