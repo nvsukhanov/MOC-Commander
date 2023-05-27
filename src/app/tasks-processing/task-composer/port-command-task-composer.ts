@@ -1,5 +1,5 @@
 import { IPortCommandTaskComposer } from './i-port-command-task-composer';
-import { ControlSchemeBinding } from '../../store';
+import { AttachedIOState, ControlSchemeBinding } from '../../store';
 import { PortCommandTask } from '../../common';
 
 export abstract class PortCommandTaskComposer implements IPortCommandTaskComposer {
@@ -8,20 +8,22 @@ export abstract class PortCommandTaskComposer implements IPortCommandTaskCompose
     protected abstract handle(
         binding: ControlSchemeBinding,
         inputValue: number,
+        ioState: AttachedIOState,
         previousTask?: PortCommandTask,
     ): PortCommandTask | null;
 
     public composeTask(
         binding: ControlSchemeBinding,
         inputValue: number,
+        ioState: AttachedIOState,
         previousTask?: PortCommandTask,
     ): PortCommandTask | null {
-        const result = this.handle(binding, inputValue, previousTask);
+        const result = this.handle(binding, inputValue, ioState, previousTask);
         if (result) {
             return result;
         }
         if (this.next) {
-            return this.next.composeTask(binding, inputValue, previousTask);
+            return this.next.composeTask(binding, inputValue, ioState, previousTask);
         }
         return null;
     }

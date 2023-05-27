@@ -14,3 +14,4 @@ export * from './hub-port-tasks.selectors';
 export * from './hub-edit-form-active-saves.selectors';
 export * from './hub-discovery-state.selectors';
 export * from './global-progress-bar.selectors';
+export * from './hub-attached-io-state.selectors';

@@ -8,6 +8,7 @@ import { Action, Store } from '@ngrx/store';
 import { HubStorageService } from '../hub-storage.service';
 import { MOTOR_LIMITS, MotorServoEndState, PortModeName } from '@nvsukhanov/rxpoweredup';
 import { HUB_ATTACHED_IO_SELECTORS } from '../selectors';
+import { transformRelativeDegToAbsoluteDeg } from '../../common';
 
 @Injectable()
 export class ServoCalibrationEffects {
@@ -138,7 +139,7 @@ export class ServoCalibrationEffects {
                         );
                         const arcAbsoluteCenter = servoRange === MOTOR_LIMITS.maxServoDegreesRange
                                                   ? 0
-                                                  : this.transformRelativeDegToAbsoluteDeg(startAbsolutePosition + arcCenterFromEncoderZero);
+                                                  : transformRelativeDegToAbsoluteDeg(startAbsolutePosition + arcCenterFromEncoderZero);
                         const arcCenterFromStart = servoRange === MOTOR_LIMITS.maxServoDegreesRange
                                                    ? -startAbsolutePosition
                                                    : (min + max) / 2;
@@ -167,18 +168,5 @@ export class ServoCalibrationEffects {
                 );
             }),
         );
-    }
-
-    private transformRelativeDegToAbsoluteDeg(
-        relativeDegrees: number
-    ): number {
-        const absoluteDegrees = relativeDegrees % 360;
-        if (absoluteDegrees > 180) {
-            return absoluteDegrees - 360;
-        }
-        if (absoluteDegrees < -180) {
-            return absoluteDegrees + 360;
-        }
-        return absoluteDegrees;
     }
 }
