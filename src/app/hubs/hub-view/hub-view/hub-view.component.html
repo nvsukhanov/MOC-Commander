@@ -4,11 +4,11 @@
                                  (disconnect)="disconnectHub()"
         ></app-hub-properties-view>
 
-        <div *ngIf="selectedHubIOs$ | ngrxPush; let hubIOs"
-             class="io-grid">
+        <div *ngIf="IOFullData$ | ngrxPush; let hubIOs"
+             class="io-list">
             <app-hub-port-view *ngFor="let hubIO of hubIOs; trackBy: hubIoTrackByFn"
-                               class="io-grid-item"
-                               [io]="hubIO">
+                               class="io-list__item"
+                               [ioFullInfo]="hubIO">
             </app-hub-port-view>
         </div>
     </section>

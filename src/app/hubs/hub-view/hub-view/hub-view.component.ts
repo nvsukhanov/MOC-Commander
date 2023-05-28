@@ -1,18 +1,19 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AttachedIO, HUB_ATTACHED_IO_SELECTORS, HubConfiguration, HUBS_ACTIONS, HUBS_SELECTORS, ROUTER_SELECTORS } from '../../../store';
+import { HUB_ATTACHED_IO_SELECTORS, HubConfiguration, HUBS_ACTIONS, HUBS_SELECTORS, IOFullInfo, ROUTER_SELECTORS } from '../../../store';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { EMPTY, Observable, switchMap, take } from 'rxjs';
-import { NgForOf, NgIf } from '@angular/common';
+import { JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { TranslocoModule } from '@ngneat/transloco';
 import { HubPropertiesViewComponent } from '../hub-properties-view';
-import { HubPortViewComponent } from '../hub-port-view';
+import { HubIoViewComponent } from '../hub-port-view';
 import { NotFoundComponent } from '../../../common';
 import { Router } from '@angular/router';
 import { RoutesBuilderService } from '../../../routing';
+import { hubAttachedIosIdFn } from '../../../store/entity-adapters';
 
 @Component({
     standalone: true,
@@ -28,8 +29,9 @@ import { RoutesBuilderService } from '../../../routing';
         MatDividerModule,
         TranslocoModule,
         HubPropertiesViewComponent,
-        HubPortViewComponent,
+        HubIoViewComponent,
         NotFoundComponent,
+        JsonPipe,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -38,8 +40,8 @@ export class HubViewComponent {
         switchMap((id) => id === undefined ? EMPTY : this.store.select(HUBS_SELECTORS.selectHub(id)))
     );
 
-    public readonly selectedHubIOs$: Observable<AttachedIO[] | undefined> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
-        switchMap((id) => id === undefined ? EMPTY : this.store.select(HUB_ATTACHED_IO_SELECTORS.selectHubIOs(id)))
+    public readonly IOFullData$: Observable<IOFullInfo[]> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
+        switchMap((id) => id === undefined ? EMPTY : this.store.select(HUB_ATTACHED_IO_SELECTORS.selectFullIOsInfo(id)))
     );
 
     constructor(
@@ -63,8 +65,8 @@ export class HubViewComponent {
 
     public hubIoTrackByFn(
         index: number,
-        item: AttachedIO
+        item: IOFullInfo
     ): string {
-        return `${item.portId}/${item.ioType}`;
+        return hubAttachedIosIdFn(item);
     }
 }

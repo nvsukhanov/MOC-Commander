@@ -16,11 +16,11 @@ export const HUB_PORT_MODE_INFO_SELECTORS = {
         HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
         (ioPortModes, portModeInfo) => {
             const hasFullInputModesInfo = ioPortModes?.portInputModes.every((modeId) => {
-                const portModeInfoForMode = portModeInfo[hubPortModeInfoIdFn(hardwareRevision, softwareRevision, modeId, ioType)];
+                const portModeInfoForMode = portModeInfo[hubPortModeInfoIdFn({ hardwareRevision, softwareRevision, modeId, ioType })];
                 return portModeInfoForMode !== undefined;
             }) ?? false;
             const hasFullOutputModesInfo = ioPortModes?.portOutputModes.every((modeId) => {
-                const portModeInfoForMode = portModeInfo[hubPortModeInfoIdFn(hardwareRevision, softwareRevision, modeId, ioType)];
+                const portModeInfoForMode = portModeInfo[hubPortModeInfoIdFn({ hardwareRevision, softwareRevision, modeId, ioType })];
                 return portModeInfoForMode !== undefined;
             }) ?? false;
             return hasFullInputModesInfo && hasFullOutputModesInfo;
@@ -31,7 +31,7 @@ export const HUB_PORT_MODE_INFO_SELECTORS = {
         HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
         (ioPortModes, portModeInfo): number | null => {
             return ioPortModes?.portInputModes.find((modeId) => {
-                return portModeInfo[hubPortModeInfoIdFn(hardwareRevision, softwareRevision, modeId, ioType)]?.name === portModeName;
+                return portModeInfo[hubPortModeInfoIdFn({ hardwareRevision, softwareRevision, modeId, ioType })]?.name === portModeName;
             }) ?? null;
         }
     ),

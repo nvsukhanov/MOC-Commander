@@ -5,8 +5,8 @@ import { HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER, hubAttachedIosIdFn } from '../ent
 
 export const HUB_ATTACHED_IO_STATE_REDUCERS = createReducer(
     INITIAL_STATE.hubAttachedIOState,
-    on(HUB_ATTACHED_IOS_ACTIONS.unregisterIO, (state, { hubId, portId }) => HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER.removeOne(
-        hubAttachedIosIdFn(hubId, portId),
+    on(HUB_ATTACHED_IOS_ACTIONS.unregisterIO, (state, data) => HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER.removeOne(
+        hubAttachedIosIdFn(data),
         state
     )),
     on(HUB_ATTACHED_IOS_STATE_ACTIONS.motorEncoderOffsetReceived, (state, data) => HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER.upsertOne(

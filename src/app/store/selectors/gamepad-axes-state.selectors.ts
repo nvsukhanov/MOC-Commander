@@ -15,7 +15,7 @@ export const GAMEPAD_AXES_STATE_SELECTORS = {
     selectEntities: createSelector(GAMEPAD_AXES_STATE_FEATURE_SELECTOR, GAMEPAD_AXES_STATE_ENTITY_SELECTORS.selectEntities),
     selectValueByIndex: (gamepadIndex: number, axisIndex: number) => createSelector(
         GAMEPAD_AXES_STATE_SELECTORS.selectEntities,
-        (state) => state[gamepadAxisIdFn(gamepadIndex, axisIndex)]?.value
+        (state) => state[gamepadAxisIdFn({ gamepadIndex, axisIndex })]?.value
     ),
     selectFistBinding: createSelector(
         GAMEPAD_AXES_SELECT_ALL,
