@@ -58,6 +58,13 @@ export class HubsEffects {
         );
     });
 
+    public navigateToHubsOnConnect$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(HUBS_ACTIONS.connected),
+            tap((a) => this.router.navigate(this.routesBuilderService.hubView(a.hubId)))
+        );
+    }, { dispatch: false });
+
     public listerToButtonStateOnConnect$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.connected),
