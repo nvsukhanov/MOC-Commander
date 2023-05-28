@@ -15,11 +15,11 @@ export const GAMEPAD_BUTTONS_STATE_SELECTORS = {
     selectEntities: createSelector(GAMEPAD_BUTTONS_STATE_FEATURE_SELECTOR, GAMEPAD_BUTTONS_STATE_ENTITY_SELECTORS.selectEntities),
     selectByIndex: (gamepadIndex: number, buttonIndex: number) => createSelector(
         GAMEPAD_BUTTONS_STATE_SELECTORS.selectEntities,
-        (state) => state[gamepadButtonIdFn(gamepadIndex, buttonIndex)]
+        (state) => state[gamepadButtonIdFn({ gamepadIndex, buttonIndex })]
     ),
     selectValueByIndex: (gamepadIndex: number, buttonIndex: number) => createSelector(
         GAMEPAD_BUTTONS_STATE_SELECTORS.selectEntities,
-        (state) => state[gamepadButtonIdFn(gamepadIndex, buttonIndex)]?.value
+        (state) => state[gamepadButtonIdFn({ gamepadIndex, buttonIndex })]?.value
     ),
     selectFistBinding: createSelector(
         GAMEPAD_BUTTONS_SELECT_ALL,

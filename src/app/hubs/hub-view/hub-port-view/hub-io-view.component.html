@@ -1,0 +1,45 @@
+<mat-card *ngIf="ioFullInfo">
+    <mat-card-header>
+        <mat-card-subtitle>
+            <section class="io-subheader">
+                {{ 'hubPort' | transloco: ioFullInfo }}
+                <span class="spacer"></span>
+                <p class="io-version">
+                    {{ 'hubIOHardwareRevision' | transloco: ioFullInfo }}
+                </p>
+                <p class="io-version">
+                    {{ 'hubIOSoftwareRevision' | transloco: ioFullInfo }}
+                </p>
+            </section>
+        </mat-card-subtitle>
+        <mat-card-title>
+            {{ ioFullInfo.ioType | ioTypeToL10nKey | transloco }}
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <section class="io-modes-group__grid">
+            <h3 class="io-modes-group__header">{{ 'io.ioInputCapabilities' | transloco }}</h3>
+            <ul class="io-modes-group__list" *ngIf="ioFullInfo.portInputModes.length; else emptyModesList">
+                <li *ngFor="let portModeInfo of ioFullInfo.portInputModes; trackBy: portModeInfoTrackById"
+                    class="io-modes-group__mode"
+                >
+                    {{ portModeInfo.name }}
+                </li>
+            </ul>
+            <h3 class="io-modes-group__header">{{ 'io.ioOutputCapabilities' | transloco }}</h3>
+            <ul class="io-modes-group__list" *ngIf="ioFullInfo.portOutputModes.length; else emptyModesList">
+                <li *ngFor="let portModeInfo of ioFullInfo.portOutputModes; trackBy: portModeInfoTrackById"
+                    class="io-modes-group__mode"
+                >
+                    {{ portModeInfo.name }}
+                </li>
+            </ul>
+
+            <ng-template #emptyModesList>
+                <p class="io-modes-group__list-empty">
+                    {{ 'io.ioCapabilitiesEmpty' | transloco }}
+                </p>
+            </ng-template>
+        </section>
+    </mat-card-content>
+</mat-card>

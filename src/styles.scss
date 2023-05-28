@@ -12,4 +12,5 @@ body {
 
 .mat-mdc-card-header-text {
     overflow: hidden; // allow ellipsis in card header
+    width: 100%; // allow full-width sub-headers
 }

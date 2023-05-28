@@ -15,11 +15,13 @@ import { IOType } from '@nvsukhanov/rxpoweredup';
 import { PortCommandTask } from '../common';
 
 export const HUB_ATTACHED_IOS_ENTITY_ADAPTER: EntityAdapter<AttachedIO> = createEntityAdapter<AttachedIO>({
-    selectId: (io) => hubAttachedIosIdFn(io.hubId, io.portId),
+    selectId: (io) => hubAttachedIosIdFn(io),
     sortComparer: (a, b) => a.portId - b.portId
 });
 
-export function hubAttachedIosIdFn(hubId: string, portId: number) {
+export function hubAttachedIosIdFn(
+    { hubId, portId }: { hubId: string, portId: number }
+) {
     return `${hubId}/${portId}`;
 }
 
@@ -29,18 +31,22 @@ export const HUBS_ENTITY_ADAPTER: EntityAdapter<HubConfiguration> = createEntity
 });
 
 export const HUB_PORT_MODE_INFO: EntityAdapter<PortModeInfo> = createEntityAdapter<PortModeInfo>({
-    selectId: (mode) => hubPortModeInfoIdFn(mode.hardwareRevision, mode.softwareRevision, mode.modeId, mode.ioType),
+    selectId: (mode) => hubPortModeInfoIdFn(mode),
 });
 
-export function hubPortModeInfoIdFn(hardwareRevision: string, softwareRevision: string, modeId: number, ioType: IOType): string {
+export function hubPortModeInfoIdFn(
+    { hardwareRevision, softwareRevision, modeId, ioType }: { hardwareRevision: string, softwareRevision: string, modeId: number, ioType: IOType }
+): string {
     return `${hardwareRevision}/${softwareRevision}/${modeId}/${ioType}`;
 }
 
 export const HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER: EntityAdapter<HubIoSupportedModes> = createEntityAdapter<HubIoSupportedModes>({
-    selectId: (mode) => hubIOSupportedModesIdFn(mode.hardwareRevision, mode.softwareRevision, mode.ioType),
+    selectId: (mode) => hubIOSupportedModesIdFn(mode),
 });
 
-export function hubIOSupportedModesIdFn(hardwareRevision: string, softwareRevision: string, ioType: IOType): string {
+export function hubIOSupportedModesIdFn(
+    { hardwareRevision, softwareRevision, ioType }: { hardwareRevision: string, softwareRevision: string, ioType: IOType }
+): string {
     return `${hardwareRevision}/${softwareRevision}/${ioType}`;
 }
 
@@ -50,20 +56,24 @@ export const GAMEPADS_ENTITY_ADAPTER: EntityAdapter<GamepadConfig> = createEntit
 });
 
 export const GAMEPAD_AXES_STATES_ENTITY_ADAPTER: EntityAdapter<GamepadAxisState> = createEntityAdapter<GamepadAxisState>({
-    selectId: (state) => gamepadAxisIdFn(state.gamepadIndex, state.axisIndex),
+    selectId: (state) => gamepadAxisIdFn(state),
     sortComparer: (a, b) => a.axisIndex - b.axisIndex
 });
 
-export function gamepadAxisIdFn(gamepadIndex: number, axisIndex: number): string {
+export function gamepadAxisIdFn(
+    { gamepadIndex, axisIndex }: { gamepadIndex: number, axisIndex: number }
+): string {
     return `${gamepadIndex}/${axisIndex}`;
 }
 
 export const GAMEPAD_BUTTONS_STATES_ENTITY_ADAPTER: EntityAdapter<GamepadButtonState> = createEntityAdapter<GamepadButtonState>({
-    selectId: (state) => gamepadButtonIdFn(state.gamepadIndex, state.buttonIndex),
+    selectId: (state) => gamepadButtonIdFn(state),
     sortComparer: (a, b) => a.buttonIndex - b.buttonIndex
 });
 
-export function gamepadButtonIdFn(gamepadIndex: number, buttonIndex: number): string {
+export function gamepadButtonIdFn(
+    { gamepadIndex, buttonIndex }: { gamepadIndex: number, buttonIndex: number }
+): string {
     return `${gamepadIndex}/${buttonIndex}`;
 }
 
@@ -73,14 +83,16 @@ export const CONTROL_SCHEMES_ENTITY_ADAPTER: EntityAdapter<ControlScheme> = crea
 });
 
 export const LAST_EXECUTED_TASKS_ENTITY_ADAPTER: EntityAdapter<PortCommandTask> = createEntityAdapter<PortCommandTask>({
-    selectId: (task) => lastExecutedTaskIdFn(task.hubId, task.portId),
+    selectId: (task) => lastExecutedTaskIdFn(task),
 });
 
-export function lastExecutedTaskIdFn(hubId: string, portId: number): string {
+export function lastExecutedTaskIdFn(
+    { hubId, portId }: { hubId: string, portId: number }
+): string {
     return `${hubId}/${portId}`;
 }
 
 export const HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER: EntityAdapter<AttachedIOState> = createEntityAdapter<AttachedIOState>({
-    selectId: (io) => hubAttachedIosIdFn(io.hubId, io.portId),
+    selectId: (io) => hubAttachedIosIdFn(io),
 });
 

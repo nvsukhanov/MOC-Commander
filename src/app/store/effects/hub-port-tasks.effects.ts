@@ -111,8 +111,8 @@ export class HubPortTasksEffects {
     ): PortCommandTask[] {
         return bindings.map((binding, index) => {
             const value = bindingValues[index];
-            const lastExecutedBindingTask = lastExecutedTasksEntities[lastExecutedTaskIdFn(binding.output.hubId, binding.output.portId)];
-            const ioState = ioStateEntities[hubAttachedIosIdFn(binding.output.hubId, binding.output.portId)];
+            const lastExecutedBindingTask = lastExecutedTasksEntities[lastExecutedTaskIdFn(binding.output)];
+            const ioState = ioStateEntities[hubAttachedIosIdFn(binding.output)];
             return this.taskComposer.composeTask(
                 binding,
                 value,
@@ -135,7 +135,7 @@ export class HubPortTasksEffects {
                 && task.portId === nextTask.portId
             );
             if (!lastTaskOfKindInQueue) {
-                const lastExecutedCommandOfKind = lastExecutedTasks[lastExecutedTaskIdFn(nextTask.hubId, nextTask.portId)];
+                const lastExecutedCommandOfKind = lastExecutedTasks[lastExecutedTaskIdFn(nextTask)];
                 if (!lastExecutedCommandOfKind
                     || lastExecutedCommandOfKind.taskType !== nextTask.taskType
                     || !this.taskSuppressor.shouldSuppressTask(nextTask, lastExecutedCommandOfKind)

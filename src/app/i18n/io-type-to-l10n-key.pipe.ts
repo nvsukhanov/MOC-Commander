@@ -29,7 +29,9 @@ export class IoTypeToL10nKeyPipe implements PipeTransform {
         [IOType.largeTechnicAngularMotor]: [ HUB_IO_I18N_SCOPE, 'ioTypeLargeTechnicAngularMotor' ].join('.')
     };
 
+    private readonly unknownDeviceType = [ HUB_IO_I18N_SCOPE, 'unknownIOType' ].join('.');
+
     public transform(ioType: IOType): string {
-        return this.mapping[ioType];
+        return this.mapping[ioType] ?? this.unknownDeviceType;
     }
 }

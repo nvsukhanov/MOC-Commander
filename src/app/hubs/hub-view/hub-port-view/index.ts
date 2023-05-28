@@ -1,1 +1,1 @@
-export * from './hub-port-view.component';
+export * from './hub-io-view.component';

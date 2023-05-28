@@ -126,7 +126,7 @@ export const CONTROL_SCHEME_SELECTORS = {
                 };
 
                 if (!bindingValidationResult.hubMissing) {
-                    const io = iosEntities[hubAttachedIosIdFn(binding.output.hubId, binding.output.portId)];
+                    const io = iosEntities[hubAttachedIosIdFn(binding.output)];
                     if (io) {
                         bindingValidationResult.ioMissing = false;
                         const ioOperationModes = getHubIOOperationModes(
@@ -211,9 +211,9 @@ export const CONTROL_SCHEME_SELECTORS = {
             const validationMap = new Map(validationResult.map((r) => [ r.bindingId, r ]));
 
             return scheme.bindings.map((binding) => {
-                const ioType = attachedIOs[hubAttachedIosIdFn(binding.output.hubId, binding.output.portId)]?.ioType;
+                const ioType = attachedIOs[hubAttachedIosIdFn(binding.output)]?.ioType;
                 const task = runningSchemeId === schemeId
-                             ? tasks[lastExecutedTaskIdFn(binding.output.hubId, binding.output.portId)]
+                             ? tasks[lastExecutedTaskIdFn(binding.output)]
                              : undefined;
                 return {
                     schemeId: schemeId,
