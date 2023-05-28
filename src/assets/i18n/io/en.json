@@ -19,5 +19,6 @@
   "ioTypeLargeTechnicMotor": "Large Technic Motor",
   "ioTypeXLargeTechnicMotor": "XLarge Technic Motor",
   "ioTypeMediumTechnicAngularMotor": "Medium Technic Angular Motor",
-  "ioTypeLargeTechnicAngularMotor": "Large Technic Angular Motor"
+  "ioTypeLargeTechnicAngularMotor": "Large Technic Angular Motor",
+  "unknownIOType": "Unknown device type"
 }
