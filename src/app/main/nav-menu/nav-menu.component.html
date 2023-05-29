@@ -107,6 +107,9 @@
            [routerLink]="routesBuilderService.controllersList"
            [routerLinkActive]="'active-link'"
            [title]="'controllersList' | transloco"
+           [matBadge]="connectedControllersCount$ | ngrxPush"
+           [matBadgeColor]="'primary'"
+           [matBadgeSize]="'large'"
         >
             <mat-icon>
                 gamepad
@@ -117,6 +120,9 @@
            [routerLink]="routesBuilderService.hubsList"
            [routerLinkActive]="'active-link'"
            [title]="'hubsList' | transloco"
+           [matBadge]="connectedHubCount$ | ngrxPush"
+           [matBadgeColor]="'primary'"
+           [matBadgeSize]="'large'"
         >
             <mat-icon>
                 memory
@@ -127,6 +133,9 @@
            [routerLink]="routesBuilderService.controlSchemesList"
            [routerLinkActive]="'active-link'"
            [title]="'controlSchemesList' | transloco"
+           [matBadge]="controlSchemesCount$ | ngrxPush"
+           [matBadgeColor]="'primary'"
+           [matBadgeSize]="'large'"
         >
             <mat-icon>
                 display_settings
