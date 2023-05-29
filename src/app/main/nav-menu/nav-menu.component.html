@@ -109,7 +109,7 @@
            [title]="'controllersList' | transloco"
            [matBadge]="connectedControllersCount$ | ngrxPush"
            [matBadgeColor]="'primary'"
-           [matBadgeSize]="'large'"
+           [matBadgeHidden]="!(connectedControllersCount$ | ngrxPush)"
         >
             <mat-icon>
                 gamepad
@@ -122,7 +122,7 @@
            [title]="'hubsList' | transloco"
            [matBadge]="connectedHubCount$ | ngrxPush"
            [matBadgeColor]="'primary'"
-           [matBadgeSize]="'large'"
+           [matBadgeHidden]="!(connectedHubCount$ | ngrxPush)"
         >
             <mat-icon>
                 memory
@@ -135,7 +135,7 @@
            [title]="'controlSchemesList' | transloco"
            [matBadge]="controlSchemesCount$ | ngrxPush"
            [matBadgeColor]="'primary'"
-           [matBadgeSize]="'large'"
+           [matBadgeHidden]="!(controlSchemesCount$ | ngrxPush)"
         >
             <mat-icon>
                 display_settings
