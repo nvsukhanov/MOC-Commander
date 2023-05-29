@@ -1,5 +1,5 @@
 <ng-container *ngIf="outputBinding">
-    <section *ngIf="inputMethodControl?.value === gamepadInputMethod.Button"
+    <section *ngIf="inputMethodControl?.value === controllerInputType.Button"
              class="parameter-section"
     >
         <mat-slide-toggle [formControl]="outputBinding.controls.linearConfig.controls.isToggle">
@@ -14,7 +14,7 @@
     <section class="parameter-section">
         <div class="slider-label">
             <label class="slider-label-description">
-                <ng-container *ngIf="inputMethodControl?.value === GamepadInputMethod.Button; else maximumSpeedLabel">
+                <ng-container *ngIf="inputMethodControl?.value === controllerInputType.Button; else maximumSpeedLabel">
                     {{ 'schemeOutputBindingConfigurationLinearSpeedParameter' | transloco }}
                 </ng-container>
                 <ng-template #maximumSpeedLabel>

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { HUB_ATTACHED_IOS_ENTITY_ADAPTER, hubAttachedIosIdFn, hubIOSupportedModesIdFn, hubPortModeInfoIdFn } from '../entity-adapters';
-import { AttachedIO, GamepadInputMethod, HubIoSupportedModes, IState, PortModeInfo } from '../i-state';
+import { AttachedIO, ControllerInputType, HubIoSupportedModes, IState, PortModeInfo } from '../i-state';
 import { HUB_IO_SUPPORTED_MODES_SELECTORS } from './hub-io-supported-modes.selectors';
 import { HUB_IO_CONTROL_METHODS, HubIoOperationMode } from '../hub-io-operation-mode';
 import { HUB_PORT_MODE_INFO_SELECTORS } from './hub-port-mode-info.selectors';
@@ -63,17 +63,17 @@ export const HUB_ATTACHED_IO_SELECTORS = {
         HUB_ATTACHED_IO_SELECTORS.selectIOsEntities,
         (ios) => ios[hubAttachedIosIdFn({ hubId, portId })]
     ),
-    selectIOsControllableByMethod: (hubId: string, inputMethod: GamepadInputMethod) => createSelector(
+    selectIOsControllableByInputType: (hubId: string, inputType: ControllerInputType) => createSelector(
         HUB_ATTACHED_IO_SELECTORS.selectHubIOs(hubId),
         HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
         HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
         (ios, supportedModes, portModeData) => {
-            const applicablePortModes: Set<PortModeName> = new Set(Object.values(HUB_IO_CONTROL_METHODS[inputMethod]));
+            const applicablePortModes: Set<PortModeName> = new Set(Object.values(HUB_IO_CONTROL_METHODS[inputType]));
             const result: Array<{ ioConfig: AttachedIO, operationModes: HubIoOperationMode[] }> = [];
             for (const io of ios) {
-                const ioOperationModes = getHubIOOperationModes(io, supportedModes, portModeData, inputMethod)
+                const ioOperationModes = getHubIOOperationModes(io, supportedModes, portModeData, inputType)
                     .filter((mode) => {
-                        const portMode = HUB_IO_CONTROL_METHODS[inputMethod][mode];
+                        const portMode = HUB_IO_CONTROL_METHODS[inputType][mode];
                         return portMode !== undefined && applicablePortModes.has(portMode);
                     });
 
@@ -87,13 +87,17 @@ export const HUB_ATTACHED_IO_SELECTORS = {
             return result;
         }
     ),
-    selectHubIOOperationModes: (hubId: string, portId: number, inputMethod: GamepadInputMethod) => createSelector(
+    selectHubIOOperationModes: (
+        hubId: string,
+        portId: number,
+        inputType: ControllerInputType
+    ) => createSelector(
         HUB_ATTACHED_IO_SELECTORS.selectIOAtPort(hubId, portId),
         HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
         HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
         (io, supportedModes, portModeData) => {
             if (io) {
-                return getHubIOOperationModes(io, supportedModes, portModeData, inputMethod);
+                return getHubIOOperationModes(io, supportedModes, portModeData, inputType);
             }
             return [];
         }
@@ -158,7 +162,7 @@ export function getHubIOOperationModes(
     io: AttachedIO,
     supportedModes: ReturnType<typeof HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities>,
     portModeData: ReturnType<typeof HUB_PORT_MODE_INFO_SELECTORS.selectEntities>,
-    inputMethod: GamepadInputMethod
+    inputType: ControllerInputType
 ): HubIoOperationMode[] {
     const outputModes = supportedModes[hubIOSupportedModesIdFn(io)]?.portOutputModes;
 
@@ -166,8 +170,8 @@ export function getHubIOOperationModes(
         return outputModes.map((modeId) => {
             const portModeId = hubPortModeInfoIdFn({ ...io, modeId });
             const portModeInfo = portModeData[portModeId];
-            if (portModeInfo && Object.values(HUB_IO_CONTROL_METHODS[inputMethod]).includes(portModeInfo.name)) {
-                return Object.entries(HUB_IO_CONTROL_METHODS[inputMethod])
+            if (portModeInfo && Object.values(HUB_IO_CONTROL_METHODS[inputType]).includes(portModeInfo.name)) {
+                return Object.entries(HUB_IO_CONTROL_METHODS[inputType])
                              .filter(([ , modeName ]) => modeName === portModeInfo.name)
                              .map(([ operationMode ]) => operationMode as HubIoOperationMode);
             }

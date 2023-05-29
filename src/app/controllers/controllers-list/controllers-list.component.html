@@ -1,21 +1,15 @@
 <ng-container *ngrxLet="connectedControllers$ as connectedControllers">
     <ng-container *ngIf="connectedControllers.length; else noConnectedControllers">
-        <p class="detect-controller-notification-tips">{{ 'detectControllerTip' | transloco }}</p>
+        <p class="detect-controller-notification-tips">{{ 'controller.detectControllerTip' | transloco }}</p>
         <mat-accordion>
             <ng-container *ngFor="let connectedController of connectedControllers; trackBy: controllerTrackById">
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            {{ connectedController.nameL10nKey | transloco }}
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                </mat-expansion-panel>
+                <app-controllers-list-item [controller]="connectedController"></app-controllers-list-item>
             </ng-container>
         </mat-accordion>
     </ng-container>
 
     <ng-template #noConnectedControllers>
-        <h3 class="no-controller-connected-notification-header">{{ 'noControllerConnected' | transloco }}</h3>
-        <p class="detect-controller-notification-tips">{{ 'detectControllerTip' | transloco }}</p>
+        <h3 class="no-controller-connected-notification-header">{{ 'controller.noControllerConnected' | transloco }}</h3>
+        <p class="detect-controller-notification-tips">{{ 'controller.detectControllerTip' | transloco }}</p>
     </ng-template>
 </ng-container>

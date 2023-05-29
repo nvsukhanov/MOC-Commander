@@ -5,9 +5,9 @@ import {
     CONTROL_SCHEME_CONFIGURATION_STATE_REDUCERS,
     CONTROL_SCHEME_REDUCERS,
     CONTROL_SCHEME_RUNNING_STATE_REDUCERS,
-    GAMEPAD_AXES_STATE_REDUCERS,
-    GAMEPAD_BUTTONS_STATE_REDUCERS,
-    GAMEPAD_REDUCERS,
+    CONTROLLER_INPUT_CAPTURE_REDUCERS,
+    CONTROLLER_INPUT_REDUCERS,
+    CONTROLLERS_REDUCERS,
     HUB_ATTACHED_IO_STATE_REDUCERS,
     HUB_ATTACHED_IOS_REDUCERS,
     HUB_DISCOVERY_STATE_REDUCERS,
@@ -20,14 +20,16 @@ import {
 } from './reducers';
 import { provideEffects } from '@ngrx/effects';
 import {
+    ControllerInputCaptureEffects,
     ControlSchemeEffects,
-    GamepadEffects,
+    GamepadControllerEffects,
     HubAttachedIOsEffects,
     HubAttachedIosStateEffects,
     HubIOSupportedModesEffects,
     HubPortModeInfoEffects,
     HubPortTasksEffects,
     HubsEffects,
+    KeyboardControllerEffects,
     NotificationsEffects,
     ServoCalibrationEffects,
 } from './effects';
@@ -37,18 +39,18 @@ import { NAVIGATOR } from '../common';
 import { ActionReducer, ActionReducerMap, MetaReducer, provideStore, Store } from '@ngrx/store';
 import { HubStorageService } from './hub-storage.service';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
-import { GAMEPAD_ACTIONS, HUBS_ACTIONS } from './actions';
+import { HUBS_ACTIONS } from './actions';
 import { localStorageSync } from 'ngrx-store-localstorage';
 import { Router } from '@angular/router';
 import { RoutesBuilderService } from '../routing';
 
 const REDUCERS: ActionReducerMap<IState> = {
+    controllers: CONTROLLERS_REDUCERS,
+    controllerInput: CONTROLLER_INPUT_REDUCERS,
+    controllerInputCapture: CONTROLLER_INPUT_CAPTURE_REDUCERS,
     controlSchemes: CONTROL_SCHEME_REDUCERS,
     controlSchemeConfigurationState: CONTROL_SCHEME_CONFIGURATION_STATE_REDUCERS,
     controlSchemeRunningState: CONTROL_SCHEME_RUNNING_STATE_REDUCERS,
-    gamepads: GAMEPAD_REDUCERS,
-    gamepadAxesState: GAMEPAD_AXES_STATE_REDUCERS,
-    gamepadButtonsState: GAMEPAD_BUTTONS_STATE_REDUCERS,
     hubs: HUBS_REDUCERS,
     hubDiscoveryState: HUB_DISCOVERY_STATE_REDUCERS,
     hubAttachedIOs: HUB_ATTACHED_IOS_REDUCERS,
@@ -75,7 +77,6 @@ export function provideApplicationStore(): EnvironmentProviders {
     return makeEnvironmentProviders([
         provideStore<IState>(REDUCERS, { metaReducers }),
         provideEffects(
-            GamepadEffects,
             HubAttachedIOsEffects,
             HubPortModeInfoEffects,
             HubIOSupportedModesEffects,
@@ -84,7 +85,10 @@ export function provideApplicationStore(): EnvironmentProviders {
             HubPortTasksEffects,
             NotificationsEffects,
             ServoCalibrationEffects,
-            HubAttachedIosStateEffects
+            HubAttachedIosStateEffects,
+            GamepadControllerEffects,
+            KeyboardControllerEffects,
+            ControllerInputCaptureEffects
         ),
         provideStoreDevtools({
             maxAge: 100,
@@ -93,7 +97,6 @@ export function provideApplicationStore(): EnvironmentProviders {
             trace: false,
             traceLimit: 75,
             actionsBlocklist: [
-                GAMEPAD_ACTIONS.updateGamepadsValues.type,
                 HUBS_ACTIONS.setHasCommunication.type,
                 HUBS_ACTIONS.rssiLevelReceived.type,
                 HUBS_ACTIONS.batteryLevelReceived.type

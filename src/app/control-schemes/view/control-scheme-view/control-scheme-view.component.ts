@@ -1,6 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { bufferCount, combineLatest, map, Observable, of, Subscription, switchMap } from 'rxjs';
-import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlScheme, HUB_PORT_TASKS_SELECTORS, ROUTER_SELECTORS, } from '../../../store';
+import {
+    CONTROL_SCHEME_ACTIONS,
+    CONTROL_SCHEME_SELECTORS,
+    CONTROLLER_INPUT_ACTIONS,
+    ControlScheme,
+    HUB_PORT_TASKS_SELECTORS,
+    ROUTER_SELECTORS,
+} from '../../../store';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
@@ -86,7 +93,7 @@ export class ControlSchemeViewComponent implements OnDestroy {
                 validationResult.hubMissing ? 'schemeValidationHubMissing' : '',
                 validationResult.ioMissing ? 'schemeValidationIOMissing' : '',
                 validationResult.ioCapabilitiesMismatch ? 'schemeValidationIOCapabilitiesMismatch' : '',
-                validationResult.gamepadMissing ? 'schemeValidationGamepadMissing' : '',
+                validationResult.controllerIsMissing ? 'schemeValidationControllerIsMissing' : '',
             ].filter((v) => v !== '');
             if (validationKeys.length === 0) {
                 return of('');
@@ -98,6 +105,8 @@ export class ControlSchemeViewComponent implements OnDestroy {
     );
 
     private sub?: Subscription;
+
+    private isCapturingInput = false;
 
     constructor(
         private readonly store: Store,
@@ -124,15 +133,32 @@ export class ControlSchemeViewComponent implements OnDestroy {
     }
 
     public ngOnDestroy(): void {
+        this.stopRunningScheme();
         this.sub?.unsubscribe();
         this.featureToolbarService.clearConfig();
     }
 
     public runScheme(schemeId: string): void {
+        this.startControllerInputCapture();
         this.store.dispatch(CONTROL_SCHEME_ACTIONS.runScheme({ schemeId }));
     }
 
     public stopRunningScheme(): void {
+        this.stopControllerInputCapture();
         this.store.dispatch(CONTROL_SCHEME_ACTIONS.stopRunning());
+    }
+
+    private startControllerInputCapture(): void {
+        if (!this.isCapturingInput) {
+            this.store.dispatch(CONTROLLER_INPUT_ACTIONS.requestInputCapture());
+            this.isCapturingInput = true;
+        }
+    }
+
+    private stopControllerInputCapture(): void {
+        if (this.isCapturingInput) {
+            this.store.dispatch(CONTROLLER_INPUT_ACTIONS.releaseInputCapture());
+            this.isCapturingInput = false;
+        }
     }
 }

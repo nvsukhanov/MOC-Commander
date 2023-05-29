@@ -3,37 +3,18 @@
 </h2>
 
 <p>
-    {{ gamepadNameL10nKey$ | ngrxPush | transloco }}
+    {{ controllerNameL10nKey$ | ngrxPush | transloco }}
 </p>
 
-<section [ngSwitch]="inputMethod$ | ngrxPush">
-    <ng-container *ngSwitchCase="inputMethods.Button">
-        <ng-container *ngIf="buttonConfig$ | ngrxPush; let buttonConfig; else noButtonConfig">
-            <ng-container [ngSwitch]="buttonConfig!.buttonType">
-                <div *ngSwitchCase="gamepadButtonsTypes.Button">
-                    {{ (buttonConfig$ | ngrxPush)?.nameL10nKey | transloco }}
-                    | {{ 'gamepadPlugins.gamepadButtonState' | transloco: (buttonValue$ | ngrxPush) }}
-                </div>
-                <div *ngSwitchCase="gamepadButtonsTypes.Trigger">
-                    {{ (buttonConfig$ | ngrxPush)?.nameL10nKey | transloco }} | {{ (buttonValue$ | ngrxPush)?.value }}
-                </div>
-            </ng-container>
-        </ng-container>
-        <ng-template #noButtonConfig>
-            <p>
-                {{ 'bindingInputButtonOfUnknownGamepad' | transloco }}
-            </p>
-        </ng-template>
-    </ng-container>
-    <ng-container *ngSwitchCase="inputMethods.Axis">
-        <p *ngIf="axisConfig$ | ngrxPush; let axisConfig; else noAxisConfig">
-            {{ axisConfig.nameL10nKey | transloco }} | {{ axisValue$ | ngrxPush }}
-        </p>
-        <ng-template #noAxisConfig>
-            <p>
-                {{ 'bindingInputAxisOfUnknownGamepad' | transloco }}
-            </p>
-        </ng-template>
+<p>
+    {{ inputName$ | ngrxPush }}
+</p>
 
-    </ng-container>
-</section>
+<ng-container [ngSwitch]="inputType$ | ngrxPush">
+    <p *ngSwitchCase="inputTypes.Button">
+        {{ buttonStateL10nKey$ | ngrxPush | transloco: (inputValue$ | ngrxPush) }}
+    </p>
+    <p *ngSwitchCase="inputTypes.Axis">
+        {{ axisStateL10nKey$ | ngrxPush | transloco: (inputValue$ | ngrxPush) }}
+    </p>
+</ng-container>

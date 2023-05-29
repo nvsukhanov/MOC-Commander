@@ -102,13 +102,13 @@ export class ControlSchemeBindingOutputComponent {
 
         this._availableIOs$ = combineLatest([
             outputGroup.controls.hubId.valueChanges.pipe(startWith(outputGroup.controls.hubId.value)),
-            inputGroup.controls.gamepadInputMethod.valueChanges.pipe(startWith(inputGroup.controls.gamepadInputMethod.value))
+            inputGroup.controls.inputType.valueChanges.pipe(startWith(inputGroup.controls.inputType.value))
         ]).pipe(
-            switchMap(([ hubId, gamepadInputMethod ]) => {
+            switchMap(([ hubId, inputType ]) => {
                 if (hubId === null) {
                     return of([]);
                 }
-                return this.store.select(HUB_ATTACHED_IO_SELECTORS.selectIOsControllableByMethod(hubId, gamepadInputMethod));
+                return this.store.select(HUB_ATTACHED_IO_SELECTORS.selectIOsControllableByInputType(hubId, inputType));
             }),
             map((ios) => ios.map((io) => io.ioConfig))
         );
@@ -116,13 +116,13 @@ export class ControlSchemeBindingOutputComponent {
         this._availableIOOperationModes$ = combineLatest([
             outputGroup.controls.hubId.valueChanges.pipe(startWith(outputGroup.controls.hubId.value)),
             outputGroup.controls.portId.valueChanges.pipe(startWith(outputGroup.controls.portId.value)),
-            inputGroup.controls.gamepadInputMethod.valueChanges.pipe(startWith(inputGroup.controls.gamepadInputMethod.value))
+            inputGroup.controls.inputType.valueChanges.pipe(startWith(inputGroup.controls.inputType.value))
         ]).pipe(
-            switchMap(([ hubId, portId, gamepadInputMethod ]) => {
+            switchMap(([ hubId, portId, inputType ]) => {
                 if (hubId === null || portId === null) {
                     return of([]);
                 }
-                return this.store.select(HUB_ATTACHED_IO_SELECTORS.selectHubIOOperationModes(hubId, portId, gamepadInputMethod));
+                return this.store.select(HUB_ATTACHED_IO_SELECTORS.selectHubIOOperationModes(hubId, portId, inputType));
             }),
             shareReplay({ bufferSize: 1, refCount: true })
         );

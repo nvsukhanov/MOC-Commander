@@ -1,9 +1,8 @@
 import { HubDiscoveryState, IState } from './i-state';
 import {
     CONTROL_SCHEMES_ENTITY_ADAPTER,
-    GAMEPAD_AXES_STATES_ENTITY_ADAPTER,
-    GAMEPAD_BUTTONS_STATES_ENTITY_ADAPTER,
-    GAMEPADS_ENTITY_ADAPTER,
+    CONTROLLER_INPUT_ENTITY_ADAPTER,
+    CONTROLLERS_ENTITY_ADAPTER,
     HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER,
     HUB_ATTACHED_IOS_ENTITY_ADAPTER,
     HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER,
@@ -14,6 +13,11 @@ import {
 import { RouterState } from '@ngrx/router-store';
 
 export const INITIAL_STATE: IState = {
+    controllers: CONTROLLERS_ENTITY_ADAPTER.getInitialState(),
+    controllerInput: CONTROLLER_INPUT_ENTITY_ADAPTER.getInitialState(),
+    controllerInputCapture: {
+        listenersCount: 0
+    },
     controlSchemes: CONTROL_SCHEMES_ENTITY_ADAPTER.getInitialState(),
     controlSchemeConfigurationState: {
         isListening: false
@@ -21,9 +25,6 @@ export const INITIAL_STATE: IState = {
     controlSchemeRunningState: {
         runningSchemeId: null
     },
-    gamepads: GAMEPADS_ENTITY_ADAPTER.getInitialState(),
-    gamepadAxesState: GAMEPAD_AXES_STATES_ENTITY_ADAPTER.getInitialState(),
-    gamepadButtonsState: GAMEPAD_BUTTONS_STATES_ENTITY_ADAPTER.getInitialState(),
     hubs: HUBS_ENTITY_ADAPTER.getInitialState(),
     hubDiscoveryState: {
         discoveryState: HubDiscoveryState.Idle

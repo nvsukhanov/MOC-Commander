@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BindingLinearOutputState, BindingOutputState, BindingServoOutputState, GamepadInputMethod, HubIoOperationMode } from '../../../store';
+import { BindingLinearOutputState, BindingOutputState, BindingServoOutputState, ControllerInputType, HubIoOperationMode } from '../../../store';
 import { ControlSchemeBindingOutputForm, LinearOutputConfiguration, ServoOutputConfiguration } from '../binding-output';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
@@ -26,20 +26,18 @@ export class ControlSchemeFormFactoryService {
 
     public createBindingForm(
         id: string,
-        gamepadId: number,
-        inputMethod: GamepadInputMethod,
-        gamepadAxisId: number | null = null,
-        gamepadButtonId: number | null = null,
+        controllerId: string,
+        inputId: string,
+        inputType: ControllerInputType,
         hubId: string,
         portId: number,
         operationMode: HubIoOperationMode,
         initialState?: BindingOutputState
     ): BindingForm {
         const inputControl: ControlSchemeBindingInputForm = this.formBuilder.group({
-            gamepadId: this.formBuilder.control(gamepadId, { nonNullable: true, validators: [ Validators.required ] }),
-            gamepadInputMethod: this.formBuilder.control(inputMethod, { nonNullable: true, validators: [ Validators.required ] }),
-            gamepadAxisId: this.formBuilder.control(gamepadAxisId ?? null),
-            gamepadButtonId: this.formBuilder.control(gamepadButtonId ?? null),
+            controllerId: this.formBuilder.control(controllerId, { nonNullable: true, validators: [ Validators.required ] }),
+            inputId: this.formBuilder.control(inputId, { nonNullable: true, validators: [ Validators.required ] }),
+            inputType: this.formBuilder.control<ControllerInputType>(inputType, { nonNullable: true, validators: [ Validators.required ] }),
         });
 
         const outputFrom: ControlSchemeBindingOutputForm = this.createOutputControlForm(

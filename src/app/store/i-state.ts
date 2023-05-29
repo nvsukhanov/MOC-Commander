@@ -3,8 +3,14 @@ import { EntityState } from '@ngrx/entity';
 import { RouterState } from '@ngrx/router-store';
 import { HubIoOperationMode } from './hub-io-operation-mode';
 import { PortCommandTask } from '../common';
+import { ControllerType } from '../plugins';
 
 export interface IState {
+    controllers: EntityState<Controller>;
+    controllerInput: EntityState<ControllerInput>;
+    controllerInputCapture: {
+        listenersCount: number;
+    },
     controlSchemes: EntityState<ControlScheme>;
     controlSchemeConfigurationState: {
         isListening: boolean;
@@ -12,9 +18,6 @@ export interface IState {
     controlSchemeRunningState: {
         runningSchemeId: string | null;
     };
-    gamepads: EntityState<GamepadConfig>;
-    gamepadAxesState: EntityState<GamepadAxisState>;
-    gamepadButtonsState: EntityState<GamepadButtonState>;
     hubs: EntityState<HubConfiguration>,
     hubDiscoveryState: {
         discoveryState: HubDiscoveryState;
@@ -40,6 +43,35 @@ export interface IState {
         isAvailable: boolean;
     },
     router: RouterState;
+}
+
+export enum ControllerInputType {
+    Button = 'Button',
+    Axis = 'Axis',
+    Trigger = 'Trigger'
+}
+
+export type ControllerInput = {
+    controllerId: string;
+    inputType: ControllerInputType;
+    inputId: string;
+    value: number;
+}
+
+export type Controller = GamepadController | KeyboardController;
+
+export type GamepadController = {
+    id: string;
+    controllerType: ControllerType.Gamepad;
+    gamepadIndex: number;
+    axesCount: number;
+    buttonsCount: number;
+    triggerButtonIndices: number[];
+}
+
+export type KeyboardController = {
+    id: string;
+    controllerType: ControllerType.Keyboard;
 }
 
 export type AttachedIOState = {
@@ -83,11 +115,10 @@ export type BindingOutputState = BindingLinearOutputState | BindingServoOutputSt
 export type ControlSchemeBinding = {
     id: string;
     input: {
-        gamepadId: number;
-        gamepadInputMethod: GamepadInputMethod;
-        gamepadAxisId: number | null;
-        gamepadButtonId: number | null;
-    };
+        controllerId: string;
+        inputType: ControllerInputType;
+        inputId: string;
+    }
     output: BindingOutputState;
 }
 
@@ -132,45 +163,3 @@ export type AttachedIO = {
     hardwareRevision: string;
     softwareRevision: string;
 }
-
-export type GamepadConfig = {
-    gamepadIndex: number;
-    name: string;
-    nameL10nKey: string;
-    axes: Array<GamepadAxisConfig>;
-    buttons: Array<GamepadButtonConfig>;
-}
-
-export type GamepadAxisState = {
-    gamepadIndex: number;
-    axisIndex: number;
-    value: number;
-}
-
-export type GamepadButtonState = {
-    gamepadIndex: number;
-    buttonIndex: number;
-    value: number;
-}
-
-export type GamepadAxisConfig = {
-    index: number;
-    nameL10nKey: string;
-}
-
-export enum GamepadInputMethod {
-    Axis,
-    Button
-}
-
-export enum GamepadButtonType {
-    Button,
-    Trigger
-}
-
-export type GamepadButtonConfig = {
-    index: number;
-    buttonType: GamepadButtonType;
-    nameL10nKey: string;
-}
-

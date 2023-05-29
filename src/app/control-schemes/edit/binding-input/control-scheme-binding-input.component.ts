@@ -1,28 +1,19 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { map, NEVER, Observable, of, startWith, switchMap } from 'rxjs';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { combineLatest, EMPTY, map, NEVER, Observable, startWith, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
-import {
-    GAMEPAD_AXES_STATE_SELECTORS,
-    GAMEPAD_BUTTONS_STATE_SELECTORS,
-    GAMEPAD_SELECTORS,
-    GamepadAxisConfig,
-    GamepadButtonConfig,
-    GamepadButtonState,
-    GamepadButtonType,
-    GamepadInputMethod
-} from '../../../store';
+import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS, controllerInputIdFn, ControllerInputType } from '../../../store';
 import { JsonPipe, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import { ControllerPluginFactoryService } from '../../../plugins';
 
 export type ControlSchemeBindingInputForm = FormGroup<{
-    gamepadId: FormControl<number>,
-    gamepadInputMethod: FormControl<GamepadInputMethod>,
-    gamepadAxisId: FormControl<number | null>,
-    gamepadButtonId: FormControl<number | null>,
+    controllerId: FormControl<string>,
+    inputId: FormControl<string>,
+    inputType: FormControl<ControllerInputType>
 }>;
 
 @Component({
@@ -43,114 +34,121 @@ export type ControlSchemeBindingInputForm = FormGroup<{
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ControlSchemeBindingInputComponent {
-    public readonly inputMethods = GamepadInputMethod;
+export class ControlSchemeBindingInputComponent implements OnInit, OnDestroy {
+    public readonly inputTypes = ControllerInputType;
 
-    public readonly gamepadButtonsTypes = GamepadButtonType;
+    private _controllerNameL10nKey$: Observable<string> = NEVER;
 
-    private _gamepadNameL10nKey$: Observable<string> = NEVER;
+    private _buttonStateL10nKey$: Observable<string> = NEVER;
 
-    private _inputMethod$: Observable<GamepadInputMethod> = NEVER;
+    private _axisStateL10nKey$: Observable<string> = NEVER;
 
-    private _axisConfig$: Observable<GamepadAxisConfig | undefined> = NEVER;
+    private _inputName$: Observable<string> = NEVER;
 
-    private _axisValue$: Observable<number | undefined> = NEVER;
+    private _inputType$: Observable<ControllerInputType> = NEVER;
 
-    private _buttonConfig$: Observable<GamepadButtonConfig | undefined> = NEVER;
-
-    private _buttonValue$: Observable<GamepadButtonState | undefined> = NEVER;
+    private _inputValue$: Observable<{ value: number }> = NEVER;
 
     constructor(
-        private readonly store: Store
+        private readonly store: Store,
+        private readonly controllerPluginFactoryService: ControllerPluginFactoryService
     ) {
     }
 
-    public get gamepadNameL10nKey$(): Observable<string> {
-        return this._gamepadNameL10nKey$;
+    public get controllerNameL10nKey$(): Observable<string> {
+        return this._controllerNameL10nKey$;
     }
 
-    public get inputMethod$(): Observable<GamepadInputMethod> {
-        return this._inputMethod$;
+    public get buttonStateL10nKey$(): Observable<string> {
+        return this._buttonStateL10nKey$;
     }
 
-    public get axisConfig$(): Observable<GamepadAxisConfig | undefined> {
-        return this._axisConfig$;
+    public get axisStateL10nKey$(): Observable<string> {
+        return this._axisStateL10nKey$;
     }
 
-    public get axisValue$(): Observable<number | undefined> {
-        return this._axisValue$;
+    public get inputName$(): Observable<string> {
+        return this._inputName$;
     }
 
-    public get buttonConfig$(): Observable<GamepadButtonConfig | undefined> {
-        return this._buttonConfig$;
+    public get inputValue$(): Observable<{ value: number }> {
+        return this._inputValue$;
     }
 
-    public get buttonValue$(): Observable<GamepadButtonState | undefined> {
-        return this._buttonValue$;
+    public get inputType$(): Observable<ControllerInputType> {
+        return this._inputType$;
     }
 
     @Input()
-    public set inputFormGroup(formGroup: ControlSchemeBindingInputForm) {
-        this._gamepadNameL10nKey$ = formGroup.controls.gamepadId.valueChanges.pipe(
-            startWith(formGroup.controls.gamepadId.value),
-            switchMap((gamepadId) => this.store.select(GAMEPAD_SELECTORS.selectById(gamepadId))),
-            map((gamepad) => gamepad?.nameL10nKey ?? '')
+    public set inputFormGroup(
+        formGroup: ControlSchemeBindingInputForm
+    ) {
+        const controllerId$ = formGroup.controls.controllerId.valueChanges.pipe(
+            startWith(formGroup.controls.controllerId.value),
+        );
+        const controllerPlugin$ = controllerId$.pipe(
+            switchMap((controllerId) => this.store.select(CONTROLLER_SELECTORS.selectById(controllerId))),
+            map((controller) => this.controllerPluginFactoryService.getPlugin(controller?.controllerType, controller?.id))
         );
 
-        this._inputMethod$ = formGroup.controls.gamepadInputMethod.valueChanges.pipe(
-            startWith(formGroup.controls.gamepadInputMethod.value),
+        const inputId$ = formGroup.controls.inputId.valueChanges.pipe(
+            startWith(formGroup.controls.inputId.value),
         );
 
-        this._axisConfig$ = formGroup.controls.gamepadInputMethod.valueChanges.pipe(
-            startWith(formGroup.controls.gamepadInputMethod.value),
-            switchMap((inputMethod) =>
-                inputMethod === GamepadInputMethod.Axis
-                ? this.store.select(GAMEPAD_SELECTORS.selectAxisConfigByIndex(
-                    formGroup.controls.gamepadId.value,
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    formGroup.controls.gamepadAxisId.value!
-                ))
-                : of(undefined)
-            )
+        this._inputType$ = formGroup.controls.inputType.valueChanges.pipe(
+            startWith(formGroup.controls.inputType.value),
         );
 
-        this._axisValue$ = formGroup.controls.gamepadInputMethod.valueChanges.pipe(
-            startWith(formGroup.controls.gamepadInputMethod.value),
-            switchMap((inputMethod) =>
-                inputMethod === GamepadInputMethod.Axis
-                ? this.store.select(GAMEPAD_AXES_STATE_SELECTORS.selectValueByIndex(
-                    formGroup.controls.gamepadId.value,
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    formGroup.controls.gamepadAxisId.value!
-                ))
-                : of(undefined)
-            )
+        this._controllerNameL10nKey$ = controllerPlugin$.pipe(
+            map((controllerPlugin) => controllerPlugin.nameL10nKey),
         );
 
-        this._buttonConfig$ = formGroup.controls.gamepadInputMethod.valueChanges.pipe(
-            startWith(formGroup.controls.gamepadInputMethod.value),
-            switchMap((inputMethod) =>
-                inputMethod === GamepadInputMethod.Button
-                ? this.store.select(GAMEPAD_SELECTORS.selectButtonConfigByIndex(
-                    formGroup.controls.gamepadId.value,
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    formGroup.controls.gamepadButtonId.value!
-                ))
-                : of(undefined)
-            )
+        this._inputName$ = combineLatest([
+            controllerPlugin$,
+            inputId$,
+            this._inputType$
+        ]).pipe(
+            switchMap(([ controllerPlugin, inputId, inputType ]) => {
+                switch (inputType) {
+                    case ControllerInputType.Axis:
+                        return controllerPlugin.getAxisName$(inputId);
+                    case ControllerInputType.Button:
+                        return controllerPlugin.getButtonName$(inputId);
+                    default:
+                        return EMPTY;
+                }
+            })
         );
 
-        this._buttonValue$ = formGroup.controls.gamepadInputMethod.valueChanges.pipe(
-            startWith(formGroup.controls.gamepadInputMethod.value),
-            switchMap((inputMethod) =>
-                inputMethod === GamepadInputMethod.Button
-                ? this.store.select(GAMEPAD_BUTTONS_STATE_SELECTORS.selectByIndex(
-                    formGroup.controls.gamepadId.value,
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    formGroup.controls.gamepadButtonId.value!
-                ))
-                : of(undefined)
-            )
+        this._buttonStateL10nKey$ = controllerPlugin$.pipe(
+            map((c) => c.buttonStateL10nKey)
         );
+
+        this._axisStateL10nKey$ = controllerPlugin$.pipe(
+            map((c) => c.axisStateL10nKey)
+        );
+
+        this._inputValue$ = combineLatest([
+            controllerId$,
+            inputId$,
+            this._inputType$
+        ]).pipe(
+            switchMap(([ controllerId, inputId, inputType ]) =>
+                this.store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(controllerInputIdFn({
+                    controllerId,
+                    inputId,
+                    inputType
+                }))),
+            ),
+            map((value) => ({ value }))
+        );
+    }
+
+    public ngOnInit(): void {
+        this.store.dispatch(CONTROLLER_INPUT_ACTIONS.requestInputCapture());
+    }
+
+    public ngOnDestroy(): void {
+        this.store.dispatch(CONTROLLER_INPUT_ACTIONS.releaseInputCapture());
     }
 }

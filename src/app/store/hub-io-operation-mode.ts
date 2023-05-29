@@ -1,4 +1,4 @@
-import { GamepadInputMethod } from './i-state';
+import { ControllerInputType } from './i-state';
 import { PortModeName } from '@nvsukhanov/rxpoweredup';
 
 export enum HubIoOperationMode {
@@ -7,13 +7,13 @@ export enum HubIoOperationMode {
     // SetColor = 'set-color',
 }
 
-export const HUB_IO_CONTROL_METHODS: { [k in GamepadInputMethod]: { [p in HubIoOperationMode]?: PortModeName } } = {
-    [GamepadInputMethod.Axis]: {
+export const HUB_IO_CONTROL_METHODS: { [k in ControllerInputType]: { [p in HubIoOperationMode]?: PortModeName } } = {
+    [ControllerInputType.Axis]: {
         [HubIoOperationMode.Linear]: PortModeName.speed,
         [HubIoOperationMode.Servo]: PortModeName.absolutePosition,
     },
-    [GamepadInputMethod.Button]: {
+    [ControllerInputType.Button]: {
         [HubIoOperationMode.Linear]: PortModeName.speed,
-        // [HubIoOperationMode.SetColor]: PortModeName.rgb
     },
+    [ControllerInputType.Trigger]: {}
 } as const;

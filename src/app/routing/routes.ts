@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
-import { HUB_IO_I18N_SCOPE } from '../i18n';
+import { L10nScopes } from '../i18n';
 import { NotFoundComponent } from '../common';
 
 export const ROUTE_PATHS = {
@@ -33,10 +33,13 @@ export const ROUTES: Routes = [
     {
         path: ROUTE_PATHS.controllers,
         loadComponent: () => import('../controllers/controllers-list').then(m => m.ControllersListComponent),
-        pathMatch: 'full',
+        pathMatch: 'full'
     },
     {
         path: ROUTE_PATHS.hubs,
+        providers: [
+            { provide: TRANSLOCO_SCOPE, useValue: L10nScopes.io, multi: true },
+        ],
         children: [
             {
                 path: '',
@@ -46,18 +49,12 @@ export const ROUTES: Routes = [
             {
                 path: [ ':id' ].join('/'),
                 loadComponent: () => import('../hubs/hub-view').then(m => m.HubViewComponent),
-                pathMatch: 'full',
-                providers: [
-                    { provide: TRANSLOCO_SCOPE, useValue: HUB_IO_I18N_SCOPE, multi: true },
-                ]
+                pathMatch: 'full'
             },
             {
                 path: [ ':id', ROUTE_PATHS.hubEdit ].join('/'),
                 loadComponent: () => import('../hubs/hub-edit').then(m => m.HubEditComponent),
                 pathMatch: 'full',
-                providers: [
-                    { provide: TRANSLOCO_SCOPE, useValue: HUB_IO_I18N_SCOPE, multi: true },
-                ]
             },
         ]
     },
@@ -72,7 +69,7 @@ export const ROUTES: Routes = [
             {
                 path: [ ROUTE_PATHS.controlSchemeCreate ].join('/'),
                 loadComponent: () => import('../control-schemes/create').then(m => m.ControlSchemeCreateComponent),
-                pathMatch: 'full',
+                pathMatch: 'full'
             },
             {
                 path: [ ':id' ].join('/'),

@@ -11,7 +11,7 @@ export function provideI18n(): EnvironmentProviders {
             useValue: translocoConfig({
                 availableLangs: [ 'en' ],
                 defaultLang: 'en',
-                prodMode: !isDevMode(),
+                prodMode: !isDevMode()
             })
         },
         { provide: TRANSLOCO_LOADER, useClass: I18nLoaderService },

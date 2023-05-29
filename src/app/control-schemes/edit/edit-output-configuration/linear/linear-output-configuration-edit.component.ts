@@ -1,5 +1,5 @@
 import { IOutputConfigurationRenderer } from '../i-output-configuration-renderer';
-import { GamepadInputMethod } from '../../../../store';
+import { ControllerInputType } from '../../../../store';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -27,13 +27,11 @@ import { ControlSchemeBindingOutputForm } from '../../binding-output';
 export class LinearOutputConfigurationEditComponent implements IOutputConfigurationRenderer {
     public readonly motorLimits = MOTOR_LIMITS;
 
-    public readonly gamepadInputMethod = GamepadInputMethod;
-
-    protected readonly GamepadInputMethod = GamepadInputMethod;
+    public readonly controllerInputType = ControllerInputType;
 
     private _outputBinding?: ControlSchemeBindingOutputForm;
 
-    private _inputMethodControl?: FormControl<GamepadInputMethod>;
+    private _inputMethodControl?: FormControl<ControllerInputType>;
 
     constructor(
         private readonly cd: ChangeDetectorRef
@@ -44,7 +42,7 @@ export class LinearOutputConfigurationEditComponent implements IOutputConfigurat
         return this._outputBinding;
     }
 
-    public get inputMethodControl(): FormControl<GamepadInputMethod> | undefined {
+    public get inputMethodControl(): FormControl<ControllerInputType> | undefined {
         return this._inputMethodControl;
     }
 
@@ -60,8 +58,8 @@ export class LinearOutputConfigurationEditComponent implements IOutputConfigurat
     public setInputFormControl(
         inputFormControl: ControlSchemeBindingInputForm
     ): void {
-        if (inputFormControl.controls.gamepadInputMethod !== this._inputMethodControl) {
-            this._inputMethodControl = inputFormControl.controls.gamepadInputMethod;
+        if (inputFormControl.controls.inputType !== this._inputMethodControl) {
+            this._inputMethodControl = inputFormControl.controls.inputType;
             this.cd.detectChanges();
         }
     }
