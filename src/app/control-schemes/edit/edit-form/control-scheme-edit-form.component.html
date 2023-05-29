@@ -9,11 +9,17 @@
 <mat-card *ngFor="let binding of form.controls.bindings.controls; let index = index"
           class="binding"
 >
-    <mat-card-content class="binding-details">
+    <mat-card-content class="binding-details"
+                      [class.binding-details_small-screen]="isSmallScreen"
+    >
         <app-control-scheme-binding-input [inputFormGroup]="binding.controls.input"></app-control-scheme-binding-input>
-        <mat-divider [vertical]="true"></mat-divider>
+        <mat-divider *ngIf="!isSmallScreen"
+                     [vertical]="true"
+        ></mat-divider>
         <app-control-scheme-binding-output [formGroup]="binding"></app-control-scheme-binding-output>
-        <mat-divider [vertical]="true"></mat-divider>
+        <mat-divider *ngIf="!isSmallScreen"
+                     [vertical]="true"
+        ></mat-divider>
         <app-control-scheme-binding-configuration [formGroup]="binding"></app-control-scheme-binding-configuration>
     </mat-card-content>
     <mat-card-actions [align]="'end'">
@@ -38,19 +44,6 @@
         </button>
     </mat-card-actions>
 </mat-card>
-
-<mat-accordion class="scheme-raw">
-    <mat-expansion-panel>
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                Raw scheme
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-card-content>
-            <pre>{{ form.value | json }}</pre>
-        </mat-card-content>
-    </mat-expansion-panel>
-</mat-accordion>
 
 <section class="binding-actions">
     <button mat-fab

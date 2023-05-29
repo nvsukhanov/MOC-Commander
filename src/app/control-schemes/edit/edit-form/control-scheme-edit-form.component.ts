@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
     CONTROL_SCHEME_CONFIGURATION_ACTIONS,
     CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS,
     CONTROLLER_INPUT_SELECTORS,
     ControllerInput,
+    CONTROLLERS_ACTIONS,
     ControlScheme,
     HUB_ATTACHED_IO_SELECTORS,
     HUBS_SELECTORS
@@ -15,12 +16,12 @@ import { JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
-import { filter, map, of, Subject, take, takeUntil } from 'rxjs';
+import { filter, map, of, Subject, Subscription, take, takeUntil } from 'rxjs';
 import { concatLatestFrom } from '@ngrx/effects';
 import { ControlSchemeBindingInputComponent } from '../binding-input';
 import { ControlSchemeBindingOutputComponent } from '../binding-output';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { WINDOW } from '../../../common'; // TODO: create alias for this
+import { ScreenSizeObserverService, WINDOW } from '../../../common'; // TODO: create alias for this
 import { MatInputModule } from '@angular/material/input';
 import { ControlSchemeFormFactoryService } from './control-scheme-form-factory.service';
 import { EditSchemeForm } from '../types';
@@ -56,7 +57,7 @@ export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ControlSchemeEditFormComponent implements OnDestroy {
+export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
     public readonly form = this.controlSchemeFormFactoryService.createEditSchemeForm(
         this.window.crypto.randomUUID(),
         'New Scheme' // TODO: translate
@@ -70,12 +71,21 @@ export class ControlSchemeEditFormComponent implements OnDestroy {
 
     private isCapturingInput = false;
 
+    private _isSmallScreen = false;
+
+    private sub?: Subscription;
+
     constructor(
         private readonly store: Store,
         @Inject(WINDOW) private readonly window: Window,
         private readonly controlSchemeFormFactoryService: ControlSchemeFormFactoryService,
-        private readonly cdRef: ChangeDetectorRef
+        private readonly cdRef: ChangeDetectorRef,
+        private readonly screenSizeObserverService: ScreenSizeObserverService,
     ) {
+    }
+
+    public get isSmallScreen(): boolean {
+        return this._isSmallScreen;
     }
 
     public get isValid(): boolean {
@@ -102,11 +112,20 @@ export class ControlSchemeEditFormComponent implements OnDestroy {
         this.form.markAsPristine();
     }
 
+    public ngOnInit(): void {
+        this.sub = this.screenSizeObserverService.isSmallScreen$.subscribe((isSmallScreen) => {
+            this._isSmallScreen = isSmallScreen;
+            this.cdRef.markForCheck();
+        });
+        this.store.dispatch(CONTROLLERS_ACTIONS.waitForConnect());
+    }
+
     public getFormValue(): BindingFormResult {
         return this.form.getRawValue();
     }
 
     public ngOnDestroy(): void {
+        this.sub?.unsubscribe();
         this.onDestroy$.next();
         this.onDestroy$.complete();
         this.stopInputCapture();
