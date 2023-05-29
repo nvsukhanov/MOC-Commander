@@ -3,10 +3,6 @@
 }
 
 .io-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
     &-validation-errors {
         display: flex;
         flex-direction: row;

@@ -1,11 +1,6 @@
 import { Injectable, TemplateRef } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-export type FeatureToolbarConfig = {
-    readonly title: string;
-    readonly controlsTemplate: TemplateRef<unknown> | null;
-}
-
 @Injectable({ providedIn: 'root' })
 export class FeatureToolbarService {
     public readonly controlsTemplate$: Observable<TemplateRef<unknown> | null>;

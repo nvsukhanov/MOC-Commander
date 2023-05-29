@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { ControllerInputType, GamepadController, IState, KeyboardController } from '../i-state';
+import { GamepadController, IState, KeyboardController } from '../i-state';
 import { CONTROLLERS_ENTITY_ADAPTER } from '../entity-adapters';
 import { ControllerType } from '../../plugins';
 
@@ -31,30 +31,6 @@ export const CONTROLLER_SELECTORS = {
     selectById: (id: string) => createSelector(
         CONTROLLERS_SELECT_ENTITIES,
         (entities) => entities[id]
-    ),
-    selectControllerHasInput: (
-        controllerId: string,
-        inputType: ControllerInputType,
-        inputId: string
-    ) => createSelector(
-        CONTROLLER_SELECTORS.selectById(controllerId),
-        (controller) => {
-            if (!controller) {
-                return false;
-            }
-            if (controller.controllerType === ControllerType.Keyboard && inputType === ControllerInputType.Button) {
-                return true;
-            }
-            if (controller.controllerType === ControllerType.Gamepad) {
-                if (inputType === ControllerInputType.Button) {
-                    return controller.buttonsCount > Number(inputId);
-                } else if (inputType === ControllerInputType.Axis) {
-                    return controller.axesCount > Number(inputId);
-                }
-                return false;
-            }
-            return false;
-        }
     ),
     count: createSelector(
         CONTROLLERS_SELECT_ALL,

@@ -1,6 +1,4 @@
 import { Routes } from '@angular/router';
-import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
-import { L10nScopes } from '../i18n';
 import { NotFoundComponent } from '../common';
 
 export const ROUTE_PATHS = {
@@ -37,9 +35,6 @@ export const ROUTES: Routes = [
     },
     {
         path: ROUTE_PATHS.hubs,
-        providers: [
-            { provide: TRANSLOCO_SCOPE, useValue: L10nScopes.io, multi: true },
-        ],
         children: [
             {
                 path: '',

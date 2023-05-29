@@ -3,6 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {
     CONTROL_SCHEME_CONFIGURATION_ACTIONS,
     CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS,
+    CONTROLLER_INPUT_SELECTORS,
     ControllerInput,
     ControlScheme,
     HUB_ATTACHED_IO_SELECTORS,
@@ -27,7 +28,6 @@ import { ControlSchemeBindingConfigurationComponent } from '../binding-config';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { CONTROLLER_INPUT_SELECTORS } from '../../../store/selectors/controller-input.selectors';
 
 export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
 

@@ -17,7 +17,7 @@ export abstract class ControllerPlugin implements IControllerPlugin {
 
     protected abstract buttonNames: { readonly [k in string]: Observable<string> };
 
-    constructor(
+    protected constructor(
         protected readonly translocoService: TranslocoService,
         protected readonly l10nScopeName: string
     ) {

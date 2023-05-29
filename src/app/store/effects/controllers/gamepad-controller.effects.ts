@@ -3,10 +3,9 @@ import { Action, Store } from '@ngrx/store';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { CONTROLLER_INPUT_ACTIONS, CONTROLLERS_ACTIONS } from '../../actions';
 import { filter, from, fromEvent, interval, map, merge, NEVER, Observable, switchMap } from 'rxjs';
-import { CONTROLLER_INPUT_CAPTURE_SELECTORS, CONTROLLER_SELECTORS } from '../../selectors';
+import { CONTROLLER_INPUT_CAPTURE_SELECTORS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS } from '../../selectors';
 import { ControllerInputType } from '../../i-state';
 import { WINDOW } from '../../../common';
-import { CONTROLLER_INPUT_SELECTORS } from '../../selectors/controller-input.selectors';
 import { controllerIdFn, controllerInputIdFn } from '../../entity-adapters';
 import { ControllerPluginFactoryService, ControllerType } from '../../../plugins';
 

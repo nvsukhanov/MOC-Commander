@@ -120,16 +120,6 @@ export const HUB_ATTACHED_IO_SELECTORS = {
             return null;
         }
     ),
-    isIOAttached: (
-        hubId: string,
-        portId: number,
-        ioType: IOType
-    ) => createSelector(
-        HUB_ATTACHED_IO_SELECTORS.selectIOAtPort(hubId, portId),
-        (io) => {
-            return io?.ioType === ioType;
-        }
-    ),
     canCalibrateServo: (
         hubId: string,
         portId: number,
