@@ -1,1 +1,1 @@
-export * from './gamepads';
+export * from './controllers';

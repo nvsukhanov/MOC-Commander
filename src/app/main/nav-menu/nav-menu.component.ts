@@ -7,7 +7,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import {
     BLUETOOTH_AVAILABILITY_SELECTORS,
     CONTROL_SCHEME_SELECTORS,
-    GAMEPAD_SELECTORS,
+    CONTROLLER_SELECTORS,
     HUB_DISCOVERY_STATE_SELECTORS,
     HUBS_ACTIONS,
     HUBS_SELECTORS
@@ -41,7 +41,7 @@ import { RoutesBuilderService } from '../../routing';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavMenuComponent {
-    public readonly connectedControllersCount$ = this.store.select(GAMEPAD_SELECTORS.selectGamepadsCount);
+    public readonly connectedControllersCount$ = this.store.select(CONTROLLER_SELECTORS.count);
 
     public readonly connectedHubCount$ = this.store.select(HUBS_SELECTORS.selectHubsCount);
 

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { HUB_ATTACHED_IO_SELECTORS, HubConfiguration, HUBS_ACTIONS, HUBS_SELECTORS, IOFullInfo, ROUTER_SELECTORS } from '../../../store';
+import { HUB_ATTACHED_IO_SELECTORS, hubAttachedIosIdFn, HubConfiguration, HUBS_ACTIONS, HUBS_SELECTORS, IOFullInfo, ROUTER_SELECTORS } from '../../../store';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { EMPTY, Observable, switchMap, take } from 'rxjs';
@@ -13,7 +13,6 @@ import { HubIoViewComponent } from '../hub-port-view';
 import { NotFoundComponent } from '../../../common';
 import { Router } from '@angular/router';
 import { RoutesBuilderService } from '../../../routing';
-import { hubAttachedIosIdFn } from '../../../store/entity-adapters';
 
 @Component({
     standalone: true,

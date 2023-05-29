@@ -95,12 +95,12 @@ export class HubPortTasksEffects {
         portCommandTaskComposerFactory: PortCommandTaskComposerFactoryService,
         taskSuppressorFactory: TaskSuppressorFactory,
         taskExecutorFactory: TaskExecutorFactoryService,
-        queueCompresorFactory: TaskQueueCompressorFactoryService,
+        queueCompressorFactory: TaskQueueCompressorFactoryService,
     ) {
         this.taskComposer = portCommandTaskComposerFactory.create();
         this.taskSuppressor = taskSuppressorFactory.create();
         this.taskExecutor = taskExecutorFactory.create();
-        this.queueCompressor = queueCompresorFactory.create();
+        this.queueCompressor = queueCompressorFactory.create();
     }
 
     private composeTasks(

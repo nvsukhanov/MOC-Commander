@@ -5,9 +5,9 @@
         </mat-card-title>
         <div *ngIf="validation"
              class="io-header-validation-errors">
-            <mat-icon *ngIf="validation.gamepadMissing"
+            <mat-icon *ngIf="validation.controllerIsMissing"
                       color="warn"
-                      [title]="'schemeBindingValidationGamepadMissing' | transloco"
+                      [title]="'schemeBindingValidationControllerIsMissing' | transloco"
             >
                 gamepad
             </mat-icon>

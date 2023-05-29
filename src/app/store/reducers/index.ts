@@ -1,7 +1,4 @@
 export * from './bluetooth-availability.reducers';
-export * from './gamepads.reducers';
-export * from './gamepad-axes-state.reducers';
-export * from './gamepad-buttons-state.reducer';
 export * from './hub-port-mode-info.reducers';
 export * from './hub-attached-ios.reducers';
 export * from './hub-io-supported-modes.reducers';
@@ -14,3 +11,6 @@ export * from './hub-edit-form-active-saves.reducers';
 export * from './hub-discovery-state.reducers';
 export * from './servo-calibration.reducers';
 export * from './hub-attached-io-state.reducers';
+export * from './controllers.reducers';
+export * from './controller-input.reducers';
+export * from './controller-input-capture.reducers';

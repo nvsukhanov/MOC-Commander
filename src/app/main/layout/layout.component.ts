@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { GAMEPAD_ACTIONS, GLOBAL_PROGRESS_BAR_SELECTORS } from '../../store';
+import { CONTROLLERS_ACTIONS, GLOBAL_PROGRESS_BAR_SELECTORS } from '../../store';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { RouterOutlet } from '@angular/router';
 import { NgIf } from '@angular/common';
@@ -49,7 +49,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
             this._isSmallScreen = isSmallScreen;
             this.cd.markForCheck();
         });
-        this.store.dispatch(GAMEPAD_ACTIONS.listenGamepadConnected());
+        this.store.dispatch(CONTROLLERS_ACTIONS.waitForConnect());
     }
 
     public ngOnDestroy(): void {

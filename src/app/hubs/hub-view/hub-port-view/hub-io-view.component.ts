@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { IOFullInfo, PortModeInfo } from '../../../store';
+import { hubPortModeInfoIdFn, IOFullInfo, PortModeInfo } from '../../../store';
 import { MatCardModule } from '@angular/material/card';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { IoTypeToL10nKeyPipe } from '../../../i18n';
-import { hubPortModeInfoIdFn } from '../../../store/entity-adapters';
 
 @Component({
     standalone: true,

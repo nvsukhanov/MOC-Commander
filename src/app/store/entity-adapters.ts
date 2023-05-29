@@ -3,16 +3,17 @@ import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import {
     AttachedIO,
     AttachedIOState,
+    Controller,
+    ControllerInput,
+    ControllerInputType,
     ControlScheme,
-    GamepadAxisState,
-    GamepadButtonState,
-    GamepadConfig,
     HubConfiguration,
     HubIoSupportedModes,
     PortModeInfo
 } from './i-state';
 import { IOType } from '@nvsukhanov/rxpoweredup';
 import { PortCommandTask } from '../common';
+import { ControllerType } from '../plugins';
 
 export const HUB_ATTACHED_IOS_ENTITY_ADAPTER: EntityAdapter<AttachedIO> = createEntityAdapter<AttachedIO>({
     selectId: (io) => hubAttachedIosIdFn(io),
@@ -50,33 +51,6 @@ export function hubIOSupportedModesIdFn(
     return `${hardwareRevision}/${softwareRevision}/${ioType}`;
 }
 
-export const GAMEPADS_ENTITY_ADAPTER: EntityAdapter<GamepadConfig> = createEntityAdapter<GamepadConfig>({
-    selectId: (gamepad) => gamepad.gamepadIndex,
-    sortComparer: (a, b) => a.gamepadIndex - b.gamepadIndex
-});
-
-export const GAMEPAD_AXES_STATES_ENTITY_ADAPTER: EntityAdapter<GamepadAxisState> = createEntityAdapter<GamepadAxisState>({
-    selectId: (state) => gamepadAxisIdFn(state),
-    sortComparer: (a, b) => a.axisIndex - b.axisIndex
-});
-
-export function gamepadAxisIdFn(
-    { gamepadIndex, axisIndex }: { gamepadIndex: number, axisIndex: number }
-): string {
-    return `${gamepadIndex}/${axisIndex}`;
-}
-
-export const GAMEPAD_BUTTONS_STATES_ENTITY_ADAPTER: EntityAdapter<GamepadButtonState> = createEntityAdapter<GamepadButtonState>({
-    selectId: (state) => gamepadButtonIdFn(state),
-    sortComparer: (a, b) => a.buttonIndex - b.buttonIndex
-});
-
-export function gamepadButtonIdFn(
-    { gamepadIndex, buttonIndex }: { gamepadIndex: number, buttonIndex: number }
-): string {
-    return `${gamepadIndex}/${buttonIndex}`;
-}
-
 export const CONTROL_SCHEMES_ENTITY_ADAPTER: EntityAdapter<ControlScheme> = createEntityAdapter<ControlScheme>({
     selectId: (scheme) => scheme.id,
     sortComparer: (a, b) => a.index - b.index
@@ -96,3 +70,26 @@ export const HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER: EntityAdapter<AttachedIOState
     selectId: (io) => hubAttachedIosIdFn(io),
 });
 
+export const CONTROLLERS_ENTITY_ADAPTER: EntityAdapter<Controller> = createEntityAdapter<Controller>({
+    selectId: (controller) => controllerIdFn(controller),
+});
+
+export function controllerIdFn(
+    idArgs: { id: string, controllerType: ControllerType.Gamepad, gamepadIndex: number } | { controllerType: ControllerType.Keyboard }
+): string {
+    if (idArgs.controllerType === ControllerType.Gamepad) {
+        return `${idArgs.id}/${idArgs.controllerType}/${idArgs.gamepadIndex}`;
+    } else {
+        return `keyboard`;
+    }
+}
+
+export const CONTROLLER_INPUT_ENTITY_ADAPTER: EntityAdapter<ControllerInput> = createEntityAdapter<ControllerInput>({
+    selectId: (input) => controllerInputIdFn(input),
+});
+
+export function controllerInputIdFn(
+    { controllerId, inputId, inputType }: { controllerId: string, inputId: string, inputType: ControllerInputType }
+): string {
+    return `${controllerId}/${inputType}/${inputId}`;
+}

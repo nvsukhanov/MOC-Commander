@@ -3,10 +3,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { NgForOf, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { GAMEPAD_SELECTORS, GamepadConfig } from '../../store';
+import { Controller, CONTROLLER_SELECTORS } from '../../store';
 import { Store } from '@ngrx/store';
 import { MatIconModule } from '@angular/material/icon';
 import { LetDirective, PushPipe } from '@ngrx/component';
+import { ControllersListItemComponent } from '../controllers-list-item';
 
 @Component({
     standalone: true,
@@ -24,18 +25,22 @@ import { LetDirective, PushPipe } from '@ngrx/component';
         NgSwitchCase,
         NgIf,
         LetDirective,
+        ControllersListItemComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControllersListComponent {
-    public readonly connectedControllers$ = this.store.select(GAMEPAD_SELECTORS.selectAll);
+    public readonly connectedControllers$ = this.store.select(CONTROLLER_SELECTORS.selectAll);
 
     constructor(
         private readonly store: Store
     ) {
     }
 
-    public controllerTrackById(index: number, controller: GamepadConfig): string {
-        return `${controller.name}/${controller.gamepadIndex}`;
+    public controllerTrackById(
+        index: number,
+        controller: Controller
+    ): string {
+        return controller.id;
     }
 }
