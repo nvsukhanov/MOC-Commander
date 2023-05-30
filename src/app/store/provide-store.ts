@@ -10,6 +10,7 @@ import {
     CONTROLLERS_REDUCERS,
     HUB_ATTACHED_IO_STATE_REDUCERS,
     HUB_ATTACHED_IOS_REDUCERS,
+    HUB_CONNECTION_REDUCERS,
     HUB_DISCOVERY_STATE_REDUCERS,
     HUB_EDIT_FORM_ACTIVE_SAVES_REDUCERS,
     HUB_IO_OUTPUT_MODES_REDUCER,
@@ -52,6 +53,7 @@ const REDUCERS: ActionReducerMap<IState> = {
     controlSchemeConfigurationState: CONTROL_SCHEME_CONFIGURATION_STATE_REDUCERS,
     controlSchemeRunningState: CONTROL_SCHEME_RUNNING_STATE_REDUCERS,
     hubs: HUBS_REDUCERS,
+    hubConnections: HUB_CONNECTION_REDUCERS,
     hubDiscoveryState: HUB_DISCOVERY_STATE_REDUCERS,
     hubAttachedIOs: HUB_ATTACHED_IOS_REDUCERS,
     hubAttachedIOState: HUB_ATTACHED_IO_STATE_REDUCERS,
@@ -66,7 +68,7 @@ const REDUCERS: ActionReducerMap<IState> = {
 
 export function localStorageSyncReducer(reducer: ActionReducer<IState>): ActionReducer<IState> {
     return localStorageSync({
-        keys: [ 'controlSchemes', 'hubIOSupportedModes', 'hubPortModeInfo' ] satisfies Array<keyof IState>,
+        keys: [ 'hubs', 'hubAttachedIOs', 'controlSchemes', 'hubIOSupportedModes', 'hubPortModeInfo' ] satisfies Array<keyof IState>,
         rehydrate: true
     })(reducer);
 }

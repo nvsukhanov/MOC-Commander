@@ -14,3 +14,4 @@ export * from './hub-attached-io-state.reducers';
 export * from './controllers.reducers';
 export * from './controller-input.reducers';
 export * from './controller-input-capture.reducers';
+export * from './hub-connection.reducers';

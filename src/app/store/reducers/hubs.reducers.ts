@@ -6,7 +6,7 @@ import { HubType } from '@nvsukhanov/rxpoweredup';
 export const HUBS_REDUCERS = createReducer(
     HUBS_ENTITY_ADAPTER.getInitialState(),
     on(HUBS_ACTIONS.connected,
-        (state, data) => HUBS_ENTITY_ADAPTER.addOne({
+        (state, data) => HUBS_ENTITY_ADAPTER.upsertOne({
             hubId: data.hubId,
             name: data.name,
             batteryLevel: null,
@@ -14,17 +14,25 @@ export const HUBS_REDUCERS = createReducer(
             hubType: HubType.Unknown,
             isButtonPressed: false,
             hasCommunication: false,
-        }, state)),
+        }, state)
+    ),
     on(HUBS_ACTIONS.disconnected,
-        (state, data) => HUBS_ENTITY_ADAPTER.removeOne(data.hubId, state)
+        (state, data) => HUBS_ENTITY_ADAPTER.updateOne({
+            id: data.hubId,
+            changes: {
+                batteryLevel: null,
+                RSSI: null,
+                isButtonPressed: false,
+                hasCommunication: false,
+            }
+        }, state)
     ),
     on(HUBS_ACTIONS.batteryLevelReceived, (state, data) => HUBS_ENTITY_ADAPTER.updateOne({
             id: data.hubId,
             changes: {
                 batteryLevel: data.batteryLevel,
             }
-        },
-        state
+        }, state
     )),
     on(HUBS_ACTIONS.rssiLevelReceived, (state, data) => HUBS_ENTITY_ADAPTER.updateOne({
             id: data.hubId,

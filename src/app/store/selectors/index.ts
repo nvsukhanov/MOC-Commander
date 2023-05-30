@@ -15,3 +15,4 @@ export * from './hub-attached-io-state.selectors';
 export * from './controllers.selectors';
 export * from './controller-input-capture.selectors';
 export * from './controller-input.selectors';
+export * from './hub-connections.selectors';

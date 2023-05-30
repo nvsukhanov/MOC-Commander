@@ -43,7 +43,7 @@ import { RoutesBuilderService } from '../../routing';
 export class NavMenuComponent {
     public readonly connectedControllersCount$ = this.store.select(CONTROLLER_SELECTORS.count);
 
-    public readonly connectedHubCount$ = this.store.select(HUBS_SELECTORS.selectHubsCount);
+    public readonly connectedHubCount$ = this.store.select(HUBS_SELECTORS.selectConnectedHubsCount);
 
     public readonly controlSchemesCount$ = this.store.select(CONTROL_SCHEME_SELECTORS.selectSchemesCount);
 

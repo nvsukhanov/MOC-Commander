@@ -5,6 +5,7 @@ import {
     CONTROLLERS_ENTITY_ADAPTER,
     HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER,
     HUB_ATTACHED_IOS_ENTITY_ADAPTER,
+    HUB_CONNECTIONS_ENTITY_ADAPTER,
     HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER,
     HUB_PORT_MODE_INFO,
     HUBS_ENTITY_ADAPTER,
@@ -26,6 +27,7 @@ export const INITIAL_STATE: IState = {
         runningSchemeId: null
     },
     hubs: HUBS_ENTITY_ADAPTER.getInitialState(),
+    hubConnections: HUB_CONNECTIONS_ENTITY_ADAPTER.getInitialState(),
     hubDiscoveryState: {
         discoveryState: HubDiscoveryState.Idle
     },

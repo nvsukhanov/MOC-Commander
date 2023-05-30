@@ -8,6 +8,10 @@
     flex: 1;
     margin: 0;
     font-weight: 500;
+
+    &_disconnected {
+        opacity: 0.5;
+    }
 }
 
 .battery-level,
@@ -19,6 +23,6 @@
     margin-left: 10px;
 }
 
-.has-communication-icon.muted {
+.muted {
     opacity: 30%;
 }

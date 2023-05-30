@@ -1,11 +1,19 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AttachedIO, HUB_ATTACHED_IO_SELECTORS, HubIoOperationMode, HUBS_SELECTORS } from '../../../store';
+import {
+    AttachedIO,
+    HUB_ATTACHED_IO_SELECTORS,
+    HUB_CONNECTION_SELECTORS,
+    HubConfiguration,
+    HubConnectionState,
+    HubIoOperationMode,
+    HUBS_SELECTORS
+} from '../../../store';
 import { MatSelectModule } from '@angular/material/select';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { combineLatest, map, Observable, of, shareReplay, startWith, Subscription, switchMap } from 'rxjs';
+import { combineLatest, EMPTY, map, Observable, of, shareReplay, startWith, Subscription, switchMap } from 'rxjs';
 import { IOType } from '@nvsukhanov/rxpoweredup';
 import { ControlSchemeBindingInputForm } from '../binding-input';
 import { TranslocoModule } from '@ngneat/transloco';
@@ -13,6 +21,7 @@ import { IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '../../../i18n
 import { MatListModule } from '@angular/material/list';
 import { RenderEditOutputConfigurationDirective } from '../edit-output-configuration';
 import { BindingForm } from '../types';
+import { MatIconModule } from '@angular/material/icon';
 
 export type LinearOutputConfiguration = FormGroup<{
     maxSpeed: FormControl<number>,
@@ -56,12 +65,15 @@ export type ControlSchemeBindingOutputForm = FormGroup<{
         NgSwitchDefault,
         IoOperationTypeToL10nKeyPipe,
         MatListModule,
-        RenderEditOutputConfigurationDirective
+        RenderEditOutputConfigurationDirective,
+        MatIconModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeBindingOutputComponent {
-    public readonly hubsList$ = this.store.select(HUBS_SELECTORS.selectHubs);
+    public readonly hubsList$ = this.store.select(HUBS_SELECTORS.selectHubsWithConnectionState);
+
+    public readonly hubConnectionStates = HubConnectionState;
 
     private _outputFormControl?: ControlSchemeBindingOutputForm;
 
@@ -72,6 +84,10 @@ export class ControlSchemeBindingOutputComponent {
     private _ioType$: Observable<IOType | null> = of(null);
 
     private _availableIOOperationModes$: Observable<HubIoOperationMode[]> = of([]);
+
+    private _selectedHubConfiguration$: Observable<HubConfiguration | undefined> = EMPTY;
+
+    private _selectedHubConnectionState$: Observable<HubConnectionState> = EMPTY;
 
     private selectedPortChangeTrackingSubscription?: Subscription;
 
@@ -127,7 +143,25 @@ export class ControlSchemeBindingOutputComponent {
             shareReplay({ bufferSize: 1, refCount: true })
         );
 
+        this._selectedHubConfiguration$ = outputGroup.controls.hubId.valueChanges.pipe(
+            startWith(outputGroup.controls.hubId.value),
+            switchMap((hubId) => this.store.select(HUBS_SELECTORS.selectHub(hubId))),
+        );
+
+        this._selectedHubConnectionState$ = outputGroup.controls.hubId.valueChanges.pipe(
+            startWith(outputGroup.controls.hubId.value),
+            switchMap((hubId) => this.store.select(HUB_CONNECTION_SELECTORS.selectHubConnectionState(hubId))),
+        );
+
         this._inputFormControl = inputGroup;
+    }
+
+    public get selectedHubConfiguration$(): Observable<HubConfiguration | undefined> {
+        return this._selectedHubConfiguration$;
+    }
+
+    public get selectedHubConnectionState$(): Observable<HubConnectionState> {
+        return this._selectedHubConnectionState$;
     }
 
     public get inputFormControl(): ControlSchemeBindingInputForm | undefined {

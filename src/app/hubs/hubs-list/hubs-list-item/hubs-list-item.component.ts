@@ -7,6 +7,7 @@ import { MatLineModule } from '@angular/material/core';
 import { RouterLink } from '@angular/router';
 import { EllipsisTitleDirective } from '../../../common';
 import { RoutesBuilderService } from '../../../routing';
+import { HubConnectionState } from '../../../store';
 
 @Component({
     standalone: true,
@@ -35,6 +36,8 @@ export class HubsListItemComponent {
 
     @Input() public hasCommunication = false;
 
+    @Input() public connectionState: HubConnectionState = HubConnectionState.Disconnected;
+
     @Output() public readonly disconnect = new EventEmitter<void>();
 
     private _hubViewHref: string[] = [];
@@ -42,6 +45,10 @@ export class HubsListItemComponent {
     constructor(
         private routesBuilderService: RoutesBuilderService,
     ) {
+    }
+
+    public get isConnected(): boolean {
+        return this.connectionState === HubConnectionState.Connected;
     }
 
     public get batteryLevelIcon(): string {

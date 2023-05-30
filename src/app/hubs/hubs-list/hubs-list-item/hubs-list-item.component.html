@@ -1,21 +1,37 @@
-<h3 class="hub-name" appEllipsisTitle>
+<h3 class="hub-name"
+    [class.hub-name_disconnected]="!isConnected"
+    appEllipsisTitle>
     {{ name }}
 </h3>
 
+<mat-icon *ngIf="!isConnected"
+          class="button-state"
+          [title]="'hubIsNotConnected' | transloco"
+          color="warn">
+    link_off
+</mat-icon>
+
 <ng-container *ngIf="isButtonPressed; else buttonNotPressed">
     <mat-icon [title]="'hubButtonStateTitle' | transloco"
-              class="button-state">radio_button_checked
+              class="button-state"
+              [class.muted]="!isConnected"
+    >
+        radio_button_checked
     </mat-icon>
 </ng-container>
 
 <ng-template #buttonNotPressed>
     <mat-icon [title]="'hubButtonStateTitle' | transloco"
-              class="button-state">radio_button_off
+              class="button-state"
+              [class.muted]="!isConnected"
+    >
+        radio_button_off
     </mat-icon>
 </ng-template>
 
 <mat-icon *ngIf="batteryLevel !== null"
           class="battery-level"
+          [class.muted]="!isConnected"
           [title]="batteryLevel"
 >
     {{ batteryLevelIcon }}
@@ -23,18 +39,21 @@
 
 <mat-icon *ngIf="rssiLevel !== null"
           class="rssi-level"
+          [class.muted]="!isConnected"
           [title]="rssiLevel"
 >
     {{ rssiLevelIcon }}
 </mat-icon>
 
 <mat-icon class="has-communication-icon"
-          [class.muted]="!hasCommunication"
->multiple_stop
+          [class.muted]="!hasCommunication || !isConnected"
+>
+    multiple_stop
 </mat-icon>
 
 <a mat-button
    class="view-button"
+   [disabled]="!isConnected"
    [routerLink]="hubViewHref"
 >
     {{ 'viewHub' | transloco }}
@@ -43,6 +62,7 @@
 <button mat-button
         class="disconnect-button"
         [title]="'disconnectHub' | transloco"
+        [disabled]="!isConnected"
         (click)="onDisconnectClick()"
 >
     {{ 'disconnectHub' | transloco }}

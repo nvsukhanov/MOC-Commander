@@ -30,7 +30,7 @@ import { MatDividerModule } from '@angular/material/divider';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HubsListComponent {
-    public readonly connectedHubs$ = this.store.select(HUBS_SELECTORS.selectHubs);
+    public readonly connectedHubs$ = this.store.select(HUBS_SELECTORS.selectHubsWithConnectionState);
 
     constructor(
         private readonly store: Store

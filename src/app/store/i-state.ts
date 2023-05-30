@@ -19,6 +19,7 @@ export interface IState {
         runningSchemeId: string | null;
     };
     hubs: EntityState<HubConfiguration>,
+    hubConnections: EntityState<HubConnection>,
     hubDiscoveryState: {
         discoveryState: HubDiscoveryState;
     },
@@ -43,6 +44,17 @@ export interface IState {
         isAvailable: boolean;
     },
     router: RouterState;
+}
+
+export type HubConnection = {
+    hubId: string;
+    connectionState: HubConnectionState;
+}
+
+export enum HubConnectionState {
+    Disconnected,
+    Connected,
+    Disconnecting,
 }
 
 export enum ControllerInputType {
