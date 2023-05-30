@@ -7,7 +7,7 @@ export const CONTROLLER_INPUT_REDUCERS = createReducer(
     INITIAL_STATE.controllerInput,
     on(CONTROLLER_INPUT_ACTIONS.inputReceived, (state, action) => {
         if (action.value !== 0) {
-            return CONTROLLER_INPUT_ENTITY_ADAPTER.addOne({
+            return CONTROLLER_INPUT_ENTITY_ADAPTER.upsertOne({
                 controllerId: action.controllerId,
                 value: action.value,
                 inputId: action.inputId,

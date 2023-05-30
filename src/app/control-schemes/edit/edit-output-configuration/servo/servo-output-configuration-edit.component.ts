@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
 import { HUB_ATTACHED_IO_SELECTORS, SERVO_CALIBRATION_ACTIONS } from '../../../../store';
 import { Actions, ofType } from '@ngrx/effects';
-import { Observable, of, takeUntil } from 'rxjs';
+import { combineLatest, Observable, of, startWith, switchMap, takeUntil } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 
 @Component({
@@ -89,14 +89,19 @@ export class ServoOutputConfigurationEditComponent implements IOutputConfigurati
         outputBinding: ControlSchemeBindingOutputForm
     ): void {
         if (outputBinding !== this._outputBinding) {
-            if (outputBinding.value.hubId !== undefined && outputBinding.value.portId !== undefined) {
-                this._canCalibrate$ = this.store.select(HUB_ATTACHED_IO_SELECTORS.canCalibrateServo(
-                    outputBinding.value.hubId,
-                    outputBinding.value.portId
-                ));
-            } else {
-                this._canCalibrate$ = of(false);
-            }
+            const hubId$ = outputBinding.controls.hubId.valueChanges.pipe(
+                startWith(outputBinding.controls.hubId.value),
+            );
+            const portId$ = outputBinding.controls.portId.valueChanges.pipe(
+                startWith(outputBinding.controls.portId.value),
+            );
+
+            this._canCalibrate$ = combineLatest([
+                hubId$,
+                portId$
+            ]).pipe(
+                switchMap(([ hubId, portId ]) => this.store.select(HUB_ATTACHED_IO_SELECTORS.canCalibrateServo({ hubId, portId })))
+            );
             this._outputBinding = outputBinding;
             this.cd.detectChanges();
         }

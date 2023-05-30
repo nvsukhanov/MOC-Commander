@@ -6,6 +6,7 @@ import { HUB_IO_SUPPORTED_MODES_SELECTORS } from './hub-io-supported-modes.selec
 import { HUB_IO_CONTROL_METHODS, HubIoOperationMode } from '../hub-io-operation-mode';
 import { HUB_PORT_MODE_INFO_SELECTORS } from './hub-port-mode-info.selectors';
 import { IOType, PortModeName } from '@nvsukhanov/rxpoweredup';
+import { HUB_CONNECTION_SELECTORS } from './hub-connections.selectors';
 
 const SELECT_HUB_ATTACHED_IOS_FEATURE = createFeatureSelector<IState['hubAttachedIOs']>('hubAttachedIOs');
 
@@ -120,15 +121,13 @@ export const HUB_ATTACHED_IO_SELECTORS = {
             return null;
         }
     ),
-    canCalibrateServo: (
-        hubId: string,
-        portId: number,
-    ) => createSelector(
+    canCalibrateServo: ({ hubId, portId }: { hubId: string, portId: number }) => createSelector(
+        HUB_CONNECTION_SELECTORS.selectIsHubConnected(hubId),
         HUB_ATTACHED_IO_SELECTORS.selectIOAtPort(hubId, portId),
         HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
         HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
-        (io, supportedModesEntities, portModesEntities) => {
-            if (!io) {
+        (isHubConnected, io, supportedModesEntities, portModesEntities) => {
+            if (!io || !isHubConnected) {
                 return false;
             }
             const modesInfo: HubIoSupportedModes | undefined =

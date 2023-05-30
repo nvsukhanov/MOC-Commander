@@ -17,7 +17,7 @@ export const HUB_ATTACHED_IOS_REDUCERS = createReducer(
         hubAttachedIosIdFn(data),
         state
     )),
-    on(HUBS_ACTIONS.disconnected, (state, data) => HUB_ATTACHED_IOS_ENTITY_ADAPTER.removeMany(
+    on(HUBS_ACTIONS.connected, (state, data) => HUB_ATTACHED_IOS_ENTITY_ADAPTER.removeMany(
         (d) => d.hubId === data.hubId,
         state
     ))

@@ -1,8 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { ControlSchemeBinding, IState } from '../i-state';
+import { ControlSchemeBinding, HubConnectionState, IState } from '../i-state';
 import { CONTROL_SCHEMES_ENTITY_ADAPTER, controllerInputIdFn, hubAttachedIosIdFn, lastExecutedTaskIdFn } from '../entity-adapters';
 import { HUB_PORT_TASKS_SELECTORS } from './hub-port-tasks.selectors';
-import { HUBS_SELECTORS } from './hubs.selectors';
 import { getHubIOOperationModes, HUB_ATTACHED_IO_SELECTORS } from './hub-attached-io.selectors';
 import { HUB_IO_SUPPORTED_MODES_SELECTORS } from './hub-io-supported-modes.selectors';
 import { HUB_PORT_MODE_INFO_SELECTORS } from './hub-port-mode-info.selectors';
@@ -12,6 +11,7 @@ import { ROUTER_SELECTORS } from './router.selectors';
 import { IOType } from '@nvsukhanov/rxpoweredup';
 import { CONTROLLER_SELECTORS } from './controllers.selectors';
 import { CONTROLLER_INPUT_SELECTORS } from './controller-input.selectors';
+import { HUB_CONNECTION_SELECTORS } from './hub-connections.selectors';
 
 const CONTROL_SCHEME_FEATURE_SELECTOR = createFeatureSelector<IState['controlSchemes']>('controlSchemes');
 
@@ -87,31 +87,30 @@ export const CONTROL_SCHEME_SELECTORS = {
     validateSchemeIOBindings: (schemeId: string) => createSelector(
         CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
         HUB_PORT_TASKS_SELECTORS.selectLastExecutedTasksEntities,
-        HUBS_SELECTORS.selectHubsIds,
         HUB_ATTACHED_IO_SELECTORS.selectIOsEntities,
         HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
         HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
         CONTROLLER_SELECTORS.selectEntities,
+        HUB_CONNECTION_SELECTORS.selectEntities,
         (
             scheme,
             tasks,
-            hubIds,
             iosEntities,
             ioSupportedModesEntities,
             portModeInfoEntities,
             controllerEntities,
+            connectionEntities
         ): IOBindingValidationResults[] => {
             if (scheme === undefined) {
                 return [] as IOBindingValidationResults[];
             }
-            const hubIdsSet = new Set([ ...hubIds ]);
 
             return scheme.bindings.map((binding) => {
                 const controller = controllerEntities[binding.input.controllerId];
                 const bindingValidationResult: IOBindingValidationResults = {
                     bindingId: binding.id,
                     controllerIsMissing: !controller,
-                    hubMissing: !hubIdsSet.has(binding.output.hubId),
+                    hubMissing: connectionEntities[binding.output.hubId]?.connectionState !== HubConnectionState.Connected,
                     ioMissing: true,
                     ioCapabilitiesMismatch: true
                 };

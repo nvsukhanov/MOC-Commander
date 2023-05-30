@@ -8,6 +8,7 @@ import {
     ControllerInputType,
     ControlScheme,
     HubConfiguration,
+    HubConnection,
     HubIoSupportedModes,
     PortModeInfo
 } from './i-state';
@@ -93,3 +94,7 @@ export function controllerInputIdFn(
 ): string {
     return `${controllerId}/${inputType}/${inputId}`;
 }
+
+export const HUB_CONNECTIONS_ENTITY_ADAPTER: EntityAdapter<HubConnection> = createEntityAdapter<HubConnection>({
+    selectId: (connection) => connection.hubId,
+});
