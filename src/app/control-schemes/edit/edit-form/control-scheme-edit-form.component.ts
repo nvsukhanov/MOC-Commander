@@ -16,7 +16,7 @@ import { JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
-import { filter, map, of, Subject, Subscription, take, takeUntil } from 'rxjs';
+import { filter, finalize, map, of, Subject, Subscription, take, takeUntil } from 'rxjs';
 import { Actions, concatLatestFrom, ofType } from '@ngrx/effects';
 import { ControlSchemeBindingInputComponent } from '../binding-input';
 import { ControlSchemeBindingOutputComponent } from '../binding-output';
@@ -123,7 +123,6 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         this.sub?.unsubscribe();
         this.onDestroy$.next();
         this.onDestroy$.complete();
-        this.stopInputCapture();
     }
 
     public addBinding(): void {
@@ -139,10 +138,10 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
                 : of([])
             ),
             map(([ [ input ], ios ]) => ({ input, ios })),
-            take(1)
+            take(1),
+            finalize(() => this.stopInputCapture())
         ).subscribe({
             next: ({ input, ios }) => {
-                this.stopInputCapture();
                 const io = ios[0];
                 if (!io) {
                     return; // TODO: notify on no matching IO

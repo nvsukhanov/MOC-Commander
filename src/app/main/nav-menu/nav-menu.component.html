@@ -59,15 +59,6 @@
         </span>
 
         <span class="right-side-nav">
-            <mat-icon *ngIf="isKeyboardBeingCaptured$ | ngrxPush"
-                      class="keyboard-captured-indicator"
-                      [matBadge]="'!'"
-                      [matBadgeColor]="'accent'"
-                      [title]="'keyboardInputCaptured' | transloco"
-            >
-                keyboard
-            </mat-icon>
-
             <ng-container *ngIf="isBluetoothAvailable | ngrxPush; else bluetoothUnavailable">
                 <button mat-fab
                         class="discover-hub-button"
