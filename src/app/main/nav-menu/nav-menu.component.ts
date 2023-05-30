@@ -7,6 +7,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import {
     BLUETOOTH_AVAILABILITY_SELECTORS,
     CONTROL_SCHEME_SELECTORS,
+    CONTROLLER_INPUT_CAPTURE_SELECTORS,
     CONTROLLER_SELECTORS,
     HUB_DISCOVERY_STATE_SELECTORS,
     HUBS_ACTIONS,
@@ -50,6 +51,8 @@ export class NavMenuComponent {
     public readonly isBluetoothAvailable = this.store.select(BLUETOOTH_AVAILABILITY_SELECTORS.isAvailable);
 
     public readonly isDiscoveryBusy$ = this.store.select(HUB_DISCOVERY_STATE_SELECTORS.isDiscoveryBusy);
+
+    public readonly isKeyboardBeingCaptured$ = this.store.select(CONTROLLER_INPUT_CAPTURE_SELECTORS.isKeyboardBeingCaptured);
 
     @Input() public compact = false;
 
