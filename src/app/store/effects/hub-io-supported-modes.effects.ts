@@ -18,7 +18,7 @@ export class HubIOSupportedModesEffects {
             ))),
             filter(([ , hasCached ]) => !hasCached),
             mergeMap(([ action ]) => this.hubStorage.get(action.hubId).ports.getPortModes(action.portId).pipe(
-                takeUntil(this.hubStorage.get(action.hubId).beforeDisconnect),
+                takeUntil(this.hubStorage.get(action.hubId).disconnected),
                 takeUntil(this.hubStorage.get(action.hubId).ports.onIoDetach(action.portId)),
                 map((modesData) => ({ action, modesData })),
             )),
