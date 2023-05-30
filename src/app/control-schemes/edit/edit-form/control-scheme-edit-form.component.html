@@ -31,20 +31,6 @@
     </mat-card-actions>
 </mat-card>
 
-<mat-card *ngIf="canCancelBinding$ | ngrxPush"
-          class="binding">
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    <mat-card-header>
-        <mat-card-title>{{ 'createBindingHelp' | transloco }}</mat-card-title>
-    </mat-card-header>
-    <mat-card-actions [align]="'end'">
-        <button mat-flat-button
-                (click)="cancelAddBinging()">
-            {{ 'cancelAddSchemeBinding' | transloco }}
-        </button>
-    </mat-card-actions>
-</mat-card>
-
 <section class="binding-actions">
     <button mat-fab
             [title]="'addSchemeBinding' | transloco"

@@ -41,7 +41,8 @@
   "saveCreatedScheme": "Save",
   "cancelCreateScheme": "Cancel",
   "cancelAddSchemeBinding": "Cancel",
-  "createBindingHelp": "Move the controller's stick or press a button to create a binding",
+  "createBindingWaitingForInputTitle": "Waiting for input",
+  "createBindingWaitingForInputContent": "Move the controller's stick or press a button to create a binding",
   "pageNotFound": "Page not found",
   "schemeIsNotFound": "Scheme is not found",
   "hubTypeBoost": "Boost Hub",
@@ -108,7 +109,7 @@
   "servoCalibrationError": "An error occurred during servo calibration",
   "servoCalibrationCancel": "Cancel",
   "servoCalibrateButtonTitle": "Calibrate",
-  "keyboardInputCaptured": "Keyboard input captured",
+  "keyboardInputCaptured": "Keyboard input is being captured",
   "io": {
     "ioInputCapabilities": "Input Capabilities",
     "ioOutputCapabilities": "Output Capabilities",

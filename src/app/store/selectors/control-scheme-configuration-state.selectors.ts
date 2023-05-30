@@ -12,6 +12,6 @@ export const CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS = {
         CONTROLLER_SELECTORS.selectAll,
         (state, hubs, controllers) => !state.isListening && hubs.length > 0 && controllers.length > 0
     ),
-    canCancelBinding: createSelector(CONTROL_SCHEME_CONFIGURATION_STATE_FEATURE_SELECTOR, (state) => state.isListening),
+    isListening: createSelector(CONTROL_SCHEME_CONFIGURATION_STATE_FEATURE_SELECTOR, (state) => state.isListening),
     shouldShowBindingHelp: createSelector(CONTROL_SCHEME_CONFIGURATION_STATE_FEATURE_SELECTOR, (state) => state.isListening),
 };
