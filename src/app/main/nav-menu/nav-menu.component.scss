@@ -14,20 +14,19 @@
 }
 
 .title {
-    display: flex;
-    align-items: center;
+    margin: 0;
 }
 
 .nav {
     width: 100%;
     display: grid;
     grid-template-columns: 200px 1fr 200px;
+    align-items: center;
 
     &__compact {
         display: flex;
         flex-direction: row;
         justify-content: space-evenly;
-        align-items: center;
     }
 }
 

@@ -5,9 +5,7 @@
                 [disabled]="!(canCalibrate$ | ngrxPush)"
                 (click)="calibrate()"
         >
-            <mat-icon>
-                settings_suggest
-            </mat-icon>
+            <mat-icon [fontIcon]="'settings_suggest'"></mat-icon>
             {{ 'servoCalibrateButtonTitle' | transloco }}
         </button>
     </section>

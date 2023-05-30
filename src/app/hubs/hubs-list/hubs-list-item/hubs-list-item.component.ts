@@ -40,6 +40,8 @@ export class HubsListItemComponent {
 
     @Output() public readonly disconnect = new EventEmitter<void>();
 
+    @Output() public readonly forget = new EventEmitter<void>();
+
     private _hubViewHref: string[] = [];
 
     constructor(
@@ -112,5 +114,9 @@ export class HubsListItemComponent {
 
     public onDisconnectClick(): void {
         this.disconnect.emit();
+    }
+
+    public onForgerClick(): void {
+        this.forget.emit();
     }
 }

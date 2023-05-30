@@ -10,18 +10,16 @@
                     <mat-icon *ngIf="(selectedHubConnectionState$ | ngrxPush) !== hubConnectionStates.Connected"
                               color="warn"
                               class="not-connected-icon"
-                    >
-                        link_off
-                    </mat-icon>
+                              [fontIcon]="'link_off'"
+                    ></mat-icon>
                     {{ selectedHub.name }}
                 </mat-select-trigger>
                 <mat-option *ngFor="let hubConfiguration of hubsList"
                             [value]="hubConfiguration.hubId">
                     <mat-icon *ngIf="hubConfiguration.connectionState !== hubConnectionStates.Connected"
                               color="warn"
-                    >
-                        link_off
-                    </mat-icon>
+                              [fontIcon]="'link_off'"
+                    ></mat-icon>
                     {{ hubConfiguration.name }}
                 </mat-option>
                 <mat-option *ngIf="hubsList?.length === 0"
@@ -38,9 +36,8 @@
                     <mat-icon *ngIf="(selectedHubConnectionState$ | ngrxPush) !== hubConnectionStates.Connected"
                               color="warn"
                               class="not-connected-icon"
-                    >
-                        link_off
-                    </mat-icon>
+                              [fontIcon]="'link_off'"
+                    ></mat-icon>
                     {{ outputFormControl.controls.portId.value }}: {{ (ioType$ | ngrxPush)! | ioTypeToL10nKey | transloco }}
                 </mat-select-trigger>
                 <mat-option *ngFor="let io of attachedIOS"

@@ -25,7 +25,9 @@
         </div>
         <mat-slider class="slider"
                     [max]="motorLimits.maxSpeed"
-                    [min]="0">
+                    [min]="0"
+                    [attr.aria-label]="'schemeOutputBindingConfigurationLinearSpeedParameter' | transloco"
+        >
             <input matSliderThumb [formControl]="outputBinding.controls.linearConfig.controls.maxSpeed"/>
         </mat-slider>
     </section>
@@ -39,7 +41,9 @@
 
         <mat-slider class="slider"
                     [max]="motorLimits.maxPower"
-                    [min]="motorLimits.minPower">
+                    [min]="motorLimits.minPower"
+                    [attr.aria-label]="'schemeOutputBindingConfigurationLinearPowerParameter' | transloco"
+        >
             <input matSliderThumb [formControl]="outputBinding.controls.linearConfig.controls.power"/>
         </mat-slider>
     </section>

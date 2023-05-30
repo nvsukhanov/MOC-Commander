@@ -1,8 +1,12 @@
 <ng-container *ngIf="bindingsWithLatestExecutedTasks">
-    <app-control-scheme-view-io *ngFor="let binding of bindingsWithLatestExecutedTasks; trackBy: trackByFn"
-                                [binding]="binding.binding"
-                                [lastExecutedTask]="binding.latestExecutedTask"
-                                [ioType]="binding.ioType"
-                                [validation]="binding.validationData"
-    ></app-control-scheme-view-io>
+    <ul class="bindings-list">
+        <li *ngFor="let binding of bindingsWithLatestExecutedTasks; trackBy: trackByFn">
+            <app-control-scheme-view-io
+                [binding]="binding.binding"
+                [lastExecutedTask]="binding.latestExecutedTask"
+                [ioType]="binding.ioType"
+                [validation]="binding.validationData"
+            ></app-control-scheme-view-io>
+        </li>
+    </ul>
 </ng-container>

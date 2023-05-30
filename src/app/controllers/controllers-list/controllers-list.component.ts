@@ -8,6 +8,8 @@ import { Store } from '@ngrx/store';
 import { MatIconModule } from '@angular/material/icon';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { ControllersListItemComponent } from '../controllers-list-item';
+import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     standalone: true,
@@ -26,6 +28,8 @@ import { ControllersListItemComponent } from '../controllers-list-item';
         NgIf,
         LetDirective,
         ControllersListItemComponent,
+        MatListModule,
+        MatCardModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

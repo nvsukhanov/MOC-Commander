@@ -72,4 +72,5 @@ export const HUBS_REDUCERS = createReducer(
             }
         }, state
     )),
+    on(HUBS_ACTIONS.forgetHub, (state, { hubId }) => HUBS_ENTITY_ADAPTER.removeOne(hubId, state))
 );

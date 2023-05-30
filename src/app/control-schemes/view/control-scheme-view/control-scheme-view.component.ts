@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
-import { bufferCount, combineLatest, map, Observable, of, Subscription, switchMap } from 'rxjs';
+import { bufferCount, map, Observable, of, Subscription, switchMap } from 'rxjs';
 import {
     CONTROL_SCHEME_ACTIONS,
     CONTROL_SCHEME_SELECTORS,
@@ -11,7 +11,7 @@ import {
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
-import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
+import { TranslocoModule } from '@ngneat/transloco';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -79,31 +79,6 @@ export class ControlSchemeViewComponent implements OnDestroy {
 
     public readonly totalTasksExecuted$ = this.store.select(HUB_PORT_TASKS_SELECTORS.selectTotalTasksExecuted);
 
-    public composeValidationErrorMessage$: Observable<string> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
-        switchMap((id) => id === null
-                          ? of(null)
-                          : this.store.select(CONTROL_SCHEME_SELECTORS.validateScheme(id))
-        ),
-        switchMap((validationResult) => {
-            if (validationResult === null) {
-                return of('');
-            }
-            const validationKeys = [
-                validationResult.anotherSchemeIsRunning ? 'schemeValidationAnotherSchemeIsRunning' : '',
-                validationResult.hubMissing ? 'schemeValidationHubMissing' : '',
-                validationResult.ioMissing ? 'schemeValidationIOMissing' : '',
-                validationResult.ioCapabilitiesMismatch ? 'schemeValidationIOCapabilitiesMismatch' : '',
-                validationResult.controllerIsMissing ? 'schemeValidationControllerIsMissing' : '',
-            ].filter((v) => v !== '');
-            if (validationKeys.length === 0) {
-                return of('');
-            }
-            return combineLatest(validationKeys.map((v) => this.translocoService.selectTranslateObject(v))).pipe(
-                map((v) => v.join('\r\n'))
-            );
-        }),
-    );
-
     private sub?: Subscription;
 
     private isCapturingInput = false;
@@ -111,7 +86,6 @@ export class ControlSchemeViewComponent implements OnDestroy {
     constructor(
         private readonly store: Store,
         private readonly featureToolbarService: FeatureToolbarService,
-        private readonly translocoService: TranslocoService,
         private readonly routesBuilderService: RoutesBuilderService
     ) {
     }
