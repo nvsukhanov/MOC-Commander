@@ -9,6 +9,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { MatSliderModule } from '@angular/material/slider';
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { ControlSchemeBindingOutputForm } from '../../binding-output';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
     standalone: true,
@@ -20,7 +21,8 @@ import { ControlSchemeBindingOutputForm } from '../../binding-output';
         ReactiveFormsModule,
         MatSlideToggleModule,
         TranslocoModule,
-        MatSliderModule
+        MatSliderModule,
+        MatFormFieldModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

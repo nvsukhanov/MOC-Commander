@@ -21,6 +21,7 @@ export const HUBS_ACTIONS = createActionGroup({
         'hub type received': props<{ hubId: string, hubType: HubType }>(),
         'set has communication': props<{ hubId: string, hasCommunication: boolean }>(),
         'request set hub name': props<{ hubId: string, name: string }>(),
-        'hub name set': props<{ hubId: string, name: string }>()
+        'hub name set': props<{ hubId: string, name: string }>(),
+        'forget hub': props<{ hubId: string }>(),
     }
 });

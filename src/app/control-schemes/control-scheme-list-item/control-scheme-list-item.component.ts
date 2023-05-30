@@ -27,8 +27,6 @@ import { RoutesBuilderService } from '../../routing';
 export class ControlSchemeListItemComponent {
     @Input() public name = '';
 
-    @Input() public isActive = false;
-
     @Output() public readonly delete = new EventEmitter<void>();
 
     @Input() public canStartScheme = false;

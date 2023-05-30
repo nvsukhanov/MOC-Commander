@@ -1,15 +1,14 @@
 <ng-container *ngrxLet="controlSchemes$; let controlSchemes">
-    <ng-container *ngIf="controlSchemes?.length; else noControlSchemes">
-        <mat-card *ngFor="let scheme of controlSchemes; trackBy: trackSchemeById"
-                  class="control-scheme-card"
-        >
-            <app-control-scheme-list-item [name]="scheme.name"
-                                          [schemeId]="scheme.id"
-                                          [isActive]="scheme.isRunning"
-                                          (delete)="onDelete(scheme.id)"
-            ></app-control-scheme-list-item>
-        </mat-card>
-    </ng-container>
+    <ul *ngIf="controlSchemes?.length; else noControlSchemes">
+        <li *ngFor="let scheme of controlSchemes; trackBy: trackSchemeById">
+            <mat-card class="control-scheme-card">
+                <app-control-scheme-list-item [name]="scheme.name"
+                                              [schemeId]="scheme.id"
+                                              (delete)="onDelete(scheme.id)"
+                ></app-control-scheme-list-item>
+            </mat-card>
+        </li>
+    </ul>
 
     <ng-template #noControlSchemes>
         <h3 class="no-control-schemes-notification">

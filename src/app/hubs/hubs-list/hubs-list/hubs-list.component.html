@@ -1,6 +1,6 @@
 <ng-container *ngrxLet="connectedHubs$; let connectedHubs">
-    <ng-container *ngIf="connectedHubs.length; else noConnectedHubs">
-        <ng-container *ngFor="let hub of connectedHubs; trackBy: hubTrackByFn; let last = last">
+    <ul *ngIf="connectedHubs.length; else noConnectedHubs">
+        <li *ngFor="let hub of connectedHubs; trackBy: hubTrackByFn; let last = last">
             <mat-card class="hub-card">
                 <app-hubs-list-item [hubId]="hub.hubId"
                                     [name]="hub.name"
@@ -10,11 +10,12 @@
                                     [hasCommunication]="hub.hasCommunication"
                                     [connectionState]="hub.connectionState"
                                     (disconnect)="disconnectHub(hub.hubId)"
+                                    (forget)="forgetHub(hub.hubId)"
                 ></app-hubs-list-item>
             </mat-card>
             <mat-divider *ngIf="!last"></mat-divider>
-        </ng-container>
-    </ng-container>
+        </li>
+    </ul>
 
     <ng-template #noConnectedHubs>
         <h3 class="no-hub-connected-notification-header">{{ 'noHubConnected' | transloco }}</h3>

@@ -1,69 +1,75 @@
-<h3 class="hub-name"
-    [class.hub-name_disconnected]="!isConnected"
-    appEllipsisTitle>
+<p class="hub-name"
+   appEllipsisTitle>
     {{ name }}
-</h3>
+    <ng-container *ngIf="!isConnected">
+        <span class="hub-is-not-connected-notification">
+            {{ 'hubListHubIsNotConnected' | transloco }}
+        </span>
+    </ng-container>
+</p>
 
-<mat-icon *ngIf="!isConnected"
-          class="button-state"
-          [title]="'hubIsNotConnected' | transloco"
-          color="warn">
-    link_off
-</mat-icon>
+<ng-container *ngIf="isConnected">
+    <ng-container *ngIf="isButtonPressed; else buttonNotPressed">
+        <mat-icon [title]="'hubButtonStateTitle' | transloco"
+                  class="button-state"
+                  [class.muted]="!isConnected"
+                  [fontIcon]="'radio_button_checked'"
+        ></mat-icon>
+        <span class="cdk-visually-hidden">{{ 'hubButtonState' | transloco: { isButtonPressed } }}</span>
+    </ng-container>
 
-<ng-container *ngIf="isButtonPressed; else buttonNotPressed">
-    <mat-icon [title]="'hubButtonStateTitle' | transloco"
-              class="button-state"
-              [class.muted]="!isConnected"
-    >
-        radio_button_checked
-    </mat-icon>
+    <ng-template #buttonNotPressed>
+        <mat-icon [title]="'hubButtonStateTitle' | transloco"
+                  class="button-state"
+                  [class.muted]="!isConnected"
+                  [fontIcon]="'radio_button_off'"
+        ></mat-icon>
+        <span class="cdk-visually-hidden">{{ 'hubButtonState' | transloco: { isButtonPressed } }}</span>
+    </ng-template>
+
+    <ng-container *ngIf="batteryLevel !== null">
+        <mat-icon class="battery-level"
+                  [title]="'hubBatteryLevel' | transloco: { batteryLevel }"
+                  [fontIcon]="batteryLevelIcon"
+        ></mat-icon>
+        <span class="cdk-visually-hidden">{{ 'hubBatteryLevel' | transloco: { batteryLevel } }}</span>
+    </ng-container>
+
+    <ng-container *ngIf="rssiLevel !== null">
+        <mat-icon class="rssi-level"
+                  [title]="'hubRSSILevel' | transloco: { RSSI: rssiLevel }"
+                  [fontIcon]="rssiLevelIcon"
+        ></mat-icon>
+        <span class="cdk-visually-hidden">{{ 'hubRSSILevel' | transloco: { RSSI: rssiLevel } }}</span>
+    </ng-container>
+
+    <mat-icon class="has-communication-icon"
+              [class.muted]="!hasCommunication"
+              [fontIcon]="'multiple_stop'"
+    ></mat-icon>
 </ng-container>
 
-<ng-template #buttonNotPressed>
-    <mat-icon [title]="'hubButtonStateTitle' | transloco"
-              class="button-state"
-              [class.muted]="!isConnected"
-    >
-        radio_button_off
-    </mat-icon>
-</ng-template>
-
-<mat-icon *ngIf="batteryLevel !== null"
-          class="battery-level"
-          [class.muted]="!isConnected"
-          [title]="batteryLevel"
->
-    {{ batteryLevelIcon }}
-</mat-icon>
-
-<mat-icon *ngIf="rssiLevel !== null"
-          class="rssi-level"
-          [class.muted]="!isConnected"
-          [title]="rssiLevel"
->
-    {{ rssiLevelIcon }}
-</mat-icon>
-
-<mat-icon class="has-communication-icon"
-          [class.muted]="!hasCommunication || !isConnected"
->
-    multiple_stop
-</mat-icon>
-
-<a mat-button
+<a *ngIf="isConnected"
+   mat-button
    class="view-button"
-   [disabled]="!isConnected"
    [routerLink]="hubViewHref"
 >
     {{ 'viewHub' | transloco }}
 </a>
 
-<button mat-button
+<button *ngIf="isConnected"
+        mat-button
         class="disconnect-button"
-        [title]="'disconnectHub' | transloco"
-        [disabled]="!isConnected"
         (click)="onDisconnectClick()"
 >
     {{ 'disconnectHub' | transloco }}
+</button>
+
+<button *ngIf="!isConnected"
+        mat-button
+        class="forget-button"
+        color="warn"
+        (click)="onForgerClick()"
+>
+    {{ 'forgetHub' | transloco }}
 </button>

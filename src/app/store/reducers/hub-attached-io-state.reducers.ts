@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { INITIAL_STATE } from '../initial-state';
-import { HUB_ATTACHED_IOS_ACTIONS, HUB_ATTACHED_IOS_STATE_ACTIONS } from '../actions';
+import { HUB_ATTACHED_IOS_ACTIONS, HUB_ATTACHED_IOS_STATE_ACTIONS, HUBS_ACTIONS } from '../actions';
 import { HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER, hubAttachedIosIdFn } from '../entity-adapters';
 
 export const HUB_ATTACHED_IO_STATE_REDUCERS = createReducer(
@@ -17,4 +17,5 @@ export const HUB_ATTACHED_IO_STATE_REDUCERS = createReducer(
         },
         state
     )),
+    on(HUBS_ACTIONS.forgetHub, (state, { hubId }) => HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER.removeMany((io) => io.hubId === hubId, state)),
 );

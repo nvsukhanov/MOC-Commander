@@ -37,6 +37,6 @@
             [disabled]="!(canAddBinding$ | ngrxPush)"
             (click)="addBinding()"
     >
-        <mat-icon>add</mat-icon>
+        <mat-icon [fontIcon]="'add'"></mat-icon>
     </button>
 </section>

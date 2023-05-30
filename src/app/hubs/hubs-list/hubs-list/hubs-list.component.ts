@@ -37,11 +37,22 @@ export class HubsListComponent {
     ) {
     }
 
-    public hubTrackByFn(index: number, hub: { hubId: string }): string {
+    public hubTrackByFn(
+        index: number,
+        hub: { hubId: string }
+    ): string {
         return hub.hubId;
     }
 
-    public disconnectHub(hubId: string): void {
+    public disconnectHub(
+        hubId: string
+    ): void {
         this.store.dispatch(HUBS_ACTIONS.userRequestedHubDisconnection({ hubId }));
+    }
+
+    public forgetHub(
+        hubId: string
+    ): void {
+        this.store.dispatch(HUBS_ACTIONS.forgetHub({ hubId }));
     }
 }

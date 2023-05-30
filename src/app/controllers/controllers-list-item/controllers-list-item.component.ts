@@ -4,6 +4,7 @@ import { ControllerPluginFactoryService, IControllerPlugin } from '../../plugins
 import { MatExpansionModule } from '@angular/material/expansion';
 import { TranslocoModule } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     standalone: true,
@@ -13,7 +14,8 @@ import { PushPipe } from '@ngrx/component';
     imports: [
         MatExpansionModule,
         TranslocoModule,
-        PushPipe
+        PushPipe,
+        MatCardModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
