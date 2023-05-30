@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS } from '../actions';
-import { filter, map, tap } from 'rxjs';
+import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_CONFIGURATION_ACTIONS, HUBS_ACTIONS } from '../actions';
+import { filter, map, NEVER, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
-import { CONTROL_SCHEME_RUNNING_STATE_SELECTORS, CONTROL_SCHEME_SELECTORS } from '../selectors';
+import { CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS, CONTROL_SCHEME_RUNNING_STATE_SELECTORS, CONTROL_SCHEME_SELECTORS } from '../selectors';
 import { Store } from '@ngrx/store';
 import { RoutesBuilderService } from '../../routing';
+import { Dialog, DialogRef } from '@angular/cdk/dialog';
+import { WaitingForInputDialogComponent } from '../../control-schemes/waiting-for-input-dialog';
 
 @Injectable()
 export class ControlSchemeEffects {
@@ -53,11 +55,38 @@ export class ControlSchemeEffects {
         );
     });
 
+    public readonly showModalOnListenStart$ = createEffect(() => {
+        return this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.isListening).pipe(
+            filter((isListening) => isListening),
+            switchMap(() => {
+                this.dialogRef = this.dialog.open(WaitingForInputDialogComponent, {
+                    hasBackdrop: true,
+                    disableClose: true
+                });
+                return this.dialogRef.componentInstance?.cancel.asObservable() ?? NEVER;
+            }),
+            map(() => CONTROL_SCHEME_CONFIGURATION_ACTIONS.stopListening()),
+        );
+    });
+
+    public readonly hideDialodOnListenStop$ = createEffect(() => {
+        return this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.isListening).pipe(
+            filter((isListening) => !isListening),
+            tap(() => {
+                this.dialogRef?.close();
+                this.dialogRef = undefined;
+            }),
+        );
+    }, { dispatch: false });
+
+    private dialogRef?: DialogRef<unknown, WaitingForInputDialogComponent>;
+
     constructor(
         private readonly actions$: Actions,
         private readonly router: Router,
         private readonly store: Store,
-        private readonly routesBuilderService: RoutesBuilderService
+        private readonly routesBuilderService: RoutesBuilderService,
+        private readonly dialog: Dialog,
     ) {
     }
 }

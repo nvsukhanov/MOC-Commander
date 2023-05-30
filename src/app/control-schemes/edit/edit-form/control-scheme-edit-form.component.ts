@@ -17,7 +17,7 @@ import { PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { filter, map, of, Subject, Subscription, take, takeUntil } from 'rxjs';
-import { concatLatestFrom } from '@ngrx/effects';
+import { Actions, concatLatestFrom, ofType } from '@ngrx/effects';
 import { ControlSchemeBindingInputComponent } from '../binding-input';
 import { ControlSchemeBindingOutputComponent } from '../binding-output';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -28,7 +28,6 @@ import { EditSchemeForm } from '../types';
 import { ControlSchemeBindingConfigurationComponent } from '../binding-config';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
 
@@ -53,7 +52,6 @@ export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
         ControlSchemeBindingConfigurationComponent,
         MatDividerModule,
         MatIconModule,
-        MatProgressBarModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -65,11 +63,7 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
 
     public readonly canAddBinding$ = this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.canAddBinding);
 
-    public readonly canCancelBinding$ = this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.canCancelBinding);
-
     private readonly onDestroy$ = new Subject<void>();
-
-    private isCapturingInput = false;
 
     private _isSmallScreen = false;
 
@@ -81,6 +75,7 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         private readonly controlSchemeFormFactoryService: ControlSchemeFormFactoryService,
         private readonly cdRef: ChangeDetectorRef,
         private readonly screenSizeObserverService: ScreenSizeObserverService,
+        private readonly actions: Actions
     ) {
     }
 
@@ -135,6 +130,7 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         this.startInputCapture();
         this.store.select(CONTROLLER_INPUT_SELECTORS.selectFirst).pipe(
             takeUntil(this.onDestroy$),
+            takeUntil(this.actions.pipe(ofType(CONTROL_SCHEME_CONFIGURATION_ACTIONS.stopListening))),
             filter((input): input is ControllerInput => !!input),
             concatLatestFrom(() => this.store.select(HUBS_SELECTORS.selectHubs)),
             concatLatestFrom(([ input, hubs ]) =>
@@ -176,16 +172,10 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
     }
 
     private startInputCapture(): void {
-        if (!this.isCapturingInput) {
-            this.store.dispatch(CONTROL_SCHEME_CONFIGURATION_ACTIONS.startListening());
-            this.isCapturingInput = true;
-        }
+        this.store.dispatch(CONTROL_SCHEME_CONFIGURATION_ACTIONS.startListening());
     }
 
     private stopInputCapture(): void {
-        if (this.isCapturingInput) {
-            this.store.dispatch(CONTROL_SCHEME_CONFIGURATION_ACTIONS.stopListening());
-            this.isCapturingInput = false;
-        }
+        this.store.dispatch(CONTROL_SCHEME_CONFIGURATION_ACTIONS.stopListening());
     }
 }
