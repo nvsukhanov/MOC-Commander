@@ -3,7 +3,7 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { WINDOW } from '../../../common';
 import { CONTROLLER_INPUT_ACTIONS, CONTROLLERS_ACTIONS } from '../../actions';
-import { filter, fromEvent, map, mergeWith, NEVER, Observable, switchMap, tap } from 'rxjs';
+import { filter, fromEvent, map, mergeWith, NEVER, Observable, switchMap } from 'rxjs';
 import { CONTROLLER_INPUT_CAPTURE_SELECTORS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS } from '../../selectors';
 import { ControllerInputType } from '../../i-state';
 import { controllerInputIdFn } from '../../entity-adapters';
@@ -50,10 +50,6 @@ export class KeyboardControllerEffects {
             mergeWith(fromEvent(this.window.document, this.keyUpEvent).pipe(
                 map((event) => ({ isPressed: false, event: event as KeyboardEvent })),
             )),
-            tap((eventData) => {
-                eventData.event.preventDefault();
-                eventData.event.stopPropagation();
-            }),
             concatLatestFrom(() => this.store.select(CONTROLLER_INPUT_SELECTORS.selectEntities)),
             map(([ eventData, controllerInputEntities ]) => {
                 const inputId = eventData.event.key;

@@ -109,7 +109,6 @@
   "servoCalibrationError": "An error occurred during servo calibration",
   "servoCalibrationCancel": "Cancel",
   "servoCalibrateButtonTitle": "Calibrate",
-  "keyboardInputCaptured": "Keyboard input is being captured",
   "io": {
     "ioInputCapabilities": "Input Capabilities",
     "ioOutputCapabilities": "Output Capabilities",
