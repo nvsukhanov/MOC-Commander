@@ -130,6 +130,7 @@
     "ioTypeXLargeTechnicMotor": "XLarge Technic Motor",
     "ioTypeMediumTechnicAngularMotor": "Medium Technic Angular Motor",
     "ioTypeLargeTechnicAngularMotor": "Large Technic Angular Motor",
+    "ioTypeHandsetButtonGroup": "Handset Button Group",
     "unknownIOType": "Unknown device type"
   },
   "controller": {

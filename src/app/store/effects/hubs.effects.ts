@@ -27,7 +27,7 @@ export class HubsEffects {
             mergeMap((action) => {
                 const hub = this.hubStorage.get(action.hubId);
                 return hub.properties.getSystemTypeId().pipe(
-                    takeUntil(this.hubStorage.get(action.hubId).beforeDisconnect),
+                    takeUntil(this.hubStorage.get(action.hubId).disconnected),
                     map((hubType) => HUBS_ACTIONS.hubTypeReceived({ hubId: action.hubId, hubType }))
                 );
             })
@@ -39,7 +39,7 @@ export class HubsEffects {
             ofType(HUBS_ACTIONS.connected),
             mergeMap((a) => interval(this.hubBatteryPollInterval).pipe(
                 startWith(0),
-                takeUntil(this.hubStorage.get(a.hubId).beforeDisconnect),
+                takeUntil(this.hubStorage.get(a.hubId).disconnected),
                 switchMap(() => this.hubStorage.get(a.hubId).properties.getBatteryLevel()),
                 map((batteryLevel) => HUBS_ACTIONS.batteryLevelReceived({ hubId: a.hubId, batteryLevel }))
             ))
@@ -51,7 +51,7 @@ export class HubsEffects {
             ofType(HUBS_ACTIONS.connected),
             mergeMap((a) => interval(this.hubRSSIPollInterval).pipe(
                 startWith(0),
-                takeUntil(this.hubStorage.get(a.hubId).beforeDisconnect),
+                takeUntil(this.hubStorage.get(a.hubId).disconnected),
                 switchMap(() => this.hubStorage.get(a.hubId).properties.getRSSILevel()),
                 map((RSSI) => HUBS_ACTIONS.rssiLevelReceived({ hubId: a.hubId, RSSI }))
             ))
@@ -62,7 +62,7 @@ export class HubsEffects {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.connected),
             mergeMap((a) => this.hubStorage.get(a.hubId).properties.buttonState.pipe(
-                takeUntil(this.hubStorage.get(a.hubId).beforeDisconnect),
+                takeUntil(this.hubStorage.get(a.hubId).disconnected),
                 map((isPressed) => HUBS_ACTIONS.buttonStateReceived({ hubId: a.hubId, isPressed }))
             ))
         );

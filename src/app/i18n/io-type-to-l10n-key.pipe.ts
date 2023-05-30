@@ -26,7 +26,8 @@ export class IoTypeToL10nKeyPipe implements PipeTransform {
         [IOType.largeTechnicMotor]: composeL10nKey(L10nScopes.io, 'ioTypeLargeTechnicMotor'),
         [IOType.xLargeTechnicMotor]: composeL10nKey(L10nScopes.io, 'ioTypeXLargeTechnicMotor'),
         [IOType.mediumTechnicAngularMotor]: composeL10nKey(L10nScopes.io, 'ioTypeMediumTechnicAngularMotor'),
-        [IOType.largeTechnicAngularMotor]: composeL10nKey(L10nScopes.io, 'ioTypeLargeTechnicAngularMotor')
+        [IOType.largeTechnicAngularMotor]: composeL10nKey(L10nScopes.io, 'ioTypeLargeTechnicAngularMotor'),
+        [IOType.handsetButtonGroup]: composeL10nKey(L10nScopes.io, 'ioTypeHandsetButtonGroup')
     };
 
     private readonly unknownDeviceType = composeL10nKey(L10nScopes.io, 'unknownIOType');
