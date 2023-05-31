@@ -1,18 +1,3 @@
-<app-control-scheme-edit-form #editForm></app-control-scheme-edit-form>
-
-<ng-template #controlsTemplate>
-    <span class="spacer"></span>
-    <button mat-stroked-button
-            class="toolbar-button"
-            [disabled]="!editForm.isValid"
-            (click)="onSave(editForm.getFormValue())"
-    >
-        {{ 'saveCreatedScheme' | transloco }}
-    </button>
-    <a mat-stroked-button
-       class="toolbar-button"
-       [routerLink]="routesBuilderService.controlSchemesList"
-    >
-        {{ 'cancelCreateScheme' | transloco }}
-    </a>
-</ng-template>
+<app-control-scheme-edit-form (save)="onSave($event)"
+                              (cancel)="onCancel()"
+></app-control-scheme-edit-form>

@@ -3,7 +3,7 @@
         <ng-container *ngrxLet="canRunScheme$; let canRunScheme">
             <span class="spacer"></span>
 
-            <button mat-stroked-button
+            <button mat-raised-button
                     class="toolbar-button"
                     [disabled]="!canRunScheme"
                     (click)="runScheme(scheme.id)"
@@ -11,7 +11,7 @@
                 {{ 'runScheme' | transloco }}
             </button>
 
-            <button mat-stroked-button
+            <button mat-raised-button
                     class="toolbar-button"
                     [disabled]="!(isCurrentControlSchemeRunning$ | ngrxPush)"
                     (click)="stopRunningScheme()"
@@ -20,7 +20,7 @@
             </button>
 
             <a *ngIf="!(isCurrentControlSchemeRunning$ | ngrxPush)"
-               mat-stroked-button
+               mat-raised-button
                class="toolbar-button"
                [routerLink]="editSchemeRoute$ | ngrxPush"
             >

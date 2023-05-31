@@ -1,6 +1,8 @@
 <ng-container *ngrxLet="controlSchemes$; let controlSchemes">
     <ul *ngIf="controlSchemes?.length; else noControlSchemes">
-        <li *ngFor="let scheme of controlSchemes; trackBy: trackSchemeById">
+        <li *ngFor="let scheme of controlSchemes; trackBy: trackSchemeById"
+            class="card-list-item"
+        >
             <mat-card class="control-scheme-card">
                 <app-control-scheme-list-item [name]="scheme.name"
                                               [schemeId]="scheme.id"

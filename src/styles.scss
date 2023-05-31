@@ -20,3 +20,7 @@ ol {
     overflow: hidden; // allow ellipsis in card header
     width: 100%; // allow full-width sub-headers
 }
+
+.card-list-item + .card-list-item {
+    margin-top: 10px;
+}
