@@ -2,6 +2,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { GamepadController, IState, KeyboardController } from '../i-state';
 import { CONTROLLERS_ENTITY_ADAPTER } from '../entity-adapters';
 import { ControllerType } from '../../plugins';
+import { CONTROLLER_SETTINGS_SELECTORS } from './controller-settings.selectors';
 
 const CONTROLLERS_FEATURE_SELECTOR = createFeatureSelector<IState['controllers']>('controllers');
 
@@ -19,6 +20,14 @@ const CONTROLLERS_SELECT_ENTITIES = createSelector(
 
 export const CONTROLLER_SELECTORS = {
     selectAll: CONTROLLERS_SELECT_ALL,
+    selectAllWithSettings: createSelector(
+        CONTROLLERS_SELECT_ALL,
+        CONTROLLER_SETTINGS_SELECTORS.selectEntities,
+        (controllers, controllerSettingsEntities) => controllers.map((controller) => ({
+            controller,
+            settings: controllerSettingsEntities[controller.id]
+        }))
+    ),
     selectEntities: CONTROLLERS_SELECT_ENTITIES,
     selectGamepads: createSelector(
         CONTROLLERS_SELECT_ALL,

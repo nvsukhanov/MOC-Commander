@@ -1,11 +1,11 @@
-<ng-container *ngrxLet="connectedControllers$ as connectedControllers">
-    <ng-container *ngIf="connectedControllers.length; else noConnectedControllers">
+<ng-container *ngrxLet="controllersWithSettings$ as controllersWithSettings">
+    <ng-container *ngIf="controllersWithSettings.length; else noConnectedControllers">
         <p class="detect-controller-notification-tips">{{ 'controller.detectControllerTip' | transloco }}</p>
         <ul>
-            <li *ngFor="let connectedController of connectedControllers; trackBy: controllerTrackById">
-                <mat-card>
-                    <app-controllers-list-item [controller]="connectedController"></app-controllers-list-item>
-                </mat-card>
+            <li *ngFor="let controllerWithSettings of controllersWithSettings; trackBy: controllerTrackById">
+                <app-controllers-list-item [controller]="controllerWithSettings"
+                                           (settingsChanges)="controllerSettingsUpdate(controllerWithSettings.controller.id, $event)"
+                ></app-controllers-list-item>
             </li>
         </ul>
     </ng-container>

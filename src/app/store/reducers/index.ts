@@ -15,3 +15,4 @@ export * from './controllers.reducers';
 export * from './controller-input.reducers';
 export * from './controller-input-capture.reducers';
 export * from './hub-connection.reducers';
+export * from './controller-settings.reducers';

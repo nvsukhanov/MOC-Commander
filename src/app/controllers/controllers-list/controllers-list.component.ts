@@ -3,13 +3,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { NgForOf, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { Controller, CONTROLLER_SELECTORS } from '../../store';
+import { Controller, CONTROLLER_SELECTORS, CONTROLLER_SETTINGS_ACTIONS, ControllerSettings } from '../../store';
 import { Store } from '@ngrx/store';
 import { MatIconModule } from '@angular/material/icon';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { ControllersListItemComponent } from '../controllers-list-item';
 import { MatListModule } from '@angular/material/list';
-import { MatCardModule } from '@angular/material/card';
 
 @Component({
     standalone: true,
@@ -29,12 +28,11 @@ import { MatCardModule } from '@angular/material/card';
         LetDirective,
         ControllersListItemComponent,
         MatListModule,
-        MatCardModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControllersListComponent {
-    public readonly connectedControllers$ = this.store.select(CONTROLLER_SELECTORS.selectAll);
+    public readonly controllersWithSettings$ = this.store.select(CONTROLLER_SELECTORS.selectAllWithSettings);
 
     constructor(
         private readonly store: Store
@@ -43,8 +41,22 @@ export class ControllersListComponent {
 
     public controllerTrackById(
         index: number,
-        controller: Controller
+        controllerWithSettings: { controller: Controller, settings?: ControllerSettings }
     ): string {
-        return controller.id;
+        return controllerWithSettings.controller.id;
+    }
+
+    public controllerSettingsUpdate(
+        controllerId: string,
+        settings: ControllerSettings
+    ): void {
+        this.store.dispatch(
+            CONTROLLER_SETTINGS_ACTIONS.updateSettings({
+                settings: {
+                    ...settings,
+                    controllerId
+                }
+            })
+        );
     }
 }

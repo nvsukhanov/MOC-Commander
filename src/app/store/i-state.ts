@@ -11,6 +11,7 @@ export interface IState {
     controllerInputCapture: {
         listenersCount: number;
     },
+    controllerSettings: EntityState<ControllerSettings>;
     controlSchemes: EntityState<ControlScheme>;
     controlSchemeConfigurationState: {
         isListening: boolean;
@@ -70,7 +71,16 @@ export type ControllerInput = {
     value: number;
 }
 
-export type Controller = GamepadController | KeyboardController;
+export type KeyboardSettings = {
+    controllerId: string;
+    captureNonAlphaNumerics: boolean;
+}
+
+export type GamepadSettings = {
+    controllerId: string;
+}
+
+export type ControllerSettings = KeyboardSettings | GamepadSettings;
 
 export type GamepadController = {
     id: string;
@@ -85,6 +95,8 @@ export type KeyboardController = {
     id: string;
     controllerType: ControllerType.Keyboard;
 }
+
+export type Controller = GamepadController | KeyboardController;
 
 export type AttachedIOState = {
     hubId: string;
