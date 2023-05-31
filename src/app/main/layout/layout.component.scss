@@ -9,7 +9,6 @@
         flex-direction: column-reverse;
     }
 
-    background-color: var(--background-color);
     overflow: hidden;
 }
 
@@ -18,14 +17,20 @@
         margin-top: var(--main-toolbar-height);
     }
 
-    max-width: 1280px;
-    width: calc(100% - 2 * var(--content-margin));
+    width: 100%;
     flex-grow: 1;
     overflow: hidden;
-    padding: var(--content-margin);
+    padding-top: var(--content-padding);
     overflow-y: auto;
-    box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px rgba(0, 0, 0, 0.1411764706), 0 1px 18px rgba(0, 0, 0, 0.1215686275);
-    background-color: var(--content-background-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__wrapper {
+        max-width: 1280px;
+        width: calc(100% - 2 * var(--content-padding));
+        padding: 0 var(--content-padding);
+    }
 }
 
 .progress-bar {
