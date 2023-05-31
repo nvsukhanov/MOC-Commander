@@ -2,6 +2,7 @@ import { HubDiscoveryState, IState } from './i-state';
 import {
     CONTROL_SCHEMES_ENTITY_ADAPTER,
     CONTROLLER_INPUT_ENTITY_ADAPTER,
+    CONTROLLER_SETTINGS_ENTITY_ADAPTER,
     CONTROLLERS_ENTITY_ADAPTER,
     HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER,
     HUB_ATTACHED_IOS_ENTITY_ADAPTER,
@@ -19,6 +20,7 @@ export const INITIAL_STATE: IState = {
     controllerInputCapture: {
         listenersCount: 0
     },
+    controllerSettings: CONTROLLER_SETTINGS_ENTITY_ADAPTER.getInitialState(),
     controlSchemes: CONTROL_SCHEMES_ENTITY_ADAPTER.getInitialState(),
     controlSchemeConfigurationState: {
         isListening: false

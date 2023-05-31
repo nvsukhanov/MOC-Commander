@@ -1,1 +1,28 @@
-{{ controllerNameL10nKey | transloco }}
+<mat-expansion-panel *ngIf="controllerSettingsComponent; else controllerWithoutSettings"
+                     class="controller-panel">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            {{ controllerNameL10nKey | transloco }}
+        </mat-panel-title>
+        <mat-panel-description>
+            {{ 'controllerPlugins.settings' | transloco }}
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    <section *ngIf="controllerSettingsComponent"
+             class="controller-panel-settings">
+        <ng-container [appControllerSettingsRender]="controllerSettingsComponent"
+                      [controllerSettings]="controllerSettings"
+                      (settingsChanges)="controllerSettingsUpdate($event)"
+        ></ng-container>
+    </section>
+</mat-expansion-panel>
+
+<ng-template #controllerWithoutSettings>
+    <mat-card class="controller-panel">
+        <mat-card-header class="controller-without-settings__header">
+            <mat-card-title class="controller-without-settings__title">
+                {{ controllerNameL10nKey | transloco }}
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+</ng-template>

@@ -149,6 +149,7 @@
     "disconnectedController": "Disconnected controller",
     "disconnectedControllerAxis": "Axis {inputId}",
     "disconnectedControllerButton": "Button {inputId}",
+    "settings": "Settings",
     "dualshock": {
       "name": "Dualshock",
       "leftStickXAxis": "Left stick X-axis",
@@ -199,7 +200,9 @@
     },
     "keyboard": {
       "name": "Keyboard",
-      "button": "Button { inputId }"
+      "button": "Button { inputId }",
+      "captureNonAlphaNumerics": "Allow use of non-alphanumeric keys for input",
+      "captureNonAlphaNumericsHint": "In some scenarios, capturing non-alphanumeric keys may prevent you from using your keyboard normally. Use this option with caution."
     }
   }
 }

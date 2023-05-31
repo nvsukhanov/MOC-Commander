@@ -6,6 +6,7 @@ import {
     Controller,
     ControllerInput,
     ControllerInputType,
+    ControllerSettings,
     ControlScheme,
     HubConfiguration,
     HubConnection,
@@ -97,4 +98,8 @@ export function controllerInputIdFn(
 
 export const HUB_CONNECTIONS_ENTITY_ADAPTER: EntityAdapter<HubConnection> = createEntityAdapter<HubConnection>({
     selectId: (connection) => connection.hubId,
+});
+
+export const CONTROLLER_SETTINGS_ENTITY_ADAPTER: EntityAdapter<ControllerSettings> = createEntityAdapter<ControllerSettings>({
+    selectId: (settings) => settings.controllerId,
 });

@@ -4,9 +4,13 @@ import { Memoize } from 'typescript-memoize';
 import { TranslocoService } from '@ngneat/transloco';
 import { createControllerL10nKey, createScopedControllerL10nKey } from '../create-controller-l10n-key';
 import { Injectable } from '@angular/core';
+import { KeyboardsSettingsComponent } from './keyboards-settings.component';
+import { KeyboardSettings } from '../../../store';
 
 @Injectable()
-export class KeyboardControllerPluginService implements IControllerPlugin {
+export class KeyboardControllerPluginService implements IControllerPlugin<KeyboardSettings> {
+    public readonly settingsComponent = KeyboardsSettingsComponent;
+
     public readonly nameL10nKey: string;
 
     public readonly triggerButtonIndices: ReadonlyArray<number> = [];
