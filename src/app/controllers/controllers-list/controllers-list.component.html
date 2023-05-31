@@ -2,7 +2,9 @@
     <ng-container *ngIf="controllersWithSettings.length; else noConnectedControllers">
         <p class="detect-controller-notification-tips">{{ 'controller.detectControllerTip' | transloco }}</p>
         <ul>
-            <li *ngFor="let controllerWithSettings of controllersWithSettings; trackBy: controllerTrackById">
+            <li *ngFor="let controllerWithSettings of controllersWithSettings; trackBy: controllerTrackById"
+                class="card-list-item"
+            >
                 <app-controllers-list-item [controller]="controllerWithSettings"
                                            (settingsChanges)="controllerSettingsUpdate(controllerWithSettings.controller.id, $event)"
                 ></app-controllers-list-item>

@@ -13,5 +13,8 @@
 
 .not-connected-icon {
     margin-right: 10px;
-    line-height: 35px; // hack to vertically center icon
+}
+
+.selection-trigger {
+    display: flex;
 }

@@ -1,4 +1,16 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+    TemplateRef,
+    ViewChild
+} from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
     CONTROL_SCHEME_CONFIGURATION_ACTIONS,
@@ -7,8 +19,7 @@ import {
     ControllerInput,
     CONTROLLERS_ACTIONS,
     ControlScheme,
-    HUB_ATTACHED_IO_SELECTORS,
-    HUBS_SELECTORS
+    HUB_ATTACHED_IO_SELECTORS
 } from '../../../store';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,18 +27,19 @@ import { JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
-import { filter, finalize, map, of, Subject, Subscription, take, takeUntil } from 'rxjs';
+import { filter, finalize, map, Subject, Subscription, take, takeUntil } from 'rxjs';
 import { Actions, concatLatestFrom, ofType } from '@ngrx/effects';
 import { ControlSchemeBindingInputComponent } from '../binding-input';
 import { ControlSchemeBindingOutputComponent } from '../binding-output';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { ScreenSizeObserverService, WINDOW } from '../../../common'; // TODO: create alias for this
+import { FeatureToolbarService, IScrollContainer, ScreenSizeObserverService, SCROLL_CONTAINER, WINDOW } from '../../../common'; // TODO: create alias for this
 import { MatInputModule } from '@angular/material/input';
 import { ControlSchemeFormFactoryService } from './control-scheme-form-factory.service';
 import { EditSchemeForm } from '../types';
 import { ControlSchemeBindingConfigurationComponent } from '../binding-config';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
 
 export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
 
@@ -52,10 +64,15 @@ export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
         ControlSchemeBindingConfigurationComponent,
         MatDividerModule,
         MatIconModule,
+        RouterLink,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
+    @Output() public readonly save = new EventEmitter<BindingFormResult>();
+
+    @Output() public readonly cancel = new EventEmitter<void>();
+
     public readonly form = this.controlSchemeFormFactoryService.createEditSchemeForm(
         this.window.crypto.randomUUID(),
         'New Scheme' // TODO: translate
@@ -75,8 +92,19 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         private readonly controlSchemeFormFactoryService: ControlSchemeFormFactoryService,
         private readonly cdRef: ChangeDetectorRef,
         private readonly screenSizeObserverService: ScreenSizeObserverService,
-        private readonly actions: Actions
+        private readonly actions: Actions,
+        private readonly featureToolbarService: FeatureToolbarService,
+        @Inject(SCROLL_CONTAINER) private readonly scrollContainer: IScrollContainer
     ) {
+    }
+
+    @ViewChild('controlsTemplate', { static: true, read: TemplateRef })
+    public set controlsTemplate(controls: TemplateRef<unknown> | null) {
+        if (controls) {
+            this.featureToolbarService.setControls(controls);
+        } else {
+            this.featureToolbarService.clearConfig();
+        }
     }
 
     public get isSmallScreen(): boolean {
@@ -115,11 +143,16 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         this.store.dispatch(CONTROLLERS_ACTIONS.waitForConnect());
     }
 
-    public getFormValue(): BindingFormResult {
-        return this.form.getRawValue();
+    public onSave(): void {
+        this.save.emit(this.form.getRawValue());
+    }
+
+    public onCancel(): void {
+        this.cancel.emit();
     }
 
     public ngOnDestroy(): void {
+        this.featureToolbarService.clearConfig();
         this.sub?.unsubscribe();
         this.onDestroy$.next();
         this.onDestroy$.complete();
@@ -131,13 +164,8 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
             takeUntil(this.onDestroy$),
             takeUntil(this.actions.pipe(ofType(CONTROL_SCHEME_CONFIGURATION_ACTIONS.stopListening))),
             filter((input): input is ControllerInput => !!input),
-            concatLatestFrom(() => this.store.select(HUBS_SELECTORS.selectHubs)),
-            concatLatestFrom(([ input, hubs ]) =>
-                hubs.length === 1
-                ? this.store.select(HUB_ATTACHED_IO_SELECTORS.selectIOsControllableByInputType(hubs[0].hubId, input.inputType))
-                : of([])
-            ),
-            map(([ [ input ], ios ]) => ({ input, ios })),
+            concatLatestFrom((input) => this.store.select(HUB_ATTACHED_IO_SELECTORS.selectFirstIOControllableByInputType(input.inputType))),
+            map(([ input, ios ]) => ({ input, ios })),
             take(1),
             finalize(() => this.stopInputCapture())
         ).subscribe({
@@ -156,7 +184,8 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
                     ios[0].operationModes[0]
                 );
                 this.form.controls.bindings.push(binging);
-                this.cdRef.markForCheck();
+                this.cdRef.detectChanges();
+                this.scrollContainer.scrollToBottom();
             }
         });
     }

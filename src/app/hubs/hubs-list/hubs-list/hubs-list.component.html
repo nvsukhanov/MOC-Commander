@@ -1,6 +1,8 @@
 <ng-container *ngrxLet="connectedHubs$; let connectedHubs">
     <ul *ngIf="connectedHubs.length; else noConnectedHubs">
-        <li *ngFor="let hub of connectedHubs; trackBy: hubTrackByFn; let last = last">
+        <li *ngFor="let hub of connectedHubs; trackBy: hubTrackByFn; let last = last"
+            class="card-list-item"
+        >
             <mat-card class="hub-card">
                 <app-hubs-list-item [hubId]="hub.hubId"
                                     [name]="hub.name"
@@ -13,7 +15,6 @@
                                     (forget)="forgetHub(hub.hubId)"
                 ></app-hubs-list-item>
             </mat-card>
-            <mat-divider *ngIf="!last"></mat-divider>
         </li>
     </ul>
 

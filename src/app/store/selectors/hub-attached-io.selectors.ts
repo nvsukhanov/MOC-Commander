@@ -7,6 +7,7 @@ import { HUB_IO_CONTROL_METHODS, HubIoOperationMode } from '../hub-io-operation-
 import { HUB_PORT_MODE_INFO_SELECTORS } from './hub-port-mode-info.selectors';
 import { IOType, PortModeName } from '@nvsukhanov/rxpoweredup';
 import { HUB_CONNECTION_SELECTORS } from './hub-connections.selectors';
+import { Dictionary } from '@ngrx/entity';
 
 const SELECT_HUB_ATTACHED_IOS_FEATURE = createFeatureSelector<IState['hubAttachedIOs']>('hubAttachedIOs');
 
@@ -64,29 +65,17 @@ export const HUB_ATTACHED_IO_SELECTORS = {
         HUB_ATTACHED_IO_SELECTORS.selectIOsEntities,
         (ios) => ios[hubAttachedIosIdFn({ hubId, portId })]
     ),
-    selectIOsControllableByInputType: (hubId: string, inputType: ControllerInputType) => createSelector(
+    selectFirstIOControllableByInputType: (inputType: ControllerInputType) => createSelector(
+        HUB_ATTACHED_IO_SELECTORS.selectIOsAll,
+        HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
+        HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
+        (ios, supportedModes, portModeData) => selectIOsControllableByInputType(ios, supportedModes, portModeData, inputType)
+    ),
+    selectHubIOsControllableByInputType: (hubId: string, inputType: ControllerInputType) => createSelector(
         HUB_ATTACHED_IO_SELECTORS.selectHubIOs(hubId),
         HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
         HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
-        (ios, supportedModes, portModeData) => {
-            const applicablePortModes: Set<PortModeName> = new Set(Object.values(HUB_IO_CONTROL_METHODS[inputType]));
-            const result: Array<{ ioConfig: AttachedIO, operationModes: HubIoOperationMode[] }> = [];
-            for (const io of ios) {
-                const ioOperationModes = getHubIOOperationModes(io, supportedModes, portModeData, inputType)
-                    .filter((mode) => {
-                        const portMode = HUB_IO_CONTROL_METHODS[inputType][mode];
-                        return portMode !== undefined && applicablePortModes.has(portMode);
-                    });
-
-                if (ioOperationModes.length > 0) {
-                    result.push({
-                        ioConfig: io,
-                        operationModes: ioOperationModes
-                    });
-                }
-            }
-            return result;
-        }
+        (ios, supportedModes, portModeData) => selectIOsControllableByInputType(ios, supportedModes, portModeData, inputType)
     ),
     selectHubIOOperationModes: (
         hubId: string,
@@ -168,4 +157,29 @@ export function getHubIOOperationModes(
         }).flat();
     }
     return [];
+}
+
+function selectIOsControllableByInputType(
+    ios: AttachedIO[],
+    supportedModes: Dictionary<HubIoSupportedModes>,
+    portModeData: Dictionary<PortModeInfo>,
+    inputType: ControllerInputType
+): Array<{ ioConfig: AttachedIO, operationModes: HubIoOperationMode[] }> {
+    const applicablePortModes: Set<PortModeName> = new Set(Object.values(HUB_IO_CONTROL_METHODS[inputType]));
+    const result: Array<{ ioConfig: AttachedIO, operationModes: HubIoOperationMode[] }> = [];
+    for (const io of ios) {
+        const ioOperationModes = getHubIOOperationModes(io, supportedModes, portModeData, inputType)
+            .filter((mode) => {
+                const portMode = HUB_IO_CONTROL_METHODS[inputType][mode];
+                return portMode !== undefined && applicablePortModes.has(portMode);
+            });
+
+        if (ioOperationModes.length > 0) {
+            result.push({
+                ioConfig: io,
+                operationModes: ioOperationModes
+            });
+        }
+    }
+    return result;
 }

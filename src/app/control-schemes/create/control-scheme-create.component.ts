@@ -1,14 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { NgIf } from '@angular/common';
-import { PushPipe } from '@ngrx/component';
-import { TranslocoModule } from '@ngneat/transloco';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { BindingFormResult, ControlSchemeEditFormComponent } from '../edit';
 import { Store } from '@ngrx/store';
 import { CONTROL_SCHEME_ACTIONS } from '../../store';
-import { FeatureToolbarService } from '../../common';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { RoutesBuilderService } from '../../routing';
 
 @Component({
@@ -17,38 +11,25 @@ import { RoutesBuilderService } from '../../routing';
     templateUrl: './control-scheme-create.component.html',
     styleUrls: [ './control-scheme-create.component.scss' ],
     imports: [
-        MatButtonModule,
-        MatIconModule,
-        NgIf,
-        PushPipe,
-        TranslocoModule,
-        ControlSchemeEditFormComponent,
-        RouterLink
+        ControlSchemeEditFormComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ControlSchemeCreateComponent implements OnDestroy {
+export class ControlSchemeCreateComponent {
     constructor(
-        private readonly store: Store,
-        private readonly featureToolbarService: FeatureToolbarService,
-        protected readonly routesBuilderService: RoutesBuilderService
+        private readonly routesBuilderService: RoutesBuilderService,
+        private readonly router: Router,
+        private readonly store: Store
     ) {
     }
 
-    @ViewChild('controlsTemplate', { static: false, read: TemplateRef })
-    public set controlsTemplate(controls: TemplateRef<unknown> | null) {
-        if (controls) {
-            this.featureToolbarService.setControls(controls);
-        } else {
-            this.featureToolbarService.clearConfig();
-        }
-    }
-
-    public ngOnDestroy(): void {
-        this.featureToolbarService.clearConfig();
-    }
-
-    public onSave(formResult: BindingFormResult): void {
+    public onSave(
+        formResult: BindingFormResult
+    ): void {
         this.store.dispatch(CONTROL_SCHEME_ACTIONS.create(formResult));
+    }
+
+    public onCancel(): void {
+        this.router.navigate(this.routesBuilderService.controlSchemesList);
     }
 }

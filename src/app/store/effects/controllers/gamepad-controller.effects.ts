@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Action, Store } from '@ngrx/store';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { CONTROLLER_INPUT_ACTIONS, CONTROLLERS_ACTIONS } from '../../actions';
-import { filter, from, fromEvent, interval, map, merge, NEVER, Observable, switchMap } from 'rxjs';
+import { filter, from, fromEvent, interval, map, merge, MonoTypeOperatorFunction, NEVER, Observable, share, switchMap } from 'rxjs';
 import { CONTROLLER_INPUT_CAPTURE_SELECTORS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS } from '../../selectors';
 import { ControllerInputType } from '../../i-state';
 import { WINDOW } from '../../../common';
@@ -13,7 +13,9 @@ import { ControllerPluginFactoryService, ControllerType } from '../../../plugins
 export class GamepadControllerEffects {
     public readonly gamepadDisconnectedEvent = 'gamepaddisconnected';
 
-    public readonly valueChangesThreshold = 0.1;
+    public readonly valueChangesThreshold = 0.05;
+
+    public readonly axialDeadZone = 0.1;
 
     public readonly waitForConnect$ = createEffect(() => {
         return this.actions$.pipe(
@@ -82,41 +84,47 @@ export class GamepadControllerEffects {
             switchMap((gamepadConfigs) => from(gamepadConfigs)),
             map((gamepadConfig) => {
                 const browserGamepad = this.window.navigator.getGamepads()[gamepadConfig.gamepadIndex] as Gamepad;
+                const gamepadRead$ = this.gamepadReadScheduler$.pipe(
+                    map(() => this.window.navigator.getGamepads()[gamepadConfig.gamepadIndex] as Gamepad),
+                    share()
+                );
                 const axesChanges = browserGamepad.axes.map((axisValue, axisIndex) => {
-                    return this.gamepadReadScheduler$.pipe(
-                        map(() => this.window.navigator.getGamepads()[gamepadConfig.gamepadIndex] as Gamepad),
+                    const inputId = controllerInputIdFn({
+                        controllerId: gamepadConfig.id,
+                        inputId: axisIndex.toString(),
+                        inputType: ControllerInputType.Axis
+                    });
+
+                    return gamepadRead$.pipe(
                         map((gamepad) => this.trimValue(gamepad.axes[axisIndex])),
-                        concatLatestFrom(() => this.store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(controllerInputIdFn({
-                            controllerId: gamepadConfig.id,
-                            inputId: axisIndex.toString(),
-                            inputType: ControllerInputType.Axis
-                        })))),
-                        filter(([ buttonValue, stateValue ]) => stateValue === undefined || Math.abs(buttonValue - stateValue) > this.valueChangesThreshold),
-                        map(([ buttonValue ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
+                        map((value) => this.snapAxisValueToDeadZone(value)),
+                        concatLatestFrom(() => this.store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(inputId))),
+                        this.filterWithThreshold(),
+                        map(([ value ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
                             controllerId: gamepadConfig.id,
                             inputType: ControllerInputType.Axis,
                             inputId: axisIndex.toString(),
-                            value: buttonValue
+                            value
                         }))
                     );
                 });
 
                 const buttonChanges = browserGamepad.buttons.map((_, buttonIndex) => {
                     const inputType = gamepadConfig.triggerButtonIndices.includes(buttonIndex) ? ControllerInputType.Trigger : ControllerInputType.Button;
-                    return this.gamepadReadScheduler$.pipe(
-                        map(() => this.window.navigator.getGamepads()[gamepadConfig.gamepadIndex] as Gamepad),
+                    const inputId = controllerInputIdFn({
+                        controllerId: gamepadConfig.id,
+                        inputId: buttonIndex.toString(),
+                        inputType
+                    });
+                    return gamepadRead$.pipe(
                         map((gamepad) => this.trimValue(gamepad.buttons[buttonIndex].value)),
-                        concatLatestFrom(() => this.store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(controllerInputIdFn({
-                            controllerId: gamepadConfig.id,
-                            inputId: buttonIndex.toString(),
-                            inputType
-                        })))),
-                        filter(([ buttonValue, stateValue ]) => stateValue === undefined || Math.abs(buttonValue - stateValue) > this.valueChangesThreshold),
-                        map(([ buttonValue ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
+                        concatLatestFrom(() => this.store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(inputId))),
+                        this.filterWithThreshold(),
+                        map(([ value ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
                             controllerId: gamepadConfig.id,
                             inputType,
                             inputId: buttonIndex.toString(),
-                            value: buttonValue
+                            value
                         }))
                     );
                 });
@@ -131,5 +139,17 @@ export class GamepadControllerEffects {
         value: number
     ): number {
         return Math.round(value * 100) / 100;
+    }
+
+    private snapAxisValueToDeadZone(
+        value: number,
+    ): number {
+        return Math.abs(value) < this.axialDeadZone ? 0 : value;
+    }
+
+    private filterWithThreshold(): MonoTypeOperatorFunction<[ number, number ]> {
+        return filter(([ currentValue, previousValue ]) =>
+            previousValue === undefined || Math.abs(currentValue - previousValue) > this.valueChangesThreshold
+        );
     }
 }

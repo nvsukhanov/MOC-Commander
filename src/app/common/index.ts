@@ -6,3 +6,4 @@ export * from './types';
 export * from './feature-toolbar';
 export * from './screen-size-observer.service';
 export * from './servo-math';
+export * from './i-scroll-container';

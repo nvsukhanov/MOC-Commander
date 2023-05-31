@@ -31,12 +31,24 @@
     </mat-card-actions>
 </mat-card>
 
-<section class="binding-actions">
-    <button mat-fab
-            [title]="'addSchemeBinding' | transloco"
+<ng-template #controlsTemplate>
+    <button mat-raised-button
+            class="toolbar-button"
             [disabled]="!(canAddBinding$ | ngrxPush)"
             (click)="addBinding()"
     >
-        <mat-icon [fontIcon]="'add'"></mat-icon>
+        {{ 'addSchemeBinding' | transloco }}
     </button>
-</section>
+    <button mat-raised-button
+            class="toolbar-button"
+            [disabled]="!form.valid"
+            (click)="onSave()">
+        {{ 'saveEditedScheme' | transloco }}
+    </button>
+    <button mat-raised-button
+            class="toolbar-button"
+            (click)="onCancel()"
+    >
+        {{ 'cancelEditScheme' | transloco }}
+    </button>
+</ng-template>

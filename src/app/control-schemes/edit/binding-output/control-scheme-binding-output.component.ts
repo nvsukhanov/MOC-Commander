@@ -124,7 +124,7 @@ export class ControlSchemeBindingOutputComponent {
                 if (hubId === null) {
                     return of([]);
                 }
-                return this.store.select(HUB_ATTACHED_IO_SELECTORS.selectIOsControllableByInputType(hubId, inputType));
+                return this.store.select(HUB_ATTACHED_IO_SELECTORS.selectHubIOsControllableByInputType(hubId, inputType));
             }),
             map((ios) => ios.map((io) => io.ioConfig))
         );

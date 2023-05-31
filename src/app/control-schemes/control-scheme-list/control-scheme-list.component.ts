@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FeatureToolbarService } from '../../common';
 import { MatCardModule } from '@angular/material/card';
 import { RoutesBuilderService } from '../../routing';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
     standalone: true,
@@ -27,7 +28,8 @@ import { RoutesBuilderService } from '../../routing';
         MatButtonModule,
         MatIconModule,
         RouterLink,
-        MatCardModule
+        MatCardModule,
+        MatListModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
