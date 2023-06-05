@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ITaskSuppressor } from './i-task-suppressor';
-import { ServoTaskSuppressor, SetSpeedTaskSuppressor } from './suppressors';
+import { ServoTaskSuppressor, SetAngleTaskSuppressor, SetSpeedTaskSuppressor } from './suppressors';
 
 @Injectable({ providedIn: 'root' })
 export class TaskSuppressorFactory {
@@ -11,7 +11,9 @@ export class TaskSuppressorFactory {
     private createChain(): ITaskSuppressor {
         const setSpeedSuppressor = new SetSpeedTaskSuppressor();
         const servoSuppressor = new ServoTaskSuppressor();
-        setSpeedSuppressor.setNext(servoSuppressor);
+        const setAngleSuppressor = new SetAngleTaskSuppressor();
+        setSpeedSuppressor.setNext(servoSuppressor)
+                          .setNext(setAngleSuppressor);
         return setSpeedSuppressor;
     }
 }

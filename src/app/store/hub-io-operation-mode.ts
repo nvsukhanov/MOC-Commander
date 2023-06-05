@@ -4,7 +4,7 @@ import { PortModeName } from '@nvsukhanov/rxpoweredup';
 export enum HubIoOperationMode {
     Linear = 'linear',
     Servo = 'servo',
-    // SetColor = 'set-color',
+    SetAngle = 'setAngle',
 }
 
 export const HUB_IO_CONTROL_METHODS: { [k in ControllerInputType]: { [p in HubIoOperationMode]?: PortModeName } } = {
@@ -14,6 +14,10 @@ export const HUB_IO_CONTROL_METHODS: { [k in ControllerInputType]: { [p in HubIo
     },
     [ControllerInputType.Button]: {
         [HubIoOperationMode.Linear]: PortModeName.speed,
+        [HubIoOperationMode.Servo]: PortModeName.absolutePosition,
+        [HubIoOperationMode.SetAngle]: PortModeName.absolutePosition,
     },
-    [ControllerInputType.Trigger]: {}
+    [ControllerInputType.Trigger]: {
+        [HubIoOperationMode.Linear]: PortModeName.speed,
+    }
 } as const;

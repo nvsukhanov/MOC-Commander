@@ -1,7 +1,8 @@
 export enum L10nScopes {
     io = 'io',
     controllerPlugins = 'controllerPlugins',
-    controller = 'controller'
+    controller = 'controller',
+    motorServoEndState = 'motorServoEndState'
 }
 
 export function composeL10nKey(

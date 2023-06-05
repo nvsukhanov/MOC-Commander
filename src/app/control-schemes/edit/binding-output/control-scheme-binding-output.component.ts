@@ -14,7 +14,7 @@ import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { combineLatest, EMPTY, map, Observable, of, shareReplay, startWith, Subscription, switchMap } from 'rxjs';
-import { IOType } from '@nvsukhanov/rxpoweredup';
+import { IOType, MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 import { ControlSchemeBindingInputForm } from '../binding-input';
 import { TranslocoModule } from '@ngneat/transloco';
 import { IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '../../../i18n';
@@ -23,14 +23,14 @@ import { RenderEditOutputConfigurationDirective } from '../edit-output-configura
 import { BindingForm } from '../types';
 import { MatIconModule } from '@angular/material/icon';
 
-export type LinearOutputConfiguration = FormGroup<{
+export type LinearOutputConfigurationForm = FormGroup<{
     maxSpeed: FormControl<number>,
     isToggle: FormControl<boolean>,
     invert: FormControl<boolean>,
     power: FormControl<number>
 }>;
 
-export type ServoOutputConfiguration = FormGroup<{
+export type ServoOutputConfigurationForm = FormGroup<{
     range: FormControl<number>,
     aposCenter: FormControl<number>,
     speed: FormControl<number>,
@@ -38,12 +38,20 @@ export type ServoOutputConfiguration = FormGroup<{
     invert: FormControl<boolean>,
 }>;
 
+export type SetAngleOutputConfigurationForm = FormGroup<{
+    angle: FormControl<number>;
+    speed: FormControl<number>;
+    power: FormControl<number>;
+    endState: FormControl<MotorServoEndState>;
+}>;
+
 export type ControlSchemeBindingOutputForm = FormGroup<{
     hubId: FormControl<string>,
     portId: FormControl<number>,
     operationMode: FormControl<HubIoOperationMode>,
-    linearConfig: LinearOutputConfiguration,
-    servoConfig: ServoOutputConfiguration
+    linearConfig: LinearOutputConfigurationForm,
+    servoConfig: ServoOutputConfigurationForm,
+    setAngleConfig: SetAngleOutputConfigurationForm
 }>;
 
 @Component({

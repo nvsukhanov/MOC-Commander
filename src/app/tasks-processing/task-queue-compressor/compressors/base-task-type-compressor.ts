@@ -1,8 +1,11 @@
 import { PortCommandTask, PortCommandTaskType } from '../../../common';
 import { ITaskSpecificQueueCompressor } from '../i-task-specific-queue-compressor';
 
-export abstract class BaseTaskTypeCompressor implements ITaskSpecificQueueCompressor {
-    protected abstract taskType: PortCommandTaskType;
+export class BaseTaskTypeCompressor implements ITaskSpecificQueueCompressor {
+    constructor(
+        protected readonly taskType: PortCommandTaskType
+    ) {
+    }
 
     public compress(
         queue: PortCommandTask[]

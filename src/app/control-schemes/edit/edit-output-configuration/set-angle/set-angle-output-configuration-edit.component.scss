@@ -1,3 +1,14 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.parameter-section {
+    display: flex;
+    flex-direction: column;
+}
+
 .slider-label {
     display: flex;
 

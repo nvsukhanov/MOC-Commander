@@ -27,6 +27,16 @@ function trimOutputBinding(source: ReturnType<BindingForm['getRawValue']>): Cont
                     servoConfig: source.output.servoConfig
                 }
             };
+        case HubIoOperationMode.SetAngle:
+            return {
+                ...source,
+                output: {
+                    hubId: source.output.hubId,
+                    portId: source.output.portId,
+                    operationMode: HubIoOperationMode.SetAngle,
+                    setAngleConfig: source.output.setAngleConfig
+                }
+            };
     }
 }
 

@@ -1,4 +1,4 @@
-import { HubType, IOType, PortModeName, PortModeSymbol } from '@nvsukhanov/rxpoweredup';
+import { HubType, IOType, MotorServoEndState, PortModeName, PortModeSymbol } from '@nvsukhanov/rxpoweredup';
 import { EntityState } from '@ngrx/entity';
 import { RouterState } from '@ngrx/router-store';
 import { HubIoOperationMode } from './hub-io-operation-mode';
@@ -134,7 +134,19 @@ export type BindingServoOutputState = {
     }
 }
 
-export type BindingOutputState = BindingLinearOutputState | BindingServoOutputState;
+export type BindingSetAngleOutputState = {
+    hubId: string;
+    portId: number;
+    operationMode: HubIoOperationMode.SetAngle;
+    setAngleConfig: {
+        angle: number;
+        speed: number;
+        power: number;
+        endState: MotorServoEndState;
+    }
+}
+
+export type BindingOutputState = BindingLinearOutputState | BindingServoOutputState | BindingSetAngleOutputState;
 
 export type ControlSchemeBinding = {
     id: string;
