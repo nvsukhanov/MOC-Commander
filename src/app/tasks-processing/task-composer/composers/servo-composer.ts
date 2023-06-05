@@ -20,7 +20,7 @@ export class ServoComposer extends PortCommandTaskComposer {
         const resultingCenter = translationPaths.cw < translationPaths.ccw ? translationPaths.cw : -translationPaths.ccw;
 
         const arcSize = outputConfig.servoConfig.range;
-        const arcPosition = inputValue * arcSize / 2;
+        const arcPosition = inputValue * arcSize / 2 * (outputConfig.servoConfig.invert ? -1 : 1);
 
         const targetAngle = arcPosition + resultingCenter;
         const minAngle = resultingCenter - arcSize / 2;
@@ -32,7 +32,8 @@ export class ServoComposer extends PortCommandTaskComposer {
             binding.id,
             outputConfig,
             snappedAngle,
-            outputConfig.servoConfig.speed
+            outputConfig.servoConfig.speed,
+            resultingCenter
         );
     }
 
@@ -51,14 +52,15 @@ export class ServoComposer extends PortCommandTaskComposer {
         bindingId: string,
         outputState: BindingServoOutputState,
         targetAngle: number,
-        targetSpeed: number
+        targetSpeed: number,
+        arcCenter: number
     ): PortCommandServoTask {
         return {
             taskType: PortCommandTaskType.Servo,
             hubId: outputState.hubId,
             portId: outputState.portId,
             bindingId: bindingId,
-            isNeutral: Math.round(targetAngle) === 0,
+            isNeutral: Math.round(targetAngle) === arcCenter,
             angle: Math.round(targetAngle),
             speed: Math.round(targetSpeed),
             power: outputState.servoConfig.power,

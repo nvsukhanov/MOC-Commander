@@ -1,0 +1,60 @@
+<ng-container *ngIf="configurationForm">
+    <section class="parameter-section">
+        <mat-form-field>
+            <label class="slider-label-description">
+                {{ 'setAngleOutputConfiguration.angle' | transloco }}
+            </label>
+            <input type="number"
+                   matInput
+                   [formControl]="configurationForm.controls.angle"
+                   [min]="motorLimits.minRawAngle"
+                   [max]="motorLimits.maxRawAngle"
+            />
+        </mat-form-field>
+    </section>
+
+    <section class="parameter-section">
+        <div class="slider-label">
+            <label class="slider-label-description">
+                {{ 'setAngleOutputConfiguration.speed' | transloco }}
+            </label>
+            <label class="slider-label-value-right">{{ configurationForm.controls.speed.value }}</label>
+        </div>
+        <mat-slider class="slider"
+                    [min]="0"
+                    [max]="motorLimits.maxSpeed"
+        >
+            <input matSliderThumb [formControl]="configurationForm.controls.speed"/>
+        </mat-slider>
+    </section>
+
+    <section class="parameter-section">
+        <div class="slider-label">
+            <label class="slider-label-description">
+                {{ 'setAngleOutputConfiguration.power' | transloco }}
+            </label>
+            <label class="slider-label-value-right">{{ configurationForm.controls.power.value }}</label>
+        </div>
+        <mat-slider class="slider"
+                    [min]="motorLimits.minPower"
+                    [max]="motorLimits.maxPower"
+        >
+            <input matSliderThumb [formControl]="configurationForm.controls.power"/>
+        </mat-slider>
+    </section>
+
+    <section class="parameter-section">
+        <mat-form-field>
+            <mat-label>
+                {{ 'setAngleOutputConfiguration.endState' | transloco }}
+            </mat-label>
+            <mat-select [formControl]="configurationForm.controls.endState">
+                <mat-option *ngFor="let endState of motorServoEndStates"
+                            [value]="endState"
+                >
+                    {{ endState | appMotorServoEndStateL10nKey | transloco }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </section>
+</ng-container>

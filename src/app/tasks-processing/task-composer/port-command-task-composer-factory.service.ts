@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IPortCommandTaskComposer } from './i-port-command-task-composer';
-import { ServoComposer, SetSpeedComposer } from './composers';
+import { ServoComposer, SetAngleComposer, SetSpeedComposer } from './composers';
 
 @Injectable({ providedIn: 'root' })
 export class PortCommandTaskComposerFactoryService {
@@ -11,7 +11,9 @@ export class PortCommandTaskComposerFactoryService {
     private createChain(): IPortCommandTaskComposer {
         const setSpeedComposer = new SetSpeedComposer();
         const servoComposer = new ServoComposer();
-        setSpeedComposer.setNext(servoComposer);
+        const setAngleComposer = new SetAngleComposer();
+        setSpeedComposer.setNext(servoComposer)
+                        .setNext(setAngleComposer);
         return setSpeedComposer;
     }
 }

@@ -12,6 +12,9 @@ export class SetSpeedTaskSuppressor extends TaskSuppressor {
         if (task.taskType !== PortCommandTaskType.SetSpeed) {
             return null;
         }
+        if (lastTaskOfKindInQueue.taskType !== PortCommandTaskType.SetSpeed) {
+            return false;
+        }
         if ((Math.abs(task.speed) === MOTOR_LIMITS.maxSpeed || task.speed === 0) && lastTaskOfKindInQueue.speed !== task.speed) {
             return false;
         }

@@ -7,6 +7,7 @@ import { Observable, startWith, Subscription } from 'rxjs';
 import { ControlSchemeBindingInputForm } from '../binding-input';
 import { LinearOutputConfigurationEditComponent } from './linear';
 import { ServoOutputConfigurationEditComponent } from './servo';
+import { SetAngleOutputConfigurationEditComponent } from './set-angle';
 
 @Directive({
     standalone: true,
@@ -16,7 +17,8 @@ import { ServoOutputConfigurationEditComponent } from './servo';
 export class RenderEditOutputConfigurationDirective implements OnDestroy {
     private readonly renderers: { [k in HubIoOperationMode]?: Type<IOutputConfigurationRenderer> } = {
         [HubIoOperationMode.Linear]: LinearOutputConfigurationEditComponent,
-        [HubIoOperationMode.Servo]: ServoOutputConfigurationEditComponent
+        [HubIoOperationMode.Servo]: ServoOutputConfigurationEditComponent,
+        [HubIoOperationMode.SetAngle]: SetAngleOutputConfigurationEditComponent
     };
 
     private _inputFormControl?: ControlSchemeBindingInputForm;

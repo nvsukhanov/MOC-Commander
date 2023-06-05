@@ -57,7 +57,7 @@
   "bindingSelectHubToAttachTitle": "Select hub to attach",
   "hubIOOperationModeLinear": "Linear",
   "hubIOOperationModeServo": "Servo",
-  "hubIOOperationModeSetColor": "Set color",
+  "hubIOOperationModeSetAngle": "Set angle",
   "bindingInputSection": "Input",
   "bindingOutputSection": "Output",
   "bindingOutputSectionPortLabel": "Port",
@@ -83,6 +83,7 @@
   "schemeBindingValidationHubIOCapabilitiesMismatch": "Attached device has incompatible capabilities",
   "portCommandTaskTypeSetLinearSpeed": "Speed: {speed}",
   "portCommandTaskTypeServo": "Angle: {angle}",
+  "portCommandTaskTypeSetAngle": "Angle: {angle}",
   "schemeOutputBindingNoConfigurationRequired": "No configuration required",
   "schemeOutputBindingConfigurationLinearToggleParameter": "Treat button as switch",
   "schemeOutputBindingConfigurationLinearSpeedParameter": "Speed",
@@ -94,6 +95,17 @@
   "schemeOutputBindingConfigurationServoInvertParameter": "Invert",
   "schemeOutputBindingConfigurationServoSpeedParameter": "Speed",
   "schemeOutputBindingConfigurationServoPowerParameter": "Power",
+  "setAngleOutputConfiguration": {
+    "angle": "Target angle",
+    "power": "Power",
+    "speed": "Speed",
+    "endState": "End state"
+  },
+  "motorServoEndState": {
+    "float": "Float",
+    "hold": "Hold",
+    "brake": "Brake"
+  },
   "aboutPageTitle": "About",
   "aboutPageDisclaimerTitle": "Disclaimer",
   "aboutPageLegalNotice": "LEGO® is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this app.",

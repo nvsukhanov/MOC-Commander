@@ -3,6 +3,7 @@ import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 export enum PortCommandTaskType {
     SetSpeed = 'SetSpeed',
     Servo = 'Servo',
+    SetAngle = 'SetAngle',
 }
 
 export type PortCommandSetLinearSpeedTask = {
@@ -29,4 +30,17 @@ export type PortCommandServoTask = {
     createdAt: number,
 }
 
-export type PortCommandTask = PortCommandSetLinearSpeedTask | PortCommandServoTask;
+export type PortCommandSetAngle = {
+    taskType: PortCommandTaskType.SetAngle,
+    hubId: string,
+    portId: number,
+    bindingId: string,
+    isNeutral: boolean,
+    angle: number,
+    speed: number,
+    power: number,
+    endState: MotorServoEndState,
+    createdAt: number
+}
+
+export type PortCommandTask = PortCommandSetLinearSpeedTask | PortCommandServoTask | PortCommandSetAngle;
