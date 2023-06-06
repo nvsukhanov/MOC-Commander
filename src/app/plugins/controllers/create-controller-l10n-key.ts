@@ -1,4 +1,4 @@
-import { composeL10nKey, L10nScopes } from '../../i18n';
+import { L10nScopes, composeL10nKey } from '../../i18n';
 
 export function createScopedControllerL10nKey(
     scope: string,

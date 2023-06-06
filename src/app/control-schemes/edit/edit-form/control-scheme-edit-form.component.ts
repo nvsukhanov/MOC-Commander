@@ -12,34 +12,35 @@ import {
     ViewChild
 } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import {
-    CONTROL_SCHEME_CONFIGURATION_ACTIONS,
-    CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS,
-    CONTROLLER_INPUT_SELECTORS,
-    ControllerInput,
-    CONTROLLERS_ACTIONS,
-    ControlScheme,
-    HUB_ATTACHED_IO_SELECTORS
-} from '../../../store';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
-import { filter, finalize, map, Subject, Subscription, take, takeUntil } from 'rxjs';
+import { Subject, Subscription, filter, finalize, map, take, takeUntil } from 'rxjs';
 import { Actions, concatLatestFrom, ofType } from '@ngrx/effects';
-import { ControlSchemeBindingInputComponent } from '../binding-input';
-import { ControlSchemeBindingOutputComponent } from '../binding-output';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { FeatureToolbarService, IScrollContainer, ScreenSizeObserverService, SCROLL_CONTAINER, WINDOW } from '../../../common'; // TODO: create alias for this
 import { MatInputModule } from '@angular/material/input';
-import { ControlSchemeFormFactoryService } from './control-scheme-form-factory.service';
-import { EditSchemeForm } from '../types';
-import { ControlSchemeBindingConfigurationComponent } from '../binding-config';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+
+import { ControlSchemeBindingInputComponent } from '../binding-input';
+import { ControlSchemeBindingOutputComponent } from '../binding-output';
+import { FeatureToolbarService, IScrollContainer, SCROLL_CONTAINER, ScreenSizeObserverService, WINDOW } from '../../../common'; // TODO: create alias for this
+import { ControlSchemeFormFactoryService } from './control-scheme-form-factory.service';
+import { EditSchemeForm } from '../types';
+import { ControlSchemeBindingConfigurationComponent } from '../binding-config';
+import {
+    CONTROLLERS_ACTIONS,
+    CONTROLLER_INPUT_SELECTORS,
+    CONTROL_SCHEME_CONFIGURATION_ACTIONS,
+    CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS,
+    ControlScheme,
+    ControllerInput,
+    HUB_ATTACHED_IO_SELECTORS
+} from '../../../store';
 
 export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
 

@@ -1,5 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import { CONTROL_SCHEME_CONFIGURATION_ACTIONS, CONTROLLER_INPUT_ACTIONS } from '../actions';
+
+import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_CONFIGURATION_ACTIONS } from '../actions';
 import { INITIAL_STATE } from '../initial-state';
 import { IState } from '../i-state';
 

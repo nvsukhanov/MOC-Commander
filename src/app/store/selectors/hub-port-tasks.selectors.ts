@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+
 import { IState } from '../i-state';
 import { LAST_EXECUTED_TASKS_ENTITY_ADAPTER } from '../entity-adapters';
 

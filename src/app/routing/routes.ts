@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+
 import { NotFoundComponent } from '../common';
 
 export const ROUTE_PATHS = {

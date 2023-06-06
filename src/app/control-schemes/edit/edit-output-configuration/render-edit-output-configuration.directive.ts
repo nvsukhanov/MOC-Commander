@@ -1,9 +1,10 @@
 import { ComponentRef, Directive, Input, OnDestroy, Type, ViewContainerRef } from '@angular/core';
+import { Observable, Subscription, startWith } from 'rxjs';
+
 import { ControlSchemeBindingOutputForm } from '../binding-output';
 import { HubIoOperationMode } from '../../../store';
 import { IOutputConfigurationRenderer } from './i-output-configuration-renderer';
 import { OutputNoConfigurationComponent } from './no-configuration';
-import { Observable, startWith, Subscription } from 'rxjs';
 import { ControlSchemeBindingInputForm } from '../binding-input';
 import { LinearOutputConfigurationEditComponent } from './linear';
 import { ServoOutputConfigurationEditComponent } from './servo';

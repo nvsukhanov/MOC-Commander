@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { HubConfiguration } from '../../../store';
 import { MatCardModule } from '@angular/material/card';
 import { JsonPipe, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,6 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslocoModule } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+
+import { HubConfiguration } from '../../../store';
 import { RoutesBuilderService } from '../../../routing';
 
 export type HubEditFormSaveResult = {

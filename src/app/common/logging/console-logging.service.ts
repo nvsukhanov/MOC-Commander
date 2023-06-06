@@ -1,8 +1,9 @@
 /* eslint-disable no-console */
 import { Inject, Injectable, Optional } from '@angular/core';
+import { ILogger } from '@nvsukhanov/rxpoweredup';
+
 import { LOG_LEVEL, LogLevel } from './log-levels';
 import { ExtractTokenType } from '../types';
-import { ILogger } from '@nvsukhanov/rxpoweredup';
 
 @Injectable({ providedIn: 'root' })
 export class ConsoleLoggingService implements ILogger {

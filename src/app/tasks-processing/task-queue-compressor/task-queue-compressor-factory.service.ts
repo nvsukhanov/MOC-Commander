@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+
 import { TaskQueueCompressor } from './task-queue-compressor';
 import { BaseTaskTypeCompressor } from './compressors';
 import { PortCommandTaskType } from '../../common';

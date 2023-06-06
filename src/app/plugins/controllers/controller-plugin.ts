@@ -1,8 +1,9 @@
-import { IControllerPlugin } from './i-controller-plugin';
 import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
-import { createControllerL10nKey, createScopedControllerL10nKey } from './create-controller-l10n-key';
 import { Memoize } from 'typescript-memoize';
+
+import { createControllerL10nKey, createScopedControllerL10nKey } from './create-controller-l10n-key';
+import { IControllerPlugin } from './i-controller-plugin';
 
 export abstract class ControllerPlugin implements IControllerPlugin {
     public abstract readonly nameL10nKey: string;

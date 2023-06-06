@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { HubConfiguration } from '../../../store';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
+
+import { HubConfiguration } from '../../../store';
 import { EllipsisTitleDirective, HUB_TYPE_TO_L10N_MAPPING } from '../../../common';
 import { RoutesBuilderService } from '../../../routing';
 

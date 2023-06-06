@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
-import { WINDOW } from './types';
 import { fromEvent, share } from 'rxjs';
+
+import { WINDOW } from './types';
 
 @Injectable({ providedIn: 'root' })
 export class WindowResizeTrackerService {

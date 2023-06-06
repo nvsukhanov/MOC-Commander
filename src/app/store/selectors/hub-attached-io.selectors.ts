@@ -1,17 +1,44 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { IOType, PortModeName } from '@nvsukhanov/rxpoweredup';
+import { Dictionary } from '@ngrx/entity';
+
 import { HUB_ATTACHED_IOS_ENTITY_ADAPTER, hubAttachedIosIdFn, hubIOSupportedModesIdFn, hubPortModeInfoIdFn } from '../entity-adapters';
-import { AttachedIO, ControllerInputType, HubIoSupportedModes, IState, PortModeInfo } from '../i-state';
+import { AttachedIO, HubIoSupportedModes, IState, PortModeInfo } from '../i-state';
 import { HUB_IO_SUPPORTED_MODES_SELECTORS } from './hub-io-supported-modes.selectors';
 import { HUB_IO_CONTROL_METHODS, HubIoOperationMode } from '../hub-io-operation-mode';
 import { HUB_PORT_MODE_INFO_SELECTORS } from './hub-port-mode-info.selectors';
-import { IOType, PortModeName } from '@nvsukhanov/rxpoweredup';
 import { HUB_CONNECTION_SELECTORS } from './hub-connections.selectors';
-import { Dictionary } from '@ngrx/entity';
+import { ControllerInputType } from '../controller-input-type';
 
 const SELECT_HUB_ATTACHED_IOS_FEATURE = createFeatureSelector<IState['hubAttachedIOs']>('hubAttachedIOs');
 
 const HUB_ATTACHED_IOS_ADAPTER_SELECTORS = HUB_ATTACHED_IOS_ENTITY_ADAPTER.getSelectors();
+
+function selectIOsControllableByInputType(
+    ios: AttachedIO[],
+    supportedModes: Dictionary<HubIoSupportedModes>,
+    portModeData: Dictionary<PortModeInfo>,
+    inputType: ControllerInputType
+): Array<{ ioConfig: AttachedIO, operationModes: HubIoOperationMode[] }> {
+    const applicablePortModes: Set<PortModeName> = new Set(Object.values(HUB_IO_CONTROL_METHODS[inputType]));
+    const result: Array<{ ioConfig: AttachedIO, operationModes: HubIoOperationMode[] }> = [];
+    for (const io of ios) {
+        const ioOperationModes = getHubIOOperationModes(io, supportedModes, portModeData, inputType)
+            .filter((mode) => {
+                const portMode = HUB_IO_CONTROL_METHODS[inputType][mode];
+                return portMode !== undefined && applicablePortModes.has(portMode);
+            });
+
+        if (ioOperationModes.length > 0) {
+            result.push({
+                ioConfig: io,
+                operationModes: ioOperationModes
+            });
+        }
+    }
+    return result;
+}
 
 export type IOFullInfo = {
     hubId: string;
@@ -157,29 +184,4 @@ export function getHubIOOperationModes(
         }).flat();
     }
     return [];
-}
-
-function selectIOsControllableByInputType(
-    ios: AttachedIO[],
-    supportedModes: Dictionary<HubIoSupportedModes>,
-    portModeData: Dictionary<PortModeInfo>,
-    inputType: ControllerInputType
-): Array<{ ioConfig: AttachedIO, operationModes: HubIoOperationMode[] }> {
-    const applicablePortModes: Set<PortModeName> = new Set(Object.values(HUB_IO_CONTROL_METHODS[inputType]));
-    const result: Array<{ ioConfig: AttachedIO, operationModes: HubIoOperationMode[] }> = [];
-    for (const io of ios) {
-        const ioOperationModes = getHubIOOperationModes(io, supportedModes, portModeData, inputType)
-            .filter((mode) => {
-                const portMode = HUB_IO_CONTROL_METHODS[inputType][mode];
-                return portMode !== undefined && applicablePortModes.has(portMode);
-            });
-
-        if (ioOperationModes.length > 0) {
-            result.push({
-                ioConfig: io,
-                operationModes: ioOperationModes
-            });
-        }
-    }
-    return result;
 }

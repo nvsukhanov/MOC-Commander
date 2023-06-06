@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LocationStrategy } from '@angular/common';
+
 import { ROUTE_PATHS } from './routes';
 
 @Injectable({ providedIn: 'root' })

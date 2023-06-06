@@ -1,9 +1,11 @@
 import { HubType, IOType, MotorServoEndState, PortModeName, PortModeSymbol } from '@nvsukhanov/rxpoweredup';
 import { EntityState } from '@ngrx/entity';
 import { RouterState } from '@ngrx/router-store';
+
 import { HubIoOperationMode } from './hub-io-operation-mode';
 import { PortCommandTask } from '../common';
 import { ControllerType } from '../plugins';
+import { ControllerInputType } from './controller-input-type';
 
 export interface IState {
     controllers: EntityState<Controller>;
@@ -56,12 +58,6 @@ export enum HubConnectionState {
     Disconnected,
     Connected,
     Disconnecting,
-}
-
-export enum ControllerInputType {
-    Button = 'Button',
-    Axis = 'Axis',
-    Trigger = 'Trigger'
 }
 
 export type ControllerInput = {

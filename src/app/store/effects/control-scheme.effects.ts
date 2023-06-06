@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_CONFIGURATION_ACTIONS, HUBS_ACTIONS } from '../actions';
-import { filter, map, NEVER, switchMap, tap } from 'rxjs';
+import { NEVER, filter, map, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
-import { CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS, CONTROL_SCHEME_RUNNING_STATE_SELECTORS, CONTROL_SCHEME_SELECTORS } from '../selectors';
 import { Store } from '@ngrx/store';
-import { RoutesBuilderService } from '../../routing';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
+
+import { CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS, CONTROL_SCHEME_RUNNING_STATE_SELECTORS, CONTROL_SCHEME_SELECTORS } from '../selectors';
+import { RoutesBuilderService } from '../../routing';
+import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_CONFIGURATION_ACTIONS, HUBS_ACTIONS } from '../actions';
 import { WaitingForInputDialogComponent } from '../../control-schemes/waiting-for-input-dialog';
 
 @Injectable()

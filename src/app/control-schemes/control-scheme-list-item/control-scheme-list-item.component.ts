@@ -5,6 +5,7 @@ import { MatLineModule } from '@angular/material/core';
 import { NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
+
 import { EllipsisTitleDirective } from '../../common';
 import { RoutesBuilderService } from '../../routing';
 

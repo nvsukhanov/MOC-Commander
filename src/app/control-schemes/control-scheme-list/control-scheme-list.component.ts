@@ -3,15 +3,16 @@ import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
-import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS, CONTROL_SCHEME_SELECTORS, ControlScheme } from '../../store';
-import { ControlSchemeListItemComponent } from '../control-scheme-list-item';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { FeatureToolbarService } from '../../common';
 import { MatCardModule } from '@angular/material/card';
-import { RoutesBuilderService } from '../../routing';
 import { MatListModule } from '@angular/material/list';
+
+import { FeatureToolbarService } from '../../common';
+import { RoutesBuilderService } from '../../routing';
+import { ControlSchemeListItemComponent } from '../control-scheme-list-item';
+import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS, CONTROL_SCHEME_SELECTORS, ControlScheme } from '../../store';
 
 @Component({
     standalone: true,

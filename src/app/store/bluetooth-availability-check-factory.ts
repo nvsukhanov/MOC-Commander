@@ -1,6 +1,7 @@
 import { Store } from '@ngrx/store';
-import { ACTIONS_BLUETOOTH_AVAILABILITY } from './actions';
 import { Router } from '@angular/router';
+
+import { ACTIONS_BLUETOOTH_AVAILABILITY } from './actions';
 import { RoutesBuilderService } from '../routing';
 
 export function bluetoothAvailabilityCheckFactory(

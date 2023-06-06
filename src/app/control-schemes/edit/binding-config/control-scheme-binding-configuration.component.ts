@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { BindingForm } from '../types';
-import { RenderEditOutputConfigurationDirective } from '../edit-output-configuration';
 import { TranslocoModule } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
+
+import { BindingForm } from '../types';
+import { RenderEditOutputConfigurationDirective } from '../edit-output-configuration';
 
 @Component({
     standalone: true,

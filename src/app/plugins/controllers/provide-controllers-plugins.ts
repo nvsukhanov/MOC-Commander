@@ -1,4 +1,5 @@
 import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
+
 import { ControllerDualshockPluginService } from './dualshock';
 import { UnknownControllerPluginService } from './unknown-controller';
 import { ControllerPluginFactoryService } from './controller-plugin-factory.service';

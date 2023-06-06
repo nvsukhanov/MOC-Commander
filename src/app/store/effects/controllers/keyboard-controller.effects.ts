@@ -1,13 +1,15 @@
 import { Inject, Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
+import { NEVER, Observable, filter, fromEvent, map, mergeMap, mergeWith, switchMap, take } from 'rxjs';
+
 import { WINDOW } from '../../../common';
-import { CONTROLLER_INPUT_ACTIONS, CONTROLLERS_ACTIONS } from '../../actions';
-import { filter, fromEvent, map, mergeMap, mergeWith, NEVER, Observable, switchMap, take } from 'rxjs';
+import { CONTROLLERS_ACTIONS, CONTROLLER_INPUT_ACTIONS } from '../../actions';
 import { CONTROLLER_INPUT_CAPTURE_SELECTORS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS, CONTROLLER_SETTINGS_SELECTORS } from '../../selectors';
-import { ControllerInputType, KeyboardSettings } from '../../i-state';
+import { KeyboardSettings } from '../../i-state';
 import { controllerIdFn, controllerInputIdFn } from '../../entity-adapters';
 import { ControllerType } from '../../../plugins';
+import { ControllerInputType } from '../../controller-input-type';
 
 @Injectable()
 export class KeyboardControllerEffects {

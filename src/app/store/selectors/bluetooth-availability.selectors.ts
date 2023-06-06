@@ -1,4 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+
 import { IState } from '../i-state';
 
 const SELECT_BLUETOOTH_AVAILABILITY_FEATURE = createFeatureSelector<IState['bluetoothAvailability']>('bluetoothAvailability');

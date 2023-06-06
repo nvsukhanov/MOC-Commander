@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
+
 import { HUB_PORT_MODE_INFO } from '../entity-adapters';
 import { HUB_PORT_MODE_INFO_ACTIONS } from '../actions';
 

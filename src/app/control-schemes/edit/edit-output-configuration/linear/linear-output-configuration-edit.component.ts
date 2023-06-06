@@ -1,15 +1,16 @@
-import { IOutputConfigurationRenderer } from '../i-output-configuration-renderer';
-import { ControllerInputType } from '../../../../store';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ControlSchemeBindingInputForm } from '../../binding-input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatSliderModule } from '@angular/material/slider';
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
-import { ControlSchemeBindingOutputForm } from '../../binding-output';
 import { MatFormFieldModule } from '@angular/material/form-field';
+
+import { ControlSchemeBindingOutputForm } from '../../binding-output';
+import { ControlSchemeBindingInputForm } from '../../binding-input';
+import { ControllerInputType } from '../../../../store';
+import { IOutputConfigurationRenderer } from '../i-output-configuration-renderer';
 
 @Component({
     standalone: true,

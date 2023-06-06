@@ -1,5 +1,6 @@
-import { ControllerInputType } from './i-state';
 import { PortModeName } from '@nvsukhanov/rxpoweredup';
+
+import { ControllerInputType } from './controller-input-type';
 
 export enum HubIoOperationMode {
     Linear = 'linear',

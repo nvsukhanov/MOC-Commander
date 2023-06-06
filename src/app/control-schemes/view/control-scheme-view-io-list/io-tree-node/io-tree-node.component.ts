@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NgIf } from '@angular/common';
+
 import { IoInlineViewComponent } from '../../../../common';
 import { ControlSchemeViewIOTreeNode } from '../../../../store';
 

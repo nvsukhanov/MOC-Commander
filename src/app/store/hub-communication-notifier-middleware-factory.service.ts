@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+
 import { HubCommunicationNotifierMiddleware } from './hub-communication-notifier-middleware';
 
 @Injectable({ providedIn: 'root' })

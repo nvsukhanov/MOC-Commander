@@ -1,4 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+
 import { HubDiscoveryState, IState } from '../i-state';
 
 const HUB_DISCOVERY_STATE_FEATURE_SELECTORS = createFeatureSelector<IState['hubDiscoveryState']>('hubDiscoveryState');

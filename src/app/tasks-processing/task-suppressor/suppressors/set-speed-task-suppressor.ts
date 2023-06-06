@@ -1,6 +1,7 @@
+import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
+
 import { TaskSuppressor } from '../task-suppressor';
 import { PortCommandTask, PortCommandTaskType } from '../../../common';
-import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 
 export class SetSpeedTaskSuppressor extends TaskSuppressor {
     public static readonly speedThreshold = 10;

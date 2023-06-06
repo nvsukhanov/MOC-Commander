@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { CONTROLLER_INPUT_ACTIONS } from '../actions';
-import { CONTROLLER_INPUT_CAPTURE_SELECTORS } from '../selectors';
 import { Store } from '@ngrx/store';
 import { filter, map } from 'rxjs';
+
+import { CONTROLLER_INPUT_ACTIONS } from '../actions';
+import { CONTROLLER_INPUT_CAPTURE_SELECTORS } from '../selectors';
 
 @Injectable()
 export class ControllerInputCaptureEffects {

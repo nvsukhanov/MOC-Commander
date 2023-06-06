@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BindingLinearOutputState } from '../../../store';
-import { LinearOutputConfigurationForm } from '../binding-output';
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { FormBuilder, Validators } from '@angular/forms';
+
+import { BindingLinearOutputState } from '../../../store';
+import { LinearOutputConfigurationForm } from '../binding-output';
 
 @Injectable({ providedIn: 'root' })
 export class LinearOutputControlFormBuilderService {

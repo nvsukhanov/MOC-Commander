@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IOutputConfigurationRenderer } from '../i-output-configuration-renderer';
 import { TranslocoModule } from '@ngneat/transloco';
+
+import { IOutputConfigurationRenderer } from '../i-output-configuration-renderer';
 import { EllipsisTitleDirective } from '../../../../common';
 
 @Component({

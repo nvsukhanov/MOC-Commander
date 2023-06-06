@@ -1,4 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+
 import { GamepadController, IState, KeyboardController } from '../i-state';
 import { CONTROLLERS_ENTITY_ADAPTER } from '../entity-adapters';
 import { ControllerType } from '../../plugins';

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+
 import { BindingOutputState, ControllerInputType, HubIoOperationMode } from '../../../store';
 import { ControlSchemeBindingOutputForm } from '../binding-output';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { BindingForm, EditSchemeForm } from '../types';
 import { ControlSchemeBindingInputForm } from '../binding-input';
 import { ServoOutputControlFormBuilderService } from './servo-output-control-form-builder.service';

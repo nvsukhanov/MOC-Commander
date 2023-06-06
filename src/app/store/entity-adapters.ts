@@ -1,21 +1,22 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
+import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { IOType } from '@nvsukhanov/rxpoweredup';
+
 import {
     AttachedIO,
     AttachedIOState,
+    ControlScheme,
     Controller,
     ControllerInput,
-    ControllerInputType,
     ControllerSettings,
-    ControlScheme,
     HubConfiguration,
     HubConnection,
     HubIoSupportedModes,
     PortModeInfo
 } from './i-state';
-import { IOType } from '@nvsukhanov/rxpoweredup';
 import { PortCommandTask } from '../common';
 import { ControllerType } from '../plugins';
+import { ControllerInputType } from './controller-input-type';
 
 export const HUB_ATTACHED_IOS_ENTITY_ADAPTER: EntityAdapter<AttachedIO> = createEntityAdapter<AttachedIO>({
     selectId: (io) => hubAttachedIosIdFn(io),

@@ -1,6 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslocoModule } from '@ngneat/transloco';
+import { PushPipe } from '@ngrx/component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
+import { ControlSchemeViewBindingTreeNode } from '../../../../store';
 import {
     ControllerL10nInputNamePipe,
     ControllerL10nTypePipe,
@@ -8,10 +13,6 @@ import {
     EllipsisTitleDirective,
     IoOperationTypeToL10nKeyPipe
 } from '../../../../common';
-import { TranslocoModule } from '@ngneat/transloco';
-import { ControlSchemeViewBindingTreeNode } from '../../../../store';
-import { PushPipe } from '@ngrx/component';
-import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
     standalone: true,

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ControllerPlugin } from '../controller-plugin';
 import { TranslocoService } from '@ngneat/transloco';
 import { Observable } from 'rxjs';
+
+import { ControllerPlugin } from '../controller-plugin';
 import { createControllerL10nKey, createScopedControllerL10nKey } from '../create-controller-l10n-key';
 
 @Injectable()

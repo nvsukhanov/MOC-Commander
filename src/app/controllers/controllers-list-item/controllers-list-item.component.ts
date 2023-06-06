@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, Type } from '@angular/core';
-import { Controller, ControllerSettings } from '../../store';
-import { ControllerPluginFactoryService, IControllerPlugin, IControllerSettingsComponent } from '../../plugins';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { TranslocoModule } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
 import { MatCardModule } from '@angular/material/card';
 import { NgIf } from '@angular/common';
+
+import { ControllerPluginFactoryService, IControllerPlugin, IControllerSettingsComponent } from '../../plugins';
+import { Controller, ControllerSettings } from '../../store';
 import { ControllerSettingsRenderDirective } from './controller-settings-render.directive';
 
 @Component({

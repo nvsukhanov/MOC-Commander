@@ -1,5 +1,5 @@
 import { IMessageMiddleware, MessageType, RawMessage } from '@nvsukhanov/rxpoweredup';
-import { map, mergeWith, Observable, of, Subject, switchMap, timer } from 'rxjs';
+import { Observable, Subject, map, mergeWith, of, switchMap, timer } from 'rxjs';
 
 export class HubCommunicationNotifierMiddleware implements IMessageMiddleware {
     public readonly communicationNotifier$: Observable<boolean>;

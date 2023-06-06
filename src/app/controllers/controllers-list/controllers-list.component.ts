@@ -3,12 +3,13 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { NgForOf, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { Controller, CONTROLLER_SELECTORS, CONTROLLER_SETTINGS_ACTIONS, ControllerSettings } from '../../store';
 import { Store } from '@ngrx/store';
 import { MatIconModule } from '@angular/material/icon';
 import { LetDirective, PushPipe } from '@ngrx/component';
-import { ControllersListItemComponent } from '../controllers-list-item';
 import { MatListModule } from '@angular/material/list';
+
+import { ControllersListItemComponent } from '../controllers-list-item';
+import { CONTROLLER_SELECTORS, CONTROLLER_SETTINGS_ACTIONS, Controller, ControllerSettings } from '../../store';
 
 @Component({
     standalone: true,

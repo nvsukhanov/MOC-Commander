@@ -5,10 +5,11 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
 import { MatLineModule } from '@angular/material/core';
 import { RouterLink } from '@angular/router';
-import { EllipsisTitleDirective } from '../index';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
+import { EllipsisTitleDirective } from "..";
 import { RoutesBuilderService } from '../../routing';
 import { HubConnectionState } from '../../store';
-import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
     standalone: true,

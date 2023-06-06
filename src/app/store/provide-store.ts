@@ -1,29 +1,35 @@
 import { APP_INITIALIZER, EnvironmentProviders, isDevMode, makeEnvironmentProviders } from '@angular/core';
+import { provideEffects } from '@ngrx/effects';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { ActionReducer, ActionReducerMap, MetaReducer, Store, provideStore } from '@ngrx/store';
+import { provideRouterStore, routerReducer } from '@ngrx/router-store';
+import { localStorageSync } from 'ngrx-store-localstorage';
+import { Router } from '@angular/router';
+
 import { IState } from './i-state';
 import {
     BLUETOOTH_AVAILABILITY_REDUCERS,
-    CONTROL_SCHEME_CONFIGURATION_STATE_REDUCERS,
-    CONTROL_SCHEME_REDUCERS,
-    CONTROL_SCHEME_RUNNING_STATE_REDUCERS,
+    CONTROLLERS_REDUCERS,
     CONTROLLER_INPUT_CAPTURE_REDUCERS,
     CONTROLLER_INPUT_REDUCERS,
     CONTROLLER_SETTINGS_REDUCER,
-    CONTROLLERS_REDUCERS,
-    HUB_ATTACHED_IO_STATE_REDUCERS,
+    CONTROL_SCHEME_CONFIGURATION_STATE_REDUCERS,
+    CONTROL_SCHEME_REDUCERS,
+    CONTROL_SCHEME_RUNNING_STATE_REDUCERS,
+    HUBS_REDUCERS,
     HUB_ATTACHED_IOS_REDUCERS,
+    HUB_ATTACHED_IO_STATE_REDUCERS,
     HUB_CONNECTION_REDUCERS,
     HUB_DISCOVERY_STATE_REDUCERS,
     HUB_EDIT_FORM_ACTIVE_SAVES_REDUCERS,
     HUB_IO_OUTPUT_MODES_REDUCER,
     HUB_PORT_MODE_INFO_REDUCERS,
     HUB_PORT_TASKS_REDUCERS,
-    HUBS_REDUCERS,
     SERVO_CALIBRATION_REDUCERS
 } from './reducers';
-import { provideEffects } from '@ngrx/effects';
 import {
-    ControllerInputCaptureEffects,
     ControlSchemeEffects,
+    ControllerInputCaptureEffects,
     GamepadControllerEffects,
     HubAttachedIOsEffects,
     HubAttachedIosStateEffects,
@@ -35,15 +41,10 @@ import {
     NotificationsEffects,
     ServoCalibrationEffects,
 } from './effects';
-import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { NAVIGATOR } from '../common';
-import { ActionReducer, ActionReducerMap, MetaReducer, provideStore, Store } from '@ngrx/store';
 import { HubStorageService } from './hub-storage.service';
-import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { HUBS_ACTIONS } from './actions';
-import { localStorageSync } from 'ngrx-store-localstorage';
-import { Router } from '@angular/router';
 import { RoutesBuilderService } from '../routing';
 
 const REDUCERS: ActionReducerMap<IState> = {
@@ -68,7 +69,7 @@ const REDUCERS: ActionReducerMap<IState> = {
     router: routerReducer
 };
 
-export function localStorageSyncReducer(reducer: ActionReducer<IState>): ActionReducer<IState> {
+function localStorageSyncReducer(reducer: ActionReducer<IState>): ActionReducer<IState> {
     return localStorageSync({
         keys: [
             'hubs',

@@ -9,3 +9,4 @@ export * from './hub-storage.service';
 export * from './provide-store';
 export * from './hub-io-operation-mode';
 export * from './entity-adapters';
+export * from './controller-input-type';

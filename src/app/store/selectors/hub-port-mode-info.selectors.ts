@@ -1,7 +1,8 @@
-import { IState } from '../i-state';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { HUB_PORT_MODE_INFO, hubPortModeInfoIdFn } from '../entity-adapters';
 import { IOType, PortModeName } from '@nvsukhanov/rxpoweredup';
+
+import { IState } from '../i-state';
+import { HUB_PORT_MODE_INFO, hubPortModeInfoIdFn } from '../entity-adapters';
 import { HUB_IO_SUPPORTED_MODES_SELECTORS } from './hub-io-supported-modes.selectors';
 
 const HUB_PORT_MODE_FEATURE_SELECTOR = createFeatureSelector<IState['hubPortModeInfo']>('hubPortModeInfo');

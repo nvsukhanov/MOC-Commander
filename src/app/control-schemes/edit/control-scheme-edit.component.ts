@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlScheme, ROUTER_SELECTORS } from '../../store';
-import { map, Observable, of, Subscription, switchMap, take } from 'rxjs';
-import { BindingFormResult, ControlSchemeEditFormComponent } from './edit-form';
+import { Observable, Subscription, map, of, switchMap, take } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
-import { RoutesBuilderService } from '../../routing';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
+
+import { RoutesBuilderService } from '../../routing';
+import { BindingFormResult, ControlSchemeEditFormComponent } from './edit-form';
+import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlScheme, ROUTER_SELECTORS } from '../../store';
 
 @Component({
     standalone: true,
