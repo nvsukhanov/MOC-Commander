@@ -136,8 +136,7 @@ export class HubPortTasksEffects {
             );
             if (!lastTaskOfKindInQueue) {
                 const lastExecutedCommandOfKind = lastExecutedTasks[lastExecutedTaskIdFn(nextTask)];
-                if (!lastExecutedCommandOfKind
-                    || lastExecutedCommandOfKind.taskType !== nextTask.taskType
+                if ((lastExecutedCommandOfKind && lastExecutedCommandOfKind.taskType !== nextTask.taskType)
                     || !this.taskSuppressor.shouldSuppressTask(nextTask, lastExecutedCommandOfKind)
                 ) {
                     modelledQueue.push(nextTask);

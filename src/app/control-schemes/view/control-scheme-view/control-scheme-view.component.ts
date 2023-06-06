@@ -5,6 +5,7 @@ import {
     CONTROL_SCHEME_SELECTORS,
     CONTROLLER_INPUT_ACTIONS,
     ControlScheme,
+    ControlSchemeViewTreeNode,
     HUB_PORT_TASKS_SELECTORS,
     ROUTER_SELECTORS,
 } from '../../../store';
@@ -70,10 +71,10 @@ export class ControlSchemeViewComponent implements OnDestroy {
         map((v) => v.reduce((acc, val) => acc + val, 0) / 10)
     );
 
-    public readonly bindingsWithLatestExecutedTasks$ = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
+    public readonly schemeViewTree$: Observable<ControlSchemeViewTreeNode[]> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
         switchMap((id) => id === null
                           ? of([])
-                          : this.store.select(CONTROL_SCHEME_SELECTORS.selectSchemeIOData(id))
+                          : this.store.select(CONTROL_SCHEME_SELECTORS.schemeViewTree(id))
         )
     );
 
@@ -86,7 +87,7 @@ export class ControlSchemeViewComponent implements OnDestroy {
     constructor(
         private readonly store: Store,
         private readonly featureToolbarService: FeatureToolbarService,
-        private readonly routesBuilderService: RoutesBuilderService
+        private readonly routesBuilderService: RoutesBuilderService,
     ) {
     }
 

@@ -1,1 +1,1 @@
-export * from './hubs-list';
+export * from './hubs-list.component';

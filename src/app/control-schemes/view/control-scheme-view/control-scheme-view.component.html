@@ -47,7 +47,7 @@
     </mat-accordion>
 
     <section class="IOs">
-        <app-control-scheme-view-io-list [bindingsWithLatestExecutedTasks]="bindingsWithLatestExecutedTasks$ | ngrxPush"></app-control-scheme-view-io-list>
+        <app-control-scheme-view-io-list [tree]="schemeViewTree$ | ngrxPush"></app-control-scheme-view-io-list>
     </section>
 </ng-container>
 

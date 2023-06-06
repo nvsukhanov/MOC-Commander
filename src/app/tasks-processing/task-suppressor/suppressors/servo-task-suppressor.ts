@@ -6,12 +6,12 @@ export class ServoTaskSuppressor extends TaskSuppressor {
 
     protected shouldSuppress<T extends PortCommandTask>(
         task: T,
-        lastTaskOfKindInQueue: T
+        lastTaskOfKindInQueue?: T
     ): boolean | null {
         if (task.taskType !== PortCommandTaskType.Servo) {
             return null;
         }
-        if (lastTaskOfKindInQueue.taskType !== PortCommandTaskType.Servo) {
+        if (!lastTaskOfKindInQueue || lastTaskOfKindInQueue.taskType !== PortCommandTaskType.Servo) {
             return false;
         }
 

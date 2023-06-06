@@ -1,5 +1,26 @@
-.bindings-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-gap: 20px;
+.control-scheme-tree {
+    ul,
+    li {
+        margin-top: 0;
+        margin-bottom: 0;
+        list-style-type: none;
+    }
+
+    .mat-tree-node {
+        padding-right: 20px;
+    }
+
+    .mat-nested-tree-node div[role=group] {
+        padding-left: 40px;
+    }
+
+    div[role=group] > .mat-tree-node {
+        padding-left: 40px;
+    }
+
+    &__node {
+        &_invisible {
+            display: none;
+        }
+    }
 }

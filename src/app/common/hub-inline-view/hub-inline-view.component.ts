@@ -5,15 +5,16 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
 import { MatLineModule } from '@angular/material/core';
 import { RouterLink } from '@angular/router';
-import { EllipsisTitleDirective } from '../../../common';
-import { RoutesBuilderService } from '../../../routing';
-import { HubConnectionState } from '../../../store';
+import { EllipsisTitleDirective } from '../index';
+import { RoutesBuilderService } from '../../routing';
+import { HubConnectionState } from '../../store';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
     standalone: true,
-    selector: 'app-hubs-list-item',
-    templateUrl: './hubs-list-item.component.html',
-    styleUrls: [ './hubs-list-item.component.scss' ],
+    selector: 'app-hub-inline-view',
+    templateUrl: './hub-inline-view.component.html',
+    styleUrls: [ './hub-inline-view.component.scss' ],
     imports: [
         MatButtonModule,
         MatIconModule,
@@ -21,11 +22,12 @@ import { HubConnectionState } from '../../../store';
         NgIf,
         MatLineModule,
         RouterLink,
-        EllipsisTitleDirective
+        EllipsisTitleDirective,
+        MatFormFieldModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HubsListItemComponent {
+export class HubInlineViewComponent {
     @Input() public name?: string;
 
     @Input() public batteryLevel: number | null = null;
@@ -37,6 +39,8 @@ export class HubsListItemComponent {
     @Input() public hasCommunication = false;
 
     @Input() public connectionState: HubConnectionState = HubConnectionState.Disconnected;
+
+    @Input() public showControls = true;
 
     @Output() public readonly disconnect = new EventEmitter<void>();
 

@@ -1,0 +1,19 @@
+<div class="port-name"
+     appEllipsisTitle
+>
+    {{ 'hubPort' | transloco: { portId } }}
+</div>
+
+<div *ngIf="ioType"
+     class="io-type"
+     appEllipsisTitle
+>
+    {{ ioType | ioTypeToL10nKey | transloco }}
+</div>
+
+<mat-error *ngIf="!isConnected"
+           class="io-is-not-connected-notification"
+           appEllipsisTitle
+>
+    {{ 'io.ioIsNotConnectedInlineNotification' | transloco }}
+</mat-error>

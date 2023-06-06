@@ -1,0 +1,10 @@
+<ng-container *ngIf="hub">
+    <app-hub-inline-view [name]="hub.name"
+                         [batteryLevel]="hub.batteryLevel"
+                         [rssiLevel]="hub.RSSI"
+                         [isButtonPressed]="hub.isButtonPressed"
+                         [hasCommunication]="hub.hasCommunication"
+                         [connectionState]="hub.connectionState"
+                         [showControls]="false"
+    ></app-hub-inline-view>
+</ng-container>

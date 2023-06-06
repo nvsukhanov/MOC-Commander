@@ -4,12 +4,12 @@ import { TaskSuppressor } from '../task-suppressor';
 export class SetAngleTaskSuppressor extends TaskSuppressor {
     protected shouldSuppress<T extends PortCommandTask>(
         task: T,
-        lastTaskOfKindInQueue: T
+        lastTaskOfKindInQueue?: T
     ): boolean | null {
         if (task.taskType !== PortCommandTaskType.SetAngle) {
             return null;
         }
-        if (lastTaskOfKindInQueue.taskType !== PortCommandTaskType.SetAngle) {
+        if (!lastTaskOfKindInQueue || lastTaskOfKindInQueue.taskType !== PortCommandTaskType.SetAngle) {
             return false;
         }
         return lastTaskOfKindInQueue.angle === task.angle;
