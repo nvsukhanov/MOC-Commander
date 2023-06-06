@@ -3,7 +3,7 @@ import { Action, Store } from '@ngrx/store';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { MonoTypeOperatorFunction, NEVER, Observable, filter, from, fromEvent, interval, map, merge, share, switchMap } from 'rxjs';
 
-import { WINDOW } from '@app/shared';
+import { APP_CONFIG, IAppConfig, WINDOW } from '@app/shared';
 import { CONTROLLERS_ACTIONS, CONTROLLER_INPUT_ACTIONS } from '../../actions';
 import { CONTROLLER_INPUT_CAPTURE_SELECTORS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS } from '../../selectors';
 import { controllerIdFn, controllerInputIdFn } from '../../entity-adapters';
@@ -75,9 +75,10 @@ export class GamepadControllerEffects {
         private readonly store: Store,
         @Inject(WINDOW) private readonly window: Window,
         private readonly gamepadPluginService: ControllerPluginFactoryService,
+        @Inject(APP_CONFIG) config: IAppConfig
     ) {
-        this.gamepadReadScheduler$ = interval(1000 / 10);  // TODO: move to config
-        this.gamepadConnectionListenerScheduler$ = interval(1000 / 10); // TODO: move to config
+        this.gamepadReadScheduler$ = interval(config.gamepadReadInterval);
+        this.gamepadConnectionListenerScheduler$ = interval(config.gamepadConnectionReadInterval);
     }
 
     private readGamepads(): Observable<Action> {
