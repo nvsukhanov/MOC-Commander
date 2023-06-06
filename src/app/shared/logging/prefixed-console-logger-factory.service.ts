@@ -1,20 +1,19 @@
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
+import { ILogger } from '@nvsukhanov/rxpoweredup';
 
-import { ILogger } from './i-logger';
 import { PrefixedConsoleLogger } from './prefixed-console-logger';
-import { LOG_LEVEL, LogLevel } from './log-levels';
-import { ExtractTokenType } from '../types';
+import { APP_CONFIG, IAppConfig } from '../i-app-config';
 
 @Injectable({ providedIn: 'root' })
 export class PrefixedConsoleLoggerFactoryService {
     constructor(
-        @Optional() @Inject(LOG_LEVEL) private configuredLogLevel: ExtractTokenType<typeof LOG_LEVEL> = LogLevel.Info
+        @Inject(APP_CONFIG) private readonly config: IAppConfig
     ) {
     }
 
     public create(
         prefix: string
     ): ILogger {
-        return new PrefixedConsoleLogger(prefix, this.configuredLogLevel);
+        return new PrefixedConsoleLogger(prefix, this.config);
     }
 }

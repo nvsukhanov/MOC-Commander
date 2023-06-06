@@ -5,7 +5,7 @@ import { Action, Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { IHub, MessageLoggingMiddleware, connectHub } from '@nvsukhanov/rxpoweredup';
 
-import { LogLevel, NAVIGATOR, PrefixedConsoleLogger } from '@app/shared';
+import { APP_CONFIG, IAppConfig, NAVIGATOR, PrefixedConsoleLoggerFactoryService } from '@app/shared';
 import { HubStorageService } from '../hub-storage.service';
 import { HUBS_ACTIONS } from '../actions';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../hub-communication-notifier-middleware-factory.service';
@@ -37,7 +37,7 @@ export class HubsEffects {
     public listenToBatteryLevelOnConnect$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.connected),
-            mergeMap((a) => interval(this.hubBatteryPollInterval).pipe(
+            mergeMap((a) => interval(this.config.hubBatteryPollInterval).pipe(
                 startWith(0),
                 takeUntil(this.hubStorage.get(a.hubId).disconnected),
                 switchMap(() => this.hubStorage.get(a.hubId).properties.getBatteryLevel()),
@@ -49,7 +49,7 @@ export class HubsEffects {
     public listenToRssiLevelOnConnect$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.connected),
-            mergeMap((a) => interval(this.hubRSSIPollInterval).pipe(
+            mergeMap((a) => interval(this.config.hubRSSIPollInterval).pipe(
                 startWith(0),
                 takeUntil(this.hubStorage.get(a.hubId).disconnected),
                 switchMap(() => this.hubStorage.get(a.hubId).properties.getRSSILevel()),
@@ -114,10 +114,6 @@ export class HubsEffects {
         );
     }, { dispatch: false });
 
-    private readonly hubBatteryPollInterval = 20000; // TODO: move to config
-
-    private readonly hubRSSIPollInterval = 5000; // TODO: move to config
-
     constructor(
         private readonly actions$: Actions,
         private readonly store: Store,
@@ -126,12 +122,14 @@ export class HubsEffects {
         private readonly communicationNotifierMiddlewareFactory: HubCommunicationNotifierMiddlewareFactoryService,
         @Inject(NAVIGATOR) private readonly navigator: Navigator,
         private readonly routesBuilderService: RoutesBuilderService,
+        @Inject(APP_CONFIG) private readonly config: IAppConfig,
+        private readonly prefixedConsoleLoggerFactory: PrefixedConsoleLoggerFactoryService,
     ) {
     }
 
     private hubDiscovery$(): Observable<Action> {
-        const incomingLoggerMiddleware = new MessageLoggingMiddleware(new PrefixedConsoleLogger('<', LogLevel.Debug), 'all'); // TODO: replace w/ factory
-        const outgoingLoggerMiddleware = new MessageLoggingMiddleware(new PrefixedConsoleLogger('>', LogLevel.Debug), 'all'); // TODO: replace w/ factory
+        const incomingLoggerMiddleware = new MessageLoggingMiddleware(this.prefixedConsoleLoggerFactory.create('<'), 'all');
+        const outgoingLoggerMiddleware = new MessageLoggingMiddleware(this.prefixedConsoleLoggerFactory.create('>'), 'all');
         const communicationNotifierMiddleware = this.communicationNotifierMiddlewareFactory.create();
 
         return connectHub(

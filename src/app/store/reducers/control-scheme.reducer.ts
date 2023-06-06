@@ -3,8 +3,9 @@ import { createReducer, on } from '@ngrx/store';
 import { CONTROL_SCHEMES_ENTITY_ADAPTER } from '../entity-adapters';
 import { CONTROL_SCHEME_ACTIONS } from '../actions';
 import { BindingForm } from '../../control-schemes/edit';
-import { ControlSchemeBinding } from '../i-state';
+import { ControlSchemeBinding, IState } from '../i-state';
 import { HubIoOperationMode } from '../hub-io-operation-mode';
+import { INITIAL_STATE } from '../initial-state';
 
 function trimOutputBinding(source: ReturnType<BindingForm['getRawValue']>): ControlSchemeBinding {
     switch (source.output.operationMode) {
@@ -41,12 +42,12 @@ function trimOutputBinding(source: ReturnType<BindingForm['getRawValue']>): Cont
     }
 }
 
-export const CONTROL_SCHEME_REDUCERS = createReducer(
-    CONTROL_SCHEMES_ENTITY_ADAPTER.getInitialState(),
+export const CONTROL_SCHEME_REDUCER = createReducer(
+    INITIAL_STATE['controlSchemes'],
     on(CONTROL_SCHEME_ACTIONS.create, (
         state,
         { id, name, bindings }
-    ) => { // TODO: add return type (and for other reducers too)
+    ): IState['controlSchemes'] => {
         const nextIndex = Math.max(0, ...Object.values(state.entities).map((entity) => entity?.index ?? 0)) + 1;
         return CONTROL_SCHEMES_ENTITY_ADAPTER.addOne({
             id,
@@ -58,13 +59,13 @@ export const CONTROL_SCHEME_REDUCERS = createReducer(
     on(CONTROL_SCHEME_ACTIONS.delete, (
         state,
         { id }
-    ) => {
+    ): IState['controlSchemes'] => {
         return CONTROL_SCHEMES_ENTITY_ADAPTER.removeOne(id, state);
     }),
     on(CONTROL_SCHEME_ACTIONS.update, (
         state,
         { id, name, bindings }
-    ) => {
+    ): IState['controlSchemes'] => {
         return CONTROL_SCHEMES_ENTITY_ADAPTER.updateOne({
             id,
             changes: {

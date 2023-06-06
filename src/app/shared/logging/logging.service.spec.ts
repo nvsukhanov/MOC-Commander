@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
+import { LogLevel } from '@nvsukhanov/rxpoweredup';
+
 import { ConsoleLoggingService } from './console-logging.service';
-import { LogLevel } from './log-levels';
+import { IAppConfig } from '@app/shared';
 
 describe('LoggingService', () => {
     let subject: ConsoleLoggingService;
@@ -20,7 +22,7 @@ describe('LoggingService', () => {
 
     describe('debug level', () => {
         beforeEach(() => {
-            subject = new ConsoleLoggingService(LogLevel.Debug);
+            subject = new ConsoleLoggingService({ logLevel: LogLevel.Debug } as IAppConfig);
         });
 
         it('should write debug messages', () => {
@@ -46,7 +48,7 @@ describe('LoggingService', () => {
 
     describe('info level', () => {
         beforeEach(() => {
-            subject = new ConsoleLoggingService(LogLevel.Info);
+            subject = new ConsoleLoggingService({ logLevel: LogLevel.Info } as IAppConfig);
         });
 
         it('should write debug messages', () => {
@@ -72,7 +74,7 @@ describe('LoggingService', () => {
 
     describe('warning level', () => {
         beforeEach(() => {
-            subject = new ConsoleLoggingService(LogLevel.Warning);
+            subject = new ConsoleLoggingService({ logLevel: LogLevel.Warning } as IAppConfig);
         });
 
         it('should write debug messages', () => {
@@ -98,7 +100,7 @@ describe('LoggingService', () => {
 
     describe('error level', () => {
         beforeEach(() => {
-            subject = new ConsoleLoggingService(LogLevel.Error);
+            subject = new ConsoleLoggingService({ logLevel: LogLevel.Error } as IAppConfig);
         });
 
         it('should not write debug messages', () => {

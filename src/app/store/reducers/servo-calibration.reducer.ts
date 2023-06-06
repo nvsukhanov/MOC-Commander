@@ -4,7 +4,7 @@ import { INITIAL_STATE } from '../initial-state';
 import { SERVO_CALIBRATION_ACTIONS } from '../actions';
 import { IState } from '../i-state';
 
-export const SERVO_CALIBRATION_REDUCERS = createReducer(
+export const SERVO_CALIBRATION_REDUCER = createReducer(
     INITIAL_STATE.servoCalibrationTaskState,
     on(SERVO_CALIBRATION_ACTIONS.startCalibration, (state): IState['servoCalibrationTaskState'] => {
         return {

@@ -7,15 +7,9 @@
     "serve:intra": "ng serve --host 0.0.0.0",
     "build": "ng build",
     "ci": "npm run lint && npm run test:ci && npm run build",
-    "test": "jest",
-    "test:ci": "jest --runInBand",
+    "test": "jest -c=setup-jest.js",
+    "test:ci": "jest -c=setup-jest.js --runInBand",
     "lint": "ng lint"
-  },
-  "jest": {
-    "preset": "jest-preset-angular",
-    "setupFilesAfterEnv": [
-      "<rootDir>/setup-jest.ts"
-    ]
   },
   "private": true,
   "dependencies": {

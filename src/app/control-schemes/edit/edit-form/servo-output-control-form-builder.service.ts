@@ -28,8 +28,8 @@ export class ServoOutputControlFormBuilderService {
                 nonNullable: true,
                 validators: [
                     Validators.required,
-                    Validators.min(-MOTOR_LIMITS.maxServoDegreesRange), // TODO: min APOS value
-                    Validators.max(MOTOR_LIMITS.maxServoDegreesRange), // TODO: max APOS value
+                    Validators.min(-MOTOR_LIMITS.maxServoDegreesRange / 2),
+                    Validators.max(MOTOR_LIMITS.maxServoDegreesRange / 2),
                 ]
             }),
             speed: this.formBuilder.control<number>(initialConfiguration?.speed ?? MOTOR_LIMITS.maxSpeed, {
