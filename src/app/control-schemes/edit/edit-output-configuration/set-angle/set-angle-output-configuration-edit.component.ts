@@ -9,7 +9,7 @@ import { MOTOR_LIMITS, MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { MotorServoEndStateL10nKeyPipe } from '../../../../i18n';
+import { MotorServoEndStateL10nKeyPipe } from '../../../../common';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({

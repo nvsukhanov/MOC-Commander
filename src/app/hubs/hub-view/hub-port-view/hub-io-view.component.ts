@@ -3,7 +3,7 @@ import { hubPortModeInfoIdFn, IOFullInfo, PortModeInfo } from '../../../store';
 import { MatCardModule } from '@angular/material/card';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { IoTypeToL10nKeyPipe } from '../../../i18n';
+import { IoTypeToL10nKeyPipe } from '../../../common';
 
 @Component({
     standalone: true,

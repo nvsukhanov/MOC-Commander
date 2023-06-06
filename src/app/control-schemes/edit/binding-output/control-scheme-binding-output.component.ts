@@ -17,7 +17,7 @@ import { combineLatest, EMPTY, map, Observable, of, shareReplay, startWith, Subs
 import { IOType, MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 import { ControlSchemeBindingInputForm } from '../binding-input';
 import { TranslocoModule } from '@ngneat/transloco';
-import { IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '../../../i18n';
+import { IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '../../../common';
 import { MatListModule } from '@angular/material/list';
 import { RenderEditOutputConfigurationDirective } from '../edit-output-configuration';
 import { BindingForm } from '../types';

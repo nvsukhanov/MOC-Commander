@@ -2,7 +2,7 @@
   "appTitle": "ngPoweredUP",
   "controllersList": "Controllers",
   "hubsList": "Hubs",
-  "hubListHubIsNotConnected": "[disconnected]",
+  "hubListHubIsNotConnected": "disconnected",
   "controlSchemesList": "Control schemes",
   "aboutPageButton": "About",
   "discoverHub": "Discover hub",
@@ -80,7 +80,7 @@
   "schemeBindingValidationControllerIsMissing": "Attached controller is missing",
   "schemeBindingValidationHubMissing": "Attached hub is missing",
   "schemeBindingValidationHubIOIsMissing": "Attached device is missing",
-  "schemeBindingValidationHubIOCapabilitiesMismatch": "Attached device has incompatible capabilities",
+  "schemeBindingValidationHubIOCapabilitiesMismatch": "Attached device does not have required capabilities",
   "portCommandTaskTypeSetLinearSpeed": "Speed: {speed}",
   "portCommandTaskTypeServo": "Angle: {angle}",
   "portCommandTaskTypeSetAngle": "Angle: {angle}",
@@ -95,6 +95,8 @@
   "schemeOutputBindingConfigurationServoInvertParameter": "Invert",
   "schemeOutputBindingConfigurationServoSpeedParameter": "Speed",
   "schemeOutputBindingConfigurationServoPowerParameter": "Power",
+  "schemeExpandCollapseHub": "Expand/collapse hub {name}",
+  "schemeExpandCollapseIO": "Expand/collapse port {portId}",
   "setAngleOutputConfiguration": {
     "angle": "Target angle",
     "power": "Power",
@@ -146,11 +148,15 @@
     "ioTypeMediumTechnicAngularMotor": "Medium Technic Angular Motor",
     "ioTypeLargeTechnicAngularMotor": "Large Technic Angular Motor",
     "ioTypeHandsetButtonGroup": "Handset Button Group",
+    "ioIsNotConnectedInlineNotification": "disconnected",
     "unknownIOType": "Unknown device type"
   },
   "controller": {
     "detectControllerTip": "To detect a controller, press any button on it or move any stick",
-    "noControllerConnected": "No controller detected"
+    "noControllerConnected": "No controller detected",
+    "isNotConnectedInlineNotification": "disconnected",
+    "keyboardControllerType": "Keyboard",
+    "gamepadControllerType": "Gamepad"
   },
   "controllerPlugins": {
     "buttonState": "{ value, select, 1 {Pressed} other {Released} }",

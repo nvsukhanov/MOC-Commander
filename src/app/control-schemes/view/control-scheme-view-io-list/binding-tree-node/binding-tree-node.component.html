@@ -1,0 +1,55 @@
+<div *ngIf="binding"
+     class="binding-info-container"
+>
+    <ng-container *ngIf="binding.controller; else noControllerIcon">
+        <mat-icon
+            class="controller-type-icon binding-info-item"
+            [fontIcon]="binding.controller.controllerType | controllerTypeIcon"
+        ></mat-icon>
+        <span class="cdk-visually-hidden">
+            {{ binding.controller.controllerType | controllerL10nType | transloco | ngrxPush }}
+        </span>
+    </ng-container>
+    <ng-template #noControllerIcon>
+        <mat-icon class="controller-type-icon binding-info-item"
+                  [fontIcon]="'question_mark'"
+        ></mat-icon>
+    </ng-template>
+
+    <div class="controller-input-name binding-info-item"
+         appEllipsisTitle
+    >
+        <ng-container *ngIf="binding.controller; else noControllerInputName">
+            {{ binding.inputId | controllerL10nInputName: binding.inputType : binding.controller | ngrxPush }}
+        </ng-container>
+
+        <ng-template #noControllerInputName>
+            <mat-error class="controller__disconnected-notification binding-info-item">
+                {{ 'controller.isNotConnectedInlineNotification' | transloco }}
+            </mat-error>
+        </ng-template>
+    </div>
+
+    <mat-icon class="is-active-indicator binding-info-item"
+              [class.is-active-indicator_hidden]="!binding.isActive"
+              [fontIcon]="'keyboard_double_arrow_right'"
+              [color]="'primary'"
+    ></mat-icon>
+
+    <mat-icon class="operation-mode__capabilities binding-info-item"
+              [class.operation-mode__capabilities_match]="!binding.ioHasNoRequiredCapabilities"
+              [fontIcon]="'warning'"
+              [color]="'warn'"
+              [title]="'schemeBindingValidationHubIOCapabilitiesMismatch' | transloco"
+    ></mat-icon>
+    <span *ngIf="binding.ioHasNoRequiredCapabilities"
+          class="cdk-visually-hidden">
+        {{ 'schemeBindingValidationHubIOCapabilitiesMismatch' | transloco }}
+    </span>
+
+    <div class="operation-mode binding-info-item"
+         appEllipsisTitle
+    >
+        {{ binding.operationMode | ioOperationTypeToL10nKey | transloco }}
+    </div>
+</div>

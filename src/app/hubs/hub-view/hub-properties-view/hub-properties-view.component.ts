@@ -5,9 +5,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { HUB_TYPE_TO_L10N_MAPPING } from '../../../i18n';
 import { RouterLink } from '@angular/router';
-import { EllipsisTitleDirective } from '../../../common';
+import { EllipsisTitleDirective, HUB_TYPE_TO_L10N_MAPPING } from '../../../common';
 import { RoutesBuilderService } from '../../../routing';
 
 @Component({

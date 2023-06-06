@@ -7,10 +7,13 @@ export class SetSpeedTaskSuppressor extends TaskSuppressor {
 
     protected shouldSuppress(
         task: PortCommandTask,
-        lastTaskOfKindInQueue: PortCommandTask
+        lastTaskOfKindInQueue?: PortCommandTask
     ): boolean | null {
         if (task.taskType !== PortCommandTaskType.SetSpeed) {
             return null;
+        }
+        if (!lastTaskOfKindInQueue) {
+            return task.speed === 0;
         }
         if (lastTaskOfKindInQueue.taskType !== PortCommandTaskType.SetSpeed) {
             return false;

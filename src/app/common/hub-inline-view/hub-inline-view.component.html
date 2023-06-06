@@ -1,12 +1,16 @@
-<p class="hub-name"
-   appEllipsisTitle>
+<div class="hub-name"
+     appEllipsisTitle>
     {{ name }}
-    <ng-container *ngIf="!isConnected">
-        <span class="hub-is-not-connected-notification">
-            {{ 'hubListHubIsNotConnected' | transloco }}
-        </span>
-    </ng-container>
-</p>
+</div>
+
+<mat-error *ngIf="!isConnected"
+           class="hub-is-not-connected-notification"
+           appEllipsisTitle
+>
+    {{ 'hubListHubIsNotConnected' | transloco }}
+</mat-error>
+
+<span class="spacer"></span>
 
 <ng-container *ngIf="isConnected">
     <ng-container *ngIf="isButtonPressed; else buttonNotPressed">
@@ -49,27 +53,29 @@
     ></mat-icon>
 </ng-container>
 
-<a *ngIf="isConnected"
-   mat-button
-   class="view-button"
-   [routerLink]="hubViewHref"
->
-    {{ 'viewHub' | transloco }}
-</a>
+<ng-container *ngIf="showControls">
+    <a *ngIf="isConnected"
+       mat-button
+       class="view-button"
+       [routerLink]="hubViewHref"
+    >
+        {{ 'viewHub' | transloco }}
+    </a>
 
-<button *ngIf="isConnected"
-        mat-button
-        class="disconnect-button"
-        (click)="onDisconnectClick()"
->
-    {{ 'disconnectHub' | transloco }}
-</button>
+    <button *ngIf="isConnected"
+            mat-button
+            class="disconnect-button"
+            (click)="onDisconnectClick()"
+    >
+        {{ 'disconnectHub' | transloco }}
+    </button>
 
-<button *ngIf="!isConnected"
-        mat-button
-        class="forget-button"
-        color="warn"
-        (click)="onForgerClick()"
->
-    {{ 'forgetHub' | transloco }}
-</button>
+    <button *ngIf="!isConnected"
+            mat-button
+            class="forget-button"
+            color="warn"
+            (click)="onForgerClick()"
+    >
+        {{ 'forgetHub' | transloco }}
+    </button>
+</ng-container>

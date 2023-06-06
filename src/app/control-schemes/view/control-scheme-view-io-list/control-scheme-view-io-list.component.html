@@ -1,12 +1,46 @@
-<ng-container *ngIf="bindingsWithLatestExecutedTasks">
-    <ul class="bindings-list">
-        <li *ngFor="let binding of bindingsWithLatestExecutedTasks; trackBy: trackByFn">
-            <app-control-scheme-view-io
-                [binding]="binding.binding"
-                [lastExecutedTask]="binding.latestExecutedTask"
-                [ioType]="binding.ioType"
-                [validation]="binding.validationData"
-            ></app-control-scheme-view-io>
-        </li>
-    </ul>
-</ng-container>
+<mat-card *ngIf="!isEmpty">
+    <mat-card-content>
+        <mat-tree [dataSource]="dataSource"
+                  [treeControl]="treeControl"
+                  class="control-scheme-tree"
+        >
+            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+                <app-binding-tree-node [binding]="node"></app-binding-tree-node>
+            </mat-tree-node>
+            <mat-nested-tree-node *matTreeNodeDef="let portNodeData; when: isPort">
+                <div class="mat-tree-node">
+                    <button mat-icon-button
+                            matTreeNodeToggle
+                            [attr.aria-label]="'schemeExpandCollapseIO' | transloco: portNodeData"
+                    >
+                        <mat-icon class="mat-icon-rtl-mirror"
+                                  [fontIcon]="treeControl.isExpanded(portNodeData) ? 'expand_more' : 'chevron_right'"
+                        ></mat-icon>
+                    </button>
+                    <app-io-tree-node [node]="portNodeData"></app-io-tree-node>
+                </div>
+                <div [class.control-scheme-tree__node_invisible]="!treeControl.isExpanded(portNodeData)"
+                     role="group">
+                    <ng-container matTreeNodeOutlet></ng-container>
+                </div>
+            </mat-nested-tree-node>
+            <mat-nested-tree-node *matTreeNodeDef="let hubNodeData; when: isHub">
+                <div class="mat-tree-node">
+                    <button mat-icon-button
+                            matTreeNodeToggle
+                            [attr.aria-label]="'schemeExpandCollapseHub' | transloco: hubNodeData"
+                    >
+                        <mat-icon class="mat-icon-rtl-mirror"
+                                  [fontIcon]="treeControl.isExpanded(hubNodeData) ? 'expand_more' : 'chevron_right'"
+                        ></mat-icon>
+                    </button>
+                    <app-hub-tree-node [hub]="hubNodeData"></app-hub-tree-node>
+                </div>
+                <div [class.control-scheme-tree__node_invisible]="!treeControl.isExpanded(hubNodeData)"
+                     role="group">
+                    <ng-container matTreeNodeOutlet></ng-container>
+                </div>
+            </mat-nested-tree-node>
+        </mat-tree>
+    </mat-card-content>
+</mat-card>

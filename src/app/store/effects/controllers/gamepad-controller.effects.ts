@@ -84,13 +84,14 @@ export class GamepadControllerEffects {
             switchMap((gamepadConfigs) => from(gamepadConfigs)),
             map((gamepadConfig) => {
                 const browserGamepad = this.window.navigator.getGamepads()[gamepadConfig.gamepadIndex] as Gamepad;
+                const controllerId = controllerIdFn(gamepadConfig);
                 const gamepadRead$ = this.gamepadReadScheduler$.pipe(
                     map(() => this.window.navigator.getGamepads()[gamepadConfig.gamepadIndex] as Gamepad),
                     share()
                 );
                 const axesChanges = browserGamepad.axes.map((axisValue, axisIndex) => {
                     const inputId = controllerInputIdFn({
-                        controllerId: gamepadConfig.id,
+                        controllerId: controllerId,
                         inputId: axisIndex.toString(),
                         inputType: ControllerInputType.Axis
                     });
@@ -101,7 +102,7 @@ export class GamepadControllerEffects {
                         concatLatestFrom(() => this.store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(inputId))),
                         this.filterWithThreshold(),
                         map(([ value ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
-                            controllerId: gamepadConfig.id,
+                            controllerId: controllerIdFn(gamepadConfig),
                             inputType: ControllerInputType.Axis,
                             inputId: axisIndex.toString(),
                             value
@@ -112,7 +113,7 @@ export class GamepadControllerEffects {
                 const buttonChanges = browserGamepad.buttons.map((_, buttonIndex) => {
                     const inputType = gamepadConfig.triggerButtonIndices.includes(buttonIndex) ? ControllerInputType.Trigger : ControllerInputType.Button;
                     const inputId = controllerInputIdFn({
-                        controllerId: gamepadConfig.id,
+                        controllerId: controllerId,
                         inputId: buttonIndex.toString(),
                         inputType
                     });
@@ -121,7 +122,7 @@ export class GamepadControllerEffects {
                         concatLatestFrom(() => this.store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(inputId))),
                         this.filterWithThreshold(),
                         map(([ value ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
-                            controllerId: gamepadConfig.id,
+                            controllerId: controllerId,
                             inputType,
                             inputId: buttonIndex.toString(),
                             value

@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
-import { HUBS_ACTIONS, HUBS_SELECTORS } from '../../../store';
+import { HUBS_ACTIONS, HUBS_SELECTORS } from '../../store';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgForOf, NgIf } from '@angular/common';
-import { HubsListItemComponent } from '../hubs-list-item';
+import { HubInlineViewComponent } from '../../common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
@@ -20,7 +20,7 @@ import { MatDividerModule } from '@angular/material/divider';
         LetDirective,
         PushPipe,
         NgIf,
-        HubsListItemComponent,
+        HubInlineViewComponent,
         NgForOf,
         MatButtonModule,
         MatIconModule,

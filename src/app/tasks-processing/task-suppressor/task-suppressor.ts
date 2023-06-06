@@ -13,17 +13,17 @@ export abstract class TaskSuppressor implements ITaskSuppressor {
 
     protected abstract shouldSuppress<T extends PortCommandTask>(
         task: T,
-        lastTaskOfKindInQueue: T,
+        lastTaskOfKindInQueue?: T,
     ): boolean | null;
 
     public shouldSuppressTask<T extends PortCommandTask>(
         task: T,
-        lastTaskOfKindInQueue: T
+        lastTaskOfKindInQueue?: T
     ): boolean {
         // If the source of the task is different from the source of the last task in the queue
         // AND the last task in the queue is not neutral, then we should suppress the task.
         // This is because we don't want to mix commands from different sources (conflicting by nature).
-        if (task.bindingId !== lastTaskOfKindInQueue.bindingId && !lastTaskOfKindInQueue.isNeutral) {
+        if (task.bindingId !== lastTaskOfKindInQueue?.bindingId && lastTaskOfKindInQueue?.isNeutral === false) {
             return true;
         }
 

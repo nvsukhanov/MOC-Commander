@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
-import { composeL10nKey, L10nScopes } from './l10n-scopes';
+import { composeL10nKey, L10nScopes } from '../i18n';
 
 @Pipe({
     name: 'appMotorServoEndStateL10nKey',
