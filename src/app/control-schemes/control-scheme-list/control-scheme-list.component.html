@@ -14,7 +14,7 @@
 
     <ng-template #noControlSchemes>
         <h3 class="no-control-schemes-notification">
-            {{ 'noControlSchemes' | transloco}}
+            {{ 'controlScheme.noControlSchemes' | transloco}}
         </h3>
     </ng-template>
 </ng-container>
@@ -24,6 +24,6 @@
     <a mat-raised-button
        [routerLink]="routesBuilderService.controlSchemesCreate"
        [disabled]="!(canCreateScheme$ | ngrxPush)">
-        {{ 'createScheme' | transloco }}
+        {{ 'controlScheme.create' | transloco }}
     </a>
 </ng-template>

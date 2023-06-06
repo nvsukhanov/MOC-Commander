@@ -40,11 +40,11 @@
               [class.operation-mode__capabilities_match]="!binding.ioHasNoRequiredCapabilities"
               [fontIcon]="'warning'"
               [color]="'warn'"
-              [title]="'schemeBindingValidationHubIOCapabilitiesMismatch' | transloco"
+              [title]="'controlScheme.ioCapabilitiesMismatch' | transloco"
     ></mat-icon>
     <span *ngIf="binding.ioHasNoRequiredCapabilities"
           class="cdk-visually-hidden">
-        {{ 'schemeBindingValidationHubIOCapabilitiesMismatch' | transloco }}
+        {{ 'controlScheme.ioCapabilitiesMismatch' | transloco }}
     </span>
 
     <div class="operation-mode binding-info-item"

@@ -1,5 +1,5 @@
 <mat-form-field>
-    <mat-label>{{ 'schemeEditNameField' | transloco }}</mat-label>
+    <mat-label>{{ 'controlScheme.nameField' | transloco }}</mat-label>
     <input type="text"
            [formControl]="form.controls.name"
            matInput
@@ -26,7 +26,7 @@
         <button mat-flat-button
                 (click)="removeBindingIndex(index)"
         >
-            {{ 'deleteSchemeBinding' | transloco }}
+            {{ 'controlScheme.deleteBinding' | transloco }}
         </button>
     </mat-card-actions>
 </mat-card>
@@ -37,18 +37,18 @@
             [disabled]="!(canAddBinding$ | ngrxPush)"
             (click)="addBinding()"
     >
-        {{ 'addSchemeBinding' | transloco }}
+        {{ 'controlScheme.addBinding' | transloco }}
     </button>
     <button mat-raised-button
             class="toolbar-button"
             [disabled]="!form.valid"
             (click)="onSave()">
-        {{ 'saveEditedScheme' | transloco }}
+        {{ 'controlScheme.saveEdited' | transloco }}
     </button>
     <button mat-raised-button
             class="toolbar-button"
             (click)="onCancel()"
     >
-        {{ 'cancelEditScheme' | transloco }}
+        {{ 'controlScheme.cancelEdit' | transloco }}
     </button>
 </ng-template>

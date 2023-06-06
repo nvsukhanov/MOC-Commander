@@ -4,7 +4,7 @@
     </mat-card-header>
     <mat-card-content>
         <mat-form-field>
-            <mat-label>{{ 'hubName' | transloco }}</mat-label>
+            <mat-label>{{ 'hub.name' | transloco }}</mat-label>
             <input matInput [formControl]="form.controls.name">
         </mat-form-field>
     </mat-card-content>
@@ -12,11 +12,11 @@
         <button mat-button
                 [disabled]="isSaving || form.invalid"
                 (click)="onSave()"
-        >{{ 'editHubFormSave' | transloco }}</button>
+        >{{ 'hub.save' | transloco }}</button>
         <a mat-button
            [routerLink]="viewPath"
            [disabled]="!!isSaving"
-        >{{ 'editHubFormCancel' | transloco }}</a>
+        >{{ 'hub.cancel' | transloco }}</a>
     </mat-card-actions>
     <mat-progress-bar *ngIf="isSaving"
                       mode="indeterminate"

@@ -3,22 +3,22 @@
              class="parameter-section"
     >
         <mat-slide-toggle [formControl]="outputBinding.controls.linearConfig.controls.isToggle">
-            {{ 'schemeOutputBindingConfigurationLinearToggleParameter' | transloco }}
+            {{ 'controlScheme.linearOutputConfigurationTreatAsSwitch' | transloco }}
         </mat-slide-toggle>
     </section>
     <section class="parameter-section">
         <mat-slide-toggle [formControl]="outputBinding.controls.linearConfig.controls.invert">
-            {{ 'schemeOutputBindingConfigurationLinearInvertParameter' | transloco }}
+            {{ 'controlScheme.linearOutputConfigurationInvert' | transloco }}
         </mat-slide-toggle>
     </section>
     <section class="parameter-section">
         <div class="slider-label">
             <label class="slider-label-description">
                 <ng-container *ngIf="inputMethodControl?.value === controllerInputType.Button; else maximumSpeedLabel">
-                    {{ 'schemeOutputBindingConfigurationLinearSpeedParameter' | transloco }}
+                    {{ 'controlScheme.linearOutputConfigurationSpeed' | transloco }}
                 </ng-container>
                 <ng-template #maximumSpeedLabel>
-                    {{ 'schemeOutputBindingConfigurationLinearMaximumSpeedParameter' | transloco }}
+                    {{ 'controlScheme.linearOutputConfigurationSpeedMaximumSpeed' | transloco }}
                 </ng-template>
             </label>
             <label class="slider-label-value">{{ outputBinding.controls.linearConfig.controls.maxSpeed.value }}</label>
@@ -26,7 +26,7 @@
         <mat-slider class="slider"
                     [max]="motorLimits.maxSpeed"
                     [min]="0"
-                    [attr.aria-label]="'schemeOutputBindingConfigurationLinearSpeedParameter' | transloco"
+                    [attr.aria-label]="'controlScheme.linearOutputConfigurationSpeed' | transloco"
         >
             <input matSliderThumb [formControl]="outputBinding.controls.linearConfig.controls.maxSpeed"/>
         </mat-slider>
@@ -34,7 +34,7 @@
     <section class="parameter-section">
         <div class="slider-label">
             <label class="slider-label-description">
-                {{ 'schemeOutputBindingConfigurationLinearPowerParameter' | transloco }}
+                {{ 'controlScheme.linearOutputConfigurationPower' | transloco }}
             </label>
             <label class="slider-label-value">{{ outputBinding.controls.linearConfig.controls.power.value }}</label>
         </div>
@@ -42,7 +42,7 @@
         <mat-slider class="slider"
                     [max]="motorLimits.maxPower"
                     [min]="motorLimits.minPower"
-                    [attr.aria-label]="'schemeOutputBindingConfigurationLinearPowerParameter' | transloco"
+                    [attr.aria-label]="'controlScheme.linearOutputConfigurationPower' | transloco"
         >
             <input matSliderThumb [formControl]="outputBinding.controls.linearConfig.controls.power"/>
         </mat-slider>

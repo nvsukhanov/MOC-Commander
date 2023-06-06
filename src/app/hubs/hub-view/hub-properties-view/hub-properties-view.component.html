@@ -5,7 +5,7 @@
                 {{ hubTypeL10nKey | transloco }}
             </ng-container>
             <ng-template #hubTypeUnknown>
-                {{ 'hubTypeUnknown' | transloco }}
+                {{ 'hubTypes.unknown' | transloco }}
             </ng-template>
         </mat-card-subtitle>
         <mat-card-title appEllipsisTitle>
@@ -14,24 +14,24 @@
     </mat-card-header>
     <mat-card-content>
         <p>
-            {{ 'hubButtonState' | transloco: configuration }}
+            {{ 'hub.buttonState' | transloco: configuration }}
         </p>
         <p *ngIf="configuration.batteryLevel !== null; else batteryLevelUnknown">
-            {{ 'hubBatteryLevel' | transloco: configuration }}
+            {{ 'hub.batteryLevel' | transloco: configuration }}
         </p>
         <ng-template #batteryLevelUnknown>
-            <p>{{ 'hubBatteryLevelUnknown' | transloco }}</p>
+            <p>{{ 'hub.batteryLevelUnknown' | transloco }}</p>
         </ng-template>
         <p *ngIf="configuration.RSSI !== null; else rssiLevelUnknown">
-            {{ 'hubRSSILevel' | transloco: configuration }}
+            {{ 'hub.RSSILevel' | transloco: configuration }}
         </p>
         <ng-template #rssiLevelUnknown>
-            <p>{{ 'hubRSSILevelUnknown' | transloco }}</p>
+            <p>{{ 'hub.RSSILevelUnknown' | transloco }}</p>
         </ng-template>
         <mat-divider></mat-divider>
     </mat-card-content>
     <mat-card-actions>
-        <a [routerLink]="hubEditRoute" mat-button>{{ 'editHub' | transloco }}</a>
-        <button mat-button (click)="onDisconnect()">{{ 'disconnectHub' | transloco }}</button>
+        <a [routerLink]="hubEditRoute" mat-button>{{ 'hub.edit' | transloco }}</a>
+        <button mat-button (click)="onDisconnect()">{{ 'hub.disconnect' | transloco }}</button>
     </mat-card-actions>
 </mat-card>

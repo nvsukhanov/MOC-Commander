@@ -6,20 +6,20 @@
                 (click)="calibrate()"
         >
             <mat-icon [fontIcon]="'settings_suggest'"></mat-icon>
-            {{ 'servoCalibrateButtonTitle' | transloco }}
+            {{ 'controlScheme.servoOutputConfigurationCalibrate' | transloco }}
         </button>
     </section>
 
     <section class="parameter-section">
         <mat-slide-toggle [formControl]="outputBinding.controls.servoConfig.controls.invert">
-            {{ 'schemeOutputBindingConfigurationServoInvertParameter' | transloco }}
+            {{ 'controlScheme.servoOutputConfigurationInvert' | transloco }}
         </mat-slide-toggle>
     </section>
 
     <section class="parameter-section">
         <div class="slider-label">
             <label class="slider-label-description">
-                {{ 'schemeOutputBindingConfigurationServoCenterOffset' | transloco }}
+                {{ 'controlScheme.servoOutputConfigurationCenterOffset' | transloco }}
             </label>
             <label class="slider-label-value-right">{{ outputBinding.controls.servoConfig.controls.aposCenter.value }}</label>
         </div>
@@ -34,7 +34,7 @@
     <section class="parameter-section">
         <div class="slider-label">
             <label class="slider-label-description">
-                {{ 'schemeOutputBindingConfigurationServoAngleRange' | transloco }}
+                {{ 'controlScheme.servoOutputConfigurationAngleRange' | transloco }}
             </label>
             <label class="slider-label-value-right">{{ outputBinding.controls.servoConfig.controls.range.value }}</label>
         </div>
@@ -49,7 +49,7 @@
     <section class="parameter-section">
         <div class="slider-label">
             <label class="slider-label-description">
-                {{ 'schemeOutputBindingConfigurationServoSpeedParameter' | transloco }}
+                {{ 'controlScheme.servoOutputConfigurationSpeed' | transloco }}
             </label>
             <label class="slider-label-value-right">{{ outputBinding.controls.servoConfig.controls.speed.value }}</label>
         </div>
@@ -63,7 +63,7 @@
     <section class="parameter-section">
         <div class="slider-label">
             <label class="slider-label-description">
-                {{ 'schemeOutputBindingConfigurationServoPowerParameter' | transloco }}
+                {{ 'controlScheme.servoOutputConfigurationPower' | transloco }}
             </label>
             <label class="slider-label-value-right">{{ outputBinding.controls.servoConfig.controls.power.value }}</label>
         </div>

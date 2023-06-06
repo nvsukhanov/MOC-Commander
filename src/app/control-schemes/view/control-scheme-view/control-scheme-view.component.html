@@ -8,7 +8,7 @@
                     [disabled]="!canRunScheme"
                     (click)="runScheme(scheme.id)"
             >
-                {{ 'runScheme' | transloco }}
+                {{ 'controlScheme.run' | transloco }}
             </button>
 
             <button mat-raised-button
@@ -16,7 +16,7 @@
                     [disabled]="!(isCurrentControlSchemeRunning$ | ngrxPush)"
                     (click)="stopRunningScheme()"
             >
-                {{ 'stopScheme' | transloco }}
+                {{ 'controlScheme.stop' | transloco }}
             </button>
 
             <a *ngIf="!(isCurrentControlSchemeRunning$ | ngrxPush)"
@@ -24,7 +24,7 @@
                class="toolbar-button"
                [routerLink]="editSchemeRoute$ | ngrxPush"
             >
-                {{ 'editScheme' | transloco }}
+                {{ 'controlScheme.edit' | transloco }}
             </a>
         </ng-container>
     </ng-template>
@@ -33,16 +33,16 @@
         <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    {{ 'currentSchemeIsRunning' | transloco }}
+                    {{ 'controlScheme.runningDetailsIsRunningNotification' | transloco }}
                 </mat-panel-title>
                 <mat-panel-description>
-                    {{ 'currentRunningSchemeTasksQueueDetails' | transloco }}
+                    {{ 'controlScheme.runningDetailsTasksQueueDetails' | transloco }}
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <p>{{ 'schemeTaskQueueCurrentLength' | transloco }} {{ queueLength$ | ngrxPush }}</p>
-            <p>{{ 'schemeTaskMaximumEncounteredQueueLength' | transloco }} {{ maxQueueLength$ | ngrxPush }}</p>
-            <p>{{ 'totalTasksExecuted' | transloco }} {{ totalTasksExecuted$ | ngrxPush }}</p>
-            <p>{{ 'lastTenTasksAverageExecutionTime' | transloco }}{{ lastTenTaskAverageExecutionTime$ | ngrxPush }}</p>
+            <p>{{ 'controlScheme.runningDetailsQueueCurrentLength' | transloco }} {{ queueLength$ | ngrxPush }}</p>
+            <p>{{ 'controlScheme.runningDetailsMaximumEncounteredQueueLength' | transloco }} {{ maxQueueLength$ | ngrxPush }}</p>
+            <p>{{ 'controlScheme.runningDetailsTotalTasksExecuted' | transloco }} {{ totalTasksExecuted$ | ngrxPush }}</p>
+            <p>{{ 'controlScheme.runningDetailsLastTenTasksAverageExecutionTime' | transloco }}{{ lastTenTaskAverageExecutionTime$ | ngrxPush }}</p>
         </mat-expansion-panel>
     </mat-accordion>
 
@@ -52,5 +52,5 @@
 </ng-container>
 
 <ng-template #schemeNotFound>
-    <h3 class="scheme-is-not-found">{{ 'schemeIsNotFound' | transloco }}</h3>
+    <h3 class="scheme-is-not-found">{{ 'controlScheme.notFound' | transloco }}</h3>
 </ng-template>
