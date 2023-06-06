@@ -4,9 +4,10 @@ import { HubType } from '@nvsukhanov/rxpoweredup';
 import { HUBS_ENTITY_ADAPTER } from '../entity-adapters';
 import { HUBS_ACTIONS } from '../actions';
 import { IState } from '../i-state';
+import { INITIAL_STATE } from '../initial-state';
 
 export const HUBS_REDUCER = createReducer(
-    HUBS_ENTITY_ADAPTER.getInitialState(),
+    INITIAL_STATE.hubs,
     on(HUBS_ACTIONS.connected,
         (state, data): IState['hubs'] => HUBS_ENTITY_ADAPTER.upsertOne({
             hubId: data.hubId,

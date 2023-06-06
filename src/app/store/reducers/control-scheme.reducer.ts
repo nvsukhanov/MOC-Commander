@@ -5,6 +5,7 @@ import { CONTROL_SCHEME_ACTIONS } from '../actions';
 import { BindingForm } from '../../control-schemes/edit';
 import { ControlSchemeBinding, IState } from '../i-state';
 import { HubIoOperationMode } from '../hub-io-operation-mode';
+import { INITIAL_STATE } from '../initial-state';
 
 function trimOutputBinding(source: ReturnType<BindingForm['getRawValue']>): ControlSchemeBinding {
     switch (source.output.operationMode) {
@@ -42,7 +43,7 @@ function trimOutputBinding(source: ReturnType<BindingForm['getRawValue']>): Cont
 }
 
 export const CONTROL_SCHEME_REDUCER = createReducer(
-    CONTROL_SCHEMES_ENTITY_ADAPTER.getInitialState(),
+    INITIAL_STATE['controlSchemes'],
     on(CONTROL_SCHEME_ACTIONS.create, (
         state,
         { id, name, bindings }
