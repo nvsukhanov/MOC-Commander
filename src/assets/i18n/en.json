@@ -44,6 +44,7 @@
     "unknown": "Unknown hub type"
   },
   "controlScheme": {
+    "newSchemeDefaultName": "New scheme",
     "notFound": "Scheme is not found",
     "noControlSchemes": "No control schemes",
     "create": "Create scheme",

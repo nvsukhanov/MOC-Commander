@@ -16,7 +16,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { Subject, Subscription, filter, finalize, map, take, takeUntil } from 'rxjs';
 import { Actions, concatLatestFrom, ofType } from '@ngrx/effects';
@@ -76,7 +76,7 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
 
     public readonly form = this.controlSchemeFormFactoryService.createEditSchemeForm(
         this.window.crypto.randomUUID(),
-        'New Scheme' // TODO: translate
+        this.translocoService.translate('controlScheme.newSchemeDefaultName')
     );
 
     public readonly canAddBinding$ = this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.canAddBinding);
@@ -95,7 +95,8 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         private readonly screenSizeObserverService: ScreenSizeObserverService,
         private readonly actions: Actions,
         private readonly featureToolbarService: FeatureToolbarService,
-        @Inject(SCROLL_CONTAINER) private readonly scrollContainer: IScrollContainer
+        @Inject(SCROLL_CONTAINER) private readonly scrollContainer: IScrollContainer,
+        private readonly translocoService: TranslocoService
     ) {
     }
 
