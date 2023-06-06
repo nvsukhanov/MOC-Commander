@@ -5,7 +5,7 @@ import { Action, Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { IHub, MessageLoggingMiddleware, connectHub } from '@nvsukhanov/rxpoweredup';
 
-import { APP_CONFIG, IAppConfig, LogLevel, NAVIGATOR, PrefixedConsoleLogger } from '@app/shared';
+import { APP_CONFIG, IAppConfig, NAVIGATOR, PrefixedConsoleLoggerFactoryService } from '@app/shared';
 import { HubStorageService } from '../hub-storage.service';
 import { HUBS_ACTIONS } from '../actions';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../hub-communication-notifier-middleware-factory.service';
@@ -122,13 +122,14 @@ export class HubsEffects {
         private readonly communicationNotifierMiddlewareFactory: HubCommunicationNotifierMiddlewareFactoryService,
         @Inject(NAVIGATOR) private readonly navigator: Navigator,
         private readonly routesBuilderService: RoutesBuilderService,
-        @Inject(APP_CONFIG) private readonly config: IAppConfig
+        @Inject(APP_CONFIG) private readonly config: IAppConfig,
+        private readonly prefixedConsoleLoggerFactory: PrefixedConsoleLoggerFactoryService,
     ) {
     }
 
     private hubDiscovery$(): Observable<Action> {
-        const incomingLoggerMiddleware = new MessageLoggingMiddleware(new PrefixedConsoleLogger('<', LogLevel.Debug), 'all'); // TODO: replace w/ factory
-        const outgoingLoggerMiddleware = new MessageLoggingMiddleware(new PrefixedConsoleLogger('>', LogLevel.Debug), 'all'); // TODO: replace w/ factory
+        const incomingLoggerMiddleware = new MessageLoggingMiddleware(this.prefixedConsoleLoggerFactory.create('<'), 'all'); // TODO: replace w/ factory
+        const outgoingLoggerMiddleware = new MessageLoggingMiddleware(this.prefixedConsoleLoggerFactory.create('>'), 'all'); // TODO: replace w/ factory
         const communicationNotifierMiddleware = this.communicationNotifierMiddlewareFactory.create();
 
         return connectHub(

@@ -1,14 +1,13 @@
 /* eslint-disable no-console */
-import { Inject, Injectable, Optional } from '@angular/core';
-import { ILogger } from '@nvsukhanov/rxpoweredup';
+import { Inject, Injectable } from '@angular/core';
+import { ILogger, LogLevel } from '@nvsukhanov/rxpoweredup';
 
-import { LOG_LEVEL, LogLevel } from './log-levels';
-import { ExtractTokenType } from '../types';
+import { APP_CONFIG, IAppConfig } from '../i-app-config';
 
 @Injectable({ providedIn: 'root' })
 export class ConsoleLoggingService implements ILogger {
     constructor(
-        @Optional() @Inject(LOG_LEVEL) private configuredLogLevel: ExtractTokenType<typeof LOG_LEVEL> = LogLevel.Info
+        @Inject(APP_CONFIG) private readonly config: IAppConfig
     ) {
     }
 
@@ -44,6 +43,6 @@ export class ConsoleLoggingService implements ILogger {
     }
 
     private canWrite(level: LogLevel): boolean {
-        return level >= this.configuredLogLevel;
+        return level >= this.config.logLevel;
     }
 }

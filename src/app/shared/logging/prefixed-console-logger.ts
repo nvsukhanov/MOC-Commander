@@ -1,12 +1,12 @@
 import { ConsoleLoggingService } from './console-logging.service';
-import { LogLevel } from './log-levels';
+import { IAppConfig } from '../i-app-config';
 
 export class PrefixedConsoleLogger extends ConsoleLoggingService {
     constructor(
         private prefix: string,
-        logLevel: LogLevel,
+        config: IAppConfig
     ) {
-        super(logLevel);
+        super(config);
     }
 
     public override debug(...debug: unknown[]): void {
