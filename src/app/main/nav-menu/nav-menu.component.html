@@ -16,7 +16,7 @@
                    [routerLinkActive]="'active-link'"
                 >
                     <mat-icon [fontIcon]="'gamepad'"></mat-icon>
-                    {{ 'controllersList' | transloco }}
+                    {{ 'nav.controllersList' | transloco }}
                     <span *ngIf="connectedControllersCount$ | ngrxPush; let count"
                           class="counter"
                     >
@@ -29,7 +29,7 @@
                    [routerLinkActive]="'active-link'"
                 >
                     <mat-icon [fontIcon]="'memory'"></mat-icon>
-                    {{ 'hubsList' | transloco }}
+                    {{ 'nav.hubsList' | transloco }}
                     <span *ngIf="connectedHubCount$ | ngrxPush; let count"
                           class="counter"
                     >
@@ -42,7 +42,7 @@
                    [routerLinkActive]="'active-link'"
                 >
                     <mat-icon [fontIcon]="'display_settings'"></mat-icon>
-                    {{ 'controlSchemesList' | transloco }}
+                    {{ 'nav.controlSchemesList' | transloco }}
                     <span *ngIf="controlSchemesCount$ | ngrxPush; let count"
                           class="counter"
                     >
@@ -83,8 +83,8 @@
                class="about-button"
                [routerLink]="routesBuilderService.about"
                [routerLinkActive]="'active-link'"
-               [title]="'aboutPageButton' | transloco"
-               [attr.aria-label]="'aboutPageButton' | transloco"
+               [title]="'nav.aboutPageButton' | transloco"
+               [attr.aria-label]="'nav.aboutPageButton' | transloco"
             >
                 <mat-icon [fontIcon]="'info'"></mat-icon>
             </a>
@@ -102,7 +102,7 @@
         <a mat-icon-button
            [routerLink]="routesBuilderService.controllersList"
            [routerLinkActive]="'active-link'"
-           [title]="'controllersList' | transloco"
+           [title]="'nav.controllersList' | transloco"
            [matBadge]="connectedControllersCount$ | ngrxPush"
            [matBadgeColor]="'primary'"
            [matBadgeHidden]="!(connectedControllersCount$ | ngrxPush)"
@@ -113,7 +113,7 @@
         <a mat-icon-button
            [routerLink]="routesBuilderService.hubsList"
            [routerLinkActive]="'active-link'"
-           [title]="'hubsList' | transloco"
+           [title]="'nav.hubsList' | transloco"
            [matBadge]="connectedHubCount$ | ngrxPush"
            [matBadgeColor]="'primary'"
            [matBadgeHidden]="!(connectedHubCount$ | ngrxPush)"
@@ -124,7 +124,7 @@
         <a mat-icon-button
            [routerLink]="routesBuilderService.controlSchemesList"
            [routerLinkActive]="'active-link'"
-           [title]="'controlSchemesList' | transloco"
+           [title]="'nav.controlSchemesList' | transloco"
            [matBadge]="controlSchemesCount$ | ngrxPush"
            [matBadgeColor]="'primary'"
            [matBadgeHidden]="!(controlSchemesCount$ | ngrxPush)"
@@ -159,8 +159,8 @@
         <a mat-icon-button
            [routerLink]="routesBuilderService.about"
            [routerLinkActive]="'active-link'"
-           [title]="'aboutPageButton' | transloco"
-           [attr.aria-label]="'aboutPageButton' | transloco"
+           [title]="'nav.aboutPageButton' | transloco"
+           [attr.aria-label]="'nav.aboutPageButton' | transloco"
         >
             <mat-icon [fontIcon]="'info'"></mat-icon>
         </a>

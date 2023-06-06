@@ -11,7 +11,7 @@
                 <div class="mat-tree-node">
                     <button mat-icon-button
                             matTreeNodeToggle
-                            [attr.aria-label]="'schemeExpandCollapseIO' | transloco: portNodeData"
+                            [attr.aria-label]="'controlScheme.expandCollapseIO' | transloco: portNodeData"
                     >
                         <mat-icon class="mat-icon-rtl-mirror"
                                   [fontIcon]="treeControl.isExpanded(portNodeData) ? 'expand_more' : 'chevron_right'"
@@ -28,7 +28,7 @@
                 <div class="mat-tree-node">
                     <button mat-icon-button
                             matTreeNodeToggle
-                            [attr.aria-label]="'schemeExpandCollapseHub' | transloco: hubNodeData"
+                            [attr.aria-label]="'controlScheme.expandCollapseHub' | transloco: hubNodeData"
                     >
                         <mat-icon class="mat-icon-rtl-mirror"
                                   [fontIcon]="treeControl.isExpanded(hubNodeData) ? 'expand_more' : 'chevron_right'"

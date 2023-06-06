@@ -8,14 +8,14 @@
    class="view-button"
    [routerLink]="schemeViewHref"
 >
-    {{ 'viewScheme' | transloco }}
+    {{ 'controlScheme.view' | transloco }}
 </a>
 
 <a mat-button
    class="edit-button"
    [routerLink]="schemeEditHref"
 >
-    {{ 'editScheme' | transloco }}
+    {{ 'controlScheme.edit' | transloco }}
 </a>
 
 <button mat-button
@@ -23,5 +23,5 @@
         class="delete-button"
         (click)="onDeleteClick()"
 >
-    {{ 'deleteScheme' | transloco }}
+    {{ 'controlScheme.delete' | transloco }}
 </button>

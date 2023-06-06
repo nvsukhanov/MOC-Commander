@@ -14,6 +14,8 @@ import packageJson from '../../../package.json';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AboutComponent {
+    public readonly authorProfileURL = 'https://www.linkedin.com/in/nvsukhanov/';
+
     public readonly ngPoweredUpURL = 'https://github.com/nvsukhanov/ngPoweredUP';
 
     public readonly rxPoweredUpURL = 'https://github.com/nvsukhanov/rxPoweredUP';

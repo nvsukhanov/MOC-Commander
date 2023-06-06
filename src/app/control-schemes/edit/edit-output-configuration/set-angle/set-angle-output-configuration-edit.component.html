@@ -2,7 +2,7 @@
     <section class="parameter-section">
         <mat-form-field>
             <label class="slider-label-description">
-                {{ 'setAngleOutputConfiguration.angle' | transloco }}
+                {{ 'controlScheme.setAngleOutputConfigurationAngle' | transloco }}
             </label>
             <input type="number"
                    matInput
@@ -16,7 +16,7 @@
     <section class="parameter-section">
         <div class="slider-label">
             <label class="slider-label-description">
-                {{ 'setAngleOutputConfiguration.speed' | transloco }}
+                {{ 'controlScheme.setAngleOutputConfigurationSpeed' | transloco }}
             </label>
             <label class="slider-label-value-right">{{ configurationForm.controls.speed.value }}</label>
         </div>
@@ -31,7 +31,7 @@
     <section class="parameter-section">
         <div class="slider-label">
             <label class="slider-label-description">
-                {{ 'setAngleOutputConfiguration.power' | transloco }}
+                {{ 'controlScheme.setAngleOutputConfigurationPower' | transloco }}
             </label>
             <label class="slider-label-value-right">{{ configurationForm.controls.power.value }}</label>
         </div>
@@ -46,7 +46,7 @@
     <section class="parameter-section">
         <mat-form-field>
             <mat-label>
-                {{ 'setAngleOutputConfiguration.endState' | transloco }}
+                {{ 'controlScheme.setAngleOutputConfigurationEndState' | transloco }}
             </mat-label>
             <mat-select [formControl]="configurationForm.controls.endState">
                 <mat-option *ngFor="let endState of motorServoEndStates"

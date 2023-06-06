@@ -18,7 +18,7 @@ export class NotificationsEffects {
     public readonly deviceConnectedNotification$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.connected),
-            switchMap((action) => this.translocoService.selectTranslate('hubConnected', action)),
+            switchMap((action) => this.translocoService.selectTranslate('hub.connected', action)),
             tap((message) => this.showMessage(message))
         );
     }, { dispatch: false });
@@ -26,7 +26,7 @@ export class NotificationsEffects {
     public readonly deviceDisconnectedNotification$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.disconnected),
-            switchMap((action) => this.translocoService.selectTranslate('hubDisconnected', action)),
+            switchMap((action) => this.translocoService.selectTranslate('hub.disconnected', action)),
             tap((message) => this.showMessage(message))
         );
     }, { dispatch: false });
@@ -34,7 +34,7 @@ export class NotificationsEffects {
     public readonly servoCalibrationErrorNotification$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(SERVO_CALIBRATION_ACTIONS.calibrationError),
-            switchMap(() => this.translocoService.selectTranslate('servoCalibrationError')),
+            switchMap(() => this.translocoService.selectTranslate('controlScheme.servoCalibrationError')),
             tap((message) => this.showMessage(message))
         );
     }, { dispatch: false });
