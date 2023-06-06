@@ -3,11 +3,12 @@ import { HubType } from '@nvsukhanov/rxpoweredup';
 
 import { HUBS_ENTITY_ADAPTER } from '../entity-adapters';
 import { HUBS_ACTIONS } from '../actions';
+import { IState } from '../i-state';
 
-export const HUBS_REDUCERS = createReducer(
+export const HUBS_REDUCER = createReducer(
     HUBS_ENTITY_ADAPTER.getInitialState(),
     on(HUBS_ACTIONS.connected,
-        (state, data) => HUBS_ENTITY_ADAPTER.upsertOne({
+        (state, data): IState['hubs'] => HUBS_ENTITY_ADAPTER.upsertOne({
             hubId: data.hubId,
             name: data.name,
             batteryLevel: null,
@@ -18,7 +19,7 @@ export const HUBS_REDUCERS = createReducer(
         }, state)
     ),
     on(HUBS_ACTIONS.disconnected,
-        (state, data) => HUBS_ENTITY_ADAPTER.updateOne({
+        (state, data): IState['hubs'] => HUBS_ENTITY_ADAPTER.updateOne({
             id: data.hubId,
             changes: {
                 batteryLevel: null,
@@ -28,14 +29,14 @@ export const HUBS_REDUCERS = createReducer(
             }
         }, state)
     ),
-    on(HUBS_ACTIONS.batteryLevelReceived, (state, data) => HUBS_ENTITY_ADAPTER.updateOne({
+    on(HUBS_ACTIONS.batteryLevelReceived, (state, data): IState['hubs'] => HUBS_ENTITY_ADAPTER.updateOne({
             id: data.hubId,
             changes: {
                 batteryLevel: data.batteryLevel,
             }
         }, state
     )),
-    on(HUBS_ACTIONS.rssiLevelReceived, (state, data) => HUBS_ENTITY_ADAPTER.updateOne({
+    on(HUBS_ACTIONS.rssiLevelReceived, (state, data): IState['hubs'] => HUBS_ENTITY_ADAPTER.updateOne({
             id: data.hubId,
             changes: {
                 RSSI: data.RSSI,
@@ -43,7 +44,7 @@ export const HUBS_REDUCERS = createReducer(
         },
         state
     )),
-    on(HUBS_ACTIONS.buttonStateReceived, (state, data) => HUBS_ENTITY_ADAPTER.updateOne({
+    on(HUBS_ACTIONS.buttonStateReceived, (state, data): IState['hubs'] => HUBS_ENTITY_ADAPTER.updateOne({
             id: data.hubId,
             changes: {
                 isButtonPressed: data.isPressed,
@@ -51,7 +52,7 @@ export const HUBS_REDUCERS = createReducer(
         },
         state
     )),
-    on(HUBS_ACTIONS.hubTypeReceived, (state, data) => HUBS_ENTITY_ADAPTER.updateOne({
+    on(HUBS_ACTIONS.hubTypeReceived, (state, data): IState['hubs'] => HUBS_ENTITY_ADAPTER.updateOne({
             id: data.hubId,
             changes: {
                 hubType: data.hubType,
@@ -59,19 +60,19 @@ export const HUBS_REDUCERS = createReducer(
         },
         state
     )),
-    on(HUBS_ACTIONS.setHasCommunication, (state, data) => HUBS_ENTITY_ADAPTER.updateOne({
+    on(HUBS_ACTIONS.setHasCommunication, (state, data): IState['hubs'] => HUBS_ENTITY_ADAPTER.updateOne({
             id: data.hubId,
             changes: {
                 hasCommunication: data.hasCommunication,
             }
         }, state
     )),
-    on(HUBS_ACTIONS.hubNameSet, (state, data) => HUBS_ENTITY_ADAPTER.updateOne({
+    on(HUBS_ACTIONS.hubNameSet, (state, data): IState['hubs'] => HUBS_ENTITY_ADAPTER.updateOne({
             id: data.hubId,
             changes: {
                 name: data.name,
             }
         }, state
     )),
-    on(HUBS_ACTIONS.forgetHub, (state, { hubId }) => HUBS_ENTITY_ADAPTER.removeOne(hubId, state))
+    on(HUBS_ACTIONS.forgetHub, (state, { hubId }): IState['hubs'] => HUBS_ENTITY_ADAPTER.removeOne(hubId, state))
 );

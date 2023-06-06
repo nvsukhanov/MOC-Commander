@@ -4,7 +4,7 @@ import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_CONFIGURATION_ACTIONS } from '
 import { INITIAL_STATE } from '../initial-state';
 import { IState } from '../i-state';
 
-export const CONTROLLER_INPUT_CAPTURE_REDUCERS = createReducer(
+export const CONTROLLER_INPUT_CAPTURE_REDUCER = createReducer(
     INITIAL_STATE.controllerInputCapture,
     on(CONTROLLER_INPUT_ACTIONS.requestInputCapture,
         CONTROL_SCHEME_CONFIGURATION_ACTIONS.startListening,

@@ -5,7 +5,7 @@ import { CONTROL_SCHEME_ACTIONS, HUB_PORT_TASKS_ACTIONS } from '../actions';
 import { LAST_EXECUTED_TASKS_ENTITY_ADAPTER } from '../entity-adapters';
 import { IState } from '../i-state';
 
-export const HUB_PORT_TASKS_REDUCERS = createReducer(
+export const HUB_PORT_TASKS_REDUCER = createReducer(
     INITIAL_STATE['hubPortTasks'],
     on(HUB_PORT_TASKS_ACTIONS.setQueue, (state, { tasks }): IState['hubPortTasks'] => {
         return {
