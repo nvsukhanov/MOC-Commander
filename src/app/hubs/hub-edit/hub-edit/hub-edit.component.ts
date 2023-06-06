@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { HubEditFormComponent, HubEditFormSaveResult } from '../hub-edit-form';
 import { Store } from '@ngrx/store';
-import { HUB_EDIT_FORM_ACTIVE_SAVES_SELECTORS, HUBS_ACTIONS, HUBS_SELECTORS, ROUTER_SELECTORS } from '../../../store';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { Observable, of, switchMap } from 'rxjs';
 import { NgIf } from '@angular/common';
-import { NotFoundComponent } from '../../../common';
 import { TranslocoModule } from '@ngneat/transloco';
+
+import { NotFoundComponent } from '@app/shared';
+import { HUBS_ACTIONS, HUBS_SELECTORS, HUB_EDIT_FORM_ACTIVE_SAVES_SELECTORS, ROUTER_SELECTORS } from '../../../store';
+import { HubEditFormComponent, HubEditFormSaveResult } from '../hub-edit-form';
 
 @Component({
     standalone: true,

@@ -1,8 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Controller } from '../store';
-import { ControllerPluginFactoryService } from '../plugins';
 import { TranslocoService } from '@ngneat/transloco';
 import { Observable } from 'rxjs';
+
+import { Controller } from '../store';
+import { ControllerPluginFactoryService } from '../plugins';
 
 @Pipe({
     standalone: true,

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NgIf } from '@angular/common';
-import { HubInlineViewComponent } from '../../../../common';
+
+import { HubInlineViewComponent } from '@app/shared';
 import { ControlSchemeViewHubTreeNode } from '../../../../store';
 
 @Component({

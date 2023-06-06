@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
+
 import { INITIAL_STATE } from '../initial-state';
 import { HUBS_ACTIONS } from '../actions';
 

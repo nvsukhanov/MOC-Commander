@@ -1,27 +1,28 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import {
-    AttachedIO,
-    HUB_ATTACHED_IO_SELECTORS,
-    HUB_CONNECTION_SELECTORS,
-    HubConfiguration,
-    HubConnectionState,
-    HubIoOperationMode,
-    HUBS_SELECTORS
-} from '../../../store';
 import { MatSelectModule } from '@angular/material/select';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { combineLatest, EMPTY, map, Observable, of, shareReplay, startWith, Subscription, switchMap } from 'rxjs';
+import { EMPTY, Observable, Subscription, combineLatest, map, of, shareReplay, startWith, switchMap } from 'rxjs';
 import { IOType, MotorServoEndState } from '@nvsukhanov/rxpoweredup';
-import { ControlSchemeBindingInputForm } from '../binding-input';
 import { TranslocoModule } from '@ngneat/transloco';
-import { IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '../../../common';
 import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+
+import { IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '@app/shared';
+import { ControlSchemeBindingInputForm } from '../binding-input';
 import { RenderEditOutputConfigurationDirective } from '../edit-output-configuration';
 import { BindingForm } from '../types';
-import { MatIconModule } from '@angular/material/icon';
+import {
+    AttachedIO,
+    HUBS_SELECTORS,
+    HUB_ATTACHED_IO_SELECTORS,
+    HUB_CONNECTION_SELECTORS,
+    HubConfiguration,
+    HubConnectionState,
+    HubIoOperationMode
+} from '../../../store';
 
 export type LinearOutputConfigurationForm = FormGroup<{
     maxSpeed: FormControl<number>,

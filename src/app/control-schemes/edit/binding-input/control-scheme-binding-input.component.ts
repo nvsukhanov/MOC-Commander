@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { combineLatest, EMPTY, map, NEVER, Observable, startWith, switchMap } from 'rxjs';
+import { EMPTY, NEVER, Observable, combineLatest, map, startWith, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS, controllerInputIdFn, ControllerInputType } from '../../../store';
 import { JsonPipe, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+
+import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS, ControllerInputType, controllerInputIdFn } from '../../../store';
 import { ControllerPluginFactoryService } from '../../../plugins';
 
 export type ControlSchemeBindingInputForm = FormGroup<{

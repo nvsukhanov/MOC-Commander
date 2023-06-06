@@ -1,9 +1,10 @@
-import { IControllerPlugin } from '../i-controller-plugin';
 import { EMPTY, Observable } from 'rxjs';
 import { Memoize } from 'typescript-memoize';
 import { TranslocoService } from '@ngneat/transloco';
-import { createControllerL10nKey, createScopedControllerL10nKey } from '../create-controller-l10n-key';
 import { Injectable } from '@angular/core';
+
+import { createControllerL10nKey, createScopedControllerL10nKey } from '../create-controller-l10n-key';
+import { IControllerPlugin } from '../i-controller-plugin';
 import { KeyboardsSettingsComponent } from './keyboards-settings.component';
 import { KeyboardSettings } from '../../../store';
 

@@ -1,4 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
+
 import { ControllerInput } from '../i-state';
 
 export const CONTROLLER_INPUT_ACTIONS = createActionGroup({

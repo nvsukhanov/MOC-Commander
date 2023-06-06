@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
+
+import { ConsoleLoggingService } from '@app/shared';
 import { ITaskExecutor } from './i-task-executor';
 import { FakeTaskExecutor } from './fake-task-executor';
-import { ConsoleLoggingService } from '../../common';
 
 @Injectable({ providedIn: 'root' })
 export class FakeTaskExecutorFactoryService {

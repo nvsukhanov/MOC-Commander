@@ -4,21 +4,22 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
-import {
-    BLUETOOTH_AVAILABILITY_SELECTORS,
-    CONTROL_SCHEME_SELECTORS,
-    CONTROLLER_INPUT_CAPTURE_SELECTORS,
-    CONTROLLER_SELECTORS,
-    HUB_DISCOVERY_STATE_SELECTORS,
-    HUBS_ACTIONS,
-    HUBS_SELECTORS
-} from '../../store';
 import { Store } from '@ngrx/store';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { EllipsisTitleDirective } from '../../common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
+import { EllipsisTitleDirective } from '@app/shared';
+import {
+    BLUETOOTH_AVAILABILITY_SELECTORS,
+    CONTROLLER_INPUT_CAPTURE_SELECTORS,
+    CONTROLLER_SELECTORS,
+    CONTROL_SCHEME_SELECTORS,
+    HUBS_ACTIONS,
+    HUBS_SELECTORS,
+    HUB_DISCOVERY_STATE_SELECTORS
+} from '../../store';
 import { RoutesBuilderService } from '../../routing';
 
 @Component({

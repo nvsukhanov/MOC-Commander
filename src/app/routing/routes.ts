@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
-import { NotFoundComponent } from '../common';
+
+import { NotFoundComponent } from '@app/shared';
 
 export const ROUTE_PATHS = {
     controllers: 'controllers',

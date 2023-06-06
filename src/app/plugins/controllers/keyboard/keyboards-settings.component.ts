@@ -1,12 +1,13 @@
-import { IControllerSettingsComponent } from '../i-controller-settings-component';
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { KeyboardSettings } from '../../../store';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Subscription } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+
+import { KeyboardSettings } from '../../../store';
+import { IControllerSettingsComponent } from '../i-controller-settings-component';
 
 @Component({
     standalone: true,

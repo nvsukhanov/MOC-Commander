@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Observable } from 'rxjs';
+
 import { ControllerPluginFactoryService } from '../plugins';
 import { Controller, ControllerInputType } from '../store';
-import { Observable } from 'rxjs';
 
 @Pipe({
     standalone: true,

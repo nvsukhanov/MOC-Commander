@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+
 import { HubConnectionState, IState } from '../i-state';
 import { HUBS_ENTITY_ADAPTER } from '../entity-adapters';
 import { HUB_CONNECTION_SELECTORS } from './hub-connections.selectors';

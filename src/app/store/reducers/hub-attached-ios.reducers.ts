@@ -1,6 +1,7 @@
-import { HUB_ATTACHED_IOS_ENTITY_ADAPTER, hubAttachedIosIdFn } from '../entity-adapters';
 import { createReducer, on } from '@ngrx/store';
-import { HUB_ATTACHED_IOS_ACTIONS, HUBS_ACTIONS } from '../actions';
+
+import { HUB_ATTACHED_IOS_ENTITY_ADAPTER, hubAttachedIosIdFn } from '../entity-adapters';
+import { HUBS_ACTIONS, HUB_ATTACHED_IOS_ACTIONS } from '../actions';
 
 export const HUB_ATTACHED_IOS_REDUCERS = createReducer(
     HUB_ATTACHED_IOS_ENTITY_ADAPTER.getInitialState(),

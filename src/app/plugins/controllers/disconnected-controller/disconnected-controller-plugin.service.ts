@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { createControllerL10nKey } from '../create-controller-l10n-key';
-import { IControllerPlugin } from '../i-controller-plugin';
 import { TranslocoService } from '@ngneat/transloco';
 import { Observable } from 'rxjs';
 import { Memoize } from 'typescript-memoize';
+
+import { IControllerPlugin } from '../i-controller-plugin';
+import { createControllerL10nKey } from '../create-controller-l10n-key';
 
 @Injectable()
 export class DisconnectedControllerPluginService implements IControllerPlugin {

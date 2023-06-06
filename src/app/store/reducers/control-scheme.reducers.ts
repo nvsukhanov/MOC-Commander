@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
+
 import { CONTROL_SCHEMES_ENTITY_ADAPTER } from '../entity-adapters';
 import { CONTROL_SCHEME_ACTIONS } from '../actions';
 import { BindingForm } from '../../control-schemes/edit';

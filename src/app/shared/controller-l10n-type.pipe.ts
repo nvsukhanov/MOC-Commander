@@ -1,20 +1,21 @@
 import { Pipe, PipeTransform } from '@angular/core';
+
 import { ControllerType } from '../plugins';
 
 @Pipe({
     standalone: true,
-    name: 'controllerTypeIcon',
+    name: 'controllerL10nType',
     pure: true
 })
-export class ControllerTypeIconPipe implements PipeTransform {
+export class ControllerL10nTypePipe implements PipeTransform {
     public transform(
         controllerType: ControllerType
     ): string {
         switch (controllerType) {
             case ControllerType.Keyboard:
-                return 'keyboard';
+                return 'controller.keyboardControllerType';
             case ControllerType.Gamepad:
-                return 'gamepad';
+                return 'controller.gamepadControllerType';
         }
     }
 }

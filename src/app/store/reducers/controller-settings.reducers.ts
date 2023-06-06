@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
+
 import { INITIAL_STATE } from '../initial-state';
 import { CONTROLLER_SETTINGS_ACTIONS } from '../actions';
 import { CONTROLLER_SETTINGS_ENTITY_ADAPTER } from '../entity-adapters';

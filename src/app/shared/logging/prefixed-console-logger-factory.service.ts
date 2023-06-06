@@ -1,4 +1,5 @@
 import { Inject, Injectable, Optional } from '@angular/core';
+
 import { ILogger } from './i-logger';
 import { PrefixedConsoleLogger } from './prefixed-console-logger';
 import { LOG_LEVEL, LogLevel } from './log-levels';

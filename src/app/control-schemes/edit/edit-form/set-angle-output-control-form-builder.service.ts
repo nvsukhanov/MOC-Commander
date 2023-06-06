@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BindingSetAngleOutputState } from '../../../store';
-import { SetAngleOutputConfigurationForm } from '../binding-output';
 import { FormBuilder } from '@angular/forms';
 import { MOTOR_LIMITS, MotorServoEndState } from '@nvsukhanov/rxpoweredup';
+
+import { BindingSetAngleOutputState } from '../../../store';
+import { SetAngleOutputConfigurationForm } from '../binding-output';
 
 @Injectable({ providedIn: 'root' })
 export class SetAngleOutputControlFormBuilderService {

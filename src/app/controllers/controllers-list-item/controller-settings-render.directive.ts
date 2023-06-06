@@ -1,4 +1,5 @@
 import { ComponentRef, Directive, EventEmitter, Input, Output, Type, ViewContainerRef } from '@angular/core';
+
 import { IControllerSettingsComponent } from '../../plugins';
 import { ControllerSettings } from '../../store';
 

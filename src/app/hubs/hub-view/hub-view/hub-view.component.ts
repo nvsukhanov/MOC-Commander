@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { HUB_ATTACHED_IO_SELECTORS, hubAttachedIosIdFn, HubConfiguration, HUBS_ACTIONS, HUBS_SELECTORS, IOFullInfo, ROUTER_SELECTORS } from '../../../store';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { EMPTY, Observable, switchMap, take } from 'rxjs';
@@ -8,10 +7,12 @@ import { JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { TranslocoModule } from '@ngneat/transloco';
+import { Router } from '@angular/router';
+
+import { NotFoundComponent } from '@app/shared';
 import { HubPropertiesViewComponent } from '../hub-properties-view';
 import { HubIoViewComponent } from '../hub-port-view';
-import { NotFoundComponent } from '../../../common';
-import { Router } from '@angular/router';
+import { HUBS_ACTIONS, HUBS_SELECTORS, HUB_ATTACHED_IO_SELECTORS, HubConfiguration, IOFullInfo, ROUTER_SELECTORS, hubAttachedIosIdFn } from '../../../store';
 import { RoutesBuilderService } from '../../../routing';
 
 @Component({

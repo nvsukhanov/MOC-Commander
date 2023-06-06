@@ -1,6 +1,4 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { IOutputConfigurationRenderer } from '../i-output-configuration-renderer';
-import { ControlSchemeBindingOutputForm } from '../../binding-output';
 import { NgIf } from '@angular/common';
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { MatSliderModule } from '@angular/material/slider';
@@ -10,10 +8,13 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
-import { HUB_ATTACHED_IO_SELECTORS, SERVO_CALIBRATION_ACTIONS } from '../../../../store';
 import { Actions, ofType } from '@ngrx/effects';
-import { combineLatest, Observable, of, startWith, switchMap, takeUntil } from 'rxjs';
+import { Observable, combineLatest, of, startWith, switchMap, takeUntil } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
+
+import { HUB_ATTACHED_IO_SELECTORS, SERVO_CALIBRATION_ACTIONS } from '../../../../store';
+import { ControlSchemeBindingOutputForm } from '../../binding-output';
+import { IOutputConfigurationRenderer } from '../i-output-configuration-renderer';
 
 @Component({
     standalone: true,

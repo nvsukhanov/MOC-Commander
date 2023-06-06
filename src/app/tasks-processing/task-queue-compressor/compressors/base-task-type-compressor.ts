@@ -1,4 +1,4 @@
-import { PortCommandTask, PortCommandTaskType } from '../../../common';
+import { PortCommandTask, PortCommandTaskType } from '@app/shared';
 import { ITaskSpecificQueueCompressor } from '../i-task-specific-queue-compressor';
 
 export class BaseTaskTypeCompressor implements ITaskSpecificQueueCompressor {

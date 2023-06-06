@@ -1,14 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
-import { bufferCount, map, Observable, of, Subscription, switchMap } from 'rxjs';
-import {
-    CONTROL_SCHEME_ACTIONS,
-    CONTROL_SCHEME_SELECTORS,
-    CONTROLLER_INPUT_ACTIONS,
-    ControlScheme,
-    ControlSchemeViewTreeNode,
-    HUB_PORT_TASKS_SELECTORS,
-    ROUTER_SELECTORS,
-} from '../../../store';
+import { Observable, Subscription, bufferCount, map, of, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
@@ -16,10 +7,20 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { ControlSchemeViewIoListComponent } from '../control-scheme-view-io-list';
-import { EllipsisTitleDirective, FeatureToolbarService } from '../../../common';
 import { RouterLink } from '@angular/router';
 import { MatExpansionModule } from '@angular/material/expansion';
+
+import { EllipsisTitleDirective, FeatureToolbarService } from '@app/shared';
+import { ControlSchemeViewIoListComponent } from '../control-scheme-view-io-list';
+import {
+    CONTROLLER_INPUT_ACTIONS,
+    CONTROL_SCHEME_ACTIONS,
+    CONTROL_SCHEME_SELECTORS,
+    ControlScheme,
+    ControlSchemeViewTreeNode,
+    HUB_PORT_TASKS_SELECTORS,
+    ROUTER_SELECTORS,
+} from '../../../store';
 import { RoutesBuilderService } from '../../../routing';
 
 @Component({

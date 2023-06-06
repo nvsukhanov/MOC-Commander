@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HubStorageService } from '../hub-storage.service';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { map, mergeMap, takeUntil, zip } from 'rxjs';
-import { HUB_IO_SUPPORTED_MODES, HUB_PORT_MODE_INFO_ACTIONS } from '../actions';
 import { PortModeInformationName, PortModeInformationSymbol, PortModeInformationType, PortModeName, PortModeSymbol } from '@nvsukhanov/rxpoweredup';
+
+import { HUB_IO_SUPPORTED_MODES, HUB_PORT_MODE_INFO_ACTIONS } from '../actions';
+import { HubStorageService } from '../hub-storage.service';
 import { HUB_ATTACHED_IO_SELECTORS } from '../selectors';
 
 @Injectable()

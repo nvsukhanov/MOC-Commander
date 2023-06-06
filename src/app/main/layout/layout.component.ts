@@ -1,14 +1,15 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CONTROLLERS_ACTIONS, GLOBAL_PROGRESS_BAR_SELECTORS } from '../../store';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { RouterOutlet } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { FeatureToolbarComponent, IScrollContainer, ScreenSizeObserverService, SCROLL_CONTAINER } from '../../common';
 import { Subscription } from 'rxjs';
-import { NavMenuComponent } from '../nav-menu';
 import { CdkScrollable } from '@angular/cdk/overlay';
+
+import { FeatureToolbarComponent, IScrollContainer, SCROLL_CONTAINER, ScreenSizeObserverService } from '@app/shared';
+import { NavMenuComponent } from '../nav-menu';
+import { CONTROLLERS_ACTIONS, GLOBAL_PROGRESS_BAR_SELECTORS } from '../../store';
 
 @Component({
     standalone: true,

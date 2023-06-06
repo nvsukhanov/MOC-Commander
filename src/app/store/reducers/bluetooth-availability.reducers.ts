@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
+
 import { INITIAL_STATE } from '../initial-state';
 import { ACTIONS_BLUETOOTH_AVAILABILITY } from '../actions';
 import { IState } from '../i-state';

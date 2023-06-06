@@ -1,15 +1,15 @@
 import { Inject, Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { catchError, combineLatestWith, filter, from, interval, map, mergeMap, Observable, of, startWith, switchMap, takeUntil, tap } from 'rxjs';
+import { Observable, catchError, combineLatestWith, filter, from, interval, map, mergeMap, of, startWith, switchMap, takeUntil, tap } from 'rxjs';
+import { Action, Store } from '@ngrx/store';
+import { Router } from '@angular/router';
+import { IHub, MessageLoggingMiddleware, connectHub } from '@nvsukhanov/rxpoweredup';
+
+import { LogLevel, NAVIGATOR, PrefixedConsoleLogger } from '@app/shared';
 import { HubStorageService } from '../hub-storage.service';
 import { HUBS_ACTIONS } from '../actions';
-import { LogLevel, NAVIGATOR } from '../../common';
-import { Action, Store } from '@ngrx/store';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../hub-communication-notifier-middleware-factory.service';
-import { Router } from '@angular/router';
 import { HUBS_SELECTORS, ROUTER_SELECTORS } from '../selectors';
-import { connectHub, IHub, MessageLoggingMiddleware } from '@nvsukhanov/rxpoweredup';
-import { PrefixedConsoleLogger } from '../../common/logging/prefixed-console-logger';
 import { RoutesBuilderService } from '../../routing';
 
 @Injectable()

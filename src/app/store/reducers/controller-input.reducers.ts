@@ -1,6 +1,7 @@
-import { INITIAL_STATE } from '../initial-state';
 import { createReducer, on } from '@ngrx/store';
-import { CONTROLLER_INPUT_ACTIONS, CONTROLLERS_ACTIONS } from '../actions';
+
+import { INITIAL_STATE } from '../initial-state';
+import { CONTROLLERS_ACTIONS, CONTROLLER_INPUT_ACTIONS } from '../actions';
 import { CONTROLLER_INPUT_ENTITY_ADAPTER, controllerInputIdFn } from '../entity-adapters';
 
 export const CONTROLLER_INPUT_REDUCERS = createReducer(

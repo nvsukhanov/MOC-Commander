@@ -30,7 +30,12 @@
       "web-bluetooth",
       "jest",
       "node"
-    ]
+    ],
+    "paths": {
+      "@app/shared": [
+        "src/app/shared"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

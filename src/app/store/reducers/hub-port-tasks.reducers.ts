@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
+
 import { INITIAL_STATE } from '../initial-state';
 import { CONTROL_SCHEME_ACTIONS, HUB_PORT_TASKS_ACTIONS } from '../actions';
 import { LAST_EXECUTED_TASKS_ENTITY_ADAPTER } from '../entity-adapters';

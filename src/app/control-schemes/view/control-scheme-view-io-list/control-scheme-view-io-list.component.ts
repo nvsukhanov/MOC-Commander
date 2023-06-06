@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { ControlSchemeNodeTypes, ControlSchemeViewTreeNode } from '../../../store';
 import { JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTreeModule, MatTreeNestedDataSource } from '@angular/material/tree';
@@ -7,10 +6,12 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { LetDirective } from '@ngrx/component';
+import { TranslocoModule } from '@ngneat/transloco';
+
 import { BindingTreeNodeComponent } from './binding-tree-node';
 import { IoTreeNodeComponent } from './io-tree-node';
 import { HubTreeNodeComponent } from './hub-tree-node';
-import { TranslocoModule } from '@ngneat/transloco';
+import { ControlSchemeNodeTypes, ControlSchemeViewTreeNode } from '../../../store';
 
 @Component({
     standalone: true,

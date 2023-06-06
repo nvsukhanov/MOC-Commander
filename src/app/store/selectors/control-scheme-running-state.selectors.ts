@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+
 import { IState } from '../i-state';
 
 const CONTROL_SCHEME_RUNNING_STATE_FEATURE_SELECTOR = createFeatureSelector<IState['controlSchemeRunningState']>('controlSchemeRunningState');

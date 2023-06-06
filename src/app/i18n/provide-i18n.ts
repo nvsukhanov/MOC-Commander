@@ -1,8 +1,9 @@
 import { EnvironmentProviders, importProvidersFrom, isDevMode, makeEnvironmentProviders } from '@angular/core';
-import { TRANSLOCO_CONFIG, TRANSLOCO_LOADER, translocoConfig, TranslocoModule } from '@ngneat/transloco';
-import { I18nLoaderService } from './i18n-loader.service';
+import { TRANSLOCO_CONFIG, TRANSLOCO_LOADER, TranslocoModule, translocoConfig } from '@ngneat/transloco';
 import { provideHttpClient } from '@angular/common/http';
 import { TranslocoMessageFormatModule } from '@ngneat/transloco-messageformat';
+
+import { I18nLoaderService } from './i18n-loader.service';
 
 export function provideI18n(): EnvironmentProviders {
     return makeEnvironmentProviders([

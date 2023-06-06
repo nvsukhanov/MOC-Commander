@@ -2,9 +2,10 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IOType } from '@nvsukhanov/rxpoweredup';
 import { TranslocoModule } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 import { EllipsisTitleDirective } from '../ellipsis-title.directive';
 import { IoTypeToL10nKeyPipe } from '../io-type-to-l10n-key.pipe';
-import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
     standalone: true,
