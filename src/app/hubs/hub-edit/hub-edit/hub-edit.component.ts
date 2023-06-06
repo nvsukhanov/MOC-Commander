@@ -5,7 +5,7 @@ import { Observable, of, switchMap } from 'rxjs';
 import { NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 
-import { NotFoundComponent } from '../../../common';
+import { NotFoundComponent } from '@app/shared';
 import { HUBS_ACTIONS, HUBS_SELECTORS, HUB_EDIT_FORM_ACTIVE_SAVES_SELECTORS, ROUTER_SELECTORS } from '../../../store';
 import { HubEditFormComponent, HubEditFormSaveResult } from '../hub-edit-form';
 

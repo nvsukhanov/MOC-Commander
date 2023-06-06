@@ -10,8 +10,8 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 
+import { IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '@app/shared';
 import { ControlSchemeBindingInputForm } from '../binding-input';
-import { IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '../../../common';
 import { RenderEditOutputConfigurationDirective } from '../edit-output-configuration';
 import { BindingForm } from '../types';
 import {

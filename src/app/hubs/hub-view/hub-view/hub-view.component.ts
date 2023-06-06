@@ -9,9 +9,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Router } from '@angular/router';
 
+import { NotFoundComponent } from '@app/shared';
 import { HubPropertiesViewComponent } from '../hub-properties-view';
 import { HubIoViewComponent } from '../hub-port-view';
-import { NotFoundComponent } from '../../../common';
 import { HUBS_ACTIONS, HUBS_SELECTORS, HUB_ATTACHED_IO_SELECTORS, HubConfiguration, IOFullInfo, ROUTER_SELECTORS, hubAttachedIosIdFn } from '../../../store';
 import { RoutesBuilderService } from '../../../routing';
 

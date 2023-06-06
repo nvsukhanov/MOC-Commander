@@ -7,7 +7,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Subscription } from 'rxjs';
 import { CdkScrollable } from '@angular/cdk/overlay';
 
-import { FeatureToolbarComponent, IScrollContainer, SCROLL_CONTAINER, ScreenSizeObserverService } from '../../common';
+import { FeatureToolbarComponent, IScrollContainer, SCROLL_CONTAINER, ScreenSizeObserverService } from '@app/shared';
 import { NavMenuComponent } from '../nav-menu';
 import { CONTROLLERS_ACTIONS, GLOBAL_PROGRESS_BAR_SELECTORS } from '../../store';
 

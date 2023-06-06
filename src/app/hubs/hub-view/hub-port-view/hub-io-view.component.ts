@@ -3,8 +3,8 @@ import { MatCardModule } from '@angular/material/card';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 
+import { IoTypeToL10nKeyPipe } from '@app/shared';
 import { IOFullInfo, PortModeInfo, hubPortModeInfoIdFn } from '../../../store';
-import { IoTypeToL10nKeyPipe } from '../../../common';
 
 @Component({
     standalone: true,

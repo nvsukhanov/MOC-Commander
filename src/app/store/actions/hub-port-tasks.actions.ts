@@ -1,6 +1,6 @@
 import { createActionGroup, props } from '@ngrx/store';
 
-import { PortCommandTask } from '../../common';
+import { PortCommandTask } from '@app/shared';
 
 export const HUB_PORT_TASKS_ACTIONS = createActionGroup({
     source: 'Hub Port Tasks',

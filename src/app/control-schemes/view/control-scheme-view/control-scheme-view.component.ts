@@ -10,8 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { MatExpansionModule } from '@angular/material/expansion';
 
+import { EllipsisTitleDirective, FeatureToolbarService } from '@app/shared';
 import { ControlSchemeViewIoListComponent } from '../control-scheme-view-io-list';
-import { EllipsisTitleDirective, FeatureToolbarService } from '../../../common';
 import {
     CONTROLLER_INPUT_ACTIONS,
     CONTROL_SCHEME_ACTIONS,

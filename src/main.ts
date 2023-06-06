@@ -4,9 +4,9 @@ import { importProvidersFrom, isDevMode } from '@angular/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DialogModule } from '@angular/cdk/dialog';
 
-import { LayoutComponent } from './app/main/layout';
+import { LOG_LEVEL, LogLevel } from '@app/shared';
+import { LayoutComponent } from './app/main';
 import { provideApplicationStore } from './app/store';
-import { LOG_LEVEL, LogLevel } from './app/common/logging';
 import { provideI18n } from './app/i18n';
 import { provideRouting } from './app/routing';
 import { provideControllersPlugins } from './app/plugins';

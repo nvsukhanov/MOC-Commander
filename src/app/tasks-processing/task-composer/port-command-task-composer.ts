@@ -1,6 +1,6 @@
+import { PortCommandTask } from '@app/shared';
 import { IPortCommandTaskComposer } from './i-port-command-task-composer';
 import { AttachedIOState, ControlSchemeBinding } from '../../store';
-import { PortCommandTask } from '../../common';
 
 export abstract class PortCommandTaskComposer implements IPortCommandTaskComposer {
     private next?: PortCommandTaskComposer;

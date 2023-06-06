@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 
-import { HubInlineViewComponent } from '../../common';
+import { HubInlineViewComponent } from '@app/shared';
 import { HUBS_ACTIONS, HUBS_SELECTORS } from '../../store';
 
 @Component({

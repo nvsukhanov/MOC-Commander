@@ -2,6 +2,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { HubType, IOType } from '@nvsukhanov/rxpoweredup';
 import { Dictionary } from '@ngrx/entity';
 
+import { PortCommandTask } from '@app/shared';
 import {
     AttachedIO,
     ControlScheme,
@@ -20,7 +21,6 @@ import { HUB_ATTACHED_IO_SELECTORS, getHubIOOperationModes } from './hub-attache
 import { HUB_IO_SUPPORTED_MODES_SELECTORS } from './hub-io-supported-modes.selectors';
 import { HUB_PORT_MODE_INFO_SELECTORS } from './hub-port-mode-info.selectors';
 import { CONTROL_SCHEME_RUNNING_STATE_SELECTORS } from './control-scheme-running-state.selectors';
-import { PortCommandTask } from '../../common';
 import { ROUTER_SELECTORS } from './router.selectors';
 import { CONTROLLER_SELECTORS } from './controllers.selectors';
 import { CONTROLLER_INPUT_SELECTORS } from './controller-input.selectors';

@@ -6,6 +6,7 @@ import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { localStorageSync } from 'ngrx-store-localstorage';
 import { Router } from '@angular/router';
 
+import { NAVIGATOR } from '@app/shared';
 import { IState } from './i-state';
 import {
     BLUETOOTH_AVAILABILITY_REDUCERS,
@@ -42,7 +43,6 @@ import {
     ServoCalibrationEffects,
 } from './effects';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
-import { NAVIGATOR } from '../common';
 import { HubStorageService } from './hub-storage.service';
 import { HUBS_ACTIONS } from './actions';
 import { RoutesBuilderService } from '../routing';

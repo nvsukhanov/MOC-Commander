@@ -5,12 +5,11 @@ import { Action, Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { IHub, MessageLoggingMiddleware, connectHub } from '@nvsukhanov/rxpoweredup';
 
+import { LogLevel, NAVIGATOR, PrefixedConsoleLogger } from '@app/shared';
 import { HubStorageService } from '../hub-storage.service';
 import { HUBS_ACTIONS } from '../actions';
-import { LogLevel, NAVIGATOR } from '../../common';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../hub-communication-notifier-middleware-factory.service';
 import { HUBS_SELECTORS, ROUTER_SELECTORS } from '../selectors';
-import { PrefixedConsoleLogger } from '../../common/logging/prefixed-console-logger';
 import { RoutesBuilderService } from '../../routing';
 
 @Injectable()

@@ -1,5 +1,5 @@
+import { PortCommandTask, PortCommandTaskType } from '@app/shared';
 import { TaskSuppressor } from '../task-suppressor';
-import { PortCommandTask, PortCommandTaskType } from '../../../common';
 
 export class ServoTaskSuppressor extends TaskSuppressor {
     private readonly servoThresholdDegrees = 10;

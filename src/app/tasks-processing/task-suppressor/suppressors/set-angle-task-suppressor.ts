@@ -1,4 +1,4 @@
-import { PortCommandTask, PortCommandTaskType } from '../../../common';
+import { PortCommandTask, PortCommandTaskType } from '@app/shared';
 import { TaskSuppressor } from '../task-suppressor';
 
 export class SetAngleTaskSuppressor extends TaskSuppressor {

@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import { EllipsisTitleDirective } from '../../common';
+import { EllipsisTitleDirective } from '@app/shared';
 import {
     BLUETOOTH_AVAILABILITY_SELECTORS,
     CONTROLLER_INPUT_CAPTURE_SELECTORS,

@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { Dictionary } from '@ngrx/entity';
 import { PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 
+import { PortCommandTask } from '@app/shared';
 import { CONTROL_SCHEME_SELECTORS, HUB_ATTACHED_IO_STATE_SELECTORS, HUB_PORT_TASKS_SELECTORS } from '../selectors';
 import { CONTROL_SCHEME_ACTIONS, HUB_PORT_TASKS_ACTIONS } from '../actions';
 import {
@@ -18,10 +19,8 @@ import {
     TaskSuppressorFactory
 } from '../../tasks-processing';
 import { hubAttachedIosIdFn, lastExecutedTaskIdFn } from '../entity-adapters';
-import { PortCommandTask } from '../../common';
 import { AttachedIOState, ControlSchemeBinding } from '../i-state';
 import { HubStorageService } from '../hub-storage.service';
-
 
 @Injectable()
 export class HubPortTasksEffects {

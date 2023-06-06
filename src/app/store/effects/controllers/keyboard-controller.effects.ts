@@ -3,7 +3,7 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { NEVER, Observable, filter, fromEvent, map, mergeMap, mergeWith, switchMap, take } from 'rxjs';
 
-import { WINDOW } from '../../../common';
+import { WINDOW } from '@app/shared';
 import { CONTROLLERS_ACTIONS, CONTROLLER_INPUT_ACTIONS } from '../../actions';
 import { CONTROLLER_INPUT_CAPTURE_SELECTORS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS, CONTROLLER_SETTINGS_SELECTORS } from '../../selectors';
 import { KeyboardSettings } from '../../i-state';

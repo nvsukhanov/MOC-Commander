@@ -5,11 +5,11 @@ import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { Action, Store } from '@ngrx/store';
 import { MOTOR_LIMITS, MotorServoEndState, PortModeName } from '@nvsukhanov/rxpoweredup';
 
+import { transformRelativeDegToAbsoluteDeg } from '@app/shared';
 import { ServoCalibrationDialogComponent } from '../../control-schemes/servo-calibration-dialog';
 import { HubStorageService } from '../hub-storage.service';
 import { SERVO_CALIBRATION_ACTIONS } from '../actions';
 import { HUB_ATTACHED_IO_SELECTORS } from '../selectors';
-import { transformRelativeDegToAbsoluteDeg } from '../../common';
 
 @Injectable()
 export class ServoCalibrationEffects {

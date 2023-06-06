@@ -3,9 +3,9 @@ import { Action, Store } from '@ngrx/store';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { MonoTypeOperatorFunction, NEVER, Observable, filter, from, fromEvent, interval, map, merge, share, switchMap } from 'rxjs';
 
+import { WINDOW } from '@app/shared';
 import { CONTROLLERS_ACTIONS, CONTROLLER_INPUT_ACTIONS } from '../../actions';
 import { CONTROLLER_INPUT_CAPTURE_SELECTORS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS } from '../../selectors';
-import { WINDOW } from '../../../common';
 import { controllerIdFn, controllerInputIdFn } from '../../entity-adapters';
 import { ControllerPluginFactoryService, ControllerType } from '../../../plugins';
 import { ControllerInputType } from '../../controller-input-type';

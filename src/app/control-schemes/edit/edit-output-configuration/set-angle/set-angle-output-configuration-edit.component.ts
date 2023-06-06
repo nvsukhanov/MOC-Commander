@@ -9,7 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 
-import { MotorServoEndStateL10nKeyPipe } from '../../../../common';
+import { MotorServoEndStateL10nKeyPipe } from '@app/shared';
 import { ControlSchemeBindingOutputForm, SetAngleOutputConfigurationForm } from '../../binding-output';
 import { IOutputConfigurationRenderer } from '../i-output-configuration-renderer';
 

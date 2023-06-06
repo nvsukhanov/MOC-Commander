@@ -2,8 +2,8 @@ import { HubType, IOType, MotorServoEndState, PortModeName, PortModeSymbol } fro
 import { EntityState } from '@ngrx/entity';
 import { RouterState } from '@ngrx/router-store';
 
+import { PortCommandTask } from '@app/shared';
 import { HubIoOperationMode } from './hub-io-operation-mode';
-import { PortCommandTask } from '../common';
 import { ControllerType } from '../plugins';
 import { ControllerInputType } from './controller-input-type';
 

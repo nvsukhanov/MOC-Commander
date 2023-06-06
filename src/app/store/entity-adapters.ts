@@ -2,6 +2,7 @@
 import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { IOType } from '@nvsukhanov/rxpoweredup';
 
+import { PortCommandTask } from '@app/shared';
 import {
     AttachedIO,
     AttachedIOState,
@@ -14,7 +15,6 @@ import {
     HubIoSupportedModes,
     PortModeInfo
 } from './i-state';
-import { PortCommandTask } from '../common';
 import { ControllerType } from '../plugins';
 import { ControllerInputType } from './controller-input-type';
 

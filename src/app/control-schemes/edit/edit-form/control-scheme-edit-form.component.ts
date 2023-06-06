@@ -26,9 +26,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 
+import { FeatureToolbarService, IScrollContainer, SCROLL_CONTAINER, ScreenSizeObserverService, WINDOW } from '@app/shared';
 import { ControlSchemeBindingInputComponent } from '../binding-input';
 import { ControlSchemeBindingOutputComponent } from '../binding-output';
-import { FeatureToolbarService, IScrollContainer, SCROLL_CONTAINER, ScreenSizeObserverService, WINDOW } from '../../../common'; // TODO: create alias for this
 import { ControlSchemeFormFactoryService } from './control-scheme-form-factory.service';
 import { EditSchemeForm } from '../types';
 import { ControlSchemeBindingConfigurationComponent } from '../binding-config';

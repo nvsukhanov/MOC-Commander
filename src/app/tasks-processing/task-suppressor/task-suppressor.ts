@@ -1,5 +1,5 @@
+import { PortCommandTask } from '@app/shared';
 import { ITaskSuppressor } from './i-task-suppressor';
-import { PortCommandTask } from '../../common';
 
 // Suppressors are used to filter out tasks that should not be sent to the hub.
 // i.g. if the task equals to the last task in the queue, then it is not needed.
