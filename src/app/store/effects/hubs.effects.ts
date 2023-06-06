@@ -128,8 +128,8 @@ export class HubsEffects {
     }
 
     private hubDiscovery$(): Observable<Action> {
-        const incomingLoggerMiddleware = new MessageLoggingMiddleware(this.prefixedConsoleLoggerFactory.create('<'), 'all'); // TODO: replace w/ factory
-        const outgoingLoggerMiddleware = new MessageLoggingMiddleware(this.prefixedConsoleLoggerFactory.create('>'), 'all'); // TODO: replace w/ factory
+        const incomingLoggerMiddleware = new MessageLoggingMiddleware(this.prefixedConsoleLoggerFactory.create('<'), 'all');
+        const outgoingLoggerMiddleware = new MessageLoggingMiddleware(this.prefixedConsoleLoggerFactory.create('>'), 'all');
         const communicationNotifierMiddleware = this.communicationNotifierMiddlewareFactory.create();
 
         return connectHub(
