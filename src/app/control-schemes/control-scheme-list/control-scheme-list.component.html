@@ -6,7 +6,7 @@
             <mat-card class="control-scheme-card">
                 <app-control-scheme-list-item [name]="scheme.name"
                                               [schemeId]="scheme.id"
-                                              (delete)="onDelete(scheme.id)"
+                                              (delete)="onDelete(scheme.id, scheme.name)"
                 ></app-control-scheme-list-item>
             </mat-card>
         </li>
