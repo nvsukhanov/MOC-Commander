@@ -9,11 +9,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 
-import { FeatureToolbarService } from '@app/shared';
+import { ConfirmDialogService , FeatureToolbarService } from '@app/shared';
 import { RoutesBuilderService } from '../../routing';
 import { ControlSchemeListItemComponent } from '../control-scheme-list-item';
 import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS, CONTROL_SCHEME_SELECTORS, ControlScheme } from '../../store';
-import { ConfirmDialogService } from '../../shared/confirm-dialog';
+
 
 @Component({
     standalone: true,
