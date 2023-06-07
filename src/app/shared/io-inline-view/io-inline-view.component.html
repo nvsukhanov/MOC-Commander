@@ -11,9 +11,12 @@
     {{ ioType | ioTypeToL10nKey | transloco }}
 </div>
 
-<mat-error *ngIf="!isConnected"
-           class="io-is-not-connected-notification"
-           appEllipsisTitle
->
-    {{ 'io.ioIsNotConnectedInlineNotification' | transloco }}
-</mat-error>
+<ng-container *ngIf="!isConnected">
+    <mat-icon color="warn"
+              class="io-is-not-connected-notification"
+              [fontIcon]="'link_off'"
+              [title]="'io.ioIsNotConnectedInlineNotification' | transloco"
+    ></mat-icon>
+
+    <span class="cdk-visually-hidden">{{ 'io.ioIsNotConnectedInlineNotification' | transloco }}</span>
+</ng-container>

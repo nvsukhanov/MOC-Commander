@@ -17,18 +17,20 @@
     </ng-template>
 
     <div class="controller-input-name binding-info-item"
+         *ngIf="binding.controller"
          appEllipsisTitle
     >
-        <ng-container *ngIf="binding.controller; else noControllerInputName">
-            {{ binding.inputId | controllerL10nInputName: binding.inputType : binding.controller | ngrxPush }}
-        </ng-container>
-
-        <ng-template #noControllerInputName>
-            <mat-error class="controller__disconnected-notification binding-info-item">
-                {{ 'controller.isNotConnectedInlineNotification' | transloco }}
-            </mat-error>
-        </ng-template>
+        {{ binding.inputId | controllerL10nInputName: binding.inputType : binding.controller | ngrxPush }}
     </div>
+
+    <ng-container *ngIf="!binding.controller">
+        <mat-icon color="warn"
+                  class="controller__disconnected-notification binding-info-item"
+                  [fontIcon]="'link_off'"
+                  [title]="'controller.isNotConnectedInlineNotification' | transloco"
+        ></mat-icon>
+        <span class="cdk-visually-hidden">{{ 'controller.isNotConnectedInlineNotification' | transloco }}</span>
+    </ng-container>
 
     <mat-icon class="is-active-indicator binding-info-item"
               [class.is-active-indicator_hidden]="!binding.isActive"

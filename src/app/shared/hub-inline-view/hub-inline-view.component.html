@@ -3,12 +3,15 @@
     {{ name }}
 </div>
 
-<mat-error *ngIf="!isConnected"
-           class="hub-is-not-connected-notification"
-           appEllipsisTitle
->
-    {{ 'hub.notConnected' | transloco }}
-</mat-error>
+<ng-container *ngIf="!isConnected">
+    <mat-icon color="warn"
+              class="hub-is-not-connected-notification"
+              [fontIcon]="'link_off'"
+              [title]="'hub.notConnected' | transloco"
+    ></mat-icon>
+
+    <span class="cdk-visually-hidden">{{ 'hub.notConnected' | transloco }}</span>
+</ng-container>
 
 <span class="spacer"></span>
 

@@ -3,9 +3,11 @@ import { IOType } from '@nvsukhanov/rxpoweredup';
 import { TranslocoModule } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 
 import { EllipsisTitleDirective } from '../ellipsis-title.directive';
 import { IoTypeToL10nKeyPipe } from '../io-type-to-l10n-key.pipe';
+import { HubConnectionState } from '../../store';
 
 @Component({
     standalone: true,
@@ -17,7 +19,8 @@ import { IoTypeToL10nKeyPipe } from '../io-type-to-l10n-key.pipe';
         NgIf,
         IoTypeToL10nKeyPipe,
         EllipsisTitleDirective,
-        MatFormFieldModule
+        MatFormFieldModule,
+        MatIconModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -27,4 +30,6 @@ export class IoInlineViewComponent {
     @Input() public ioType: IOType | null = null;
 
     @Input() public isConnected: boolean | null = null;
+
+    protected readonly HubConnectionState = HubConnectionState;
 }
