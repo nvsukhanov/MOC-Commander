@@ -4,7 +4,7 @@ import { switchMap, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';
 
-import { HUBS_ACTIONS, SERVO_CALIBRATION_ACTIONS } from '../actions';
+import { CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS, SERVO_CALIBRATION_ACTIONS } from '../actions';
 
 @Injectable()
 export class NotificationsEffects {
@@ -35,6 +35,22 @@ export class NotificationsEffects {
         return this.actions$.pipe(
             ofType(SERVO_CALIBRATION_ACTIONS.calibrationError),
             switchMap(() => this.translocoService.selectTranslate('controlScheme.servoCalibrationError')),
+            tap((message) => this.showMessage(message))
+        );
+    }, { dispatch: false });
+
+    public readonly controlSchemeInputRebindSuccess$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(CONTROL_SCHEME_ACTIONS.inputRebindSuccess),
+            switchMap(() => this.translocoService.selectTranslate('controlScheme.bindToAnotherInputSuccess')),
+            tap((message) => this.showMessage(message))
+        );
+    }, { dispatch: false });
+
+    public readonly controlSchemeInputRebindTypeMismatch$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(CONTROL_SCHEME_ACTIONS.inputRebindTypeMismatch),
+            switchMap(() => this.translocoService.selectTranslate('controlScheme.bindToAnotherInputTypeMismatchError')),
             tap((message) => this.showMessage(message))
         );
     }, { dispatch: false });

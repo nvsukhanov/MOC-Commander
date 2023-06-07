@@ -12,7 +12,9 @@
     <mat-card-content class="binding-details"
                       [class.binding-details_small-screen]="isSmallScreen"
     >
-        <app-control-scheme-binding-input [inputFormGroup]="binding.controls.input"></app-control-scheme-binding-input>
+        <app-control-scheme-binding-input [inputFormGroup]="binding.controls.input"
+                                          (rebind)="rebindInput(binding)"
+        ></app-control-scheme-binding-input>
         <mat-divider *ngIf="!isSmallScreen"
                      [vertical]="true"
         ></mat-divider>

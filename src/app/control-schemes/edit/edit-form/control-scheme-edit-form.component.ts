@@ -30,16 +30,19 @@ import { FeatureToolbarService, IScrollContainer, SCROLL_CONTAINER, ScreenSizeOb
 import { ControlSchemeBindingInputComponent } from '../binding-input';
 import { ControlSchemeBindingOutputComponent } from '../binding-output';
 import { ControlSchemeFormFactoryService } from './control-scheme-form-factory.service';
-import { EditSchemeForm } from '../types';
+import { BindingForm, EditSchemeForm } from '../types';
 import { ControlSchemeBindingConfigurationComponent } from '../binding-config';
 import {
     CONTROLLERS_ACTIONS,
     CONTROLLER_INPUT_SELECTORS,
+    CONTROL_SCHEME_ACTIONS,
     CONTROL_SCHEME_CONFIGURATION_ACTIONS,
     CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS,
     ControlScheme,
     ControllerInput,
-    HUB_ATTACHED_IO_SELECTORS
+    ControllerInputType,
+    HUB_ATTACHED_IO_SELECTORS,
+    HUB_IO_CONTROL_METHODS
 } from '../../../store';
 
 export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
@@ -96,7 +99,7 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         private readonly actions: Actions,
         private readonly featureToolbarService: FeatureToolbarService,
         @Inject(SCROLL_CONTAINER) private readonly scrollContainer: IScrollContainer,
-        private readonly translocoService: TranslocoService
+        private readonly translocoService: TranslocoService,
     ) {
     }
 
@@ -189,6 +192,36 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
                 this.cdRef.detectChanges();
                 this.scrollContainer.scrollToBottom();
             }
+        });
+    }
+
+    public rebindInput(
+        binding: BindingForm
+    ): void {
+        const ioOperationMode = binding.controls.output.controls.operationMode.value;
+        const applicableInputTypes = new Set(Object.keys(HUB_IO_CONTROL_METHODS).filter((inputType) => {
+            return HUB_IO_CONTROL_METHODS[inputType as ControllerInputType][ioOperationMode] !== undefined;
+        }));
+
+        this.startInputCapture();
+        this.store.select(CONTROLLER_INPUT_SELECTORS.selectFirst).pipe(
+            takeUntil(this.onDestroy$),
+            takeUntil(this.actions.pipe(ofType(CONTROL_SCHEME_CONFIGURATION_ACTIONS.stopListening))),
+            filter((input): input is ControllerInput => !!input),
+            take(1),
+            finalize(() => this.stopInputCapture())
+        ).subscribe((input) => {
+            if (!applicableInputTypes.has(input.inputType)) {
+                this.store.dispatch(CONTROL_SCHEME_ACTIONS.inputRebindTypeMismatch());
+                return;
+            }
+            binding.controls.input.patchValue({
+                controllerId: input.controllerId,
+                inputId: input.inputId,
+                inputType: input.inputType
+            });
+            this.store.dispatch(CONTROL_SCHEME_ACTIONS.inputRebindSuccess());
+            this.cdRef.detectChanges();
         });
     }
 

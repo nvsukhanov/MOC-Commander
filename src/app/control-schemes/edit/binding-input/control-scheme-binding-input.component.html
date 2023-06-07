@@ -18,3 +18,11 @@
         {{ axisStateL10nKey$ | ngrxPush | transloco: (inputValue$ | ngrxPush) }}
     </p>
 </ng-container>
+
+<p>
+    <button mat-raised-button
+            (click)="onRebind()"
+    >
+        {{ 'controlScheme.bindToAnotherInputButtonTitle' | transloco }}
+    </button>
+</p>
