@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { EMPTY, NEVER, Observable, combineLatest, map, startWith, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { JsonPipe, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
@@ -7,6 +7,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import { MatButtonModule } from '@angular/material/button';
 
 import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS, ControllerInputType, controllerInputIdFn } from '../../../store';
 import { ControllerPluginFactoryService } from '../../../plugins';
@@ -31,11 +32,14 @@ export type ControlSchemeBindingInputForm = FormGroup<{
         TranslocoModule,
         MatCardModule,
         MatListModule,
-        NgIf
+        NgIf,
+        MatButtonModule,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeBindingInputComponent implements OnInit, OnDestroy {
+    @Output() public readonly rebind = new EventEmitter<void>();
+
     public readonly inputTypes = ControllerInputType;
 
     private _controllerNameL10nKey$: Observable<string> = NEVER;
@@ -49,6 +53,8 @@ export class ControlSchemeBindingInputComponent implements OnInit, OnDestroy {
     private _inputType$: Observable<ControllerInputType> = NEVER;
 
     private _inputValue$: Observable<{ value: number }> = NEVER;
+
+    private isCapturingInput = false;
 
     constructor(
         private readonly store: Store,
@@ -147,9 +153,17 @@ export class ControlSchemeBindingInputComponent implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         this.store.dispatch(CONTROLLER_INPUT_ACTIONS.requestInputCapture());
+        this.isCapturingInput = true;
     }
 
     public ngOnDestroy(): void {
-        this.store.dispatch(CONTROLLER_INPUT_ACTIONS.releaseInputCapture());
+        if (this.isCapturingInput) {
+            this.store.dispatch(CONTROLLER_INPUT_ACTIONS.releaseInputCapture());
+        }
+        this.isCapturingInput = false;
+    }
+
+    public onRebind(): void {
+        this.rebind.emit();
     }
 }

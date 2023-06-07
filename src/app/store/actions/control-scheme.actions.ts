@@ -10,6 +10,8 @@ export const CONTROL_SCHEME_ACTIONS = createActionGroup({
         'delete': props<{ id: string }>(),
         'run scheme': props<{ schemeId: string }>(),
         'mark scheme as running': props<{ schemeId: string }>(),
-        'stop running': emptyProps()
+        'stop running': emptyProps(),
+        'input rebind success': emptyProps(),
+        'input rebind type mismatch': emptyProps(),
     }
 });
