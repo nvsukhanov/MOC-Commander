@@ -55,6 +55,14 @@ export class NotificationsEffects {
         );
     }, { dispatch: false });
 
+    public readonly noIOForInputFound$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(CONTROL_SCHEME_ACTIONS.noIOForInputFound),
+            switchMap(() => this.translocoService.selectTranslate('controlScheme.noMatchingIOForInputFound')),
+            tap((message) => this.showMessage(message))
+        );
+    }, { dispatch: false });
+
     constructor(
         private readonly actions$: Actions,
         private readonly snackBar: MatSnackBar,
