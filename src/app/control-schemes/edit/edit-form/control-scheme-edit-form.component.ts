@@ -177,7 +177,8 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
             next: ({ input, ios }) => {
                 const io = ios[0];
                 if (!io) {
-                    return; // TODO: notify on no matching IO
+                    this.store.dispatch(CONTROL_SCHEME_ACTIONS.noIOForInputFound());
+                    return;
                 }
                 const binging = this.controlSchemeFormFactoryService.createBindingForm(
                     this.window.crypto.randomUUID(),

@@ -64,6 +64,7 @@
     "cancelAddBinding": "Cancel",
     "createBindingWaitingForInputTitle": "Waiting for input",
     "createBindingWaitingForInputContent": "Move the controller's stick or press a button to create a binding",
+    "noMatchingIOForInputFound": "There are no IOs that can be controlled by this input",
     "view": "View",
     "edit": "Edit",
     "run": "Start",
