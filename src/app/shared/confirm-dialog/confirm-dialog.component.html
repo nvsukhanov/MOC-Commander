@@ -1,0 +1,30 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            {{ title$ | ngrxPush }}
+        </mat-card-title>
+    </mat-card-header>
+    <ng-container *ngrxLet="content$ as content">
+        <mat-card-content *ngIf="content"
+                          class="content"
+        >
+            {{ content }}
+        </mat-card-content>
+
+    </ng-container>
+    <mat-card-actions [align]="'end'">
+        <button mat-raised-button
+                class="confirmation-button"
+                [color]="'warn'"
+                (click)="onConfirm()"
+        >
+            {{ confirmTitle$ | ngrxPush }}
+        </button>
+        <button mat-button
+                class="confirmation-button"
+                (click)="onCancel()"
+        >
+            {{ cancelTitle$ | ngrxPush }}
+        </button>
+    </mat-card-actions>
+</mat-card>
