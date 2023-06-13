@@ -48,6 +48,7 @@ export type IOFullInfo = {
     softwareRevision: string;
     portInputModes: PortModeInfo[];
     portOutputModes: PortModeInfo[];
+    synchronizable: boolean;
 }
 
 export const HUB_ATTACHED_IO_SELECTORS = {
@@ -83,7 +84,8 @@ export const HUB_ATTACHED_IO_SELECTORS = {
                     hardwareRevision: io.hardwareRevision,
                     softwareRevision: io.softwareRevision,
                     portInputModes,
-                    portOutputModes
+                    portOutputModes,
+                    synchronizable: supportedModes?.synchronizable ?? false
                 };
             });
         }

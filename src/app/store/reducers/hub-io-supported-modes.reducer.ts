@@ -13,5 +13,6 @@ export const HUB_IO_OUTPUT_MODES_REDUCER = createReducer(
         ioType: data.ioType,
         portInputModes: data.portInputModes,
         portOutputModes: data.portOutputModes,
+        synchronizable: data.synchronizable
     }, state))
 );

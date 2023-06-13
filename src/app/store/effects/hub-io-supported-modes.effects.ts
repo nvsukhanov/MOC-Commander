@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { filter, map, mergeMap, takeUntil } from 'rxjs';
+import { PortModeInboundMessage } from '@nvsukhanov/rxpoweredup';
 
 import { HUB_ATTACHED_IOS_ACTIONS, HUB_IO_SUPPORTED_MODES } from '../actions';
 import { HUB_IO_SUPPORTED_MODES_SELECTORS } from '../selectors';
@@ -21,14 +22,15 @@ export class HubIOSupportedModesEffects {
             mergeMap(([ action ]) => this.hubStorage.get(action.hubId).ports.getPortModes(action.portId).pipe(
                 takeUntil(this.hubStorage.get(action.hubId).disconnected),
                 takeUntil(this.hubStorage.get(action.hubId).ports.onIoDetach(action.portId)),
-                map((modesData) => ({ action, modesData })),
+                map((modesData: PortModeInboundMessage) => ({ action, modesData })),
             )),
             map(({ action, modesData }) => HUB_IO_SUPPORTED_MODES.portModesReceived({
                 hardwareRevision: action.hardwareRevision,
                 softwareRevision: action.softwareRevision,
                 ioType: action.ioType,
                 portInputModes: modesData.inputModes,
-                portOutputModes: modesData.outputModes
+                portOutputModes: modesData.outputModes,
+                synchronizable: modesData.capabilities.logicalSynchronizable
             }))
         );
     });

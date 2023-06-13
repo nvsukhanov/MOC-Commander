@@ -2,6 +2,9 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { IoTypeToL10nKeyPipe } from '@app/shared';
 import { IOFullInfo, PortModeInfo, hubPortModeInfoIdFn } from '../../../store';
@@ -17,6 +20,9 @@ import { IOFullInfo, PortModeInfo, hubPortModeInfoIdFn } from '../../../store';
         TranslocoModule,
         IoTypeToL10nKeyPipe,
         NgForOf,
+        MatIconModule,
+        MatButtonModule,
+        MatExpansionModule,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

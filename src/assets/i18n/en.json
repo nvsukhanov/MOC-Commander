@@ -131,8 +131,8 @@
     "versionTitle": "Version"
   },
   "io": {
-    "hardwareRevision": "HW Rev. {hardwareRevision}",
-    "softwareRevision": "SW Rev. {softwareRevision}",
+    "hardwareRevision": "Hardware Revision",
+    "softwareRevision": "Software Revision",
     "ioInputCapabilities": "Input Capabilities",
     "ioOutputCapabilities": "Output Capabilities",
     "ioCapabilitiesEmpty": "None",
@@ -164,7 +164,9 @@
     "unknownIOType": "Unknown device type",
     "operationModeLinear": "Linear",
     "operationModeServo": "Servo",
-    "operationModeSetAngle": "Set angle"
+    "operationModeSetAngle": "Set angle",
+    "ioSynchronizableTitle": "Synchronizable",
+    "ioSynchronizableValue": "{ synchronizable, select, true {Yes} other {No} }"
   },
   "controller": {
     "detectControllerTip": "To detect a controller, press any button on it or move any stick",

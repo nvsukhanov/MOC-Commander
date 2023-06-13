@@ -9,7 +9,8 @@ export const HUB_IO_SUPPORTED_MODES = createActionGroup({
             softwareRevision: string,
             ioType: IOType,
             portInputModes: number[]
-            portOutputModes: number[]
+            portOutputModes: number[],
+            synchronizable: boolean
         }>(),
     }
 });

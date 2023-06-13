@@ -167,6 +167,7 @@ export type HubIoSupportedModes = {
     ioType: IOType;
     portInputModes: number[];
     portOutputModes: number[];
+    synchronizable: boolean;
 }
 
 export type HubConfiguration = {

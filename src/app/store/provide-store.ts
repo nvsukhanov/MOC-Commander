@@ -47,6 +47,8 @@ import { HubStorageService } from './hub-storage.service';
 import { HUBS_ACTIONS } from './actions';
 import { RoutesBuilderService } from '../routing';
 
+const STORAGE_VERSION = '1';
+
 const REDUCERS: ActionReducerMap<IState> = {
     controllers: CONTROLLERS_REDUCER,
     controllerInput: CONTROLLER_INPUT_REDUCER,
@@ -69,7 +71,9 @@ const REDUCERS: ActionReducerMap<IState> = {
     router: routerReducer
 };
 
-function localStorageSyncReducer(reducer: ActionReducer<IState>): ActionReducer<IState> {
+function localStorageSyncReducer(
+    reducer: ActionReducer<IState>
+): ActionReducer<IState> {
     return localStorageSync({
         keys: [
             'hubs',
@@ -79,7 +83,8 @@ function localStorageSyncReducer(reducer: ActionReducer<IState>): ActionReducer<
             'hubIOSupportedModes',
             'hubPortModeInfo'
         ] satisfies Array<keyof IState>,
-        rehydrate: true
+        rehydrate: true,
+        storageKeySerializer: (key: string) => `${STORAGE_VERSION}/${key}`,
     })(reducer);
 }
 

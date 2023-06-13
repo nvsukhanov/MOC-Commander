@@ -1,45 +1,63 @@
-<mat-card *ngIf="ioFullInfo">
-    <mat-card-header>
-        <mat-card-subtitle>
-            <section class="io-subheader">
+<mat-expansion-panel *ngIf="ioFullInfo">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <h3 class="io-port__title">
                 {{ 'hub.port' | transloco: ioFullInfo }}
-                <span class="spacer"></span>
-                <p class="io-version">
-                    {{ 'io.hardwareRevision' | transloco: ioFullInfo }}
-                </p>
-                <p class="io-version">
-                    {{ 'io.softwareRevision' | transloco: ioFullInfo }}
-                </p>
-            </section>
-        </mat-card-subtitle>
-        <mat-card-title>
+            </h3>
+        </mat-panel-title>
+        <mat-panel-description>
             {{ ioFullInfo.ioType | ioTypeToL10nKey | transloco }}
-        </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <section class="io-modes-group__grid">
-            <h3 class="io-modes-group__header">{{ 'io.ioInputCapabilities' | transloco }}</h3>
-            <ul class="io-modes-group__list" *ngIf="ioFullInfo.portInputModes.length; else emptyModesList">
-                <li *ngFor="let portModeInfo of ioFullInfo.portInputModes; trackBy: portModeInfoTrackById"
-                    class="io-modes-group__mode"
-                >
-                    {{ portModeInfo.name }}
-                </li>
-            </ul>
-            <h3 class="io-modes-group__header">{{ 'io.ioOutputCapabilities' | transloco }}</h3>
-            <ul class="io-modes-group__list" *ngIf="ioFullInfo.portOutputModes.length; else emptyModesList">
-                <li *ngFor="let portModeInfo of ioFullInfo.portOutputModes; trackBy: portModeInfoTrackById"
-                    class="io-modes-group__mode"
-                >
-                    {{ portModeInfo.name }}
-                </li>
-            </ul>
+        </mat-panel-description>
+    </mat-expansion-panel-header>
 
-            <ng-template #emptyModesList>
-                <p class="io-modes-group__list-empty">
-                    {{ 'io.ioCapabilitiesEmpty' | transloco }}
-                </p>
+    <dl class="io-properties__grid">
+        <dt class="io-properties__title">{{ 'io.hardwareRevision' | transloco }}</dt>
+        <dd class="io-properties__value">{{ ioFullInfo.hardwareRevision }}</dd>
+
+        <dt class="io-properties__title">{{ 'io.softwareRevision' | transloco }}</dt>
+        <dd class="io-properties__value">{{ ioFullInfo.softwareRevision }}</dd>
+
+        <dt class="io-properties__title">{{ 'io.ioSynchronizableTitle' | transloco }}</dt>
+        <dd class="io-properties__value">
+            <ng-container *ngIf="ioFullInfo.synchronizable; else notSynchronizable">
+                <mat-icon [fontIcon]="'check_box'"
+                          [color]="'primary'"
+                ></mat-icon>
+            </ng-container>
+            <ng-template #notSynchronizable>
+                <mat-icon [fontIcon]="'check_box_outline_blank'"></mat-icon>
             </ng-template>
-        </section>
-    </mat-card-content>
-</mat-card>
+            <span class="cdk-visually-hidden">
+                {{ 'io.ioSynchronizableValue' | transloco: ioFullInfo }}
+            </span>
+        </dd>
+
+        <dt class="io-properties__title">{{ 'io.ioInputCapabilities' | transloco }}</dt>
+        <dd class="io-properties__value">
+            <ul class="io-properties__list" *ngIf="ioFullInfo.portInputModes.length; else emptyModesList">
+                <li *ngFor="let portModeInfo of ioFullInfo.portInputModes; trackBy: portModeInfoTrackById"
+                    class="io-properties__mode"
+                >
+                    {{ portModeInfo.name }}
+                </li>
+            </ul>
+        </dd>
+
+        <dt class="io-properties__title">{{ 'io.ioOutputCapabilities' | transloco }}</dt>
+        <dd class="io-properties__value">
+            <ul class="io-properties__list" *ngIf="ioFullInfo.portOutputModes.length; else emptyModesList">
+                <li *ngFor="let portModeInfo of ioFullInfo.portOutputModes; trackBy: portModeInfoTrackById"
+                    class="io-properties__mode"
+                >
+                    {{ portModeInfo.name }}
+                </li>
+            </ul>
+        </dd>
+
+        <ng-template #emptyModesList>
+            <p class="io-properties__list-empty">
+                {{ 'io.ioCapabilitiesEmpty' | transloco }}
+            </p>
+        </ng-template>
+    </dl>
+</mat-expansion-panel>
