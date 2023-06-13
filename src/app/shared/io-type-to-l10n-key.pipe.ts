@@ -28,7 +28,12 @@ export class IoTypeToL10nKeyPipe implements PipeTransform {
         [IOType.xLargeTechnicMotor]: composeL10nKey(L10nScopes.io, 'ioTypeXLargeTechnicMotor'),
         [IOType.mediumTechnicAngularMotor]: composeL10nKey(L10nScopes.io, 'ioTypeMediumTechnicAngularMotor'),
         [IOType.largeTechnicAngularMotor]: composeL10nKey(L10nScopes.io, 'ioTypeLargeTechnicAngularMotor'),
-        [IOType.handsetButtonGroup]: composeL10nKey(L10nScopes.io, 'ioTypeHandsetButtonGroup')
+        [IOType.handsetButtonGroup]: composeL10nKey(L10nScopes.io, 'ioTypeHandsetButtonGroup'),
+        [IOType.accelerometerSensor]: composeL10nKey(L10nScopes.io, 'ioTypeAccelerometerSensor'),
+        [IOType.gyroscopeSensor]: composeL10nKey(L10nScopes.io, 'ioTypeGyroscopeSensor'),
+        [IOType.tiltSensor]: composeL10nKey(L10nScopes.io, 'ioTypeTiltSensor'),
+        [IOType.temperatureSensor]: composeL10nKey(L10nScopes.io, 'ioTypeTemperatureSensor'),
+        [IOType.gestureSensor]: composeL10nKey(L10nScopes.io, 'ioTypeGestureSensor')
     };
 
     private readonly unknownDeviceType = composeL10nKey(L10nScopes.io, 'unknownIOType');
