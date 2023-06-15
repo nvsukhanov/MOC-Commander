@@ -1,0 +1,97 @@
+<mat-expansion-panel *ngIf="data"
+                     [class.virtual-port-configuration_expanded]="portPanel.expanded"
+                     [class.virtual-port-configuration_collapsed]="!portPanel.expanded"
+                     #portPanel
+>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <h3 class="virtual-port-configuration__title">
+                {{ data.name }}
+            </h3>
+        </mat-panel-title>
+        <mat-panel-description *ngIf="hasIssues">
+            <ng-container *ngIf="!data.ioA || !data.ioB; else ioMismatchNotification">
+                <mat-icon color="warn"
+                          [fontIcon]="'link_off'"
+                          [title]="'io.virtualPortsConfigurationsListItemIONotConnectedWarning' | transloco"
+                ></mat-icon>
+
+                <span class="cdk-visually-hidden">{{ 'io.virtualPortsConfigurationsListItemIONotConnectedWarning' | transloco }}</span>
+            </ng-container>
+            <ng-template #ioMismatchNotification>
+                <ng-container *ngIf="!ioAMatches || !ioBMatches">
+                    <mat-icon color="warn"
+                              [fontIcon]="'question_mark'"
+                              [title]="'io.virtualPortsConfigurationsListItemIOCapabilitiesMismatchWarning' | transloco"
+                    ></mat-icon>
+
+                    <span class="cdk-visually-hidden">{{ 'io.virtualPortsConfigurationsListItemIOCapabilitiesMismatchWarning' | transloco }}</span>
+                </ng-container>
+            </ng-template>
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <dl class="virtual-port-properties__grid">
+        <dt class="virtual-port-properties__title">{{ 'io.virtualPortNameLabel' | transloco }}</dt>
+        <dd class="virtual-port-properties__value">{{ data.name }}</dd>
+
+        <dt class="virtual-port-properties__title">{{ 'io.virtualPortPortALabel' | transloco}}</dt>
+        <dd class="virtual-port-properties__value">
+            <span class="virtual-port-configuration__port">
+                {{ 'io.virtualPortPhysicalPortLabel' | transloco: { portId: data.portIdA } }}
+            </span>
+            <ng-container *ngIf="data.ioA; else ioIsMissing">
+                <span class="virtual-port-configuration__io-name">
+                    {{ data.ioA.ioType | ioTypeToL10nKey | transloco }}
+                </span>
+                <mat-error *ngIf="!ioAMatches"
+                           class="virtual-port-configuration__io-mismatch-notification"
+                >
+                    {{ 'io.ioTypeMismatchNotification' | transloco: {
+                    expectedType: data.ioAExpectedType | ioTypeToL10nKey | transloco,
+                    expectedHardwareRevision: data.ioAExpectedHardwareRevision,
+                    expectedSoftwareRevision: data.ioAExpectedSoftwareRevision,
+                } }}
+                </mat-error>
+            </ng-container>
+        </dd>
+
+        <dt class="virtual-port-properties__title">{{ 'io.virtualPortPortBLabel' | transloco}}</dt>
+        <dd class="virtual-port-properties__value">
+            <span class="virtual-port-configuration__port">
+                {{ 'io.virtualPortPhysicalPortLabel' | transloco: { portId: data.portIdB } }}
+            </span>
+            <ng-container *ngIf="data.ioB; else ioIsMissing">
+                <span class="virtual-port-configuration__io-name">
+                    {{ data.ioB.ioType | ioTypeToL10nKey | transloco }}
+                </span>
+                <mat-error *ngIf="!ioBMatches"
+                           class="virtual-port-configuration__io-mismatch-notification"
+                >
+                    {{ 'io.ioTypeMismatchNotification' | transloco: {
+                    expectedType: data.ioBExpectedType | ioTypeToL10nKey | transloco,
+                    expectedHardwareRevision: data.ioBExpectedHardwareRevision,
+                    expectedSoftwareRevision: data.ioBExpectedSoftwareRevision,
+                } }}
+                </mat-error>
+            </ng-container>
+        </dd>
+
+        <ng-template #ioIsMissing>
+            <mat-icon color="warn"
+                      class="virtual-port-configuration__io-is-not-connected-notification"
+                      [fontIcon]="'link_off'"
+                      [title]="'io.ioIsNotConnectedInlineNotification' | transloco"
+            ></mat-icon>
+
+            <span class="cdk-visually-hidden">{{ 'io.ioIsNotConnectedInlineNotification' | transloco }}</span>
+        </ng-template>
+    </dl>
+    <mat-action-row>
+        <button mat-button
+                (click)="onDelete()"
+        >
+            {{ 'io.virtualPortDeleteButtonTitle' | transloco }}
+        </button>
+    </mat-action-row>
+</mat-expansion-panel>

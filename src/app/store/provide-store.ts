@@ -26,6 +26,7 @@ import {
     HUB_IO_OUTPUT_MODES_REDUCER,
     HUB_PORT_MODE_INFO_REDUCER,
     HUB_PORT_TASKS_REDUCER,
+    HUB_VIRTUAL_PORT_CONFIGS_REDUCER,
     SERVO_CALIBRATION_REDUCER
 } from './reducers';
 import {
@@ -66,6 +67,7 @@ const REDUCERS: ActionReducerMap<IState> = {
     hubPortModeInfo: HUB_PORT_MODE_INFO_REDUCER,
     hubPortTasks: HUB_PORT_TASKS_REDUCER,
     hubEditFormActiveSaves: HUB_EDIT_FORM_ACTIVE_SAVES_REDUCER,
+    hubVirtualPortConfigs: HUB_VIRTUAL_PORT_CONFIGS_REDUCER,
     servoCalibrationTaskState: SERVO_CALIBRATION_REDUCER,
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_REDUCER,
     router: routerReducer
@@ -81,7 +83,8 @@ function localStorageSyncReducer(
             'controllerSettings',
             'controlSchemes',
             'hubIOSupportedModes',
-            'hubPortModeInfo'
+            'hubPortModeInfo',
+            'hubVirtualPortConfigs'
         ] satisfies Array<keyof IState>,
         rehydrate: true,
         storageKeySerializer: (key: string) => `${STORAGE_VERSION}/${key}`,

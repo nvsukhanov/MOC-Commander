@@ -120,7 +120,7 @@ export class ControlSchemeBindingOutputComponent {
                 if (hubId === null || portId === null) {
                     return of(null);
                 }
-                return this.store.select(HUB_ATTACHED_IO_SELECTORS.selectIOAtPort(hubId, portId));
+                return this.store.select(HUB_ATTACHED_IO_SELECTORS.selectIOAtPort({ hubId, portId }));
             }),
             map((io) => io?.ioType ?? null)
         );
