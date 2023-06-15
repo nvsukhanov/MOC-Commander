@@ -1,0 +1,50 @@
+<h2 mat-dialog-title>
+    {{ 'io.createVirtualPortConfigurationDialogTitle' | transloco }}
+</h2>
+<mat-dialog-content *ngIf="data">
+    <mat-form-field class="form-field">
+        <mat-label>
+            {{ 'io.createVirtualPortConfigurationDialogNameLabel' | transloco }}
+        </mat-label>
+        <input matInput [formControl]="form.controls.name"/>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+        <mat-label>
+            {{ 'io.createVirtualPortConfigurationDialogPortALabel' | transloco }}
+        </mat-label>
+        <mat-select [formControl]="form.controls.portIdA">
+            <mat-option *ngFor="let mergeableIO of data.mergeableIOs; trackBy: mergeableIOTrackByFn"
+                        [value]="mergeableIO.portId"
+            >
+                {{ mergeableIO.portId }} : {{ mergeableIO.ioType | ioTypeToL10nKey | transloco }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+        <mat-label>
+            {{ 'io.createVirtualPortConfigurationDialogPortBLabel' | transloco }}
+        </mat-label>
+        <mat-select [formControl]="form.controls.portIdB">
+            <mat-option *ngFor="let mergeableIO of availableSecondIOs; trackBy: mergeableIOTrackByFn"
+                        [value]="mergeableIO.portId"
+            >
+                {{ mergeableIO.portId }} : {{ mergeableIO.ioType | ioTypeToL10nKey | transloco }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions [align]="'end'">
+    <button mat-button
+            [color]="'primary'"
+            [disabled]="!form.valid"
+            (click)="onConfirm()"
+    >
+        {{ 'io.createVirtualPortConfigurationDialogConfirmButtonTitle' | transloco }}
+    </button>
+    <button mat-button
+            [mat-dialog-close]="'cancel'"
+    >
+        {{ 'io.createVirtualPortConfigurationDialogCancelButtonTitle' | transloco }}
+    </button>
+</mat-dialog-actions>

@@ -4,7 +4,7 @@ import { switchMap, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';
 
-import { CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS, SERVO_CALIBRATION_ACTIONS } from '../actions';
+import { CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS, SERVO_CALIBRATION_ACTIONS, VIRTUAL_PORTS_ACTIONS } from '../actions';
 
 @Injectable()
 export class NotificationsEffects {
@@ -59,6 +59,22 @@ export class NotificationsEffects {
         return this.actions$.pipe(
             ofType(CONTROL_SCHEME_ACTIONS.noIOForInputFound),
             switchMap(() => this.translocoService.selectTranslate('controlScheme.noMatchingIOForInputFound')),
+            tap((message) => this.showMessage(message))
+        );
+    }, { dispatch: false });
+
+    public readonly virtualPortConfigurationCreated$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(VIRTUAL_PORTS_ACTIONS.createVirtualPort),
+            switchMap(() => this.translocoService.selectTranslate('io.virtualPortConfigurationCreated')),
+            tap((message) => this.showMessage(message))
+        );
+    }, { dispatch: false });
+
+    public readonly virtualPortConfigurationDeleted$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(VIRTUAL_PORTS_ACTIONS.deleteVirtualPort),
+            switchMap((action) => this.translocoService.selectTranslate('io.virtualPortDeletedNotification', { name: action.configName })),
             tap((message) => this.showMessage(message))
         );
     }, { dispatch: false });

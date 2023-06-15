@@ -3,15 +3,19 @@
     flex-direction: column;
 }
 
-.hub-view {
-    display: flex;
-    flex-direction: column;
+.hub-properties-view {
+    margin-bottom: 10px;
+}
+
+.ports-group-section {
+    margin-top: 10px;
 }
 
 .io-list {
     display: flex;
     flex-direction: column;
     justify-content: stretch;
+    margin: 0 0 20px 0;
 
     &__item {
         margin-top: 10px;

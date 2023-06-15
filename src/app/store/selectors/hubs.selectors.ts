@@ -32,11 +32,6 @@ export const HUBS_SELECTORS = {
         }
     ),
     selectHub: (hubId: string) => createSelector(SELECT_HUBS_ENTITIES, (state) => state[hubId]),
-    selectHubWithConnectionState: (hubId: string) => createSelector(
-        HUBS_SELECTORS.selectHub(hubId),
-        HUB_CONNECTION_SELECTORS.selectHubConnectionState(hubId),
-        (hub, connectionState) => (hub ? { ...hub, connectionState } : undefined)
-    ),
     selectHubsWithConnectionState: createSelector(
         HUBS_SELECT_ALL,
         HUB_CONNECTION_SELECTORS.selectEntities,
@@ -47,5 +42,4 @@ export const HUBS_SELECTORS = {
             }));
         }
     )
-
 } as const;

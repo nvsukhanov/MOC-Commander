@@ -16,3 +16,4 @@ export * from './controller-input.reducer';
 export * from './controller-input-capture.reducer';
 export * from './hub-connection.reducer';
 export * from './controller-settings.reducer';
+export * from './hub-virtual-port-configs.reducer';

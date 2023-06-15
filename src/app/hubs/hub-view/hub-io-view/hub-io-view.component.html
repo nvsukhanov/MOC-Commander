@@ -1,4 +1,8 @@
-<mat-expansion-panel *ngIf="ioFullInfo">
+<mat-expansion-panel *ngIf="ioFullInfo"
+                     [class.io-port_expanded]="ioPortPanel.expanded"
+                     [class.io-port_collapsed]="!ioPortPanel.expanded"
+                     #ioPortPanel
+>
     <mat-expansion-panel-header>
         <mat-panel-title>
             <h3 class="io-port__title">
@@ -7,6 +11,25 @@
         </mat-panel-title>
         <mat-panel-description>
             {{ ioFullInfo.ioType | ioTypeToL10nKey | transloco }}
+            <ng-container *ngIf="canBeMerged">
+                <mat-icon [fontIcon]="'merge'"
+                          [title]="'io.canCreateVirtualPort' | transloco"
+                          class="io-port__can-be-merged"
+                ></mat-icon>
+                <span class="cdk-visually-hidden">
+                    {{ 'io.canCreateVirtualPort' | transloco }}
+                </span>
+            </ng-container>
+            <ng-container *ngIf="ioFullInfo.virtualPort">
+                <mat-icon [fontIcon]="'merge'"
+                          [title]="'io.isAPartOfVirtualPortConfiguration' | transloco"
+                          [color]="'primary'"
+                          class="io-port__can-be-merged"
+                ></mat-icon>
+                <span class="cdk-visually-hidden">
+                    {{ 'io.isAPartOfVirtualPortConfiguration' | transloco }}
+                </span>
+            </ng-container>
         </mat-panel-description>
     </mat-expansion-panel-header>
 
@@ -17,20 +40,14 @@
         <dt class="io-properties__title">{{ 'io.softwareRevision' | transloco }}</dt>
         <dd class="io-properties__value">{{ ioFullInfo.softwareRevision }}</dd>
 
-        <dt class="io-properties__title">{{ 'io.ioSynchronizableTitle' | transloco }}</dt>
-        <dd class="io-properties__value">
-            <ng-container *ngIf="ioFullInfo.synchronizable; else notSynchronizable">
+        <ng-container *ngIf="ioFullInfo.synchronizable">
+            <dt class="io-properties__title">{{ 'io.ioSynchronizableTitle' | transloco }}</dt>
+            <dd class="io-properties__value">
                 <mat-icon [fontIcon]="'check_box'"
                           [color]="'primary'"
                 ></mat-icon>
-            </ng-container>
-            <ng-template #notSynchronizable>
-                <mat-icon [fontIcon]="'check_box_outline_blank'"></mat-icon>
-            </ng-template>
-            <span class="cdk-visually-hidden">
-                {{ 'io.ioSynchronizableValue' | transloco: ioFullInfo }}
-            </span>
-        </dd>
+            </dd>
+        </ng-container>
 
         <dt class="io-properties__title">{{ 'io.ioInputCapabilities' | transloco }}</dt>
         <dd class="io-properties__value">
@@ -54,10 +71,25 @@
             </ul>
         </dd>
 
+        <ng-container *ngIf="ioFullInfo.virtualPort">
+            <dt class="io-properties__title">{{ 'io.virtualPortNameField' | transloco }}</dt>
+            <dd class="io-properties__value">
+                {{ ioFullInfo.virtualPort.name }}
+            </dd>
+        </ng-container>
+
         <ng-template #emptyModesList>
             <p class="io-properties__list-empty">
                 {{ 'io.ioCapabilitiesEmpty' | transloco }}
             </p>
         </ng-template>
     </dl>
+
+    <mat-action-row *ngIf="canBeMerged">
+        <button mat-button
+                (click)="onCreateVirtualPortConfiguration()"
+        >
+            {{ 'io.createVirtualPortConfiguration' | transloco }}
+        </button>
+    </mat-action-row>
 </mat-expansion-panel>
