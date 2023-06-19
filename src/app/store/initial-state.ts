@@ -12,7 +12,6 @@ import {
     HUB_CONNECTIONS_ENTITY_ADAPTER,
     HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER,
     HUB_PORT_MODE_INFO,
-    HUB_VIRTUAL_PORT_CONFIGS_ENTITY_ADAPTER,
     LAST_EXECUTED_TASKS_ENTITY_ADAPTER
 } from './entity-adapters';
 
@@ -49,7 +48,6 @@ export const INITIAL_STATE: IState = {
     hubEditFormActiveSaves: {
         hubIds: []
     },
-    hubVirtualPortConfigs: HUB_VIRTUAL_PORT_CONFIGS_ENTITY_ADAPTER.getInitialState(),
     servoCalibrationTaskState: {
         calibrationInProgress: false
     },

@@ -24,6 +24,10 @@ export const HUBS_SELECTORS = {
     selectHubEntities: SELECT_HUBS_ENTITIES,
     selectHubsIds: createSelector(SELECT_HUBS_FEATURE, HUBS_ENTITY_ADAPTER.getSelectors().selectIds),
     selectHubsCount: createSelector(SELECT_HUBS_FEATURE, HUBS_ENTITY_ADAPTER.getSelectors().selectTotal),
+    selectHubName: (hubId: string) => createSelector(
+        SELECT_HUBS_ENTITIES,
+        (hubEntities) => hubEntities[hubId]?.name
+    ),
     selectConnectedHubsCount: createSelector(
         HUBS_SELECT_ALL,
         HUB_CONNECTION_SELECTORS.selectEntities,

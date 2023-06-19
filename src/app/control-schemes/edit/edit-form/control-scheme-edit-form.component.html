@@ -6,6 +6,12 @@
     />
 </mat-form-field>
 
+<app-virtual-ports-list *ngIf="form.controls.virtualPorts.length"
+                        [virtualPorts]="form.controls.virtualPorts"
+                        (delete)="deleteVirtualPort($event)"
+                        class="virtual-ports-list"
+></app-virtual-ports-list>
+
 <mat-card *ngFor="let binding of form.controls.bindings.controls; let index = index"
           class="binding"
 >
@@ -34,6 +40,13 @@
 </mat-card>
 
 <ng-template #controlsTemplate>
+    <button mat-raised-button
+            class="toolbar-button"
+            [disabled]="(hubsWithSynchronizableIOs$ | ngrxPush)?.length === 0"
+            (click)="addVirtualPort()"
+    >
+        {{ 'controlScheme.createVirtualPortConfiguration' | transloco }}
+    </button>
     <button mat-raised-button
             class="toolbar-button"
             [disabled]="!(canAddBinding$ | ngrxPush)"

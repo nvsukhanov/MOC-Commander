@@ -46,14 +46,15 @@ export const CONTROL_SCHEME_REDUCER = createReducer(
     INITIAL_STATE['controlSchemes'],
     on(CONTROL_SCHEME_ACTIONS.create, (
         state,
-        { id, name, bindings }
+        { id, name, bindings, virtualPorts }
     ): IState['controlSchemes'] => {
         const nextIndex = Math.max(0, ...Object.values(state.entities).map((entity) => entity?.index ?? 0)) + 1;
         return CONTROL_SCHEMES_ENTITY_ADAPTER.addOne({
             id,
             name,
             index: nextIndex,
-            bindings: bindings.map((binding) => trimOutputBinding(binding))
+            bindings: bindings.map((binding) => trimOutputBinding(binding)),
+            virtualPorts
         }, state);
     }),
     on(CONTROL_SCHEME_ACTIONS.delete, (
@@ -64,13 +65,14 @@ export const CONTROL_SCHEME_REDUCER = createReducer(
     }),
     on(CONTROL_SCHEME_ACTIONS.update, (
         state,
-        { id, name, bindings }
+        { id, name, bindings, virtualPorts }
     ): IState['controlSchemes'] => {
         return CONTROL_SCHEMES_ENTITY_ADAPTER.updateOne({
             id,
             changes: {
                 name,
-                bindings: bindings.map((binding) => trimOutputBinding(binding))
+                bindings: bindings.map((binding) => trimOutputBinding(binding)),
+                virtualPorts
             }
         }, state);
     }),

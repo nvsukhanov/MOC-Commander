@@ -7,6 +7,11 @@
             <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
                 <app-binding-tree-node [binding]="node"></app-binding-tree-node>
             </mat-tree-node>
+            <mat-nested-tree-node *matTreeNodeDef="let portNodeData; when: isVirtualPort">
+                <div class="mat-tree-node control-scheme-tree__virtual-port-node">
+                    <app-virtual-port-tree-node [data]="portNodeData"></app-virtual-port-tree-node>
+                </div>
+            </mat-nested-tree-node>
             <mat-nested-tree-node *matTreeNodeDef="let portNodeData; when: isPort">
                 <div class="mat-tree-node">
                     <button mat-icon-button

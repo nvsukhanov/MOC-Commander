@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import { IOType } from '@nvsukhanov/rxpoweredup';
 
 import { BindingOutputState, ControllerInputType, HubIoOperationMode } from '../../../store';
 import { ControlSchemeBindingOutputForm } from '../binding-output';
-import { BindingForm, EditSchemeForm } from '../types';
+import { BindingForm, EditSchemeForm, VirtualPortsForm } from '../types';
 import { ControlSchemeBindingInputForm } from '../binding-input';
 import { ServoOutputControlFormBuilderService } from './servo-output-control-form-builder.service';
 import { LinearOutputControlFormBuilderService } from './linear-output-control-form-builder.service';
 import { SetAngleOutputControlFormBuilderService } from './set-angle-output-control-form-builder.service';
+import { CreateVirtualPortDialogResult } from '../../create-virtual-port-dialog';
 
 @Injectable({ providedIn: 'root' })
-export class ControlSchemeFormFactoryService {
+export class ControlSchemeFormBuilderService {
     constructor(
         private readonly formBuilder: FormBuilder,
         private readonly servoOutputControlFormBuilder: ServoOutputControlFormBuilderService,
@@ -24,9 +26,10 @@ export class ControlSchemeFormFactoryService {
         name: string
     ): EditSchemeForm {
         return this.formBuilder.group({
-            id: this.formBuilder.control<string>(id, [ Validators.required ]) as FormControl<string>,
-            name: this.formBuilder.control<string>(name, [ Validators.required ]) as FormControl<string>,
-            bindings: this.formBuilder.array<BindingForm>([], Validators.required)
+            id: this.formBuilder.control<string>(id, { nonNullable: true, validators: [ Validators.required ] }),
+            name: this.formBuilder.control<string>(name, { nonNullable: true, validators: [ Validators.required ] }),
+            bindings: this.formBuilder.array<BindingForm>([], Validators.required),
+            virtualPorts: this.formBuilder.array<VirtualPortsForm>([])
         });
     }
 
@@ -58,6 +61,19 @@ export class ControlSchemeFormFactoryService {
             input: inputControl,
             output: outputFrom
         }) as BindingForm;
+    }
+
+    public createVirtualPortsForm(
+        data: CreateVirtualPortDialogResult
+    ): VirtualPortsForm {
+        return this.formBuilder.group({
+            hubId: this.formBuilder.control(data.hubId, { nonNullable: true, validators: [ Validators.required ] }),
+            name: this.formBuilder.control(data.name, { nonNullable: true, validators: [ Validators.required ] }),
+            portIdA: this.formBuilder.control(data.portIdA, { nonNullable: true, validators: [ Validators.required ] }),
+            ioAType: this.formBuilder.control<IOType>(data.ioAType, { nonNullable: true, validators: [ Validators.required ] }),
+            portIdB: this.formBuilder.control(data.portIdB, { nonNullable: true, validators: [ Validators.required ] }),
+            ioBType: this.formBuilder.control<IOType>(data.ioBType, { nonNullable: true, validators: [ Validators.required ] })
+        }) as VirtualPortsForm;
     }
 
     private createOutputControlForm(

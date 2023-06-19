@@ -1,58 +1,31 @@
 <ng-container *ngIf="selectedHub$ | ngrxPush; let hub; else hubNotFound">
-    <ng-container *ngrxLet="synchronizableMergeableIOsCount$ as synchronizableMergeableIOsCount">
-        <app-hub-properties-view class="hub-properties-view"
-                                 [configuration]="hub"
-                                 (disconnect)="disconnectHub()"
-        ></app-hub-properties-view>
+    <app-hub-properties-view class="hub-properties-view"
+                             [configuration]="hub"
+                             (disconnect)="disconnectHub()"
+    ></app-hub-properties-view>
 
-        <ng-container *ngrxLet="virtualPortsData$ as virtualPortConfigurationWithData">
-            <ng-container *ngrxLet="IOFullData$ as physicalPorts">
-                <mat-card *ngIf="virtualPortConfigurationWithData.length"
-                          class="ports-group-section"
-                >
-                    <mat-card-header>
-                        <mat-card-title>
-                            <h2>
-                                {{ 'io.virtualPortsConfigurationsListSection' | transloco }}
-                            </h2>
-                        </mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <ul class="io-list">
-                            <li *ngFor="let virtualPortConfiguration of virtualPortConfigurationWithData; trackBy: virtualPortWithConfigurationTrackByFn">
-                                <app-hub-virtual-port-configuration-view [data]="virtualPortConfiguration"
-                                                                         (delete)="deleteVirtualPortConfiguration(virtualPortConfiguration)"
-                                ></app-hub-virtual-port-configuration-view>
-                            </li>
-                        </ul>
-                    </mat-card-content>
-                </mat-card>
+    <ng-container *ngrxLet="IOFullData$ as physicalPorts">
+        <mat-card *ngIf="physicalPorts.length"
+                  class="ports-group-section"
+        >
+            <mat-card-header>
+                <mat-card-title>
+                    <h2>
+                        {{ 'io.physicalPortsListSection' | transloco }}
+                    </h2>
+                </mat-card-title>
+            </mat-card-header>
 
-                <mat-card *ngIf="physicalPorts.length"
-                          class="ports-group-section"
-                >
-                    <mat-card-header>
-                        <mat-card-title>
-                            <h2>
-                                {{ 'io.physicalPortsListSection' | transloco }}
-                            </h2>
-                        </mat-card-title>
-                    </mat-card-header>
-
-                    <mat-card-content>
-                        <ul class="io-list">
-                            <li *ngFor="let physicalPort of physicalPorts; trackBy: hubIoTrackByFn">
-                                <app-hub-port-view class="io-list__item"
-                                                   [ioFullInfo]="physicalPort"
-                                                   [mergeableCount]="synchronizableMergeableIOsCount"
-                                                   (createVirtualPortConfiguration)="createVirtualPortConfiguration(physicalPort.hubId, physicalPort.portId)"
-                                ></app-hub-port-view>
-                            </li>
-                        </ul>
-                    </mat-card-content>
-                </mat-card>
-            </ng-container>
-        </ng-container>
+            <mat-card-content>
+                <ul class="io-list">
+                    <li *ngFor="let physicalPort of physicalPorts; trackBy: hubIoTrackByFn">
+                        <app-hub-port-view class="io-list__item"
+                                           [ioFullInfo]="physicalPort"
+                        ></app-hub-port-view>
+                    </li>
+                </ul>
+            </mat-card-content>
+        </mat-card>
     </ng-container>
 </ng-container>
 
