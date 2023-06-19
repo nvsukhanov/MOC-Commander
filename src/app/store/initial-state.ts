@@ -12,6 +12,7 @@ import {
     HUB_CONNECTIONS_ENTITY_ADAPTER,
     HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER,
     HUB_PORT_MODE_INFO,
+    HUB_VIRTUAL_PORT_ENTITY_ADAPTER,
     LAST_EXECUTED_TASKS_ENTITY_ADAPTER
 } from './entity-adapters';
 
@@ -36,6 +37,7 @@ export const INITIAL_STATE: IState = {
     },
     hubAttachedIOs: HUB_ATTACHED_IOS_ENTITY_ADAPTER.getInitialState(),
     hubAttachedIOState: HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER.getInitialState(),
+    hubVirtualPorts: HUB_VIRTUAL_PORT_ENTITY_ADAPTER.getInitialState(),
     hubIOSupportedModes: HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER.getInitialState(),
     hubPortModeInfo: HUB_PORT_MODE_INFO.getInitialState(),
     hubPortTasks: {
