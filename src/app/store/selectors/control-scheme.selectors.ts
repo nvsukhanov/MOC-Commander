@@ -155,102 +155,34 @@ export const CONTROL_SCHEME_SELECTORS = {
             return input ? input.value : 0;
         }
     ),
-    validateSchemeIOBindings: (schemeId: string) => createSelector(
-        CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
-        HUB_PORT_TASKS_SELECTORS.selectLastExecutedTasksEntities,
-        HUB_ATTACHED_IO_SELECTORS.selectIOsEntities,
-        HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
-        HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
-        CONTROLLER_SELECTORS.selectEntities,
-        HUB_CONNECTION_SELECTORS.selectEntities,
-        (
-            scheme,
-            tasks,
-            iosEntities,
-            ioSupportedModesEntities,
-            portModeInfoEntities,
-            controllerEntities,
-            connectionEntities
-        ): IOBindingValidationResults[] => {
-            if (scheme === undefined) {
-                return [] as IOBindingValidationResults[];
-            }
-
-            return scheme.bindings.map((binding) => {
-                const controller = controllerEntities[binding.input.controllerId];
-                const bindingValidationResult: IOBindingValidationResults = {
-                    bindingId: binding.id,
-                    controllerIsMissing: !controller,
-                    hubMissing: connectionEntities[binding.output.hubId]?.connectionState !== HubConnectionState.Connected,
-                    ioMissing: true,
-                    ioCapabilitiesMismatch: true
-                };
-
-                if (!bindingValidationResult.hubMissing) {
-                    const io = iosEntities[hubAttachedIosIdFn(binding.output)];
-                    if (io) {
-                        bindingValidationResult.ioMissing = false;
-                        const ioOperationModes = getHubIOOperationModes(
-                            io,
-                            ioSupportedModesEntities,
-                            portModeInfoEntities,
-                            binding.input.inputType
-                        );
-                        bindingValidationResult.ioCapabilitiesMismatch = !ioOperationModes.includes(binding.output.operationMode);
-                    }
-                }
-
-                return bindingValidationResult;
-            });
-        }
-    ),
-    validateScheme: (schemeId: string) => createSelector(
-        CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId,
-        CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
-        CONTROL_SCHEME_SELECTORS.validateSchemeIOBindings(schemeId),
-        (
-            alreadyRunningSchemeId,
-            scheme,
-            ioValidationResults
-        ): SchemeValidationResult => {
-            let canRunResultNegative: SchemeValidationResult = {
-                schemeMissing: false,
-                anotherSchemeIsRunning: false,
-                controllerIsMissing: false,
-                hubMissing: false,
-                ioMissing: false,
-                ioCapabilitiesMismatch: false,
-            };
-
-            if (alreadyRunningSchemeId !== null && alreadyRunningSchemeId !== schemeId) {
-                canRunResultNegative.anotherSchemeIsRunning = true;
-            }
-            if (!scheme) {
-                canRunResultNegative.schemeMissing = false;
-            }
-
-            canRunResultNegative = ioValidationResults.reduce((
-                acc,
-                cur
-            ) => {
-                acc.controllerIsMissing = acc.controllerIsMissing || cur.controllerIsMissing;
-                acc.hubMissing = acc.hubMissing || cur.hubMissing;
-                acc.ioMissing = acc.ioMissing || cur.ioMissing;
-                acc.ioCapabilitiesMismatch = acc.ioCapabilitiesMismatch || cur.ioCapabilitiesMismatch;
-                return acc;
-            }, canRunResultNegative);
-
-            return canRunResultNegative;
-        }
-    ),
     canRunScheme: (schemeId: string) => createSelector(
-        CONTROL_SCHEME_SELECTORS.validateScheme(schemeId),
+        CONTROL_SCHEME_SELECTORS.schemeViewTree(schemeId),
         CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId,
         (
-            validationResult,
+            viewTree,
             runningSchemeId
         ): boolean => {
-            return !Object.values(validationResult).some((v) => v) && runningSchemeId === null;
+            let allHubAreConnected = true;
+            let allIOsAreConnected = true;
+            let allIOsTypesMatches = true;
+            if (runningSchemeId !== null) {
+                return false;
+            }
+            viewTree.forEach((hubNode) => {
+                allHubAreConnected = allHubAreConnected && hubNode.connectionState === HubConnectionState.Connected;
+                hubNode.children.forEach((nodeChild) => {
+                    if (nodeChild.nodeType === ControlSchemeNodeTypes.VirtualPort) {
+                        allIOsAreConnected = allIOsAreConnected && nodeChild.portAIOIsConnected && nodeChild.portBIOIsConnected;
+                        allIOsTypesMatches = allIOsTypesMatches
+                            && nodeChild.ioTypeA === nodeChild.portAActualIOType
+                            && nodeChild.ioTypeB === nodeChild.portBActualIOType;
+                    } else {
+                        allIOsAreConnected = allIOsAreConnected && nodeChild.isConnected;
+                        allIOsTypesMatches = allIOsTypesMatches && nodeChild.children.every((c) => !c.ioHasNoRequiredCapabilities);
+                    }
+                });
+            });
+            return allHubAreConnected && allIOsAreConnected && allIOsTypesMatches;
         }
     ),
     schemeViewTree: (schemeId: string) => createSelector(
@@ -271,7 +203,7 @@ export const CONTROL_SCHEME_SELECTORS = {
             portModeInfoEntities: Dictionary<PortModeInfo>,
             controllerEntities: Dictionary<Controller>,
             lastExecutedTasksBindingIds: ReadonlySet<string>
-        ): ControlSchemeViewTreeNode[] => {
+        ): ControlSchemeViewHubTreeNode[] => {
             if (!scheme) {
                 return [];
             }
