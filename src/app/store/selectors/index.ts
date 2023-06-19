@@ -17,3 +17,4 @@ export * from './controller-input-capture.selectors';
 export * from './controller-input.selectors';
 export * from './hub-connections.selectors';
 export * from './controller-settings.selectors';
+export * from './hub-virtual-port.selectors';

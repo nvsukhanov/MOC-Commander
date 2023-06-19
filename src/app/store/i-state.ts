@@ -28,6 +28,7 @@ export interface IState {
     },
     hubAttachedIOs: EntityState<AttachedIO>,
     hubAttachedIOState: EntityState<AttachedIOState>,
+    hubVirtualPorts: EntityState<VirtualPort>,
     hubIOSupportedModes: EntityState<HubIoSupportedModes>,
     hubPortModeInfo: EntityState<PortModeInfo>,
     hubPortTasks: {
@@ -47,14 +48,6 @@ export interface IState {
         isAvailable: boolean;
     },
     router: RouterState;
-}
-
-export type HubVirtualPort = {
-    hubId: string;
-    portId: number;
-    ioType: IOType;
-    portIdA: number;
-    portIdB: number;
 }
 
 export type VirtualPortConfig = {
@@ -213,4 +206,12 @@ export type AttachedIO = {
     ioType: IOType;
     hardwareRevision: string;
     softwareRevision: string;
+}
+
+export type VirtualPort = {
+    hubId: string;
+    portId: number;
+    ioType: IOType;
+    portIdA: number;
+    portIdB: number;
 }
