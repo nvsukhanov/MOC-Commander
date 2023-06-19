@@ -40,7 +40,6 @@ export interface IState {
     hubEditFormActiveSaves: {
         hubIds: string[]
     },
-    hubVirtualPortConfigs: EntityState<HubVirtualPortConfig>,
     servoCalibrationTaskState: {
         calibrationInProgress: boolean;
     },
@@ -50,17 +49,21 @@ export interface IState {
     router: RouterState;
 }
 
-export type HubVirtualPortConfig = {
+export type HubVirtualPort = {
+    hubId: string;
+    portId: number;
+    ioType: IOType;
+    portIdA: number;
+    portIdB: number;
+}
+
+export type VirtualPortConfig = {
     hubId: string;
     name: string;
     portIdA: number;
     ioAType: IOType;
-    ioAHardwareRevision: string;
-    ioASoftwareRevision: string;
     portIdB: number;
     ioBType: IOType;
-    ioBHardwareRevision: string;
-    ioBSoftwareRevision: string;
 }
 
 export type HubConnection = {
@@ -173,6 +176,7 @@ export type ControlScheme = {
     index: number;
     name: string;
     bindings: ControlSchemeBinding[];
+    virtualPorts: VirtualPortConfig[];
 }
 
 export type HubIoSupportedModes = {

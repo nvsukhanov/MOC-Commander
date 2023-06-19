@@ -13,8 +13,7 @@ import {
     HubConfiguration,
     HubConnection,
     HubIoSupportedModes,
-    HubVirtualPortConfig,
-    PortModeInfo
+    PortModeInfo,
 } from './i-state';
 import { ControllerType } from '../plugins';
 import { ControllerInputType } from './controller-input-type';
@@ -105,13 +104,3 @@ export const HUB_CONNECTIONS_ENTITY_ADAPTER: EntityAdapter<HubConnection> = crea
 export const CONTROLLER_SETTINGS_ENTITY_ADAPTER: EntityAdapter<ControllerSettings> = createEntityAdapter<ControllerSettings>({
     selectId: (settings) => settings.controllerId,
 });
-
-export const HUB_VIRTUAL_PORT_CONFIGS_ENTITY_ADAPTER: EntityAdapter<HubVirtualPortConfig> = createEntityAdapter<HubVirtualPortConfig>({
-    selectId: (config) => hubVirtualPortConfigIdFn(config),
-});
-
-export function hubVirtualPortConfigIdFn(
-    { hubId, portIdA, portIdB }: { hubId: string, portIdA: number, portIdB: number }
-): string {
-    return `${hubId}/${portIdA}/${portIdB}`;
-}

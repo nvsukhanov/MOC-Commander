@@ -26,7 +26,6 @@ import {
     HUB_IO_OUTPUT_MODES_REDUCER,
     HUB_PORT_MODE_INFO_REDUCER,
     HUB_PORT_TASKS_REDUCER,
-    HUB_VIRTUAL_PORT_CONFIGS_REDUCER,
     SERVO_CALIBRATION_REDUCER
 } from './reducers';
 import {
@@ -45,7 +44,7 @@ import {
 } from './effects';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { HubStorageService } from './hub-storage.service';
-import { HUBS_ACTIONS } from './actions';
+import { CONTROLLER_INPUT_ACTIONS, HUBS_ACTIONS } from './actions';
 import { RoutesBuilderService } from '../routing';
 
 const STORAGE_VERSION = '1';
@@ -67,7 +66,6 @@ const REDUCERS: ActionReducerMap<IState> = {
     hubPortModeInfo: HUB_PORT_MODE_INFO_REDUCER,
     hubPortTasks: HUB_PORT_TASKS_REDUCER,
     hubEditFormActiveSaves: HUB_EDIT_FORM_ACTIVE_SAVES_REDUCER,
-    hubVirtualPortConfigs: HUB_VIRTUAL_PORT_CONFIGS_REDUCER,
     servoCalibrationTaskState: SERVO_CALIBRATION_REDUCER,
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_REDUCER,
     router: routerReducer
@@ -84,7 +82,6 @@ function localStorageSyncReducer(
             'controlSchemes',
             'hubIOSupportedModes',
             'hubPortModeInfo',
-            'hubVirtualPortConfigs'
         ] satisfies Array<keyof IState>,
         rehydrate: true,
         storageKeySerializer: (key: string) => `${STORAGE_VERSION}/${key}`,
@@ -108,7 +105,7 @@ export function provideApplicationStore(): EnvironmentProviders {
             HubAttachedIosStateEffects,
             GamepadControllerEffects,
             KeyboardControllerEffects,
-            ControllerInputCaptureEffects
+            ControllerInputCaptureEffects,
         ),
         provideStoreDevtools({
             maxAge: 100,
@@ -119,7 +116,8 @@ export function provideApplicationStore(): EnvironmentProviders {
             actionsBlocklist: [
                 HUBS_ACTIONS.setHasCommunication.type,
                 HUBS_ACTIONS.rssiLevelReceived.type,
-                HUBS_ACTIONS.batteryLevelReceived.type
+                HUBS_ACTIONS.batteryLevelReceived.type,
+                CONTROLLER_INPUT_ACTIONS.inputReceived.type
             ]
         }),
         {

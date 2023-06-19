@@ -18,18 +18,19 @@ import { JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
-import { Subject, Subscription, filter, finalize, map, take, takeUntil } from 'rxjs';
+import { Subject, Subscription, combineLatestWith, filter, finalize, map, merge, startWith, switchMap, take, takeUntil, tap } from 'rxjs';
 import { Actions, concatLatestFrom, ofType } from '@ngrx/effects';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
-import { FeatureToolbarService, IScrollContainer, SCROLL_CONTAINER, ScreenSizeObserverService, WINDOW } from '@app/shared';
+import { ConfirmDialogService, FeatureToolbarService, IScrollContainer, SCROLL_CONTAINER, ScreenSizeObserverService, WINDOW } from '@app/shared';
 import { ControlSchemeBindingInputComponent } from '../binding-input';
 import { ControlSchemeBindingOutputComponent } from '../binding-output';
-import { ControlSchemeFormFactoryService } from './control-scheme-form-factory.service';
+import { ControlSchemeFormBuilderService } from './control-scheme-form-builder.service';
 import { BindingForm, EditSchemeForm } from '../types';
 import { ControlSchemeBindingConfigurationComponent } from '../binding-config';
 import {
@@ -38,12 +39,17 @@ import {
     CONTROL_SCHEME_ACTIONS,
     CONTROL_SCHEME_CONFIGURATION_ACTIONS,
     CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS,
+    CONTROL_SCHEME_SELECTORS,
     ControlScheme,
     ControllerInput,
     ControllerInputType,
     HUB_ATTACHED_IO_SELECTORS,
-    HUB_IO_CONTROL_METHODS
+    HUB_IO_CONTROL_METHODS,
+    HubWithSynchronizableIOs,
+    hubAttachedIosIdFn
 } from '../../../store';
+import { CreateVirtualPortConfigurationDialogComponent, CreateVirtualPortDialogResult } from '../../create-virtual-port-dialog';
+import { VirtualPortsListComponent } from '../virtual-ports-list';
 
 export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
 
@@ -69,6 +75,8 @@ export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
         MatDividerModule,
         MatIconModule,
         RouterLink,
+        MatDialogModule,
+        VirtualPortsListComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -84,6 +92,11 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
 
     public readonly canAddBinding$ = this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.canAddBinding);
 
+    public readonly hubsWithSynchronizableIOs$ = this.store.select(CONTROL_SCHEME_SELECTORS.selectHubsWithSynchronizableIOs).pipe(
+        combineLatestWith(this.form.controls.virtualPorts.valueChanges.pipe(startWith(null))),
+        map(([ hubs ]) => this.getRemainingSynchronizableIOs(hubs)),
+    );
+
     private readonly onDestroy$ = new Subject<void>();
 
     private _isSmallScreen = false;
@@ -93,13 +106,15 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
     constructor(
         private readonly store: Store,
         @Inject(WINDOW) private readonly window: Window,
-        private readonly controlSchemeFormFactoryService: ControlSchemeFormFactoryService,
+        private readonly controlSchemeFormFactoryService: ControlSchemeFormBuilderService,
         private readonly cdRef: ChangeDetectorRef,
         private readonly screenSizeObserverService: ScreenSizeObserverService,
         private readonly actions: Actions,
         private readonly featureToolbarService: FeatureToolbarService,
         @Inject(SCROLL_CONTAINER) private readonly scrollContainer: IScrollContainer,
         private readonly translocoService: TranslocoService,
+        private readonly dialog: MatDialog,
+        private readonly confirmDialogService: ConfirmDialogService
     ) {
     }
 
@@ -116,14 +131,14 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         return this._isSmallScreen;
     }
 
-    public get isValid(): boolean {
-        return this.form.valid;
-    }
-
     @Input()
     public set scheme(scheme: ControlScheme) {
         this.form.reset();
         this.form.patchValue(scheme);
+        scheme.virtualPorts.forEach((virtualPort) => {
+            const virtualPortForm = this.controlSchemeFormFactoryService.createVirtualPortsForm(virtualPort);
+            this.form.controls.virtualPorts.push(virtualPortForm);
+        });
         scheme.bindings.forEach(binding => {
             const binging = this.controlSchemeFormFactoryService.createBindingForm(
                 binding.id,
@@ -161,6 +176,7 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         this.sub?.unsubscribe();
         this.onDestroy$.next();
         this.onDestroy$.complete();
+        this.confirmDialogService.hide(this);
     }
 
     public addBinding(): void {
@@ -226,6 +242,45 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         });
     }
 
+    public addVirtualPort(): void {
+        this.hubsWithSynchronizableIOs$.pipe(
+            take(1),
+            switchMap((hubsWithSynchronizableIOs) => {
+                const dialogRef = this.dialog.open(CreateVirtualPortConfigurationDialogComponent, {
+                    data: this.getRemainingSynchronizableIOs(hubsWithSynchronizableIOs)
+                });
+                return merge(
+                    dialogRef.afterClosed().pipe(map(() => undefined)),
+                    dialogRef.componentInstance.confirm.pipe(
+                        tap((data: CreateVirtualPortDialogResult) => dialogRef.close(data))
+                    )
+                );
+            }),
+            take(1)
+        ).subscribe((data: CreateVirtualPortDialogResult | undefined) => {
+            if (data) {
+                this.form.controls.virtualPorts.push(
+                    this.controlSchemeFormFactoryService.createVirtualPortsForm(data)
+                );
+                this.cdRef.detectChanges();
+            }
+        });
+    }
+
+    public deleteVirtualPort(
+        index: number
+    ): void {
+        this.confirmDialogService.show(
+            this.translocoService.selectTranslate('controlScheme.virtualPortDeleteConfirmationTitle'),
+            this
+        ).subscribe((isConfirmed) => {
+            if (isConfirmed) {
+                this.form.controls.virtualPorts.removeAt(index);
+                this.cdRef.markForCheck();
+            }
+        });
+    }
+
     public removeBindingIndex(index: number): void {
         this.form.controls.bindings.removeAt(index);
         this.cdRef.markForCheck();
@@ -241,5 +296,32 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
 
     private stopInputCapture(): void {
         this.store.dispatch(CONTROL_SCHEME_CONFIGURATION_ACTIONS.stopListening());
+    }
+
+    private getRemainingSynchronizableIOs(
+        allHubsWithSynchronizableIOs: HubWithSynchronizableIOs[],
+    ): HubWithSynchronizableIOs[] {
+        const hubPortsParticipatingInVirtualPorts = new Set<string>();
+        this.form.controls.virtualPorts.value.forEach((virtualPortsForm) => {
+            if (virtualPortsForm.hubId === undefined || virtualPortsForm.portIdA === undefined || virtualPortsForm.portIdB === undefined) {
+                return;
+            }
+            const hubPortIdA = hubAttachedIosIdFn({ hubId: virtualPortsForm.hubId, portId: virtualPortsForm.portIdA });
+            const hubPortIdB = hubAttachedIosIdFn({ hubId: virtualPortsForm.hubId, portId: virtualPortsForm.portIdB });
+            hubPortsParticipatingInVirtualPorts.add(hubPortIdA);
+            hubPortsParticipatingInVirtualPorts.add(hubPortIdB);
+        });
+
+        return allHubsWithSynchronizableIOs.map((hubWithSynchronizableIOs) => {
+            const remainingIOs = hubWithSynchronizableIOs.synchronizableIOs.filter((io) => {
+                return !hubPortsParticipatingInVirtualPorts.has(hubAttachedIosIdFn(io));
+            });
+            return {
+                ...hubWithSynchronizableIOs,
+                synchronizableIOs: remainingIOs
+            };
+        }).filter((hubWithSynchronizableIOs) => {
+            return hubWithSynchronizableIOs.synchronizableIOs.length > 0;
+        });
     }
 }

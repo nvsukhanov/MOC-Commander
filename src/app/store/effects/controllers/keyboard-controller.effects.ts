@@ -43,7 +43,6 @@ export class KeyboardControllerEffects {
         private readonly store: Store,
         @Inject(WINDOW) private readonly window: Window,
     ) {
-
     }
 
     private readKeyboard(): Observable<Action> {
@@ -51,7 +50,7 @@ export class KeyboardControllerEffects {
             map((s) => s as KeyboardSettings),
             take(1),
             mergeMap((settings) => {
-                if (settings.captureNonAlphaNumerics) {
+                if (settings?.captureNonAlphaNumerics) {
                     return fromEvent(this.window.document, this.keyDownEvent);
                 } else {
                     return fromEvent(this.window.document, this.keyDownEvent).pipe(

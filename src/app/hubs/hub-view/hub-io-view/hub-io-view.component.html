@@ -11,25 +11,6 @@
         </mat-panel-title>
         <mat-panel-description>
             {{ ioFullInfo.ioType | ioTypeToL10nKey | transloco }}
-            <ng-container *ngIf="canBeMerged">
-                <mat-icon [fontIcon]="'merge'"
-                          [title]="'io.canCreateVirtualPort' | transloco"
-                          class="io-port__can-be-merged"
-                ></mat-icon>
-                <span class="cdk-visually-hidden">
-                    {{ 'io.canCreateVirtualPort' | transloco }}
-                </span>
-            </ng-container>
-            <ng-container *ngIf="ioFullInfo.virtualPort">
-                <mat-icon [fontIcon]="'merge'"
-                          [title]="'io.isAPartOfVirtualPortConfiguration' | transloco"
-                          [color]="'primary'"
-                          class="io-port__can-be-merged"
-                ></mat-icon>
-                <span class="cdk-visually-hidden">
-                    {{ 'io.isAPartOfVirtualPortConfiguration' | transloco }}
-                </span>
-            </ng-container>
         </mat-panel-description>
     </mat-expansion-panel-header>
 
@@ -71,25 +52,10 @@
             </ul>
         </dd>
 
-        <ng-container *ngIf="ioFullInfo.virtualPort">
-            <dt class="io-properties__title">{{ 'io.virtualPortNameField' | transloco }}</dt>
-            <dd class="io-properties__value">
-                {{ ioFullInfo.virtualPort.name }}
-            </dd>
-        </ng-container>
-
         <ng-template #emptyModesList>
             <p class="io-properties__list-empty">
                 {{ 'io.ioCapabilitiesEmpty' | transloco }}
             </p>
         </ng-template>
     </dl>
-
-    <mat-action-row *ngIf="canBeMerged">
-        <button mat-button
-                (click)="onCreateVirtualPortConfiguration()"
-        >
-            {{ 'io.createVirtualPortConfiguration' | transloco }}
-        </button>
-    </mat-action-row>
 </mat-expansion-panel>

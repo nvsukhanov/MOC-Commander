@@ -11,4 +11,3 @@ export * from './controllers.actions';
 export * from './controller-input.actions';
 export * from './control-scheme-configuration.actions';
 export * from './controller-settings.actions';
-export * from './virtual-port-configs.actions';

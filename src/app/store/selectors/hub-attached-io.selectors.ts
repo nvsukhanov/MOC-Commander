@@ -4,17 +4,18 @@ import { IOType, PortModeName } from '@nvsukhanov/rxpoweredup';
 import { Dictionary } from '@ngrx/entity';
 
 import { HUB_ATTACHED_IOS_ENTITY_ADAPTER, hubAttachedIosIdFn, hubIOSupportedModesIdFn, hubPortModeInfoIdFn, } from '../entity-adapters';
-import { AttachedIO, HubIoSupportedModes, HubVirtualPortConfig, IState, PortModeInfo } from '../i-state';
+import { AttachedIO, HubIoSupportedModes, IState, PortModeInfo } from '../i-state';
 import { HUB_IO_SUPPORTED_MODES_SELECTORS } from './hub-io-supported-modes.selectors';
 import { HUB_IO_CONTROL_METHODS, HubIoOperationMode } from '../hub-io-operation-mode';
 import { HUB_PORT_MODE_INFO_SELECTORS } from './hub-port-mode-info.selectors';
 import { HUB_CONNECTION_SELECTORS } from './hub-connections.selectors';
 import { ControllerInputType } from '../controller-input-type';
-import { HUB_VIRTUAL_PORT_CONFIGS_SELECTORS } from './hub-virtual-port-configs.selectors';
 
 const SELECT_HUB_ATTACHED_IOS_FEATURE = createFeatureSelector<IState['hubAttachedIOs']>('hubAttachedIOs');
 
 const HUB_ATTACHED_IOS_ADAPTER_SELECTORS = HUB_ATTACHED_IOS_ENTITY_ADAPTER.getSelectors();
+
+const SELECT_ALL = createSelector(SELECT_HUB_ATTACHED_IOS_FEATURE, HUB_ATTACHED_IOS_ADAPTER_SELECTORS.selectAll);
 
 function selectIOsControllableByInputType(
     ios: AttachedIO[],
@@ -41,6 +42,38 @@ function selectIOsControllableByInputType(
     return result;
 }
 
+function combineFullIOInfo(
+    ios: AttachedIO[],
+    supportedModesEntities: Dictionary<HubIoSupportedModes>,
+    portModeDataEntities: Dictionary<PortModeInfo>
+): IOFullInfo[] {
+    return ios.map((io) => {
+        const supportedModesEntityId = hubIOSupportedModesIdFn(io);
+        const supportedModes: HubIoSupportedModes | undefined = supportedModesEntities[supportedModesEntityId];
+        const portInputModeIds = supportedModes?.portInputModes ?? [];
+        const portOutputModeIds = supportedModes?.portOutputModes ?? [];
+        const portInputModes = portInputModeIds.map((modeId) => {
+            const modeEntityId = hubPortModeInfoIdFn({ ...io, modeId });
+            return portModeDataEntities[modeEntityId];
+        }).filter((mode) => !!mode) as PortModeInfo[];
+        const portOutputModes = portOutputModeIds.map((modeId) => {
+            const modeEntityId = hubPortModeInfoIdFn({ ...io, modeId });
+            return portModeDataEntities[modeEntityId];
+        }).filter((mode) => !!mode) as PortModeInfo[];
+
+        return {
+            hubId: io.hubId,
+            portId: io.portId,
+            ioType: io.ioType,
+            hardwareRevision: io.hardwareRevision,
+            softwareRevision: io.softwareRevision,
+            portInputModes,
+            portOutputModes,
+            synchronizable: supportedModes?.synchronizable ?? false,
+        };
+    });
+}
+
 export type IOFullInfo = {
     hubId: string;
     portId: number;
@@ -50,77 +83,30 @@ export type IOFullInfo = {
     portInputModes: PortModeInfo[];
     portOutputModes: PortModeInfo[];
     synchronizable: boolean;
-    virtualPort?: HubVirtualPortConfig;
-}
-
-export type VirtualPortConfigurationWithData = {
-    hubId: string;
-    name: string;
-    portIdA: number;
-    ioA?: AttachedIO;
-    ioAExpectedType: IOType;
-    ioAExpectedHardwareRevision: string;
-    ioAExpectedSoftwareRevision: string;
-    portIdB: number;
-    ioB?: AttachedIO;
-    ioBExpectedType: IOType;
-    ioBExpectedHardwareRevision: string;
-    ioBExpectedSoftwareRevision: string;
 }
 
 export const HUB_ATTACHED_IO_SELECTORS = {
-    selectIOsAll: createSelector(SELECT_HUB_ATTACHED_IOS_FEATURE, HUB_ATTACHED_IOS_ADAPTER_SELECTORS.selectAll),
+    selectIOsAll: SELECT_ALL,
     selectIOsEntities: createSelector(SELECT_HUB_ATTACHED_IOS_FEATURE, HUB_ATTACHED_IOS_ADAPTER_SELECTORS.selectEntities),
     selectHubIOs: (hubId: string) => createSelector(
         HUB_ATTACHED_IO_SELECTORS.selectIOsAll,
         (ios) => ios.filter((io) => io.hubId === hubId)
     ),
-    selectFullIOsInfo: (hubId: string) => createSelector(
+    selectFullIOsInfoForHub: (hubId: string) => createSelector(
         HUB_ATTACHED_IO_SELECTORS.selectHubIOs(hubId),
         HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
         HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
-        HUB_VIRTUAL_PORT_CONFIGS_SELECTORS.selectEntities,
-        (ios, supportedModesEntities, portModeDataEntities, virtualPortsConfigurations): IOFullInfo[] => {
-            return ios.map((io) => {
-                const supportedModesEntityId = hubIOSupportedModesIdFn(io);
-                const supportedModes: HubIoSupportedModes | undefined = supportedModesEntities[supportedModesEntityId];
-                const portInputModeIds = supportedModes?.portInputModes ?? [];
-                const portOutputModeIds = supportedModes?.portOutputModes ?? [];
-                const portInputModes = portInputModeIds.map((modeId) => {
-                    const modeEntityId = hubPortModeInfoIdFn({ ...io, modeId });
-                    return portModeDataEntities[modeEntityId];
-                }).filter((mode) => !!mode) as PortModeInfo[];
-                const portOutputModes = portOutputModeIds.map((modeId) => {
-                    const modeEntityId = hubPortModeInfoIdFn({ ...io, modeId });
-                    return portModeDataEntities[modeEntityId];
-                }).filter((mode) => !!mode) as PortModeInfo[];
-
-                const virtualPort = Object.values(virtualPortsConfigurations)
-                                          .find((config) => io.portId === config?.portIdA || io.portId === config?.portIdB);
-
-                return {
-                    hubId,
-                    portId: io.portId,
-                    ioType: io.ioType,
-                    hardwareRevision: io.hardwareRevision,
-                    softwareRevision: io.softwareRevision,
-                    portInputModes,
-                    portOutputModes,
-                    synchronizable: supportedModes?.synchronizable ?? false,
-                    virtualPort
-                };
-            });
+        (ios, supportedModesEntities, portModeDataEntities): IOFullInfo[] => {
+            return combineFullIOInfo(ios, supportedModesEntities, portModeDataEntities);
         }
     ),
-    selectMergeableIOs: ({ hubId }: { hubId: string }) => createSelector(
-        HUB_ATTACHED_IO_SELECTORS.selectFullIOsInfo(hubId),
-        (ios) => {
-            return ios.filter((io) => io.synchronizable && !io.virtualPort);
+    selectFullIOsInfo: createSelector(
+        SELECT_ALL,
+        HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
+        HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
+        (ios, supportedModesEntities, portModeDataEntities): IOFullInfo[] => {
+            return combineFullIOInfo(ios, supportedModesEntities, portModeDataEntities);
         }
-    ),
-    countSynchronizableMergeableIOsCount: (hubId: string) => createSelector(
-        HUB_ATTACHED_IO_SELECTORS.selectFullIOsInfo(hubId),
-        (ios) => ios.filter((io) => io.synchronizable && !io.virtualPort).length
     ),
     selectIOAtPort: (data: { hubId: string, portId: number }) => createSelector(
         HUB_ATTACHED_IO_SELECTORS.selectIOsEntities,
@@ -194,30 +180,6 @@ export const HUB_ATTACHED_IO_SELECTORS = {
 
             return portModes.has(PortModeName.position) && portModes.has(PortModeName.absolutePosition);
         }
-    ),
-    selectVirtualPortsWithIOData: (hubId: string) => createSelector( // TODO: does not fit here, decompose into separate selectors
-        HUB_VIRTUAL_PORT_CONFIGS_SELECTORS.selectAll,
-        HUB_ATTACHED_IO_SELECTORS.selectIOsEntities,
-        (virtualPortConfigurations, ios): VirtualPortConfigurationWithData[] => {
-            return virtualPortConfigurations.map((virtualPortConfiguration) => {
-                const ioA = ios[hubAttachedIosIdFn({ hubId, portId: virtualPortConfiguration.portIdA })];
-                const ioB = ios[hubAttachedIosIdFn({ hubId, portId: virtualPortConfiguration.portIdB })];
-                return {
-                    hubId,
-                    name: virtualPortConfiguration.name,
-                    portIdA: virtualPortConfiguration.portIdA,
-                    ioA,
-                    ioAExpectedType: virtualPortConfiguration.ioAType,
-                    ioAExpectedHardwareRevision: virtualPortConfiguration.ioAHardwareRevision,
-                    ioAExpectedSoftwareRevision: virtualPortConfiguration.ioASoftwareRevision,
-                    portIdB: virtualPortConfiguration.portIdB,
-                    ioB,
-                    ioBExpectedType: virtualPortConfiguration.ioBType,
-                    ioBExpectedHardwareRevision: virtualPortConfiguration.ioBHardwareRevision,
-                    ioBExpectedSoftwareRevision: virtualPortConfiguration.ioBSoftwareRevision,
-                };
-            });
-        }
     )
 } as const;
 
@@ -243,3 +205,4 @@ export function getHubIOOperationModes(
     }
     return [];
 }
+

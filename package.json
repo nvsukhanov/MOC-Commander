@@ -31,7 +31,7 @@
     "@ngrx/router-store": "^16.0.0",
     "@ngrx/store": "^16.0.0",
     "@ngrx/store-devtools": "^16.0.0",
-    "@nvsukhanov/rxpoweredup": "^0.0.25",
+    "@nvsukhanov/rxpoweredup": "^0.0.27",
     "ngrx-store-localstorage": "^16.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.5.2",

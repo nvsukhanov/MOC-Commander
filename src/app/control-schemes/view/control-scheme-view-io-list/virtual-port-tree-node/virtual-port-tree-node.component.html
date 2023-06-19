@@ -1,0 +1,35 @@
+<ng-container *ngIf="data">
+    <span class="virtual-port__name">
+        {{ data.name }}
+    </span>
+    <span class="virtual-port__portAIO">
+        {{ data.portIdA }} : {{ data.ioTypeA | ioTypeToL10nKey | transloco }}
+    </span>
+    <span class="virtual-port__portAConnectionState">
+        <ng-container *ngIf="data.portAIOIsConnected; else ioIsNotConnected">
+            %CONNECTED%
+        </ng-container>
+    </span>
+    <span *ngIf="data.portAActualIOType"
+          class="virtual-port__portA-actual-io-type"
+    >
+        {{ data.portAActualIOType | ioTypeToL10nKey | transloco}}
+    </span>
+    <span class="virtual-port__portBIO">
+        {{ data.portIdB }} : {{ data.ioTypeB | ioTypeToL10nKey | transloco }}
+    </span>
+    <span class="virtual-port__portAConnectionState">
+        <ng-container *ngIf="data.portAIOIsConnected; else ioIsNotConnected">
+            %CONNECTED%
+        </ng-container>
+    </span>
+    <span *ngIf="data.portBActualIOType"
+          class="virtual-port__portB-actual-io-type"
+    >
+        {{ data.portBActualIOType | ioTypeToL10nKey | transloco}}
+    </span>
+</ng-container>
+
+<ng-template #ioIsNotConnected>
+    %NOT CONNECTED%
+</ng-template>
