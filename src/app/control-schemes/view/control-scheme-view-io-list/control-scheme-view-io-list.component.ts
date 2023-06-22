@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { JsonPipe, NgForOf, NgIf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTreeModule, MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
@@ -24,7 +24,6 @@ import { VirtualPortTreeNodeComponent } from './virtual-port-tree-node';
         NgIf,
         MatCardModule,
         MatTreeModule,
-        JsonPipe,
         MatButtonModule,
         MatIconModule,
         LetDirective,
@@ -46,13 +45,18 @@ export class ControlSchemeViewIoListComponent {
 
     public dataSource = new MatTreeNestedDataSource<ControlSchemeViewTreeNode>();
 
+    private initialExpansionDone = false;
+
     @Input()
     public set tree(
         v: ControlSchemeViewTreeNode[] | undefined
     ) {
         this.dataSource.data = v ?? [];
         this.treeControl.dataNodes = this.dataSource.data;
-        this.treeControl.expandAll();
+        if (!this.initialExpansionDone) {
+            this.initialExpansionDone = true;
+            this.treeControl.expandAll();
+        }
     }
 
     public get isEmpty(): boolean {
@@ -60,16 +64,7 @@ export class ControlSchemeViewIoListComponent {
     }
 
     public trackByNodeTypeFn(item: ControlSchemeViewTreeNode): string {
-        switch (item.nodeType) {
-            case ControlSchemeNodeTypes.Hub:
-                return item.hubId;
-            case ControlSchemeNodeTypes.IO:
-                return item.portId.toString();
-            case ControlSchemeNodeTypes.Binding:
-                return `${item.controller?.id}-${item.inputId}`;
-            case ControlSchemeNodeTypes.VirtualPort:
-                return `${item.ioTypeA}/${item.ioTypeB}`;
-        }
+        return item.path;
     }
 
     public isHub(_: number, node: ControlSchemeViewTreeNode): boolean {

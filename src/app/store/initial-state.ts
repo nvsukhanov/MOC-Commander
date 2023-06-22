@@ -1,6 +1,6 @@
 import { RouterState } from '@ngrx/router-store';
 
-import { HubDiscoveryState, IState } from './i-state';
+import { ControlSchemeRunStage, HubDiscoveryState, IState } from './i-state';
 import {
     CONTROLLERS_ENTITY_ADAPTER,
     CONTROLLER_INPUT_ENTITY_ADAPTER,
@@ -28,6 +28,7 @@ export const INITIAL_STATE: IState = {
         isListening: false
     },
     controlSchemeRunningState: {
+        stage: ControlSchemeRunStage.Idle,
         runningSchemeId: null
     },
     hubs: HUBS_ENTITY_ADAPTER.getInitialState(),

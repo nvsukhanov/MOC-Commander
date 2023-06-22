@@ -8,8 +8,20 @@
                 <app-binding-tree-node [binding]="node"></app-binding-tree-node>
             </mat-tree-node>
             <mat-nested-tree-node *matTreeNodeDef="let portNodeData; when: isVirtualPort">
-                <div class="mat-tree-node control-scheme-tree__virtual-port-node">
+                <div class="mat-tree-node">
+                    <button mat-icon-button
+                            matTreeNodeToggle
+                            [attr.aria-label]="'controlScheme.expandCollapseIO' | transloco: portNodeData"
+                    >
+                        <mat-icon class="mat-icon-rtl-mirror"
+                                  [fontIcon]="treeControl.isExpanded(portNodeData) ? 'expand_more' : 'chevron_right'"
+                        ></mat-icon>
+                    </button>
                     <app-virtual-port-tree-node [data]="portNodeData"></app-virtual-port-tree-node>
+                </div>
+                <div [class.control-scheme-tree__node_invisible]="!treeControl.isExpanded(portNodeData)"
+                     role="group">
+                    <ng-container matTreeNodeOutlet></ng-container>
                 </div>
             </mat-nested-tree-node>
             <mat-nested-tree-node *matTreeNodeDef="let portNodeData; when: isPort">

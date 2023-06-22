@@ -42,22 +42,76 @@ const CONTROL_SCHEME_SELECT_ALL = createSelector(
     CONTROL_SCHEME_ENTITY_SELECTORS.selectAll
 );
 
-export type SchemeValidationResult = {
-    schemeMissing: boolean;
-    anotherSchemeIsRunning: boolean;
-    controllerIsMissing: boolean;
-    hubMissing: boolean;
-    ioMissing: boolean;
-    ioCapabilitiesMismatch: boolean;
+function createHubTreeNode(
+    hubConfig: HubConfiguration,
+    connectionState: HubConnectionState,
+): ControlSchemeViewHubTreeNode {
+    return {
+        path: hubConfig.hubId,
+        hubId: hubConfig.hubId,
+        name: hubConfig.name,
+        batteryLevel: hubConfig.batteryLevel,
+        RSSI: hubConfig.RSSI,
+        hubType: hubConfig.hubType,
+        isButtonPressed: hubConfig.isButtonPressed,
+        hasCommunication: hubConfig.hasCommunication,
+        nodeType: ControlSchemeNodeTypes.Hub,
+        connectionState,
+        children: []
+    };
 }
 
-export type IOBindingValidationResults = {
-    bindingId: string;
-    controllerIsMissing: boolean;
-    hubMissing: boolean;
-    ioMissing: boolean;
-    ioCapabilitiesMismatch: boolean;
-};
+function createIOTreeNode(
+    parentPath: string,
+    hubConfig: HubConfiguration,
+    hubConnectionState: HubConnectionState,
+    iosEntities: Dictionary<AttachedIO>,
+    portId: number,
+): ControlSchemeViewIOTreeNode {
+    const ioId = hubAttachedIosIdFn({ hubId: hubConfig.hubId, portId });
+    const io = iosEntities[ioId];
+
+    return {
+        path: `${parentPath}.${portId}`,
+        nodeType: ControlSchemeNodeTypes.IO,
+        portId: portId,
+        ioType: io?.ioType ?? null,
+        isConnected: hubConnectionState === HubConnectionState.Connected && !!io,
+        children: []
+    };
+}
+
+function createBindingTreeNode(
+    ioPath: string,
+    binding: ControlSchemeBinding,
+    ioSupportedModesEntities: Dictionary<HubIoSupportedModes>,
+    portModeInfoEntities: Dictionary<PortModeInfo>,
+    controllerEntities: Dictionary<Controller>,
+    lastExecutedTasksBindingIds: ReadonlySet<string>,
+    io?: AttachedIO,
+): ControlSchemeViewBindingTreeNode {
+    let ioHasNoRequiredCapabilities = false;
+    if (io) {
+        const ioOperationModes = getHubIOOperationModes(
+            io,
+            ioSupportedModesEntities,
+            portModeInfoEntities,
+            binding.input.inputType
+        );
+        ioHasNoRequiredCapabilities = !ioOperationModes.includes(binding.output.operationMode);
+    }
+    return {
+        path: `${ioPath}.${binding.id}`,
+        nodeType: ControlSchemeNodeTypes.Binding,
+        controller: controllerEntities[binding.input.controllerId],
+        inputId: binding.input.inputId,
+        inputType: binding.input.inputType,
+        isActive: lastExecutedTasksBindingIds.has(binding.id),
+        operationMode: binding.output.operationMode,
+        ioHasNoRequiredCapabilities,
+        children: []
+    };
+}
 
 export enum ControlSchemeNodeTypes {
     Hub = 'Hub',
@@ -67,6 +121,7 @@ export enum ControlSchemeNodeTypes {
 }
 
 export type ControlSchemeViewBindingTreeNode = {
+    readonly path: string;
     readonly nodeType: ControlSchemeNodeTypes.Binding;
     readonly controller?: Controller;
     readonly inputId: string;
@@ -78,6 +133,7 @@ export type ControlSchemeViewBindingTreeNode = {
 }
 
 export type ControlSchemeViewIOTreeNode = {
+    readonly path: string;
     readonly nodeType: ControlSchemeNodeTypes.IO;
     readonly portId: number;
     readonly ioType: IOType | null;
@@ -86,20 +142,15 @@ export type ControlSchemeViewIOTreeNode = {
 }
 
 export type ControlSchemeViewVirtualPortTreeNode = {
+    readonly path: string;
     readonly name: string;
     readonly nodeType: ControlSchemeNodeTypes.VirtualPort;
-    readonly portIdA: number;
-    readonly ioTypeA: IOType;
-    readonly portAIOIsConnected: boolean;
-    readonly portAActualIOType: IOType | null;
-    readonly portIdB: number;
-    readonly ioTypeB: IOType;
-    readonly portBIOIsConnected: boolean;
-    readonly portBActualIOType: IOType | null;
-    readonly children: [];
+    readonly expectedIOTypes: [ IOType, IOType ];
+    readonly children: [ ControlSchemeViewIOTreeNode, ControlSchemeViewIOTreeNode ];
 }
 
 export type ControlSchemeViewHubTreeNode = {
+    readonly path: string;
     readonly nodeType: ControlSchemeNodeTypes.Hub;
     readonly hubId: string;
     readonly name: string;
@@ -155,7 +206,7 @@ export const CONTROL_SCHEME_SELECTORS = {
             return input ? input.value : 0;
         }
     ),
-    canRunScheme: (schemeId: string) => createSelector(
+    canRunScheme: (schemeId: string) => createSelector( // TODO: performance-wise, this selector is not optimal (should not use viewTree)
         CONTROL_SCHEME_SELECTORS.schemeViewTree(schemeId),
         CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId,
         (
@@ -170,15 +221,15 @@ export const CONTROL_SCHEME_SELECTORS = {
             }
             viewTree.forEach((hubNode) => {
                 allHubAreConnected = allHubAreConnected && hubNode.connectionState === HubConnectionState.Connected;
-                hubNode.children.forEach((nodeChild) => {
-                    if (nodeChild.nodeType === ControlSchemeNodeTypes.VirtualPort) {
-                        allIOsAreConnected = allIOsAreConnected && nodeChild.portAIOIsConnected && nodeChild.portBIOIsConnected;
+                hubNode.children.forEach((ioNode) => {
+                    if (ioNode.nodeType === ControlSchemeNodeTypes.VirtualPort) {
+                        allIOsAreConnected = allIOsAreConnected && ioNode.children.every((c) => c.isConnected);
                         allIOsTypesMatches = allIOsTypesMatches
-                            && nodeChild.ioTypeA === nodeChild.portAActualIOType
-                            && nodeChild.ioTypeB === nodeChild.portBActualIOType;
+                            && ioNode.children[0].ioType === ioNode.expectedIOTypes[0]
+                            && ioNode.children[1].ioType === ioNode.expectedIOTypes[1];
                     } else {
-                        allIOsAreConnected = allIOsAreConnected && nodeChild.isConnected;
-                        allIOsTypesMatches = allIOsTypesMatches && nodeChild.children.every((c) => !c.ioHasNoRequiredCapabilities);
+                        allIOsAreConnected = allIOsAreConnected && ioNode.isConnected;
+                        allIOsTypesMatches = allIOsTypesMatches && ioNode.children.every((c) => !c.ioHasNoRequiredCapabilities);
                     }
                 });
             });
@@ -208,31 +259,19 @@ export const CONTROL_SCHEME_SELECTORS = {
                 return [];
             }
             const hubsViewMap = new Map<string, ControlSchemeViewHubTreeNode>();
-            const hubIOsViewMap = new Map<string, ControlSchemeViewIOTreeNode>();
 
             function ensureHubNodeCreated(
-                hubConfig: HubConfiguration
+                hubConfiguration: HubConfiguration
             ): ControlSchemeViewHubTreeNode {
-                const existingHubNode = hubsViewMap.get(hubConfig.hubId);
-                if (existingHubNode) {
-                    return existingHubNode;
+                let hubTreeNode = hubsViewMap.get(hubConfiguration.hubId);
+                if (!hubTreeNode) {
+                    hubTreeNode = createHubTreeNode(
+                        hubConfiguration,
+                        connectionEntities[hubConfiguration.hubId]?.connectionState ?? HubConnectionState.Disconnected,
+                    );
+                    hubsViewMap.set(hubConfiguration.hubId, hubTreeNode);
                 }
-
-                const connectionState = connectionEntities[hubConfig.hubId]?.connectionState ?? HubConnectionState.Disconnected;
-                const newHubNode: ControlSchemeViewHubTreeNode = {
-                    hubId: hubConfig.hubId,
-                    name: hubConfig.name,
-                    batteryLevel: hubConfig.batteryLevel,
-                    RSSI: hubConfig.RSSI,
-                    hubType: hubConfig.hubType,
-                    isButtonPressed: hubConfig.isButtonPressed,
-                    hasCommunication: hubConfig.hasCommunication,
-                    nodeType: ControlSchemeNodeTypes.Hub,
-                    connectionState,
-                    children: []
-                };
-                hubsViewMap.set(hubConfig.hubId, newHubNode);
-                return newHubNode;
+                return hubTreeNode;
             }
 
             [ ...scheme.virtualPorts ].sort((a, b) => a.portIdA - b.portIdA).forEach((virtualPort) => {
@@ -241,69 +280,69 @@ export const CONTROL_SCHEME_SELECTORS = {
                     return;
                 }
                 const hubNode = ensureHubNodeCreated(hubConfig);
-                const portAIO = IOs[hubAttachedIosIdFn({ hubId: hubConfig.hubId, portId: virtualPort.portIdA })];
-                const portAIOIsConnected = hubNode.connectionState === HubConnectionState.Connected && !!portAIO;
-                const portBIO = IOs[hubAttachedIosIdFn({ hubId: hubConfig.hubId, portId: virtualPort.portIdB })];
-                const portBIOIsConnected = hubNode.connectionState === HubConnectionState.Connected && !!portBIO;
+                const ioNodeA = createIOTreeNode(
+                    `${hubNode.path}.virtualPort/${virtualPort.portIdA}`,
+                    hubConfig,
+                    hubNode.connectionState,
+                    IOs,
+                    virtualPort.portIdA
+                );
+                const ioNodeB = createIOTreeNode(
+                    `${hubNode.path}.virtualPort/${virtualPort.portIdB}`,
+                    hubConfig,
+                    hubNode.connectionState,
+                    IOs,
+                    virtualPort.portIdB
+                );
+
                 const virtualPortNode: ControlSchemeViewVirtualPortTreeNode = {
+                    path: `${hubNode.path}.${virtualPort.name}`,
                     name: virtualPort.name,
                     nodeType: ControlSchemeNodeTypes.VirtualPort,
-                    portIdA: virtualPort.portIdA,
-                    portAIOIsConnected,
-                    portAActualIOType: portAIOIsConnected ? portAIO?.ioType ?? null : null,
-                    ioTypeA: virtualPort.ioAType,
-                    portIdB: virtualPort.portIdB,
-                    portBIOIsConnected,
-                    ioTypeB: virtualPort.ioBType,
-                    portBActualIOType: portBIOIsConnected ? portBIO?.ioType ?? null : null,
-                    children: []
+                    expectedIOTypes: [ virtualPort.ioAType, virtualPort.ioBType ],
+                    children: [
+                        ioNodeA,
+                        ioNodeB
+                    ]
                 };
                 hubNode.children.push(virtualPortNode);
             });
 
+            const hubIOsViewMap = new Map<string, ControlSchemeViewIOTreeNode>();
             [ ...scheme.bindings ].sort((a, b) => a.output.portId - b.output.portId).forEach((binding) => {
                 const hubConfig = hubEntities[binding.output.hubId];
                 if (!hubConfig) {
                     return;
                 }
-                const hubTreeNode = ensureHubNodeCreated(hubConfig);
+                const ioId = hubAttachedIosIdFn({ hubId: hubConfig.hubId, portId: binding.output.portId });
 
-                let ioViewModel = hubIOsViewMap.get(hubAttachedIosIdFn(binding.output));
-                const io = IOs[hubAttachedIosIdFn(binding.output)];
+                let ioViewModel = hubIOsViewMap.get(ioId);
                 if (!ioViewModel) {
-                    ioViewModel = {
-                        nodeType: ControlSchemeNodeTypes.IO,
-                        portId: binding.output.portId,
-                        ioType: io?.ioType ?? null,
-                        isConnected: hubTreeNode.connectionState === HubConnectionState.Connected && !!io,
-                        children: []
-                    };
-                    hubIOsViewMap.set(hubAttachedIosIdFn(binding.output), ioViewModel);
+                    const hubTreeNode = ensureHubNodeCreated(hubConfig);
+                    ioViewModel = createIOTreeNode(
+                        hubTreeNode.path,
+                        hubConfig,
+                        connectionEntities[hubConfig.hubId]?.connectionState ?? HubConnectionState.Disconnected,
+                        IOs,
+                        binding.output.portId
+                    );
+                    hubIOsViewMap.set(ioId, ioViewModel);
+
                     hubTreeNode.children.push(ioViewModel);
                 }
 
-                let ioHasNoRequiredCapabilities = false;
-                if (io) {
-                    const ioOperationModes = getHubIOOperationModes(
-                        io,
-                        ioSupportedModesEntities,
-                        portModeInfoEntities,
-                        binding.input.inputType
-                    );
-                    ioHasNoRequiredCapabilities = !ioOperationModes.includes(binding.output.operationMode);
-                }
+                const io = IOs[hubAttachedIosIdFn(binding.output)];
+                const bindingTreeNode = createBindingTreeNode(
+                    ioViewModel.path,
+                    binding,
+                    ioSupportedModesEntities,
+                    portModeInfoEntities,
+                    controllerEntities,
+                    lastExecutedTasksBindingIds,
+                    io
+                );
 
-                const bindingViewModel: ControlSchemeViewBindingTreeNode = {
-                    nodeType: ControlSchemeNodeTypes.Binding,
-                    controller: controllerEntities[binding.input.controllerId],
-                    inputId: binding.input.inputId,
-                    inputType: binding.input.inputType,
-                    isActive: lastExecutedTasksBindingIds.has(binding.id),
-                    operationMode: binding.output.operationMode,
-                    ioHasNoRequiredCapabilities,
-                    children: []
-                };
-                ioViewModel.children.push(bindingViewModel);
+                ioViewModel.children.push(bindingTreeNode);
             });
             return [ ...hubsViewMap.values() ];
         }

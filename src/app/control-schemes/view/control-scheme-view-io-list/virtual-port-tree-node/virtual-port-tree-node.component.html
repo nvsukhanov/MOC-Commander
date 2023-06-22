@@ -1,35 +1,27 @@
 <ng-container *ngIf="data">
     <span class="virtual-port__name">
-        {{ data.name }}
+        {{ 'controlScheme.virtualPortTitle' | transloco: data }}
     </span>
-    <span class="virtual-port__portAIO">
-        {{ data.portIdA }} : {{ data.ioTypeA | ioTypeToL10nKey | transloco }}
-    </span>
-    <span class="virtual-port__portAConnectionState">
-        <ng-container *ngIf="data.portAIOIsConnected; else ioIsNotConnected">
-            %CONNECTED%
-        </ng-container>
-    </span>
-    <span *ngIf="data.portAActualIOType"
-          class="virtual-port__portA-actual-io-type"
-    >
-        {{ data.portAActualIOType | ioTypeToL10nKey | transloco}}
-    </span>
-    <span class="virtual-port__portBIO">
-        {{ data.portIdB }} : {{ data.ioTypeB | ioTypeToL10nKey | transloco }}
-    </span>
-    <span class="virtual-port__portAConnectionState">
-        <ng-container *ngIf="data.portAIOIsConnected; else ioIsNotConnected">
-            %CONNECTED%
-        </ng-container>
-    </span>
-    <span *ngIf="data.portBActualIOType"
-          class="virtual-port__portB-actual-io-type"
-    >
-        {{ data.portBActualIOType | ioTypeToL10nKey | transloco}}
-    </span>
-</ng-container>
 
-<ng-template #ioIsNotConnected>
-    %NOT CONNECTED%
-</ng-template>
+    <ng-container *ngIf="data.expectedIOTypes[0] !== data.children[0].ioType">
+        <mat-icon class="virtual-port__warning-icon"
+                  [fontIcon]="'warning'"
+                  [color]="'warn'"
+                  [title]="'controlScheme.virtualPortIoTypeMismatch' | transloco: data.children[0]"
+        ></mat-icon>
+        <span class="cdk-visually-hidden">
+            {{ 'controlScheme.virtualPortIoTypeMismatch' | transloco: data.children[0] }}
+        </span>
+    </ng-container>
+
+    <ng-container *ngIf="data.expectedIOTypes[1] !== data.children[1].ioType">
+        <mat-icon class="virtual-port__warning-icon"
+                  [fontIcon]="'warning'"
+                  [color]="'warn'"
+                  [title]="'controlScheme.virtualPortIoTypeMismatch' | transloco: data.children[1]"
+        ></mat-icon>
+        <span class="cdk-visually-hidden">
+            {{ 'controlScheme.virtualPortIoTypeMismatch' | transloco: data.children[1] }}
+        </span>
+    </ng-container>
+</ng-container>

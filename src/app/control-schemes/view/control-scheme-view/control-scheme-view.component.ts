@@ -116,12 +116,12 @@ export class ControlSchemeViewComponent implements OnDestroy {
 
     public runScheme(schemeId: string): void {
         this.startControllerInputCapture();
-        this.store.dispatch(CONTROL_SCHEME_ACTIONS.runScheme({ schemeId }));
+        this.store.dispatch(CONTROL_SCHEME_ACTIONS.startScheme({ schemeId }));
     }
 
     public stopRunningScheme(): void {
         this.stopControllerInputCapture();
-        this.store.dispatch(CONTROL_SCHEME_ACTIONS.stopRunning());
+        this.store.dispatch(CONTROL_SCHEME_ACTIONS.stopScheme());
     }
 
     private startControllerInputCapture(): void {

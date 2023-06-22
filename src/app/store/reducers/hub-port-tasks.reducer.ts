@@ -24,7 +24,7 @@ export const HUB_PORT_TASKS_REDUCER = createReducer(
             lastExecutedTasks: LAST_EXECUTED_TASKS_ENTITY_ADAPTER.upsertOne(task, state.lastExecutedTasks)
         };
     }),
-    on(CONTROL_SCHEME_ACTIONS.runScheme, (): IState['hubPortTasks'] => {
+    on(CONTROL_SCHEME_ACTIONS.startScheme, (): IState['hubPortTasks'] => {
         return {
             queue: [],
             totalTasksExecuted: 0,
@@ -33,7 +33,7 @@ export const HUB_PORT_TASKS_REDUCER = createReducer(
             lastExecutedTasks: LAST_EXECUTED_TASKS_ENTITY_ADAPTER.getInitialState()
         };
     }),
-    on(CONTROL_SCHEME_ACTIONS.stopRunning, (state): IState['hubPortTasks'] => {
+    on(CONTROL_SCHEME_ACTIONS.schemeStopped, (state): IState['hubPortTasks'] => {
         return {
             ...state,
             queue: [],
