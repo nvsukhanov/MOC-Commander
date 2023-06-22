@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription, map, of, switchMap, take } from 'rxjs';
+import { Observable, Subscription, of, switchMap, take } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Router } from '@angular/router';
@@ -26,10 +26,6 @@ import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlScheme, ROUTER
 export class ControlSchemeEditComponent implements OnDestroy {
     public readonly currentlyEditedScheme$: Observable<ControlScheme | undefined> = this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeId).pipe(
         switchMap((i) => i === null ? of(undefined) : this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(i)))
-    );
-
-    public readonly cancelViewUrl$: Observable<string[]> = this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeId).pipe(
-        map((i) => i !== null ? this.routesBuilderService.controlSchemeView(i) : [])
     );
 
     private sub?: Subscription;

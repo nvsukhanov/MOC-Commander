@@ -285,11 +285,7 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         this.form.controls.bindings.removeAt(index);
         this.cdRef.markForCheck();
     }
-
-    public cancelAddBinging(): void {
-        this.stopInputCapture();
-    }
-
+    
     private startInputCapture(): void {
         this.store.dispatch(CONTROL_SCHEME_CONFIGURATION_ACTIONS.startListening());
     }
