@@ -75,7 +75,6 @@ export type HubConnection = {
 export enum HubConnectionState {
     Disconnected,
     Connected,
-    Disconnecting,
 }
 
 export type ControllerInput = {

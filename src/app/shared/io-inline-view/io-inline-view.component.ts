@@ -7,7 +7,6 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { EllipsisTitleDirective } from '../ellipsis-title.directive';
 import { IoTypeToL10nKeyPipe } from '../io-type-to-l10n-key.pipe';
-import { HubConnectionState } from '../../store';
 
 @Component({
     standalone: true,
@@ -30,6 +29,4 @@ export class IoInlineViewComponent {
     @Input() public ioType: IOType | null = null;
 
     @Input() public isConnected: boolean | null = null;
-
-    protected readonly HubConnectionState = HubConnectionState;
 }

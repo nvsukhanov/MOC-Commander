@@ -16,7 +16,6 @@ export * from './controller-l10n-type.pipe';
 export * from './hub-type-to-l10n';
 export * from './io-type-to-l10n-key.pipe';
 export * from './io-operation-type-to-l10n-key.pipe';
-export * from './port-task-type-to-l10n';
 export * from './motor-servo-end-state-l10n-key.pipe';
 export * from './i-app-config';
 export * from './confirm-dialog';
