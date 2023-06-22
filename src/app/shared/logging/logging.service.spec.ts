@@ -2,7 +2,7 @@
 import { LogLevel } from '@nvsukhanov/rxpoweredup';
 
 import { ConsoleLoggingService } from './console-logging.service';
-import { IAppConfig } from '@app/shared';
+import { IAppConfig } from '../i-app-config';
 
 describe('LoggingService', () => {
     let subject: ConsoleLoggingService;

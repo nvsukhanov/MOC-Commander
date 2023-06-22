@@ -40,7 +40,7 @@ export class ControlSchemeEffects {
         );
     });
 
-    public readonly hideDialodOnListenStop$ = createEffect(() => {
+    public readonly hideDialogOnListenStop$ = createEffect(() => {
         return this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.isListening).pipe(
             filter((isListening) => !isListening),
             tap(() => {
