@@ -19,6 +19,7 @@ export interface IState {
         isListening: boolean;
     };
     controlSchemeRunningState: {
+        stage: ControlSchemeRunStage;
         runningSchemeId: string | null;
     };
     hubs: EntityState<HubConfiguration>,
@@ -48,6 +49,13 @@ export interface IState {
         isAvailable: boolean;
     },
     router: RouterState;
+}
+
+export enum ControlSchemeRunStage {
+    Preparing,
+    Running,
+    Cleanup,
+    Idle
 }
 
 export type VirtualPortConfig = {

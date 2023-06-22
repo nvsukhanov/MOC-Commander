@@ -121,7 +121,11 @@
     "createVirtualPortConfigurationDialogCancelButtonTitle": "Cancel",
     "virtualPortsSectionTitle": "Virtual ports",
     "virtualPortDeleteButtonTitle": "Delete",
-    "virtualPortDeleteConfirmationTitle": "Are you sure you want to delete virtual port?"
+    "virtualPortDeleteConfirmationTitle": "Are you sure you want to delete virtual port?",
+    "controlSchemeStartError": "An error occurred while starting control scheme",
+    "controlSchemeStopError": "An error occurred while stopping control scheme",
+    "virtualPortIoTypeMismatch": "Device at port {portId} does not match the virtual port configuration",
+    "virtualPortTitle": "Virtual port {name}"
   },
   "motorServoEndState": {
     "float": "Float",

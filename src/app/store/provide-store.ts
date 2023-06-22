@@ -31,13 +31,13 @@ import {
 } from './reducers';
 import {
     ControlSchemeEffects,
+    ControlSchemeRunnerEffects,
     ControllerInputCaptureEffects,
     GamepadControllerEffects,
     HubAttachedIOsEffects,
     HubAttachedIosStateEffects,
     HubIOSupportedModesEffects,
     HubPortModeInfoEffects,
-    HubPortTasksEffects,
     HubVirtualPortEffects,
     HubsEffects,
     KeyboardControllerEffects,
@@ -102,7 +102,7 @@ export function provideApplicationStore(): EnvironmentProviders {
             HubIOSupportedModesEffects,
             HubsEffects,
             ControlSchemeEffects,
-            HubPortTasksEffects,
+            ControlSchemeRunnerEffects,
             NotificationsEffects,
             ServoCalibrationEffects,
             HubAttachedIosStateEffects,

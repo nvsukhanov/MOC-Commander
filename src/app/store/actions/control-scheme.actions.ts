@@ -8,9 +8,14 @@ export const CONTROL_SCHEME_ACTIONS = createActionGroup({
         'create': props<BindingFormResult>(),
         'update': props<BindingFormResult>(),
         'delete': props<{ id: string }>(),
-        'run scheme': props<{ schemeId: string }>(),
-        'mark scheme as running': props<{ schemeId: string }>(),
-        'stop running': emptyProps(),
+
+        'start scheme': props<{ schemeId: string }>(),
+        'scheme started': props<{ schemeId: string }>(),
+        'scheme start error': props<{ schemeId: string }>(),
+        'stop scheme': emptyProps(),
+        'scheme stopped': emptyProps(),
+        'scheme stop error': emptyProps(),
+
         'input rebind success': emptyProps(),
         'input rebind type mismatch': emptyProps(),
         'no IO for input found': emptyProps(),
