@@ -4,6 +4,7 @@ import { Dictionary } from '@ngrx/entity';
 
 import {
     AttachedIO,
+    AttachedVirtualIO,
     ControlScheme,
     ControlSchemeBinding,
     Controller,
@@ -12,7 +13,8 @@ import {
     HubConnectionState,
     HubIoSupportedModes,
     IState,
-    PortModeInfo
+    PortModeInfo,
+    PortType
 } from '../i-state';
 import { CONTROL_SCHEMES_ENTITY_ADAPTER, controllerInputIdFn, hubAttachedIosIdFn } from '../entity-adapters';
 import { HUB_PORT_TASKS_SELECTORS } from './hub-port-tasks.selectors';
@@ -378,6 +380,21 @@ export const CONTROL_SCHEME_SELECTORS = {
                    }
                });
             return [ ...hubWithSynchronizableIOsMap.values() ].filter((h) => h.synchronizableIOs.length > 1);
+        }
+    ),
+    selectVirtualPortsOfSchemeRelatedHubs: (schemeId: string) => createSelector(
+        CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
+        HUB_ATTACHED_IO_SELECTORS.selectHubIOsByPortType(PortType.Virtual),
+        (scheme, virtualIOs): AttachedVirtualIO[] => {
+            const virtualIoMap = new Map<string, AttachedVirtualIO>();
+            virtualIOs.forEach((io) => {
+                virtualIoMap.set(`${io.hubId}/${io.portIdA}/${io.portIdB}`, io);
+            });
+            if (!scheme) {
+                return [];
+            }
+            return scheme.virtualPorts.map((vp) => virtualIoMap.get(`${vp.hubId}/${vp.portIdA}/${vp.portIdB}`))
+                         .filter((v) => !!v) as AttachedVirtualIO[];
         }
     )
 } as const;

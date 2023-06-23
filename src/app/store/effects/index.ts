@@ -9,4 +9,3 @@ export * from './servo-calibration.effects';
 export * from './hub-attached-ios-state.effects';
 export * from './controllers';
 export * from './controller-input-capture.effects';
-export * from './hub-virtual-port.effects';

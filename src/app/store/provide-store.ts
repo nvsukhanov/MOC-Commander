@@ -26,7 +26,6 @@ import {
     HUB_IO_OUTPUT_MODES_REDUCER,
     HUB_PORT_MODE_INFO_REDUCER,
     HUB_PORT_TASKS_REDUCER,
-    HUB_VIRTUAL_PORT_REDUCER,
     SERVO_CALIBRATION_REDUCER
 } from './reducers';
 import {
@@ -38,7 +37,6 @@ import {
     HubAttachedIosStateEffects,
     HubIOSupportedModesEffects,
     HubPortModeInfoEffects,
-    HubVirtualPortEffects,
     HubsEffects,
     KeyboardControllerEffects,
     NotificationsEffects,
@@ -64,7 +62,6 @@ const REDUCERS: ActionReducerMap<IState> = {
     hubDiscoveryState: HUB_DISCOVERY_STATE_REDUCER,
     hubAttachedIOs: HUB_ATTACHED_IOS_REDUCER,
     hubAttachedIOState: HUB_ATTACHED_IO_STATE_REDUCER,
-    hubVirtualPorts: HUB_VIRTUAL_PORT_REDUCER,
     hubIOSupportedModes: HUB_IO_OUTPUT_MODES_REDUCER,
     hubPortModeInfo: HUB_PORT_MODE_INFO_REDUCER,
     hubPortTasks: HUB_PORT_TASKS_REDUCER,
@@ -109,7 +106,6 @@ export function provideApplicationStore(): EnvironmentProviders {
             GamepadControllerEffects,
             KeyboardControllerEffects,
             ControllerInputCaptureEffects,
-            HubVirtualPortEffects
         ),
         provideStoreDevtools({
             maxAge: 100,

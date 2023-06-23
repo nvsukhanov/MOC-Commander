@@ -91,6 +91,10 @@ export const HUB_ATTACHED_IO_SELECTORS = {
         HUB_ATTACHED_IO_SELECTORS.selectIOsAll,
         (ios) => ios.filter((io) => io.hubId === hubId)
     ),
+    selectHubIOsByPortType: <T extends PortType>(portType: T) => createSelector(
+        SELECT_ALL,
+        (ios) => ios.filter((io) => io.portType === portType) as Array<AttachedIO & { portType: T }>
+    ),
     selectFullPhysicalIOsInfoForHub: (hubId: string) => createSelector(
         HUB_ATTACHED_IO_SELECTORS.selectHubIOs(hubId),
         HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
