@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { IOType } from '@nvsukhanov/rxpoweredup';
 
-import { HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER } from '../entity-adapters';
-import { IState } from '../i-state';
+import { HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER, hubIOSupportedModesIdFn } from '../entity-adapters';
+import { AttachedIO, IState } from '../i-state';
 
 const HUB_IO_SUPPORTED_MODES_FEATURE_SELECTOR = createFeatureSelector<IState['hubIOSupportedModes']>('hubIOSupportedModes');
 
@@ -18,20 +17,16 @@ export const HUB_IO_SUPPORTED_MODES_SELECTORS = {
         HUB_IO_SUPPORTED_MODES_FEATURE_SELECTOR,
         HUB_IO_SUPPORTED_MODES_ADAPTER_SELECTORS.selectEntities
     ),
-    selectIOPortModes: (hardwareRevision: string, softwareRevision: string, ioType: IOType) => createSelector(
+    selectIOPortModes: (io: AttachedIO) => createSelector(
         HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesList,
         (state) => {
             return state.find(
-                (item) => item.hardwareRevision === hardwareRevision && item.softwareRevision === softwareRevision && item.ioType === ioType
+                (item) => item.id === hubIOSupportedModesIdFn(io)
             ) ?? null;
         }
     ),
-    hasCachedIOPortModes: (hardwareRevision: string, softwareRevision: string, ioType: IOType) => createSelector(
-        HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesList,
-        (state) => {
-            return state.some(
-                (item) => item.hardwareRevision === hardwareRevision && item.softwareRevision === softwareRevision && item.ioType === ioType
-            );
-        }
+    hasCachedIOPortModes: (io: AttachedIO) => createSelector(
+        HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOPortModes(io),
+        (state) => state !== null
     )
 } as const;

@@ -14,7 +14,16 @@ import { MatCardModule } from '@angular/material/card';
 import { ConfirmDialogService, NotFoundComponent } from '@app/shared';
 import { HubPropertiesViewComponent } from '../hub-properties-view';
 import { HubIoViewComponent } from '../hub-io-view';
-import { HUBS_ACTIONS, HUBS_SELECTORS, HUB_ATTACHED_IO_SELECTORS, HubConfiguration, IOFullInfo, ROUTER_SELECTORS, hubAttachedIosIdFn, } from '../../../store';
+import {
+    HUBS_ACTIONS,
+    HUBS_SELECTORS,
+    HUB_ATTACHED_IO_SELECTORS,
+    HubConfiguration,
+    IOFullInfo,
+    PhysicalIOFullInfo,
+    ROUTER_SELECTORS,
+    hubAttachedIosIdFn,
+} from '../../../store';
 import { RoutesBuilderService } from '../../../routing';
 
 @Component({
@@ -44,8 +53,8 @@ export class HubViewComponent implements OnDestroy {
         switchMap((id) => id === undefined ? EMPTY : this.store.select(HUBS_SELECTORS.selectHub(id)))
     );
 
-    public readonly IOFullData$: Observable<IOFullInfo[]> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
-        switchMap((id) => id === undefined ? EMPTY : this.store.select(HUB_ATTACHED_IO_SELECTORS.selectFullIOsInfoForHub(id)))
+    public readonly IOFullData$: Observable<PhysicalIOFullInfo[]> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
+        switchMap((id) => id === undefined ? EMPTY : this.store.select(HUB_ATTACHED_IO_SELECTORS.selectFullPhysicalIOsInfoForHub(id)))
     );
 
     constructor(

@@ -1,13 +1,12 @@
 import { createActionGroup, props } from '@ngrx/store';
-import { IOType } from '@nvsukhanov/rxpoweredup';
+
+import { AttachedIO } from '../i-state';
 
 export const HUB_IO_SUPPORTED_MODES = createActionGroup({
     source: 'HUB_IO_OUTPUT_MODES',
     events: {
         'port modes received': props<{
-            hardwareRevision: string,
-            softwareRevision: string,
-            ioType: IOType,
+            io: AttachedIO,
             portInputModes: number[]
             portOutputModes: number[],
             synchronizable: boolean

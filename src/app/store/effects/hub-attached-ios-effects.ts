@@ -7,10 +7,11 @@ import { Store } from '@ngrx/store';
 import { HUBS_ACTIONS, HUB_ATTACHED_IOS_ACTIONS } from '../actions';
 import { HubStorageService } from '../hub-storage.service';
 import { HUB_ATTACHED_IO_SELECTORS } from '../selectors';
+import { PortType } from '../i-state';
 
 @Injectable()
 export class HubAttachedIOsEffects {
-    public readonly listenAttachedIOsReplies$ = createEffect(() => {
+    public readonly listenAttachedPhysicalIOs$ = createEffect(() => {
         return this.actions.pipe(
             ofType(HUBS_ACTIONS.connected),
             mergeMap((action) => {
@@ -19,12 +20,15 @@ export class HubAttachedIOsEffects {
                     filter((r) => r.event === AttachIoEvent.Attached),
                     map((r) => {
                         const attachMessage = r as AttachedIoAttachInboundMessage;
-                        return HUB_ATTACHED_IOS_ACTIONS.registerIO({
-                            portId: attachMessage.portId,
-                            ioType: attachMessage.ioTypeId,
-                            hardwareRevision: attachMessage.hardwareRevision,
-                            softwareRevision: attachMessage.softwareRevision,
-                            hubId: action.hubId
+                        return HUB_ATTACHED_IOS_ACTIONS.ioConnected({
+                            io: {
+                                portType: PortType.Physical,
+                                hubId: action.hubId,
+                                portId: attachMessage.portId,
+                                hardwareRevision: attachMessage.hardwareRevision,
+                                softwareRevision: attachMessage.softwareRevision,
+                                ioType: attachMessage.ioTypeId,
+                            }
                         });
                     })
                 );
@@ -42,7 +46,7 @@ export class HubAttachedIOsEffects {
                         this.store.select(HUB_ATTACHED_IO_SELECTORS.selectIOAtPort({ hubId: action.hubId, portId: ioDetachEvent.portId }))
                     ),
                     filter(([ , io ]) => !!io),
-                    map(([ ioDetachEvent ]) => HUB_ATTACHED_IOS_ACTIONS.unregisterIO({ hubId: action.hubId, portId: ioDetachEvent.portId }))
+                    map(([ ioDetachEvent ]) => HUB_ATTACHED_IOS_ACTIONS.ioDisconnected({ hubId: action.hubId, portId: ioDetachEvent.portId }))
                 );
             })
         );

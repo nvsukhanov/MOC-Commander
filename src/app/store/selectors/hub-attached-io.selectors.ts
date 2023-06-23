@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { IOType, PortModeName } from '@nvsukhanov/rxpoweredup';
+import { PortModeName } from '@nvsukhanov/rxpoweredup';
 import { Dictionary } from '@ngrx/entity';
 
 import { HUB_ATTACHED_IOS_ENTITY_ADAPTER, hubAttachedIosIdFn, hubIOSupportedModesIdFn, hubPortModeInfoIdFn, } from '../entity-adapters';
-import { AttachedIO, HubIoSupportedModes, IState, PortModeInfo } from '../i-state';
+import { AttachedIO, AttachedPhysicalIO, AttachedVirtualIO, HubIoSupportedModes, IState, PortModeInfo, PortType } from '../i-state';
 import { HUB_IO_SUPPORTED_MODES_SELECTORS } from './hub-io-supported-modes.selectors';
 import { HUB_IO_CONTROL_METHODS, HubIoOperationMode } from '../hub-io-operation-mode';
 import { HUB_PORT_MODE_INFO_SELECTORS } from './hub-port-mode-info.selectors';
@@ -53,20 +53,16 @@ function combineFullIOInfo(
         const portInputModeIds = supportedModes?.portInputModes ?? [];
         const portOutputModeIds = supportedModes?.portOutputModes ?? [];
         const portInputModes = portInputModeIds.map((modeId) => {
-            const modeEntityId = hubPortModeInfoIdFn({ ...io, modeId });
+            const modeEntityId = hubPortModeInfoIdFn({ io, modeId });
             return portModeDataEntities[modeEntityId];
         }).filter((mode) => !!mode) as PortModeInfo[];
         const portOutputModes = portOutputModeIds.map((modeId) => {
-            const modeEntityId = hubPortModeInfoIdFn({ ...io, modeId });
+            const modeEntityId = hubPortModeInfoIdFn({ io, modeId });
             return portModeDataEntities[modeEntityId];
         }).filter((mode) => !!mode) as PortModeInfo[];
 
         return {
-            hubId: io.hubId,
-            portId: io.portId,
-            ioType: io.ioType,
-            hardwareRevision: io.hardwareRevision,
-            softwareRevision: io.softwareRevision,
+            ...io,
             portInputModes,
             portOutputModes,
             synchronizable: supportedModes?.synchronizable ?? false,
@@ -74,16 +70,19 @@ function combineFullIOInfo(
     });
 }
 
-export type IOFullInfo = {
-    hubId: string;
-    portId: number;
-    ioType: IOType;
-    hardwareRevision: string;
-    softwareRevision: string;
+export type PhysicalIOFullInfo = {
     portInputModes: PortModeInfo[];
     portOutputModes: PortModeInfo[];
     synchronizable: boolean;
-}
+} & AttachedPhysicalIO;
+
+export type VirtualIOFullInfo = {
+    portInputModes: PortModeInfo[];
+    portOutputModes: PortModeInfo[];
+    synchronizable: boolean;
+} & AttachedVirtualIO;
+
+export type IOFullInfo = PhysicalIOFullInfo | VirtualIOFullInfo;
 
 export const HUB_ATTACHED_IO_SELECTORS = {
     selectIOsAll: SELECT_ALL,
@@ -92,12 +91,13 @@ export const HUB_ATTACHED_IO_SELECTORS = {
         HUB_ATTACHED_IO_SELECTORS.selectIOsAll,
         (ios) => ios.filter((io) => io.hubId === hubId)
     ),
-    selectFullIOsInfoForHub: (hubId: string) => createSelector(
+    selectFullPhysicalIOsInfoForHub: (hubId: string) => createSelector(
         HUB_ATTACHED_IO_SELECTORS.selectHubIOs(hubId),
         HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
         HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
-        (ios, supportedModesEntities, portModeDataEntities): IOFullInfo[] => {
-            return combineFullIOInfo(ios, supportedModesEntities, portModeDataEntities);
+        (ios, supportedModesEntities, portModeDataEntities): PhysicalIOFullInfo[] => {
+            return combineFullIOInfo(ios, supportedModesEntities, portModeDataEntities)
+                .filter((v) => v.portType === PortType.Physical) as PhysicalIOFullInfo[];
         }
     ),
     selectFullIOsInfo: createSelector(
@@ -173,7 +173,7 @@ export const HUB_ATTACHED_IO_SELECTORS = {
             }
             const portOutputModes = modesInfo.portOutputModes;
             const portModes = new Set(portOutputModes
-                .map((modeId) => portModesEntities[hubPortModeInfoIdFn({ ...io, modeId })])
+                .map((modeId) => portModesEntities[hubPortModeInfoIdFn({ io, modeId })])
                 .map((portModeInfo) => portModeInfo?.name)
                 .filter((portModeInfo) => !!portModeInfo)
             ) as ReadonlySet<PortModeName>;
@@ -193,7 +193,7 @@ export function getHubIOOperationModes(
 
     if (outputModes && outputModes.length > 0) {
         return outputModes.map((modeId) => {
-            const portModeId = hubPortModeInfoIdFn({ ...io, modeId });
+            const portModeId = hubPortModeInfoIdFn({ io, modeId });
             const portModeInfo = portModeData[portModeId];
             if (portModeInfo && Object.values(HUB_IO_CONTROL_METHODS[inputType]).includes(portModeInfo.name)) {
                 return Object.entries(HUB_IO_CONTROL_METHODS[inputType])
