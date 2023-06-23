@@ -29,7 +29,6 @@ export interface IState {
     },
     hubAttachedIOs: EntityState<AttachedIO>,
     hubAttachedIOState: EntityState<AttachedIOState>,
-    hubVirtualPorts: EntityState<VirtualPort>,
     hubIOSupportedModes: EntityState<HubIoSupportedModes>,
     hubPortModeInfo: EntityState<PortModeInfo>,
     hubPortTasks: {
@@ -227,11 +226,3 @@ export type AttachedVirtualIO = {
 }
 
 export type AttachedIO = AttachedPhysicalIO | AttachedVirtualIO;
-
-export type VirtualPort = {
-    hubId: string;
-    portId: number;
-    ioType: IOType;
-    portIdA: number;
-    portIdB: number;
-}

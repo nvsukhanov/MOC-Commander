@@ -6,13 +6,7 @@ import { Dictionary } from '@ngrx/entity';
 import { PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 
 import { PortCommandTask } from '@app/shared';
-import {
-    CONTROL_SCHEME_RUNNING_STATE_SELECTORS,
-    CONTROL_SCHEME_SELECTORS,
-    HUB_ATTACHED_IO_STATE_SELECTORS,
-    HUB_PORT_TASKS_SELECTORS,
-    HUB_VIRTUAL_PORT_SELECTORS
-} from '../selectors';
+import { CONTROL_SCHEME_RUNNING_STATE_SELECTORS, CONTROL_SCHEME_SELECTORS, HUB_ATTACHED_IO_STATE_SELECTORS, HUB_PORT_TASKS_SELECTORS } from '../selectors';
 import { CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS, HUB_PORT_TASKS_ACTIONS } from '../actions';
 import {
     IPortCommandTaskComposer,
@@ -218,7 +212,7 @@ export class ControlSchemeRunnerEffects {
     private deleteAllVirtualPortsAtSchemeRelatedHubs(
         schemeId: string
     ): Observable<void> {
-        return this.store.select(HUB_VIRTUAL_PORT_SELECTORS.selectVirtualPortsOfSchemeRelatedHubs(schemeId)).pipe(
+        return this.store.select(CONTROL_SCHEME_SELECTORS.selectVirtualPortsOfSchemeRelatedHubs(schemeId)).pipe(
             take(1),
             switchMap((virtualPorts) => {
                 if (virtualPorts.length) {

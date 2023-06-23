@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { filter, map, mergeMap, takeUntil } from 'rxjs';
-import { AttachIoEvent, AttachedIoAttachInboundMessage } from '@nvsukhanov/rxpoweredup';
-import { Store } from '@ngrx/store';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { map, mergeMap, takeUntil } from 'rxjs';
+import { AttachIoEvent, AttachedIOAttachVirtualInboundMessage, AttachedIoAttachInboundMessage } from '@nvsukhanov/rxpoweredup';
 
 import { HUBS_ACTIONS, HUB_ATTACHED_IOS_ACTIONS } from '../actions';
 import { HubStorageService } from '../hub-storage.service';
-import { HUB_ATTACHED_IO_SELECTORS } from '../selectors';
 import { PortType } from '../i-state';
 
 @Injectable()
@@ -17,7 +15,6 @@ export class HubAttachedIOsEffects {
             mergeMap((action) => {
                 return this.hubStorage.get(action.hubId).ports.onIoAttach({ eventTypes: [ AttachIoEvent.Attached ] }).pipe(
                     takeUntil(this.hubStorage.get(action.hubId).disconnected),
-                    filter((r) => r.event === AttachIoEvent.Attached),
                     map((r) => {
                         const attachMessage = r as AttachedIoAttachInboundMessage;
                         return HUB_ATTACHED_IOS_ACTIONS.ioConnected({
@@ -36,25 +33,67 @@ export class HubAttachedIOsEffects {
         );
     });
 
+    public readonly listenAttachedVirtualIOs$ = createEffect(() => {
+        return this.actions.pipe(
+            ofType(HUBS_ACTIONS.connected),
+            mergeMap((action) => {
+                return this.hubStorage.get(action.hubId).ports.onIoAttach({ eventTypes: [ AttachIoEvent.AttachedVirtual ] }).pipe(
+                    takeUntil(this.hubStorage.get(action.hubId).disconnected),
+                    map((r) => {
+                        const attachMessage = r as AttachedIOAttachVirtualInboundMessage;
+                        return HUB_ATTACHED_IOS_ACTIONS.ioConnected({
+                            io: {
+                                portType: PortType.Virtual,
+                                hubId: action.hubId,
+                                portId: attachMessage.portId,
+                                ioType: attachMessage.ioTypeId,
+                                portIdA: attachMessage.portIdA,
+                                portIdB: attachMessage.portIdB,
+                            }
+                        });
+                    })
+                );
+            }),
+        );
+    });
+
     public readonly listenDetachedIOsReplies$ = createEffect(() => {
         return this.actions.pipe(
             ofType(HUBS_ACTIONS.connected),
             mergeMap((action) => {
                 return this.hubStorage.get(action.hubId).ports.onIoDetach().pipe(
                     takeUntil(this.hubStorage.get(action.hubId).disconnected),
-                    concatLatestFrom((ioDetachEvent) =>
-                        this.store.select(HUB_ATTACHED_IO_SELECTORS.selectIOAtPort({ hubId: action.hubId, portId: ioDetachEvent.portId }))
-                    ),
-                    filter(([ , io ]) => !!io),
-                    map(([ ioDetachEvent ]) => HUB_ATTACHED_IOS_ACTIONS.ioDisconnected({ hubId: action.hubId, portId: ioDetachEvent.portId }))
+                    map((ioDetachEvent) => HUB_ATTACHED_IOS_ACTIONS.ioDisconnected({ hubId: action.hubId, portId: ioDetachEvent.portId }))
                 );
             })
         );
     });
 
+    public readonly createVirtualPort$ = createEffect(() => {
+        return this.actions.pipe(
+            ofType(HUB_ATTACHED_IOS_ACTIONS.createVirtualPort),
+            mergeMap((action) => {
+                return this.hubStorage.get(action.hubId).ports.createVirtualPort(
+                    action.portIdA,
+                    action.portIdB
+                );
+            })
+        );
+    }, { dispatch: false });
+
+    public readonly deleteVirtualPort$ = createEffect(() => {
+        return this.actions.pipe(
+            ofType(HUB_ATTACHED_IOS_ACTIONS.deleteVirtualPort),
+            mergeMap((action) => {
+                return this.hubStorage.get(action.hubId).ports.deleteVirtualPort(
+                    action.portId
+                );
+            })
+        );
+    }, { dispatch: false });
+
     constructor(
         private readonly actions: Actions,
-        private readonly store: Store,
         private readonly hubStorage: HubStorageService,
     ) {
     }
