@@ -4,25 +4,22 @@ import { PortModeName } from '@nvsukhanov/rxpoweredup';
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 
-import { HUB_IO_SUPPORTED_MODES_SELECTORS, HUB_PORT_MODE_INFO_SELECTORS } from '../selectors';
+import { HUB_PORT_MODE_INFO_SELECTORS } from '../selectors';
 import { HubStorageService } from '../hub-storage.service';
-import { HUB_ATTACHED_IOS_ACTIONS, HUB_ATTACHED_IOS_STATE_ACTIONS, HUB_PORT_MODE_INFO_ACTIONS } from '../actions';
+import { HUB_ATTACHED_IOS_ACTIONS, HUB_ATTACHED_IOS_STATE_ACTIONS } from '../actions';
+import { AttachedIO } from '../i-state';
 
 @Injectable()
 export class HubAttachedIosStateEffects {
     public readonly getMotorEncoderOffset$ = createEffect(() => {
         return this.actions.pipe(
-            ofType(HUB_ATTACHED_IOS_ACTIONS.registerIO),
+            ofType(HUB_ATTACHED_IOS_ACTIONS.ioConnected),
             mergeMap((action) => this.getModeIdForModeName(
-                action.hardwareRevision,
-                action.softwareRevision,
-                action.ioType,
+                action.io,
                 PortModeName.position
             ).pipe(
                 concatWith(this.getModeIdForModeName(
-                    action.hardwareRevision,
-                    action.softwareRevision,
-                    action.ioType,
+                    action.io,
                     PortModeName.absolutePosition
                 )),
                 bufferCount(2),
@@ -31,14 +28,14 @@ export class HubAttachedIosStateEffects {
             filter((d) => d.absolutePositionModeId !== null && d.positionModeId !== null),
             mergeMap(({ positionModeId, absolutePositionModeId, action }) => {
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                return this.hubStorage.get(action.hubId).motors.getPosition(action.portId, positionModeId!).pipe(
+                return this.hubStorage.get(action.io.hubId).motors.getPosition(action.io.portId, positionModeId!).pipe(
                     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    concatWith(this.hubStorage.get(action.hubId).motors.getAbsolutePosition(action.portId, absolutePositionModeId!)),
+                    concatWith(this.hubStorage.get(action.io.hubId).motors.getAbsolutePosition(action.io.portId, absolutePositionModeId!)),
                     bufferCount(2),
                     map(([ position, absolutePosition ]) => absolutePosition - position),
                     map((offset) => HUB_ATTACHED_IOS_STATE_ACTIONS.motorEncoderOffsetReceived({
-                        hubId: action.hubId,
-                        portId: action.portId,
+                        hubId: action.io.hubId,
+                        portId: action.io.portId,
                         offset
                     }))
                 );
@@ -54,40 +51,11 @@ export class HubAttachedIosStateEffects {
     }
 
     private getModeIdForModeName(
-        hardwareRevision: string,
-        softwareRevision: string,
-        ioType: number,
+        io: AttachedIO,
         portModeName: PortModeName
     ): Observable<number | null> {
-        return this.store.select(HUB_IO_SUPPORTED_MODES_SELECTORS.hasCachedIOPortModes(
-            hardwareRevision,
-            softwareRevision,
-            ioType
-        )).pipe(
-            take(1),
-            concatWith(this.store.select(HUB_PORT_MODE_INFO_SELECTORS.hasCachedPortModeInfo(hardwareRevision, softwareRevision, ioType))),
-            bufferCount(2),
-            map(([ hasCachedIOPortModes, hasCachePortModeInfo ]) => hasCachedIOPortModes && hasCachePortModeInfo),
-            mergeMap((hasCache) => {
-                if (hasCache) {
-                    return this.store.select(HUB_PORT_MODE_INFO_SELECTORS.selectModeIdForInputModeName(
-                        hardwareRevision,
-                        softwareRevision,
-                        ioType,
-                        portModeName
-                    ));
-                } else {
-                    return this.actions.pipe(
-                        ofType(HUB_PORT_MODE_INFO_ACTIONS.addPortModeData),
-                        map((d) => d.dataSets.find((dataSet) => dataSet.name === portModeName
-                            && dataSet.hardwareRevision === hardwareRevision
-                            && dataSet.softwareRevision === softwareRevision
-                            && dataSet.ioType === ioType
-                        )),
-                        map((positionMode) => positionMode?.modeId || null),
-                    );
-                }
-            }),
+        return this.store.select(HUB_PORT_MODE_INFO_SELECTORS.selectModeIdForInputModeName(io, portModeName)).pipe(
+            filter((modeId) => modeId !== null),
             take(1)
         );
     }

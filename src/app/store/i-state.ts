@@ -180,9 +180,7 @@ export type ControlScheme = {
 }
 
 export type HubIoSupportedModes = {
-    hardwareRevision: string;
-    softwareRevision: string;
-    ioType: IOType;
+    id: string;
     portInputModes: number[];
     portOutputModes: number[];
     synchronizable: boolean;
@@ -199,21 +197,36 @@ export type HubConfiguration = {
 }
 
 export type PortModeInfo = {
-    hardwareRevision: string;
-    softwareRevision: string;
+    id: string;
     modeId: number;
-    ioType: IOType;
     name: PortModeName;
     symbol: PortModeSymbol;
 }
 
-export type AttachedIO = {
+export enum PortType {
+    Physical,
+    Virtual
+}
+
+export type AttachedPhysicalIO = {
+    portType: PortType.Physical;
     hubId: string;
     portId: number;
     ioType: IOType;
     hardwareRevision: string;
     softwareRevision: string;
 }
+
+export type AttachedVirtualIO = {
+    portType: PortType.Virtual;
+    hubId: string;
+    portId: number;
+    ioType: IOType;
+    portIdA: number;
+    portIdB: number;
+}
+
+export type AttachedIO = AttachedPhysicalIO | AttachedVirtualIO;
 
 export type VirtualPort = {
     hubId: string;

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { IOType } from '@nvsukhanov/rxpoweredup';
 
 import { PortCommandTask } from '@app/shared';
 import {
@@ -14,6 +13,7 @@ import {
     HubConnection,
     HubIoSupportedModes,
     PortModeInfo,
+    PortType,
     VirtualPort,
 } from './i-state';
 import { ControllerType } from '../plugins';
@@ -36,23 +36,31 @@ export const HUBS_ENTITY_ADAPTER: EntityAdapter<HubConfiguration> = createEntity
 });
 
 export const HUB_PORT_MODE_INFO: EntityAdapter<PortModeInfo> = createEntityAdapter<PortModeInfo>({
-    selectId: (mode) => hubPortModeInfoIdFn(mode),
+    selectId: (mode) => mode.id,
 });
 
 export function hubPortModeInfoIdFn(
-    { hardwareRevision, softwareRevision, modeId, ioType }: { hardwareRevision: string, softwareRevision: string, modeId: number, ioType: IOType }
+    { io, modeId }: { io: AttachedIO, modeId: number }
 ): string {
-    return `${hardwareRevision}/${softwareRevision}/${modeId}/${ioType}`;
+    if (io.portType === PortType.Virtual) {
+        return `vi/${io.hubId}/${io.portId}/${modeId}`;
+    } else {
+        return `phy/${io.hardwareRevision}/${io.softwareRevision}/${io.ioType}/${modeId}`;
+    }
 }
 
 export const HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER: EntityAdapter<HubIoSupportedModes> = createEntityAdapter<HubIoSupportedModes>({
-    selectId: (mode) => hubIOSupportedModesIdFn(mode),
+    selectId: (mode) => mode.id,
 });
 
 export function hubIOSupportedModesIdFn(
-    { hardwareRevision, softwareRevision, ioType }: { hardwareRevision: string, softwareRevision: string, ioType: IOType }
+    io: AttachedIO
 ): string {
-    return `${hardwareRevision}/${softwareRevision}/${ioType}`;
+    if (io.portType === PortType.Virtual) {
+        return `vi/${io.hubId}/${io.portId}`;
+    } else {
+        return `phy/${io.hardwareRevision}/${io.softwareRevision}/${io.ioType}`;
+    }
 }
 
 export const CONTROL_SCHEMES_ENTITY_ADAPTER: EntityAdapter<ControlScheme> = createEntityAdapter<ControlScheme>({

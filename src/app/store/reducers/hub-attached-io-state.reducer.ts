@@ -7,7 +7,7 @@ import { IState } from '../i-state';
 
 export const HUB_ATTACHED_IO_STATE_REDUCER = createReducer(
     INITIAL_STATE.hubAttachedIOState,
-    on(HUB_ATTACHED_IOS_ACTIONS.unregisterIO, (state, data): IState['hubAttachedIOState'] => HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER.removeOne(
+    on(HUB_ATTACHED_IOS_ACTIONS.ioDisconnected, (state, data): IState['hubAttachedIOState'] => HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER.removeOne(
         hubAttachedIosIdFn(data),
         state
     )),

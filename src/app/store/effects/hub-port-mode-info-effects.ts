@@ -7,6 +7,7 @@ import { PortModeInformationName, PortModeInformationSymbol, PortModeInformation
 import { HUB_IO_SUPPORTED_MODES, HUB_PORT_MODE_INFO_ACTIONS } from '../actions';
 import { HubStorageService } from '../hub-storage.service';
 import { HUB_ATTACHED_IO_SELECTORS } from '../selectors';
+import { hubPortModeInfoIdFn } from '../entity-adapters';
 
 @Injectable()
 export class HubPortModeInfoEffects {
@@ -15,10 +16,7 @@ export class HubPortModeInfoEffects {
             ofType(HUB_IO_SUPPORTED_MODES.portModesReceived),
             concatLatestFrom(() => this.store.select(HUB_ATTACHED_IO_SELECTORS.selectIOsAll)),
             mergeMap(([ action, ios ]) => {
-                const matchingIO = ios.find((io) => io.softwareRevision === action.softwareRevision
-                    && io.hardwareRevision === action.hardwareRevision
-                    && io.ioType === action.ioType
-                );
+                const matchingIO = ios.find((io) => io.hubId === action.io.hubId && io.portId === action.io.portId);
                 if (!matchingIO) {
                     throw new Error('No hub found with matching IO');
                 }
@@ -34,10 +32,8 @@ export class HubPortModeInfoEffects {
                         const names = data.slice(0, concatenatedPortModeIds.length) as PortModeInformationName[];
                         const symbols = data.slice(concatenatedPortModeIds.length) as PortModeInformationSymbol[];
                         const dataSets = names.map((nameMode, index) => ({
+                            id: hubPortModeInfoIdFn({ io: matchingIO, modeId: nameMode.mode }),
                             modeId: nameMode.mode,
-                            ioType: action.ioType,
-                            hardwareRevision: action.hardwareRevision,
-                            softwareRevision: action.softwareRevision,
                             name: names[index].name as PortModeName,
                             symbol: symbols[index].symbol as PortModeSymbol
                         }));

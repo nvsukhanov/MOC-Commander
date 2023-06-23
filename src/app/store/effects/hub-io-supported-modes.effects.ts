@@ -12,22 +12,16 @@ import { HubStorageService } from '../hub-storage.service';
 export class HubIOSupportedModesEffects {
     public loadHubIOOutputModesIfCacheIsEmpty$ = createEffect(() => {
         return this.actions$.pipe(
-            ofType(HUB_ATTACHED_IOS_ACTIONS.registerIO),
-            concatLatestFrom((action) => this.store.select(HUB_IO_SUPPORTED_MODES_SELECTORS.hasCachedIOPortModes(
-                action.hardwareRevision,
-                action.softwareRevision,
-                action.ioType
-            ))),
+            ofType(HUB_ATTACHED_IOS_ACTIONS.ioConnected),
+            concatLatestFrom((action) => this.store.select(HUB_IO_SUPPORTED_MODES_SELECTORS.hasCachedIOPortModes(action.io))),
             filter(([ , hasCached ]) => !hasCached),
-            mergeMap(([ action ]) => this.hubStorage.get(action.hubId).ports.getPortModes(action.portId).pipe(
-                takeUntil(this.hubStorage.get(action.hubId).disconnected),
-                takeUntil(this.hubStorage.get(action.hubId).ports.onIoDetach({ portIds: [ action.portId ] })),
+            mergeMap(([ action ]) => this.hubStorage.get(action.io.hubId).ports.getPortModes(action.io.portId).pipe(
+                takeUntil(this.hubStorage.get(action.io.hubId).disconnected),
+                takeUntil(this.hubStorage.get(action.io.hubId).ports.onIoDetach({ portIds: [ action.io.portId ] })),
                 map((modesData: PortModeInboundMessage) => ({ action, modesData })),
             )),
             map(({ action, modesData }) => HUB_IO_SUPPORTED_MODES.portModesReceived({
-                hardwareRevision: action.hardwareRevision,
-                softwareRevision: action.softwareRevision,
-                ioType: action.ioType,
+                io: action.io,
                 portInputModes: modesData.inputModes,
                 portOutputModes: modesData.outputModes,
                 synchronizable: modesData.capabilities.logicalSynchronizable

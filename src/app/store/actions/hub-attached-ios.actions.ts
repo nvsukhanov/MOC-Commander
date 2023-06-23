@@ -1,16 +1,11 @@
 import { createActionGroup, props } from '@ngrx/store';
-import { IOType } from '@nvsukhanov/rxpoweredup';
+
+import { AttachedIO } from '../i-state';
 
 export const HUB_ATTACHED_IOS_ACTIONS = createActionGroup({
-    source: 'HUB_ATTACHED_IOS_ACTIONS',
+    source: 'Hub Attached IOs',
     events: {
-        'registerIO': props<{
-            hubId: string,
-            portId: number,
-            ioType: IOType,
-            hardwareRevision: string,
-            softwareRevision: string,
-        }>(),
-        'unregisterIO': props<{ hubId: string, portId: number }>()
+        'io connected': props<{ io: AttachedIO }>(),
+        'io disconnected': props<{ hubId: string, portId: number }>()
     }
 });
