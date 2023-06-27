@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-import { HubConnectionState, IState } from '../i-state';
+import { IState } from '../i-state';
 import { HUBS_ENTITY_ADAPTER } from '../entity-adapters';
-import { HUB_CONNECTION_SELECTORS } from './hub-connections.selectors';
+import { HUB_STATS_SELECTORS } from './hub-stats.selectors';
 
 const SELECT_HUBS_FEATURE = createFeatureSelector<IState['hubs']>('hubs');
 
@@ -29,21 +29,32 @@ export const HUBS_SELECTORS = {
         (hubEntities) => hubEntities[hubId]?.name
     ),
     selectConnectedHubsCount: createSelector(
-        HUBS_SELECT_ALL,
-        HUB_CONNECTION_SELECTORS.selectEntities,
-        (hubs, hubConnections) => {
-            return hubs.filter((hub) => hubConnections[hub.hubId]?.connectionState === HubConnectionState.Connected).length;
-        }
+        HUB_STATS_SELECTORS.selectIds,
+        (statIds) => statIds.length
     ),
     selectHub: (hubId: string) => createSelector(SELECT_HUBS_ENTITIES, (state) => state[hubId]),
     selectHubsWithConnectionState: createSelector(
         HUBS_SELECT_ALL,
-        HUB_CONNECTION_SELECTORS.selectEntities,
-        (hubs, hubConnections) => {
+        HUB_STATS_SELECTORS.selectEntities,
+        (hubs, hubStats) => {
             return hubs.map((hub) => ({
                 ...hub,
-                connectionState: hubConnections[hub.hubId]?.connectionState ?? HubConnectionState.Disconnected
+                isConnected: !!hubStats[hub.hubId]
             }));
         }
-    )
+    ),
+    selectHubListViewModel: createSelector(
+        HUBS_SELECT_ALL,
+        HUB_STATS_SELECTORS.selectEntities,
+        (hubs, hubStats) => {
+            return hubs.map((hub) => ({
+                ...hub,
+                batteryLevel: hubStats[hub.hubId]?.batteryLevel || null,
+                RSSI: hubStats[hub.hubId]?.RSSI || null,
+                isButtonPressed: hubStats[hub.hubId]?.isButtonPressed || false,
+                hasCommunication: hubStats[hub.hubId]?.hasCommunication || false,
+                isConnected: !!hubStats[hub.hubId]
+            }));
+        }
+    ),
 } as const;

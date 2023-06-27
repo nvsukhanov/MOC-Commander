@@ -18,7 +18,7 @@ import { JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
-import { Subject, Subscription, combineLatestWith, filter, finalize, map, merge, startWith, switchMap, take, takeUntil, tap } from 'rxjs';
+import { Subject, Subscription, combineLatestWith, filter, finalize, map, merge, mergeMap, startWith, switchMap, take, takeUntil, tap } from 'rxjs';
 import { Actions, concatLatestFrom, ofType } from '@ngrx/effects';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatInputModule } from '@angular/material/input';
@@ -43,9 +43,13 @@ import {
     ControlScheme,
     ControllerInput,
     ControllerInputType,
+    HUBS_ACTIONS,
+    HUB_ATTACHED_IOS_ACTIONS,
     HUB_ATTACHED_IO_SELECTORS,
     HUB_IO_CONTROL_METHODS,
+    HUB_STATS_ACTIONS,
     HubWithSynchronizableIOs,
+    VirtualPortConfig,
     hubAttachedIosIdFn
 } from '../../../store';
 import { CreateVirtualPortConfigurationDialogComponent, CreateVirtualPortDialogResult } from '../../create-virtual-port-dialog';
@@ -101,7 +105,7 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
 
     private _isSmallScreen = false;
 
-    private sub?: Subscription;
+    private readonly sub: Subscription = new Subscription();
 
     constructor(
         private readonly store: Store,
@@ -153,13 +157,41 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
             this.form.controls.bindings.push(binging);
         });
         this.form.markAsPristine();
+
+        this.form.getRawValue().virtualPorts.forEach((virtualPort) => {
+            this.createVirtualPortIfPossible(virtualPort);
+        });
+
+        this.sub.add(
+            this.actions.pipe(
+                ofType(HUB_STATS_ACTIONS.initialHubIoDataReceived),
+                mergeMap((initialIoReceivedAction) => this.actions.pipe(
+                    ofType(HUB_ATTACHED_IOS_ACTIONS.ioConnected),
+                    filter((ioConnectedAction) => ioConnectedAction.io.hubId === initialIoReceivedAction.hubId),
+                    startWith(null),
+                    map(() => initialIoReceivedAction),
+                    takeUntil(
+                        this.actions.pipe(
+                            ofType(HUBS_ACTIONS.disconnected),
+                            filter((hubDisconnectedAction) => hubDisconnectedAction.hubId === initialIoReceivedAction.hubId)
+                        )
+                    )
+                ))
+            ).subscribe((action) => {
+                this.form.getRawValue().virtualPorts.forEach((virtualPort) => {
+                    if (virtualPort.hubId === action.hubId) {
+                        this.createVirtualPortIfPossible(virtualPort);
+                    }
+                });
+            })
+        );
     }
 
     public ngOnInit(): void {
-        this.sub = this.screenSizeObserverService.isSmallScreen$.subscribe((isSmallScreen) => {
+        this.sub.add(this.screenSizeObserverService.isSmallScreen$.subscribe((isSmallScreen) => {
             this._isSmallScreen = isSmallScreen;
             this.cdRef.markForCheck();
-        });
+        }));
         this.store.dispatch(CONTROLLERS_ACTIONS.waitForConnect());
     }
 
@@ -177,6 +209,14 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         this.onDestroy$.next();
         this.onDestroy$.complete();
         this.confirmDialogService.hide(this);
+
+        const hubsIdsSet = new Set<string>;
+        this.form.getRawValue().bindings.forEach((binding) => {
+            hubsIdsSet.add(binding.output.hubId);
+        });
+        hubsIdsSet.forEach((hubId) => {
+            this.store.dispatch(HUB_ATTACHED_IOS_ACTIONS.deleteAllVirtualPorts({ hubId }));
+        });
     }
 
     public addBinding(): void {
@@ -262,6 +302,7 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
                 this.form.controls.virtualPorts.push(
                     this.controlSchemeFormFactoryService.createVirtualPortsForm(data)
                 );
+                this.store.dispatch(HUB_ATTACHED_IOS_ACTIONS.createVirtualPort(data));
                 this.cdRef.detectChanges();
             }
         });
@@ -274,8 +315,19 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
             this.translocoService.selectTranslate('controlScheme.virtualPortDeleteConfirmationTitle'),
             this
         ).subscribe((isConfirmed) => {
-            if (isConfirmed) {
+            const virtualPort = this.form.controls.virtualPorts.value[index];
+            if (isConfirmed && virtualPort) {
                 this.form.controls.virtualPorts.removeAt(index);
+                const { hubId, portIdA, portIdB } = { ...virtualPort };
+                if (hubId !== undefined && portIdA !== undefined && portIdB !== undefined) {
+                    this.store.select(HUB_ATTACHED_IO_SELECTORS.selectHubVirtualPortByABId({ hubId, portIdA, portIdB })).pipe(
+                        take(1)
+                    ).subscribe((virtualPortFullInfo) => {
+                        if (virtualPortFullInfo) {
+                            this.store.dispatch(HUB_ATTACHED_IOS_ACTIONS.deleteVirtualPort(virtualPortFullInfo));
+                        }
+                    });
+                }
                 this.cdRef.markForCheck();
             }
         });
@@ -285,7 +337,7 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         this.form.controls.bindings.removeAt(index);
         this.cdRef.markForCheck();
     }
-    
+
     private startInputCapture(): void {
         this.store.dispatch(CONTROL_SCHEME_CONFIGURATION_ACTIONS.startListening());
     }
@@ -319,5 +371,19 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         }).filter((hubWithSynchronizableIOs) => {
             return hubWithSynchronizableIOs.synchronizableIOs.length > 0;
         });
+    }
+
+    private createVirtualPortIfPossible(
+        virtualPortConfig: VirtualPortConfig
+    ): void {
+        this.sub.add(
+            this.store.select(HUB_ATTACHED_IO_SELECTORS.virtualPortCanBeCreated(virtualPortConfig)).pipe(
+                take(1),
+            ).subscribe((canBeCreated) => {
+                if (canBeCreated) {
+                    this.store.dispatch(HUB_ATTACHED_IOS_ACTIONS.createVirtualPort(virtualPortConfig));
+                }
+            })
+        );
     }
 }

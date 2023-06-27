@@ -1,4 +1,4 @@
-<mat-card *ngIf="configuration">
+<mat-card *ngIf="configuration && stats">
     <mat-card-header>
         <mat-card-subtitle>
             <ng-container *ngIf="hubTypeL10nMap[configuration.hubType]; let hubTypeL10nKey; else hubTypeUnknown">
@@ -18,19 +18,18 @@
         <p>
             {{ 'hub.buttonState' | transloco: configuration }}
         </p>
-        <p *ngIf="configuration.batteryLevel !== null; else batteryLevelUnknown">
-            {{ 'hub.batteryLevel' | transloco: configuration }}
+        <p *ngIf="stats.batteryLevel !== null; else batteryLevelUnknown">
+            {{ 'hub.batteryLevel' | transloco: stats }}
         </p>
         <ng-template #batteryLevelUnknown>
             <p>{{ 'hub.batteryLevelUnknown' | transloco }}</p>
         </ng-template>
-        <p *ngIf="configuration.RSSI !== null; else rssiLevelUnknown">
-            {{ 'hub.RSSILevel' | transloco: configuration }}
+        <p *ngIf="stats.RSSI !== null; else rssiLevelUnknown">
+            {{ 'hub.RSSILevel' | transloco: stats }}
         </p>
         <ng-template #rssiLevelUnknown>
             <p>{{ 'hub.RSSILevelUnknown' | transloco }}</p>
         </ng-template>
-        <mat-divider></mat-divider>
     </mat-card-content>
     <mat-card-actions>
         <a [routerLink]="hubEditRoute" mat-button>{{ 'hub.edit' | transloco }}</a>

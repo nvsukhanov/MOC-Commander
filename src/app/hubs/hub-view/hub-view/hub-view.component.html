@@ -1,36 +1,39 @@
 <ng-container *ngIf="selectedHub$ | ngrxPush; let hub; else hubNotFound">
-    <app-hub-properties-view class="hub-properties-view"
-                             [configuration]="hub"
-                             (disconnect)="disconnectHub()"
-    ></app-hub-properties-view>
+    <ng-container *ngIf="selectedHubStats$ | ngrxPush; let stats; else hubNotFound">
+        <app-hub-properties-view class="hub-properties-view"
+                                 [configuration]="hub"
+                                 [stats]="selectedHubStats$ | ngrxPush"
+                                 (disconnect)="disconnectHub()"
+        ></app-hub-properties-view>
 
-    <ng-container *ngrxLet="IOFullData$ as physicalPorts">
-        <mat-card *ngIf="physicalPorts.length"
-                  class="ports-group-section"
-        >
-            <mat-card-header>
-                <mat-card-title>
-                    <h2>
-                        {{ 'io.physicalPortsListSection' | transloco }}
-                    </h2>
-                </mat-card-title>
-            </mat-card-header>
+        <ng-container *ngrxLet="IOFullData$ as physicalPorts">
+            <mat-card *ngIf="physicalPorts.length"
+                      class="ports-group-section"
+            >
+                <mat-card-header>
+                    <mat-card-title>
+                        <h2>
+                            {{ 'io.physicalPortsListSection' | transloco }}
+                        </h2>
+                    </mat-card-title>
+                </mat-card-header>
 
-            <mat-card-content>
-                <ul class="io-list">
-                    <li *ngFor="let physicalPort of physicalPorts; trackBy: hubIoTrackByFn">
-                        <app-hub-port-view class="io-list__item"
-                                           [ioFullInfo]="physicalPort"
-                        ></app-hub-port-view>
-                    </li>
-                </ul>
-            </mat-card-content>
-        </mat-card>
+                <mat-card-content>
+                    <ul class="io-list">
+                        <li *ngFor="let physicalPort of physicalPorts; trackBy: hubIoTrackByFn">
+                            <app-hub-port-view class="io-list__item"
+                                               [ioFullInfo]="physicalPort"
+                            ></app-hub-port-view>
+                        </li>
+                    </ul>
+                </mat-card-content>
+            </mat-card>
+        </ng-container>
     </ng-container>
 </ng-container>
 
 <ng-template #hubNotFound>
-    <h3 class="hub-is-not-connected">{{ 'hub.notConnected' | transloco }}</h3>
+    <div class="hub-is-not-connected__container">
+        <h2 class="hub-is-not-connected__title">{{ 'hub.isNotConnectedTitle' | transloco }}</h2>
+    </div>
 </ng-template>
-
-

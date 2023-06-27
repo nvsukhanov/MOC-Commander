@@ -34,6 +34,7 @@
     "forgerHubNotificationConfirmationCancelButtonTitle": "Cancel",
     "noneConnected": "No connected hubs",
     "notConnected": "disconnected",
+    "isNotConnectedTitle": "Hub is not connected",
     "connected": "Hub {name} connected",
     "disconnected": "Hub {name} disconnected",
     "batteryLevel": "Battery: {batteryLevel}%",

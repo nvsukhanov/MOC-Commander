@@ -1,13 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { NEVER, Observable, TimeoutError, animationFrames, catchError, combineLatest, concat, exhaustMap, filter, last, map, of, switchMap, take } from 'rxjs';
+import {
+    NEVER,
+    Observable,
+    TimeoutError,
+    animationFrames,
+    catchError,
+    combineLatest,
+    concat,
+    exhaustMap,
+    filter,
+    last,
+    map,
+    of,
+    switchMap,
+    take,
+    timeout
+} from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Dictionary } from '@ngrx/entity';
 import { PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 
 import { PortCommandTask } from '@app/shared';
 import { CONTROL_SCHEME_RUNNING_STATE_SELECTORS, CONTROL_SCHEME_SELECTORS, HUB_ATTACHED_IO_STATE_SELECTORS, HUB_PORT_TASKS_SELECTORS } from '../selectors';
-import { CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS, HUB_PORT_TASKS_ACTIONS } from '../actions';
+import { CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS, HUB_ATTACHED_IOS_ACTIONS, HUB_PORT_TASKS_ACTIONS } from '../actions';
 import {
     IPortCommandTaskComposer,
     ITaskExecutor,
@@ -31,6 +47,7 @@ export class ControlSchemeRunnerEffects {
                 this.deleteAllVirtualPortsAtSchemeRelatedHubs(action.schemeId),
                 this.createVirtualPortAtSchemeRelatedHubs(action.schemeId)
             ).pipe(
+                this.schemePreparationTimeout$,
                 last(),
                 map(() => CONTROL_SCHEME_ACTIONS.schemeStarted({ schemeId: action.schemeId })),
                 catchError((e) => {
@@ -148,6 +165,8 @@ export class ControlSchemeRunnerEffects {
 
     private readonly queueCompressor: TaskQueueCompressor;
 
+    private readonly schemePreparationTimeout$ = timeout(2000); // TODO: why 2000? move to config.
+
     constructor(
         private readonly actions$: Actions,
         private readonly store: Store,
@@ -227,25 +246,20 @@ export class ControlSchemeRunnerEffects {
 
     private createVirtualPortAtSchemeRelatedHubs(
         schemeId: string
-    ): Observable<void> {
+    ): Observable<unknown> {
         return this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(schemeId)).pipe(
+            filter((scheme) => !!scheme),
             take(1),
-            map((scheme) => {
-                if (!scheme) {
-                    throw new Error('scheme is not found');
-                }
-                return scheme;
-            }),
             switchMap((scheme) => {
-                if (scheme.virtualPorts.length) {
-                    return concat(...scheme.virtualPorts.map((virtualPort) =>
-                        this.hubStorage.get(virtualPort.hubId).ports.createVirtualPort(virtualPort.portIdA, virtualPort.portIdB))
-                    );
-                }
-                return of(void 0);
-            }),
-            last(),
-            map(() => void 0)
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                scheme!.virtualPorts.forEach((port) => {
+                    this.store.dispatch(HUB_ATTACHED_IOS_ACTIONS.createVirtualPort({ hubId: port.hubId, portIdA: port.portIdA, portIdB: port.portIdB }));
+                });
+                return this.store.select(CONTROL_SCHEME_SELECTORS.areAllNecessaryVirtualPortsCreated(schemeId)).pipe(
+                    filter((areAllNecessaryVirtualPortsCreated) => areAllNecessaryVirtualPortsCreated),
+                    take(1)
+                );
+            })
         );
     }
 }

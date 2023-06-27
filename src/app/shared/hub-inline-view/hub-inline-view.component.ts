@@ -7,9 +7,8 @@ import { MatLineModule } from '@angular/material/core';
 import { RouterLink } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
-import { EllipsisTitleDirective } from "..";
+import { EllipsisTitleDirective } from '../ellipsis-title.directive';
 import { RoutesBuilderService } from '../../routing';
-import { HubConnectionState } from '../../store';
 
 @Component({
     standalone: true,
@@ -39,7 +38,7 @@ export class HubInlineViewComponent {
 
     @Input() public hasCommunication = false;
 
-    @Input() public connectionState: HubConnectionState = HubConnectionState.Disconnected;
+    @Input() public isConnected = false;
 
     @Input() public showControls = true;
 
@@ -52,10 +51,6 @@ export class HubInlineViewComponent {
     constructor(
         private routesBuilderService: RoutesBuilderService,
     ) {
-    }
-
-    public get isConnected(): boolean {
-        return this.connectionState === HubConnectionState.Connected;
     }
 
     public get batteryLevelIcon(): string {

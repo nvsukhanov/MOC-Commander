@@ -23,7 +23,7 @@ export interface IState {
         runningSchemeId: string | null;
     };
     hubs: EntityState<HubConfiguration>,
-    hubConnections: EntityState<HubConnection>,
+    hubStats: EntityState<HubStats>,
     hubDiscoveryState: {
         discoveryState: HubDiscoveryState;
     },
@@ -41,6 +41,7 @@ export interface IState {
     hubEditFormActiveSaves: {
         hubIds: string[]
     },
+    hubKeepVirtualPorts: EntityState<KeepVirtualPorts>,
     servoCalibrationTaskState: {
         calibrationInProgress: boolean;
     },
@@ -64,16 +65,6 @@ export type VirtualPortConfig = {
     ioAType: IOType;
     portIdB: number;
     ioBType: IOType;
-}
-
-export type HubConnection = {
-    hubId: string;
-    connectionState: HubConnectionState;
-}
-
-export enum HubConnectionState {
-    Disconnected,
-    Connected,
 }
 
 export type ControllerInput = {
@@ -188,11 +179,16 @@ export type HubIoSupportedModes = {
 export type HubConfiguration = {
     hubId: string;
     name: string;
-    batteryLevel: number | null;
-    RSSI: number | null;
     hubType: HubType;
+}
+
+export type HubStats = {
+    hubId: string;
+    RSSI: number | null;
     isButtonPressed: boolean;
+    batteryLevel: number | null;
     hasCommunication: boolean;
+    initialIoDataReceived: boolean;
 }
 
 export type PortModeInfo = {
@@ -221,6 +217,12 @@ export type AttachedVirtualIO = {
     hubId: string;
     portId: number;
     ioType: IOType;
+    portIdA: number;
+    portIdB: number;
+}
+
+export type KeepVirtualPorts = {
+    hubId: string;
     portIdA: number;
     portIdB: number;
 }

@@ -15,5 +15,6 @@ export * from './hub-attached-io-state.selectors';
 export * from './controllers.selectors';
 export * from './controller-input-capture.selectors';
 export * from './controller-input.selectors';
-export * from './hub-connections.selectors';
 export * from './controller-settings.selectors';
+export * from './hub-keep-virtual-ports.selectors';
+export * from './hub-stats.selectors';

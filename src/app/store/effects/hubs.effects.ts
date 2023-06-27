@@ -1,13 +1,29 @@
 import { Inject, Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { Observable, catchError, combineLatestWith, filter, from, interval, map, mergeMap, of, startWith, switchMap, takeUntil, tap } from 'rxjs';
+import {
+    Observable,
+    catchError,
+    combineLatestWith,
+    debounceTime,
+    filter,
+    from,
+    interval,
+    map,
+    mergeMap,
+    of,
+    startWith,
+    switchMap,
+    take,
+    takeUntil,
+    tap
+} from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { IHub, MessageLoggingMiddleware, connectHub } from '@nvsukhanov/rxpoweredup';
 
 import { APP_CONFIG, IAppConfig, NAVIGATOR, PrefixedConsoleLoggerFactoryService } from '@app/shared';
 import { HubStorageService } from '../hub-storage.service';
-import { HUBS_ACTIONS } from '../actions';
+import { HUBS_ACTIONS, HUB_STATS_ACTIONS } from '../actions';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../hub-communication-notifier-middleware-factory.service';
 import { HUBS_SELECTORS, ROUTER_SELECTORS } from '../selectors';
 import { RoutesBuilderService } from '../../routing';
@@ -41,7 +57,7 @@ export class HubsEffects {
                 startWith(0),
                 takeUntil(this.hubStorage.get(a.hubId).disconnected),
                 switchMap(() => this.hubStorage.get(a.hubId).properties.getBatteryLevel()),
-                map((batteryLevel) => HUBS_ACTIONS.batteryLevelReceived({ hubId: a.hubId, batteryLevel }))
+                map((batteryLevel) => HUB_STATS_ACTIONS.batteryLevelReceived({ hubId: a.hubId, batteryLevel }))
             ))
         );
     });
@@ -53,7 +69,7 @@ export class HubsEffects {
                 startWith(0),
                 takeUntil(this.hubStorage.get(a.hubId).disconnected),
                 switchMap(() => this.hubStorage.get(a.hubId).properties.getRSSILevel()),
-                map((RSSI) => HUBS_ACTIONS.rssiLevelReceived({ hubId: a.hubId, RSSI }))
+                map((RSSI) => HUB_STATS_ACTIONS.rssiLevelReceived({ hubId: a.hubId, RSSI }))
             ))
         );
     });
@@ -63,12 +79,12 @@ export class HubsEffects {
             ofType(HUBS_ACTIONS.connected),
             mergeMap((a) => this.hubStorage.get(a.hubId).properties.buttonState.pipe(
                 takeUntil(this.hubStorage.get(a.hubId).disconnected),
-                map((isPressed) => HUBS_ACTIONS.buttonStateReceived({ hubId: a.hubId, isPressed }))
+                map((isPressed) => HUB_STATS_ACTIONS.buttonStateReceived({ hubId: a.hubId, isPressed }))
             ))
         );
     });
 
-    public readonly listenDeviceDisconnect$ = createEffect(() => {
+    public readonly listenHubDisconnect$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.connected),
             mergeMap((action) => this.hubStorage.get(action.hubId).disconnected.pipe(
@@ -85,14 +101,9 @@ export class HubsEffects {
             ofType(HUBS_ACTIONS.userRequestedHubDisconnection),
             concatLatestFrom((action) => this.store.select(HUBS_SELECTORS.selectHub(action.hubId))),
             filter(([ , hub ]) => !!hub),
-            mergeMap(([ action, hub ]) => {
-                return from(this.hubStorage.get(action.hubId).disconnect()).pipe(
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    map(() => HUBS_ACTIONS.disconnected({ hubId: hub!.hubId, name: hub!.name }))
-                );
-            })
+            mergeMap(([ action ]) => this.hubStorage.get(action.hubId).disconnect())
         );
-    });
+    }, { dispatch: false });
 
     public readonly setHubName$ = createEffect(() => {
         return this.actions$.pipe(
@@ -113,6 +124,26 @@ export class HubsEffects {
             tap(([ , hubId ]) => this.router.navigate(this.routesBuilderService.hubView(hubId!)))
         );
     }, { dispatch: false });
+
+    public readonly initialHubIoDataReceived$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(HUBS_ACTIONS.connected),
+            mergeMap((action) => {
+                return this.hubStorage.get(action.hubId).ports.onIoAttach().pipe(
+                    takeUntil(this.hubStorage.get(action.hubId).disconnected),
+                    this.hubInitialIoDataReceivedDebounceTime$,
+                    take(1),
+                    map(() => HUB_STATS_ACTIONS.initialHubIoDataReceived({ hubId: action.hubId }))
+                );
+            })
+        );
+    });
+
+    // TODO: brittle, should be replaced with a better solution (if possible)
+    // We can start creating virtual ports only after we know what virtual ports are already created.
+    // Not doing so can lead to a situation when we create a virtual port, but the port is already created,
+    // which will lead to an error message from the hub, that can't be distinguished from a real error.
+    private readonly hubInitialIoDataReceivedDebounceTime$ = debounceTime(1000);
 
     constructor(
         private readonly actions$: Actions,
@@ -151,7 +182,7 @@ export class HubsEffects {
                 communicationNotifierMiddleware.communicationNotifier$.pipe(
                     takeUntil(hub.disconnected)
                 ).subscribe((v) => {
-                    this.store.dispatch(HUBS_ACTIONS.setHasCommunication({ hubId: macAddressReply, hasCommunication: v }));
+                    this.store.dispatch(HUB_STATS_ACTIONS.setHasCommunication({ hubId: macAddressReply, hasCommunication: v }));
                 });
                 this.hubStorage.store(hub, macAddressReply);
             }),

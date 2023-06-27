@@ -20,12 +20,13 @@ import {
     HUBS_REDUCER,
     HUB_ATTACHED_IOS_REDUCER,
     HUB_ATTACHED_IO_STATE_REDUCER,
-    HUB_CONNECTION_REDUCER,
     HUB_DISCOVERY_STATE_REDUCER,
     HUB_EDIT_FORM_ACTIVE_SAVES_REDUCER,
     HUB_IO_OUTPUT_MODES_REDUCER,
+    HUB_KEEP_VIRTUAL_PORTS_REDUCER,
     HUB_PORT_MODE_INFO_REDUCER,
     HUB_PORT_TASKS_REDUCER,
+    HUB_STATS_REDUCER,
     SERVO_CALIBRATION_REDUCER
 } from './reducers';
 import {
@@ -44,7 +45,7 @@ import {
 } from './effects';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { HubStorageService } from './hub-storage.service';
-import { CONTROLLER_INPUT_ACTIONS, HUBS_ACTIONS } from './actions';
+import { CONTROLLER_INPUT_ACTIONS, HUB_STATS_ACTIONS } from './actions';
 import { RoutesBuilderService } from '../routing';
 
 const STORAGE_VERSION = '1';
@@ -58,7 +59,7 @@ const REDUCERS: ActionReducerMap<IState> = {
     controlSchemeConfigurationState: CONTROL_SCHEME_CONFIGURATION_STATE_REDUCER,
     controlSchemeRunningState: CONTROL_SCHEME_RUNNING_STATE_REDUCER,
     hubs: HUBS_REDUCER,
-    hubConnections: HUB_CONNECTION_REDUCER,
+    hubStats: HUB_STATS_REDUCER,
     hubDiscoveryState: HUB_DISCOVERY_STATE_REDUCER,
     hubAttachedIOs: HUB_ATTACHED_IOS_REDUCER,
     hubAttachedIOState: HUB_ATTACHED_IO_STATE_REDUCER,
@@ -66,6 +67,7 @@ const REDUCERS: ActionReducerMap<IState> = {
     hubPortModeInfo: HUB_PORT_MODE_INFO_REDUCER,
     hubPortTasks: HUB_PORT_TASKS_REDUCER,
     hubEditFormActiveSaves: HUB_EDIT_FORM_ACTIVE_SAVES_REDUCER,
+    hubKeepVirtualPorts: HUB_KEEP_VIRTUAL_PORTS_REDUCER,
     servoCalibrationTaskState: SERVO_CALIBRATION_REDUCER,
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_REDUCER,
     router: routerReducer
@@ -111,12 +113,12 @@ export function provideApplicationStore(): EnvironmentProviders {
             maxAge: 100,
             logOnly: !isDevMode(),
             autoPause: true,
-            trace: false,
+            trace: true,
             traceLimit: 75,
             actionsBlocklist: [
-                HUBS_ACTIONS.setHasCommunication.type,
-                HUBS_ACTIONS.rssiLevelReceived.type,
-                HUBS_ACTIONS.batteryLevelReceived.type,
+                HUB_STATS_ACTIONS.setHasCommunication.type,
+                HUB_STATS_ACTIONS.rssiLevelReceived.type,
+                HUB_STATS_ACTIONS.batteryLevelReceived.type,
                 CONTROLLER_INPUT_ACTIONS.inputReceived.type
             ]
         }),
