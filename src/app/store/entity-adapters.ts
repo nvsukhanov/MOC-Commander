@@ -10,8 +10,9 @@ import {
     ControllerInput,
     ControllerSettings,
     HubConfiguration,
-    HubConnection,
     HubIoSupportedModes,
+    HubStats,
+    KeepVirtualPorts,
     PortModeInfo,
     PortType,
 } from './i-state';
@@ -105,10 +106,20 @@ export function controllerInputIdFn(
     return `${controllerId}/${inputType}/${inputId}`;
 }
 
-export const HUB_CONNECTIONS_ENTITY_ADAPTER: EntityAdapter<HubConnection> = createEntityAdapter<HubConnection>({
-    selectId: (connection) => connection.hubId,
-});
-
 export const CONTROLLER_SETTINGS_ENTITY_ADAPTER: EntityAdapter<ControllerSettings> = createEntityAdapter<ControllerSettings>({
     selectId: (settings) => settings.controllerId,
+});
+
+export const HUB_KEEP_VIRTUAL_PORTS_ENTITY_ADAPTER: EntityAdapter<KeepVirtualPorts> = createEntityAdapter<KeepVirtualPorts>({
+    selectId: (keepVirtualPorts) => hubKeepVirtualPortsIdFn(keepVirtualPorts)
+});
+
+export function hubKeepVirtualPortsIdFn(
+    { hubId, portIdA, portIdB }: { hubId: string, portIdA: number, portIdB: number }
+): string {
+    return `${hubId}/${portIdA}/${portIdB}`;
+}
+
+export const HUB_STATS_ENTITY_ADAPTER: EntityAdapter<HubStats> = createEntityAdapter<HubStats>({
+    selectId: (stats) => stats.hubId,
 });

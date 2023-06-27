@@ -7,7 +7,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
 
 import { EllipsisTitleDirective, HUB_TYPE_TO_L10N_MAPPING } from '@app/shared';
-import { HubConfiguration } from '../../../store';
+import { HubConfiguration, HubStats } from '../../../store';
 import { RoutesBuilderService } from '../../../routing';
 
 @Component({
@@ -28,6 +28,8 @@ import { RoutesBuilderService } from '../../../routing';
 })
 export class HubPropertiesViewComponent {
     @Output() public readonly disconnect = new EventEmitter<void>();
+
+    @Input() public stats?: HubStats;
 
     public readonly hubTypeL10nMap = HUB_TYPE_TO_L10N_MAPPING;
 

@@ -14,5 +14,6 @@ export * from './hub-attached-io-state.reducer';
 export * from './controllers.reducer';
 export * from './controller-input.reducer';
 export * from './controller-input-capture.reducer';
-export * from './hub-connection.reducer';
 export * from './controller-settings.reducer';
+export * from './hub-keep-virtual-ports.reducer';
+export * from './hub-stats.reducer';

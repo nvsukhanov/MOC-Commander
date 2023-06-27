@@ -2,7 +2,7 @@
     <h2>
         {{ 'controlScheme.bindingOutputSection' | transloco }}
     </h2>
-    <section *ngrxLet="(selectedHubConnectionState$ | ngrxPush) !== hubConnectionStates.Connected; let selectedHubIsNotConnected"
+    <section *ngrxLet="!(selectedHubConnectionState$ | ngrxPush); let selectedHubIsNotConnected"
              class="output-form__content"
     >
         <mat-form-field *ngrxLet="hubsList$; let hubsList">
@@ -15,7 +15,7 @@
                 </mat-select-trigger>
                 <mat-option *ngFor="let hubConfiguration of hubsList"
                             [value]="hubConfiguration.hubId">
-                    <mat-icon *ngIf="hubConfiguration.connectionState !== hubConnectionStates.Connected"
+                    <mat-icon *ngIf="!hubConfiguration.isConnected"
                               color="warn"
                               [fontIcon]="'link_off'"
                     ></mat-icon>

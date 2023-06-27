@@ -8,8 +8,8 @@ import { AttachedIO, AttachedPhysicalIO, AttachedVirtualIO, HubIoSupportedModes,
 import { HUB_IO_SUPPORTED_MODES_SELECTORS } from './hub-io-supported-modes.selectors';
 import { HUB_IO_CONTROL_METHODS, HubIoOperationMode } from '../hub-io-operation-mode';
 import { HUB_PORT_MODE_INFO_SELECTORS } from './hub-port-mode-info.selectors';
-import { HUB_CONNECTION_SELECTORS } from './hub-connections.selectors';
 import { ControllerInputType } from '../controller-input-type';
+import { HUB_STATS_SELECTORS } from './hub-stats.selectors';
 
 const SELECT_HUB_ATTACHED_IOS_FEATURE = createFeatureSelector<IState['hubAttachedIOs']>('hubAttachedIOs');
 
@@ -162,7 +162,7 @@ export const HUB_ATTACHED_IO_SELECTORS = {
         }
     ),
     canCalibrateServo: ({ hubId, portId }: { hubId: string, portId: number }) => createSelector(
-        HUB_CONNECTION_SELECTORS.selectIsHubConnected(hubId),
+        HUB_STATS_SELECTORS.selectIsHubConnected(hubId),
         HUB_ATTACHED_IO_SELECTORS.selectIOAtPort({ hubId, portId }),
         HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
         HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
@@ -184,7 +184,37 @@ export const HUB_ATTACHED_IO_SELECTORS = {
 
             return portModes.has(PortModeName.position) && portModes.has(PortModeName.absolutePosition);
         }
-    )
+    ),
+    selectHubVirtualPorts: (hubId: string) => createSelector(
+        HUB_ATTACHED_IO_SELECTORS.selectHubIOs(hubId),
+        (ios) => {
+            return ios.filter((io) => io.portType === PortType.Virtual);
+        }
+    ),
+    selectHubVirtualPortByABId: (
+        { hubId, portIdA, portIdB }: { hubId: string, portIdA: number, portIdB: number }
+    ) => createSelector(
+        HUB_ATTACHED_IO_SELECTORS.selectHubVirtualPorts(hubId),
+        (ios): AttachedVirtualIO => {
+            return ios.find((io) => io.portType === PortType.Virtual && io.portIdA === portIdA && io.portIdB === portIdB) as AttachedVirtualIO;
+        }
+    ),
+    virtualPortCanBeCreated: ({ hubId, portIdA, portIdB }: { hubId: string, portIdA: number, portIdB: number }) => createSelector(
+        HUB_STATS_SELECTORS.selectIsHubConnected(hubId),
+        HUB_ATTACHED_IO_SELECTORS.selectIOAtPort({ hubId, portId: portIdA }),
+        HUB_ATTACHED_IO_SELECTORS.selectIOAtPort({ hubId, portId: portIdB }),
+        HUB_ATTACHED_IO_SELECTORS.selectHubVirtualPortByABId({ hubId, portIdA, portIdB }),
+        (isHubConnected, ioA, ioB, existingVirtualPort) => {
+            return !!isHubConnected && !!ioA && !!ioB && !existingVirtualPort;
+        }
+    ),
+    virtualPortCanBeDeleted: ({ hubId, portIdA, portIdB }: { hubId: string, portIdA: number, portIdB: number }) => createSelector(
+        HUB_STATS_SELECTORS.selectIsHubConnected(hubId),
+        HUB_ATTACHED_IO_SELECTORS.selectHubVirtualPortByABId({ hubId, portIdA, portIdB }),
+        (isHubConnected, existingVirtualPort) => {
+            return !!isHubConnected && !!existingVirtualPort;
+        }
+    ),
 } as const;
 
 export function getHubIOOperationModes(

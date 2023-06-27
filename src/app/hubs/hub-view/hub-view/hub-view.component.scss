@@ -21,3 +21,17 @@
         margin-top: 10px;
     }
 }
+
+.hub-is-not-connected {
+    &__container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+    }
+
+    &__title {
+        font-weight: 300;
+    }
+}

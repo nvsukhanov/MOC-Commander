@@ -18,7 +18,9 @@ import {
     HUBS_ACTIONS,
     HUBS_SELECTORS,
     HUB_ATTACHED_IO_SELECTORS,
+    HUB_STATS_SELECTORS,
     HubConfiguration,
+    HubStats,
     IOFullInfo,
     PhysicalIOFullInfo,
     ROUTER_SELECTORS,
@@ -51,6 +53,10 @@ import { RoutesBuilderService } from '../../../routing';
 export class HubViewComponent implements OnDestroy {
     public readonly selectedHub$: Observable<HubConfiguration | undefined> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
         switchMap((id) => id === undefined ? EMPTY : this.store.select(HUBS_SELECTORS.selectHub(id)))
+    );
+
+    public readonly selectedHubStats$: Observable<HubStats | undefined> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
+        switchMap((id) => id === undefined ? EMPTY : this.store.select(HUB_STATS_SELECTORS.selectByHubId(id)))
     );
 
     public readonly IOFullData$: Observable<PhysicalIOFullInfo[]> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(

@@ -9,9 +9,8 @@ import {
     ControlSchemeBinding,
     Controller,
     HubConfiguration,
-    HubConnection,
-    HubConnectionState,
     HubIoSupportedModes,
+    HubStats,
     IState,
     PortModeInfo,
     PortType
@@ -25,10 +24,10 @@ import { CONTROL_SCHEME_RUNNING_STATE_SELECTORS } from './control-scheme-running
 import { ROUTER_SELECTORS } from './router.selectors';
 import { CONTROLLER_SELECTORS } from './controllers.selectors';
 import { CONTROLLER_INPUT_SELECTORS } from './controller-input.selectors';
-import { HUB_CONNECTION_SELECTORS } from './hub-connections.selectors';
 import { HubIoOperationMode } from '../hub-io-operation-mode';
 import { HUBS_SELECTORS } from './hubs.selectors';
 import { ControllerInputType } from '../controller-input-type';
+import { HUB_STATS_SELECTORS } from './hub-stats.selectors';
 
 const CONTROL_SCHEME_FEATURE_SELECTOR = createFeatureSelector<IState['controlSchemes']>('controlSchemes');
 
@@ -46,19 +45,19 @@ const CONTROL_SCHEME_SELECT_ALL = createSelector(
 
 function createHubTreeNode(
     hubConfig: HubConfiguration,
-    connectionState: HubConnectionState,
+    hubStats?: HubStats,
 ): ControlSchemeViewHubTreeNode {
     return {
         path: hubConfig.hubId,
         hubId: hubConfig.hubId,
         name: hubConfig.name,
-        batteryLevel: hubConfig.batteryLevel,
-        RSSI: hubConfig.RSSI,
+        batteryLevel: hubStats?.batteryLevel ?? null,
+        RSSI: hubStats?.RSSI ?? null,
         hubType: hubConfig.hubType,
-        isButtonPressed: hubConfig.isButtonPressed,
-        hasCommunication: hubConfig.hasCommunication,
+        isButtonPressed: hubStats?.isButtonPressed ?? false,
+        hasCommunication: hubStats?.hasCommunication ?? false,
         nodeType: ControlSchemeNodeTypes.Hub,
-        connectionState,
+        isConnected: !!hubStats,
         children: []
     };
 }
@@ -66,7 +65,7 @@ function createHubTreeNode(
 function createIOTreeNode(
     parentPath: string,
     hubConfig: HubConfiguration,
-    hubConnectionState: HubConnectionState,
+    isHubConnected: boolean,
     iosEntities: Dictionary<AttachedIO>,
     portId: number,
 ): ControlSchemeViewIOTreeNode {
@@ -78,7 +77,7 @@ function createIOTreeNode(
         nodeType: ControlSchemeNodeTypes.IO,
         portId: portId,
         ioType: io?.ioType ?? null,
-        isConnected: hubConnectionState === HubConnectionState.Connected && !!io,
+        isConnected: isHubConnected && !!io,
         children: []
     };
 }
@@ -161,7 +160,7 @@ export type ControlSchemeViewHubTreeNode = {
     readonly hubType: HubType;
     readonly isButtonPressed: boolean;
     readonly hasCommunication: boolean;
-    readonly connectionState: HubConnectionState;
+    readonly isConnected: boolean;
     readonly children: Array<ControlSchemeViewIOTreeNode | ControlSchemeViewVirtualPortTreeNode>;
 };
 
@@ -222,7 +221,7 @@ export const CONTROL_SCHEME_SELECTORS = {
                 return false;
             }
             viewTree.forEach((hubNode) => {
-                allHubAreConnected = allHubAreConnected && hubNode.connectionState === HubConnectionState.Connected;
+                allHubAreConnected = allHubAreConnected && hubNode.isConnected;
                 hubNode.children.forEach((ioNode) => {
                     if (ioNode.nodeType === ControlSchemeNodeTypes.VirtualPort) {
                         allIOsAreConnected = allIOsAreConnected && ioNode.children.every((c) => c.isConnected);
@@ -241,7 +240,7 @@ export const CONTROL_SCHEME_SELECTORS = {
     schemeViewTree: (schemeId: string) => createSelector(
         CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
         HUBS_SELECTORS.selectHubEntities,
-        HUB_CONNECTION_SELECTORS.selectEntities,
+        HUB_STATS_SELECTORS.selectEntities,
         HUB_ATTACHED_IO_SELECTORS.selectIOsEntities,
         HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
         HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
@@ -250,7 +249,7 @@ export const CONTROL_SCHEME_SELECTORS = {
         (
             scheme: ControlScheme | undefined,
             hubEntities: Dictionary<HubConfiguration>,
-            connectionEntities: Dictionary<HubConnection>,
+            statsEntities: Dictionary<HubStats>,
             IOs: Dictionary<AttachedIO>,
             ioSupportedModesEntities: Dictionary<HubIoSupportedModes>,
             portModeInfoEntities: Dictionary<PortModeInfo>,
@@ -269,7 +268,7 @@ export const CONTROL_SCHEME_SELECTORS = {
                 if (!hubTreeNode) {
                     hubTreeNode = createHubTreeNode(
                         hubConfiguration,
-                        connectionEntities[hubConfiguration.hubId]?.connectionState ?? HubConnectionState.Disconnected,
+                        statsEntities[hubConfiguration.hubId],
                     );
                     hubsViewMap.set(hubConfiguration.hubId, hubTreeNode);
                 }
@@ -285,14 +284,14 @@ export const CONTROL_SCHEME_SELECTORS = {
                 const ioNodeA = createIOTreeNode(
                     `${hubNode.path}.virtualPort/${virtualPort.portIdA}`,
                     hubConfig,
-                    hubNode.connectionState,
+                    !!statsEntities[hubConfig.hubId],
                     IOs,
                     virtualPort.portIdA
                 );
                 const ioNodeB = createIOTreeNode(
                     `${hubNode.path}.virtualPort/${virtualPort.portIdB}`,
                     hubConfig,
-                    hubNode.connectionState,
+                    !!statsEntities[hubConfig.hubId],
                     IOs,
                     virtualPort.portIdB
                 );
@@ -324,7 +323,7 @@ export const CONTROL_SCHEME_SELECTORS = {
                     ioViewModel = createIOTreeNode(
                         hubTreeNode.path,
                         hubConfig,
-                        connectionEntities[hubConfig.hubId]?.connectionState ?? HubConnectionState.Disconnected,
+                        !!statsEntities[hubConfig.hubId],
                         IOs,
                         binding.output.portId
                     );
@@ -396,5 +395,18 @@ export const CONTROL_SCHEME_SELECTORS = {
             return scheme.virtualPorts.map((vp) => virtualIoMap.get(`${vp.hubId}/${vp.portIdA}/${vp.portIdB}`))
                          .filter((v) => !!v) as AttachedVirtualIO[];
         }
-    )
+    ),
+    selectSchemeVirtualPortConfigs: (schemeId: string) => createSelector(
+        CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
+        (scheme) => scheme?.virtualPorts ?? []
+    ),
+    areAllNecessaryVirtualPortsCreated: (schemeId: string) => createSelector(
+        HUB_ATTACHED_IO_SELECTORS.selectIOsAll,
+        CONTROL_SCHEME_SELECTORS.selectSchemeVirtualPortConfigs(schemeId),
+        (ios, virtualPortConfigs) => {
+            return virtualPortConfigs.every((config) => // TODO: ineffective, but it's not a problem for now
+                !!ios.find((io) => io.portType === PortType.Virtual && io.portIdA === config.portIdA && io.portIdB === config.portIdB)
+            );
+        }
+    ),
 } as const;

@@ -31,7 +31,7 @@ import { HUBS_ACTIONS, HUBS_SELECTORS } from '../../store';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HubsListComponent implements OnDestroy {
-    public readonly connectedHubs$ = this.store.select(HUBS_SELECTORS.selectHubsWithConnectionState);
+    public readonly hubsList$ = this.store.select(HUBS_SELECTORS.selectHubListViewModel);
 
     constructor(
         private readonly store: Store,

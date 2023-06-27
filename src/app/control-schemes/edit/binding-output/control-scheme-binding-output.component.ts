@@ -14,15 +14,7 @@ import { IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '@app/shared';
 import { ControlSchemeBindingInputForm } from '../binding-input';
 import { RenderEditOutputConfigurationDirective } from '../edit-output-configuration';
 import { BindingForm } from '../types';
-import {
-    AttachedIO,
-    HUBS_SELECTORS,
-    HUB_ATTACHED_IO_SELECTORS,
-    HUB_CONNECTION_SELECTORS,
-    HubConfiguration,
-    HubConnectionState,
-    HubIoOperationMode
-} from '../../../store';
+import { AttachedIO, HUBS_SELECTORS, HUB_ATTACHED_IO_SELECTORS, HUB_STATS_SELECTORS, HubConfiguration, HubIoOperationMode } from '../../../store';
 
 export type LinearOutputConfigurationForm = FormGroup<{
     maxSpeed: FormControl<number>,
@@ -82,8 +74,6 @@ export type ControlSchemeBindingOutputForm = FormGroup<{
 export class ControlSchemeBindingOutputComponent {
     public readonly hubsList$ = this.store.select(HUBS_SELECTORS.selectHubsWithConnectionState);
 
-    public readonly hubConnectionStates = HubConnectionState;
-
     private _outputFormControl?: ControlSchemeBindingOutputForm;
 
     private _inputFormControl?: ControlSchemeBindingInputForm;
@@ -96,7 +86,7 @@ export class ControlSchemeBindingOutputComponent {
 
     private _selectedHubConfiguration$: Observable<HubConfiguration | undefined> = EMPTY;
 
-    private _selectedHubConnectionState$: Observable<HubConnectionState> = EMPTY;
+    private _selectedHubConnectionState$: Observable<boolean> = EMPTY;
 
     private selectedPortChangeTrackingSubscription?: Subscription;
 
@@ -159,7 +149,7 @@ export class ControlSchemeBindingOutputComponent {
 
         this._selectedHubConnectionState$ = outputGroup.controls.hubId.valueChanges.pipe(
             startWith(outputGroup.controls.hubId.value),
-            switchMap((hubId) => this.store.select(HUB_CONNECTION_SELECTORS.selectHubConnectionState(hubId))),
+            switchMap((hubId) => this.store.select(HUB_STATS_SELECTORS.selectIsHubConnected(hubId))),
         );
 
         this._inputFormControl = inputGroup;
@@ -169,7 +159,7 @@ export class ControlSchemeBindingOutputComponent {
         return this._selectedHubConfiguration$;
     }
 
-    public get selectedHubConnectionState$(): Observable<HubConnectionState> {
+    public get selectedHubConnectionState$(): Observable<boolean> {
         return this._selectedHubConnectionState$;
     }
 

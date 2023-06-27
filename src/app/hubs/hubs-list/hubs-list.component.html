@@ -1,6 +1,6 @@
-<ng-container *ngrxLet="connectedHubs$; let connectedHubs">
-    <ul *ngIf="connectedHubs.length; else noConnectedHubs">
-        <li *ngFor="let hub of connectedHubs; trackBy: hubTrackByFn"
+<ng-container *ngrxLet="hubsList$; let hubsList">
+    <ul *ngIf="hubsList.length; else noConnectedHubs">
+        <li *ngFor="let hub of hubsList; trackBy: hubTrackByFn"
             class="card-list-item"
         >
             <mat-card class="hub-card">
@@ -10,7 +10,7 @@
                                      [rssiLevel]="hub.RSSI"
                                      [isButtonPressed]="hub.isButtonPressed"
                                      [hasCommunication]="hub.hasCommunication"
-                                     [connectionState]="hub.connectionState"
+                                     [isConnected]="hub.isConnected"
                                      (disconnect)="disconnectHub(hub.hubId)"
                                      (forget)="forgetHub(hub.hubId)"
                 ></app-hub-inline-view>
