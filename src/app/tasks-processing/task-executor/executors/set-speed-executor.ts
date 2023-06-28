@@ -15,7 +15,8 @@ export class SetSpeedExecutor extends TaskExecutor {
                 task.speed,
                 {
                     power: task.power,
-                    useProfile: MotorUseProfile.dontUseProfiles
+                    useProfile: MotorUseProfile.dontUseProfiles,
+                    noFeedback: true
                 }
             );
         }
