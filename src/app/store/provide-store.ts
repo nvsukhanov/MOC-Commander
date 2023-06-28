@@ -23,7 +23,6 @@ import {
     HUB_DISCOVERY_STATE_REDUCER,
     HUB_EDIT_FORM_ACTIVE_SAVES_REDUCER,
     HUB_IO_OUTPUT_MODES_REDUCER,
-    HUB_KEEP_VIRTUAL_PORTS_REDUCER,
     HUB_PORT_MODE_INFO_REDUCER,
     HUB_PORT_TASKS_REDUCER,
     HUB_STATS_REDUCER,
@@ -48,7 +47,7 @@ import { HubStorageService } from './hub-storage.service';
 import { CONTROLLER_INPUT_ACTIONS, HUB_STATS_ACTIONS } from './actions';
 import { RoutesBuilderService } from '../routing';
 
-const STORAGE_VERSION = '1';
+const STORAGE_VERSION = '2';
 
 const REDUCERS: ActionReducerMap<IState> = {
     controllers: CONTROLLERS_REDUCER,
@@ -67,7 +66,6 @@ const REDUCERS: ActionReducerMap<IState> = {
     hubPortModeInfo: HUB_PORT_MODE_INFO_REDUCER,
     hubPortTasks: HUB_PORT_TASKS_REDUCER,
     hubEditFormActiveSaves: HUB_EDIT_FORM_ACTIVE_SAVES_REDUCER,
-    hubKeepVirtualPorts: HUB_KEEP_VIRTUAL_PORTS_REDUCER,
     servoCalibrationTaskState: SERVO_CALIBRATION_REDUCER,
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_REDUCER,
     router: routerReducer

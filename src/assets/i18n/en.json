@@ -111,22 +111,7 @@
     "servoOutputConfigurationPower": "Power",
     "servoCalibrationIsInProgress": "Servo calibration is in progress",
     "servoCalibrationError": "An error occurred during servo calibration",
-    "servoCalibrationCancel": "Cancel",
-    "createVirtualPortConfiguration": "Create virtual port",
-    "createVirtualPortConfigurationDialogTitle": "Create virtual port",
-    "createVirtualPortConfigurationDialogNameLabel": "Name",
-    "createVirtualPortConfigurationDialogHubNameLabel": "Hub name",
-    "createVirtualPortConfigurationDialogPortALabel": "Port A",
-    "createVirtualPortConfigurationDialogPortBLabel": "Port B",
-    "createVirtualPortConfigurationDialogConfirmButtonTitle": "Create",
-    "createVirtualPortConfigurationDialogCancelButtonTitle": "Cancel",
-    "virtualPortsSectionTitle": "Virtual ports",
-    "virtualPortDeleteButtonTitle": "Delete",
-    "virtualPortDeleteConfirmationTitle": "Are you sure you want to delete virtual port?",
-    "controlSchemeStartError": "An error occurred while starting control scheme",
-    "controlSchemeStopError": "An error occurred while stopping control scheme",
-    "virtualPortIoTypeMismatch": "Device at port {portId} does not match the virtual port configuration",
-    "virtualPortTitle": "Virtual port {name}"
+    "servoCalibrationCancel": "Cancel"
   },
   "motorServoEndState": {
     "float": "Float",
@@ -182,8 +167,7 @@
     "operationModeLinear": "Linear",
     "operationModeServo": "Servo",
     "operationModeSetAngle": "Set angle",
-    "ioSynchronizableTitle": "Synchronizable",
-    "physicalPortsListSection": "Physical ports"
+    "ioSynchronizableTitle": "Synchronizable"
   },
   "controller": {
     "detectControllerTip": "To detect a controller, press any button on it or move any stick",

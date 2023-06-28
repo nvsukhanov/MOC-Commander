@@ -12,7 +12,6 @@ import { BindingTreeNodeComponent } from './binding-tree-node';
 import { IoTreeNodeComponent } from './io-tree-node';
 import { HubTreeNodeComponent } from './hub-tree-node';
 import { ControlSchemeNodeTypes, ControlSchemeViewTreeNode } from '../../../store';
-import { VirtualPortTreeNodeComponent } from './virtual-port-tree-node';
 
 @Component({
     standalone: true,
@@ -31,7 +30,6 @@ import { VirtualPortTreeNodeComponent } from './virtual-port-tree-node';
         IoTreeNodeComponent,
         HubTreeNodeComponent,
         TranslocoModule,
-        VirtualPortTreeNodeComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -73,9 +71,5 @@ export class ControlSchemeViewIoListComponent {
 
     public isPort(_: number, node: ControlSchemeViewTreeNode): boolean {
         return node.nodeType === ControlSchemeNodeTypes.IO;
-    }
-
-    public isVirtualPort(_: number, node: ControlSchemeViewTreeNode): boolean {
-        return node.nodeType === ControlSchemeNodeTypes.VirtualPort;
     }
 }

@@ -27,9 +27,5 @@ export const HUB_STATS_SELECTORS = {
     selectIsHubConnected: (hubId: string) => createSelector(
         HUB_STATS_SELECTORS.selectByHubId(hubId),
         (hubStats): boolean => !!hubStats
-    ),
-    isHubInitialIoDataReceived: (hubId: string) => createSelector(
-        HUB_STATS_SELECTORS.selectByHubId(hubId),
-        (hubStats): boolean => !!(hubStats?.initialIoDataReceived)
-    ),
+    )
 } as const;

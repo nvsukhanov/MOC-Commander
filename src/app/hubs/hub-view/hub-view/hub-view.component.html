@@ -6,23 +6,15 @@
                                  (disconnect)="disconnectHub()"
         ></app-hub-properties-view>
 
-        <ng-container *ngrxLet="IOFullData$ as physicalPorts">
-            <mat-card *ngIf="physicalPorts.length"
+        <ng-container *ngrxLet="IOFullData$ as iosList">
+            <mat-card *ngIf="iosList.length"
                       class="ports-group-section"
             >
-                <mat-card-header>
-                    <mat-card-title>
-                        <h2>
-                            {{ 'io.physicalPortsListSection' | transloco }}
-                        </h2>
-                    </mat-card-title>
-                </mat-card-header>
-
                 <mat-card-content>
                     <ul class="io-list">
-                        <li *ngFor="let physicalPort of physicalPorts; trackBy: hubIoTrackByFn">
+                        <li *ngFor="let ioFullInfo of iosList; trackBy: hubIoTrackByFn">
                             <app-hub-port-view class="io-list__item"
-                                               [ioFullInfo]="physicalPort"
+                                               [ioFullInfo]="ioFullInfo"
                             ></app-hub-port-view>
                         </li>
                     </ul>

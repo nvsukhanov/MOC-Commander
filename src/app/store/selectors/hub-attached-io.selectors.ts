@@ -4,7 +4,7 @@ import { PortModeName } from '@nvsukhanov/rxpoweredup';
 import { Dictionary } from '@ngrx/entity';
 
 import { HUB_ATTACHED_IOS_ENTITY_ADAPTER, hubAttachedIosIdFn, hubIOSupportedModesIdFn, hubPortModeInfoIdFn, } from '../entity-adapters';
-import { AttachedIO, AttachedPhysicalIO, AttachedVirtualIO, HubIoSupportedModes, IState, PortModeInfo, PortType } from '../i-state';
+import { AttachedIO, HubIoSupportedModes, IState, PortModeInfo } from '../i-state';
 import { HUB_IO_SUPPORTED_MODES_SELECTORS } from './hub-io-supported-modes.selectors';
 import { HUB_IO_CONTROL_METHODS, HubIoOperationMode } from '../hub-io-operation-mode';
 import { HUB_PORT_MODE_INFO_SELECTORS } from './hub-port-mode-info.selectors';
@@ -70,19 +70,11 @@ function combineFullIOInfo(
     });
 }
 
-export type PhysicalIOFullInfo = {
+export type IOFullInfo = {
     portInputModes: PortModeInfo[];
     portOutputModes: PortModeInfo[];
     synchronizable: boolean;
-} & AttachedPhysicalIO;
-
-export type VirtualIOFullInfo = {
-    portInputModes: PortModeInfo[];
-    portOutputModes: PortModeInfo[];
-    synchronizable: boolean;
-} & AttachedVirtualIO;
-
-export type IOFullInfo = PhysicalIOFullInfo | VirtualIOFullInfo;
+} & AttachedIO;
 
 export const HUB_ATTACHED_IO_SELECTORS = {
     selectIOsAll: SELECT_ALL,
@@ -91,17 +83,12 @@ export const HUB_ATTACHED_IO_SELECTORS = {
         HUB_ATTACHED_IO_SELECTORS.selectIOsAll,
         (ios) => ios.filter((io) => io.hubId === hubId)
     ),
-    selectHubIOsByPortType: <T extends PortType>(portType: T) => createSelector(
-        SELECT_ALL,
-        (ios) => ios.filter((io) => io.portType === portType) as Array<AttachedIO & { portType: T }>
-    ),
-    selectFullPhysicalIOsInfoForHub: (hubId: string) => createSelector(
+    selectFullIOsInfoForHub: (hubId: string) => createSelector(
         HUB_ATTACHED_IO_SELECTORS.selectHubIOs(hubId),
         HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesEntities,
         HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
-        (ios, supportedModesEntities, portModeDataEntities): PhysicalIOFullInfo[] => {
-            return combineFullIOInfo(ios, supportedModesEntities, portModeDataEntities)
-                .filter((v) => v.portType === PortType.Physical) as PhysicalIOFullInfo[];
+        (ios, supportedModesEntities, portModeDataEntities): IOFullInfo[] => {
+            return combineFullIOInfo(ios, supportedModesEntities, portModeDataEntities);
         }
     ),
     selectFullIOsInfo: createSelector(
@@ -184,37 +171,7 @@ export const HUB_ATTACHED_IO_SELECTORS = {
 
             return portModes.has(PortModeName.position) && portModes.has(PortModeName.absolutePosition);
         }
-    ),
-    selectHubVirtualPorts: (hubId: string) => createSelector(
-        HUB_ATTACHED_IO_SELECTORS.selectHubIOs(hubId),
-        (ios) => {
-            return ios.filter((io) => io.portType === PortType.Virtual);
-        }
-    ),
-    selectHubVirtualPortByABId: (
-        { hubId, portIdA, portIdB }: { hubId: string, portIdA: number, portIdB: number }
-    ) => createSelector(
-        HUB_ATTACHED_IO_SELECTORS.selectHubVirtualPorts(hubId),
-        (ios): AttachedVirtualIO => {
-            return ios.find((io) => io.portType === PortType.Virtual && io.portIdA === portIdA && io.portIdB === portIdB) as AttachedVirtualIO;
-        }
-    ),
-    virtualPortCanBeCreated: ({ hubId, portIdA, portIdB }: { hubId: string, portIdA: number, portIdB: number }) => createSelector(
-        HUB_STATS_SELECTORS.selectIsHubConnected(hubId),
-        HUB_ATTACHED_IO_SELECTORS.selectIOAtPort({ hubId, portId: portIdA }),
-        HUB_ATTACHED_IO_SELECTORS.selectIOAtPort({ hubId, portId: portIdB }),
-        HUB_ATTACHED_IO_SELECTORS.selectHubVirtualPortByABId({ hubId, portIdA, portIdB }),
-        (isHubConnected, ioA, ioB, existingVirtualPort) => {
-            return !!isHubConnected && !!ioA && !!ioB && !existingVirtualPort;
-        }
-    ),
-    virtualPortCanBeDeleted: ({ hubId, portIdA, portIdB }: { hubId: string, portIdA: number, portIdB: number }) => createSelector(
-        HUB_STATS_SELECTORS.selectIsHubConnected(hubId),
-        HUB_ATTACHED_IO_SELECTORS.selectHubVirtualPortByABId({ hubId, portIdA, portIdB }),
-        (isHubConnected, existingVirtualPort) => {
-            return !!isHubConnected && !!existingVirtualPort;
-        }
-    ),
+    )
 } as const;
 
 export function getHubIOOperationModes(

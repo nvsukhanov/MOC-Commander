@@ -63,22 +63,6 @@ export class NotificationsEffects {
         );
     }, { dispatch: false });
 
-    public readonly controlSchemeStartError$ = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(CONTROL_SCHEME_ACTIONS.schemeStartError),
-            switchMap(() => this.translocoService.selectTranslate('controlScheme.controlSchemeStartError')),
-            tap((message) => this.showMessage(message))
-        );
-    }, { dispatch: false });
-
-    public readonly controlSchemeStopError$ = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(CONTROL_SCHEME_ACTIONS.schemeStopError),
-            switchMap(() => this.translocoService.selectTranslate('controlScheme.controlSchemeStopError')),
-            tap((message) => this.showMessage(message))
-        );
-    }, { dispatch: false });
-
     constructor(
         private readonly actions$: Actions,
         private readonly snackBar: MatSnackBar,

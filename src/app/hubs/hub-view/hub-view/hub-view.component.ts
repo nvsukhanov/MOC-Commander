@@ -22,7 +22,6 @@ import {
     HubConfiguration,
     HubStats,
     IOFullInfo,
-    PhysicalIOFullInfo,
     ROUTER_SELECTORS,
     hubAttachedIosIdFn,
 } from '../../../store';
@@ -59,8 +58,8 @@ export class HubViewComponent implements OnDestroy {
         switchMap((id) => id === undefined ? EMPTY : this.store.select(HUB_STATS_SELECTORS.selectByHubId(id)))
     );
 
-    public readonly IOFullData$: Observable<PhysicalIOFullInfo[]> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
-        switchMap((id) => id === undefined ? EMPTY : this.store.select(HUB_ATTACHED_IO_SELECTORS.selectFullPhysicalIOsInfoForHub(id)))
+    public readonly IOFullData$: Observable<IOFullInfo[]> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
+        switchMap((id) => id === undefined ? EMPTY : this.store.select(HUB_ATTACHED_IO_SELECTORS.selectFullIOsInfoForHub(id)))
     );
 
     constructor(

@@ -1,6 +1,6 @@
 import { RouterState } from '@ngrx/router-store';
 
-import { ControlSchemeRunStage, HubDiscoveryState, IState } from './i-state';
+import { HubDiscoveryState, IState } from './i-state';
 import {
     CONTROLLERS_ENTITY_ADAPTER,
     CONTROLLER_INPUT_ENTITY_ADAPTER,
@@ -10,7 +10,6 @@ import {
     HUB_ATTACHED_IOS_ENTITY_ADAPTER,
     HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER,
     HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER,
-    HUB_KEEP_VIRTUAL_PORTS_ENTITY_ADAPTER,
     HUB_PORT_MODE_INFO,
     HUB_STATS_ENTITY_ADAPTER,
     LAST_EXECUTED_TASKS_ENTITY_ADAPTER
@@ -28,7 +27,6 @@ export const INITIAL_STATE: IState = {
         isListening: false
     },
     controlSchemeRunningState: {
-        stage: ControlSchemeRunStage.Idle,
         runningSchemeId: null
     },
     hubs: HUBS_ENTITY_ADAPTER.getInitialState(),
@@ -50,7 +48,6 @@ export const INITIAL_STATE: IState = {
     hubEditFormActiveSaves: {
         hubIds: []
     },
-    hubKeepVirtualPorts: HUB_KEEP_VIRTUAL_PORTS_ENTITY_ADAPTER.getInitialState(),
     servoCalibrationTaskState: {
         calibrationInProgress: false
     },

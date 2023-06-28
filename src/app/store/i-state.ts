@@ -19,7 +19,6 @@ export interface IState {
         isListening: boolean;
     };
     controlSchemeRunningState: {
-        stage: ControlSchemeRunStage;
         runningSchemeId: string | null;
     };
     hubs: EntityState<HubConfiguration>,
@@ -41,7 +40,6 @@ export interface IState {
     hubEditFormActiveSaves: {
         hubIds: string[]
     },
-    hubKeepVirtualPorts: EntityState<KeepVirtualPorts>,
     servoCalibrationTaskState: {
         calibrationInProgress: boolean;
     },
@@ -49,22 +47,6 @@ export interface IState {
         isAvailable: boolean;
     },
     router: RouterState;
-}
-
-export enum ControlSchemeRunStage {
-    Preparing,
-    Running,
-    Cleanup,
-    Idle
-}
-
-export type VirtualPortConfig = {
-    hubId: string;
-    name: string;
-    portIdA: number;
-    ioAType: IOType;
-    portIdB: number;
-    ioBType: IOType;
 }
 
 export type ControllerInput = {
@@ -166,7 +148,6 @@ export type ControlScheme = {
     index: number;
     name: string;
     bindings: ControlSchemeBinding[];
-    virtualPorts: VirtualPortConfig[];
 }
 
 export type HubIoSupportedModes = {
@@ -188,7 +169,6 @@ export type HubStats = {
     isButtonPressed: boolean;
     batteryLevel: number | null;
     hasCommunication: boolean;
-    initialIoDataReceived: boolean;
 }
 
 export type PortModeInfo = {
@@ -198,33 +178,10 @@ export type PortModeInfo = {
     symbol: PortModeSymbol;
 }
 
-export enum PortType {
-    Physical,
-    Virtual
-}
-
-export type AttachedPhysicalIO = {
-    portType: PortType.Physical;
+export type AttachedIO = {
     hubId: string;
     portId: number;
     ioType: IOType;
     hardwareRevision: string;
     softwareRevision: string;
 }
-
-export type AttachedVirtualIO = {
-    portType: PortType.Virtual;
-    hubId: string;
-    portId: number;
-    ioType: IOType;
-    portIdA: number;
-    portIdB: number;
-}
-
-export type KeepVirtualPorts = {
-    hubId: string;
-    portIdA: number;
-    portIdB: number;
-}
-
-export type AttachedIO = AttachedPhysicalIO | AttachedVirtualIO;
