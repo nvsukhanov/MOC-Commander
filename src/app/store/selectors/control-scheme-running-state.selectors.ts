@@ -13,9 +13,5 @@ export const CONTROL_SCHEME_RUNNING_STATE_SELECTORS = {
     selectIsAnySchemeRunning: createSelector(
         CONTROL_SCHEME_RUNNING_STATE_FEATURE_SELECTOR,
         (state) => state.runningSchemeId !== null
-    ),
-    selectRunningSchemeStage: createSelector(
-        CONTROL_SCHEME_RUNNING_STATE_FEATURE_SELECTOR,
-        (state) => state.stage
     )
 } as const;

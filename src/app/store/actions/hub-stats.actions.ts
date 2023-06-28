@@ -13,6 +13,5 @@ export const HUB_STATS_ACTIONS = createActionGroup({
         'button state received': props<{ hubId: string, isPressed: boolean }>(),
         'button state unsubscribe': props<{ hubId: string }>(),
         'set has communication': props<{ hubId: string, hasCommunication: boolean }>(),
-        'initial hub io data received': props<{ hubId: string }>(),
     }
 });

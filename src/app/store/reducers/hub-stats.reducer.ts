@@ -14,19 +14,11 @@ export const HUB_STATS_REDUCER = createReducer(
             isButtonPressed: false,
             batteryLevel: null,
             hasCommunication: false,
-            initialIoDataReceived: false
         }, state)
     ),
     on(HUBS_ACTIONS.disconnected, (state, { hubId }): IState['hubStats'] =>
         HUB_STATS_ENTITY_ADAPTER.removeOne(hubId, state)
     ),
-    on(HUB_STATS_ACTIONS.initialHubIoDataReceived, (state, { hubId }): IState['hubStats'] => HUB_STATS_ENTITY_ADAPTER.updateOne({
-            id: hubId,
-            changes: {
-                initialIoDataReceived: true,
-            }
-        }, state
-    )),
     on(HUB_STATS_ACTIONS.setHasCommunication, (state, data): IState['hubStats'] => HUB_STATS_ENTITY_ADAPTER.updateOne({
             id: data.hubId,
             changes: {

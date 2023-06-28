@@ -1,22 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import {
-    Observable,
-    catchError,
-    combineLatestWith,
-    debounceTime,
-    filter,
-    from,
-    interval,
-    map,
-    mergeMap,
-    of,
-    startWith,
-    switchMap,
-    take,
-    takeUntil,
-    tap
-} from 'rxjs';
+import { Observable, catchError, combineLatestWith, filter, from, interval, map, mergeMap, of, startWith, switchMap, takeUntil, tap } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { IHub, MessageLoggingMiddleware, connectHub } from '@nvsukhanov/rxpoweredup';
@@ -124,26 +108,6 @@ export class HubsEffects {
             tap(([ , hubId ]) => this.router.navigate(this.routesBuilderService.hubView(hubId!)))
         );
     }, { dispatch: false });
-
-    public readonly initialHubIoDataReceived$ = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(HUBS_ACTIONS.connected),
-            mergeMap((action) => {
-                return this.hubStorage.get(action.hubId).ports.onIoAttach().pipe(
-                    takeUntil(this.hubStorage.get(action.hubId).disconnected),
-                    this.hubInitialIoDataReceivedDebounceTime$,
-                    take(1),
-                    map(() => HUB_STATS_ACTIONS.initialHubIoDataReceived({ hubId: action.hubId }))
-                );
-            })
-        );
-    });
-
-    // TODO: brittle, should be replaced with a better solution (if possible)
-    // We can start creating virtual ports only after we know what virtual ports are already created.
-    // Not doing so can lead to a situation when we create a virtual port, but the port is already created,
-    // which will lead to an error message from the hub, that can't be distinguished from a real error.
-    private readonly hubInitialIoDataReceivedDebounceTime$ = debounceTime(1000);
 
     constructor(
         private readonly actions$: Actions,

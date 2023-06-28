@@ -12,9 +12,7 @@ import {
     HubConfiguration,
     HubIoSupportedModes,
     HubStats,
-    KeepVirtualPorts,
     PortModeInfo,
-    PortType,
 } from './i-state';
 import { ControllerType } from '../plugins';
 import { ControllerInputType } from './controller-input-type';
@@ -42,11 +40,7 @@ export const HUB_PORT_MODE_INFO: EntityAdapter<PortModeInfo> = createEntityAdapt
 export function hubPortModeInfoIdFn(
     { io, modeId }: { io: AttachedIO, modeId: number }
 ): string {
-    if (io.portType === PortType.Virtual) {
-        return `vi/${io.hubId}/${io.portId}/${modeId}`;
-    } else {
-        return `phy/${io.hardwareRevision}/${io.softwareRevision}/${io.ioType}/${modeId}`;
-    }
+    return `${io.hardwareRevision}/${io.softwareRevision}/${io.ioType}/${modeId}`;
 }
 
 export const HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER: EntityAdapter<HubIoSupportedModes> = createEntityAdapter<HubIoSupportedModes>({
@@ -56,11 +50,7 @@ export const HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER: EntityAdapter<HubIoSupported
 export function hubIOSupportedModesIdFn(
     io: AttachedIO
 ): string {
-    if (io.portType === PortType.Virtual) {
-        return `vi/${io.hubId}/${io.portId}`;
-    } else {
-        return `phy/${io.hardwareRevision}/${io.softwareRevision}/${io.ioType}`;
-    }
+    return `${io.hardwareRevision}/${io.softwareRevision}/${io.ioType}`;
 }
 
 export const CONTROL_SCHEMES_ENTITY_ADAPTER: EntityAdapter<ControlScheme> = createEntityAdapter<ControlScheme>({
@@ -109,16 +99,6 @@ export function controllerInputIdFn(
 export const CONTROLLER_SETTINGS_ENTITY_ADAPTER: EntityAdapter<ControllerSettings> = createEntityAdapter<ControllerSettings>({
     selectId: (settings) => settings.controllerId,
 });
-
-export const HUB_KEEP_VIRTUAL_PORTS_ENTITY_ADAPTER: EntityAdapter<KeepVirtualPorts> = createEntityAdapter<KeepVirtualPorts>({
-    selectId: (keepVirtualPorts) => hubKeepVirtualPortsIdFn(keepVirtualPorts)
-});
-
-export function hubKeepVirtualPortsIdFn(
-    { hubId, portIdA, portIdB }: { hubId: string, portIdA: number, portIdB: number }
-): string {
-    return `${hubId}/${portIdA}/${portIdB}`;
-}
 
 export const HUB_STATS_ENTITY_ADAPTER: EntityAdapter<HubStats> = createEntityAdapter<HubStats>({
     selectId: (stats) => stats.hubId,

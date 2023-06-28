@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 import { IoTypeToL10nKeyPipe } from '@app/shared';
-import { PhysicalIOFullInfo, PortModeInfo } from '../../../store';
+import { IOFullInfo, PortModeInfo } from '../../../store';
 
 @Component({
     standalone: true,
@@ -27,7 +27,7 @@ import { PhysicalIOFullInfo, PortModeInfo } from '../../../store';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HubIoViewComponent {
-    @Input() public ioFullInfo: PhysicalIOFullInfo | undefined;
+    @Input() public ioFullInfo: IOFullInfo | undefined;
 
     public portModeInfoTrackById(
         _: number,

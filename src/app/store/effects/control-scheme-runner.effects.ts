@@ -1,29 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import {
-    NEVER,
-    Observable,
-    TimeoutError,
-    animationFrames,
-    catchError,
-    combineLatest,
-    concat,
-    exhaustMap,
-    filter,
-    last,
-    map,
-    of,
-    switchMap,
-    take,
-    timeout
-} from 'rxjs';
+import { NEVER, TimeoutError, animationFrames, catchError, combineLatest, exhaustMap, filter, map, of, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Dictionary } from '@ngrx/entity';
 import { PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 
 import { PortCommandTask } from '@app/shared';
 import { CONTROL_SCHEME_RUNNING_STATE_SELECTORS, CONTROL_SCHEME_SELECTORS, HUB_ATTACHED_IO_STATE_SELECTORS, HUB_PORT_TASKS_SELECTORS } from '../selectors';
-import { CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS, HUB_ATTACHED_IOS_ACTIONS, HUB_PORT_TASKS_ACTIONS } from '../actions';
+import { CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS, HUB_PORT_TASKS_ACTIONS } from '../actions';
 import {
     IPortCommandTaskComposer,
     ITaskExecutor,
@@ -40,43 +24,6 @@ import { HubStorageService } from '../hub-storage.service';
 
 @Injectable()
 export class ControlSchemeRunnerEffects {
-    public startSchemeRunning$ = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(CONTROL_SCHEME_ACTIONS.startScheme),
-            switchMap((action) => concat(
-                this.deleteAllVirtualPortsAtSchemeRelatedHubs(action.schemeId),
-                this.createVirtualPortAtSchemeRelatedHubs(action.schemeId)
-            ).pipe(
-                this.schemePreparationTimeout$,
-                last(),
-                map(() => CONTROL_SCHEME_ACTIONS.schemeStarted({ schemeId: action.schemeId })),
-                catchError((e) => {
-                    console.error(e);
-                    return of(CONTROL_SCHEME_ACTIONS.schemeStartError({ schemeId: action.schemeId }));
-                })
-            ))
-        );
-    });
-
-    public stopSchemeRunning$ = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(CONTROL_SCHEME_ACTIONS.stopScheme),
-            concatLatestFrom(() => this.store.select(CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId)),
-            switchMap(([ , schemeId ]) => {
-                if (schemeId === null) {
-                    return of(CONTROL_SCHEME_ACTIONS.schemeStopped());
-                }
-                return this.deleteAllVirtualPortsAtSchemeRelatedHubs(schemeId).pipe(
-                    map(() => CONTROL_SCHEME_ACTIONS.schemeStopped()),
-                    catchError((e) => {
-                        console.error(e);
-                        return of(CONTROL_SCHEME_ACTIONS.schemeStopError());
-                    })
-                );
-            })
-        );
-    });
-
     public readonly stopSchemeOnHubDisconnect$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.disconnected),
@@ -84,12 +31,7 @@ export class ControlSchemeRunnerEffects {
             filter(([ , schemeId ]) => schemeId !== null),
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             concatLatestFrom(([ , schemeId ]) => this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(schemeId!))),
-            filter(([ [ action ], scheme ]) => !!scheme
-                && (
-                    scheme.bindings.some((binding) => binding.output.hubId === action.hubId)
-                    || scheme.virtualPorts.some((virtualPort) => virtualPort.hubId === action.hubId)
-                )
-            ),
+            filter(([ [ action ], scheme ]) => !!scheme && scheme.bindings.some((binding) => binding.output.hubId === action.hubId)),
             map(() => CONTROL_SCHEME_ACTIONS.stopScheme())
         );
     });
@@ -97,10 +39,10 @@ export class ControlSchemeRunnerEffects {
     public readonly composeTasks$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(
-                CONTROL_SCHEME_ACTIONS.schemeStarted,
-                CONTROL_SCHEME_ACTIONS.schemeStopped,
+                CONTROL_SCHEME_ACTIONS.startScheme,
+                CONTROL_SCHEME_ACTIONS.startScheme,
             ),
-            switchMap((action) => action.type === CONTROL_SCHEME_ACTIONS.schemeStarted.type
+            switchMap((action) => action.type === CONTROL_SCHEME_ACTIONS.startScheme.type
                                   ? this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(action.schemeId))
                                   : of(null),
             ),
@@ -133,10 +75,10 @@ export class ControlSchemeRunnerEffects {
     public readonly pollTasks$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(
-                CONTROL_SCHEME_ACTIONS.schemeStarted,
-                CONTROL_SCHEME_ACTIONS.schemeStopped,
+                CONTROL_SCHEME_ACTIONS.startScheme,
+                CONTROL_SCHEME_ACTIONS.stopScheme,
             ),
-            switchMap((a) => a.type === CONTROL_SCHEME_ACTIONS.schemeStarted.type
+            switchMap((a) => a.type === CONTROL_SCHEME_ACTIONS.startScheme.type
                              ? animationFrames() // TODO: replace with a meaningful scheduler
                              : NEVER
             ),
@@ -164,8 +106,6 @@ export class ControlSchemeRunnerEffects {
     private readonly taskExecutor: ITaskExecutor;
 
     private readonly queueCompressor: TaskQueueCompressor;
-
-    private readonly schemePreparationTimeout$ = timeout(2000); // TODO: why 2000? move to config.
 
     constructor(
         private readonly actions$: Actions,
@@ -228,38 +168,4 @@ export class ControlSchemeRunnerEffects {
         return this.queueCompressor.compress(modelledQueue);
     }
 
-    private deleteAllVirtualPortsAtSchemeRelatedHubs(
-        schemeId: string
-    ): Observable<void> {
-        return this.store.select(CONTROL_SCHEME_SELECTORS.selectVirtualPortsOfSchemeRelatedHubs(schemeId)).pipe(
-            take(1),
-            switchMap((virtualPorts) => {
-                if (virtualPorts.length) {
-                    return concat(...virtualPorts.map((virtualPort) => this.hubStorage.get(virtualPort.hubId).ports.deleteVirtualPort(virtualPort.portId)));
-                }
-                return of(void 0);
-            }),
-            last(),
-            map(() => void 0)
-        );
-    }
-
-    private createVirtualPortAtSchemeRelatedHubs(
-        schemeId: string
-    ): Observable<unknown> {
-        return this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(schemeId)).pipe(
-            filter((scheme) => !!scheme),
-            take(1),
-            switchMap((scheme) => {
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                scheme!.virtualPorts.forEach((port) => {
-                    this.store.dispatch(HUB_ATTACHED_IOS_ACTIONS.createVirtualPort({ hubId: port.hubId, portIdA: port.portIdA, portIdB: port.portIdB }));
-                });
-                return this.store.select(CONTROL_SCHEME_SELECTORS.areAllNecessaryVirtualPortsCreated(schemeId)).pipe(
-                    filter((areAllNecessaryVirtualPortsCreated) => areAllNecessaryVirtualPortsCreated),
-                    take(1)
-                );
-            })
-        );
-    }
 }
