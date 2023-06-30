@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { HubIoOperationMode } from '../store';
+import { HubIoOperationMode } from './hub-io-operation-mode';
 
 @Pipe({
     name: 'ioOperationTypeToL10nKey',

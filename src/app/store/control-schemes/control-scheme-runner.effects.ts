@@ -6,8 +6,8 @@ import { Dictionary } from '@ngrx/entity';
 import { PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 
 import { PortCommandTask } from '@app/shared';
-import { CONTROL_SCHEME_RUNNING_STATE_SELECTORS, CONTROL_SCHEME_SELECTORS, HUB_ATTACHED_IO_STATE_SELECTORS, HUB_PORT_TASKS_SELECTORS } from '../selectors';
-import { CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS, HUB_PORT_TASKS_ACTIONS } from '../actions';
+import { HUB_ATTACHED_IO_STATE_SELECTORS, HUB_PORT_TASKS_SELECTORS } from '../selectors';
+import { HUBS_ACTIONS, HUB_PORT_TASKS_ACTIONS } from '../actions';
 import {
     IPortCommandTaskComposer,
     ITaskExecutor,
@@ -19,15 +19,18 @@ import {
     TaskSuppressorFactory
 } from '../../tasks-processing';
 import { hubAttachedIosIdFn, lastExecutedTaskIdFn } from '../entity-adapters';
-import { AttachedIoProps, ControlSchemeBinding } from '../i-state';
+import { AttachedIoProps } from '../i-state';
 import { HubStorageService } from '../hub-storage.service';
+import { CONTROL_SCHEME_ACTIONS } from './control-scheme.actions';
+import { CONTROL_SCHEME_SELECTORS } from './control-scheme.selectors';
+import { ControlSchemeBinding } from './control-scheme.model';
 
 @Injectable()
 export class ControlSchemeRunnerEffects {
     public readonly stopSchemeOnHubDisconnect$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.disconnected),
-            concatLatestFrom(() => this.store.select(CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId)),
+            concatLatestFrom(() => this.store.select(CONTROL_SCHEME_SELECTORS.selectRunningSchemeId)),
             filter(([ , schemeId ]) => schemeId !== null),
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             concatLatestFrom(([ , schemeId ]) => this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(schemeId!))),

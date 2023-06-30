@@ -5,10 +5,10 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 
-import { CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS } from '../selectors';
 import { RoutesBuilderService } from '../../routing';
-import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_CONFIGURATION_ACTIONS } from '../actions';
 import { WaitingForInputDialogComponent } from '../../control-schemes/waiting-for-input-dialog';
+import { CONTROL_SCHEME_ACTIONS } from './control-scheme.actions';
+import { CONTROL_SCHEME_SELECTORS } from './control-scheme.selectors';
 
 @Injectable()
 export class ControlSchemeEffects {
@@ -27,7 +27,7 @@ export class ControlSchemeEffects {
     }, { dispatch: false });
 
     public readonly showModalOnListenStart$ = createEffect(() => {
-        return this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.isListening).pipe(
+        return this.store.select(CONTROL_SCHEME_SELECTORS.isListening).pipe(
             filter((isListening) => isListening),
             switchMap(() => {
                 this.dialogRef = this.dialog.open(WaitingForInputDialogComponent, {
@@ -36,12 +36,12 @@ export class ControlSchemeEffects {
                 });
                 return this.dialogRef.componentInstance?.cancel.asObservable() ?? NEVER;
             }),
-            map(() => CONTROL_SCHEME_CONFIGURATION_ACTIONS.stopListening()),
+            map(() => CONTROL_SCHEME_ACTIONS.stopListening()),
         );
     });
 
     public readonly hideDialogOnListenStop$ = createEffect(() => {
-        return this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.isListening).pipe(
+        return this.store.select(CONTROL_SCHEME_SELECTORS.isListening).pipe(
             filter((isListening) => !isListening),
             tap(() => {
                 this.dialogRef?.close();

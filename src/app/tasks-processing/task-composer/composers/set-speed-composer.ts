@@ -1,8 +1,8 @@
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 
-import { PortCommandSetLinearSpeedTask, PortCommandTask, PortCommandTaskType } from '@app/shared';
+import { HubIoOperationMode, PortCommandSetLinearSpeedTask, PortCommandTask, PortCommandTaskType } from '@app/shared';
 import { PortCommandTaskComposer } from '../port-command-task-composer';
-import { AttachedIoProps, ControlSchemeBinding, HubIoOperationMode } from '../../../store';
+import { AttachedIoProps, ControlSchemeBinding } from '../../../store';
 
 export class SetSpeedComposer extends PortCommandTaskComposer {
     private readonly speedSnapToZero = 15;

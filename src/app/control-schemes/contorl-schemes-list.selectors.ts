@@ -1,35 +1,29 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { HubType, IOType } from '@nvsukhanov/rxpoweredup';
 import { Dictionary } from '@ngrx/entity';
+import { HubType, IOType } from '@nvsukhanov/rxpoweredup';
+import { createSelector } from '@ngrx/store';
 
-import { AttachedIo, ControlScheme, ControlSchemeBinding, HubConfiguration, HubIoSupportedModes, HubStats, IState, PortModeInfo, } from '../i-state';
-import { CONTROL_SCHEMES_ENTITY_ADAPTER, hubAttachedIosIdFn } from '../entity-adapters';
-import { HUB_PORT_TASKS_SELECTORS } from './hub-port-tasks.selectors';
-import { HUB_ATTACHED_IO_SELECTORS, getHubIoOperationModes } from './hub-attached-io.selectors';
-import { HUB_IO_SUPPORTED_MODES_SELECTORS } from './hub-io-supported-modes.selectors';
-import { HUB_PORT_MODE_INFO_SELECTORS } from './hub-port-mode-info.selectors';
-import { CONTROL_SCHEME_RUNNING_STATE_SELECTORS } from './control-scheme-running-state.selectors';
-import { ROUTER_SELECTORS } from './router.selectors';
-import { CONTROLLER_SELECTORS, ControllerModel } from '../controllers';
-import { CONTROLLER_INPUT_SELECTORS, controllerInputIdFn } from '../controller-input';
-import { HubIoOperationMode } from '../hub-io-operation-mode';
-import { HUBS_SELECTORS } from './hubs.selectors';
-import { HUB_STATS_SELECTORS } from './hub-stats.selectors';
-import { ControllerInputType } from '@app/shared';
-
-const CONTROL_SCHEME_FEATURE_SELECTOR = createFeatureSelector<IState['controlSchemes']>('controlSchemes');
-
-const CONTROL_SCHEME_ENTITY_SELECTORS = CONTROL_SCHEMES_ENTITY_ADAPTER.getSelectors();
-
-const CONTROL_SCHEME_SELECT_ENTITIES = createSelector(
-    CONTROL_SCHEME_FEATURE_SELECTOR,
-    CONTROL_SCHEME_ENTITY_SELECTORS.selectEntities
-);
-
-const CONTROL_SCHEME_SELECT_ALL = createSelector(
-    CONTROL_SCHEME_FEATURE_SELECTOR,
-    CONTROL_SCHEME_ENTITY_SELECTORS.selectAll
-);
+import {
+    AttachedIo,
+    CONTROLLER_SELECTORS,
+    CONTROL_SCHEME_SELECTORS,
+    ControlSchemeBinding,
+    ControlSchemeModel,
+    ControllerModel,
+    HUBS_SELECTORS,
+    HUB_ATTACHED_IO_SELECTORS,
+    HUB_IO_SUPPORTED_MODES_SELECTORS,
+    HUB_PORT_MODE_INFO_SELECTORS,
+    HUB_PORT_TASKS_SELECTORS,
+    HUB_STATS_SELECTORS,
+    HubConfiguration,
+    HubIoSupportedModes,
+    HubStats,
+    PortModeInfo,
+    ROUTER_SELECTORS,
+    getHubIoOperationModes,
+    hubAttachedIosIdFn
+} from '../store';
+import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 
 function createHubTreeNode(
     hubConfig: HubConfiguration,
@@ -147,61 +141,7 @@ export type ControlSchemeViewTreeNode = ControlSchemeViewHubTreeNode
     | ControlSchemeViewIoTreeNode
     | ControlSchemeViewBindingTreeNode;
 
-export const CONTROL_SCHEME_SELECTORS = {
-    selectAll: CONTROL_SCHEME_SELECT_ALL,
-    selectEntities: createSelector(CONTROL_SCHEME_FEATURE_SELECTOR, CONTROL_SCHEME_ENTITY_SELECTORS.selectEntities),
-    selectSchemesList: createSelector(
-        CONTROL_SCHEME_SELECT_ALL,
-        CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId,
-        (
-            schemes,
-            runningSchemeId
-        ) => {
-            return schemes.map((scheme) => ({
-                ...scheme,
-                isRunning: scheme.id === runningSchemeId
-            }));
-        }
-    ),
-    selectSchemesCount: createSelector(CONTROL_SCHEME_FEATURE_SELECTOR, CONTROL_SCHEME_ENTITY_SELECTORS.selectTotal),
-    selectScheme: (id: string) => createSelector(CONTROL_SCHEME_SELECT_ENTITIES, (state) => state[id]),
-    selectSchemeBindingInputValue: (
-        schemeId: string,
-        binding: ControlSchemeBinding
-    ) => createSelector(
-        CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
-        CONTROLLER_INPUT_SELECTORS.selectEntities,
-        (scheme, inputEntities) => {
-            if (!scheme || !inputEntities) {
-                return 0;
-            }
-            const input = inputEntities[controllerInputIdFn(binding.input)];
-            return input ? input.value : 0;
-        }
-    ),
-    canRunScheme: (schemeId: string) => createSelector( // TODO: performance-wise, this selector is not optimal (should not use viewTree)
-        CONTROL_SCHEME_SELECTORS.schemeViewTree(schemeId),
-        CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId,
-        (
-            viewTree,
-            runningSchemeId
-        ): boolean => {
-            let allHubAreConnected = true;
-            let allIosAreConnected = true;
-            let allIosTypesMatches = true;
-            if (runningSchemeId !== null) {
-                return false;
-            }
-            viewTree.forEach((hubNode) => {
-                allHubAreConnected = allHubAreConnected && hubNode.isConnected;
-                hubNode.children.forEach((ioNode) => {
-                    allIosAreConnected = allIosAreConnected && ioNode.isConnected;
-                    allIosTypesMatches = allIosTypesMatches && ioNode.children.every((c) => !c.ioHasNoRequiredCapabilities);
-                });
-            });
-            return allHubAreConnected && allIosAreConnected && allIosTypesMatches;
-        }
-    ),
+export const CONTROL_SCHEMES_LIST_SELECTORS = {
     schemeViewTree: (schemeId: string) => createSelector(
         CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
         HUBS_SELECTORS.selectHubEntities,
@@ -212,7 +152,7 @@ export const CONTROL_SCHEME_SELECTORS = {
         CONTROLLER_SELECTORS.selectEntities,
         HUB_PORT_TASKS_SELECTORS.selectLastExecutedBindingIds,
         (
-            scheme: ControlScheme | undefined,
+            scheme: ControlSchemeModel | undefined,
             hubEntities: Dictionary<HubConfiguration>,
             statsEntities: Dictionary<HubStats>,
             ios: Dictionary<AttachedIo>,
@@ -279,12 +219,52 @@ export const CONTROL_SCHEME_SELECTORS = {
             return [ ...hubsViewMap.values() ];
         }
     ),
+    canRunScheme: (schemeId: string) => createSelector( // TODO: performance-wise, this selector is not optimal (should not use viewTree)
+        CONTROL_SCHEMES_LIST_SELECTORS.schemeViewTree(schemeId),
+        CONTROL_SCHEME_SELECTORS.selectRunningSchemeId,
+        (
+            viewTree,
+            runningSchemeId
+        ): boolean => {
+            let allHubAreConnected = true;
+            let allIosAreConnected = true;
+            let allIosTypesMatches = true;
+            if (runningSchemeId !== null) {
+                return false;
+            }
+            viewTree.forEach((hubNode) => {
+                allHubAreConnected = allHubAreConnected && hubNode.isConnected;
+                hubNode.children.forEach((ioNode) => {
+                    allIosAreConnected = allIosAreConnected && ioNode.isConnected;
+                    allIosTypesMatches = allIosTypesMatches && ioNode.children.every((c) => !c.ioHasNoRequiredCapabilities);
+                });
+            });
+            return allHubAreConnected && allIosAreConnected && allIosTypesMatches;
+        }
+    ),
+
     isCurrentControlSchemeRunning: createSelector(
-        CONTROL_SCHEME_RUNNING_STATE_SELECTORS.selectRunningSchemeId,
+        CONTROL_SCHEME_SELECTORS.selectRunningSchemeId,
         ROUTER_SELECTORS.selectRouteParam('id'),
         (
             runningSchemeId,
             schemeId
         ) => runningSchemeId !== null && runningSchemeId === schemeId
-    )
+    ),
+    canAddBinding: createSelector(
+        CONTROL_SCHEME_SELECTORS.isListening,
+        HUBS_SELECTORS.selectHubs,
+        CONTROLLER_SELECTORS.selectAll,
+        (isListening, hubs, controllers) => !isListening && hubs.length > 0 && controllers.length > 0
+    ),
+    selectSchemesList: createSelector(
+        CONTROL_SCHEME_SELECTORS.selectAll,
+        CONTROL_SCHEME_SELECTORS.selectRunningSchemeId,
+        (schemes, runningSchemeId) => {
+            return schemes.map((scheme) => ({
+                ...scheme,
+                isRunning: scheme.id === runningSchemeId
+            }));
+        }
+    ),
 } as const;

@@ -10,11 +10,11 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 
-import { IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '@app/shared';
+import { HubIoOperationMode, IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '@app/shared';
 import { ControlSchemeBindingInputForm } from '../binding-input';
 import { RenderEditOutputConfigurationDirective } from '../edit-output-configuration';
 import { BindingForm } from '../types';
-import { AttachedIo, HUBS_SELECTORS, HUB_ATTACHED_IO_SELECTORS, HUB_STATS_SELECTORS, HubConfiguration, HubIoOperationMode } from '../../../store';
+import { AttachedIo, HUBS_SELECTORS, HUB_ATTACHED_IO_SELECTORS, HUB_STATS_SELECTORS, HubConfiguration } from '../../../store';
 
 export type LinearOutputConfigurationForm = FormGroup<{
     maxSpeed: FormControl<number>,

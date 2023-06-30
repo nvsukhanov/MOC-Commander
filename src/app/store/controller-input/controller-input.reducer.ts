@@ -4,8 +4,8 @@ import { EntityAdapter, EntityState, createEntityAdapter } from '@ngrx/entity';
 import { CONTROLLER_INPUT_ACTIONS } from './controller-input.actions';
 import { CONTROLLERS_ACTIONS } from '../controllers';
 import { ControllerInputType } from '@app/shared';
-import { CONTROL_SCHEME_CONFIGURATION_ACTIONS } from '../actions';
 import { ControllerInputModel } from './controller-input.model';
+import { CONTROL_SCHEME_ACTIONS } from '../control-schemes';
 
 export interface ControllerInputState extends EntityState<ControllerInputModel> {
     listenersCount: number;
@@ -48,7 +48,7 @@ export const CONTROLLER_INPUT_FEATURE = createFeature({
             return CONTROLLER_INPUT_ENTITY_ADAPTER.removeAll(state);
         }),
         on(CONTROLLER_INPUT_ACTIONS.requestInputCapture,
-            CONTROL_SCHEME_CONFIGURATION_ACTIONS.startListening,
+            CONTROL_SCHEME_ACTIONS.startListening,
             (state): ControllerInputState => {
                 return {
                     ...state,
@@ -56,7 +56,7 @@ export const CONTROLLER_INPUT_FEATURE = createFeature({
                 };
             }),
         on(CONTROLLER_INPUT_ACTIONS.releaseInputCapture,
-            CONTROL_SCHEME_CONFIGURATION_ACTIONS.stopListening,
+            CONTROL_SCHEME_ACTIONS.stopListening,
             (state): ControllerInputState => {
                 const nextListenersCount = state.listenersCount - 1;
                 if (nextListenersCount < 0) {

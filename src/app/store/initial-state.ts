@@ -2,7 +2,6 @@ import { RouterState } from '@ngrx/router-store';
 
 import { HubDiscoveryState, IState } from './i-state';
 import {
-    CONTROL_SCHEMES_ENTITY_ADAPTER,
     HUBS_ENTITY_ADAPTER,
     HUB_ATTACHED_IOS_ENTITY_ADAPTER,
     HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER,
@@ -15,19 +14,14 @@ import { CONTROLLERS_INITIAL_STATE } from './controllers';
 import { BLUETOOTH_AVAILABILITY_INITIAL_STATE } from './bluetooth-availability';
 import { CONTROLLER_INPUT_INITIAL_STATE } from './controller-input';
 import { CONTROLLER_SETTINGS_INITIAL_STATE } from './controller-settings';
+import { CONTROL_SCHEMES_INITIAL_STATE } from './control-schemes';
 
 export const INITIAL_STATE: IState = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_INITIAL_STATE,
     controllers: CONTROLLERS_INITIAL_STATE,
     controllerInput: CONTROLLER_INPUT_INITIAL_STATE,
     controllerSettings: CONTROLLER_SETTINGS_INITIAL_STATE,
-    controlSchemes: CONTROL_SCHEMES_ENTITY_ADAPTER.getInitialState(),
-    controlSchemeConfigurationState: {
-        isListening: false
-    },
-    controlSchemeRunningState: {
-        runningSchemeId: null
-    },
+    controlSchemes: CONTROL_SCHEMES_INITIAL_STATE,
     hubs: HUBS_ENTITY_ADAPTER.getInitialState(),
     hubStats: HUB_STATS_ENTITY_ADAPTER.getInitialState(),
     hubDiscoveryState: {

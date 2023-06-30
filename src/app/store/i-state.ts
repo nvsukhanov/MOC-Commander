@@ -1,26 +1,20 @@
-import { HubType, IOType, MotorServoEndState, PortModeName, PortModeSymbol } from '@nvsukhanov/rxpoweredup';
+import { HubType, IOType, PortModeName, PortModeSymbol } from '@nvsukhanov/rxpoweredup';
 import { EntityState } from '@ngrx/entity';
 import { RouterState } from '@ngrx/router-store';
 
-import { ControllerInputType, PortCommandTask } from '@app/shared';
-import { HubIoOperationMode } from './hub-io-operation-mode';
+import { PortCommandTask } from '@app/shared';
 import { ControllersState } from './controllers';
 import { BluetoothAvailabilityState } from './bluetooth-availability';
 import { ControllerInputState } from './controller-input';
 import { ControllerSettingsState } from './controller-settings';
+import { ControlSchemeState } from './control-schemes';
 
 export interface IState {
     bluetoothAvailability: BluetoothAvailabilityState,
     controllers: ControllersState;
     controllerInput: ControllerInputState;
     controllerSettings: ControllerSettingsState;
-    controlSchemes: EntityState<ControlScheme>;
-    controlSchemeConfigurationState: {
-        isListening: boolean;
-    };
-    controlSchemeRunningState: {
-        runningSchemeId: string | null;
-    };
+    controlSchemes: ControlSchemeState;
     hubs: EntityState<HubConfiguration>,
     hubStats: EntityState<HubStats>,
     hubDiscoveryState: {
@@ -55,62 +49,6 @@ export type AttachedIoProps = {
 export enum HubDiscoveryState {
     Idle = 'Idle',
     Discovering = 'Discovering',
-}
-
-export type BindingLinearOutputState = {
-    hubId: string;
-    portId: number;
-    operationMode: HubIoOperationMode.Linear;
-    linearConfig: {
-        maxSpeed: number;
-        isToggle: boolean;
-        invert: boolean;
-        power: number;
-    }
-}
-
-export type BindingServoOutputState = {
-    hubId: string;
-    portId: number;
-    operationMode: HubIoOperationMode.Servo;
-    servoConfig: {
-        range: number;
-        aposCenter: number;
-        speed: number;
-        power: number;
-        invert: boolean;
-    }
-}
-
-export type BindingSetAngleOutputState = {
-    hubId: string;
-    portId: number;
-    operationMode: HubIoOperationMode.SetAngle;
-    setAngleConfig: {
-        angle: number;
-        speed: number;
-        power: number;
-        endState: MotorServoEndState;
-    }
-}
-
-export type BindingOutputState = BindingLinearOutputState | BindingServoOutputState | BindingSetAngleOutputState;
-
-export type ControlSchemeBinding = {
-    id: string;
-    input: {
-        controllerId: string;
-        inputType: ControllerInputType;
-        inputId: string;
-    }
-    output: BindingOutputState;
-}
-
-export type ControlScheme = {
-    id: string;
-    index: number;
-    name: string;
-    bindings: ControlSchemeBinding[];
 }
 
 export type HubIoSupportedModes = {

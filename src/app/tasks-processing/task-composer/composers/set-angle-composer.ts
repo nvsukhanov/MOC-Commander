@@ -1,6 +1,6 @@
-import { PortCommandSetAngle, PortCommandTaskType } from '@app/shared';
+import { HubIoOperationMode, PortCommandSetAngle, PortCommandTaskType } from '@app/shared';
 import { PortCommandTaskComposer } from '../port-command-task-composer';
-import { AttachedIoProps, ControlSchemeBinding, HubIoOperationMode } from '../../../store';
+import { AttachedIoProps, ControlSchemeBinding } from '../../../store';
 
 export class SetAngleComposer extends PortCommandTaskComposer {
     private readonly inputValueThreshold = 0.5;

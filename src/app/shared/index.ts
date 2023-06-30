@@ -20,3 +20,4 @@ export * from './motor-servo-end-state-l10n-key.pipe';
 export * from './i-app-config';
 export * from './confirm-dialog';
 export * from './hub-id-to-name.pipe';
+export * from './hub-io-operation-mode';

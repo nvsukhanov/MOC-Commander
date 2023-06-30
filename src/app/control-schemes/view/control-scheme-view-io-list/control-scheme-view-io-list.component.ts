@@ -11,7 +11,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { BindingTreeNodeComponent } from './binding-tree-node';
 import { IoTreeNodeComponent } from './io-tree-node';
 import { HubTreeNodeComponent } from './hub-tree-node';
-import { ControlSchemeNodeTypes, ControlSchemeViewTreeNode } from '../../../store';
+import { ControlSchemeNodeTypes, ControlSchemeViewTreeNode } from '../../contorl-schemes-list.selectors';
 
 @Component({
     standalone: true,
