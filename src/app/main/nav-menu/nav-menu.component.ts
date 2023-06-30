@@ -11,15 +11,9 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { EllipsisTitleDirective } from '@app/shared';
-import {
-    BLUETOOTH_AVAILABILITY_SELECTORS,
-    CONTROLLER_SELECTORS,
-    CONTROL_SCHEME_SELECTORS,
-    HUBS_ACTIONS,
-    HUBS_SELECTORS,
-    HUB_DISCOVERY_STATE_SELECTORS
-} from '../../store';
+import { BLUETOOTH_AVAILABILITY_SELECTORS, HUBS_ACTIONS, HUBS_SELECTORS, } from '../../store';
 import { RoutesBuilderService } from '../../routing';
+import { MAIN_SELECTORS } from '../main.selectors';
 
 @Component({
     standalone: true,
@@ -42,15 +36,15 @@ import { RoutesBuilderService } from '../../routing';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavMenuComponent {
-    public readonly connectedControllersCount$ = this.store.select(CONTROLLER_SELECTORS.count);
+    public readonly connectedControllersCount$ = this.store.select(MAIN_SELECTORS.selectConnectedControllersCount);
 
-    public readonly connectedHubCount$ = this.store.select(HUBS_SELECTORS.selectConnectedHubsCount);
+    public readonly connectedHubCount$ = this.store.select(MAIN_SELECTORS.selectConnectedHubsCount);
 
-    public readonly controlSchemesCount$ = this.store.select(CONTROL_SCHEME_SELECTORS.selectSchemesCount);
+    public readonly controlSchemesCount$ = this.store.select(MAIN_SELECTORS.selectControlSchemesCount);
 
     public readonly isBluetoothAvailable = this.store.select(BLUETOOTH_AVAILABILITY_SELECTORS.isAvailable);
 
-    public readonly isDiscoveryBusy$ = this.store.select(HUB_DISCOVERY_STATE_SELECTORS.isDiscoveryBusy);
+    public readonly isDiscoveryBusy$ = this.store.select(HUBS_SELECTORS.selectIsDiscovering);
 
     @Input() public compact = false;
 

@@ -3,8 +3,9 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap, takeUntil } from 'rxjs';
 import { AttachIoEvent, AttachedIoAttachInboundMessage } from '@nvsukhanov/rxpoweredup';
 
-import { HUBS_ACTIONS, HUB_ATTACHED_IOS_ACTIONS } from '../actions';
+import { HUB_ATTACHED_IOS_ACTIONS } from '../actions';
 import { HubStorageService } from '../hub-storage.service';
+import { HUBS_ACTIONS } from '../hubs';
 
 @Injectable()
 export class HubAttachedIOsEffects {

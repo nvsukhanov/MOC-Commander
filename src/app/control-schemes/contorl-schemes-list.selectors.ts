@@ -15,8 +15,8 @@ import {
     HUB_PORT_MODE_INFO_SELECTORS,
     HUB_PORT_TASKS_SELECTORS,
     HUB_STATS_SELECTORS,
-    HubConfiguration,
     HubIoSupportedModes,
+    HubModel,
     HubStats,
     PortModeInfo,
     ROUTER_SELECTORS,
@@ -26,7 +26,7 @@ import {
 import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 
 function createHubTreeNode(
-    hubConfig: HubConfiguration,
+    hubConfig: HubModel,
     hubStats?: HubStats,
 ): ControlSchemeViewHubTreeNode {
     return {
@@ -46,7 +46,7 @@ function createHubTreeNode(
 
 function createIoTreeNode(
     parentPath: string,
-    hubConfig: HubConfiguration,
+    hubConfig: HubModel,
     isHubConnected: boolean,
     iosEntities: Dictionary<AttachedIo>,
     portId: number,
@@ -144,7 +144,7 @@ export type ControlSchemeViewTreeNode = ControlSchemeViewHubTreeNode
 export const CONTROL_SCHEMES_LIST_SELECTORS = {
     schemeViewTree: (schemeId: string) => createSelector(
         CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
-        HUBS_SELECTORS.selectHubEntities,
+        HUBS_SELECTORS.selectEntities,
         HUB_STATS_SELECTORS.selectEntities,
         HUB_ATTACHED_IO_SELECTORS.selectIosEntities,
         HUB_IO_SUPPORTED_MODES_SELECTORS.selectIoSupportedModesEntities,
@@ -153,7 +153,7 @@ export const CONTROL_SCHEMES_LIST_SELECTORS = {
         HUB_PORT_TASKS_SELECTORS.selectLastExecutedBindingIds,
         (
             scheme: ControlSchemeModel | undefined,
-            hubEntities: Dictionary<HubConfiguration>,
+            hubEntities: Dictionary<HubModel>,
             statsEntities: Dictionary<HubStats>,
             ios: Dictionary<AttachedIo>,
             ioSupportedModesEntities: Dictionary<HubIoSupportedModes>,
@@ -167,7 +167,7 @@ export const CONTROL_SCHEMES_LIST_SELECTORS = {
             const hubsViewMap = new Map<string, ControlSchemeViewHubTreeNode>();
 
             function ensureHubNodeCreated(
-                hubConfiguration: HubConfiguration
+                hubConfiguration: HubModel
             ): ControlSchemeViewHubTreeNode {
                 let hubTreeNode = hubsViewMap.get(hubConfiguration.hubId);
                 if (!hubTreeNode) {
@@ -253,7 +253,7 @@ export const CONTROL_SCHEMES_LIST_SELECTORS = {
     ),
     canAddBinding: createSelector(
         CONTROL_SCHEME_SELECTORS.isListening,
-        HUBS_SELECTORS.selectHubs,
+        HUBS_SELECTORS.selectAll,
         CONTROLLER_SELECTORS.selectAll,
         (isListening, hubs, controllers) => !isListening && hubs.length > 0 && controllers.length > 0
     ),
@@ -264,6 +264,16 @@ export const CONTROL_SCHEMES_LIST_SELECTORS = {
             return schemes.map((scheme) => ({
                 ...scheme,
                 isRunning: scheme.id === runningSchemeId
+            }));
+        }
+    ),
+    selectHubsWithConnectionState: createSelector(
+        HUBS_SELECTORS.selectAll,
+        HUB_STATS_SELECTORS.selectEntities,
+        (hubs, hubStats) => {
+            return hubs.map((hub) => ({
+                ...hub,
+                isConnected: !!hubStats[hub.hubId]
             }));
         }
     ),

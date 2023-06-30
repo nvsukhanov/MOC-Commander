@@ -1,8 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
 
 import { INITIAL_STATE } from '../initial-state';
-import { HUBS_ACTIONS } from '../actions';
 import { IState } from '../i-state';
+import { HUBS_ACTIONS } from '../hubs';
 
 export const HUB_EDIT_FORM_ACTIVE_SAVES_REDUCER = createReducer(
     INITIAL_STATE.hubEditFormActiveSaves,

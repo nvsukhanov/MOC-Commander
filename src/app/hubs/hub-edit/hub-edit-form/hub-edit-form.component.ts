@@ -8,7 +8,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
-import { HubConfiguration } from '../../../store';
+import { HubModel } from '../../../store';
 import { RoutesBuilderService } from '../../../routing';
 
 export type HubEditFormSaveResult = {
@@ -44,7 +44,7 @@ export class HubEditFormComponent {
         name: FormControl<string | null>;
     }>;
 
-    private _hubConfiguration?: HubConfiguration;
+    private _hubConfiguration?: HubModel;
 
     private _viewPath: string[] = [];
 
@@ -66,7 +66,7 @@ export class HubEditFormComponent {
     }
 
     @Input()
-    public set hubConfiguration(v: HubConfiguration | undefined) {
+    public set hubConfiguration(v: HubModel | undefined) {
         if (v) {
             if (this._hubConfiguration?.name !== v.name) {
                 this.form.patchValue(v);
@@ -80,7 +80,7 @@ export class HubEditFormComponent {
         this._hubConfiguration = v;
     }
 
-    public get hubConfiguration(): HubConfiguration | undefined {
+    public get hubConfiguration(): HubModel | undefined {
         return this._hubConfiguration;
     }
 

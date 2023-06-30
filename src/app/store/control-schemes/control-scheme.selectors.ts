@@ -16,13 +16,15 @@ const CONTROL_SCHEME_SELECT_ALL = createSelector(
     CONTROL_SCHEME_ENTITY_SELECTORS.selectAll
 );
 
+const CONTROL_SCHEME_SELECT_IDS = createSelector(
+    CONTROL_SCHEMES_FEATURE.selectControlSchemesState,
+    CONTROL_SCHEME_ENTITY_SELECTORS.selectIds
+);
+
 export const CONTROL_SCHEME_SELECTORS = {
     selectAll: CONTROL_SCHEME_SELECT_ALL,
+    selectIds: CONTROL_SCHEME_SELECT_IDS,
     selectEntities: CONTROL_SCHEME_SELECT_ENTITIES,
-    selectSchemesCount: createSelector(
-        CONTROL_SCHEMES_FEATURE.selectControlSchemesState,
-        CONTROL_SCHEME_ENTITY_SELECTORS.selectTotal
-    ),
     selectScheme: (id: string) => createSelector(
         CONTROL_SCHEME_SELECTORS.selectEntities,
         (state) => state[id]

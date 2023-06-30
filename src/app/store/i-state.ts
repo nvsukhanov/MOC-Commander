@@ -1,4 +1,4 @@
-import { HubType, IOType, PortModeName, PortModeSymbol } from '@nvsukhanov/rxpoweredup';
+import { IOType, PortModeName, PortModeSymbol } from '@nvsukhanov/rxpoweredup';
 import { EntityState } from '@ngrx/entity';
 import { RouterState } from '@ngrx/router-store';
 
@@ -8,6 +8,7 @@ import { BluetoothAvailabilityState } from './bluetooth-availability';
 import { ControllerInputState } from './controller-input';
 import { ControllerSettingsState } from './controller-settings';
 import { ControlSchemeState } from './control-schemes';
+import { HubsState } from './hubs';
 
 export interface IState {
     bluetoothAvailability: BluetoothAvailabilityState,
@@ -15,11 +16,8 @@ export interface IState {
     controllerInput: ControllerInputState;
     controllerSettings: ControllerSettingsState;
     controlSchemes: ControlSchemeState;
-    hubs: EntityState<HubConfiguration>,
+    hubs: HubsState,
     hubStats: EntityState<HubStats>,
-    hubDiscoveryState: {
-        discoveryState: HubDiscoveryState;
-    },
     hubAttachedIos: EntityState<AttachedIo>,
     hubAttachedIoProps: EntityState<AttachedIoProps>,
     hubIoSupportedModes: EntityState<HubIoSupportedModes>,
@@ -46,22 +44,11 @@ export type AttachedIoProps = {
     motorEncoderOffset: number | null;
 }
 
-export enum HubDiscoveryState {
-    Idle = 'Idle',
-    Discovering = 'Discovering',
-}
-
 export type HubIoSupportedModes = {
     id: string;
     portInputModes: number[];
     portOutputModes: number[];
     synchronizable: boolean;
-}
-
-export type HubConfiguration = {
-    hubId: string;
-    name: string;
-    hubType: HubType;
 }
 
 export type HubStats = {

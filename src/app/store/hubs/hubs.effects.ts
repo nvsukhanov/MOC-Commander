@@ -7,10 +7,12 @@ import { IHub, MessageLoggingMiddleware, connectHub } from '@nvsukhanov/rxpowere
 
 import { APP_CONFIG, IAppConfig, NAVIGATOR, PrefixedConsoleLoggerFactoryService } from '@app/shared';
 import { HubStorageService } from '../hub-storage.service';
-import { HUBS_ACTIONS, HUB_STATS_ACTIONS } from '../actions';
+import { HUB_STATS_ACTIONS } from '../actions';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../hub-communication-notifier-middleware-factory.service';
-import { HUBS_SELECTORS, ROUTER_SELECTORS } from '../selectors';
+import { ROUTER_SELECTORS } from '../selectors';
 import { RoutesBuilderService } from '../../routing';
+import { HUBS_ACTIONS } from './hubs.actions';
+import { HUBS_SELECTORS } from './hubs.selectors';
 
 @Injectable()
 export class HubsEffects {

@@ -15,8 +15,14 @@ const CONTROLLERS_SELECT_ENTITIES = createSelector(
     CONTROLLERS_ENTITY_SELECTOR.selectEntities
 );
 
+const CONTROLLERS_SELECT_IDS = createSelector(
+    CONTROLLERS_FEATURE.selectControllersState,
+    CONTROLLERS_ENTITY_SELECTOR.selectIds
+);
+
 export const CONTROLLER_SELECTORS = {
     selectAll: CONTROLLERS_SELECT_ALL,
+    selectIds: CONTROLLERS_SELECT_IDS,
     selectEntities: CONTROLLERS_SELECT_ENTITIES,
     selectGamepads: createSelector(
         CONTROLLERS_SELECT_ALL,
@@ -29,9 +35,5 @@ export const CONTROLLER_SELECTORS = {
     selectById: (id: string) => createSelector(
         CONTROLLERS_SELECT_ENTITIES,
         (entities) => entities[id]
-    ),
-    count: createSelector(
-        CONTROLLERS_SELECT_ALL,
-        (controllers) => controllers.length
     )
 } as const;
