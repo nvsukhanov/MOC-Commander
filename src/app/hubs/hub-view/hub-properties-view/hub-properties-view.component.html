@@ -16,7 +16,7 @@
     </mat-card-header>
     <mat-card-content>
         <p>
-            {{ 'hub.buttonState' | transloco: configuration }}
+            {{ 'hub.buttonState' | transloco: stats }}
         </p>
         <p *ngIf="stats.batteryLevel !== null; else batteryLevelUnknown">
             {{ 'hub.batteryLevel' | transloco: stats }}
@@ -24,11 +24,11 @@
         <ng-template #batteryLevelUnknown>
             <p>{{ 'hub.batteryLevelUnknown' | transloco }}</p>
         </ng-template>
-        <p *ngIf="stats.RSSI !== null; else rssiLevelUnknown">
-            {{ 'hub.RSSILevel' | transloco: stats }}
+        <p *ngIf="stats.rssi !== null; else rssiLevelUnknown">
+            {{ 'hub.rssiLevel' | transloco: stats }}
         </p>
         <ng-template #rssiLevelUnknown>
-            <p>{{ 'hub.RSSILevelUnknown' | transloco }}</p>
+            <p>{{ 'hub.rssiLevelUnknown' | transloco }}</p>
         </ng-template>
     </mat-card-content>
     <mat-card-actions>

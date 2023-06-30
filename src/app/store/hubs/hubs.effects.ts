@@ -7,12 +7,12 @@ import { IHub, MessageLoggingMiddleware, connectHub } from '@nvsukhanov/rxpowere
 
 import { APP_CONFIG, IAppConfig, NAVIGATOR, PrefixedConsoleLoggerFactoryService } from '@app/shared';
 import { HubStorageService } from '../hub-storage.service';
-import { HUB_STATS_ACTIONS } from '../actions';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../hub-communication-notifier-middleware-factory.service';
 import { ROUTER_SELECTORS } from '../selectors';
 import { RoutesBuilderService } from '../../routing';
 import { HUBS_ACTIONS } from './hubs.actions';
 import { HUBS_SELECTORS } from './hubs.selectors';
+import { HUB_STATS_ACTIONS } from '../hub-stats';
 
 @Injectable()
 export class HubsEffects {
@@ -51,11 +51,11 @@ export class HubsEffects {
     public listenToRssiLevelOnConnect$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.connected),
-            mergeMap((a) => interval(this.config.hubRSSIPollInterval).pipe(
+            mergeMap((a) => interval(this.config.hubRssiPollInterval).pipe(
                 startWith(0),
                 takeUntil(this.hubStorage.get(a.hubId).disconnected),
                 switchMap(() => this.hubStorage.get(a.hubId).properties.getRSSILevel()),
-                map((RSSI) => HUB_STATS_ACTIONS.rssiLevelReceived({ hubId: a.hubId, RSSI }))
+                map((rssi) => HUB_STATS_ACTIONS.rssiLevelReceived({ hubId: a.hubId, rssi }))
             ))
         );
     });
@@ -65,7 +65,7 @@ export class HubsEffects {
             ofType(HUBS_ACTIONS.connected),
             mergeMap((a) => this.hubStorage.get(a.hubId).properties.buttonState.pipe(
                 takeUntil(this.hubStorage.get(a.hubId).disconnected),
-                map((isPressed) => HUB_STATS_ACTIONS.buttonStateReceived({ hubId: a.hubId, isPressed }))
+                map((isButtonPressed) => HUB_STATS_ACTIONS.buttonStateReceived({ hubId: a.hubId, isButtonPressed }))
             ))
         );
     });

@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { EMPTY, Observable, switchMap, take } from 'rxjs';
-import { JsonPipe, NgForOf, NgIf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { TranslocoModule } from '@ngneat/transloco';
@@ -20,7 +20,7 @@ import {
     HUB_ATTACHED_IO_SELECTORS,
     HUB_STATS_SELECTORS,
     HubModel,
-    HubStats,
+    HubStatsModel,
     IoFullInfo,
     ROUTER_SELECTORS,
     hubAttachedIosIdFn,
@@ -43,7 +43,6 @@ import { RoutesBuilderService } from '../../../routing';
         HubPropertiesViewComponent,
         HubIoViewComponent,
         NotFoundComponent,
-        JsonPipe,
         MatDialogModule,
         MatCardModule
     ],
@@ -54,7 +53,7 @@ export class HubViewComponent implements OnDestroy {
         switchMap((id) => id === undefined ? EMPTY : this.store.select(HUBS_SELECTORS.selectHub(id)))
     );
 
-    public readonly selectedHubStats$: Observable<HubStats | undefined> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
+    public readonly selectedHubStats$: Observable<HubStatsModel | undefined> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
         switchMap((id) => id === undefined ? EMPTY : this.store.select(HUB_STATS_SELECTORS.selectByHubId(id)))
     );
 

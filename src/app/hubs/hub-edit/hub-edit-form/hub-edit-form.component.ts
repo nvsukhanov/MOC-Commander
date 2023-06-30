@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { JsonPipe, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -25,7 +25,6 @@ export type HubEditFormSaveResult = {
         MatCardModule,
         NgIf,
         MatButtonModule,
-        JsonPipe,
         MatInputModule,
         ReactiveFormsModule,
         TranslocoModule,

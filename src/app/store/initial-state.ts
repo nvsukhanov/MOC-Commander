@@ -6,7 +6,6 @@ import {
     HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER,
     HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER,
     HUB_PORT_MODE_INFO,
-    HUB_STATS_ENTITY_ADAPTER,
     LAST_EXECUTED_TASKS_ENTITY_ADAPTER
 } from './entity-adapters';
 import { CONTROLLERS_INITIAL_STATE } from './controllers';
@@ -15,6 +14,7 @@ import { CONTROLLER_INPUT_INITIAL_STATE } from './controller-input';
 import { CONTROLLER_SETTINGS_INITIAL_STATE } from './controller-settings';
 import { CONTROL_SCHEMES_INITIAL_STATE } from './control-schemes';
 import { HUBS_INITIAL_STATE } from './hubs';
+import { HUB_STATS_INITIAL_STATE } from './hub-stats';
 
 export const INITIAL_STATE: IState = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_INITIAL_STATE,
@@ -23,7 +23,7 @@ export const INITIAL_STATE: IState = {
     controllerSettings: CONTROLLER_SETTINGS_INITIAL_STATE,
     controlSchemes: CONTROL_SCHEMES_INITIAL_STATE,
     hubs: HUBS_INITIAL_STATE,
-    hubStats: HUB_STATS_ENTITY_ADAPTER.getInitialState(),
+    hubStats: HUB_STATS_INITIAL_STATE,
     hubAttachedIos: HUB_ATTACHED_IOS_ENTITY_ADAPTER.getInitialState(),
     hubAttachedIoProps: HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER.getInitialState(),
     hubIoSupportedModes: HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER.getInitialState(),

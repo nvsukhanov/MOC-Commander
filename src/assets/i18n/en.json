@@ -39,8 +39,8 @@
     "disconnected": "Hub {name} disconnected",
     "batteryLevel": "Battery: {batteryLevel}%",
     "batteryLevelUnknown": "Battery level unknown",
-    "RSSILevel": "RSSI: {RSSI}",
-    "RSSILevelUnknown": "RSSI unknown",
+    "rssiLevel": "RSSI: {rssi}",
+    "rssiLevelUnknown": "RSSI unknown",
     "buttonStateTitle": "Button state",
     "buttonState": "Hub button state: {isButtonPressed, select, true {pressed} other {released}}",
     "port": "Port {portId}"

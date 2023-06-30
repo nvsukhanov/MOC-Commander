@@ -9,6 +9,7 @@ import { ControllerInputState } from './controller-input';
 import { ControllerSettingsState } from './controller-settings';
 import { ControlSchemeState } from './control-schemes';
 import { HubsState } from './hubs';
+import { HubStatsState } from './hub-stats';
 
 export interface IState {
     bluetoothAvailability: BluetoothAvailabilityState,
@@ -17,7 +18,7 @@ export interface IState {
     controllerSettings: ControllerSettingsState;
     controlSchemes: ControlSchemeState;
     hubs: HubsState,
-    hubStats: EntityState<HubStats>,
+    hubStats: HubStatsState,
     hubAttachedIos: EntityState<AttachedIo>,
     hubAttachedIoProps: EntityState<AttachedIoProps>,
     hubIoSupportedModes: EntityState<HubIoSupportedModes>,
@@ -49,14 +50,6 @@ export type HubIoSupportedModes = {
     portInputModes: number[];
     portOutputModes: number[];
     synchronizable: boolean;
-}
-
-export type HubStats = {
-    hubId: string;
-    RSSI: number | null;
-    isButtonPressed: boolean;
-    batteryLevel: number | null;
-    hasCommunication: boolean;
 }
 
 export type PortModeInfo = {

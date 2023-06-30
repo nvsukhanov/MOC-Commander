@@ -29,3 +29,4 @@ export {
     CONTROL_SCHEME_SELECTORS
 } from './control-schemes';
 export { HUBS_ACTIONS, HUBS_SELECTORS, HubModel, HubDiscoveryState } from './hubs';
+export { HUB_STATS_ACTIONS, HUB_STATS_SELECTORS, HubStatsModel } from './hub-stats';

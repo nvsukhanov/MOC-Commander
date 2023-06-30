@@ -14,7 +14,7 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { JsonPipe, NgForOf, NgIf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
@@ -65,7 +65,6 @@ export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
         PushPipe,
         TranslocoModule,
         NgForOf,
-        JsonPipe,
         ControlSchemeBindingInputComponent,
         ControlSchemeBindingOutputComponent,
         MatExpansionModule,

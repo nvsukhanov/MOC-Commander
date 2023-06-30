@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { JsonPipe, NgForOf, NgIf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslocoModule } from '@ngneat/transloco';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -20,7 +20,6 @@ import { IOutputConfigurationRenderer } from '../i-output-configuration-renderer
     styleUrls: [ './set-angle-output-configuration-edit.component.scss' ],
     imports: [
         NgIf,
-        JsonPipe,
         MatSlideToggleModule,
         TranslocoModule,
         ReactiveFormsModule,
