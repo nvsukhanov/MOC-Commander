@@ -5,9 +5,9 @@ import { Store } from '@ngrx/store';
 
 import { CONTROLLERS_ACTIONS } from './controllers.actions';
 import { CONTROLLER_SELECTORS } from './controllers.selectors';
-import { ControllerType } from '../../plugins';
 import { WINDOW } from '@app/shared';
-import { controllerIdFn } from './controllers-state';
+import { controllerIdFn } from './controllers.reducer';
+import { ControllerType } from './controller-model';
 
 @Injectable()
 export class KeyboardControllerEffects {

@@ -1,11 +1,9 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-import { IState, } from '../i-state';
-import { ControllerType } from '../../plugins';
-import { CONTROLLER_SETTINGS_SELECTORS } from '../selectors';
-import { CONTROLLERS_ENTITY_ADAPTER, GamepadController, KeyboardController } from './controllers-state';
+import { CONTROLLERS_ENTITY_ADAPTER, ControllersState } from './controllers.reducer';
+import { ControllerType, GamepadControllerModel, KeyboardControllerModel } from './controller-model';
 
-const CONTROLLERS_FEATURE_SELECTOR = createFeatureSelector<IState['controllers']>('controllers');
+const CONTROLLERS_FEATURE_SELECTOR = createFeatureSelector<ControllersState>('controllers');
 
 const CONTROLLERS_ENTITY_SELECTOR = CONTROLLERS_ENTITY_ADAPTER.getSelectors();
 
@@ -21,22 +19,14 @@ const CONTROLLERS_SELECT_ENTITIES = createSelector(
 
 export const CONTROLLER_SELECTORS = {
     selectAll: CONTROLLERS_SELECT_ALL,
-    selectAllWithSettings: createSelector(
-        CONTROLLERS_SELECT_ALL,
-        CONTROLLER_SETTINGS_SELECTORS.selectEntities,
-        (controllers, controllerSettingsEntities) => controllers.map((controller) => ({
-            controller,
-            settings: controllerSettingsEntities[controller.id]
-        }))
-    ),
     selectEntities: CONTROLLERS_SELECT_ENTITIES,
     selectGamepads: createSelector(
         CONTROLLERS_SELECT_ALL,
-        (controllers) => controllers.filter((c) => c.controllerType === ControllerType.Gamepad) as GamepadController[]
+        (controllers) => controllers.filter((c) => c.controllerType === ControllerType.Gamepad) as GamepadControllerModel[]
     ),
     selectKeyboards: createSelector(
         CONTROLLERS_SELECT_ALL,
-        (controllers) => controllers.filter((c) => c.controllerType === ControllerType.Keyboard) as KeyboardController[]
+        (controllers) => controllers.filter((c) => c.controllerType === ControllerType.Keyboard) as KeyboardControllerModel[]
     ),
     selectById: (id: string) => createSelector(
         CONTROLLERS_SELECT_ENTITIES,
