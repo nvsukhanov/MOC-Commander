@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 import { NAVIGATOR } from '@app/shared';
 import { IState } from './i-state';
 import {
-    BLUETOOTH_AVAILABILITY_REDUCER,
     CONTROLLER_INPUT_CAPTURE_REDUCER,
     CONTROLLER_INPUT_REDUCER,
     CONTROLLER_SETTINGS_REDUCER,
@@ -46,10 +45,12 @@ import { HubStorageService } from './hub-storage.service';
 import { CONTROLLER_INPUT_ACTIONS, HUB_STATS_ACTIONS } from './actions';
 import { RoutesBuilderService } from '../routing';
 import { CONTROLLERS_REDUCER, GamepadControllerEffects, KeyboardControllerEffects } from './controllers';
+import { BLUETOOTH_AVAILABILITY_FEATURE } from './bluetooth-availability';
 
 const STORAGE_VERSION = '2';
 
 const REDUCERS: ActionReducerMap<IState> = {
+    bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,
     controllers: CONTROLLERS_REDUCER,
     controllerInput: CONTROLLER_INPUT_REDUCER,
     controllerInputCapture: CONTROLLER_INPUT_CAPTURE_REDUCER,
@@ -67,7 +68,6 @@ const REDUCERS: ActionReducerMap<IState> = {
     hubPortTasks: HUB_PORT_TASKS_REDUCER,
     hubEditFormActiveSaves: HUB_EDIT_FORM_ACTIVE_SAVES_REDUCER,
     servoCalibrationTaskState: SERVO_CALIBRATION_REDUCER,
-    bluetoothAvailability: BLUETOOTH_AVAILABILITY_REDUCER,
     router: routerReducer
 };
 
