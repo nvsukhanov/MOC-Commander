@@ -7,5 +7,3 @@ export * from './control-scheme-runner.effects';
 export * from './notifications.effects';
 export * from './servo-calibration.effects';
 export * from './hub-attached-ios-state.effects';
-export * from './controllers';
-export * from './controller-input-capture.effects';

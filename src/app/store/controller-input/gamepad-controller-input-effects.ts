@@ -3,12 +3,11 @@ import { Action, Store } from '@ngrx/store';
 import { concatLatestFrom, createEffect } from '@ngrx/effects';
 import { MonoTypeOperatorFunction, NEVER, Observable, filter, from, interval, map, merge, share, switchMap } from 'rxjs';
 
-import { APP_CONFIG, IAppConfig, WINDOW } from '@app/shared';
-import { CONTROLLER_INPUT_ACTIONS } from '../../actions';
-import { CONTROLLER_INPUT_CAPTURE_SELECTORS, CONTROLLER_INPUT_SELECTORS } from '../../selectors';
-import { controllerInputIdFn } from '../../entity-adapters';
-import { ControllerInputType } from '../../controller-input-type';
-import { CONTROLLER_SELECTORS, controllerIdFn } from '../../controllers';
+import { APP_CONFIG, ControllerInputType, IAppConfig, WINDOW } from '@app/shared';
+import { CONTROLLER_SELECTORS, controllerIdFn } from '../controllers';
+import { controllerInputIdFn } from './controller-input.reducer';
+import { CONTROLLER_INPUT_ACTIONS } from './controller-input.actions';
+import { CONTROLLER_INPUT_SELECTORS } from './controller-input.selectors';
 
 @Injectable()
 export class GamepadControllerInputEffects {
@@ -18,7 +17,7 @@ export class GamepadControllerInputEffects {
     public readonly axialDeadZone = 0.1;
 
     public readonly captureGamepadInput$ = createEffect(() => {
-        return this.store.select(CONTROLLER_INPUT_CAPTURE_SELECTORS.isCapturing).pipe(
+        return this.store.select(CONTROLLER_INPUT_SELECTORS.isCapturing).pipe(
             switchMap((isCapturing) => isCapturing ? this.readGamepads() : NEVER)
         );
     });

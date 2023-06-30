@@ -8,8 +8,8 @@ import { AttachedIo, HubIoSupportedModes, IState, PortModeInfo } from '../i-stat
 import { HUB_IO_SUPPORTED_MODES_SELECTORS } from './hub-io-supported-modes.selectors';
 import { HUB_IO_CONTROL_METHODS, HubIoOperationMode } from '../hub-io-operation-mode';
 import { HUB_PORT_MODE_INFO_SELECTORS } from './hub-port-mode-info.selectors';
-import { ControllerInputType } from '../controller-input-type';
 import { HUB_STATS_SELECTORS } from './hub-stats.selectors';
+import { ControllerInputType } from '@app/shared';
 
 const SELECT_HUB_ATTACHED_IOS_FEATURE = createFeatureSelector<IState['hubAttachedIos']>('hubAttachedIos');
 

@@ -3,15 +3,15 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { filter, map } from 'rxjs';
 
-import { CONTROLLER_INPUT_ACTIONS } from '../actions';
-import { CONTROLLER_INPUT_CAPTURE_SELECTORS } from '../selectors';
+import { CONTROLLER_INPUT_SELECTORS } from './controller-input.selectors';
+import { CONTROLLER_INPUT_ACTIONS } from './controller-input.actions';
 
 @Injectable()
 export class ControllerInputCaptureEffects {
     public readonly listenForInputCaptureRelease$ = createEffect(() => {
         return this.actions.pipe(
             ofType(CONTROLLER_INPUT_ACTIONS.releaseInputCapture),
-            concatLatestFrom(() => this.store.select(CONTROLLER_INPUT_CAPTURE_SELECTORS.isCapturing)),
+            concatLatestFrom(() => this.store.select(CONTROLLER_INPUT_SELECTORS.isCapturing)),
             filter(([ , isCapturing ]) => !isCapturing),
             map(() => CONTROLLER_INPUT_ACTIONS.inputCaptureReleased())
         );
@@ -20,7 +20,7 @@ export class ControllerInputCaptureEffects {
     public readonly listenForInputCapture$ = createEffect(() => {
         return this.actions.pipe(
             ofType(CONTROLLER_INPUT_ACTIONS.requestInputCapture),
-            concatLatestFrom(() => this.store.select(CONTROLLER_INPUT_CAPTURE_SELECTORS.isCapturing)),
+            concatLatestFrom(() => this.store.select(CONTROLLER_INPUT_SELECTORS.isCapturing)),
             filter(([ , isCapturing ]) => isCapturing),
             map(() => CONTROLLER_INPUT_ACTIONS.inputCapturing())
         );

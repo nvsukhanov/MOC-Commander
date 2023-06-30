@@ -9,8 +9,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 
-import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS, ControllerInputType, controllerInputIdFn } from '../../../store';
+import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS, controllerInputIdFn } from '../../../store';
 import { ControllerPluginFactoryService } from '../../../plugins';
+import { ControllerInputType } from '@app/shared';
 
 export type ControlSchemeBindingInputForm = FormGroup<{
     controllerId: FormControl<string>,
