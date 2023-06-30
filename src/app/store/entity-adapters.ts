@@ -3,8 +3,8 @@ import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 import { PortCommandTask } from '@app/shared';
 import {
-    AttachedIO,
-    AttachedIOState,
+    AttachedIo,
+    AttachedIoProps,
     ControlScheme,
     Controller,
     ControllerInput,
@@ -17,7 +17,7 @@ import {
 import { ControllerType } from '../plugins';
 import { ControllerInputType } from './controller-input-type';
 
-export const HUB_ATTACHED_IOS_ENTITY_ADAPTER: EntityAdapter<AttachedIO> = createEntityAdapter<AttachedIO>({
+export const HUB_ATTACHED_IOS_ENTITY_ADAPTER: EntityAdapter<AttachedIo> = createEntityAdapter<AttachedIo>({
     selectId: (io) => hubAttachedIosIdFn(io),
     sortComparer: (a, b) => a.portId - b.portId
 });
@@ -38,7 +38,7 @@ export const HUB_PORT_MODE_INFO: EntityAdapter<PortModeInfo> = createEntityAdapt
 });
 
 export function hubPortModeInfoIdFn(
-    { io, modeId }: { io: AttachedIO, modeId: number }
+    { io, modeId }: { io: AttachedIo, modeId: number }
 ): string {
     return `${io.hardwareRevision}/${io.softwareRevision}/${io.ioType}/${modeId}`;
 }
@@ -47,8 +47,8 @@ export const HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER: EntityAdapter<HubIoSupported
     selectId: (mode) => mode.id,
 });
 
-export function hubIOSupportedModesIdFn(
-    io: AttachedIO
+export function hubIoSupportedModesIdFn(
+    io: AttachedIo
 ): string {
     return `${io.hardwareRevision}/${io.softwareRevision}/${io.ioType}`;
 }
@@ -68,7 +68,7 @@ export function lastExecutedTaskIdFn(
     return `${hubId}/${portId}`;
 }
 
-export const HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER: EntityAdapter<AttachedIOState> = createEntityAdapter<AttachedIOState>({
+export const HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER: EntityAdapter<AttachedIoProps> = createEntityAdapter<AttachedIoProps>({
     selectId: (io) => hubAttachedIosIdFn(io),
 });
 

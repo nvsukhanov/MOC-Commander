@@ -9,11 +9,11 @@ import { HUB_IO_SUPPORTED_MODES_SELECTORS } from '../selectors';
 import { HubStorageService } from '../hub-storage.service';
 
 @Injectable()
-export class HubIOSupportedModesEffects {
-    public loadHubIOOutputModesIfCacheIsEmpty$ = createEffect(() => {
+export class HubIoSupportedModesEffects {
+    public loadHubIoOutputModesIfCacheIsEmpty$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUB_ATTACHED_IOS_ACTIONS.ioConnected),
-            concatLatestFrom((action) => this.store.select(HUB_IO_SUPPORTED_MODES_SELECTORS.hasCachedIOPortModes(action.io))),
+            concatLatestFrom((action) => this.store.select(HUB_IO_SUPPORTED_MODES_SELECTORS.hasCachedIoPortModes(action.io))),
             filter(([ , hasCached ]) => !hasCached),
             mergeMap(([ action ]) => this.hubStorage.get(action.io.hubId).ports.getPortModes(action.io.portId).pipe(
                 takeUntil(this.hubStorage.get(action.io.hubId).disconnected),

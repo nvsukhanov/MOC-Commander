@@ -167,7 +167,7 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
             takeUntil(this.onDestroy$),
             takeUntil(this.actions.pipe(ofType(CONTROL_SCHEME_CONFIGURATION_ACTIONS.stopListening))),
             filter((input): input is ControllerInput => !!input),
-            concatLatestFrom((input) => this.store.select(HUB_ATTACHED_IO_SELECTORS.selectFirstIOControllableByInputType(input.inputType))),
+            concatLatestFrom((input) => this.store.select(HUB_ATTACHED_IO_SELECTORS.selectFirstIiControllableByInputType(input.inputType))),
             map(([ input, ios ]) => ({ input, ios })),
             take(1),
             finalize(() => this.stopInputCapture())

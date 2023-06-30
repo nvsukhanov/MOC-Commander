@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 import { HUB_PORT_MODE_INFO_SELECTORS } from '../selectors';
 import { HubStorageService } from '../hub-storage.service';
 import { HUB_ATTACHED_IOS_ACTIONS, HUB_ATTACHED_IOS_STATE_ACTIONS } from '../actions';
-import { AttachedIO } from '../i-state';
+import { AttachedIo } from '../i-state';
 
 @Injectable()
 export class HubAttachedIosStateEffects {
@@ -51,7 +51,7 @@ export class HubAttachedIosStateEffects {
     }
 
     private getModeIdForModeName(
-        io: AttachedIO,
+        io: AttachedIo,
         portModeName: PortModeName
     ): Observable<number | null> {
         return this.store.select(HUB_PORT_MODE_INFO_SELECTORS.selectModeIdForInputModeName(io, portModeName)).pipe(

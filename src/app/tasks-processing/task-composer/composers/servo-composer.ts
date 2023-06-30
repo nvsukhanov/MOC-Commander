@@ -2,7 +2,7 @@ import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 
 import { PortCommandServoTask, PortCommandTaskType, getTranslationArcs } from '@app/shared';
 import { PortCommandTaskComposer } from '../port-command-task-composer';
-import { AttachedIOState, BindingServoOutputState, ControlSchemeBinding, HubIoOperationMode } from '../../../store';
+import { AttachedIoProps, BindingServoOutputState, ControlSchemeBinding, HubIoOperationMode } from '../../../store';
 
 export class ServoComposer extends PortCommandTaskComposer {
     private readonly snappingThreshold = 10;
@@ -10,7 +10,7 @@ export class ServoComposer extends PortCommandTaskComposer {
     protected handle(
         binding: ControlSchemeBinding,
         inputValue: number,
-        ioState?: AttachedIOState
+        ioState?: AttachedIoProps
     ): PortCommandServoTask | null {
         const outputConfig = binding.output;
         if (outputConfig.operationMode !== HubIoOperationMode.Servo || ioState === undefined || ioState.motorEncoderOffset === null) {

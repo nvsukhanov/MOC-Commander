@@ -1,32 +1,32 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-import { HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER, hubIOSupportedModesIdFn } from '../entity-adapters';
-import { AttachedIO, IState } from '../i-state';
+import { HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER, hubIoSupportedModesIdFn } from '../entity-adapters';
+import { AttachedIo, IState } from '../i-state';
 
-const HUB_IO_SUPPORTED_MODES_FEATURE_SELECTOR = createFeatureSelector<IState['hubIOSupportedModes']>('hubIOSupportedModes');
+const HUB_IO_SUPPORTED_MODES_FEATURE_SELECTOR = createFeatureSelector<IState['hubIoSupportedModes']>('hubIoSupportedModes');
 
 const HUB_IO_SUPPORTED_MODES_ADAPTER_SELECTORS = HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER.getSelectors();
 
 export const HUB_IO_SUPPORTED_MODES_SELECTORS = {
-    selectIOSupportedModesList: createSelector(
+    selectIOoSupportedModesList: createSelector(
         HUB_IO_SUPPORTED_MODES_FEATURE_SELECTOR,
         HUB_IO_SUPPORTED_MODES_ADAPTER_SELECTORS.selectAll
     ),
-    selectIOSupportedModesEntities: createSelector(
+    selectIoSupportedModesEntities: createSelector(
         HUB_IO_SUPPORTED_MODES_FEATURE_SELECTOR,
         HUB_IO_SUPPORTED_MODES_ADAPTER_SELECTORS.selectEntities
     ),
-    selectIOPortModes: (io: AttachedIO) => createSelector(
-        HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOSupportedModesList,
+    selectIoPortModes: (io: AttachedIo) => createSelector(
+        HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOoSupportedModesList,
         (state) => {
             return state.find(
-                (item) => item.id === hubIOSupportedModesIdFn(io)
+                (item) => item.id === hubIoSupportedModesIdFn(io)
             ) ?? null;
         }
     ),
-    hasCachedIOPortModes: (io: AttachedIO) => createSelector(
-        HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOPortModes(io),
+    hasCachedIoPortModes: (io: AttachedIo) => createSelector(
+        HUB_IO_SUPPORTED_MODES_SELECTORS.selectIoPortModes(io),
         (state) => state !== null
     )
 } as const;

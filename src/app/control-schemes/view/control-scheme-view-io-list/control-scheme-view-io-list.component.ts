@@ -70,6 +70,6 @@ export class ControlSchemeViewIoListComponent {
     }
 
     public isPort(_: number, node: ControlSchemeViewTreeNode): boolean {
-        return node.nodeType === ControlSchemeNodeTypes.IO;
+        return node.nodeType === ControlSchemeNodeTypes.Io;
     }
 }

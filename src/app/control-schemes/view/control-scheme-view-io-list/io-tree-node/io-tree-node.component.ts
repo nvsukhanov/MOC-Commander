@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NgIf } from '@angular/common';
 
 import { IoInlineViewComponent } from '@app/shared';
-import { ControlSchemeViewIOTreeNode } from '../../../../store';
+import { ControlSchemeViewIoTreeNode } from '../../../../store';
 
 @Component({
     standalone: true,
@@ -16,5 +16,5 @@ import { ControlSchemeViewIOTreeNode } from '../../../../store';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IoTreeNodeComponent {
-    @Input() public node?: ControlSchemeViewIOTreeNode;
+    @Input() public node?: ControlSchemeViewIoTreeNode;
 }

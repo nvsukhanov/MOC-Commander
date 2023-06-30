@@ -26,9 +26,9 @@ export interface IState {
     hubDiscoveryState: {
         discoveryState: HubDiscoveryState;
     },
-    hubAttachedIOs: EntityState<AttachedIO>,
-    hubAttachedIOState: EntityState<AttachedIOState>,
-    hubIOSupportedModes: EntityState<HubIoSupportedModes>,
+    hubAttachedIos: EntityState<AttachedIo>,
+    hubAttachedIoProps: EntityState<AttachedIoProps>,
+    hubIoSupportedModes: EntityState<HubIoSupportedModes>,
     hubPortModeInfo: EntityState<PortModeInfo>,
     hubPortTasks: {
         queue: PortCommandTask[],
@@ -83,7 +83,7 @@ export type KeyboardController = {
 
 export type Controller = GamepadController | KeyboardController;
 
-export type AttachedIOState = {
+export type AttachedIoProps = {
     hubId: string;
     portId: number;
     motorEncoderOffset: number | null;
@@ -178,7 +178,7 @@ export type PortModeInfo = {
     symbol: PortModeSymbol;
 }
 
-export type AttachedIO = {
+export type AttachedIo = {
     hubId: string;
     portId: number;
     ioType: IOType;

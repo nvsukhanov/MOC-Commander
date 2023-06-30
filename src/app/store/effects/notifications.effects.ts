@@ -58,7 +58,7 @@ export class NotificationsEffects {
     public readonly noIOForInputFound$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(CONTROL_SCHEME_ACTIONS.noIOForInputFound),
-            switchMap(() => this.translocoService.selectTranslate('controlScheme.noMatchingIOForInputFound')),
+            switchMap(() => this.translocoService.selectTranslate('controlScheme.noMatchingIoForInputFound')),
             tap((message) => this.showMessage(message))
         );
     }, { dispatch: false });

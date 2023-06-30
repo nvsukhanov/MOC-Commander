@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { PortModeName } from '@nvsukhanov/rxpoweredup';
 
-import { AttachedIO, IState } from '../i-state';
+import { AttachedIo, IState } from '../i-state';
 import { HUB_PORT_MODE_INFO, hubPortModeInfoIdFn } from '../entity-adapters';
 import { HUB_IO_SUPPORTED_MODES_SELECTORS } from './hub-io-supported-modes.selectors';
 
@@ -12,8 +12,8 @@ const HUB_PORT_MODE_INFO_ENTITY_ADAPTER_SELECTORS = HUB_PORT_MODE_INFO.getSelect
 export const HUB_PORT_MODE_INFO_SELECTORS = {
     selectAll: createSelector(HUB_PORT_MODE_FEATURE_SELECTOR, HUB_PORT_MODE_INFO_ENTITY_ADAPTER_SELECTORS.selectAll),
     selectEntities: createSelector(HUB_PORT_MODE_FEATURE_SELECTOR, HUB_PORT_MODE_INFO_ENTITY_ADAPTER_SELECTORS.selectEntities),
-    selectModeIdForInputModeName: (io: AttachedIO, portModeName: PortModeName) => createSelector(
-        HUB_IO_SUPPORTED_MODES_SELECTORS.selectIOPortModes(io),
+    selectModeIdForInputModeName: (io: AttachedIo, portModeName: PortModeName) => createSelector(
+        HUB_IO_SUPPORTED_MODES_SELECTORS.selectIoPortModes(io),
         HUB_PORT_MODE_INFO_SELECTORS.selectEntities,
         (ioPortModes, portModeInfo): number | null => {
             return ioPortModes?.portInputModes.find((modeId) => {
