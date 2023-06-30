@@ -6,7 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { NgIf } from '@angular/common';
 
 import { ControllerPluginFactoryService, IControllerPlugin, IControllerSettingsComponent } from '../../plugins';
-import { ControllerModel, ControllerSettings } from '../../store';
+import { ControllerModel, ControllerSettingsModel } from '../../store';
 import { ControllerSettingsRenderDirective } from './controller-settings-render.directive';
 
 @Component({
@@ -25,11 +25,11 @@ import { ControllerSettingsRenderDirective } from './controller-settings-render.
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControllersListItemComponent {
-    @Output() public readonly settingsChanges = new EventEmitter<ControllerSettings>();
+    @Output() public readonly settingsChanges = new EventEmitter<ControllerSettingsModel>();
 
     private _controllerPlugin: IControllerPlugin = this.controllerPluginFactoryService.getPlugin();
 
-    private _controllerSettings?: ControllerSettings;
+    private _controllerSettings?: ControllerSettingsModel;
 
     constructor(
         private readonly controllerPluginFactoryService: ControllerPluginFactoryService,
@@ -38,7 +38,7 @@ export class ControllersListItemComponent {
 
     @Input()
     public set controller(
-        controllerWithSettings: { controller: ControllerModel, settings?: ControllerSettings } | undefined
+        controllerWithSettings: { controller: ControllerModel, settings?: ControllerSettingsModel } | undefined
     ) {
         this._controllerPlugin = this.controllerPluginFactoryService.getPlugin(
             controllerWithSettings?.controller?.controllerType,
@@ -55,12 +55,12 @@ export class ControllersListItemComponent {
         return this._controllerPlugin.nameL10nKey;
     }
 
-    public get controllerSettings(): ControllerSettings | undefined {
+    public get controllerSettings(): ControllerSettingsModel | undefined {
         return this._controllerSettings;
     }
 
     public controllerSettingsUpdate(
-        settings: ControllerSettings
+        settings: ControllerSettingsModel
     ): void {
         this.settingsChanges.emit(settings);
     }

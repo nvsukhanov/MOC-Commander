@@ -6,10 +6,10 @@ import { Injectable } from '@angular/core';
 import { createControllerL10nKey, createScopedControllerL10nKey } from '../create-controller-l10n-key';
 import { IControllerPlugin } from '../i-controller-plugin';
 import { KeyboardsSettingsComponent } from './keyboards-settings.component';
-import { KeyboardSettings } from '../../../store';
+import { KeyboardSettingsModel } from '../../../store';
 
 @Injectable()
-export class KeyboardControllerPluginService implements IControllerPlugin<KeyboardSettings> {
+export class KeyboardControllerPluginService implements IControllerPlugin<KeyboardSettingsModel> {
     public readonly settingsComponent = KeyboardsSettingsComponent;
 
     public readonly nameL10nKey: string;

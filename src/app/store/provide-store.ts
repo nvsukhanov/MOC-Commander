@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 import { NAVIGATOR } from '@app/shared';
 import { IState } from './i-state';
 import {
-    CONTROLLER_SETTINGS_REDUCER,
     CONTROL_SCHEME_CONFIGURATION_STATE_REDUCER,
     CONTROL_SCHEME_REDUCER,
     CONTROL_SCHEME_RUNNING_STATE_REDUCER,
@@ -48,6 +47,7 @@ import {
     GamepadControllerInputEffects,
     KeyboardControllerInputEffects
 } from './controller-input';
+import { CONTROLLER_SETTINGS_FEATURE } from './controller-settings';
 
 const STORAGE_VERSION = '2';
 
@@ -55,7 +55,7 @@ const REDUCERS: ActionReducerMap<IState> = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,
     controllers: CONTROLLERS_FEATURE.reducer,
     controllerInput: CONTROLLER_INPUT_FEATURE.reducer,
-    controllerSettings: CONTROLLER_SETTINGS_REDUCER,
+    controllerSettings: CONTROLLER_SETTINGS_FEATURE.reducer,
     controlSchemes: CONTROL_SCHEME_REDUCER,
     controlSchemeConfigurationState: CONTROL_SCHEME_CONFIGURATION_STATE_REDUCER,
     controlSchemeRunningState: CONTROL_SCHEME_RUNNING_STATE_REDUCER,

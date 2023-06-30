@@ -1,10 +1,10 @@
 import { createActionGroup, props } from '@ngrx/store';
 
-import { ControllerSettings } from '../i-state';
+import { ControllerSettingsModel } from './controller-settings.model';
 
 export const CONTROLLER_SETTINGS_ACTIONS = createActionGroup({
     source: 'Controller Settings',
     events: {
-        'update settings': props<{ settings: ControllerSettings }>()
+        'update settings': props<{ settings: ControllerSettingsModel }>()
     }
 });

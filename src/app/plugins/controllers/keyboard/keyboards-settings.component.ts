@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { KeyboardSettings } from '../../../store';
+import { KeyboardSettingsModel } from '../../../store';
 import { IControllerSettingsComponent } from '../i-controller-settings-component';
 
 @Component({
@@ -23,7 +23,7 @@ import { IControllerSettingsComponent } from '../i-controller-settings-component
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class KeyboardsSettingsComponent implements IControllerSettingsComponent<KeyboardSettings>, OnDestroy {
+export class KeyboardsSettingsComponent implements IControllerSettingsComponent<KeyboardSettingsModel>, OnDestroy {
     public formGroup: FormGroup<{
         controllerId: FormControl<string>;
         captureNonAlphaNumerics: FormControl<boolean>;
@@ -31,7 +31,7 @@ export class KeyboardsSettingsComponent implements IControllerSettingsComponent<
 
     private readonly defaultCaptureNonAlphaNumerics = false;
 
-    private settingsChangesFn?: (settings: KeyboardSettings) => void;
+    private settingsChangesFn?: (settings: KeyboardSettingsModel) => void;
 
     private formChangeSubscription: Subscription;
 
@@ -55,13 +55,13 @@ export class KeyboardsSettingsComponent implements IControllerSettingsComponent<
     }
 
     public loadSettings(
-        settings: KeyboardSettings
+        settings: KeyboardSettingsModel
     ): void {
         this.formGroup.patchValue(settings, { emitEvent: false });
     }
 
     public registerSettingsChangesFn(
-        settingChanges: (settings: KeyboardSettings) => void
+        settingChanges: (settings: KeyboardSettingsModel) => void
     ): void {
         this.settingsChangesFn = settingChanges;
     }
