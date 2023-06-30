@@ -6,8 +6,10 @@ import { PortCommandTask } from '@app/shared';
 import { HubIoOperationMode } from './hub-io-operation-mode';
 import { ControllerInputType } from './controller-input-type';
 import { ControllersState } from './controllers';
+import { BluetoothAvailabilityState } from './bluetooth-availability';
 
 export interface IState {
+    bluetoothAvailability: BluetoothAvailabilityState,
     controllers: ControllersState;
     controllerInput: EntityState<ControllerInput>;
     controllerInputCapture: {
@@ -42,9 +44,6 @@ export interface IState {
     },
     servoCalibrationTaskState: {
         calibrationInProgress: boolean;
-    },
-    bluetoothAvailability: {
-        isAvailable: boolean;
     },
     router: RouterState;
 }

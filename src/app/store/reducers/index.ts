@@ -1,4 +1,3 @@
-export * from './bluetooth-availability.reducer';
 export * from './hub-port-mode-info.reducer';
 export * from './hub-attached-ios.reducer';
 export * from './hub-io-supported-modes.reducer';

@@ -1,8 +1,8 @@
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 
-import { ACTIONS_BLUETOOTH_AVAILABILITY } from './actions';
 import { RoutesBuilderService } from '../routing';
+import { BLUETOOTH_AVAILABILITY_ACTIONS } from './bluetooth-availability';
 
 export function bluetoothAvailabilityCheckFactory(
     navigator: Navigator,
@@ -12,7 +12,7 @@ export function bluetoothAvailabilityCheckFactory(
 ): () => void {
     return (): void => {
         const isAvailable = !!navigator.bluetooth;
-        store.dispatch(ACTIONS_BLUETOOTH_AVAILABILITY.setBluetoothAvailability({ isAvailable }));
+        store.dispatch(BLUETOOTH_AVAILABILITY_ACTIONS.setBluetoothAvailability({ isAvailable }));
         if (!isAvailable) {
             router.navigate(routesBuilderService.bluetoothUnavailable);
         }

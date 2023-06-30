@@ -1,7 +1,7 @@
 import { createActionGroup, props } from '@ngrx/store';
 
-export const ACTIONS_BLUETOOTH_AVAILABILITY = createActionGroup({
-    source: 'BLUETOOTH_AVAILABILITY_ACTIONS',
+export const BLUETOOTH_AVAILABILITY_ACTIONS = createActionGroup({
+    source: 'Bluetooth Availability',
     events: {
         'set bluetooth availability': props<{ isAvailable: boolean }>(),
     }

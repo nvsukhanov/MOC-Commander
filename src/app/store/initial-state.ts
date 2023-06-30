@@ -14,8 +14,10 @@ import {
     LAST_EXECUTED_TASKS_ENTITY_ADAPTER
 } from './entity-adapters';
 import { CONTROLLERS_INITIAL_STATE } from './controllers';
+import { BLUETOOTH_AVAILABILITY_INITIAL_STATE } from './bluetooth-availability';
 
 export const INITIAL_STATE: IState = {
+    bluetoothAvailability: BLUETOOTH_AVAILABILITY_INITIAL_STATE,
     controllers: CONTROLLERS_INITIAL_STATE,
     controllerInput: CONTROLLER_INPUT_ENTITY_ADAPTER.getInitialState(),
     controllerInputCapture: {
@@ -50,9 +52,6 @@ export const INITIAL_STATE: IState = {
     },
     servoCalibrationTaskState: {
         calibrationInProgress: false
-    },
-    bluetoothAvailability: {
-        isAvailable: false
     },
     router: RouterState.Full,
 };
