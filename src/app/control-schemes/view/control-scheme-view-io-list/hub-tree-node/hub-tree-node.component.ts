@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NgIf } from '@angular/common';
 
 import { HubInlineViewComponent } from '@app/shared';
-import { ControlSchemeViewHubTreeNode } from '../../../../store';
+import { ControlSchemeViewHubTreeNode } from '../../../contorl-schemes-list.selectors';
 
 @Component({
     standalone: true,

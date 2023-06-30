@@ -16,12 +16,12 @@ import {
     CONTROLLER_INPUT_ACTIONS,
     CONTROL_SCHEME_ACTIONS,
     CONTROL_SCHEME_SELECTORS,
-    ControlScheme,
-    ControlSchemeViewTreeNode,
+    ControlSchemeModel,
     HUB_PORT_TASKS_SELECTORS,
     ROUTER_SELECTORS,
 } from '../../../store';
 import { RoutesBuilderService } from '../../../routing';
+import { CONTROL_SCHEMES_LIST_SELECTORS, ControlSchemeViewTreeNode } from '../../contorl-schemes-list.selectors';
 
 @Component({
     standalone: true,
@@ -46,21 +46,21 @@ import { RoutesBuilderService } from '../../../routing';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeViewComponent implements OnDestroy {
-    public readonly selectedScheme$: Observable<ControlScheme | undefined> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
+    public readonly selectedScheme$: Observable<ControlSchemeModel | undefined> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
         switchMap((id) => id === null ? of(undefined) : this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(id))),
     );
 
     public readonly canRunScheme$: Observable<boolean> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
         switchMap((id) => id === null
                           ? of(false)
-                          : this.store.select(CONTROL_SCHEME_SELECTORS.canRunScheme(id))),
+                          : this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.canRunScheme(id))),
     );
 
     public readonly editSchemeRoute$ = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
         map((id) => id === null ? [] : this.routesBuilderService.controlSchemeEdit(id)),
     );
 
-    public readonly isCurrentControlSchemeRunning$ = this.store.select(CONTROL_SCHEME_SELECTORS.isCurrentControlSchemeRunning);
+    public readonly isCurrentControlSchemeRunning$ = this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.isCurrentControlSchemeRunning);
 
     public readonly queueLength$ = this.store.select(HUB_PORT_TASKS_SELECTORS.selectQueueLength);
 
@@ -75,7 +75,7 @@ export class ControlSchemeViewComponent implements OnDestroy {
     public readonly schemeViewTree$: Observable<ControlSchemeViewTreeNode[]> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
         switchMap((id) => id === null
                           ? of([])
-                          : this.store.select(CONTROL_SCHEME_SELECTORS.schemeViewTree(id))
+                          : this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.schemeViewTree(id))
         )
     );
 

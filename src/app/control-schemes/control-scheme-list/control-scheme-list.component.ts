@@ -9,11 +9,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 
-import { ConfirmDialogService , FeatureToolbarService } from '@app/shared';
+import { ConfirmDialogService, FeatureToolbarService } from '@app/shared';
 import { RoutesBuilderService } from '../../routing';
 import { ControlSchemeListItemComponent } from '../control-scheme-list-item';
-import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS, CONTROL_SCHEME_SELECTORS, ControlScheme } from '../../store';
-
+import { CONTROL_SCHEME_ACTIONS, ControlSchemeModel } from '../../store';
+import { CONTROL_SCHEMES_LIST_SELECTORS } from '../contorl-schemes-list.selectors';
 
 @Component({
     standalone: true,
@@ -36,9 +36,9 @@ import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS, C
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeListComponent implements OnDestroy {
-    public readonly controlSchemes$ = this.store.select(CONTROL_SCHEME_SELECTORS.selectSchemesList);
+    public readonly controlSchemes$ = this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.selectSchemesList);
 
-    public readonly canCreateScheme$ = this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.canAddBinding);
+    public readonly canCreateScheme$ = this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.canAddBinding);
 
     constructor(
         private readonly store: Store,
@@ -63,7 +63,7 @@ export class ControlSchemeListComponent implements OnDestroy {
         this.confirmDialogService.hide(this);
     }
 
-    public trackSchemeById(index: number, scheme: ControlScheme): string {
+    public trackSchemeById(index: number, scheme: ControlSchemeModel): string {
         return scheme.id;
     }
 

@@ -30,6 +30,7 @@ import {
     ConfirmDialogService,
     ControllerInputType,
     FeatureToolbarService,
+    HUB_IO_CONTROL_METHODS,
     IScrollContainer,
     SCROLL_CONTAINER,
     ScreenSizeObserverService,
@@ -44,13 +45,11 @@ import {
     CONTROLLERS_ACTIONS,
     CONTROLLER_INPUT_SELECTORS,
     CONTROL_SCHEME_ACTIONS,
-    CONTROL_SCHEME_CONFIGURATION_ACTIONS,
-    CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS,
-    ControlScheme,
+    ControlSchemeModel,
     ControllerInputModel,
     HUB_ATTACHED_IO_SELECTORS,
-    HUB_IO_CONTROL_METHODS
 } from '../../../store';
+import { CONTROL_SCHEMES_LIST_SELECTORS } from '../../contorl-schemes-list.selectors';
 
 export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
 
@@ -89,7 +88,7 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         this.translocoService.translate('controlScheme.newSchemeDefaultName')
     );
 
-    public readonly canAddBinding$ = this.store.select(CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS.canAddBinding);
+    public readonly canAddBinding$ = this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.canAddBinding);
 
     private readonly onDestroy$ = new Subject<void>();
 
@@ -125,7 +124,7 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
     }
 
     @Input()
-    public set scheme(scheme: ControlScheme) {
+    public set scheme(scheme: ControlSchemeModel) {
         this.form.reset();
         this.form.patchValue(scheme);
         scheme.bindings.forEach(binding => {
@@ -172,7 +171,7 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         this.startInputCapture();
         this.store.select(CONTROLLER_INPUT_SELECTORS.selectFirst).pipe(
             takeUntil(this.onDestroy$),
-            takeUntil(this.actions.pipe(ofType(CONTROL_SCHEME_CONFIGURATION_ACTIONS.stopListening))),
+            takeUntil(this.actions.pipe(ofType(CONTROL_SCHEME_ACTIONS.stopListening))),
             filter((input): input is ControllerInputModel => !!input),
             concatLatestFrom((input) => this.store.select(HUB_ATTACHED_IO_SELECTORS.selectFirstIiControllableByInputType(input.inputType))),
             map(([ input, ios ]) => ({ input, ios })),
@@ -212,7 +211,7 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         this.startInputCapture();
         this.store.select(CONTROLLER_INPUT_SELECTORS.selectFirst).pipe(
             takeUntil(this.onDestroy$),
-            takeUntil(this.actions.pipe(ofType(CONTROL_SCHEME_CONFIGURATION_ACTIONS.stopListening))),
+            takeUntil(this.actions.pipe(ofType(CONTROL_SCHEME_ACTIONS.stopListening))),
             filter((input): input is ControllerInputModel => !!input),
             take(1),
             finalize(() => this.stopInputCapture())
@@ -237,10 +236,10 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
     }
 
     private startInputCapture(): void {
-        this.store.dispatch(CONTROL_SCHEME_CONFIGURATION_ACTIONS.startListening());
+        this.store.dispatch(CONTROL_SCHEME_ACTIONS.startListening());
     }
 
     private stopInputCapture(): void {
-        this.store.dispatch(CONTROL_SCHEME_CONFIGURATION_ACTIONS.stopListening());
+        this.store.dispatch(CONTROL_SCHEME_ACTIONS.stopListening());
     }
 }

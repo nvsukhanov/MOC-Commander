@@ -1,6 +1,6 @@
 import { PortModeName } from '@nvsukhanov/rxpoweredup';
 
-import { ControllerInputType } from '@app/shared';
+import { ControllerInputType } from './types';
 
 export enum HubIoOperationMode {
     Linear = 'linear',
@@ -21,4 +21,4 @@ export const HUB_IO_CONTROL_METHODS: { [k in ControllerInputType]: { [p in HubIo
     [ControllerInputType.Trigger]: {
         [HubIoOperationMode.Linear]: PortModeName.speed,
     }
-} as const;
+};

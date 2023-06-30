@@ -9,9 +9,6 @@ import { Router } from '@angular/router';
 import { NAVIGATOR } from '@app/shared';
 import { IState } from './i-state';
 import {
-    CONTROL_SCHEME_CONFIGURATION_STATE_REDUCER,
-    CONTROL_SCHEME_REDUCER,
-    CONTROL_SCHEME_RUNNING_STATE_REDUCER,
     HUBS_REDUCER,
     HUB_ATTACHED_IOS_REDUCER,
     HUB_ATTACHED_IO_STATE_REDUCER,
@@ -24,8 +21,6 @@ import {
     SERVO_CALIBRATION_REDUCER
 } from './reducers';
 import {
-    ControlSchemeEffects,
-    ControlSchemeRunnerEffects,
     HubAttachedIOsEffects,
     HubAttachedIosStateEffects,
     HubIoSupportedModesEffects,
@@ -48,6 +43,7 @@ import {
     KeyboardControllerInputEffects
 } from './controller-input';
 import { CONTROLLER_SETTINGS_FEATURE } from './controller-settings';
+import { CONTROL_SCHEMES_FEATURE, ControlSchemeEffects, ControlSchemeRunnerEffects } from './control-schemes';
 
 const STORAGE_VERSION = '2';
 
@@ -56,9 +52,7 @@ const REDUCERS: ActionReducerMap<IState> = {
     controllers: CONTROLLERS_FEATURE.reducer,
     controllerInput: CONTROLLER_INPUT_FEATURE.reducer,
     controllerSettings: CONTROLLER_SETTINGS_FEATURE.reducer,
-    controlSchemes: CONTROL_SCHEME_REDUCER,
-    controlSchemeConfigurationState: CONTROL_SCHEME_CONFIGURATION_STATE_REDUCER,
-    controlSchemeRunningState: CONTROL_SCHEME_RUNNING_STATE_REDUCER,
+    controlSchemes: CONTROL_SCHEMES_FEATURE.reducer,
     hubs: HUBS_REDUCER,
     hubStats: HUB_STATS_REDUCER,
     hubDiscoveryState: HUB_DISCOVERY_STATE_REDUCER,
@@ -77,13 +71,13 @@ function localStorageSyncReducer(
 ): ActionReducer<IState> {
     return localStorageSync({
         keys: [
-            'hubs',
-            'hubAttachedIos',
-            'controllerSettings',
-            'controlSchemes',
-            'hubIoSupportedModes',
-            'hubPortModeInfo',
-        ] satisfies Array<keyof IState>,
+            { hubs: [ 'ids', 'entities' ] },
+            { hubAttachedIos: [ 'ids', 'entities' ] },
+            { controllerSettings: [ 'ids', 'entities' ] },
+            { controlSchemes: [ 'ids', 'entities' ] },
+            { hubIoSupportedModes: [ 'ids', 'entities' ] },
+            { hubPortModeInfo: [ 'ids', 'entities' ] },
+        ],
         rehydrate: true,
         storageKeySerializer: (key: string) => `${STORAGE_VERSION}/${key}`,
     })(reducer);

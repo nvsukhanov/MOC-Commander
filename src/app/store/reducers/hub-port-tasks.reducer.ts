@@ -1,9 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
 
 import { INITIAL_STATE } from '../initial-state';
-import { CONTROL_SCHEME_ACTIONS, HUB_PORT_TASKS_ACTIONS } from '../actions';
+import { HUB_PORT_TASKS_ACTIONS } from '../actions';
 import { LAST_EXECUTED_TASKS_ENTITY_ADAPTER } from '../entity-adapters';
 import { IState } from '../i-state';
+import { CONTROL_SCHEME_ACTIONS } from '../control-schemes';
 
 export const HUB_PORT_TASKS_REDUCER = createReducer(
     INITIAL_STATE['hubPortTasks'],
