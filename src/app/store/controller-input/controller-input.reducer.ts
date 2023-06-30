@@ -5,13 +5,7 @@ import { CONTROLLER_INPUT_ACTIONS } from './controller-input.actions';
 import { CONTROLLERS_ACTIONS } from '../controllers';
 import { ControllerInputType } from '@app/shared';
 import { CONTROL_SCHEME_CONFIGURATION_ACTIONS } from '../actions';
-
-export type ControllerInputModel = {
-    controllerId: string;
-    inputType: ControllerInputType;
-    inputId: string;
-    value: number;
-}
+import { ControllerInputModel } from './controller-input.model';
 
 export interface ControllerInputState extends EntityState<ControllerInputModel> {
     listenersCount: number;

@@ -1,6 +1,6 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
-import { ControllerInputType } from '@app/shared';
+import { ControllerInputModel } from './controller-input.model';
 
 export const CONTROLLER_INPUT_ACTIONS = createActionGroup({
     source: 'Controller Input',
@@ -9,11 +9,6 @@ export const CONTROLLER_INPUT_ACTIONS = createActionGroup({
         'release input capture': emptyProps(),
         'input capturing': emptyProps(),
         'input capture released': emptyProps(),
-        'input received': props<{
-            controllerId: string;
-            inputType: ControllerInputType;
-            inputId: string;
-            value: number;
-        }>()
+        'input received': props<ControllerInputModel>()
     }
 });

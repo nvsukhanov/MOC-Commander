@@ -1,6 +1,6 @@
-import { ControllerSettings } from '../../store';
+import { ControllerSettingsModel } from '../../store';
 
-export interface IControllerSettingsComponent<TSettings extends ControllerSettings = ControllerSettings> {
+export interface IControllerSettingsComponent<TSettings extends ControllerSettingsModel = ControllerSettingsModel> {
     loadSettings(
         settings: TSettings
     ): void;

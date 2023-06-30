@@ -4,12 +4,11 @@ import { Action, Store } from '@ngrx/store';
 import { NEVER, Observable, filter, fromEvent, map, mergeMap, mergeWith, switchMap, take } from 'rxjs';
 
 import { ControllerInputType, WINDOW } from '@app/shared';
-import { CONTROLLER_SETTINGS_SELECTORS } from '../selectors';
-import { KeyboardSettings } from '../i-state';
 import { ControllerType, controllerIdFn } from '../controllers';
 import { controllerInputIdFn } from './controller-input.reducer';
 import { CONTROLLER_INPUT_ACTIONS } from './controller-input.actions';
 import { CONTROLLER_INPUT_SELECTORS } from './controller-input.selectors';
+import { CONTROLLER_SETTINGS_SELECTORS, KeyboardSettingsModel } from '../controller-settings';
 
 @Injectable()
 export class KeyboardControllerInputEffects {
@@ -31,7 +30,7 @@ export class KeyboardControllerInputEffects {
 
     private readKeyboard(): Observable<Action> {
         return this.store.select(CONTROLLER_SETTINGS_SELECTORS.selectByControllerId(controllerIdFn({ controllerType: ControllerType.Keyboard }))).pipe(
-            map((s) => s as KeyboardSettings),
+            map((s) => s as KeyboardSettingsModel),
             take(1),
             mergeMap((settings) => {
                 if (settings?.captureNonAlphaNumerics) {

@@ -7,12 +7,13 @@ import { HubIoOperationMode } from './hub-io-operation-mode';
 import { ControllersState } from './controllers';
 import { BluetoothAvailabilityState } from './bluetooth-availability';
 import { ControllerInputState } from './controller-input';
+import { ControllerSettingsState } from './controller-settings';
 
 export interface IState {
     bluetoothAvailability: BluetoothAvailabilityState,
     controllers: ControllersState;
     controllerInput: ControllerInputState;
-    controllerSettings: EntityState<ControllerSettings>;
+    controllerSettings: ControllerSettingsState;
     controlSchemes: EntityState<ControlScheme>;
     controlSchemeConfigurationState: {
         isListening: boolean;
@@ -44,17 +45,6 @@ export interface IState {
     },
     router: RouterState;
 }
-
-export type KeyboardSettings = {
-    controllerId: string;
-    captureNonAlphaNumerics: boolean;
-}
-
-export type GamepadSettings = {
-    controllerId: string;
-}
-
-export type ControllerSettings = KeyboardSettings | GamepadSettings;
 
 export type AttachedIoProps = {
     hubId: string;

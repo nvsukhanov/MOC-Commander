@@ -1,14 +1,14 @@
 import { ComponentRef, Directive, EventEmitter, Input, Output, Type, ViewContainerRef } from '@angular/core';
 
 import { IControllerSettingsComponent } from '../../plugins';
-import { ControllerSettings } from '../../store';
+import { ControllerSettingsModel } from '../../store';
 
 @Directive({
     standalone: true,
     selector: '[appControllerSettingsRender]'
 })
-export class ControllerSettingsRenderDirective<TSettings extends ControllerSettings> {
-    @Output() public readonly settingsChanges = new EventEmitter<ControllerSettings>();
+export class ControllerSettingsRenderDirective<TSettings extends ControllerSettingsModel> {
+    @Output() public readonly settingsChanges = new EventEmitter<ControllerSettingsModel>();
 
     private controllerSettingsComponentType?: Type<IControllerSettingsComponent<TSettings>>;
 
