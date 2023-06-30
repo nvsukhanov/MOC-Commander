@@ -1,8 +1,8 @@
-import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { HubType } from '@nvsukhanov/rxpoweredup';
+import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
 export const HUBS_ACTIONS = createActionGroup({
-    source: 'HUBS_ACTIONS',
+    source: 'Hubs',
     events: {
         'start discovery': emptyProps(),
         'connected': props<{ hubId: string, name: string }>(),

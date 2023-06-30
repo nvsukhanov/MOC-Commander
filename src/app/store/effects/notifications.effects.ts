@@ -4,8 +4,9 @@ import { switchMap, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';
 
-import { HUBS_ACTIONS, SERVO_CALIBRATION_ACTIONS } from '../actions';
+import { SERVO_CALIBRATION_ACTIONS } from '../actions';
 import { CONTROL_SCHEME_ACTIONS } from '../control-schemes';
+import { HUBS_ACTIONS } from '../hubs';
 
 @Injectable()
 export class NotificationsEffects {

@@ -1,8 +1,7 @@
 import { RouterState } from '@ngrx/router-store';
 
-import { HubDiscoveryState, IState } from './i-state';
+import { IState } from './i-state';
 import {
-    HUBS_ENTITY_ADAPTER,
     HUB_ATTACHED_IOS_ENTITY_ADAPTER,
     HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER,
     HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER,
@@ -15,6 +14,7 @@ import { BLUETOOTH_AVAILABILITY_INITIAL_STATE } from './bluetooth-availability';
 import { CONTROLLER_INPUT_INITIAL_STATE } from './controller-input';
 import { CONTROLLER_SETTINGS_INITIAL_STATE } from './controller-settings';
 import { CONTROL_SCHEMES_INITIAL_STATE } from './control-schemes';
+import { HUBS_INITIAL_STATE } from './hubs';
 
 export const INITIAL_STATE: IState = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_INITIAL_STATE,
@@ -22,11 +22,8 @@ export const INITIAL_STATE: IState = {
     controllerInput: CONTROLLER_INPUT_INITIAL_STATE,
     controllerSettings: CONTROLLER_SETTINGS_INITIAL_STATE,
     controlSchemes: CONTROL_SCHEMES_INITIAL_STATE,
-    hubs: HUBS_ENTITY_ADAPTER.getInitialState(),
+    hubs: HUBS_INITIAL_STATE,
     hubStats: HUB_STATS_ENTITY_ADAPTER.getInitialState(),
-    hubDiscoveryState: {
-        discoveryState: HubDiscoveryState.Idle
-    },
     hubAttachedIos: HUB_ATTACHED_IOS_ENTITY_ADAPTER.getInitialState(),
     hubAttachedIoProps: HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER.getInitialState(),
     hubIoSupportedModes: HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER.getInitialState(),

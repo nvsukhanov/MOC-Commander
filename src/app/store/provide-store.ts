@@ -9,10 +9,8 @@ import { Router } from '@angular/router';
 import { NAVIGATOR } from '@app/shared';
 import { IState } from './i-state';
 import {
-    HUBS_REDUCER,
     HUB_ATTACHED_IOS_REDUCER,
     HUB_ATTACHED_IO_STATE_REDUCER,
-    HUB_DISCOVERY_STATE_REDUCER,
     HUB_EDIT_FORM_ACTIVE_SAVES_REDUCER,
     HUB_IO_OUTPUT_MODES_REDUCER,
     HUB_PORT_MODE_INFO_REDUCER,
@@ -25,7 +23,6 @@ import {
     HubAttachedIosStateEffects,
     HubIoSupportedModesEffects,
     HubPortModeInfoEffects,
-    HubsEffects,
     NotificationsEffects,
     ServoCalibrationEffects,
 } from './effects';
@@ -44,6 +41,7 @@ import {
 } from './controller-input';
 import { CONTROLLER_SETTINGS_FEATURE } from './controller-settings';
 import { CONTROL_SCHEMES_FEATURE, ControlSchemeEffects, ControlSchemeRunnerEffects } from './control-schemes';
+import { HUBS_FEATURE, HubsEffects } from './hubs';
 
 const STORAGE_VERSION = '2';
 
@@ -53,9 +51,8 @@ const REDUCERS: ActionReducerMap<IState> = {
     controllerInput: CONTROLLER_INPUT_FEATURE.reducer,
     controllerSettings: CONTROLLER_SETTINGS_FEATURE.reducer,
     controlSchemes: CONTROL_SCHEMES_FEATURE.reducer,
-    hubs: HUBS_REDUCER,
+    hubs: HUBS_FEATURE.reducer,
     hubStats: HUB_STATS_REDUCER,
-    hubDiscoveryState: HUB_DISCOVERY_STATE_REDUCER,
     hubAttachedIos: HUB_ATTACHED_IOS_REDUCER,
     hubAttachedIoProps: HUB_ATTACHED_IO_STATE_REDUCER,
     hubIoSupportedModes: HUB_IO_OUTPUT_MODES_REDUCER,

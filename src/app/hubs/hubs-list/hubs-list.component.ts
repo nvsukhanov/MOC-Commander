@@ -9,7 +9,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 
 import { ConfirmDialogService, HubInlineViewComponent } from '@app/shared';
-import { HUBS_ACTIONS, HUBS_SELECTORS } from '../../store';
+import { HUBS_ACTIONS } from '../../store';
+import { HUBS_LIST_SELECTORS } from './hubs-list.selectors';
 
 @Component({
     standalone: true,
@@ -31,7 +32,7 @@ import { HUBS_ACTIONS, HUBS_SELECTORS } from '../../store';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HubsListComponent implements OnDestroy {
-    public readonly hubsList$ = this.store.select(HUBS_SELECTORS.selectHubListViewModel);
+    public readonly hubsList$ = this.store.select(HUBS_LIST_SELECTORS.selectHubListViewModel);
 
     constructor(
         private readonly store: Store,

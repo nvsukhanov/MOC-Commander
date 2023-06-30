@@ -1,9 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
 
 import { INITIAL_STATE } from '../initial-state';
-import { HUBS_ACTIONS, HUB_STATS_ACTIONS } from '../actions';
+import { HUB_STATS_ACTIONS } from '../actions';
 import { IState } from '../i-state';
 import { HUB_STATS_ENTITY_ADAPTER } from '../entity-adapters';
+import { HUBS_ACTIONS } from '../hubs';
 
 export const HUB_STATS_REDUCER = createReducer(
     INITIAL_STATE['hubStats'],

@@ -7,7 +7,7 @@ import { PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 
 import { PortCommandTask } from '@app/shared';
 import { HUB_ATTACHED_IO_STATE_SELECTORS, HUB_PORT_TASKS_SELECTORS } from '../selectors';
-import { HUBS_ACTIONS, HUB_PORT_TASKS_ACTIONS } from '../actions';
+import { HUB_PORT_TASKS_ACTIONS } from '../actions';
 import {
     IPortCommandTaskComposer,
     ITaskExecutor,
@@ -24,6 +24,7 @@ import { HubStorageService } from '../hub-storage.service';
 import { CONTROL_SCHEME_ACTIONS } from './control-scheme.actions';
 import { CONTROL_SCHEME_SELECTORS } from './control-scheme.selectors';
 import { ControlSchemeBinding } from './control-scheme.model';
+import { HUBS_ACTIONS } from '../hubs';
 
 @Injectable()
 export class ControlSchemeRunnerEffects {

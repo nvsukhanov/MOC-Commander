@@ -7,7 +7,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
 
 import { EllipsisTitleDirective, HUB_TYPE_TO_L10N_MAPPING } from '@app/shared';
-import { HubConfiguration, HubStats } from '../../../store';
+import { HubModel, HubStats } from '../../../store';
 import { RoutesBuilderService } from '../../../routing';
 
 @Component({
@@ -35,7 +35,7 @@ export class HubPropertiesViewComponent {
 
     private _hubEditRoute: string[] = [];
 
-    private _configuration: HubConfiguration | undefined;
+    private _configuration: HubModel | undefined;
 
     constructor(
         private readonly routesBuilderService: RoutesBuilderService,
@@ -43,12 +43,12 @@ export class HubPropertiesViewComponent {
     }
 
     @Input()
-    public set configuration(value: HubConfiguration | undefined) {
+    public set configuration(value: HubModel | undefined) {
         this._configuration = value;
         this._hubEditRoute = value === undefined ? [] : this.routesBuilderService.hubEdit(value.hubId);
     }
 
-    public get configuration(): HubConfiguration | undefined {
+    public get configuration(): HubModel | undefined {
         return this._configuration;
     }
 

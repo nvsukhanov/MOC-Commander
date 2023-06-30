@@ -14,7 +14,8 @@ import { HubIoOperationMode, IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe }
 import { ControlSchemeBindingInputForm } from '../binding-input';
 import { RenderEditOutputConfigurationDirective } from '../edit-output-configuration';
 import { BindingForm } from '../types';
-import { AttachedIo, HUBS_SELECTORS, HUB_ATTACHED_IO_SELECTORS, HUB_STATS_SELECTORS, HubConfiguration } from '../../../store';
+import { AttachedIo, HUBS_SELECTORS, HUB_ATTACHED_IO_SELECTORS, HUB_STATS_SELECTORS, HubModel } from '../../../store';
+import { CONTROL_SCHEMES_LIST_SELECTORS } from '../../contorl-schemes-list.selectors';
 
 export type LinearOutputConfigurationForm = FormGroup<{
     maxSpeed: FormControl<number>,
@@ -72,7 +73,7 @@ export type ControlSchemeBindingOutputForm = FormGroup<{
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeBindingOutputComponent {
-    public readonly hubsList$ = this.store.select(HUBS_SELECTORS.selectHubsWithConnectionState);
+    public readonly hubsList$ = this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.selectHubsWithConnectionState);
 
     private _outputFormControl?: ControlSchemeBindingOutputForm;
 
@@ -84,7 +85,7 @@ export class ControlSchemeBindingOutputComponent {
 
     private _availableIoOperationModes$: Observable<HubIoOperationMode[]> = of([]);
 
-    private _selectedHubConfiguration$: Observable<HubConfiguration | undefined> = EMPTY;
+    private _selectedHubConfiguration$: Observable<HubModel | undefined> = EMPTY;
 
     private _selectedHubConnectionState$: Observable<boolean> = EMPTY;
 
@@ -155,7 +156,7 @@ export class ControlSchemeBindingOutputComponent {
         this._inputFormControl = inputGroup;
     }
 
-    public get selectedHubConfiguration$(): Observable<HubConfiguration | undefined> {
+    public get selectedHubConfiguration$(): Observable<HubModel | undefined> {
         return this._selectedHubConfiguration$;
     }
 

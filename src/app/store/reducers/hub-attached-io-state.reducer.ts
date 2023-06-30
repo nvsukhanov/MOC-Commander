@@ -1,9 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
 
 import { INITIAL_STATE } from '../initial-state';
-import { HUBS_ACTIONS, HUB_ATTACHED_IOS_ACTIONS, HUB_ATTACHED_IOS_STATE_ACTIONS } from '../actions';
+import { HUB_ATTACHED_IOS_ACTIONS, HUB_ATTACHED_IOS_STATE_ACTIONS } from '../actions';
 import { HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER, hubAttachedIosIdFn } from '../entity-adapters';
 import { IState } from '../i-state';
+import { HUBS_ACTIONS } from '../hubs';
 
 export const HUB_ATTACHED_IO_STATE_REDUCER = createReducer(
     INITIAL_STATE.hubAttachedIoProps,
