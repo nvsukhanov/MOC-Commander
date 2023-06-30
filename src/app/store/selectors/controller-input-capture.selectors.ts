@@ -16,7 +16,7 @@ export const CONTROLLER_INPUT_CAPTURE_SELECTORS = {
     ),
     isKeyboardBeingCaptured: createSelector(
         CONTROLLER_INPUT_CAPTURE_FEATURE_SELECTOR,
-        CONTROLLER_SELECTORS.selectKeyboards,
-        (state, keyboards) => state.listenersCount > 0 && keyboards.length > 0
+        CONTROLLER_SELECTORS.hasKeyboardConnected,
+        (state, hasKeyboardConnected) => state.listenersCount > 0 && hasKeyboardConnected
     )
 } as const;
