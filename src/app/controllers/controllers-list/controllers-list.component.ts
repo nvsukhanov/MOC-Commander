@@ -9,7 +9,8 @@ import { LetDirective, PushPipe } from '@ngrx/component';
 import { MatListModule } from '@angular/material/list';
 
 import { ControllersListItemComponent } from '../controllers-list-item';
-import { CONTROLLER_SELECTORS, CONTROLLER_SETTINGS_ACTIONS, Controller, ControllerSettings } from '../../store';
+import { CONTROLLER_SETTINGS_ACTIONS, ControllerModel, ControllerSettings } from '../../store';
+import { CONTROLLERS_LIST_SELECTORS } from './controllers-list.selectors';
 
 @Component({
     standalone: true,
@@ -33,7 +34,7 @@ import { CONTROLLER_SELECTORS, CONTROLLER_SETTINGS_ACTIONS, Controller, Controll
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControllersListComponent {
-    public readonly controllersWithSettings$ = this.store.select(CONTROLLER_SELECTORS.selectAllWithSettings);
+    public readonly controllersWithSettings$ = this.store.select(CONTROLLERS_LIST_SELECTORS.viewModel);
 
     constructor(
         private readonly store: Store
@@ -42,7 +43,7 @@ export class ControllersListComponent {
 
     public controllerTrackById(
         index: number,
-        controllerWithSettings: { controller: Controller, settings?: ControllerSettings }
+        controllerWithSettings: { controller: ControllerModel, settings?: ControllerSettings }
     ): string {
         return controllerWithSettings.controller.id;
     }

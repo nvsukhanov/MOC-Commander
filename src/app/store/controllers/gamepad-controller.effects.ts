@@ -5,9 +5,10 @@ import { Store } from '@ngrx/store';
 
 import { CONTROLLERS_ACTIONS } from './controllers.actions';
 import { CONTROLLER_SELECTORS } from './controllers.selectors';
-import { ControllerPluginFactoryService, ControllerType } from '../../plugins';
-import { controllerIdFn } from './controllers-state';
+import { ControllerPluginFactoryService } from '../../plugins';
 import { APP_CONFIG, IAppConfig, WINDOW } from '@app/shared';
+import { controllerIdFn } from './controllers.reducer';
+import { ControllerType } from './controller-model';
 
 @Injectable()
 export class GamepadControllerEffects {

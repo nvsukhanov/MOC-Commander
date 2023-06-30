@@ -6,7 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { NgIf } from '@angular/common';
 
 import { ControllerPluginFactoryService, IControllerPlugin, IControllerSettingsComponent } from '../../plugins';
-import { Controller, ControllerSettings } from '../../store';
+import { ControllerModel, ControllerSettings } from '../../store';
 import { ControllerSettingsRenderDirective } from './controller-settings-render.directive';
 
 @Component({
@@ -38,7 +38,7 @@ export class ControllersListItemComponent {
 
     @Input()
     public set controller(
-        controllerWithSettings: { controller: Controller, settings?: ControllerSettings } | undefined
+        controllerWithSettings: { controller: ControllerModel, settings?: ControllerSettings } | undefined
     ) {
         this._controllerPlugin = this.controllerPluginFactoryService.getPlugin(
             controllerWithSettings?.controller?.controllerType,

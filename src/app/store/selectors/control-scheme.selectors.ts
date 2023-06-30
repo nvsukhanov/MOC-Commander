@@ -10,7 +10,7 @@ import { HUB_IO_SUPPORTED_MODES_SELECTORS } from './hub-io-supported-modes.selec
 import { HUB_PORT_MODE_INFO_SELECTORS } from './hub-port-mode-info.selectors';
 import { CONTROL_SCHEME_RUNNING_STATE_SELECTORS } from './control-scheme-running-state.selectors';
 import { ROUTER_SELECTORS } from './router.selectors';
-import { CONTROLLER_SELECTORS, Controller } from '../controllers';
+import { CONTROLLER_SELECTORS, ControllerModel } from '../controllers';
 import { CONTROLLER_INPUT_SELECTORS } from './controller-input.selectors';
 import { HubIoOperationMode } from '../hub-io-operation-mode';
 import { HUBS_SELECTORS } from './hubs.selectors';
@@ -75,7 +75,7 @@ function createBindingTreeNode(
     binding: ControlSchemeBinding,
     ioSupportedModesEntities: Dictionary<HubIoSupportedModes>,
     portModeInfoEntities: Dictionary<PortModeInfo>,
-    controllerEntities: Dictionary<Controller>,
+    controllerEntities: Dictionary<ControllerModel>,
     lastExecutedTasksBindingIds: ReadonlySet<string>,
     io?: AttachedIo,
 ): ControlSchemeViewBindingTreeNode {
@@ -111,7 +111,7 @@ export enum ControlSchemeNodeTypes {
 export type ControlSchemeViewBindingTreeNode = {
     readonly path: string;
     readonly nodeType: ControlSchemeNodeTypes.Binding;
-    readonly controller?: Controller;
+    readonly controller?: ControllerModel;
     readonly inputId: string;
     readonly inputType: ControllerInputType;
     readonly isActive: boolean;
@@ -218,7 +218,7 @@ export const CONTROL_SCHEME_SELECTORS = {
             ios: Dictionary<AttachedIo>,
             ioSupportedModesEntities: Dictionary<HubIoSupportedModes>,
             portModeInfoEntities: Dictionary<PortModeInfo>,
-            controllerEntities: Dictionary<Controller>,
+            controllerEntities: Dictionary<ControllerModel>,
             lastExecutedTasksBindingIds: ReadonlySet<string>
         ): ControlSchemeViewHubTreeNode[] => {
             if (!scheme) {

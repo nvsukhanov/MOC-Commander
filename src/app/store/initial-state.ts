@@ -13,10 +13,10 @@ import {
     HUB_STATS_ENTITY_ADAPTER,
     LAST_EXECUTED_TASKS_ENTITY_ADAPTER
 } from './entity-adapters';
-import { CONTROLLERS_ENTITY_ADAPTER } from './controllers';
+import { CONTROLLERS_INITIAL_STATE } from './controllers';
 
 export const INITIAL_STATE: IState = {
-    controllers: CONTROLLERS_ENTITY_ADAPTER.getInitialState(),
+    controllers: CONTROLLERS_INITIAL_STATE,
     controllerInput: CONTROLLER_INPUT_ENTITY_ADAPTER.getInitialState(),
     controllerInputCapture: {
         listenersCount: 0

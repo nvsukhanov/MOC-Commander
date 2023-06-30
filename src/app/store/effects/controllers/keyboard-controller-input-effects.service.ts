@@ -8,9 +8,8 @@ import { CONTROLLER_INPUT_ACTIONS } from '../../actions';
 import { CONTROLLER_INPUT_CAPTURE_SELECTORS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SETTINGS_SELECTORS } from '../../selectors';
 import { KeyboardSettings } from '../../i-state';
 import { controllerInputIdFn } from '../../entity-adapters';
-import { ControllerType } from '../../../plugins';
 import { ControllerInputType } from '../../controller-input-type';
-import { controllerIdFn } from '../../controllers';
+import { ControllerType, controllerIdFn } from '../../controllers';
 
 @Injectable()
 export class KeyboardControllerInputEffects {

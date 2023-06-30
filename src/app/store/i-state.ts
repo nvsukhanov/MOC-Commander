@@ -5,10 +5,10 @@ import { RouterState } from '@ngrx/router-store';
 import { PortCommandTask } from '@app/shared';
 import { HubIoOperationMode } from './hub-io-operation-mode';
 import { ControllerInputType } from './controller-input-type';
-import { Controller } from './controllers';
+import { ControllersState } from './controllers';
 
 export interface IState {
-    controllers: EntityState<Controller>;
+    controllers: ControllersState;
     controllerInput: EntityState<ControllerInput>;
     controllerInputCapture: {
         listenersCount: number;
