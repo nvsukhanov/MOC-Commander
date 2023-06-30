@@ -1,9 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
 
 import { INITIAL_STATE } from '../initial-state';
-import { CONTROLLERS_ACTIONS } from '../actions';
-import { CONTROLLERS_ENTITY_ADAPTER } from '../entity-adapters';
 import { IState } from '../i-state';
+import { CONTROLLERS_ACTIONS } from './controllers.actions';
+import { CONTROLLERS_ENTITY_ADAPTER } from './controllers-state';
 
 export const CONTROLLERS_REDUCER = createReducer(
     INITIAL_STATE.controllers,

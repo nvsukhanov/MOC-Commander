@@ -2,7 +2,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { IState } from '../i-state';
 import { HUBS_SELECTORS } from './hubs.selectors';
-import { CONTROLLER_SELECTORS } from './controllers.selectors';
+import { CONTROLLER_SELECTORS } from '../controllers';
 
 const CONTROL_SCHEME_CONFIGURATION_STATE_FEATURE_SELECTOR = createFeatureSelector<IState['controlSchemeConfigurationState']>('controlSchemeConfigurationState');
 

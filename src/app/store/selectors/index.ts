@@ -12,7 +12,6 @@ export * from './hub-edit-form-active-saves.selectors';
 export * from './hub-discovery-state.selectors';
 export * from './global-progress-bar.selectors';
 export * from './hub-attached-io-state.selectors';
-export * from './controllers.selectors';
 export * from './controller-input-capture.selectors';
 export * from './controller-input.selectors';
 export * from './controller-settings.selectors';

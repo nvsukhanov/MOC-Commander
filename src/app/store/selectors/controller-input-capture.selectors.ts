@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { IState } from '../i-state';
-import { CONTROLLER_SELECTORS } from './controllers.selectors';
+import { CONTROLLER_SELECTORS } from '../controllers';
 
 const CONTROLLER_INPUT_CAPTURE_FEATURE_SELECTOR = createFeatureSelector<IState['controllerInputCapture']>('controllerInputCapture');
 

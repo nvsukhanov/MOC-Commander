@@ -1,9 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
 
 import { INITIAL_STATE } from '../initial-state';
-import { CONTROLLERS_ACTIONS, CONTROLLER_INPUT_ACTIONS } from '../actions';
+import { CONTROLLER_INPUT_ACTIONS } from '../actions';
 import { CONTROLLER_INPUT_ENTITY_ADAPTER, controllerInputIdFn } from '../entity-adapters';
 import { IState } from '../i-state';
+import { CONTROLLERS_ACTIONS } from '../controllers';
 
 export const CONTROLLER_INPUT_REDUCER = createReducer(
     INITIAL_STATE.controllerInput,
