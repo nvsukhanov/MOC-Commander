@@ -2,7 +2,6 @@ import { RouterState } from '@ngrx/router-store';
 
 import { HubDiscoveryState, IState } from './i-state';
 import {
-    CONTROLLERS_ENTITY_ADAPTER,
     CONTROLLER_INPUT_ENTITY_ADAPTER,
     CONTROLLER_SETTINGS_ENTITY_ADAPTER,
     CONTROL_SCHEMES_ENTITY_ADAPTER,
@@ -14,6 +13,7 @@ import {
     HUB_STATS_ENTITY_ADAPTER,
     LAST_EXECUTED_TASKS_ENTITY_ADAPTER
 } from './entity-adapters';
+import { CONTROLLERS_ENTITY_ADAPTER } from './controllers';
 
 export const INITIAL_STATE: IState = {
     controllers: CONTROLLERS_ENTITY_ADAPTER.getInitialState(),

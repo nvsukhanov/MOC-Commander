@@ -6,7 +6,6 @@ import {
     AttachedIo,
     AttachedIoProps,
     ControlScheme,
-    Controller,
     ControllerInput,
     ControllerSettings,
     HubConfiguration,
@@ -14,7 +13,6 @@ import {
     HubStats,
     PortModeInfo,
 } from './i-state';
-import { ControllerType } from '../plugins';
 import { ControllerInputType } from './controller-input-type';
 
 export const HUB_ATTACHED_IOS_ENTITY_ADAPTER: EntityAdapter<AttachedIo> = createEntityAdapter<AttachedIo>({
@@ -71,20 +69,6 @@ export function lastExecutedTaskIdFn(
 export const HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER: EntityAdapter<AttachedIoProps> = createEntityAdapter<AttachedIoProps>({
     selectId: (io) => hubAttachedIosIdFn(io),
 });
-
-export const CONTROLLERS_ENTITY_ADAPTER: EntityAdapter<Controller> = createEntityAdapter<Controller>({
-    selectId: (controller) => controllerIdFn(controller),
-});
-
-export function controllerIdFn(
-    idArgs: { id: string, controllerType: ControllerType.Gamepad, gamepadIndex: number } | { controllerType: ControllerType.Keyboard }
-): string {
-    if (idArgs.controllerType === ControllerType.Gamepad) {
-        return `${idArgs.id}/${idArgs.controllerType}/${idArgs.gamepadIndex}`;
-    } else {
-        return `keyboard`;
-    }
-}
 
 export const CONTROLLER_INPUT_ENTITY_ADAPTER: EntityAdapter<ControllerInput> = createEntityAdapter<ControllerInput>({
     selectId: (input) => controllerInputIdFn(input),

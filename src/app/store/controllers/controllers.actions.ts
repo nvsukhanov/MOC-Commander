@@ -1,6 +1,6 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
-import { Controller } from '../i-state';
+import { Controller } from './controllers-state';
 
 export const CONTROLLERS_ACTIONS = createActionGroup({
     source: 'Controllers',

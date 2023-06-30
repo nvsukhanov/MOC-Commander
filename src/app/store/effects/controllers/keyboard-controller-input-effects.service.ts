@@ -1,36 +1,22 @@
 import { Inject, Injectable } from '@angular/core';
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { concatLatestFrom, createEffect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { NEVER, Observable, filter, fromEvent, map, mergeMap, mergeWith, switchMap, take } from 'rxjs';
 
 import { WINDOW } from '@app/shared';
-import { CONTROLLERS_ACTIONS, CONTROLLER_INPUT_ACTIONS } from '../../actions';
-import { CONTROLLER_INPUT_CAPTURE_SELECTORS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS, CONTROLLER_SETTINGS_SELECTORS } from '../../selectors';
+import { CONTROLLER_INPUT_ACTIONS } from '../../actions';
+import { CONTROLLER_INPUT_CAPTURE_SELECTORS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SETTINGS_SELECTORS } from '../../selectors';
 import { KeyboardSettings } from '../../i-state';
-import { controllerIdFn, controllerInputIdFn } from '../../entity-adapters';
+import { controllerInputIdFn } from '../../entity-adapters';
 import { ControllerType } from '../../../plugins';
 import { ControllerInputType } from '../../controller-input-type';
+import { controllerIdFn } from '../../controllers';
 
 @Injectable()
-export class KeyboardControllerEffects {
+export class KeyboardControllerInputEffects {
     public readonly keyDownEvent = 'keydown';
 
     public readonly keyUpEvent = 'keyup';
-
-    public readonly keyboardId = 'keyboard';
-
-    public readonly waitForConnect$ = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(CONTROLLERS_ACTIONS.waitForConnect),
-            switchMap(() => fromEvent(this.window.document, this.keyDownEvent)),
-            concatLatestFrom(() => this.store.select(CONTROLLER_SELECTORS.selectKeyboards)),
-            filter(([ , knownKeyboards ]) => knownKeyboards.length === 0),
-            map(() => CONTROLLERS_ACTIONS.connected({
-                id: 'keyboard',
-                controllerType: ControllerType.Keyboard,
-            }))
-        );
-    });
 
     public readonly captureKeyboardInput$ = createEffect(() => {
         return this.store.select(CONTROLLER_INPUT_CAPTURE_SELECTORS.isCapturing).pipe(
@@ -39,7 +25,6 @@ export class KeyboardControllerEffects {
     });
 
     constructor(
-        private readonly actions$: Actions,
         private readonly store: Store,
         @Inject(WINDOW) private readonly window: Window,
     ) {
@@ -66,7 +51,7 @@ export class KeyboardControllerEffects {
             map(([ eventData, controllerInputEntities ]) => {
                 const inputId = eventData.event.key;
                 const prevState = controllerInputEntities[controllerInputIdFn({
-                    controllerId: this.keyboardId,
+                    controllerId: controllerIdFn({ controllerType: ControllerType.Keyboard }),
                     inputId,
                     inputType: ControllerInputType.Button
                 })];
@@ -78,7 +63,7 @@ export class KeyboardControllerEffects {
             }),
             filter(({ prevState, nextState }) => prevState === undefined || prevState !== nextState),
             map(({ inputId, nextState }) => CONTROLLER_INPUT_ACTIONS.inputReceived({
-                controllerId: this.keyboardId,
+                controllerId: controllerIdFn({ controllerType: ControllerType.Keyboard }),
                 inputId,
                 inputType: ControllerInputType.Button,
                 value: nextState

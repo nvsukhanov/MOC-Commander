@@ -1,9 +1,9 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-import { GamepadController, IState, KeyboardController } from '../i-state';
-import { CONTROLLERS_ENTITY_ADAPTER } from '../entity-adapters';
+import { IState, } from '../i-state';
 import { ControllerType } from '../../plugins';
-import { CONTROLLER_SETTINGS_SELECTORS } from './controller-settings.selectors';
+import { CONTROLLER_SETTINGS_SELECTORS } from '../selectors';
+import { CONTROLLERS_ENTITY_ADAPTER, GamepadController, KeyboardController } from './controllers-state';
 
 const CONTROLLERS_FEATURE_SELECTOR = createFeatureSelector<IState['controllers']>('controllers');
 

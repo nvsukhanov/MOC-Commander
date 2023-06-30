@@ -10,7 +10,6 @@ import { NAVIGATOR } from '@app/shared';
 import { IState } from './i-state';
 import {
     BLUETOOTH_AVAILABILITY_REDUCER,
-    CONTROLLERS_REDUCER,
     CONTROLLER_INPUT_CAPTURE_REDUCER,
     CONTROLLER_INPUT_REDUCER,
     CONTROLLER_SETTINGS_REDUCER,
@@ -32,13 +31,13 @@ import {
     ControlSchemeEffects,
     ControlSchemeRunnerEffects,
     ControllerInputCaptureEffects,
-    GamepadControllerEffects,
+    GamepadControllerInputEffects,
     HubAttachedIOsEffects,
     HubAttachedIosStateEffects,
     HubIoSupportedModesEffects,
     HubPortModeInfoEffects,
     HubsEffects,
-    KeyboardControllerEffects,
+    KeyboardControllerInputEffects,
     NotificationsEffects,
     ServoCalibrationEffects,
 } from './effects';
@@ -46,6 +45,7 @@ import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-chec
 import { HubStorageService } from './hub-storage.service';
 import { CONTROLLER_INPUT_ACTIONS, HUB_STATS_ACTIONS } from './actions';
 import { RoutesBuilderService } from '../routing';
+import { CONTROLLERS_REDUCER, GamepadControllerEffects, KeyboardControllerEffects } from './controllers';
 
 const STORAGE_VERSION = '2';
 
@@ -103,9 +103,11 @@ export function provideApplicationStore(): EnvironmentProviders {
             NotificationsEffects,
             ServoCalibrationEffects,
             HubAttachedIosStateEffects,
-            GamepadControllerEffects,
-            KeyboardControllerEffects,
+            GamepadControllerInputEffects,
+            KeyboardControllerInputEffects,
             ControllerInputCaptureEffects,
+            GamepadControllerEffects,
+            KeyboardControllerEffects
         ),
         provideStoreDevtools({
             maxAge: 100,

@@ -10,3 +10,4 @@ export * from './provide-store';
 export * from './hub-io-operation-mode';
 export * from './entity-adapters';
 export * from './controller-input-type';
+export * from './controllers';

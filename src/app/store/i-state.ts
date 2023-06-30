@@ -4,8 +4,8 @@ import { RouterState } from '@ngrx/router-store';
 
 import { PortCommandTask } from '@app/shared';
 import { HubIoOperationMode } from './hub-io-operation-mode';
-import { ControllerType } from '../plugins';
 import { ControllerInputType } from './controller-input-type';
+import { Controller } from './controllers';
 
 export interface IState {
     controllers: EntityState<Controller>;
@@ -66,22 +66,6 @@ export type GamepadSettings = {
 }
 
 export type ControllerSettings = KeyboardSettings | GamepadSettings;
-
-export type GamepadController = {
-    id: string;
-    controllerType: ControllerType.Gamepad;
-    gamepadIndex: number;
-    axesCount: number;
-    buttonsCount: number;
-    triggerButtonIndices: number[];
-}
-
-export type KeyboardController = {
-    id: string;
-    controllerType: ControllerType.Keyboard;
-}
-
-export type Controller = GamepadController | KeyboardController;
 
 export type AttachedIoProps = {
     hubId: string;

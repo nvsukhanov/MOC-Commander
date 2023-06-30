@@ -2,17 +2,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { HubType, IOType } from '@nvsukhanov/rxpoweredup';
 import { Dictionary } from '@ngrx/entity';
 
-import {
-    AttachedIo,
-    ControlScheme,
-    ControlSchemeBinding,
-    Controller,
-    HubConfiguration,
-    HubIoSupportedModes,
-    HubStats,
-    IState,
-    PortModeInfo,
-} from '../i-state';
+import { AttachedIo, ControlScheme, ControlSchemeBinding, HubConfiguration, HubIoSupportedModes, HubStats, IState, PortModeInfo, } from '../i-state';
 import { CONTROL_SCHEMES_ENTITY_ADAPTER, controllerInputIdFn, hubAttachedIosIdFn } from '../entity-adapters';
 import { HUB_PORT_TASKS_SELECTORS } from './hub-port-tasks.selectors';
 import { HUB_ATTACHED_IO_SELECTORS, getHubIoOperationModes } from './hub-attached-io.selectors';
@@ -20,7 +10,7 @@ import { HUB_IO_SUPPORTED_MODES_SELECTORS } from './hub-io-supported-modes.selec
 import { HUB_PORT_MODE_INFO_SELECTORS } from './hub-port-mode-info.selectors';
 import { CONTROL_SCHEME_RUNNING_STATE_SELECTORS } from './control-scheme-running-state.selectors';
 import { ROUTER_SELECTORS } from './router.selectors';
-import { CONTROLLER_SELECTORS } from './controllers.selectors';
+import { CONTROLLER_SELECTORS, Controller } from '../controllers';
 import { CONTROLLER_INPUT_SELECTORS } from './controller-input.selectors';
 import { HubIoOperationMode } from '../hub-io-operation-mode';
 import { HUBS_SELECTORS } from './hubs.selectors';
