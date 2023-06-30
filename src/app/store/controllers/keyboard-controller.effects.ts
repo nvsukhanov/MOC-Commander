@@ -1,35 +1,27 @@
-import { Inject, Injectable } from '@angular/core';
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { filter, fromEvent, map, switchMap } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { inject } from '@angular/core';
+import { Actions, FunctionalEffect, createEffect, ofType } from '@ngrx/effects';
+import { fromEvent, map, switchMap, take } from 'rxjs';
 
 import { CONTROLLERS_ACTIONS } from './controllers.actions';
-import { CONTROLLER_SELECTORS } from './controllers.selectors';
 import { WINDOW } from '@app/shared';
 import { controllerIdFn } from './controllers.reducer';
 import { ControllerType } from './controller-model';
 
-@Injectable()
-export class KeyboardControllerEffects {
-    public readonly keyDownEvent = 'keydown';
+const KEY_DOWN_EVENT = 'keydown';
 
-    public readonly listenForConnect$ = createEffect(() => {
-        return this.actions$.pipe(
+export const KEYBOARD_CONTROLLER_EFFECTS: Record<string, FunctionalEffect> = {
+    listenForConnect: createEffect((
+        actions$: Actions = inject(Actions),
+        window: Window = inject(WINDOW)
+    ) => {
+        return actions$.pipe(
             ofType(CONTROLLERS_ACTIONS.waitForConnect),
-            switchMap(() => fromEvent(this.window.document, this.keyDownEvent)),
-            concatLatestFrom(() => this.store.select(CONTROLLER_SELECTORS.selectKeyboards)),
-            filter(([ , knownKeyboards ]) => knownKeyboards.length === 0),
+            switchMap(() => fromEvent(window.document, KEY_DOWN_EVENT)),
             map(() => CONTROLLERS_ACTIONS.connected({
                 id: controllerIdFn({ controllerType: ControllerType.Keyboard }),
                 controllerType: ControllerType.Keyboard,
-            }))
+            })),
+            take(1)
         );
-    });
-
-    constructor(
-        private readonly actions$: Actions,
-        @Inject(WINDOW) private readonly window: Window,
-        private store: Store
-    ) {
-    }
-}
+    }, { functional: true })
+};

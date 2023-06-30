@@ -1,4 +1,4 @@
-import { createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, on } from '@ngrx/store';
 import { EntityAdapter, EntityState, createEntityAdapter } from '@ngrx/entity';
 
 import { CONTROLLERS_ACTIONS } from './controllers.actions';
@@ -24,12 +24,15 @@ export function controllerIdFn(
 
 export const CONTROLLERS_INITIAL_STATE = CONTROLLERS_ENTITY_ADAPTER.getInitialState();
 
-export const CONTROLLERS_REDUCER = createReducer(
-    CONTROLLERS_INITIAL_STATE,
-    on(CONTROLLERS_ACTIONS.connected, (state, action): ControllersState => {
-        return CONTROLLERS_ENTITY_ADAPTER.addOne(action, state);
-    }),
-    on(CONTROLLERS_ACTIONS.disconnected, (state, action): ControllersState => {
-        return CONTROLLERS_ENTITY_ADAPTER.removeOne(action.id, state);
-    }),
-);
+export const CONTROLLERS_FEATURE = createFeature({
+    name: 'controllers',
+    reducer: createReducer(
+        CONTROLLERS_INITIAL_STATE,
+        on(CONTROLLERS_ACTIONS.connected, (state, action): ControllersState => {
+            return CONTROLLERS_ENTITY_ADAPTER.addOne(action, state);
+        }),
+        on(CONTROLLERS_ACTIONS.disconnected, (state, action): ControllersState => {
+            return CONTROLLERS_ENTITY_ADAPTER.removeOne(action.id, state);
+        }),
+    ),
+});

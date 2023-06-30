@@ -44,14 +44,14 @@ import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-chec
 import { HubStorageService } from './hub-storage.service';
 import { CONTROLLER_INPUT_ACTIONS, HUB_STATS_ACTIONS } from './actions';
 import { RoutesBuilderService } from '../routing';
-import { CONTROLLERS_REDUCER, GamepadControllerEffects, KeyboardControllerEffects } from './controllers';
+import { CONTROLLERS_FEATURE, GAMEPAD_CONTROLLER_EFFECTS, KEYBOARD_CONTROLLER_EFFECTS } from './controllers';
 import { BLUETOOTH_AVAILABILITY_FEATURE } from './bluetooth-availability';
 
 const STORAGE_VERSION = '2';
 
 const REDUCERS: ActionReducerMap<IState> = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,
-    controllers: CONTROLLERS_REDUCER,
+    controllers: CONTROLLERS_FEATURE.reducer,
     controllerInput: CONTROLLER_INPUT_REDUCER,
     controllerInputCapture: CONTROLLER_INPUT_CAPTURE_REDUCER,
     controllerSettings: CONTROLLER_SETTINGS_REDUCER,
@@ -106,8 +106,8 @@ export function provideApplicationStore(): EnvironmentProviders {
             GamepadControllerInputEffects,
             KeyboardControllerInputEffects,
             ControllerInputCaptureEffects,
-            GamepadControllerEffects,
-            KeyboardControllerEffects
+            GAMEPAD_CONTROLLER_EFFECTS,
+            KEYBOARD_CONTROLLER_EFFECTS
         ),
         provideStoreDevtools({
             maxAge: 100,
