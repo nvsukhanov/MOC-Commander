@@ -44,10 +44,10 @@
 
     <ng-container *ngIf="rssiLevel !== null">
         <mat-icon class="rssi-level"
-                  [title]="'hub.RSSILevel' | transloco: { RSSI: rssiLevel }"
+                  [title]="'hub.rssiLevel' | transloco: { rssi: rssiLevel }"
                   [fontIcon]="rssiLevelIcon"
         ></mat-icon>
-        <span class="cdk-visually-hidden">{{ 'hub.RSSILevel' | transloco: { RSSI: rssiLevel } }}</span>
+        <span class="cdk-visually-hidden">{{ 'hub.rssiLevel' | transloco: { rssi: rssiLevel } }}</span>
     </ng-container>
 
     <mat-icon class="has-communication-icon"

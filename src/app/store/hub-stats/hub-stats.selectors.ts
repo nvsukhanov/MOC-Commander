@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { IState } from '../i-state';
-import { HUB_STATS_ENTITY_ADAPTER } from '../entity-adapters';
+import { HUB_STATS_ENTITY_ADAPTER } from './hub-stats.reducer';
 
 const HUB_STATS_FEATURE_SELECTOR = createFeatureSelector<IState['hubStats']>('hubStats');
 

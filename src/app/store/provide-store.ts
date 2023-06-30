@@ -15,7 +15,6 @@ import {
     HUB_IO_OUTPUT_MODES_REDUCER,
     HUB_PORT_MODE_INFO_REDUCER,
     HUB_PORT_TASKS_REDUCER,
-    HUB_STATS_REDUCER,
     SERVO_CALIBRATION_REDUCER
 } from './reducers';
 import {
@@ -28,7 +27,6 @@ import {
 } from './effects';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { HubStorageService } from './hub-storage.service';
-import { HUB_STATS_ACTIONS } from './actions';
 import { RoutesBuilderService } from '../routing';
 import { CONTROLLERS_FEATURE, GAMEPAD_CONTROLLER_EFFECTS, KEYBOARD_CONTROLLER_EFFECTS } from './controllers';
 import { BLUETOOTH_AVAILABILITY_FEATURE } from './bluetooth-availability';
@@ -42,8 +40,9 @@ import {
 import { CONTROLLER_SETTINGS_FEATURE } from './controller-settings';
 import { CONTROL_SCHEMES_FEATURE, ControlSchemeEffects, ControlSchemeRunnerEffects } from './control-schemes';
 import { HUBS_FEATURE, HubsEffects } from './hubs';
+import { HUB_STATS_ACTIONS, HUB_STATS_FEATURE } from './hub-stats';
 
-const STORAGE_VERSION = '2';
+const STORAGE_VERSION = '3';
 
 const REDUCERS: ActionReducerMap<IState> = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,
@@ -52,7 +51,7 @@ const REDUCERS: ActionReducerMap<IState> = {
     controllerSettings: CONTROLLER_SETTINGS_FEATURE.reducer,
     controlSchemes: CONTROL_SCHEMES_FEATURE.reducer,
     hubs: HUBS_FEATURE.reducer,
-    hubStats: HUB_STATS_REDUCER,
+    hubStats: HUB_STATS_FEATURE.reducer,
     hubAttachedIos: HUB_ATTACHED_IOS_REDUCER,
     hubAttachedIoProps: HUB_ATTACHED_IO_STATE_REDUCER,
     hubIoSupportedModes: HUB_IO_OUTPUT_MODES_REDUCER,

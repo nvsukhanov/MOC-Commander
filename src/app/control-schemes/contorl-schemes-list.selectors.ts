@@ -17,7 +17,7 @@ import {
     HUB_STATS_SELECTORS,
     HubIoSupportedModes,
     HubModel,
-    HubStats,
+    HubStatsModel,
     PortModeInfo,
     ROUTER_SELECTORS,
     getHubIoOperationModes,
@@ -27,14 +27,14 @@ import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 
 function createHubTreeNode(
     hubConfig: HubModel,
-    hubStats?: HubStats,
+    hubStats?: HubStatsModel,
 ): ControlSchemeViewHubTreeNode {
     return {
         path: hubConfig.hubId,
         hubId: hubConfig.hubId,
         name: hubConfig.name,
         batteryLevel: hubStats?.batteryLevel ?? null,
-        RSSI: hubStats?.RSSI ?? null,
+        rssi: hubStats?.rssi ?? null,
         hubType: hubConfig.hubType,
         isButtonPressed: hubStats?.isButtonPressed ?? false,
         hasCommunication: hubStats?.hasCommunication ?? false,
@@ -129,7 +129,7 @@ export type ControlSchemeViewHubTreeNode = {
     readonly hubId: string;
     readonly name: string;
     readonly batteryLevel: number | null;
-    readonly RSSI: number | null;
+    readonly rssi: number | null;
     readonly hubType: HubType;
     readonly isButtonPressed: boolean;
     readonly hasCommunication: boolean;
@@ -154,7 +154,7 @@ export const CONTROL_SCHEMES_LIST_SELECTORS = {
         (
             scheme: ControlSchemeModel | undefined,
             hubEntities: Dictionary<HubModel>,
-            statsEntities: Dictionary<HubStats>,
+            statsEntities: Dictionary<HubStatsModel>,
             ios: Dictionary<AttachedIo>,
             ioSupportedModesEntities: Dictionary<HubIoSupportedModes>,
             portModeInfoEntities: Dictionary<PortModeInfo>,

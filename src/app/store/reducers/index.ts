@@ -5,4 +5,3 @@ export * from './hub-port-tasks.reducer';
 export * from './hub-edit-form-active-saves.reducer';
 export * from './servo-calibration.reducer';
 export * from './hub-attached-io-state.reducer';
-export * from './hub-stats.reducer';

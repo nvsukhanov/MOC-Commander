@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { EMPTY, NEVER, Observable, combineLatest, map, startWith, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { JsonPipe, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
+import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -27,7 +27,6 @@ export type ControlSchemeBindingInputForm = FormGroup<{
     imports: [
         NgSwitch,
         PushPipe,
-        JsonPipe,
         LetDirective,
         NgSwitchCase,
         TranslocoModule,

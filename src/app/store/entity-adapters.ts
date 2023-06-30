@@ -2,7 +2,7 @@
 import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 import { PortCommandTask } from '@app/shared';
-import { AttachedIo, AttachedIoProps, HubIoSupportedModes, HubStats, PortModeInfo, } from './i-state';
+import { AttachedIo, AttachedIoProps, HubIoSupportedModes, PortModeInfo, } from './i-state';
 
 export const HUB_ATTACHED_IOS_ENTITY_ADAPTER: EntityAdapter<AttachedIo> = createEntityAdapter<AttachedIo>({
     selectId: (io) => hubAttachedIosIdFn(io),
@@ -49,6 +49,4 @@ export const HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER: EntityAdapter<AttachedIoProps
     selectId: (io) => hubAttachedIosIdFn(io),
 });
 
-export const HUB_STATS_ENTITY_ADAPTER: EntityAdapter<HubStats> = createEntityAdapter<HubStats>({
-    selectId: (stats) => stats.hubId,
-});
+
