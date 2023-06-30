@@ -3,13 +3,13 @@ import { concatLatestFrom, createEffect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { NEVER, Observable, filter, fromEvent, map, mergeMap, mergeWith, switchMap, take } from 'rxjs';
 
-import { WINDOW } from '@app/shared';
-import { CONTROLLER_INPUT_ACTIONS } from '../../actions';
-import { CONTROLLER_INPUT_CAPTURE_SELECTORS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SETTINGS_SELECTORS } from '../../selectors';
-import { KeyboardSettings } from '../../i-state';
-import { controllerInputIdFn } from '../../entity-adapters';
-import { ControllerInputType } from '../../controller-input-type';
-import { ControllerType, controllerIdFn } from '../../controllers';
+import { ControllerInputType, WINDOW } from '@app/shared';
+import { CONTROLLER_SETTINGS_SELECTORS } from '../selectors';
+import { KeyboardSettings } from '../i-state';
+import { ControllerType, controllerIdFn } from '../controllers';
+import { controllerInputIdFn } from './controller-input.reducer';
+import { CONTROLLER_INPUT_ACTIONS } from './controller-input.actions';
+import { CONTROLLER_INPUT_SELECTORS } from './controller-input.selectors';
 
 @Injectable()
 export class KeyboardControllerInputEffects {
@@ -18,7 +18,7 @@ export class KeyboardControllerInputEffects {
     public readonly keyUpEvent = 'keyup';
 
     public readonly captureKeyboardInput$ = createEffect(() => {
-        return this.store.select(CONTROLLER_INPUT_CAPTURE_SELECTORS.isCapturing).pipe(
+        return this.store.select(CONTROLLER_INPUT_SELECTORS.isCapturing).pipe(
             switchMap((isCapturing) => isCapturing ? this.readKeyboard() : NEVER)
         );
     });

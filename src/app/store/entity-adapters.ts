@@ -2,18 +2,7 @@
 import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 import { PortCommandTask } from '@app/shared';
-import {
-    AttachedIo,
-    AttachedIoProps,
-    ControlScheme,
-    ControllerInput,
-    ControllerSettings,
-    HubConfiguration,
-    HubIoSupportedModes,
-    HubStats,
-    PortModeInfo,
-} from './i-state';
-import { ControllerInputType } from './controller-input-type';
+import { AttachedIo, AttachedIoProps, ControlScheme, ControllerSettings, HubConfiguration, HubIoSupportedModes, HubStats, PortModeInfo, } from './i-state';
 
 export const HUB_ATTACHED_IOS_ENTITY_ADAPTER: EntityAdapter<AttachedIo> = createEntityAdapter<AttachedIo>({
     selectId: (io) => hubAttachedIosIdFn(io),
@@ -69,16 +58,6 @@ export function lastExecutedTaskIdFn(
 export const HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER: EntityAdapter<AttachedIoProps> = createEntityAdapter<AttachedIoProps>({
     selectId: (io) => hubAttachedIosIdFn(io),
 });
-
-export const CONTROLLER_INPUT_ENTITY_ADAPTER: EntityAdapter<ControllerInput> = createEntityAdapter<ControllerInput>({
-    selectId: (input) => controllerInputIdFn(input),
-});
-
-export function controllerInputIdFn(
-    { controllerId, inputId, inputType }: { controllerId: string, inputId: string, inputType: ControllerInputType }
-): string {
-    return `${controllerId}/${inputType}/${inputId}`;
-}
 
 export const CONTROLLER_SETTINGS_ENTITY_ADAPTER: EntityAdapter<ControllerSettings> = createEntityAdapter<ControllerSettings>({
     selectId: (settings) => settings.controllerId,

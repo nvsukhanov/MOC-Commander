@@ -26,7 +26,15 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 
-import { ConfirmDialogService, FeatureToolbarService, IScrollContainer, SCROLL_CONTAINER, ScreenSizeObserverService, WINDOW } from '@app/shared';
+import {
+    ConfirmDialogService,
+    ControllerInputType,
+    FeatureToolbarService,
+    IScrollContainer,
+    SCROLL_CONTAINER,
+    ScreenSizeObserverService,
+    WINDOW
+} from '@app/shared';
 import { ControlSchemeBindingInputComponent } from '../binding-input';
 import { ControlSchemeBindingOutputComponent } from '../binding-output';
 import { ControlSchemeFormBuilderService } from './control-scheme-form-builder.service';
@@ -39,8 +47,7 @@ import {
     CONTROL_SCHEME_CONFIGURATION_ACTIONS,
     CONTROL_SCHEME_CONFIGURATION_STATE_SELECTORS,
     ControlScheme,
-    ControllerInput,
-    ControllerInputType,
+    ControllerInputModel,
     HUB_ATTACHED_IO_SELECTORS,
     HUB_IO_CONTROL_METHODS
 } from '../../../store';
@@ -166,7 +173,7 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         this.store.select(CONTROLLER_INPUT_SELECTORS.selectFirst).pipe(
             takeUntil(this.onDestroy$),
             takeUntil(this.actions.pipe(ofType(CONTROL_SCHEME_CONFIGURATION_ACTIONS.stopListening))),
-            filter((input): input is ControllerInput => !!input),
+            filter((input): input is ControllerInputModel => !!input),
             concatLatestFrom((input) => this.store.select(HUB_ATTACHED_IO_SELECTORS.selectFirstIiControllableByInputType(input.inputType))),
             map(([ input, ios ]) => ({ input, ios })),
             take(1),
@@ -206,7 +213,7 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         this.store.select(CONTROLLER_INPUT_SELECTORS.selectFirst).pipe(
             takeUntil(this.onDestroy$),
             takeUntil(this.actions.pipe(ofType(CONTROL_SCHEME_CONFIGURATION_ACTIONS.stopListening))),
-            filter((input): input is ControllerInput => !!input),
+            filter((input): input is ControllerInputModel => !!input),
             take(1),
             finalize(() => this.stopInputCapture())
         ).subscribe((input) => {

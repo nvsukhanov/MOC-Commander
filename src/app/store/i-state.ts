@@ -2,19 +2,16 @@ import { HubType, IOType, MotorServoEndState, PortModeName, PortModeSymbol } fro
 import { EntityState } from '@ngrx/entity';
 import { RouterState } from '@ngrx/router-store';
 
-import { PortCommandTask } from '@app/shared';
+import { ControllerInputType, PortCommandTask } from '@app/shared';
 import { HubIoOperationMode } from './hub-io-operation-mode';
-import { ControllerInputType } from './controller-input-type';
 import { ControllersState } from './controllers';
 import { BluetoothAvailabilityState } from './bluetooth-availability';
+import { ControllerInputState } from './controller-input';
 
 export interface IState {
     bluetoothAvailability: BluetoothAvailabilityState,
     controllers: ControllersState;
-    controllerInput: EntityState<ControllerInput>;
-    controllerInputCapture: {
-        listenersCount: number;
-    },
+    controllerInput: ControllerInputState;
     controllerSettings: EntityState<ControllerSettings>;
     controlSchemes: EntityState<ControlScheme>;
     controlSchemeConfigurationState: {
@@ -46,13 +43,6 @@ export interface IState {
         calibrationInProgress: boolean;
     },
     router: RouterState;
-}
-
-export type ControllerInput = {
-    controllerId: string;
-    inputType: ControllerInputType;
-    inputId: string;
-    value: number;
 }
 
 export type KeyboardSettings = {

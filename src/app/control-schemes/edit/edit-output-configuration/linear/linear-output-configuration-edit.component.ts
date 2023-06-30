@@ -9,8 +9,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { ControlSchemeBindingOutputForm } from '../../binding-output';
 import { ControlSchemeBindingInputForm } from '../../binding-input';
-import { ControllerInputType } from '../../../../store';
 import { IOutputConfigurationRenderer } from '../i-output-configuration-renderer';
+import { ControllerInputType } from '@app/shared';
 
 @Component({
     standalone: true,

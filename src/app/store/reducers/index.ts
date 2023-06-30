@@ -10,7 +10,5 @@ export * from './hub-edit-form-active-saves.reducer';
 export * from './hub-discovery-state.reducer';
 export * from './servo-calibration.reducer';
 export * from './hub-attached-io-state.reducer';
-export * from './controller-input.reducer';
-export * from './controller-input-capture.reducer';
 export * from './controller-settings.reducer';
 export * from './hub-stats.reducer';

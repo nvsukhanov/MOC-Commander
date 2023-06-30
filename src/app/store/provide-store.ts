@@ -9,8 +9,6 @@ import { Router } from '@angular/router';
 import { NAVIGATOR } from '@app/shared';
 import { IState } from './i-state';
 import {
-    CONTROLLER_INPUT_CAPTURE_REDUCER,
-    CONTROLLER_INPUT_REDUCER,
     CONTROLLER_SETTINGS_REDUCER,
     CONTROL_SCHEME_CONFIGURATION_STATE_REDUCER,
     CONTROL_SCHEME_REDUCER,
@@ -29,31 +27,34 @@ import {
 import {
     ControlSchemeEffects,
     ControlSchemeRunnerEffects,
-    ControllerInputCaptureEffects,
-    GamepadControllerInputEffects,
     HubAttachedIOsEffects,
     HubAttachedIosStateEffects,
     HubIoSupportedModesEffects,
     HubPortModeInfoEffects,
     HubsEffects,
-    KeyboardControllerInputEffects,
     NotificationsEffects,
     ServoCalibrationEffects,
 } from './effects';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { HubStorageService } from './hub-storage.service';
-import { CONTROLLER_INPUT_ACTIONS, HUB_STATS_ACTIONS } from './actions';
+import { HUB_STATS_ACTIONS } from './actions';
 import { RoutesBuilderService } from '../routing';
 import { CONTROLLERS_FEATURE, GAMEPAD_CONTROLLER_EFFECTS, KEYBOARD_CONTROLLER_EFFECTS } from './controllers';
 import { BLUETOOTH_AVAILABILITY_FEATURE } from './bluetooth-availability';
+import {
+    CONTROLLER_INPUT_ACTIONS,
+    CONTROLLER_INPUT_FEATURE,
+    ControllerInputCaptureEffects,
+    GamepadControllerInputEffects,
+    KeyboardControllerInputEffects
+} from './controller-input';
 
 const STORAGE_VERSION = '2';
 
 const REDUCERS: ActionReducerMap<IState> = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,
     controllers: CONTROLLERS_FEATURE.reducer,
-    controllerInput: CONTROLLER_INPUT_REDUCER,
-    controllerInputCapture: CONTROLLER_INPUT_CAPTURE_REDUCER,
+    controllerInput: CONTROLLER_INPUT_FEATURE.reducer,
     controllerSettings: CONTROLLER_SETTINGS_REDUCER,
     controlSchemes: CONTROL_SCHEME_REDUCER,
     controlSchemeConfigurationState: CONTROL_SCHEME_CONFIGURATION_STATE_REDUCER,
