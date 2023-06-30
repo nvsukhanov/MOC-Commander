@@ -1,6 +1,6 @@
 import { PortCommandTask } from '@app/shared';
 import { IPortCommandTaskComposer } from './i-port-command-task-composer';
-import { AttachedIOState, ControlSchemeBinding } from '../../store';
+import { AttachedIoProps, ControlSchemeBinding } from '../../store';
 
 export abstract class PortCommandTaskComposer implements IPortCommandTaskComposer {
     private next?: PortCommandTaskComposer;
@@ -8,14 +8,14 @@ export abstract class PortCommandTaskComposer implements IPortCommandTaskCompose
     protected abstract handle(
         binding: ControlSchemeBinding,
         inputValue: number,
-        ioState: AttachedIOState,
+        ioState: AttachedIoProps,
         previousTask?: PortCommandTask,
     ): PortCommandTask | null;
 
     public composeTask(
         binding: ControlSchemeBinding,
         inputValue: number,
-        ioState: AttachedIOState,
+        ioState: AttachedIoProps,
         previousTask?: PortCommandTask,
     ): PortCommandTask | null {
         const result = this.handle(binding, inputValue, ioState, previousTask);

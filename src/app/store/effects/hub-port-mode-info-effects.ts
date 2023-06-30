@@ -14,25 +14,25 @@ export class HubPortModeInfoEffects {
     public loadPortModesInfo$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUB_IO_SUPPORTED_MODES.portModesReceived),
-            concatLatestFrom(() => this.store.select(HUB_ATTACHED_IO_SELECTORS.selectIOsAll)),
+            concatLatestFrom(() => this.store.select(HUB_ATTACHED_IO_SELECTORS.selectIosAll)),
             mergeMap(([ action, ios ]) => {
-                const matchingIO = ios.find((io) => io.hubId === action.io.hubId && io.portId === action.io.portId);
-                if (!matchingIO) {
+                const matchingIo = ios.find((io) => io.hubId === action.io.hubId && io.portId === action.io.portId);
+                if (!matchingIo) {
                     throw new Error('No hub found with matching IO');
                 }
-                const portApi = this.hubStorage.get(matchingIO.hubId).ports;
+                const portApi = this.hubStorage.get(matchingIo.hubId).ports;
                 const concatenatedPortModeIds = [ ...new Set([ ...action.portOutputModes, ...action.portInputModes ]) ];
 
                 return zip(
-                    ...concatenatedPortModeIds.map((mode) => portApi.getPortModeInformation(matchingIO.portId, mode, PortModeInformationType.name)),
-                    ...concatenatedPortModeIds.map((mode) => portApi.getPortModeInformation(matchingIO.portId, mode, PortModeInformationType.symbol)),
+                    ...concatenatedPortModeIds.map((mode) => portApi.getPortModeInformation(matchingIo.portId, mode, PortModeInformationType.name)),
+                    ...concatenatedPortModeIds.map((mode) => portApi.getPortModeInformation(matchingIo.portId, mode, PortModeInformationType.symbol)),
                 ).pipe(
-                    takeUntil(this.hubStorage.get(matchingIO.hubId).disconnected),
+                    takeUntil(this.hubStorage.get(matchingIo.hubId).disconnected),
                     map((data) => {
                         const names = data.slice(0, concatenatedPortModeIds.length) as PortModeInformationName[];
                         const symbols = data.slice(concatenatedPortModeIds.length) as PortModeInformationSymbol[];
                         const dataSets = names.map((nameMode, index) => ({
-                            id: hubPortModeInfoIdFn({ io: matchingIO, modeId: nameMode.mode }),
+                            id: hubPortModeInfoIdFn({ io: matchingIo, modeId: nameMode.mode }),
                             modeId: nameMode.mode,
                             name: names[index].name as PortModeName,
                             symbol: symbols[index].symbol as PortModeSymbol

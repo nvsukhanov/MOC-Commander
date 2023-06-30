@@ -36,7 +36,7 @@ export class IoTypeToL10nKeyPipe implements PipeTransform {
         [IOType.gestureSensor]: composeL10nKey(L10nScopes.io, 'ioTypeGestureSensor')
     };
 
-    private readonly unknownDeviceType = composeL10nKey(L10nScopes.io, 'unknownIOType');
+    private readonly unknownDeviceType = composeL10nKey(L10nScopes.io, 'unknownIoType');
 
     public transform(ioType: IOType): string {
         return this.mapping[ioType] ?? this.unknownDeviceType;

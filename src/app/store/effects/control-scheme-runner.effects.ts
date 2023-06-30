@@ -19,7 +19,7 @@ import {
     TaskSuppressorFactory
 } from '../../tasks-processing';
 import { hubAttachedIosIdFn, lastExecutedTaskIdFn } from '../entity-adapters';
-import { AttachedIOState, ControlSchemeBinding } from '../i-state';
+import { AttachedIoProps, ControlSchemeBinding } from '../i-state';
 import { HubStorageService } from '../hub-storage.service';
 
 @Injectable()
@@ -126,7 +126,7 @@ export class ControlSchemeRunnerEffects {
         bindings: ControlSchemeBinding[],
         bindingValues: number[],
         lastExecutedTasksEntities: Dictionary<PortCommandTask>,
-        ioStateEntities: Dictionary<AttachedIOState>
+        ioStateEntities: Dictionary<AttachedIoProps>
     ): PortCommandTask[] {
         return bindings.map((binding, index) => {
             const value = bindingValues[index];

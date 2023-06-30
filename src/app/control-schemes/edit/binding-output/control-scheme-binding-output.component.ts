@@ -14,7 +14,7 @@ import { IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '@app/shared';
 import { ControlSchemeBindingInputForm } from '../binding-input';
 import { RenderEditOutputConfigurationDirective } from '../edit-output-configuration';
 import { BindingForm } from '../types';
-import { AttachedIO, HUBS_SELECTORS, HUB_ATTACHED_IO_SELECTORS, HUB_STATS_SELECTORS, HubConfiguration, HubIoOperationMode } from '../../../store';
+import { AttachedIo, HUBS_SELECTORS, HUB_ATTACHED_IO_SELECTORS, HUB_STATS_SELECTORS, HubConfiguration, HubIoOperationMode } from '../../../store';
 
 export type LinearOutputConfigurationForm = FormGroup<{
     maxSpeed: FormControl<number>,
@@ -78,11 +78,11 @@ export class ControlSchemeBindingOutputComponent {
 
     private _inputFormControl?: ControlSchemeBindingInputForm;
 
-    private _availableIOs$: Observable<AttachedIO[]> = of([]);
+    private _attachedIos$: Observable<AttachedIo[]> = of([]);
 
     private _ioType$: Observable<IOType | null> = of(null);
 
-    private _availableIOOperationModes$: Observable<HubIoOperationMode[]> = of([]);
+    private _availableIoOperationModes$: Observable<HubIoOperationMode[]> = of([]);
 
     private _selectedHubConfiguration$: Observable<HubConfiguration | undefined> = EMPTY;
 
@@ -110,12 +110,12 @@ export class ControlSchemeBindingOutputComponent {
                 if (hubId === null || portId === null) {
                     return of(null);
                 }
-                return this.store.select(HUB_ATTACHED_IO_SELECTORS.selectIOAtPort({ hubId, portId }));
+                return this.store.select(HUB_ATTACHED_IO_SELECTORS.selectIoAtPort({ hubId, portId }));
             }),
             map((io) => io?.ioType ?? null)
         );
 
-        this._availableIOs$ = combineLatest([
+        this._attachedIos$ = combineLatest([
             outputGroup.controls.hubId.valueChanges.pipe(startWith(outputGroup.controls.hubId.value)),
             inputGroup.controls.inputType.valueChanges.pipe(startWith(inputGroup.controls.inputType.value))
         ]).pipe(
@@ -123,12 +123,12 @@ export class ControlSchemeBindingOutputComponent {
                 if (hubId === null) {
                     return of([]);
                 }
-                return this.store.select(HUB_ATTACHED_IO_SELECTORS.selectHubIOsControllableByInputType(hubId, inputType));
+                return this.store.select(HUB_ATTACHED_IO_SELECTORS.selectHubIosControllableByInputType(hubId, inputType));
             }),
             map((ios) => ios.map((io) => io.ioConfig))
         );
 
-        this._availableIOOperationModes$ = combineLatest([
+        this._availableIoOperationModes$ = combineLatest([
             outputGroup.controls.hubId.valueChanges.pipe(startWith(outputGroup.controls.hubId.value)),
             outputGroup.controls.portId.valueChanges.pipe(startWith(outputGroup.controls.portId.value)),
             inputGroup.controls.inputType.valueChanges.pipe(startWith(inputGroup.controls.inputType.value))
@@ -137,7 +137,7 @@ export class ControlSchemeBindingOutputComponent {
                 if (hubId === null || portId === null) {
                     return of([]);
                 }
-                return this.store.select(HUB_ATTACHED_IO_SELECTORS.selectHubIOOperationModes(hubId, portId, inputType));
+                return this.store.select(HUB_ATTACHED_IO_SELECTORS.selectHubIoOperationModes(hubId, portId, inputType));
             }),
             shareReplay({ bufferSize: 1, refCount: true })
         );
@@ -175,11 +175,11 @@ export class ControlSchemeBindingOutputComponent {
         return this._ioType$;
     }
 
-    public get availableIOs$(): Observable<AttachedIO[]> {
-        return this._availableIOs$;
+    public get attachedIos$(): Observable<AttachedIo[]> {
+        return this._attachedIos$;
     }
 
-    public get availableIOOperationModes$(): Observable<HubIoOperationMode[]> {
-        return this._availableIOOperationModes$;
+    public get availableIoOperationModes$(): Observable<HubIoOperationMode[]> {
+        return this._availableIoOperationModes$;
     }
 }

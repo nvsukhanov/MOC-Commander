@@ -6,13 +6,13 @@
                                  (disconnect)="disconnectHub()"
         ></app-hub-properties-view>
 
-        <ng-container *ngrxLet="IOFullData$ as iosList">
-            <mat-card *ngIf="iosList.length"
+        <ng-container *ngrxLet="ioFullInfoList$ as iosFullInfoList">
+            <mat-card *ngIf="iosFullInfoList.length"
                       class="ports-group-section"
             >
                 <mat-card-content>
                     <ul class="io-list">
-                        <li *ngFor="let ioFullInfo of iosList; trackBy: hubIoTrackByFn">
+                        <li *ngFor="let ioFullInfo of iosFullInfoList; trackBy: hubIoTrackByFn">
                             <app-hub-port-view class="io-list__item"
                                                [ioFullInfo]="ioFullInfo"
                             ></app-hub-port-view>
