@@ -14,7 +14,7 @@
                     <ul class="io-list">
                         <li *ngFor="let ioFullInfo of iosFullInfoList; trackBy: hubIoTrackByFn">
                             <app-hub-port-view class="io-list__item"
-                                               [ioFullInfo]="ioFullInfo"
+                                               [hubIoViewModel]="ioFullInfo"
                             ></app-hub-port-view>
                         </li>
                     </ul>

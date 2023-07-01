@@ -7,9 +7,9 @@ import { MOTOR_LIMITS, MotorServoEndState, PortModeName } from '@nvsukhanov/rxpo
 
 import { transformRelativeDegToAbsoluteDeg } from '@app/shared';
 import { ServoCalibrationDialogComponent } from '../../control-schemes/servo-calibration-dialog';
-import { HubStorageService } from '../hub-storage.service';
 import { SERVO_CALIBRATION_ACTIONS } from '../actions';
-import { HUB_ATTACHED_IO_SELECTORS } from '../selectors';
+import { ATTACHED_IO_PORT_MODE_INFO_SELECTORS } from '../selectors';
+import { HubStorageService } from '../hub-storage.service';
 
 @Injectable()
 export class ServoCalibrationEffects {
@@ -17,8 +17,12 @@ export class ServoCalibrationEffects {
         return this.actions.pipe(
             ofType(SERVO_CALIBRATION_ACTIONS.startCalibration),
             concatLatestFrom((action) => [
-                this.store.select(HUB_ATTACHED_IO_SELECTORS.selectHubPortInputModeForPortModeName(action.hubId, action.portId, PortModeName.position)),
-                this.store.select(HUB_ATTACHED_IO_SELECTORS.selectHubPortInputModeForPortModeName(action.hubId, action.portId, PortModeName.absolutePosition)),
+                this.store.select(
+                    ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectHubPortInputModeForPortModeName(action.hubId, action.portId, PortModeName.position)
+                ),
+                this.store.select(
+                    ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectHubPortInputModeForPortModeName(action.hubId, action.portId, PortModeName.absolutePosition)
+                ),
             ]),
             switchMap(([ action, positionModeInfo, absolutePositionModeInfo ]) => {
                 if (absolutePositionModeInfo === null || positionModeInfo === null) {

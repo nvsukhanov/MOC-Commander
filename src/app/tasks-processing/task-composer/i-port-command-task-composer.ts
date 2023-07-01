@@ -1,11 +1,11 @@
+import { AttachedIoPropsModel, ControlSchemeBinding } from '../../store';
 import { PortCommandTask } from '@app/shared';
-import { AttachedIoProps, ControlSchemeBinding } from '../../store';
 
 export interface IPortCommandTaskComposer {
     composeTask(
         binding: ControlSchemeBinding,
         inputValue: number,
-        ioState?: AttachedIoProps,
+        ioState?: AttachedIoPropsModel,
         previousTask?: PortCommandTask,
     ): PortCommandTask | null;
 }

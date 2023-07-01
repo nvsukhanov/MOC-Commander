@@ -1,22 +1,31 @@
-import { createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, on } from '@ngrx/store';
 
-import { INITIAL_STATE } from '../initial-state';
-import { IState } from '../i-state';
-import { HUBS_ACTIONS } from '../hubs';
+import { HUBS_ACTIONS } from '../actions';
 
-export const HUB_EDIT_FORM_ACTIVE_SAVES_REDUCER = createReducer(
-    INITIAL_STATE.hubEditFormActiveSaves,
-    on(HUBS_ACTIONS.requestSetHubName, (state, data): IState['hubEditFormActiveSaves'] => {
-        if (state.hubIds.includes(data.hubId)) {
-            return state;
-        }
-        return {
-            hubIds: [ ...state.hubIds, data.hubId ]
-        };
-    }),
-    on(HUBS_ACTIONS.hubNameSet, (state, data): IState['hubEditFormActiveSaves'] => {
-        return {
-            hubIds: state.hubIds.filter(id => id !== data.hubId)
-        };
-    })
-);
+export type HubEditFormActiveSavesState = {
+    hubIds: string[];
+}
+
+export const HUB_EDIT_FORM_ACTIVE_SAVES_INITIAL_STATE = {
+    hubIds: [] as string[]
+};
+
+export const HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE = createFeature({
+    name: 'hubEditFormActiveSaves',
+    reducer: createReducer(
+        HUB_EDIT_FORM_ACTIVE_SAVES_INITIAL_STATE,
+        on(HUBS_ACTIONS.requestSetHubName, (state, data): HubEditFormActiveSavesState => {
+            if (state.hubIds.includes(data.hubId)) {
+                return state;
+            }
+            return {
+                hubIds: [ ...state.hubIds, data.hubId ]
+            };
+        }),
+        on(HUBS_ACTIONS.hubNameSet, (state, data): HubEditFormActiveSavesState => {
+            return {
+                hubIds: state.hubIds.filter(id => id !== data.hubId)
+            };
+        })
+    )
+});

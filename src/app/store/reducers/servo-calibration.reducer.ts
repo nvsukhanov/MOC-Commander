@@ -1,33 +1,42 @@
-import { createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, on } from '@ngrx/store';
 
-import { INITIAL_STATE } from '../initial-state';
 import { SERVO_CALIBRATION_ACTIONS } from '../actions';
-import { IState } from '../i-state';
 
-export const SERVO_CALIBRATION_REDUCER = createReducer(
-    INITIAL_STATE.servoCalibrationTaskState,
-    on(SERVO_CALIBRATION_ACTIONS.startCalibration, (state): IState['servoCalibrationTaskState'] => {
-        return {
-            ...state,
-            calibrationInProgress: true
-        };
-    }),
-    on(SERVO_CALIBRATION_ACTIONS.calibrationFinished, (state): IState['servoCalibrationTaskState'] => {
-        return {
-            ...state,
-            calibrationInProgress: false
-        };
-    }),
-    on(SERVO_CALIBRATION_ACTIONS.calibrationCancelled, (state): IState['servoCalibrationTaskState'] => {
-        return {
-            ...state,
-            calibrationInProgress: false
-        };
-    }),
-    on(SERVO_CALIBRATION_ACTIONS.calibrationError, (state): IState['servoCalibrationTaskState'] => {
-        return {
-            ...state,
-            calibrationInProgress: false
-        };
-    })
-);
+export type ServoCalibrationState = {
+    calibrationInProgress: boolean;
+}
+
+export const SERVO_CALIBRATION_INITIAL_STATE = {
+    calibrationInProgress: false
+};
+
+export const SERVO_CALIBRATION_FEATURE = createFeature({
+    name: 'servoCalibration',
+    reducer: createReducer(
+        SERVO_CALIBRATION_INITIAL_STATE,
+        on(SERVO_CALIBRATION_ACTIONS.startCalibration, (state): ServoCalibrationState => {
+            return {
+                ...state,
+                calibrationInProgress: true
+            };
+        }),
+        on(SERVO_CALIBRATION_ACTIONS.calibrationFinished, (state): ServoCalibrationState => {
+            return {
+                ...state,
+                calibrationInProgress: false
+            };
+        }),
+        on(SERVO_CALIBRATION_ACTIONS.calibrationCancelled, (state): ServoCalibrationState => {
+            return {
+                ...state,
+                calibrationInProgress: false
+            };
+        }),
+        on(SERVO_CALIBRATION_ACTIONS.calibrationError, (state): ServoCalibrationState => {
+            return {
+                ...state,
+                calibrationInProgress: false
+            };
+        })
+    )
+});

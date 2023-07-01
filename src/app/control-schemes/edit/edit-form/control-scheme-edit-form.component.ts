@@ -34,21 +34,14 @@ import {
     IScrollContainer,
     SCROLL_CONTAINER,
     ScreenSizeObserverService,
-    WINDOW
+    WINDOW,
 } from '@app/shared';
 import { ControlSchemeBindingInputComponent } from '../binding-input';
 import { ControlSchemeBindingOutputComponent } from '../binding-output';
 import { ControlSchemeFormBuilderService } from './control-scheme-form-builder.service';
 import { BindingForm, EditSchemeForm } from '../types';
 import { ControlSchemeBindingConfigurationComponent } from '../binding-config';
-import {
-    CONTROLLERS_ACTIONS,
-    CONTROLLER_INPUT_SELECTORS,
-    CONTROL_SCHEME_ACTIONS,
-    ControlSchemeModel,
-    ControllerInputModel,
-    HUB_ATTACHED_IO_SELECTORS,
-} from '../../../store';
+import { CONTROLLERS_ACTIONS, CONTROLLER_INPUT_SELECTORS, CONTROL_SCHEME_ACTIONS, ControlSchemeModel, ControllerInputModel, } from '../../../store';
 import { CONTROL_SCHEMES_LIST_SELECTORS } from '../../contorl-schemes-list.selectors';
 
 export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
@@ -172,7 +165,7 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
             takeUntil(this.onDestroy$),
             takeUntil(this.actions.pipe(ofType(CONTROL_SCHEME_ACTIONS.stopListening))),
             filter((input): input is ControllerInputModel => !!input),
-            concatLatestFrom((input) => this.store.select(HUB_ATTACHED_IO_SELECTORS.selectFirstIiControllableByInputType(input.inputType))),
+            concatLatestFrom((input) => this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.selectFirstIoControllableByInputType(input.inputType))),
             map(([ input, ios ]) => ({ input, ios })),
             take(1),
             finalize(() => this.stopInputCapture())

@@ -1,8 +1,8 @@
 import { IHub, PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 import { Observable, of } from 'rxjs';
 
-import { PortCommandTask } from '@app/shared';
 import { ITaskExecutor } from './i-task-executor';
+import { PortCommandTask } from '@app/shared';
 
 export abstract class TaskExecutor implements ITaskExecutor {
     private next?: TaskExecutor;

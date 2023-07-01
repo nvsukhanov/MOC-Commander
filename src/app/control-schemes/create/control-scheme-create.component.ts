@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { BindingFormResult, ControlSchemeEditFormComponent } from '../edit';
 import { CONTROL_SCHEME_ACTIONS } from '../../store';
 import { RoutesBuilderService } from '../../routing';
+import { trimFormOutputBinding } from '../trim-form-output-binding';
 
 @Component({
     standalone: true,
@@ -25,9 +26,14 @@ export class ControlSchemeCreateComponent {
     }
 
     public onSave(
-        formResult: BindingFormResult
+        data: BindingFormResult
     ): void {
-        this.store.dispatch(CONTROL_SCHEME_ACTIONS.create(formResult));
+        const result = {
+            id: data.id,
+            name: data.name,
+            bindings: data.bindings.map((i) => trimFormOutputBinding(i))
+        };
+        this.store.dispatch(CONTROL_SCHEME_ACTIONS.create(result));
     }
 
     public onCancel(): void {

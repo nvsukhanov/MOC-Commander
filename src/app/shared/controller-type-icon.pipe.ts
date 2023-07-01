@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { ControllerType } from '../store';
+import { ControllerType } from './types';
 
 @Pipe({
     standalone: true,

@@ -2,19 +2,21 @@ import { RouterState } from '@ngrx/router-store';
 
 import { IState } from './i-state';
 import {
-    HUB_ATTACHED_IOS_ENTITY_ADAPTER,
-    HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER,
-    HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER,
-    HUB_PORT_MODE_INFO,
-    LAST_EXECUTED_TASKS_ENTITY_ADAPTER
-} from './entity-adapters';
-import { CONTROLLERS_INITIAL_STATE } from './controllers';
-import { BLUETOOTH_AVAILABILITY_INITIAL_STATE } from './bluetooth-availability';
-import { CONTROLLER_INPUT_INITIAL_STATE } from './controller-input';
-import { CONTROLLER_SETTINGS_INITIAL_STATE } from './controller-settings';
-import { CONTROL_SCHEMES_INITIAL_STATE } from './control-schemes';
-import { HUBS_INITIAL_STATE } from './hubs';
-import { HUB_STATS_INITIAL_STATE } from './hub-stats';
+    ATTACHED_IOS_INITIAL_STATE,
+    ATTACHED_IO_MODES_INITIAL_STATE,
+    ATTACHED_IO_PORT_MODE_INFO_INITIAL_STATE,
+    ATTACHED_IO_PROPS_INITIAL_STATE,
+    BLUETOOTH_AVAILABILITY_INITIAL_STATE,
+    CONTROLLERS_INITIAL_STATE,
+    CONTROLLER_INPUT_INITIAL_STATE,
+    CONTROLLER_SETTINGS_INITIAL_STATE,
+    CONTROL_SCHEMES_INITIAL_STATE,
+    HUBS_INITIAL_STATE,
+    HUB_EDIT_FORM_ACTIVE_SAVES_INITIAL_STATE,
+    HUB_PORT_TASKS_INITIAL_STATE,
+    HUB_STATS_INITIAL_STATE,
+    SERVO_CALIBRATION_INITIAL_STATE
+} from './reducers';
 
 export const INITIAL_STATE: IState = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_INITIAL_STATE,
@@ -24,22 +26,12 @@ export const INITIAL_STATE: IState = {
     controlSchemes: CONTROL_SCHEMES_INITIAL_STATE,
     hubs: HUBS_INITIAL_STATE,
     hubStats: HUB_STATS_INITIAL_STATE,
-    hubAttachedIos: HUB_ATTACHED_IOS_ENTITY_ADAPTER.getInitialState(),
-    hubAttachedIoProps: HUB_ATTACHED_IO_STATE_ENTITY_ADAPTER.getInitialState(),
-    hubIoSupportedModes: HUB_IO_SUPPORTED_MODES_ENTITY_ADAPTER.getInitialState(),
-    hubPortModeInfo: HUB_PORT_MODE_INFO.getInitialState(),
-    hubPortTasks: {
-        queue: [],
-        totalTasksExecuted: 0,
-        lastTaskExecutionTime: 0,
-        maxQueueLength: 0,
-        lastExecutedTasks: LAST_EXECUTED_TASKS_ENTITY_ADAPTER.getInitialState()
-    },
-    hubEditFormActiveSaves: {
-        hubIds: []
-    },
-    servoCalibrationTaskState: {
-        calibrationInProgress: false
-    },
+    attachedIos: ATTACHED_IOS_INITIAL_STATE,
+    attachedIoProps: ATTACHED_IO_PROPS_INITIAL_STATE,
+    attachedIoModes: ATTACHED_IO_MODES_INITIAL_STATE,
+    attachedIoPortModeInfo: ATTACHED_IO_PORT_MODE_INFO_INITIAL_STATE,
+    hubPortTasks: HUB_PORT_TASKS_INITIAL_STATE,
+    hubEditFormActiveSaves: HUB_EDIT_FORM_ACTIVE_SAVES_INITIAL_STATE,
+    servoCalibrationTaskState: SERVO_CALIBRATION_INITIAL_STATE,
     router: RouterState.Full,
 };

@@ -4,16 +4,16 @@ import { PortModeName } from '@nvsukhanov/rxpoweredup';
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 
-import { HUB_PORT_MODE_INFO_SELECTORS } from '../selectors';
+import { ATTACHED_IO_PORT_MODE_INFO_SELECTORS } from '../selectors';
 import { HubStorageService } from '../hub-storage.service';
-import { HUB_ATTACHED_IOS_ACTIONS, HUB_ATTACHED_IOS_STATE_ACTIONS } from '../actions';
-import { AttachedIo } from '../i-state';
+import { ATTACHED_IOS_ACTIONS, ATTACHED_IO_PROPS_ACTIONS } from '../actions';
+import { AttachedIoModel } from '../models';
 
 @Injectable()
 export class HubAttachedIosStateEffects {
     public readonly getMotorEncoderOffset$ = createEffect(() => {
         return this.actions.pipe(
-            ofType(HUB_ATTACHED_IOS_ACTIONS.ioConnected),
+            ofType(ATTACHED_IOS_ACTIONS.ioConnected),
             mergeMap((action) => this.getModeIdForModeName(
                 action.io,
                 PortModeName.position
@@ -33,7 +33,7 @@ export class HubAttachedIosStateEffects {
                     concatWith(this.hubStorage.get(action.io.hubId).motors.getAbsolutePosition(action.io.portId, absolutePositionModeId!)),
                     bufferCount(2),
                     map(([ position, absolutePosition ]) => absolutePosition - position),
-                    map((offset) => HUB_ATTACHED_IOS_STATE_ACTIONS.motorEncoderOffsetReceived({
+                    map((offset) => ATTACHED_IO_PROPS_ACTIONS.motorEncoderOffsetReceived({
                         hubId: action.io.hubId,
                         portId: action.io.portId,
                         offset
@@ -51,10 +51,10 @@ export class HubAttachedIosStateEffects {
     }
 
     private getModeIdForModeName(
-        io: AttachedIo,
+        io: AttachedIoModel,
         portModeName: PortModeName
     ): Observable<number | null> {
-        return this.store.select(HUB_PORT_MODE_INFO_SELECTORS.selectModeIdForInputModeName(io, portModeName)).pipe(
+        return this.store.select(ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectModeIdForInputModeName(io, portModeName)).pipe(
             filter((modeId) => modeId !== null),
             take(1)
         );

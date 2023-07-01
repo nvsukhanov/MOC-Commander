@@ -1,6 +1,6 @@
-import { HubIoOperationMode, PortCommandSetAngle, PortCommandTaskType } from '@app/shared';
 import { PortCommandTaskComposer } from '../port-command-task-composer';
-import { AttachedIoProps, ControlSchemeBinding } from '../../../store';
+import { AttachedIoPropsModel, ControlSchemeBinding } from '../../../store';
+import { HubIoOperationMode, PortCommandSetAngle, PortCommandTaskType } from '@app/shared';
 
 export class SetAngleComposer extends PortCommandTaskComposer {
     private readonly inputValueThreshold = 0.5;
@@ -8,7 +8,7 @@ export class SetAngleComposer extends PortCommandTaskComposer {
     protected handle(
         binding: ControlSchemeBinding,
         inputValue: number,
-        ioState: AttachedIoProps,
+        ioState: AttachedIoPropsModel,
     ): PortCommandSetAngle | null {
         const outputConfig = binding.output;
         if (outputConfig.operationMode !== HubIoOperationMode.SetAngle || ioState === undefined || ioState.motorEncoderOffset === null) {
