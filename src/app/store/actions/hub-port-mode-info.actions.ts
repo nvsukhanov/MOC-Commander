@@ -1,7 +1,7 @@
 import { createActionGroup, props } from '@ngrx/store';
 import { IOType } from '@nvsukhanov/rxpoweredup';
 
-import { PortModeInfo } from '../i-state';
+import { AttachedIoPortModeInfoModel } from '../models';
 
 export const HUB_PORT_MODE_INFO_ACTIONS = createActionGroup({
     source: 'HUB_PORT_MODE_INFO_ACTIONS',
@@ -15,7 +15,7 @@ export const HUB_PORT_MODE_INFO_ACTIONS = createActionGroup({
             softwareRevision: string
         }>(),
         'add port mode data': props<{
-            dataSets: PortModeInfo[]
+            dataSets: AttachedIoPortModeInfoModel[]
         }>()
     }
 });

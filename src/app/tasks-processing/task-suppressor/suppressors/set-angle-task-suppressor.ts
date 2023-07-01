@@ -1,5 +1,5 @@
-import { PortCommandTask, PortCommandTaskType } from '@app/shared';
 import { TaskSuppressor } from '../task-suppressor';
+import { PortCommandTask, PortCommandTaskType } from '@app/shared';
 
 export class SetAngleTaskSuppressor extends TaskSuppressor {
     protected shouldSuppress<T extends PortCommandTask>(

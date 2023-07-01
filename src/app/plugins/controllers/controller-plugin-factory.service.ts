@@ -5,7 +5,7 @@ import { ControllerPlugin } from './controller-plugin';
 import { IControllerPlugin } from './i-controller-plugin';
 import { KeyboardControllerPluginService } from './keyboard';
 import { DisconnectedControllerPluginService } from './disconnected-controller';
-import { ControllerType } from '../../store';
+import { ControllerType } from '@app/shared';
 
 @Injectable()
 export class ControllerPluginFactoryService {

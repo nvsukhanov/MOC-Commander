@@ -2,7 +2,7 @@ import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 
 import { RoutesBuilderService } from '../routing';
-import { BLUETOOTH_AVAILABILITY_ACTIONS } from './bluetooth-availability';
+import { BLUETOOTH_AVAILABILITY_ACTIONS } from './actions';
 
 export function bluetoothAvailabilityCheckFactory(
     navigator: Navigator,

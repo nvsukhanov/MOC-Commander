@@ -1,4 +1,4 @@
-<mat-expansion-panel *ngIf="ioFullInfo"
+<mat-expansion-panel *ngIf="hubIoViewModel"
                      [class.io-port_expanded]="ioPortPanel.expanded"
                      [class.io-port_collapsed]="!ioPortPanel.expanded"
                      #ioPortPanel
@@ -6,22 +6,22 @@
     <mat-expansion-panel-header>
         <mat-panel-title>
             <h3 class="io-port__title">
-                {{ 'hub.port' | transloco: ioFullInfo }}
+                {{ 'hub.port' | transloco: hubIoViewModel }}
             </h3>
         </mat-panel-title>
         <mat-panel-description>
-            {{ ioFullInfo.ioType | ioTypeToL10nKey | transloco }}
+            {{ hubIoViewModel.ioType | ioTypeToL10nKey | transloco }}
         </mat-panel-description>
     </mat-expansion-panel-header>
 
     <dl class="io-properties__grid">
         <dt class="io-properties__title">{{ 'io.hardwareRevision' | transloco }}</dt>
-        <dd class="io-properties__value">{{ ioFullInfo.hardwareRevision }}</dd>
+        <dd class="io-properties__value">{{ hubIoViewModel.hardwareRevision }}</dd>
 
         <dt class="io-properties__title">{{ 'io.softwareRevision' | transloco }}</dt>
-        <dd class="io-properties__value">{{ ioFullInfo.softwareRevision }}</dd>
+        <dd class="io-properties__value">{{ hubIoViewModel.softwareRevision }}</dd>
 
-        <ng-container *ngIf="ioFullInfo.synchronizable">
+        <ng-container *ngIf="hubIoViewModel.synchronizable">
             <dt class="io-properties__title">{{ 'io.ioSynchronizableTitle' | transloco }}</dt>
             <dd class="io-properties__value">
                 <mat-icon [fontIcon]="'check_box'"
@@ -32,8 +32,8 @@
 
         <dt class="io-properties__title">{{ 'io.ioInputCapabilities' | transloco }}</dt>
         <dd class="io-properties__value">
-            <ul class="io-properties__list" *ngIf="ioFullInfo.portInputModes.length; else emptyModesList">
-                <li *ngFor="let portModeInfo of ioFullInfo.portInputModes; trackBy: portModeInfoTrackById"
+            <ul class="io-properties__list" *ngIf="hubIoViewModel.portInputModes.length; else emptyModesList">
+                <li *ngFor="let portModeInfo of hubIoViewModel.portInputModes; trackBy: portModeInfoTrackById"
                     class="io-properties__mode"
                 >
                     {{ portModeInfo.name }}
@@ -43,8 +43,8 @@
 
         <dt class="io-properties__title">{{ 'io.ioOutputCapabilities' | transloco }}</dt>
         <dd class="io-properties__value">
-            <ul class="io-properties__list" *ngIf="ioFullInfo.portOutputModes.length; else emptyModesList">
-                <li *ngFor="let portModeInfo of ioFullInfo.portOutputModes; trackBy: portModeInfoTrackById"
+            <ul class="io-properties__list" *ngIf="hubIoViewModel.portOutputModes.length; else emptyModesList">
+                <li *ngFor="let portModeInfo of hubIoViewModel.portOutputModes; trackBy: portModeInfoTrackById"
                     class="io-properties__mode"
                 >
                     {{ portModeInfo.name }}

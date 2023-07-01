@@ -14,18 +14,9 @@ import { MatCardModule } from '@angular/material/card';
 import { ConfirmDialogService, NotFoundComponent } from '@app/shared';
 import { HubPropertiesViewComponent } from '../hub-properties-view';
 import { HubIoViewComponent } from '../hub-io-view';
-import {
-    HUBS_ACTIONS,
-    HUBS_SELECTORS,
-    HUB_ATTACHED_IO_SELECTORS,
-    HUB_STATS_SELECTORS,
-    HubModel,
-    HubStatsModel,
-    IoFullInfo,
-    ROUTER_SELECTORS,
-    hubAttachedIosIdFn,
-} from '../../../store';
+import { HUBS_ACTIONS, HUBS_SELECTORS, HUB_STATS_SELECTORS, HubModel, HubStatsModel, ROUTER_SELECTORS, attachedIosIdFn, } from '../../../store';
 import { RoutesBuilderService } from '../../../routing';
+import { HUB_VIEW_SELECTORS, HubIoViewModel } from '../hub-view.selectors';
 
 @Component({
     standalone: true,
@@ -57,8 +48,8 @@ export class HubViewComponent implements OnDestroy {
         switchMap((id) => id === undefined ? EMPTY : this.store.select(HUB_STATS_SELECTORS.selectByHubId(id)))
     );
 
-    public readonly ioFullInfoList$: Observable<IoFullInfo[]> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
-        switchMap((id) => id === undefined ? EMPTY : this.store.select(HUB_ATTACHED_IO_SELECTORS.selectFullIosInfoForHub(id)))
+    public readonly ioFullInfoList$: Observable<HubIoViewModel[]> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
+        switchMap((id) => id === undefined ? EMPTY : this.store.select(HUB_VIEW_SELECTORS.selectFullIosInfoForHub(id)))
     );
 
     constructor(
@@ -83,9 +74,9 @@ export class HubViewComponent implements OnDestroy {
 
     public hubIoTrackByFn(
         index: number,
-        item: IoFullInfo
+        item: HubIoViewModel
     ): string {
-        return hubAttachedIosIdFn(item);
+        return attachedIosIdFn(item);
     }
 
     public ngOnDestroy(): void {

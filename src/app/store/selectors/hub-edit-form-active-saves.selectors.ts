@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { createSelector } from '@ngrx/store';
 
-import { IState } from '../i-state';
-
-const HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE_SELECTOR = createFeatureSelector<IState['hubEditFormActiveSaves']>('hubEditFormActiveSaves');
+import { HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE } from '../reducers';
 
 export const HUB_EDIT_FORM_ACTIVE_SAVES_SELECTORS = {
     isSaveInProgress: (hubId: string) => createSelector(
-        HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE_SELECTOR,
+        HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE.selectHubEditFormActiveSavesState,
         (state) => state.hubIds.includes(hubId)
     )
 };

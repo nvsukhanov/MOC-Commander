@@ -7,10 +7,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import { Observable } from 'rxjs';
 
 import { ConfirmDialogService, HubInlineViewComponent } from '@app/shared';
 import { HUBS_ACTIONS } from '../../store';
-import { HUBS_LIST_SELECTORS } from './hubs-list.selectors';
+import { HUBS_LIST_SELECTORS, HubListViewModel } from './hubs-list.selectors';
 
 @Component({
     standalone: true,
@@ -32,7 +33,7 @@ import { HUBS_LIST_SELECTORS } from './hubs-list.selectors';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HubsListComponent implements OnDestroy {
-    public readonly hubsList$ = this.store.select(HUBS_LIST_SELECTORS.selectHubListViewModel);
+    public readonly hubsList$: Observable<HubListViewModel> = this.store.select(HUBS_LIST_SELECTORS.selectHubListViewModel);
 
     constructor(
         private readonly store: Store,

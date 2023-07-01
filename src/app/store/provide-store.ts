@@ -6,43 +6,46 @@ import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { localStorageSync } from 'ngrx-store-localstorage';
 import { Router } from '@angular/router';
 
-import { NAVIGATOR } from '@app/shared';
 import { IState } from './i-state';
 import {
-    HUB_ATTACHED_IOS_REDUCER,
-    HUB_ATTACHED_IO_STATE_REDUCER,
-    HUB_EDIT_FORM_ACTIVE_SAVES_REDUCER,
-    HUB_IO_OUTPUT_MODES_REDUCER,
-    HUB_PORT_MODE_INFO_REDUCER,
-    HUB_PORT_TASKS_REDUCER,
-    SERVO_CALIBRATION_REDUCER
+    ATTACHED_IOS_FEATURE,
+    ATTACHED_IO_MODES_FEATURE,
+    ATTACHED_IO_PORT_MODE_INFO_FEATURE,
+    ATTACHED_IO_PROPS_FEATURE,
+    BLUETOOTH_AVAILABILITY_FEATURE,
+    CONTROLLERS_FEATURE,
+    CONTROLLER_INPUT_FEATURE,
+    CONTROLLER_SETTINGS_FEATURE,
+    CONTROL_SCHEMES_FEATURE,
+    HUBS_FEATURE,
+    HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE,
+    HUB_PORT_TASKS_FEATURE,
+    HUB_STATS_FEATURE,
+    SERVO_CALIBRATION_FEATURE,
 } from './reducers';
 import {
-    HubAttachedIOsEffects,
+    AttachedIOsEffects,
+    AttachedIoModesEffects,
+    ControlSchemeEffects,
+    ControlSchemeRunnerEffects,
+    ControllerInputCaptureEffects,
+    GAMEPAD_CONTROLLER_EFFECTS,
+    GamepadControllerInputEffects,
     HubAttachedIosStateEffects,
-    HubIoSupportedModesEffects,
     HubPortModeInfoEffects,
+    HubsEffects,
+    KEYBOARD_CONTROLLER_EFFECTS,
+    KeyboardControllerInputEffects,
     NotificationsEffects,
     ServoCalibrationEffects,
 } from './effects';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { HubStorageService } from './hub-storage.service';
 import { RoutesBuilderService } from '../routing';
-import { CONTROLLERS_FEATURE, GAMEPAD_CONTROLLER_EFFECTS, KEYBOARD_CONTROLLER_EFFECTS } from './controllers';
-import { BLUETOOTH_AVAILABILITY_FEATURE } from './bluetooth-availability';
-import {
-    CONTROLLER_INPUT_ACTIONS,
-    CONTROLLER_INPUT_FEATURE,
-    ControllerInputCaptureEffects,
-    GamepadControllerInputEffects,
-    KeyboardControllerInputEffects
-} from './controller-input';
-import { CONTROLLER_SETTINGS_FEATURE } from './controller-settings';
-import { CONTROL_SCHEMES_FEATURE, ControlSchemeEffects, ControlSchemeRunnerEffects } from './control-schemes';
-import { HUBS_FEATURE, HubsEffects } from './hubs';
-import { HUB_STATS_ACTIONS, HUB_STATS_FEATURE } from './hub-stats';
+import { CONTROLLER_INPUT_ACTIONS, HUB_STATS_ACTIONS } from './actions';
+import { NAVIGATOR } from '@app/shared';
 
-const STORAGE_VERSION = '3';
+const STORAGE_VERSION = '4';
 
 const REDUCERS: ActionReducerMap<IState> = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,
@@ -52,13 +55,13 @@ const REDUCERS: ActionReducerMap<IState> = {
     controlSchemes: CONTROL_SCHEMES_FEATURE.reducer,
     hubs: HUBS_FEATURE.reducer,
     hubStats: HUB_STATS_FEATURE.reducer,
-    hubAttachedIos: HUB_ATTACHED_IOS_REDUCER,
-    hubAttachedIoProps: HUB_ATTACHED_IO_STATE_REDUCER,
-    hubIoSupportedModes: HUB_IO_OUTPUT_MODES_REDUCER,
-    hubPortModeInfo: HUB_PORT_MODE_INFO_REDUCER,
-    hubPortTasks: HUB_PORT_TASKS_REDUCER,
-    hubEditFormActiveSaves: HUB_EDIT_FORM_ACTIVE_SAVES_REDUCER,
-    servoCalibrationTaskState: SERVO_CALIBRATION_REDUCER,
+    attachedIos: ATTACHED_IOS_FEATURE.reducer,
+    attachedIoProps: ATTACHED_IO_PROPS_FEATURE.reducer,
+    attachedIoModes: ATTACHED_IO_MODES_FEATURE.reducer,
+    attachedIoPortModeInfo: ATTACHED_IO_PORT_MODE_INFO_FEATURE.reducer,
+    hubPortTasks: HUB_PORT_TASKS_FEATURE.reducer,
+    hubEditFormActiveSaves: HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE.reducer,
+    servoCalibrationTaskState: SERVO_CALIBRATION_FEATURE.reducer,
     router: routerReducer
 };
 
@@ -68,12 +71,12 @@ function localStorageSyncReducer(
     return localStorageSync({
         keys: [
             { hubs: [ 'ids', 'entities' ] },
-            { hubAttachedIos: [ 'ids', 'entities' ] },
+            { attachedIos: [ 'ids', 'entities' ] },
             { controllerSettings: [ 'ids', 'entities' ] },
             { controlSchemes: [ 'ids', 'entities' ] },
-            { hubIoSupportedModes: [ 'ids', 'entities' ] },
-            { hubPortModeInfo: [ 'ids', 'entities' ] },
-        ],
+            { attachedIoModes: [ 'ids', 'entities' ] },
+            { attachedIoPortModeInfo: [ 'ids', 'entities' ] },
+        ], // TODO: add types for this
         rehydrate: true,
         storageKeySerializer: (key: string) => `${STORAGE_VERSION}/${key}`,
     })(reducer);
@@ -85,9 +88,9 @@ export function provideApplicationStore(): EnvironmentProviders {
     return makeEnvironmentProviders([
         provideStore<IState>(REDUCERS, { metaReducers }),
         provideEffects(
-            HubAttachedIOsEffects,
+            AttachedIOsEffects,
             HubPortModeInfoEffects,
-            HubIoSupportedModesEffects,
+            AttachedIoModesEffects,
             HubsEffects,
             ControlSchemeEffects,
             ControlSchemeRunnerEffects,

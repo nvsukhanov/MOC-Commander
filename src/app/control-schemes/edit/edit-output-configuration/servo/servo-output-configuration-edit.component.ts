@@ -12,9 +12,10 @@ import { Actions, ofType } from '@ngrx/effects';
 import { Observable, combineLatest, of, startWith, switchMap, takeUntil } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 
-import { HUB_ATTACHED_IO_SELECTORS, SERVO_CALIBRATION_ACTIONS } from '../../../../store';
+import { SERVO_CALIBRATION_ACTIONS } from '../../../../store';
 import { ControlSchemeBindingOutputForm } from '../../binding-output';
 import { IOutputConfigurationRenderer } from '../i-output-configuration-renderer';
+import { CONTROL_SCHEMES_LIST_SELECTORS } from '../../../contorl-schemes-list.selectors';
 
 @Component({
     standalone: true,
@@ -101,7 +102,7 @@ export class ServoOutputConfigurationEditComponent implements IOutputConfigurati
                 hubId$,
                 portId$
             ]).pipe(
-                switchMap(([ hubId, portId ]) => this.store.select(HUB_ATTACHED_IO_SELECTORS.canCalibrateServo({ hubId, portId })))
+                switchMap(([ hubId, portId ]) => this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.canCalibrateServo({ hubId, portId })))
             );
             this._outputBinding = outputBinding;
             this.cd.detectChanges();

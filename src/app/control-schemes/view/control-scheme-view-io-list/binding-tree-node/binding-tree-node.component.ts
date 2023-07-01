@@ -5,8 +5,9 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
-import { ControllerL10nInputNamePipe, ControllerL10nTypePipe, ControllerTypeIconPipe, EllipsisTitleDirective, IoOperationTypeToL10nKeyPipe } from '@app/shared';
+import { ControllerL10nTypePipe, ControllerTypeIconPipe, EllipsisTitleDirective, IoOperationTypeToL10nKeyPipe } from '@app/shared';
 import { ControlSchemeViewBindingTreeNode } from '../../../contorl-schemes-list.selectors';
+import { ControllerL10nInputNamePipe } from '../../../controller-l10n-input-name.pipe';
 
 @Component({
     standalone: true,

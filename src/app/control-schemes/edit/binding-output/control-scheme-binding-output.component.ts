@@ -14,7 +14,7 @@ import { HubIoOperationMode, IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe }
 import { ControlSchemeBindingInputForm } from '../binding-input';
 import { RenderEditOutputConfigurationDirective } from '../edit-output-configuration';
 import { BindingForm } from '../types';
-import { AttachedIo, HUBS_SELECTORS, HUB_ATTACHED_IO_SELECTORS, HUB_STATS_SELECTORS, HubModel } from '../../../store';
+import { ATTACHED_IO_SELECTORS, AttachedIoModel, HUBS_SELECTORS, HUB_STATS_SELECTORS, HubModel } from '../../../store';
 import { CONTROL_SCHEMES_LIST_SELECTORS } from '../../contorl-schemes-list.selectors';
 
 export type LinearOutputConfigurationForm = FormGroup<{
@@ -73,13 +73,14 @@ export type ControlSchemeBindingOutputForm = FormGroup<{
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeBindingOutputComponent {
-    public readonly hubsList$ = this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.selectHubsWithConnectionState);
+    public readonly hubsList$: Observable<Array<HubModel & { isConnected: boolean }>> =
+        this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.selectHubsWithConnectionState);
 
     private _outputFormControl?: ControlSchemeBindingOutputForm;
 
     private _inputFormControl?: ControlSchemeBindingInputForm;
 
-    private _attachedIos$: Observable<AttachedIo[]> = of([]);
+    private _attachedIos$: Observable<AttachedIoModel[]> = of([]);
 
     private _ioType$: Observable<IOType | null> = of(null);
 
@@ -111,7 +112,7 @@ export class ControlSchemeBindingOutputComponent {
                 if (hubId === null || portId === null) {
                     return of(null);
                 }
-                return this.store.select(HUB_ATTACHED_IO_SELECTORS.selectIoAtPort({ hubId, portId }));
+                return this.store.select(ATTACHED_IO_SELECTORS.selectIoAtPort({ hubId, portId }));
             }),
             map((io) => io?.ioType ?? null)
         );
@@ -124,7 +125,7 @@ export class ControlSchemeBindingOutputComponent {
                 if (hubId === null) {
                     return of([]);
                 }
-                return this.store.select(HUB_ATTACHED_IO_SELECTORS.selectHubIosControllableByInputType(hubId, inputType));
+                return this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.selectHubIosControllableByInputType(hubId, inputType));
             }),
             map((ios) => ios.map((io) => io.ioConfig))
         );
@@ -138,7 +139,7 @@ export class ControlSchemeBindingOutputComponent {
                 if (hubId === null || portId === null) {
                     return of([]);
                 }
-                return this.store.select(HUB_ATTACHED_IO_SELECTORS.selectHubIoOperationModes(hubId, portId, inputType));
+                return this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.selectHubIoOperationModes(hubId, portId, inputType));
             }),
             shareReplay({ bufferSize: 1, refCount: true })
         );
@@ -176,7 +177,7 @@ export class ControlSchemeBindingOutputComponent {
         return this._ioType$;
     }
 
-    public get attachedIos$(): Observable<AttachedIo[]> {
+    public get attachedIos$(): Observable<AttachedIoModel[]> {
         return this._attachedIos$;
     }
 

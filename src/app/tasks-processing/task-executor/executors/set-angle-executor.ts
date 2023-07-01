@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
 import { IHub, PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 
-import { PortCommandSetAngle } from '@app/shared';
 import { TaskExecutor } from '../task-executor';
+import { PortCommandSetAngle } from '@app/shared';
 
 export class SetAngleExecutor extends TaskExecutor {
     protected handle(
