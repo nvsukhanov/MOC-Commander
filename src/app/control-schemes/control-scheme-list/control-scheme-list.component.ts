@@ -1,19 +1,21 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgForOf, NgIf } from '@angular/common';
-import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
+import { TranslocoModule } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
-import { ConfirmDialogService, FeatureToolbarService } from '@app/shared';
+import { FeatureToolbarService } from '@app/shared';
 import { RoutesBuilderService } from '../../routing';
 import { ControlSchemeListItemComponent } from '../control-scheme-list-item';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeModel } from '../../store';
 import { CONTROL_SCHEMES_LIST_SELECTORS } from '../contorl-schemes-list.selectors';
+import { ControlSchemeDeleteDialogComponent } from '../control-scheme-delete-dialog';
 
 @Component({
     standalone: true,
@@ -31,7 +33,8 @@ import { CONTROL_SCHEMES_LIST_SELECTORS } from '../contorl-schemes-list.selector
         MatIconModule,
         RouterLink,
         MatCardModule,
-        MatListModule
+        MatListModule,
+        MatDialogModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -44,8 +47,7 @@ export class ControlSchemeListComponent implements OnDestroy {
         private readonly store: Store,
         private readonly featureToolbarService: FeatureToolbarService,
         protected readonly routesBuilderService: RoutesBuilderService,
-        private readonly confirmDialogService: ConfirmDialogService,
-        private readonly translocoService: TranslocoService
+        private readonly dialog: MatDialog,
     ) {
     }
 
@@ -60,7 +62,6 @@ export class ControlSchemeListComponent implements OnDestroy {
 
     public ngOnDestroy(): void {
         this.featureToolbarService.clearConfig();
-        this.confirmDialogService.hide(this);
     }
 
     public trackSchemeById(index: number, scheme: ControlSchemeModel): string {
@@ -71,15 +72,11 @@ export class ControlSchemeListComponent implements OnDestroy {
         id: string,
         name: string
     ): void {
-        this.confirmDialogService.show(
-            this.translocoService.selectTranslate('controlScheme.deleteSchemeConfirmationTitle', { name }),
-            this,
-            {
-                content$: this.translocoService.selectTranslate('controlScheme.deleteSchemeConfirmationContent'),
-                confirmTitle$: this.translocoService.selectTranslate('controlScheme.deleteSchemeConfirmationConfirmButtonTitle'),
-                cancelTitle$: this.translocoService.selectTranslate('controlScheme.deleteSchemeConfirmationCancelButtonTitle')
-            }
-        ).subscribe((isConfirmed) => {
+        const dialogRef = this.dialog.open(ControlSchemeDeleteDialogComponent, {
+            data: { name }
+        });
+
+        dialogRef.afterClosed().subscribe((isConfirmed) => {
             if (isConfirmed) {
                 this.store.dispatch(CONTROL_SCHEME_ACTIONS.delete({ id }));
             }

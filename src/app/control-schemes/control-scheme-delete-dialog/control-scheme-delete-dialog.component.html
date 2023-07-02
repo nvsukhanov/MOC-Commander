@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>
+    {{ 'controlScheme.deleteSchemeConfirmationTitle' | transloco: data }}
+</h1>
+<div mat-dialog-content>
+    <p>
+        {{ 'controlScheme.deleteSchemeConfirmationContent' | transloco }}
+    </p>
+</div>
+<div mat-dialog-actions
+     [align]="'end'"
+>
+    <button mat-button
+            mat-dialog-close
+    >
+        {{ 'controlScheme.deleteSchemeConfirmationCancelButtonTitle' | transloco }}
+    </button>
+    <button mat-raised-button
+            [mat-dialog-close]="true"
+            [color]="'warn'"
+            cdkFocusInitial
+    >
+        {{ 'controlScheme.deleteSchemeConfirmationConfirmButtonTitle' | transloco }}
+    </button>
+</div>
