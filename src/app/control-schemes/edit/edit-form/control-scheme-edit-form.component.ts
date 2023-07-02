@@ -18,16 +18,15 @@ import { NgForOf, NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
-import { Subject, Subscription, filter, finalize, map, take, takeUntil } from 'rxjs';
-import { Actions, concatLatestFrom, ofType } from '@ngrx/effects';
+import { Observable, Subscription, filter, take } from 'rxjs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import {
-    ConfirmDialogService,
     ControllerInputType,
     FeatureToolbarService,
     HUB_IO_CONTROL_METHODS,
@@ -41,8 +40,9 @@ import { ControlSchemeBindingOutputComponent } from '../binding-output';
 import { ControlSchemeFormBuilderService } from './control-scheme-form-builder.service';
 import { BindingForm, EditSchemeForm } from '../types';
 import { ControlSchemeBindingConfigurationComponent } from '../binding-config';
-import { CONTROLLERS_ACTIONS, CONTROLLER_INPUT_SELECTORS, CONTROL_SCHEME_ACTIONS, ControlSchemeModel, ControllerInputModel, } from '../../../store';
-import { CONTROL_SCHEMES_LIST_SELECTORS } from '../../contorl-schemes-list.selectors';
+import { CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, ControlSchemeModel, ControllerInputModel, } from '../../../store';
+import { CONTROL_SCHEMES_LIST_SELECTORS, IoWithOperationModes } from '../../contorl-schemes-list.selectors';
+import { WaitingForInputDialogComponent } from '../../waiting-for-input-dialog';
 
 export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
 
@@ -67,6 +67,7 @@ export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
         MatDividerModule,
         MatIconModule,
         RouterLink,
+        MatDialogModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -82,8 +83,6 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
 
     public readonly canAddBinding$ = this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.canAddBinding);
 
-    private readonly onDestroy$ = new Subject<void>();
-
     private _isSmallScreen = false;
 
     private readonly sub: Subscription = new Subscription();
@@ -94,11 +93,10 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         private readonly controlSchemeFormFactoryService: ControlSchemeFormBuilderService,
         private readonly cdRef: ChangeDetectorRef,
         private readonly screenSizeObserverService: ScreenSizeObserverService,
-        private readonly actions: Actions,
         private readonly featureToolbarService: FeatureToolbarService,
         @Inject(SCROLL_CONTAINER) private readonly scrollContainer: IScrollContainer,
         private readonly translocoService: TranslocoService,
-        private readonly confirmDialogService: ConfirmDialogService
+        private readonly matDialog: MatDialog
     ) {
     }
 
@@ -154,41 +152,22 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
     public ngOnDestroy(): void {
         this.featureToolbarService.clearConfig();
         this.sub?.unsubscribe();
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
-        this.confirmDialogService.hide(this);
     }
 
     public addBinding(): void {
-        this.startInputCapture();
-        this.store.select(CONTROLLER_INPUT_SELECTORS.selectFirst).pipe(
-            takeUntil(this.onDestroy$),
-            takeUntil(this.actions.pipe(ofType(CONTROL_SCHEME_ACTIONS.stopListening))),
-            filter((input): input is ControllerInputModel => !!input),
-            concatLatestFrom((input) => this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.selectFirstIoControllableByInputType(input.inputType))),
-            map(([ input, ios ]) => ({ input, ios })),
-            take(1),
-            finalize(() => this.stopInputCapture())
-        ).subscribe({
-            next: ({ input, ios }) => {
-                const io = ios[0];
-                if (!io) {
-                    this.store.dispatch(CONTROL_SCHEME_ACTIONS.noIOForInputFound());
-                    return;
-                }
-                const binging = this.controlSchemeFormFactoryService.createBindingForm(
-                    this.window.crypto.randomUUID(),
-                    input.controllerId,
-                    input.inputId,
-                    input.inputType,
-                    ios[0].ioConfig.hubId,
-                    ios[0].ioConfig.portId,
-                    ios[0].operationModes[0]
-                );
-                this.form.controls.bindings.push(binging);
-                this.cdRef.detectChanges();
-                this.scrollContainer.scrollToBottom();
-            }
+        this.requestInput().subscribe(({ input, ioWithModes }) => {
+            const binging = this.controlSchemeFormFactoryService.createBindingForm(
+                this.window.crypto.randomUUID(),
+                input.controllerId,
+                input.inputId,
+                input.inputType,
+                ioWithModes.ioConfig.hubId,
+                ioWithModes.ioConfig.portId,
+                ioWithModes.operationModes[0]
+            );
+            this.form.controls.bindings.push(binging);
+            this.cdRef.detectChanges();
+            this.scrollContainer.scrollToBottom();
         });
     }
 
@@ -200,14 +179,7 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
             return HUB_IO_CONTROL_METHODS[inputType as ControllerInputType][ioOperationMode] !== undefined;
         }));
 
-        this.startInputCapture();
-        this.store.select(CONTROLLER_INPUT_SELECTORS.selectFirst).pipe(
-            takeUntil(this.onDestroy$),
-            takeUntil(this.actions.pipe(ofType(CONTROL_SCHEME_ACTIONS.stopListening))),
-            filter((input): input is ControllerInputModel => !!input),
-            take(1),
-            finalize(() => this.stopInputCapture())
-        ).subscribe((input) => {
+        this.requestInput().subscribe(({ input }) => {
             if (!applicableInputTypes.has(input.inputType)) {
                 this.store.dispatch(CONTROL_SCHEME_ACTIONS.inputRebindTypeMismatch());
                 return;
@@ -227,11 +199,10 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         this.cdRef.markForCheck();
     }
 
-    private startInputCapture(): void {
-        this.store.dispatch(CONTROL_SCHEME_ACTIONS.startListening());
-    }
-
-    private stopInputCapture(): void {
-        this.store.dispatch(CONTROL_SCHEME_ACTIONS.stopListening());
+    private requestInput(): Observable<{ input: ControllerInputModel, ioWithModes: IoWithOperationModes }> {
+        return this.matDialog.open(WaitingForInputDialogComponent).afterClosed().pipe(
+            take(1),
+            filter((result) => !!result),
+        ) as Observable<{ input: ControllerInputModel, ioWithModes: IoWithOperationModes }>;
     }
 }

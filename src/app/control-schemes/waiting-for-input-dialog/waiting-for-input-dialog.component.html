@@ -1,18 +1,19 @@
-<mat-card>
-    <mat-card-header>
-        <mat-card-title>
-            {{ 'controlScheme.createBindingWaitingForInputTitle' | transloco }}
-        </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
+<h1 mat-dialog-title>
+    {{ 'controlScheme.createBindingWaitingForInputTitle' | transloco }}
+</h1>
+
+<div mat-dialog-content>
+    <p>
         {{ 'controlScheme.createBindingWaitingForInputContent' | transloco }}
-    </mat-card-content>
-    <mat-card-actions align="end">
-        <button mat-button
-                (click)="onCancel()"
-        >
-            {{ 'controlScheme.cancelAddBinding' | transloco }}
-        </button>
-    </mat-card-actions>
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-</mat-card>
+    </p>
+</div>
+
+<div mat-dialog-actions
+     [align]="'end'">
+    <button mat-button
+            (click)="onCancel()"
+    >
+        {{ 'controlScheme.cancelAddBinding' | transloco }}
+    </button>
+</div>
+<mat-progress-bar mode="indeterminate"></mat-progress-bar>

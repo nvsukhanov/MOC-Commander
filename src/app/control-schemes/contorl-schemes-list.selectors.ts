@@ -102,7 +102,7 @@ function selectIosControllableByInputType(
     supportedModes: Dictionary<AttachedIoModesModel>,
     portModeData: Dictionary<AttachedIoPortModeInfoModel>,
     inputType: ControllerInputType
-): Array<{ ioConfig: AttachedIoModel, operationModes: HubIoOperationMode[] }> {
+): Array<IoWithOperationModes> {
     const applicablePortModes: Set<PortModeName> = new Set(Object.values(HUB_IO_CONTROL_METHODS[inputType]));
     const result: Array<{ ioConfig: AttachedIoModel, operationModes: HubIoOperationMode[] }> = [];
     for (const io of ios) {
@@ -144,6 +144,11 @@ function getHubIoOperationModes(
     }
     return [];
 }
+
+export type IoWithOperationModes = {
+    ioConfig: AttachedIoModel,
+    operationModes: HubIoOperationMode[]
+};
 
 export enum ControlSchemeNodeTypes {
     Hub = 'Hub',
@@ -301,10 +306,9 @@ export const CONTROL_SCHEMES_LIST_SELECTORS = {
         ) => runningSchemeId !== null && runningSchemeId === schemeId
     ),
     canAddBinding: createSelector(
-        CONTROL_SCHEME_SELECTORS.isListening,
         HUBS_SELECTORS.selectAll,
         CONTROLLER_SELECTORS.selectAll,
-        (isListening, hubs, controllers) => !isListening && hubs.length > 0 && controllers.length > 0
+        (hubs, controllers) => hubs.length > 0 && controllers.length > 0
     ),
     selectSchemesList: createSelector(
         CONTROL_SCHEME_SELECTORS.selectAll,
@@ -330,7 +334,7 @@ export const CONTROL_SCHEMES_LIST_SELECTORS = {
         ATTACHED_IO_SELECTORS.selectAll,
         ATTACHED_IO_MODES_SELECTORS.selectEntities,
         ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
-        (ios, supportedModes, portModeData) => selectIosControllableByInputType(ios, supportedModes, portModeData, inputType)
+        (ios, supportedModes, portModeData) => selectIosControllableByInputType(ios, supportedModes, portModeData, inputType)[0]
     ),
     selectHubIosControllableByInputType: (hubId: string, inputType: ControllerInputType) => createSelector(
         ATTACHED_IO_SELECTORS.selectHubIos(hubId),

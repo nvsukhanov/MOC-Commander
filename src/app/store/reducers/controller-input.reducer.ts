@@ -1,7 +1,7 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { EntityAdapter, EntityState, createEntityAdapter } from '@ngrx/entity';
 
-import { CONTROLLERS_ACTIONS, CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS } from '../actions';
+import { CONTROLLERS_ACTIONS, CONTROLLER_INPUT_ACTIONS } from '../actions';
 import { ControllerInputModel } from '../models';
 import { ControllerInputType } from '@app/shared';
 
@@ -46,7 +46,6 @@ export const CONTROLLER_INPUT_FEATURE = createFeature({
             return CONTROLLER_INPUT_ENTITY_ADAPTER.removeAll(state);
         }),
         on(CONTROLLER_INPUT_ACTIONS.requestInputCapture,
-            CONTROL_SCHEME_ACTIONS.startListening,
             (state): ControllerInputState => {
                 return {
                     ...state,
@@ -54,7 +53,6 @@ export const CONTROLLER_INPUT_FEATURE = createFeature({
                 };
             }),
         on(CONTROLLER_INPUT_ACTIONS.releaseInputCapture,
-            CONTROL_SCHEME_ACTIONS.stopListening,
             (state): ControllerInputState => {
                 const nextListenersCount = state.listenersCount - 1;
                 if (nextListenersCount < 0) {
