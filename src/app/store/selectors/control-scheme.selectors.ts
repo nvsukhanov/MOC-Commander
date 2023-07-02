@@ -47,6 +47,5 @@ export const CONTROL_SCHEME_SELECTORS = {
             const input = inputEntities[controllerInputIdFn(binding.input)];
             return input ? input.value : 0;
         }
-    ),
-    isListening: CONTROL_SCHEMES_FEATURE.selectIsListening,
+    )
 } as const;

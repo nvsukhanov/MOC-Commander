@@ -5,7 +5,6 @@ import { ControlSchemeModel } from '../models';
 import { CONTROL_SCHEME_ACTIONS } from '../actions';
 
 export interface ControlSchemeState extends EntityState<ControlSchemeModel> {
-    isListening: boolean;
     runningSchemeId: string | null;
 }
 
@@ -15,7 +14,6 @@ export const CONTROL_SCHEMES_ENTITY_ADAPTER: EntityAdapter<ControlSchemeModel> =
 });
 
 export const CONTROL_SCHEMES_INITIAL_STATE = CONTROL_SCHEMES_ENTITY_ADAPTER.getInitialState({
-    isListening: false,
     runningSchemeId: null as string | null, // TODO: had to cast bc of seemingly incorrect type inference in ngrx
 });
 
@@ -44,7 +42,5 @@ export const CONTROL_SCHEMES_FEATURE = createFeature({
         }),
         on(CONTROL_SCHEME_ACTIONS.startScheme, (state, { schemeId }): ControlSchemeState => ({ ...state, runningSchemeId: schemeId })),
         on(CONTROL_SCHEME_ACTIONS.stopScheme, (state): ControlSchemeState => ({ ...state, runningSchemeId: null })),
-        on(CONTROL_SCHEME_ACTIONS.startListening, (state): ControlSchemeState => ({ ...state, isListening: true })),
-        on(CONTROL_SCHEME_ACTIONS.stopListening, (state): ControlSchemeState => ({ ...state, isListening: false }))
     )
 });
