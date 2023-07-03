@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
@@ -9,7 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { Observable } from 'rxjs';
 
-import { ConfirmDialogService, HubInlineViewComponent } from '@app/shared';
+import { ConfirmationDialogModule, ConfirmationDialogService, HubInlineViewComponent } from '@app/shared';
 import { HUBS_ACTIONS } from '../../store';
 import { HUBS_LIST_SELECTORS, HubListViewModel } from './hubs-list.selectors';
 
@@ -28,16 +28,18 @@ import { HUBS_LIST_SELECTORS, HubListViewModel } from './hubs-list.selectors';
         MatButtonModule,
         MatIconModule,
         MatCardModule,
-        MatDividerModule
+        MatDividerModule,
+        ConfirmationDialogModule
     ],
+    providers: [],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HubsListComponent implements OnDestroy {
+export class HubsListComponent {
     public readonly hubsList$: Observable<HubListViewModel> = this.store.select(HUBS_LIST_SELECTORS.selectHubListViewModel);
 
     constructor(
         private readonly store: Store,
-        private readonly confirmDialogService: ConfirmDialogService,
+        private readonly confirmationService: ConfirmationDialogService,
         private readonly translocoService: TranslocoService
     ) {
     }
@@ -55,16 +57,11 @@ export class HubsListComponent implements OnDestroy {
         this.store.dispatch(HUBS_ACTIONS.userRequestedHubDisconnection({ hubId }));
     }
 
-    public ngOnDestroy(): void {
-        this.confirmDialogService.hide(this);
-    }
-
     public forgetHub(
         hubId: string
     ): void {
-        this.confirmDialogService.show(
+        this.confirmationService.show(
             this.translocoService.selectTranslate('hub.forgerHubNotificationConfirmationTitle'),
-            this,
             {
                 content$: this.translocoService.selectTranslate('hub.forgerHubNotificationConfirmationContent'),
                 confirmTitle$: this.translocoService.selectTranslate('hub.forgerHubNotificationConfirmationConfirmButtonTitle'),

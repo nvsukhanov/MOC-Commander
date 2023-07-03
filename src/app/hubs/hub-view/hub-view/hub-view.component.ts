@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { EMPTY, Observable, switchMap, take } from 'rxjs';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 
-import { ConfirmDialogService, NotFoundComponent } from '@app/shared';
+import { NotFoundComponent } from '@app/shared';
 import { HubPropertiesViewComponent } from '../hub-properties-view';
 import { HubIoViewComponent } from '../hub-io-view';
 import { HUBS_ACTIONS, HUBS_SELECTORS, HUB_STATS_SELECTORS, HubModel, HubStatsModel, ROUTER_SELECTORS, attachedIosIdFn, } from '../../../store';
@@ -39,7 +39,7 @@ import { HUB_VIEW_SELECTORS, HubIoViewModel } from '../hub-view.selectors';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HubViewComponent implements OnDestroy {
+export class HubViewComponent {
     public readonly selectedHub$: Observable<HubModel | undefined> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
         switchMap((id) => id === undefined ? EMPTY : this.store.select(HUBS_SELECTORS.selectHub(id)))
     );
@@ -56,7 +56,6 @@ export class HubViewComponent implements OnDestroy {
         private readonly store: Store,
         private readonly router: Router,
         private readonly routesBuilderService: RoutesBuilderService,
-        private readonly confirmDialogService: ConfirmDialogService,
     ) {
     }
 
@@ -77,9 +76,5 @@ export class HubViewComponent implements OnDestroy {
         item: HubIoViewModel
     ): string {
         return attachedIosIdFn(item);
-    }
-
-    public ngOnDestroy(): void {
-        this.confirmDialogService.hide(this);
     }
 }
