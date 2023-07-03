@@ -21,7 +21,6 @@ import {
     HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE,
     HUB_PORT_TASKS_FEATURE,
     HUB_STATS_FEATURE,
-    SERVO_CALIBRATION_FEATURE,
 } from './reducers';
 import {
     AttachedIOsEffects,
@@ -37,7 +36,6 @@ import {
     KEYBOARD_CONTROLLER_EFFECTS,
     KeyboardControllerInputEffects,
     NotificationsEffects,
-    ServoCalibrationEffects,
 } from './effects';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { HubStorageService } from './hub-storage.service';
@@ -61,7 +59,6 @@ const REDUCERS: ActionReducerMap<IState> = {
     attachedIoPortModeInfo: ATTACHED_IO_PORT_MODE_INFO_FEATURE.reducer,
     hubPortTasks: HUB_PORT_TASKS_FEATURE.reducer,
     hubEditFormActiveSaves: HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE.reducer,
-    servoCalibrationTaskState: SERVO_CALIBRATION_FEATURE.reducer,
     router: routerReducer
 };
 
@@ -95,7 +92,6 @@ export function provideApplicationStore(): EnvironmentProviders {
             ControlSchemeEffects,
             ControlSchemeRunnerEffects,
             NotificationsEffects,
-            ServoCalibrationEffects,
             HubAttachedIosStateEffects,
             GamepadControllerInputEffects,
             KeyboardControllerInputEffects,

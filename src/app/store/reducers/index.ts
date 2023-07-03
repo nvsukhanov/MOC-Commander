@@ -8,7 +8,6 @@ export * from './hub-edit-form-active-saves.reducer';
 export * from './hub-port-tasks.reducer';
 export * from './hub-stats.reducer';
 export * from './hubs.reducer';
-export * from './servo-calibration.reducer';
 export * from './attached-io-props.reducer';
 export * from './attached-io-modes.reducer';
 export * from './attached-io-port-mode-info.reducer';

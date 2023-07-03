@@ -14,7 +14,6 @@ import {
     HubPortTasksState,
     HubStatsState,
     HubsState,
-    ServoCalibrationState
 } from './reducers';
 
 export interface IState {
@@ -31,7 +30,6 @@ export interface IState {
     attachedIoPortModeInfo: AttachedIoPortModeInfoState,
     hubPortTasks: HubPortTasksState,
     hubEditFormActiveSaves: HubEditFormActiveSavesState,
-    servoCalibrationTaskState: ServoCalibrationState,
     router: RouterState;
 }
 
