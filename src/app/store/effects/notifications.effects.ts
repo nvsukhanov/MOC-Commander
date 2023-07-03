@@ -4,7 +4,7 @@ import { switchMap, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';
 
-import { CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS, SERVO_CALIBRATION_ACTIONS } from '../actions';
+import { CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS } from '../actions';
 
 @Injectable()
 export class NotificationsEffects {
@@ -33,7 +33,7 @@ export class NotificationsEffects {
 
     public readonly servoCalibrationErrorNotification$ = createEffect(() => {
         return this.actions$.pipe(
-            ofType(SERVO_CALIBRATION_ACTIONS.calibrationError),
+            ofType(CONTROL_SCHEME_ACTIONS.servoCalibrationError),
             switchMap(() => this.translocoService.selectTranslate('controlScheme.servoCalibrationError')),
             tap((message) => this.showMessage(message))
         );

@@ -1,18 +1,15 @@
-<mat-card>
-    <mat-card-header>
-        <mat-card-title>
-            {{ 'controlScheme.servoCalibrationIsInProgress' | transloco }}
-        </mat-card-title>
-    </mat-card-header>
-    <mat-card-actions align="end">
-        <button mat-button
-                (click)="onCancel()"
-        >
-            {{ 'controlScheme.servoCalibrationCancel' | transloco }}
-        </button>
-    </mat-card-actions>
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-</mat-card>
+<h1 mat-dialog-title>
+    {{ 'controlScheme.servoCalibrationIsInProgress' | transloco }}
+</h1>
 
+<div mat-dialog-actions
+     [align]="'end'"
+>
+    <button mat-button
+            (click)="onCancel()"
+    >
+        {{ 'controlScheme.servoCalibrationCancel' | transloco }}
+    </button>
+</div>
 
-
+<mat-progress-bar mode="indeterminate"></mat-progress-bar>

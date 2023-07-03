@@ -8,14 +8,15 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
-import { Actions, ofType } from '@ngrx/effects';
-import { Observable, combineLatest, of, startWith, switchMap, takeUntil } from 'rxjs';
+import { Observable, combineLatest, of, startWith, switchMap } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
-import { SERVO_CALIBRATION_ACTIONS } from '../../../../store';
 import { ControlSchemeBindingOutputForm } from '../../binding-output';
 import { IOutputConfigurationRenderer } from '../i-output-configuration-renderer';
 import { CONTROL_SCHEMES_LIST_SELECTORS } from '../../../contorl-schemes-list.selectors';
+import { CalibrationResult, CalibrationResultType, ServoCalibrationDialogComponent } from '../../../servo-calibration-dialog';
+import { CONTROL_SCHEME_ACTIONS } from '../../../../store';
 
 @Component({
     standalone: true,
@@ -30,7 +31,8 @@ import { CONTROL_SCHEMES_LIST_SELECTORS } from '../../../contorl-schemes-list.se
         MatSlideToggleModule,
         MatButtonModule,
         MatIconModule,
-        PushPipe
+        PushPipe,
+        MatDialogModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -44,7 +46,7 @@ export class ServoOutputConfigurationEditComponent implements IOutputConfigurati
     constructor(
         private readonly cd: ChangeDetectorRef,
         private readonly store: Store,
-        private readonly actions: Actions
+        private readonly matDialog: MatDialog
     ) {
     }
 
@@ -65,26 +67,26 @@ export class ServoOutputConfigurationEditComponent implements IOutputConfigurati
         ) {
             return;
         }
-
-        this.actions.pipe(
-            ofType(SERVO_CALIBRATION_ACTIONS.calibrationFinished),
-            takeUntil(
-                this.actions.pipe(
-                    ofType(SERVO_CALIBRATION_ACTIONS.calibrationError, SERVO_CALIBRATION_ACTIONS.calibrationCancelled)
-                )
-            )
-        ).subscribe((result) => {
-            this._outputBinding?.controls.servoConfig.patchValue({
-                range: result.range,
-                aposCenter: result.aposCenter,
-            });
+        this.matDialog.open(ServoCalibrationDialogComponent, {
+            data: {
+                hubId: this._outputBinding.value.hubId,
+                portId: this._outputBinding.value.portId,
+                power: this._outputBinding.value.servoConfig.power
+            }
+        }).afterClosed().subscribe((result: CalibrationResult | null) => {
+            if (!result) { // cancelled
+                return;
+            }
+            if (result.type === CalibrationResultType.finished) {
+                this._outputBinding?.controls.servoConfig.patchValue({
+                    range: result.range,
+                    aposCenter: result.aposCenter,
+                });
+            }
+            if (result.type === CalibrationResultType.error) {
+                this.store.dispatch(CONTROL_SCHEME_ACTIONS.servoCalibrationError({ error: result.error }));
+            }
         });
-
-        this.store.dispatch(SERVO_CALIBRATION_ACTIONS.startCalibration({
-            hubId: this._outputBinding.value.hubId,
-            portId: this._outputBinding.value.portId,
-            power: this._outputBinding.value.servoConfig.power
-        }));
     }
 
     public setOutputFormControl(
