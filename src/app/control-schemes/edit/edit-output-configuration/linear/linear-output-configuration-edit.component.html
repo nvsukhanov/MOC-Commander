@@ -1,50 +1,22 @@
 <ng-container *ngIf="outputBinding">
-    <section *ngIf="inputMethodControl?.value === controllerInputType.Button"
-             class="parameter-section"
-    >
-        <mat-slide-toggle [formControl]="outputBinding.controls.linearConfig.controls.isToggle">
-            {{ 'controlScheme.linearOutputConfigurationTreatAsSwitch' | transloco }}
-        </mat-slide-toggle>
-    </section>
-    <section class="parameter-section">
-        <mat-slide-toggle [formControl]="outputBinding.controls.linearConfig.controls.invert">
-            {{ 'controlScheme.linearOutputConfigurationInvert' | transloco }}
-        </mat-slide-toggle>
-    </section>
-    <section class="parameter-section">
-        <div class="slider-label">
-            <label class="slider-label-description">
-                <ng-container *ngIf="inputMethodControl?.value === controllerInputType.Button; else maximumSpeedLabel">
-                    {{ 'controlScheme.linearOutputConfigurationSpeed' | transloco }}
-                </ng-container>
-                <ng-template #maximumSpeedLabel>
-                    {{ 'controlScheme.linearOutputConfigurationSpeedMaximumSpeed' | transloco }}
-                </ng-template>
-            </label>
-            <label class="slider-label-value">{{ outputBinding.controls.linearConfig.controls.maxSpeed.value }}</label>
-        </div>
-        <mat-slider class="slider"
-                    [max]="motorLimits.maxSpeed"
-                    [min]="0"
-                    [attr.aria-label]="'controlScheme.linearOutputConfigurationSpeed' | transloco"
-        >
-            <input matSliderThumb [formControl]="outputBinding.controls.linearConfig.controls.maxSpeed"/>
-        </mat-slider>
-    </section>
-    <section class="parameter-section">
-        <div class="slider-label">
-            <label class="slider-label-description">
-                {{ 'controlScheme.linearOutputConfigurationPower' | transloco }}
-            </label>
-            <label class="slider-label-value">{{ outputBinding.controls.linearConfig.controls.power.value }}</label>
-        </div>
+    <app-output-config-toggle-control *ngIf="inputMethodControl?.value === controllerInputType.Button"
+                                      [translocoTitle]="'controlScheme.linearOutputConfigurationTreatAsSwitch'"
+                                      [control]="outputBinding.controls.linearConfig.controls.isToggle"
+    ></app-output-config-toggle-control>
 
-        <mat-slider class="slider"
-                    [max]="motorLimits.maxPower"
-                    [min]="motorLimits.minPower"
-                    [attr.aria-label]="'controlScheme.linearOutputConfigurationPower' | transloco"
-        >
-            <input matSliderThumb [formControl]="outputBinding.controls.linearConfig.controls.power"/>
-        </mat-slider>
-    </section>
+    <app-output-config-toggle-control [translocoTitle]="'controlScheme.outputInvertControlTitle'"
+                                      [control]="outputBinding.controls.linearConfig.controls.invert"
+    ></app-output-config-toggle-control>
+
+    <app-output-config-slider-control [min]="0"
+                                      [max]="motorLimits.maxSpeed"
+                                      [control]="outputBinding.controls.linearConfig.controls.maxSpeed"
+                                      [translocoTitle]="'controlScheme.outputSpeedControlTitle'"
+    ></app-output-config-slider-control>
+
+    <app-output-config-slider-control [min]="motorLimits.minPower"
+                                      [max]="motorLimits.maxPower"
+                                      [control]="outputBinding.controls.linearConfig.controls.power"
+                                      [translocoTitle]="'controlScheme.outputPowerControlTitle'"
+    ></app-output-config-slider-control>
 </ng-container>

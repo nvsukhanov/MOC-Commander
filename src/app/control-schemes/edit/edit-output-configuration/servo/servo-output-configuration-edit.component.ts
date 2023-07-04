@@ -1,10 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
-import { MatSliderModule } from '@angular/material/slider';
-import { ReactiveFormsModule } from '@angular/forms';
 import { TranslocoModule } from '@ngneat/transloco';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
@@ -17,6 +14,7 @@ import { IOutputConfigurationRenderer } from '../i-output-configuration-renderer
 import { CONTROL_SCHEMES_LIST_SELECTORS } from '../../../contorl-schemes-list.selectors';
 import { CalibrationResult, CalibrationResultType, ServoCalibrationDialogComponent } from '../../../servo-calibration-dialog';
 import { CONTROL_SCHEME_ACTIONS } from '../../../../store';
+import { OutputConfigSliderControlComponent, OutputConfigToggleControlComponent } from '../controls';
 
 @Component({
     standalone: true,
@@ -25,14 +23,13 @@ import { CONTROL_SCHEME_ACTIONS } from '../../../../store';
     styleUrls: [ './servo-output-configuration-edit.component.scss' ],
     imports: [
         NgIf,
-        MatSliderModule,
-        ReactiveFormsModule,
         TranslocoModule,
-        MatSlideToggleModule,
         MatButtonModule,
         MatIconModule,
         PushPipe,
-        MatDialogModule
+        MatDialogModule,
+        OutputConfigSliderControlComponent,
+        OutputConfigToggleControlComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
