@@ -33,8 +33,9 @@ import { ControlSchemeFormBuilderService } from './control-scheme-form-builder.s
 import { BindingForm, EditSchemeForm } from '../types';
 import { ControlSchemeBindingConfigurationComponent } from '../binding-config';
 import { CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, ControlSchemeModel, ControllerInputModel, } from '../../../store';
-import { CONTROL_SCHEMES_LIST_SELECTORS, IoWithOperationModes, getIoOperationModesForControllerInputType } from '../../contorl-schemes-list.selectors';
-import { WaitingForInputDialogComponent } from '../../waiting-for-input-dialog';
+import { WaitingForInputDialogComponent } from '../waiting-for-input-dialog';
+import { CONTROL_SCHEME_EDIT_SELECTORS, IoWithOperationModes } from '../control-scheme-edit.selectors';
+import { getIoOperationModesForControllerInputType } from '../../get-io-operation-modes-for-controller-input-type';
 
 export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
 
@@ -73,7 +74,7 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         this.translocoService.translate('controlScheme.newSchemeDefaultName')
     );
 
-    public readonly canAddBinding$ = this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.canAddBinding);
+    public readonly canAddBinding$ = this.store.select(CONTROL_SCHEME_EDIT_SELECTORS.canAddBinding);
 
     private _isSmallScreen = false;
 

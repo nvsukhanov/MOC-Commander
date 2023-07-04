@@ -7,7 +7,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
 
 import { EllipsisTitleDirective } from '@app/shared';
-import { RoutesBuilderService } from '../../routing';
+import { RoutesBuilderService } from '../../../routing';
 
 @Component({
     standalone: true,

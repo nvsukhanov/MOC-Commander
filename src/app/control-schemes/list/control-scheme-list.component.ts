@@ -12,10 +12,10 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import { FeatureToolbarService } from '@app/shared';
 import { RoutesBuilderService } from '../../routing';
-import { ControlSchemeListItemComponent } from '../control-scheme-list-item';
+import { ControlSchemeListItemComponent } from './control-scheme-list-item';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeModel } from '../../store';
-import { CONTROL_SCHEMES_LIST_SELECTORS } from '../contorl-schemes-list.selectors';
 import { ControlSchemeDeleteDialogComponent } from '../control-scheme-delete-dialog';
+import { CONTROL_SCHEMES_LIST_SELECTORS } from './control-schemes-list.selectors';
 
 @Component({
     standalone: true,
@@ -41,7 +41,7 @@ import { ControlSchemeDeleteDialogComponent } from '../control-scheme-delete-dia
 export class ControlSchemeListComponent implements OnDestroy {
     public readonly controlSchemes$ = this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.selectSchemesList);
 
-    public readonly canCreateScheme$ = this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.canAddBinding);
+    public readonly canCreateScheme$ = this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.canCreateScheme);
 
     constructor(
         private readonly store: Store,

@@ -8,8 +8,8 @@ import { Store } from '@ngrx/store';
 import { Subscription, filter, map, of, take } from 'rxjs';
 import { concatLatestFrom } from '@ngrx/effects';
 
-import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, CONTROL_SCHEME_ACTIONS, ControllerInputModel } from '../../store';
-import { CONTROL_SCHEMES_LIST_SELECTORS } from '../contorl-schemes-list.selectors';
+import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, CONTROL_SCHEME_ACTIONS, ControllerInputModel } from '../../../store';
+import { CONTROL_SCHEME_EDIT_SELECTORS } from '../control-scheme-edit.selectors';
 
 @Component({
     standalone: true,
@@ -41,7 +41,7 @@ export class WaitingForInputDialogComponent implements OnInit, OnDestroy {
                 filter((input): input is ControllerInputModel => !!input),
                 concatLatestFrom((input?: ControllerInputModel) => {
                     return input
-                           ? this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.selectFirstIoControllableByInputType(input.inputType))
+                           ? this.store.select(CONTROL_SCHEME_EDIT_SELECTORS.selectFirstIoControllableByInputType(input.inputType))
                            : of(null);
                 }),
                 map(([ input, io ]) => {
