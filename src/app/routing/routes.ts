@@ -59,7 +59,7 @@ export const ROUTES: Routes = [
         children: [
             {
                 path: '',
-                loadComponent: () => import('../control-schemes/control-scheme-list').then(m => m.ControlSchemeListComponent),
+                loadComponent: () => import('../control-schemes/list').then(m => m.ControlSchemeListComponent),
                 pathMatch: 'full',
             },
             {

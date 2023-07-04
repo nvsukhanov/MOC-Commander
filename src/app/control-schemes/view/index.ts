@@ -1,1 +1,1 @@
-export * from './control-scheme-view';
+export * from './control-scheme-view.component';

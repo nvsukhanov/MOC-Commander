@@ -15,7 +15,7 @@ import { ControlSchemeBindingInputForm } from '../binding-input';
 import { RenderEditOutputConfigurationDirective } from '../edit-output-configuration';
 import { BindingForm } from '../types';
 import { ATTACHED_IO_SELECTORS, AttachedIoModel, HUBS_SELECTORS, HUB_STATS_SELECTORS, HubModel } from '../../../store';
-import { CONTROL_SCHEMES_LIST_SELECTORS } from '../../contorl-schemes-list.selectors';
+import { CONTROL_SCHEME_EDIT_SELECTORS } from '../control-scheme-edit.selectors';
 
 export type LinearOutputConfigurationForm = FormGroup<{
     maxSpeed: FormControl<number>,
@@ -82,7 +82,7 @@ export type ControlSchemeBindingOutputForm = FormGroup<{
 })
 export class ControlSchemeBindingOutputComponent {
     public readonly hubsList$: Observable<Array<HubModel & { isConnected: boolean }>> =
-        this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.selectHubsWithConnectionState);
+        this.store.select(CONTROL_SCHEME_EDIT_SELECTORS.selectHubsWithConnectionState);
 
     private _outputFormControl?: ControlSchemeBindingOutputForm;
 
@@ -133,7 +133,7 @@ export class ControlSchemeBindingOutputComponent {
                 if (hubId === null) {
                     return of([]);
                 }
-                return this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.selectHubIosControllableByInputType(hubId, inputType));
+                return this.store.select(CONTROL_SCHEME_EDIT_SELECTORS.selectHubIosControllableByInputType(hubId, inputType));
             }),
             map((ios) => ios.map((io) => io.ioConfig))
         );
@@ -147,7 +147,7 @@ export class ControlSchemeBindingOutputComponent {
                 if (hubId === null || portId === null) {
                     return of([]);
                 }
-                return this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.selectHubIoOperationModes(hubId, portId, inputType));
+                return this.store.select(CONTROL_SCHEME_EDIT_SELECTORS.selectHubIoOperationModes(hubId, portId, inputType));
             }),
             shareReplay({ bufferSize: 1, refCount: true })
         );

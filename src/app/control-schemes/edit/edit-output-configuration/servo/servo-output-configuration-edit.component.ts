@@ -11,10 +11,10 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import { ControlSchemeBindingOutputForm } from '../../binding-output';
 import { IOutputConfigurationRenderer } from '../i-output-configuration-renderer';
-import { CONTROL_SCHEMES_LIST_SELECTORS } from '../../../contorl-schemes-list.selectors';
-import { CalibrationResult, CalibrationResultType, ServoCalibrationDialogComponent } from '../../../servo-calibration-dialog';
+import { CalibrationResult, CalibrationResultType, ServoCalibrationDialogComponent } from '../../servo-calibration-dialog';
 import { CONTROL_SCHEME_ACTIONS } from '../../../../store';
 import { OutputConfigSliderControlComponent, OutputConfigToggleControlComponent } from '../controls';
+import { CONTROL_SCHEME_EDIT_SELECTORS } from '../../control-scheme-edit.selectors';
 
 @Component({
     standalone: true,
@@ -101,7 +101,7 @@ export class ServoOutputConfigurationEditComponent implements IOutputConfigurati
                 hubId$,
                 portId$
             ]).pipe(
-                switchMap(([ hubId, portId ]) => this.store.select(CONTROL_SCHEMES_LIST_SELECTORS.canCalibrateServo({ hubId, portId })))
+                switchMap(([ hubId, portId ]) => this.store.select(CONTROL_SCHEME_EDIT_SELECTORS.canCalibrateServo({ hubId, portId })))
             );
             this._outputBinding = outputBinding;
             this.cd.detectChanges();

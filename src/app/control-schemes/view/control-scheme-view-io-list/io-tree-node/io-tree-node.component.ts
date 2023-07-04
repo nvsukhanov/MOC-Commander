@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NgIf } from '@angular/common';
 
 import { IoInlineViewComponent } from '@app/shared';
-import { ControlSchemeViewIoTreeNode } from '../../../contorl-schemes-list.selectors';
+import { ControlSchemeViewIoTreeNode } from '../../control-scheme-view.selectors';
 
 @Component({
     standalone: true,
