@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { ITaskExecutor } from './i-task-executor';
-import { ServoExecutor, SetAngleExecutor, SetSpeedExecutor } from './executors';
+import { ServoExecutor, SetAngleExecutor, SetSpeedExecutor, StepperExecutor } from './executors';
 
 @Injectable({ providedIn: 'root' })
 export class TaskExecutorFactoryService {
@@ -13,8 +13,10 @@ export class TaskExecutorFactoryService {
         const setSpeedExecutor = new SetSpeedExecutor();
         const servoExecutor = new ServoExecutor();
         const setAngleExecutor = new SetAngleExecutor();
+        const stepperExecutor = new StepperExecutor();
         setSpeedExecutor.setNext(servoExecutor)
-                        .setNext(setAngleExecutor);
+                        .setNext(setAngleExecutor)
+                        .setNext(stepperExecutor);
         return setSpeedExecutor;
     }
 }

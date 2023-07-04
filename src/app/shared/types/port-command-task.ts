@@ -4,6 +4,7 @@ export enum PortCommandTaskType {
     SetSpeed = 'SetSpeed',
     Servo = 'Servo',
     SetAngle = 'SetAngle',
+    Stepper = 'Stepper',
 }
 
 export type PortCommandSetLinearSpeedTask = {
@@ -43,4 +44,20 @@ export type PortCommandSetAngle = {
     createdAt: number
 }
 
-export type PortCommandTask = PortCommandSetLinearSpeedTask | PortCommandServoTask | PortCommandSetAngle;
+export type PortCommandStepperTask = {
+    taskType: PortCommandTaskType.Stepper,
+    hubId: string,
+    portId: number,
+    bindingId: string,
+    isNeutral: boolean,
+    degree: number,
+    speed: number,
+    power: number,
+    endState: MotorServoEndState,
+    createdAt: number
+}
+
+export type PortCommandTask = PortCommandSetLinearSpeedTask
+    | PortCommandServoTask
+    | PortCommandSetAngle
+    | PortCommandStepperTask;

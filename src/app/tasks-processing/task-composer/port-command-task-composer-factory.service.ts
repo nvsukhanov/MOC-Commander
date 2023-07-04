@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { IPortCommandTaskComposer } from './i-port-command-task-composer';
-import { ServoComposer, SetAngleComposer, SetSpeedComposer } from './composers';
+import { ServoComposer, SetAngleComposer, SetSpeedComposer, StepperComposer } from './composers';
 
 @Injectable({ providedIn: 'root' })
 export class PortCommandTaskComposerFactoryService {
@@ -13,8 +13,10 @@ export class PortCommandTaskComposerFactoryService {
         const setSpeedComposer = new SetSpeedComposer();
         const servoComposer = new ServoComposer();
         const setAngleComposer = new SetAngleComposer();
+        const stepperComposer = new StepperComposer();
         setSpeedComposer.setNext(servoComposer)
-                        .setNext(setAngleComposer);
+                        .setNext(setAngleComposer)
+                        .setNext(stepperComposer);
         return setSpeedComposer;
     }
 }

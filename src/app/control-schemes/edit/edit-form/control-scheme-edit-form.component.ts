@@ -26,22 +26,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
-import {
-    ControllerInputType,
-    FeatureToolbarService,
-    HUB_IO_CONTROL_METHODS,
-    IScrollContainer,
-    SCROLL_CONTAINER,
-    ScreenSizeObserverService,
-    WINDOW,
-} from '@app/shared';
+import { FeatureToolbarService, IScrollContainer, SCROLL_CONTAINER, ScreenSizeObserverService, WINDOW } from '@app/shared';
 import { ControlSchemeBindingInputComponent } from '../binding-input';
 import { ControlSchemeBindingOutputComponent } from '../binding-output';
 import { ControlSchemeFormBuilderService } from './control-scheme-form-builder.service';
 import { BindingForm, EditSchemeForm } from '../types';
 import { ControlSchemeBindingConfigurationComponent } from '../binding-config';
 import { CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, ControlSchemeModel, ControllerInputModel, } from '../../../store';
-import { CONTROL_SCHEMES_LIST_SELECTORS, IoWithOperationModes } from '../../contorl-schemes-list.selectors';
+import { CONTROL_SCHEMES_LIST_SELECTORS, IoWithOperationModes, getIoOperationModesForControllerInputType } from '../../contorl-schemes-list.selectors';
 import { WaitingForInputDialogComponent } from '../../waiting-for-input-dialog';
 
 export type BindingFormResult = ReturnType<EditSchemeForm['getRawValue']>;
@@ -175,12 +167,10 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         binding: BindingForm
     ): void {
         const ioOperationMode = binding.controls.output.controls.operationMode.value;
-        const applicableInputTypes = new Set(Object.keys(HUB_IO_CONTROL_METHODS).filter((inputType) => {
-            return HUB_IO_CONTROL_METHODS[inputType as ControllerInputType][ioOperationMode] !== undefined;
-        }));
 
         this.requestInput().subscribe(({ input }) => {
-            if (!applicableInputTypes.has(input.inputType)) {
+            const applicableInputTypes = getIoOperationModesForControllerInputType(input.inputType);
+            if (!applicableInputTypes.includes(ioOperationMode)) {
                 this.store.dispatch(CONTROL_SCHEME_ACTIONS.inputRebindTypeMismatch());
                 return;
             }

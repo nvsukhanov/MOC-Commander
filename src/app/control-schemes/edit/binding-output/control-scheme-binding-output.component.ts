@@ -39,13 +39,21 @@ export type SetAngleOutputConfigurationForm = FormGroup<{
     endState: FormControl<MotorServoEndState>;
 }>;
 
+export type StepperOutputConfigurationForm = FormGroup<{
+    degree: FormControl<number>;
+    speed: FormControl<number>;
+    power: FormControl<number>;
+    endState: FormControl<MotorServoEndState>;
+}>;
+
 export type ControlSchemeBindingOutputForm = FormGroup<{
     hubId: FormControl<string>,
     portId: FormControl<number>,
     operationMode: FormControl<HubIoOperationMode>,
     linearConfig: LinearOutputConfigurationForm,
     servoConfig: ServoOutputConfigurationForm,
-    setAngleConfig: SetAngleOutputConfigurationForm
+    setAngleConfig: SetAngleOutputConfigurationForm,
+    stepperConfig: StepperOutputConfigurationForm
 }>;
 
 @Component({

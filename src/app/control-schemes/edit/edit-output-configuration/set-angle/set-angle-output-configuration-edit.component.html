@@ -1,9 +1,9 @@
 <ng-container *ngIf="configurationForm">
     <section class="parameter-section">
         <mat-form-field>
-            <label class="slider-label-description">
+            <mat-label>
                 {{ 'controlScheme.setAngleOutputConfigurationAngle' | transloco }}
-            </label>
+            </mat-label>
             <input type="number"
                    matInput
                    [formControl]="configurationForm.controls.angle"

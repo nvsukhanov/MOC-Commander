@@ -111,7 +111,11 @@
     "servoOutputConfigurationPower": "Power",
     "servoCalibrationIsInProgress": "Servo calibration is in progress",
     "servoCalibrationError": "An error occurred during servo calibration",
-    "servoCalibrationCancel": "Cancel"
+    "servoCalibrationCancel": "Cancel",
+    "stepperOutputConfigurationDegree": "Angle (deg)",
+    "stepperOutputConfigurationSpeed": "Speed",
+    "stepperOutputConfigurationPower": "Power",
+    "stepperOutputConfigurationEndState": "End state"
   },
   "motorServoEndState": {
     "float": "Float",
@@ -167,6 +171,7 @@
     "operationModeLinear": "Linear",
     "operationModeServo": "Servo",
     "operationModeSetAngle": "Set angle",
+    "operationModeStepper": "Stepper",
     "ioSynchronizableTitle": "Synchronizable"
   },
   "controller": {

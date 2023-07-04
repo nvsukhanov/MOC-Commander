@@ -11,11 +11,11 @@ export class IoOperationTypeToL10nKeyPipe implements PipeTransform {
     private readonly mapping: { [k in HubIoOperationMode]: string } = {
         [HubIoOperationMode.Linear]: 'io.operationModeLinear',
         [HubIoOperationMode.Servo]: 'io.operationModeServo',
-        [HubIoOperationMode.SetAngle]: 'io.operationModeSetAngle'
+        [HubIoOperationMode.SetAngle]: 'io.operationModeSetAngle',
+        [HubIoOperationMode.Stepper]: 'io.operationModeStepper'
     };
 
     public transform(operationMode: HubIoOperationMode): string {
         return this.mapping[operationMode];
     }
-
 }
