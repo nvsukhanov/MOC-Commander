@@ -24,7 +24,7 @@ import {
     attachedIoPortModeInfoIdFn,
     attachedIosIdFn
 } from '../store';
-import { ControllerInputType, HUB_IO_CONTROL_METHODS, HubIoOperationMode } from '@app/shared';
+import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 
 function createHubTreeNode(
     hubConfig: HubModel,
@@ -102,24 +102,11 @@ function selectIosControllableByInputType(
     supportedModes: Dictionary<AttachedIoModesModel>,
     portModeData: Dictionary<AttachedIoPortModeInfoModel>,
     inputType: ControllerInputType
-): Array<IoWithOperationModes> {
-    const applicablePortModes: Set<PortModeName> = new Set(Object.values(HUB_IO_CONTROL_METHODS[inputType]));
-    const result: Array<{ ioConfig: AttachedIoModel, operationModes: HubIoOperationMode[] }> = [];
-    for (const io of ios) {
-        const ioOperationModes = getHubIoOperationModes(io, supportedModes, portModeData, inputType)
-            .filter((mode) => {
-                const portMode = HUB_IO_CONTROL_METHODS[inputType][mode];
-                return portMode !== undefined && applicablePortModes.has(portMode);
-            });
-
-        if (ioOperationModes.length > 0) {
-            result.push({
-                ioConfig: io,
-                operationModes: ioOperationModes
-            });
-        }
-    }
-    return result;
+): IoWithOperationModes[] {
+    return ios.map((ioConfig) => ({
+        ioConfig,
+        operationModes: getHubIoOperationModes(ioConfig, supportedModes, portModeData, inputType)
+    })).filter((io) => io.operationModes.length > 0);
 }
 
 function getHubIoOperationModes(
@@ -128,21 +115,46 @@ function getHubIoOperationModes(
     portModeData: ReturnType<typeof ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities>,
     inputType: ControllerInputType
 ): HubIoOperationMode[] {
-    const outputModes = supportedModes[attachedIoModesIdFn(io)]?.portOutputModes;
+    const operationModesByInputType = getIoOperationModesForControllerInputType(inputType);
 
-    if (outputModes && outputModes.length > 0) {
-        return outputModes.map((modeId) => {
-            const portModeId = attachedIoPortModeInfoIdFn({ ...io, modeId });
-            const portModeInfo = portModeData[portModeId];
-            if (portModeInfo && Object.values(HUB_IO_CONTROL_METHODS[inputType]).includes(portModeInfo.name)) {
-                return Object.entries(HUB_IO_CONTROL_METHODS[inputType])
-                             .filter(([ , modeName ]) => modeName === portModeInfo.name)
-                             .map(([ operationMode ]) => operationMode as HubIoOperationMode);
-            }
-            return [];
-        }).flat();
-    }
-    return [];
+    const ioSupportedOutputModes: number[] = supportedModes[attachedIoModesIdFn(io)]?.portOutputModes ?? [];
+
+    const ioOutputPortModeNames: PortModeName[] = ioSupportedOutputModes.map((modeId) => {
+        const portModeId = attachedIoPortModeInfoIdFn({ ...io, modeId });
+        return portModeData[portModeId]?.name ?? null;
+    }).filter((name) => !!name) as PortModeName[];
+
+    return operationModesByInputType.filter((operationMode) =>
+        doesIoSupportOperationMode(operationMode, ioOutputPortModeNames)
+    );
+}
+
+const CONTROLLER_TO_IO_OPERATION_MODES: { [k in ControllerInputType]?: ReadonlyArray<HubIoOperationMode> } = {
+    [ControllerInputType.Axis]: [ HubIoOperationMode.Linear, HubIoOperationMode.Servo ],
+    [ControllerInputType.Button]: [ HubIoOperationMode.Linear, HubIoOperationMode.Servo, HubIoOperationMode.SetAngle, HubIoOperationMode.Stepper ],
+    [ControllerInputType.Trigger]: [ HubIoOperationMode.Linear ],
+};
+
+const REQUIRED_PORT_MODES_FOR_OPERATION_MODE: { [k in HubIoOperationMode]?: PortModeName[] } = {
+    [HubIoOperationMode.Linear]: [ PortModeName.speed ],
+    [HubIoOperationMode.Servo]: [ PortModeName.absolutePosition, PortModeName.position ],
+    [HubIoOperationMode.SetAngle]: [ PortModeName.absolutePosition, PortModeName.position ],
+    [HubIoOperationMode.Stepper]: [ PortModeName.position ]
+};
+
+export function getIoOperationModesForControllerInputType(
+    inputType: ControllerInputType,
+): HubIoOperationMode[] {
+    return [ ...CONTROLLER_TO_IO_OPERATION_MODES[inputType] || [] ];
+}
+
+export function doesIoSupportOperationMode(
+    operationMode: HubIoOperationMode,
+    ioOutputPortModeNames: PortModeName[],
+): boolean {
+    return REQUIRED_PORT_MODES_FOR_OPERATION_MODE[operationMode]?.every((requiredPortModeName) =>
+        ioOutputPortModeNames.includes(requiredPortModeName)
+    ) ?? false;
 }
 
 export type IoWithOperationModes = {

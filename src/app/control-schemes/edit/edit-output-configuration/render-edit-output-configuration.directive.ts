@@ -9,6 +9,7 @@ import { LinearOutputConfigurationEditComponent } from './linear';
 import { ServoOutputConfigurationEditComponent } from './servo';
 import { SetAngleOutputConfigurationEditComponent } from './set-angle';
 import { HubIoOperationMode } from '@app/shared';
+import { StepperOutputConfigurationEditComponent } from './stepper';
 
 @Directive({
     standalone: true,
@@ -19,7 +20,8 @@ export class RenderEditOutputConfigurationDirective implements OnDestroy {
     private readonly renderers: { [k in HubIoOperationMode]?: Type<IOutputConfigurationRenderer> } = {
         [HubIoOperationMode.Linear]: LinearOutputConfigurationEditComponent,
         [HubIoOperationMode.Servo]: ServoOutputConfigurationEditComponent,
-        [HubIoOperationMode.SetAngle]: SetAngleOutputConfigurationEditComponent
+        [HubIoOperationMode.SetAngle]: SetAngleOutputConfigurationEditComponent,
+        [HubIoOperationMode.Stepper]: StepperOutputConfigurationEditComponent
     };
 
     private _inputFormControl?: ControlSchemeBindingInputForm;

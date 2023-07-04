@@ -56,4 +56,19 @@ export type BindingSetAngleOutputState = {
     }
 }
 
-export type BindingOutputState = BindingLinearOutputState | BindingServoOutputState | BindingSetAngleOutputState;
+export type BindingStepperOutputState = {
+    hubId: string;
+    portId: number;
+    operationMode: HubIoOperationMode.Stepper;
+    stepperConfig: {
+        degree: number;
+        speed: number;
+        power: number;
+        endState: MotorServoEndState;
+    }
+}
+
+export type BindingOutputState = BindingLinearOutputState
+    | BindingServoOutputState
+    | BindingSetAngleOutputState
+    | BindingStepperOutputState;

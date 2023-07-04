@@ -36,7 +36,15 @@ export function trimFormOutputBinding(
                     setAngleConfig: source.output.setAngleConfig
                 }
             };
-        default:
-            throw new Error(`Unexpected operation mode: ${source.output.operationMode}`);
+        case HubIoOperationMode.Stepper:
+            return {
+                ...source,
+                output: {
+                    hubId: source.output.hubId,
+                    portId: source.output.portId,
+                    operationMode: HubIoOperationMode.Stepper,
+                    stepperConfig: source.output.stepperConfig
+                }
+            };
     }
 }

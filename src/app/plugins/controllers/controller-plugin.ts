@@ -31,7 +31,7 @@ export abstract class ControllerPlugin implements IControllerPlugin {
         inputId: string
     ): Observable<string> {
         return this.axisNames[inputId]
-            ?? this.translocoService.selectTranslate(createControllerL10nKey('genericGamepadAxisName'), { inputId });
+            ?? this.translocoService.selectTranslate(createControllerL10nKey('unknownControllerAxis'), { inputId });
     }
 
     @Memoize()
@@ -39,7 +39,7 @@ export abstract class ControllerPlugin implements IControllerPlugin {
         inputId: string
     ): Observable<string> {
         return this.buttonNames[inputId]
-            ?? this.translocoService.selectTranslate(createControllerL10nKey('genericGamepadAxisName'), { inputId });
+            ?? this.translocoService.selectTranslate(createControllerL10nKey('unknownControllerButton'), { inputId });
     }
 
     protected getTranslation(

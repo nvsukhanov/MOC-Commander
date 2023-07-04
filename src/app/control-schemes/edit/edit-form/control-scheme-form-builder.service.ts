@@ -9,6 +9,7 @@ import { ServoOutputControlFormBuilderService } from './servo-output-control-for
 import { LinearOutputControlFormBuilderService } from './linear-output-control-form-builder.service';
 import { SetAngleOutputControlFormBuilderService } from './set-angle-output-control-form-builder.service';
 import { ControllerInputType, HubIoOperationMode } from '@app/shared';
+import { StepperOutputControlFormBuilderService } from './stepper-output-control-form-builder.service';
 
 @Injectable({ providedIn: 'root' })
 export class ControlSchemeFormBuilderService {
@@ -17,6 +18,7 @@ export class ControlSchemeFormBuilderService {
         private readonly servoOutputControlFormBuilder: ServoOutputControlFormBuilderService,
         private readonly linearOutputControlFormBuilder: LinearOutputControlFormBuilderService,
         private readonly setAngleOutputControlFormBuilder: SetAngleOutputControlFormBuilderService,
+        private readonly stepperOutputControlFormBuilder: StepperOutputControlFormBuilderService,
     ) {
     }
 
@@ -79,7 +81,10 @@ export class ControlSchemeFormBuilderService {
             ),
             setAngleConfig: this.setAngleOutputControlFormBuilder.build(
                 outputState?.operationMode === HubIoOperationMode.SetAngle ? outputState.setAngleConfig : undefined
-            )
+            ),
+            stepperConfig: this.stepperOutputControlFormBuilder.build(
+                outputState?.operationMode === HubIoOperationMode.Stepper ? outputState.stepperConfig : undefined
+            ),
         });
     }
 }
