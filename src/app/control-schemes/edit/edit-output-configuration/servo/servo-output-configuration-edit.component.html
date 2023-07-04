@@ -10,67 +10,31 @@
         </button>
     </section>
 
-    <section class="parameter-section">
-        <mat-slide-toggle [formControl]="outputBinding.controls.servoConfig.controls.invert">
-            {{ 'controlScheme.servoOutputConfigurationInvert' | transloco }}
-        </mat-slide-toggle>
-    </section>
+    <app-output-config-toggle-control [translocoTitle]="'controlScheme.outputInvertControlTitle'"
+                                      [control]="outputBinding.controls.servoConfig.controls.invert"
+    ></app-output-config-toggle-control>
 
-    <section class="parameter-section">
-        <div class="slider-label">
-            <label class="slider-label-description">
-                {{ 'controlScheme.servoOutputConfigurationCenterOffset' | transloco }}
-            </label>
-            <label class="slider-label-value-right">{{ outputBinding.controls.servoConfig.controls.aposCenter.value }}</label>
-        </div>
-        <mat-slider class="slider"
-                    [min]="-motorLimits.maxServoDegreesRange / 2"
-                    [max]="motorLimits.maxServoDegreesRange / 2"
-        >
-            <input matSliderThumb [formControl]="outputBinding.controls.servoConfig.controls.aposCenter"/>
-        </mat-slider>
-    </section>
+    <app-output-config-slider-control [min]="-motorLimits.maxServoDegreesRange / 2"
+                                      [max]="motorLimits.maxServoDegreesRange / 2"
+                                      [control]="outputBinding.controls.servoConfig.controls.aposCenter"
+                                      [translocoTitle]="'controlScheme.servoOutputConfigurationCenterOffset'"
+    ></app-output-config-slider-control>
 
-    <section class="parameter-section">
-        <div class="slider-label">
-            <label class="slider-label-description">
-                {{ 'controlScheme.servoOutputConfigurationAngleRange' | transloco }}
-            </label>
-            <label class="slider-label-value-right">{{ outputBinding.controls.servoConfig.controls.range.value }}</label>
-        </div>
-        <mat-slider class="slider"
-                    [min]="motorLimits.minServoDegreesRange"
-                    [max]="motorLimits.maxServoDegreesRange"
-        >
-            <input matSliderThumb [formControl]="outputBinding.controls.servoConfig.controls.range"/>
-        </mat-slider>
-    </section>
+    <app-output-config-slider-control [min]="motorLimits.minServoDegreesRange"
+                                      [max]="motorLimits.maxServoDegreesRange"
+                                      [control]="outputBinding.controls.servoConfig.controls.range"
+                                      [translocoTitle]="'controlScheme.servoOutputConfigurationAngleRange'"
+    ></app-output-config-slider-control>
 
-    <section class="parameter-section">
-        <div class="slider-label">
-            <label class="slider-label-description">
-                {{ 'controlScheme.servoOutputConfigurationSpeed' | transloco }}
-            </label>
-            <label class="slider-label-value-right">{{ outputBinding.controls.servoConfig.controls.speed.value }}</label>
-        </div>
-        <mat-slider class="slider"
-                    [max]="motorLimits.maxSpeed"
-                    [min]="0">
-            <input matSliderThumb [formControl]="outputBinding.controls.servoConfig.controls.speed"/>
-        </mat-slider>
-    </section>
+    <app-output-config-slider-control [min]="0"
+                                      [max]="motorLimits.maxSpeed"
+                                      [control]="outputBinding.controls.servoConfig.controls.speed"
+                                      [translocoTitle]="'controlScheme.outputSpeedControlTitle'"
+    ></app-output-config-slider-control>
 
-    <section class="parameter-section">
-        <div class="slider-label">
-            <label class="slider-label-description">
-                {{ 'controlScheme.servoOutputConfigurationPower' | transloco }}
-            </label>
-            <label class="slider-label-value-right">{{ outputBinding.controls.servoConfig.controls.power.value }}</label>
-        </div>
-        <mat-slider class="slider"
-                    [max]="motorLimits.maxPower"
-                    [min]="0">
-            <input matSliderThumb [formControl]="outputBinding.controls.servoConfig.controls.power"/>
-        </mat-slider>
-    </section>
+    <app-output-config-slider-control [min]="motorLimits.minPower"
+                                      [max]="motorLimits.maxPower"
+                                      [control]="outputBinding.controls.servoConfig.controls.power"
+                                      [translocoTitle]="'controlScheme.outputPowerControlTitle'"
+    ></app-output-config-slider-control>
 </ng-container>

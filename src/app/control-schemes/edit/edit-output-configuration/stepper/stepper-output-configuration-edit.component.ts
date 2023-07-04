@@ -1,17 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { NgForOf, NgIf } from '@angular/common';
-import { MOTOR_LIMITS, MotorServoEndState } from '@nvsukhanov/rxpoweredup';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
-import { TranslocoModule } from '@ngneat/transloco';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatOptionModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 
 import { ControlSchemeBindingOutputForm, StepperOutputConfigurationForm } from '../../binding-output';
 import { IOutputConfigurationRenderer } from '../i-output-configuration-renderer';
-import { MotorServoEndStateL10nKeyPipe } from '@app/shared';
+import { OutputConfigSliderControlComponent, OutputEndStateSelectorComponent, OutputNumInputControlComponent } from '../controls';
 
 @Component({
     standalone: true,
@@ -20,15 +13,9 @@ import { MotorServoEndStateL10nKeyPipe } from '@app/shared';
     styleUrls: [ './stepper-output-configuration-edit.component.scss' ],
     imports: [
         NgIf,
-        MatFormFieldModule,
-        MatInputModule,
-        ReactiveFormsModule,
-        TranslocoModule,
-        MatSliderModule,
-        MatOptionModule,
-        MatSelectModule,
-        MotorServoEndStateL10nKeyPipe,
-        NgForOf
+        OutputConfigSliderControlComponent,
+        OutputNumInputControlComponent,
+        OutputEndStateSelectorComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -45,21 +32,23 @@ export class StepperOutputConfigurationEditComponent implements IOutputConfigura
 
     public readonly maxPower = MOTOR_LIMITS.maxPower;
 
-    public readonly motorServoEndStates: ReadonlyArray<MotorServoEndState> = [
-        MotorServoEndState.float,
-        MotorServoEndState.hold,
-        MotorServoEndState.brake
-    ];
+    private _form?: StepperOutputConfigurationForm;
 
-    private _form?: ControlSchemeBindingOutputForm;
+    constructor(
+        private readonly cdRef: ChangeDetectorRef
+    ) {
+    }
 
     public get form(): StepperOutputConfigurationForm | undefined {
-        return this._form?.controls.stepperConfig;
+        return this._form;
     }
 
     public setOutputFormControl(
         outputFormControl: ControlSchemeBindingOutputForm
     ): void {
-        this._form = outputFormControl;
+        if (outputFormControl.controls.stepperConfig !== this._form) {
+            this._form = outputFormControl.controls.stepperConfig;
+            this.cdRef.detectChanges();
+        }
     }
 }

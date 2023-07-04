@@ -1,16 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { NgIf } from '@angular/common';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { TranslocoModule } from '@ngneat/transloco';
-import { MatSliderModule } from '@angular/material/slider';
+import { FormControl } from '@angular/forms';
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
-import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { ControlSchemeBindingOutputForm } from '../../binding-output';
 import { ControlSchemeBindingInputForm } from '../../binding-input';
 import { IOutputConfigurationRenderer } from '../i-output-configuration-renderer';
 import { ControllerInputType } from '@app/shared';
+import { OutputConfigSliderControlComponent, OutputConfigToggleControlComponent } from '../controls';
 
 @Component({
     standalone: true,
@@ -19,11 +16,8 @@ import { ControllerInputType } from '@app/shared';
     styleUrls: [ './linear-output-configuration-edit.component.scss' ],
     imports: [
         NgIf,
-        ReactiveFormsModule,
-        MatSlideToggleModule,
-        TranslocoModule,
-        MatSliderModule,
-        MatFormFieldModule
+        OutputConfigSliderControlComponent,
+        OutputConfigToggleControlComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

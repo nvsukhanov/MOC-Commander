@@ -1,22 +1,3 @@
-.slider-label {
-    display: flex;
-
-    &-description {
-        font-weight: 400;
-        flex: 1;
-    }
-
-    &-value-right {
-        font-weight: 600;
-        width: 45px;
-        text-align: right;
-    }
-}
-
-.slider {
-    width: calc(100% - 20px);
-}
-
 .parameter-section {
     margin-bottom: 20px;
 }
