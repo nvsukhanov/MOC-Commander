@@ -2,7 +2,6 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { importProvidersFrom } from '@angular/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { DialogModule } from '@angular/cdk/dialog';
 
 import { LayoutComponent } from './app/main';
 import { provideApplicationStore } from './app/store';
@@ -17,7 +16,6 @@ bootstrapApplication(LayoutComponent, {
         provideAnimations(),
         provideControllersPlugins(),
         importProvidersFrom(MatSnackBarModule),
-        provideApplicationStore(),
-        importProvidersFrom(DialogModule),
+        provideApplicationStore()
     ]
 });
