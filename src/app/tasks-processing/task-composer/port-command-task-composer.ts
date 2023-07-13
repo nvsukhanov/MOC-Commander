@@ -1,35 +1,54 @@
 import { IPortCommandTaskComposer } from './i-port-command-task-composer';
-import { AttachedIoPropsModel, ControlSchemeBinding } from '../../store';
-import { PortCommandTask } from '@app/shared';
+import { ControlSchemeBinding } from '../../store';
+import { PortCommandTask, PortCommandTaskPayload } from '@app/shared';
 
-export abstract class PortCommandTaskComposer implements IPortCommandTaskComposer {
-    private next?: PortCommandTaskComposer;
+export abstract class PortCommandTaskComposer<TPayload extends PortCommandTaskPayload> implements IPortCommandTaskComposer {
+    private next?: PortCommandTaskComposer<PortCommandTaskPayload>;
 
-    protected abstract handle(
+    protected abstract composePayload(
         binding: ControlSchemeBinding,
         inputValue: number,
-        ioState: AttachedIoPropsModel,
-        previousTask?: PortCommandTask,
-    ): PortCommandTask | null;
+        motorEncoderOffset: number,
+        previousTaskPayload: PortCommandTask | null
+    ): TPayload | null;
+
+    protected abstract calculatePayloadHash(
+        payload: TPayload
+    ): string;
 
     public composeTask(
         binding: ControlSchemeBinding,
         inputValue: number,
-        ioState: AttachedIoPropsModel,
-        previousTask?: PortCommandTask,
+        motorEncoderOffset: number,
+        lastExecutedTask: PortCommandTask | null
     ): PortCommandTask | null {
-        const result = this.handle(binding, inputValue, ioState, previousTask);
-        if (result) {
-            return result;
+        const payload = this.composePayload(binding, inputValue, motorEncoderOffset, lastExecutedTask);
+        if (payload) {
+            return {
+                hubId: binding.output.hubId,
+                portId: binding.output.portId,
+                bindingId: binding.id,
+                payload,
+                hash: this.calculateHash(binding, payload)
+            };
         }
         if (this.next) {
-            return this.next.composeTask(binding, inputValue, ioState, previousTask);
+            return this.next.composeTask(binding, inputValue, motorEncoderOffset, lastExecutedTask);
         }
         return null;
     }
 
-    public setNext(next: PortCommandTaskComposer): PortCommandTaskComposer {
+    public setNext(
+        next: PortCommandTaskComposer<PortCommandTaskPayload>
+    ): PortCommandTaskComposer<PortCommandTaskPayload> {
         this.next = next;
         return next;
+    }
+
+    private calculateHash(
+        binding: ControlSchemeBinding,
+        payload: TPayload
+    ): string {
+        return `${binding.output.hubId}/${binding.output.portId}/${this.calculatePayloadHash(payload)}`;
     }
 }

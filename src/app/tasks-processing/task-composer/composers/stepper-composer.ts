@@ -1,12 +1,12 @@
 import { PortCommandTaskComposer } from '../port-command-task-composer';
 import { ControlSchemeBinding } from '../../../store';
-import { HubIoOperationMode, PortCommandStepperTask, PortCommandTaskType } from '@app/shared';
+import { HubIoOperationMode, PortCommandTaskType, StepperTaskPayload } from '@app/shared';
 
-export class StepperComposer extends PortCommandTaskComposer {
-    protected handle(
+export class StepperComposer extends PortCommandTaskComposer<StepperTaskPayload> {
+    protected composePayload(
         binding: ControlSchemeBinding,
         inputValue: number,
-    ): PortCommandStepperTask | null {
+    ): StepperTaskPayload | null {
         if (binding.output.operationMode !== HubIoOperationMode.Stepper) {
             return null;
         }
@@ -17,15 +17,22 @@ export class StepperComposer extends PortCommandTaskComposer {
 
         return {
             taskType: PortCommandTaskType.Stepper,
-            hubId: binding.output.hubId,
-            portId: binding.output.portId,
-            bindingId: binding.id,
-            isNeutral: true,
             degree: binding.output.stepperConfig.degree,
             speed: binding.output.stepperConfig.speed,
             power: binding.output.stepperConfig.power,
             endState: binding.output.stepperConfig.endState,
-            createdAt: Date.now(),
-        } satisfies PortCommandStepperTask;
+        };
+    }
+
+    protected calculatePayloadHash(
+        payload: StepperTaskPayload
+    ): string {
+        return [
+            payload.taskType,
+            payload.degree,
+            payload.speed,
+            payload.power,
+            payload.endState
+        ].join('_');
     }
 }

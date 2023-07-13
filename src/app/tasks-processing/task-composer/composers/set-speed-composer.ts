@@ -1,79 +1,125 @@
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 
 import { PortCommandTaskComposer } from '../port-command-task-composer';
-import { AttachedIoPropsModel, ControlSchemeBinding } from '../../../store';
-import { HubIoOperationMode, PortCommandSetLinearSpeedTask, PortCommandTask, PortCommandTaskType } from '@app/shared';
+import { BindingLinearOutputState, ControlSchemeBinding } from '../../../store';
+import { HubIoOperationMode, PortCommandTask, PortCommandTaskType, SetLinearSpeedTaskPayload } from '@app/shared';
 
-export class SetSpeedComposer extends PortCommandTaskComposer {
-    private readonly speedSnapToZero = 15;
+export class SetSpeedComposer extends PortCommandTaskComposer<SetLinearSpeedTaskPayload> {
+    private readonly speedStep = 5;
 
-    protected handle(
+    private readonly speedSnapThreshold = 10;
+
+    protected composePayload(
         binding: ControlSchemeBinding,
         inputValue: number,
-        ioState: AttachedIoPropsModel,
-        previousTask?: PortCommandTask,
-    ): PortCommandSetLinearSpeedTask | null {
+        motorEncoderOffset: number,
+        lastExecutedTask: PortCommandTask | null
+    ): SetLinearSpeedTaskPayload | null {
         if (binding.output.operationMode !== HubIoOperationMode.Linear) {
             return null;
         }
 
-        if (binding.output.linearConfig.isToggle && inputValue === 0) {
-            return null;
+        if (binding.output.linearConfig.isToggle) {
+            if (inputValue === 0) {
+                return null;
+            }
+            return this.createTogglePayload(binding.id, binding.output, lastExecutedTask);
         }
 
         const targetSpeed = this.calculateSpeed(
             inputValue,
             binding.output.linearConfig.maxSpeed,
-            previousTask?.bindingId === binding.id ? previousTask.speed : undefined,
-            binding.output.linearConfig.isToggle,
             binding.output.linearConfig.invert,
         );
 
         return {
             taskType: PortCommandTaskType.SetSpeed,
-            portId: binding.output.portId,
-            hubId: binding.output.hubId,
             speed: targetSpeed,
-            power: targetSpeed !== 0 ? binding.output.linearConfig.power : 0,
-            bindingId: binding.id,
-            isNeutral: targetSpeed === 0 || binding.output.linearConfig.isToggle,
-            createdAt: Date.now(),
-        } satisfies PortCommandSetLinearSpeedTask;
+            power: this.calculatePower(targetSpeed, binding.output.linearConfig.power),
+            activeInput: inputValue !== 0,
+        };
+    }
+
+    protected calculatePayloadHash(
+        payload: SetLinearSpeedTaskPayload
+    ): string {
+        return [
+            payload.taskType,
+            payload.speed,
+            payload.power,
+        ].join('_');
+    }
+
+    private createTogglePayload(
+        bindingId: string,
+        outputConfig: BindingLinearOutputState,
+        lastExecutedTask: PortCommandTask | null
+    ): SetLinearSpeedTaskPayload | null {
+        let shouldActivate: boolean;
+
+        if (lastExecutedTask?.bindingId === bindingId) {
+            shouldActivate = (lastExecutedTask.payload as SetLinearSpeedTaskPayload).speed === 0;
+        } else {
+            shouldActivate = true;
+        }
+
+        if (shouldActivate) {
+            const speed = this.calculateSpeed(1, outputConfig.linearConfig.maxSpeed, outputConfig.linearConfig.invert);
+            return {
+                taskType: PortCommandTaskType.SetSpeed,
+                speed,
+                power: this.calculatePower(speed, outputConfig.linearConfig.power),
+                activeInput: true,
+            };
+        }
+
+        return {
+            taskType: PortCommandTaskType.SetSpeed,
+            speed: 0,
+            power: this.calculatePower(0, outputConfig.linearConfig.power),
+            activeInput: true,
+        };
     }
 
     private calculateSpeed(
         inputValue: number,
         maxAbsSpeed: number,
-        previousValue: number | undefined,
-        isToggle: boolean,
         invert: boolean,
     ): number {
-        if (isToggle && previousValue !== undefined && previousValue !== 0) {
-            return 0;
-        }
+        const clampedSpeed = this.clampSpeed(inputValue * maxAbsSpeed);
         const direction = invert ? -1 : 1;
 
-        const clampedSpeed = this.clampSpeed(
-            inputValue * direction * maxAbsSpeed,
-            Math.min(maxAbsSpeed, MOTOR_LIMITS.maxSpeed),
-        );
-
-        return Math.round(this.snapSpeedToZero(clampedSpeed));
+        return this.snapSpeed(clampedSpeed * direction);
     }
 
     private clampSpeed(
         speed: number,
-        maxAbsSpeed: number,
     ): number {
-        if (Math.abs(speed) > maxAbsSpeed) {
-            return maxAbsSpeed * Math.sign(speed);
+        return Math.abs(speed) > MOTOR_LIMITS.maxSpeed
+               ? MOTOR_LIMITS.maxSpeed * Math.sign(speed)
+               : speed;
+    }
+
+    private snapSpeed(
+        speed: number,
+    ): number {
+        const speedWithStep = Math.round(speed / this.speedStep) * this.speedStep;
+        if (Math.abs(speedWithStep) < this.speedSnapThreshold) {
+            return 0;
+        }
+        if (Math.abs(speedWithStep) >= MOTOR_LIMITS.maxSpeed - this.speedSnapThreshold) {
+            return MOTOR_LIMITS.maxSpeed * Math.sign(speedWithStep);
         }
         return speed;
     }
 
-    private snapSpeedToZero(
+    private calculatePower(
         speed: number,
+        maxPower: number
     ): number {
-        return Math.abs(speed) < this.speedSnapToZero ? 0 : speed;
+        if (speed === 0) {
+            return 0;
+        }
+        return maxPower;
     }
 }

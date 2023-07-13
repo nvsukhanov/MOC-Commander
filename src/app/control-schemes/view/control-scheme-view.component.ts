@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
-import { Observable, Subscription, bufferCount, map, of, switchMap } from 'rxjs';
+import { Observable, Subscription, map, of, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
@@ -12,14 +12,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 
 import { EllipsisTitleDirective, FeatureToolbarService } from '@app/shared';
 import { ControlSchemeViewIoListComponent } from './control-scheme-view-io-list';
-import {
-    CONTROLLER_INPUT_ACTIONS,
-    CONTROL_SCHEME_ACTIONS,
-    CONTROL_SCHEME_SELECTORS,
-    ControlSchemeModel,
-    HUB_PORT_TASKS_SELECTORS,
-    ROUTER_SELECTORS,
-} from '../../store';
+import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel, ROUTER_SELECTORS, } from '../../store';
 import { RoutesBuilderService } from '../../routing';
 import { CONTROL_SCHEME_VIEW_SELECTORS, ControlSchemeViewTreeNode } from './control-scheme-view.selectors';
 
@@ -62,24 +55,12 @@ export class ControlSchemeViewComponent implements OnDestroy {
 
     public readonly isCurrentControlSchemeRunning$ = this.store.select(CONTROL_SCHEME_VIEW_SELECTORS.isCurrentControlSchemeRunning);
 
-    public readonly queueLength$ = this.store.select(HUB_PORT_TASKS_SELECTORS.selectQueueLength);
-
-    public readonly maxQueueLength$ = this.store.select(HUB_PORT_TASKS_SELECTORS.selectMaxQueueLength);
-
-    public readonly lastTenTaskAverageExecutionTime$ = this.store.select(HUB_PORT_TASKS_SELECTORS.lastTaskExecutionTime).pipe(
-        bufferCount(10, 1),
-        // eslint-disable-next-line @ngrx/avoid-mapping-selectors
-        map((v) => v.reduce((acc, val) => acc + val, 0) / 10)
-    );
-
     public readonly schemeViewTree$: Observable<ControlSchemeViewTreeNode[]> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
         switchMap((id) => id === null
                           ? of([])
                           : this.store.select(CONTROL_SCHEME_VIEW_SELECTORS.schemeViewTree(id))
         )
     );
-
-    public readonly totalTasksExecuted$ = this.store.select(HUB_PORT_TASKS_SELECTORS.selectTotalTasksExecuted);
 
     private sub?: Subscription;
 

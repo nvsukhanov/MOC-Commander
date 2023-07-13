@@ -9,13 +9,13 @@ export class ServoExecutor extends TaskExecutor {
         task: PortCommandTask,
         hub: IHub
     ): Observable<PortCommandExecutionStatus> | null {
-        if (task.taskType === PortCommandTaskType.Servo) {
+        if (task.payload.taskType === PortCommandTaskType.Servo) {
             return hub.motors.goToPosition(
                 task.portId,
-                task.angle,
+                task.payload.angle,
                 {
-                    speed: task.speed,
-                    power: task.power,
+                    speed: task.payload.speed,
+                    power: task.payload.power,
                     useProfile: MotorUseProfile.dontUseProfiles
                 }
             );

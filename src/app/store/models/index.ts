@@ -8,3 +8,4 @@ export * from './hub-stats.model';
 export * from './attached-io-props.model';
 export * from './attached-io-modes.model';
 export * from './attached-io-port-mode-info.model';
+export * from './port-tasks.model';

@@ -9,13 +9,15 @@ export type ControlSchemeModel = {
     bindings: ControlSchemeBinding[];
 }
 
+export type ControlSchemeBindingInput = {
+    controllerId: string;
+    inputType: ControllerInputType;
+    inputId: string;
+}
+
 export type ControlSchemeBinding = {
     id: string;
-    input: {
-        controllerId: string;
-        inputType: ControllerInputType;
-        inputId: string;
-    }
+    input: ControlSchemeBindingInput;
     output: BindingOutputState;
 }
 

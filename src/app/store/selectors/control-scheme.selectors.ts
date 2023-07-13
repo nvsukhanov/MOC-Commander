@@ -1,8 +1,6 @@
 import { createSelector } from '@ngrx/store';
 
-import { CONTROL_SCHEMES_ENTITY_ADAPTER, CONTROL_SCHEMES_FEATURE, controllerInputIdFn } from '../reducers';
-import { ControlSchemeBinding } from '../models';
-import { CONTROLLER_INPUT_SELECTORS } from './controller-input.selectors';
+import { CONTROL_SCHEMES_ENTITY_ADAPTER, CONTROL_SCHEMES_FEATURE } from '../reducers';
 
 const CONTROL_SCHEME_ENTITY_SELECTORS = CONTROL_SCHEMES_ENTITY_ADAPTER.getSelectors();
 
@@ -33,19 +31,5 @@ export const CONTROL_SCHEME_SELECTORS = {
     selectIsAnySchemeRunning: createSelector(
         CONTROL_SCHEMES_FEATURE.selectRunningSchemeId,
         (runningSchemeId) => runningSchemeId !== null
-    ),
-    selectSchemeBindingInputValue: (
-        schemeId: string,
-        binding: ControlSchemeBinding
-    ) => createSelector(
-        CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
-        CONTROLLER_INPUT_SELECTORS.selectEntities,
-        (scheme, inputEntities) => {
-            if (!scheme || !inputEntities) {
-                return 0;
-            }
-            const input = inputEntities[controllerInputIdFn(binding.input)];
-            return input ? input.value : 0;
-        }
     )
 } as const;

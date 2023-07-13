@@ -19,14 +19,13 @@ import {
     CONTROL_SCHEMES_FEATURE,
     HUBS_FEATURE,
     HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE,
-    HUB_PORT_TASKS_FEATURE,
     HUB_STATS_FEATURE,
+    PORT_TASKS_FEATURE,
 } from './reducers';
 import {
     AttachedIOsEffects,
     AttachedIoModesEffects,
     ControlSchemeEffects,
-    ControlSchemeRunnerEffects,
     ControllerInputCaptureEffects,
     GAMEPAD_CONTROLLER_EFFECTS,
     GamepadControllerInputEffects,
@@ -36,6 +35,7 @@ import {
     KEYBOARD_CONTROLLER_EFFECTS,
     KeyboardControllerInputEffects,
     NotificationsEffects,
+    PortTaskEffects,
 } from './effects';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { HubStorageService } from './hub-storage.service';
@@ -43,7 +43,7 @@ import { RoutesBuilderService } from '../routing';
 import { CONTROLLER_INPUT_ACTIONS, HUB_STATS_ACTIONS } from './actions';
 import { NAVIGATOR } from '@app/shared';
 
-const STORAGE_VERSION = '4';
+const STORAGE_VERSION = '5';
 
 const REDUCERS: ActionReducerMap<IState> = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,
@@ -57,8 +57,8 @@ const REDUCERS: ActionReducerMap<IState> = {
     attachedIoProps: ATTACHED_IO_PROPS_FEATURE.reducer,
     attachedIoModes: ATTACHED_IO_MODES_FEATURE.reducer,
     attachedIoPortModeInfo: ATTACHED_IO_PORT_MODE_INFO_FEATURE.reducer,
-    hubPortTasks: HUB_PORT_TASKS_FEATURE.reducer,
     hubEditFormActiveSaves: HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE.reducer,
+    portTasks: PORT_TASKS_FEATURE.reducer,
     router: routerReducer
 };
 
@@ -90,7 +90,7 @@ export function provideApplicationStore(): EnvironmentProviders {
             AttachedIoModesEffects,
             HubsEffects,
             ControlSchemeEffects,
-            ControlSchemeRunnerEffects,
+            PortTaskEffects,
             NotificationsEffects,
             HubAttachedIosStateEffects,
             GamepadControllerInputEffects,

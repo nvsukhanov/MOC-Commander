@@ -1,5 +1,8 @@
 import { PortCommandTask } from '@app/shared';
 
 export interface ITaskSuppressor {
-    shouldSuppressTask<T extends PortCommandTask>(task: T, lastTaskOfKindInQueue?: T): boolean;
+    shouldSuppressTask<T extends PortCommandTask>(
+        nextTask: T,
+        lastTaskOfKindInQueue: T | null
+    ): boolean;
 }

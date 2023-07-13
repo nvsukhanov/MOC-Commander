@@ -4,22 +4,30 @@ import { PortCommandTask, PortCommandTaskType } from '@app/shared';
 export class ServoTaskSuppressor extends TaskSuppressor {
     private readonly servoThresholdDegrees = 10;
 
-    protected shouldSuppress<T extends PortCommandTask>(
-        task: T,
-        lastTaskOfKindInQueue?: T
+    protected shouldSuppress(
+        currentTask: PortCommandTask,
+        lastExecutedTask: PortCommandTask | null
     ): boolean | null {
-        if (task.taskType !== PortCommandTaskType.Servo) {
+        if (currentTask.payload.taskType !== PortCommandTaskType.Servo) {
             return null;
         }
-        if (!lastTaskOfKindInQueue || lastTaskOfKindInQueue.taskType !== PortCommandTaskType.Servo) {
+
+        // will center the servo if there is no last executed task
+        if (!lastExecutedTask) {
             return false;
         }
 
-        if (lastTaskOfKindInQueue.angle !== 0 && task.angle === 0) {
+        // will center the servo if the last executed task was not a servo task
+        if (lastExecutedTask.payload.taskType !== PortCommandTaskType.Servo) {
             return false;
         }
 
-        // TODO: potentially could suppress if angle is near arc's ends. need fix
-        return Math.abs(task.angle - lastTaskOfKindInQueue.angle) < this.servoThresholdDegrees;
+        // will snap to center if the last executed task was a servo task and the current task is a servo task with angle 0
+        if (lastExecutedTask.payload.angle !== 0 && currentTask.payload.angle === 0) {
+            return false;
+        }
+
+        // TODO: potentially could suppress if angle is near arc's ends. need fix. Move threshold ops to the task composer?
+        return Math.abs(currentTask.payload.angle - lastExecutedTask.payload.angle) < this.servoThresholdDegrees;
     }
 }
