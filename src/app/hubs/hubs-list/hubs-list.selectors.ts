@@ -3,11 +3,11 @@ import { createSelector } from '@ngrx/store';
 import { HUBS_SELECTORS, HUB_STATS_SELECTORS, HubModel } from '../../store';
 
 export type HubListViewModel = Array<{
-    batteryLevel: number | null,
-    rssi: number | null,
-    isButtonPressed: boolean,
-    hasCommunication: boolean,
-    isConnected: boolean,
+    batteryLevel: number | null;
+    rssi: number | null;
+    isButtonPressed: boolean;
+    hasCommunication: boolean;
+    isConnected: boolean;
 } & HubModel>;
 
 export const HUBS_LIST_SELECTORS = {

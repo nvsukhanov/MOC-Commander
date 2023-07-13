@@ -14,7 +14,7 @@ export const ATTACHED_IO_MODES_SELECTORS = {
         ATTACHED_IO_MODES_ENTITY_ADAPTER.getSelectors().selectEntities
     ),
     selectIoPortModes: (
-        { hardwareRevision, softwareRevision, ioType }: { hardwareRevision: string, softwareRevision: string, ioType: IOType }
+        { hardwareRevision, softwareRevision, ioType }: { hardwareRevision: string; softwareRevision: string; ioType: IOType }
     ) => createSelector(
         ATTACHED_IO_MODES_SELECTORS.selectAll,
         (state) => {
@@ -24,7 +24,7 @@ export const ATTACHED_IO_MODES_SELECTORS = {
         }
     ),
     hasCachedIoPortModes: (
-        { hardwareRevision, softwareRevision, ioType }: { hardwareRevision: string, softwareRevision: string, ioType: IOType }
+        { hardwareRevision, softwareRevision, ioType }: { hardwareRevision: string; softwareRevision: string; ioType: IOType }
     ) => createSelector(
         ATTACHED_IO_MODES_SELECTORS.selectIoPortModes({ hardwareRevision, softwareRevision, ioType }),
         (state) => state !== null

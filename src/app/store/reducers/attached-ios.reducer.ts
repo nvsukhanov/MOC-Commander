@@ -12,7 +12,7 @@ export const ATTACHED_IOS_ENTITY_ADAPTER = createEntityAdapter<AttachedIoModel>(
 });
 
 export function attachedIosIdFn(
-    { hubId, portId }: { hubId: string, portId: number }
+    { hubId, portId }: { hubId: string; portId: number }
 ): string {
     return `${hubId}/${portId}`;
 }

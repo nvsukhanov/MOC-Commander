@@ -7,11 +7,11 @@ export type GamepadControllerModel = {
     axesCount: number;
     buttonsCount: number;
     triggerButtonIndices: number[];
-}
+};
 
 export type KeyboardControllerModel = {
     id: string;
     controllerType: ControllerType.Keyboard;
-}
+};
 
 export type ControllerModel = GamepadControllerModel | KeyboardControllerModel;

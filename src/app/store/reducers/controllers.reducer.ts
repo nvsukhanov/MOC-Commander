@@ -14,7 +14,7 @@ export const CONTROLLERS_ENTITY_ADAPTER: EntityAdapter<ControllerModel> = create
 });
 
 export function controllerIdFn(
-    idArgs: { id: string, controllerType: ControllerType.Gamepad, gamepadIndex: number } | { controllerType: ControllerType.Keyboard }
+    idArgs: { id: string; controllerType: ControllerType.Gamepad; gamepadIndex: number } | { controllerType: ControllerType.Keyboard }
 ): string {
     if (idArgs.controllerType === ControllerType.Gamepad) {
         return `${idArgs.id}/${idArgs.controllerType}/${idArgs.gamepadIndex}`;

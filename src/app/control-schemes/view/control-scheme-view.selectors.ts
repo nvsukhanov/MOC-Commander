@@ -112,7 +112,7 @@ export type ControlSchemeViewBindingTreeNode = {
     readonly operationMode: HubIoOperationMode;
     readonly ioHasNoRequiredCapabilities: boolean;
     readonly children: [];
-}
+};
 
 export type ControlSchemeViewIoTreeNode = {
     readonly path: string;
@@ -121,7 +121,7 @@ export type ControlSchemeViewIoTreeNode = {
     readonly ioType: IOType | null;
     readonly isConnected: boolean;
     readonly children: ControlSchemeViewBindingTreeNode[];
-}
+};
 
 export type ControlSchemeViewHubTreeNode = {
     readonly path: string;

@@ -43,7 +43,7 @@ export class ControllersListComponent {
 
     public controllerTrackById(
         index: number,
-        controllerWithSettings: { controller: ControllerModel, settings?: ControllerSettingsModel }
+        controllerWithSettings: { controller: ControllerModel; settings?: ControllerSettingsModel }
     ): string {
         return controllerWithSettings.controller.id;
     }

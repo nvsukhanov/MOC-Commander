@@ -4,7 +4,7 @@ import { HUBS_ACTIONS } from '../actions';
 
 export type HubEditFormActiveSavesState = {
     hubIds: string[];
-}
+};
 
 export const HUB_EDIT_FORM_ACTIVE_SAVES_INITIAL_STATE = {
     hubIds: [] as string[]

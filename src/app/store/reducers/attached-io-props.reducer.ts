@@ -12,7 +12,7 @@ export const ATTACHED_IO_PROPS_ENTITY_ADAPTER: EntityAdapter<AttachedIoPropsMode
 });
 
 export function hubAttachedIoPropsIdFn(
-    { hubId, portId }: { hubId: string, portId: number }
+    { hubId, portId }: { hubId: string; portId: number }
 ): string {
     return `${hubId}/${portId}`;
 }

@@ -4,4 +4,4 @@ export type HubStatsModel = {
     isButtonPressed: boolean;
     batteryLevel: number | null;
     hasCommunication: boolean;
-}
+};

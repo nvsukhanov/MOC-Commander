@@ -11,7 +11,7 @@ export const PORT_TASKS_ENTITY_ADAPTER = createEntityAdapter<PortTasksModel>({
 });
 
 export function hubPortTasksIdFn(
-    { hubId, portId }: { hubId: string, portId: number }
+    { hubId, portId }: { hubId: string; portId: number }
 ): string {
     return `${hubId}/${portId}`;
 }

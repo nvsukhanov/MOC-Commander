@@ -5,4 +5,4 @@ export type ControllerInputModel = {
     inputType: ControllerInputType;
     inputId: string;
     value: number;
-}
+};

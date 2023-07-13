@@ -12,7 +12,7 @@ export const ATTACHED_IO_MODES_ENTITY_ADAPTER: EntityAdapter<AttachedIoModesMode
 });
 
 export function attachedIoModesIdFn(
-    { hardwareRevision, softwareRevision, ioType }: { hardwareRevision: string, softwareRevision: string, ioType: IOType }
+    { hardwareRevision, softwareRevision, ioType }: { hardwareRevision: string; softwareRevision: string; ioType: IOType }
 ): string {
     return `${hardwareRevision}/${softwareRevision}/${ioType}`;
 }

@@ -12,7 +12,7 @@ export const ATTACHED_IO_PORT_MODE_INFO_ENTITY_ADAPTER: EntityAdapter<AttachedIo
 });
 
 export function attachedIoPortModeInfoIdFn(
-    { hardwareRevision, softwareRevision, ioType, modeId }: { hardwareRevision: string, softwareRevision: string, ioType: IOType, modeId: number }
+    { hardwareRevision, softwareRevision, ioType, modeId }: { hardwareRevision: string; softwareRevision: string; ioType: IOType; modeId: number }
 ): string {
     return `${hardwareRevision}/${softwareRevision}/${ioType}/${modeId}`;
 }

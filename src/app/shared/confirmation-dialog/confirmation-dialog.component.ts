@@ -11,7 +11,7 @@ export type ConfirmDialogData = {
     readonly content$?: Observable<string>;
     readonly confirmTitle$?: Observable<string>;
     readonly cancelTitle$?: Observable<string>;
-}
+};
 
 @Component({
     standalone: true,
