@@ -31,8 +31,8 @@ function selectIosControllableByInputType(
 }
 
 export type IoWithOperationModes = {
-    ioConfig: AttachedIoModel,
-    operationModes: HubIoOperationMode[]
+    ioConfig: AttachedIoModel;
+    operationModes: HubIoOperationMode[];
 };
 
 export const CONTROL_SCHEME_EDIT_SELECTORS = {
@@ -63,7 +63,7 @@ export const CONTROL_SCHEME_EDIT_SELECTORS = {
         ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
         (ios, supportedModes, portModeData) => selectIosControllableByInputType(ios, supportedModes, portModeData, inputType)
     ),
-    canCalibrateServo: ({ hubId, portId }: { hubId: string, portId: number }) => createSelector(
+    canCalibrateServo: ({ hubId, portId }: { hubId: string; portId: number }) => createSelector(
         HUB_STATS_SELECTORS.selectIsHubConnected(hubId),
         ATTACHED_IO_SELECTORS.selectIoAtPort({ hubId, portId }),
         ATTACHED_IO_MODES_SELECTORS.selectEntities,

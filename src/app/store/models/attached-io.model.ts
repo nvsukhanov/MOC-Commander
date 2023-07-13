@@ -6,4 +6,4 @@ export type AttachedIoModel = {
     ioType: IOType;
     hardwareRevision: string;
     softwareRevision: string;
-}
+};

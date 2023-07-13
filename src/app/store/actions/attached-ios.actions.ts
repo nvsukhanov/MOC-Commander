@@ -6,6 +6,6 @@ export const ATTACHED_IOS_ACTIONS = createActionGroup({
     source: 'Attached IOs',
     events: {
         'io connected': props<{ io: AttachedIoModel }>(),
-        'io disconnected': props<{ hubId: string, portId: number }>(),
+        'io disconnected': props<{ hubId: string; portId: number }>(),
     }
 });

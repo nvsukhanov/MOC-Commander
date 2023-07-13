@@ -5,4 +5,4 @@ export type AttachedIoPortModeInfoModel = {
     modeId: number;
     name: PortModeName;
     symbol: PortModeSymbol;
-}
+};

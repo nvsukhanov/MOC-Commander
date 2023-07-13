@@ -190,10 +190,10 @@ export class ControlSchemeEditFormComponent implements OnInit, OnDestroy {
         this.cdRef.markForCheck();
     }
 
-    private requestInput(): Observable<{ input: ControllerInputModel, ioWithModes: IoWithOperationModes }> {
+    private requestInput(): Observable<{ input: ControllerInputModel; ioWithModes: IoWithOperationModes }> {
         return this.matDialog.open(WaitingForInputDialogComponent).afterClosed().pipe(
             take(1),
             filter((result) => !!result),
-        ) as Observable<{ input: ControllerInputModel, ioWithModes: IoWithOperationModes }>;
+        ) as Observable<{ input: ControllerInputModel; ioWithModes: IoWithOperationModes }>;
     }
 }

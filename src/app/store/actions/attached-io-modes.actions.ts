@@ -6,10 +6,10 @@ export const ATTACHED_IO_MODES_ACTIONS = createActionGroup({
     source: 'Attached IO Modes',
     events: {
         'port modes received': props<{
-            io: AttachedIoModel,
-            portInputModes: number[]
-            portOutputModes: number[],
-            synchronizable: boolean
+            io: AttachedIoModel;
+            portInputModes: number[];
+            portOutputModes: number[];
+            synchronizable: boolean;
         }>(),
     }
 });

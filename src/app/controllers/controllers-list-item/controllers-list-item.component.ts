@@ -38,7 +38,7 @@ export class ControllersListItemComponent {
 
     @Input()
     public set controller(
-        controllerWithSettings: { controller: ControllerModel, settings?: ControllerSettingsModel } | undefined
+        controllerWithSettings: { controller: ControllerModel; settings?: ControllerSettingsModel } | undefined
     ) {
         this._controllerPlugin = this.controllerPluginFactoryService.getPlugin(
             controllerWithSettings?.controller?.controllerType,

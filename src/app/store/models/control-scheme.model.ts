@@ -7,19 +7,19 @@ export type ControlSchemeModel = {
     index: number;
     name: string;
     bindings: ControlSchemeBinding[];
-}
+};
 
 export type ControlSchemeBindingInput = {
     controllerId: string;
     inputType: ControllerInputType;
     inputId: string;
-}
+};
 
 export type ControlSchemeBinding = {
     id: string;
     input: ControlSchemeBindingInput;
     output: BindingOutputState;
-}
+};
 
 export type BindingLinearOutputState = {
     hubId: string;
@@ -30,8 +30,8 @@ export type BindingLinearOutputState = {
         isToggle: boolean;
         invert: boolean;
         power: number;
-    }
-}
+    };
+};
 
 export type BindingServoOutputState = {
     hubId: string;
@@ -43,8 +43,8 @@ export type BindingServoOutputState = {
         speed: number;
         power: number;
         invert: boolean;
-    }
-}
+    };
+};
 
 export type BindingSetAngleOutputState = {
     hubId: string;
@@ -55,8 +55,8 @@ export type BindingSetAngleOutputState = {
         speed: number;
         power: number;
         endState: MotorServoEndState;
-    }
-}
+    };
+};
 
 export type BindingStepperOutputState = {
     hubId: string;
@@ -67,8 +67,8 @@ export type BindingStepperOutputState = {
         speed: number;
         power: number;
         endState: MotorServoEndState;
-    }
-}
+    };
+};
 
 export type BindingOutputState = BindingLinearOutputState
     | BindingServoOutputState

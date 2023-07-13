@@ -6,4 +6,4 @@ export type PortTasksModel = {
     queue: PortCommandTask[];
     runningTask: PortCommandTask | null;
     lastExecutedTask: PortCommandTask | null;
-}
+};

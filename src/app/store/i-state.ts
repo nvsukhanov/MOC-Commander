@@ -17,20 +17,20 @@ import {
 } from './reducers';
 
 export interface IState {
-    bluetoothAvailability: BluetoothAvailabilityState,
+    bluetoothAvailability: BluetoothAvailabilityState;
     controllers: ControllersState;
     controllerInput: ControllerInputState;
     controllerSettings: ControllerSettingsState;
     controlSchemes: ControlSchemeState;
-    hubs: HubsState,
-    hubStats: HubStatsState,
-    attachedIos: AttachedIOState,
-    attachedIoProps: AttacheIoPropsState,
-    attachedIoModes: AttachedIoModesState,
-    attachedIoPortModeInfo: AttachedIoPortModeInfoState,
-    hubEditFormActiveSaves: HubEditFormActiveSavesState,
-    portTasks: PortTasksState,
-    router: RouterState
+    hubs: HubsState;
+    hubStats: HubStatsState;
+    attachedIos: AttachedIOState;
+    attachedIoProps: AttacheIoPropsState;
+    attachedIoModes: AttachedIoModesState;
+    attachedIoPortModeInfo: AttachedIoPortModeInfoState;
+    hubEditFormActiveSaves: HubEditFormActiveSavesState;
+    portTasks: PortTasksState;
+    router: RouterState;
 }
 
 

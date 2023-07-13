@@ -14,9 +14,9 @@ import { ControllerPluginFactoryService } from '../../../plugins';
 import { ControllerInputType } from '@app/shared';
 
 export type ControlSchemeBindingInputForm = FormGroup<{
-    controllerId: FormControl<string>,
-    inputId: FormControl<string>,
-    inputType: FormControl<ControllerInputType>
+    controllerId: FormControl<string>;
+    inputId: FormControl<string>;
+    inputType: FormControl<ControllerInputType>;
 }>;
 
 @Component({

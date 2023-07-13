@@ -14,7 +14,7 @@ export const CONTROLLER_INPUT_ENTITY_ADAPTER: EntityAdapter<ControllerInputModel
 });
 
 export function controllerInputIdFn(
-    { controllerId, inputId, inputType }: { controllerId: string, inputId: string, inputType: ControllerInputType }
+    { controllerId, inputId, inputType }: { controllerId: string; inputId: string; inputType: ControllerInputType }
 ): string {
     return `${controllerId}/${inputType}/${inputId}`;
 }

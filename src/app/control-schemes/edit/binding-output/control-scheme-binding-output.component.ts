@@ -18,18 +18,18 @@ import { ATTACHED_IO_SELECTORS, AttachedIoModel, HUBS_SELECTORS, HUB_STATS_SELEC
 import { CONTROL_SCHEME_EDIT_SELECTORS } from '../control-scheme-edit.selectors';
 
 export type LinearOutputConfigurationForm = FormGroup<{
-    maxSpeed: FormControl<number>,
-    isToggle: FormControl<boolean>,
-    invert: FormControl<boolean>,
-    power: FormControl<number>
+    maxSpeed: FormControl<number>;
+    isToggle: FormControl<boolean>;
+    invert: FormControl<boolean>;
+    power: FormControl<number>;
 }>;
 
 export type ServoOutputConfigurationForm = FormGroup<{
-    range: FormControl<number>,
-    aposCenter: FormControl<number>,
-    speed: FormControl<number>,
-    power: FormControl<number>,
-    invert: FormControl<boolean>,
+    range: FormControl<number>;
+    aposCenter: FormControl<number>;
+    speed: FormControl<number>;
+    power: FormControl<number>;
+    invert: FormControl<boolean>;
 }>;
 
 export type SetAngleOutputConfigurationForm = FormGroup<{
@@ -47,13 +47,13 @@ export type StepperOutputConfigurationForm = FormGroup<{
 }>;
 
 export type ControlSchemeBindingOutputForm = FormGroup<{
-    hubId: FormControl<string>,
-    portId: FormControl<number>,
-    operationMode: FormControl<HubIoOperationMode>,
-    linearConfig: LinearOutputConfigurationForm,
-    servoConfig: ServoOutputConfigurationForm,
-    setAngleConfig: SetAngleOutputConfigurationForm,
-    stepperConfig: StepperOutputConfigurationForm
+    hubId: FormControl<string>;
+    portId: FormControl<number>;
+    operationMode: FormControl<HubIoOperationMode>;
+    linearConfig: LinearOutputConfigurationForm;
+    servoConfig: ServoOutputConfigurationForm;
+    setAngleConfig: SetAngleOutputConfigurationForm;
+    stepperConfig: StepperOutputConfigurationForm;
 }>;
 
 @Component({

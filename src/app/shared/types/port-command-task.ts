@@ -8,34 +8,34 @@ export enum PortCommandTaskType {
 }
 
 export type SetLinearSpeedTaskPayload = {
-    taskType: PortCommandTaskType.SetSpeed,
-    activeInput: boolean,
-    speed: number,
-    power: number,
+    taskType: PortCommandTaskType.SetSpeed;
+    activeInput: boolean;
+    speed: number;
+    power: number;
 };
 
 export type ServoTaskPayload = {
-    taskType: PortCommandTaskType.Servo,
-    angle: number,
-    speed: number,
-    power: number,
-    endState: MotorServoEndState,
+    taskType: PortCommandTaskType.Servo;
+    angle: number;
+    speed: number;
+    power: number;
+    endState: MotorServoEndState;
 };
 
 export type SetAngleTaskPayload = {
-    taskType: PortCommandTaskType.SetAngle,
-    angle: number,
-    speed: number,
-    power: number,
-    endState: MotorServoEndState,
+    taskType: PortCommandTaskType.SetAngle;
+    angle: number;
+    speed: number;
+    power: number;
+    endState: MotorServoEndState;
 };
 
 export type StepperTaskPayload = {
-    taskType: PortCommandTaskType.Stepper,
-    degree: number,
-    speed: number,
-    power: number,
-    endState: MotorServoEndState,
+    taskType: PortCommandTaskType.Stepper;
+    degree: number;
+    speed: number;
+    power: number;
+    endState: MotorServoEndState;
 };
 
 export type PortCommandTaskPayload = SetLinearSpeedTaskPayload
@@ -44,9 +44,9 @@ export type PortCommandTaskPayload = SetLinearSpeedTaskPayload
     | StepperTaskPayload;
 
 export type PortCommandTask = {
-    hubId: string,
-    portId: number,
-    bindingId: string,
-    payload: PortCommandTaskPayload,
-    hash: string
-}
+    hubId: string;
+    portId: number;
+    bindingId: string;
+    payload: PortCommandTaskPayload;
+    hash: string;
+};

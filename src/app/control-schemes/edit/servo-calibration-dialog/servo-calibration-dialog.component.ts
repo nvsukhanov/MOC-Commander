@@ -11,7 +11,7 @@ export type ServoCalibrationDialogData = {
     hubId: string;
     portId: number;
     power: number;
-}
+};
 
 @Component({
     standalone: true,
