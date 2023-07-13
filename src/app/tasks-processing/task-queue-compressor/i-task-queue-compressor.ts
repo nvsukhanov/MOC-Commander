@@ -1,5 +1,5 @@
 import { PortCommandTask } from '@app/shared';
 
-export interface ITaskSpecificQueueCompressor {
+export interface ITaskQueueCompressor {
     compress(queue: PortCommandTask[]): PortCommandTask[];
 }

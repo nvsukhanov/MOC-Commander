@@ -17,12 +17,10 @@ export function hubAttachedIoPropsIdFn(
     return `${hubId}/${portId}`;
 }
 
-export const ATTACHED_IO_PROPS_INITIAL_STATE = ATTACHED_IO_PROPS_ENTITY_ADAPTER.getInitialState();
-
 export const ATTACHED_IO_PROPS_FEATURE = createFeature({
     name: 'attachedIoProps',
     reducer: createReducer(
-        ATTACHED_IO_PROPS_INITIAL_STATE,
+        ATTACHED_IO_PROPS_ENTITY_ADAPTER.getInitialState(),
         on(ATTACHED_IOS_ACTIONS.ioDisconnected, (state, data): AttacheIoPropsState => ATTACHED_IO_PROPS_ENTITY_ADAPTER.removeOne(
             attachedIosIdFn(data),
             state
@@ -34,9 +32,10 @@ export const ATTACHED_IO_PROPS_FEATURE = createFeature({
                     motorEncoderOffset: data.offset,
                 },
                 state
-            )),
+            )
+        ),
         on(HUBS_ACTIONS.forgetHub, (state, { hubId }): AttacheIoPropsState =>
             ATTACHED_IO_PROPS_ENTITY_ADAPTER.removeMany((io) => io.hubId === hubId, state)
-        ),
+        )
     )
 });

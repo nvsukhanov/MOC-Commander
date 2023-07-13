@@ -1,17 +1,16 @@
 import { PortCommandTaskComposer } from '../port-command-task-composer';
-import { AttachedIoPropsModel, ControlSchemeBinding } from '../../../store';
-import { HubIoOperationMode, PortCommandSetAngle, PortCommandTaskType } from '@app/shared';
+import { ControlSchemeBinding } from '../../../store';
+import { HubIoOperationMode, PortCommandTaskType, SetAngleTaskPayload } from '@app/shared';
 
-export class SetAngleComposer extends PortCommandTaskComposer {
+export class SetAngleComposer extends PortCommandTaskComposer<SetAngleTaskPayload> {
     private readonly inputValueThreshold = 0.5;
 
-    protected handle(
+    protected composePayload(
         binding: ControlSchemeBinding,
-        inputValue: number,
-        ioState: AttachedIoPropsModel,
-    ): PortCommandSetAngle | null {
+        inputValue: number
+    ): SetAngleTaskPayload | null {
         const outputConfig = binding.output;
-        if (outputConfig.operationMode !== HubIoOperationMode.SetAngle || ioState === undefined || ioState.motorEncoderOffset === null) {
+        if (outputConfig.operationMode !== HubIoOperationMode.SetAngle) {
             return null;
         }
         if (inputValue < this.inputValueThreshold) {
@@ -19,15 +18,21 @@ export class SetAngleComposer extends PortCommandTaskComposer {
         }
         return {
             taskType: PortCommandTaskType.SetAngle,
-            hubId: outputConfig.hubId,
-            portId: outputConfig.portId,
-            bindingId: binding.id,
-            isNeutral: true,
             angle: outputConfig.setAngleConfig.angle,
             speed: outputConfig.setAngleConfig.speed,
             power: outputConfig.setAngleConfig.power,
             endState: outputConfig.setAngleConfig.endState,
-            createdAt: Date.now(),
         };
+    }
+
+    protected calculatePayloadHash(
+        payload: SetAngleTaskPayload
+    ): string {
+        return [
+            payload.angle,
+            payload.speed,
+            payload.power,
+            payload.endState
+        ].join('_');
     }
 }

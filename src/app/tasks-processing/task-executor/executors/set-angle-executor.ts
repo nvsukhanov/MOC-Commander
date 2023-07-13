@@ -2,21 +2,21 @@ import { Observable } from 'rxjs';
 import { IHub, PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 
 import { TaskExecutor } from '../task-executor';
-import { PortCommandSetAngle, PortCommandTaskType } from '@app/shared';
+import { PortCommandTask, PortCommandTaskType } from '@app/shared';
 
 export class SetAngleExecutor extends TaskExecutor {
     protected handle(
-        task: PortCommandSetAngle,
+        task: PortCommandTask,
         hub: IHub
     ): Observable<PortCommandExecutionStatus> | null {
-        if (task.taskType === PortCommandTaskType.SetAngle) {
+        if (task.payload.taskType === PortCommandTaskType.SetAngle) {
             return hub.motors.goToPosition(
                 task.portId,
-                task.angle,
+                task.payload.angle,
                 {
-                    speed: task.speed,
-                    power: task.power,
-                    endState: task.endState,
+                    speed: task.payload.speed,
+                    power: task.payload.power,
+                    endState: task.payload.endState,
                 }
             );
         }

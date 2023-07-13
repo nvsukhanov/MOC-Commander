@@ -11,9 +11,9 @@ import {
     ControllerSettingsState,
     ControllersState,
     HubEditFormActiveSavesState,
-    HubPortTasksState,
     HubStatsState,
     HubsState,
+    PortTasksState,
 } from './reducers';
 
 export interface IState {
@@ -28,9 +28,9 @@ export interface IState {
     attachedIoProps: AttacheIoPropsState,
     attachedIoModes: AttachedIoModesState,
     attachedIoPortModeInfo: AttachedIoPortModeInfoState,
-    hubPortTasks: HubPortTasksState,
     hubEditFormActiveSaves: HubEditFormActiveSavesState,
-    router: RouterState;
+    portTasks: PortTasksState,
+    router: RouterState
 }
 
 

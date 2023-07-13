@@ -29,23 +29,6 @@
         </ng-container>
     </ng-template>
 
-    <mat-accordion *ngIf="isCurrentControlSchemeRunning$ | ngrxPush">
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    {{ 'controlScheme.runningDetailsIsRunningNotification' | transloco }}
-                </mat-panel-title>
-                <mat-panel-description>
-                    {{ 'controlScheme.runningDetailsTasksQueueDetails' | transloco }}
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            <p>{{ 'controlScheme.runningDetailsQueueCurrentLength' | transloco }} {{ queueLength$ | ngrxPush }}</p>
-            <p>{{ 'controlScheme.runningDetailsMaximumEncounteredQueueLength' | transloco }} {{ maxQueueLength$ | ngrxPush }}</p>
-            <p>{{ 'controlScheme.runningDetailsTotalTasksExecuted' | transloco }} {{ totalTasksExecuted$ | ngrxPush }}</p>
-            <p>{{ 'controlScheme.runningDetailsLastTenTasksAverageExecutionTime' | transloco }}{{ lastTenTaskAverageExecutionTime$ | ngrxPush }}</p>
-        </mat-expansion-panel>
-    </mat-accordion>
-
     <section class="ios">
         <app-control-scheme-view-io-list [tree]="schemeViewTree$ | ngrxPush"></app-control-scheme-view-io-list>
     </section>

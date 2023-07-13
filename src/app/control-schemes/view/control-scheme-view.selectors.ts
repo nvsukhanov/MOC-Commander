@@ -15,10 +15,10 @@ import {
     ControlSchemeModel,
     ControllerModel,
     HUBS_SELECTORS,
-    HUB_PORT_TASKS_SELECTORS,
     HUB_STATS_SELECTORS,
     HubModel,
     HubStatsModel,
+    PORT_TASKS_SELECTORS,
     ROUTER_SELECTORS,
     attachedIosIdFn
 } from '../../store';
@@ -150,7 +150,7 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
         ATTACHED_IO_MODES_SELECTORS.selectEntities,
         ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
         CONTROLLER_SELECTORS.selectEntities,
-        HUB_PORT_TASKS_SELECTORS.selectLastExecutedBindingIds,
+        PORT_TASKS_SELECTORS.selectLastExecutedBindingIds,
         (
             scheme: ControlSchemeModel | undefined,
             hubEntities: Dictionary<HubModel>,

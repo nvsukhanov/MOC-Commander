@@ -1,23 +1,23 @@
 import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 
 import { PortCommandTaskComposer } from '../port-command-task-composer';
-import { AttachedIoPropsModel, BindingServoOutputState, ControlSchemeBinding } from '../../../store';
-import { HubIoOperationMode, PortCommandServoTask, PortCommandTaskType, getTranslationArcs } from '@app/shared';
+import { ControlSchemeBinding } from '../../../store';
+import { HubIoOperationMode, PortCommandTaskType, ServoTaskPayload, getTranslationArcs } from '@app/shared';
 
-export class ServoComposer extends PortCommandTaskComposer {
+export class ServoComposer extends PortCommandTaskComposer<ServoTaskPayload> {
     private readonly snappingThreshold = 10;
 
-    protected handle(
+    protected composePayload(
         binding: ControlSchemeBinding,
         inputValue: number,
-        ioState?: AttachedIoPropsModel
-    ): PortCommandServoTask | null {
+        motorEncoderOffset: number,
+    ): ServoTaskPayload | null {
         const outputConfig = binding.output;
-        if (outputConfig.operationMode !== HubIoOperationMode.Servo || ioState === undefined || ioState.motorEncoderOffset === null) {
+        if (outputConfig.operationMode !== HubIoOperationMode.Servo) {
             return null;
         }
 
-        const translationPaths = getTranslationArcs(ioState.motorEncoderOffset, outputConfig.servoConfig.aposCenter);
+        const translationPaths = getTranslationArcs(motorEncoderOffset, outputConfig.servoConfig.aposCenter);
         const resultingCenter = translationPaths.cw < translationPaths.ccw ? translationPaths.cw : -translationPaths.ccw;
 
         const arcSize = outputConfig.servoConfig.range;
@@ -29,13 +29,25 @@ export class ServoComposer extends PortCommandTaskComposer {
 
         const snappedAngle = this.snapAngle(targetAngle, resultingCenter, minAngle, maxAngle);
 
-        return this.composeServoTask(
-            binding.id,
-            outputConfig,
-            snappedAngle,
-            outputConfig.servoConfig.speed,
-            resultingCenter
-        );
+        return {
+            taskType: PortCommandTaskType.Servo,
+            angle: Math.round(snappedAngle),
+            speed: Math.round(outputConfig.servoConfig.speed),
+            power: outputConfig.servoConfig.power,
+            endState: MotorServoEndState.hold,
+        };
+    }
+
+    protected calculatePayloadHash(
+        payload: ServoTaskPayload
+    ): string {
+        return [
+            payload.taskType,
+            payload.angle,
+            payload.speed,
+            payload.power,
+            payload.endState
+        ].join('_');
     }
 
     private snapAngle(
@@ -47,26 +59,5 @@ export class ServoComposer extends PortCommandTaskComposer {
         const snappedToZeroAngle = Math.abs(targetAngle - arcCenter) < this.snappingThreshold ? arcCenter : targetAngle;
         const snappedToMaxAngle = Math.abs(snappedToZeroAngle - maxAngle) < this.snappingThreshold ? maxAngle : snappedToZeroAngle;
         return Math.abs(snappedToMaxAngle - minAngle) < this.snappingThreshold ? minAngle : snappedToMaxAngle;
-    }
-
-    private composeServoTask(
-        bindingId: string,
-        outputState: BindingServoOutputState,
-        targetAngle: number,
-        targetSpeed: number,
-        arcCenter: number
-    ): PortCommandServoTask {
-        return {
-            taskType: PortCommandTaskType.Servo,
-            hubId: outputState.hubId,
-            portId: outputState.portId,
-            bindingId: bindingId,
-            isNeutral: Math.round(targetAngle) === arcCenter,
-            angle: Math.round(targetAngle),
-            speed: Math.round(targetSpeed),
-            power: outputState.servoConfig.power,
-            endState: MotorServoEndState.hold,
-            createdAt: Date.now(),
-        };
     }
 }

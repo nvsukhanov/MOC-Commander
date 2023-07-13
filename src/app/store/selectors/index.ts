@@ -8,7 +8,7 @@ export * from './controller-input.selectors';
 export * from './controller-settings.selectors';
 export * from './controllers.selectors';
 export * from './hub-edit-form-active-saves.selectors';
-export * from './hub-port-tasks.selectors';
+export * from './port-tasks.selectors';
 export * from './hub-stats.selectors';
 export * from './hubs.selectors';
 export * from './router.selectors';
