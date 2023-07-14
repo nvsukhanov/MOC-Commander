@@ -1,10 +1,8 @@
 import { ITaskQueueCompressor } from '../i-task-queue-compressor';
 import { PortCommandTask, PortCommandTaskType } from '../../../models';
-import { StepperTaskBuilder } from '../task-builder/stepper-task-builder';
+import { payloadHash } from '../payload-hash';
 
 export class StepperTaskCompressor implements ITaskQueueCompressor {
-    private taskBuilder = new StepperTaskBuilder();
-
     /**
      * Compresses stepper tasks into one task with accumulated degree
      * @param queue
@@ -31,7 +29,7 @@ export class StepperTaskCompressor implements ITaskQueueCompressor {
         if (totalStepperTaskCount > 1) {
             const result = queue.map((task) => {
                 if (task === firstStepperTask) {
-                    const updatedFirstTask: PortCommandTask<PortCommandTaskType.Stepper> = {
+                    const updatedFirstTask = {
                         ...firstStepperTask,
                         payload: {
                             ...firstStepperTask.payload,
@@ -39,7 +37,7 @@ export class StepperTaskCompressor implements ITaskQueueCompressor {
 
                         }
                     };
-                    updatedFirstTask.hash = this.taskBuilder.calculatePayloadHash(updatedFirstTask.payload);
+                    updatedFirstTask.hash = payloadHash(updatedFirstTask.payload);
                     return updatedFirstTask;
                 }
                 if (task.payload.taskType === PortCommandTaskType.Stepper) {

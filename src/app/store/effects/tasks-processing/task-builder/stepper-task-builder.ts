@@ -3,18 +3,6 @@ import { ControlSchemeBinding, PortCommandTaskType, StepperTaskPayload } from '.
 import { HubIoOperationMode } from '@app/shared';
 
 export class StepperTaskBuilder extends BaseTaskBuilder<StepperTaskPayload> {
-    public calculatePayloadHash(
-        payload: StepperTaskPayload
-    ): string {
-        return [
-            payload.taskType,
-            payload.degree,
-            payload.speed,
-            payload.power,
-            payload.endState
-        ].join('_');
-    }
-
     protected buildPayload(
         binding: ControlSchemeBinding,
         inputValue: number,
