@@ -9,9 +9,9 @@ import { ControlSchemeBinding, PortCommandTask } from '../../models';
 import { attachedIosIdFn } from '../../reducers';
 import { HubStorageService } from '../../hub-storage.service';
 import { IPortCommandTaskBuilder, PortCommandTaskBuilderFactoryService } from './task-builder';
-import { ITaskSuppressor, TaskSuppressorFactory } from './task-suppressor';
 import { ITaskRunner, TaskRunnerFactoryService } from './task-runner';
 import { ITaskQueueCompressor, TaskQueueCompressorFactoryService } from './task-queue-compressor';
+import { taskFilter } from './task-filter';
 
 @Injectable()
 export class TaskProcessingEffects {
@@ -78,8 +78,6 @@ export class TaskProcessingEffects {
 
     private taskBuilder: IPortCommandTaskBuilder;
 
-    private readonly taskSuppressor: ITaskSuppressor;
-
     private readonly taskRunner: ITaskRunner;
 
     private readonly taskQueueCompressor: ITaskQueueCompressor;
@@ -89,12 +87,10 @@ export class TaskProcessingEffects {
         private readonly actions: Actions,
         private readonly hubStorage: HubStorageService,
         portCommandTaskBuilderFactory: PortCommandTaskBuilderFactoryService,
-        taskSuppressorFactory: TaskSuppressorFactory,
         taskRunnerFactory: TaskRunnerFactoryService,
         tasksQueueCompressorFactory: TaskQueueCompressorFactoryService
     ) {
         this.taskBuilder = portCommandTaskBuilderFactory.create();
-        this.taskSuppressor = taskSuppressorFactory.create();
         this.taskRunner = taskRunnerFactory.create();
         this.taskQueueCompressor = tasksQueueCompressorFactory.create();
     }
@@ -150,11 +146,7 @@ export class TaskProcessingEffects {
                 previousTask
             );
             if (task) {
-                const shouldSuppress = this.taskSuppressor.shouldSuppressTask(
-                    task,
-                    previousTask
-                );
-                if (!shouldSuppress) {
+                if (taskFilter(task, previousTask)) {
                     result.push(task);
                     previousTask = task;
                 }

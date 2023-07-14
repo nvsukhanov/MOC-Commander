@@ -43,10 +43,10 @@ export type PortCommandTaskPayload = SetLinearSpeedTaskPayload
     | SetAngleTaskPayload
     | StepperTaskPayload;
 
-export type PortCommandTask = {
+export type PortCommandTask<TPayloadType extends PortCommandTaskType = PortCommandTaskType> = {
     hubId: string;
     portId: number;
     bindingId: string;
-    payload: PortCommandTaskPayload;
+    payload: PortCommandTaskPayload & { taskType: TPayloadType };
     hash: string;
 };
