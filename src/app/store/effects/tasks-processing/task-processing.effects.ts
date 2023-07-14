@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Action, Store } from '@ngrx/store';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Observable, filter, from, map, mergeMap, switchMap, takeUntil } from 'rxjs';
@@ -8,10 +8,10 @@ import { BindingTaskComposingData, CONTROL_SCHEME_SELECTORS, PORT_TASKS_SELECTOR
 import { ControlSchemeBinding, PortCommandTask } from '../../models';
 import { attachedIosIdFn } from '../../reducers';
 import { HubStorageService } from '../../hub-storage.service';
-import { IPortCommandTaskBuilder, PortCommandTaskBuilderFactoryService } from './task-builder';
-import { ITaskRunner, TaskRunnerFactoryService } from './task-runner';
-import { ITaskQueueCompressor, TaskQueueCompressorFactoryService } from './task-queue-compressor';
 import { taskFilter } from './task-filter';
+import { ITaskBuilder, TASK_BUILDER } from './i-task-builder';
+import { ITaskQueueCompressor, TASK_QUEUE_COMPRESSOR } from './i-task-queue-compressor';
+import { ITaskRunner, TASK_RUNNER } from './i-task-runner';
 
 @Injectable()
 export class TaskProcessingEffects {
@@ -76,23 +76,14 @@ export class TaskProcessingEffects {
         );
     });
 
-    private taskBuilder: IPortCommandTaskBuilder;
-
-    private readonly taskRunner: ITaskRunner;
-
-    private readonly taskQueueCompressor: ITaskQueueCompressor;
-
     constructor(
         private readonly store: Store,
         private readonly actions: Actions,
         private readonly hubStorage: HubStorageService,
-        portCommandTaskBuilderFactory: PortCommandTaskBuilderFactoryService,
-        taskRunnerFactory: TaskRunnerFactoryService,
-        tasksQueueCompressorFactory: TaskQueueCompressorFactoryService
+        @Inject(TASK_BUILDER) private taskBuilder: ITaskBuilder,
+        @Inject(TASK_RUNNER) private readonly taskRunner: ITaskRunner,
+        @Inject(TASK_QUEUE_COMPRESSOR) private readonly taskQueueCompressor: ITaskQueueCompressor
     ) {
-        this.taskBuilder = portCommandTaskBuilderFactory.create();
-        this.taskRunner = taskRunnerFactory.create();
-        this.taskQueueCompressor = tasksQueueCompressorFactory.create();
     }
 
     private groupBindingsByHubsPortId(

@@ -1,4 +1,4 @@
-import { ITaskQueueCompressor } from './i-task-queue-compressor';
+import { ITaskQueueCompressor } from '../i-task-queue-compressor';
 import { PortCommandTask, PortCommandTaskType } from '../../../models';
 
 export class LastOfTypeTaskCompressor implements ITaskQueueCompressor {
