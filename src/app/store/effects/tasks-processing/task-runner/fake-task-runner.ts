@@ -1,17 +1,17 @@
 import { ILogger, PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 import { Observable, debounceTime, from, take } from 'rxjs';
 
-import { ITaskExecutor } from './i-task-executor';
+import { ITaskRunner } from './i-task-runner';
 import { PortCommandTask } from '../../../models';
 
-export class FakeTaskExecutor implements ITaskExecutor {
+export class FakeTaskRunner implements ITaskRunner {
     constructor(
         private readonly taskExecutionDuration: number,
         private readonly logger: ILogger
     ) {
     }
 
-    public executeTask(
+    public runTask(
         task: PortCommandTask,
     ): Observable<PortCommandExecutionStatus> {
         this.logger.debug('Executing task', JSON.stringify(task));

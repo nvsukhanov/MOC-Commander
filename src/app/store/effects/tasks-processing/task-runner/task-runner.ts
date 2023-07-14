@@ -1,18 +1,18 @@
 import { IHub, PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 import { Observable, of } from 'rxjs';
 
-import { ITaskExecutor } from './i-task-executor';
+import { ITaskRunner } from './i-task-runner';
 import { PortCommandTask } from '../../../models';
 
-export abstract class TaskExecutor implements ITaskExecutor {
-    private next?: TaskExecutor;
+export abstract class TaskRunner implements ITaskRunner {
+    private next?: TaskRunner;
 
     protected abstract handle(
         task: PortCommandTask,
         hub: IHub
     ): Observable<PortCommandExecutionStatus> | null;
 
-    public executeTask(
+    public runTask(
         task: PortCommandTask,
         hub: IHub
     ): Observable<PortCommandExecutionStatus> {
@@ -24,12 +24,12 @@ export abstract class TaskExecutor implements ITaskExecutor {
             return result;
         }
         if (this.next) {
-            return this.next.executeTask(task, hub);
+            return this.next.runTask(task, hub);
         }
         return of(PortCommandExecutionStatus.discarded);
     }
 
-    public setNext(next: TaskExecutor): TaskExecutor {
+    public setNext(next: TaskRunner): TaskRunner {
         this.next = next;
         return next;
     }

@@ -1,10 +1,10 @@
 import { IHub, MotorUseProfile, PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 import { Observable } from 'rxjs';
 
-import { TaskExecutor } from '../task-executor';
+import { TaskRunner } from '../task-runner';
 import { PortCommandTask, PortCommandTaskType } from '../../../../models';
 
-export class SetSpeedExecutor extends TaskExecutor {
+export class SetSpeedTaskRunner extends TaskRunner {
     protected handle(
         task: PortCommandTask,
         hub: IHub

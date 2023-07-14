@@ -8,9 +8,9 @@ import { BindingTaskComposingData, CONTROL_SCHEME_SELECTORS, PORT_TASKS_SELECTOR
 import { ControlSchemeBinding, PortCommandTask } from '../../models';
 import { attachedIosIdFn } from '../../reducers';
 import { HubStorageService } from '../../hub-storage.service';
-import { IPortCommandTaskComposer, PortCommandTaskComposerFactoryService } from './task-composer';
+import { IPortCommandTaskBuilder, PortCommandTaskBuilderFactoryService } from './task-builder';
 import { ITaskSuppressor, TaskSuppressorFactory } from './task-suppressor';
-import { ITaskExecutor, TaskExecutorFactoryService } from './task-executor';
+import { ITaskRunner, TaskRunnerFactoryService } from './task-runner';
 import { ITaskQueueCompressor, TaskQueueCompressorFactoryService } from './task-queue-compressor';
 
 @Injectable()
@@ -70,17 +70,17 @@ export class TaskProcessingEffects {
     public readonly executeTask$ = createEffect(() => {
         return this.actions.pipe(
             ofType(PORT_TASKS_ACTIONS.runTask),
-            mergeMap((action) => this.taskExecutor.executeTask(action.task, this.hubStorage.get(action.task.hubId)).pipe(
+            mergeMap((action) => this.taskRunner.runTask(action.task, this.hubStorage.get(action.task.hubId)).pipe(
                 map(() => PORT_TASKS_ACTIONS.taskExecuted({ task: action.task })),
             )),
         );
     });
 
-    private taskComposer: IPortCommandTaskComposer;
+    private taskBuilder: IPortCommandTaskBuilder;
 
     private readonly taskSuppressor: ITaskSuppressor;
 
-    private readonly taskExecutor: ITaskExecutor;
+    private readonly taskRunner: ITaskRunner;
 
     private readonly taskQueueCompressor: ITaskQueueCompressor;
 
@@ -88,14 +88,14 @@ export class TaskProcessingEffects {
         private readonly store: Store,
         private readonly actions: Actions,
         private readonly hubStorage: HubStorageService,
-        portCommandTaskComposerFactory: PortCommandTaskComposerFactoryService,
+        portCommandTaskBuilderFactory: PortCommandTaskBuilderFactoryService,
         taskSuppressorFactory: TaskSuppressorFactory,
-        taskExecutorFactory: TaskExecutorFactoryService,
+        taskRunnerFactory: TaskRunnerFactoryService,
         tasksQueueCompressorFactory: TaskQueueCompressorFactoryService
     ) {
-        this.taskComposer = portCommandTaskComposerFactory.create();
+        this.taskBuilder = portCommandTaskBuilderFactory.create();
         this.taskSuppressor = taskSuppressorFactory.create();
-        this.taskExecutor = taskExecutorFactory.create();
+        this.taskRunner = taskRunnerFactory.create();
         this.taskQueueCompressor = tasksQueueCompressorFactory.create();
     }
 
@@ -143,7 +143,7 @@ export class TaskProcessingEffects {
             || null;
 
         for (const { value, binding } of composingData.bindingWithValue) {
-            const task = this.taskComposer.composeTask(
+            const task = this.taskBuilder.build(
                 binding,
                 value,
                 composingData.encoderOffset,

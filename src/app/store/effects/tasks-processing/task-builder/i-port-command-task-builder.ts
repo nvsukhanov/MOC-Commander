@@ -1,7 +1,7 @@
 import { ControlSchemeBinding, PortCommandTask } from '../../../models';
 
-export interface IPortCommandTaskComposer {
-    composeTask(
+export interface IPortCommandTaskBuilder {
+    build(
         binding: ControlSchemeBinding,
         inputValue: number,
         motorEncoderOffset: number,
