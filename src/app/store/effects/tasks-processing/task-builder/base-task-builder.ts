@@ -1,8 +1,8 @@
-import { IPortCommandTaskBuilder } from './i-port-command-task-builder';
+import { ITaskBuilder } from '../i-task-builder';
 import { ControlSchemeBinding, PortCommandTask, PortCommandTaskPayload } from '../../../models';
 
-export abstract class PortCommandTaskBuilder<TPayload extends PortCommandTaskPayload> implements IPortCommandTaskBuilder {
-    private next?: PortCommandTaskBuilder<PortCommandTaskPayload>;
+export abstract class BaseTaskBuilder<TPayload extends PortCommandTaskPayload> implements ITaskBuilder {
+    private next?: BaseTaskBuilder<PortCommandTaskPayload>;
 
     protected abstract buildPayload(
         binding: ControlSchemeBinding,
@@ -38,8 +38,8 @@ export abstract class PortCommandTaskBuilder<TPayload extends PortCommandTaskPay
     }
 
     public setNext(
-        next: PortCommandTaskBuilder<PortCommandTaskPayload>
-    ): PortCommandTaskBuilder<PortCommandTaskPayload> {
+        next: BaseTaskBuilder<PortCommandTaskPayload>
+    ): BaseTaskBuilder<PortCommandTaskPayload> {
         this.next = next;
         return next;
     }

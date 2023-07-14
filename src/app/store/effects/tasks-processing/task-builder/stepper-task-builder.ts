@@ -1,8 +1,8 @@
-import { PortCommandTaskBuilder } from '../port-command-task-builder';
-import { ControlSchemeBinding, PortCommandTaskType, StepperTaskPayload } from '../../../../models';
+import { BaseTaskBuilder } from './base-task-builder';
+import { ControlSchemeBinding, PortCommandTaskType, StepperTaskPayload } from '../../../models';
 import { HubIoOperationMode } from '@app/shared';
 
-export class StepperTaskBuilder extends PortCommandTaskBuilder<StepperTaskPayload> {
+export class StepperTaskBuilder extends BaseTaskBuilder<StepperTaskPayload> {
     public calculatePayloadHash(
         payload: StepperTaskPayload
     ): string {

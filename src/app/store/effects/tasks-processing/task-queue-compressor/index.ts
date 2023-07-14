@@ -1,2 +1,1 @@
-export * from './i-task-queue-compressor';
-export * from './task-queue-compressor-factory.service';
+export * from './queue-compressor-factory';

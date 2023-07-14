@@ -1,6 +1,6 @@
-import { ITaskQueueCompressor } from './i-task-queue-compressor';
+import { ITaskQueueCompressor } from '../i-task-queue-compressor';
 import { PortCommandTask, PortCommandTaskType } from '../../../models';
-import { StepperTaskBuilder } from '../task-builder/builders';
+import { StepperTaskBuilder } from '../task-builder/stepper-task-builder';
 
 export class StepperTaskCompressor implements ITaskQueueCompressor {
     private taskBuilder = new StepperTaskBuilder();
