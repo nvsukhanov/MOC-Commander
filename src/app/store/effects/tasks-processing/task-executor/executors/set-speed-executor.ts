@@ -2,7 +2,7 @@ import { IHub, MotorUseProfile, PortCommandExecutionStatus } from '@nvsukhanov/r
 import { Observable } from 'rxjs';
 
 import { TaskExecutor } from '../task-executor';
-import { PortCommandTask, PortCommandTaskType } from '@app/shared';
+import { PortCommandTask, PortCommandTaskType } from '../../../../models';
 
 export class SetSpeedExecutor extends TaskExecutor {
     protected handle(

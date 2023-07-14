@@ -1,10 +1,9 @@
 import { createSelector } from '@ngrx/store';
 
 import { PORT_TASKS_ENTITY_ADAPTER, PORT_TASKS_FEATURE, controllerInputIdFn, hubPortTasksIdFn } from '../reducers';
-import { ControlSchemeBinding } from '../models';
+import { ControlSchemeBinding, PortCommandTask } from '../models';
 import { CONTROLLER_INPUT_SELECTORS } from './controller-input.selectors';
 import { ATTACHED_IO_PROPS_SELECTORS } from './attached-io-props.selectors';
-import { PortCommandTask } from '@app/shared';
 
 const SELECT_ALL = createSelector(
     PORT_TASKS_FEATURE.selectPortTasksState,

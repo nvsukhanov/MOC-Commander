@@ -1,5 +1,5 @@
-import { PortCommandTask } from '@app/shared';
 import { ITaskSuppressor } from './i-task-suppressor';
+import { PortCommandTask } from '../../../models';
 
 // Suppressors are used to filter out tasks that should not be sent to the hub
 export abstract class TaskSuppressor implements ITaskSuppressor {

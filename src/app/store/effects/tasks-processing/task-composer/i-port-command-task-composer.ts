@@ -1,5 +1,4 @@
-import { PortCommandTask } from '@app/shared';
-import { ControlSchemeBinding } from '../../../models';
+import { ControlSchemeBinding, PortCommandTask } from '../../../models';
 
 export interface IPortCommandTaskComposer {
     composeTask(

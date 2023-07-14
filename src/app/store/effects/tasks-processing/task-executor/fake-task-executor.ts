@@ -2,7 +2,7 @@ import { ILogger, PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 import { Observable, debounceTime, from, take } from 'rxjs';
 
 import { ITaskExecutor } from './i-task-executor';
-import { PortCommandTask } from '@app/shared';
+import { PortCommandTask } from '../../../models';
 
 export class FakeTaskExecutor implements ITaskExecutor {
     constructor(

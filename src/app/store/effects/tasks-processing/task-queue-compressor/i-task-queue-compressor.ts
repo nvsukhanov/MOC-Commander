@@ -1,4 +1,4 @@
-import { PortCommandTask } from '@app/shared';
+import { PortCommandTask } from '../../../models';
 
 export interface ITaskQueueCompressor {
     compress(queue: PortCommandTask[]): PortCommandTask[];
