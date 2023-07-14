@@ -12,7 +12,6 @@ export class StepperTaskCompressor implements ITaskQueueCompressor {
     public compress(
         queue: PortCommandTask[]
     ): PortCommandTask[] {
-        console.log(queue);
         let firstStepperTask: PortCommandTask<PortCommandTaskType.Stepper> | null = null;
         let totalStepperTaskCount = 0;
         let accumulatedDegree = 0;
@@ -48,11 +47,8 @@ export class StepperTaskCompressor implements ITaskQueueCompressor {
                 }
                 return task;
             }).filter((task) => task !== null) as PortCommandTask[];
-            console.log('compression result', result);
             return result;
         }
-
-        console.log('not compressed');
         return queue;
     }
 }
