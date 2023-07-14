@@ -1,6 +1,6 @@
 import { IPortCommandTaskComposer } from './i-port-command-task-composer';
-import { ControlSchemeBinding } from '../../store';
 import { PortCommandTask, PortCommandTaskPayload } from '@app/shared';
+import { ControlSchemeBinding } from '../../../models';
 
 export abstract class PortCommandTaskComposer<TPayload extends PortCommandTaskPayload> implements IPortCommandTaskComposer {
     private next?: PortCommandTaskComposer<PortCommandTaskPayload>;
