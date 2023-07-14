@@ -1,28 +1,26 @@
 import { IHub, MotorUseProfile, PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
-import { Observable, last } from 'rxjs';
+import { Observable } from 'rxjs';
 
-import { TaskExecutor } from '../task-executor';
+import { TaskRunner } from '../task-runner';
 import { PortCommandTask, PortCommandTaskType } from '../../../../models';
 
-export class StepperExecutor extends TaskExecutor {
+export class ServoTaskRunner extends TaskRunner {
     protected handle(
         task: PortCommandTask,
         hub: IHub
     ): Observable<PortCommandExecutionStatus> | null {
-        if (task.payload.taskType === PortCommandTaskType.Stepper) {
-            return hub.motors.rotateByDegree(
+        if (task.payload.taskType === PortCommandTaskType.Servo) {
+            return hub.motors.goToPosition(
                 task.portId,
-                task.payload.degree,
+                task.payload.angle,
                 {
                     speed: task.payload.speed,
                     power: task.payload.power,
-                    useProfile: MotorUseProfile.dontUseProfiles,
-                    endState: task.payload.endState
+                    useProfile: MotorUseProfile.dontUseProfiles
                 }
-            ).pipe(
-                last()
             );
         }
         return null;
     }
+
 }

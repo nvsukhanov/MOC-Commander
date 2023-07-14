@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 
 import { ConsoleLoggingService } from '@app/shared';
-import { ITaskExecutor } from './i-task-executor';
-import { FakeTaskExecutor } from './fake-task-executor';
+import { ITaskRunner } from './i-task-runner';
+import { FakeTaskRunner } from './fake-task-runner';
 
 @Injectable({ providedIn: 'root' })
-export class FakeTaskExecutorFactoryService {
+export class FakeTaskRunnerFactoryService {
     constructor(
         private readonly logger: ConsoleLoggingService
     ) {
@@ -13,8 +13,8 @@ export class FakeTaskExecutorFactoryService {
 
     public create(
         taskExecutionDuration: number = 50
-    ): ITaskExecutor {
-        return new FakeTaskExecutor(
+    ): ITaskRunner {
+        return new FakeTaskRunner(
             taskExecutionDuration,
             this.logger
         );

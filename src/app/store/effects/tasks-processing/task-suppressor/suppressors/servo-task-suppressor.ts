@@ -27,7 +27,7 @@ export class ServoTaskSuppressor extends TaskSuppressor {
             return false;
         }
 
-        // TODO: potentially could suppress if angle is near arc's ends. need fix. Move threshold ops to the task composer?
+        // TODO: potentially could suppress if angle is near arc's ends. need fix. Move threshold ops to the task builder?
         return Math.abs(currentTask.payload.angle - lastExecutedTask.payload.angle) < this.servoThresholdDegrees;
     }
 }

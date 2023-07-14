@@ -1,11 +1,11 @@
-import { PortCommandTaskComposer } from '../port-command-task-composer';
+import { PortCommandTaskBuilder } from '../port-command-task-builder';
 import { ControlSchemeBinding, PortCommandTaskType, SetAngleTaskPayload } from '../../../../models';
 import { HubIoOperationMode } from '@app/shared';
 
-export class SetAngleComposer extends PortCommandTaskComposer<SetAngleTaskPayload> {
+export class SetAngleTaskBuilder extends PortCommandTaskBuilder<SetAngleTaskPayload> {
     private readonly inputValueThreshold = 0.5;
 
-    protected composePayload(
+    protected buildPayload(
         binding: ControlSchemeBinding,
         inputValue: number
     ): SetAngleTaskPayload | null {

@@ -1,10 +1,10 @@
-import { IPortCommandTaskComposer } from './i-port-command-task-composer';
+import { IPortCommandTaskBuilder } from './i-port-command-task-builder';
 import { ControlSchemeBinding, PortCommandTask, PortCommandTaskPayload } from '../../../models';
 
-export abstract class PortCommandTaskComposer<TPayload extends PortCommandTaskPayload> implements IPortCommandTaskComposer {
-    private next?: PortCommandTaskComposer<PortCommandTaskPayload>;
+export abstract class PortCommandTaskBuilder<TPayload extends PortCommandTaskPayload> implements IPortCommandTaskBuilder {
+    private next?: PortCommandTaskBuilder<PortCommandTaskPayload>;
 
-    protected abstract composePayload(
+    protected abstract buildPayload(
         binding: ControlSchemeBinding,
         inputValue: number,
         motorEncoderOffset: number,
@@ -15,13 +15,13 @@ export abstract class PortCommandTaskComposer<TPayload extends PortCommandTaskPa
         payload: TPayload
     ): string;
 
-    public composeTask(
+    public build(
         binding: ControlSchemeBinding,
         inputValue: number,
         motorEncoderOffset: number,
         lastExecutedTask: PortCommandTask | null
     ): PortCommandTask | null {
-        const payload = this.composePayload(binding, inputValue, motorEncoderOffset, lastExecutedTask);
+        const payload = this.buildPayload(binding, inputValue, motorEncoderOffset, lastExecutedTask);
         if (payload) {
             return {
                 hubId: binding.output.hubId,
@@ -32,14 +32,14 @@ export abstract class PortCommandTaskComposer<TPayload extends PortCommandTaskPa
             };
         }
         if (this.next) {
-            return this.next.composeTask(binding, inputValue, motorEncoderOffset, lastExecutedTask);
+            return this.next.build(binding, inputValue, motorEncoderOffset, lastExecutedTask);
         }
         return null;
     }
 
     public setNext(
-        next: PortCommandTaskComposer<PortCommandTaskPayload>
-    ): PortCommandTaskComposer<PortCommandTaskPayload> {
+        next: PortCommandTaskBuilder<PortCommandTaskPayload>
+    ): PortCommandTaskBuilder<PortCommandTaskPayload> {
         this.next = next;
         return next;
     }

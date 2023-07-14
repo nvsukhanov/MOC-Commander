@@ -1,15 +1,15 @@
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 
-import { PortCommandTaskComposer } from '../port-command-task-composer';
+import { PortCommandTaskBuilder } from '../port-command-task-builder';
 import { BindingLinearOutputState, ControlSchemeBinding, PortCommandTask, PortCommandTaskType, SetLinearSpeedTaskPayload } from '../../../../models';
 import { HubIoOperationMode } from '@app/shared';
 
-export class SetSpeedComposer extends PortCommandTaskComposer<SetLinearSpeedTaskPayload> {
+export class SetSpeedTaskBuilder extends PortCommandTaskBuilder<SetLinearSpeedTaskPayload> {
     private readonly speedStep = 5;
 
     private readonly speedSnapThreshold = 10;
 
-    protected composePayload(
+    protected buildPayload(
         binding: ControlSchemeBinding,
         inputValue: number,
         motorEncoderOffset: number,
