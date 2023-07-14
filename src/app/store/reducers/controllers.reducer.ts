@@ -33,7 +33,7 @@ export const CONTROLLERS_FEATURE = createFeature({
             return CONTROLLERS_ENTITY_ADAPTER.addOne(action, state);
         }),
         on(CONTROLLERS_ACTIONS.disconnected, (state, action): ControllersState => {
-            return CONTROLLERS_ENTITY_ADAPTER.removeOne(action.id, state);
+            return CONTROLLERS_ENTITY_ADAPTER.removeOne(controllerIdFn(action), state);
         }),
     ),
 });

@@ -8,6 +8,6 @@ export const CONTROLLERS_ACTIONS = createActionGroup({
         'wait for connect': emptyProps(),
         'connected': props<ControllerModel>(),
         'disconnect': props<Pick<ControllerModel, 'id'>>(),
-        'disconnected': props<Pick<ControllerModel, 'id'>>(),
+        'disconnected': props<ControllerModel>(),
     }
 });

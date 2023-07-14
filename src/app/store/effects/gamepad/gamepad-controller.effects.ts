@@ -49,16 +49,19 @@ export const GAMEPAD_CONTROLLER_EFFECTS: Record<string, FunctionalEffect> = {
         );
     }, { functional: true }),
     listenGamepadDisconnect: createEffect((
-        actions$: Actions = inject(Actions),
         window: Window = inject(WINDOW),
+        store: Store = inject(Store),
     ) => {
-        return actions$.pipe(
-            ofType(CONTROLLERS_ACTIONS.waitForConnect),
-            switchMap(() => (fromEvent(window, GAMEPAD_DISCONNECT_EVENT) as Observable<GamepadEvent>)),
+        return (fromEvent(window, GAMEPAD_DISCONNECT_EVENT) as Observable<GamepadEvent>).pipe(
             map((gamepadEvent) => gamepadEvent.gamepad),
-            map((gamepad) => CONTROLLERS_ACTIONS.disconnected({
-                id: controllerIdFn({ id: gamepad.id, controllerType: ControllerType.Gamepad, gamepadIndex: gamepad.index }),
-            }))
+            concatLatestFrom((gamepad) => store.select(CONTROLLER_SELECTORS.selectById(controllerIdFn({
+                id: gamepad.id,
+                controllerType: ControllerType.Gamepad,
+                gamepadIndex: gamepad.index
+            })))),
+            filter(([ , controller ]) => !!controller),
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            map(([ , controller ]) => CONTROLLERS_ACTIONS.disconnected(controller!))
         );
     }, { functional: true })
 };
