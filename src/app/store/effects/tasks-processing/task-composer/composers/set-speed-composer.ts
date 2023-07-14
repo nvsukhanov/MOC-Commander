@@ -1,7 +1,7 @@
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 
 import { PortCommandTaskComposer } from '../port-command-task-composer';
-import { BindingLinearOutputState, ControlSchemeBinding } from '../../../store';
+import { BindingLinearOutputState, ControlSchemeBinding } from '../../../../models';
 import { HubIoOperationMode, PortCommandTask, PortCommandTaskType, SetLinearSpeedTaskPayload } from '@app/shared';
 
 export class SetSpeedComposer extends PortCommandTaskComposer<SetLinearSpeedTaskPayload> {

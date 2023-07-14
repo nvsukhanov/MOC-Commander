@@ -1,5 +1,5 @@
 import { PortCommandTaskComposer } from '../port-command-task-composer';
-import { ControlSchemeBinding } from '../../../store';
+import { ControlSchemeBinding } from '../../../../models';
 import { HubIoOperationMode, PortCommandTaskType, SetAngleTaskPayload } from '@app/shared';
 
 export class SetAngleComposer extends PortCommandTaskComposer<SetAngleTaskPayload> {

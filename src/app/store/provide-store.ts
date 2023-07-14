@@ -35,7 +35,7 @@ import {
     KEYBOARD_CONTROLLER_EFFECTS,
     KeyboardControllerInputEffects,
     NotificationsEffects,
-    PortTaskEffects,
+    TaskProcessingEffects,
 } from './effects';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { HubStorageService } from './hub-storage.service';
@@ -90,7 +90,7 @@ export function provideApplicationStore(): EnvironmentProviders {
             AttachedIoModesEffects,
             HubsEffects,
             ControlSchemeEffects,
-            PortTaskEffects,
+            TaskProcessingEffects,
             NotificationsEffects,
             HubAttachedIosStateEffects,
             GamepadControllerInputEffects,
