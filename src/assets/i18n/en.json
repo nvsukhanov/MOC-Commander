@@ -170,7 +170,9 @@
     "noControllerConnected": "No controller detected",
     "isNotConnectedInlineNotification": "disconnected",
     "keyboardControllerType": "Keyboard",
-    "gamepadControllerType": "Gamepad"
+    "gamepadControllerType": "Gamepad",
+    "controllerConnectedNotification": "{ name } connected",
+    "controllerDisconnectedNotification": "{ name } disconnected"
   },
   "controllerPlugins": {
     "buttonState": "{ value, select, 1 {Pressed} other {Released} }",
