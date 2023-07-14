@@ -5,10 +5,9 @@ import { Observable, filter, from, map, mergeMap, switchMap, takeUntil } from 'r
 
 import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, PORT_TASKS_ACTIONS } from '../../actions';
 import { BindingTaskComposingData, CONTROL_SCHEME_SELECTORS, PORT_TASKS_SELECTORS } from '../../selectors';
-import { ControlSchemeBinding } from '../../models';
+import { ControlSchemeBinding, PortCommandTask } from '../../models';
 import { attachedIosIdFn } from '../../reducers';
 import { HubStorageService } from '../../hub-storage.service';
-import { PortCommandTask } from '@app/shared';
 import { IPortCommandTaskComposer, PortCommandTaskComposerFactoryService } from './task-composer';
 import { ITaskSuppressor, TaskSuppressorFactory } from './task-suppressor';
 import { ITaskExecutor, TaskExecutorFactoryService } from './task-executor';

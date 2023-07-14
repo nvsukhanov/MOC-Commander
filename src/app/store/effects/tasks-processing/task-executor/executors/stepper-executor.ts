@@ -2,7 +2,7 @@ import { IHub, MotorUseProfile, PortCommandExecutionStatus } from '@nvsukhanov/r
 import { Observable, last } from 'rxjs';
 
 import { TaskExecutor } from '../task-executor';
-import { PortCommandTask, PortCommandTaskType } from '@app/shared';
+import { PortCommandTask, PortCommandTaskType } from '../../../../models';
 
 export class StepperExecutor extends TaskExecutor {
     protected handle(

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { ComposingTaskQueueCompressor } from './composing-task-queue-compressor';
 import { LastOfTypeCompressor } from './last-of-type-compressor';
-import { PortCommandTaskType } from '@app/shared';
 import { ITaskQueueCompressor } from './i-task-queue-compressor';
+import { PortCommandTaskType } from '../../../models';
 
 @Injectable({ providedIn: 'root' })
 export class TaskQueueCompressorFactoryService {

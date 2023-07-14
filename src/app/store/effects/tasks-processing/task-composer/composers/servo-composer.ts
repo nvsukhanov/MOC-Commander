@@ -1,8 +1,8 @@
 import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 
 import { PortCommandTaskComposer } from '../port-command-task-composer';
-import { ControlSchemeBinding } from '../../../../models';
-import { HubIoOperationMode, PortCommandTaskType, ServoTaskPayload, getTranslationArcs } from '@app/shared';
+import { ControlSchemeBinding, PortCommandTaskType, ServoTaskPayload } from '../../../../models';
+import { HubIoOperationMode, getTranslationArcs } from '@app/shared';
 
 export class ServoComposer extends PortCommandTaskComposer<ServoTaskPayload> {
     private readonly snappingThreshold = 10;

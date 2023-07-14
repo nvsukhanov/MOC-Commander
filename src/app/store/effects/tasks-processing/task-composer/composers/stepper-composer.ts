@@ -1,6 +1,6 @@
 import { PortCommandTaskComposer } from '../port-command-task-composer';
-import { ControlSchemeBinding } from '../../../../models';
-import { HubIoOperationMode, PortCommandTaskType, StepperTaskPayload } from '@app/shared';
+import { ControlSchemeBinding, PortCommandTaskType, StepperTaskPayload } from '../../../../models';
+import { HubIoOperationMode } from '@app/shared';
 
 export class StepperComposer extends PortCommandTaskComposer<StepperTaskPayload> {
     protected composePayload(

@@ -1,4 +1,4 @@
-import { PortCommandTask } from '@app/shared';
+import { PortCommandTask } from './port-command-task';
 
 export type PortTasksModel = {
     hubId: string;

@@ -1,5 +1,5 @@
 import { TaskSuppressor } from '../task-suppressor';
-import { PortCommandTask, PortCommandTaskType } from '@app/shared';
+import { PortCommandTask, PortCommandTaskType } from '../../../../models';
 
 export class StepperTaskSuppressor extends TaskSuppressor {
     protected shouldSuppress(
