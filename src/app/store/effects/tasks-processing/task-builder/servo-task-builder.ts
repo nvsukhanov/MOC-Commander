@@ -38,18 +38,6 @@ export class ServoTaskBuilder extends BaseTaskBuilder<ServoTaskPayload> {
         };
     }
 
-    protected calculatePayloadHash(
-        payload: ServoTaskPayload
-    ): string {
-        return [
-            payload.taskType,
-            payload.angle,
-            payload.speed,
-            payload.power,
-            payload.endState
-        ].join('_');
-    }
-
     private snapAngle(
         targetAngle: number,
         arcCenter: number,

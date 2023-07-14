@@ -40,16 +40,6 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder<SetLinearSpeedTaskPaylo
         };
     }
 
-    protected calculatePayloadHash(
-        payload: SetLinearSpeedTaskPayload
-    ): string {
-        return [
-            payload.taskType,
-            payload.speed,
-            payload.power,
-        ].join('_');
-    }
-
     private createTogglePayload(
         bindingId: string,
         outputConfig: BindingLinearOutputState,

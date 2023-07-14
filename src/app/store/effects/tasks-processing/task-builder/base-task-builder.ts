@@ -1,5 +1,6 @@
 import { ITaskBuilder } from '../i-task-builder';
 import { ControlSchemeBinding, PortCommandTask, PortCommandTaskPayload } from '../../../models';
+import { payloadHash } from '../payload-hash';
 
 export abstract class BaseTaskBuilder<TPayload extends PortCommandTaskPayload> implements ITaskBuilder {
     private next?: BaseTaskBuilder<PortCommandTaskPayload>;
@@ -10,10 +11,6 @@ export abstract class BaseTaskBuilder<TPayload extends PortCommandTaskPayload> i
         motorEncoderOffset: number,
         previousTaskPayload: PortCommandTask | null
     ): TPayload | null;
-
-    protected abstract calculatePayloadHash(
-        payload: TPayload
-    ): string;
 
     public build(
         binding: ControlSchemeBinding,
@@ -48,6 +45,6 @@ export abstract class BaseTaskBuilder<TPayload extends PortCommandTaskPayload> i
         binding: ControlSchemeBinding,
         payload: TPayload
     ): string {
-        return `${binding.output.hubId}/${binding.output.portId}/${this.calculatePayloadHash(payload)}`;
+        return `${binding.output.hubId}/${binding.output.portId}/${payloadHash(payload)}`;
     }
 }
