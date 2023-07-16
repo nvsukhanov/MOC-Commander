@@ -10,8 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel, ROUTER_SELECTORS, } from '@app/store';
-
 import { EllipsisTitleDirective, FeatureToolbarService } from '@app/shared';
+
 import { ControlSchemeViewIoListComponent } from './control-scheme-view-io-list';
 import { RoutesBuilderService } from '../../routing';
 import { CONTROL_SCHEME_VIEW_SELECTORS, ControlSchemeViewTreeNode } from './control-scheme-view.selectors';

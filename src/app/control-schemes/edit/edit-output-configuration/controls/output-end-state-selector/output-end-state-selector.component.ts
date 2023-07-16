@@ -6,7 +6,6 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-
 import { MotorServoEndStateL10nKeyPipe } from '@app/shared';
 
 @Component({

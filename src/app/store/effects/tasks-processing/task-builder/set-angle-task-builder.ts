@@ -1,6 +1,7 @@
+import { HubIoOperationMode } from '@app/shared';
+
 import { BaseTaskBuilder } from './base-task-builder';
 import { ControlSchemeBinding, PortCommandTaskType, SetAngleTaskPayload } from '../../../models';
-import { HubIoOperationMode } from '@app/shared';
 
 export class SetAngleTaskBuilder extends BaseTaskBuilder<SetAngleTaskPayload> {
     private readonly inputValueThreshold = 0.5;

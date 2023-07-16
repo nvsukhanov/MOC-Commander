@@ -1,9 +1,9 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { EntityAdapter, EntityState, createEntityAdapter } from '@ngrx/entity';
+import { ControllerInputType } from '@app/shared';
 
 import { CONTROLLERS_ACTIONS, CONTROLLER_INPUT_ACTIONS } from '../actions';
 import { ControllerInputModel } from '../models';
-import { ControllerInputType } from '@app/shared';
 
 export interface ControllerInputState extends EntityState<ControllerInputModel> {
     listenersCount: number;

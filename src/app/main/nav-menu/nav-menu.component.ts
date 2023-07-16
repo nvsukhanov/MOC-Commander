@@ -10,8 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BLUETOOTH_AVAILABILITY_SELECTORS, HUBS_ACTIONS, HUBS_SELECTORS, } from '@app/store';
-
 import { EllipsisTitleDirective } from '@app/shared';
+
 import { RoutesBuilderService } from '../../routing';
 import { MAIN_SELECTORS } from '../main.selectors';
 

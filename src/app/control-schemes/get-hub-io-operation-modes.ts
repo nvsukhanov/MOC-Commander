@@ -6,8 +6,8 @@ import {
     attachedIoModesIdFn,
     attachedIoPortModeInfoIdFn
 } from '@app/store';
-
 import { ControllerInputType, HubIoOperationMode } from '@app/shared';
+
 import { getIoOperationModesForControllerInputType } from './get-io-operation-modes-for-controller-input-type';
 import { doesIoSupportOperationMode } from './does-io-support-operation-mode';
 

@@ -1,5 +1,4 @@
 import { PortModeName } from '@nvsukhanov/rxpoweredup';
-
 import { HubIoOperationMode } from '@app/shared';
 
 const REQUIRED_PORT_MODES_FOR_OPERATION_MODE: { [k in HubIoOperationMode]?: PortModeName[] } = {

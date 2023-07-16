@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
+import { ControllerType } from '@app/shared';
 
 import { UnknownControllerProfileService } from './unknown-controller';
 import { ControllerProfile } from './controller-profile';
 import { IControllerProfile } from './i-controller-profile';
 import { KeyboardControllerProfileService } from './keyboard';
 import { DisconnectedControllerProfileService } from './disconnected-controller';
-import { ControllerType } from '@app/shared';
 
 @Injectable()
 export class ControllerProfileFactoryService {

@@ -10,8 +10,8 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { ATTACHED_IO_SELECTORS, AttachedIoModel, HUBS_SELECTORS, HUB_STATS_SELECTORS, HubModel } from '@app/store';
-
 import { HubIoOperationMode, IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '@app/shared';
+
 import { ControlSchemeBindingInputForm } from '../binding-input';
 import { RenderEditOutputConfigurationDirective } from '../edit-output-configuration';
 import { BindingForm } from '../types';

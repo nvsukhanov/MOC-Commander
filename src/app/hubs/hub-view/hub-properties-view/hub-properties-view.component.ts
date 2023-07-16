@@ -6,8 +6,8 @@ import { NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
 import { HubModel, HubStatsModel } from '@app/store';
-
 import { EllipsisTitleDirective, HUB_TYPE_TO_L10N_MAPPING } from '@app/shared';
+
 import { RoutesBuilderService } from '../../../routing';
 
 @Component({

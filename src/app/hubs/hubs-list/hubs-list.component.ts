@@ -9,8 +9,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { Observable } from 'rxjs';
 import { HUBS_ACTIONS } from '@app/store';
-
 import { ConfirmationDialogModule, ConfirmationDialogService, HubInlineViewComponent } from '@app/shared';
+
 import { HUBS_LIST_SELECTORS, HubListViewModel } from './hubs-list.selectors';
 
 @Component({

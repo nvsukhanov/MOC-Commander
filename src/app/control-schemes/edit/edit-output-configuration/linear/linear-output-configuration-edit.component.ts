@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { NgIf } from '@angular/common';
 import { FormControl } from '@angular/forms';
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
+import { ControllerInputType } from '@app/shared';
 
 import { ControlSchemeBindingOutputForm } from '../../binding-output';
 import { ControlSchemeBindingInputForm } from '../../binding-input';
 import { IOutputConfigurationRenderer } from '../i-output-configuration-renderer';
-import { ControllerInputType } from '@app/shared';
 import { OutputConfigSliderControlComponent, OutputConfigToggleControlComponent } from '../controls';
 
 @Component({

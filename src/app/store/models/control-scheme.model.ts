@@ -1,5 +1,4 @@
 import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
-
 import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 
 export type ControlSchemeModel = {

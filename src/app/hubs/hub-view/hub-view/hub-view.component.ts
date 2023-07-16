@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { HUBS_ACTIONS, HUBS_SELECTORS, HUB_STATS_SELECTORS, HubModel, HubStatsModel, ROUTER_SELECTORS, attachedIosIdFn, } from '@app/store';
-
 import { NotFoundComponent } from '@app/shared';
+
 import { HubPropertiesViewComponent } from '../hub-properties-view';
 import { HubIoViewComponent } from '../hub-io-view';
 import { RoutesBuilderService } from '../../../routing';

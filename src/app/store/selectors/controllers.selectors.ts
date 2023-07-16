@@ -1,8 +1,8 @@
 import { createSelector } from '@ngrx/store';
+import { ControllerType } from '@app/shared';
 
 import { CONTROLLERS_ENTITY_ADAPTER, CONTROLLERS_FEATURE } from '../reducers';
 import { GamepadControllerModel } from '../models';
-import { ControllerType } from '@app/shared';
 
 const CONTROLLERS_ENTITY_SELECTOR = CONTROLLERS_ENTITY_ADAPTER.getSelectors();
 

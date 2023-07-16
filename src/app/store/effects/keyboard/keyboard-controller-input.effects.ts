@@ -2,12 +2,12 @@ import { Inject, Injectable } from '@angular/core';
 import { concatLatestFrom, createEffect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { NEVER, Observable, filter, fromEvent, map, mergeMap, mergeWith, switchMap, take } from 'rxjs';
+import { ControllerInputType, ControllerType, WINDOW } from '@app/shared';
 
 import { CONTROLLER_INPUT_SELECTORS, CONTROLLER_SETTINGS_SELECTORS } from '../../selectors';
 import { controllerIdFn, controllerInputIdFn } from '../../reducers';
 import { KeyboardSettingsModel } from '../../models';
 import { CONTROLLER_INPUT_ACTIONS } from '../../actions';
-import { ControllerInputType, ControllerType, WINDOW } from '@app/shared';
 
 @Injectable()
 export class KeyboardControllerInputEffects {

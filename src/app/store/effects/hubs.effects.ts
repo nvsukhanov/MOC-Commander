@@ -4,8 +4,8 @@ import { Observable, catchError, combineLatestWith, filter, from, interval, map,
 import { Action, Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { IHub, MessageLoggingMiddleware, connectHub } from '@nvsukhanov/rxpoweredup';
-
 import { APP_CONFIG, IAppConfig, NAVIGATOR, PrefixedConsoleLoggerFactoryService } from '@app/shared';
+
 import { HubStorageService } from '../hub-storage.service';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../hub-communication-notifier-middleware-factory.service';
 import { HUBS_SELECTORS, ROUTER_SELECTORS } from '../selectors';
