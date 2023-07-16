@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { ControllerProfileFactoryService } from '../plugins';
+import { ControllerProfileFactoryService } from '../controller-profiles';
 import { ControllerModel } from '../store';
 import { ControllerInputType } from '@app/shared';
 

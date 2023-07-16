@@ -5,7 +5,7 @@ import { PushPipe } from '@ngrx/component';
 import { MatCardModule } from '@angular/material/card';
 import { NgIf } from '@angular/common';
 
-import { ControllerProfileFactoryService, IControllerProfile, IControllerSettingsComponent } from '../../plugins';
+import { ControllerProfileFactoryService, IControllerProfile, IControllerSettingsComponent } from '../../controller-profiles';
 import { ControllerModel, ControllerSettingsModel } from '../../store';
 import { ControllerSettingsRenderDirective } from './controller-settings-render.directive';
 

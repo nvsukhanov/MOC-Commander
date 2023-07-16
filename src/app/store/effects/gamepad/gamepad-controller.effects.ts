@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 
 import { CONTROLLERS_ACTIONS } from '../../actions';
 import { CONTROLLER_SELECTORS } from '../../selectors';
-import { ControllerProfileFactoryService } from '../../../plugins';
+import { ControllerProfileFactoryService } from '../../../controller-profiles';
 import { APP_CONFIG, ControllerType, IAppConfig, WINDOW } from '@app/shared';
 import { controllerIdFn } from '../../reducers';
 

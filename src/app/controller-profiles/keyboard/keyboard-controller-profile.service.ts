@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 import { createControllerL10nKey, createScopedControllerL10nKey } from '../create-controller-l10n-key';
 import { IControllerProfile } from '../i-controller-profile';
 import { KeyboardsSettingsComponent } from './keyboards-settings.component';
-import { KeyboardSettingsModel } from '../../../store';
+import { KeyboardSettingsModel } from '../../store';
 
 @Injectable()
 export class KeyboardControllerProfileService implements IControllerProfile<KeyboardSettingsModel> {

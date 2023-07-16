@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { KeyboardSettingsModel } from '../../../store';
+import { KeyboardSettingsModel } from '../../store';
 import { IControllerSettingsComponent } from '../i-controller-settings-component';
 
 @Component({
