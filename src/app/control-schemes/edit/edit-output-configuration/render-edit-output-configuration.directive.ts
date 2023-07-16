@@ -1,5 +1,6 @@
 import { ComponentRef, Directive, Input, OnDestroy, Type, ViewContainerRef } from '@angular/core';
 import { Observable, Subscription, startWith } from 'rxjs';
+import { HubIoOperationMode } from '@app/shared';
 
 import { ControlSchemeBindingOutputForm } from '../binding-output';
 import { IOutputConfigurationRenderer } from './i-output-configuration-renderer';
@@ -8,7 +9,6 @@ import { ControlSchemeBindingInputForm } from '../binding-input';
 import { LinearOutputConfigurationEditComponent } from './linear';
 import { ServoOutputConfigurationEditComponent } from './servo';
 import { SetAngleOutputConfigurationEditComponent } from './set-angle';
-import { HubIoOperationMode } from '@app/shared';
 import { StepperOutputConfigurationEditComponent } from './stepper';
 
 @Directive({

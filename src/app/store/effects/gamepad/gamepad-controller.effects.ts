@@ -2,11 +2,11 @@ import { inject } from '@angular/core';
 import { Actions, FunctionalEffect, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Observable, filter, from, fromEvent, interval, map, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { APP_CONFIG, ControllerType, IAppConfig, WINDOW } from '@app/shared';
 
 import { CONTROLLERS_ACTIONS } from '../../actions';
 import { CONTROLLER_SELECTORS } from '../../selectors';
 import { ControllerProfileFactoryService } from '../../../controller-profiles';
-import { APP_CONFIG, ControllerType, IAppConfig, WINDOW } from '@app/shared';
 import { controllerIdFn } from '../../reducers';
 
 const GAMEPAD_DISCONNECT_EVENT = 'gamepaddisconnected';

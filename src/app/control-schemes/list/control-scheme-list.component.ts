@@ -10,8 +10,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeModel } from '@app/store';
-
 import { FeatureToolbarService } from '@app/shared';
+
 import { RoutesBuilderService } from '../../routing';
 import { ControlSchemeListItemComponent } from './control-scheme-list-item';
 import { ControlSchemeDeleteDialogComponent } from '../control-scheme-delete-dialog';

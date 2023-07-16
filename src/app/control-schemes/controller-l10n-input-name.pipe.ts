@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ControllerModel } from '@app/store';
+import { ControllerInputType } from '@app/shared';
 
 import { ControllerProfileFactoryService } from '../controller-profiles';
-import { ControllerInputType } from '@app/shared';
 
 @Pipe({
     standalone: true,

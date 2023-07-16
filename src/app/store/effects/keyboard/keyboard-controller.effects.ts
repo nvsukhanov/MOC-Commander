@@ -1,10 +1,10 @@
 import { inject } from '@angular/core';
 import { Actions, FunctionalEffect, createEffect, ofType } from '@ngrx/effects';
 import { fromEvent, map, switchMap, take } from 'rxjs';
+import { ControllerType, WINDOW } from '@app/shared';
 
 import { CONTROLLERS_ACTIONS } from '../../actions';
 import { controllerIdFn } from '../../reducers';
-import { ControllerType, WINDOW } from '@app/shared';
 
 const KEY_DOWN_EVENT = 'keydown';
 

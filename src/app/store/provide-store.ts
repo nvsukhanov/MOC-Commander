@@ -5,6 +5,7 @@ import { ActionReducer, ActionReducerMap, MetaReducer, Store, provideStore } fro
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { localStorageSync } from 'ngrx-store-localstorage';
 import { Router } from '@angular/router';
+import { NAVIGATOR } from '@app/shared';
 
 import { IState } from './i-state';
 import {
@@ -41,7 +42,6 @@ import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-chec
 import { HubStorageService } from './hub-storage.service';
 import { RoutesBuilderService } from '../routing';
 import { CONTROLLER_INPUT_ACTIONS, HUB_STATS_ACTIONS } from './actions';
-import { NAVIGATOR } from '@app/shared';
 
 const STORAGE_VERSION = '5';
 

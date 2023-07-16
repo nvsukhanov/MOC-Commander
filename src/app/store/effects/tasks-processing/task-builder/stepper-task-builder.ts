@@ -1,6 +1,7 @@
+import { HubIoOperationMode } from '@app/shared';
+
 import { BaseTaskBuilder } from './base-task-builder';
 import { ControlSchemeBinding, PortCommandTaskType, StepperTaskPayload } from '../../../models';
-import { HubIoOperationMode } from '@app/shared';
 
 export class StepperTaskBuilder extends BaseTaskBuilder<StepperTaskPayload> {
     protected buildPayload(

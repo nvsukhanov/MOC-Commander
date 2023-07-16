@@ -132,7 +132,10 @@
           "error",
           {
             "groups": [
-              "external"
+              [
+                "external",
+                "internal"
+              ]
             ],
             "newlines-between": "always"
           }

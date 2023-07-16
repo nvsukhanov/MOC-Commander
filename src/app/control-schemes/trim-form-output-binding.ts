@@ -1,7 +1,7 @@
 import { ControlSchemeBinding } from '@app/store';
+import { HubIoOperationMode } from '@app/shared';
 
 import { BindingForm } from './edit';
-import { HubIoOperationMode } from '@app/shared';
 
 export function trimFormOutputBinding(
     source: ReturnType<BindingForm['getRawValue']>

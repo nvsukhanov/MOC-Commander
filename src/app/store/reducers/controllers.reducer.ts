@@ -1,9 +1,9 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { EntityAdapter, EntityState, createEntityAdapter } from '@ngrx/entity';
+import { ControllerType } from '@app/shared';
 
 import { CONTROLLERS_ACTIONS } from '../actions';
 import { ControllerModel, } from '../models';
-import { ControllerType } from '@app/shared';
 
 const KEYBOARD_CONTROLLER_ID = 'keyboard';
 

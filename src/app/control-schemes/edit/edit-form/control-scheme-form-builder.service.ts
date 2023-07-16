@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { BindingOutputState } from '@app/store';
+import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 
 import { ControlSchemeBindingOutputForm } from '../binding-output';
 import { BindingForm, EditSchemeForm } from '../types';
@@ -8,7 +9,6 @@ import { ControlSchemeBindingInputForm } from '../binding-input';
 import { ServoOutputControlFormBuilderService } from './servo-output-control-form-builder.service';
 import { LinearOutputControlFormBuilderService } from './linear-output-control-form-builder.service';
 import { SetAngleOutputControlFormBuilderService } from './set-angle-output-control-form-builder.service';
-import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 import { StepperOutputControlFormBuilderService } from './stepper-output-control-form-builder.service';
 
 @Injectable({ providedIn: 'root' })

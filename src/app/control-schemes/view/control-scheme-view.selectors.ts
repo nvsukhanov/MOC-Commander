@@ -21,8 +21,8 @@ import {
     ROUTER_SELECTORS,
     attachedIosIdFn
 } from '@app/store';
-
 import { ControllerInputType, HubIoOperationMode } from '@app/shared';
+
 import { getHubIoOperationModes } from '../get-hub-io-operation-modes';
 
 function createHubTreeNode(

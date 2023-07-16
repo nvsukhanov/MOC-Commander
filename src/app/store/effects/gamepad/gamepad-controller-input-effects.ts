@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@angular/core';
 import { Action, Store } from '@ngrx/store';
 import { concatLatestFrom, createEffect } from '@ngrx/effects';
 import { MonoTypeOperatorFunction, NEVER, Observable, filter, from, interval, map, merge, share, switchMap } from 'rxjs';
-
 import { APP_CONFIG, ControllerInputType, IAppConfig, WINDOW } from '@app/shared';
+
 import { controllerIdFn, controllerInputIdFn } from '../../reducers';
 import { CONTROLLER_INPUT_ACTIONS } from '../../actions';
 import { CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS } from '../../selectors';
