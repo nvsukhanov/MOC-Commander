@@ -1,1 +1,1 @@
-export * from './controller-dualshock-plugin.service';
+export * from './controller-dualshock-profile.service';

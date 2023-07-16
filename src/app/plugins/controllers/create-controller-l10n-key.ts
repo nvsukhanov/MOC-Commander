@@ -10,5 +10,5 @@ export function createScopedControllerL10nKey(
 export function createControllerL10nKey(
     key: string
 ): string {
-    return composeL10nKey(L10nScopes.controllerPlugins, key);
+    return composeL10nKey(L10nScopes.controllerProfiles, key);
 }

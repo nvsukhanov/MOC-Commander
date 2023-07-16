@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';
 
 import { CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS } from '../actions';
-import { ControllerPluginFactoryService } from '../../plugins';
+import { ControllerProfileFactoryService } from '../../plugins';
 
 @Injectable()
 export class NotificationsEffects {
@@ -68,8 +68,8 @@ export class NotificationsEffects {
         return this.actions$.pipe(
             ofType(CONTROLLERS_ACTIONS.connected),
             switchMap((action) => {
-                const controllerPlugin = this.controllerPluginFactory.getPlugin(action.controllerType, action.id);
-                return this.translocoService.selectTranslate(controllerPlugin.nameL10nKey);
+                const controllerProfile = this.controllerProfilesFactory.getProfile(action.controllerType, action.id);
+                return this.translocoService.selectTranslate(controllerProfile.nameL10nKey);
             }),
             switchMap((name) => this.translocoService.selectTranslate('controller.controllerConnectedNotification', { name })),
             tap((message) => this.showMessage(message))
@@ -80,8 +80,8 @@ export class NotificationsEffects {
         return this.actions$.pipe(
             ofType(CONTROLLERS_ACTIONS.disconnected),
             switchMap((action) => {
-                const controllerPlugin = this.controllerPluginFactory.getPlugin(action.controllerType, action.id);
-                return this.translocoService.selectTranslate(controllerPlugin.nameL10nKey);
+                const controllerProfile = this.controllerProfilesFactory.getProfile(action.controllerType, action.id);
+                return this.translocoService.selectTranslate(controllerProfile.nameL10nKey);
             }),
             switchMap((name) => this.translocoService.selectTranslate('controller.controllerDisconnectedNotification', { name })),
             tap((message) => this.showMessage(message))
@@ -92,7 +92,7 @@ export class NotificationsEffects {
         private readonly actions$: Actions,
         private readonly snackBar: MatSnackBar,
         private readonly translocoService: TranslocoService,
-        private readonly controllerPluginFactory: ControllerPluginFactoryService
+        private readonly controllerProfilesFactory: ControllerProfileFactoryService
     ) {
     }
 

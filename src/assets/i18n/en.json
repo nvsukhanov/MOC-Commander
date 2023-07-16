@@ -174,7 +174,7 @@
     "controllerConnectedNotification": "{ name } connected",
     "controllerDisconnectedNotification": "{ name } disconnected"
   },
-  "controllerPlugins": {
+  "controllerProfiles": {
     "buttonState": "{ value, select, 1 {Pressed} other {Released} }",
     "axisState": "Position: { value }",
     "unknownControllerName": "Unknown controller",

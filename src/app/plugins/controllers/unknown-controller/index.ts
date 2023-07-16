@@ -1,1 +1,1 @@
-export * from './unknown-controller-plugin.service';
+export * from './unknown-controller-profile.service';

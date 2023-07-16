@@ -7,14 +7,14 @@ import { LayoutComponent } from './app/main';
 import { provideApplicationStore } from './app/store';
 import { provideI18n } from './app/i18n';
 import { provideRouting } from './app/routing';
-import { provideControllersPlugins } from './app/plugins';
+import { provideControllerProfiles } from './app/plugins';
 
 bootstrapApplication(LayoutComponent, {
     providers: [
         provideRouting(),
         provideI18n(),
         provideAnimations(),
-        provideControllersPlugins(),
+        provideControllerProfiles(),
         importProvidersFrom(MatSnackBarModule),
         provideApplicationStore()
     ]
