@@ -7,8 +7,8 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subscription, filter, map, of, take } from 'rxjs';
 import { concatLatestFrom } from '@ngrx/effects';
+import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, CONTROL_SCHEME_ACTIONS, ControllerInputModel } from '@app/store';
 
-import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, CONTROL_SCHEME_ACTIONS, ControllerInputModel } from '../../../store';
 import { CONTROL_SCHEME_EDIT_SELECTORS } from '../control-scheme-edit.selectors';
 
 @Component({

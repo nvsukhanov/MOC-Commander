@@ -1,4 +1,4 @@
-import { ControllerSettingsModel } from '../store';
+import { ControllerSettingsModel } from '@app/store';
 
 export interface IControllerSettingsComponent<TSettings extends ControllerSettingsModel = ControllerSettingsModel> {
     loadSettings(

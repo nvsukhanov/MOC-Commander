@@ -1,7 +1,7 @@
 import { ComponentRef, Directive, EventEmitter, Input, Output, Type, ViewContainerRef } from '@angular/core';
+import { ControllerSettingsModel } from '@app/store';
 
 import { IControllerSettingsComponent } from '../../controller-profiles';
-import { ControllerSettingsModel } from '../../store';
 
 @Directive({
     standalone: true,

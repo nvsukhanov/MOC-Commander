@@ -1,5 +1,6 @@
+import { ControlSchemeBinding } from '@app/store';
+
 import { BindingForm } from './edit';
-import { ControlSchemeBinding } from '../store';
 import { HubIoOperationMode } from '@app/shared';
 
 export function trimFormOutputBinding(

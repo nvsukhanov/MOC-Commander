@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { BindingOutputState } from '@app/store';
 
-import { BindingOutputState } from '../../../store';
 import { ControlSchemeBindingOutputForm } from '../binding-output';
 import { BindingForm, EditSchemeForm } from '../types';
 import { ControlSchemeBindingInputForm } from '../binding-input';

@@ -1,6 +1,5 @@
 import { createSelector } from '@ngrx/store';
-
-import { HUBS_SELECTORS, HUB_STATS_SELECTORS, HubModel } from '../../store';
+import { HUBS_SELECTORS, HUB_STATS_SELECTORS, HubModel } from '@app/store';
 
 export type HubListViewModel = Array<{
     batteryLevel: number | null;

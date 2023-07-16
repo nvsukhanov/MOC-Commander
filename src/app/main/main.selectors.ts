@@ -1,6 +1,5 @@
 import { createSelector } from '@ngrx/store';
-
-import { CONTROLLER_SELECTORS, CONTROL_SCHEME_SELECTORS, HUBS_SELECTORS, HUB_STATS_SELECTORS } from '../store';
+import { CONTROLLER_SELECTORS, CONTROL_SCHEME_SELECTORS, HUBS_SELECTORS, HUB_STATS_SELECTORS } from '@app/store';
 
 export const MAIN_SELECTORS = {
     selectConnectedControllersCount: createSelector(

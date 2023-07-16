@@ -8,11 +8,11 @@ import { Store } from '@ngrx/store';
 import { Observable, combineLatest, of, startWith, switchMap } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { CONTROL_SCHEME_ACTIONS } from '@app/store';
 
 import { ControlSchemeBindingOutputForm } from '../../binding-output';
 import { IOutputConfigurationRenderer } from '../i-output-configuration-renderer';
 import { CalibrationResult, CalibrationResultType, ServoCalibrationDialogComponent } from '../../servo-calibration-dialog';
-import { CONTROL_SCHEME_ACTIONS } from '../../../../store';
 import { OutputConfigSliderControlComponent, OutputConfigToggleControlComponent } from '../controls';
 import { CONTROL_SCHEME_EDIT_SELECTORS } from '../../control-scheme-edit.selectors';
 

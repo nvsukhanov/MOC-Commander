@@ -1,6 +1,12 @@
 import { PortModeName } from '@nvsukhanov/rxpoweredup';
+import {
+    ATTACHED_IO_MODES_SELECTORS,
+    ATTACHED_IO_PORT_MODE_INFO_SELECTORS,
+    AttachedIoModel,
+    attachedIoModesIdFn,
+    attachedIoPortModeInfoIdFn
+} from '@app/store';
 
-import { ATTACHED_IO_MODES_SELECTORS, ATTACHED_IO_PORT_MODE_INFO_SELECTORS, AttachedIoModel, attachedIoModesIdFn, attachedIoPortModeInfoIdFn } from '../store';
 import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 import { getIoOperationModesForControllerInputType } from './get-io-operation-modes-for-controller-input-type';
 import { doesIoSupportOperationMode } from './does-io-support-operation-mode';

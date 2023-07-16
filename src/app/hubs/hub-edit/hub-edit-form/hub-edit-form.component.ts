@@ -7,8 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslocoModule } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { HubModel } from '@app/store';
 
-import { HubModel } from '../../../store';
 import { RoutesBuilderService } from '../../../routing';
 
 export type HubEditFormSaveResult = {

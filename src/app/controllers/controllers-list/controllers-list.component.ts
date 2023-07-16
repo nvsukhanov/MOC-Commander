@@ -7,9 +7,9 @@ import { Store } from '@ngrx/store';
 import { MatIconModule } from '@angular/material/icon';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { MatListModule } from '@angular/material/list';
+import { CONTROLLER_SETTINGS_ACTIONS, ControllerModel, ControllerSettingsModel } from '@app/store';
 
 import { ControllersListItemComponent } from '../controllers-list-item';
-import { CONTROLLER_SETTINGS_ACTIONS, ControllerModel, ControllerSettingsModel } from '../../store';
 import { CONTROLLERS_LIST_SELECTORS } from './controllers-list.selectors';
 
 @Component({

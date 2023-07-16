@@ -5,10 +5,10 @@ import { PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel, ROUTER_SELECTORS } from '@app/store';
 
 import { RoutesBuilderService } from '../../routing';
 import { BindingFormResult, ControlSchemeEditFormComponent } from './edit-form';
-import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel, ROUTER_SELECTORS } from '../../store';
 import { trimFormOutputBinding } from '../trim-form-output-binding';
 
 @Component({

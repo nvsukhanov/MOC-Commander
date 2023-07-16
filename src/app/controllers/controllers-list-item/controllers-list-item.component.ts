@@ -4,9 +4,9 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
 import { MatCardModule } from '@angular/material/card';
 import { NgIf } from '@angular/common';
+import { ControllerModel, ControllerSettingsModel } from '@app/store';
 
 import { ControllerProfileFactoryService, IControllerProfile, IControllerSettingsComponent } from '../../controller-profiles';
-import { ControllerModel, ControllerSettingsModel } from '../../store';
 import { ControllerSettingsRenderDirective } from './controller-settings-render.directive';
 
 @Component({
