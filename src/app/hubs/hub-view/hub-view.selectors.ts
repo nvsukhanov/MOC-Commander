@@ -1,6 +1,5 @@
 import { createSelector } from '@ngrx/store';
 import { Dictionary } from '@ngrx/entity';
-
 import {
     ATTACHED_IO_MODES_SELECTORS,
     ATTACHED_IO_PORT_MODE_INFO_SELECTORS,
@@ -10,7 +9,7 @@ import {
     AttachedIoPortModeInfoModel,
     attachedIoModesIdFn,
     attachedIoPortModeInfoIdFn
-} from '../../store';
+} from '@app/store';
 
 function combineFullIoInfo(
     ios: AttachedIoModel[],

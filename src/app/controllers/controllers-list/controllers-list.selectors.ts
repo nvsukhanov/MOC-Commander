@@ -1,6 +1,5 @@
 import { createSelector } from '@ngrx/store';
-
-import { CONTROLLER_SELECTORS, CONTROLLER_SETTINGS_SELECTORS } from '../../store';
+import { CONTROLLER_SELECTORS, CONTROLLER_SETTINGS_SELECTORS } from '@app/store';
 
 export const CONTROLLERS_LIST_SELECTORS = {
     viewModel: createSelector(

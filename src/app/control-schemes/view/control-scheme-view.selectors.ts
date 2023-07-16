@@ -1,7 +1,6 @@
 import { Dictionary } from '@ngrx/entity';
 import { HubType, IOType } from '@nvsukhanov/rxpoweredup';
 import { createSelector } from '@ngrx/store';
-
 import {
     ATTACHED_IO_MODES_SELECTORS,
     ATTACHED_IO_PORT_MODE_INFO_SELECTORS,
@@ -21,7 +20,8 @@ import {
     PORT_TASKS_SELECTORS,
     ROUTER_SELECTORS,
     attachedIosIdFn
-} from '../../store';
+} from '@app/store';
+
 import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 import { getHubIoOperationModes } from '../get-hub-io-operation-modes';
 

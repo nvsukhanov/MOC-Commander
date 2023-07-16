@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
 import { Type } from '@angular/core';
+import { ControllerSettingsModel } from '@app/store';
 
 import { IControllerSettingsComponent } from './i-controller-settings-component';
-import { ControllerSettingsModel } from '../store';
 
 export interface IControllerProfile<TSettings extends ControllerSettingsModel = ControllerSettingsModel> {
     readonly settingsComponent?: Type<IControllerSettingsComponent<TSettings>>;

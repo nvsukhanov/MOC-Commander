@@ -1,7 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { PortModeName } from '@nvsukhanov/rxpoweredup';
 import { Dictionary } from '@ngrx/entity';
-
 import {
     ATTACHED_IO_MODES_SELECTORS,
     ATTACHED_IO_PORT_MODE_INFO_SELECTORS,
@@ -14,7 +13,8 @@ import {
     HUB_STATS_SELECTORS,
     attachedIoModesIdFn,
     attachedIoPortModeInfoIdFn
-} from '../../store';
+} from '@app/store';
+
 import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 import { getHubIoOperationModes } from '../get-hub-io-operation-modes';
 

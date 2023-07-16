@@ -34,6 +34,9 @@
     "paths": {
       "@app/shared": [
         "src/app/shared"
+      ],
+      "@app/store": [
+        "src/app/store"
       ]
     }
   },

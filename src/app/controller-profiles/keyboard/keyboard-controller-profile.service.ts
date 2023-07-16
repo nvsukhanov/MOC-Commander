@@ -2,11 +2,11 @@ import { EMPTY, Observable } from 'rxjs';
 import { Memoize } from 'typescript-memoize';
 import { TranslocoService } from '@ngneat/transloco';
 import { Injectable } from '@angular/core';
+import { KeyboardSettingsModel } from '@app/store';
 
 import { createControllerL10nKey, createScopedControllerL10nKey } from '../create-controller-l10n-key';
 import { IControllerProfile } from '../i-controller-profile';
 import { KeyboardsSettingsComponent } from './keyboards-settings.component';
-import { KeyboardSettingsModel } from '../../store';
 
 @Injectable()
 export class KeyboardControllerProfileService implements IControllerProfile<KeyboardSettingsModel> {

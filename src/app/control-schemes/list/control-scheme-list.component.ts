@@ -9,11 +9,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { CONTROL_SCHEME_ACTIONS, ControlSchemeModel } from '@app/store';
 
 import { FeatureToolbarService } from '@app/shared';
 import { RoutesBuilderService } from '../../routing';
 import { ControlSchemeListItemComponent } from './control-scheme-list-item';
-import { CONTROL_SCHEME_ACTIONS, ControlSchemeModel } from '../../store';
 import { ControlSchemeDeleteDialogComponent } from '../control-scheme-delete-dialog';
 import { CONTROL_SCHEMES_LIST_SELECTORS } from './control-schemes-list.selectors';
 

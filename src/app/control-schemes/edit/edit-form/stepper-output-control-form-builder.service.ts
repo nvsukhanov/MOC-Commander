@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MOTOR_LIMITS, MotorServoEndState } from '@nvsukhanov/rxpoweredup';
+import { BindingStepperOutputState } from '@app/store';
 
 import { StepperOutputConfigurationForm } from '../binding-output';
-import { BindingStepperOutputState } from '../../../store';
 
 @Injectable({ providedIn: 'root' })
 export class StepperOutputControlFormBuilderService {

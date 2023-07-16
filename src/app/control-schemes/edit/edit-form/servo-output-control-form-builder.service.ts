@@ -1,9 +1,9 @@
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Injectable } from '@angular/core';
+import { BindingServoOutputState } from '@app/store';
 
 import { ServoOutputConfigurationForm } from '../binding-output';
-import { BindingServoOutputState } from '../../../store';
 
 @Injectable({ providedIn: 'root' })
 export class ServoOutputControlFormBuilderService {

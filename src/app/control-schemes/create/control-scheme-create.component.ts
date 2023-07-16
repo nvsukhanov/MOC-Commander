@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
+import { CONTROL_SCHEME_ACTIONS } from '@app/store';
 
 import { BindingFormResult, ControlSchemeEditFormComponent } from '../edit';
-import { CONTROL_SCHEME_ACTIONS } from '../../store';
 import { RoutesBuilderService } from '../../routing';
 import { trimFormOutputBinding } from '../trim-form-output-binding';
 

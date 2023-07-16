@@ -25,6 +25,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, ControlSchemeModel, ControllerInputModel, } from '@app/store';
 
 import { FeatureToolbarService, IScrollContainer, SCROLL_CONTAINER, ScreenSizeObserverService, WINDOW } from '@app/shared';
 import { ControlSchemeBindingInputComponent } from '../binding-input';
@@ -32,7 +33,6 @@ import { ControlSchemeBindingOutputComponent } from '../binding-output';
 import { ControlSchemeFormBuilderService } from './control-scheme-form-builder.service';
 import { BindingForm, EditSchemeForm } from '../types';
 import { ControlSchemeBindingConfigurationComponent } from '../binding-config';
-import { CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, ControlSchemeModel, ControllerInputModel, } from '../../../store';
 import { WaitingForInputDialogComponent } from '../waiting-for-input-dialog';
 import { CONTROL_SCHEME_EDIT_SELECTORS, IoWithOperationModes } from '../control-scheme-edit.selectors';
 import { getIoOperationModesForControllerInputType } from '../../get-io-operation-modes-for-controller-input-type';
