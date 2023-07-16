@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';
 
 import { CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS } from '../actions';
-import { ControllerProfileFactoryService } from '../../plugins';
+import { ControllerProfileFactoryService } from '../../controller-profiles';
 
 @Injectable()
 export class NotificationsEffects {

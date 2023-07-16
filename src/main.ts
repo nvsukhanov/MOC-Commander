@@ -7,7 +7,7 @@ import { LayoutComponent } from './app/main';
 import { provideApplicationStore } from './app/store';
 import { provideI18n } from './app/i18n';
 import { provideRouting } from './app/routing';
-import { provideControllerProfiles } from './app/plugins';
+import { provideControllerProfiles } from './app/controller-profiles';
 
 bootstrapApplication(LayoutComponent, {
     providers: [

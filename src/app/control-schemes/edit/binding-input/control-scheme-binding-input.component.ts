@@ -10,7 +10,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 
 import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS, controllerInputIdFn } from '../../../store';
-import { ControllerProfileFactoryService } from '../../../plugins';
+import { ControllerProfileFactoryService } from '../../../controller-profiles';
 import { ControllerInputType } from '@app/shared';
 
 export type ControlSchemeBindingInputForm = FormGroup<{
