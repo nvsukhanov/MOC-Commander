@@ -1,4 +1,4 @@
-export * from './provide-controllers-plugins';
-export * from './controller-plugin-factory.service';
-export * from './i-controller-plugin';
+export * from './provide-controller-profiles';
+export * from './controller-profile-factory.service';
+export * from './i-controller-profile';
 export * from './i-controller-settings-component';

@@ -3,11 +3,11 @@ import { TranslocoService } from '@ngneat/transloco';
 import { Observable } from 'rxjs';
 import { Memoize } from 'typescript-memoize';
 
-import { IControllerPlugin } from '../i-controller-plugin';
+import { IControllerProfile } from '../i-controller-profile';
 import { createControllerL10nKey } from '../create-controller-l10n-key';
 
 @Injectable()
-export class DisconnectedControllerPluginService implements IControllerPlugin {
+export class DisconnectedControllerProfileService implements IControllerProfile {
     public readonly nameL10nKey: string;
 
     public readonly buttonStateL10nKey = createControllerL10nKey('buttonState');

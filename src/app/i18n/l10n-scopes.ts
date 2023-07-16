@@ -1,6 +1,6 @@
 export enum L10nScopes {
     io = 'io',
-    controllerPlugins = 'controllerPlugins',
+    controllerProfiles = 'controllerProfiles',
     controller = 'controller',
     motorServoEndState = 'motorServoEndState'
 }

@@ -5,7 +5,7 @@ import { PushPipe } from '@ngrx/component';
 import { MatCardModule } from '@angular/material/card';
 import { NgIf } from '@angular/common';
 
-import { ControllerPluginFactoryService, IControllerPlugin, IControllerSettingsComponent } from '../../plugins';
+import { ControllerProfileFactoryService, IControllerProfile, IControllerSettingsComponent } from '../../plugins';
 import { ControllerModel, ControllerSettingsModel } from '../../store';
 import { ControllerSettingsRenderDirective } from './controller-settings-render.directive';
 
@@ -27,12 +27,12 @@ import { ControllerSettingsRenderDirective } from './controller-settings-render.
 export class ControllersListItemComponent {
     @Output() public readonly settingsChanges = new EventEmitter<ControllerSettingsModel>();
 
-    private _controllerPlugin: IControllerPlugin = this.controllerPluginFactoryService.getPlugin();
+    private _controllerProfile: IControllerProfile = this.controllerProfileFactory.getProfile();
 
     private _controllerSettings?: ControllerSettingsModel;
 
     constructor(
-        private readonly controllerPluginFactoryService: ControllerPluginFactoryService,
+        private readonly controllerProfileFactory: ControllerProfileFactoryService,
     ) {
     }
 
@@ -40,7 +40,7 @@ export class ControllersListItemComponent {
     public set controller(
         controllerWithSettings: { controller: ControllerModel; settings?: ControllerSettingsModel } | undefined
     ) {
-        this._controllerPlugin = this.controllerPluginFactoryService.getPlugin(
+        this._controllerProfile = this.controllerProfileFactory.getProfile(
             controllerWithSettings?.controller?.controllerType,
             controllerWithSettings?.controller?.id
         );
@@ -48,11 +48,11 @@ export class ControllersListItemComponent {
     }
 
     public get controllerSettingsComponent(): Type<IControllerSettingsComponent> | undefined {
-        return this._controllerPlugin.settingsComponent;
+        return this._controllerProfile.settingsComponent;
     }
 
     public get controllerNameL10nKey(): string {
-        return this._controllerPlugin.nameL10nKey;
+        return this._controllerProfile.nameL10nKey;
     }
 
     public get controllerSettings(): ControllerSettingsModel | undefined {

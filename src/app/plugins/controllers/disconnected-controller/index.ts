@@ -1,1 +1,1 @@
-export * from './disconnected-controller-plugin.service';
+export * from './disconnected-controller-profile.service';

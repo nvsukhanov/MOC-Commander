@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 
 import { CONTROLLERS_ACTIONS } from '../../actions';
 import { CONTROLLER_SELECTORS } from '../../selectors';
-import { ControllerPluginFactoryService } from '../../../plugins';
+import { ControllerProfileFactoryService } from '../../../plugins';
 import { APP_CONFIG, ControllerType, IAppConfig, WINDOW } from '@app/shared';
 import { controllerIdFn } from '../../reducers';
 
@@ -16,7 +16,7 @@ export const GAMEPAD_CONTROLLER_EFFECTS: Record<string, FunctionalEffect> = {
         actions$: Actions = inject(Actions),
         store: Store = inject(Store),
         window: Window = inject(WINDOW),
-        gamepadPluginFactory: ControllerPluginFactoryService = inject(ControllerPluginFactoryService),
+        controllerProfileFactory: ControllerProfileFactoryService = inject(ControllerProfileFactoryService),
         config: IAppConfig = inject(APP_CONFIG),
     ) => {
         return actions$.pipe(
@@ -36,12 +36,12 @@ export const GAMEPAD_CONTROLLER_EFFECTS: Record<string, FunctionalEffect> = {
             }),
             switchMap((gamepads) => from(gamepads)),
             map((gamepad: Gamepad) => {
-                const gamepadPlugin = gamepadPluginFactory.getPlugin(ControllerType.Gamepad, gamepad.id);
+                const gamepadProfile = controllerProfileFactory.getProfile(ControllerType.Gamepad, gamepad.id);
                 return CONTROLLERS_ACTIONS.connected({
                     id: gamepad.id,
                     gamepadIndex: gamepad.index,
                     controllerType: ControllerType.Gamepad,
-                    triggerButtonIndices: [ ...gamepadPlugin.triggerButtonIndices ],
+                    triggerButtonIndices: [ ...gamepadProfile.triggerButtonIndices ],
                     buttonsCount: gamepad.buttons.length,
                     axesCount: gamepad.axes.length,
                 });

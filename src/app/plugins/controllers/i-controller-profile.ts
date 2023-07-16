@@ -4,7 +4,7 @@ import { Type } from '@angular/core';
 import { IControllerSettingsComponent } from './i-controller-settings-component';
 import { ControllerSettingsModel } from '../../store';
 
-export interface IControllerPlugin<TSettings extends ControllerSettingsModel = ControllerSettingsModel> {
+export interface IControllerProfile<TSettings extends ControllerSettingsModel = ControllerSettingsModel> {
     readonly settingsComponent?: Type<IControllerSettingsComponent<TSettings>>;
 
     readonly nameL10nKey: string;

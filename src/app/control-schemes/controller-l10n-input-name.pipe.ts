@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { ControllerPluginFactoryService } from '../plugins';
+import { ControllerProfileFactoryService } from '../plugins';
 import { ControllerModel } from '../store';
 import { ControllerInputType } from '@app/shared';
 
@@ -12,7 +12,7 @@ import { ControllerInputType } from '@app/shared';
 })
 export class ControllerL10nInputNamePipe implements PipeTransform {
     constructor(
-        private readonly controllerPluginFactory: ControllerPluginFactoryService,
+        private readonly controllerProfileFactory: ControllerProfileFactoryService,
     ) {
     }
 
@@ -21,7 +21,7 @@ export class ControllerL10nInputNamePipe implements PipeTransform {
         inputType: ControllerInputType,
         controller: ControllerModel
     ): Observable<string> {
-        const plugin = this.controllerPluginFactory.getPlugin(controller.controllerType, controller.id);
-        return inputType === ControllerInputType.Axis ? plugin.getAxisName$(inputId) : plugin.getButtonName$(inputId);
+        const controllerProfile = this.controllerProfileFactory.getProfile(controller.controllerType, controller.id);
+        return inputType === ControllerInputType.Axis ? controllerProfile.getAxisName$(inputId) : controllerProfile.getButtonName$(inputId);
     }
 }

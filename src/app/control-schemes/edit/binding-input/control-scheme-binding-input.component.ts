@@ -10,7 +10,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 
 import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS, controllerInputIdFn } from '../../../store';
-import { ControllerPluginFactoryService } from '../../../plugins';
+import { ControllerProfileFactoryService } from '../../../plugins';
 import { ControllerInputType } from '@app/shared';
 
 export type ControlSchemeBindingInputForm = FormGroup<{
@@ -58,7 +58,7 @@ export class ControlSchemeBindingInputComponent implements OnInit, OnDestroy {
 
     constructor(
         private readonly store: Store,
-        private readonly controllerPluginFactoryService: ControllerPluginFactoryService
+        private readonly controllerProfileFactory: ControllerProfileFactoryService
     ) {
     }
 
@@ -93,9 +93,9 @@ export class ControlSchemeBindingInputComponent implements OnInit, OnDestroy {
         const controllerId$ = formGroup.controls.controllerId.valueChanges.pipe(
             startWith(formGroup.controls.controllerId.value),
         );
-        const controllerPlugin$ = controllerId$.pipe(
+        const controllerProfile$ = controllerId$.pipe(
             switchMap((controllerId) => this.store.select(CONTROLLER_SELECTORS.selectById(controllerId))),
-            map((controller) => this.controllerPluginFactoryService.getPlugin(controller?.controllerType, controller?.id))
+            map((controller) => this.controllerProfileFactory.getProfile(controller?.controllerType, controller?.id))
         );
 
         const inputId$ = formGroup.controls.inputId.valueChanges.pipe(
@@ -106,32 +106,32 @@ export class ControlSchemeBindingInputComponent implements OnInit, OnDestroy {
             startWith(formGroup.controls.inputType.value),
         );
 
-        this._controllerNameL10nKey$ = controllerPlugin$.pipe(
-            map((controllerPlugin) => controllerPlugin.nameL10nKey),
+        this._controllerNameL10nKey$ = controllerProfile$.pipe(
+            map((controllerProfile) => controllerProfile.nameL10nKey),
         );
 
         this._inputName$ = combineLatest([
-            controllerPlugin$,
+            controllerProfile$,
             inputId$,
             this._inputType$
         ]).pipe(
-            switchMap(([ controllerPlugin, inputId, inputType ]) => {
+            switchMap(([ controllerProfile, inputId, inputType ]) => {
                 switch (inputType) {
                     case ControllerInputType.Axis:
-                        return controllerPlugin.getAxisName$(inputId);
+                        return controllerProfile.getAxisName$(inputId);
                     case ControllerInputType.Button:
-                        return controllerPlugin.getButtonName$(inputId);
+                        return controllerProfile.getButtonName$(inputId);
                     default:
                         return EMPTY;
                 }
             })
         );
 
-        this._buttonStateL10nKey$ = controllerPlugin$.pipe(
+        this._buttonStateL10nKey$ = controllerProfile$.pipe(
             map((c) => c.buttonStateL10nKey)
         );
 
-        this._axisStateL10nKey$ = controllerPlugin$.pipe(
+        this._axisStateL10nKey$ = controllerProfile$.pipe(
             map((c) => c.axisStateL10nKey)
         );
 

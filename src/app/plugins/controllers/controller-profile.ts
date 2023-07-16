@@ -3,9 +3,9 @@ import { TranslocoService } from '@ngneat/transloco';
 import { Memoize } from 'typescript-memoize';
 
 import { createControllerL10nKey, createScopedControllerL10nKey } from './create-controller-l10n-key';
-import { IControllerPlugin } from './i-controller-plugin';
+import { IControllerProfile } from './i-controller-profile';
 
-export abstract class ControllerPlugin implements IControllerPlugin {
+export abstract class ControllerProfile implements IControllerProfile {
     public abstract readonly nameL10nKey: string;
 
     public abstract readonly buttonStateL10nKey: string;
