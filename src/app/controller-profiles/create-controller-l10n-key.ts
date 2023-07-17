@@ -12,3 +12,9 @@ export function createControllerL10nKey(
 ): string {
     return composeL10nKey(L10nScopes.controllerProfiles, key);
 }
+
+export function createScopedControllerL10nKeyBuilder(
+    scope: string
+): (key: string) => string {
+    return (key: string) => createScopedControllerL10nKey(scope, key);
+}

@@ -3,9 +3,12 @@
     <mat-expansion-panel-header>
         <mat-panel-title>
             {{ controllerNameL10nKey | transloco }}
+            <app-not-connected-inline-icon *ngIf="!isConnected"
+                                           [notification]="'controller.isNotConnectedInlineNotification' | transloco"
+            ></app-not-connected-inline-icon>
         </mat-panel-title>
         <mat-panel-description>
-            {{ 'controllerPlugins.settings' | transloco }}
+            {{ 'controllerProfiles.settings' | transloco }}
         </mat-panel-description>
     </mat-expansion-panel-header>
     <section *ngIf="controllerSettingsComponent"
@@ -22,6 +25,9 @@
         <mat-card-header class="controller-without-settings__header">
             <mat-card-title class="controller-without-settings__title">
                 {{ controllerNameL10nKey | transloco }}
+                <app-not-connected-inline-icon *ngIf="!isConnected"
+                                               [notification]="'controller.isNotConnectedInlineNotification' | transloco"
+                ></app-not-connected-inline-icon>
             </mat-card-title>
         </mat-card-header>
     </mat-card>

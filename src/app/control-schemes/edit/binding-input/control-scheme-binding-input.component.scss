@@ -1,3 +1,14 @@
 :host {
     display: block;
 }
+
+.controller-input-name,
+.controller-name {
+    margin: 5px;
+}
+
+.controller-name {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}

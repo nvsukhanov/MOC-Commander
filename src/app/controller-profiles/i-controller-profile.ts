@@ -7,13 +7,15 @@ import { IControllerSettingsComponent } from './i-controller-settings-component'
 export interface IControllerProfile<TSettings extends ControllerSettingsModel = ControllerSettingsModel> {
     readonly settingsComponent?: Type<IControllerSettingsComponent<TSettings>>;
 
+    readonly uid: string;
+
     readonly nameL10nKey: string;
 
     readonly buttonStateL10nKey: string;
 
     readonly axisStateL10nKey: string;
 
-    readonly triggerButtonIndices: ReadonlyArray<number>;
+    readonly triggerButtonsIndices: ReadonlyArray<number>;
 
     getButtonName$(inputId: string): Observable<string>;
 

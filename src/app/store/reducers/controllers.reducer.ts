@@ -5,21 +5,21 @@ import { ControllerType } from '@app/shared';
 import { CONTROLLERS_ACTIONS } from '../actions';
 import { ControllerModel, } from '../models';
 
-const KEYBOARD_CONTROLLER_ID = 'keyboard';
+export const CONTROLLERS_ENTITY_ADAPTER: EntityAdapter<ControllerModel> = createEntityAdapter<ControllerModel>({
+    selectId: (controller) => controller.id,
+});
 
 export type ControllersState = EntityState<ControllerModel>;
 
-export const CONTROLLERS_ENTITY_ADAPTER: EntityAdapter<ControllerModel> = createEntityAdapter<ControllerModel>({
-    selectId: (controller) => controllerIdFn(controller),
-});
-
 export function controllerIdFn(
-    idArgs: { id: string; controllerType: ControllerType.Gamepad; gamepadIndex: number } | { controllerType: ControllerType.Keyboard }
+    idArgs: { profileUid: string; controllerType: ControllerType.Gamepad; gamepadOfTypeIndex: number }
+        | { profileUid: string; controllerType: ControllerType.Keyboard }
 ): string {
-    if (idArgs.controllerType === ControllerType.Gamepad) {
-        return `${idArgs.id}/${idArgs.controllerType}/${idArgs.gamepadIndex}`;
-    } else {
-        return KEYBOARD_CONTROLLER_ID;
+    switch (idArgs.controllerType) {
+        case ControllerType.Keyboard:
+            return idArgs.profileUid;
+        case ControllerType.Gamepad:
+            return `gamepad-${idArgs.profileUid}/${idArgs.gamepadOfTypeIndex}`;
     }
 }
 
@@ -29,11 +29,23 @@ export const CONTROLLERS_FEATURE = createFeature({
     name: 'controllers',
     reducer: createReducer(
         CONTROLLERS_INITIAL_STATE,
-        on(CONTROLLERS_ACTIONS.connected, (state, action): ControllersState => {
-            return CONTROLLERS_ENTITY_ADAPTER.addOne(action, state);
+        on(CONTROLLERS_ACTIONS.keyboardDiscovered, (state, action): ControllersState => {
+            return CONTROLLERS_ENTITY_ADAPTER.addOne({
+                id: controllerIdFn({ profileUid: action.profileUid, controllerType: ControllerType.Keyboard }),
+                controllerType: ControllerType.Keyboard,
+                profileUid: action.profileUid,
+            }, state);
         }),
-        on(CONTROLLERS_ACTIONS.disconnected, (state, action): ControllersState => {
-            return CONTROLLERS_ENTITY_ADAPTER.removeOne(controllerIdFn(action), state);
-        }),
+        on(CONTROLLERS_ACTIONS.gamepadDiscovered, (state, action): ControllersState => {
+            return CONTROLLERS_ENTITY_ADAPTER.addOne({
+                id: action.id,
+                controllerType: ControllerType.Gamepad,
+                axesCount: action.axesCount,
+                buttonsCount: action.buttonsCount,
+                triggerButtonIndices: action.triggerButtonsIndices,
+                profileUid: action.profileUid,
+                gamepadOfTypeIndex: action.gamepadOfTypeIndex,
+            }, state);
+        })
     ),
 });

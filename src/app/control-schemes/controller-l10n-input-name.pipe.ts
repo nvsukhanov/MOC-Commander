@@ -21,7 +21,7 @@ export class ControllerL10nInputNamePipe implements PipeTransform {
         inputType: ControllerInputType,
         controller: ControllerModel
     ): Observable<string> {
-        const controllerProfile = this.controllerProfileFactory.getProfile(controller.controllerType, controller.id);
+        const controllerProfile = this.controllerProfileFactory.getByProfileUid(controller.profileUid);
         return inputType === ControllerInputType.Axis ? controllerProfile.getAxisName$(inputId) : controllerProfile.getButtonName$(inputId);
     }
 }

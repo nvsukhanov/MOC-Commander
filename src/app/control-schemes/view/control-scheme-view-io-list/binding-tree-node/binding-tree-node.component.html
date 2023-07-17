@@ -1,7 +1,7 @@
 <div *ngIf="binding"
      class="binding-info-container"
 >
-    <ng-container *ngIf="binding.controller; else noControllerIcon">
+    <ng-container *ngIf="binding.controller; else unknownController">
         <mat-icon
             class="controller-type-icon binding-info-item"
             [fontIcon]="binding.controller.controllerType | controllerTypeIcon"
@@ -12,14 +12,20 @@
         <div class="controller-input-name binding-info-item"
              appEllipsisTitle
         >
+            {{ binding.controller | controllerL10nName | transloco | ngrxPush }} :
             {{ binding.inputId | controllerL10nInputName: binding.inputType : binding.controller | ngrxPush }}
         </div>
+        <div class="not-connected-icon">
+            <app-not-connected-inline-icon *ngIf="!binding.controllerIsConnected"
+                                           [notification]="'controller.isNotConnectedInlineNotification' | transloco"
+            ></app-not-connected-inline-icon>
+        </div>
     </ng-container>
-    <ng-template #noControllerIcon>
+    <ng-template #unknownController>
         <mat-icon class="controller-type-icon binding-info-item"
                   [fontIcon]="'question_mark'"
         ></mat-icon>
-        <span class="cdk-visually-hidden">{{ 'controller.isNotConnectedInlineNotification' | transloco }}</span>
+        <span class="cdk-visually-hidden">{{ 'controller.unknownController' | transloco }}</span>
     </ng-template>
 
     <mat-icon class="is-active-indicator binding-info-item"

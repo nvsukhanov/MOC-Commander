@@ -12,9 +12,11 @@ import { KeyboardsSettingsComponent } from './keyboards-settings.component';
 export class KeyboardControllerProfileService implements IControllerProfile<KeyboardSettingsModel> {
     public readonly settingsComponent = KeyboardsSettingsComponent;
 
+    public readonly uid = 'keyboard';
+
     public readonly nameL10nKey: string;
 
-    public readonly triggerButtonIndices: ReadonlyArray<number> = [];
+    public readonly triggerButtonsIndices: ReadonlyArray<number> = [];
 
     public readonly buttonStateL10nKey = createControllerL10nKey('buttonState');
 

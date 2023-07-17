@@ -3,10 +3,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { TranslocoModule } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
 import { MatCardModule } from '@angular/material/card';
-import { NgIf } from '@angular/common';
+import { NgIf, NgTemplateOutlet } from '@angular/common';
 import { ControllerModel, ControllerSettingsModel } from '@app/store';
+import { MatIconModule } from '@angular/material/icon';
+import { NotConnectedInlineIconComponent } from '@app/shared';
 
-import { ControllerProfileFactoryService, IControllerProfile, IControllerSettingsComponent } from '../../controller-profiles';
+import { ControllerProfileFactoryService, IControllerProfile, IControllerSettingsComponent } from '../../../controller-profiles';
 import { ControllerSettingsRenderDirective } from './controller-settings-render.directive';
 
 @Component({
@@ -20,7 +22,10 @@ import { ControllerSettingsRenderDirective } from './controller-settings-render.
         PushPipe,
         MatCardModule,
         NgIf,
-        ControllerSettingsRenderDirective
+        ControllerSettingsRenderDirective,
+        MatIconModule,
+        NgTemplateOutlet,
+        NotConnectedInlineIconComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -31,6 +36,8 @@ export class ControllersListItemComponent {
 
     private _controllerSettings?: ControllerSettingsModel;
 
+    private _isConnected = false;
+
     constructor(
         private readonly controllerProfileFactory: ControllerProfileFactoryService,
     ) {
@@ -38,13 +45,13 @@ export class ControllersListItemComponent {
 
     @Input()
     public set controller(
-        controllerWithSettings: { controller: ControllerModel; settings?: ControllerSettingsModel } | undefined
+        controllerWithSettings: { controller: ControllerModel; settings?: ControllerSettingsModel; isConnected: boolean } | undefined
     ) {
-        this._controllerProfile = this.controllerProfileFactory.getProfile(
-            controllerWithSettings?.controller?.controllerType,
-            controllerWithSettings?.controller?.id
+        this._controllerProfile = this.controllerProfileFactory.getByProfileUid(
+            controllerWithSettings?.controller?.profileUid
         );
         this._controllerSettings = controllerWithSettings?.settings;
+        this._isConnected = controllerWithSettings?.isConnected ?? false;
     }
 
     public get controllerSettingsComponent(): Type<IControllerSettingsComponent> | undefined {
@@ -57,6 +64,10 @@ export class ControllersListItemComponent {
 
     public get controllerSettings(): ControllerSettingsModel | undefined {
         return this._controllerSettings;
+    }
+
+    public get isConnected(): boolean {
+        return this._isConnected;
     }
 
     public controllerSettingsUpdate(

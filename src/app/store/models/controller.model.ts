@@ -3,15 +3,17 @@ import { ControllerType } from '@app/shared';
 export type GamepadControllerModel = {
     id: string;
     controllerType: ControllerType.Gamepad;
-    gamepadIndex: number;
     axesCount: number;
     buttonsCount: number;
     triggerButtonIndices: number[];
+    profileUid: string;
+    gamepadOfTypeIndex: number;
 };
 
 export type KeyboardControllerModel = {
     id: string;
     controllerType: ControllerType.Keyboard;
+    profileUid: string;
 };
 
 export type ControllerModel = GamepadControllerModel | KeyboardControllerModel;

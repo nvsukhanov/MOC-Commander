@@ -1,13 +1,15 @@
 import { createSelector } from '@ngrx/store';
-import { CONTROLLER_SELECTORS, CONTROLLER_SETTINGS_SELECTORS } from '@app/store';
+import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS, CONTROLLER_SETTINGS_SELECTORS } from '@app/store';
 
 export const CONTROLLERS_LIST_SELECTORS = {
     viewModel: createSelector(
         CONTROLLER_SELECTORS.selectAll,
         CONTROLLER_SETTINGS_SELECTORS.selectEntities,
-        (controllers, controllerSettingsEntities) => controllers.map((controller) => ({
+        CONTROLLER_CONNECTION_SELECTORS.selectEntities,
+        (controllers, settingsEntities, connectionStateEntities) => controllers.map((controller) => ({
             controller,
-            settings: controllerSettingsEntities[controller.id]
+            isConnected: !!connectionStateEntities[controller.id],
+            settings: settingsEntities[controller.id]
         }))
     ),
 } as const;

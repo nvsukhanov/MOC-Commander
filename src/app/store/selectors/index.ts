@@ -12,3 +12,4 @@ export * from './port-tasks.selectors';
 export * from './hub-stats.selectors';
 export * from './hubs.selectors';
 export * from './router.selectors';
+export * from './controller-connection.selectors';

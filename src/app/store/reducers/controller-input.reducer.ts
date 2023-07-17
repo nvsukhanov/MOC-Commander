@@ -2,7 +2,7 @@ import { createFeature, createReducer, on } from '@ngrx/store';
 import { EntityAdapter, EntityState, createEntityAdapter } from '@ngrx/entity';
 import { ControllerInputType } from '@app/shared';
 
-import { CONTROLLERS_ACTIONS, CONTROLLER_INPUT_ACTIONS } from '../actions';
+import { CONTROLLER_INPUT_ACTIONS } from '../actions';
 import { ControllerInputModel } from '../models';
 
 export interface ControllerInputState extends EntityState<ControllerInputModel> {
@@ -38,9 +38,6 @@ export const CONTROLLER_INPUT_FEATURE = createFeature({
             } else {
                 return CONTROLLER_INPUT_ENTITY_ADAPTER.removeOne(controllerInputIdFn(action), state);
             }
-        }),
-        on(CONTROLLERS_ACTIONS.disconnected, (state, action): ControllerInputState => {
-            return CONTROLLER_INPUT_ENTITY_ADAPTER.removeMany((v) => v.controllerId === action.id, state);
         }),
         on(CONTROLLER_INPUT_ACTIONS.inputCaptureReleased, (state): ControllerInputState => {
             return CONTROLLER_INPUT_ENTITY_ADAPTER.removeAll(state);

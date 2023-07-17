@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
 
 import { CONTROLLER_INPUT_ENTITY_ADAPTER, CONTROLLER_INPUT_FEATURE } from '../reducers';
-import { CONTROLLER_SELECTORS } from './controllers.selectors';
+import { CONTROLLER_CONNECTION_SELECTORS } from './controller-connection.selectors';
 
 const CONTROLLER_INPUT_ENTITY_ADAPTER_SELECTORS = CONTROLLER_INPUT_ENTITY_ADAPTER.getSelectors();
 
@@ -31,7 +31,7 @@ export const CONTROLLER_INPUT_SELECTORS = {
     ),
     isKeyboardBeingCaptured: createSelector(
         CONTROLLER_INPUT_FEATURE.selectListenersCount,
-        CONTROLLER_SELECTORS.hasKeyboardConnected,
-        (listenersCount, hasKeyboardConnected) => listenersCount > 0 && hasKeyboardConnected
+        CONTROLLER_CONNECTION_SELECTORS.selectKeyboardConnection,
+        (listenersCount, keyboardConnection) => listenersCount > 0 && !!keyboardConnection
     )
 } as const;

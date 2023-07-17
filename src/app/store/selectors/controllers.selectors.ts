@@ -29,7 +29,11 @@ export const CONTROLLER_SELECTORS = {
         CONTROLLERS_SELECT_ALL,
         (controllers) => controllers.filter((c) => c.controllerType === ControllerType.Gamepad) as GamepadControllerModel[]
     ),
-    hasKeyboardConnected: createSelector(
+    selectKeyboard: createSelector(
+        CONTROLLERS_SELECT_ALL,
+        (controllers) => controllers.find((c) => c.controllerType === ControllerType.Keyboard)
+    ),
+    isKeyboardDiscovered: createSelector(
         CONTROLLERS_SELECT_ALL,
         (controllers) => controllers.some((c) => c.controllerType === ControllerType.Keyboard)
     ),

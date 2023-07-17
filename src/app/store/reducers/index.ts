@@ -11,3 +11,4 @@ export * from './hubs.reducer';
 export * from './attached-io-props.reducer';
 export * from './attached-io-modes.reducer';
 export * from './attached-io-port-mode-info.reducer';
+export * from './controller-connection.reducer';

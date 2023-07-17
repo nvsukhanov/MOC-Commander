@@ -2,22 +2,23 @@
     {{ 'controlScheme.bindingInputSection' | transloco }}
 </h2>
 
-<p>
+<div class="controller-name">
     {{ controllerNameL10nKey$ | ngrxPush | transloco }}
-</p>
+    <app-not-connected-inline-icon *ngIf="!(isControllerConnected$ | ngrxPush)"
+                                   [notification]="'controller.isNotConnectedInlineNotification' | transloco"
+    ></app-not-connected-inline-icon>
+</div>
 
-<p>
+<div class="controller-input-name"
+     [ngSwitch]="inputType$ | ngrxPush">
     {{ inputName$ | ngrxPush }}
-</p>
-
-<ng-container [ngSwitch]="inputType$ | ngrxPush">
-    <p *ngSwitchCase="inputTypes.Button">
-        {{ buttonStateL10nKey$ | ngrxPush | transloco: (inputValue$ | ngrxPush) }}
-    </p>
-    <p *ngSwitchCase="inputTypes.Axis">
-        {{ axisStateL10nKey$ | ngrxPush | transloco: (inputValue$ | ngrxPush) }}
-    </p>
-</ng-container>
+    <span *ngSwitchCase="inputTypes.Button">
+        ({{ buttonStateL10nKey$ | ngrxPush | transloco: (inputValue$ | ngrxPush) }})
+    </span>
+    <span *ngSwitchCase="inputTypes.Axis">
+        ({{ axisStateL10nKey$ | ngrxPush | transloco: (inputValue$ | ngrxPush) }})
+    </span>
+</div>
 
 <p>
     <button mat-raised-button

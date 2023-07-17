@@ -1,1 +1,1 @@
-export * from './unknown-controller-profile.service';
+export * from './generic-gamepad-profile.service';
