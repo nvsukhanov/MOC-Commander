@@ -8,8 +8,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
-import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS, controllerInputIdFn } from '@app/store';
-import { ControllerInputType } from '@app/shared';
+import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS, controllerInputIdFn } from '@app/store';
+import { ControllerInputType, NotConnectedInlineIconComponent } from '@app/shared';
 
 import { ControllerProfileFactoryService } from '../../../controller-profiles';
 
@@ -34,6 +34,7 @@ export type ControlSchemeBindingInputForm = FormGroup<{
         MatListModule,
         NgIf,
         MatButtonModule,
+        NotConnectedInlineIconComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -54,6 +55,8 @@ export class ControlSchemeBindingInputComponent implements OnInit, OnDestroy {
 
     private _inputValue$: Observable<{ value: number }> = NEVER;
 
+    private _isControllerConnected$: Observable<boolean> = NEVER;
+
     private isCapturingInput = false;
 
     constructor(
@@ -64,6 +67,10 @@ export class ControlSchemeBindingInputComponent implements OnInit, OnDestroy {
 
     public get controllerNameL10nKey$(): Observable<string> {
         return this._controllerNameL10nKey$;
+    }
+
+    public get isControllerConnected$(): Observable<boolean> {
+        return this._isControllerConnected$;
     }
 
     public get buttonStateL10nKey$(): Observable<string> {
@@ -95,7 +102,7 @@ export class ControlSchemeBindingInputComponent implements OnInit, OnDestroy {
         );
         const controllerProfile$ = controllerId$.pipe(
             switchMap((controllerId) => this.store.select(CONTROLLER_SELECTORS.selectById(controllerId))),
-            map((controller) => this.controllerProfileFactory.getProfile(controller?.controllerType, controller?.id))
+            map((controller) => this.controllerProfileFactory.getByProfileUid(controller?.profileUid))
         );
 
         const inputId$ = formGroup.controls.inputId.valueChanges.pipe(
@@ -108,6 +115,10 @@ export class ControlSchemeBindingInputComponent implements OnInit, OnDestroy {
 
         this._controllerNameL10nKey$ = controllerProfile$.pipe(
             map((controllerProfile) => controllerProfile.nameL10nKey),
+        );
+
+        this._isControllerConnected$ = controllerId$.pipe(
+            switchMap((controllerId) => this.store.select(CONTROLLER_CONNECTION_SELECTORS.isConnected(controllerId)))
         );
 
         this._inputName$ = combineLatest([

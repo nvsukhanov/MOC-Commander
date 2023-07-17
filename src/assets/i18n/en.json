@@ -166,24 +166,24 @@
     "ioSynchronizableTitle": "Synchronizable"
   },
   "controller": {
-    "detectControllerTip": "To detect a controller, press any button on it or move any stick",
-    "noControllerConnected": "No controller detected",
+    "detectControllerTip": "To connect a controller, press any button on it or move any stick",
+    "unknownController": "Unknown controller",
     "isNotConnectedInlineNotification": "disconnected",
     "keyboardControllerType": "Keyboard",
     "gamepadControllerType": "Gamepad",
-    "controllerConnectedNotification": "{ name } connected",
-    "controllerDisconnectedNotification": "{ name } disconnected"
+    "controllerDiscoveredNotification": "Discovered new controller: { name }",
+    "controllerConnectedNotification": "{ name } controller connected",
+    "controllerDisconnectedNotification": "{ name } controller disconnected"
   },
   "controllerProfiles": {
     "buttonState": "{ value, select, 1 {Pressed} other {Released} }",
     "axisState": "Position: { value }",
-    "unknownControllerName": "Unknown controller",
-    "unknownControllerAxis": "Axis {inputId}",
-    "unknownControllerButton": "Button {inputId}",
-    "disconnectedController": "Disconnected controller",
-    "disconnectedControllerAxis": "Axis {inputId}",
-    "disconnectedControllerButton": "Button {inputId}",
     "settings": "Settings",
+    "genericGamepad": {
+      "name": "Unknown",
+      "axis": "Axis {inputId}",
+      "button": "Button {inputId}"
+    },
     "dualshock": {
       "name": "Dualshock",
       "leftStickXAxis": "Left stick X-axis",
@@ -210,7 +210,7 @@
       "buttonTouchpadPress": "Touchpad press"
     },
     "xbox360": {
-      "name": "Xbox 360 Controller",
+      "name": "Xbox 360",
       "leftStickXAxis": "Left stick X-axis",
       "leftStickYAxis": "Left stick Y-axis",
       "rightStickXAxis": "Right stick X-axis",

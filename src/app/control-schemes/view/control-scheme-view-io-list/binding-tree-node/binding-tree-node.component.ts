@@ -4,10 +4,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ControllerL10nTypePipe, ControllerTypeIconPipe, EllipsisTitleDirective, IoOperationTypeToL10nKeyPipe } from '@app/shared';
+import {
+    ControllerL10nTypePipe,
+    ControllerTypeIconPipe,
+    EllipsisTitleDirective,
+    IoOperationTypeToL10nKeyPipe,
+    NotConnectedInlineIconComponent
+} from '@app/shared';
 
 import { ControlSchemeViewBindingTreeNode } from '../../control-scheme-view.selectors';
 import { ControllerL10nInputNamePipe } from '../../../controller-l10n-input-name.pipe';
+import { ControllerL10nNamePipe } from '../../../controller-l10n-name.pipe';
 
 @Component({
     standalone: true,
@@ -24,7 +31,9 @@ import { ControllerL10nInputNamePipe } from '../../../controller-l10n-input-name
         ControllerL10nInputNamePipe,
         PushPipe,
         ControllerL10nTypePipe,
-        MatFormFieldModule
+        MatFormFieldModule,
+        NotConnectedInlineIconComponent,
+        ControllerL10nNamePipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

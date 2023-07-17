@@ -8,10 +8,12 @@ import {
     AttachedIoModel,
     AttachedIoModesModel,
     AttachedIoPortModeInfoModel,
+    CONTROLLER_CONNECTION_SELECTORS,
     CONTROLLER_SELECTORS,
     CONTROL_SCHEME_SELECTORS,
     ControlSchemeBinding,
     ControlSchemeModel,
+    ControllerConnectionModel,
     ControllerModel,
     HUBS_SELECTORS,
     HUB_STATS_SELECTORS,
@@ -70,6 +72,7 @@ function createBindingTreeNode(
     ioSupportedModesEntities: Dictionary<AttachedIoModesModel>,
     portModeInfoEntities: Dictionary<AttachedIoPortModeInfoModel>,
     controllerEntities: Dictionary<ControllerModel>,
+    controllerConnectionEntities: Dictionary<ControllerConnectionModel>,
     lastExecutedTasksBindingIds: ReadonlySet<string>,
     io?: AttachedIoModel,
 ): ControlSchemeViewBindingTreeNode {
@@ -87,6 +90,7 @@ function createBindingTreeNode(
         path: `${ioPath}.${binding.id}`,
         nodeType: ControlSchemeNodeTypes.Binding,
         controller: controllerEntities[binding.input.controllerId],
+        controllerIsConnected: !!controllerConnectionEntities[binding.input.controllerId],
         inputId: binding.input.inputId,
         inputType: binding.input.inputType,
         isActive: lastExecutedTasksBindingIds.has(binding.id),
@@ -106,6 +110,7 @@ export type ControlSchemeViewBindingTreeNode = {
     readonly path: string;
     readonly nodeType: ControlSchemeNodeTypes.Binding;
     readonly controller?: ControllerModel;
+    readonly controllerIsConnected: boolean;
     readonly inputId: string;
     readonly inputType: ControllerInputType;
     readonly isActive: boolean;
@@ -150,6 +155,7 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
         ATTACHED_IO_MODES_SELECTORS.selectEntities,
         ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
         CONTROLLER_SELECTORS.selectEntities,
+        CONTROLLER_CONNECTION_SELECTORS.selectEntities,
         PORT_TASKS_SELECTORS.selectLastExecutedBindingIds,
         (
             scheme: ControlSchemeModel | undefined,
@@ -159,6 +165,7 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
             ioSupportedModesEntities: Dictionary<AttachedIoModesModel>,
             portModeInfoEntities: Dictionary<AttachedIoPortModeInfoModel>,
             controllerEntities: Dictionary<ControllerModel>,
+            controllerConnectionEntities: Dictionary<ControllerConnectionModel>,
             lastExecutedTasksBindingIds: ReadonlySet<string>
         ): ControlSchemeViewHubTreeNode[] => {
             if (!scheme) {
@@ -210,6 +217,7 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
                     ioSupportedModesEntities,
                     portModeInfoEntities,
                     controllerEntities,
+                    controllerConnectionEntities,
                     lastExecutedTasksBindingIds,
                     io
                 );

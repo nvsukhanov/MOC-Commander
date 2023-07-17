@@ -7,6 +7,7 @@ import {
     AttachedIoPortModeInfoState,
     BluetoothAvailabilityState,
     ControlSchemeState,
+    ControllerConnectionState,
     ControllerInputState,
     ControllerSettingsState,
     ControllersState,
@@ -21,6 +22,7 @@ export interface IState {
     controllers: ControllersState;
     controllerInput: ControllerInputState;
     controllerSettings: ControllerSettingsState;
+    controllerConnections: ControllerConnectionState;
     controlSchemes: ControlSchemeState;
     hubs: HubsState;
     hubStats: HubStatsState;

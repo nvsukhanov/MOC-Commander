@@ -7,13 +7,15 @@ import { createControllerL10nKey, createScopedControllerL10nKey } from '../creat
 
 @Injectable()
 export class ControllerXbox360ProfileService extends ControllerProfile {
+    public readonly uid = 'xbox360';
+
     public readonly nameL10nKey = createScopedControllerL10nKey(this.l10nScopeName, 'name');
 
     public readonly buttonStateL10nKey = createControllerL10nKey('buttonState');
 
     public readonly axisStateL10nKey = createControllerL10nKey('axisState');
 
-    public readonly triggerButtonIndices: ReadonlyArray<number> = [ 6, 7 ];
+    public readonly triggerButtonsIndices: ReadonlyArray<number> = [ 6, 7 ];
 
     protected axisNames: { readonly [k in string]: Observable<string> } = {
         0: this.getTranslation('leftStickXAxis'),

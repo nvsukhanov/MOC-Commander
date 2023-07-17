@@ -28,6 +28,11 @@
     max-width: 250px;
 }
 
+.not-connected-icon {
+    flex: 0;
+    min-width: 34px;
+}
+
 .controller {
     &__disconnected-notification {
         flex-shrink: 1;

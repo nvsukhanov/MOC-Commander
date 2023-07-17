@@ -15,6 +15,7 @@ import {
     ATTACHED_IO_PROPS_FEATURE,
     BLUETOOTH_AVAILABILITY_FEATURE,
     CONTROLLERS_FEATURE,
+    CONTROLLER_CONNECTION_FEATURE,
     CONTROLLER_INPUT_FEATURE,
     CONTROLLER_SETTINGS_FEATURE,
     CONTROL_SCHEMES_FEATURE,
@@ -27,14 +28,11 @@ import {
     AttachedIOsEffects,
     AttachedIoModesEffects,
     ControlSchemeEffects,
-    ControllerInputCaptureEffects,
     GAMEPAD_CONTROLLER_EFFECTS,
-    GamepadControllerInputEffects,
     HubAttachedIosStateEffects,
     HubPortModeInfoEffects,
     HubsEffects,
     KEYBOARD_CONTROLLER_EFFECTS,
-    KeyboardControllerInputEffects,
     NotificationsEffects,
     TaskProcessingEffects,
 } from './effects';
@@ -43,13 +41,14 @@ import { HubStorageService } from './hub-storage.service';
 import { RoutesBuilderService } from '../routing';
 import { CONTROLLER_INPUT_ACTIONS, HUB_STATS_ACTIONS } from './actions';
 
-const STORAGE_VERSION = '5';
+const STORAGE_VERSION = '6';
 
 const REDUCERS: ActionReducerMap<IState> = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,
     controllers: CONTROLLERS_FEATURE.reducer,
     controllerInput: CONTROLLER_INPUT_FEATURE.reducer,
     controllerSettings: CONTROLLER_SETTINGS_FEATURE.reducer,
+    controllerConnections: CONTROLLER_CONNECTION_FEATURE.reducer,
     controlSchemes: CONTROL_SCHEMES_FEATURE.reducer,
     hubs: HUBS_FEATURE.reducer,
     hubStats: HUB_STATS_FEATURE.reducer,
@@ -69,6 +68,7 @@ function localStorageSyncReducer(
         keys: [
             { hubs: [ 'ids', 'entities' ] },
             { attachedIos: [ 'ids', 'entities' ] },
+            { controllers: [ 'ids', 'entities' ] },
             { controllerSettings: [ 'ids', 'entities' ] },
             { controlSchemes: [ 'ids', 'entities' ] },
             { attachedIoModes: [ 'ids', 'entities' ] },
@@ -93,9 +93,6 @@ export function provideApplicationStore(): EnvironmentProviders {
             TaskProcessingEffects,
             NotificationsEffects,
             HubAttachedIosStateEffects,
-            GamepadControllerInputEffects,
-            KeyboardControllerInputEffects,
-            ControllerInputCaptureEffects,
             GAMEPAD_CONTROLLER_EFFECTS,
             KEYBOARD_CONTROLLER_EFFECTS
         ),
