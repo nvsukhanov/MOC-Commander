@@ -12,15 +12,13 @@
     overflow: hidden;
 }
 
-.content {
-    &__toolbar-at-top {
-        margin-top: var(--main-toolbar-height);
-    }
+$content-padding: 20px;
 
+.content {
     width: 100%;
     flex-grow: 1;
     overflow: hidden;
-    padding-top: var(--content-padding);
+    padding-top: $content-padding;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -28,8 +26,8 @@
 
     &__wrapper {
         max-width: 1280px;
-        width: calc(100% - 2 * var(--content-padding));
-        padding: 0 var(--content-padding);
+        width: calc(100% - 2 * $content-padding);
+        padding: 0 $content-padding;
     }
 }
 

@@ -25,6 +25,10 @@ export const CONTROLLER_SELECTORS = {
     selectAll: CONTROLLERS_SELECT_ALL,
     selectIds: CONTROLLERS_SELECT_IDS,
     selectEntities: CONTROLLERS_SELECT_ENTITIES,
+    selectTotal: createSelector(
+        CONTROLLERS_FEATURE.selectControllersState,
+        CONTROLLERS_ENTITY_SELECTOR.selectTotal
+    ),
     selectGamepads: createSelector(
         CONTROLLERS_SELECT_ALL,
         (controllers) => controllers.filter((c) => c.controllerType === ControllerType.Gamepad) as GamepadControllerModel[]

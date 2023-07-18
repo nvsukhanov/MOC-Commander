@@ -1,19 +1,14 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { NgIf } from '@angular/common';
-import { PushPipe } from '@ngrx/component';
-import { TranslocoModule } from '@ngneat/transloco';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { HUBS_ACTIONS } from '@app/store';
 import { Store } from '@ngrx/store';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { BLUETOOTH_AVAILABILITY_SELECTORS, HUBS_ACTIONS, HUBS_SELECTORS, } from '@app/store';
-import { EllipsisTitleDirective } from '@app/shared';
+import { ScreenSizeObserverService } from '@app/shared';
+import { Observable } from 'rxjs';
+import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
+import { LetDirective, PushPipe } from '@ngrx/component';
 
-import { RoutesBuilderService } from '../../routing';
-import { MAIN_SELECTORS } from '../main.selectors';
+import { CompactNavMenuComponent } from './compact-nav-menu';
+import { FullNavMenuComponent } from './full-nav-menu';
+import { NAV_MENU_SELECTORS } from './nav-menu.selectors';
 
 @Component({
     standalone: true,
@@ -21,40 +16,29 @@ import { MAIN_SELECTORS } from '../main.selectors';
     templateUrl: './nav-menu.component.html',
     styleUrls: [ './nav-menu.component.scss' ],
     imports: [
-        MatButtonModule,
-        MatToolbarModule,
-        NgIf,
+        NgSwitch,
         PushPipe,
-        TranslocoModule,
-        RouterLink,
-        RouterLinkActive,
-        EllipsisTitleDirective,
-        MatIconModule,
-        MatBadgeModule,
-        MatProgressSpinnerModule,
+        CompactNavMenuComponent,
+        NgSwitchCase,
+        FullNavMenuComponent,
+        LetDirective,
+        NgIf
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavMenuComponent {
-    public readonly connectedControllersCount$ = this.store.select(MAIN_SELECTORS.selectConnectedControllersCount);
+    public readonly navMenuViewModel$ = this.store.select(NAV_MENU_SELECTORS.selectNavMenuViewModel);
 
-    public readonly connectedHubCount$ = this.store.select(MAIN_SELECTORS.selectConnectedHubsCount);
-
-    public readonly controlSchemesCount$ = this.store.select(MAIN_SELECTORS.selectControlSchemesCount);
-
-    public readonly isBluetoothAvailable = this.store.select(BLUETOOTH_AVAILABILITY_SELECTORS.isAvailable);
-
-    public readonly isDiscoveryBusy$ = this.store.select(HUBS_SELECTORS.selectIsDiscovering);
-
-    @Input() public compact = false;
+    public readonly isSmallScreen$: Observable<boolean>;
 
     constructor(
         private readonly store: Store,
-        public readonly routesBuilderService: RoutesBuilderService
+        screenSizeObserverService: ScreenSizeObserverService,
     ) {
+        this.isSmallScreen$ = screenSizeObserverService.isSmallScreen$;
     }
 
-    public startDiscovery(): void {
+    public onDiscoveryStart(): void {
         this.store.dispatch(HUBS_ACTIONS.startDiscovery());
     }
 }
