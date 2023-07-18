@@ -5,6 +5,34 @@
 $typography: mat.define-typography-config();
 @include mat.typography-hierarchy($typography);
 
+$dark-primary-text: rgba(black, 0.87);
+$light-primary-text: #EEE;
+
+$dark-palette: (
+    50: #aaa,
+    100: #999,
+    200: #888,
+    300: #777,
+    400: #666,
+    500: #555,
+    600: #444,
+    700: #333,
+    800: #222,
+    900: #111,
+    contrast: (
+        50: $dark-primary-text,
+        100: $dark-primary-text,
+        200: $light-primary-text,
+        300: $light-primary-text,
+        400: $light-primary-text,
+        500: $light-primary-text,
+        600: $light-primary-text,
+        700: $light-primary-text,
+        800: $light-primary-text,
+        900: $light-primary-text,
+    )
+);
+
 $theme-light: mat.define-light-theme((
     color: (
         primary: mat.define-palette(mat.$deep-purple-palette),
@@ -16,16 +44,68 @@ $theme-light: mat.define-light-theme((
 
 $theme-dark: mat.define-dark-theme((
     color: (
-        primary: mat.define-palette(mat.$pink-palette),
-        accent: mat.define-palette(mat.$yellow-palette),
-        warn: mat.define-palette(mat.$orange-palette),
+        primary: mat.define-palette($dark-palette, 700, 600, 900),
+        accent: mat.define-palette(mat.$deep-purple-palette, 800, 700, 900),
+        warn: mat.define-palette(mat.$red-palette),
     ),
 ));
 
 @include mat.core-theme($theme-light);
 @include mat.all-component-themes($theme-light);
 
+$elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
+
 .theme-dark {
     @include mat.core-color($theme-dark);
     @include mat.all-component-colors($theme-dark);
+
+    --mdc-theme-primary: #{$light-primary-text};
+    --mdc-theme-text-primary-on-background: #{$light-primary-text};
+
+    .mat-mdc-slider.mat-primary {
+        --mdc-slider-active-track-color: #{mat.get-color-from-palette($dark-palette, 200)};
+        --mdc-slider-inactive-track-color: #{mat.get-color-from-palette($dark-palette, 300)};
+    }
+
+    &.mat-app-background {
+        background-color: mat.get-color-from-palette($dark-palette, 900);
+        color: $light-primary-text;
+    }
+
+    .mat-mdc-card {
+        --mdc-elevated-card-container-color: #{$elevated-dark-color};
+    }
+
+    .mat-mdc-snack-bar-container {
+        --mdc-snackbar-container-color: #{mat.get-color-from-palette($dark-palette, 500)};
+        --mdc-snackbar-supporting-text-color: #{$light-primary-text};
+        --mat-snack-bar-button-color: #{rgba($light-primary-text, 0.87)};
+    }
+
+    .mat-expansion-panel,
+    .mat-tree {
+        background: $elevated-dark-color;
+    }
+
+    .mat-tree-node {
+        color: $light-primary-text;
+    }
+
+    .mat-mdc-form-field.mat-focused {
+        .mat-mdc-form-field-focus-overlay {
+            opacity: 0.12;
+        }
+    }
+
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+        background-color: mat.get-color-from-palette($dark-palette, 800);
+    }
+
+    .mdc-text-field--focused:not(.mdc-text-field--disabled) {
+        background-color: mat.get-color-from-palette($dark-palette, 700);
+
+        .mdc-floating-label {
+            color: $light-primary-text;
+        }
+    }
 }
