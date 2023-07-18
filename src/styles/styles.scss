@@ -1,6 +1,7 @@
-@import "./assets/_vars";
+@import "vars";
 @import "./fonts";
 @import "./icons";
+@import "./theming.scss";
 
 html, body {
     height: 100%;

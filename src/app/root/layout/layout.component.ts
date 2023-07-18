@@ -14,7 +14,7 @@ import { MAIN_SELECTORS } from '../main.selectors';
 
 @Component({
     standalone: true,
-    selector: 'app-root',
+    selector: 'app-layout',
     templateUrl: './layout.component.html',
     styleUrls: [ './layout.component.scss' ],
     imports: [
