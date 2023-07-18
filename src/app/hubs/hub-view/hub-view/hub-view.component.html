@@ -7,19 +7,15 @@
         ></app-hub-properties-view>
 
         <ng-container *ngrxLet="ioFullInfoList$ as iosFullInfoList">
-            <mat-card *ngIf="iosFullInfoList.length"
-                      class="ports-group-section"
+            <ul class="io-list"
+                *ngIf="iosFullInfoList.length"
             >
-                <mat-card-content>
-                    <ul class="io-list">
-                        <li *ngFor="let ioFullInfo of iosFullInfoList; trackBy: hubIoTrackByFn">
-                            <app-hub-port-view class="io-list__item"
-                                               [hubIoViewModel]="ioFullInfo"
-                            ></app-hub-port-view>
-                        </li>
-                    </ul>
-                </mat-card-content>
-            </mat-card>
+                <li *ngFor="let ioFullInfo of iosFullInfoList; trackBy: hubIoTrackByFn">
+                    <app-hub-port-view class="io-list__item"
+                                       [hubIoViewModel]="ioFullInfo"
+                    ></app-hub-port-view>
+                </li>
+            </ul>
         </ng-container>
     </ng-container>
 </ng-container>
