@@ -168,6 +168,7 @@
   "controller": {
     "detectControllerTip": "To connect a controller, press any button on it or move any stick",
     "unknownController": "Unknown controller",
+    "noControllerConnected": "No controller detected",
     "isNotConnectedInlineNotification": "disconnected",
     "keyboardControllerType": "Keyboard",
     "gamepadControllerType": "Gamepad",
