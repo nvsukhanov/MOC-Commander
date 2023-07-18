@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { switchMap, tap } from 'rxjs';
+import { MonoTypeOperatorFunction, Observable, map, switchMap, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
+import { ScreenSizeObserverService } from '@app/shared';
 
 import { CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS } from '../actions';
 import { ControllerProfileFactoryService } from '../../controller-profiles';
@@ -14,7 +15,8 @@ export class NotificationsEffects {
     public readonly deviceConnectFailedNotification$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.deviceConnectFailed),
-            tap((error) => this.showMessage(error.error.message))
+            map((error) => error.error.message),
+            this.showMessage()
         );
     }, { dispatch: false });
 
@@ -22,7 +24,7 @@ export class NotificationsEffects {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.connected),
             switchMap((action) => this.translocoService.selectTranslate('hub.connected', action)),
-            tap((message) => this.showMessage(message))
+            this.showMessage()
         );
     }, { dispatch: false });
 
@@ -30,7 +32,7 @@ export class NotificationsEffects {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.disconnected),
             switchMap((action) => this.translocoService.selectTranslate('hub.disconnected', action)),
-            tap((message) => this.showMessage(message))
+            this.showMessage()
         );
     }, { dispatch: false });
 
@@ -38,7 +40,7 @@ export class NotificationsEffects {
         return this.actions$.pipe(
             ofType(CONTROL_SCHEME_ACTIONS.servoCalibrationError),
             switchMap(() => this.translocoService.selectTranslate('controlScheme.servoCalibrationError')),
-            tap((message) => this.showMessage(message))
+            this.showMessage()
         );
     }, { dispatch: false });
 
@@ -46,7 +48,7 @@ export class NotificationsEffects {
         return this.actions$.pipe(
             ofType(CONTROL_SCHEME_ACTIONS.inputRebindSuccess),
             switchMap(() => this.translocoService.selectTranslate('controlScheme.bindToAnotherInputSuccess')),
-            tap((message) => this.showMessage(message))
+            this.showMessage()
         );
     }, { dispatch: false });
 
@@ -54,7 +56,7 @@ export class NotificationsEffects {
         return this.actions$.pipe(
             ofType(CONTROL_SCHEME_ACTIONS.inputRebindTypeMismatch),
             switchMap(() => this.translocoService.selectTranslate('controlScheme.bindToAnotherInputTypeMismatchError')),
-            tap((message) => this.showMessage(message))
+            this.showMessage()
         );
     }, { dispatch: false });
 
@@ -62,7 +64,7 @@ export class NotificationsEffects {
         return this.actions$.pipe(
             ofType(CONTROL_SCHEME_ACTIONS.noIOForInputFound),
             switchMap(() => this.translocoService.selectTranslate('controlScheme.noMatchingIoForInputFound')),
-            tap((message) => this.showMessage(message))
+            this.showMessage()
         );
     }, { dispatch: false });
 
@@ -74,7 +76,7 @@ export class NotificationsEffects {
                 return this.translocoService.selectTranslate(controllerProfile.nameL10nKey);
             }),
             switchMap((name) => this.translocoService.selectTranslate('controller.controllerDiscoveredNotification', { name })),
-            tap((message) => this.showMessage(message))
+            this.showMessage()
         );
     }, { dispatch: false });
 
@@ -86,7 +88,7 @@ export class NotificationsEffects {
                 return this.translocoService.selectTranslate(controllerProfile.nameL10nKey);
             }),
             switchMap((name) => this.translocoService.selectTranslate('controller.controllerConnectedNotification', { name })),
-            tap((message) => this.showMessage(message))
+            this.showMessage()
         );
     }, { dispatch: false });
 
@@ -99,7 +101,7 @@ export class NotificationsEffects {
                 return this.translocoService.selectTranslate(controllerProfile.nameL10nKey);
             }),
             switchMap((name) => this.translocoService.selectTranslate('controller.controllerDisconnectedNotification', { name })),
-            tap((message) => this.showMessage(message))
+            this.showMessage()
         );
     }, { dispatch: false });
 
@@ -108,21 +110,26 @@ export class NotificationsEffects {
         private readonly snackBar: MatSnackBar,
         private readonly translocoService: TranslocoService,
         private readonly controllerProfilesFactory: ControllerProfileFactoryService,
-        private readonly store: Store
+        private readonly store: Store,
+        private readonly screenSizeObserverService: ScreenSizeObserverService
     ) {
     }
 
-    private showMessage(
-        message: string
-    ): void {
-        this.snackBar.open(
-            message,
-            'OK',
-            {
-                duration: 5000,
-                horizontalPosition: 'end',
-                verticalPosition: 'bottom'
-            }
+    private showMessage(): MonoTypeOperatorFunction<string> {
+        return (source: Observable<string>) => source.pipe(
+            concatLatestFrom(() => this.screenSizeObserverService.isSmallScreen$),
+            tap(([ message, isSmallScreen ]) => {
+                this.snackBar.open(
+                    message,
+                    'OK',
+                    {
+                        duration: 5000,
+                        horizontalPosition: 'end',
+                        verticalPosition: isSmallScreen ? 'top' : 'bottom'
+                    }
+                );
+            }),
+            map(([ message ]) => message)
         );
     }
 }
