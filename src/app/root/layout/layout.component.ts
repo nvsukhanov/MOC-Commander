@@ -9,8 +9,8 @@ import { CdkScrollable } from '@angular/cdk/overlay';
 import { CONTROLLERS_ACTIONS } from '@app/store';
 import { FeatureToolbarComponent, IScrollContainer, SCROLL_CONTAINER, ScreenSizeObserverService } from '@app/shared';
 
-import { NavMenuComponent } from '../nav-menu';
 import { MAIN_SELECTORS } from '../main.selectors';
+import { NavMenuComponent } from '../nav-menu';
 
 @Component({
     standalone: true,

@@ -18,6 +18,10 @@ const SELECT_ALL = createSelector(
 export const CONTROLLER_CONNECTION_SELECTORS = {
     selectEntities: SELECT_ENTITIES,
     selectAll: SELECT_ALL,
+    selectTotal: createSelector(
+        CONTROLLER_CONNECTION_FEATURE.selectControllerConnectionsState,
+        CONTROLLER_CONNECTION_ADAPTER.getSelectors().selectTotal
+    ),
     isConnected: (id: string) => createSelector(
         SELECT_ENTITIES,
         (connections) => !!connections[id]
