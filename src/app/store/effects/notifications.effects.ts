@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { MonoTypeOperatorFunction, Observable, map, switchMap, tap } from 'rxjs';
+import { MonoTypeOperatorFunction, Observable, filter, map, switchMap, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
@@ -96,7 +96,9 @@ export class NotificationsEffects {
         return this.actions$.pipe(
             ofType(CONTROLLERS_ACTIONS.gamepadDisconnected),
             concatLatestFrom((action) => this.store.select(CONTROLLER_SELECTORS.selectById(action.id))),
+            filter(([ , controllerModel ]) => !!controllerModel),
             switchMap(([ , controllerModel ]) => {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 const controllerProfile = this.controllerProfilesFactory.getByProfileUid(controllerModel!.profileUid);
                 return this.translocoService.selectTranslate(controllerProfile.nameL10nKey);
             }),
