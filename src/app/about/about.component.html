@@ -12,7 +12,9 @@
         {{ 'about.licenseTitle' | transloco }}
     </h2>
     <p class="about-section-content">
-        <a [href]="licenseURL">
+        <a class="mat-mdc-button"
+           [href]="licenseURL"
+        >
             {{ 'about.licenseText' | transloco }}
         </a>
     </p>
@@ -23,10 +25,18 @@
         {{ 'about.sourcesTitle' | transloco }}
     </h2>
     <p class="about-section-content">
-        <a [href]="ngPoweredUpURL">{{ 'about.githubTitle' | transloco }}</a>
+        <a class="mat-mdc-button"
+           [href]="ngPoweredUpURL"
+        >
+            {{ 'about.githubTitle' | transloco }}
+        </a>
     </p>
     <p class="about-section-content">
-        <a [href]="rxPoweredUpURL">{{ 'about.githubApiTitle' | transloco }}</a>
+        <a class="mat-mdc-button"
+           [href]="rxPoweredUpURL"
+        >
+            {{ 'about.githubApiTitle' | transloco }}
+        </a>
     </p>
 </section>
 
@@ -35,7 +45,11 @@
         {{ 'about.authorTitle' | transloco }}
     </h3>
     <p class="about-section-content">
-        <a [href]="authorProfileURL">{{ 'about.authorName' | transloco }}</a>
+        <a class="mat-mdc-button"
+           [href]="authorProfileURL"
+        >
+            {{ 'about.authorName' | transloco }}
+        </a>
     </p>
 </section>
 
