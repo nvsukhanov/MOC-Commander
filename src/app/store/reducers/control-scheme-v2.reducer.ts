@@ -12,7 +12,7 @@ export const CONTROL_SCHEME_V2_ENTITY_ADAPTER = createEntityAdapter({
 });
 
 export const CONTROL_SCHEME_V2_FEATURE = createFeature({
-    name: 'controlSchemeV2',
+    name: 'controlSchemesV2',
     reducer: createReducer(
         CONTROL_SCHEME_V2_ENTITY_ADAPTER.getInitialState({
             runningSchemeId: null as string | null
