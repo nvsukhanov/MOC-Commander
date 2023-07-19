@@ -13,3 +13,4 @@ export * from './hub-stats.selectors';
 export * from './hubs.selectors';
 export * from './router.selectors';
 export * from './controller-connection.selectors';
+export * from './control-scheme-v2.selectors';
