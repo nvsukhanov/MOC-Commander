@@ -1,10 +1,10 @@
 import { createSelector } from '@ngrx/store';
-import { CONTROLLER_SELECTORS, CONTROL_SCHEME_SELECTORS, HUBS_SELECTORS } from '@app/store';
+import { CONTROLLER_SELECTORS, CONTROL_SCHEME_V2_SELECTORS, HUBS_SELECTORS } from '@app/store';
 
 export const CONTROL_SCHEMES_LIST_SELECTORS = {
     selectSchemesList: createSelector(
-        CONTROL_SCHEME_SELECTORS.selectAll,
-        CONTROL_SCHEME_SELECTORS.selectRunningSchemeId,
+        CONTROL_SCHEME_V2_SELECTORS.selectAll,
+        CONTROL_SCHEME_V2_SELECTORS.selectRunningSchemeId,
         (schemes, runningSchemeId) => {
             return schemes.map((scheme) => ({
                 ...scheme,

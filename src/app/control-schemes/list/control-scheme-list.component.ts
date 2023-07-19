@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { CONTROL_SCHEME_ACTIONS, ControlSchemeModel } from '@app/store';
+import { CONTROL_SCHEME_ACTIONS, ControlSchemeV2Model } from '@app/store';
 import { FeatureToolbarService } from '@app/shared';
 
 import { RoutesBuilderService } from '../../routing';
@@ -64,7 +64,7 @@ export class ControlSchemeListComponent implements OnDestroy {
         this.featureToolbarService.clearConfig();
     }
 
-    public trackSchemeById(index: number, scheme: ControlSchemeModel): string {
+    public trackSchemeById(index: number, scheme: ControlSchemeV2Model): string {
         return scheme.id;
     }
 
