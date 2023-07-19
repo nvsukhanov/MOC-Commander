@@ -10,3 +10,4 @@ export * from './hub-port-mode-info.actions';
 export * from './port-tasks.actions';
 export * from './hub-stats.actions';
 export * from './hubs.actions';
+export * from './control-scheme-v2.actions';
