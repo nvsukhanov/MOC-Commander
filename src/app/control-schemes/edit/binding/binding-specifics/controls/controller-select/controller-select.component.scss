@@ -1,0 +1,22 @@
+:host {
+    display: block;
+}
+
+.title {
+    font-weight: 500;
+    margin-right: 10px;
+}
+
+.control-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &__control-name {
+        flex-grow: 1;
+    }
+}
+
+.assign-control {
+    width: 100%;
+}

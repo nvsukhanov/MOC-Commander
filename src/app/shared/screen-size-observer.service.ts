@@ -15,6 +15,15 @@ export class ScreenSizeObserverService {
         ]))
     );
 
+    public readonly isXsScreen$ = this.breakpointObserver.observe([
+        Breakpoints.XSmall
+    ]).pipe(
+        map((breakpointState) => breakpointState.matches),
+        startWith(this.breakpointObserver.isMatched([
+            Breakpoints.XSmall
+        ]))
+    );
+
     constructor(
         private readonly breakpointObserver: BreakpointObserver
     ) {

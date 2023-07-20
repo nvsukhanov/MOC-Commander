@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
-import { CONTROL_SCHEME_ACTIONS } from '@app/store';
+import { CONTROL_SCHEME_V2_ACTIONS } from '@app/store';
 
-import { BindingFormResult, ControlSchemeEditFormComponent } from '../edit';
+import { ControlSchemeEditForm, ControlSchemeEditFormComponent } from '../edit';
 import { RoutesBuilderService } from '../../routing';
-import { trimFormOutputBinding } from '../trim-form-output-binding';
+import { mapFormToModel } from '../map-form-to-model';
 
 @Component({
     standalone: true,
@@ -26,14 +26,12 @@ export class ControlSchemeCreateComponent {
     }
 
     public onSave(
-        data: BindingFormResult
+        form: ControlSchemeEditForm
     ): void {
-        const result = {
-            id: data.id,
-            name: data.name,
-            bindings: data.bindings.map((i) => trimFormOutputBinding(i))
-        };
-        this.store.dispatch(CONTROL_SCHEME_ACTIONS.create(result));
+        this.store.dispatch(CONTROL_SCHEME_V2_ACTIONS.create({
+            scheme: mapFormToModel(form)
+        }));
+        this.router.navigate(this.routesBuilderService.controlSchemesList);
     }
 
     public onCancel(): void {

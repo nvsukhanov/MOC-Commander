@@ -1,0 +1,28 @@
+<mat-card>
+    <mat-card-content *ngIf="binding" class="card-content">
+        <app-operation-mode-select [control]="binding.controls.bindingFormOperationMode"
+                                   [availabilityData]="availabilityData"
+        ></app-operation-mode-select>
+
+        <app-hub-select [control]="binding.controls[binding.controls.bindingFormOperationMode.value].controls.hubId"
+                        [operationMode]="binding.controls.bindingFormOperationMode.value"
+                        [availabilityData]="availabilityData"
+        ></app-hub-select>
+
+        <app-io-select [control]="binding.controls[binding.controls.bindingFormOperationMode.value].controls.portId"
+                       [operationMode]="binding.controls.bindingFormOperationMode.value"
+                       [hubId]="binding.controls[binding.controls.bindingFormOperationMode.value].controls.hubId.value"
+                       [availabilityData]="availabilityData"
+        ></app-io-select>
+
+        <div *appRenderBindingSpecifics="binding"></div>
+    </mat-card-content>
+    <mat-card-actions [align]="'end'">
+        <button mat-button
+                [color]="'warn'"
+                (click)="onDelete()"
+        >
+            {{ 'controlScheme.deleteBinding' | transloco }}
+        </button>
+    </mat-card-actions>
+</mat-card>
