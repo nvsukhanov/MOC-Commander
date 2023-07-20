@@ -21,25 +21,6 @@ export const CONTROL_SCHEMES_FEATURE = createFeature({
     name: 'controlSchemes',
     reducer: createReducer(
         CONTROL_SCHEMES_INITIAL_STATE,
-        on(CONTROL_SCHEME_ACTIONS.create, (state, action): ControlSchemeState => {
-            const nextIndex = Math.max(0, ...Object.values(state.entities).map((entity) => entity?.index ?? 0)) + 1;
-            return CONTROL_SCHEMES_ENTITY_ADAPTER.addOne({
-                id: action.id,
-                name: action.name,
-                index: nextIndex,
-                bindings: action.bindings,
-            }, state);
-        }),
-        on(CONTROL_SCHEME_ACTIONS.delete, (state, action): ControlSchemeState => CONTROL_SCHEMES_ENTITY_ADAPTER.removeOne(action.id, state)),
-        on(CONTROL_SCHEME_ACTIONS.update, (state, action): ControlSchemeState => {
-            return CONTROL_SCHEMES_ENTITY_ADAPTER.updateOne({
-                id: action.id,
-                changes: {
-                    name: action.name,
-                    bindings: action.bindings,
-                }
-            }, state);
-        }),
         on(CONTROL_SCHEME_ACTIONS.startScheme, (state, { schemeId }): ControlSchemeState => ({ ...state, runningSchemeId: schemeId })),
         on(CONTROL_SCHEME_ACTIONS.stopScheme, (state): ControlSchemeState => ({ ...state, runningSchemeId: null })),
     )

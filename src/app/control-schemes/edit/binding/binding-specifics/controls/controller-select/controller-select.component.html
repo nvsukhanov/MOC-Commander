@@ -1,0 +1,28 @@
+<ng-container *ngIf="controllerIdFormControl && inputIdFormControl && inputTypeControl">
+    <div *ngIf="controllerIdFormControl.valid && inputIdFormControl.valid && inputTypeControl.valid; else assignControl"
+         class="control-info">
+        <div class="title">
+            {{ title }}:
+        </div>
+        <app-full-controller-input-name class="control-info__control-name"
+                                        [controllerId]="controllerIdFormControl.value"
+                                        [inputId]="inputIdFormControl.value"
+                                        [inputType]="inputTypeControl.value"
+        ></app-full-controller-input-name>
+
+        <button mat-raised-button
+                (click)="onBind()"
+        >
+            {{ 'controlScheme.bindToAnotherInputButtonTitle' | transloco }}
+        </button>
+    </div>
+</ng-container>
+
+<ng-template #assignControl>
+    <button class="assign-control"
+            mat-raised-button
+            (click)="onBind()"
+    >
+        {{ 'controlScheme.bindingAssignControlButtonTitle' | transloco }}
+    </button>
+</ng-template>

@@ -1,11 +1,12 @@
-import { HubIoOperationMode } from '@app/shared';
+import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 
 export type ControlSchemeV2LinearBinding = {
+    id: string;
     operationMode: HubIoOperationMode.Linear;
     controllerId: string;
     inputId: string;
-    id: string;
+    inputType: ControllerInputType;
     hubId: string;
     portId: number;
     maxSpeed: number;
@@ -15,10 +16,11 @@ export type ControlSchemeV2LinearBinding = {
 };
 
 export type ControlSchemeV2ServoBinding = {
+    id: string;
     operationMode: HubIoOperationMode.Servo;
     controllerId: string;
     inputId: string;
-    id: string;
+    inputType: ControllerInputType;
     hubId: string;
     portId: number;
     range: number;
@@ -29,10 +31,11 @@ export type ControlSchemeV2ServoBinding = {
 };
 
 export type ControlSchemeV2SetAngleBinding = {
+    id: string;
     operationMode: HubIoOperationMode.SetAngle;
     controllerId: string;
     inputId: string;
-    id: string;
+    inputType: ControllerInputType;
     hubId: string;
     portId: number;
     angle: number;
@@ -42,10 +45,11 @@ export type ControlSchemeV2SetAngleBinding = {
 };
 
 export type ControlSchemeV2StepperBinding = {
+    id: string;
     operationMode: HubIoOperationMode.Stepper;
     controllerId: string;
     inputId: string;
-    id: string;
+    inputType: ControllerInputType;
     hubId: string;
     portId: number;
     degree: number;

@@ -1,0 +1,13 @@
+<mat-form-field *ngIf="control"
+                class="form-field"
+>
+    <mat-label>{{ 'controlScheme.bindingOutputSectionOperationModeLabel' | transloco }}</mat-label>
+    <mat-select [formControl]="control">
+        <ng-container *ngFor="let operationType of availableOperationTypes">
+            <mat-option *ngIf="availabilityData[operationType]"
+                        [value]="operationType">
+                {{ operationType | ioOperationTypeToL10nKey | transloco }}
+            </mat-option>
+        </ng-container>
+    </mat-select>
+</mat-form-field>

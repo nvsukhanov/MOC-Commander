@@ -6,32 +6,18 @@
     />
 </mat-form-field>
 
-<mat-card *ngFor="let binding of form.controls.bindings.controls; let index = index"
-          class="binding"
+<section *ngrxLet="bindingAvailabilityIoData$; let bindingAvailabilityIoData"
+         class="bindings-container"
+         [class.bindings-container__small-screen]="isSmallScreen$ | ngrxPush"
+         [class.bindings-container__xs-screen]="isXsScreen$ | ngrxPush"
 >
-    <mat-card-content class="binding-details"
-                      [class.binding-details_small-screen]="isSmallScreen"
-    >
-        <app-control-scheme-binding-input [inputFormGroup]="binding.controls.input"
-                                          (rebind)="rebindInput(binding)"
-        ></app-control-scheme-binding-input>
-        <mat-divider *ngIf="!isSmallScreen"
-                     [vertical]="true"
-        ></mat-divider>
-        <app-control-scheme-binding-output [formGroup]="binding"></app-control-scheme-binding-output>
-        <mat-divider *ngIf="!isSmallScreen"
-                     [vertical]="true"
-        ></mat-divider>
-        <app-control-scheme-binding-configuration [formGroup]="binding"></app-control-scheme-binding-configuration>
-    </mat-card-content>
-    <mat-card-actions [align]="'end'">
-        <button mat-flat-button
-                (click)="removeBindingIndex(index)"
-        >
-            {{ 'controlScheme.deleteBinding' | transloco }}
-        </button>
-    </mat-card-actions>
-</mat-card>
+    <app-binding *ngFor="let binding of form.controls.bindings.controls; let idx = index"
+                 class="binding"
+                 [binding]="binding"
+                 [availabilityData]="bindingAvailabilityIoData"
+                 (deleteBinding)="deleteBindingAtIndex(idx)"
+    ></app-binding>
+</section>
 
 <ng-template #controlsTemplate>
     <button mat-raised-button
@@ -43,7 +29,7 @@
     </button>
     <button mat-raised-button
             class="toolbar-button"
-            [disabled]="!form.valid"
+            [disabled]="!(canSave$ | ngrxPush)"
             (click)="onSave()">
         {{ 'controlScheme.saveEdited' | transloco }}
     </button>

@@ -5,11 +5,12 @@ import { PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
-import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel, ROUTER_SELECTORS } from '@app/store';
+import { CONTROL_SCHEME_V2_ACTIONS, CONTROL_SCHEME_V2_SELECTORS, ControlSchemeV2Model, ROUTER_SELECTORS } from '@app/store';
 
 import { RoutesBuilderService } from '../../routing';
-import { BindingFormResult, ControlSchemeEditFormComponent } from './edit-form';
-import { trimFormOutputBinding } from '../trim-form-output-binding';
+import { ControlSchemeEditFormComponent } from './edit-form';
+import { ControlSchemeEditForm } from './types';
+import { mapFormToModel } from '../map-form-to-model';
 
 @Component({
     standalone: true,
@@ -25,9 +26,10 @@ import { trimFormOutputBinding } from '../trim-form-output-binding';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeEditComponent implements OnDestroy {
-    public readonly currentlyEditedScheme$: Observable<ControlSchemeModel | undefined> = this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeId).pipe(
-        switchMap((i) => i === null ? of(undefined) : this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(i)))
-    );
+    public readonly currentlyEditedScheme$: Observable<ControlSchemeV2Model | undefined> =
+        this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeId).pipe(
+            switchMap((i) => i === null ? of(undefined) : this.store.select(CONTROL_SCHEME_V2_SELECTORS.selectScheme(i)))
+        );
 
     private sub?: Subscription;
 
@@ -42,13 +44,12 @@ export class ControlSchemeEditComponent implements OnDestroy {
         this.sub?.unsubscribe();
     }
 
-    public onSave(data: BindingFormResult): void {
-        const result = {
-            id: data.id,
-            name: data.name,
-            bindings: data.bindings.map((i) => trimFormOutputBinding(i))
-        };
-        this.store.dispatch(CONTROL_SCHEME_ACTIONS.update(result));
+    public onSave(
+        form: ControlSchemeEditForm
+    ): void {
+        this.store.dispatch(CONTROL_SCHEME_V2_ACTIONS.update({
+            scheme: mapFormToModel(form)
+        }));
     }
 
     public onCancel(): void {

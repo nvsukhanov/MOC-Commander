@@ -25,8 +25,6 @@ import {
 } from '@app/store';
 import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 
-import { getHubIoOperationModes } from '../get-hub-io-operation-modes';
-
 function createHubTreeNode(
     hubConfig: HubModel,
     hubStats?: HubStatsModel,
@@ -78,13 +76,13 @@ function createBindingTreeNode(
 ): ControlSchemeViewBindingTreeNode {
     let ioHasNoRequiredCapabilities = false;
     if (io) {
-        const ioOperationModes = getHubIoOperationModes(
-            io,
-            ioSupportedModesEntities,
-            portModeInfoEntities,
-            binding.input.inputType
-        );
-        ioHasNoRequiredCapabilities = !ioOperationModes.includes(binding.output.operationMode);
+        // const ioOperationModes = getHubIoOperationModes(
+        //     io,
+        //     ioSupportedModesEntities,
+        //     portModeInfoEntities,
+        //     binding.input.inputType
+        // );
+        ioHasNoRequiredCapabilities = false;
     }
     return {
         path: `${ioPath}.${binding.id}`,
