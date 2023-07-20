@@ -1,0 +1,33 @@
+<ng-container *ngIf="form">
+    <app-controller-select [controllerIdFormControl]="form.controls.controllerId"
+                           [inputIdFormControl]="form.controls.inputId"
+                           [operationMode]="linearHubIoOperationMode"
+                           [inputTypeControl]="form.controls.inputType"
+                           [title]="'controlScheme.bindingGenericInputTitle' | transloco "
+    ></app-controller-select>
+
+    <ng-container *ngIf="form.controls.controllerId.valid && form.controls.inputId.valid">
+        <app-binding-toggle-control *ngIf="form.controls.inputType.value === controllerInputButtonType"
+                                    [translocoTitle]="'controlScheme.linearOutputConfigurationTreatAsSwitch'"
+                                    [control]="form.controls.isToggle"
+        ></app-binding-toggle-control>
+
+        <app-binding-toggle-control [translocoTitle]="'controlScheme.outputInvertControlTitle'"
+                                    [control]="form.controls.invert"
+        ></app-binding-toggle-control>
+
+    </ng-container>
+    <ng-container *ngIf="form.controls.controllerId.valid && form.controls.inputId.valid">
+        <app-output-config-slider-control [min]="0"
+                                          [max]="motorLimits.maxSpeed"
+                                          [control]="form.controls.maxSpeed"
+                                          [translocoTitle]="'controlScheme.outputSpeedControlTitle'"
+        ></app-output-config-slider-control>
+
+        <app-output-config-slider-control [min]="motorLimits.minPower"
+                                          [max]="motorLimits.maxPower"
+                                          [control]="form.controls.power"
+                                          [translocoTitle]="'controlScheme.outputPowerControlTitle'"
+        ></app-output-config-slider-control>
+    </ng-container>
+</ng-container>
