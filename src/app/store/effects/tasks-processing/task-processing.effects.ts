@@ -3,9 +3,9 @@ import { Action, Store } from '@ngrx/store';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Observable, filter, from, map, mergeMap, switchMap, takeUntil } from 'rxjs';
 
-import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, PORT_TASKS_ACTIONS } from '../../actions';
-import { BindingTaskComposingData, CONTROL_SCHEME_SELECTORS, PORT_TASKS_SELECTORS } from '../../selectors';
-import { ControlSchemeBinding, PortCommandTask } from '../../models';
+import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_V2_ACTIONS, PORT_TASKS_ACTIONS } from '../../actions';
+import { BindingTaskComposingData, CONTROL_SCHEME_V2_SELECTORS, PORT_TASKS_SELECTORS } from '../../selectors';
+import { ControlSchemeV2Binding, PortCommandTask } from '../../models';
 import { attachedIosIdFn } from '../../reducers';
 import { HubStorageService } from '../../hub-storage.service';
 import { taskFilter } from './task-filter';
@@ -17,8 +17,8 @@ import { ITaskRunner, TASK_RUNNER } from './i-task-runner';
 export class TaskProcessingEffects {
     public readonly composeTasks$ = createEffect(() => {
         return this.actions.pipe(
-            ofType(CONTROL_SCHEME_ACTIONS.startScheme),
-            concatLatestFrom((action) => this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(action.schemeId))),
+            ofType(CONTROL_SCHEME_V2_ACTIONS.startScheme),
+            concatLatestFrom((action) => this.store.select(CONTROL_SCHEME_V2_SELECTORS.selectScheme(action.schemeId))),
             filter((scheme) => !!scheme),
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             switchMap(([ , scheme ]) => from(this.groupBindingsByHubsPortId(scheme!.bindings))),
@@ -87,11 +87,11 @@ export class TaskProcessingEffects {
     }
 
     private groupBindingsByHubsPortId(
-        bindings: ControlSchemeBinding[]
-    ): Array<ControlSchemeBinding[]> {
-        const bindingByHubPortId = new Map<string, ControlSchemeBinding[]>();
+        bindings: ControlSchemeV2Binding[]
+    ): Array<ControlSchemeV2Binding[]> {
+        const bindingByHubPortId = new Map<string, ControlSchemeV2Binding[]>();
         for (const binding of bindings) {
-            const hubPortId = attachedIosIdFn(binding.output);
+            const hubPortId = attachedIosIdFn(binding);
             let hubBindings = bindingByHubPortId.get(hubPortId);
             if (!hubBindings) {
                 hubBindings = [ binding ];
@@ -104,19 +104,19 @@ export class TaskProcessingEffects {
     }
 
     private getTaskComposingData$(
-        bindingsGroup: ControlSchemeBinding[]
+        bindingsGroup: ControlSchemeV2Binding[]
     ): Observable<BindingTaskComposingData> {
         return this.actions.pipe(
             ofType(CONTROLLER_INPUT_ACTIONS.inputReceived),
             concatLatestFrom(() =>
                 this.store.select(PORT_TASKS_SELECTORS.selectBindingTaskCreationModel({
-                    hubId: bindingsGroup[0].output.hubId,
-                    portId: bindingsGroup[0].output.portId,
+                    hubId: bindingsGroup[0].hubId,
+                    portId: bindingsGroup[0].portId,
                     bindings: bindingsGroup
                 }))
             ),
             map(([ , composingData ]) => composingData),
-            takeUntil(this.actions.pipe(ofType(CONTROL_SCHEME_ACTIONS.stopScheme)))
+            takeUntil(this.actions.pipe(ofType(CONTROL_SCHEME_V2_ACTIONS.stopScheme)))
         );
     }
 

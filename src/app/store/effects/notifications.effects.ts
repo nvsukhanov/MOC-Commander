@@ -6,7 +6,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { ScreenSizeObserverService } from '@app/shared';
 
-import { CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS } from '../actions';
+import { CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_V2_ACTIONS, HUBS_ACTIONS } from '../actions';
 import { ControllerProfileFactoryService } from '../../controller-profiles';
 import { CONTROLLER_SELECTORS } from '../selectors';
 
@@ -38,7 +38,7 @@ export class NotificationsEffects {
 
     public readonly servoCalibrationErrorNotification$ = createEffect(() => {
         return this.actions$.pipe(
-            ofType(CONTROL_SCHEME_ACTIONS.servoCalibrationError),
+            ofType(CONTROL_SCHEME_V2_ACTIONS.servoCalibrationError),
             switchMap(() => this.translocoService.selectTranslate('controlScheme.servoCalibrationError')),
             this.showMessage()
         );

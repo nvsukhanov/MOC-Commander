@@ -1,14 +1,14 @@
 import { HubIoOperationMode } from '@app/shared';
 
 import { BaseTaskBuilder } from './base-task-builder';
-import { ControlSchemeBinding, PortCommandTaskType, StepperTaskPayload } from '../../../models';
+import { ControlSchemeV2Binding, PortCommandTaskType, StepperTaskPayload } from '../../../models';
 
 export class StepperTaskBuilder extends BaseTaskBuilder<StepperTaskPayload> {
     protected buildPayload(
-        binding: ControlSchemeBinding,
+        binding: ControlSchemeV2Binding,
         inputValue: number,
     ): StepperTaskPayload | null {
-        if (binding.output.operationMode !== HubIoOperationMode.Stepper) {
+        if (binding.operationMode !== HubIoOperationMode.Stepper) {
             return null;
         }
 
@@ -18,10 +18,10 @@ export class StepperTaskBuilder extends BaseTaskBuilder<StepperTaskPayload> {
 
         return {
             taskType: PortCommandTaskType.Stepper,
-            degree: binding.output.stepperConfig.degree,
-            speed: binding.output.stepperConfig.speed,
-            power: binding.output.stepperConfig.power,
-            endState: binding.output.stepperConfig.endState,
+            degree: binding.degree,
+            speed: binding.speed,
+            power: binding.power,
+            endState: binding.endState,
         };
     }
 }

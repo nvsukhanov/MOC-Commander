@@ -18,6 +18,8 @@ import {
     HubStatsModel,
     PORT_TASKS_SELECTORS,
     ROUTER_SELECTORS,
+    attachedIoModesIdFn,
+    attachedIoPortModeInfoIdFn,
     attachedIosIdFn
 } from '@app/store';
 
@@ -149,18 +151,18 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
             const hubsViewMap = new Map<string, ControlSchemeViewHubTreeNode>();
             const ioOutputPortModeNamesMap = new Map<string, PortModeName[]>();
 
-            for (const ioId in Object.keys(iosEntities)) {
+            for (const ioId of Object.keys(iosEntities)) {
                 const io = iosEntities[ioId];
                 if (!io) {
                     continue;
                 }
-                const ioSupportedModes = ioSupportedModesEntities[ioId];
+                const ioSupportedModes = ioSupportedModesEntities[attachedIoModesIdFn(io)];
                 if (!ioSupportedModes) {
                     continue;
                 }
                 const ioOutputModes = ioSupportedModes.portOutputModes;
                 const ioOutputPortModeNames = ioOutputModes.map((modeId) => {
-                    const portModeInfo = portModeInfoEntities[`${ioId}.${modeId}`];
+                    const portModeInfo = portModeInfoEntities[attachedIoPortModeInfoIdFn({ ...io, modeId })];
                     return portModeInfo?.name ?? null;
                 }).filter((name): name is PortModeName => !!name);
                 ioOutputPortModeNamesMap.set(ioId, ioOutputPortModeNames);

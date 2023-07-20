@@ -2,7 +2,7 @@ import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createFeature, createReducer, on } from '@ngrx/store';
 
 import { PortTasksModel } from '../models';
-import { CONTROL_SCHEME_ACTIONS, PORT_TASKS_ACTIONS } from '../actions';
+import { CONTROL_SCHEME_V2_ACTIONS, PORT_TASKS_ACTIONS } from '../actions';
 
 export type PortTasksState = EntityState<PortTasksModel>;
 
@@ -49,6 +49,6 @@ export const PORT_TASKS_FEATURE = createFeature({
                 lastExecutedTask: task,
             }, state);
         }),
-        on(CONTROL_SCHEME_ACTIONS.stopScheme, () => PORT_TASKS_ENTITY_ADAPTER.getInitialState()),
+        on(CONTROL_SCHEME_V2_ACTIONS.stopScheme, () => PORT_TASKS_ENTITY_ADAPTER.getInitialState()),
     ),
 });
