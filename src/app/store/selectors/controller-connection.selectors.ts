@@ -47,5 +47,5 @@ export const CONTROLLER_CONNECTION_SELECTORS = {
     selectKeyboardConnection: createSelector(
         SELECT_ALL,
         (allConnections) => allConnections.find((connection) => connection.controllerType === ControllerType.Keyboard)
-    ),
+    )
 } as const;

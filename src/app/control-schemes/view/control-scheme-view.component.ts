@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel, ROUTER_SELECTORS, } from '@app/store';
+import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_V2_SELECTORS, ControlSchemeV2Model, ROUTER_SELECTORS, } from '@app/store';
 import { EllipsisTitleDirective, FeatureToolbarService } from '@app/shared';
 
 import { ControlSchemeViewIoListComponent } from './control-scheme-view-io-list';
@@ -39,8 +39,8 @@ import { CONTROL_SCHEME_VIEW_SELECTORS, ControlSchemeViewTreeNode } from './cont
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeViewComponent implements OnDestroy {
-    public readonly selectedScheme$: Observable<ControlSchemeModel | undefined> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
-        switchMap((id) => id === null ? of(undefined) : this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(id))),
+    public readonly selectedScheme$: Observable<ControlSchemeV2Model | undefined> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
+        switchMap((id) => id === null ? of(undefined) : this.store.select(CONTROL_SCHEME_V2_SELECTORS.selectScheme(id))),
     );
 
     public readonly canRunScheme$: Observable<boolean> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
