@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
@@ -8,13 +8,19 @@ import {
     ControllerL10nTypePipe,
     ControllerTypeIconPipe,
     EllipsisTitleDirective,
+    HubIoOperationMode,
     IoOperationTypeToL10nKeyPipe,
     NotConnectedInlineIconComponent
 } from '@app/shared';
+import { NEVER, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
-import { ControlSchemeViewBindingTreeNode } from '../../control-scheme-view.selectors';
+import { ControlSchemeViewBindingTreeNodeData } from '../../control-scheme-view.selectors';
 import { ControllerL10nInputNamePipe } from '../../../controller-l10n-input-name.pipe';
 import { ControllerL10nNamePipe } from '../../../controller-l10n-name.pipe';
+import { BindingTreeNodeViewModel } from './binding-tree-nove-view-model';
+import { SINGLE_INPUT_TREE_NODE_VIEW_MODEL_SELECTOR } from './single-input-tree-node-view-model.selector';
+import { FullControllerInputNameComponent } from '../../../shared';
 
 @Component({
     standalone: true,
@@ -33,10 +39,54 @@ import { ControllerL10nNamePipe } from '../../../controller-l10n-name.pipe';
         ControllerL10nTypePipe,
         MatFormFieldModule,
         NotConnectedInlineIconComponent,
-        ControllerL10nNamePipe
+        ControllerL10nNamePipe,
+        JsonPipe,
+        NgForOf,
+        FullControllerInputNameComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingTreeNodeComponent {
-    @Input() public binding?: ControlSchemeViewBindingTreeNode;
+    private _treeNodeData?: ControlSchemeViewBindingTreeNodeData;
+
+    private _viewModel$: Observable<BindingTreeNodeViewModel> = NEVER;
+
+    constructor(
+        private store: Store
+    ) {
+    }
+
+    public get viewModel$(): Observable<BindingTreeNodeViewModel> {
+        return this._viewModel$;
+    }
+
+    @Input()
+    public set treeNodeData(
+        treeNodeData: ControlSchemeViewBindingTreeNodeData | undefined
+    ) {
+        if (this._treeNodeData !== treeNodeData) {
+            this._treeNodeData = treeNodeData;
+            if (!treeNodeData) {
+                this._viewModel$ = NEVER;
+            } else {
+                this._viewModel$ = this.recalculateTreeNodeViewSelector(treeNodeData);
+            }
+        }
+    }
+
+    private recalculateTreeNodeViewSelector(
+        treeNodeData: ControlSchemeViewBindingTreeNodeData
+    ): Observable<BindingTreeNodeViewModel> {
+        switch (treeNodeData.binding.operationMode) {
+            case HubIoOperationMode.Stepper:
+            case HubIoOperationMode.SetAngle:
+            case HubIoOperationMode.Servo:
+            case HubIoOperationMode.Linear:
+                return this.store.select(SINGLE_INPUT_TREE_NODE_VIEW_MODEL_SELECTOR(
+                    treeNodeData.binding,
+                    treeNodeData.isActive,
+                    treeNodeData.ioHasNoRequiredCapabilities
+                ));
+        }
+    }
 }

@@ -5,12 +5,12 @@
 
 .bindings-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     grid-gap: 20px;
 }
 
 .binding {
-    min-width: 400px;
+    min-width: 350px;
     max-width: 800px;
 }
 

@@ -1,53 +1,43 @@
-<div *ngIf="binding"
-     class="binding-info-container"
->
-    <ng-container *ngIf="binding.controller; else unknownController">
-        <mat-icon
-            class="controller-type-icon binding-info-item"
-            [fontIcon]="binding.controller.controllerType | controllerTypeIcon"
+<ng-container *ngIf="viewModel$ | ngrxPush; let viewModel">
+    <div class="binding__general-info">
+        <mat-icon class="binding__activity-indicator"
+                  [class.binding__activity-indicator_inactive]="!viewModel.isActive"
+                  [fontIcon]="'keyboard_double_arrow_right'"
+                  [color]="'accent'"
         ></mat-icon>
-        <span class="cdk-visually-hidden">
-            {{ binding.controller.controllerType | controllerL10nType | transloco | ngrxPush }}
-        </span>
-        <div class="controller-input-name binding-info-item"
-             appEllipsisTitle
-        >
-            {{ binding.controller | controllerL10nName | transloco | ngrxPush }} :
-            {{ binding.inputId | controllerL10nInputName: binding.inputType : binding.controller | ngrxPush }}
-        </div>
-        <div class="not-connected-icon">
-            <app-not-connected-inline-icon *ngIf="!binding.controllerIsConnected"
+
+        <mat-icon class="binding__operation-type_capabilities-mismatch-icon"
+                  [class.binding__operation-type_capabilities-mismatch-icon_hidden]="!viewModel.ioHasNoRequiredCapabilities"
+                  [fontIcon]="'error'"
+                  [title]="'controlScheme.ioCapabilitiesMismatch' | transloco"
+                  [color]="'warn'"
+        ></mat-icon>
+
+        <ng-container *ngIf="!viewModel.ioHasNoRequiredCapabilities; else ioCapabilitiesMismatch">
+            <div class="binding__operation-type">
+                {{ viewModel.operationMode | ioOperationTypeToL10nKey | transloco }}
+            </div>
+        </ng-container>
+        <ng-template #ioCapabilitiesMismatch>
+            <mat-error class="binding__operation-type">
+                {{ viewModel.operationMode | ioOperationTypeToL10nKey | transloco }}
+            </mat-error>
+            <span class="cdk-visually-hidden">
+                {{ 'controlScheme.ioCapabilitiesMismatch' | transloco }}
+            </span>
+        </ng-template>
+    </div>
+    <ng-container *ngFor="let controlData of viewModel.controlData">
+        <div class="binding__controls">
+            <app-not-connected-inline-icon class="binding__controls-connection-state"
+                                           [class.binding__controls-connection-state_connected]="controlData.isControllerConnected"
                                            [notification]="'controller.isNotConnectedInlineNotification' | transloco"
             ></app-not-connected-inline-icon>
+            <app-full-controller-input-name class="binding__controls-label"
+                                            [controllerId]="controlData.controllerId"
+                                            [inputId]="controlData.inputId"
+                                            [inputType]="controlData.inputType"
+            ></app-full-controller-input-name>
         </div>
     </ng-container>
-    <ng-template #unknownController>
-        <mat-icon class="controller-type-icon binding-info-item"
-                  [fontIcon]="'question_mark'"
-        ></mat-icon>
-        <span class="cdk-visually-hidden">{{ 'controller.unknownController' | transloco }}</span>
-    </ng-template>
-
-    <mat-icon class="is-active-indicator binding-info-item"
-              [class.is-active-indicator_hidden]="!binding.isActive"
-              [fontIcon]="'keyboard_double_arrow_right'"
-              [color]="'primary'"
-    ></mat-icon>
-
-    <mat-icon class="operation-mode__capabilities binding-info-item"
-              [class.operation-mode__capabilities_match]="!binding.ioHasNoRequiredCapabilities"
-              [fontIcon]="'warning'"
-              [color]="'warn'"
-              [title]="'controlScheme.ioCapabilitiesMismatch' | transloco"
-    ></mat-icon>
-    <span *ngIf="binding.ioHasNoRequiredCapabilities"
-          class="cdk-visually-hidden">
-        {{ 'controlScheme.ioCapabilitiesMismatch' | transloco }}
-    </span>
-
-    <div class="operation-mode binding-info-item"
-         appEllipsisTitle
-    >
-        {{ binding.operationMode | ioOperationTypeToL10nKey | transloco }}
-    </div>
-</div>
+</ng-container>

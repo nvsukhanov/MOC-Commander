@@ -15,7 +15,7 @@ import { StepperOutputConfigurationEditComponent } from './binding-specifics/ste
     exportAs: 'appRenderBindingSpecifics'
 })
 export class RenderBindingSpecificsDirective implements OnDestroy {
-    private readonly renderers: { [k in HubIoOperationMode]?: Type<IBindingsSpecificsComponent> } = {
+    private readonly renderers: { [k in HubIoOperationMode]: Type<IBindingsSpecificsComponent> | null } = {
         [HubIoOperationMode.Linear]: LinearOutputConfigurationEditComponent,
         [HubIoOperationMode.Servo]: ServoOutputConfigurationEditComponent,
         [HubIoOperationMode.SetAngle]: SetAngleOutputConfigurationEditComponent,

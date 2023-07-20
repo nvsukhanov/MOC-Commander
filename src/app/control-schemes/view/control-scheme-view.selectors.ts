@@ -1,5 +1,5 @@
 import { Dictionary } from '@ngrx/entity';
-import { HubType, IOType } from '@nvsukhanov/rxpoweredup';
+import { HubType, IOType, PortModeName } from '@nvsukhanov/rxpoweredup';
 import { createSelector } from '@ngrx/store';
 import {
     ATTACHED_IO_MODES_SELECTORS,
@@ -8,13 +8,10 @@ import {
     AttachedIoModel,
     AttachedIoModesModel,
     AttachedIoPortModeInfoModel,
-    CONTROLLER_CONNECTION_SELECTORS,
-    CONTROLLER_SELECTORS,
     CONTROL_SCHEME_SELECTORS,
-    ControlSchemeBinding,
-    ControlSchemeModel,
-    ControllerConnectionModel,
-    ControllerModel,
+    CONTROL_SCHEME_V2_SELECTORS,
+    ControlSchemeV2Binding,
+    ControlSchemeV2Model,
     HUBS_SELECTORS,
     HUB_STATS_SELECTORS,
     HubModel,
@@ -23,7 +20,8 @@ import {
     ROUTER_SELECTORS,
     attachedIosIdFn
 } from '@app/store';
-import { ControllerInputType, HubIoOperationMode } from '@app/shared';
+
+import { ioHasMatchingModeForOpMode } from '../io-has-matching-mode-for-op-mode';
 
 function createHubTreeNode(
     hubConfig: HubModel,
@@ -66,33 +64,20 @@ function createIoTreeNode(
 
 function createBindingTreeNode(
     ioPath: string,
-    binding: ControlSchemeBinding,
+    binding: ControlSchemeV2Binding,
     ioSupportedModesEntities: Dictionary<AttachedIoModesModel>,
-    portModeInfoEntities: Dictionary<AttachedIoPortModeInfoModel>,
-    controllerEntities: Dictionary<ControllerModel>,
-    controllerConnectionEntities: Dictionary<ControllerConnectionModel>,
+    portOutputModeNames: PortModeName[],
     lastExecutedTasksBindingIds: ReadonlySet<string>,
     io?: AttachedIoModel,
-): ControlSchemeViewBindingTreeNode {
-    let ioHasNoRequiredCapabilities = false;
-    if (io) {
-        // const ioOperationModes = getHubIoOperationModes(
-        //     io,
-        //     ioSupportedModesEntities,
-        //     portModeInfoEntities,
-        //     binding.input.inputType
-        // );
-        ioHasNoRequiredCapabilities = false;
-    }
+): ControlSchemeViewBindingTreeNodeData {
+    const ioHasNoRequiredCapabilities = io ?
+                                        !ioHasMatchingModeForOpMode(binding.operationMode, portOutputModeNames)
+                                           : true;
     return {
         path: `${ioPath}.${binding.id}`,
         nodeType: ControlSchemeNodeTypes.Binding,
-        controller: controllerEntities[binding.input.controllerId],
-        controllerIsConnected: !!controllerConnectionEntities[binding.input.controllerId],
-        inputId: binding.input.inputId,
-        inputType: binding.input.inputType,
         isActive: lastExecutedTasksBindingIds.has(binding.id),
-        operationMode: binding.output.operationMode,
+        binding,
         ioHasNoRequiredCapabilities,
         children: []
     };
@@ -104,15 +89,11 @@ export enum ControlSchemeNodeTypes {
     Binding = 'Binding',
 }
 
-export type ControlSchemeViewBindingTreeNode = {
+export type ControlSchemeViewBindingTreeNodeData = {
     readonly path: string;
     readonly nodeType: ControlSchemeNodeTypes.Binding;
-    readonly controller?: ControllerModel;
-    readonly controllerIsConnected: boolean;
-    readonly inputId: string;
-    readonly inputType: ControllerInputType;
     readonly isActive: boolean;
-    readonly operationMode: HubIoOperationMode;
+    readonly binding: ControlSchemeV2Binding;
     readonly ioHasNoRequiredCapabilities: boolean;
     readonly children: [];
 };
@@ -123,7 +104,7 @@ export type ControlSchemeViewIoTreeNode = {
     readonly portId: number;
     readonly ioType: IOType | null;
     readonly isConnected: boolean;
-    readonly children: ControlSchemeViewBindingTreeNode[];
+    readonly children: ControlSchemeViewBindingTreeNodeData[];
 };
 
 export type ControlSchemeViewHubTreeNode = {
@@ -142,34 +123,48 @@ export type ControlSchemeViewHubTreeNode = {
 
 export type ControlSchemeViewTreeNode = ControlSchemeViewHubTreeNode
     | ControlSchemeViewIoTreeNode
-    | ControlSchemeViewBindingTreeNode;
+    | ControlSchemeViewBindingTreeNodeData;
 
 export const CONTROL_SCHEME_VIEW_SELECTORS = {
     schemeViewTree: (schemeId: string) => createSelector(
-        CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
+        CONTROL_SCHEME_V2_SELECTORS.selectScheme(schemeId),
         HUBS_SELECTORS.selectEntities,
         HUB_STATS_SELECTORS.selectEntities,
         ATTACHED_IO_SELECTORS.selectEntities,
         ATTACHED_IO_MODES_SELECTORS.selectEntities,
         ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
-        CONTROLLER_SELECTORS.selectEntities,
-        CONTROLLER_CONNECTION_SELECTORS.selectEntities,
         PORT_TASKS_SELECTORS.selectLastExecutedBindingIds,
         (
-            scheme: ControlSchemeModel | undefined,
+            scheme: ControlSchemeV2Model | undefined,
             hubEntities: Dictionary<HubModel>,
             statsEntities: Dictionary<HubStatsModel>,
-            ios: Dictionary<AttachedIoModel>,
+            iosEntities: Dictionary<AttachedIoModel>,
             ioSupportedModesEntities: Dictionary<AttachedIoModesModel>,
             portModeInfoEntities: Dictionary<AttachedIoPortModeInfoModel>,
-            controllerEntities: Dictionary<ControllerModel>,
-            controllerConnectionEntities: Dictionary<ControllerConnectionModel>,
             lastExecutedTasksBindingIds: ReadonlySet<string>
         ): ControlSchemeViewHubTreeNode[] => {
             if (!scheme) {
                 return [];
             }
             const hubsViewMap = new Map<string, ControlSchemeViewHubTreeNode>();
+            const ioOutputPortModeNamesMap = new Map<string, PortModeName[]>();
+
+            for (const ioId in Object.keys(iosEntities)) {
+                const io = iosEntities[ioId];
+                if (!io) {
+                    continue;
+                }
+                const ioSupportedModes = ioSupportedModesEntities[ioId];
+                if (!ioSupportedModes) {
+                    continue;
+                }
+                const ioOutputModes = ioSupportedModes.portOutputModes;
+                const ioOutputPortModeNames = ioOutputModes.map((modeId) => {
+                    const portModeInfo = portModeInfoEntities[`${ioId}.${modeId}`];
+                    return portModeInfo?.name ?? null;
+                }).filter((name): name is PortModeName => !!name);
+                ioOutputPortModeNamesMap.set(ioId, ioOutputPortModeNames);
+            }
 
             function ensureHubNodeCreated(
                 hubConfiguration: HubModel
@@ -186,12 +181,12 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
             }
 
             const hubIosViewMap = new Map<string, ControlSchemeViewIoTreeNode>();
-            [ ...scheme.bindings ].sort((a, b) => a.output.portId - b.output.portId).forEach((binding) => {
-                const hubConfig = hubEntities[binding.output.hubId];
+            [ ...scheme.bindings ].sort((a, b) => a.portId - b.portId).forEach((binding) => {
+                const hubConfig = hubEntities[binding.hubId];
                 if (!hubConfig) {
                     return;
                 }
-                const ioId = attachedIosIdFn({ hubId: hubConfig.hubId, portId: binding.output.portId });
+                const ioId = attachedIosIdFn(binding);
 
                 let ioViewModel = hubIosViewMap.get(ioId);
                 if (!ioViewModel) {
@@ -200,22 +195,20 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
                         hubTreeNode.path,
                         hubConfig,
                         !!statsEntities[hubConfig.hubId],
-                        ios,
-                        binding.output.portId
+                        iosEntities,
+                        binding.portId
                     );
                     hubIosViewMap.set(ioId, ioViewModel);
 
                     hubTreeNode.children.push(ioViewModel);
                 }
 
-                const io = ios[attachedIosIdFn(binding.output)];
+                const io = iosEntities[ioId];
                 const bindingTreeNode = createBindingTreeNode(
                     ioViewModel.path,
                     binding,
                     ioSupportedModesEntities,
-                    portModeInfoEntities,
-                    controllerEntities,
-                    controllerConnectionEntities,
+                    ioOutputPortModeNamesMap.get(ioId) ?? [],
                     lastExecutedTasksBindingIds,
                     io
                 );

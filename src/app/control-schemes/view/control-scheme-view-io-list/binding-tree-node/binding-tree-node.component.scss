@@ -1,64 +1,49 @@
 :host {
-    display: block;
-    width: 100%;
-    overflow: hidden;
-}
-
-.binding-info-container {
     display: flex;
-    align-items: center;
+    flex-direction: row;
+    align-items: flex-start;
 }
 
-.binding-info-item {
-    margin-left: 10px;
-
-    &:first-child {
-        margin-left: 0;
+.binding {
+    &__general-info {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
-}
 
-.controller-type-icon {
-    width: 24px;
-    flex-shrink: 0;
-}
+    &__activity-indicator {
+        margin: 0 5px;
 
-.controller-input-name {
-    flex: 1;
-    min-width: 80px;
-    max-width: 250px;
-}
-
-.not-connected-icon {
-    flex: 0;
-    min-width: 34px;
-}
-
-.controller {
-    &__disconnected-notification {
-        flex-shrink: 1;
-    }
-}
-
-.operation-mode {
-    flex: 1;
-    font-weight: 500;
-
-    &__capabilities {
-        flex: 0;
-        margin-left: 10px;
-        min-width: 24px;
-
-        &_match {
+        &_inactive {
             visibility: hidden;
         }
-
     }
-}
 
-.is-active-indicator {
-    width: 24px;
+    &__operation-type {
+        width: 100px;
+        font-weight: 500;
+        font-size: 16px;
 
-    &_hidden {
-        visibility: hidden;
+        &_capabilities-mismatch-icon {
+            margin: 0 5px;
+
+            &_hidden {
+                visibility: hidden;
+            }
+        }
+    }
+
+    &__controls {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        &-connection-state {
+            margin: 0 5px;
+
+            &_connected {
+                visibility: hidden;
+            }
+        }
     }
 }
