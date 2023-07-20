@@ -5,7 +5,7 @@ import { PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
-import { CONTROL_SCHEME_V2_ACTIONS, CONTROL_SCHEME_V2_SELECTORS, ControlSchemeV2Model, ROUTER_SELECTORS } from '@app/store';
+import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel, ROUTER_SELECTORS } from '@app/store';
 
 import { RoutesBuilderService } from '../../routing';
 import { ControlSchemeEditFormComponent } from './edit-form';
@@ -26,9 +26,9 @@ import { mapFormToModel } from '../map-form-to-model';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeEditComponent implements OnDestroy {
-    public readonly currentlyEditedScheme$: Observable<ControlSchemeV2Model | undefined> =
+    public readonly currentlyEditedScheme$: Observable<ControlSchemeModel | undefined> =
         this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeId).pipe(
-            switchMap((i) => i === null ? of(undefined) : this.store.select(CONTROL_SCHEME_V2_SELECTORS.selectScheme(i)))
+            switchMap((i) => i === null ? of(undefined) : this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(i)))
         );
 
     private sub?: Subscription;
@@ -47,7 +47,7 @@ export class ControlSchemeEditComponent implements OnDestroy {
     public onSave(
         form: ControlSchemeEditForm
     ): void {
-        this.store.dispatch(CONTROL_SCHEME_V2_ACTIONS.update({
+        this.store.dispatch(CONTROL_SCHEME_ACTIONS.update({
             scheme: mapFormToModel(form)
         }));
     }

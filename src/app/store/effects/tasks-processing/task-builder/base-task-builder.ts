@@ -1,19 +1,19 @@
 import { ITaskBuilder } from '../i-task-builder';
-import { ControlSchemeV2Binding, PortCommandTask, PortCommandTaskPayload } from '../../../models';
+import { ControlSchemeBinding, PortCommandTask, PortCommandTaskPayload } from '../../../models';
 import { payloadHash } from '../payload-hash';
 
 export abstract class BaseTaskBuilder<TPayload extends PortCommandTaskPayload> implements ITaskBuilder {
     private next?: BaseTaskBuilder<PortCommandTaskPayload>;
 
     protected abstract buildPayload(
-        binding: ControlSchemeV2Binding,
+        binding: ControlSchemeBinding,
         inputValue: number,
         motorEncoderOffset: number,
         previousTaskPayload: PortCommandTask | null
     ): TPayload | null;
 
     public build(
-        binding: ControlSchemeV2Binding,
+        binding: ControlSchemeBinding,
         inputValue: number,
         motorEncoderOffset: number,
         lastExecutedTask: PortCommandTask | null
@@ -42,7 +42,7 @@ export abstract class BaseTaskBuilder<TPayload extends PortCommandTaskPayload> i
     }
 
     private calculateHash(
-        binding: ControlSchemeV2Binding,
+        binding: ControlSchemeBinding,
         payload: TPayload
     ): string {
         return `${binding.hubId}/${binding.portId}/${payloadHash(payload)}`;

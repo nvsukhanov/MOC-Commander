@@ -9,9 +9,8 @@ import {
     AttachedIoModesModel,
     AttachedIoPortModeInfoModel,
     CONTROL_SCHEME_SELECTORS,
-    CONTROL_SCHEME_V2_SELECTORS,
-    ControlSchemeV2Binding,
-    ControlSchemeV2Model,
+    ControlSchemeBinding,
+    ControlSchemeModel,
     HUBS_SELECTORS,
     HUB_STATS_SELECTORS,
     HubModel,
@@ -66,7 +65,7 @@ function createIoTreeNode(
 
 function createBindingTreeNode(
     ioPath: string,
-    binding: ControlSchemeV2Binding,
+    binding: ControlSchemeBinding,
     ioSupportedModesEntities: Dictionary<AttachedIoModesModel>,
     portOutputModeNames: PortModeName[],
     lastExecutedTasksBindingIds: ReadonlySet<string>,
@@ -95,7 +94,7 @@ export type ControlSchemeViewBindingTreeNodeData = {
     readonly path: string;
     readonly nodeType: ControlSchemeNodeTypes.Binding;
     readonly isActive: boolean;
-    readonly binding: ControlSchemeV2Binding;
+    readonly binding: ControlSchemeBinding;
     readonly ioHasNoRequiredCapabilities: boolean;
     readonly children: [];
 };
@@ -129,7 +128,7 @@ export type ControlSchemeViewTreeNode = ControlSchemeViewHubTreeNode
 
 export const CONTROL_SCHEME_VIEW_SELECTORS = {
     schemeViewTree: (schemeId: string) => createSelector(
-        CONTROL_SCHEME_V2_SELECTORS.selectScheme(schemeId),
+        CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
         HUBS_SELECTORS.selectEntities,
         HUB_STATS_SELECTORS.selectEntities,
         ATTACHED_IO_SELECTORS.selectEntities,
@@ -137,7 +136,7 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
         ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
         PORT_TASKS_SELECTORS.selectLastExecutedBindingIds,
         (
-            scheme: ControlSchemeV2Model | undefined,
+            scheme: ControlSchemeModel | undefined,
             hubEntities: Dictionary<HubModel>,
             statsEntities: Dictionary<HubStatsModel>,
             iosEntities: Dictionary<AttachedIoModel>,

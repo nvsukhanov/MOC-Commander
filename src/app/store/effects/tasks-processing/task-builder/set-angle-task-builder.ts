@@ -1,13 +1,13 @@
 import { HubIoOperationMode } from '@app/shared';
 
 import { BaseTaskBuilder } from './base-task-builder';
-import { ControlSchemeV2Binding, PortCommandTaskType, SetAngleTaskPayload } from '../../../models';
+import { ControlSchemeBinding, PortCommandTaskType, SetAngleTaskPayload } from '../../../models';
 
 export class SetAngleTaskBuilder extends BaseTaskBuilder<SetAngleTaskPayload> {
     private readonly inputValueThreshold = 0.5;
 
     protected buildPayload(
-        binding: ControlSchemeV2Binding,
+        binding: ControlSchemeBinding,
         inputValue: number
     ): SetAngleTaskPayload | null {
         if (binding.operationMode !== HubIoOperationMode.SetAngle) {

@@ -1,6 +1,5 @@
 export * from './attached-ios.reducer';
 export * from './bluetooth-availability.reducer';
-export * from './control-scheme.reducer';
 export * from './controller-input.reducer';
 export * from './controller-settings.reducer';
 export * from './controllers.reducer';
@@ -12,4 +11,4 @@ export * from './attached-io-props.reducer';
 export * from './attached-io-modes.reducer';
 export * from './attached-io-port-mode-info.reducer';
 export * from './controller-connection.reducer';
-export * from './control-scheme-v2.reducer';
+export * from './control-scheme.reducer';

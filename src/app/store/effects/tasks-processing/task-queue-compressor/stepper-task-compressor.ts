@@ -27,7 +27,7 @@ export class StepperTaskCompressor implements ITaskQueueCompressor {
         }
 
         if (totalStepperTaskCount > 1) {
-            const result = queue.map((task) => {
+            return queue.map((task) => {
                 if (task === firstStepperTask) {
                     const updatedFirstTask = {
                         ...firstStepperTask,
@@ -45,7 +45,6 @@ export class StepperTaskCompressor implements ITaskQueueCompressor {
                 }
                 return task;
             }).filter((task) => task !== null) as PortCommandTask[];
-            return result;
         }
         return queue;
     }

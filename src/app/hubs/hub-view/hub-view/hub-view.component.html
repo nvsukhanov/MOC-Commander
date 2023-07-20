@@ -1,5 +1,5 @@
 <ng-container *ngIf="selectedHub$ | ngrxPush; let hub; else hubNotFound">
-    <ng-container *ngIf="selectedHubStats$ | ngrxPush; let stats; else hubNotFound">
+    <ng-container *ngIf="selectedHubStats$ | ngrxPush; else hubNotFound">
         <app-hub-properties-view class="hub-properties-view"
                                  [configuration]="hub"
                                  [stats]="selectedHubStats$ | ngrxPush"

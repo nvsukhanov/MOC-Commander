@@ -18,8 +18,7 @@ import {
     CONTROLLER_CONNECTION_FEATURE,
     CONTROLLER_INPUT_FEATURE,
     CONTROLLER_SETTINGS_FEATURE,
-    CONTROL_SCHEMES_FEATURE,
-    CONTROL_SCHEME_V2_FEATURE,
+    CONTROL_SCHEME_FEATURE,
     HUBS_FEATURE,
     HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE,
     HUB_STATS_FEATURE,
@@ -42,7 +41,7 @@ import { HubStorageService } from './hub-storage.service';
 import { RoutesBuilderService } from '../routing';
 import { CONTROLLER_INPUT_ACTIONS, HUB_STATS_ACTIONS } from './actions';
 
-const STORAGE_VERSION = '6';
+const STORAGE_VERSION = '7';
 
 const REDUCERS: ActionReducerMap<IState> = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,
@@ -50,8 +49,7 @@ const REDUCERS: ActionReducerMap<IState> = {
     controllerInput: CONTROLLER_INPUT_FEATURE.reducer,
     controllerSettings: CONTROLLER_SETTINGS_FEATURE.reducer,
     controllerConnections: CONTROLLER_CONNECTION_FEATURE.reducer,
-    controlSchemes: CONTROL_SCHEMES_FEATURE.reducer,
-    controlSchemesV2: CONTROL_SCHEME_V2_FEATURE.reducer,
+    controlSchemes: CONTROL_SCHEME_FEATURE.reducer,
     hubs: HUBS_FEATURE.reducer,
     hubStats: HUB_STATS_FEATURE.reducer,
     attachedIos: ATTACHED_IOS_FEATURE.reducer,
@@ -73,7 +71,6 @@ function localStorageSyncReducer(
             { controllers: [ 'ids', 'entities' ] },
             { controllerSettings: [ 'ids', 'entities' ] },
             { controlSchemes: [ 'ids', 'entities' ] },
-            { controlSchemesV2: [ 'ids', 'entities' ] },
             { attachedIoModes: [ 'ids', 'entities' ] },
             { attachedIoPortModeInfo: [ 'ids', 'entities' ] },
         ], // TODO: add types for this

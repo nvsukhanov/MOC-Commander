@@ -1,10 +1,10 @@
-import { ControlSchemeV2Binding, ControlSchemeV2Model } from '@app/store';
+import { ControlSchemeBinding, ControlSchemeModel } from '@app/store';
 
 import { ControlSchemeEditForm } from './edit';
 
 export function mapFormToModel(
     form: ControlSchemeEditForm
-): ControlSchemeV2Model {
+): ControlSchemeModel {
     const rawData = form.getRawValue();
     return {
         id: rawData.id,
@@ -12,6 +12,6 @@ export function mapFormToModel(
         bindings: rawData.bindings.map((data) => ({
             operationMode: data.bindingFormOperationMode,
             ...data[data.bindingFormOperationMode]
-        }) as ControlSchemeV2Binding)
+        }) as ControlSchemeBinding)
     };
 }

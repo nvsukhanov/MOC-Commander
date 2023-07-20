@@ -1,5 +1,4 @@
 export * from './attached-io.model';
-export * from './control-scheme.model';
 export * from './controller.model';
 export * from './controller-input.model';
 export * from './controller-settings.model';
@@ -11,4 +10,4 @@ export * from './attached-io-port-mode-info.model';
 export * from './port-tasks.model';
 export * from './port-command-task';
 export * from './controller-connection.model';
-export * from './control-scheme-v2.model';
+export * from './control-scheme.model';

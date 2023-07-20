@@ -2,7 +2,7 @@ import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { HubIoOperationMode } from '@app/shared';
 
 import { BaseTaskBuilder } from './base-task-builder';
-import { ControlSchemeV2Binding, ControlSchemeV2LinearBinding, PortCommandTask, PortCommandTaskType, SetLinearSpeedTaskPayload } from '../../../models';
+import { ControlSchemeBinding, ControlSchemeLinearBinding, PortCommandTask, PortCommandTaskType, SetLinearSpeedTaskPayload } from '../../../models';
 
 export class SetSpeedTaskBuilder extends BaseTaskBuilder<SetLinearSpeedTaskPayload> {
     private readonly speedStep = 5;
@@ -10,7 +10,7 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder<SetLinearSpeedTaskPaylo
     private readonly speedSnapThreshold = 10;
 
     protected buildPayload(
-        binding: ControlSchemeV2Binding,
+        binding: ControlSchemeBinding,
         inputValue: number,
         motorEncoderOffset: number,
         lastExecutedTask: PortCommandTask | null
@@ -41,7 +41,7 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder<SetLinearSpeedTaskPaylo
     }
 
     private createTogglePayload(
-        binding: ControlSchemeV2LinearBinding,
+        binding: ControlSchemeLinearBinding,
         lastExecutedTask: PortCommandTask | null
     ): SetLinearSpeedTaskPayload | null {
         let shouldActivate: boolean;
