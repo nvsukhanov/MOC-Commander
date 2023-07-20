@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
 
 import { PORT_TASKS_ENTITY_ADAPTER, PORT_TASKS_FEATURE, controllerInputIdFn, hubPortTasksIdFn } from '../reducers';
-import { ControlSchemeV2Binding, PortCommandTask } from '../models';
+import { ControlSchemeBinding, PortCommandTask } from '../models';
 import { CONTROLLER_INPUT_SELECTORS } from './controller-input.selectors';
 import { ATTACHED_IO_PROPS_SELECTORS } from './attached-io-props.selectors';
 
@@ -13,7 +13,7 @@ const SELECT_ALL = createSelector(
 export type BindingTaskComposingData = {
     hubId: string;
     portId: number;
-    bindingWithValue: Array<{ binding: ControlSchemeV2Binding; value: number }>;
+    bindingWithValue: Array<{ binding: ControlSchemeBinding; value: number }>;
     encoderOffset: number;
     lastExecutedTask: PortCommandTask | null;
     runningTask: PortCommandTask | null;
@@ -62,7 +62,7 @@ export const PORT_TASKS_SELECTORS = {
         }
     ),
     selectBindingTaskCreationModel: (
-        { hubId, portId, bindings }: { hubId: string; portId: number; bindings: ControlSchemeV2Binding[] }
+        { hubId, portId, bindings }: { hubId: string; portId: number; bindings: ControlSchemeBinding[] }
     ) => createSelector(
         CONTROLLER_INPUT_SELECTORS.selectEntities,
         ATTACHED_IO_PROPS_SELECTORS.selectMotorEncoderOffset({ hubId, portId }),

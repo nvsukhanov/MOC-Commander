@@ -6,7 +6,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { ScreenSizeObserverService } from '@app/shared';
 
-import { CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_V2_ACTIONS, HUBS_ACTIONS } from '../actions';
+import { CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS } from '../actions';
 import { ControllerProfileFactoryService } from '../../controller-profiles';
 import { CONTROLLER_SELECTORS } from '../selectors';
 
@@ -38,32 +38,8 @@ export class NotificationsEffects {
 
     public readonly servoCalibrationErrorNotification$ = createEffect(() => {
         return this.actions$.pipe(
-            ofType(CONTROL_SCHEME_V2_ACTIONS.servoCalibrationError),
+            ofType(CONTROL_SCHEME_ACTIONS.servoCalibrationError),
             switchMap(() => this.translocoService.selectTranslate('controlScheme.servoCalibrationError')),
-            this.showMessage()
-        );
-    }, { dispatch: false });
-
-    public readonly controlSchemeInputRebindSuccess$ = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(CONTROL_SCHEME_ACTIONS.inputRebindSuccess),
-            switchMap(() => this.translocoService.selectTranslate('controlScheme.bindToAnotherInputSuccess')),
-            this.showMessage()
-        );
-    }, { dispatch: false });
-
-    public readonly controlSchemeInputRebindTypeMismatch$ = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(CONTROL_SCHEME_ACTIONS.inputRebindTypeMismatch),
-            switchMap(() => this.translocoService.selectTranslate('controlScheme.bindToAnotherInputTypeMismatchError')),
-            this.showMessage()
-        );
-    }, { dispatch: false });
-
-    public readonly noIOForInputFound$ = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(CONTROL_SCHEME_ACTIONS.noIOForInputFound),
-            switchMap(() => this.translocoService.selectTranslate('controlScheme.noMatchingIoForInputFound')),
             this.showMessage()
         );
     }, { dispatch: false });

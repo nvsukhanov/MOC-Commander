@@ -2,13 +2,13 @@ import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 import { HubIoOperationMode, getTranslationArcs } from '@app/shared';
 
 import { BaseTaskBuilder } from './base-task-builder';
-import { ControlSchemeV2Binding, PortCommandTaskType, ServoTaskPayload } from '../../../models';
+import { ControlSchemeBinding, PortCommandTaskType, ServoTaskPayload } from '../../../models';
 
 export class ServoTaskBuilder extends BaseTaskBuilder<ServoTaskPayload> {
     private readonly snappingThreshold = 10;
 
     protected buildPayload(
-        binding: ControlSchemeV2Binding,
+        binding: ControlSchemeBinding,
         inputValue: number,
         motorEncoderOffset: number,
     ): ServoTaskPayload | null {

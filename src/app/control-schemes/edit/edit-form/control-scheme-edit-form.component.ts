@@ -5,7 +5,7 @@ import { LetDirective, PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { MatInputModule } from '@angular/material/input';
-import { ControlSchemeV2Model, } from '@app/store';
+import { ControlSchemeModel, } from '@app/store';
 import { FeatureToolbarService, IScrollContainer, SCROLL_CONTAINER, ScreenSizeObserverService } from '@app/shared';
 import { NgForOf } from '@angular/common';
 import { Observable, map, startWith } from 'rxjs';
@@ -84,7 +84,7 @@ export class ControlSchemeEditFormComponent implements OnDestroy {
 
     @Input()
     public set scheme(
-        scheme: ControlSchemeV2Model
+        scheme: ControlSchemeModel
     ) {
         this.form.reset();
         this.form.controls.id.patchValue(scheme.id);

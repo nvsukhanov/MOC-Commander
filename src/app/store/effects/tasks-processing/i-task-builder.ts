@@ -1,11 +1,11 @@
 import { InjectionToken } from '@angular/core';
 
-import { ControlSchemeV2Binding, PortCommandTask } from '../../models';
+import { ControlSchemeBinding, PortCommandTask } from '../../models';
 import { taskBuilderFactory } from './task-builder';
 
 export interface ITaskBuilder {
     build(
-        binding: ControlSchemeV2Binding,
+        binding: ControlSchemeBinding,
         inputValue: number,
         motorEncoderOffset: number,
         previousTask: PortCommandTask | null

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ControlSchemeV2Binding } from '@app/store';
+import { ControlSchemeBinding } from '@app/store';
 import { HubIoOperationMode, WINDOW } from '@app/shared';
 import { TranslocoService } from '@ngneat/transloco';
 
@@ -35,7 +35,7 @@ export class ControlSchemeFormBuilderService {
     }
 
     public createBindingForm(
-        initialState?: ControlSchemeV2Binding
+        initialState?: ControlSchemeBinding
     ): ControlSchemeBindingForm {
         const form: ControlSchemeBindingForm = this.formBuilder.group({
             bindingFormOperationMode: this.formBuilder.control<HubIoOperationMode>(HubIoOperationMode.Linear, { nonNullable: true }),

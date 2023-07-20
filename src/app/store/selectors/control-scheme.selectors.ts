@@ -1,39 +1,39 @@
 import { createSelector } from '@ngrx/store';
 
-import { CONTROL_SCHEMES_ENTITY_ADAPTER, CONTROL_SCHEMES_FEATURE } from '../reducers';
+import { CONTROL_SCHEME_ENTITY_ADAPTER, CONTROL_SCHEME_FEATURE } from '../reducers';
 
-const CONTROL_SCHEME_ENTITY_SELECTORS = CONTROL_SCHEMES_ENTITY_ADAPTER.getSelectors();
-
-const CONTROL_SCHEME_SELECT_ENTITIES = createSelector(
-    CONTROL_SCHEMES_FEATURE.selectControlSchemesState,
-    CONTROL_SCHEME_ENTITY_SELECTORS.selectEntities
+const SELECT_ALL = createSelector(
+    CONTROL_SCHEME_FEATURE.selectControlSchemesState,
+    CONTROL_SCHEME_ENTITY_ADAPTER.getSelectors().selectAll
 );
 
-const CONTROL_SCHEME_SELECT_ALL = createSelector(
-    CONTROL_SCHEMES_FEATURE.selectControlSchemesState,
-    CONTROL_SCHEME_ENTITY_SELECTORS.selectAll
+const SELECT_ENTITIES = createSelector(
+    CONTROL_SCHEME_FEATURE.selectControlSchemesState,
+    CONTROL_SCHEME_ENTITY_ADAPTER.getSelectors().selectEntities
 );
 
-const CONTROL_SCHEME_SELECT_IDS = createSelector(
-    CONTROL_SCHEMES_FEATURE.selectControlSchemesState,
-    CONTROL_SCHEME_ENTITY_SELECTORS.selectIds
+const SELECT_IDS = createSelector(
+    CONTROL_SCHEME_FEATURE.selectControlSchemesState,
+    CONTROL_SCHEME_ENTITY_ADAPTER.getSelectors().selectIds
+);
+
+const SELECT_TOTAL = createSelector(
+    CONTROL_SCHEME_FEATURE.selectControlSchemesState,
+    CONTROL_SCHEME_ENTITY_ADAPTER.getSelectors().selectTotal
 );
 
 export const CONTROL_SCHEME_SELECTORS = {
-    selectAll: CONTROL_SCHEME_SELECT_ALL,
-    selectIds: CONTROL_SCHEME_SELECT_IDS,
-    selectEntities: CONTROL_SCHEME_SELECT_ENTITIES,
-    selectTotal: createSelector(
-        CONTROL_SCHEMES_FEATURE.selectControlSchemesState,
-        CONTROL_SCHEME_ENTITY_SELECTORS.selectTotal
-    ),
+    selectAll: SELECT_ALL,
+    selectEntities: SELECT_ENTITIES,
+    selectIds: SELECT_IDS,
+    selectTotal: SELECT_TOTAL,
     selectScheme: (id: string) => createSelector(
-        CONTROL_SCHEME_SELECTORS.selectEntities,
+        SELECT_ENTITIES,
         (state) => state[id]
     ),
-    selectRunningSchemeId: CONTROL_SCHEMES_FEATURE.selectRunningSchemeId,
+    selectRunningSchemeId: CONTROL_SCHEME_FEATURE.selectRunningSchemeId,
     selectIsAnySchemeRunning: createSelector(
-        CONTROL_SCHEMES_FEATURE.selectRunningSchemeId,
+        CONTROL_SCHEME_FEATURE.selectRunningSchemeId,
         (runningSchemeId) => runningSchemeId !== null
     )
 } as const;

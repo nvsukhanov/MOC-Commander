@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
-import { CONTROL_SCHEME_V2_ACTIONS } from '@app/store';
+import { CONTROL_SCHEME_ACTIONS } from '@app/store';
 
 import { ControlSchemeEditForm, ControlSchemeEditFormComponent } from '../edit';
 import { RoutesBuilderService } from '../../routing';
@@ -28,7 +28,7 @@ export class ControlSchemeCreateComponent {
     public onSave(
         form: ControlSchemeEditForm
     ): void {
-        this.store.dispatch(CONTROL_SCHEME_V2_ACTIONS.create({
+        this.store.dispatch(CONTROL_SCHEME_ACTIONS.create({
             scheme: mapFormToModel(form)
         }));
         this.router.navigate(this.routesBuilderService.controlSchemesList);

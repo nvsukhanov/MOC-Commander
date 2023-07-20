@@ -21,10 +21,6 @@ export const HUBS_SELECTORS = {
     selectEntities: SELECT_HUBS_ENTITIES,
     selectIds: createSelector(HUBS_FEATURE.selectHubsState, HUBS_ENTITY_ADAPTER.getSelectors().selectIds),
     selectTotal: createSelector(HUBS_FEATURE.selectHubsState, HUBS_ENTITY_ADAPTER.getSelectors().selectTotal),
-    selectHubName: (hubId: string) => createSelector(
-        SELECT_HUBS_ENTITIES,
-        (hubEntities) => hubEntities[hubId]?.name
-    ),
     selectHub: (hubId: string) => createSelector(SELECT_HUBS_ENTITIES, (state) => state[hubId]),
     selectIsDiscovering: createSelector(
         HUBS_FEATURE.selectDiscoveryState,

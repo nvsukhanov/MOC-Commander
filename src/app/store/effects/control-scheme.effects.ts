@@ -4,20 +4,20 @@ import { tap } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { RoutesBuilderService } from '../../routing';
-import { CONTROL_SCHEME_V2_ACTIONS } from '../actions';
+import { CONTROL_SCHEME_ACTIONS } from '../actions';
 
 @Injectable()
 export class ControlSchemeEffects {
     public readonly schemeCreated$ = createEffect(() => {
         return this.actions$.pipe(
-            ofType(CONTROL_SCHEME_V2_ACTIONS.create),
+            ofType(CONTROL_SCHEME_ACTIONS.create),
             tap((action) => this.router.navigate(this.routesBuilderService.controlSchemeView(action.scheme.id))),
         );
     }, { dispatch: false });
 
     public readonly schemeUpdated$ = createEffect(() => {
         return this.actions$.pipe(
-            ofType(CONTROL_SCHEME_V2_ACTIONS.update),
+            ofType(CONTROL_SCHEME_ACTIONS.update),
             tap((action) => this.router.navigate(this.routesBuilderService.controlSchemeView(action.scheme.id))),
         );
     }, { dispatch: false });
