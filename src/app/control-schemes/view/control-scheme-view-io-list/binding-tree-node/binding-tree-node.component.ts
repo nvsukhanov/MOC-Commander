@@ -20,7 +20,7 @@ import { ControllerL10nInputNamePipe } from '../../../controller-l10n-input-name
 import { ControllerL10nNamePipe } from '../../../controller-l10n-name.pipe';
 import { BindingTreeNodeViewModel } from './binding-tree-nove-view-model';
 import { SINGLE_INPUT_TREE_NODE_VIEW_MODEL_SELECTOR } from './single-input-tree-node-view-model.selector';
-import { FullControllerInputNameComponent } from '../../../shared';
+import { FullControllerInputNameComponent } from '../../../full-controller-input-name';
 
 @Component({
     standalone: true,

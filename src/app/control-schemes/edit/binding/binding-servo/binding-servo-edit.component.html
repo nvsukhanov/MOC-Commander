@@ -1,0 +1,48 @@
+<ng-container *ngIf="form">
+    <app-controller-select [controllerIdFormControl]="form.controls.controllerId"
+                           [inputIdFormControl]="form.controls.inputId"
+                           [operationMode]="servoOperationMode"
+                           [inputTypeControl]="form.controls.inputType"
+                           [title]="'controlScheme.bindingGenericInputTitle' | transloco "
+    ></app-controller-select>
+
+    <ng-container *ngIf="form.controls.controllerId.valid && form.controls.inputId.valid">
+        <app-binding-toggle-control [translocoTitle]="'controlScheme.outputInvertControlTitle'"
+                                    [control]="form.controls.invert"
+        ></app-binding-toggle-control>
+
+        <button mat-raised-button
+                color="primary"
+                class="calibrate-button"
+                [disabled]="!(canCalibrate$ | ngrxPush)"
+                (click)="calibrate()"
+        >
+            <mat-icon [fontIcon]="'settings_suggest'"></mat-icon>
+            {{ 'controlScheme.servoOutputConfigurationCalibrate' | transloco }}
+        </button>
+
+        <app-output-config-slider-control [min]="-motorLimits.maxServoDegreesRange / 2"
+                                          [max]="motorLimits.maxServoDegreesRange / 2"
+                                          [control]="form.controls.aposCenter"
+                                          [translocoTitle]="'controlScheme.servoOutputConfigurationCenterOffset'"
+        ></app-output-config-slider-control>
+
+        <app-output-config-slider-control [min]="motorLimits.minServoDegreesRange"
+                                          [max]="motorLimits.maxServoDegreesRange"
+                                          [control]="form.controls.range"
+                                          [translocoTitle]="'controlScheme.servoOutputConfigurationAngleRange'"
+        ></app-output-config-slider-control>
+
+        <app-output-config-slider-control [min]="0"
+                                          [max]="motorLimits.maxSpeed"
+                                          [control]="form.controls.speed"
+                                          [translocoTitle]="'controlScheme.outputSpeedControlTitle'"
+        ></app-output-config-slider-control>
+
+        <app-output-config-slider-control [min]="motorLimits.minPower"
+                                          [max]="motorLimits.maxPower"
+                                          [control]="form.controls.power"
+                                          [translocoTitle]="'controlScheme.outputPowerControlTitle'"
+        ></app-output-config-slider-control>
+    </ng-container>
+</ng-container>

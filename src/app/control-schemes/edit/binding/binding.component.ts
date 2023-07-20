@@ -7,10 +7,10 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { ControlSchemeBindingForm } from '../types';
 import { BindingEditAvailableOperationModesModel } from '../../control-schemes-feature.selectors';
-import { OperationModeSelectComponent } from './operation-mode-select';
-import { HubSelectComponent } from './hub-select';
-import { IoSelectComponent } from './io-select';
-import { RenderBindingSpecificsDirective } from './render-binding-specifics.directive';
+import { RenderBindingDetailsEditDirective } from './render-binding-details-edit.directive';
+import { BindingControlSelectHubComponent } from './control-select-hub';
+import { BindingControlSelectOperationModeComponent } from './control-select-operation-mode';
+import { BindingControlSelectIoComponent } from './control-select-io';
 
 @Component({
     standalone: true,
@@ -23,11 +23,11 @@ import { RenderBindingSpecificsDirective } from './render-binding-specifics.dire
         IoOperationTypeToL10nKeyPipe,
         TranslocoModule,
         NgForOf,
-        OperationModeSelectComponent,
-        HubSelectComponent,
-        IoSelectComponent,
+        BindingControlSelectOperationModeComponent,
+        BindingControlSelectHubComponent,
+        BindingControlSelectIoComponent,
         MatButtonModule,
-        RenderBindingSpecificsDirective,
+        RenderBindingDetailsEditDirective,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

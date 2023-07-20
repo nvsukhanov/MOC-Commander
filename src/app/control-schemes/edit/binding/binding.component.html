@@ -1,21 +1,21 @@
 <mat-card>
     <mat-card-content *ngIf="binding" class="card-content">
-        <app-operation-mode-select [control]="binding.controls.bindingFormOperationMode"
-                                   [availabilityData]="availabilityData"
-        ></app-operation-mode-select>
+        <app-binding-select-operation-mode [control]="binding.controls.bindingFormOperationMode"
+                                           [availabilityData]="availabilityData"
+        ></app-binding-select-operation-mode>
 
-        <app-hub-select [control]="binding.controls[binding.controls.bindingFormOperationMode.value].controls.hubId"
-                        [operationMode]="binding.controls.bindingFormOperationMode.value"
-                        [availabilityData]="availabilityData"
-        ></app-hub-select>
+        <app-binding-select-hub [control]="binding.controls[binding.controls.bindingFormOperationMode.value].controls.hubId"
+                                [operationMode]="binding.controls.bindingFormOperationMode.value"
+                                [availabilityData]="availabilityData"
+        ></app-binding-select-hub>
 
-        <app-io-select [control]="binding.controls[binding.controls.bindingFormOperationMode.value].controls.portId"
-                       [operationMode]="binding.controls.bindingFormOperationMode.value"
-                       [hubId]="binding.controls[binding.controls.bindingFormOperationMode.value].controls.hubId.value"
-                       [availabilityData]="availabilityData"
-        ></app-io-select>
+        <app-binding-control-select-io [control]="binding.controls[binding.controls.bindingFormOperationMode.value].controls.portId"
+                                       [operationMode]="binding.controls.bindingFormOperationMode.value"
+                                       [hubId]="binding.controls[binding.controls.bindingFormOperationMode.value].controls.hubId.value"
+                                       [availabilityData]="availabilityData"
+        ></app-binding-control-select-io>
 
-        <div *appRenderBindingSpecifics="binding"></div>
+        <div *appRenderBindingDetailsEdit="binding"></div>
     </mat-card-content>
     <mat-card-actions [align]="'end'">
         <button mat-button
