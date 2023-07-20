@@ -2,7 +2,7 @@ import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { HubIoOperationMode } from '@app/shared';
 
 import { BaseTaskBuilder } from './base-task-builder';
-import { BindingLinearOutputState, ControlSchemeBinding, PortCommandTask, PortCommandTaskType, SetLinearSpeedTaskPayload } from '../../../models';
+import { ControlSchemeV2Binding, ControlSchemeV2LinearBinding, PortCommandTask, PortCommandTaskType, SetLinearSpeedTaskPayload } from '../../../models';
 
 export class SetSpeedTaskBuilder extends BaseTaskBuilder<SetLinearSpeedTaskPayload> {
     private readonly speedStep = 5;
@@ -10,55 +10,54 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder<SetLinearSpeedTaskPaylo
     private readonly speedSnapThreshold = 10;
 
     protected buildPayload(
-        binding: ControlSchemeBinding,
+        binding: ControlSchemeV2Binding,
         inputValue: number,
         motorEncoderOffset: number,
         lastExecutedTask: PortCommandTask | null
     ): SetLinearSpeedTaskPayload | null {
-        if (binding.output.operationMode !== HubIoOperationMode.Linear) {
+        if (binding.operationMode !== HubIoOperationMode.Linear) {
             return null;
         }
 
-        if (binding.output.linearConfig.isToggle) {
+        if (binding.isToggle) {
             if (inputValue === 0) {
                 return null;
             }
-            return this.createTogglePayload(binding.id, binding.output, lastExecutedTask);
+            return this.createTogglePayload(binding, lastExecutedTask);
         }
 
         const targetSpeed = this.calculateSpeed(
             inputValue,
-            binding.output.linearConfig.maxSpeed,
-            binding.output.linearConfig.invert,
+            binding.maxSpeed,
+            binding.invert,
         );
 
         return {
             taskType: PortCommandTaskType.SetSpeed,
             speed: targetSpeed,
-            power: this.calculatePower(targetSpeed, binding.output.linearConfig.power),
+            power: this.calculatePower(targetSpeed, binding.power),
             activeInput: inputValue !== 0,
         };
     }
 
     private createTogglePayload(
-        bindingId: string,
-        outputConfig: BindingLinearOutputState,
+        binding: ControlSchemeV2LinearBinding,
         lastExecutedTask: PortCommandTask | null
     ): SetLinearSpeedTaskPayload | null {
         let shouldActivate: boolean;
 
-        if (lastExecutedTask?.bindingId === bindingId) {
+        if (lastExecutedTask?.bindingId === binding.id) {
             shouldActivate = (lastExecutedTask.payload as SetLinearSpeedTaskPayload).speed === 0;
         } else {
             shouldActivate = true;
         }
 
         if (shouldActivate) {
-            const speed = this.calculateSpeed(1, outputConfig.linearConfig.maxSpeed, outputConfig.linearConfig.invert);
+            const speed = this.calculateSpeed(1, binding.maxSpeed, binding.invert);
             return {
                 taskType: PortCommandTaskType.SetSpeed,
                 speed,
-                power: this.calculatePower(speed, outputConfig.linearConfig.power),
+                power: this.calculatePower(speed, binding.power),
                 activeInput: true,
             };
         }
@@ -66,7 +65,7 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder<SetLinearSpeedTaskPaylo
         return {
             taskType: PortCommandTaskType.SetSpeed,
             speed: 0,
-            power: this.calculatePower(0, outputConfig.linearConfig.power),
+            power: this.calculatePower(0, binding.power),
             activeInput: true,
         };
     }

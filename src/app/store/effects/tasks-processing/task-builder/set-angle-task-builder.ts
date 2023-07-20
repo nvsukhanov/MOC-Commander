@@ -1,17 +1,16 @@
 import { HubIoOperationMode } from '@app/shared';
 
 import { BaseTaskBuilder } from './base-task-builder';
-import { ControlSchemeBinding, PortCommandTaskType, SetAngleTaskPayload } from '../../../models';
+import { ControlSchemeV2Binding, PortCommandTaskType, SetAngleTaskPayload } from '../../../models';
 
 export class SetAngleTaskBuilder extends BaseTaskBuilder<SetAngleTaskPayload> {
     private readonly inputValueThreshold = 0.5;
 
     protected buildPayload(
-        binding: ControlSchemeBinding,
+        binding: ControlSchemeV2Binding,
         inputValue: number
     ): SetAngleTaskPayload | null {
-        const outputConfig = binding.output;
-        if (outputConfig.operationMode !== HubIoOperationMode.SetAngle) {
+        if (binding.operationMode !== HubIoOperationMode.SetAngle) {
             return null;
         }
         if (inputValue < this.inputValueThreshold) {
@@ -19,10 +18,10 @@ export class SetAngleTaskBuilder extends BaseTaskBuilder<SetAngleTaskPayload> {
         }
         return {
             taskType: PortCommandTaskType.SetAngle,
-            angle: outputConfig.setAngleConfig.angle,
-            speed: outputConfig.setAngleConfig.speed,
-            power: outputConfig.setAngleConfig.power,
-            endState: outputConfig.setAngleConfig.endState,
+            angle: binding.angle,
+            speed: binding.speed,
+            power: binding.power,
+            endState: binding.endState,
         };
     }
 }

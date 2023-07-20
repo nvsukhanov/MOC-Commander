@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { Observable, combineLatest, of, startWith, switchMap } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { CONTROL_SCHEME_ACTIONS } from '@app/store';
+import { CONTROL_SCHEME_V2_ACTIONS } from '@app/store';
 import { HubIoOperationMode } from '@app/shared';
 
 import { ControllerSelectComponent, OutputConfigSliderControlComponent, OutputConfigToggleControlComponent } from '../controls';
@@ -85,7 +85,7 @@ export class ServoOutputConfigurationEditComponent implements IBindingsSpecifics
                 });
             }
             if (result.type === CalibrationResultType.error) {
-                this.store.dispatch(CONTROL_SCHEME_ACTIONS.servoCalibrationError({ error: result.error }));
+                this.store.dispatch(CONTROL_SCHEME_V2_ACTIONS.servoCalibrationError({ error: result.error }));
             }
         });
     }

@@ -2,26 +2,25 @@ import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 import { HubIoOperationMode, getTranslationArcs } from '@app/shared';
 
 import { BaseTaskBuilder } from './base-task-builder';
-import { ControlSchemeBinding, PortCommandTaskType, ServoTaskPayload } from '../../../models';
+import { ControlSchemeV2Binding, PortCommandTaskType, ServoTaskPayload } from '../../../models';
 
 export class ServoTaskBuilder extends BaseTaskBuilder<ServoTaskPayload> {
     private readonly snappingThreshold = 10;
 
     protected buildPayload(
-        binding: ControlSchemeBinding,
+        binding: ControlSchemeV2Binding,
         inputValue: number,
         motorEncoderOffset: number,
     ): ServoTaskPayload | null {
-        const outputConfig = binding.output;
-        if (outputConfig.operationMode !== HubIoOperationMode.Servo) {
+        if (binding.operationMode !== HubIoOperationMode.Servo) {
             return null;
         }
 
-        const translationPaths = getTranslationArcs(motorEncoderOffset, outputConfig.servoConfig.aposCenter);
+        const translationPaths = getTranslationArcs(motorEncoderOffset, binding.aposCenter);
         const resultingCenter = translationPaths.cw < translationPaths.ccw ? translationPaths.cw : -translationPaths.ccw;
 
-        const arcSize = outputConfig.servoConfig.range;
-        const arcPosition = inputValue * arcSize / 2 * (outputConfig.servoConfig.invert ? -1 : 1);
+        const arcSize = binding.range;
+        const arcPosition = inputValue * arcSize / 2 * (binding.invert ? -1 : 1);
 
         const targetAngle = arcPosition + resultingCenter;
         const minAngle = resultingCenter - arcSize / 2;
@@ -32,8 +31,8 @@ export class ServoTaskBuilder extends BaseTaskBuilder<ServoTaskPayload> {
         return {
             taskType: PortCommandTaskType.Servo,
             angle: Math.round(snappedAngle),
-            speed: Math.round(outputConfig.servoConfig.speed),
-            power: outputConfig.servoConfig.power,
+            speed: Math.round(binding.speed),
+            power: binding.power,
             endState: MotorServoEndState.hold,
         };
     }
