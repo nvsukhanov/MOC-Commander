@@ -63,8 +63,9 @@ $theme-dark: mat.define-dark-theme((
 
 $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
 
-.light-theme {
+.theme-light {
     --app-accent-color: #{mat.get-color-from-palette($light-accent-palette, 500)};
+    --app-disabled-color: rgba(0, 0, 0, 0.38);
 }
 
 .theme-dark {
@@ -72,6 +73,8 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
     @include mat.all-component-colors($theme-dark);
 
     --app-accent-color: #{mat.get-color-from-palette($dark-accent-palette, 500)};
+    --app-disabled-color: rgba(255, 255, 255, 0.5);
+
     --mdc-theme-primary: #{$light-primary-text};
     --mdc-theme-text-primary-on-background: #{$light-primary-text};
 

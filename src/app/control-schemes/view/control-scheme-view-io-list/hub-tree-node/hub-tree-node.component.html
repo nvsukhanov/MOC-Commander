@@ -1,5 +1,6 @@
 <ng-container *ngIf="hub">
     <app-hub-inline-view [name]="hub.name"
+                         [hubId]="hub.hubId"
                          [batteryLevel]="hub.batteryLevel"
                          [rssiLevel]="hub.rssi"
                          [isButtonPressed]="hub.isButtonPressed"

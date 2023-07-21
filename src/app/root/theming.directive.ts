@@ -20,4 +20,9 @@ export class ThemingDirective {
         this.useDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
         overlayContainer.getContainerElement().classList.add(this.useDarkTheme ? 'theme-dark' : 'theme-light');
     }
+
+    @HostBinding('class.theme-light')
+    public get useLightTheme(): boolean {
+        return !this.useDarkTheme;
+    }
 }

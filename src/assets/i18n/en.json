@@ -27,7 +27,7 @@
     "cancel": "Cancel",
     "view": "View",
     "disconnect": "Disconnect",
-    "forget": "Forget hub",
+    "forget": "Forget",
     "forgerHubNotificationConfirmationTitle": "Are you sure you want to forget this hub?",
     "forgerHubNotificationConfirmationContent": "Some control schemes may stop working. You can revert this action by connecting the hub again",
     "forgerHubNotificationConfirmationConfirmButtonTitle": "Forget",
