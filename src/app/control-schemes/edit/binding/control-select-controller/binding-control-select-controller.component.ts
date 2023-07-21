@@ -61,10 +61,22 @@ export class BindingControlSelectControllerComponent {
         );
         dialog.afterClosed().subscribe((result) => {
             if (result && this.controllerIdFormControl && this.inputIdFormControl && this.inputTypeControl) {
-                this.controllerIdFormControl.setValue(result.controllerId);
-                this.inputIdFormControl.setValue(result.inputId);
-                this.inputTypeControl.setValue(result.inputType);
-                this.cd.markForCheck();
+                if (this.controllerIdFormControl.value !== result.controllerId) {
+                    this.controllerIdFormControl.markAsTouched();
+                    this.controllerIdFormControl.markAsDirty();
+                    this.controllerIdFormControl.setValue(result.controllerId);
+                }
+                if (this.inputIdFormControl.value !== result.inputId) {
+                    this.inputIdFormControl.markAsTouched();
+                    this.inputIdFormControl.markAsDirty();
+                    this.inputIdFormControl.setValue(result.inputId);
+                }
+                if (this.inputTypeControl.value !== result.inputType) {
+                    this.inputTypeControl.markAsTouched();
+                    this.inputTypeControl.markAsDirty();
+                    this.inputTypeControl.setValue(result.inputType);
+                }
+                this.cd.detectChanges();
             }
         });
     }
