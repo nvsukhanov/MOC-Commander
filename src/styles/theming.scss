@@ -33,10 +33,18 @@ $dark-palette: (
     )
 );
 
+$dark-accent-palette: mat.$deep-purple-palette;
+$dark-warn-palette: mat.$red-palette;
+
+$light-palette: mat.$deep-purple-palette;
+$light-accent-palette: mat.$amber-palette;
+$light-warn-palette: mat.$red-palette;
+
 $theme-light: mat.define-light-theme((
     color: (
-        primary: mat.define-palette(mat.$deep-purple-palette),
-        accent: mat.define-palette(mat.$amber-palette),
+        primary: mat.define-palette($light-palette),
+        accent: mat.define-palette($light-accent-palette),
+        warn: mat.define-palette($light-warn-palette),
     ),
     typography: $typography,
     density: 0
@@ -45,8 +53,8 @@ $theme-light: mat.define-light-theme((
 $theme-dark: mat.define-dark-theme((
     color: (
         primary: mat.define-palette($dark-palette, 700, 600, 900),
-        accent: mat.define-palette(mat.$deep-purple-palette, 800, 700, 900),
-        warn: mat.define-palette(mat.$red-palette),
+        accent: mat.define-palette($dark-accent-palette, 800, 700, 900),
+        warn: mat.define-palette($dark-warn-palette),
     ),
 ));
 
@@ -55,16 +63,24 @@ $theme-dark: mat.define-dark-theme((
 
 $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
 
+.light-theme {
+    --app-accent-color: #{mat.get-color-from-palette($light-accent-palette, 500)};
+}
+
 .theme-dark {
     @include mat.core-color($theme-dark);
     @include mat.all-component-colors($theme-dark);
 
+    --app-accent-color: #{mat.get-color-from-palette($dark-accent-palette, 500)};
     --mdc-theme-primary: #{$light-primary-text};
     --mdc-theme-text-primary-on-background: #{$light-primary-text};
 
     .mat-mdc-slider.mat-primary {
         --mdc-slider-active-track-color: #{mat.get-color-from-palette($dark-palette, 200)};
         --mdc-slider-inactive-track-color: #{mat.get-color-from-palette($dark-palette, 300)};
+        --mdc-slider-handle-color: #{mat.get-color-from-palette($dark-palette, 100)};
+        --mdc-slider-focus-handle-color: #{mat.get-color-from-palette($dark-palette, 100)};
+        --mdc-slider-hover-handle-color: #{mat.get-color-from-palette($dark-palette, 100)};
     }
 
     &.mat-app-background {

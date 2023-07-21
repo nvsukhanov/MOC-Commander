@@ -1,20 +1,9 @@
 <ng-container *ngIf="viewModel$ | ngrxPush; let viewModel">
     <div class="binding__general-info">
-        <mat-icon class="binding__activity-indicator"
-                  [class.binding__activity-indicator_inactive]="!viewModel.isActive"
-                  [fontIcon]="'keyboard_double_arrow_right'"
-                  [color]="'accent'"
-        ></mat-icon>
-
-        <mat-icon class="binding__operation-type_capabilities-mismatch-icon"
-                  [class.binding__operation-type_capabilities-mismatch-icon_hidden]="!viewModel.ioHasNoRequiredCapabilities"
-                  [fontIcon]="'error'"
-                  [title]="'controlScheme.ioCapabilitiesMismatch' | transloco"
-                  [color]="'warn'"
-        ></mat-icon>
-
         <ng-container *ngIf="!viewModel.ioHasNoRequiredCapabilities; else ioCapabilitiesMismatch">
-            <div class="binding__operation-type">
+            <div class="binding__operation-type"
+                 [class.binding__operation-type_active]="viewModel.isActive"
+            >
                 {{ viewModel.operationMode | ioOperationTypeToL10nKey | transloco }}
             </div>
         </ng-container>
@@ -29,14 +18,12 @@
     </div>
     <ng-container *ngFor="let controlData of viewModel.controlData">
         <div class="binding__controls">
-            <app-not-connected-inline-icon class="binding__controls-connection-state"
-                                           [class.binding__controls-connection-state_connected]="controlData.isControllerConnected"
-                                           [notification]="'controller.isNotConnectedInlineNotification' | transloco"
-            ></app-not-connected-inline-icon>
             <app-full-controller-input-name class="binding__controls-label"
+                                            [class.binding__controls-label_disconnected]="!controlData.isControllerConnected"
                                             [controllerId]="controlData.controllerId"
                                             [inputId]="controlData.inputId"
                                             [inputType]="controlData.inputType"
+                                            [showDisconnectedState]="true"
             ></app-full-controller-input-name>
         </div>
     </ng-container>

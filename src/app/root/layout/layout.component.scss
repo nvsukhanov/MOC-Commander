@@ -12,13 +12,13 @@
     overflow: hidden;
 }
 
-$content-padding: 20px;
+$content-padding: 10px;
 
 .content {
     width: 100%;
     flex-grow: 1;
     overflow: hidden;
-    padding-top: $content-padding;
+    padding: $content-padding 0;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
