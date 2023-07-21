@@ -3,7 +3,6 @@ export * from './keyboard';
 export * from './attached-ios.effects';
 export * from './control-scheme.effects';
 export * from './tasks-processing';
-export * from './controller-input-capture.effects';
 export * from './hub-attached-ios-state.effects';
 export * from './attached-io-modes.effects';
 export * from './hub-port-mode-info-effects';

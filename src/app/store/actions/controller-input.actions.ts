@@ -7,8 +7,6 @@ export const CONTROLLER_INPUT_ACTIONS = createActionGroup({
     events: {
         'request input capture': emptyProps(),
         'release input capture': emptyProps(),
-        'input capturing': emptyProps(),
-        'input capture released': emptyProps(),
         'input received': props<ControllerInputModel>()
     }
 });
