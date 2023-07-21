@@ -1,15 +1,11 @@
-<p class="name"
-   appEllipsisTitle
->
-    {{ name }}
-</p>
-
-<a mat-button
-   class="view-button"
-   [routerLink]="schemeViewHref"
->
-    {{ 'controlScheme.view' | transloco }}
-</a>
+<div class="name">
+    <a mat-button
+       appEllipsisTitle
+       [routerLink]="schemeViewHref"
+    >
+        {{ name }}
+    </a>
+</div>
 
 <a mat-button
    class="edit-button"

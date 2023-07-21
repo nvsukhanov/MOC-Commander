@@ -1,9 +1,9 @@
 <ng-container *ngIf="controllerIdFormControl && inputIdFormControl && inputTypeControl">
     <div *ngIf="controllerIdFormControl.valid && inputIdFormControl.valid && inputTypeControl.valid; else assignControl"
          class="control-info">
-        <div class="title">
+        <mat-label class="title">
             {{ title }}:
-        </div>
+        </mat-label>
         <app-full-controller-input-name class="control-info__control-name"
                                         [controllerId]="controllerIdFormControl.value"
                                         [inputId]="inputIdFormControl.value"

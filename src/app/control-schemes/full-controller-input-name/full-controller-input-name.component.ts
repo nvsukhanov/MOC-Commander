@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
 import { ControllerInputType } from '@app/shared';
 import { Store } from '@ngrx/store';
-import { NEVER, Observable, filter, map, switchMap } from 'rxjs';
-import { CONTROLLER_SELECTORS, ControllerModel } from '@app/store';
-import { TranslocoService } from '@ngneat/transloco';
+import { NEVER, Observable, filter, map, of, switchMap } from 'rxjs';
+import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS, ControllerModel } from '@app/store';
+import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
+import { NgIf } from '@angular/common';
 
 import { ControllerProfileFactoryService } from '../../controller-profiles';
 
@@ -14,7 +15,9 @@ import { ControllerProfileFactoryService } from '../../controller-profiles';
     templateUrl: './full-controller-input-name.component.html',
     styleUrls: [ './full-controller-input-name.component.scss' ],
     imports: [
-        PushPipe
+        PushPipe,
+        NgIf,
+        TranslocoModule,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -25,15 +28,23 @@ export class FullControllerInputNameComponent implements OnChanges {
 
     @Input() public inputType?: ControllerInputType;
 
+    @Input() public showDisconnectedState = false;
+
     private _controllerName$: Observable<string> = NEVER;
 
     private _inputName$: Observable<string> = NEVER;
+
+    private _isConnected$: Observable<boolean> = of(true);
 
     constructor(
         private readonly store: Store,
         private readonly profileFactory: ControllerProfileFactoryService,
         private readonly translocoService: TranslocoService
     ) {
+    }
+
+    public get isConnected$(): Observable<boolean> {
+        return this._isConnected$;
     }
 
     public get controllerName$(): Observable<string> {
@@ -73,5 +84,11 @@ export class FullControllerInputNameComponent implements OnChanges {
                 return NEVER;
             })
         );
+
+        if (this.showDisconnectedState) {
+            this._isConnected$ = this.store.select(CONTROLLER_CONNECTION_SELECTORS.isConnected(this.controllerId));
+        } else {
+            this._isConnected$ = of(true);
+        }
     }
 }
