@@ -1,4 +1,5 @@
 <div class="port-name"
+     [class.port-name_not-connected]="!isConnected"
      appEllipsisTitle
 >
     {{ 'hub.port' | transloco: { portId } }}
@@ -6,17 +7,12 @@
 
 <div *ngIf="ioType"
      class="io-type"
+     [class.io-type_not-connected]="!isConnected"
      appEllipsisTitle
 >
-    {{ ioType | ioTypeToL10nKey | transloco }}
+    ({{ ioType | ioTypeToL10nKey | transloco }})
 </div>
 
 <ng-container *ngIf="!isConnected">
-    <mat-icon color="warn"
-              class="io-is-not-connected-notification"
-              [fontIcon]="'link_off'"
-              [title]="'io.ioIsNotConnectedInlineNotification' | transloco"
-    ></mat-icon>
-
     <span class="cdk-visually-hidden">{{ 'io.ioIsNotConnectedInlineNotification' | transloco }}</span>
 </ng-container>
