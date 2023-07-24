@@ -1,0 +1,22 @@
+<mat-card class="settings-card">
+    <mat-card-content>
+        <ul class="options__list">
+            <li class="option">
+                <span class="option__title">
+                    {{ 'settings.theme' | transloco }}
+                </span>
+                <span class="option__value">
+                                    <mat-button-toggle-group [value]="currentThemeSelection$ | ngrxPush"
+                                                             (valueChange)="onThemeChange($event)"
+                                                             [attr.aria-label]="'settings.theme' | transloco">
+                    <mat-button-toggle *ngFor="let theme of themes"
+                                       [value]="theme"
+                    >
+                        {{ theme | themeToL10nKey | transloco }}
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+                </span>
+            </li>
+        </ul>
+    </mat-card-content>
+</mat-card>

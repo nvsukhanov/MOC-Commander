@@ -11,3 +11,4 @@ export * from './port-tasks.model';
 export * from './port-command-task';
 export * from './controller-connection.model';
 export * from './control-scheme.model';
+export * from './settings.model';

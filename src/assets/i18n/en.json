@@ -17,7 +17,15 @@
     "controllersList": "Controllers",
     "hubsList": "Hubs",
     "controlSchemesList": "Control schemes",
-    "aboutPageButton": "About"
+    "navMenuAriaLabel": "Menu",
+    "aboutPageButton": "About",
+    "settingsPageButton": "Settings"
+  },
+  "settings": {
+    "theme": "Theme",
+    "themeSystem": "System",
+    "themeLight": "Light",
+    "themeDark": "Dark"
   },
   "hub": {
     "hub": "Hub",

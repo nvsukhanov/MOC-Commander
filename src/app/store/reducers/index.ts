@@ -12,3 +12,4 @@ export * from './attached-io-modes.reducer';
 export * from './attached-io-port-mode-info.reducer';
 export * from './controller-connection.reducer';
 export * from './control-scheme.reducer';
+export * from './settings.reducer';

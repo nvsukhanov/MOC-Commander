@@ -23,6 +23,7 @@ import {
     HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE,
     HUB_STATS_FEATURE,
     PORT_TASKS_FEATURE,
+    SETTINGS_FEATURE,
 } from './reducers';
 import {
     AttachedIOsEffects,
@@ -58,7 +59,8 @@ const REDUCERS: ActionReducerMap<IState> = {
     attachedIoPortModeInfo: ATTACHED_IO_PORT_MODE_INFO_FEATURE.reducer,
     hubEditFormActiveSaves: HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE.reducer,
     portTasks: PORT_TASKS_FEATURE.reducer,
-    router: routerReducer
+    router: routerReducer,
+    settings: SETTINGS_FEATURE.reducer
 };
 
 function localStorageSyncReducer(
@@ -73,6 +75,7 @@ function localStorageSyncReducer(
             { controlSchemes: [ 'ids', 'entities' ] },
             { attachedIoModes: [ 'ids', 'entities' ] },
             { attachedIoPortModeInfo: [ 'ids', 'entities' ] },
+            'settings'
         ], // TODO: add types for this
         rehydrate: true,
         storageKeySerializer: (key: string) => `${STORAGE_VERSION}/${key}`,

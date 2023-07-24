@@ -77,6 +77,16 @@
 
             <a mat-icon-button
                class="about-button"
+               [routerLink]="routesBuilderService.settings"
+               [routerLinkActive]="'active-link'"
+               [title]="'nav.settingsPageButton' | transloco"
+               [attr.aria-label]="'nav.settingsPageButton' | transloco"
+            >
+                <mat-icon [fontIcon]="'settings'"></mat-icon>
+            </a>
+
+            <a mat-icon-button
+               class="about-button"
                [routerLink]="routesBuilderService.about"
                [routerLinkActive]="'active-link'"
                [title]="'nav.aboutPageButton' | transloco"

@@ -1,0 +1,15 @@
+:host {
+    display: flex;
+    justify-content: center;
+}
+
+.settings-card {
+    max-width: 400px;
+    width: 100%;
+}
+
+.option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

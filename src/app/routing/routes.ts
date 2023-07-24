@@ -10,6 +10,7 @@ export const ROUTE_PATHS = {
     controlSchemeEdit: 'edit',
     about: 'about',
     bluetoothUnavailable: 'bluetooth-unavailable',
+    settings: 'settings'
 } as const;
 
 export const ROUTES: Routes = [
@@ -31,6 +32,11 @@ export const ROUTES: Routes = [
     {
         path: ROUTE_PATHS.controllers,
         loadComponent: () => import('../controllers/controllers-list').then(m => m.ControllersListComponent),
+        pathMatch: 'full'
+    },
+    {
+        path: ROUTE_PATHS.settings,
+        loadComponent: () => import('../settings').then((m) => m.SettingsComponent),
         pathMatch: 'full'
     },
     {

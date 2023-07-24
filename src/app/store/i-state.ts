@@ -15,6 +15,7 @@ import {
     HubStatsState,
     HubsState,
     PortTasksState,
+    SettingsState,
 } from './reducers';
 
 export interface IState {
@@ -33,6 +34,7 @@ export interface IState {
     hubEditFormActiveSaves: HubEditFormActiveSavesState;
     portTasks: PortTasksState;
     router: RouterState;
+    settings: SettingsState;
 }
 
 
