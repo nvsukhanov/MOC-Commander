@@ -45,6 +45,7 @@ export class ControlSchemeFormBuilderService {
             [HubIoOperationMode.Stepper]: this.stepperOutputControlFormBuilder.build(),
         });
         if (initialState) {
+            form.controls.bindingFormOperationMode.setValue(initialState.operationMode);
             switch (initialState.operationMode) {
                 case HubIoOperationMode.Linear:
                     form.get(HubIoOperationMode.Linear)?.patchValue(initialState);
