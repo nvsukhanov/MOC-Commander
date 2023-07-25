@@ -4,11 +4,15 @@ import { ControlSchemeBinding, PortCommandTask } from '../../models';
 import { taskBuilderFactory } from './task-builder';
 
 export interface ITaskBuilder {
-    build(
+    buildTask(
         binding: ControlSchemeBinding,
         inputValue: number,
         motorEncoderOffset: number,
         previousTask: PortCommandTask | null
+    ): PortCommandTask | null;
+
+    buildCleanupTask(
+        previousTask: PortCommandTask
     ): PortCommandTask | null;
 }
 

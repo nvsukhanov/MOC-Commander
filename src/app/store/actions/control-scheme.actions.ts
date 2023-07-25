@@ -11,6 +11,7 @@ export const CONTROL_SCHEME_ACTIONS = createActionGroup({
 
         'start scheme': props<{ schemeId: string }>(),
         'stop scheme': emptyProps(),
+        'scheme stopped': emptyProps(),
 
         'servo calibration error': props<{ error: Error }>(),
     }

@@ -1,4 +1,4 @@
-import { EntityState, createEntityAdapter } from '@ngrx/entity';
+import { EntityState, Update, createEntityAdapter } from '@ngrx/entity';
 import { createFeature, createReducer, on } from '@ngrx/store';
 
 import { PortTasksModel } from '../models';
@@ -49,6 +49,23 @@ export const PORT_TASKS_FEATURE = createFeature({
                 lastExecutedTask: task,
             }, state);
         }),
-        on(CONTROL_SCHEME_ACTIONS.stopScheme, () => PORT_TASKS_ENTITY_ADAPTER.getInitialState()),
+        on(CONTROL_SCHEME_ACTIONS.stopScheme, (state) => {
+            return PORT_TASKS_ENTITY_ADAPTER.updateMany(
+                state.ids.map((id) => {
+                    const entity = state.entities[id];
+                    if (!entity) {
+                        return null;
+                    }
+                    return {
+                        id,
+                        changes: {
+                            queue: [],
+                        } as Partial<PortTasksModel>,
+                    };
+                }).filter((update): update is Update<PortTasksModel> => !!update),
+                state
+            );
+        }),
+        on(CONTROL_SCHEME_ACTIONS.schemeStopped, () => PORT_TASKS_ENTITY_ADAPTER.getInitialState()),
     ),
 });
