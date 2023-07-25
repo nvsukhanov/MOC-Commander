@@ -5,7 +5,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
-import { Observable, combineLatest, of, startWith, switchMap } from 'rxjs';
+import { Observable, combineLatest, map, of, startWith, switchMap } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CONTROL_SCHEME_ACTIONS } from '@app/store';
@@ -98,9 +98,11 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
         if (form !== this._form) {
             const hubId$ = form.controls.hubId.valueChanges.pipe(
                 startWith(form.controls.hubId.value),
+                map(() => form.controls.hubId.value),
             );
             const portId$ = form.controls.portId.valueChanges.pipe(
                 startWith(form.controls.portId.value),
+                map(() => form.controls.portId.value),
             );
 
             this._canCalibrate$ = combineLatest([
