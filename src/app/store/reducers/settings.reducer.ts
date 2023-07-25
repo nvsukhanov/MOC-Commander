@@ -9,6 +9,6 @@ export const SETTINGS_FEATURE = createFeature({
     name: 'settings',
     reducer: createReducer(
         { theme: UserSelectedTheme.System } as SettingsState,
-        on(SETTINGS_ACTIONS.setTheme, (state, { theme }) => ({ ...state, theme }))
+        on(SETTINGS_ACTIONS.setTheme, (state, { theme }): SettingsState => ({ ...state, theme }))
     )
 });
