@@ -35,7 +35,7 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
             }, state);
         }),
         on(CONTROL_SCHEME_ACTIONS.startScheme, (state, { schemeId }): ControlSchemeState => ({ ...state, runningSchemeId: schemeId })),
-        on(CONTROL_SCHEME_ACTIONS.stopScheme, (state): ControlSchemeState => ({ ...state, runningSchemeId: null })),
+        on(CONTROL_SCHEME_ACTIONS.schemeStopped, (state): ControlSchemeState => ({ ...state, runningSchemeId: null })),
         on(CONTROL_SCHEME_ACTIONS.delete, (state, action): ControlSchemeState => CONTROL_SCHEME_ENTITY_ADAPTER.removeOne(action.id, state)),
     ),
 });

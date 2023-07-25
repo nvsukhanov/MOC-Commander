@@ -1,9 +1,9 @@
 import { HubIoOperationMode } from '@app/shared';
 
 import { BaseTaskBuilder } from './base-task-builder';
-import { ControlSchemeBinding, PortCommandTaskType, SetAngleTaskPayload } from '../../../models';
+import { ControlSchemeBinding, PortCommandTask, PortCommandTaskPayload, PortCommandTaskType, SetAngleTaskPayload } from '../../../models';
 
-export class SetAngleTaskBuilder extends BaseTaskBuilder<SetAngleTaskPayload> {
+export class SetAngleTaskBuilder extends BaseTaskBuilder {
     private readonly inputValueThreshold = 0.5;
 
     protected buildPayload(
@@ -22,6 +22,20 @@ export class SetAngleTaskBuilder extends BaseTaskBuilder<SetAngleTaskPayload> {
             speed: binding.speed,
             power: binding.power,
             endState: binding.endState,
+        };
+    }
+
+    protected buildCleanupPayload(
+        previousTask: PortCommandTask
+    ): PortCommandTaskPayload | null {
+        if (previousTask.payload.taskType !== PortCommandTaskType.SetAngle) {
+            return null;
+        }
+        return {
+            taskType: PortCommandTaskType.SetSpeed,
+            speed: 0,
+            power: 0,
+            activeInput: false
         };
     }
 }

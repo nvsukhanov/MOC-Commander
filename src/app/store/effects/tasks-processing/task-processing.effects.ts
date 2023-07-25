@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
 import { Action, Store } from '@ngrx/store';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { Observable, filter, from, map, mergeMap, switchMap, takeUntil } from 'rxjs';
+import { Observable, filter, forkJoin, from, map, mergeMap, of, switchMap, takeUntil } from 'rxjs';
 
 import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, PORT_TASKS_ACTIONS } from '../../actions';
 import { BindingTaskComposingData, CONTROL_SCHEME_SELECTORS, PORT_TASKS_SELECTORS } from '../../selectors';
-import { ControlSchemeBinding, PortCommandTask } from '../../models';
+import { ControlSchemeBinding, ControlSchemeModel, PortCommandTask } from '../../models';
 import { attachedIosIdFn } from '../../reducers';
 import { HubStorageService } from '../../hub-storage.service';
 import { taskFilter } from './task-filter';
@@ -17,11 +17,13 @@ import { ITaskRunner, TASK_RUNNER } from './i-task-runner';
 export class TaskProcessingEffects {
     public readonly composeTasks$ = createEffect(() => {
         return this.actions.pipe(
-            ofType(CONTROL_SCHEME_ACTIONS.startScheme),
-            concatLatestFrom((action) => this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(action.schemeId))),
-            filter((scheme) => !!scheme),
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            switchMap(([ , scheme ]) => from(this.groupBindingsByHubsPortId(scheme!.bindings))),
+            ofType(CONTROL_SCHEME_ACTIONS.startScheme, CONTROL_SCHEME_ACTIONS.stopScheme),
+            switchMap((action) => action.type === CONTROL_SCHEME_ACTIONS.startScheme.type
+                                  ? this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(action.schemeId))
+                                  : of(null)
+            ),
+            filter((scheme): scheme is ControlSchemeModel => !!scheme),
+            switchMap((scheme) => from(this.groupBindingsByHubsPortId(scheme.bindings))),
             mergeMap((groupedBindings) => this.getTaskComposingData$(groupedBindings)),
             map((composingData) => ({
                 hubId: composingData.hubId,
@@ -47,6 +49,30 @@ export class TaskProcessingEffects {
         ) as Observable<Action>;
     });
 
+    public readonly onSchemeStop$ = createEffect(() => {
+        return this.actions.pipe(
+            ofType(CONTROL_SCHEME_ACTIONS.stopScheme),
+            concatLatestFrom(() => this.store.select(CONTROL_SCHEME_SELECTORS.selectRunningScheme)),
+            map(([ , runningScheme ]) => runningScheme),
+            filter((runningScheme): runningScheme is ControlSchemeModel => !!runningScheme),
+            map((scheme) => this.getUniqueHubPorts(scheme.bindings)),
+            concatLatestFrom((uniquePortIds) => uniquePortIds.map(({ hubId, portId }) =>
+                this.store.select(PORT_TASKS_SELECTORS.selectLastExecutedTask({ hubId, portId })))
+            ),
+            map(([ , ...lastExecutedTasks ]) => {
+                return lastExecutedTasks
+                    .filter((lastExecutedTask): lastExecutedTask is PortCommandTask => !!lastExecutedTask)
+                    .map((lastExecutedTask) => this.taskBuilder.buildCleanupTask(lastExecutedTask))
+                    .filter((cleanupTask): cleanupTask is PortCommandTask => !!cleanupTask);
+            }),
+            switchMap((cleanupTasks) => cleanupTasks.length === 0
+                                        ? of(null)
+                                        : forkJoin(cleanupTasks.map((task) => this.taskRunner.runTask(task, this.hubStorage.get(task.hubId))))
+            ),
+            map(() => CONTROL_SCHEME_ACTIONS.schemeStopped())
+        ) as Observable<Action>;
+    });
+
     public readonly markTaskForRunning$ = createEffect(() => {
         return this.actions.pipe(
             ofType(PORT_TASKS_ACTIONS.updateQueue, PORT_TASKS_ACTIONS.taskExecuted),
@@ -61,9 +87,9 @@ export class TaskProcessingEffects {
             concatLatestFrom(({ hubId, portId }) => this.store.select(PORT_TASKS_SELECTORS.selectRunningTask({ hubId, portId }))),
             filter(([ , runningTask ]) => !runningTask),
             concatLatestFrom(([ { hubId, portId } ]) => this.store.select(PORT_TASKS_SELECTORS.selectFirstItemInQueue({ hubId, portId }))),
-            filter(([ , taskToRun ]) => !!taskToRun),
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            map(([ , taskToRun ]) => PORT_TASKS_ACTIONS.runTask({ task: taskToRun! })),
+            map(([ , task ]) => task),
+            filter((task): task is PortCommandTask => !!task),
+            map((task) => PORT_TASKS_ACTIONS.runTask({ task: task })),
         );
     });
 
@@ -84,6 +110,22 @@ export class TaskProcessingEffects {
         @Inject(TASK_RUNNER) private readonly taskRunner: ITaskRunner,
         @Inject(TASK_QUEUE_COMPRESSOR) private readonly taskQueueCompressor: ITaskQueueCompressor
     ) {
+    }
+
+    private getUniqueHubPorts(
+        bindings: ControlSchemeBinding[]
+    ): Array<{ hubId: string; portId: number }> {
+        const knownHubPortIds = new Set<string>();
+        const result: Array<{ hubId: string; portId: number }> = [];
+        for (const binding of bindings) {
+            const ioIds = attachedIosIdFn(binding);
+            if (knownHubPortIds.has(ioIds)) {
+                continue;
+            }
+            result.push({ hubId: binding.hubId, portId: binding.portId });
+            knownHubPortIds.add(ioIds);
+        }
+        return result;
     }
 
     private groupBindingsByHubsPortId(
@@ -130,7 +172,7 @@ export class TaskProcessingEffects {
             || null;
 
         for (const { value, binding } of composingData.bindingWithValue) {
-            const task = this.taskBuilder.build(
+            const task = this.taskBuilder.buildTask(
                 binding,
                 value,
                 composingData.encoderOffset,

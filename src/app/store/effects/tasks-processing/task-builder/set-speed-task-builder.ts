@@ -2,9 +2,16 @@ import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { HubIoOperationMode } from '@app/shared';
 
 import { BaseTaskBuilder } from './base-task-builder';
-import { ControlSchemeBinding, ControlSchemeLinearBinding, PortCommandTask, PortCommandTaskType, SetLinearSpeedTaskPayload } from '../../../models';
+import {
+    ControlSchemeBinding,
+    ControlSchemeLinearBinding,
+    PortCommandTask,
+    PortCommandTaskPayload,
+    PortCommandTaskType,
+    SetLinearSpeedTaskPayload
+} from '../../../models';
 
-export class SetSpeedTaskBuilder extends BaseTaskBuilder<SetLinearSpeedTaskPayload> {
+export class SetSpeedTaskBuilder extends BaseTaskBuilder {
     private readonly speedStep = 5;
 
     private readonly speedSnapThreshold = 10;
@@ -37,6 +44,20 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder<SetLinearSpeedTaskPaylo
             speed: targetSpeed,
             power: this.calculatePower(targetSpeed, binding.power),
             activeInput: inputValue !== 0,
+        };
+    }
+
+    protected buildCleanupPayload(
+        previousTask: PortCommandTask
+    ): PortCommandTaskPayload | null {
+        if (previousTask.payload.taskType !== PortCommandTaskType.SetSpeed) {
+            return null;
+        }
+        return {
+            taskType: PortCommandTaskType.SetSpeed,
+            speed: 0,
+            power: 0,
+            activeInput: false
         };
     }
 

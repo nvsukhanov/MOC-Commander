@@ -2,9 +2,9 @@ import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 import { HubIoOperationMode, getTranslationArcs } from '@app/shared';
 
 import { BaseTaskBuilder } from './base-task-builder';
-import { ControlSchemeBinding, PortCommandTaskType, ServoTaskPayload } from '../../../models';
+import { ControlSchemeBinding, PortCommandTask, PortCommandTaskPayload, PortCommandTaskType, ServoTaskPayload } from '../../../models';
 
-export class ServoTaskBuilder extends BaseTaskBuilder<ServoTaskPayload> {
+export class ServoTaskBuilder extends BaseTaskBuilder {
     private readonly snappingThreshold = 10;
 
     protected buildPayload(
@@ -34,6 +34,20 @@ export class ServoTaskBuilder extends BaseTaskBuilder<ServoTaskPayload> {
             speed: Math.round(binding.speed),
             power: binding.power,
             endState: MotorServoEndState.hold,
+        };
+    }
+
+    protected buildCleanupPayload(
+        previousTask: PortCommandTask
+    ): PortCommandTaskPayload | null {
+        if (previousTask.payload.taskType !== PortCommandTaskType.Servo) {
+            return null;
+        }
+        return {
+            taskType: PortCommandTaskType.SetSpeed,
+            speed: 0,
+            power: 0,
+            activeInput: false
         };
     }
 

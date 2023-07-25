@@ -2,17 +2,21 @@ import { ITaskBuilder } from '../i-task-builder';
 import { ControlSchemeBinding, PortCommandTask, PortCommandTaskPayload } from '../../../models';
 import { payloadHash } from '../payload-hash';
 
-export abstract class BaseTaskBuilder<TPayload extends PortCommandTaskPayload> implements ITaskBuilder {
-    private next?: BaseTaskBuilder<PortCommandTaskPayload>;
+export abstract class BaseTaskBuilder implements ITaskBuilder {
+    private next?: BaseTaskBuilder;
 
     protected abstract buildPayload(
         binding: ControlSchemeBinding,
         inputValue: number,
         motorEncoderOffset: number,
         previousTaskPayload: PortCommandTask | null
-    ): TPayload | null;
+    ): PortCommandTaskPayload | null;
 
-    public build(
+    protected abstract buildCleanupPayload(
+        previousTask: PortCommandTask
+    ): PortCommandTaskPayload | null;
+
+    public buildTask(
         binding: ControlSchemeBinding,
         inputValue: number,
         motorEncoderOffset: number,
@@ -20,31 +24,56 @@ export abstract class BaseTaskBuilder<TPayload extends PortCommandTaskPayload> i
     ): PortCommandTask | null {
         const payload = this.buildPayload(binding, inputValue, motorEncoderOffset, lastExecutedTask);
         if (payload) {
+            return this.composeTask(binding, payload);
+        }
+        if (this.next) {
+            return this.next.buildTask(binding, inputValue, motorEncoderOffset, lastExecutedTask);
+        }
+        return null;
+    }
+
+    public buildCleanupTask(
+        previousTask: PortCommandTask
+    ): PortCommandTask | null {
+        const payload = this.buildCleanupPayload(previousTask);
+        if (payload) {
             return {
-                hubId: binding.hubId,
-                portId: binding.portId,
-                bindingId: binding.id,
+                ...previousTask,
                 payload,
-                hash: this.calculateHash(binding, payload)
+                hash: this.calculateHash(previousTask.hubId, previousTask.portId, payload)
             };
         }
         if (this.next) {
-            return this.next.build(binding, inputValue, motorEncoderOffset, lastExecutedTask);
+            return this.next.buildCleanupTask(previousTask);
         }
         return null;
     }
 
     public setNext(
-        next: BaseTaskBuilder<PortCommandTaskPayload>
-    ): BaseTaskBuilder<PortCommandTaskPayload> {
+        next: BaseTaskBuilder
+    ): BaseTaskBuilder {
         this.next = next;
         return next;
     }
 
     private calculateHash(
-        binding: ControlSchemeBinding,
-        payload: TPayload
+        hubId: string,
+        portId: number,
+        payload: PortCommandTaskPayload
     ): string {
-        return `${binding.hubId}/${binding.portId}/${payloadHash(payload)}`;
+        return `${hubId}/${portId}/${payloadHash(payload)}`;
+    }
+
+    private composeTask(
+        binding: ControlSchemeBinding,
+        payload: PortCommandTaskPayload
+    ): PortCommandTask {
+        return {
+            hubId: binding.hubId,
+            portId: binding.portId,
+            bindingId: binding.id,
+            payload,
+            hash: this.calculateHash(binding.hubId, binding.portId, payload)
+        };
     }
 }
