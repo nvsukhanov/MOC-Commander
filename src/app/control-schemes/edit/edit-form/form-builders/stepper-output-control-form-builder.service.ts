@@ -30,7 +30,9 @@ export class StepperOutputControlFormBuilderService {
             }),
             power: this.commonFormControlBuilder.powerControl(),
             speed: this.commonFormControlBuilder.speedControl(),
-            endState: this.commonFormControlBuilder.servoEndStateControl(MotorServoEndState.hold)
+            endState: this.commonFormControlBuilder.servoEndStateControl(MotorServoEndState.hold),
+            useAccelerationProfile: this.commonFormControlBuilder.toggleControl(),
+            useDecelerationProfile: this.commonFormControlBuilder.toggleControl()
         });
     }
 }

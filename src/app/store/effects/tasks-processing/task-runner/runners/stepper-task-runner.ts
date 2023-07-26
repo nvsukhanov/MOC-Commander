@@ -1,8 +1,9 @@
-import { IHub, MotorUseProfile, PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
+import { IHub, PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 import { Observable, last } from 'rxjs';
 
 import { TaskRunner } from '../task-runner';
 import { PortCommandTask, PortCommandTaskType } from '../../../../models';
+import { mapUseProfile } from '../map-use-profile';
 
 export class StepperTaskRunner extends TaskRunner {
     protected handle(
@@ -16,7 +17,7 @@ export class StepperTaskRunner extends TaskRunner {
                 {
                     speed: task.payload.speed,
                     power: task.payload.power,
-                    useProfile: MotorUseProfile.dontUseProfiles,
+                    useProfile: mapUseProfile(task.payload),
                     endState: task.payload.endState
                 }
             ).pipe(

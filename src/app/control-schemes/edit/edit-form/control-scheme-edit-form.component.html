@@ -1,23 +1,36 @@
-<mat-form-field>
-    <mat-label>{{ 'controlScheme.nameField' | transloco }}</mat-label>
-    <input type="text"
-           [formControl]="form.controls.name"
-           matInput
-    />
-</mat-form-field>
-
-<section *ngrxLet="bindingAvailabilityIoData$; let bindingAvailabilityIoData"
-         class="bindings-container"
-         [class.bindings-container__small-screen]="isSmallScreen$ | ngrxPush"
-         [class.bindings-container__xs-screen]="isXsScreen$ | ngrxPush"
->
-    <app-binding *ngFor="let binding of form.controls.bindings.controls; let idx = index"
-                 class="binding"
-                 [binding]="binding"
-                 [availabilityData]="bindingAvailabilityIoData"
-                 (deleteBinding)="deleteBindingAtIndex(idx)"
-    ></app-binding>
+<section class="general-scheme-props__container">
+    <mat-form-field class="general-scheme-props__item">
+        <mat-label>{{ 'controlScheme.nameField' | transloco }}</mat-label>
+        <input type="text"
+               [formControl]="form.controls.name"
+               matInput
+        />
+    </mat-form-field>
 </section>
+
+<ng-container *ngrxLet="bindingAvailabilityIoData$; let bindingAvailabilityIoData">
+    <section *ngIf="form.controls.hubConfigs.controls.length"
+             class="hub-configurations__container"
+    >
+        <app-control-scheme-hub-configuration *ngFor="let control of form.controls.hubConfigs.controls"
+                                              class="hub-configurations__item"
+                                              [configForm]="control"
+                                              [knownHubs]="knownHubs$ | ngrxPush"
+        ></app-control-scheme-hub-configuration>
+    </section>
+
+    <section class="bindings-container"
+             [class.bindings-container__small-screen]="isSmallScreen$ | ngrxPush"
+             [class.bindings-container__xs-screen]="isXsScreen$ | ngrxPush"
+    >
+        <app-binding *ngFor="let binding of form.controls.bindings.controls; let idx = index"
+                     class="binding"
+                     [binding]="binding"
+                     [availabilityData]="bindingAvailabilityIoData"
+                     (deleteBinding)="deleteBindingAtIndex(idx)"
+        ></app-binding>
+    </section>
+</ng-container>
 
 <ng-template #controlsTemplate>
     <button mat-raised-button

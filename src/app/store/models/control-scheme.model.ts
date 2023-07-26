@@ -1,6 +1,22 @@
 import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 
+export type ControlSchemeHubConfig = {
+    hubId: string;
+    useAccelerationProfile: boolean;
+    accelerationTimeMs: number;
+    useDecelerationProfile: boolean;
+    decelerationTimeMs: number;
+};
+
+export type AccelerationProfileMixin = {
+    useAccelerationProfile: boolean;
+};
+
+export type DecelerationProfileMixin = {
+    useDecelerationProfile: boolean;
+};
+
 export type ControlSchemeLinearBinding = {
     id: string;
     operationMode: HubIoOperationMode.Linear;
@@ -13,7 +29,7 @@ export type ControlSchemeLinearBinding = {
     isToggle: boolean;
     invert: boolean;
     power: number;
-};
+} & AccelerationProfileMixin & DecelerationProfileMixin;
 
 export type ControlSchemeServoBinding = {
     id: string;
@@ -28,7 +44,7 @@ export type ControlSchemeServoBinding = {
     speed: number;
     power: number;
     invert: boolean;
-};
+} & AccelerationProfileMixin & DecelerationProfileMixin;
 
 export type ControlSchemeSetAngleBinding = {
     id: string;
@@ -42,7 +58,7 @@ export type ControlSchemeSetAngleBinding = {
     speed: number;
     power: number;
     endState: MotorServoEndState;
-};
+} & AccelerationProfileMixin & DecelerationProfileMixin;
 
 export type ControlSchemeStepperBinding = {
     id: string;
@@ -56,7 +72,7 @@ export type ControlSchemeStepperBinding = {
     speed: number;
     power: number;
     endState: MotorServoEndState;
-};
+} & AccelerationProfileMixin & DecelerationProfileMixin;
 
 export type ControlSchemeBinding = ControlSchemeLinearBinding
     | ControlSchemeServoBinding
@@ -66,5 +82,6 @@ export type ControlSchemeBinding = ControlSchemeLinearBinding
 export type ControlSchemeModel = {
     id: string;
     name: string;
+    hubConfigurations: ControlSchemeHubConfig[];
     bindings: ControlSchemeBinding[];
 };

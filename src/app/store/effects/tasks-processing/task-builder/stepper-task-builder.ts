@@ -22,6 +22,8 @@ export class StepperTaskBuilder extends BaseTaskBuilder {
             speed: binding.speed,
             power: binding.power,
             endState: binding.endState,
+            useAccelerationProfile: binding.useAccelerationProfile,
+            useDecelerationProfile: binding.useDecelerationProfile
         };
     }
 
@@ -35,7 +37,9 @@ export class StepperTaskBuilder extends BaseTaskBuilder {
             taskType: PortCommandTaskType.SetSpeed,
             speed: 0,
             power: 0,
-            activeInput: false
+            activeInput: false,
+            useAccelerationProfile: previousTask.payload.useAccelerationProfile,
+            useDecelerationProfile: previousTask.payload.useDecelerationProfile
         };
     }
 }

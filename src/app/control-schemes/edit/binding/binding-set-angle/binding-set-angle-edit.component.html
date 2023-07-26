@@ -28,5 +28,13 @@
         <app-binding-control-output-end-state [control]="form.controls.endState"
                                               [translocoTitle]="'controlScheme.outputEndStateControlTitle'"
         ></app-binding-control-output-end-state>
+
+        <app-binding-toggle-control [translocoTitle]="'controlScheme.useAccelerationProfile'"
+                                    [control]="form.controls.useAccelerationProfile"
+        ></app-binding-toggle-control>
+
+        <app-binding-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'"
+                                    [control]="form.controls.useDecelerationProfile"
+        ></app-binding-toggle-control>
     </ng-container>
 </ng-container>

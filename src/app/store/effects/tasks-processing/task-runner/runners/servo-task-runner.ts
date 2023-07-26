@@ -1,8 +1,9 @@
-import { IHub, MotorUseProfile, PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
+import { IHub, PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 import { Observable } from 'rxjs';
 
 import { TaskRunner } from '../task-runner';
 import { PortCommandTask, PortCommandTaskType } from '../../../../models';
+import { mapUseProfile } from '../map-use-profile';
 
 export class ServoTaskRunner extends TaskRunner {
     protected handle(
@@ -16,7 +17,7 @@ export class ServoTaskRunner extends TaskRunner {
                 {
                     speed: task.payload.speed,
                     power: task.payload.power,
-                    useProfile: MotorUseProfile.dontUseProfiles
+                    useProfile: mapUseProfile(task.payload)
                 }
             );
         }

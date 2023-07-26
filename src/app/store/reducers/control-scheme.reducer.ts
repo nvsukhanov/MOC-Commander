@@ -22,6 +22,7 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
             return CONTROL_SCHEME_ENTITY_ADAPTER.addOne({
                 id: action.scheme.id,
                 name: action.scheme.name,
+                hubConfigurations: action.scheme.hubConfigurations,
                 bindings: action.scheme.bindings,
             }, state);
         }),
@@ -30,6 +31,7 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
                 id: action.scheme.id,
                 changes: {
                     name: action.scheme.name,
+                    hubConfigurations: action.scheme.hubConfigurations,
                     bindings: action.scheme.bindings,
                 }
             }, state);
