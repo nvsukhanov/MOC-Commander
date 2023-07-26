@@ -15,7 +15,8 @@ export class SetSpeedTaskRunner extends TaskRunner {
                 task.payload.speed,
                 {
                     power: task.payload.power,
-                    useProfile: MotorUseProfile.dontUseProfiles
+                    useProfile: MotorUseProfile.dontUseProfiles,
+                    noFeedback: true
                 }
             );
         }
