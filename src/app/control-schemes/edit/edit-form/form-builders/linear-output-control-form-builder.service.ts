@@ -24,7 +24,9 @@ export class LinearOutputControlFormBuilderService {
             maxSpeed: this.commonFormControlBuilder.speedControl(),
             isToggle: this.commonFormControlBuilder.toggleControl(),
             invert: this.commonFormControlBuilder.toggleControl(),
-            power: this.commonFormControlBuilder.powerControl()
+            power: this.commonFormControlBuilder.powerControl(),
+            useAccelerationProfile: this.commonFormControlBuilder.toggleControl(),
+            useDecelerationProfile: this.commonFormControlBuilder.toggleControl()
         });
     }
 }

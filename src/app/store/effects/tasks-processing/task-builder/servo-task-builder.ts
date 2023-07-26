@@ -34,6 +34,8 @@ export class ServoTaskBuilder extends BaseTaskBuilder {
             speed: Math.round(binding.speed),
             power: binding.power,
             endState: MotorServoEndState.hold,
+            useAccelerationProfile: binding.useAccelerationProfile,
+            useDecelerationProfile: binding.useDecelerationProfile
         };
     }
 
@@ -47,7 +49,9 @@ export class ServoTaskBuilder extends BaseTaskBuilder {
             taskType: PortCommandTaskType.SetSpeed,
             speed: 0,
             power: 0,
-            activeInput: false
+            activeInput: false,
+            useAccelerationProfile: previousTask.payload.useAccelerationProfile,
+            useDecelerationProfile: previousTask.payload.useDecelerationProfile
         };
     }
 

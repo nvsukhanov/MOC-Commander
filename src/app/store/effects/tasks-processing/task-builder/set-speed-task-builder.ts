@@ -44,6 +44,8 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
             speed: targetSpeed,
             power: this.calculatePower(targetSpeed, binding.power),
             activeInput: inputValue !== 0,
+            useAccelerationProfile: binding.useAccelerationProfile,
+            useDecelerationProfile: binding.useDecelerationProfile
         };
     }
 
@@ -57,7 +59,9 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
             taskType: PortCommandTaskType.SetSpeed,
             speed: 0,
             power: 0,
-            activeInput: false
+            activeInput: false,
+            useAccelerationProfile: previousTask.payload.useAccelerationProfile,
+            useDecelerationProfile: previousTask.payload.useDecelerationProfile
         };
     }
 
@@ -80,6 +84,8 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
                 speed,
                 power: this.calculatePower(speed, binding.power),
                 activeInput: true,
+                useAccelerationProfile: binding.useAccelerationProfile,
+                useDecelerationProfile: binding.useDecelerationProfile
             };
         }
 
@@ -88,6 +94,8 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
             speed: 0,
             power: this.calculatePower(0, binding.power),
             activeInput: true,
+            useAccelerationProfile: binding.useAccelerationProfile,
+            useDecelerationProfile: binding.useDecelerationProfile
         };
     }
 

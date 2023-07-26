@@ -12,6 +12,8 @@ export type SetLinearSpeedTaskPayload = {
     activeInput: boolean;
     speed: number;
     power: number;
+    useAccelerationProfile: boolean;
+    useDecelerationProfile: boolean;
 };
 
 export type ServoTaskPayload = {
@@ -20,6 +22,8 @@ export type ServoTaskPayload = {
     speed: number;
     power: number;
     endState: MotorServoEndState;
+    useAccelerationProfile: boolean;
+    useDecelerationProfile: boolean;
 };
 
 export type SetAngleTaskPayload = {
@@ -28,6 +32,8 @@ export type SetAngleTaskPayload = {
     speed: number;
     power: number;
     endState: MotorServoEndState;
+    useAccelerationProfile: boolean;
+    useDecelerationProfile: boolean;
 };
 
 export type StepperTaskPayload = {
@@ -36,6 +42,8 @@ export type StepperTaskPayload = {
     speed: number;
     power: number;
     endState: MotorServoEndState;
+    useAccelerationProfile: boolean;
+    useDecelerationProfile: boolean;
 };
 
 export type PortCommandTaskPayload = SetLinearSpeedTaskPayload

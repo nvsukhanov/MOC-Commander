@@ -1,5 +1,11 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { ControlSchemeLinearBinding, ControlSchemeServoBinding, ControlSchemeSetAngleBinding, ControlSchemeStepperBinding } from '@app/store';
+import {
+    ControlSchemeHubConfig,
+    ControlSchemeLinearBinding,
+    ControlSchemeServoBinding,
+    ControlSchemeSetAngleBinding,
+    ControlSchemeStepperBinding
+} from '@app/store';
 import { HubIoOperationMode, ToFormGroup } from '@app/shared';
 
 type BindingStateToFormGroup<T> = ToFormGroup<Omit<T, 'operationMode'>>;
@@ -17,8 +23,11 @@ export type ControlSchemeBindingForm = FormGroup<{
     [HubIoOperationMode.SetAngle]: SetAngleBindingForm;
 }>;
 
+export type ControlSchemeHubConfigForm = ToFormGroup<ControlSchemeHubConfig>;
+
 export type ControlSchemeEditForm = FormGroup<{
     id: FormControl<string>;
     name: FormControl<string>;
+    hubConfigs: FormArray<ControlSchemeHubConfigForm>;
     bindings: FormArray<ControlSchemeBindingForm>;
 }>;

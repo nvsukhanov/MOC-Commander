@@ -17,3 +17,27 @@
 .toolbar-button {
     margin-left: 10px;
 }
+
+.general-scheme-props {
+    &__container {
+        display: flex;
+        flex-flow: wrap;
+        gap: 0 20px;
+    }
+
+    &__item {
+        min-width: 300px;
+        max-width: 100%;
+        flex: 1;
+    }
+}
+
+.hub-configurations {
+    &__container {
+        margin-bottom: 20px;
+    }
+
+    &__item {
+        margin: 10px 0;
+    }
+}

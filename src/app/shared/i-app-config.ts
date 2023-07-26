@@ -7,6 +7,8 @@ export interface IAppConfig {
     readonly hubBatteryPollInterval: number;
     readonly hubRssiPollInterval: number;
     readonly logLevel: LogLevel;
+    readonly defaultAccelerationTimeMs: number;
+    readonly defaultDecelerationTimeMs: number;
 }
 
 export const APP_CONFIG = new InjectionToken<IAppConfig>('APP_CONFIG', {
@@ -15,7 +17,9 @@ export const APP_CONFIG = new InjectionToken<IAppConfig>('APP_CONFIG', {
         gamepadConnectionReadInterval: 100,
         hubBatteryPollInterval: 20000,
         hubRssiPollInterval: 10000,
-        logLevel: isDevMode() ? LogLevel.Debug : LogLevel.Warning
+        logLevel: isDevMode() ? LogLevel.Debug : LogLevel.Warning,
+        defaultAccelerationTimeMs: 1000,
+        defaultDecelerationTimeMs: 1000,
     }),
     providedIn: 'root'
 });

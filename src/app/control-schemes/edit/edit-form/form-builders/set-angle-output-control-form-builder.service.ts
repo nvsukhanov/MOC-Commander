@@ -27,7 +27,9 @@ export class SetAngleOutputControlFormBuilderService {
             }),
             speed: this.commonFormControlBuilder.speedControl(),
             power: this.commonFormControlBuilder.powerControl(),
-            endState: this.commonFormControlBuilder.servoEndStateControl()
+            endState: this.commonFormControlBuilder.servoEndStateControl(),
+            useAccelerationProfile: this.commonFormControlBuilder.toggleControl(),
+            useDecelerationProfile: this.commonFormControlBuilder.toggleControl()
         });
     }
 }

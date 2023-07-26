@@ -7,10 +7,6 @@
     ></app-controller-select>
 
     <ng-container *ngIf="form.controls.controllerId.valid && form.controls.inputId.valid">
-        <app-binding-toggle-control [translocoTitle]="'controlScheme.outputInvertControlTitle'"
-                                    [control]="form.controls.invert"
-        ></app-binding-toggle-control>
-
         <button mat-raised-button
                 color="primary"
                 class="calibrate-button"
@@ -44,5 +40,17 @@
                                           [control]="form.controls.power"
                                           [translocoTitle]="'controlScheme.outputPowerControlTitle'"
         ></app-output-config-slider-control>
+
+        <app-binding-toggle-control [translocoTitle]="'controlScheme.outputInvertControlTitle'"
+                                    [control]="form.controls.invert"
+        ></app-binding-toggle-control>
+
+        <app-binding-toggle-control [translocoTitle]="'controlScheme.useAccelerationProfile'"
+                                    [control]="form.controls.useAccelerationProfile"
+        ></app-binding-toggle-control>
+
+        <app-binding-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'"
+                                    [control]="form.controls.useDecelerationProfile"
+        ></app-binding-toggle-control>
     </ng-container>
 </ng-container>

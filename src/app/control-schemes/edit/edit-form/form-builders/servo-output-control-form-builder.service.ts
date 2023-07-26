@@ -41,6 +41,8 @@ export class ServoOutputControlFormBuilderService {
             speed: this.commonFormControlBuilder.speedControl(),
             power: this.commonFormControlBuilder.powerControl(),
             invert: this.commonFormControlBuilder.toggleControl(),
+            useAccelerationProfile: this.commonFormControlBuilder.toggleControl(),
+            useDecelerationProfile: this.commonFormControlBuilder.toggleControl()
         });
     }
 

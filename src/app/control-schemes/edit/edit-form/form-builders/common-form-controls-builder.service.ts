@@ -7,7 +7,7 @@ import { MOTOR_LIMITS, MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 export class CommonFormControlsBuilderService {
     constructor(
         private readonly formBuilder: FormBuilder,
-        @Inject(WINDOW) private readonly window: Window
+        @Inject(WINDOW) private readonly window: Window,
     ) {
     }
 

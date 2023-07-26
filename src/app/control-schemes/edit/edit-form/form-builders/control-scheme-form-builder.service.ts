@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ControlSchemeBinding } from '@app/store';
-import { HubIoOperationMode, WINDOW } from '@app/shared';
+import { ControlSchemeBinding, ControlSchemeHubConfig } from '@app/store';
+import { APP_CONFIG, HubIoOperationMode, IAppConfig, WINDOW } from '@app/shared';
 import { TranslocoService } from '@ngneat/transloco';
 
-import { ControlSchemeBindingForm, ControlSchemeEditForm } from '../../types';
+import { ControlSchemeBindingForm, ControlSchemeEditForm, ControlSchemeHubConfigForm } from '../../types';
 import { ServoOutputControlFormBuilderService } from './servo-output-control-form-builder.service';
 import { LinearOutputControlFormBuilderService } from './linear-output-control-form-builder.service';
 import { SetAngleOutputControlFormBuilderService } from './set-angle-output-control-form-builder.service';
@@ -20,6 +20,7 @@ export class ControlSchemeFormBuilderService {
         private readonly linearOutputControlFormBuilder: LinearOutputControlFormBuilderService,
         private readonly setAngleOutputControlFormBuilder: SetAngleOutputControlFormBuilderService,
         private readonly stepperOutputControlFormBuilder: StepperOutputControlFormBuilderService,
+        @Inject(APP_CONFIG) private readonly config: IAppConfig,
     ) {
     }
 
@@ -30,7 +31,35 @@ export class ControlSchemeFormBuilderService {
                 this.translocoService.translate('controlScheme.newSchemeDefaultName'),
                 { nonNullable: true, validators: [ Validators.required ] }
             ),
+            hubConfigs: this.formBuilder.array<ControlSchemeHubConfigForm>([]),
             bindings: this.formBuilder.array<ControlSchemeBindingForm>([], Validators.required),
+        });
+    }
+
+    public createHubConfigForm(
+        initialState?: ControlSchemeHubConfig
+    ): ControlSchemeHubConfigForm {
+        return this.formBuilder.group({
+            hubId: this.formBuilder.control<string>(
+                initialState?.hubId ?? '',
+                { nonNullable: true, validators: [ Validators.required ] }
+            ),
+            useAccelerationProfile: this.formBuilder.control<boolean>(
+                initialState?.useAccelerationProfile ?? false,
+                { nonNullable: true }
+            ),
+            accelerationTimeMs: this.formBuilder.control<number>(
+                initialState?.accelerationTimeMs ?? this.config.defaultAccelerationTimeMs,
+                { nonNullable: true }
+            ),
+            useDecelerationProfile: this.formBuilder.control<boolean>(
+                initialState?.useDecelerationProfile ?? false,
+                { nonNullable: true }
+            ),
+            decelerationTimeMs: this.formBuilder.control<number>(
+                initialState?.decelerationTimeMs ?? this.config.defaultDecelerationTimeMs,
+                { nonNullable: true }
+            ),
         });
     }
 

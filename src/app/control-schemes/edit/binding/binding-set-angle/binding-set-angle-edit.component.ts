@@ -10,6 +10,7 @@ import { BindingControlNumInputComponent } from '../control-num-input';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { BindingControlOutputEndStateComponent } from '../control-output-end-state-select';
 import { BindingControlSliderComponent } from '../control-slider';
+import { BindingControlToggleComponent } from '../control-toggle';
 
 @Component({
     standalone: true,
@@ -22,7 +23,8 @@ import { BindingControlSliderComponent } from '../control-slider';
         BindingControlNumInputComponent,
         BindingControlOutputEndStateComponent,
         BindingControlSelectControllerComponent,
-        TranslocoModule
+        TranslocoModule,
+        BindingControlToggleComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

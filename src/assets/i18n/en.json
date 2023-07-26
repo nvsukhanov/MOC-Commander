@@ -111,7 +111,11 @@
     "outputSpeedControlTitle": "Speed",
     "outputPowerControlTitle": "Power",
     "outputInvertControlTitle": "Invert",
-    "outputEndStateControlTitle": "End state"
+    "outputEndStateControlTitle": "End state",
+    "accelerationTimeMs": "Acceleration time (ms)",
+    "decelerationTimeMs": "Deceleration time (ms)",
+    "useAccelerationProfile": "Use acceleration profile",
+    "useDecelerationProfile": "Use deceleration profile"
   },
   "motorServoEndState": {
     "float": "Float",
