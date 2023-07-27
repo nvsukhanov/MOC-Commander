@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
-import { Observable, combineLatestWith, map, of, startWith } from 'rxjs';
+import { Observable, combineLatestWith, map, mergeWith, of, startWith } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslocoModule } from '@ngneat/transloco';
 
-import { ControlSchemeHubConfigForm } from '../../types';
+import { ControlSchemePortConfigForm } from '../../types';
 
 @Component({
     standalone: true,
@@ -27,7 +27,7 @@ import { ControlSchemeHubConfigForm } from '../../types';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeHubConfigurationComponent implements OnChanges {
-    @Input() public configForm?: ControlSchemeHubConfigForm;
+    @Input() public configForm?: ControlSchemePortConfigForm;
 
     @Input() public knownHubs?: Dictionary<HubModel>;
 
@@ -37,14 +37,14 @@ export class ControlSchemeHubConfigurationComponent implements OnChanges {
 
     private _decelerationProfileInputActive$: Observable<boolean> = of(false);
 
-    private _hubName$: Observable<string> = of('');
+    private _titleData$: Observable<{ hubName: string; portId: number }> = of({ hubName: '', portId: -1 });
 
     public get shouldDisplayHubConfiguration$(): Observable<boolean> {
         return this._shouldDisplayHubConfiguration$;
     }
 
-    public get hubName$(): Observable<string> {
-        return this._hubName$;
+    public get titleData$(): Observable<{ hubName: string; portId: number }> {
+        return this._titleData$;
     }
 
     public get accelerationProfileInputActive$(): Observable<boolean> {
@@ -75,14 +75,17 @@ export class ControlSchemeHubConfigurationComponent implements OnChanges {
                     }
                 ));
 
-            this._hubName$ = this.configForm.controls.hubId.valueChanges.pipe(
-                startWith(this.configForm.controls.hubId.value),
-                map((hubId) => {
-                    const hubModel = this.knownHubs && this.knownHubs[hubId];
-                    if (hubModel) {
-                        return hubModel.name;
+            this._titleData$ = this.configForm.controls.hubId.valueChanges.pipe(
+                mergeWith(this.configForm.controls.portId.valueChanges),
+                startWith(null),
+                map(() => {
+                    const hubId = this.configForm?.controls.hubId.value;
+                    const portId = this.configForm?.controls.portId.value;
+                    const hubModel = hubId !== undefined && this.knownHubs && this.knownHubs[hubId];
+                    if (!hubModel || portId === undefined) {
+                        return { hubName: '', portId: -1 };
                     }
-                    return '';
+                    return { hubName: hubModel.name, portId };
                 })
             );
         } else {

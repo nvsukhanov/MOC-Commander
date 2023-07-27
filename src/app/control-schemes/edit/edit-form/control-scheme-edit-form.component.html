@@ -9,10 +9,10 @@
 </section>
 
 <ng-container *ngrxLet="bindingAvailabilityIoData$; let bindingAvailabilityIoData">
-    <section *ngIf="form.controls.hubConfigs.controls.length"
+    <section *ngIf="form.controls.portConfigs.controls.length"
              class="hub-configurations__container"
     >
-        <app-control-scheme-hub-configuration *ngFor="let control of form.controls.hubConfigs.controls"
+        <app-control-scheme-hub-configuration *ngFor="let control of form.controls.portConfigs.controls"
                                               class="hub-configurations__item"
                                               [configForm]="control"
                                               [knownHubs]="knownHubs$ | ngrxPush"

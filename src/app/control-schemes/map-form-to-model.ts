@@ -1,4 +1,4 @@
-import { ControlSchemeBinding, ControlSchemeModel } from '@app/store';
+import { ControlSchemeBinding, ControlSchemeModel, attachedIosIdFn } from '@app/store';
 
 import { ControlSchemeEditForm } from './edit';
 
@@ -6,12 +6,12 @@ export function mapFormToModel(
     form: ControlSchemeEditForm
 ): ControlSchemeModel {
     const rawData = form.getRawValue();
-    const uniqueHubIds = new Set(rawData.bindings.map((binding) => binding[binding.bindingFormOperationMode].hubId));
-    const hubConfigurations = rawData.hubConfigs.filter((hubConfig) => uniqueHubIds.has(hubConfig.hubId));
+    const uniquePortIds = new Set(rawData.bindings.map((binding) => attachedIosIdFn(binding[binding.bindingFormOperationMode])));
+    const portConfigs = rawData.portConfigs.filter((hubConfig) => uniquePortIds.has(attachedIosIdFn(hubConfig)));
     return {
         id: rawData.id,
         name: rawData.name,
-        hubConfigurations,
+        portConfigs,
         bindings: rawData.bindings.map((data) => ({
             operationMode: data.bindingFormOperationMode,
             ...data[data.bindingFormOperationMode]

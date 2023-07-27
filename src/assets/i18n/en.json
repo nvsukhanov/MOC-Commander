@@ -115,7 +115,8 @@
     "accelerationTimeMs": "Acceleration time (ms)",
     "decelerationTimeMs": "Deceleration time (ms)",
     "useAccelerationProfile": "Use acceleration profile",
-    "useDecelerationProfile": "Use deceleration profile"
+    "useDecelerationProfile": "Use deceleration profile",
+    "portConfigTitle": "Hub ''{hubName}'' port {portId} configuration"
   },
   "motorServoEndState": {
     "float": "Float",

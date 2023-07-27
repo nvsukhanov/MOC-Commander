@@ -1,8 +1,9 @@
 import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 
-export type ControlSchemeHubConfig = {
+export type ControlSchemePortConfig = {
     hubId: string;
+    portId: number;
     useAccelerationProfile: boolean;
     accelerationTimeMs: number;
     useDecelerationProfile: boolean;
@@ -82,6 +83,6 @@ export type ControlSchemeBinding = ControlSchemeLinearBinding
 export type ControlSchemeModel = {
     id: string;
     name: string;
-    hubConfigurations: ControlSchemeHubConfig[];
+    portConfigs: ControlSchemePortConfig[];
     bindings: ControlSchemeBinding[];
 };
