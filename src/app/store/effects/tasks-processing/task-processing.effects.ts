@@ -122,7 +122,23 @@ export class TaskProcessingEffects {
 
     private initializeScheme(): OperatorFunction<{ schemeId: string }, { schemeId: string }> {
         return (source: Observable<{ schemeId: string }>) => source.pipe(
-            map(({ schemeId }) => ({ schemeId }))
+            concatLatestFrom(({ schemeId }) => this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(schemeId))),
+            map(([ , scheme ]) => scheme),
+            filter((scheme): scheme is ControlSchemeModel => !!scheme),
+            switchMap((scheme) => {
+                const setAccProfileTasks = scheme.portConfigs.filter((i) => i.useAccelerationProfile).map((i) => {
+                    return this.hubStorage.get(i.hubId).motors.setAccelerationTime(i.portId, i.accelerationTimeMs);
+                });
+                const setDecProfileTasks = scheme.portConfigs.filter((i) => i.useDecelerationProfile).map((i) => {
+                    return this.hubStorage.get(i.hubId).motors.setDecelerationTime(i.portId, i.decelerationTimeMs);
+                });
+                return forkJoin([
+                    ...setAccProfileTasks,
+                    ...setDecProfileTasks
+                ]).pipe(
+                    map(() => ({ schemeId: scheme.id }))
+                );
+            })
         );
     }
 
