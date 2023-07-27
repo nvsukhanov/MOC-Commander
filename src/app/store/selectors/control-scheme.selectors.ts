@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 
-import { CONTROL_SCHEME_ENTITY_ADAPTER, CONTROL_SCHEME_FEATURE } from '../reducers';
+import { CONTROL_SCHEME_ENTITY_ADAPTER, CONTROL_SCHEME_FEATURE, ControlSchemeRunState } from '../reducers';
 import { ControlSchemeModel } from '../models';
 
 const SELECT_ALL = createSelector(
@@ -32,6 +32,7 @@ export const CONTROL_SCHEME_SELECTORS = {
         SELECT_ENTITIES,
         (state) => state[id]
     ),
+    selectRunningState: CONTROL_SCHEME_FEATURE.selectRunningState,
     selectRunningSchemeId: CONTROL_SCHEME_FEATURE.selectRunningSchemeId,
     selectRunningScheme: createSelector(
         SELECT_ENTITIES,
@@ -39,7 +40,7 @@ export const CONTROL_SCHEME_SELECTORS = {
         (entities, runningSchemeId): ControlSchemeModel | null => runningSchemeId !== null ? entities[runningSchemeId] ?? null : null
     ),
     selectIsAnySchemeRunning: createSelector(
-        CONTROL_SCHEME_FEATURE.selectRunningSchemeId,
-        (runningSchemeId) => runningSchemeId !== null
+        CONTROL_SCHEME_FEATURE.selectRunningState,
+        (runningState) => runningState !== ControlSchemeRunState.Idle
     )
 } as const;

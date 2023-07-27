@@ -10,6 +10,7 @@ export const CONTROL_SCHEME_ACTIONS = createActionGroup({
         'delete': props<{ id: string }>(),
 
         'start scheme': props<{ schemeId: string }>(),
+        'scheme started': props<{ schemeId: string }>(),
         'stop scheme': emptyProps(),
         'scheme stopped': emptyProps(),
 

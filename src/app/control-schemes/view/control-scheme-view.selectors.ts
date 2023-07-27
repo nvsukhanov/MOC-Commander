@@ -11,6 +11,7 @@ import {
     CONTROL_SCHEME_SELECTORS,
     ControlSchemeBinding,
     ControlSchemeModel,
+    ControlSchemeRunState,
     HUBS_SELECTORS,
     HUB_STATS_SELECTORS,
     HubModel,
@@ -221,15 +222,15 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
     ),
     canRunScheme: (schemeId: string) => createSelector( // TODO: performance-wise, this selector is not optimal (should not use viewTree)
         CONTROL_SCHEME_VIEW_SELECTORS.schemeViewTree(schemeId),
-        CONTROL_SCHEME_SELECTORS.selectRunningSchemeId,
+        CONTROL_SCHEME_SELECTORS.selectRunningState,
         (
             viewTree,
-            runningSchemeId
+            runningState
         ): boolean => {
             let allHubAreConnected = true;
             let allIosAreConnected = true;
             let allIosTypesMatches = true;
-            if (runningSchemeId !== null) {
+            if (runningState !== ControlSchemeRunState.Idle) {
                 return false;
             }
             viewTree.forEach((hubNode) => {
@@ -249,5 +250,5 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
             runningSchemeId,
             schemeId
         ) => runningSchemeId !== null && runningSchemeId === schemeId
-    ),
+    )
 } as const;
