@@ -1,9 +1,12 @@
 import { createSelector } from '@ngrx/store';
-import { HUBS_SELECTORS } from '@app/store';
+import { CONTROL_SCHEME_SELECTORS, ControlSchemeRunState, HUBS_SELECTORS } from '@app/store';
 
 export const MAIN_SELECTORS = {
     shouldShowProgressBar: createSelector(
         HUBS_SELECTORS.selectIsDiscovering,
-        (isDiscovering) => isDiscovering
+        CONTROL_SCHEME_SELECTORS.selectRunningState,
+        (isDiscovering, schemeRunningState) => {
+            return isDiscovering || schemeRunningState === ControlSchemeRunState.Starting || schemeRunningState === ControlSchemeRunState.Stopping;
+        }
     ),
 };

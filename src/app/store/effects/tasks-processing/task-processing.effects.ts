@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { Action, Store } from '@ngrx/store';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { Observable, filter, forkJoin, from, map, mergeMap, of, switchMap, takeUntil } from 'rxjs';
+import { Observable, OperatorFunction, filter, forkJoin, from, map, mergeMap, of, switchMap, takeUntil } from 'rxjs';
 
 import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, PORT_TASKS_ACTIONS } from '../../actions';
 import { BindingTaskComposingData, CONTROL_SCHEME_SELECTORS, PORT_TASKS_SELECTORS } from '../../selectors';
@@ -15,11 +15,19 @@ import { ITaskRunner, TASK_RUNNER } from './i-task-runner';
 
 @Injectable()
 export class TaskProcessingEffects {
+    public readonly prepareSchemeRun$ = createEffect(() => {
+        return this.actions.pipe(
+            ofType(CONTROL_SCHEME_ACTIONS.startScheme),
+            this.initializeScheme(),
+            map((action) => CONTROL_SCHEME_ACTIONS.schemeStarted({ schemeId: action.schemeId }))
+        );
+    });
+
     public readonly composeTasks$ = createEffect(() => {
         return this.actions.pipe(
-            ofType(CONTROL_SCHEME_ACTIONS.startScheme, CONTROL_SCHEME_ACTIONS.stopScheme),
-            switchMap((action) => action.type === CONTROL_SCHEME_ACTIONS.startScheme.type
-                                  ? this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(action.schemeId))
+            ofType(CONTROL_SCHEME_ACTIONS.schemeStarted, CONTROL_SCHEME_ACTIONS.stopScheme),
+            switchMap((action) => action.type === CONTROL_SCHEME_ACTIONS.schemeStarted.type
+                                  ? this.store.select(CONTROL_SCHEME_SELECTORS.selectRunningScheme)
                                   : of(null)
             ),
             filter((scheme): scheme is ControlSchemeModel => !!scheme),
@@ -110,6 +118,12 @@ export class TaskProcessingEffects {
         @Inject(TASK_RUNNER) private readonly taskRunner: ITaskRunner,
         @Inject(TASK_QUEUE_COMPRESSOR) private readonly taskQueueCompressor: ITaskQueueCompressor
     ) {
+    }
+
+    private initializeScheme(): OperatorFunction<{ schemeId: string }, { schemeId: string }> {
+        return (source: Observable<{ schemeId: string }>) => source.pipe(
+            map(({ schemeId }) => ({ schemeId }))
+        );
     }
 
     private getUniqueHubPorts(
