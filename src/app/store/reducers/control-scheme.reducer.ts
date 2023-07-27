@@ -31,7 +31,7 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
             return CONTROL_SCHEME_ENTITY_ADAPTER.addOne({
                 id: action.scheme.id,
                 name: action.scheme.name,
-                hubConfigurations: action.scheme.hubConfigurations,
+                portConfigs: action.scheme.portConfigs,
                 bindings: action.scheme.bindings,
             }, state);
         }),
@@ -40,7 +40,7 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
                 id: action.scheme.id,
                 changes: {
                     name: action.scheme.name,
-                    hubConfigurations: action.scheme.hubConfigurations,
+                    portConfigs: action.scheme.portConfigs,
                     bindings: action.scheme.bindings,
                 }
             }, state);
@@ -54,10 +54,15 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
             runningState: ControlSchemeRunState.Running,
             runningSchemeId: schemeId
         })),
-        on(CONTROL_SCHEME_ACTIONS.stopScheme, (state): ControlSchemeState => ({
-            ...state,
-            runningState: ControlSchemeRunState.Stopping
-        })),
+        on(CONTROL_SCHEME_ACTIONS.stopScheme, (state): ControlSchemeState => {
+            if (state.runningState === ControlSchemeRunState.Running || state.runningState === ControlSchemeRunState.Starting) {
+                return {
+                    ...state,
+                    runningState: ControlSchemeRunState.Stopping
+                };
+            }
+            return state;
+        }),
         on(CONTROL_SCHEME_ACTIONS.schemeStopped, (state): ControlSchemeState => ({
             ...state,
             runningSchemeId: null,

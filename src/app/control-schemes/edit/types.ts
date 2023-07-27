@@ -1,7 +1,7 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import {
-    ControlSchemeHubConfig,
     ControlSchemeLinearBinding,
+    ControlSchemePortConfig,
     ControlSchemeServoBinding,
     ControlSchemeSetAngleBinding,
     ControlSchemeStepperBinding
@@ -23,11 +23,11 @@ export type ControlSchemeBindingForm = FormGroup<{
     [HubIoOperationMode.SetAngle]: SetAngleBindingForm;
 }>;
 
-export type ControlSchemeHubConfigForm = ToFormGroup<ControlSchemeHubConfig>;
+export type ControlSchemePortConfigForm = ToFormGroup<ControlSchemePortConfig>;
 
 export type ControlSchemeEditForm = FormGroup<{
     id: FormControl<string>;
     name: FormControl<string>;
-    hubConfigs: FormArray<ControlSchemeHubConfigForm>;
+    portConfigs: FormArray<ControlSchemePortConfigForm>;
     bindings: FormArray<ControlSchemeBindingForm>;
 }>;

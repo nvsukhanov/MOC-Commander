@@ -2,7 +2,7 @@
     <mat-card *ngIf="shouldDisplayHubConfiguration$ | ngrxPush">
         <mat-card-content class="hub-configuration__container">
             <h3 class="hub-configuration__title">
-                {{ hubName$ | ngrxPush }}
+                {{  'controlScheme.portConfigTitle' | transloco: (titleData$ | ngrxPush) }}
             </h3>
 
             <mat-form-field *ngIf="accelerationProfileInputActive$ | ngrxPush"

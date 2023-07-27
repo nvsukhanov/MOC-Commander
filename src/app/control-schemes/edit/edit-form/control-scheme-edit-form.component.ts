@@ -5,7 +5,7 @@ import { LetDirective, PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { MatInputModule } from '@angular/material/input';
-import { AccelerationProfileMixin, ControlSchemeModel, DecelerationProfileMixin, HUBS_SELECTORS, HubModel, } from '@app/store';
+import { AccelerationProfileMixin, ControlSchemeModel, DecelerationProfileMixin, HUBS_SELECTORS, HubModel, attachedIosIdFn, } from '@app/store';
 import { FeatureToolbarService, IScrollContainer, SCROLL_CONTAINER, ScreenSizeObserverService } from '@app/shared';
 import { JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { Observable, Subscription, map, startWith } from 'rxjs';
@@ -77,7 +77,7 @@ export class ControlSchemeEditFormComponent implements OnDestroy {
                         break;
                     }
                 }
-                for (const control of this.form.controls.hubConfigs.controls) { // TODO: why do we even need this?
+                for (const control of this.form.controls.portConfigs.controls) { // TODO: why do we even need this?
                     isValid = isValid && control.valid;
                     if (!isValid) {
                         break;
@@ -109,16 +109,16 @@ export class ControlSchemeEditFormComponent implements OnDestroy {
             const binging = this.controlSchemeFormFactoryService.createBindingForm(binding);
             this.form.controls.bindings.push(binging);
         });
-        (scheme.hubConfigurations ?? []).forEach((hubConfig) => { // TODO: remove nullish coalescing when store version bumped
-            const hubConfigForm = this.controlSchemeFormFactoryService.createHubConfigForm(hubConfig);
-            this.form.controls.hubConfigs.push(hubConfigForm);
+        (scheme.portConfigs ?? []).forEach((hubConfig) => { // TODO: remove nullish coalescing when store version bumped
+            const hubConfigForm = this.controlSchemeFormFactoryService.createPortConfigForm(hubConfig);
+            this.form.controls.portConfigs.push(hubConfigForm);
         });
         this.hubConfigurationsFormUpdateSub?.unsubscribe();
 
         this.hubConfigurationsFormUpdateSub = this.form.controls.bindings.valueChanges.pipe(
             startWith(this.form.controls.bindings.value)
         ).subscribe(() => {
-            this.updateHubConfigurations();
+            this.updatePortsConfigurations();
         });
 
         this.form.markAsPristine();
@@ -153,49 +153,38 @@ export class ControlSchemeEditFormComponent implements OnDestroy {
         this.cdRef.markForCheck();
     }
 
-    private getUniqueHubIds(): Set<string> {
-        const hubIds = new Set<string>();
-        const rawFormValue = this.form.getRawValue();
-        rawFormValue.bindings.forEach((binding) => { // TODO: better use form controls
-            const bindingConfig = binding[binding.bindingFormOperationMode];
-            if (bindingConfig.hubId) {
-                hubIds.add(bindingConfig.hubId);
-            }
-        });
-        return hubIds;
-    }
-
-    private updateHubConfigurations(): void {
-        const uniqueHubIds = this.getUniqueHubIds();
-
-        uniqueHubIds.forEach((hubId) => {
-            const hubConfigForm = this.form.controls.hubConfigs.controls.find((hubConfig) => hubConfig.controls.hubId.value === hubId);
+    private updatePortsConfigurations(): void {
+        // create port configs for all bindings that don't have one yet
+        this.form.controls.bindings.controls.forEach((bindingControl) => {
+            const actualBindingControl = bindingControl.controls[bindingControl.controls.bindingFormOperationMode.value];
+            const hubConfigForm = this.form.controls.portConfigs.controls.find((hubConfig) =>
+                hubConfig.controls.hubId.value === actualBindingControl.controls.hubId.value
+                && hubConfig.controls.portId.value === actualBindingControl.controls.portId.value
+            );
             if (!hubConfigForm) {
-                const hubConfig = this.controlSchemeFormFactoryService.createHubConfigForm();
-                hubConfig.controls.hubId.setValue(hubId);
-                this.form.controls.hubConfigs.push(hubConfig);
+                const hubConfig = this.controlSchemeFormFactoryService.createPortConfigForm();
+                hubConfig.controls.hubId.setValue(actualBindingControl.controls.hubId.value);
+                hubConfig.controls.portId.setValue(actualBindingControl.controls.portId.value);
+                this.form.controls.portConfigs.push(hubConfig);
             }
         });
 
         const rawFormValue = this.form.getRawValue();
-        const accProfileEnabledHubIds = new Set<string>();
-        const decProfileEnabledHubIds = new Set<string>();
+        const accProfileEnabledIoIds = new Set<string>();
+        const decProfileEnabledIoIds = new Set<string>();
         rawFormValue.bindings.forEach((binding) => {
             const bindingConfig = binding[binding.bindingFormOperationMode];
-            const hubConfigForm = this.form.controls.hubConfigs.controls.find((hubConfig) => hubConfig.controls.hubId.value === bindingConfig.hubId);
-            if (!hubConfigForm) {
-                return;
-            }
             if (this.hasAccelerationProfileMixin(bindingConfig) && bindingConfig.useAccelerationProfile) {
-                accProfileEnabledHubIds.add(bindingConfig.hubId);
+                accProfileEnabledIoIds.add(attachedIosIdFn(bindingConfig));
             }
             if (this.hasDecelerationProfileMixin(bindingConfig) && bindingConfig.useDecelerationProfile) {
-                decProfileEnabledHubIds.add(bindingConfig.hubId);
+                decProfileEnabledIoIds.add(attachedIosIdFn(bindingConfig));
             }
         });
-        this.form.controls.hubConfigs.controls.forEach((hubConfigForm) => {
-            const shouldEnableAccProfile = accProfileEnabledHubIds.has(hubConfigForm.controls.hubId.value);
-            const shouldEnableDecProfile = decProfileEnabledHubIds.has(hubConfigForm.controls.hubId.value);
+        this.form.controls.portConfigs.controls.forEach((hubConfigForm) => {
+            const rawValue = hubConfigForm.getRawValue();
+            const shouldEnableAccProfile = accProfileEnabledIoIds.has(attachedIosIdFn(rawValue));
+            const shouldEnableDecProfile = decProfileEnabledIoIds.has(attachedIosIdFn(rawValue));
 
             if (hubConfigForm.controls.useAccelerationProfile.value !== shouldEnableAccProfile) {
                 hubConfigForm.controls.useAccelerationProfile.setValue(shouldEnableAccProfile);

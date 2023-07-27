@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ControlSchemeBinding, ControlSchemeHubConfig } from '@app/store';
+import { ControlSchemeBinding, ControlSchemePortConfig } from '@app/store';
 import { APP_CONFIG, HubIoOperationMode, IAppConfig, WINDOW } from '@app/shared';
 import { TranslocoService } from '@ngneat/transloco';
 
-import { ControlSchemeBindingForm, ControlSchemeEditForm, ControlSchemeHubConfigForm } from '../../types';
+import { ControlSchemeBindingForm, ControlSchemeEditForm, ControlSchemePortConfigForm } from '../../types';
 import { ServoOutputControlFormBuilderService } from './servo-output-control-form-builder.service';
 import { LinearOutputControlFormBuilderService } from './linear-output-control-form-builder.service';
 import { SetAngleOutputControlFormBuilderService } from './set-angle-output-control-form-builder.service';
@@ -31,17 +31,21 @@ export class ControlSchemeFormBuilderService {
                 this.translocoService.translate('controlScheme.newSchemeDefaultName'),
                 { nonNullable: true, validators: [ Validators.required ] }
             ),
-            hubConfigs: this.formBuilder.array<ControlSchemeHubConfigForm>([]),
+            portConfigs: this.formBuilder.array<ControlSchemePortConfigForm>([]),
             bindings: this.formBuilder.array<ControlSchemeBindingForm>([], Validators.required),
         });
     }
 
-    public createHubConfigForm(
-        initialState?: ControlSchemeHubConfig
-    ): ControlSchemeHubConfigForm {
+    public createPortConfigForm(
+        initialState?: ControlSchemePortConfig
+    ): ControlSchemePortConfigForm {
         return this.formBuilder.group({
             hubId: this.formBuilder.control<string>(
                 initialState?.hubId ?? '',
+                { nonNullable: true, validators: [ Validators.required ] }
+            ),
+            portId: this.formBuilder.control<number>(
+                initialState?.portId ?? 0,
                 { nonNullable: true, validators: [ Validators.required ] }
             ),
             useAccelerationProfile: this.formBuilder.control<boolean>(
