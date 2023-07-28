@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { NgForOf, NgIf } from '@angular/common';
-import { IoOperationTypeToL10nKeyPipe } from '@app/shared';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
+import { IoOperationTypeToL10nKeyPipe } from '@app/shared';
 
 import { ControlSchemeBindingForm } from '../types';
 import { BindingEditAvailableOperationModesModel } from '../../control-schemes-feature.selectors';

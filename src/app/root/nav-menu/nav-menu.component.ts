@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { HUBS_ACTIONS } from '@app/store';
 import { Store } from '@ngrx/store';
-import { ScreenSizeObserverService } from '@app/shared';
 import { Observable } from 'rxjs';
 import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { LetDirective, PushPipe } from '@ngrx/component';
+import { ScreenSizeObserverService } from '@app/shared';
+import { HUBS_ACTIONS } from '@app/store';
 
 import { CompactNavMenuComponent } from './compact-nav-menu';
 import { FullNavMenuComponent } from './full-nav-menu';

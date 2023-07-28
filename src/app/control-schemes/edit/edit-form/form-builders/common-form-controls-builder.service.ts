@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ControllerInputType, WINDOW } from '@app/shared';
 import { MOTOR_LIMITS, MotorServoEndState } from '@nvsukhanov/rxpoweredup';
+import { ControllerInputType, WINDOW } from '@app/shared';
 
 @Injectable({ providedIn: 'root' })
 export class CommonFormControlsBuilderService {

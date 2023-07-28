@@ -6,9 +6,9 @@ import { PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatBadgeModule } from '@angular/material/badge';
-import { EllipsisTitleDirective } from '@app/shared';
 import { NgIf } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
+import { EllipsisTitleDirective } from '@app/shared';
 
 import { RoutesBuilderService } from '../../../routing';
 

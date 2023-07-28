@@ -4,10 +4,10 @@ import { MatCardModule } from '@angular/material/card';
 import { NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { Dictionary } from '@ngrx/entity';
-import { HubModel } from '@app/store';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslocoModule } from '@ngneat/transloco';
+import { HubModel } from '@app/store';
 
 import { ControlSchemePortConfigForm } from '../../types';
 

@@ -1,4 +1,7 @@
 import { concatLatestFrom, createEffect } from '@ngrx/effects';
+import { NEVER, Observable, filter, fromEvent, map, mergeMap, mergeWith, switchMap, take } from 'rxjs';
+import { Action, Store } from '@ngrx/store';
+import { inject } from '@angular/core';
 import {
     CONTROLLER_CONNECTION_SELECTORS,
     CONTROLLER_INPUT_ACTIONS,
@@ -7,9 +10,6 @@ import {
     KeyboardSettingsModel,
     controllerInputIdFn
 } from '@app/store';
-import { NEVER, Observable, filter, fromEvent, map, mergeMap, mergeWith, switchMap, take } from 'rxjs';
-import { Action, Store } from '@ngrx/store';
-import { inject } from '@angular/core';
 import { ControllerInputType, WINDOW } from '@app/shared';
 
 const KEY_DOWN_EVENT = 'keydown';

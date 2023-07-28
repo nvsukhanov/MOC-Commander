@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NgIf } from '@angular/common';
-import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { ControllerInputModel } from '@app/store';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatInputModule } from '@angular/material/input';
+import { ControllerInputModel } from '@app/store';
+import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 
 import { IWaitingForInputDialogData, WaitForControllerInputDialogComponent } from '../wait-for-controller-input-dialog';
 import { FullControllerInputNameComponent } from '../../../full-controller-input-name';

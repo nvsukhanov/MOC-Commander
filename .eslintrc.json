@@ -137,7 +137,15 @@
                 "internal"
               ]
             ],
-            "newlines-between": "always"
+            "pathGroups": [
+              {
+                "pattern": "@app/**",
+                "group": "external",
+                "position": "after"
+              }
+            ],
+            "newlines-between": "always",
+            "distinctGroup": false
           }
         ],
         "sort-imports": [

@@ -4,6 +4,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { NEVER, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 import {
     ControllerL10nTypePipe,
     ControllerTypeIconPipe,
@@ -12,8 +14,6 @@ import {
     IoOperationTypeToL10nKeyPipe,
     NotConnectedInlineIconComponent
 } from '@app/shared';
-import { NEVER, Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
 
 import { ControlSchemeViewBindingTreeNodeData } from '../../control-scheme-view.selectors';
 import { ControllerL10nInputNamePipe } from '../../../controller-l10n-input-name.pipe';

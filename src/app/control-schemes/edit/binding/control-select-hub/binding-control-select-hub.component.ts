@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { HubIoOperationMode } from '@app/shared';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
+import { HubIoOperationMode } from '@app/shared';
 
 import { BindingEditAvailableOperationModesModel } from '../../../control-schemes-feature.selectors';
 

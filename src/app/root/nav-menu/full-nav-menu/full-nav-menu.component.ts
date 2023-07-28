@@ -5,8 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslocoModule } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
-import { EllipsisTitleDirective } from '@app/shared';
 import { NgIf } from '@angular/common';
+import { EllipsisTitleDirective } from '@app/shared';
 
 import { RoutesBuilderService } from '../../../routing';
 

@@ -4,8 +4,8 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
 import { MatCardModule } from '@angular/material/card';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
-import { ControllerModel, ControllerSettingsModel } from '@app/store';
 import { MatIconModule } from '@angular/material/icon';
+import { ControllerModel, ControllerSettingsModel } from '@app/store';
 import { NotConnectedInlineIconComponent } from '@app/shared';
 
 import { ControllerProfileFactoryService, IControllerProfile, IControllerSettingsComponent } from '../../../controller-profiles';

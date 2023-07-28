@@ -1,6 +1,6 @@
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
-import { HubIoOperationMode } from '@app/shared';
 import { Dictionary } from '@ngrx/entity';
+import { HubIoOperationMode } from '@app/shared';
 import { controllerInputIdFn } from '@app/store';
 
 import { BaseTaskBuilder } from './base-task-builder';
