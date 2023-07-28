@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
-import { ControllerInputType } from '@app/shared';
 import { Store } from '@ngrx/store';
 import { NEVER, Observable, filter, map, of, switchMap } from 'rxjs';
-import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS, ControllerModel } from '@app/store';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
 import { NgIf } from '@angular/common';
+import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS, ControllerModel } from '@app/store';
+import { ControllerInputType } from '@app/shared';
 
 import { ControllerProfileFactoryService } from '../../controller-profiles';
 

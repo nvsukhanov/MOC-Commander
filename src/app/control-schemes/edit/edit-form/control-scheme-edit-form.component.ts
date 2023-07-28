@@ -5,11 +5,11 @@ import { LetDirective, PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { MatInputModule } from '@angular/material/input';
-import { AccelerationProfileMixin, ControlSchemeModel, DecelerationProfileMixin, HUBS_SELECTORS, HubModel, attachedIosIdFn, } from '@app/store';
-import { FeatureToolbarService, IScrollContainer, SCROLL_CONTAINER, ScreenSizeObserverService } from '@app/shared';
 import { NgForOf, NgIf } from '@angular/common';
 import { Observable, Subscription, map, startWith } from 'rxjs';
 import { Dictionary } from '@ngrx/entity';
+import { FeatureToolbarService, IScrollContainer, SCROLL_CONTAINER, ScreenSizeObserverService } from '@app/shared';
+import { AccelerationProfileMixin, ControlSchemeModel, DecelerationProfileMixin, HUBS_SELECTORS, HubModel, attachedIosIdFn, } from '@app/store';
 
 import { ControlSchemeFormBuilderService } from './form-builders';
 import { ControlSchemeEditForm } from '../types';

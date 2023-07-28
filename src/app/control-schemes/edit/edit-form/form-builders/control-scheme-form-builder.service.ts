@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { TranslocoService } from '@ngneat/transloco';
 import { ControlSchemeBinding, ControlSchemePortConfig } from '@app/store';
 import { APP_CONFIG, HubIoOperationMode, IAppConfig, WINDOW } from '@app/shared';
-import { TranslocoService } from '@ngneat/transloco';
 
 import { ControlSchemeBindingForm, ControlSchemeEditForm, ControlSchemePortConfigForm } from '../../types';
 import { ServoOutputControlFormBuilderService } from './servo-output-control-form-builder.service';

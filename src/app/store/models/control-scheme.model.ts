@@ -1,5 +1,5 @@
-import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
+import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 
 export type ControlSchemePortConfig = {
     hubId: string;

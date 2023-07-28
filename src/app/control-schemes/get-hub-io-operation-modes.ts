@@ -1,6 +1,6 @@
 import { PortModeName } from '@nvsukhanov/rxpoweredup';
-import { AttachedIoModel, AttachedIoModesModel, AttachedIoPortModeInfoModel, attachedIoModesIdFn, attachedIoPortModeInfoIdFn } from '@app/store';
 import { Dictionary } from '@ngrx/entity';
+import { AttachedIoModel, AttachedIoModesModel, AttachedIoPortModeInfoModel, attachedIoModesIdFn, attachedIoPortModeInfoIdFn } from '@app/store';
 
 export function getIoPortModes(
     io: AttachedIoModel,

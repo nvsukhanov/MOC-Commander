@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
-import { HubIoOperationMode } from '@app/shared';
 import { TranslocoModule } from '@ngneat/transloco';
+import { HubIoOperationMode } from '@app/shared';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { StepperBindingForm } from '../../types';

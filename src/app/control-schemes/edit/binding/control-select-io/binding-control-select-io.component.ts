@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { HubIoOperationMode, IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '@app/shared';
-import { AttachedIoModel } from '@app/store';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
@@ -10,6 +8,8 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
 import { Observable, map, of, startWith } from 'rxjs';
 import { IOType } from '@nvsukhanov/rxpoweredup';
+import { AttachedIoModel } from '@app/store';
+import { HubIoOperationMode, IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '@app/shared';
 
 import { BindingEditAvailableOperationModesModel } from '../../../control-schemes-feature.selectors';
 

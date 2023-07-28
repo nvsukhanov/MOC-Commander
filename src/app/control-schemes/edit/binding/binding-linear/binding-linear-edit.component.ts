@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
-import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 import { merge } from 'rxjs';
 import { TranslocoModule } from '@ngneat/transloco';
+import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { LinearBindingForm } from '../../types';

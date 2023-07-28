@@ -1,9 +1,9 @@
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { inject } from '@angular/core';
 import { Action, Store } from '@ngrx/store';
+import { Observable, filter, interval, map, switchMap } from 'rxjs';
 import { APP_CONFIG, ControllerType, IAppConfig, WINDOW } from '@app/shared';
 import { CONTROLLERS_ACTIONS, CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS, controllerIdFn } from '@app/store';
-import { Observable, filter, interval, map, switchMap } from 'rxjs';
 
 import { ControllerProfileFactoryService, IControllerProfile } from '../../../controller-profiles';
 

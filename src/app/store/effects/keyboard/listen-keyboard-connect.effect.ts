@@ -1,9 +1,9 @@
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { inject } from '@angular/core';
-import { ControllerType, WINDOW } from '@app/shared';
-import { CONTROLLERS_ACTIONS, CONTROLLER_SELECTORS } from '@app/store';
 import { fromEvent, map, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { ControllerType, WINDOW } from '@app/shared';
+import { CONTROLLERS_ACTIONS, CONTROLLER_SELECTORS } from '@app/store';
 
 import { ControllerProfileFactoryService } from '../../../controller-profiles';
 

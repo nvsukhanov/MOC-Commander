@@ -6,9 +6,9 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subscription, filter } from 'rxjs';
+import { DIALOG_DATA } from '@angular/cdk/dialog';
 import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, ControllerInputModel } from '@app/store';
 import { HubIoOperationMode } from '@app/shared';
-import { DIALOG_DATA } from '@angular/cdk/dialog';
 
 import { getIoOperationModesForControllerInputType } from './get-io-operation-modes-for-controller-input-type';
 
