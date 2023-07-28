@@ -17,7 +17,8 @@ export class ServoTaskRunner extends TaskRunner {
                 {
                     speed: task.payload.speed,
                     power: task.payload.power,
-                    useProfile: mapUseProfile(task.payload)
+                    useProfile: mapUseProfile(task.payload),
+                    noFeedback: false
                 }
             );
         }

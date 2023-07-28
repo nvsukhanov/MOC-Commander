@@ -11,6 +11,7 @@ export interface ControllerInputState extends EntityState<ControllerInputModel> 
 
 export const CONTROLLER_INPUT_ENTITY_ADAPTER: EntityAdapter<ControllerInputModel> = createEntityAdapter<ControllerInputModel>({
     selectId: (input) => controllerInputIdFn(input),
+    sortComparer: (a, b) => a.timestamp - b.timestamp
 });
 
 export function controllerInputIdFn(
@@ -28,16 +29,13 @@ export const CONTROLLER_INPUT_FEATURE = createFeature({
     reducer: createReducer(
         CONTROLLER_INPUT_INITIAL_STATE,
         on(CONTROLLER_INPUT_ACTIONS.inputReceived, (state, action): ControllerInputState => {
-            if (action.value !== 0) {
-                return CONTROLLER_INPUT_ENTITY_ADAPTER.upsertOne({
-                    controllerId: action.controllerId,
-                    value: action.value,
-                    inputId: action.inputId,
-                    inputType: action.inputType
-                }, state);
-            } else {
-                return CONTROLLER_INPUT_ENTITY_ADAPTER.removeOne(controllerInputIdFn(action), state);
-            }
+            return CONTROLLER_INPUT_ENTITY_ADAPTER.upsertOne({
+                controllerId: action.controllerId,
+                value: action.value,
+                inputId: action.inputId,
+                inputType: action.inputType,
+                timestamp: action.timestamp
+            }, state);
         }),
         on(CONTROLLER_INPUT_ACTIONS.requestInputCapture,
             (state): ControllerInputState => {

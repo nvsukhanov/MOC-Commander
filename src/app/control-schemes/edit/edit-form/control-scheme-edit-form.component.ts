@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import { MatInputModule } from '@angular/material/input';
 import { AccelerationProfileMixin, ControlSchemeModel, DecelerationProfileMixin, HUBS_SELECTORS, HubModel, attachedIosIdFn, } from '@app/store';
 import { FeatureToolbarService, IScrollContainer, SCROLL_CONTAINER, ScreenSizeObserverService } from '@app/shared';
-import { JsonPipe, NgForOf, NgIf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { Observable, Subscription, map, startWith } from 'rxjs';
 import { Dictionary } from '@ngrx/entity';
 
@@ -32,7 +32,6 @@ import { ControlSchemeHubConfigurationComponent } from './hub-configuration';
         NgForOf,
         LetDirective,
         NgIf,
-        JsonPipe,
         ControlSchemeHubConfigurationComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -70,6 +69,7 @@ export class ControlSchemeEditFormComponent implements OnDestroy {
         this.canSave$ = this.form.valueChanges.pipe(
             startWith(this.form.value),
             map(() => {
+                this.updatePortsConfigurations();
                 let isValid = true;
                 for (const control of this.form.controls.bindings.controls) {
                     isValid = isValid && control.controls[control.controls.bindingFormOperationMode.value].valid;
@@ -157,6 +157,9 @@ export class ControlSchemeEditFormComponent implements OnDestroy {
         // create port configs for all bindings that don't have one yet
         this.form.controls.bindings.controls.forEach((bindingControl) => {
             const actualBindingControl = bindingControl.controls[bindingControl.controls.bindingFormOperationMode.value];
+            if (!actualBindingControl.controls.hubId.valid || !actualBindingControl.controls.portId.valid) {
+                return;
+            }
             const hubConfigForm = this.form.controls.portConfigs.controls.find((hubConfig) =>
                 hubConfig.controls.hubId.value === actualBindingControl.controls.hubId.value
                 && hubConfig.controls.portId.value === actualBindingControl.controls.portId.value

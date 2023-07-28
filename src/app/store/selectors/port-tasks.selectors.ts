@@ -1,7 +1,8 @@
 import { createSelector } from '@ngrx/store';
+import { Dictionary } from '@ngrx/entity';
 
-import { PORT_TASKS_ENTITY_ADAPTER, PORT_TASKS_FEATURE, controllerInputIdFn, hubPortTasksIdFn } from '../reducers';
-import { ControlSchemeBinding, PortCommandTask } from '../models';
+import { PORT_TASKS_ENTITY_ADAPTER, PORT_TASKS_FEATURE, hubPortTasksIdFn } from '../reducers';
+import { ControlSchemeBinding, ControllerInputModel, PortCommandTask } from '../models';
 import { CONTROLLER_INPUT_SELECTORS } from './controller-input.selectors';
 import { ATTACHED_IO_PROPS_SELECTORS } from './attached-io-props.selectors';
 
@@ -13,7 +14,8 @@ const SELECT_ALL = createSelector(
 export type BindingTaskComposingData = {
     hubId: string;
     portId: number;
-    bindingWithValue: Array<{ binding: ControlSchemeBinding; value: number }>;
+    bindings: ControlSchemeBinding[];
+    inputState: Dictionary<ControllerInputModel>;
     encoderOffset: number;
     lastExecutedTask: PortCommandTask | null;
     runningTask: PortCommandTask | null;
@@ -69,7 +71,7 @@ export const PORT_TASKS_SELECTORS = {
         PORT_TASKS_SELECTORS.selectRunningTask({ hubId, portId }),
         PORT_TASKS_SELECTORS.selectLastExecutedTask({ hubId, portId }),
         PORT_TASKS_SELECTORS.selectQueue({ hubId, portId }),
-        (inputEntities, encoderOffset, runningTask, lastExecutedTask, queue): BindingTaskComposingData => {
+        (inputState, encoderOffset, runningTask, lastExecutedTask, queue): BindingTaskComposingData => {
             return {
                 encoderOffset,
                 runningTask,
@@ -77,13 +79,8 @@ export const PORT_TASKS_SELECTORS = {
                 hubId,
                 portId,
                 queue,
-                bindingWithValue: bindings.map((binding) => {
-                    const input = inputEntities[controllerInputIdFn(binding)];
-                    return {
-                        binding,
-                        value: input ? input.value : 0
-                    };
-                })
+                bindings,
+                inputState
             };
         }
     )

@@ -1,20 +1,25 @@
 import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 import { HubIoOperationMode, getTranslationArcs } from '@app/shared';
+import { Dictionary } from '@ngrx/entity';
+import { controllerInputIdFn } from '@app/store';
 
 import { BaseTaskBuilder } from './base-task-builder';
-import { ControlSchemeBinding, PortCommandTask, PortCommandTaskPayload, PortCommandTaskType, ServoTaskPayload } from '../../../models';
+import { ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, PortCommandTaskType, ServoTaskPayload } from '../../../models';
 
 export class ServoTaskBuilder extends BaseTaskBuilder {
     private readonly snappingThreshold = 10;
 
     protected buildPayload(
         binding: ControlSchemeBinding,
-        inputValue: number,
+        inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
-    ): ServoTaskPayload | null {
+    ): { payload: ServoTaskPayload; inputTimestamp: number } | null {
         if (binding.operationMode !== HubIoOperationMode.Servo) {
             return null;
         }
+
+        const inputRecord = inputsState[controllerInputIdFn(binding)];
+        const inputValue = inputRecord?.value ?? 0;
 
         const translationPaths = getTranslationArcs(motorEncoderOffset, binding.aposCenter);
         const resultingCenter = translationPaths.cw < translationPaths.ccw ? translationPaths.cw : -translationPaths.ccw;
@@ -28,15 +33,16 @@ export class ServoTaskBuilder extends BaseTaskBuilder {
 
         const snappedAngle = this.snapAngle(targetAngle, resultingCenter, minAngle, maxAngle);
 
-        return {
+        const payload: ServoTaskPayload = {
             taskType: PortCommandTaskType.Servo,
             angle: Math.round(snappedAngle),
             speed: Math.round(binding.speed),
             power: binding.power,
             endState: MotorServoEndState.hold,
             useAccelerationProfile: binding.useAccelerationProfile,
-            useDecelerationProfile: binding.useDecelerationProfile
+            useDecelerationProfile: binding.useDecelerationProfile,
         };
+        return { payload, inputTimestamp: inputRecord?.timestamp ?? Date.now() };
     }
 
     protected buildCleanupPayload(

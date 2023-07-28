@@ -1,22 +1,27 @@
 import { HubIoOperationMode } from '@app/shared';
+import { Dictionary } from '@ngrx/entity';
+import { controllerInputIdFn } from '@app/store';
 
 import { BaseTaskBuilder } from './base-task-builder';
-import { ControlSchemeBinding, PortCommandTask, PortCommandTaskPayload, PortCommandTaskType, StepperTaskPayload } from '../../../models';
+import { ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, PortCommandTaskType, StepperTaskPayload } from '../../../models';
 
 export class StepperTaskBuilder extends BaseTaskBuilder {
     protected buildPayload(
         binding: ControlSchemeBinding,
-        inputValue: number,
-    ): StepperTaskPayload | null {
+        inputsState: Dictionary<ControllerInputModel>,
+    ): { payload: StepperTaskPayload; inputTimestamp: number } | null {
         if (binding.operationMode !== HubIoOperationMode.Stepper) {
             return null;
         }
+
+        const inputRecord = inputsState[controllerInputIdFn(binding)];
+        const inputValue = inputRecord?.value ?? 0;
 
         if (inputValue < 0.5) {
             return null;
         }
 
-        return {
+        const payload: StepperTaskPayload = {
             taskType: PortCommandTaskType.Stepper,
             degree: binding.degree,
             speed: binding.speed,
@@ -25,6 +30,8 @@ export class StepperTaskBuilder extends BaseTaskBuilder {
             useAccelerationProfile: binding.useAccelerationProfile,
             useDecelerationProfile: binding.useDecelerationProfile
         };
+
+        return { payload, inputTimestamp: inputRecord?.timestamp ?? Date.now() };
     }
 
     protected buildCleanupPayload(

@@ -1,5 +1,7 @@
+import { Dictionary } from '@ngrx/entity';
+
 import { ITaskBuilder } from '../i-task-builder';
-import { ControlSchemeBinding, PortCommandTask, PortCommandTaskPayload } from '../../../models';
+import { ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload } from '../../../models';
 import { payloadHash } from '../payload-hash';
 
 export abstract class BaseTaskBuilder implements ITaskBuilder {
@@ -7,10 +9,10 @@ export abstract class BaseTaskBuilder implements ITaskBuilder {
 
     protected abstract buildPayload(
         binding: ControlSchemeBinding,
-        inputValue: number,
+        inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
         previousTaskPayload: PortCommandTask | null
-    ): PortCommandTaskPayload | null;
+    ): { payload: PortCommandTaskPayload; inputTimestamp: number } | null;
 
     protected abstract buildCleanupPayload(
         previousTask: PortCommandTask
@@ -18,16 +20,16 @@ export abstract class BaseTaskBuilder implements ITaskBuilder {
 
     public buildTask(
         binding: ControlSchemeBinding,
-        inputValue: number,
+        inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
         lastExecutedTask: PortCommandTask | null
     ): PortCommandTask | null {
-        const payload = this.buildPayload(binding, inputValue, motorEncoderOffset, lastExecutedTask);
-        if (payload) {
-            return this.composeTask(binding, payload);
+        const payloadBuildResult = this.buildPayload(binding, inputsState, motorEncoderOffset, lastExecutedTask);
+        if (payloadBuildResult) {
+            return this.composeTask(binding, payloadBuildResult.payload, payloadBuildResult.inputTimestamp);
         }
         if (this.next) {
-            return this.next.buildTask(binding, inputValue, motorEncoderOffset, lastExecutedTask);
+            return this.next.buildTask(binding, inputsState, motorEncoderOffset, lastExecutedTask);
         }
         return null;
     }
@@ -66,14 +68,16 @@ export abstract class BaseTaskBuilder implements ITaskBuilder {
 
     private composeTask(
         binding: ControlSchemeBinding,
-        payload: PortCommandTaskPayload
+        payload: PortCommandTaskPayload,
+        inputTimestamp: number
     ): PortCommandTask {
         return {
             hubId: binding.hubId,
             portId: binding.portId,
             bindingId: binding.id,
             payload,
-            hash: this.calculateHash(binding.hubId, binding.portId, payload)
+            hash: this.calculateHash(binding.hubId, binding.portId, payload),
+            inputTimestamp
         };
     }
 }

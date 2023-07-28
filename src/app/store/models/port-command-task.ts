@@ -57,4 +57,5 @@ export type PortCommandTask<TPayloadType extends PortCommandTaskType = PortComma
     bindingId: string;
     payload: PortCommandTaskPayload & { taskType: TPayloadType };
     hash: string;
+    inputTimestamp: number;
 };
