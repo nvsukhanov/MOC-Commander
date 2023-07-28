@@ -132,6 +132,8 @@ export class HubsEffects {
             {
                 incomingMessageMiddleware: [ incomingLoggerMiddleware, communicationNotifierMiddleware ],
                 outgoingMessageMiddleware: [ outgoingLoggerMiddleware, communicationNotifierMiddleware ],
+                messageSendTimeout: 200,
+                maxMessageSendRetries: 10
             }
         ).pipe(
             switchMap((hub: IHub) => {

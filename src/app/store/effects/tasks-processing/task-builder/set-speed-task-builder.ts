@@ -1,10 +1,13 @@
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { HubIoOperationMode } from '@app/shared';
+import { Dictionary } from '@ngrx/entity';
+import { controllerInputIdFn } from '@app/store';
 
 import { BaseTaskBuilder } from './base-task-builder';
 import {
     ControlSchemeBinding,
     ControlSchemeLinearBinding,
+    ControllerInputModel,
     PortCommandTask,
     PortCommandTaskPayload,
     PortCommandTaskType,
@@ -18,19 +21,26 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
 
     protected buildPayload(
         binding: ControlSchemeBinding,
-        inputValue: number,
+        inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
         lastExecutedTask: PortCommandTask | null
-    ): SetLinearSpeedTaskPayload | null {
+    ): { payload: SetLinearSpeedTaskPayload; inputTimestamp: number } | null {
         if (binding.operationMode !== HubIoOperationMode.Linear) {
             return null;
         }
+
+        const inputRecord = inputsState[controllerInputIdFn(binding)];
+        const inputValue = inputRecord?.value ?? 0;
 
         if (binding.isToggle) {
             if (inputValue === 0) {
                 return null;
             }
-            return this.createTogglePayload(binding, lastExecutedTask);
+            const payload = this.createTogglePayload(binding, lastExecutedTask);
+            if (payload) {
+                return { payload, inputTimestamp: inputRecord?.timestamp ?? Date.now() };
+            }
+            return null;
         }
 
         const targetSpeed = this.calculateSpeed(
@@ -39,7 +49,7 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
             binding.invert,
         );
 
-        return {
+        const payload: SetLinearSpeedTaskPayload = {
             taskType: PortCommandTaskType.SetSpeed,
             speed: targetSpeed,
             power: this.calculatePower(targetSpeed, binding.power),
@@ -47,6 +57,8 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
             useAccelerationProfile: binding.useAccelerationProfile,
             useDecelerationProfile: binding.useDecelerationProfile
         };
+
+        return { payload, inputTimestamp: inputRecord?.timestamp ?? Date.now() };
     }
 
     protected buildCleanupPayload(

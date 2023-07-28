@@ -1,22 +1,28 @@
 import { HubIoOperationMode } from '@app/shared';
+import { Dictionary } from '@ngrx/entity';
+import { controllerInputIdFn } from '@app/store';
 
 import { BaseTaskBuilder } from './base-task-builder';
-import { ControlSchemeBinding, PortCommandTask, PortCommandTaskPayload, PortCommandTaskType, SetAngleTaskPayload } from '../../../models';
+import { ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, PortCommandTaskType, SetAngleTaskPayload } from '../../../models';
 
 export class SetAngleTaskBuilder extends BaseTaskBuilder {
     private readonly inputValueThreshold = 0.5;
 
     protected buildPayload(
         binding: ControlSchemeBinding,
-        inputValue: number
-    ): SetAngleTaskPayload | null {
+        inputsState: Dictionary<ControllerInputModel>,
+    ): { payload: SetAngleTaskPayload; inputTimestamp: number } | null {
         if (binding.operationMode !== HubIoOperationMode.SetAngle) {
             return null;
         }
+
+        const inputRecord = inputsState[controllerInputIdFn(binding)];
+        const inputValue = inputRecord?.value ?? 0;
+
         if (inputValue < this.inputValueThreshold) {
             return null;
         }
-        return {
+        const payload: SetAngleTaskPayload = {
             taskType: PortCommandTaskType.SetAngle,
             angle: binding.angle,
             speed: binding.speed,
@@ -25,6 +31,8 @@ export class SetAngleTaskBuilder extends BaseTaskBuilder {
             useAccelerationProfile: binding.useAccelerationProfile,
             useDecelerationProfile: binding.useDecelerationProfile
         };
+
+        return { payload, inputTimestamp: inputRecord?.timestamp ?? Date.now() };
     }
 
     protected buildCleanupPayload(

@@ -37,7 +37,8 @@ function readGamepads(
                         controllerId: connection.controllerId,
                         inputType: ControllerInputType.Axis,
                         inputId: axisIndex.toString(),
-                        value
+                        value,
+                        timestamp: Date.now()
                     }))
                 );
             });
@@ -57,7 +58,8 @@ function readGamepads(
                         controllerId: connection.controllerId,
                         inputType,
                         inputId: buttonIndex.toString(),
-                        value
+                        value,
+                        timestamp: Date.now()
                     }))
                 );
             });

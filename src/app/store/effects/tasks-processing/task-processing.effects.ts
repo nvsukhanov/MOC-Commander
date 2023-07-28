@@ -8,10 +8,10 @@ import { BindingTaskComposingData, CONTROL_SCHEME_SELECTORS, PORT_TASKS_SELECTOR
 import { ControlSchemeBinding, ControlSchemeModel, PortCommandTask } from '../../models';
 import { attachedIosIdFn } from '../../reducers';
 import { HubStorageService } from '../../hub-storage.service';
-import { taskFilter } from './task-filter';
 import { ITaskBuilder, TASK_BUILDER } from './i-task-builder';
 import { ITaskQueueCompressor, TASK_QUEUE_COMPRESSOR } from './i-task-queue-compressor';
 import { ITaskRunner, TASK_RUNNER } from './i-task-runner';
+import { taskFilter } from './task-filter';
 
 @Injectable()
 export class TaskProcessingEffects {
@@ -37,18 +37,21 @@ export class TaskProcessingEffects {
                 hubId: composingData.hubId,
                 portId: composingData.portId,
                 queue: composingData.queue,
-                tasks: this.composeTasksForBindingGroup(composingData)
+                tasks: this.composeTasksForBindingGroup(composingData),
+                lastExecutedTask: composingData.lastExecutedTask,
+                runningTask: composingData.runningTask
             })),
             filter(({ tasks }) => tasks.length > 0),
-            map((createdTasksData) => {
-                const nonCompressedCombinedQueue = [ ...createdTasksData.queue, ...createdTasksData.tasks ];
+            map(({ queue, tasks, lastExecutedTask, runningTask, portId, hubId }) => {
+                const nonCompressedCombinedQueue = [ ...queue, ...tasks ];
                 const compressedQueue = this.taskQueueCompressor.compress(nonCompressedCombinedQueue);
-                const shouldUpdateQueue = compressedQueue.length !== createdTasksData.queue.length
-                    || compressedQueue.some((task, index) => task.hash !== createdTasksData.queue[index]?.hash);
+                const filteredQueue = this.filterQueue(compressedQueue, runningTask, lastExecutedTask);
+                const shouldUpdateQueue = filteredQueue.length !== queue.length
+                    || filteredQueue.some((task, index) => task.hash !== queue[index]?.hash);
                 return {
-                    hubId: createdTasksData.hubId,
-                    portId: createdTasksData.portId,
-                    queue: compressedQueue,
+                    hubId,
+                    portId,
+                    queue: filteredQueue,
                     shouldUpdateQueue
                 };
             }),
@@ -132,6 +135,9 @@ export class TaskProcessingEffects {
                 const setDecProfileTasks = scheme.portConfigs.filter((i) => i.useDecelerationProfile).map((i) => {
                     return this.hubStorage.get(i.hubId).motors.setDecelerationTime(i.portId, i.decelerationTimeMs);
                 });
+                if (setAccProfileTasks.length === 0 && setDecProfileTasks.length === 0) {
+                    return of({ schemeId: scheme.id });
+                }
                 return forkJoin([
                     ...setAccProfileTasks,
                     ...setDecProfileTasks
@@ -196,25 +202,39 @@ export class TaskProcessingEffects {
         composingData: BindingTaskComposingData
     ): PortCommandTask[] {
         const result: PortCommandTask[] = [];
-        let previousTask: PortCommandTask | null = composingData.runningTask
+        const previousTask: PortCommandTask | null = composingData.runningTask
             || composingData.lastExecutedTask
             || composingData.queue.at(-1)
             || null;
 
-        for (const { value, binding } of composingData.bindingWithValue) {
+        for (const binding of composingData.bindings) {
             const task = this.taskBuilder.buildTask(
                 binding,
-                value,
+                composingData.inputState,
                 composingData.encoderOffset,
                 previousTask
             );
             if (task) {
-                if (taskFilter(task, previousTask)) {
-                    result.push(task);
-                    previousTask = task;
-                }
+                result.push(task);
             }
         }
-        return result;
+        return result.sort((a, b) => a.inputTimestamp - b.inputTimestamp);
+    }
+
+    private filterQueue(
+        queue: PortCommandTask[],
+        runningTask: PortCommandTask | null,
+        lastExecutedTask: PortCommandTask | null
+    ): PortCommandTask[] {
+        let previousTask: PortCommandTask | null = runningTask || lastExecutedTask || null;
+        const resultingQueue: PortCommandTask[] = new Array(queue.length);
+        for (let i = 0; i < queue.length; i++) {
+            const task = queue[i];
+            if (taskFilter(task, previousTask)) {
+                resultingQueue[i] = task;
+                previousTask = task;
+            }
+        }
+        return resultingQueue.filter((i) => !!i);
     }
 }

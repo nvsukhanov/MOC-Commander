@@ -1,12 +1,13 @@
 import { InjectionToken } from '@angular/core';
+import { Dictionary } from '@ngrx/entity';
 
-import { ControlSchemeBinding, PortCommandTask } from '../../models';
+import { ControlSchemeBinding, ControllerInputModel, PortCommandTask } from '../../models';
 import { taskBuilderFactory } from './task-builder';
 
 export interface ITaskBuilder {
     buildTask(
         binding: ControlSchemeBinding,
-        inputValue: number,
+        inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
         previousTask: PortCommandTask | null
     ): PortCommandTask | null;
