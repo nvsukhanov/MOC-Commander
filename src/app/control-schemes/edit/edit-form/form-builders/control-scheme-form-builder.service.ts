@@ -12,6 +12,10 @@ import { StepperOutputControlFormBuilderService } from './stepper-output-control
 
 @Injectable({ providedIn: 'root' })
 export class ControlSchemeFormBuilderService {
+    private readonly maxAccelerationTimeMs: number = 10000;
+
+    private readonly maxDecelerationTimeMs: number = 10000;
+
     constructor(
         private readonly formBuilder: FormBuilder,
         private readonly translocoService: TranslocoService,
@@ -54,7 +58,7 @@ export class ControlSchemeFormBuilderService {
             ),
             accelerationTimeMs: this.formBuilder.control<number>(
                 initialState?.accelerationTimeMs ?? this.config.defaultAccelerationTimeMs,
-                { nonNullable: true }
+                { nonNullable: true, validators: [ Validators.required, Validators.min(0), Validators.max(this.maxAccelerationTimeMs) ] }
             ),
             useDecelerationProfile: this.formBuilder.control<boolean>(
                 initialState?.useDecelerationProfile ?? false,
@@ -62,7 +66,7 @@ export class ControlSchemeFormBuilderService {
             ),
             decelerationTimeMs: this.formBuilder.control<number>(
                 initialState?.decelerationTimeMs ?? this.config.defaultDecelerationTimeMs,
-                { nonNullable: true }
+                { nonNullable: true, validators: [ Validators.required, Validators.min(0), Validators.max(this.maxDecelerationTimeMs) ] }
             ),
         });
     }

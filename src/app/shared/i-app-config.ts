@@ -18,8 +18,8 @@ export const APP_CONFIG = new InjectionToken<IAppConfig>('APP_CONFIG', {
         hubBatteryPollInterval: 20000,
         hubRssiPollInterval: 10000,
         logLevel: isDevMode() ? LogLevel.Debug : LogLevel.Warning,
-        defaultAccelerationTimeMs: 1000,
-        defaultDecelerationTimeMs: 1000,
+        defaultAccelerationTimeMs: 100,
+        defaultDecelerationTimeMs: 100,
     }),
     providedIn: 'root'
 });
