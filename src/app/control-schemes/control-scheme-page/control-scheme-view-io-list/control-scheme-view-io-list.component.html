@@ -1,0 +1,44 @@
+<ng-container *ngIf="!isEmpty">
+    <mat-tree [dataSource]="dataSource"
+              [treeControl]="treeControl"
+              class="control-scheme-tree"
+    >
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+            <app-binding-tree-node [treeNodeData]="node"></app-binding-tree-node>
+        </mat-tree-node>
+        <mat-nested-tree-node *matTreeNodeDef="let portNodeData; when: isPort">
+            <div class="mat-tree-node">
+                <button mat-icon-button
+                        matTreeNodeToggle
+                        [attr.aria-label]="'controlScheme.expandCollapseIo' | transloco: portNodeData"
+                >
+                    <mat-icon class="mat-icon-rtl-mirror"
+                              [fontIcon]="treeControl.isExpanded(portNodeData) ? 'expand_more' : 'chevron_right'"
+                    ></mat-icon>
+                </button>
+                <app-io-tree-node [node]="portNodeData"></app-io-tree-node>
+            </div>
+            <div [class.control-scheme-tree__node_invisible]="!treeControl.isExpanded(portNodeData)"
+                 role="group">
+                <ng-container matTreeNodeOutlet></ng-container>
+            </div>
+        </mat-nested-tree-node>
+        <mat-nested-tree-node *matTreeNodeDef="let hubNodeData; when: isHub">
+            <div class="mat-tree-node">
+                <button mat-icon-button
+                        matTreeNodeToggle
+                        [attr.aria-label]="'controlScheme.expandCollapseHub' | transloco: hubNodeData"
+                >
+                    <mat-icon class="mat-icon-rtl-mirror"
+                              [fontIcon]="treeControl.isExpanded(hubNodeData) ? 'expand_more' : 'chevron_right'"
+                    ></mat-icon>
+                </button>
+                <app-hub-tree-node [hub]="hubNodeData"></app-hub-tree-node>
+            </div>
+            <div [class.control-scheme-tree__node_invisible]="!treeControl.isExpanded(hubNodeData)"
+                 role="group">
+                <ng-container matTreeNodeOutlet></ng-container>
+            </div>
+        </mat-nested-tree-node>
+    </mat-tree>
+</ng-container>

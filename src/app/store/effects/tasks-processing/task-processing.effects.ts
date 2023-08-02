@@ -129,12 +129,27 @@ export class TaskProcessingEffects {
             map(([ , scheme ]) => scheme),
             filter((scheme): scheme is ControlSchemeModel => !!scheme),
             switchMap((scheme) => {
-                const setAccProfileTasks = scheme.portConfigs.filter((i) => i.useAccelerationProfile).map((i) => {
-                    return this.hubStorage.get(i.hubId).motors.setAccelerationTime(i.portId, i.accelerationTimeMs);
-                });
-                const setDecProfileTasks = scheme.portConfigs.filter((i) => i.useDecelerationProfile).map((i) => {
-                    return this.hubStorage.get(i.hubId).motors.setDecelerationTime(i.portId, i.decelerationTimeMs);
-                });
+                const ioIdsWithAccelerationProfiles = new Set(
+                    scheme.bindings.filter((b) => b.useAccelerationProfile).map((b) => attachedIosIdFn(b))
+                );
+                const setAccProfileTasks = scheme.portConfigs.filter((portConfig) => ioIdsWithAccelerationProfiles.has(attachedIosIdFn(portConfig)))
+                                                 .map((portConfig) => {
+                                                     return this.hubStorage
+                                                                .get(portConfig.hubId)
+                                                                .motors
+                                                                .setAccelerationTime(portConfig.portId, portConfig.accelerationTimeMs);
+                                                 });
+
+                const ioIdsWithDecelerationProfiles = new Set(
+                    scheme.bindings.filter((b) => b.useDecelerationProfile).map((b) => attachedIosIdFn(b))
+                );
+                const setDecProfileTasks = scheme.portConfigs.filter((portConfig) => ioIdsWithDecelerationProfiles.has(attachedIosIdFn(portConfig)))
+                                                 .map((portConfig) => {
+                                                     return this.hubStorage
+                                                                .get(portConfig.hubId)
+                                                                .motors
+                                                                .setDecelerationTime(portConfig.portId, portConfig.decelerationTimeMs);
+                                                 });
                 if (setAccProfileTasks.length === 0 && setDecProfileTasks.length === 0) {
                     return of({ schemeId: scheme.id });
                 }

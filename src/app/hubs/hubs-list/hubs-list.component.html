@@ -19,6 +19,6 @@
     </ul>
 
     <ng-template #noConnectedHubs>
-        <h3 class="no-hub-connected-notification-header">{{ 'hub.noneConnected' | transloco }}</h3>
+        <app-hint [hintL10nKey]="'hub.noneConnected'"></app-hint>
     </ng-template>
 </ng-container>

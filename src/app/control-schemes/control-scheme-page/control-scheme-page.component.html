@@ -1,0 +1,59 @@
+<mat-card *ngIf="selectedScheme$ | ngrxPush; let scheme; else schemeNotFound">
+
+    <mat-card-header>
+        <mat-card-title>
+            <app-control-scheme-general-info [name]="scheme.name"
+                                             (nameChange)="onUpdateSchemeName($event)"
+            ></app-control-scheme-general-info>
+        </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+        <section *ngIf="scheme.bindings.length; else bindingsListEmpty">
+            <app-control-scheme-view-io-list [tree]="schemeViewTree$ | ngrxPush"></app-control-scheme-view-io-list>
+        </section>
+    </mat-card-content>
+
+    <div *appFeatureToolbarControls>
+        <ng-container *ngrxLet="canRunScheme$; let canRunScheme">
+            <span class="spacer"></span>
+
+            <button mat-raised-button
+                    class="toolbar-button"
+                    [disabled]="!canRunScheme"
+                    (click)="runScheme(scheme.id)"
+            >
+                {{ 'controlScheme.run' | transloco }}
+            </button>
+
+            <button mat-raised-button
+                    class="toolbar-button"
+                    [disabled]="!(isCurrentControlSchemeRunning$ | ngrxPush)"
+                    (click)="stopRunningScheme()"
+            >
+                {{ 'controlScheme.stop' | transloco }}
+            </button>
+
+            <button mat-raised-button
+                    class="toolbar-button"
+                    (click)="addBinding()"
+            >
+                {{ 'controlScheme.addBinding' | transloco }}
+            </button>
+            <button mat-raised-button
+                    class="toolbar-button"
+                    [color]="'warn'"
+                    (click)="onDelete()">
+                {{ 'controlScheme.delete' | transloco }}
+            </button>
+        </ng-container>
+    </div>
+</mat-card>
+
+<ng-template #schemeNotFound>
+    <h3 class="scheme-is-not-found">{{ 'controlScheme.notFound' | transloco }}</h3>
+</ng-template>
+
+<ng-template #bindingsListEmpty>
+    <app-hint [hintL10nKey]="'controlScheme.bindingsListEmptyNotification'"></app-hint>
+</ng-template>

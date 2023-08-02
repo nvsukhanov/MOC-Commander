@@ -28,7 +28,6 @@ import {
 import {
     AttachedIOsEffects,
     AttachedIoModesEffects,
-    ControlSchemeEffects,
     GAMEPAD_CONTROLLER_EFFECTS,
     HubAttachedIosStateEffects,
     HubPortModeInfoEffects,
@@ -92,7 +91,6 @@ export function provideApplicationStore(): EnvironmentProviders {
             HubPortModeInfoEffects,
             AttachedIoModesEffects,
             HubsEffects,
-            ControlSchemeEffects,
             TaskProcessingEffects,
             NotificationsEffects,
             HubAttachedIosStateEffects,

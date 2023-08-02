@@ -1,0 +1,27 @@
+<ng-container *ngrxLet="controlSchemes$; let controlSchemes">
+    <mat-card *ngIf="controlSchemes?.length; else noControlSchemes">
+        <mat-card-content>
+            <mat-nav-list>
+                <a *ngFor="let scheme of controlSchemes; trackBy: trackSchemeById"
+                   mat-list-item
+                   [routerLink]="scheme | controlSchemeViewUrl"
+                >
+                    {{ scheme.name }}
+                </a>
+            </mat-nav-list>
+        </mat-card-content>
+    </mat-card>
+
+    <ng-template #noControlSchemes>
+        <app-hint [hintL10nKey]="'controlScheme.noControlSchemes'"></app-hint>
+    </ng-template>
+</ng-container>
+
+<div *appFeatureToolbarControls>
+    <span class="spacer"></span>
+    <button mat-raised-button
+            (click)="onCreate()"
+    >
+        {{ 'controlScheme.create' | transloco }}
+    </button>
+</div>

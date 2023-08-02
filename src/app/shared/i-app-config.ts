@@ -7,8 +7,8 @@ export interface IAppConfig {
     readonly hubBatteryPollInterval: number;
     readonly hubRssiPollInterval: number;
     readonly logLevel: LogLevel;
-    readonly defaultAccelerationTimeMs: number;
-    readonly defaultDecelerationTimeMs: number;
+    readonly defaultAccDecProfileTimeMs: number;
+    readonly maxAccDecProfileTimeMs: number;
 }
 
 export const APP_CONFIG = new InjectionToken<IAppConfig>('APP_CONFIG', {
@@ -18,8 +18,8 @@ export const APP_CONFIG = new InjectionToken<IAppConfig>('APP_CONFIG', {
         hubBatteryPollInterval: 20000,
         hubRssiPollInterval: 10000,
         logLevel: isDevMode() ? LogLevel.Debug : LogLevel.Warning,
-        defaultAccelerationTimeMs: 100,
-        defaultDecelerationTimeMs: 100,
+        defaultAccDecProfileTimeMs: 100,
+        maxAccDecProfileTimeMs: 10000,
     }),
     providedIn: 'root'
 });

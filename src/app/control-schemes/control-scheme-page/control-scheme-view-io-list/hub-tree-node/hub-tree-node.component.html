@@ -1,0 +1,10 @@
+<app-hub-inline-view *ngIf="hub"
+                     [name]="hub.name"
+                     [hubId]="hub.hubId"
+                     [batteryLevel]="hub.batteryLevel"
+                     [rssiLevel]="hub.rssi"
+                     [isButtonPressed]="hub.isButtonPressed"
+                     [hasCommunication]="hub.hasCommunication"
+                     [isConnected]="hub.isConnected"
+                     [showControls]="false"
+></app-hub-inline-view>

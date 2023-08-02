@@ -1,0 +1,26 @@
+<ng-container *ngIf="node">
+    <app-io-inline-view [portId]="node.portId"
+                        [ioType]="node.ioType"
+                        [isConnected]="node.isConnected"
+    ></app-io-inline-view>
+    <a *ngIf="node.useAccelerationProfile || node.useDecelerationProfile"
+       class="mat-mdc-button port-config"
+       [routerLink]="portConfigRoute"
+    >
+        <span *ngIf="node.useAccelerationProfile"
+              class="port-profile"
+              [title]="'controlScheme.accelerationTimeMs' | transloco"
+        >
+            <mat-icon [fontIcon]="'north_east'"></mat-icon>
+            {{ node.accelerationTimeMs }}{{ 'controlScheme.profileTimingPostfix' | transloco }}
+        </span>
+        <span *ngIf="node.useDecelerationProfile"
+              class="port-profile"
+              [title]="'controlScheme.decelerationTimeMs' | transloco"
+        >
+            <mat-icon [fontIcon]="'south_east'"></mat-icon>
+            {{ node.decelerationTimeMs }}{{ 'controlScheme.profileTimingPostfix' | transloco }}
+        </span>
+    </a>
+
+</ng-container>

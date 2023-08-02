@@ -1,0 +1,41 @@
+<ng-container *ngIf="isEditing; else view">
+    <section class="info">
+        <form class="info__name-edit-form"
+              (submit)="onSave($event)"
+        >
+            <mat-form-field class="info__name-edit-field">
+                <mat-label>{{ 'controlScheme.nameField' | transloco }}</mat-label>
+                <input matInput
+                       type="text"
+                       [formControl]="nameFormControl"
+                />
+                <button mat-icon-button
+                        matSuffix
+                        [disabled]="!canSave()"
+                        (click)="onSave($event)"
+                >
+                    <mat-icon [fontIcon]="'save'"></mat-icon>
+                </button>
+                <button mat-icon-button
+                        matSuffix
+                        (click)="onCancel()"
+                >
+                    <mat-icon [fontIcon]="'cancel'"></mat-icon>
+                </button>
+            </mat-form-field>
+        </form>
+    </section>
+</ng-container>
+
+<ng-template #view>
+    <section class="info">
+        <h2 class="info__name">
+            {{ name }}
+        </h2>
+        <button mat-icon-button
+                (click)="onEditMode()"
+        >
+            <mat-icon [fontIcon]="'edit'"></mat-icon>
+        </button>
+    </section>
+</ng-template>

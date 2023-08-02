@@ -1,0 +1,54 @@
+<mat-card *ngIf="portConfig$ | ngrxPush; let portConfig; else notFound"
+          class="port-configs"
+>
+    <mat-card-header>
+        <mat-card-title>
+            {{ 'controlScheme.portConfigTitle' | transloco }}
+        </mat-card-title>
+        <mat-card-subtitle>
+            {{ 'controlScheme.portConfigSubtitle' | transloco: portConfig }}
+        </mat-card-subtitle>
+    </mat-card-header>
+    <form (submit)="onSubmit($event)">
+        <mat-card-content class="port-configs__content">
+            <mat-form-field>
+                <mat-label>{{ 'controlScheme.accelerationTimeMs' | transloco }}</mat-label>
+                <input type="number"
+                       matInput
+                       [min]="minAccDecProfileTimeMs"
+                       [max]="maxAccDecProfileTimeMs"
+                       [formControl]="formGroup.controls.accelerationTimeMs"
+                />
+                <span matTextSuffix>{{ 'controlScheme.profileTimingPostfix' | transloco }}</span>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>{{ 'controlScheme.decelerationTimeMs' | transloco }}</mat-label>
+                <input type="number"
+                       matInput
+                       [min]="minAccDecProfileTimeMs"
+                       [max]="maxAccDecProfileTimeMs"
+                       [formControl]="formGroup.controls.decelerationTimeMs"
+                />
+                <span matTextSuffix>{{ 'controlScheme.profileTimingPostfix' | transloco }}</span>
+            </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions [align]="'end'">
+            <button type="submit"
+                    mat-button
+                    [disabled]="isSubmitDisabled"
+            >
+                {{ 'controlScheme.portConfigSaveButtonTitle' | transloco }}
+            </button>
+            <button type="button"
+                    mat-button
+                    (click)="onCancel()"
+            >
+                {{ 'controlScheme.portConfigCancelButtonTitle' | transloco }}
+            </button>
+        </mat-card-actions>
+    </form>
+</mat-card>
+
+<ng-template #notFound>
+    <app-hint [hintL10nKey]="'controlScheme.portConfigNotFound'"></app-hint>
+</ng-template>

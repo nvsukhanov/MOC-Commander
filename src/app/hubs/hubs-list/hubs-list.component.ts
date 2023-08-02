@@ -6,10 +6,9 @@ import { NgForOf, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
 import { Observable } from 'rxjs';
 import { HUBS_ACTIONS } from '@app/store';
-import { ConfirmationDialogModule, ConfirmationDialogService, HubInlineViewComponent } from '@app/shared';
+import { ConfirmationDialogModule, ConfirmationDialogService, HintComponent, HubInlineViewComponent } from '@app/shared';
 
 import { HUBS_LIST_SELECTORS, HubListViewModel } from './hubs-list.selectors';
 
@@ -28,8 +27,8 @@ import { HUBS_LIST_SELECTORS, HubListViewModel } from './hubs-list.selectors';
         MatButtonModule,
         MatIconModule,
         MatCardModule,
-        MatDividerModule,
-        ConfirmationDialogModule
+        ConfirmationDialogModule,
+        HintComponent
     ],
     providers: [],
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -60,7 +59,7 @@ export class HubsListComponent {
     public forgetHub(
         hubId: string
     ): void {
-        this.confirmationService.show(
+        this.confirmationService.confirm(
             this.translocoService.selectTranslate('hub.forgerHubNotificationConfirmationTitle'),
             {
                 content$: this.translocoService.selectTranslate('hub.forgerHubNotificationConfirmationContent'),

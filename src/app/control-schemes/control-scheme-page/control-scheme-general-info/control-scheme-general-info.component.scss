@@ -1,0 +1,15 @@
+.info {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    height: 56px;
+
+    &__name {
+        margin: 0;
+
+        &-edit-field,
+        &-edit-form {
+            width: 100%;
+        }
+    }
+}
