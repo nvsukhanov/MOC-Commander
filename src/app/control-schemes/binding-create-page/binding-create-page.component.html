@@ -1,0 +1,21 @@
+<ng-container *ngIf="availabilityData$ | ngrxPush; let availabilityData">
+    <app-binding [availabilityData]="availabilityData"
+                 #binding="appBindingEdit"
+    ></app-binding>
+
+    <div *appFeatureToolbarControls>
+        <button mat-raised-button
+                class="toolbar-button"
+                [disabled]="!(binding.canSave$ | ngrxPush)"
+                (click)="onSave(binding.getValue())">
+            {{ 'controlScheme.saveCreated' | transloco }}
+        </button>
+        <button mat-raised-button
+                class="toolbar-button"
+                (click)="onCancel()"
+        >
+            {{ 'controlScheme.cancelCreate' | transloco }}
+        </button>
+    </div>
+</ng-container>
+

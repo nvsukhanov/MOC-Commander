@@ -4,9 +4,7 @@ import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 export type ControlSchemePortConfig = {
     hubId: string;
     portId: number;
-    useAccelerationProfile: boolean;
     accelerationTimeMs: number;
-    useDecelerationProfile: boolean;
     decelerationTimeMs: number;
 };
 

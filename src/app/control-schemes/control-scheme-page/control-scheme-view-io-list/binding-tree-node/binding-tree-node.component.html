@@ -1,0 +1,31 @@
+<ng-container *ngIf="viewModel$ | ngrxPush; let viewModel">
+    <div class="binding__general-info">
+        <ng-container *ngIf="!viewModel.ioHasNoRequiredCapabilities; else ioCapabilitiesMismatch">
+            <a class="binding__operation-type mat-mdc-button"
+               [class.binding__operation-type_active]="viewModel.isActive"
+               [routerLink]="viewModel.controlSchemeId | bindingViewUrl: viewModel.bindingId"
+            >
+                {{ viewModel.operationMode | ioOperationTypeToL10nKey | transloco }}
+            </a>
+        </ng-container>
+        <ng-template #ioCapabilitiesMismatch>
+            <mat-error class="binding__operation-type">
+                {{ viewModel.operationMode | ioOperationTypeToL10nKey | transloco }}
+            </mat-error>
+            <span class="cdk-visually-hidden">
+                {{ 'controlScheme.ioCapabilitiesMismatch' | transloco }}
+            </span>
+        </ng-template>
+    </div>
+    <ng-container *ngFor="let controlData of viewModel.controlData">
+        <div class="binding__controls">
+            <app-full-controller-input-name class="binding__controls-label"
+                                            [class.binding__controls-label_disconnected]="!controlData.isControllerConnected"
+                                            [controllerId]="controlData.controllerId"
+                                            [inputId]="controlData.inputId"
+                                            [inputType]="controlData.inputType"
+                                            [showDisconnectedState]="true"
+            ></app-full-controller-input-name>
+        </div>
+    </ng-container>
+</ng-container>

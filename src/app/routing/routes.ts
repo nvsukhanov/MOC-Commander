@@ -5,9 +5,11 @@ export const ROUTE_PATHS = {
     controllers: 'controllers',
     hubs: 'hubs',
     controlSchemes: 'control-schemes',
+    binding: 'binding',
+    bindingCreate: 'binding-create',
+    portConfigEdit: 'port',
     hubEdit: 'edit',
     controlSchemeCreate: 'create',
-    controlSchemeEdit: 'edit',
     about: 'about',
     bluetoothUnavailable: 'bluetooth-unavailable',
     settings: 'settings'
@@ -64,24 +66,29 @@ export const ROUTES: Routes = [
         children: [
             {
                 path: '',
-                loadComponent: () => import('../control-schemes/list').then(m => m.ControlSchemeListComponent),
+                loadComponent: () => import('../control-schemes/control-scheme-list-page').then((m) => m.ControlSchemeListPageComponent),
                 pathMatch: 'full',
             },
             {
-                path: [ ROUTE_PATHS.controlSchemeCreate ].join('/'),
-                loadComponent: () => import('../control-schemes/create').then(m => m.ControlSchemeCreateComponent),
-                pathMatch: 'full'
-            },
-            {
-                path: [ ':id' ].join('/'),
-                loadComponent: () => import('../control-schemes/view').then(m => m.ControlSchemeViewComponent),
+                path: [ ':schemeId' ].join('/'),
+                loadComponent: () => import('../control-schemes/control-scheme-page').then((m) => m.ControlSchemePageComponent),
                 pathMatch: 'full',
             },
             {
-                path: [ ':id', ROUTE_PATHS.controlSchemeEdit ].join('/'),
-                loadComponent: () => import('../control-schemes/edit').then(m => m.ControlSchemeEditComponent),
+                path: [ ':schemeId', ROUTE_PATHS.binding, ':bindingId' ].join('/'),
+                loadComponent: () => import('../control-schemes/binding-edit-page').then((m) => m.BindingEditPageComponent),
                 pathMatch: 'full'
             },
+            {
+                path: [ ':schemeId', ROUTE_PATHS.bindingCreate ].join('/'),
+                loadComponent: () => import('../control-schemes/binding-create-page').then((m) => m.BindingCreatePageComponent),
+                pathMatch: 'full'
+            },
+            {
+                path: [ ':schemeId', ROUTE_PATHS.portConfigEdit, ':hubId', ':portId' ].join('/'),
+                loadComponent: () => import('../control-schemes/port-config-edit-page').then((m) => m.PortConfigEditPageComponent),
+                pathMatch: 'full'
+            }
         ]
     },
     {

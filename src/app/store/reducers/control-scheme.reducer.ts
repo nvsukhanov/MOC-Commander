@@ -1,8 +1,50 @@
-import { EntityState, createEntityAdapter } from '@ngrx/entity';
+import { EntityState, Update, createEntityAdapter } from '@ngrx/entity';
 import { createFeature, createReducer, on } from '@ngrx/store';
 
-import { ControlSchemeModel } from '../models';
+import { ControlSchemeBinding, ControlSchemeModel, ControlSchemePortConfig } from '../models';
 import { CONTROL_SCHEME_ACTIONS } from '../actions';
+import { attachedIosIdFn } from './attached-ios.reducer';
+
+const DEFAULT_ACCELERATION_PROFILE_TIME_MS = 1000;
+
+const DEFAULT_DECELERATION_PROFILE_TIME_MS = 1000;
+
+function createDefaultPortConfig(
+    { hubId, portId }: { hubId: string; portId: number },
+): ControlSchemePortConfig {
+    return {
+        hubId,
+        portId,
+        accelerationTimeMs: DEFAULT_ACCELERATION_PROFILE_TIME_MS,
+        decelerationTimeMs: DEFAULT_DECELERATION_PROFILE_TIME_MS,
+    };
+}
+
+function ensurePortConfigsAreUpToDate(
+    bindings: ControlSchemeBinding[],
+    portConfigs: ControlSchemePortConfig[]
+): ControlSchemePortConfig[] {
+    let result = [ ...portConfigs ];
+    const existingPortConfigIds = new Set(result.map((p) => attachedIosIdFn(p)));
+    const existingBindingIds = new Set(result.map((b) => attachedIosIdFn(b)));
+
+    const shouldRemovePortConfig = result.some((p) => !existingBindingIds.has(attachedIosIdFn(p)));
+    if (shouldRemovePortConfig) {
+        result = result.filter((p) => existingPortConfigIds.has(attachedIosIdFn(p)));
+    }
+
+    const shouldAddPortConfig = bindings.some((b) => !existingPortConfigIds.has(attachedIosIdFn(b)));
+    if (shouldAddPortConfig) {
+        result = result.concat(bindings
+            .filter((b) => !existingPortConfigIds.has(attachedIosIdFn(b)))
+            .map((b) => createDefaultPortConfig(b)));
+    }
+
+    if (shouldRemovePortConfig || shouldAddPortConfig) {
+        return result;
+    }
+    return portConfigs;
+}
 
 export enum ControlSchemeRunState {
     Idle,
@@ -27,22 +69,12 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
             runningState: ControlSchemeRunState.Idle,
             runningSchemeId: null as string | null
         }),
-        on(CONTROL_SCHEME_ACTIONS.create, (state, action): ControlSchemeState => {
+        on(CONTROL_SCHEME_ACTIONS.createControlScheme, (state, action): ControlSchemeState => {
             return CONTROL_SCHEME_ENTITY_ADAPTER.addOne({
-                id: action.scheme.id,
-                name: action.scheme.name,
-                portConfigs: action.scheme.portConfigs,
-                bindings: action.scheme.bindings,
-            }, state);
-        }),
-        on(CONTROL_SCHEME_ACTIONS.update, (state, action): ControlSchemeState => {
-            return CONTROL_SCHEME_ENTITY_ADAPTER.updateOne({
-                id: action.scheme.id,
-                changes: {
-                    name: action.scheme.name,
-                    portConfigs: action.scheme.portConfigs,
-                    bindings: action.scheme.bindings,
-                }
+                id: action.id,
+                name: action.name,
+                portConfigs: [],
+                bindings: [],
             }, state);
         }),
         on(CONTROL_SCHEME_ACTIONS.startScheme, (state): ControlSchemeState => ({
@@ -68,6 +100,91 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
             runningSchemeId: null,
             runningState: ControlSchemeRunState.Idle
         })),
-        on(CONTROL_SCHEME_ACTIONS.delete, (state, action): ControlSchemeState => CONTROL_SCHEME_ENTITY_ADAPTER.removeOne(action.id, state)),
+        on(CONTROL_SCHEME_ACTIONS.deleteControlScheme, (state, { id }): ControlSchemeState => CONTROL_SCHEME_ENTITY_ADAPTER.removeOne(id, state)),
+        on(CONTROL_SCHEME_ACTIONS.saveBinding, (state, { binding, schemeId }): ControlSchemeState => {
+            const scheme = state.entities[schemeId];
+            if (!scheme) {
+                return state;
+            }
+            const bindingIndex = scheme.bindings.findIndex((b) => b.id === binding.id);
+            if (bindingIndex === -1) {
+                return state;
+            }
+
+            const newBindings = [ ...scheme.bindings ];
+            newBindings[bindingIndex] = binding;
+            const update: Update<ControlSchemeModel> = {
+                id: schemeId,
+                changes: {
+                    bindings: newBindings,
+                }
+            };
+            const updatedPortConfigs = ensurePortConfigsAreUpToDate(newBindings, scheme.portConfigs);
+            if (updatedPortConfigs !== scheme.portConfigs) {
+                update.changes.portConfigs = updatedPortConfigs;
+            }
+            return CONTROL_SCHEME_ENTITY_ADAPTER.updateOne(update, state);
+        }),
+        on(CONTROL_SCHEME_ACTIONS.createBinding, (state, { binding, schemeId }): ControlSchemeState => {
+            const scheme = state.entities[schemeId];
+            if (!scheme) {
+                return state;
+            }
+            const nextBindings = [ ...scheme.bindings, binding ];
+            const update: Update<ControlSchemeModel> = {
+                id: schemeId,
+                changes: {
+                    bindings: nextBindings,
+                }
+            };
+            const updatedPortConfigs = ensurePortConfigsAreUpToDate(nextBindings, scheme.portConfigs);
+            if (updatedPortConfigs !== scheme.portConfigs) {
+                update.changes.portConfigs = updatedPortConfigs;
+            }
+            return CONTROL_SCHEME_ENTITY_ADAPTER.updateOne(update, state);
+        }),
+        on(CONTROL_SCHEME_ACTIONS.deleteBinding, (state, { schemeId, bindingId }): ControlSchemeState => {
+            const scheme = state.entities[schemeId];
+            if (!scheme) {
+                return state;
+            }
+            const update: Update<ControlSchemeModel> = {
+                id: schemeId,
+                changes: {}
+            };
+            update.changes.bindings = scheme.bindings.filter((b) => b.id !== bindingId);
+            const remainingIoIds = new Set(update.changes.bindings.map((b) => attachedIosIdFn(b)));
+            const shouldRemovePortConfig = scheme.portConfigs.some((p) => !remainingIoIds.has(attachedIosIdFn(p)));
+            if (shouldRemovePortConfig) {
+                update.changes.portConfigs = scheme.portConfigs.filter((p) => remainingIoIds.has(attachedIosIdFn(p)));
+            }
+            return CONTROL_SCHEME_ENTITY_ADAPTER.updateOne(update, state);
+        }),
+        on(CONTROL_SCHEME_ACTIONS.updateControlSchemeName, (state, { id, name }) => {
+            return CONTROL_SCHEME_ENTITY_ADAPTER.updateOne({
+                id,
+                changes: {
+                    name
+                }
+            }, state);
+        }),
+        on(CONTROL_SCHEME_ACTIONS.savePortConfig, (state, { portConfig, schemeId }): ControlSchemeState => {
+            const scheme = state.entities[schemeId];
+            if (!scheme) {
+                return state;
+            }
+            const portConfigIndex = scheme.portConfigs.findIndex((p) => p.portId === portConfig.portId && p.hubId === portConfig.hubId);
+            if (portConfigIndex === -1) {
+                return state;
+            }
+            const newPortConfigs = [ ...scheme.portConfigs ];
+            newPortConfigs[portConfigIndex] = portConfig;
+            return CONTROL_SCHEME_ENTITY_ADAPTER.updateOne({
+                id: schemeId,
+                changes: {
+                    portConfigs: newPortConfigs,
+                }
+            }, state);
+        })
     ),
 });

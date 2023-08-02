@@ -45,7 +45,42 @@ export class RoutesBuilderService {
         return [ this.baseHref, ROUTE_PATHS.controlSchemes, controlSchemeId ];
     }
 
-    public controlSchemeEdit(controlSchemeId: string): string[] {
-        return [ this.baseHref, ROUTE_PATHS.controlSchemes, controlSchemeId, ROUTE_PATHS.controlSchemeEdit ];
+    public bindingView(
+        controlSchemeId: string,
+        bindingId: string
+    ): string[] {
+        return [
+            this.baseHref,
+            ROUTE_PATHS.controlSchemes,
+            controlSchemeId,
+            ROUTE_PATHS.binding,
+            bindingId
+        ];
+    }
+
+    public bindingCreate(
+        controlSchemeId: string
+    ): string[] {
+        return [
+            this.baseHref,
+            ROUTE_PATHS.controlSchemes,
+            controlSchemeId,
+            ROUTE_PATHS.bindingCreate
+        ];
+    }
+
+    public portConfigEdit(
+        controlSchemeId: string,
+        hubId: string,
+        portId: number
+    ): string[] {
+        return [
+            this.baseHref,
+            ROUTE_PATHS.controlSchemes,
+            controlSchemeId,
+            ROUTE_PATHS.portConfigEdit,
+            hubId,
+            portId.toString()
+        ];
     }
 }

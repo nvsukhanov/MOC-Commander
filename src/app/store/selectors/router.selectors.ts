@@ -9,7 +9,7 @@ export const ROUTER_SELECTORS = {
     selectCurrentlyViewedSchemeId: createSelector(
         BASE_ROUTER_SELECTORS.selectCurrentRoute,
         (route: ActivatedRouteSnapshot | undefined): string | null => {
-            return route?.params?.['id'] ?? null;
+            return route?.params?.['schemeId'] ?? null;
         }
     ),
     selectCurrentlyEditedHubId: createSelector(
@@ -21,7 +21,13 @@ export const ROUTER_SELECTORS = {
     selectCurrentlyEditedSchemeId: createSelector(
         BASE_ROUTER_SELECTORS.selectCurrentRoute,
         (route: ActivatedRouteSnapshot | undefined): string | null => {
-            return route?.params?.['id'] ?? null;
+            return route?.params?.['schemeId'] ?? null;
+        }
+    ),
+    selectCurrentlyEditedBindingId: createSelector(
+        BASE_ROUTER_SELECTORS.selectCurrentRoute,
+        (route: ActivatedRouteSnapshot | undefined): string | null => {
+            return route?.params?.['bindingId'] ?? null;
         }
     ),
 } as const;

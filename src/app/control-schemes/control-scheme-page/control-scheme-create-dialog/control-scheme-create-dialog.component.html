@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>
+    {{ 'controlScheme.newSchemeDialogTitle' | transloco }}
+</h1>
+
+<form (submit)="onSubmit($event)">
+    <div mat-dialog-content>
+        <mat-form-field class="form-field">
+            <mat-label>{{ 'controlScheme.newSchemeDialogNameField' | transloco }}</mat-label>
+            <input matInput
+                   type="text"
+                   [formControl]="nameFormControl"
+            />
+        </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions
+         [align]="'end'"
+    >
+        <button mat-button
+                [disabled]="!canSubmit()"
+                (click)="onSubmit($event)"
+        >
+            {{ 'controlScheme.newSchemeDialogSubmitButtonTitle' | transloco }}
+        </button>
+        <button mat-button
+                type="button"
+                (click)="onCancel()"
+        >
+            {{ 'controlScheme.newSchemeDialogCancelButtonTitle' | transloco }}
+        </button>
+    </div>
+</form>

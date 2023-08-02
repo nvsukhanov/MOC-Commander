@@ -19,3 +19,4 @@ export * from './i-app-config';
 export * from './confirmation-dialog';
 export * from './hub-io-operation-mode';
 export * from './not-connected-inline-icon';
+export * from './hint';
