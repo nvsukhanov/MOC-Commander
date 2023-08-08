@@ -2,8 +2,8 @@ import { InjectionToken, isDevMode } from '@angular/core';
 import { LogLevel } from '@nvsukhanov/rxpoweredup';
 
 export interface IAppConfig {
-    readonly gamepadReadInterval: number;
     readonly gamepadConnectionReadInterval: number;
+    readonly gamepadAxisDefaultDeadZone: number;
     readonly hubBatteryPollInterval: number;
     readonly hubRssiPollInterval: number;
     readonly logLevel: LogLevel;
@@ -13,8 +13,8 @@ export interface IAppConfig {
 
 export const APP_CONFIG = new InjectionToken<IAppConfig>('APP_CONFIG', {
     factory: (): IAppConfig => ({
-        gamepadReadInterval: 100,
         gamepadConnectionReadInterval: 100,
+        gamepadAxisDefaultDeadZone: 0.1,
         hubBatteryPollInterval: 20000,
         hubRssiPollInterval: 10000,
         logLevel: isDevMode() ? LogLevel.Debug : LogLevel.Warning,

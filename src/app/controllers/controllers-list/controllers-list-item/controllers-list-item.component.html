@@ -1,4 +1,4 @@
-<mat-expansion-panel *ngIf="controllerSettingsComponent; else controllerWithoutSettings"
+<mat-expansion-panel *ngIf="controllerSettings; else controllerWithoutSettings"
                      class="controller-panel">
     <mat-expansion-panel-header>
         <mat-panel-title>
@@ -11,12 +11,8 @@
             {{ 'controllerProfiles.settings' | transloco }}
         </mat-panel-description>
     </mat-expansion-panel-header>
-    <section *ngIf="controllerSettingsComponent"
-             class="controller-panel-settings">
-        <ng-container [appControllerSettingsRender]="controllerSettingsComponent"
-                      [controllerSettings]="controllerSettings"
-                      (settingsChanges)="controllerSettingsUpdate($event)"
-        ></ng-container>
+    <section class="controller-panel-settings">
+        <app-controller-settings-container [controllerSettings]="controllerSettings"></app-controller-settings-container>
     </section>
 </mat-expansion-panel>
 

@@ -9,13 +9,11 @@ import { Observable, combineLatest, map, of, startWith, switchMap } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CONTROL_SCHEME_ACTIONS } from '@app/store';
-import { HubIoOperationMode } from '@app/shared';
+import { HubIoOperationMode, SliderControlComponent, ToggleControlComponent } from '@app/shared';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { CalibrationResult, CalibrationResultType, ServoCalibrationDialogComponent } from '../servo-calibration-dialog';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
-import { BindingControlSliderComponent } from '../control-slider';
-import { BindingControlToggleComponent } from '../control-toggle';
 import { BINDING_EDIT_SELECTORS } from '../binding-edit.selectors';
 import { ServoBindingForm } from '../types';
 
@@ -31,8 +29,8 @@ import { ServoBindingForm } from '../types';
         MatIconModule,
         PushPipe,
         MatDialogModule,
-        BindingControlSliderComponent,
-        BindingControlToggleComponent,
+        SliderControlComponent,
+        ToggleControlComponent,
         BindingControlSelectControllerComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush

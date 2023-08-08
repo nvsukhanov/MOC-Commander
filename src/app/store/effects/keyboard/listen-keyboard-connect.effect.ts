@@ -2,7 +2,7 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { inject } from '@angular/core';
 import { fromEvent, map, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { ControllerType, WINDOW } from '@app/shared';
+import { WINDOW } from '@app/shared';
 import { CONTROLLERS_ACTIONS, CONTROLLER_SELECTORS } from '@app/store';
 
 import { ControllerProfileFactoryService } from '../../../controller-profiles';
@@ -20,10 +20,11 @@ export const LISTEN_KEYBOARD_CONNECT = createEffect((
         switchMap(() => fromEvent(window.document, KEY_DOWN_EVENT)),
         concatLatestFrom(() => store.select(CONTROLLER_SELECTORS.selectKeyboard)),
         map(([ , knownKeyboard ]) => {
-            const profileUid = controllerProfileFactory.getProfile(ControllerType.Keyboard).uid;
+            const controllerProfile = controllerProfileFactory.getKeyboardProfile();
+            const profileUid = controllerProfile.uid;
             return knownKeyboard
                    ? CONTROLLERS_ACTIONS.keyboardConnected({ profileUid })
-                   : CONTROLLERS_ACTIONS.keyboardDiscovered({ profileUid });
+                   : CONTROLLERS_ACTIONS.keyboardDiscovered({ profileUid, settings: controllerProfile.getDefaultSettings() });
         }),
         take(1)
     );

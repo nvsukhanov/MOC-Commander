@@ -20,3 +20,4 @@ export * from './confirmation-dialog';
 export * from './hub-io-operation-mode';
 export * from './not-connected-inline-icon';
 export * from './hint';
+export * from './controls';

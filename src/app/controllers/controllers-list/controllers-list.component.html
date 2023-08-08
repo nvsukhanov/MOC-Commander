@@ -1,6 +1,6 @@
 <ng-container *ngrxLet="controllersWithSettings$ as controllersWithSettings">
     <ng-container *ngIf="controllersWithSettings.length; else noConnectedControllers">
-        <p class="detect-controller-notification-tips">{{ 'controller.detectControllerTip' | transloco }}</p>
+        <app-hint [hintL10nKey]="'controller.detectControllerTip'"></app-hint>
         <ul>
             <li *ngFor="let controllerWithSettings of controllersWithSettings; trackBy: controllerTrackById"
                 class="card-list-item"

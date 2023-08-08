@@ -1,0 +1,53 @@
+.axis-configuration {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        min-width: 250px;
+        flex: 1;
+
+        &-title {
+            flex-shrink: 1;
+            white-space: nowrap;
+            font-size: 20px;
+        }
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: row;
+        min-width: 250px;
+        flex: 1;
+    }
+
+    &__items {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        gap: 20px 0;
+        margin: 20px 0;
+        min-width: 250px;
+    }
+
+    &__item {
+        min-width: 250px;
+        width: 100%;
+    }
+
+    &__input-output-diagram {
+        height: 40px;
+        min-width: 250px;
+        max-width: 600px;
+
+        &-container {
+            padding: 8px;
+            border-radius: 5px;
+        }
+    }
+
+}

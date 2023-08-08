@@ -3,7 +3,8 @@ import { ControllerType } from '@app/shared';
 
 import { CONTROLLER_CONNECTION_ADAPTER, CONTROLLER_CONNECTION_FEATURE } from '../reducers';
 import { CONTROLLER_SELECTORS } from './controllers.selectors';
-import { GamepadConnectionModel, GamepadControllerModel } from '../models';
+import { GamepadConnectionModel } from '../models';
+import { CONTROLLER_SETTINGS_SELECTORS } from './controller-settings.selectors';
 
 const SELECT_ENTITIES = createSelector(
     CONTROLLER_CONNECTION_FEATURE.selectControllerConnectionsState,
@@ -35,12 +36,13 @@ export const CONTROLLER_CONNECTION_SELECTORS = {
     selectGamepadConnections: createSelector(
         SELECT_ALL,
         CONTROLLER_SELECTORS.selectEntities,
-        (allConnections, controllerEntities) => {
+        CONTROLLER_SETTINGS_SELECTORS.selectEntities,
+        (allConnections, controllerEntities, settings) => {
             return allConnections.filter((connection) => controllerEntities[connection.controllerId]?.controllerType === ControllerType.Gamepad)
                                  .map((connection) => ({
                                      connection: connection as GamepadConnectionModel,
-                                     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                                     gamepad: controllerEntities[connection.controllerId]! as GamepadControllerModel
+                                     gamepad: controllerEntities[connection.controllerId],
+                                     settings: settings[connection.controllerId]
                                  }));
         }
     ),

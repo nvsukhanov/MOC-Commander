@@ -3,12 +3,10 @@ import { NgIf } from '@angular/common';
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { merge } from 'rxjs';
 import { TranslocoModule } from '@ngneat/transloco';
-import { ControllerInputType, HubIoOperationMode } from '@app/shared';
+import { ControllerInputType, HubIoOperationMode, SliderControlComponent, ToggleControlComponent } from '@app/shared';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
-import { BindingControlSliderComponent } from '../control-slider';
-import { BindingControlToggleComponent } from '../control-toggle';
 import { LinearBindingForm } from '../types';
 
 @Component({
@@ -18,8 +16,8 @@ import { LinearBindingForm } from '../types';
     styleUrls: [ './binding-linear-edit.component.scss' ],
     imports: [
         NgIf,
-        BindingControlSliderComponent,
-        BindingControlToggleComponent,
+        SliderControlComponent,
+        ToggleControlComponent,
         BindingControlSelectControllerComponent,
         TranslocoModule
     ],

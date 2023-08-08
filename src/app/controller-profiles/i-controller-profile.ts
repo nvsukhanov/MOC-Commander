@@ -1,16 +1,12 @@
 import { Observable } from 'rxjs';
-import { Type } from '@angular/core';
-import { ControllerSettingsModel } from '@app/store';
 
-import { IControllerSettingsComponent } from './i-controller-settings-component';
+import { ControllerSettings } from './controller-settings';
 
-export interface IControllerProfile<TSettings extends ControllerSettingsModel = ControllerSettingsModel> {
-    readonly settingsComponent?: Type<IControllerSettingsComponent<TSettings>>;
-
+export interface IControllerProfile {
     readonly uid: string;
 
     readonly nameL10nKey: string;
-
+    
     readonly buttonStateL10nKey: string;
 
     readonly axisStateL10nKey: string;
@@ -20,4 +16,6 @@ export interface IControllerProfile<TSettings extends ControllerSettingsModel = 
     getButtonName$(inputId: string): Observable<string>;
 
     getAxisName$(inputId: string): Observable<string>;
+
+    getDefaultSettings(): ControllerSettings;
 }

@@ -9,6 +9,7 @@ import { ScreenSizeObserverService } from '@app/shared';
 import { CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS } from '../actions';
 import { ControllerProfileFactoryService } from '../../controller-profiles';
 import { CONTROLLER_SELECTORS } from '../selectors';
+import { ControllerModel } from '../models';
 
 @Injectable()
 export class NotificationsEffects {
@@ -72,10 +73,10 @@ export class NotificationsEffects {
         return this.actions$.pipe(
             ofType(CONTROLLERS_ACTIONS.gamepadDisconnected),
             concatLatestFrom((action) => this.store.select(CONTROLLER_SELECTORS.selectById(action.id))),
-            filter(([ , controllerModel ]) => !!controllerModel),
-            switchMap(([ , controllerModel ]) => {
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                const controllerProfile = this.controllerProfilesFactory.getByProfileUid(controllerModel!.profileUid);
+            map(([ , controllerModel ]) => controllerModel),
+            filter((controllerModel): controllerModel is ControllerModel => !!controllerModel),
+            switchMap((controllerModel) => {
+                const controllerProfile = this.controllerProfilesFactory.getByProfileUid(controllerModel.profileUid);
                 return this.translocoService.selectTranslate(controllerProfile.nameL10nKey);
             }),
             switchMap((name) => this.translocoService.selectTranslate('controller.controllerDisconnectedNotification', { name })),

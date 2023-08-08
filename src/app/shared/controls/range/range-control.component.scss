@@ -1,0 +1,30 @@
+:host {
+    display: flex;
+    flex-direction: column;
+}
+
+.slider-label {
+    display: flex;
+    margin: 0 8px;
+
+    &-description {
+        font-weight: 400;
+        flex: 1;
+    }
+
+    &-value-left {
+        font-weight: 600;
+        width: 45px;
+        text-align: left;
+    }
+
+    &-value-right {
+        font-weight: 600;
+        width: 45px;
+        text-align: right;
+    }
+}
+
+.slider {
+    width: calc(100% - 20px);
+}

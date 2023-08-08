@@ -2,14 +2,12 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { NgIf } from '@angular/common';
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { TranslocoModule } from '@ngneat/transloco';
-import { HubIoOperationMode } from '@app/shared';
+import { HubIoOperationMode, SliderControlComponent, ToggleControlComponent } from '@app/shared';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { BindingControlNumInputComponent } from '../control-num-input';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { BindingControlOutputEndStateComponent } from '../control-output-end-state-select';
-import { BindingControlSliderComponent } from '../control-slider';
-import { BindingControlToggleComponent } from '../control-toggle';
 import { SetAngleBindingForm } from '../types';
 
 @Component({
@@ -19,12 +17,12 @@ import { SetAngleBindingForm } from '../types';
     styleUrls: [ './binding-set-angle-edit.component.scss' ],
     imports: [
         NgIf,
-        BindingControlSliderComponent,
+        SliderControlComponent,
         BindingControlNumInputComponent,
         BindingControlOutputEndStateComponent,
         BindingControlSelectControllerComponent,
         TranslocoModule,
-        BindingControlToggleComponent
+        ToggleControlComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

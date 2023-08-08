@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, Type } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { TranslocoModule } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
@@ -8,8 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { ControllerModel, ControllerSettingsModel } from '@app/store';
 import { NotConnectedInlineIconComponent } from '@app/shared';
 
-import { ControllerProfileFactoryService, IControllerProfile, IControllerSettingsComponent } from '../../../controller-profiles';
-import { ControllerSettingsRenderDirective } from './controller-settings-render.directive';
+import { ControllerProfileFactoryService, ControllerSettings, IControllerProfile } from '../../../controller-profiles';
+import { ControllerSettingsContainerComponent } from '../controller-settings-container';
 
 @Component({
     standalone: true,
@@ -22,17 +22,17 @@ import { ControllerSettingsRenderDirective } from './controller-settings-render.
         PushPipe,
         MatCardModule,
         NgIf,
-        ControllerSettingsRenderDirective,
         MatIconModule,
         NgTemplateOutlet,
-        NotConnectedInlineIconComponent
+        NotConnectedInlineIconComponent,
+        ControllerSettingsContainerComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControllersListItemComponent {
     @Output() public readonly settingsChanges = new EventEmitter<ControllerSettingsModel>();
 
-    private _controllerProfile: IControllerProfile = this.controllerProfileFactory.getProfile();
+    private _controllerProfile?: IControllerProfile;
 
     private _controllerSettings?: ControllerSettingsModel;
 
@@ -47,19 +47,21 @@ export class ControllersListItemComponent {
     public set controller(
         controllerWithSettings: { controller: ControllerModel; settings?: ControllerSettingsModel; isConnected: boolean } | undefined
     ) {
+        if (!controllerWithSettings) {
+            this._controllerProfile = undefined;
+            this._controllerSettings = undefined;
+            this._isConnected = false;
+            return;
+        }
         this._controllerProfile = this.controllerProfileFactory.getByProfileUid(
-            controllerWithSettings?.controller?.profileUid
+            controllerWithSettings.controller.profileUid
         );
         this._controllerSettings = controllerWithSettings?.settings;
         this._isConnected = controllerWithSettings?.isConnected ?? false;
     }
 
-    public get controllerSettingsComponent(): Type<IControllerSettingsComponent> | undefined {
-        return this._controllerProfile.settingsComponent;
-    }
-
     public get controllerNameL10nKey(): string {
-        return this._controllerProfile.nameL10nKey;
+        return this._controllerProfile?.nameL10nKey ?? '';
     }
 
     public get controllerSettings(): ControllerSettingsModel | undefined {
@@ -71,8 +73,14 @@ export class ControllersListItemComponent {
     }
 
     public controllerSettingsUpdate(
-        settings: ControllerSettingsModel
+        settings: ControllerSettings
     ): void {
-        this.settingsChanges.emit(settings);
+        if (!this._controllerSettings) {
+            return;
+        }
+        this.settingsChanges.emit({
+            controllerId: this._controllerSettings.controllerId,
+            ...settings
+        });
     }
 }
