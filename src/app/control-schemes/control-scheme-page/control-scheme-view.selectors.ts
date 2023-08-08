@@ -213,6 +213,7 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
             let allIosAreConnected = true;
             let allIosTypesMatches = true;
             let allControllersConnected = true;
+            let hasBindings = false;
             if (runningState !== ControlSchemeRunState.Idle) {
                 return false;
             }
@@ -222,9 +223,10 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
                     allIosAreConnected = allIosAreConnected && ioNode.isConnected;
                     allIosTypesMatches = allIosTypesMatches && ioNode.children.every((c) => !c.ioHasNoRequiredCapabilities);
                     allControllersConnected = allControllersConnected && ioNode.children.some((c) => !!controllerEntities[c.binding.controllerId]);
+                    hasBindings = hasBindings || ioNode.children.length > 0;
                 });
             });
-            return allHubAreConnected && allIosAreConnected && allIosTypesMatches && allControllersConnected;
+            return allHubAreConnected && allIosAreConnected && allIosTypesMatches && allControllersConnected && hasBindings;
         }
     ),
     isCurrentControlSchemeRunning: createSelector(
