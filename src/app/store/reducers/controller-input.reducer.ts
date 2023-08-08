@@ -32,6 +32,7 @@ export const CONTROLLER_INPUT_FEATURE = createFeature({
             return CONTROLLER_INPUT_ENTITY_ADAPTER.upsertOne({
                 controllerId: action.controllerId,
                 value: action.value,
+                rawValue: action.rawValue,
                 inputId: action.inputId,
                 inputType: action.inputType,
                 timestamp: action.timestamp

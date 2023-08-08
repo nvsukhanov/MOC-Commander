@@ -1,0 +1,15 @@
+<ng-container *ngIf="control">
+    <div class="slider-label">
+        <label class="slider-label-description">
+            {{ translocoTitle | transloco }}
+        </label>
+        <label class="slider-label-value-right">{{ control.value }}</label>
+    </div>
+    <mat-slider class="slider"
+                [min]="min"
+                [max]="max"
+                [step]="step"
+    >
+        <input matSliderThumb [formControl]="control"/>
+    </mat-slider>
+</ng-container>

@@ -200,14 +200,19 @@
     "gamepadControllerType": "Gamepad",
     "controllerDiscoveredNotification": "Discovered new controller: { name }",
     "controllerConnectedNotification": "{ name } controller connected",
-    "controllerDisconnectedNotification": "{ name } controller disconnected"
+    "controllerDisconnectedNotification": "{ name } controller disconnected",
+    "activeZone": "Active zone",
+    "rawInput": "input",
+    "output": "output",
+    "invert": "Invert",
+    "save": "Save"
   },
   "controllerProfiles": {
     "buttonState": "{ value, select, 1 {Pressed} other {Released} }",
     "axisState": "Position: { value }",
     "settings": "Settings",
     "genericGamepad": {
-      "name": "Unknown",
+      "name": "Generic gamepad",
       "axis": "Axis {inputId}",
       "button": "Button {inputId}"
     },

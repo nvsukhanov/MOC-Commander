@@ -1,0 +1,11 @@
+<ng-container #container></ng-container>
+
+<mat-action-row>
+    <button mat-button
+            [disabled]="!(canSave$ | ngrxPush)"
+            (click)="onSave()"
+    >
+        {{ 'controller.save' | transloco }}
+    </button>
+</mat-action-row>
+

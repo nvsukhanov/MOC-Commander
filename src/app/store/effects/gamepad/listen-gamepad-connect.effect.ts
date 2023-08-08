@@ -31,7 +31,7 @@ export const LISTEN_GAMEPAD_CONNECT = createEffect((
                 storeId: string;
             }> = [];
             gamepads.forEach((gamepad) => {
-                const profile = controllerProfileFactory.getProfile(ControllerType.Gamepad, gamepad.id);
+                const profile = controllerProfileFactory.getGamepadProfile(gamepad);
                 const hasInput = gamepad.axes.some((a) => a > GAMEPAD_DETECTION_INPUT_THRESHOLD)
                     || gamepad.buttons.some((b) => b.value > GAMEPAD_DETECTION_INPUT_THRESHOLD);
                 if (!profileCounts[profile.uid]) {
@@ -77,6 +77,7 @@ export const LISTEN_GAMEPAD_CONNECT = createEffect((
                         triggerButtonsIndices: [ ...gamepadDatum.profile.triggerButtonsIndices ],
                         gamepadApiIndex: gamepadDatum.gamepad.index,
                         gamepadOfTypeIndex: gamepadDatum.gamepadsApiProfileIndex,
+                        settings: gamepadDatum.profile.getDefaultSettings()
                     });
                 }
                 return null;

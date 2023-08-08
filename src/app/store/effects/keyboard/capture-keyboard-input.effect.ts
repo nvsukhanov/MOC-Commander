@@ -56,6 +56,7 @@ function readKeyboard(
             controllerId,
             inputId,
             inputType: ControllerInputType.Button,
+            rawValue: nextState,
             value: nextState,
             timestamp: Date.now()
         }))

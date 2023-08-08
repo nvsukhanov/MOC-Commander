@@ -13,28 +13,28 @@
                                        [max]="maxStepperDegree"
         ></app-binding-control-num-input>
 
-        <app-output-config-slider-control [min]="minSpeed"
-                                          [max]="maxSpeed"
-                                          [control]="form.controls.speed"
-                                          [translocoTitle]="'controlScheme.outputSpeedControlTitle'"
-        ></app-output-config-slider-control>
+        <app-slider-control [min]="minSpeed"
+                            [max]="maxSpeed"
+                            [control]="form.controls.speed"
+                            [translocoTitle]="'controlScheme.outputSpeedControlTitle'"
+        ></app-slider-control>
 
-        <app-output-config-slider-control [min]="minPower"
-                                          [max]="maxPower"
-                                          [control]="form.controls.power"
-                                          [translocoTitle]="'controlScheme.outputPowerControlTitle'"
-        ></app-output-config-slider-control>
+        <app-slider-control [min]="minPower"
+                            [max]="maxPower"
+                            [control]="form.controls.power"
+                            [translocoTitle]="'controlScheme.outputPowerControlTitle'"
+        ></app-slider-control>
 
         <app-binding-control-output-end-state [control]="form.controls.endState"
                                               [translocoTitle]="'controlScheme.outputEndStateControlTitle'"
         ></app-binding-control-output-end-state>
 
-        <app-binding-toggle-control [translocoTitle]="'controlScheme.useAccelerationProfile'"
-                                    [control]="form.controls.useAccelerationProfile"
-        ></app-binding-toggle-control>
+        <app-toggle-control [translocoTitle]="'controlScheme.useAccelerationProfile'"
+                            [control]="form.controls.useAccelerationProfile"
+        ></app-toggle-control>
 
-        <app-binding-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'"
-                                    [control]="form.controls.useDecelerationProfile"
-        ></app-binding-toggle-control>
+        <app-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'"
+                            [control]="form.controls.useDecelerationProfile"
+        ></app-toggle-control>
     </ng-container>
 </ng-container>

@@ -1,23 +1,26 @@
 import { concatLatestFrom, createEffect } from '@ngrx/effects';
-import { MonoTypeOperatorFunction, NEVER, Observable, filter, from, interval, map, merge, share, switchMap } from 'rxjs';
+import { NEVER, Observable, animationFrames, filter, from, map, merge, share, switchMap } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, controllerInputIdFn } from '@app/store';
-import { APP_CONFIG, ControllerInputType, IAppConfig, WINDOW } from '@app/shared';
+import { APP_CONFIG, ControllerInputType, ControllerType, IAppConfig, WINDOW } from '@app/shared';
 
-const AXIAL_DEAD_ZONE = 0.1;
-const VALUE_CHANGES_THRESHOLD = 0.05;
+import { GamepadValueTransformService } from '../../../controller-profiles';
 
 function readGamepads(
     store: Store,
     navigator: Navigator,
-    config: IAppConfig
+    config: IAppConfig,
+    valueTransformer: GamepadValueTransformService
 ): Observable<Action> {
     return store.select(CONTROLLER_CONNECTION_SELECTORS.selectGamepadConnections).pipe(
         switchMap((connectedGamepads) => from(connectedGamepads)),
-        map(({ connection, gamepad }) => {
+        map(({ connection, gamepad, settings }) => {
+            if (!gamepad || gamepad.controllerType !== ControllerType.Gamepad || !settings || !settings || settings.controllerType !== ControllerType.Gamepad) {
+                return [ NEVER ];
+            }
             const browserGamepad = navigator.getGamepads()[connection.gamepadIndex] as Gamepad;
-            const gamepadRead$ = createGamepadScheduler(config.gamepadReadInterval).pipe(
+            const gamepadRead$ = createGamepadScheduler().pipe(
                 map(() => navigator.getGamepads()[connection.gamepadIndex] as Gamepad),
                 share()
             );
@@ -29,15 +32,18 @@ function readGamepads(
                 });
 
                 return gamepadRead$.pipe(
-                    map((apiGamepad) => trimValue(apiGamepad.axes[axisIndex])),
-                    map((value) => snapAxisValueToDeadZone(value)),
+                    map((apiGamepad) => ({
+                        rawValue: valueTransformer.trimValue(apiGamepad.axes[axisIndex]),
+                        value: valueTransformer.transformAxisValue(apiGamepad.axes[axisIndex], settings.axisConfigs[axisIndex])
+                    })),
                     concatLatestFrom(() => store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(inputId))),
-                    filterWithThreshold(),
-                    map(([ value ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
+                    filter(([ current, previousValue ]) => current.value !== previousValue),
+                    map(([ current ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
                         controllerId: connection.controllerId,
                         inputType: ControllerInputType.Axis,
                         inputId: axisIndex.toString(),
-                        value,
+                        value: current.value,
+                        rawValue: current.rawValue,
                         timestamp: Date.now()
                     }))
                 );
@@ -51,14 +57,15 @@ function readGamepads(
                     inputType
                 });
                 return gamepadRead$.pipe(
-                    map((apiGamepad) => trimValue(apiGamepad.buttons[buttonIndex].value)),
+                    map((apiGamepad) => valueTransformer.trimValue(apiGamepad.buttons[buttonIndex].value)),
                     concatLatestFrom(() => store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(inputId))),
-                    filterWithThreshold(),
+                    filter(([ currentValue, previousValue ]) => currentValue !== previousValue),
                     map(([ value ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
                         controllerId: connection.controllerId,
                         inputType,
                         inputId: buttonIndex.toString(),
                         value,
+                        rawValue: value,
                         timestamp: Date.now()
                     }))
                 );
@@ -67,41 +74,22 @@ function readGamepads(
             return [ ...axesChanges, ...buttonChanges ];
         }),
         switchMap((changes) => merge(...changes))
-    );
+    ) as Observable<Action>;
 }
 
-function trimValue(
-    value: number
-): number {
-    return Math.round(value * 100) / 100;
-}
-
-function snapAxisValueToDeadZone(
-    value: number,
-): number {
-    return Math.abs(value) < AXIAL_DEAD_ZONE ? 0 : value;
-}
-
-function createGamepadScheduler(
-    intervalMs: number
-): Observable<unknown> {
-    return interval(intervalMs);
-}
-
-function filterWithThreshold(): MonoTypeOperatorFunction<[ number, number ]> {
-    return filter(([ currentValue, previousValue ]) =>
-        previousValue === undefined || Math.abs(currentValue - previousValue) > VALUE_CHANGES_THRESHOLD
-    );
+function createGamepadScheduler(): Observable<unknown> {
+    return animationFrames();
 }
 
 export const CAPTURE_GAMEPAD_INPUT = createEffect((
     store: Store = inject(Store),
     window: Window = inject(WINDOW),
-    config: IAppConfig = inject(APP_CONFIG)
+    config: IAppConfig = inject(APP_CONFIG),
+    valueTransformer: GamepadValueTransformService = inject(GamepadValueTransformService)
 ) => {
     return store.select(CONTROLLER_INPUT_SELECTORS.isCapturing).pipe(
         switchMap((isCapturing) => isCapturing
-                                   ? readGamepads(store, window.navigator, config)
+                                   ? readGamepads(store, window.navigator, config, valueTransformer)
                                    : NEVER
         )
     );
