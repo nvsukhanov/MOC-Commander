@@ -132,7 +132,9 @@
     "portConfigTitle": "Port configuration",
     "portConfigSubtitle": "Hub ''{hubName}'', port {portId}",
     "portConfigSaveButtonTitle": "Save",
-    "portConfigCancelButtonTitle": "Cancel"
+    "portConfigCancelButtonTitle": "Cancel",
+    "newSchemeDialogNameRequired": "Scheme name is required",
+    "newSchemeDialogNameUniqueness": "Scheme with this name already exists"
   },
   "motorServoEndState": {
     "float": "Float",

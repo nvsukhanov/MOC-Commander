@@ -4,7 +4,12 @@ import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angu
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
-import { WINDOW } from '@app/shared';
+import { Store } from '@ngrx/store';
+import { NgIf } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ValidationErrorMappingDirective, ValidationErrorsL10nMap, WINDOW } from '@app/shared';
+
+import { CONTROL_SCHEME_NAME_IS_NOT_UNIQUE, ControlSchemeValidators } from '../../validation';
 
 @Component({
     standalone: true,
@@ -17,21 +22,38 @@ import { WINDOW } from '@app/shared';
         ReactiveFormsModule,
         MatButtonModule,
         TranslocoModule,
+        ValidationErrorMappingDirective,
+        MatFormFieldModule,
+        NgIf,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeCreateDialogComponent {
     protected readonly nameFormControl: FormControl<string>;
 
+    protected readonly validationErrorsL10nMap: ValidationErrorsL10nMap = {
+        required: 'controlScheme.newSchemeDialogNameRequired',
+        [CONTROL_SCHEME_NAME_IS_NOT_UNIQUE]: 'controlScheme.newSchemeDialogNameUniqueness'
+    };
+
     constructor(
         private readonly dialogRef: MatDialogRef<ControlSchemeCreateDialogComponent, { name: string; id: string }>,
         private readonly formBuilder: FormBuilder,
         @Inject(WINDOW) private readonly window: Window,
-        private readonly translocoService: TranslocoService
+        private readonly translocoService: TranslocoService,
+        private readonly store: Store
     ) {
         this.nameFormControl = this.formBuilder.control<string>(
             this.translocoService.translate('controlScheme.newSchemeDialogDefaultName'),
-            { nonNullable: true, validators: [ Validators.required ] }
+            {
+                nonNullable: true,
+                validators: [
+                    Validators.required,
+                ],
+                asyncValidators: [
+                    ControlSchemeValidators.nameUniqueness(this.store)
+                ]
+            }
         );
     }
 
