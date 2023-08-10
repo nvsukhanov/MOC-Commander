@@ -39,8 +39,9 @@ export class BindingLinearEditComponent implements IBindingsDetailsEditComponent
     ) {
     }
 
-    public get isAxialInput(): boolean {
-        return this.form?.controls.inputType.value === ControllerInputType.Axis;
+    public get isInputGainConfigurable(): boolean {
+        return this.form?.controls.inputType.value === ControllerInputType.Axis
+            || this.form?.controls.inputType.value === ControllerInputType.Trigger;
     }
 
     public setForm(

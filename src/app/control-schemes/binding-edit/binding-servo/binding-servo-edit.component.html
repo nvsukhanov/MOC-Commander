@@ -7,7 +7,7 @@
     ></app-controller-select>
 
     <ng-container *ngIf="form.controls.controllerId.valid && form.controls.inputId.valid">
-        <app-binding-input-gain-select *ngIf="isAxialInput"
+        <app-binding-input-gain-select *ngIf="isInputGainConfigurable"
                                        [control]="form.controls.inputGain"
         ></app-binding-input-gain-select>
 
