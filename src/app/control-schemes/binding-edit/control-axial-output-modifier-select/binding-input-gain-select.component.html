@@ -1,0 +1,16 @@
+<ng-container *ngIf="control">
+    <mat-form-field>
+        <mat-label>
+            {{ translocoTitle | transloco }}
+        </mat-label>
+        <mat-select [formControl]="control"
+                    required
+        >
+            <mat-option *ngFor="let mode of gainOptions"
+                        [value]="mode"
+            >
+                {{ mode | inputGainL10nKey | transloco }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</ng-container>

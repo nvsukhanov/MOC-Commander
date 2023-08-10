@@ -5,6 +5,7 @@ import { controllerInputIdFn } from '@app/store';
 
 import { BaseTaskBuilder } from './base-task-builder';
 import { ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, PortCommandTaskType, ServoTaskPayload } from '../../../models';
+import { calcInputGain } from './calc-input-gain';
 
 export class ServoTaskBuilder extends BaseTaskBuilder {
     private readonly snappingThreshold = 10;
@@ -19,7 +20,7 @@ export class ServoTaskBuilder extends BaseTaskBuilder {
         }
 
         const inputRecord = inputsState[controllerInputIdFn(binding)];
-        const inputValue = inputRecord?.value ?? 0;
+        const inputValue = calcInputGain(inputRecord?.value ?? 0, binding.inputGain);
 
         const translationPaths = getTranslationArcs(motorEncoderOffset, binding.aposCenter);
         const resultingCenter = translationPaths.cw < translationPaths.ccw ? translationPaths.cw : -translationPaths.ccw;

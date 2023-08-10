@@ -7,6 +7,10 @@
     ></app-controller-select>
 
     <ng-container *ngIf="form.controls.controllerId.valid && form.controls.inputId.valid">
+        <app-binding-input-gain-select *ngIf="isAxialInput"
+                                       [control]="form.controls.inputGain"
+        ></app-binding-input-gain-select>
+
         <app-slider-control [min]="0"
                             [max]="motorLimits.maxSpeed"
                             [control]="form.controls.maxSpeed"

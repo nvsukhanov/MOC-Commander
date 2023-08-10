@@ -9,13 +9,14 @@ import { Observable, combineLatest, map, of, startWith, switchMap } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CONTROL_SCHEME_ACTIONS } from '@app/store';
-import { HubIoOperationMode, SliderControlComponent, ToggleControlComponent } from '@app/shared';
+import { ControllerInputType, HubIoOperationMode, SliderControlComponent, ToggleControlComponent } from '@app/shared';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { CalibrationResult, CalibrationResultType, ServoCalibrationDialogComponent } from '../servo-calibration-dialog';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { BINDING_EDIT_SELECTORS } from '../binding-edit.selectors';
 import { ServoBindingForm } from '../types';
+import { BindingInputGainSelectComponent } from '../control-axial-output-modifier-select';
 
 @Component({
     standalone: true,
@@ -31,7 +32,8 @@ import { ServoBindingForm } from '../types';
         MatDialogModule,
         SliderControlComponent,
         ToggleControlComponent,
-        BindingControlSelectControllerComponent
+        BindingControlSelectControllerComponent,
+        BindingInputGainSelectComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -53,6 +55,10 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
 
     public get form(): ServoBindingForm | undefined {
         return this._form;
+    }
+
+    public get isAxialInput(): boolean {
+        return this.form?.controls.inputType.value === ControllerInputType.Axis;
     }
 
     public get canCalibrate$(): Observable<boolean> {

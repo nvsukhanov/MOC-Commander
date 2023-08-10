@@ -1,7 +1,7 @@
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { Dictionary } from '@ngrx/entity';
 import { HubIoOperationMode } from '@app/shared';
-import { controllerInputIdFn } from '@app/store';
+import { InputGain, controllerInputIdFn } from '@app/store';
 
 import { BaseTaskBuilder } from './base-task-builder';
 import {
@@ -13,6 +13,7 @@ import {
     PortCommandTaskType,
     SetLinearSpeedTaskPayload
 } from '../../../models';
+import { calcInputGain } from './calc-input-gain';
 
 export class SetSpeedTaskBuilder extends BaseTaskBuilder {
     private readonly speedStep = 5;
@@ -47,6 +48,7 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
             inputValue,
             binding.maxSpeed,
             binding.invert,
+            binding.inputGain
         );
 
         const payload: SetLinearSpeedTaskPayload = {
@@ -90,7 +92,7 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
         }
 
         if (shouldActivate) {
-            const speed = this.calculateSpeed(1, binding.maxSpeed, binding.invert);
+            const speed = this.calculateSpeed(1, binding.maxSpeed, binding.invert, binding.inputGain);
             return {
                 taskType: PortCommandTaskType.SetSpeed,
                 speed,
@@ -115,8 +117,11 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
         inputValue: number,
         maxAbsSpeed: number,
         invert: boolean,
+        inputGain: InputGain
     ): number {
-        const clampedSpeed = this.clampSpeed(inputValue * maxAbsSpeed);
+        const clampedSpeed = this.clampSpeed(
+            calcInputGain(inputValue, inputGain) * maxAbsSpeed
+        );
         const direction = invert ? -1 : 1;
 
         return this.snapSpeed(clampedSpeed * direction);
