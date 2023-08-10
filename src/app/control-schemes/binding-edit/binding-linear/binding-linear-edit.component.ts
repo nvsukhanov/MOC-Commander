@@ -8,6 +8,7 @@ import { ControllerInputType, HubIoOperationMode, SliderControlComponent, Toggle
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { LinearBindingForm } from '../types';
+import { BindingInputGainSelectComponent } from '../control-axial-output-modifier-select';
 
 @Component({
     standalone: true,
@@ -19,7 +20,8 @@ import { LinearBindingForm } from '../types';
         SliderControlComponent,
         ToggleControlComponent,
         BindingControlSelectControllerComponent,
-        TranslocoModule
+        TranslocoModule,
+        BindingInputGainSelectComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -35,6 +37,10 @@ export class BindingLinearEditComponent implements IBindingsDetailsEditComponent
     constructor(
         private readonly cd: ChangeDetectorRef,
     ) {
+    }
+
+    public get isAxialInput(): boolean {
+        return this.form?.controls.inputType.value === ControllerInputType.Axis;
     }
 
     public setForm(

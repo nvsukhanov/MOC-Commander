@@ -41,7 +41,7 @@ import { HubStorageService } from './hub-storage.service';
 import { RoutesBuilderService } from '../routing';
 import { CONTROLLER_INPUT_ACTIONS, HUB_STATS_ACTIONS } from './actions';
 
-const STORAGE_VERSION = '8';
+const STORAGE_VERSION = '9';
 
 const REDUCERS: ActionReducerMap<IState> = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,

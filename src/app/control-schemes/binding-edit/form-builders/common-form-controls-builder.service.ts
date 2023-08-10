@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MOTOR_LIMITS, MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 import { ControllerInputType, WINDOW } from '@app/shared';
+import { InputGain } from '@app/store';
 
 @Injectable({ providedIn: 'root' })
 export class CommonFormControlsBuilderService {
@@ -84,6 +85,15 @@ export class CommonFormControlsBuilderService {
         initialValue: ControllerInputType
     ): FormControl<ControllerInputType> {
         return this.formBuilder.control<ControllerInputType>(initialValue, {
+            nonNullable: true,
+            validators: [ Validators.required ]
+        });
+    }
+
+    public axialInputFunctionControl(
+        initialValue: InputGain
+    ): FormControl<InputGain> {
+        return this.formBuilder.control<InputGain>(initialValue, {
             nonNullable: true,
             validators: [ Validators.required ]
         });

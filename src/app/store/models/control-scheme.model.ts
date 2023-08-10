@@ -1,6 +1,12 @@
 import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 
+export enum InputGain {
+    None,
+    Exponential,
+    Logarithmic,
+}
+
 export type ControlSchemePortConfig = {
     hubId: string;
     portId: number;
@@ -22,6 +28,7 @@ export type ControlSchemeLinearBinding = {
     controllerId: string;
     inputId: string;
     inputType: ControllerInputType;
+    inputGain: InputGain;
     hubId: string;
     portId: number;
     maxSpeed: number;
@@ -36,6 +43,7 @@ export type ControlSchemeServoBinding = {
     controllerId: string;
     inputId: string;
     inputType: ControllerInputType;
+    inputGain: InputGain;
     hubId: string;
     portId: number;
     range: number;

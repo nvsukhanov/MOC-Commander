@@ -2,6 +2,7 @@ import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { ControllerInputType } from '@app/shared';
+import { InputGain } from '@app/store';
 
 import { ServoBindingForm } from '../types';
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';
@@ -20,6 +21,7 @@ export class ServoOutputControlFormBuilderService {
             controllerId: this.commonFormControlBuilder.controllerIdControl(),
             inputId: this.commonFormControlBuilder.inputIdControl(),
             inputType: this.commonFormControlBuilder.controllerInputTypeControl(ControllerInputType.Button),
+            inputGain: this.commonFormControlBuilder.axialInputFunctionControl(InputGain.None),
             hubId: this.commonFormControlBuilder.hubIdControl(),
             portId: this.commonFormControlBuilder.portIdControl(),
             range: this.formBuilder.control<number>(MOTOR_LIMITS.maxServoDegreesRange, {

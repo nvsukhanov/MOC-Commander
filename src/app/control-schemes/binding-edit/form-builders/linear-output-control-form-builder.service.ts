@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ControllerInputType } from '@app/shared';
+import { InputGain } from '@app/store';
 
 import { LinearBindingForm } from '../types';
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';
@@ -19,6 +20,7 @@ export class LinearOutputControlFormBuilderService {
             controllerId: this.commonFormControlBuilder.controllerIdControl(),
             inputId: this.commonFormControlBuilder.inputIdControl(),
             inputType: this.commonFormControlBuilder.controllerInputTypeControl(ControllerInputType.Button),
+            inputGain: this.commonFormControlBuilder.axialInputFunctionControl(InputGain.None),
             hubId: this.commonFormControlBuilder.hubIdControl(),
             portId: this.commonFormControlBuilder.portIdControl(),
             maxSpeed: this.commonFormControlBuilder.speedControl(),

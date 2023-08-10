@@ -134,7 +134,11 @@
     "portConfigSaveButtonTitle": "Save",
     "portConfigCancelButtonTitle": "Cancel",
     "newSchemeDialogNameRequired": "Scheme name is required",
-    "newSchemeDialogNameUniqueness": "Scheme with this name already exists"
+    "newSchemeDialogNameUniqueness": "Scheme with this name already exists",
+    "inputGain": "Input gain",
+    "inputGainLinear": "None",
+    "inputGainLogarithmic": "Logarithmic",
+    "inputGainExponential": "Exponential"
   },
   "motorServoEndState": {
     "float": "Float",
