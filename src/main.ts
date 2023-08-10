@@ -2,6 +2,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { importProvidersFrom } from '@angular/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 
 import { RootComponent } from './app/root';
 import { provideApplicationStore } from './app/store';
@@ -16,6 +17,7 @@ bootstrapApplication(RootComponent, {
         provideAnimations(),
         provideControllerProfiles(),
         importProvidersFrom(MatSnackBarModule),
-        provideApplicationStore()
+        provideApplicationStore(),
+        { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
     ]
 });
