@@ -275,6 +275,10 @@
       "button": "Key ''{ inputId }''",
       "captureNonAlphaNumerics": "Allow use of non-alphanumeric keys for input",
       "captureNonAlphaNumericsHint": "In some scenarios, capturing non-alphanumeric keys may prevent you from using your keyboard normally. Use this option with caution."
+    },
+    "hub": {
+      "name": "Hub ''{name}''",
+      "greenButton": "Green button"
     }
   }
 }

@@ -1,13 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NEVER, Observable, filter, map, of, switchMap } from 'rxjs';
-import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
+import { TranslocoModule } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
 import { NgIf } from '@angular/common';
-import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS, ControllerModel } from '@app/store';
+import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS, ControllerModel, ControllerProfileFactoryService } from '@app/store';
 import { ControllerInputType } from '@app/shared';
-
-import { ControllerProfileFactoryService } from '../../controller-profiles';
 
 @Component({
     standalone: true,
@@ -38,8 +36,7 @@ export class FullControllerInputNameComponent implements OnChanges {
 
     constructor(
         private readonly store: Store,
-        private readonly profileFactory: ControllerProfileFactoryService,
-        private readonly translocoService: TranslocoService
+        private readonly profileFactory: ControllerProfileFactoryService
     ) {
     }
 
@@ -68,8 +65,7 @@ export class FullControllerInputNameComponent implements OnChanges {
         );
 
         this._controllerName$ = profile$.pipe(
-            map((profile) => profile.nameL10nKey),
-            switchMap((nameL10nKey) => this.translocoService.selectTranslate(nameL10nKey))
+            switchMap((profile) => profile.name$)
         );
         this._inputName$ = this.store.select(CONTROLLER_SELECTORS.selectById(this.controllerId)).pipe(
             filter((controller): controller is ControllerModel => !!controller),

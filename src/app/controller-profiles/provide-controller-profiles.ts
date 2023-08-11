@@ -1,11 +1,9 @@
 import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
 
-import { ControllerProfileFactoryService } from './controller-profile-factory.service';
 import { GamepadProfile } from './gamepad-profile';
-import { ControllerProfileKeyboardService } from './controller-profile-keyboard.service';
-import { ControllerProfileDualshockService } from './controller-profile-dualshock.service';
-import { ControllerProfileXbox360Service } from './controller-profile-xbox360.service';
-import { ControllerProfileGenericGamepadFactoryService } from './controller-profile-generic-gamepad-factory.service';
+import { ControllerProfileKeyboardService } from './keyboard';
+import { ControllerProfileDualshockService, ControllerProfileGenericGamepadFactoryService, ControllerProfileXbox360Service } from './gamepad';
+import { ControllerProfileHubFactoryService } from './hub';
 
 export function provideControllerProfiles(): EnvironmentProviders {
     return makeEnvironmentProviders([
@@ -13,6 +11,6 @@ export function provideControllerProfiles(): EnvironmentProviders {
         { provide: GamepadProfile, useClass: ControllerProfileXbox360Service, multi: true },
         ControllerProfileKeyboardService,
         ControllerProfileGenericGamepadFactoryService,
-        ControllerProfileFactoryService,
+        ControllerProfileHubFactoryService
     ]);
 }

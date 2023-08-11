@@ -13,13 +13,14 @@ import {
     CONTROLLER_INPUT_SELECTORS,
     CONTROLLER_SELECTORS,
     ControllerModel,
+    ControllerProfileFactoryService,
     GamepadSettingsModel,
     controllerInputIdFn
 } from '@app/store';
 import { ControllerInputType, ControllerType, RangeControlComponent, SliderControlComponent, ToFormGroup, ToggleControlComponent } from '@app/shared';
 
 import { IControllerSettingsRenderer } from '../i-controller-settings-renderer';
-import { ControllerProfileFactoryService, GamepadAxisSettings, GamepadValueTransformService, IControllerProfile } from '../../../../controller-profiles';
+import { GamepadAxisSettings, GamepadValueTransformService, IControllerProfile } from '../../../../controller-profiles';
 import { InputOutputDiagramComponent } from './input-output-diagram';
 import { ActiveZoneHumanReadableValuePipe } from './active-zone-human-readable-value.pipe';
 

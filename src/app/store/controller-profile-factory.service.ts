@@ -1,18 +1,23 @@
 import { Inject, Injectable } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
+import { Store } from '@ngrx/store';
 
-import { IControllerProfile } from './i-controller-profile';
-import { ControllerProfileKeyboardService } from './controller-profile-keyboard.service';
-import { ControllerProfileGenericGamepadFactoryService } from './controller-profile-generic-gamepad-factory.service';
-import { GamepadProfile } from './gamepad-profile';
+import { IControllerProfile } from '../controller-profiles';
+import { ControllerProfileKeyboardService } from '../controller-profiles/keyboard';
+import { ControllerProfileGenericGamepadFactoryService } from '../controller-profiles/gamepad';
+import { GamepadProfile } from '../controller-profiles/gamepad-profile';
+import { ControllerProfileHub, ControllerProfileHubFactoryService } from '../controller-profiles/hub';
+import { HUBS_SELECTORS } from './selectors';
 
 @Injectable()
-export class ControllerProfileFactoryService {
+export class ControllerProfileFactoryService { // TODO: refactor, this is a mess
     constructor(
         @Inject(GamepadProfile) private readonly controllerProfiles: readonly GamepadProfile[],
         private readonly keyboardProfile: ControllerProfileKeyboardService,
         private readonly translocoService: TranslocoService,
-        private readonly genericGamepadFactory: ControllerProfileGenericGamepadFactoryService
+        private readonly genericGamepadFactory: ControllerProfileGenericGamepadFactoryService,
+        private readonly hubProfileFactory: ControllerProfileHubFactoryService,
+        private readonly store: Store
     ) {
     }
 
@@ -30,6 +35,16 @@ export class ControllerProfileFactoryService {
         return this.keyboardProfile;
     }
 
+    public getHubProfile(
+        hubId: string,
+    ): ControllerProfileHub {
+        const profile = this.hubProfileFactory.build(
+            hubId,
+        );
+        profile.setNameProvider(this.store.select(HUBS_SELECTORS.selectHubName(hubId)));
+        return profile;
+    }
+
     public getByProfileUid(
         profileUid: string
     ): IControllerProfile {
@@ -40,6 +55,12 @@ export class ControllerProfileFactoryService {
         if (profile) {
             return profile;
         }
+        const hubProfile = this.hubProfileFactory.fromUid(profileUid);
+        if (hubProfile) {
+            hubProfile.setNameProvider(this.store.select(HUBS_SELECTORS.selectHubName(hubProfile.hubId)));
+            return hubProfile;
+        }
+
         const genericGamepadProfile = this.genericGamepadFactory.fromUid(profileUid, this.translocoService);
         if (genericGamepadProfile) {
             return genericGamepadProfile;

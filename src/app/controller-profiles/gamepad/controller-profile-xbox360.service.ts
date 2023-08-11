@@ -3,15 +3,15 @@ import { TranslocoService } from '@ngneat/transloco';
 import { Observable } from 'rxjs';
 import { APP_CONFIG, ControllerType, IAppConfig } from '@app/shared';
 
-import { GamepadProfile } from './gamepad-profile';
-import { createControllerL10nKey, createScopedControllerL10nKey } from './create-controller-l10n-key';
-import { GamepadSettings } from './controller-settings';
+import { GamepadProfile } from '../gamepad-profile';
+import { createControllerL10nKey, createScopedControllerL10nKey } from '../create-controller-l10n-key';
+import { GamepadSettings } from '../controller-settings';
 
 @Injectable()
 export class ControllerProfileXbox360Service extends GamepadProfile {
     public readonly uid = 'xbox360';
 
-    public readonly nameL10nKey = createScopedControllerL10nKey(this.l10nScopeName, 'name');
+    public readonly name$: Observable<string>;
 
     public readonly buttonStateL10nKey = createControllerL10nKey('buttonState');
 
@@ -55,6 +55,7 @@ export class ControllerProfileXbox360Service extends GamepadProfile {
         @Inject(APP_CONFIG) private readonly appConfig: IAppConfig
     ) {
         super(translocoService, 'xbox360');
+        this.name$ = translocoService.selectTranslate(createScopedControllerL10nKey(this.l10nScopeName, 'name'));
     }
 
     public controllerIdMatch(id: string): boolean {

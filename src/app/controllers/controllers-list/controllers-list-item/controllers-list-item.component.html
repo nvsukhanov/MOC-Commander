@@ -2,7 +2,7 @@
                      class="controller-panel">
     <mat-expansion-panel-header>
         <mat-panel-title>
-            {{ controllerNameL10nKey | transloco }}
+            {{ controllerName$ | ngrxPush }}
             <app-not-connected-inline-icon *ngIf="!isConnected"
                                            [notification]="'controller.isNotConnectedInlineNotification' | transloco"
             ></app-not-connected-inline-icon>
@@ -20,7 +20,7 @@
     <mat-card class="controller-panel">
         <mat-card-header class="controller-without-settings__header">
             <mat-card-title class="controller-without-settings__title">
-                {{ controllerNameL10nKey | transloco }}
+                {{ controllerName$ | ngrxPush }}
                 <app-not-connected-inline-icon *ngIf="!isConnected"
                                                [notification]="'controller.isNotConnectedInlineNotification' | transloco"
                 ></app-not-connected-inline-icon>

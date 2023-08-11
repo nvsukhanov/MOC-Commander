@@ -1,0 +1,16 @@
+import { FunctionalEffect } from '@ngrx/effects';
+
+import { CAPTURE_GAMEPAD_INPUT, CAPTURE_KEYBOARD_INPUT } from './capture-input';
+import { LISTEN_GAMEPAD_CONNECT, LISTEN_HUB_CONNECT } from './listen-connect';
+import { LISTEN_GAMEPAD_DISCONNECT, LISTEN_HUB_DISCONNECT } from './listen-disconnect';
+
+export * from '../../controller-profile-factory.service';
+
+export const CONTROLLER_EFFECTS: { [name: string]: FunctionalEffect } = {
+    gamepadInput: CAPTURE_GAMEPAD_INPUT,
+    gamepadConnect: LISTEN_GAMEPAD_CONNECT,
+    gamepadDisconnect: LISTEN_GAMEPAD_DISCONNECT,
+    keyboardInput: CAPTURE_KEYBOARD_INPUT,
+    hubConnect: LISTEN_HUB_CONNECT,
+    hubDisconnect: LISTEN_HUB_DISCONNECT
+};

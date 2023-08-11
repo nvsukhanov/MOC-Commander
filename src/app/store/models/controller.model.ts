@@ -16,4 +16,11 @@ export type KeyboardControllerModel = {
     profileUid: string;
 };
 
-export type ControllerModel = GamepadControllerModel | KeyboardControllerModel;
+export type HubControllerModel = {
+    id: string;
+    controllerType: ControllerType.Hub;
+    hubId: string;
+    profileUid: string;
+};
+
+export type ControllerModel = GamepadControllerModel | KeyboardControllerModel | HubControllerModel;

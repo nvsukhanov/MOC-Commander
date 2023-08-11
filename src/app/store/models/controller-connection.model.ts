@@ -11,4 +11,9 @@ export type KeyboardConnectionModel = {
     controllerType: ControllerType.Keyboard;
 };
 
-export type ControllerConnectionModel = GamepadConnectionModel | KeyboardConnectionModel;
+export type HubControllerConnectionModel = {
+    controllerId: string;
+    controllerType: ControllerType.Hub;
+};
+
+export type ControllerConnectionModel = GamepadConnectionModel | KeyboardConnectionModel | HubControllerConnectionModel;

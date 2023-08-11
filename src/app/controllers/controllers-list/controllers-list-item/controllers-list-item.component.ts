@@ -5,10 +5,11 @@ import { PushPipe } from '@ngrx/component';
 import { MatCardModule } from '@angular/material/card';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { ControllerModel, ControllerSettingsModel } from '@app/store';
+import { EMPTY, Observable } from 'rxjs';
+import { ControllerModel, ControllerProfileFactoryService, ControllerSettingsModel } from '@app/store';
 import { NotConnectedInlineIconComponent } from '@app/shared';
 
-import { ControllerProfileFactoryService, ControllerSettings, IControllerProfile } from '../../../controller-profiles';
+import { ControllerSettings, IControllerProfile } from '../../../controller-profiles';
 import { ControllerSettingsContainerComponent } from '../controller-settings-container';
 
 @Component({
@@ -60,8 +61,8 @@ export class ControllersListItemComponent {
         this._isConnected = controllerWithSettings?.isConnected ?? false;
     }
 
-    public get controllerNameL10nKey(): string {
-        return this._controllerProfile?.nameL10nKey ?? '';
+    public get controllerName$(): Observable<string> {
+        return this._controllerProfile?.name$ ?? EMPTY;
     }
 
     public get controllerSettings(): ControllerSettingsModel | undefined {

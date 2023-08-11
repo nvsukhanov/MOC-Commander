@@ -7,9 +7,9 @@ import { Store } from '@ngrx/store';
 import { ScreenSizeObserverService } from '@app/shared';
 
 import { CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS } from '../actions';
-import { ControllerProfileFactoryService } from '../../controller-profiles';
 import { CONTROLLER_SELECTORS } from '../selectors';
 import { ControllerModel } from '../models';
+import { ControllerProfileFactoryService } from '../controller-profile-factory.service';
 
 @Injectable()
 export class NotificationsEffects {
@@ -50,7 +50,7 @@ export class NotificationsEffects {
             ofType(CONTROLLERS_ACTIONS.gamepadDiscovered, CONTROLLERS_ACTIONS.keyboardDiscovered),
             switchMap((action) => {
                 const controllerProfile = this.controllerProfilesFactory.getByProfileUid(action.profileUid);
-                return this.translocoService.selectTranslate(controllerProfile.nameL10nKey);
+                return controllerProfile.name$;
             }),
             switchMap((name) => this.translocoService.selectTranslate('controller.controllerDiscoveredNotification', { name })),
             this.showMessage()
@@ -62,7 +62,7 @@ export class NotificationsEffects {
             ofType(CONTROLLERS_ACTIONS.gamepadConnected, CONTROLLERS_ACTIONS.keyboardConnected),
             switchMap((action) => {
                 const controllerProfile = this.controllerProfilesFactory.getByProfileUid(action.profileUid);
-                return this.translocoService.selectTranslate(controllerProfile.nameL10nKey);
+                return controllerProfile.name$;
             }),
             switchMap((name) => this.translocoService.selectTranslate('controller.controllerConnectedNotification', { name })),
             this.showMessage()
@@ -77,7 +77,7 @@ export class NotificationsEffects {
             filter((controllerModel): controllerModel is ControllerModel => !!controllerModel),
             switchMap((controllerModel) => {
                 const controllerProfile = this.controllerProfilesFactory.getByProfileUid(controllerModel.profileUid);
-                return this.translocoService.selectTranslate(controllerProfile.nameL10nKey);
+                return controllerProfile.name$;
             }),
             switchMap((name) => this.translocoService.selectTranslate('controller.controllerDisconnectedNotification', { name })),
             this.showMessage()

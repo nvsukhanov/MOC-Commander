@@ -5,8 +5,8 @@ import { ControllerSettings } from './controller-settings';
 export interface IControllerProfile {
     readonly uid: string;
 
-    readonly nameL10nKey: string;
-    
+    readonly name$: Observable<string>;
+
     readonly buttonStateL10nKey: string;
 
     readonly axisStateL10nKey: string;

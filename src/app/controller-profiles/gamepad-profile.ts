@@ -9,7 +9,7 @@ import { GamepadSettings } from './controller-settings';
 export abstract class GamepadProfile implements IControllerProfile {
     public abstract readonly uid: string;
 
-    public abstract readonly nameL10nKey: string;
+    public abstract name$: Observable<string>;
 
     public abstract readonly buttonStateL10nKey: string;
 

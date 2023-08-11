@@ -16,4 +16,8 @@ export type GamepadSettings = {
     axisConfigs: { [k in string]: GamepadAxisSettings };
 };
 
-export type ControllerSettings = KeyboardSettings | GamepadSettings;
+export type HubControllerSettings = {
+    controllerType: ControllerType.Hub;
+};
+
+export type ControllerSettings = KeyboardSettings | GamepadSettings | HubControllerSettings;
