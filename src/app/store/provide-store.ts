@@ -39,9 +39,9 @@ import {
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { HubStorageService } from './hub-storage.service';
 import { RoutesBuilderService } from '../routing';
-import { CONTROLLER_INPUT_ACTIONS, HUB_STATS_ACTIONS } from './actions';
+import { HUB_STATS_ACTIONS } from './actions';
 
-const STORAGE_VERSION = '9';
+const STORAGE_VERSION = '10';
 
 const REDUCERS: ActionReducerMap<IState> = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,
@@ -106,7 +106,7 @@ export function provideApplicationStore(): EnvironmentProviders {
                 HUB_STATS_ACTIONS.setHasCommunication.type,
                 HUB_STATS_ACTIONS.rssiLevelReceived.type,
                 HUB_STATS_ACTIONS.batteryLevelReceived.type,
-                CONTROLLER_INPUT_ACTIONS.inputReceived.type
+                // CONTROLLER_INPUT_ACTIONS.inputReceived.type
             ]
         }),
         {
