@@ -5,7 +5,7 @@ import { inject } from '@angular/core';
 import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, controllerInputIdFn } from '@app/store';
 import { APP_CONFIG, ControllerInputType, ControllerType, IAppConfig, WINDOW } from '@app/shared';
 
-import { GamepadValueTransformService } from '../../../controller-profiles';
+import { GamepadValueTransformService } from '../../../../controller-profiles';
 
 function readGamepads(
     store: Store,

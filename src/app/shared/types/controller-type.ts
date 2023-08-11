@@ -1,4 +1,5 @@
 export enum ControllerType {
     Gamepad = 'Gamepad',
-    Keyboard = 'Keyboard'
+    Keyboard = 'Keyboard',
+    Hub = 'Hub',
 }

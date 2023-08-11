@@ -5,7 +5,7 @@ import { Observable, filter, fromEvent, map } from 'rxjs';
 import { WINDOW } from '@app/shared';
 import { CONTROLLERS_ACTIONS } from '@app/store';
 
-import { CONTROLLER_CONNECTION_SELECTORS } from '../../selectors';
+import { CONTROLLER_CONNECTION_SELECTORS } from '../../../selectors';
 
 const GAMEPAD_DISCONNECT_EVENT = 'gamepaddisconnected';
 

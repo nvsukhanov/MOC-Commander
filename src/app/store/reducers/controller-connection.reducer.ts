@@ -1,6 +1,6 @@
 import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { CONTROLLERS_ACTIONS, ControllerConnectionModel, controllerIdFn } from '@app/store';
+import { CONTROLLERS_ACTIONS, ControllerConnectionModel, HUBS_ACTIONS, controllerIdFn } from '@app/store';
 import { ControllerType } from '@app/shared';
 
 export type ControllerConnectionState = EntityState<ControllerConnectionModel>;
@@ -35,6 +35,30 @@ export const CONTROLLER_CONNECTION_FEATURE = createFeature({
         }),
         on(CONTROLLERS_ACTIONS.gamepadDisconnected, (state, action): ControllerConnectionState => {
             return CONTROLLER_CONNECTION_ADAPTER.removeOne(action.id, state);
+        }),
+        on(CONTROLLERS_ACTIONS.hubDiscovered, (state, action): ControllerConnectionState => {
+            return CONTROLLER_CONNECTION_ADAPTER.addOne({
+                controllerId: controllerIdFn({ hubId: action.hubId, controllerType: ControllerType.Hub }),
+                controllerType: ControllerType.Hub
+            }, state);
+        }),
+        on(CONTROLLERS_ACTIONS.hubConnected, (state, action): ControllerConnectionState => {
+            return CONTROLLER_CONNECTION_ADAPTER.addOne({
+                controllerId: controllerIdFn({ hubId: action.hubId, controllerType: ControllerType.Hub }),
+                controllerType: ControllerType.Hub
+            }, state);
+        }),
+        on(CONTROLLERS_ACTIONS.hubDisconnected, (state, action): ControllerConnectionState => {
+            return CONTROLLER_CONNECTION_ADAPTER.removeOne(
+                controllerIdFn({ hubId: action.hubId, controllerType: ControllerType.Hub }),
+                state
+            );
+        }),
+        on(HUBS_ACTIONS.forgetHub, (state, action): ControllerConnectionState => {
+            return CONTROLLER_CONNECTION_ADAPTER.removeOne(
+                controllerIdFn({ hubId: action.hubId, controllerType: ControllerType.Hub }),
+                state
+            );
         }),
     )
 });

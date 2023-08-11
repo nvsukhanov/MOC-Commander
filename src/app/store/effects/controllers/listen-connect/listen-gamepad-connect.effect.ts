@@ -3,9 +3,9 @@ import { inject } from '@angular/core';
 import { Action, Store } from '@ngrx/store';
 import { Observable, filter, interval, map, switchMap } from 'rxjs';
 import { APP_CONFIG, ControllerType, IAppConfig, WINDOW } from '@app/shared';
-import { CONTROLLERS_ACTIONS, CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS, controllerIdFn } from '@app/store';
+import { CONTROLLERS_ACTIONS, CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS, ControllerProfileFactoryService, controllerIdFn } from '@app/store';
 
-import { ControllerProfileFactoryService, IControllerProfile } from '../../../controller-profiles';
+import { IControllerProfile } from '../../../../controller-profiles';
 
 const GAMEPAD_DETECTION_INPUT_THRESHOLD = 0.5;
 
@@ -77,7 +77,7 @@ export const LISTEN_GAMEPAD_CONNECT = createEffect((
                         triggerButtonsIndices: [ ...gamepadDatum.profile.triggerButtonsIndices ],
                         gamepadApiIndex: gamepadDatum.gamepad.index,
                         gamepadOfTypeIndex: gamepadDatum.gamepadsApiProfileIndex,
-                        settings: gamepadDatum.profile.getDefaultSettings()
+                        defaultSettings: gamepadDatum.profile.getDefaultSettings()
                     });
                 }
                 return null;

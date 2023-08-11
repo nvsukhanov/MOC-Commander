@@ -1,8 +1,10 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { EntityAdapter, EntityState, createEntityAdapter } from '@ngrx/entity';
+import { ControllerType } from '@app/shared';
 
-import { CONTROLLERS_ACTIONS, CONTROLLER_SETTINGS_ACTIONS } from '../actions';
+import { CONTROLLERS_ACTIONS, CONTROLLER_SETTINGS_ACTIONS, HUBS_ACTIONS } from '../actions';
 import { ControllerSettingsModel } from '../models';
+import { controllerIdFn } from './controllers.reducer';
 
 export type ControllerSettingsState = EntityState<ControllerSettingsModel>;
 
@@ -22,16 +24,26 @@ export const CONTROLLER_SETTINGS_FEATURE = createFeature({
         on(CONTROLLERS_ACTIONS.gamepadDiscovered, (state, action): ControllerSettingsState => {
             const settingsModel: ControllerSettingsModel = {
                 controllerId: action.id,
-                ...action.settings
+                ...action.defaultSettings
             };
             return CONTROLLER_SETTINGS_ENTITY_ADAPTER.addOne(settingsModel, state);
         }),
         on(CONTROLLERS_ACTIONS.keyboardDiscovered, (state, action): ControllerSettingsState => {
             const settingsModel: ControllerSettingsModel = {
                 controllerId: action.profileUid,
-                ...action.settings
+                ...action.defaultSettings
             };
             return CONTROLLER_SETTINGS_ENTITY_ADAPTER.addOne(settingsModel, state);
+        }),
+        on(CONTROLLERS_ACTIONS.hubDiscovered, (state, action): ControllerSettingsState => {
+            const settingsModel: ControllerSettingsModel = {
+                controllerId: controllerIdFn({ hubId: action.hubId, controllerType: ControllerType.Hub }),
+                ...action.defaultSettings
+            };
+            return CONTROLLER_SETTINGS_ENTITY_ADAPTER.addOne(settingsModel, state);
+        }),
+        on(HUBS_ACTIONS.forgetHub, (state, action): ControllerSettingsState => {
+            return CONTROLLER_SETTINGS_ENTITY_ADAPTER.removeOne(action.hubId, state);
         })
     ),
 });

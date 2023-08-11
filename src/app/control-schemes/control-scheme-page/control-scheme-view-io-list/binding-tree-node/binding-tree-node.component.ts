@@ -9,17 +9,8 @@ import { Store } from '@ngrx/store';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
-import {
-    ControllerL10nTypePipe,
-    ControllerTypeIconPipe,
-    EllipsisTitleDirective,
-    HubIoOperationMode,
-    IoOperationTypeToL10nKeyPipe,
-    NotConnectedInlineIconComponent
-} from '@app/shared';
+import { EllipsisTitleDirective, HubIoOperationMode, IoOperationTypeToL10nKeyPipe, NotConnectedInlineIconComponent } from '@app/shared';
 
-import { ControllerL10nInputNamePipe } from './controller-l10n-input-name.pipe';
-import { ControllerL10nNamePipe } from './controller-l10n-name.pipe';
 import { BindingTreeNodeViewModel } from './binding-tree-node-view-model';
 import { SINGLE_INPUT_TREE_NODE_VIEW_MODEL_SELECTOR } from './single-input-tree-node-view-model.selector';
 import { FullControllerInputNameComponent } from '../../../full-controller-input-name';
@@ -34,16 +25,12 @@ import { ControlSchemeViewBindingTreeNodeData } from '../../types';
     imports: [
         NgIf,
         MatIconModule,
-        ControllerTypeIconPipe,
         IoOperationTypeToL10nKeyPipe,
         TranslocoModule,
         EllipsisTitleDirective,
-        ControllerL10nInputNamePipe,
         PushPipe,
-        ControllerL10nTypePipe,
         MatFormFieldModule,
         NotConnectedInlineIconComponent,
-        ControllerL10nNamePipe,
         JsonPipe,
         NgForOf,
         FullControllerInputNameComponent,

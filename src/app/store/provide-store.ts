@@ -28,11 +28,11 @@ import {
 import {
     AttachedIOsEffects,
     AttachedIoModesEffects,
-    GAMEPAD_CONTROLLER_EFFECTS,
+    CONTROLLER_EFFECTS,
+    ControllerProfileFactoryService,
     HubAttachedIosStateEffects,
     HubPortModeInfoEffects,
     HubsEffects,
-    KEYBOARD_CONTROLLER_EFFECTS,
     NotificationsEffects,
     TaskProcessingEffects,
 } from './effects';
@@ -94,8 +94,7 @@ export function provideApplicationStore(): EnvironmentProviders {
             TaskProcessingEffects,
             NotificationsEffects,
             HubAttachedIosStateEffects,
-            GAMEPAD_CONTROLLER_EFFECTS,
-            KEYBOARD_CONTROLLER_EFFECTS
+            CONTROLLER_EFFECTS,
         ),
         provideStoreDevtools({
             maxAge: 100,
@@ -122,6 +121,7 @@ export function provideApplicationStore(): EnvironmentProviders {
             multi: true
         },
         HubStorageService,
+        ControllerProfileFactoryService,
         provideRouterStore()
     ]);
 }

@@ -3,9 +3,7 @@ import { inject } from '@angular/core';
 import { fromEvent, map, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { WINDOW } from '@app/shared';
-import { CONTROLLERS_ACTIONS, CONTROLLER_SELECTORS } from '@app/store';
-
-import { ControllerProfileFactoryService } from '../../../controller-profiles';
+import { CONTROLLERS_ACTIONS, CONTROLLER_SELECTORS, ControllerProfileFactoryService } from '@app/store';
 
 const KEY_DOWN_EVENT = 'keydown';
 
@@ -24,7 +22,7 @@ export const LISTEN_KEYBOARD_CONNECT = createEffect((
             const profileUid = controllerProfile.uid;
             return knownKeyboard
                    ? CONTROLLERS_ACTIONS.keyboardConnected({ profileUid })
-                   : CONTROLLERS_ACTIONS.keyboardDiscovered({ profileUid, settings: controllerProfile.getDefaultSettings() });
+                   : CONTROLLERS_ACTIONS.keyboardDiscovered({ profileUid, defaultSettings: controllerProfile.getDefaultSettings() });
         }),
         take(1)
     );
