@@ -1,13 +1,11 @@
 import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
-import { ControllerType } from '@app/shared';
 
 import { IControllerProfile } from '../i-controller-profile';
-import { HubControllerSettings } from '../controller-settings';
 
 export const GREEN_BUTTON_INPUT_ID = 'green-button';
 
-export class ControllerProfileHub implements IControllerProfile {
+export class ControllerProfileHub implements IControllerProfile<null> {
     public readonly axisStateL10nKey: string = '';
 
     public readonly name$: Observable<string>;
@@ -50,9 +48,7 @@ export class ControllerProfileHub implements IControllerProfile {
         return of('');
     }
 
-    public getDefaultSettings(): HubControllerSettings {
-        return {
-            controllerType: ControllerType.Hub,
-        };
+    public getDefaultSettings(): null {
+        return null;
     }
 }

@@ -20,7 +20,7 @@ import {
 import { ControllerInputType, ControllerType, RangeControlComponent, SliderControlComponent, ToFormGroup, ToggleControlComponent } from '@app/shared';
 
 import { IControllerSettingsRenderer } from '../i-controller-settings-renderer';
-import { GamepadAxisSettings, GamepadValueTransformService, IControllerProfile } from '../../../../controller-profiles';
+import { GamepadAxisSettings, GamepadSettings, GamepadValueTransformService, IControllerProfile } from '../../../../controller-profiles';
 import { InputOutputDiagramComponent } from './input-output-diagram';
 import { ActiveZoneHumanReadableValuePipe } from './active-zone-human-readable-value.pipe';
 
@@ -128,7 +128,7 @@ export class GamepadSettingsComponent implements IControllerSettingsRenderer<Gam
         const profile$ = controllerState.pipe(
             filter((cs): cs is ControllerModel => !!cs),
             map(({ profileUid }) => this.profileFactoryService.getByProfileUid(profileUid)),
-            filter((profile): profile is IControllerProfile => !!profile),
+            filter((profile): profile is IControllerProfile<GamepadSettings> => !!profile),
         );
 
         const viewModel: ViewModel = {

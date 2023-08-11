@@ -2,11 +2,11 @@ import { Inject, Injectable } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 
-import { IControllerProfile } from '../controller-profiles';
+import { ControllerSettings, GamepadSettings, IControllerProfile, KeyboardSettings } from '../controller-profiles';
 import { ControllerProfileKeyboardService } from '../controller-profiles/keyboard';
 import { ControllerProfileGenericGamepadFactoryService } from '../controller-profiles/gamepad';
 import { GamepadProfile } from '../controller-profiles/gamepad-profile';
-import { ControllerProfileHub, ControllerProfileHubFactoryService } from '../controller-profiles/hub';
+import { ControllerProfileHubFactoryService } from '../controller-profiles/hub';
 import { HUBS_SELECTORS } from './selectors';
 
 @Injectable()
@@ -23,7 +23,7 @@ export class ControllerProfileFactoryService { // TODO: refactor, this is a mess
 
     public getGamepadProfile(
         gamepad: Gamepad
-    ): IControllerProfile {
+    ): IControllerProfile<GamepadSettings> {
         const profile = this.controllerProfiles.find((p) => p.controllerIdMatch(gamepad.id));
         if (profile) {
             return profile;
@@ -31,13 +31,13 @@ export class ControllerProfileFactoryService { // TODO: refactor, this is a mess
         return this.genericGamepadFactory.fromGamepadAPI(gamepad);
     }
 
-    public getKeyboardProfile(): IControllerProfile {
+    public getKeyboardProfile(): IControllerProfile<KeyboardSettings> {
         return this.keyboardProfile;
     }
 
     public getHubProfile(
         hubId: string,
-    ): ControllerProfileHub {
+    ): IControllerProfile<null> {
         const profile = this.hubProfileFactory.build(
             hubId,
         );
@@ -47,7 +47,7 @@ export class ControllerProfileFactoryService { // TODO: refactor, this is a mess
 
     public getByProfileUid(
         profileUid: string
-    ): IControllerProfile {
+    ): IControllerProfile<ControllerSettings | null> {
         if (profileUid === this.keyboardProfile.uid) {
             return this.keyboardProfile;
         }
