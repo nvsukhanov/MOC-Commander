@@ -20,7 +20,7 @@ export const CONTROLLERS_ACTIONS = createActionGroup({
         }>(),
         'gamepadConnected': props<{ id: string; gamepadApiIndex: number; profileUid: string }>(),
         'gamepadDisconnected': props<{ id: string }>(),
-        'hubDiscovered': props<{ profileUid: string; hubId: string; defaultSettings: ControllerSettings }>(),
+        'hubDiscovered': props<{ profileUid: string; hubId: string; defaultSettings?: ControllerSettings }>(),
         'hubConnected': props<{ hubId: string }>(),
         'hubDisconnected': props<{ hubId: string }>()
     }

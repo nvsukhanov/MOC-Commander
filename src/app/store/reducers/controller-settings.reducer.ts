@@ -22,6 +22,9 @@ export const CONTROLLER_SETTINGS_FEATURE = createFeature({
             return CONTROLLER_SETTINGS_ENTITY_ADAPTER.upsertOne(action.settings, state);
         }),
         on(CONTROLLERS_ACTIONS.gamepadDiscovered, (state, action): ControllerSettingsState => {
+            if (!action.defaultSettings) {
+                return state;
+            }
             const settingsModel: ControllerSettingsModel = {
                 controllerId: action.id,
                 ...action.defaultSettings
@@ -29,6 +32,9 @@ export const CONTROLLER_SETTINGS_FEATURE = createFeature({
             return CONTROLLER_SETTINGS_ENTITY_ADAPTER.addOne(settingsModel, state);
         }),
         on(CONTROLLERS_ACTIONS.keyboardDiscovered, (state, action): ControllerSettingsState => {
+            if (!action.defaultSettings) {
+                return state;
+            }
             const settingsModel: ControllerSettingsModel = {
                 controllerId: action.profileUid,
                 ...action.defaultSettings
@@ -36,6 +42,9 @@ export const CONTROLLER_SETTINGS_FEATURE = createFeature({
             return CONTROLLER_SETTINGS_ENTITY_ADAPTER.addOne(settingsModel, state);
         }),
         on(CONTROLLERS_ACTIONS.hubDiscovered, (state, action): ControllerSettingsState => {
+            if (!action.defaultSettings) {
+                return state;
+            }
             const settingsModel: ControllerSettingsModel = {
                 controllerId: controllerIdFn({ hubId: action.hubId, controllerType: ControllerType.Hub }),
                 ...action.defaultSettings

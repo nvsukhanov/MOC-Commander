@@ -5,7 +5,7 @@ import { Observable, filter, interval, map, switchMap } from 'rxjs';
 import { APP_CONFIG, ControllerType, IAppConfig, WINDOW } from '@app/shared';
 import { CONTROLLERS_ACTIONS, CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS, ControllerProfileFactoryService, controllerIdFn } from '@app/store';
 
-import { IControllerProfile } from '../../../../controller-profiles';
+import { GamepadSettings, IControllerProfile } from '../../../../controller-profiles';
 
 const GAMEPAD_DETECTION_INPUT_THRESHOLD = 0.5;
 
@@ -24,7 +24,7 @@ export const LISTEN_GAMEPAD_CONNECT = createEffect((
         map((gamepads) => {
             const profileCounts: { [profileUid in string]: number } = {};
             const result: Array<{
-                profile: IControllerProfile;
+                profile: IControllerProfile<GamepadSettings>;
                 gamepad: Gamepad;
                 hasInput: boolean;
                 gamepadsApiProfileIndex: number;

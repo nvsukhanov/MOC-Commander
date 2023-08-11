@@ -6,7 +6,7 @@ import { createScopedControllerL10nKeyBuilder } from './create-controller-l10n-k
 import { IControllerProfile } from './i-controller-profile';
 import { GamepadSettings } from './controller-settings';
 
-export abstract class GamepadProfile implements IControllerProfile {
+export abstract class GamepadProfile implements IControllerProfile<GamepadSettings> {
     public abstract readonly uid: string;
 
     public abstract name$: Observable<string>;

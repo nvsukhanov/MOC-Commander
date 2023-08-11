@@ -9,7 +9,7 @@ import { IControllerProfile } from '../i-controller-profile';
 import { KeyboardSettings } from '../controller-settings';
 
 @Injectable()
-export class ControllerProfileKeyboardService implements IControllerProfile {
+export class ControllerProfileKeyboardService implements IControllerProfile<KeyboardSettings> {
     public readonly uid = 'keyboard';
 
     public readonly name$: Observable<string>;

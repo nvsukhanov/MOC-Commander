@@ -7,7 +7,7 @@ import { IControllerProfile } from '../i-controller-profile';
 import { createControllerL10nKey, createScopedControllerL10nKeyBuilder } from '../create-controller-l10n-key';
 import { GamepadAxisSettings, GamepadSettings } from '../controller-settings';
 
-export class ControllerProfileGenericGamepad implements IControllerProfile {
+export class ControllerProfileGenericGamepad implements IControllerProfile<GamepadSettings> {
     public readonly name$: Observable<string>;
 
     public readonly buttonStateL10nKey = createControllerL10nKey('buttonState');

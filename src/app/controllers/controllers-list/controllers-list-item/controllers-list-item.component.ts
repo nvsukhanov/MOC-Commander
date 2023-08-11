@@ -33,7 +33,7 @@ import { ControllerSettingsContainerComponent } from '../controller-settings-con
 export class ControllersListItemComponent {
     @Output() public readonly settingsChanges = new EventEmitter<ControllerSettingsModel>();
 
-    private _controllerProfile?: IControllerProfile;
+    private _controllerProfile?: IControllerProfile<ControllerSettings | null>;
 
     private _controllerSettings?: ControllerSettingsModel;
 

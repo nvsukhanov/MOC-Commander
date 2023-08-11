@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 
 import { ControllerSettings } from './controller-settings';
 
-export interface IControllerProfile {
+export interface IControllerProfile<TSettings extends ControllerSettings | null> {
     readonly uid: string;
 
     readonly name$: Observable<string>;
@@ -17,5 +17,5 @@ export interface IControllerProfile {
 
     getAxisName$(inputId: string): Observable<string>;
 
-    getDefaultSettings(): ControllerSettings;
+    getDefaultSettings(): TSettings;
 }
