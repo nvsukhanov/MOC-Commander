@@ -15,9 +15,17 @@ export const CONTROLLER_INPUT_ENTITY_ADAPTER: EntityAdapter<ControllerInputModel
 });
 
 export function controllerInputIdFn(
-    { controllerId, inputId, inputType }: { controllerId: string; inputId: string; inputType: ControllerInputType }
+    idArgs: { controllerId: string; inputId: string; inputType: ControllerInputType.Button | ControllerInputType.Axis | ControllerInputType.Trigger } |
+        { controllerId: string; inputId: string; inputType: ControllerInputType.ButtonGroup; portId: number | null; buttonId: number | null }
 ): string {
-    return `${controllerId}/${inputType}/${inputId}`;
+    switch (idArgs.inputType) {
+        case ControllerInputType.Button:
+        case ControllerInputType.Axis:
+        case ControllerInputType.Trigger:
+            return `${idArgs.controllerId}/${idArgs.inputType}/${idArgs.inputId}`;
+        case ControllerInputType.ButtonGroup:
+            return `${idArgs.controllerId}/${idArgs.inputType}/${idArgs.portId}/${idArgs.buttonId}`;
+    }
 }
 
 export const CONTROLLER_INPUT_INITIAL_STATE = CONTROLLER_INPUT_ENTITY_ADAPTER.getInitialState({
@@ -29,6 +37,18 @@ export const CONTROLLER_INPUT_FEATURE = createFeature({
     reducer: createReducer(
         CONTROLLER_INPUT_INITIAL_STATE,
         on(CONTROLLER_INPUT_ACTIONS.inputReceived, (state, action): ControllerInputState => {
+            if (action.inputType === ControllerInputType.ButtonGroup) {
+                return CONTROLLER_INPUT_ENTITY_ADAPTER.upsertOne({
+                    controllerId: action.controllerId,
+                    value: action.value,
+                    rawValue: action.rawValue,
+                    inputId: action.inputId,
+                    inputType: action.inputType,
+                    portId: action.portId,
+                    buttonId: action.buttonId,
+                    timestamp: action.timestamp
+                }, state);
+            }
             return CONTROLLER_INPUT_ENTITY_ADAPTER.upsertOne({
                 controllerId: action.controllerId,
                 value: action.value,

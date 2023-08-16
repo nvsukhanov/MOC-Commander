@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { NEVER, Observable, filter, map, of, switchMap } from 'rxjs';
-import { TranslocoModule } from '@ngneat/transloco';
+import { Observable, combineLatestWith, filter, map, of, switchMap } from 'rxjs';
+import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
 import { NgIf } from '@angular/common';
-import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS, ControllerModel, ControllerProfileFactoryService } from '@app/store';
+import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS, ControlSchemeInput, ControllerModel, ControllerProfileFactoryService } from '@app/store';
 import { ControllerInputType } from '@app/shared';
 
 @Component({
@@ -19,72 +19,73 @@ import { ControllerInputType } from '@app/shared';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FullControllerInputNameComponent implements OnChanges {
-    @Input() public controllerId?: string;
-
-    @Input() public inputId?: string;
-
-    @Input() public inputType?: ControllerInputType;
-
+export class FullControllerInputNameComponent {
     @Input() public showDisconnectedState = false;
 
-    private _controllerName$: Observable<string> = NEVER;
-
-    private _inputName$: Observable<string> = NEVER;
+    private _inputName: Observable<string> = of('');
 
     private _isConnected$: Observable<boolean> = of(true);
 
     constructor(
         private readonly store: Store,
-        private readonly profileFactory: ControllerProfileFactoryService
+        private readonly profileFactory: ControllerProfileFactoryService,
+        private readonly translocoService: TranslocoService
     ) {
+    }
+
+    @Input()
+    public set inputData(
+        data: ControlSchemeInput | undefined
+    ) {
+        if (!data) {
+            this._inputName = of('');
+            this._isConnected$ = of(false);
+            return;
+        }
+        const profile$ = this.store.select(CONTROLLER_SELECTORS.selectById(data.controllerId)).pipe(
+            filter((controller): controller is ControllerModel => !!controller),
+            map((controller) => this.profileFactory.getByProfileUid(controller.profileUid))
+        );
+
+        const controllerName$ = profile$.pipe(switchMap((profile) => profile.name$));
+
+        if (data.inputType === ControllerInputType.ButtonGroup) {
+            const buttonName$ = profile$.pipe(
+                switchMap((p) => data.buttonId !== null
+                                 ? p.getButtonName$(data.buttonId)
+                                 : this.translocoService.selectTranslate('controllerProfiles.hub.unknownButton'))
+            );
+            this._inputName = controllerName$.pipe(
+                combineLatestWith(buttonName$),
+                switchMap(([ controllerName, inputName ]) =>
+                    this.translocoService.selectTranslate('controlScheme.fullControllerInputNameWithPort', { controllerName, inputName, portId: data.portId })
+                )
+            );
+        } else {
+            const inputName$ = data.inputType === ControllerInputType.Axis
+                               ? profile$.pipe(switchMap((p) => p.getAxisName$(data.inputId)))
+                               : profile$.pipe(switchMap((p) => p.getButtonName$(data.inputId)));
+            this._inputName = controllerName$.pipe(
+                combineLatestWith(inputName$),
+                switchMap(([ controllerName, inputName ]) =>
+                    this.translocoService.selectTranslate('controlScheme.fullControllerInputName', { controllerName, inputName })
+                )
+            );
+        }
+
+        if (this.showDisconnectedState) {
+            this._isConnected$ = this.store.select(CONTROLLER_CONNECTION_SELECTORS.isConnected(data.controllerId));
+        } else {
+            this._isConnected$ = of(true);
+        }
+
     }
 
     public get isConnected$(): Observable<boolean> {
         return this._isConnected$;
     }
 
-    public get controllerName$(): Observable<string> {
-        return this._controllerName$;
-    }
-
     public get inputName$(): Observable<string> {
-        return this._inputName$;
-    }
-
-    public ngOnChanges(): void {
-        if (this.controllerId === undefined || this.inputId === undefined || this.inputType === undefined) {
-            this._controllerName$ = NEVER;
-            this._inputName$ = NEVER;
-            return;
-        }
-
-        const profile$ = this.store.select(CONTROLLER_SELECTORS.selectById(this.controllerId)).pipe(
-            filter((controller): controller is ControllerModel => !!controller),
-            map((controller) => this.profileFactory.getByProfileUid(controller.profileUid))
-        );
-
-        this._controllerName$ = profile$.pipe(
-            switchMap((profile) => profile.name$)
-        );
-        this._inputName$ = this.store.select(CONTROLLER_SELECTORS.selectById(this.controllerId)).pipe(
-            filter((controller): controller is ControllerModel => !!controller),
-            map((controller) => this.profileFactory.getByProfileUid(controller?.profileUid)),
-            switchMap((profile) => {
-                if (this.inputType === ControllerInputType.Axis && this.inputId !== undefined) {
-                    return profile.getAxisName$(this.inputId);
-                }
-                if (this.inputType === ControllerInputType.Button && this.inputId !== undefined) {
-                    return profile.getButtonName$(this.inputId);
-                }
-                return NEVER;
-            })
-        );
-
-        if (this.showDisconnectedState) {
-            this._isConnected$ = this.store.select(CONTROLLER_CONNECTION_SELECTORS.isConnected(this.controllerId));
-        } else {
-            this._isConnected$ = of(true);
-        }
+        return this._inputName;
     }
 }

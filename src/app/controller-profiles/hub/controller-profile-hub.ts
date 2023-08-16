@@ -1,5 +1,6 @@
 import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
+import { ButtonGroupButtonId } from '@nvsukhanov/rxpoweredup';
 
 import { IControllerProfile } from '../i-controller-profile';
 
@@ -40,12 +41,20 @@ export class ControllerProfileHub implements IControllerProfile<null> {
     }
 
     public getButtonName$(
-        inputId: string
+        inputId: string | number
     ): Observable<string> {
-        if (inputId === GREEN_BUTTON_INPUT_ID) {
-            return this.translocoService.selectTranslate('controllerProfiles.hub.greenButton');
+        switch (inputId) {
+            case GREEN_BUTTON_INPUT_ID:
+                return this.translocoService.selectTranslate('controllerProfiles.hub.greenButton');
+            case ButtonGroupButtonId.Red:
+                return this.translocoService.selectTranslate('controllerProfiles.hub.redButton');
+            case ButtonGroupButtonId.Plus:
+                return this.translocoService.selectTranslate('controllerProfiles.hub.plusButton');
+            case ButtonGroupButtonId.Minus:
+                return this.translocoService.selectTranslate('controllerProfiles.hub.minusButton');
+            default:
+                return this.translocoService.selectTranslate('controllerProfiles.hub.genericButton', { inputId });
         }
-        return of('');
     }
 
     public getDefaultSettings(): null {

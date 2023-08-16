@@ -1,4 +1,4 @@
-import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
+import { ButtonGroupButtonId, MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 
 export enum InputGain {
@@ -22,13 +22,19 @@ export type DecelerationProfileMixin = {
     useDecelerationProfile: boolean;
 };
 
-export type ControlSchemeLinearBinding = {
-    id: string;
-    operationMode: HubIoOperationMode.Linear;
+export type ControlSchemeInput = {
     controllerId: string;
     inputId: string;
     inputType: ControllerInputType;
-    inputGain: InputGain;
+    gain: InputGain;
+    buttonId: ButtonGroupButtonId | null;
+    portId: number | null;
+};
+
+export type ControlSchemeLinearBinding = {
+    id: string;
+    operationMode: HubIoOperationMode.Linear;
+    input: ControlSchemeInput;
     hubId: string;
     portId: number;
     maxSpeed: number;
@@ -40,10 +46,7 @@ export type ControlSchemeLinearBinding = {
 export type ControlSchemeServoBinding = {
     id: string;
     operationMode: HubIoOperationMode.Servo;
-    controllerId: string;
-    inputId: string;
-    inputType: ControllerInputType;
-    inputGain: InputGain;
+    input: ControlSchemeInput;
     hubId: string;
     portId: number;
     range: number;
@@ -56,9 +59,7 @@ export type ControlSchemeServoBinding = {
 export type ControlSchemeSetAngleBinding = {
     id: string;
     operationMode: HubIoOperationMode.SetAngle;
-    controllerId: string;
-    inputId: string;
-    inputType: ControllerInputType;
+    input: ControlSchemeInput;
     hubId: string;
     portId: number;
     angle: number;
@@ -70,9 +71,7 @@ export type ControlSchemeSetAngleBinding = {
 export type ControlSchemeStepperBinding = {
     id: string;
     operationMode: HubIoOperationMode.Stepper;
-    controllerId: string;
-    inputId: string;
-    inputType: ControllerInputType;
+    input: ControlSchemeInput;
     hubId: string;
     portId: number;
     degree: number;

@@ -1,13 +1,11 @@
-<ng-container *ngIf="controllerIdFormControl && inputIdFormControl && inputTypeControl">
-    <div *ngIf="controllerIdFormControl.valid && inputIdFormControl.valid && inputTypeControl.valid; else assignControl"
+<ng-container *ngIf="inputFormGroup">
+    <div *ngIf="inputFormGroup.valid; else assignControl"
          class="control-info">
         <mat-label class="title">
             {{ title }}:
         </mat-label>
         <app-full-controller-input-name class="control-info__control-name"
-                                        [controllerId]="controllerIdFormControl.value"
-                                        [inputId]="inputIdFormControl.value"
-                                        [inputType]="inputTypeControl.value"
+                                        [inputData]="controllerData"
         ></app-full-controller-input-name>
 
         <button mat-raised-button

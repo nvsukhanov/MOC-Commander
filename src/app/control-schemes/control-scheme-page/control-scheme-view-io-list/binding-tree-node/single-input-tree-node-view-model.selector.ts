@@ -1,13 +1,15 @@
 import { createSelector } from '@ngrx/store';
-import { CONTROLLER_CONNECTION_SELECTORS } from '@app/store';
-import { ControllerInputType, HubIoOperationMode } from '@app/shared';
+import { CONTROLLER_CONNECTION_SELECTORS, ControlSchemeInput } from '@app/store';
+import { HubIoOperationMode } from '@app/shared';
 
 import { BindingTreeNodeViewModel } from './binding-tree-node-view-model';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const SINGLE_INPUT_TREE_NODE_VIEW_MODEL_SELECTOR = (
     controlSchemeId: string,
-    singleInputBinding: { inputId: string; inputType: ControllerInputType; controllerId: string; operationMode: HubIoOperationMode; id: string },
+    singleInputBinding: ControlSchemeInput,
+    operationMode: HubIoOperationMode,
+    bindingId: string,
     isActive: boolean,
     ioHasNoRequiredCapabilities: boolean
 ) => createSelector(
@@ -15,15 +17,13 @@ export const SINGLE_INPUT_TREE_NODE_VIEW_MODEL_SELECTOR = (
     (isControllerConnected: boolean): BindingTreeNodeViewModel => {
         return {
             controlSchemeId,
-            bindingId: singleInputBinding.id,
+            bindingId,
             isActive,
             ioHasNoRequiredCapabilities,
-            operationMode: singleInputBinding.operationMode,
+            operationMode,
             controlData: [ {
-                controllerId: singleInputBinding.controllerId,
-                isControllerConnected,
-                inputId: singleInputBinding.inputId,
-                inputType: singleInputBinding.inputType,
+                input: singleInputBinding,
+                isControllerConnected
             } ]
         };
     }

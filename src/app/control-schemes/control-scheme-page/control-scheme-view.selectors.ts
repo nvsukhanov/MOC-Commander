@@ -222,7 +222,7 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
                 hubNode.children.forEach((ioNode) => {
                     allIosAreConnected = allIosAreConnected && ioNode.isConnected;
                     allIosTypesMatches = allIosTypesMatches && ioNode.children.every((c) => !c.ioHasNoRequiredCapabilities);
-                    allControllersConnected = allControllersConnected && ioNode.children.some((c) => !!controllerEntities[c.binding.controllerId]);
+                    allControllersConnected = allControllersConnected && ioNode.children.some((c) => !!controllerEntities[c.binding.input.controllerId]);
                     hasBindings = hasBindings || ioNode.children.length > 0;
                 });
             });

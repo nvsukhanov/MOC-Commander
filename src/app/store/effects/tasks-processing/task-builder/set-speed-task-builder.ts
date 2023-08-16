@@ -30,7 +30,7 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
             return null;
         }
 
-        const inputRecord = inputsState[controllerInputIdFn(binding)];
+        const inputRecord = inputsState[controllerInputIdFn(binding.input)];
         const inputValue = inputRecord?.value ?? 0;
 
         if (binding.isToggle) {
@@ -48,7 +48,7 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
             inputValue,
             binding.maxSpeed,
             binding.invert,
-            binding.inputGain
+            binding.input.gain
         );
 
         const payload: SetLinearSpeedTaskPayload = {
@@ -92,7 +92,7 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
         }
 
         if (shouldActivate) {
-            const speed = this.calculateSpeed(1, binding.maxSpeed, binding.invert, binding.inputGain);
+            const speed = this.calculateSpeed(1, binding.maxSpeed, binding.invert, binding.input.gain);
             return {
                 taskType: PortCommandTaskType.SetSpeed,
                 speed,

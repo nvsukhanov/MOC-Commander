@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { MOTOR_LIMITS, MotorServoEndState } from '@nvsukhanov/rxpoweredup';
-import { ControllerInputType, WINDOW } from '@app/shared';
-import { InputGain } from '@app/store';
+import { ButtonGroupButtonId, MOTOR_LIMITS, MotorServoEndState } from '@nvsukhanov/rxpoweredup';
+import { ControllerInputType, ToFormGroup, WINDOW } from '@app/shared';
+import { ControlSchemeInput, InputGain } from '@app/store';
 
 @Injectable({ providedIn: 'root' })
 export class CommonFormControlsBuilderService {
@@ -14,20 +14,6 @@ export class CommonFormControlsBuilderService {
 
     public schemeIdControl(): FormControl<string> {
         return this.formBuilder.control<string>(this.window.crypto.randomUUID(), { nonNullable: true });
-    }
-
-    public controllerIdControl(): FormControl<string> {
-        return this.formBuilder.control<string>('', {
-            nonNullable: true,
-            validators: [ Validators.required ]
-        });
-    }
-
-    public inputIdControl(): FormControl<string> {
-        return this.formBuilder.control<string>('', {
-            nonNullable: true,
-            validators: [ Validators.required ]
-        });
     }
 
     public hubIdControl(): FormControl<string> {
@@ -81,21 +67,28 @@ export class CommonFormControlsBuilderService {
         });
     }
 
-    public controllerInputTypeControl(
-        initialValue: ControllerInputType
-    ): FormControl<ControllerInputType> {
-        return this.formBuilder.control<ControllerInputType>(initialValue, {
-            nonNullable: true,
-            validators: [ Validators.required ]
-        });
-    }
-
-    public axialInputFunctionControl(
-        initialValue: InputGain
-    ): FormControl<InputGain> {
-        return this.formBuilder.control<InputGain>(initialValue, {
-            nonNullable: true,
-            validators: [ Validators.required ]
+    public inputFormGroup(
+        initialValue?: Partial<ControlSchemeInput>
+    ): ToFormGroup<ControlSchemeInput> {
+        return this.formBuilder.group({
+            controllerId: this.formBuilder.control<string>(initialValue?.controllerId ?? '', {
+                nonNullable: true,
+                validators: [ Validators.required ]
+            }),
+            inputType: this.formBuilder.control<ControllerInputType>(initialValue?.inputType ?? ControllerInputType.Button, {
+                nonNullable: true,
+                validators: [ Validators.required ]
+            }),
+            inputId: this.formBuilder.control<string>(initialValue?.inputId ?? '', {
+                nonNullable: true,
+                validators: [ Validators.required ]
+            }),
+            gain: this.formBuilder.control<InputGain>(initialValue?.gain ?? InputGain.None, {
+                nonNullable: true,
+                validators: [ Validators.required ]
+            }),
+            buttonId: this.formBuilder.control<ButtonGroupButtonId | null>(initialValue?.portId ?? null),
+            portId: this.formBuilder.control<number | null>(initialValue?.portId ?? null)
         });
     }
 }

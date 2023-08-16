@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
-import { ControllerInputType } from '@app/shared';
 
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';
 import { StepperBindingForm } from '../types';
@@ -19,9 +18,7 @@ export class StepperOutputControlFormBuilderService {
     public build(): StepperBindingForm {
         return this.formBuilder.group({
             id: this.commonFormControlBuilder.schemeIdControl(),
-            controllerId: this.commonFormControlBuilder.controllerIdControl(),
-            inputId: this.commonFormControlBuilder.inputIdControl(),
-            inputType: this.commonFormControlBuilder.controllerInputTypeControl(ControllerInputType.Button),
+            input: this.commonFormControlBuilder.inputFormGroup(),
             hubId: this.commonFormControlBuilder.hubIdControl(),
             portId: this.commonFormControlBuilder.portIdControl(),
             degree: this.formBuilder.control<number>(this.defaultStepDegree, {
