@@ -13,7 +13,7 @@ export interface IControllerProfile<TSettings extends ControllerSettings | null>
 
     readonly triggerButtonsIndices: ReadonlyArray<number>;
 
-    getButtonName$(inputId: string): Observable<string>;
+    getButtonName$(inputId: string | number): Observable<string>;
 
     getAxisName$(inputId: string): Observable<string>;
 

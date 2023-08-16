@@ -39,9 +39,14 @@ export class BindingLinearEditComponent implements IBindingsDetailsEditComponent
     ) {
     }
 
+    public get isToggleable(): boolean {
+        const inputType = this.form?.controls.input.controls.inputType.value;
+        return inputType === ControllerInputType.Button || inputType === ControllerInputType.ButtonGroup;
+    }
+
     public get isInputGainConfigurable(): boolean {
-        return this.form?.controls.inputType.value === ControllerInputType.Axis
-            || this.form?.controls.inputType.value === ControllerInputType.Trigger;
+        return this.form?.controls.input.controls.inputType.value === ControllerInputType.Axis
+            || this.form?.controls.input.controls.inputType.value === ControllerInputType.Trigger;
     }
 
     public setForm(
@@ -50,9 +55,9 @@ export class BindingLinearEditComponent implements IBindingsDetailsEditComponent
         if (outputBinding !== this.form) {
             this.form = outputBinding;
             merge(
-                outputBinding.controls.controllerId.valueChanges,
-                outputBinding.controls.inputId.valueChanges,
-                outputBinding.controls.inputType.valueChanges,
+                outputBinding.controls.input.controls.controllerId.valueChanges,
+                outputBinding.controls.input.controls.inputId.valueChanges,
+                outputBinding.controls.input.controls.inputType.valueChanges,
             ).subscribe(() => {
                 this.cd.markForCheck();
             });

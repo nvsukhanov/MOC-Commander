@@ -14,7 +14,7 @@ export class StepperTaskBuilder extends BaseTaskBuilder {
             return null;
         }
 
-        const inputRecord = inputsState[controllerInputIdFn(binding)];
+        const inputRecord = inputsState[controllerInputIdFn(binding.input)];
         const inputValue = inputRecord?.value ?? 0;
 
         if (inputValue < 0.5) {

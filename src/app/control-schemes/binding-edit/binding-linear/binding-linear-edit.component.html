@@ -1,14 +1,12 @@
 <ng-container *ngIf="form">
-    <app-controller-select [controllerIdFormControl]="form.controls.controllerId"
-                           [inputIdFormControl]="form.controls.inputId"
-                           [operationMode]="linearHubIoOperationMode"
-                           [inputTypeControl]="form.controls.inputType"
+    <app-controller-select [operationMode]="linearHubIoOperationMode"
+                           [inputFormGroup]="form.controls.input"
                            [title]="'controlScheme.bindingGenericInputTitle' | transloco "
     ></app-controller-select>
 
-    <ng-container *ngIf="form.controls.controllerId.valid && form.controls.inputId.valid">
+    <ng-container *ngIf="form.controls.input.valid">
         <app-binding-input-gain-select *ngIf="isInputGainConfigurable"
-                                       [control]="form.controls.inputGain"
+                                       [control]="form.controls.input.controls.gain"
         ></app-binding-input-gain-select>
 
         <app-slider-control [min]="0"
@@ -23,7 +21,7 @@
                             [translocoTitle]="'controlScheme.outputPowerControlTitle'"
         ></app-slider-control>
 
-        <app-toggle-control *ngIf="form.controls.inputType.value === controllerInputButtonType"
+        <app-toggle-control *ngIf="isToggleable"
                             [translocoTitle]="'controlScheme.linearOutputConfigurationTreatAsSwitch'"
                             [control]="form.controls.isToggle"
         ></app-toggle-control>

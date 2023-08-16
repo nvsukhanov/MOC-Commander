@@ -1,10 +1,9 @@
-import { ControllerInputType, HubIoOperationMode } from '@app/shared';
+import { HubIoOperationMode } from '@app/shared';
+import { ControlSchemeInput } from '@app/store';
 
 export type BindingTreeNodeRecord = {
-    controllerId: string;
+    input: ControlSchemeInput;
     isControllerConnected: boolean;
-    inputId: string;
-    inputType: ControllerInputType;
 };
 
 export type BindingTreeNodeViewModel = {

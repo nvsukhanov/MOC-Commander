@@ -1,12 +1,10 @@
 <ng-container *ngIf="form">
-    <app-controller-select [controllerIdFormControl]="form.controls.controllerId"
-                           [inputIdFormControl]="form.controls.inputId"
-                           [operationMode]="setAngleHubIoOperationMode"
-                           [inputTypeControl]="form.controls.inputType"
+    <app-controller-select [operationMode]="setAngleHubIoOperationMode"
+                           [inputFormGroup]="form.controls.input"
                            [title]="'controlScheme.bindingGenericInputTitle' | transloco "
     ></app-controller-select>
 
-    <ng-container *ngIf="form.controls.controllerId.valid && form.controls.inputId.valid">
+    <ng-container *ngIf="form.controls.input.valid">
         <app-binding-control-num-input [translocoTitle]="'controlScheme.setAngleOutputConfigurationAngle'"
                                        [control]="form.controls.angle"
                                        [min]="motorLimits.minRawAngle"

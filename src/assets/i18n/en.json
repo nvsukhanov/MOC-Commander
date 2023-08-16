@@ -138,7 +138,9 @@
     "inputGain": "Input gain",
     "inputGainLinear": "None",
     "inputGainLogarithmic": "Logarithmic",
-    "inputGainExponential": "Exponential"
+    "inputGainExponential": "Exponential",
+    "fullControllerInputName": "{controllerName} / {inputName}",
+    "fullControllerInputNameWithPort": "{controllerName} / Port {portId} / {inputName}"
   },
   "motorServoEndState": {
     "float": "Float",
@@ -278,7 +280,12 @@
     },
     "hub": {
       "name": "Hub ''{name}''",
-      "greenButton": "Green button"
+      "greenButton": "Green button",
+      "plusButton": "''+'' button",
+      "redButton": "Red button",
+      "minusButton": "''-'' button",
+      "genericButton": "Button {inputId}",
+      "unknownButton": "Unknown button"
     }
   }
 }

@@ -22,7 +22,7 @@ export function controllerIdFn(
         case ControllerType.Gamepad:
             return `gamepad-${idArgs.profileUid}/${idArgs.gamepadOfTypeIndex}`;
         case ControllerType.Hub:
-            return `hub-${idArgs.hubId}}`;
+            return `hub-${idArgs.hubId}`;
     }
 }
 

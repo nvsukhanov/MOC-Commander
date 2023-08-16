@@ -1,5 +1,6 @@
 export enum ControllerInputType {
     Button = 'Button',
     Axis = 'Axis',
-    Trigger = 'Trigger'
+    Trigger = 'Trigger',
+    ButtonGroup = 'ButtonGroup',
 }

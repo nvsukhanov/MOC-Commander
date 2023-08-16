@@ -1,12 +1,12 @@
 <ng-container *ngIf="isConnected$ | ngrxPush; else notConnected">
-    {{ controllerName$ | ngrxPush }} / {{ inputName$ | ngrxPush }}
+    {{ inputName$ | ngrxPush }}
 </ng-container>
 
 <ng-template #notConnected>
     <span class="disconnected"
           [title]="'controller.isNotConnectedInlineNotification' | transloco"
     >
-        {{ controllerName$ | ngrxPush }} / {{ inputName$ | ngrxPush }}
+        {{ inputName$ | ngrxPush }}
     </span>
     <span class="cdk-visually-hidden">
         {{ 'controller.isNotConnectedInlineNotification' | transloco }}

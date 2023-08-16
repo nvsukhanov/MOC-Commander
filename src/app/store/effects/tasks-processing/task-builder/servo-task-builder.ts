@@ -19,8 +19,8 @@ export class ServoTaskBuilder extends BaseTaskBuilder {
             return null;
         }
 
-        const inputRecord = inputsState[controllerInputIdFn(binding)];
-        const inputValue = calcInputGain(inputRecord?.value ?? 0, binding.inputGain);
+        const inputRecord = inputsState[controllerInputIdFn(binding.input)];
+        const inputValue = calcInputGain(inputRecord?.value ?? 0, binding.input.gain);
 
         const translationPaths = getTranslationArcs(motorEncoderOffset, binding.aposCenter);
         const resultingCenter = translationPaths.cw < translationPaths.ccw ? translationPaths.cw : -translationPaths.ccw;

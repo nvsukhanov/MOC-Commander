@@ -9,5 +9,5 @@ export type DeepReadonly<T extends object> = {
 };
 
 export type ToFormGroup<T extends object> = FormGroup<{
-    [K in keyof T]: FormControl<T[K]>;
+    [K in keyof T]: T[K] extends object ? ToFormGroup<T[K]> : FormControl<T[K]>;
 }>;

@@ -79,7 +79,9 @@ export class BindingTreeNodeComponent {
             case HubIoOperationMode.Linear:
                 return this.store.select(SINGLE_INPUT_TREE_NODE_VIEW_MODEL_SELECTOR(
                     treeNodeData.controlSchemeId,
-                    treeNodeData.binding,
+                    treeNodeData.binding.input,
+                    treeNodeData.binding.operationMode,
+                    treeNodeData.binding.id,
                     treeNodeData.isActive,
                     treeNodeData.ioHasNoRequiredCapabilities
                 ));
