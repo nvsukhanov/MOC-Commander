@@ -1,5 +1,6 @@
 import { Directive, OnDestroy, OnInit, TemplateRef } from '@angular/core';
-import { FeatureToolbarService } from '@app/shared';
+
+import { FeatureToolbarService } from './feature-toolbar-service';
 
 @Directive({
     standalone: true,

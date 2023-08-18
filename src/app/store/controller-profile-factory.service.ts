@@ -41,7 +41,7 @@ export class ControllerProfileFactoryService { // TODO: refactor, this is a mess
         const profile = this.hubProfileFactory.build(
             hubId,
         );
-        profile.setNameProvider(this.store.select(HUBS_SELECTORS.selectHubName(hubId)));
+        profile.setName(this.store.select(HUBS_SELECTORS.selectHubName(hubId)));
         return profile;
     }
 
@@ -57,7 +57,7 @@ export class ControllerProfileFactoryService { // TODO: refactor, this is a mess
         }
         const hubProfile = this.hubProfileFactory.fromUid(profileUid);
         if (hubProfile) {
-            hubProfile.setNameProvider(this.store.select(HUBS_SELECTORS.selectHubName(hubProfile.hubId)));
+            hubProfile.setName(this.store.select(HUBS_SELECTORS.selectHubName(hubProfile.hubId)));
             return hubProfile;
         }
 

@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { ButtonGroupButtonId } from '@nvsukhanov/rxpoweredup';
 
@@ -9,31 +9,27 @@ export const GREEN_BUTTON_INPUT_ID = 'green-button';
 export class ControllerProfileHub implements IControllerProfile<null> {
     public readonly axisStateL10nKey: string = '';
 
-    public readonly name$: Observable<string>;
-
     public readonly buttonStateL10nKey: string = 'controllerProfiles.buttonState';
 
     public readonly triggerButtonsIndices: ReadonlyArray<number> = [];
 
-    private _nameProvider: BehaviorSubject<Observable<string>> = new BehaviorSubject(of('unknown'));
+    private _name$: Observable<string> = of('');
 
     constructor(
         public readonly uid: string,
         public readonly hubId: string,
         private readonly translocoService: TranslocoService
     ) {
-        this.name$ = this._nameProvider.pipe(
-            switchMap((nameProvider) => nameProvider),
-            switchMap((name) => {
-                return translocoService.selectTranslate('controllerProfiles.hub.name', { name });
-            })
-        );
     }
 
-    public setNameProvider(
+    public get name$(): Observable<string> {
+        return this._name$;
+    }
+
+    public setName(
         nameProvider: Observable<string>
     ): void {
-        this._nameProvider.next(nameProvider);
+        this._name$ = nameProvider;
     }
 
     public getAxisName$(): Observable<string> {
