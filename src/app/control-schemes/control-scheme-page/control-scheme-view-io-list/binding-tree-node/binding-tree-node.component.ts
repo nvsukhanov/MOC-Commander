@@ -9,7 +9,7 @@ import { Store } from '@ngrx/store';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
-import { EllipsisTitleDirective, HubIoOperationMode, IoOperationTypeToL10nKeyPipe, NotConnectedInlineIconComponent } from '@app/shared';
+import { EllipsisTitleDirective, HubIoOperationMode, IoOperationTypeToL10nKeyPipe } from '@app/shared';
 
 import { BindingTreeNodeViewModel } from './binding-tree-node-view-model';
 import { SINGLE_INPUT_TREE_NODE_VIEW_MODEL_SELECTOR } from './single-input-tree-node-view-model.selector';
@@ -30,7 +30,6 @@ import { ControlSchemeViewBindingTreeNodeData } from '../../types';
         EllipsisTitleDirective,
         PushPipe,
         MatFormFieldModule,
-        NotConnectedInlineIconComponent,
         JsonPipe,
         NgForOf,
         FullControllerInputNameComponent,
