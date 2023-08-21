@@ -15,7 +15,9 @@ export class LinearOutputControlFormBuilderService {
     public build(): LinearBindingForm {
         return this.formBuilder.group({
             id: this.commonFormControlBuilder.schemeIdControl(),
-            input: this.commonFormControlBuilder.inputFormGroup(),
+            inputs: this.formBuilder.group({
+                accelerate: this.commonFormControlBuilder.inputFormGroup()
+            }),
             hubId: this.commonFormControlBuilder.hubIdControl(),
             portId: this.commonFormControlBuilder.portIdControl(),
             maxSpeed: this.commonFormControlBuilder.speedControl(),

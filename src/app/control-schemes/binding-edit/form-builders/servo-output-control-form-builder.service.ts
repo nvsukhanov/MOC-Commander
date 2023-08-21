@@ -16,7 +16,9 @@ export class ServoOutputControlFormBuilderService {
     public build(): ServoBindingForm {
         return this.formBuilder.group({
             id: this.commonFormControlBuilder.schemeIdControl(),
-            input: this.commonFormControlBuilder.inputFormGroup(),
+            inputs: this.formBuilder.group({
+                servo: this.commonFormControlBuilder.inputFormGroup()
+            }),
             hubId: this.commonFormControlBuilder.hubIdControl(),
             portId: this.commonFormControlBuilder.portIdControl(),
             range: this.formBuilder.control<number>(MOTOR_LIMITS.maxServoDegreesRange, {

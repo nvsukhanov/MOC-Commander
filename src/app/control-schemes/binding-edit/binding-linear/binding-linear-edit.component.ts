@@ -21,7 +21,7 @@ import { BindingInputGainSelectComponent } from '../control-axial-output-modifie
         ToggleControlComponent,
         BindingControlSelectControllerComponent,
         TranslocoModule,
-        BindingInputGainSelectComponent
+        BindingInputGainSelectComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -40,24 +40,25 @@ export class BindingLinearEditComponent implements IBindingsDetailsEditComponent
     }
 
     public get isToggleable(): boolean {
-        const inputType = this.form?.controls.input.controls.inputType.value;
+        const inputType = this.form?.controls.inputs.controls.accelerate.controls.inputType.value;
         return inputType === ControllerInputType.Button || inputType === ControllerInputType.ButtonGroup;
     }
 
     public get isInputGainConfigurable(): boolean {
-        return this.form?.controls.input.controls.inputType.value === ControllerInputType.Axis
-            || this.form?.controls.input.controls.inputType.value === ControllerInputType.Trigger;
+        return this.form?.controls.inputs.controls.accelerate.controls.inputType.value === ControllerInputType.Axis
+            || this.form?.controls.inputs.controls.accelerate.controls.inputType.value === ControllerInputType.Trigger;
     }
 
     public setForm(
         outputBinding: LinearBindingForm
     ): void {
+        const accelerateControls = outputBinding.controls.inputs.controls.accelerate.controls;
         if (outputBinding !== this.form) {
             this.form = outputBinding;
             merge(
-                outputBinding.controls.input.controls.controllerId.valueChanges,
-                outputBinding.controls.input.controls.inputId.valueChanges,
-                outputBinding.controls.input.controls.inputType.valueChanges,
+                accelerateControls.controllerId.valueChanges,
+                accelerateControls.inputId.valueChanges,
+                accelerateControls.inputType.valueChanges,
             ).subscribe(() => {
                 this.cd.markForCheck();
             });

@@ -16,10 +16,10 @@ export class SetAngleTaskBuilder extends BaseTaskBuilder {
             return null;
         }
 
-        const inputRecord = inputsState[controllerInputIdFn(binding.input)];
-        const inputValue = inputRecord?.value ?? 0;
+        const setAngleInput = inputsState[controllerInputIdFn(binding.inputs.setAngle)];
+        const setAngleInputValue = setAngleInput?.value ?? 0;
 
-        if (inputValue < this.inputValueThreshold) {
+        if (setAngleInputValue < this.inputValueThreshold) { // TODO: inject threshold
             return null;
         }
         const payload: SetAngleTaskPayload = {
@@ -32,7 +32,7 @@ export class SetAngleTaskBuilder extends BaseTaskBuilder {
             useDecelerationProfile: binding.useDecelerationProfile
         };
 
-        return { payload, inputTimestamp: inputRecord?.timestamp ?? Date.now() };
+        return { payload, inputTimestamp: setAngleInput?.timestamp ?? Date.now() };
     }
 
     protected buildCleanupPayload(

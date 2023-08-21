@@ -30,37 +30,37 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
             return null;
         }
 
-        const inputRecord = inputsState[controllerInputIdFn(binding.input)];
-        const inputValue = inputRecord?.value ?? 0;
+        const accelerateInput = inputsState[controllerInputIdFn(binding.inputs.accelerate)];
+        const accelerateInputValue = accelerateInput?.value ?? 0;
 
         if (binding.isToggle) {
-            if (inputValue === 0) {
+            if (accelerateInputValue === 0) {
                 return null;
             }
             const payload = this.createTogglePayload(binding, lastExecutedTask);
             if (payload) {
-                return { payload, inputTimestamp: inputRecord?.timestamp ?? Date.now() };
+                return { payload, inputTimestamp: accelerateInput?.timestamp ?? Date.now() };
             }
             return null;
         }
 
         const targetSpeed = this.calculateSpeed(
-            inputValue,
+            accelerateInputValue,
             binding.maxSpeed,
             binding.invert,
-            binding.input.gain
+            binding.inputs.accelerate.gain
         );
 
         const payload: SetLinearSpeedTaskPayload = {
             taskType: PortCommandTaskType.SetSpeed,
             speed: targetSpeed,
             power: this.calculatePower(targetSpeed, binding.power),
-            activeInput: inputValue !== 0,
+            activeInput: accelerateInputValue !== 0,
             useAccelerationProfile: binding.useAccelerationProfile,
             useDecelerationProfile: binding.useDecelerationProfile
         };
 
-        return { payload, inputTimestamp: inputRecord?.timestamp ?? Date.now() };
+        return { payload, inputTimestamp: accelerateInput?.timestamp ?? Date.now() };
     }
 
     protected buildCleanupPayload(
@@ -92,7 +92,12 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
         }
 
         if (shouldActivate) {
-            const speed = this.calculateSpeed(1, binding.maxSpeed, binding.invert, binding.input.gain);
+            const speed = this.calculateSpeed(
+                1,
+                binding.maxSpeed,
+                binding.invert,
+                binding.inputs.accelerate.gain
+            );
             return {
                 taskType: PortCommandTaskType.SetSpeed,
                 speed,

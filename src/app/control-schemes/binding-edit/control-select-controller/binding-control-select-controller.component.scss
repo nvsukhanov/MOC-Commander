@@ -4,7 +4,7 @@
 
 .title {
     font-weight: 500;
-    margin-right: 10px;
+    margin: 0 10px;
 }
 
 .control-info {
@@ -15,8 +15,4 @@
     &__control-name {
         flex-grow: 1;
     }
-}
-
-.assign-control {
-    width: 100%;
 }

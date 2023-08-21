@@ -19,14 +19,14 @@ export class ServoTaskBuilder extends BaseTaskBuilder {
             return null;
         }
 
-        const inputRecord = inputsState[controllerInputIdFn(binding.input)];
-        const inputValue = calcInputGain(inputRecord?.value ?? 0, binding.input.gain);
+        const servoInput = inputsState[controllerInputIdFn(binding.inputs.servo)];
+        const servoInputValue = calcInputGain(servoInput?.value ?? 0, binding.inputs.servo.gain);
 
         const translationPaths = getTranslationArcs(motorEncoderOffset, binding.aposCenter);
         const resultingCenter = translationPaths.cw < translationPaths.ccw ? translationPaths.cw : -translationPaths.ccw;
 
         const arcSize = binding.range;
-        const arcPosition = inputValue * arcSize / 2 * (binding.invert ? -1 : 1);
+        const arcPosition = servoInputValue * arcSize / 2 * (binding.invert ? -1 : 1);
 
         const targetAngle = arcPosition + resultingCenter;
         const minAngle = resultingCenter - arcSize / 2;
@@ -43,7 +43,7 @@ export class ServoTaskBuilder extends BaseTaskBuilder {
             useAccelerationProfile: binding.useAccelerationProfile,
             useDecelerationProfile: binding.useDecelerationProfile,
         };
-        return { payload, inputTimestamp: inputRecord?.timestamp ?? Date.now() };
+        return { payload, inputTimestamp: servoInput?.timestamp ?? Date.now() };
     }
 
     protected buildCleanupPayload(
