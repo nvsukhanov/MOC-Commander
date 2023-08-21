@@ -58,8 +58,8 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
     }
 
     public get isInputGainConfigurable(): boolean {
-        return this.form?.controls.input.controls.inputType.value === ControllerInputType.Axis
-            || this.form?.controls.input.controls.inputType.value === ControllerInputType.Trigger;
+        return this.form?.controls.inputs.controls.servo.controls.inputType.value === ControllerInputType.Axis
+            || this.form?.controls.inputs.controls.servo.controls.inputType.value === ControllerInputType.Trigger;
     }
 
     public get canCalibrate$(): Observable<boolean> {

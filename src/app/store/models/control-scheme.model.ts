@@ -31,10 +31,14 @@ export type ControlSchemeInput = {
     portId: number | null;
 };
 
+export type ControlSchemeInputsRecord = Record<string, ControlSchemeInput>;
+
 export type ControlSchemeLinearBinding = {
     id: string;
     operationMode: HubIoOperationMode.Linear;
-    input: ControlSchemeInput;
+    inputs: {
+        accelerate: ControlSchemeInput;
+    } & ControlSchemeInputsRecord;
     hubId: string;
     portId: number;
     maxSpeed: number;
@@ -46,7 +50,9 @@ export type ControlSchemeLinearBinding = {
 export type ControlSchemeServoBinding = {
     id: string;
     operationMode: HubIoOperationMode.Servo;
-    input: ControlSchemeInput;
+    inputs: {
+        servo: ControlSchemeInput;
+    } & ControlSchemeInputsRecord;
     hubId: string;
     portId: number;
     range: number;
@@ -59,7 +65,9 @@ export type ControlSchemeServoBinding = {
 export type ControlSchemeSetAngleBinding = {
     id: string;
     operationMode: HubIoOperationMode.SetAngle;
-    input: ControlSchemeInput;
+    inputs: {
+        setAngle: ControlSchemeInput;
+    } & ControlSchemeInputsRecord;
     hubId: string;
     portId: number;
     angle: number;
@@ -71,7 +79,9 @@ export type ControlSchemeSetAngleBinding = {
 export type ControlSchemeStepperBinding = {
     id: string;
     operationMode: HubIoOperationMode.Stepper;
-    input: ControlSchemeInput;
+    inputs: {
+        step: ControlSchemeInput;
+    } & ControlSchemeInputsRecord;
     hubId: string;
     portId: number;
     degree: number;

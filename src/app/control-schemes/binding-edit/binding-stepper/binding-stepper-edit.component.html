@@ -1,10 +1,10 @@
 <ng-container *ngIf="form">
     <app-controller-select [operationMode]="stepperHubIoOperationMode"
-                           [inputFormGroup]="form.controls.input"
-                           [title]="'controlScheme.bindingGenericInputTitle' | transloco "
+                           [inputFormGroup]="form.controls.inputs.controls.step"
+                           [title]="'controlScheme.stepperInput' | transloco "
     ></app-controller-select>
 
-    <ng-container *ngIf="form.controls.input.valid">
+    <ng-container *ngIf="form.controls.inputs.valid">
         <app-binding-control-num-input [translocoTitle]="'controlScheme.stepperOutputConfigurationDegree'"
                                        [control]="form.controls.degree"
                                        [min]="minStepperDegree"

@@ -207,7 +207,7 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
         (
             viewTree,
             runningState,
-            controllerEntities: Dictionary<ControllerConnectionModel>
+            controllerConnectionEntities: Dictionary<ControllerConnectionModel>
         ): boolean => {
             let allHubAreConnected = true;
             let allIosAreConnected = true;
@@ -222,7 +222,11 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
                 hubNode.children.forEach((ioNode) => {
                     allIosAreConnected = allIosAreConnected && ioNode.isConnected;
                     allIosTypesMatches = allIosTypesMatches && ioNode.children.every((c) => !c.ioHasNoRequiredCapabilities);
-                    allControllersConnected = allControllersConnected && ioNode.children.some((c) => !!controllerEntities[c.binding.input.controllerId]);
+                    ioNode.children.forEach((c) => {
+                        Object.values(c.binding.inputs).forEach((input) => {
+                            allControllersConnected = allControllersConnected && !!controllerConnectionEntities[input.controllerId];
+                        });
+                    });
                     hasBindings = hasBindings || ioNode.children.length > 0;
                 });
             });

@@ -1,26 +1,31 @@
 <ng-container *ngIf="inputFormGroup">
-    <div *ngIf="inputFormGroup.valid; else assignControl"
-         class="control-info">
+    <div class="control-info">
+        <mat-icon [fontIcon]="'gamepad'"></mat-icon>
         <mat-label class="title">
-            {{ title }}:
+            {{ title }}
         </mat-label>
-        <app-full-controller-input-name class="control-info__control-name"
-                                        [inputData]="controllerData"
-        ></app-full-controller-input-name>
+        <ng-container *ngIf="inputFormGroup.valid; else controllerIsNotAssigned">
+            <app-full-controller-input-name class="control-info__control-name"
+                                            [inputData]="controllerData"
+            ></app-full-controller-input-name>
 
-        <button mat-raised-button
-                (click)="onBind()"
-        >
-            {{ 'controlScheme.bindToAnotherInputButtonTitle' | transloco }}
-        </button>
+            <button mat-raised-button
+                    (click)="onBind()"
+            >
+                {{ 'controlScheme.bindToAnotherInputButtonTitle' | transloco }}
+            </button>
+        </ng-container>
+        <ng-template #controllerIsNotAssigned>
+            <span class="control-info__control-name">
+                {{ 'controlScheme.bindingInputIsNotAssigned' | transloco }}
+            </span>
+
+            <button class="assign-control"
+                    mat-raised-button
+                    (click)="onBind()"
+            >
+                {{ 'controlScheme.bindingAssignControlButtonTitle' | transloco }}
+            </button>
+        </ng-template>
     </div>
 </ng-container>
-
-<ng-template #assignControl>
-    <button class="assign-control"
-            mat-raised-button
-            (click)="onBind()"
-    >
-        {{ 'controlScheme.bindingAssignControlButtonTitle' | transloco }}
-    </button>
-</ng-template>

@@ -12,7 +12,7 @@ import { MatListModule } from '@angular/material/list';
 import { EllipsisTitleDirective, HubIoOperationMode, IoOperationTypeToL10nKeyPipe } from '@app/shared';
 
 import { BindingTreeNodeViewModel } from './binding-tree-node-view-model';
-import { SINGLE_INPUT_TREE_NODE_VIEW_MODEL_SELECTOR } from './single-input-tree-node-view-model.selector';
+import { INPUT_TREE_NODE_VIEW_MODEL_SELECTOR } from './input-tree-node-view-model.selector';
 import { FullControllerInputNameComponent } from '../../../full-controller-input-name';
 import { BindingViewUrlPipe } from './binding-view-url.pipe';
 import { ControlSchemeViewBindingTreeNodeData } from '../../types';
@@ -76,9 +76,9 @@ export class BindingTreeNodeComponent {
             case HubIoOperationMode.SetAngle:
             case HubIoOperationMode.Servo:
             case HubIoOperationMode.Linear:
-                return this.store.select(SINGLE_INPUT_TREE_NODE_VIEW_MODEL_SELECTOR(
+                return this.store.select(INPUT_TREE_NODE_VIEW_MODEL_SELECTOR(
                     treeNodeData.controlSchemeId,
-                    treeNodeData.binding.input,
+                    treeNodeData.binding.inputs,
                     treeNodeData.binding.operationMode,
                     treeNodeData.binding.id,
                     treeNodeData.isActive,

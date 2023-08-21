@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@a
 import { NgIf } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import { ControlSchemeInput, ControllerInputModel } from '@app/store';
 import { HubIoOperationMode, ToFormGroup } from '@app/shared';
 
@@ -21,9 +21,9 @@ import { FullControllerInputNameComponent } from '../../full-controller-input-na
         MatDialogModule,
         FullControllerInputNameComponent,
         MatButtonModule,
-        MatIconModule,
         TranslocoModule,
-        MatInputModule
+        MatInputModule,
+        MatIconModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

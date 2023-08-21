@@ -15,7 +15,9 @@ export class SetAngleOutputControlFormBuilderService {
     public build(): SetAngleBindingForm {
         return this.formBuilder.group({
             id: this.commonFormControlBuilder.schemeIdControl(),
-            input: this.commonFormControlBuilder.inputFormGroup(),
+            inputs: this.formBuilder.group({
+                setAngle: this.commonFormControlBuilder.inputFormGroup()
+            }),
             hubId: this.commonFormControlBuilder.hubIdControl(),
             portId: this.commonFormControlBuilder.portIdControl(),
             angle: this.formBuilder.control<number>(0, {

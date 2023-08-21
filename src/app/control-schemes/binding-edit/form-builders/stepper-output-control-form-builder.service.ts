@@ -18,7 +18,9 @@ export class StepperOutputControlFormBuilderService {
     public build(): StepperBindingForm {
         return this.formBuilder.group({
             id: this.commonFormControlBuilder.schemeIdControl(),
-            input: this.commonFormControlBuilder.inputFormGroup(),
+            inputs: this.formBuilder.group({
+                step: this.commonFormControlBuilder.inputFormGroup()
+            }),
             hubId: this.commonFormControlBuilder.hubIdControl(),
             portId: this.commonFormControlBuilder.portIdControl(),
             degree: this.formBuilder.control<number>(this.defaultStepDegree, {

@@ -14,10 +14,10 @@ export class StepperTaskBuilder extends BaseTaskBuilder {
             return null;
         }
 
-        const inputRecord = inputsState[controllerInputIdFn(binding.input)];
-        const inputValue = inputRecord?.value ?? 0;
+        const stepInput = inputsState[controllerInputIdFn(binding.inputs.step)];
+        const stepInputValue = stepInput?.value ?? 0;
 
-        if (inputValue < 0.5) {
+        if (stepInputValue < 0.5) { // TODO: inject threshold
             return null;
         }
 
@@ -31,7 +31,7 @@ export class StepperTaskBuilder extends BaseTaskBuilder {
             useDecelerationProfile: binding.useDecelerationProfile
         };
 
-        return { payload, inputTimestamp: inputRecord?.timestamp ?? Date.now() };
+        return { payload, inputTimestamp: stepInput?.timestamp ?? Date.now() };
     }
 
     protected buildCleanupPayload(
