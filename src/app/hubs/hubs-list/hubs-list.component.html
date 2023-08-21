@@ -3,17 +3,21 @@
         <li *ngFor="let hub of hubsList; trackBy: hubTrackByFn"
             class="card-list-item"
         >
-            <mat-card class="hub-card">
-                <app-hub-inline-view [hubId]="hub.hubId"
-                                     [name]="hub.name"
-                                     [batteryLevel]="hub.batteryLevel"
-                                     [rssiLevel]="hub.rssi"
-                                     [isButtonPressed]="hub.isButtonPressed"
-                                     [hasCommunication]="hub.hasCommunication"
-                                     [isConnected]="hub.isConnected"
-                                     (disconnect)="disconnectHub(hub.hubId)"
-                                     (forget)="forgetHub(hub.hubId)"
-                ></app-hub-inline-view>
+            <mat-card>
+                <mat-card-header class="hub-name-container">
+                    <mat-card-title>
+                        <app-hub-inline-view [hubId]="hub.hubId"
+                                             [name]="hub.name"
+                                             [batteryLevel]="hub.batteryLevel"
+                                             [rssiLevel]="hub.rssi"
+                                             [isButtonPressed]="hub.isButtonPressed"
+                                             [hasCommunication]="hub.hasCommunication"
+                                             [isConnected]="hub.isConnected"
+                                             (disconnect)="disconnectHub(hub.hubId)"
+                                             (forget)="forgetHub(hub.hubId)"
+                        ></app-hub-inline-view>
+                    </mat-card-title>
+                </mat-card-header>
             </mat-card>
         </li>
     </ul>
