@@ -3,3 +3,11 @@
     height: 100%;
     flex-direction: column;
 }
+
+.control-scheme-name-container {
+    height: 48px;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
