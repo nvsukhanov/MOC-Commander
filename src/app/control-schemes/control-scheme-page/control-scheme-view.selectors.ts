@@ -224,7 +224,9 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
                     allIosTypesMatches = allIosTypesMatches && ioNode.children.every((c) => !c.ioHasNoRequiredCapabilities);
                     ioNode.children.forEach((c) => {
                         Object.values(c.binding.inputs).forEach((input) => {
-                            allControllersConnected = allControllersConnected && !!controllerConnectionEntities[input.controllerId];
+                            if (input?.controllerId !== undefined) {
+                                allControllersConnected = allControllersConnected && !!controllerConnectionEntities[input.controllerId];
+                            }
                         });
                     });
                     hasBindings = hasBindings || ioNode.children.length > 0;

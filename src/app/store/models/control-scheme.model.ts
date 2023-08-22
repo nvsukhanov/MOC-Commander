@@ -38,6 +38,7 @@ export type ControlSchemeLinearBinding = {
     operationMode: HubIoOperationMode.Linear;
     inputs: {
         accelerate: ControlSchemeInput;
+        brake?: ControlSchemeInput;
     } & ControlSchemeInputsRecord;
     hubId: string;
     portId: number;

@@ -1,10 +1,16 @@
 <ng-container *ngIf="form">
-    <app-controller-select [operationMode]="linearHubIoOperationMode"
-                           [inputFormGroup]="form.controls.inputs.controls.accelerate"
-                           [title]="'controlScheme.linearInput' | transloco "
+    <app-controller-select [inputFormGroup]="form.controls.inputs.controls.accelerate"
+                           [title]="'controlScheme.linearInputSpeed' | transloco "
+                           [acceptableInputTypes]="accelerationInputTypes"
     ></app-controller-select>
 
-    <ng-container *ngIf="form.controls.inputs.valid">
+    <ng-container *ngIf="isAccelerationInputAssigned">
+        <app-controller-select *ngIf="!form.controls.isToggle.value"
+                               [inputFormGroup]="form.controls.inputs.controls.brake"
+                               [title]="'controlScheme.linearInputBrake' | transloco "
+                               [acceptableInputTypes]="brakeInputTypes"
+        ></app-controller-select>
+
         <app-binding-input-gain-select *ngIf="isInputGainConfigurable"
                                        [control]="form.controls.inputs.controls.accelerate.controls.gain"
         ></app-binding-input-gain-select>

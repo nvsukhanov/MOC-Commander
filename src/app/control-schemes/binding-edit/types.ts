@@ -1,13 +1,87 @@
 import { FormControl, FormGroup } from '@angular/forms';
-import { AttachedIoModel, ControlSchemeLinearBinding, ControlSchemeServoBinding, ControlSchemeSetAngleBinding, ControlSchemeStepperBinding } from '@app/store';
-import { HubIoOperationMode, ToFormGroup } from '@app/shared';
+import { ButtonGroupButtonId, MotorServoEndState } from '@nvsukhanov/rxpoweredup';
+import { AttachedIoModel, InputGain } from '@app/store';
+import { ControllerInputType, HubIoOperationMode } from '@app/shared';
 
-type BindingStateToFormGroup<T> = ToFormGroup<Omit<T, 'operationMode'>>;
+export type InputFormGroup = FormGroup<{
+    controllerId: FormControl<string>;
+    inputId: FormControl<string>;
+    inputType: FormControl<ControllerInputType>;
+    gain: FormControl<InputGain>;
+    buttonId: FormControl<ButtonGroupButtonId | null>;
+    portId: FormControl<number | null>;
+}>;
 
-export type LinearBindingForm = BindingStateToFormGroup<ControlSchemeLinearBinding>;
-export type ServoBindingForm = BindingStateToFormGroup<ControlSchemeServoBinding>;
-export type StepperBindingForm = BindingStateToFormGroup<ControlSchemeStepperBinding>;
-export type SetAngleBindingForm = BindingStateToFormGroup<ControlSchemeSetAngleBinding>;
+export type OptionalInputFormGroup = FormGroup<{
+    controllerId: FormControl<string | null>;
+    inputId: FormControl<string>;
+    inputType: FormControl<ControllerInputType>;
+    gain: FormControl<InputGain>;
+    buttonId: FormControl<ButtonGroupButtonId | null>;
+    portId: FormControl<number | null>;
+}>;
+
+export type LinearBindingForm = FormGroup<{
+    id: FormControl<string>;
+    inputs: FormGroup<{
+        accelerate: InputFormGroup;
+        brake: OptionalInputFormGroup;
+    }>;
+    hubId: FormControl<string>;
+    portId: FormControl<number>;
+    maxSpeed: FormControl<number>;
+    isToggle: FormControl<boolean>;
+    invert: FormControl<boolean>;
+    power: FormControl<number>;
+    useAccelerationProfile: FormControl<boolean>;
+    useDecelerationProfile: FormControl<boolean>;
+}>;
+
+export type ServoBindingForm = FormGroup<{
+    id: FormControl<string>;
+    inputs: FormGroup<{
+        servo: InputFormGroup;
+    }>;
+    hubId: FormControl<string>;
+    portId: FormControl<number>;
+    range: FormControl<number>;
+    aposCenter: FormControl<number>;
+    speed: FormControl<number>;
+    power: FormControl<number>;
+    invert: FormControl<boolean>;
+    useAccelerationProfile: FormControl<boolean>;
+    useDecelerationProfile: FormControl<boolean>;
+}>;
+
+export type StepperBindingForm = FormGroup<{
+    id: FormControl<string>;
+    inputs: FormGroup<{
+        step: InputFormGroup;
+    }>;
+    hubId: FormControl<string>;
+    portId: FormControl<number>;
+    degree: FormControl<number>;
+    speed: FormControl<number>;
+    power: FormControl<number>;
+    endState: FormControl<MotorServoEndState>;
+    useAccelerationProfile: FormControl<boolean>;
+    useDecelerationProfile: FormControl<boolean>;
+}>;
+
+export type SetAngleBindingForm = FormGroup<{
+    id: FormControl<string>;
+    inputs: FormGroup<{
+        setAngle: InputFormGroup;
+    }>;
+    hubId: FormControl<string>;
+    portId: FormControl<number>;
+    angle: FormControl<number>;
+    speed: FormControl<number>;
+    power: FormControl<number>;
+    endState: FormControl<MotorServoEndState>;
+    useAccelerationProfile: FormControl<boolean>;
+    useDecelerationProfile: FormControl<boolean>;
+}>;
 
 export type ControlSchemeBindingForm = FormGroup<{
     bindingFormOperationMode: FormControl<HubIoOperationMode>;

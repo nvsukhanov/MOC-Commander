@@ -33,6 +33,7 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
         const accelerateInput = inputsState[controllerInputIdFn(binding.inputs.accelerate)];
         const accelerateInputValue = accelerateInput?.value ?? 0;
 
+        // brake input is ignored for toggle bindings
         if (binding.isToggle) {
             if (accelerateInputValue === 0) {
                 return null;
@@ -44,8 +45,13 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
             return null;
         }
 
+        const brakeInput = binding.inputs.brake
+                           ? inputsState[controllerInputIdFn(binding.inputs.brake)]
+                           : undefined;
+        const brakeInputValue = brakeInput?.value ?? 0;
         const targetSpeed = this.calculateSpeed(
             accelerateInputValue,
+            brakeInputValue,
             binding.maxSpeed,
             binding.invert,
             binding.inputs.accelerate.gain
@@ -54,7 +60,7 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
         const payload: SetLinearSpeedTaskPayload = {
             taskType: PortCommandTaskType.SetSpeed,
             speed: targetSpeed,
-            power: this.calculatePower(targetSpeed, binding.power),
+            power: this.calculatePower(targetSpeed, brakeInputValue, binding.power),
             activeInput: accelerateInputValue !== 0,
             useAccelerationProfile: binding.useAccelerationProfile,
             useDecelerationProfile: binding.useDecelerationProfile
@@ -84,6 +90,7 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
         lastExecutedTask: PortCommandTask | null
     ): SetLinearSpeedTaskPayload | null {
         let shouldActivate: boolean;
+        const assumedBrakeInput = 0;
 
         if (lastExecutedTask?.bindingId === binding.id) {
             shouldActivate = (lastExecutedTask.payload as SetLinearSpeedTaskPayload).speed === 0;
@@ -94,6 +101,7 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
         if (shouldActivate) {
             const speed = this.calculateSpeed(
                 1,
+                assumedBrakeInput,
                 binding.maxSpeed,
                 binding.invert,
                 binding.inputs.accelerate.gain
@@ -101,7 +109,7 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
             return {
                 taskType: PortCommandTaskType.SetSpeed,
                 speed,
-                power: this.calculatePower(speed, binding.power),
+                power: this.calculatePower(speed, assumedBrakeInput, binding.power),
                 activeInput: true,
                 useAccelerationProfile: binding.useAccelerationProfile,
                 useDecelerationProfile: binding.useDecelerationProfile
@@ -111,7 +119,7 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
         return {
             taskType: PortCommandTaskType.SetSpeed,
             speed: 0,
-            power: this.calculatePower(0, binding.power),
+            power: this.calculatePower(0, assumedBrakeInput, binding.power),
             activeInput: true,
             useAccelerationProfile: binding.useAccelerationProfile,
             useDecelerationProfile: binding.useDecelerationProfile
@@ -119,13 +127,18 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
     }
 
     private calculateSpeed(
-        inputValue: number,
+        accelerateInput: number,
+        brakeInput: number,
         maxAbsSpeed: number,
         invert: boolean,
         inputGain: InputGain
     ): number {
+        if (accelerateInput === 0) {
+            return 0;
+        }
+        const outputValue = Math.sign(accelerateInput) * (Math.abs(accelerateInput) - Math.abs(brakeInput));
         const clampedSpeed = this.clampSpeed(
-            calcInputGain(inputValue, inputGain) * maxAbsSpeed
+            calcInputGain(outputValue, inputGain) * maxAbsSpeed
         );
         const direction = invert ? -1 : 1;
 
@@ -154,12 +167,16 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
     }
 
     private calculatePower(
-        speed: number,
+        accelerateInput: number,
+        brakeInput: number,
         maxPower: number
     ): number {
-        if (speed === 0) {
+        if (accelerateInput === 0 && brakeInput === 0) {
             return 0;
         }
-        return maxPower;
+        if (accelerateInput !== 0) {
+            return maxPower;
+        }
+        return maxPower * brakeInput;
     }
 }

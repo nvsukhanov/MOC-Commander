@@ -12,3 +12,15 @@ export function getIoOperationModesForControllerInputType(
 ): HubIoOperationMode[] {
     return [ ...CONTROLLER_TO_IO_OPERATION_MODES[inputType] || [] ];
 }
+
+export function getInputTypesForOperationMode(
+    operationMode: HubIoOperationMode
+): ControllerInputType[] {
+    const inputTypes = new Set<ControllerInputType>();
+    for (const [ inputType, ioOperationModes ] of Object.entries(CONTROLLER_TO_IO_OPERATION_MODES)) {
+        if (ioOperationModes.includes(operationMode)) {
+            inputTypes.add(inputType as ControllerInputType);
+        }
+    }
+    return [ ...inputTypes ];
+}

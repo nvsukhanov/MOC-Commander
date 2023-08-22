@@ -9,6 +9,7 @@ import { BindingControlNumInputComponent } from '../control-num-input';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { BindingControlOutputEndStateComponent } from '../control-output-end-state-select';
 import { StepperBindingForm } from '../types';
+import { getInputTypesForOperationMode } from '../wait-for-controller-input-dialog/get-io-operation-modes-for-controller-input-type';
 
 @Component({
     standalone: true,
@@ -39,7 +40,7 @@ export class BindingStepperEditComponent implements IBindingsDetailsEditComponen
 
     public readonly maxPower = MOTOR_LIMITS.maxPower;
 
-    public readonly stepperHubIoOperationMode = HubIoOperationMode.Stepper;
+    public readonly acceptableInputTypes = getInputTypesForOperationMode(HubIoOperationMode.Stepper);
 
     private _form?: StepperBindingForm;
 
