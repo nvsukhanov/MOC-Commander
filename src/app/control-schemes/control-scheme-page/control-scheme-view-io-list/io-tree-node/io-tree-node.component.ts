@@ -3,10 +3,12 @@ import { NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
+import { PushPipe } from '@ngrx/component';
 import { IoInlineViewComponent } from '@app/shared';
 
 import { ControlSchemeViewIoTreeNode } from '../../types';
 import { RoutesBuilderService } from '../../../../routing';
+import { PortCommandTaskSummaryPipe } from '../../../port-command-task-summary';
 
 @Component({
     standalone: true,
@@ -18,7 +20,9 @@ import { RoutesBuilderService } from '../../../../routing';
         IoInlineViewComponent,
         MatIconModule,
         TranslocoModule,
-        RouterLink
+        RouterLink,
+        PortCommandTaskSummaryPipe,
+        PushPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

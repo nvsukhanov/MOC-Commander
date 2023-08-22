@@ -55,7 +55,11 @@ export class ControlSchemeViewIoListComponent {
         this.treeControl.dataNodes = this.dataSource.data;
         if (!this.initialExpansionDone) {
             this.initialExpansionDone = true;
-            this.treeControl.expandAll();
+            this.treeControl.dataNodes
+                .filter((node) => node.initiallyExpanded)
+                .forEach((node) => {
+                    this.treeControl.expand(node);
+                });
         }
     }
 
