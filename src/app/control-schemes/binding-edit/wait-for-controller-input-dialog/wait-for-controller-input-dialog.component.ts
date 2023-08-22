@@ -8,12 +8,10 @@ import { Store } from '@ngrx/store';
 import { Subscription, filter } from 'rxjs';
 import { DIALOG_DATA } from '@angular/cdk/dialog';
 import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, ControllerInputModel } from '@app/store';
-import { HubIoOperationMode } from '@app/shared';
-
-import { getIoOperationModesForControllerInputType } from './get-io-operation-modes-for-controller-input-type';
+import { ControllerInputType } from '@app/shared';
 
 export interface IWaitingForInputDialogData {
-    readonly forOperationMode: HubIoOperationMode;
+    readonly acceptableInputTypes: ControllerInputType[];
 }
 
 @Component({
@@ -46,7 +44,7 @@ export class WaitForControllerInputDialogComponent implements OnInit, OnDestroy 
             this.store.select(CONTROLLER_INPUT_SELECTORS.selectFirst).pipe(
                 filter((input): input is ControllerInputModel => !!input),
                 filter(({ inputType }) => {
-                    return getIoOperationModesForControllerInputType(inputType).includes(this.data.forOperationMode);
+                    return this.data.acceptableInputTypes.includes(inputType);
                 }),
             ).subscribe((input) => {
                 this.dialogRef.close(input);

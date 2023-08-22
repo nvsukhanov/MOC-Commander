@@ -9,6 +9,7 @@ import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-compon
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { LinearBindingForm } from '../types';
 import { BindingInputGainSelectComponent } from '../control-axial-output-modifier-select';
+import { getInputTypesForOperationMode } from '../wait-for-controller-input-dialog/get-io-operation-modes-for-controller-input-type';
 
 @Component({
     standalone: true,
@@ -28,15 +29,23 @@ import { BindingInputGainSelectComponent } from '../control-axial-output-modifie
 export class BindingLinearEditComponent implements IBindingsDetailsEditComponent<LinearBindingForm> {
     public readonly motorLimits = MOTOR_LIMITS;
 
-    public readonly linearHubIoOperationMode = HubIoOperationMode.Linear;
+    public readonly accelerationInputTypes = getInputTypesForOperationMode(HubIoOperationMode.Linear);
 
-    public readonly controllerInputButtonType = ControllerInputType.Button;
+    public readonly brakeInputTypes: ControllerInputType[] = [
+        ControllerInputType.Button,
+        ControllerInputType.ButtonGroup,
+        ControllerInputType.Trigger
+    ];
 
     public form?: LinearBindingForm;
 
     constructor(
         private readonly cd: ChangeDetectorRef,
     ) {
+    }
+
+    public get isAccelerationInputAssigned(): boolean {
+        return this.form?.controls.inputs.controls.accelerate.controls.inputId.value !== undefined;
     }
 
     public get isToggleable(): boolean {

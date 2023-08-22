@@ -6,10 +6,11 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { ControlSchemeInput, ControllerInputModel } from '@app/store';
-import { HubIoOperationMode, ToFormGroup } from '@app/shared';
+import { ControllerInputType } from '@app/shared';
 
 import { IWaitingForInputDialogData, WaitForControllerInputDialogComponent } from '../wait-for-controller-input-dialog';
 import { FullControllerInputNameComponent } from '../../full-controller-input-name';
+import { InputFormGroup, OptionalInputFormGroup } from '../types';
 
 @Component({
     standalone: true,
@@ -28,11 +29,11 @@ import { FullControllerInputNameComponent } from '../../full-controller-input-na
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingControlSelectControllerComponent {
-    @Input() public operationMode?: HubIoOperationMode;
-
-    @Input() public inputFormGroup?: ToFormGroup<ControlSchemeInput>;
+    @Input() public inputFormGroup?: InputFormGroup | OptionalInputFormGroup;
 
     @Input() public title = '';
+
+    @Input() public acceptableInputTypes: ControllerInputType[] = [];
 
     constructor(
         private readonly dialog: MatDialog,
@@ -41,20 +42,17 @@ export class BindingControlSelectControllerComponent {
     }
 
     public get controllerData(): ControlSchemeInput | undefined {
-        return this.inputFormGroup?.getRawValue();
+        return this.inputFormGroup?.getRawValue() as ControlSchemeInput | undefined; // TODO: fix hack
     }
 
     public onBind(): void {
-        if (this.operationMode === undefined) {
-            return;
-        }
         const dialog = this.dialog.open<WaitForControllerInputDialogComponent, IWaitingForInputDialogData, ControllerInputModel>(
             WaitForControllerInputDialogComponent,
             {
                 disableClose: true,
                 hasBackdrop: true,
                 data: {
-                    forOperationMode: this.operationMode,
+                    acceptableInputTypes: this.acceptableInputTypes,
                 }
             }
         );

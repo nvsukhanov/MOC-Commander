@@ -17,6 +17,7 @@ import { BindingControlSelectControllerComponent } from '../control-select-contr
 import { BINDING_EDIT_SELECTORS } from '../binding-edit.selectors';
 import { ServoBindingForm } from '../types';
 import { BindingInputGainSelectComponent } from '../control-axial-output-modifier-select';
+import { getInputTypesForOperationMode } from '../wait-for-controller-input-dialog/get-io-operation-modes-for-controller-input-type';
 
 @Component({
     standalone: true,
@@ -40,7 +41,7 @@ import { BindingInputGainSelectComponent } from '../control-axial-output-modifie
 export class BindingServoEditComponent implements IBindingsDetailsEditComponent<ServoBindingForm> {
     public readonly motorLimits = MOTOR_LIMITS;
 
-    public readonly servoOperationMode = HubIoOperationMode.Servo;
+    public readonly acceptableInputTypes = getInputTypesForOperationMode(HubIoOperationMode.Servo);
 
     private _form?: ServoBindingForm;
 

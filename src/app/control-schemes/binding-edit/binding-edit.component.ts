@@ -7,7 +7,7 @@ import { Observable, map, startWith } from 'rxjs';
 import { IoOperationTypeToL10nKeyPipe } from '@app/shared';
 import { ControlSchemeBinding } from '@app/store';
 
-import { ControlSchemeFormBuilderService } from './form-builders';
+import { ControlSchemeFormBuilderService, ControlSchemeFormMapperService } from './forms';
 import { RenderBindingDetailsEditDirective } from './render-binding-details-edit.directive';
 import { BindingControlSelectOperationModeComponent } from './control-select-operation-mode';
 import { BindingControlSelectHubComponent } from './control-select-hub';
@@ -42,7 +42,8 @@ export class BindingEditComponent {
     protected readonly form: ControlSchemeBindingForm;
 
     constructor(
-        private readonly formBuilder: ControlSchemeFormBuilderService
+        private readonly formBuilder: ControlSchemeFormBuilderService,
+        private readonly formMapper: ControlSchemeFormMapperService
     ) {
         this.form = this.formBuilder.createBindingForm();
         this.canSave$ = this.form.statusChanges.pipe(
@@ -59,20 +60,15 @@ export class BindingEditComponent {
 
     @Input()
     public set binding(
-        binding: ControlSchemeBinding | undefined
+        binding: Partial<ControlSchemeBinding> | undefined
     ) {
-        if (binding) {
+        if (binding && binding.operationMode !== undefined) {
             this.form.controls.bindingFormOperationMode.setValue(binding.operationMode);
             this.form.controls[binding.operationMode].patchValue(binding);
         }
     }
 
     public getValue(): ControlSchemeBinding {
-        const rawData = this.form.getRawValue();
-        const bindingData: Omit<ControlSchemeBinding, 'operationMode'> = rawData[rawData.bindingFormOperationMode];
-        return {
-            operationMode: rawData.bindingFormOperationMode,
-            ...bindingData
-        } as ControlSchemeBinding;
+        return this.formMapper.mapToModel(this.form);
     }
 }

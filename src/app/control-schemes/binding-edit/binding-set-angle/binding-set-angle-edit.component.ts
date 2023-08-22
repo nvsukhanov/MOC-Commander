@@ -9,6 +9,7 @@ import { BindingControlNumInputComponent } from '../control-num-input';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { BindingControlOutputEndStateComponent } from '../control-output-end-state-select';
 import { SetAngleBindingForm } from '../types';
+import { getInputTypesForOperationMode } from '../wait-for-controller-input-dialog/get-io-operation-modes-for-controller-input-type';
 
 @Component({
     standalone: true,
@@ -29,7 +30,7 @@ import { SetAngleBindingForm } from '../types';
 export class BindingSetAngleEditComponent implements IBindingsDetailsEditComponent<SetAngleBindingForm> {
     public readonly motorLimits = MOTOR_LIMITS;
 
-    public readonly setAngleHubIoOperationMode = HubIoOperationMode.SetAngle;
+    public readonly acceptableInputTypes = getInputTypesForOperationMode(HubIoOperationMode.SetAngle);
 
     private _form?: SetAngleBindingForm;
 

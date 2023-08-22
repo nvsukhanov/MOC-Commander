@@ -1,5 +1,5 @@
 <ng-container *ngIf="form">
-    <app-controller-select [operationMode]="stepperHubIoOperationMode"
+    <app-controller-select [acceptableInputTypes]="acceptableInputTypes"
                            [inputFormGroup]="form.controls.inputs.controls.step"
                            [title]="'controlScheme.stepperInput' | transloco "
     ></app-controller-select>
