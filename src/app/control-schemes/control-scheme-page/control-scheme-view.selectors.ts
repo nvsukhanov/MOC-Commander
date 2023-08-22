@@ -20,10 +20,12 @@ import {
     HubModel,
     HubStatsModel,
     PORT_TASKS_SELECTORS,
+    PortTasksModel,
     ROUTER_SELECTORS,
     attachedIoModesIdFn,
     attachedIoPortModeInfoIdFn,
-    attachedIosIdFn
+    attachedIosIdFn,
+    hubPortTasksIdFn
 } from '@app/store';
 
 import { ioHasMatchingModeForOpMode } from '../io-has-matching-mode-for-op-mode';
@@ -44,7 +46,8 @@ function createHubTreeNode(
         hasCommunication: hubStats?.hasCommunication ?? false,
         nodeType: ControlSchemeNodeTypes.Hub,
         isConnected: !!hubStats,
-        children: []
+        children: [],
+        initiallyExpanded: true
     };
 }
 
@@ -57,6 +60,7 @@ function createIoTreeNode(
     bindings: ControlSchemeBinding[],
     portConfigs: ControlSchemePortConfig[],
     controlSchemeId: string,
+    portTasksModelDictionary: Dictionary<PortTasksModel>
 ): ControlSchemeViewIoTreeNode {
     const ioId = attachedIosIdFn({ hubId: hubConfig.hubId, portId });
     const io = iosEntities[ioId];
@@ -65,6 +69,9 @@ function createIoTreeNode(
         .length > 0;
     const useDecelerationProfile = bindings.filter((b) => b.useDecelerationProfile && b.portId === portId && b.hubId === hubConfig.hubId)
         .length > 0;
+
+    const runningTask = portTasksModelDictionary[hubPortTasksIdFn({ hubId: hubConfig.hubId, portId })]?.runningTask ?? undefined;
+    const lastExecutedTask = portTasksModelDictionary[hubPortTasksIdFn({ hubId: hubConfig.hubId, portId })]?.lastExecutedTask ?? undefined;
 
     return {
         path: `${parentPath}.${portId}`,
@@ -78,7 +85,10 @@ function createIoTreeNode(
         accelerationTimeMs: portConfig?.accelerationTimeMs ?? 0,
         useDecelerationProfile,
         decelerationTimeMs: portConfig?.decelerationTimeMs ?? 0,
-        children: []
+        runningTask,
+        lastExecutedTask,
+        children: [],
+        initiallyExpanded: false
     };
 }
 
@@ -100,7 +110,8 @@ function createBindingTreeNode(
         binding,
         controlSchemeId,
         ioHasNoRequiredCapabilities,
-        children: []
+        children: [],
+        initiallyExpanded: false
     };
 }
 
@@ -113,6 +124,7 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
         ATTACHED_IO_MODES_SELECTORS.selectEntities,
         ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
         PORT_TASKS_SELECTORS.selectLastExecutedBindingIds,
+        PORT_TASKS_SELECTORS.selectEntities,
         (
             scheme: ControlSchemeModel | undefined,
             hubEntities: Dictionary<HubModel>,
@@ -120,7 +132,8 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
             iosEntities: Dictionary<AttachedIoModel>,
             ioSupportedModesEntities: Dictionary<AttachedIoModesModel>,
             portModeInfoEntities: Dictionary<AttachedIoPortModeInfoModel>,
-            lastExecutedTasksBindingIds: ReadonlySet<string>
+            lastExecutedTasksBindingIds: ReadonlySet<string>,
+            portCommandTasksEntities: Dictionary<PortTasksModel>,
         ): ControlSchemeViewHubTreeNode[] => {
             if (!scheme) {
                 return [];
@@ -178,7 +191,8 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
                         binding.portId,
                         scheme.bindings,
                         scheme.portConfigs,
-                        schemeId
+                        schemeId,
+                        portCommandTasksEntities
                     );
                     hubIosViewMap.set(ioId, ioViewModel);
 

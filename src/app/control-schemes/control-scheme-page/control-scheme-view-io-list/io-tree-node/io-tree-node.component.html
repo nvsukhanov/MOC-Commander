@@ -3,6 +3,17 @@
                         [ioType]="node.ioType"
                         [isConnected]="node.isConnected"
     ></app-io-inline-view>
+
+    <ng-container *ngIf="node.runningTask">
+        <mat-icon [fontIcon]="'sync'"></mat-icon>
+        {{ node.runningTask | portCommandTaskSummary | ngrxPush }}
+    </ng-container>
+    
+    <ng-container *ngIf="node.lastExecutedTask && !node.runningTask">
+        <mat-icon [fontIcon]="'check_circle'"></mat-icon>
+        {{ node.lastExecutedTask | portCommandTaskSummary | ngrxPush }}
+    </ng-container>
+
     <a *ngIf="node.useAccelerationProfile || node.useDecelerationProfile"
        class="mat-mdc-button port-config"
        [routerLink]="portConfigRoute"

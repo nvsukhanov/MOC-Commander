@@ -7,6 +7,12 @@ export const ATTACHED_IO_PROPS_SELECTORS = {
         ATTACHED_IO_PROPS_FEATURE.selectAttachedIoPropsState,
         ATTACHED_IO_PROPS_ENTITY_ADAPTER.getSelectors().selectEntities,
     ),
+    selectById: (
+        q: { hubId: string; portId: number }
+    ) => createSelector(
+        ATTACHED_IO_PROPS_SELECTORS.selectEntities,
+        (entities) => entities[hubAttachedIoPropsIdFn(q)]
+    ),
     selectMotorEncoderOffset: (
         q: { hubId: string; portId: number }
     ) => createSelector(

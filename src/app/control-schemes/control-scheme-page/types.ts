@@ -1,5 +1,5 @@
 import { HubType, IOType } from '@nvsukhanov/rxpoweredup';
-import { ControlSchemeBinding } from '@app/store';
+import { ControlSchemeBinding, PortCommandTask } from '@app/store';
 
 export enum ControlSchemeNodeTypes {
     Hub = 'Hub',
@@ -15,6 +15,7 @@ export type ControlSchemeViewBindingTreeNodeData = {
     readonly binding: ControlSchemeBinding;
     readonly ioHasNoRequiredCapabilities: boolean;
     readonly children: [];
+    readonly initiallyExpanded: boolean;
 };
 
 export type ControlSchemeViewIoTreeNode = {
@@ -29,7 +30,10 @@ export type ControlSchemeViewIoTreeNode = {
     readonly accelerationTimeMs: number;
     readonly useDecelerationProfile: boolean;
     readonly decelerationTimeMs: number;
+    readonly runningTask?: PortCommandTask;
+    readonly lastExecutedTask?: PortCommandTask;
     readonly children: ControlSchemeViewBindingTreeNodeData[];
+    readonly initiallyExpanded: boolean;
 };
 
 export type ControlSchemeViewHubTreeNode = {
@@ -44,6 +48,7 @@ export type ControlSchemeViewHubTreeNode = {
     readonly hasCommunication: boolean;  // TODO: remove, may impact performance, Use ad-hoc selector instead
     readonly isConnected: boolean;
     readonly children: ControlSchemeViewIoTreeNode[];
+    readonly initiallyExpanded: boolean;
 };
 
 export type ControlSchemeViewTreeNode = ControlSchemeViewHubTreeNode
