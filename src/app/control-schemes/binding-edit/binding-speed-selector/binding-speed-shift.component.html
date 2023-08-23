@@ -1,17 +1,17 @@
 <ng-container *ngIf="form">
     <app-controller-select [inputFormGroup]="form.controls.inputs.controls.nextSpeed"
-                           [title]="'controlScheme.speedStepperBinding.inputNextSpeed' | transloco "
+                           [title]="'controlScheme.speedShiftBinding.inputNextSpeed' | transloco "
                            [acceptableInputTypes]="acceptableInputTypes"
     ></app-controller-select>
 
     <ng-container *ngIf="isNextSpeedControlAssigned">
         <app-controller-select [inputFormGroup]="form.controls.inputs.controls.prevSpeed"
-                               [title]="'controlScheme.speedStepperBinding.inputPrevSpeed' | transloco "
+                               [title]="'controlScheme.speedShiftBinding.inputPrevSpeed' | transloco "
                                [acceptableInputTypes]="acceptableInputTypes"
         ></app-controller-select>
 
         <app-controller-select [inputFormGroup]="form.controls.inputs.controls.stop"
-                               [title]="'controlScheme.speedStepperBinding.inputStop' | transloco "
+                               [title]="'controlScheme.speedShiftBinding.inputStop' | transloco "
                                [acceptableInputTypes]="acceptableInputTypes"
         ></app-controller-select>
 
@@ -19,16 +19,16 @@
             <button class="add-level-button"
                     mat-raised-button
                     (click)="addNextSpeedControl()">
-                {{ 'controlScheme.speedStepperBinding.outputLevelAdd' | transloco }}
+                {{ 'controlScheme.speedShiftBinding.outputLevelAdd' | transloco }}
             </button>
         </div>
 
-        <div *ngFor="let speedControl of form.controls.steps.controls; let idx = index"
+        <div *ngFor="let speedControl of form.controls.levels.controls; let idx = index"
              class="level-input-container"
         >
             <app-binding-control-num-input [control]="speedControl"
                                            class="level-input"
-                                           [controlTitle]="'controlScheme.speedStepperBinding.level' | transloco: { level: form.controls.initialStepIndex.value - idx }"
+                                           [controlTitle]="'controlScheme.speedShiftBinding.level' | transloco: { level: form.controls.initialStepIndex.value - idx }"
                                            [min]="motorLimits.minSpeed"
                                            [max]="motorLimits.maxSpeed"
             ></app-binding-control-num-input>
@@ -37,7 +37,7 @@
                     (click)="removeSpeedControl(idx)"
             >
                 <mat-icon [fontIcon]="'delete'"></mat-icon>
-                <span class="cdk-visually-hidden">{{ 'controlScheme.speedStepperBinding.outputLevelRemove' | transloco }}</span>
+                <span class="cdk-visually-hidden">{{ 'controlScheme.speedShiftBinding.outputLevelRemove' | transloco }}</span>
             </button>
         </div>
 
@@ -45,7 +45,7 @@
             <button class="add-level-button"
                     mat-raised-button
                     (click)="addPrevSpeedControl()">
-                {{ 'controlScheme.speedStepperBinding.outputLevelAdd' | transloco }}
+                {{ 'controlScheme.speedShiftBinding.outputLevelAdd' | transloco }}
             </button>
         </div>
 

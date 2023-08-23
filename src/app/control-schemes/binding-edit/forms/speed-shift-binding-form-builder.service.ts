@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ControlSchemeSpeedStepperBinding } from '@app/store';
+import { ControlSchemeSpeedShiftBinding } from '@app/store';
 
-import { SpeedStepperBindingForm } from '../types';
+import { SpeedShiftBindingForm } from '../types';
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';
 
 @Injectable({ providedIn: 'root' })
-export class SpeedStepperBindingFormBuilderService {
+export class SpeedShiftBindingFormBuilderService {
     constructor(
         private readonly formBuilder: FormBuilder,
         private commonFormControlBuilder: CommonFormControlsBuilderService
     ) {
     }
 
-    public build(): SpeedStepperBindingForm {
+    public build(): SpeedShiftBindingForm {
         return this.formBuilder.group({
             id: this.commonFormControlBuilder.schemeIdControl(),
             inputs: this.formBuilder.group({
@@ -23,8 +23,8 @@ export class SpeedStepperBindingFormBuilderService {
             }),
             hubId: this.commonFormControlBuilder.hubIdControl(),
             portId: this.commonFormControlBuilder.portIdControl(),
-            steps: this.formBuilder.array<FormControl<number>>([
-                this.commonFormControlBuilder.speedStepControl(0)
+            levels: this.formBuilder.array<FormControl<number>>([
+                this.commonFormControlBuilder.speedSelectControl(0)
             ], {
                 validators: [
                     Validators.required,
@@ -39,17 +39,17 @@ export class SpeedStepperBindingFormBuilderService {
     }
 
     public patchForm(
-        form: SpeedStepperBindingForm,
-        patch: Partial<ControlSchemeSpeedStepperBinding>
+        form: SpeedShiftBindingForm,
+        patch: Partial<ControlSchemeSpeedShiftBinding>
     ): void {
         form.patchValue(patch);
-        form.controls.steps.clear();
-        if (patch.steps) {
-            patch.steps.forEach((step) =>
-                form.controls.steps.push(this.commonFormControlBuilder.speedStepControl(step))
+        form.controls.levels.clear();
+        if (patch.levels) {
+            patch.levels.forEach((step) =>
+                form.controls.levels.push(this.commonFormControlBuilder.speedSelectControl(step))
             );
         } else {
-            form.controls.steps.push(this.commonFormControlBuilder.speedStepControl(0));
+            form.controls.levels.push(this.commonFormControlBuilder.speedSelectControl(0));
             form.controls.initialStepIndex.setValue(0);
         }
     }

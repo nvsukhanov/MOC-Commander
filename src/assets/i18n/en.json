@@ -169,8 +169,8 @@
       "readAngleFromPort": "Read angle from port",
       "taskSummary": "Set angle: { angle }°"
     },
-    "speedStepperBinding": {
-      "operationMode": "Speed stepper",
+    "speedShiftBinding": {
+      "operationMode": "Speed shift",
       "inputNextSpeed": "Next speed",
       "inputPrevSpeed": "Previous speed",
       "inputStop": "Stop",
@@ -178,7 +178,7 @@
       "outputLevelAdd": "Add speed level",
       "outputLevelRemove": "Remove level",
       "ouputPower": "Power (%)",
-      "taskSummary": "Speed stepper: {speed}%"
+      "taskSummary": "Speed shift: {speed}%"
     }
   },
   "motorServoEndState": {

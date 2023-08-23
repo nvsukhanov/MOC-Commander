@@ -8,7 +8,7 @@ import {
     ServoTaskBuilderService,
     SetAngleTaskBuilderService,
     SetSpeedTaskBuilderService,
-    SpeedStepperTaskBuilderService,
+    SpeedShiftTaskBuilderService,
     StepperTaskBuilderService
 } from './builders';
 
@@ -18,7 +18,7 @@ export class TaskBuilderService implements ITaskBuilder {
         [ControlSchemeBindingType.Servo]: this.servoTaskBuilder,
         [ControlSchemeBindingType.SetAngle]: this.setAngleTaskBuilder,
         [ControlSchemeBindingType.Linear]: this.setSpeedTaskBuilder,
-        [ControlSchemeBindingType.SpeedStepper]: this.speedStepperTaskBuilder,
+        [ControlSchemeBindingType.SpeedShift]: this.speedShiftTaskBuilder,
         [ControlSchemeBindingType.Stepper]: this.stepperTaskBuilder,
     };
 
@@ -26,7 +26,7 @@ export class TaskBuilderService implements ITaskBuilder {
         private readonly servoTaskBuilder: ServoTaskBuilderService,
         private readonly setAngleTaskBuilder: SetAngleTaskBuilderService,
         private readonly setSpeedTaskBuilder: SetSpeedTaskBuilderService,
-        private readonly speedStepperTaskBuilder: SpeedStepperTaskBuilderService,
+        private readonly speedShiftTaskBuilder: SpeedShiftTaskBuilderService,
         private readonly stepperTaskBuilder: StepperTaskBuilderService,
     ) {
     }

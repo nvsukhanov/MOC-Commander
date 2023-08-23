@@ -12,6 +12,6 @@ export function queueCompressorFactory(): ITaskQueueCompressor {
         new LastOfTypeTaskCompressor(ControlSchemeBindingType.SetAngle),
         new StepperTaskCompressor(),
         new SetSpeedQueueCompressor(),
-        new LastOfTypeTaskCompressor(ControlSchemeBindingType.SpeedStepper)
+        new LastOfTypeTaskCompressor(ControlSchemeBindingType.SpeedShift)
     ]);
 }

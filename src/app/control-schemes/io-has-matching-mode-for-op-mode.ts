@@ -6,7 +6,7 @@ const REQUIRED_PORT_MODES_FOR_OPERATION_MODE: { [k in ControlSchemeBindingType]:
     [ControlSchemeBindingType.Servo]: [ PortModeName.absolutePosition, PortModeName.position ],
     [ControlSchemeBindingType.SetAngle]: [ PortModeName.absolutePosition, PortModeName.position ],
     [ControlSchemeBindingType.Stepper]: [ PortModeName.position ],
-    [ControlSchemeBindingType.SpeedStepper]: [ PortModeName.speed ]
+    [ControlSchemeBindingType.SpeedShift]: [ PortModeName.speed ]
 };
 
 export function ioHasMatchingModeForOpMode(

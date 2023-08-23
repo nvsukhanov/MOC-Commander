@@ -1,7 +1,7 @@
-import { SpeedStepperTaskPayload } from '../../../models';
+import { SpeedShiftTaskPayload } from '../../../models';
 
-export function speedStepperPayloadHash(
-    payload: SpeedStepperTaskPayload
+export function speedShiftPayloadHash(
+    payload: SpeedShiftTaskPayload
 ): string {
     return [
         payload.bindingType,

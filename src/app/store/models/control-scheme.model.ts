@@ -91,9 +91,9 @@ export type ControlSchemeStepperBinding = {
     endState: MotorServoEndState;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
-export type ControlSchemeSpeedStepperBinding = {
+export type ControlSchemeSpeedShiftBinding = {
     id: string;
-    operationMode: ControlSchemeBindingType.SpeedStepper;
+    operationMode: ControlSchemeBindingType.SpeedShift;
     inputs: {
         nextSpeed: ControlSchemeInput;
         prevSpeed?: ControlSchemeInput;
@@ -101,7 +101,7 @@ export type ControlSchemeSpeedStepperBinding = {
     } & ControlSchemeInputsRecord;
     hubId: string;
     portId: number;
-    steps: number[];
+    levels: number[];
     power: number;
     initialStepIndex: number;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
@@ -110,7 +110,7 @@ export type ControlSchemeBinding = ControlSchemeLinearBinding
     | ControlSchemeServoBinding
     | ControlSchemeSetAngleBinding
     | ControlSchemeStepperBinding
-    | ControlSchemeSpeedStepperBinding;
+    | ControlSchemeSpeedShiftBinding;
 
 export type ControlSchemeModel = {
     id: string;

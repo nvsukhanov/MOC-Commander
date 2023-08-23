@@ -83,7 +83,7 @@ export type SetAngleBindingForm = FormGroup<{
     useDecelerationProfile: FormControl<boolean>;
 }>;
 
-export type SpeedStepperBindingForm = FormGroup<{
+export type SpeedShiftBindingForm = FormGroup<{
     id: FormControl<string>;
     inputs: FormGroup<{
         nextSpeed: InputFormGroup;
@@ -92,7 +92,7 @@ export type SpeedStepperBindingForm = FormGroup<{
     }>;
     hubId: FormControl<string>;
     portId: FormControl<number>;
-    steps: FormArray<FormControl<number>>;
+    levels: FormArray<FormControl<number>>;
     power: FormControl<number>;
     useAccelerationProfile: FormControl<boolean>;
     useDecelerationProfile: FormControl<boolean>;
@@ -105,7 +105,7 @@ export type ControlSchemeBindingForm = FormGroup<{
     [ControlSchemeBindingType.Servo]: ServoBindingForm;
     [ControlSchemeBindingType.Stepper]: StepperBindingForm;
     [ControlSchemeBindingType.SetAngle]: SetAngleBindingForm;
-    [ControlSchemeBindingType.SpeedStepper]: SpeedStepperBindingForm;
+    [ControlSchemeBindingType.SpeedShift]: SpeedShiftBindingForm;
 }>;
 
 export type BindingEditAvailableOperationModesModel = {

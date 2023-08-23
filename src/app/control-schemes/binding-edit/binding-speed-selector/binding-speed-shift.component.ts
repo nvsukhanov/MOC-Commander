@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ControlSchemeBindingType, ControllerInputType, SliderControlComponent, ToggleControlComponent } from '@app/shared';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
-import { SpeedStepperBindingForm } from '../types';
+import { SpeedShiftBindingForm } from '../types';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { getInputTypesForOperationMode } from '../wait-for-controller-input-dialog/get-io-operation-modes-for-controller-input-type';
 import { CommonFormControlsBuilderService } from '../forms';
@@ -16,8 +16,8 @@ import { BindingControlNumInputComponent } from '../control-num-input';
 @Component({
     standalone: true,
     selector: 'app-binding-speed-stepper',
-    templateUrl: './binding-speed-stepper.component.html',
-    styleUrls: [ './binding-speed-stepper.component.scss' ],
+    templateUrl: './binding-speed-shift.component.html',
+    styleUrls: [ './binding-speed-shift.component.scss' ],
     imports: [
         BindingControlSelectControllerComponent,
         NgIf,
@@ -31,19 +31,19 @@ import { BindingControlNumInputComponent } from '../control-num-input';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BindingSpeedStepperComponent implements IBindingsDetailsEditComponent<SpeedStepperBindingForm> {
-    public readonly acceptableInputTypes: ControllerInputType[] = getInputTypesForOperationMode(ControlSchemeBindingType.SpeedStepper);
+export class BindingSpeedShiftComponent implements IBindingsDetailsEditComponent<SpeedShiftBindingForm> {
+    public readonly acceptableInputTypes: ControllerInputType[] = getInputTypesForOperationMode(ControlSchemeBindingType.SpeedShift);
 
     public readonly motorLimits = MOTOR_LIMITS;
 
-    private _form?: SpeedStepperBindingForm;
+    private _form?: SpeedShiftBindingForm;
 
     constructor(
         private readonly commonFormControlBuilder: CommonFormControlsBuilderService
     ) {
     }
 
-    public get form(): SpeedStepperBindingForm | undefined {
+    public get form(): SpeedShiftBindingForm | undefined {
         return this._form;
     }
 
@@ -52,7 +52,7 @@ export class BindingSpeedStepperComponent implements IBindingsDetailsEditCompone
     }
 
     public setForm(
-        form: SpeedStepperBindingForm
+        form: SpeedShiftBindingForm
     ): void {
         this._form = form;
     }
@@ -61,15 +61,15 @@ export class BindingSpeedStepperComponent implements IBindingsDetailsEditCompone
         if (!this._form) {
             return;
         }
-        this._form.controls.steps.insert(
+        this._form.controls.levels.insert(
             0,
-            this.commonFormControlBuilder.speedStepControl(MOTOR_LIMITS.maxSpeed)
+            this.commonFormControlBuilder.speedSelectControl(MOTOR_LIMITS.maxSpeed)
         );
         this._form.controls.initialStepIndex.setValue(
             this._form.controls.initialStepIndex.value + 1
         );
-        this._form.controls.steps.markAsTouched();
-        this._form.controls.steps.markAsDirty();
+        this._form.controls.levels.markAsTouched();
+        this._form.controls.levels.markAsDirty();
         this._form.updateValueAndValidity();
     }
 
@@ -77,11 +77,11 @@ export class BindingSpeedStepperComponent implements IBindingsDetailsEditCompone
         if (!this._form) {
             return;
         }
-        this._form.controls.steps.push(
-            this.commonFormControlBuilder.speedStepControl(MOTOR_LIMITS.minSpeed)
+        this._form.controls.levels.push(
+            this.commonFormControlBuilder.speedSelectControl(MOTOR_LIMITS.minSpeed)
         );
-        this._form.controls.steps.markAsTouched();
-        this._form.controls.steps.markAsDirty();
+        this._form.controls.levels.markAsTouched();
+        this._form.controls.levels.markAsDirty();
         this._form.updateValueAndValidity();
     }
 
@@ -91,7 +91,7 @@ export class BindingSpeedStepperComponent implements IBindingsDetailsEditCompone
         if (!this._form) {
             return;
         }
-        this._form.controls.steps.removeAt(index);
+        this._form.controls.levels.removeAt(index);
         if (this._form.controls.initialStepIndex.value > index) {
             this._form.controls.initialStepIndex.setValue(
                 this._form.controls.initialStepIndex.value - 1

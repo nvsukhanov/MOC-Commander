@@ -60,7 +60,7 @@ export class CommonFormControlsBuilderService {
         return this.formBuilder.control<boolean>(initialValue, { nonNullable: true });
     }
 
-    public speedStepControl(
+    public speedSelectControl(
         initialValue: number = MOTOR_LIMITS.maxSpeed
     ): FormControl<number> {
         return this.formBuilder.control<number>(initialValue, {

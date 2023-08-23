@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
-import { SpeedStepperTaskPayload } from '@app/store';
+import { SpeedShiftTaskPayload } from '@app/store';
 
 @Injectable({ providedIn: 'root' })
-export class SpeedStepperPortCommandTaskSummaryBuilderService {
+export class SpeedShiftPortCommandTaskSummaryBuilderService {
     constructor(
         private readonly translocoService: TranslocoService
     ) {
     }
 
     public build(
-        task: SpeedStepperTaskPayload
+        task: SpeedShiftTaskPayload
     ): Observable<string> {
         return this.translocoService.selectTranslate(
-            'controlScheme.speedStepperBinding.taskSummary',
+            'controlScheme.speedShiftBinding.taskSummary',
             {
                 speed: task.speed,
             }
