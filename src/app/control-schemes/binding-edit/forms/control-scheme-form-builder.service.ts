@@ -5,7 +5,7 @@ import { ControlSchemeBinding } from '@app/store';
 
 import { ControlSchemeBindingForm } from '../types';
 import { ServoBindingFormBuilderService } from './servo-binding-form-builder.service';
-import { LinearBindingFormBuilderService } from './linear-binding-form-builder.service';
+import { SetSpeedBindingFormBuilderService } from './set-speed-binding-form-builder.service';
 import { SetAngleBindingFormBuilderService } from './set-angle-binding-form-builder.service';
 import { StepperBindingFormBuilderService } from './stepper-binding-form-builder.service';
 import { SpeedShiftBindingFormBuilderService } from './speed-shift-binding-form-builder.service';
@@ -15,7 +15,7 @@ export class ControlSchemeFormBuilderService {
     constructor(
         private readonly formBuilder: FormBuilder,
         private readonly servoBindingFormBuilder: ServoBindingFormBuilderService,
-        private readonly linearBindingFormBuilder: LinearBindingFormBuilderService,
+        private readonly setSpeedBindingFormBuilder: SetSpeedBindingFormBuilderService,
         private readonly setAngleBindingFormBuilder: SetAngleBindingFormBuilderService,
         private readonly stepperBindingFormBuilder: StepperBindingFormBuilderService,
         private readonly speedShiftBindingFormBuilder: SpeedShiftBindingFormBuilderService,
@@ -24,8 +24,8 @@ export class ControlSchemeFormBuilderService {
 
     public createBindingForm(): ControlSchemeBindingForm {
         return this.formBuilder.group({
-            bindingFormOperationMode: this.formBuilder.control<ControlSchemeBindingType>(ControlSchemeBindingType.Linear, { nonNullable: true }),
-            [ControlSchemeBindingType.Linear]: this.linearBindingFormBuilder.build(),
+            bindingFormOperationMode: this.formBuilder.control<ControlSchemeBindingType>(ControlSchemeBindingType.SetSpeed, { nonNullable: true }),
+            [ControlSchemeBindingType.SetSpeed]: this.setSpeedBindingFormBuilder.build(),
             [ControlSchemeBindingType.Servo]: this.servoBindingFormBuilder.build(),
             [ControlSchemeBindingType.SetAngle]: this.setAngleBindingFormBuilder.build(),
             [ControlSchemeBindingType.Stepper]: this.stepperBindingFormBuilder.build(),
@@ -41,8 +41,8 @@ export class ControlSchemeFormBuilderService {
             form.controls.bindingFormOperationMode.patchValue(patch.operationMode);
         }
         switch (patch.operationMode) {
-            case ControlSchemeBindingType.Linear:
-                this.linearBindingFormBuilder.patchForm(form.controls[ControlSchemeBindingType.Linear], patch);
+            case ControlSchemeBindingType.SetSpeed:
+                this.setSpeedBindingFormBuilder.patchForm(form.controls[ControlSchemeBindingType.SetSpeed], patch);
                 break;
             case ControlSchemeBindingType.Servo:
                 this.servoBindingFormBuilder.patchForm(form.controls[ControlSchemeBindingType.Servo], patch);

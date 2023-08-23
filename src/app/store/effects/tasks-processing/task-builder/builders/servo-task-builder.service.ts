@@ -51,7 +51,7 @@ export class ServoTaskBuilderService extends BaseTaskBuilder<ControlSchemeServoB
             return null;
         }
         return {
-            bindingType: ControlSchemeBindingType.Linear,
+            bindingType: ControlSchemeBindingType.SetSpeed,
             speed: 0,
             power: 0,
             activeInput: false,

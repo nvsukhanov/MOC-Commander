@@ -12,7 +12,7 @@ export class TaskRunnerService implements ITaskRunner<ControlSchemeBindingType> 
     private readonly runnersMap: { [k in ControlSchemeBindingType]: ITaskRunner<k> } = {
         [ControlSchemeBindingType.Servo]: this.servoTaskRunnerService,
         [ControlSchemeBindingType.SetAngle]: this.setAngleTaskRunnerService,
-        [ControlSchemeBindingType.Linear]: this.setSpeedTaskRunnerService,
+        [ControlSchemeBindingType.SetSpeed]: this.setSpeedTaskRunnerService,
         [ControlSchemeBindingType.Stepper]: this.stepperTaskRunnerService,
         [ControlSchemeBindingType.SpeedShift]: this.speedShiftTaskRunnerService
     };

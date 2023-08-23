@@ -33,9 +33,9 @@ export type ControlSchemeInput = {
 
 export type ControlSchemeInputsRecord = Record<string, ControlSchemeInput>;
 
-export type ControlSchemeLinearBinding = {
+export type ControlSchemeSetSpeedBinding = {
     id: string;
-    operationMode: ControlSchemeBindingType.Linear;
+    operationMode: ControlSchemeBindingType.SetSpeed;
     inputs: {
         accelerate: ControlSchemeInput;
         brake?: ControlSchemeInput;
@@ -106,7 +106,7 @@ export type ControlSchemeSpeedShiftBinding = {
     initialStepIndex: number;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
-export type ControlSchemeBinding = ControlSchemeLinearBinding
+export type ControlSchemeBinding = ControlSchemeSetSpeedBinding
     | ControlSchemeServoBinding
     | ControlSchemeSetAngleBinding
     | ControlSchemeStepperBinding

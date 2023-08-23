@@ -127,9 +127,9 @@
     "inputGainExponential": "Exponential",
     "fullControllerInputName": "{controllerName} / {inputName}",
     "fullControllerInputNameWithPort": "{controllerName} / Port {portId} / {inputName}",
-    "linearBinding": {
-      "operationMode": "Linear",
-      "inputSpeed": "Speed",
+    "setSpeedBinding": {
+      "operationMode": "Set speed",
+      "inputSpeed": "Set speed",
       "inputBrake": "Brake",
       "outputSpeed": "Max speed (%)",
       "outputPower": "Power (%)",

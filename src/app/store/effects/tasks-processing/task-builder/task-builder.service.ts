@@ -17,7 +17,7 @@ export class TaskBuilderService implements ITaskBuilder {
     private readonly taskBuildersMap: { [k in ControlSchemeBindingType]: ITaskBuilder } = {
         [ControlSchemeBindingType.Servo]: this.servoTaskBuilder,
         [ControlSchemeBindingType.SetAngle]: this.setAngleTaskBuilder,
-        [ControlSchemeBindingType.Linear]: this.setSpeedTaskBuilder,
+        [ControlSchemeBindingType.SetSpeed]: this.setSpeedTaskBuilder,
         [ControlSchemeBindingType.SpeedShift]: this.speedShiftTaskBuilder,
         [ControlSchemeBindingType.Stepper]: this.stepperTaskBuilder,
     };

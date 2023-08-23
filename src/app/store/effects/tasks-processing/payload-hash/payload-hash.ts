@@ -15,7 +15,7 @@ export function payloadHash(
             return servoPayloadHash(payload);
         case ControlSchemeBindingType.SetAngle:
             return setAnglePayloadHash(payload);
-        case ControlSchemeBindingType.Linear:
+        case ControlSchemeBindingType.SetSpeed:
             return setSpeedPayloadHash(payload);
         case ControlSchemeBindingType.Stepper:
             return stepperPayloadHash(payload);

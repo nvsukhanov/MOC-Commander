@@ -1,8 +1,8 @@
 import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 import { ControlSchemeBindingType } from '@app/shared';
 
-export type SetLinearSpeedTaskPayload = {
-    bindingType: ControlSchemeBindingType.Linear;
+export type SetSpeedTaskPayload = {
+    bindingType: ControlSchemeBindingType.SetSpeed;
     activeInput: boolean;
     speed: number;
     power: number;
@@ -51,7 +51,7 @@ export type SpeedShiftTaskPayload = {
     useDecelerationProfile: boolean;
 };
 
-export type PortCommandTaskPayload = SetLinearSpeedTaskPayload
+export type PortCommandTaskPayload = SetSpeedTaskPayload
     | ServoTaskPayload
     | SetAngleTaskPayload
     | StepperTaskPayload

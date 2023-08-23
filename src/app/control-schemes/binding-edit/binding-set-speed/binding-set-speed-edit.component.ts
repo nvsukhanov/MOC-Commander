@@ -7,15 +7,15 @@ import { ControlSchemeBindingType, ControllerInputType, SliderControlComponent, 
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
-import { LinearBindingForm } from '../types';
+import { SetSpeedBindingForm } from '../types';
 import { BindingInputGainSelectComponent } from '../control-axial-output-modifier-select';
 import { getInputTypesForOperationMode } from '../wait-for-controller-input-dialog/get-io-operation-modes-for-controller-input-type';
 
 @Component({
     standalone: true,
-    selector: 'app-binding-linear-edit',
-    templateUrl: './binding-linear-edit.component.html',
-    styleUrls: [ './binding-linear-edit.component.scss' ],
+    selector: 'app-binding-set-speed-edit',
+    templateUrl: './binding-set-speed-edit.component.html',
+    styleUrls: [ './binding-set-speed-edit.component.scss' ],
     imports: [
         NgIf,
         SliderControlComponent,
@@ -26,10 +26,10 @@ import { getInputTypesForOperationMode } from '../wait-for-controller-input-dial
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BindingLinearEditComponent implements IBindingsDetailsEditComponent<LinearBindingForm> {
+export class BindingSetSpeedEditComponent implements IBindingsDetailsEditComponent<SetSpeedBindingForm> {
     public readonly motorLimits = MOTOR_LIMITS;
 
-    public readonly accelerationInputTypes = getInputTypesForOperationMode(ControlSchemeBindingType.Linear);
+    public readonly accelerationInputTypes = getInputTypesForOperationMode(ControlSchemeBindingType.SetSpeed);
 
     public readonly brakeInputTypes: ControllerInputType[] = [
         ControllerInputType.Button,
@@ -37,7 +37,7 @@ export class BindingLinearEditComponent implements IBindingsDetailsEditComponent
         ControllerInputType.Trigger
     ];
 
-    public form?: LinearBindingForm;
+    public form?: SetSpeedBindingForm;
 
     constructor(
         private readonly cd: ChangeDetectorRef,
@@ -59,7 +59,7 @@ export class BindingLinearEditComponent implements IBindingsDetailsEditComponent
     }
 
     public setForm(
-        outputBinding: LinearBindingForm
+        outputBinding: SetSpeedBindingForm
     ): void {
         const accelerateControls = outputBinding.controls.inputs.controls.accelerate.controls;
         if (outputBinding !== this.form) {

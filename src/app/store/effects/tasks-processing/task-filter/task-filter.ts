@@ -11,8 +11,8 @@ export function taskFilter(
     lastExecutedTask: PortCommandTask | null
 ): boolean {
     switch (task.payload.bindingType) {
-        case ControlSchemeBindingType.Linear:
-            return setSpeedTaskFilter(task as PortCommandTask<ControlSchemeBindingType.Linear>, lastExecutedTask);
+        case ControlSchemeBindingType.SetSpeed:
+            return setSpeedTaskFilter(task as PortCommandTask<ControlSchemeBindingType.SetSpeed>, lastExecutedTask);
         case ControlSchemeBindingType.Servo:
             return servoTaskFilter(task as PortCommandTask<ControlSchemeBindingType.Servo>, lastExecutedTask);
         case ControlSchemeBindingType.SetAngle:

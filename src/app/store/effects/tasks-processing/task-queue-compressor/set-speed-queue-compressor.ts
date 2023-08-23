@@ -7,20 +7,20 @@ export class SetSpeedQueueCompressor implements ITaskQueueCompressor {
     public compress(
         queue: PortCommandTask[]
     ): PortCommandTask[] {
-        let lastSpeedTask: PortCommandTask<ControlSchemeBindingType.Linear> | null = null;
+        let lastSpeedTask: PortCommandTask<ControlSchemeBindingType.SetSpeed> | null = null;
 
         // create new array with same length as queue (to avoid array resizing)
         const resultingQueue: PortCommandTask[] = new Array<PortCommandTask>(queue.length);
 
         for (let index = queue.length - 1; index >= 0; index--) {
             const task = queue[index];
-            if (task.payload.bindingType !== ControlSchemeBindingType.Linear) {
+            if (task.payload.bindingType !== ControlSchemeBindingType.SetSpeed) {
                 resultingQueue[index] = task;
                 continue;
             }
 
             if (!lastSpeedTask) {
-                lastSpeedTask = task as PortCommandTask<ControlSchemeBindingType.Linear>;
+                lastSpeedTask = task as PortCommandTask<ControlSchemeBindingType.SetSpeed>;
                 resultingQueue[index] = task;
                 continue;
             }

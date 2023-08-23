@@ -3,10 +3,10 @@ import { ControlSchemeBindingType } from '@app/shared';
 import { PortCommandTask } from '../../../models';
 
 export function setSpeedTaskFilter(
-    task: PortCommandTask<ControlSchemeBindingType.Linear>,
+    task: PortCommandTask<ControlSchemeBindingType.SetSpeed>,
     lastExecutedTask: PortCommandTask | null
 ): boolean {
-    if (!lastExecutedTask || lastExecutedTask.payload.bindingType !== ControlSchemeBindingType.Linear) {
+    if (!lastExecutedTask || lastExecutedTask.payload.bindingType !== ControlSchemeBindingType.SetSpeed) {
         return task.payload.activeInput;
     }
 

@@ -4,29 +4,29 @@ import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import {
-    ControlSchemeLinearBinding,
+    ControlSchemeSetSpeedBinding,
     ControllerInputModel,
     InputGain,
     PortCommandTask,
     PortCommandTaskPayload,
-    SetLinearSpeedTaskPayload
+    SetSpeedTaskPayload
 } from '../../../../models';
 import { controllerInputIdFn } from '../../../../reducers';
 import { BaseTaskBuilder } from '../base-task-builder';
 import { calcInputGain } from '../calc-input-gain';
 
 @Injectable({ providedIn: 'root' })
-export class SetSpeedTaskBuilderService extends BaseTaskBuilder<ControlSchemeLinearBinding, SetLinearSpeedTaskPayload> {
+export class SetSpeedTaskBuilderService extends BaseTaskBuilder<ControlSchemeSetSpeedBinding, SetSpeedTaskPayload> {
     private readonly speedStep = 5;
 
     private readonly speedSnapThreshold = 10;
 
     protected buildPayload(
-        binding: ControlSchemeLinearBinding,
+        binding: ControlSchemeSetSpeedBinding,
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
         lastExecutedTask: PortCommandTask | null
-    ): { payload: SetLinearSpeedTaskPayload; inputTimestamp: number } | null {
+    ): { payload: SetSpeedTaskPayload; inputTimestamp: number } | null {
         const accelerateInput = inputsState[controllerInputIdFn(binding.inputs.accelerate)];
         const accelerateInputValue = accelerateInput?.value ?? 0;
 
@@ -54,8 +54,8 @@ export class SetSpeedTaskBuilderService extends BaseTaskBuilder<ControlSchemeLin
             binding.inputs.accelerate.gain
         );
 
-        const payload: SetLinearSpeedTaskPayload = {
-            bindingType: ControlSchemeBindingType.Linear,
+        const payload: SetSpeedTaskPayload = {
+            bindingType: ControlSchemeBindingType.SetSpeed,
             speed: targetSpeed,
             power: this.calculatePower(targetSpeed, brakeInputValue, binding.power),
             activeInput: accelerateInputValue !== 0,
@@ -69,11 +69,11 @@ export class SetSpeedTaskBuilderService extends BaseTaskBuilder<ControlSchemeLin
     protected buildCleanupPayload(
         previousTask: PortCommandTask
     ): PortCommandTaskPayload | null {
-        if (previousTask.payload.bindingType !== ControlSchemeBindingType.Linear) {
+        if (previousTask.payload.bindingType !== ControlSchemeBindingType.SetSpeed) {
             return null;
         }
         return {
-            bindingType: ControlSchemeBindingType.Linear,
+            bindingType: ControlSchemeBindingType.SetSpeed,
             speed: 0,
             power: 0,
             activeInput: false,
@@ -83,14 +83,14 @@ export class SetSpeedTaskBuilderService extends BaseTaskBuilder<ControlSchemeLin
     }
 
     private createTogglePayload(
-        binding: ControlSchemeLinearBinding,
+        binding: ControlSchemeSetSpeedBinding,
         lastExecutedTask: PortCommandTask | null
-    ): SetLinearSpeedTaskPayload | null {
+    ): SetSpeedTaskPayload | null {
         let shouldActivate: boolean;
         const assumedBrakeInput = 0;
 
         if (lastExecutedTask?.bindingId === binding.id) {
-            shouldActivate = (lastExecutedTask.payload as SetLinearSpeedTaskPayload).speed === 0;
+            shouldActivate = (lastExecutedTask.payload as SetSpeedTaskPayload).speed === 0;
         } else {
             shouldActivate = true;
         }
@@ -104,7 +104,7 @@ export class SetSpeedTaskBuilderService extends BaseTaskBuilder<ControlSchemeLin
                 binding.inputs.accelerate.gain
             );
             return {
-                bindingType: ControlSchemeBindingType.Linear,
+                bindingType: ControlSchemeBindingType.SetSpeed,
                 speed,
                 power: this.calculatePower(speed, assumedBrakeInput, binding.power),
                 activeInput: true,
@@ -114,7 +114,7 @@ export class SetSpeedTaskBuilderService extends BaseTaskBuilder<ControlSchemeLin
         }
 
         return {
-            bindingType: ControlSchemeBindingType.Linear,
+            bindingType: ControlSchemeBindingType.SetSpeed,
             speed: 0,
             power: this.calculatePower(0, assumedBrakeInput, binding.power),
             activeInput: true,

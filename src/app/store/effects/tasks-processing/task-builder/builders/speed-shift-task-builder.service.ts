@@ -73,7 +73,7 @@ export class SpeedShiftTaskBuilderService extends BaseTaskBuilder<ControlSchemeS
             return null;
         }
         return {
-            bindingType: ControlSchemeBindingType.Linear,
+            bindingType: ControlSchemeBindingType.SetSpeed,
             speed: 0,
             power: 0,
             activeInput: false,

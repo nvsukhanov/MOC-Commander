@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { ATTACHED_IO_PROPS_SELECTORS, AttachedIoPropsModel, PortCommandTask } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared';
 
-import { LinearPortCommandTaskSummaryBuilderService } from './linear-port-command-task-summary-builder.service';
+import { SetSpeedPortCommandTaskSummaryBuilderService } from './set-speed-port-command-task-summary-builder.service';
 import { ServoPortCommandTaskSummaryBuilderService } from './servo-port-command-task-summary-builder.service';
 import { SetAnglePortCommandTaskSummaryBuilderService } from './set-angle-port-command-task-summary-builder.service';
 import { StepperPortCommandTaskSummaryBuilderService } from './stepper-port-command-task-summary-builder.service';
@@ -17,7 +17,7 @@ import { SpeedShiftPortCommandTaskSummaryBuilderService } from './speed-shift-po
 })
 export class PortCommandTaskSummaryPipe implements PipeTransform {
     constructor(
-        private readonly linearPortCommandTaskSummaryBuilder: LinearPortCommandTaskSummaryBuilderService,
+        private readonly setSpeedPortCommandTaskSummaryBuilder: SetSpeedPortCommandTaskSummaryBuilderService,
         private readonly setAnglePortCommandTaskSummaryBuilder: SetAnglePortCommandTaskSummaryBuilderService,
         private readonly servoPortCommandTaskSummaryBuilder: ServoPortCommandTaskSummaryBuilderService,
         private readonly stepperPortCommandTaskSummaryBuilder: StepperPortCommandTaskSummaryBuilderService,
@@ -31,8 +31,8 @@ export class PortCommandTaskSummaryPipe implements PipeTransform {
     ): Observable<string> {
         const payload = portCommandTask.payload;
         switch (payload.bindingType) {
-            case ControlSchemeBindingType.Linear:
-                return this.linearPortCommandTaskSummaryBuilder.build(payload);
+            case ControlSchemeBindingType.SetSpeed:
+                return this.setSpeedPortCommandTaskSummaryBuilder.build(payload);
             case ControlSchemeBindingType.SetAngle:
                 return this.store.select(ATTACHED_IO_PROPS_SELECTORS.selectById(portCommandTask)).pipe(
                     filter((ioProps): ioProps is AttachedIoPropsModel => !!ioProps),
