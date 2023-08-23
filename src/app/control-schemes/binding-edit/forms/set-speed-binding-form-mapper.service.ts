@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { ControlSchemeInput, ControlSchemeLinearBinding } from '@app/store';
+import { ControlSchemeInput, ControlSchemeSetSpeedBinding } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared';
 
-import { LinearBindingForm } from '../types';
+import { SetSpeedBindingForm } from '../types';
 
 @Injectable({ providedIn: 'root' })
-export class LinearBindingFormMapperService {
+export class SetSpeedBindingFormMapperService {
     public mapToModel(
-        form: LinearBindingForm
-    ): ControlSchemeLinearBinding {
-        const result: ControlSchemeLinearBinding = {
-            operationMode: ControlSchemeBindingType.Linear,
+        form: SetSpeedBindingForm
+    ): ControlSchemeSetSpeedBinding {
+        const result: ControlSchemeSetSpeedBinding = {
+            operationMode: ControlSchemeBindingType.SetSpeed,
             id: form.controls.id.getRawValue(),
             inputs: {
                 accelerate: form.controls.inputs.controls.accelerate.getRawValue(),

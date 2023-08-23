@@ -8,7 +8,7 @@ import { mapUseProfile } from '../map-use-profile';
 import { ITaskRunner } from '../i-task-runner';
 
 @Injectable({ providedIn: 'root' })
-export class SetSpeedTaskRunnerService implements ITaskRunner<ControlSchemeBindingType.Linear> {
+export class SetSpeedTaskRunnerService implements ITaskRunner<ControlSchemeBindingType.SetSpeed> {
     public runTask(
         task: PortCommandTask,
         hub: IHub

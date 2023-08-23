@@ -3,12 +3,12 @@ import { Subscription, startWith } from 'rxjs';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import { IBindingsDetailsEditComponent } from './i-bindings-details-edit-component';
-import { BindingLinearEditComponent } from './binding-linear';
+import { BindingSetSpeedEditComponent } from './binding-set-speed';
 import { BindingServoEditComponent } from './binding-servo';
 import { BindingSetAngleEditComponent } from './binding-set-angle';
 import { BindingStepperEditComponent } from './binding-stepper';
 import { ControlSchemeBindingForm } from './types';
-import { BindingSpeedShiftComponent } from './binding-speed-selector';
+import { BindingSpeedShiftComponent } from './binding-speed-shift';
 
 @Directive({
     standalone: true,
@@ -17,7 +17,7 @@ import { BindingSpeedShiftComponent } from './binding-speed-selector';
 })
 export class RenderBindingDetailsEditDirective implements OnDestroy {
     private readonly renderers: { [k in ControlSchemeBindingType]: Type<IBindingsDetailsEditComponent> | null } = {
-        [ControlSchemeBindingType.Linear]: BindingLinearEditComponent,
+        [ControlSchemeBindingType.SetSpeed]: BindingSetSpeedEditComponent,
         [ControlSchemeBindingType.Servo]: BindingServoEditComponent,
         [ControlSchemeBindingType.SetAngle]: BindingSetAngleEditComponent,
         [ControlSchemeBindingType.Stepper]: BindingStepperEditComponent,

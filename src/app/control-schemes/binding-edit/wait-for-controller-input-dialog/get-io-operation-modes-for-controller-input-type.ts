@@ -2,26 +2,26 @@ import { ControlSchemeBindingType, ControllerInputType } from '@app/shared';
 
 const CONTROLLER_TO_IO_OPERATION_MODES: { [k in ControllerInputType]: ReadonlyArray<ControlSchemeBindingType> } = { // TODO: is this really necessary?
     [ControllerInputType.Axis]: [
-        ControlSchemeBindingType.Linear,
+        ControlSchemeBindingType.SetSpeed,
         ControlSchemeBindingType.Servo,
         ControlSchemeBindingType.SpeedShift
     ],
     [ControllerInputType.Button]: [
-        ControlSchemeBindingType.Linear,
+        ControlSchemeBindingType.SetSpeed,
         ControlSchemeBindingType.Servo,
         ControlSchemeBindingType.SetAngle,
         ControlSchemeBindingType.Stepper,
         ControlSchemeBindingType.SpeedShift
     ],
     [ControllerInputType.Trigger]: [
-        ControlSchemeBindingType.Linear,
+        ControlSchemeBindingType.SetSpeed,
         ControlSchemeBindingType.Servo,
         ControlSchemeBindingType.SetAngle,
         ControlSchemeBindingType.Stepper,
         ControlSchemeBindingType.SpeedShift
     ],
     [ControllerInputType.ButtonGroup]: [
-        ControlSchemeBindingType.Linear,
+        ControlSchemeBindingType.SetSpeed,
         ControlSchemeBindingType.Servo,
         ControlSchemeBindingType.SetAngle,
         ControlSchemeBindingType.Stepper,

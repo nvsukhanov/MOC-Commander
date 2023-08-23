@@ -1,7 +1,7 @@
-import { SetLinearSpeedTaskPayload } from '../../../models';
+import { SetSpeedTaskPayload } from '../../../models';
 
 export function setSpeedPayloadHash(
-    payload: SetLinearSpeedTaskPayload
+    payload: SetSpeedTaskPayload
 ): string {
     return [
         payload.bindingType,

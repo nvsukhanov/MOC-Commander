@@ -3,7 +3,7 @@ import { ControlSchemeBinding } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import { ControlSchemeBindingForm } from '../types';
-import { LinearBindingFormMapperService } from './linear-binding-form-mapper.service';
+import { SetSpeedBindingFormMapperService } from './set-speed-binding-form-mapper.service';
 import { ServoBindingFormMapperService } from './servo-binding-form-mapper.service';
 import { SetAngleBindingFormMapperService } from './set-angle-binding-form-mapper.service';
 import { StepperBindingFormMapperService } from './stepper-binding-form-mapper.service';
@@ -12,7 +12,7 @@ import { SpeedShiftBindingFormMapperService } from './speed-shift-binding-form-m
 @Injectable({ providedIn: 'root' })
 export class ControlSchemeFormMapperService {
     constructor(
-        private readonly linearBindingMapper: LinearBindingFormMapperService,
+        private readonly setSpeedBindingMapper: SetSpeedBindingFormMapperService,
         private readonly servoBindingMapper: ServoBindingFormMapperService,
         private readonly setAngleBindingMapper: SetAngleBindingFormMapperService,
         private readonly stepperBindingMapper: StepperBindingFormMapperService,
@@ -25,8 +25,8 @@ export class ControlSchemeFormMapperService {
     ): ControlSchemeBinding {
         const operationMode = form.controls.bindingFormOperationMode.value;
         switch (operationMode) {
-            case ControlSchemeBindingType.Linear:
-                return this.linearBindingMapper.mapToModel(form.controls[ControlSchemeBindingType.Linear]);
+            case ControlSchemeBindingType.SetSpeed:
+                return this.setSpeedBindingMapper.mapToModel(form.controls[ControlSchemeBindingType.SetSpeed]);
             case ControlSchemeBindingType.Servo:
                 return this.servoBindingMapper.mapToModel(form.controls[ControlSchemeBindingType.Servo]);
             case ControlSchemeBindingType.SetAngle:

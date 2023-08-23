@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { ControlSchemeLinearBinding } from '@app/store';
+import { ControlSchemeSetSpeedBinding } from '@app/store';
 
-import { LinearBindingForm } from '../types';
+import { SetSpeedBindingForm } from '../types';
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';
 
 @Injectable({ providedIn: 'root' })
-export class LinearBindingFormBuilderService {
+export class SetSpeedBindingFormBuilderService {
     constructor(
         private readonly formBuilder: FormBuilder,
         private commonFormControlBuilder: CommonFormControlsBuilderService
     ) {
     }
 
-    public build(): LinearBindingForm {
+    public build(): SetSpeedBindingForm {
         return this.formBuilder.group({
             id: this.commonFormControlBuilder.schemeIdControl(),
             inputs: this.formBuilder.group({
@@ -32,8 +32,8 @@ export class LinearBindingFormBuilderService {
     }
 
     public patchForm(
-        form: LinearBindingForm,
-        patch: Partial<ControlSchemeLinearBinding>
+        form: SetSpeedBindingForm,
+        patch: Partial<ControlSchemeSetSpeedBinding>
     ): void {
         form.patchValue(patch);
     }

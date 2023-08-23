@@ -75,7 +75,7 @@ export class BindingTreeNodeComponent {
             case ControlSchemeBindingType.Stepper:
             case ControlSchemeBindingType.SetAngle:
             case ControlSchemeBindingType.Servo:
-            case ControlSchemeBindingType.Linear:
+            case ControlSchemeBindingType.SetSpeed:
             case ControlSchemeBindingType.SpeedShift:
                 return this.store.select(INPUT_TREE_NODE_VIEW_MODEL_SELECTOR(
                     treeNodeData.controlSchemeId,

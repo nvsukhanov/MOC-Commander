@@ -21,7 +21,7 @@ export type OptionalInputFormGroup = FormGroup<{
     portId: FormControl<number | null>;
 }>;
 
-export type LinearBindingForm = FormGroup<{
+export type SetSpeedBindingForm = FormGroup<{
     id: FormControl<string>;
     inputs: FormGroup<{
         accelerate: InputFormGroup;
@@ -101,7 +101,7 @@ export type SpeedShiftBindingForm = FormGroup<{
 
 export type ControlSchemeBindingForm = FormGroup<{
     bindingFormOperationMode: FormControl<ControlSchemeBindingType>;
-    [ControlSchemeBindingType.Linear]: LinearBindingForm;
+    [ControlSchemeBindingType.SetSpeed]: SetSpeedBindingForm;
     [ControlSchemeBindingType.Servo]: ServoBindingForm;
     [ControlSchemeBindingType.Stepper]: StepperBindingForm;
     [ControlSchemeBindingType.SetAngle]: SetAngleBindingForm;

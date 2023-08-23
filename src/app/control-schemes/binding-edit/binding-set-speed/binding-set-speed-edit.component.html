@@ -1,13 +1,13 @@
 <ng-container *ngIf="form">
     <app-controller-select [inputFormGroup]="form.controls.inputs.controls.accelerate"
-                           [title]="'controlScheme.linearBinding.inputSpeed' | transloco "
+                           [title]="'controlScheme.setSpeedBinding.inputSpeed' | transloco "
                            [acceptableInputTypes]="accelerationInputTypes"
     ></app-controller-select>
 
     <ng-container *ngIf="isAccelerationInputAssigned">
         <app-controller-select *ngIf="!form.controls.isToggle.value"
                                [inputFormGroup]="form.controls.inputs.controls.brake"
-                               [title]="'controlScheme.linearBinding.inputBrake' | transloco "
+                               [title]="'controlScheme.setSpeedBinding.inputBrake' | transloco "
                                [acceptableInputTypes]="brakeInputTypes"
         ></app-controller-select>
 
@@ -18,17 +18,17 @@
         <app-slider-control [min]="0"
                             [max]="motorLimits.maxSpeed"
                             [control]="form.controls.maxSpeed"
-                            [translocoTitle]="'controlScheme.linearBinding.outputSpeed'"
+                            [translocoTitle]="'controlScheme.setSpeedBinding.outputSpeed'"
         ></app-slider-control>
 
         <app-slider-control [min]="motorLimits.minPower"
                             [max]="motorLimits.maxPower"
                             [control]="form.controls.power"
-                            [translocoTitle]="'controlScheme.linearBinding.outputPower'"
+                            [translocoTitle]="'controlScheme.setSpeedBinding.outputPower'"
         ></app-slider-control>
 
         <app-toggle-control *ngIf="isToggleable"
-                            [translocoTitle]="'controlScheme.linearBinding.treatAsSwitch'"
+                            [translocoTitle]="'controlScheme.setSpeedBinding.treatAsSwitch'"
                             [control]="form.controls.isToggle"
         ></app-toggle-control>
 

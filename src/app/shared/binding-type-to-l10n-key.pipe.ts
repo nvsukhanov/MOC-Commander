@@ -9,7 +9,7 @@ import { ControlSchemeBindingType } from './control-scheme-binding-type';
 })
 export class BindingTypeToL10nKeyPipe implements PipeTransform {
     private readonly mapping: { [k in ControlSchemeBindingType]: string } = {
-        [ControlSchemeBindingType.Linear]: 'controlScheme.linearBinding.operationMode',
+        [ControlSchemeBindingType.SetSpeed]: 'controlScheme.setSpeedBinding.operationMode',
         [ControlSchemeBindingType.Servo]: 'controlScheme.servoBinding.operationMode',
         [ControlSchemeBindingType.SetAngle]: 'controlScheme.setAngleBinding.operationMode',
         [ControlSchemeBindingType.Stepper]: 'controlScheme.stepperBinding.operationMode',
