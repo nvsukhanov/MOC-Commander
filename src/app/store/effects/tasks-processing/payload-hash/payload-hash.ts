@@ -5,7 +5,7 @@ import { servoPayloadHash } from './servo-payload-hash';
 import { setAnglePayloadHash } from './set-angle-payload-hash';
 import { setSpeedPayloadHash } from './set-speed-payload-hash';
 import { stepperPayloadHash } from './stepper-payload-hash';
-import { speedStepperPayloadHash } from './speed-stepper-payload-hash';
+import { speedShiftPayloadHash } from './speed-shift-payload-hash';
 
 export function payloadHash(
     payload: PortCommandTaskPayload
@@ -19,7 +19,7 @@ export function payloadHash(
             return setSpeedPayloadHash(payload);
         case ControlSchemeBindingType.Stepper:
             return stepperPayloadHash(payload);
-        case ControlSchemeBindingType.SpeedStepper:
-            return speedStepperPayloadHash(payload);
+        case ControlSchemeBindingType.SpeedShift:
+            return speedShiftPayloadHash(payload);
     }
 }

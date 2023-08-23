@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
-import { ControlSchemeInput, ControlSchemeSpeedStepperBinding } from '@app/store';
+import { ControlSchemeInput, ControlSchemeSpeedShiftBinding } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared';
 
-import { SpeedStepperBindingForm } from '../types';
+import { SpeedShiftBindingForm } from '../types';
 
 @Injectable({ providedIn: 'root' })
-export class SpeedStepperBindingFormMapperService {
+export class SpeedShiftBindingFormMapperService {
     public mapToModel(
-        form: SpeedStepperBindingForm
-    ): ControlSchemeSpeedStepperBinding {
-        const result: ControlSchemeSpeedStepperBinding = {
+        form: SpeedShiftBindingForm
+    ): ControlSchemeSpeedShiftBinding {
+        const result: ControlSchemeSpeedShiftBinding = {
             id: form.controls.id.getRawValue(),
-            operationMode: ControlSchemeBindingType.SpeedStepper,
+            operationMode: ControlSchemeBindingType.SpeedShift,
             inputs: {
                 nextSpeed: form.controls.inputs.controls.nextSpeed.getRawValue(),
             },
             hubId: form.controls.hubId.getRawValue(),
             portId: form.controls.portId.getRawValue(),
-            steps: form.controls.steps.getRawValue(),
+            levels: form.controls.levels.getRawValue(),
             power: form.controls.power.getRawValue(),
             useAccelerationProfile: form.controls.useAccelerationProfile.getRawValue(),
             useDecelerationProfile: form.controls.useDecelerationProfile.getRawValue(),

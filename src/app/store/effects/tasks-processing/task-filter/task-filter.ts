@@ -4,7 +4,7 @@ import { PortCommandTask } from '../../../models';
 import { setSpeedTaskFilter } from './set-speed-task-filter';
 import { servoTaskFilter } from './servo-task-filter';
 import { setAngleTaskFilter } from './set-angle-task-filter';
-import { speedStepperTaskFilter } from './speed-stepper-task-filter';
+import { speedShiftTaskFilter } from './speed-shift-task-filter';
 
 export function taskFilter(
     task: PortCommandTask,
@@ -17,8 +17,8 @@ export function taskFilter(
             return servoTaskFilter(task as PortCommandTask<ControlSchemeBindingType.Servo>, lastExecutedTask);
         case ControlSchemeBindingType.SetAngle:
             return setAngleTaskFilter(task as PortCommandTask<ControlSchemeBindingType.SetAngle>, lastExecutedTask);
-        case ControlSchemeBindingType.SpeedStepper:
-            return speedStepperTaskFilter(task as PortCommandTask<ControlSchemeBindingType.SpeedStepper>, lastExecutedTask);
+        case ControlSchemeBindingType.SpeedShift:
+            return speedShiftTaskFilter(task as PortCommandTask<ControlSchemeBindingType.SpeedShift>, lastExecutedTask);
         case ControlSchemeBindingType.Stepper:
             return true;
     }

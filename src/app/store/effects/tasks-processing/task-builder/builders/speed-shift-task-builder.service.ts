@@ -3,19 +3,19 @@ import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import { controllerInputIdFn } from '../../../../reducers';
-import { ControlSchemeSpeedStepperBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, SpeedStepperTaskPayload, } from '../../../../models';
+import { ControlSchemeSpeedShiftBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, SpeedShiftTaskPayload, } from '../../../../models';
 import { BaseTaskBuilder } from '../base-task-builder';
 
 @Injectable({ providedIn: 'root' })
-export class SpeedStepperTaskBuilderService extends BaseTaskBuilder<ControlSchemeSpeedStepperBinding, SpeedStepperTaskPayload> {
+export class SpeedShiftTaskBuilderService extends BaseTaskBuilder<ControlSchemeSpeedShiftBinding, SpeedShiftTaskPayload> {
     private readonly inputThreshold = 0.5;
 
     protected buildPayload(
-        binding: ControlSchemeSpeedStepperBinding,
+        binding: ControlSchemeSpeedShiftBinding,
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
         previousTask: PortCommandTask | null
-    ): { payload: SpeedStepperTaskPayload; inputTimestamp: number } | null {
+    ): { payload: SpeedShiftTaskPayload; inputTimestamp: number } | null {
         const isNextSpeedInputActive = (inputsState[controllerInputIdFn(binding.inputs.nextSpeed)]?.value ?? 0) > this.inputThreshold;
         const isPrevSpeedInputActive = !!binding.inputs.prevSpeed
             && (inputsState[controllerInputIdFn(binding.inputs.prevSpeed)]?.value ?? 0) > this.inputThreshold;
@@ -24,7 +24,7 @@ export class SpeedStepperTaskBuilderService extends BaseTaskBuilder<ControlSchem
         if (isStopInputActive) {
             return {
                 payload: {
-                    bindingType: ControlSchemeBindingType.SpeedStepper,
+                    bindingType: ControlSchemeBindingType.SpeedShift,
                     nextSpeedActiveInput: isNextSpeedInputActive,
                     prevSpeedActiveInput: isPrevSpeedInputActive,
                     speed: 0,
@@ -37,9 +37,9 @@ export class SpeedStepperTaskBuilderService extends BaseTaskBuilder<ControlSchem
             };
         }
 
-        const sameBindingPrevTaskPayload: SpeedStepperTaskPayload | null = previousTask?.bindingId === binding.id
-                                                                           ? previousTask.payload as SpeedStepperTaskPayload
-                                                                           : null;
+        const sameBindingPrevTaskPayload: SpeedShiftTaskPayload | null = previousTask?.bindingId === binding.id
+                                                                         ? previousTask.payload as SpeedShiftTaskPayload
+                                                                         : null;
         const previousLevel = sameBindingPrevTaskPayload?.level ?? binding.initialStepIndex;
         const isPreviousTaskNextSpeedInputActive = sameBindingPrevTaskPayload?.nextSpeedActiveInput ?? false;
         const isPreviousTaskPreviousSpeedInputActive = sameBindingPrevTaskPayload?.prevSpeedActiveInput ?? false;
@@ -53,10 +53,10 @@ export class SpeedStepperTaskBuilderService extends BaseTaskBuilder<ControlSchem
             nextLevel = this.calculateUpdatedLevel(binding, previousLevel, 1);
         }
 
-        const payload: SpeedStepperTaskPayload = {
-            bindingType: ControlSchemeBindingType.SpeedStepper,
+        const payload: SpeedShiftTaskPayload = {
+            bindingType: ControlSchemeBindingType.SpeedShift,
             level: nextLevel,
-            speed: binding.steps[nextLevel],
+            speed: binding.levels[nextLevel],
             power: binding.power,
             nextSpeedActiveInput: isNextSpeedInputActive,
             prevSpeedActiveInput: isPrevSpeedInputActive,
@@ -69,7 +69,7 @@ export class SpeedStepperTaskBuilderService extends BaseTaskBuilder<ControlSchem
     protected buildCleanupPayload(
         previousTask: PortCommandTask
     ): PortCommandTaskPayload | null {
-        if (previousTask.payload.bindingType !== ControlSchemeBindingType.SpeedStepper) {
+        if (previousTask.payload.bindingType !== ControlSchemeBindingType.SpeedShift) {
             return null;
         }
         return {
@@ -83,11 +83,11 @@ export class SpeedStepperTaskBuilderService extends BaseTaskBuilder<ControlSchem
     }
 
     private calculateUpdatedLevel(
-        binding: ControlSchemeSpeedStepperBinding,
+        binding: ControlSchemeSpeedShiftBinding,
         previousLevel: number,
         levelIncrement: 1 | -1
     ): number {
-        return binding.steps[previousLevel + levelIncrement] !== undefined
+        return binding.levels[previousLevel + levelIncrement] !== undefined
                ? previousLevel + levelIncrement
                : previousLevel;
     }

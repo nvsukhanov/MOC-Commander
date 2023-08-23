@@ -8,7 +8,7 @@ import { ServoBindingFormBuilderService } from './servo-binding-form-builder.ser
 import { LinearBindingFormBuilderService } from './linear-binding-form-builder.service';
 import { SetAngleBindingFormBuilderService } from './set-angle-binding-form-builder.service';
 import { StepperBindingFormBuilderService } from './stepper-binding-form-builder.service';
-import { SpeedStepperBindingFormBuilderService } from './speed-stepper-binding-form-builder.service';
+import { SpeedShiftBindingFormBuilderService } from './speed-shift-binding-form-builder.service';
 
 @Injectable({ providedIn: 'root' })
 export class ControlSchemeFormBuilderService {
@@ -18,7 +18,7 @@ export class ControlSchemeFormBuilderService {
         private readonly linearBindingFormBuilder: LinearBindingFormBuilderService,
         private readonly setAngleBindingFormBuilder: SetAngleBindingFormBuilderService,
         private readonly stepperBindingFormBuilder: StepperBindingFormBuilderService,
-        private readonly speedStepperBindingFormBuilder: SpeedStepperBindingFormBuilderService,
+        private readonly speedShiftBindingFormBuilder: SpeedShiftBindingFormBuilderService,
     ) {
     }
 
@@ -29,7 +29,7 @@ export class ControlSchemeFormBuilderService {
             [ControlSchemeBindingType.Servo]: this.servoBindingFormBuilder.build(),
             [ControlSchemeBindingType.SetAngle]: this.setAngleBindingFormBuilder.build(),
             [ControlSchemeBindingType.Stepper]: this.stepperBindingFormBuilder.build(),
-            [ControlSchemeBindingType.SpeedStepper]: this.speedStepperBindingFormBuilder.build()
+            [ControlSchemeBindingType.SpeedShift]: this.speedShiftBindingFormBuilder.build()
         });
     }
 
@@ -53,8 +53,8 @@ export class ControlSchemeFormBuilderService {
             case ControlSchemeBindingType.Stepper:
                 this.stepperBindingFormBuilder.patchForm(form.controls[ControlSchemeBindingType.Stepper], patch);
                 break;
-            case ControlSchemeBindingType.SpeedStepper:
-                this.speedStepperBindingFormBuilder.patchForm(form.controls[ControlSchemeBindingType.SpeedStepper], patch);
+            case ControlSchemeBindingType.SpeedShift:
+                this.speedShiftBindingFormBuilder.patchForm(form.controls[ControlSchemeBindingType.SpeedShift], patch);
                 break;
             default:
                 return patch.operationMode satisfies void;

@@ -8,9 +8,9 @@ import { mapUseProfile } from '../map-use-profile';
 import { ITaskRunner } from '../i-task-runner';
 
 @Injectable({ providedIn: 'root' })
-export class SpeedStepperTaskRunnerService implements ITaskRunner<ControlSchemeBindingType.SpeedStepper> {
+export class SpeedShiftTaskRunnerService implements ITaskRunner<ControlSchemeBindingType.SpeedShift> {
     public runTask(
-        task: PortCommandTask<ControlSchemeBindingType.SpeedStepper>,
+        task: PortCommandTask<ControlSchemeBindingType.SpeedShift>,
         hub: IHub
     ): Observable<PortCommandExecutionStatus> {
         return hub.motors.setSpeed(

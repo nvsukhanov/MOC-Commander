@@ -5,8 +5,7 @@ import { ControlSchemeBindingType } from '@app/shared';
 
 import { PortCommandTask } from '../../../models';
 import { ITaskRunner } from './i-task-runner';
-import { ServoTaskRunnerService, SetAngleTaskRunnerService, SetSpeedTaskRunnerService, StepperTaskRunnerService } from './runners';
-import { SpeedStepperTaskRunnerService } from './runners/speed-stepper-task-runner.service';
+import { ServoTaskRunnerService, SetAngleTaskRunnerService, SetSpeedTaskRunnerService, SpeedShiftTaskRunnerService, StepperTaskRunnerService } from './runners';
 
 @Injectable({ providedIn: 'root' })
 export class TaskRunnerService implements ITaskRunner<ControlSchemeBindingType> {
@@ -15,14 +14,14 @@ export class TaskRunnerService implements ITaskRunner<ControlSchemeBindingType> 
         [ControlSchemeBindingType.SetAngle]: this.setAngleTaskRunnerService,
         [ControlSchemeBindingType.Linear]: this.setSpeedTaskRunnerService,
         [ControlSchemeBindingType.Stepper]: this.stepperTaskRunnerService,
-        [ControlSchemeBindingType.SpeedStepper]: this.speedStepperTaskRunnerService
+        [ControlSchemeBindingType.SpeedShift]: this.speedShiftTaskRunnerService
     };
 
     constructor(
         private readonly servoTaskRunnerService: ServoTaskRunnerService,
         private readonly setAngleTaskRunnerService: SetAngleTaskRunnerService,
         private readonly setSpeedTaskRunnerService: SetSpeedTaskRunnerService,
-        private readonly speedStepperTaskRunnerService: SpeedStepperTaskRunnerService,
+        private readonly speedShiftTaskRunnerService: SpeedShiftTaskRunnerService,
         private readonly stepperTaskRunnerService: StepperTaskRunnerService
     ) {
     }
