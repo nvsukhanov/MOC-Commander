@@ -5,6 +5,7 @@ export enum PortCommandTaskType {
     Servo = 'Servo',
     SetAngle = 'SetAngle',
     Stepper = 'Stepper',
+    SpeedStepper = 'SpeedStepper'
 }
 
 export type SetLinearSpeedTaskPayload = {
@@ -46,10 +47,22 @@ export type StepperTaskPayload = {
     useDecelerationProfile: boolean;
 };
 
+export type SpeedStepperTaskPayload = {
+    taskType: PortCommandTaskType.SpeedStepper;
+    nextSpeedActiveInput: boolean;
+    prevSpeedActiveInput: boolean;
+    speed: number;
+    power: number;
+    level: number;
+    useAccelerationProfile: boolean;
+    useDecelerationProfile: boolean;
+};
+
 export type PortCommandTaskPayload = SetLinearSpeedTaskPayload
     | ServoTaskPayload
     | SetAngleTaskPayload
-    | StepperTaskPayload;
+    | StepperTaskPayload
+    | SpeedStepperTaskPayload;
 
 export type PortCommandTask<TPayloadType extends PortCommandTaskType = PortCommandTaskType> = {
     hubId: string;

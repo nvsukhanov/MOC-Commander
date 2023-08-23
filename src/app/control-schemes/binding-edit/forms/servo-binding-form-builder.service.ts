@@ -1,6 +1,7 @@
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Injectable } from '@angular/core';
+import { ControlSchemeServoBinding } from '@app/store';
 
 import { ServoBindingForm } from '../types';
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';
@@ -43,6 +44,13 @@ export class ServoBindingFormBuilderService {
             useAccelerationProfile: this.commonFormControlBuilder.toggleControl(),
             useDecelerationProfile: this.commonFormControlBuilder.toggleControl()
         });
+    }
+
+    public patchForm(
+        form: ServoBindingForm,
+        patch: Partial<ControlSchemeServoBinding>
+    ): void {
+        form.patchValue(patch);
     }
 
 }

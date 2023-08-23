@@ -60,6 +60,15 @@ export class CommonFormControlsBuilderService {
         return this.formBuilder.control<boolean>(initialValue, { nonNullable: true });
     }
 
+    public speedStepControl(
+        initialValue: number = MOTOR_LIMITS.maxSpeed
+    ): FormControl<number> {
+        return this.formBuilder.control<number>(initialValue, {
+            nonNullable: true,
+            validators: [ Validators.required, Validators.min(MOTOR_LIMITS.minSpeed), Validators.max(MOTOR_LIMITS.maxSpeed) ]
+        });
+    }
+
     public servoEndStateControl(
         initialValue: MotorServoEndState = MotorServoEndState.float
     ): FormControl<MotorServoEndState> {
@@ -98,20 +107,15 @@ export class CommonFormControlsBuilderService {
         initialValue?: Partial<ControlSchemeInput>
     ): OptionalInputFormGroup {
         return this.formBuilder.group({
-            controllerId: this.formBuilder.control<string | null>(initialValue?.controllerId ?? null, {
-                validators: [ Validators.required ]
-            }),
+            controllerId: this.formBuilder.control<string | null>(initialValue?.controllerId ?? null),
             inputType: this.formBuilder.control<ControllerInputType>(initialValue?.inputType ?? ControllerInputType.Button, {
-                nonNullable: true,
-                validators: [ Validators.required ]
+                nonNullable: true
             }),
             inputId: this.formBuilder.control<string>(initialValue?.inputId ?? '', {
-                nonNullable: true,
-                validators: [ Validators.required ]
+                nonNullable: true
             }),
             gain: this.formBuilder.control<InputGain>(initialValue?.gain ?? InputGain.None, {
-                nonNullable: true,
-                validators: [ Validators.required ]
+                nonNullable: true
             }),
             buttonId: this.formBuilder.control<ButtonGroupButtonId | null>(initialValue?.portId ?? null),
             portId: this.formBuilder.control<number | null>(initialValue?.portId ?? null)

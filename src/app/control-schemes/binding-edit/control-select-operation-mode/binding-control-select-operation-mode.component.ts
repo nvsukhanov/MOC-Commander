@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslocoModule } from '@ngneat/transloco';
-import { HubIoOperationMode, IoOperationTypeToL10nKeyPipe } from '@app/shared';
+import { BindingTypeToL10nKeyPipe, ControlSchemeBindingType } from '@app/shared';
 
 import { BindingEditAvailableOperationModesModel } from '../types';
 
@@ -16,7 +16,7 @@ import { BindingEditAvailableOperationModesModel } from '../types';
     styleUrls: [ './binding-control-select-operation-mode.component.scss' ],
     imports: [
         NgIf,
-        IoOperationTypeToL10nKeyPipe,
+        BindingTypeToL10nKeyPipe,
         MatFormFieldModule,
         MatOptionModule,
         MatSelectModule,
@@ -29,9 +29,9 @@ import { BindingEditAvailableOperationModesModel } from '../types';
 export class BindingControlSelectOperationModeComponent implements OnChanges {
     @Input() public availabilityData: BindingEditAvailableOperationModesModel = {};
 
-    @Input() public control?: FormControl<HubIoOperationMode>;
+    @Input() public control?: FormControl<ControlSchemeBindingType>;
 
-    public readonly availableOperationTypes = Object.values(HubIoOperationMode) as ReadonlyArray<HubIoOperationMode>;
+    public readonly availableOperationTypes = Object.values(ControlSchemeBindingType) as ReadonlyArray<ControlSchemeBindingType>;
 
     public ngOnChanges(): void {
         if (this.control && this.control.value !== null && !this.availabilityData[this.control.value]) {

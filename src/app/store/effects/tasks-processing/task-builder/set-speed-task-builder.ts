@@ -1,6 +1,6 @@
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { Dictionary } from '@ngrx/entity';
-import { HubIoOperationMode } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared';
 import { InputGain, controllerInputIdFn } from '@app/store';
 
 import { BaseTaskBuilder } from './base-task-builder';
@@ -26,7 +26,7 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
         motorEncoderOffset: number,
         lastExecutedTask: PortCommandTask | null
     ): { payload: SetLinearSpeedTaskPayload; inputTimestamp: number } | null {
-        if (binding.operationMode !== HubIoOperationMode.Linear) {
+        if (binding.operationMode !== ControlSchemeBindingType.Linear) {
             return null;
         }
 

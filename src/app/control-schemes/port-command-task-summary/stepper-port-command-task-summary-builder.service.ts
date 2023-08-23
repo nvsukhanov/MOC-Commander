@@ -13,6 +13,6 @@ export class StepperPortCommandTaskSummaryBuilderService {
     public build(
         payload: StepperTaskPayload
     ): Observable<string> {
-        return this.translocoService.selectTranslate('controlScheme.stepperTaskSummary', payload);
+        return this.translocoService.selectTranslate('controlScheme.stepperBinding.taskSummary', payload);
     }
 }

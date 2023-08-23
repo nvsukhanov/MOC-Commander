@@ -7,6 +7,7 @@ import { LinearPortCommandTaskSummaryBuilderService } from './linear-port-comman
 import { ServoPortCommandTaskSummaryBuilderService } from './servo-port-command-task-summary-builder.service';
 import { SetAnglePortCommandTaskSummaryBuilderService } from './set-angle-port-command-task-summary-builder.service';
 import { StepperPortCommandTaskSummaryBuilderService } from './stepper-port-command-task-summary-builder.service';
+import { SpeedStepperPortCommandTaskSummaryBuilderService } from './speed-stepper-port-command-task-summary-builder.service';
 
 @Pipe({
     standalone: true,
@@ -19,6 +20,7 @@ export class PortCommandTaskSummaryPipe implements PipeTransform {
         private readonly setAnglePortCommandTaskSummaryBuilder: SetAnglePortCommandTaskSummaryBuilderService,
         private readonly servoPortCommandTaskSummaryBuilder: ServoPortCommandTaskSummaryBuilderService,
         private readonly stepperPortCommandTaskSummaryBuilder: StepperPortCommandTaskSummaryBuilderService,
+        private readonly speedStepperPortCommandTaskSummaryBuilder: SpeedStepperPortCommandTaskSummaryBuilderService,
         private readonly store: Store
     ) {
     }
@@ -48,6 +50,8 @@ export class PortCommandTaskSummaryPipe implements PipeTransform {
                 );
             case PortCommandTaskType.Stepper:
                 return this.stepperPortCommandTaskSummaryBuilder.build(payload);
+            case PortCommandTaskType.SpeedStepper:
+                return this.speedStepperPortCommandTaskSummaryBuilder.build(payload);
         }
     }
 }

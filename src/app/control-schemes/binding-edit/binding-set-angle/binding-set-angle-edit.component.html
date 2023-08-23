@@ -1,11 +1,11 @@
 <ng-container *ngIf="form">
     <app-controller-select [acceptableInputTypes]="acceptableInputTypes"
                            [inputFormGroup]="form.controls.inputs.controls.setAngle"
-                           [title]="'controlScheme.setAngleInput' | transloco "
+                           [title]="'controlScheme.setAngleBinding.inputSetAngle' | transloco "
     ></app-controller-select>
 
     <ng-container *ngIf="form.controls.inputs.valid">
-        <app-binding-control-num-input [translocoTitle]="'controlScheme.setAngleOutputConfigurationAngle'"
+        <app-binding-control-num-input [controlTitle]="'controlScheme.setAngleBinding.outputAngle' | transloco"
                                        [control]="form.controls.angle"
                                        [min]="motorLimits.minRawAngle"
                                        [max]="motorLimits.maxRawAngle"
@@ -14,13 +14,13 @@
         <app-slider-control [min]="0"
                             [max]="motorLimits.maxSpeed"
                             [control]="form.controls.speed"
-                            [translocoTitle]="'controlScheme.outputSpeedControlTitle'"
+                            [translocoTitle]="'controlScheme.setAngleBinding.outputSpeed'"
         ></app-slider-control>
 
         <app-slider-control [min]="motorLimits.minPower"
                             [max]="motorLimits.maxPower"
                             [control]="form.controls.power"
-                            [translocoTitle]="'controlScheme.outputPowerControlTitle'"
+                            [translocoTitle]="'controlScheme.setAngleBinding.outputPower'"
         ></app-slider-control>
 
         <app-binding-control-output-end-state [control]="form.controls.endState"

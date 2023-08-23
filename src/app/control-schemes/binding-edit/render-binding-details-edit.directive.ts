@@ -1,6 +1,6 @@
 import { ComponentRef, Directive, Input, OnDestroy, Type, ViewContainerRef } from '@angular/core';
 import { Subscription, startWith } from 'rxjs';
-import { HubIoOperationMode } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared';
 
 import { IBindingsDetailsEditComponent } from './i-bindings-details-edit-component';
 import { BindingLinearEditComponent } from './binding-linear';
@@ -8,6 +8,7 @@ import { BindingServoEditComponent } from './binding-servo';
 import { BindingSetAngleEditComponent } from './binding-set-angle';
 import { BindingStepperEditComponent } from './binding-stepper';
 import { ControlSchemeBindingForm } from './types';
+import { BindingSpeedStepperComponent } from './binding-speed-stepper';
 
 @Directive({
     standalone: true,
@@ -15,14 +16,15 @@ import { ControlSchemeBindingForm } from './types';
     exportAs: 'appRenderBindingDetailsEdit'
 })
 export class RenderBindingDetailsEditDirective implements OnDestroy {
-    private readonly renderers: { [k in HubIoOperationMode]: Type<IBindingsDetailsEditComponent> | null } = {
-        [HubIoOperationMode.Linear]: BindingLinearEditComponent,
-        [HubIoOperationMode.Servo]: BindingServoEditComponent,
-        [HubIoOperationMode.SetAngle]: BindingSetAngleEditComponent,
-        [HubIoOperationMode.Stepper]: BindingStepperEditComponent
+    private readonly renderers: { [k in ControlSchemeBindingType]: Type<IBindingsDetailsEditComponent> | null } = {
+        [ControlSchemeBindingType.Linear]: BindingLinearEditComponent,
+        [ControlSchemeBindingType.Servo]: BindingServoEditComponent,
+        [ControlSchemeBindingType.SetAngle]: BindingSetAngleEditComponent,
+        [ControlSchemeBindingType.Stepper]: BindingStepperEditComponent,
+        [ControlSchemeBindingType.SpeedStepper]: BindingSpeedStepperComponent
     };
 
-    private operationMode?: HubIoOperationMode;
+    private operationMode?: ControlSchemeBindingType;
 
     private renderer?: ComponentRef<IBindingsDetailsEditComponent>;
 
@@ -45,7 +47,7 @@ export class RenderBindingDetailsEditDirective implements OnDestroy {
         const opModeChanges = form.controls.bindingFormOperationMode.valueChanges;
         this.sub = opModeChanges.pipe(
             startWith(form.controls.bindingFormOperationMode.value)
-        ).subscribe((operationMode: HubIoOperationMode) => {
+        ).subscribe((operationMode: ControlSchemeBindingType) => {
             this.operationMode = operationMode;
             this.updateRenderer();
         });

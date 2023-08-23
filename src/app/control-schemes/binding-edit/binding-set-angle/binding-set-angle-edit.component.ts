@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { NgIf } from '@angular/common';
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { TranslocoModule } from '@ngneat/transloco';
-import { HubIoOperationMode, SliderControlComponent, ToggleControlComponent } from '@app/shared';
+import { ControlSchemeBindingType, SliderControlComponent, ToggleControlComponent } from '@app/shared';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { BindingControlNumInputComponent } from '../control-num-input';
@@ -30,7 +30,7 @@ import { getInputTypesForOperationMode } from '../wait-for-controller-input-dial
 export class BindingSetAngleEditComponent implements IBindingsDetailsEditComponent<SetAngleBindingForm> {
     public readonly motorLimits = MOTOR_LIMITS;
 
-    public readonly acceptableInputTypes = getInputTypesForOperationMode(HubIoOperationMode.SetAngle);
+    public readonly acceptableInputTypes = getInputTypesForOperationMode(ControlSchemeBindingType.SetAngle);
 
     private _form?: SetAngleBindingForm;
 

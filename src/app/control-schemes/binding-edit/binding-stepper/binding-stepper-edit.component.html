@@ -1,11 +1,11 @@
 <ng-container *ngIf="form">
     <app-controller-select [acceptableInputTypes]="acceptableInputTypes"
                            [inputFormGroup]="form.controls.inputs.controls.step"
-                           [title]="'controlScheme.stepperInput' | transloco "
+                           [title]="'controlScheme.stepperBinding.inputMakeStep' | transloco "
     ></app-controller-select>
 
     <ng-container *ngIf="form.controls.inputs.valid">
-        <app-binding-control-num-input [translocoTitle]="'controlScheme.stepperOutputConfigurationDegree'"
+        <app-binding-control-num-input [controlTitle]="'controlScheme.stepperBinding.outputDegree' | transloco"
                                        [control]="form.controls.degree"
                                        [min]="minStepperDegree"
                                        [max]="maxStepperDegree"
@@ -14,13 +14,13 @@
         <app-slider-control [min]="minSpeed"
                             [max]="maxSpeed"
                             [control]="form.controls.speed"
-                            [translocoTitle]="'controlScheme.outputSpeedControlTitle'"
+                            [translocoTitle]="'controlScheme.stepperBinding.outputSpeed'"
         ></app-slider-control>
 
         <app-slider-control [min]="minPower"
                             [max]="maxPower"
                             [control]="form.controls.power"
-                            [translocoTitle]="'controlScheme.outputPowerControlTitle'"
+                            [translocoTitle]="'controlScheme.stepperBinding.outputPower'"
         ></app-slider-control>
 
         <app-binding-control-output-end-state [control]="form.controls.endState"

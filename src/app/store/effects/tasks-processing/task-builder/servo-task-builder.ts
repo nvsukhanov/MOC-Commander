@@ -1,6 +1,6 @@
 import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 import { Dictionary } from '@ngrx/entity';
-import { HubIoOperationMode, getTranslationArcs } from '@app/shared';
+import { ControlSchemeBindingType, getTranslationArcs } from '@app/shared';
 import { controllerInputIdFn } from '@app/store';
 
 import { BaseTaskBuilder } from './base-task-builder';
@@ -15,7 +15,7 @@ export class ServoTaskBuilder extends BaseTaskBuilder {
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
     ): { payload: ServoTaskPayload; inputTimestamp: number } | null {
-        if (binding.operationMode !== HubIoOperationMode.Servo) {
+        if (binding.operationMode !== ControlSchemeBindingType.Servo) {
             return null;
         }
 

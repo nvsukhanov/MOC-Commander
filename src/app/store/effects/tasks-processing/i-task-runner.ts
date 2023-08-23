@@ -10,3 +10,9 @@ export interface ITaskRunner {
 }
 
 export const TASK_RUNNER = new InjectionToken<ITaskRunner>('TASK RUNNER', { factory: taskRunnerFactory });
+// export const TASK_RUNNER = new InjectionToken<ITaskRunner>(
+//     'TASK RUNNER',
+//     {
+//         factory: () => new FakeTaskRunner(1000)
+//     }
+// );

@@ -9,7 +9,7 @@ import { Store } from '@ngrx/store';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
-import { EllipsisTitleDirective, HubIoOperationMode, IoOperationTypeToL10nKeyPipe } from '@app/shared';
+import { BindingTypeToL10nKeyPipe, ControlSchemeBindingType, EllipsisTitleDirective } from '@app/shared';
 
 import { BindingTreeNodeViewModel } from './binding-tree-node-view-model';
 import { INPUT_TREE_NODE_VIEW_MODEL_SELECTOR } from './input-tree-node-view-model.selector';
@@ -25,7 +25,7 @@ import { ControlSchemeViewBindingTreeNodeData } from '../../types';
     imports: [
         NgIf,
         MatIconModule,
-        IoOperationTypeToL10nKeyPipe,
+        BindingTypeToL10nKeyPipe,
         TranslocoModule,
         EllipsisTitleDirective,
         PushPipe,
@@ -72,10 +72,11 @@ export class BindingTreeNodeComponent {
         treeNodeData: ControlSchemeViewBindingTreeNodeData
     ): Observable<BindingTreeNodeViewModel> {
         switch (treeNodeData.binding.operationMode) {
-            case HubIoOperationMode.Stepper:
-            case HubIoOperationMode.SetAngle:
-            case HubIoOperationMode.Servo:
-            case HubIoOperationMode.Linear:
+            case ControlSchemeBindingType.Stepper:
+            case ControlSchemeBindingType.SetAngle:
+            case ControlSchemeBindingType.Servo:
+            case ControlSchemeBindingType.Linear:
+            case ControlSchemeBindingType.SpeedStepper:
                 return this.store.select(INPUT_TREE_NODE_VIEW_MODEL_SELECTOR(
                     treeNodeData.controlSchemeId,
                     treeNodeData.binding.inputs,

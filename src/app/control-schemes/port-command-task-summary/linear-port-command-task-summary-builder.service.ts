@@ -14,8 +14,8 @@ export class LinearPortCommandTaskSummaryBuilderService {
         payload: SetLinearSpeedTaskPayload
     ): Observable<string> {
         if (payload.power !== 0 && payload.speed === 0) {
-            return this.translocoService.selectTranslate('controlScheme.linearBrakeTaskSummary');
+            return this.translocoService.selectTranslate('controlScheme.linearBinding.brakeTaskSummary');
         }
-        return this.translocoService.selectTranslate('controlScheme.linearTaskSummary', payload);
+        return this.translocoService.selectTranslate('controlScheme.linearBinding.taskSummary', payload);
     }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ControlSchemeServoBinding } from '@app/store';
-import { HubIoOperationMode } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared';
 
 import { ServoBindingForm } from '../types';
 
@@ -10,7 +10,7 @@ export class ServoBindingFormMapperService {
         form: ServoBindingForm
     ): ControlSchemeServoBinding {
         return {
-            operationMode: HubIoOperationMode.Servo,
+            operationMode: ControlSchemeBindingType.Servo,
             ...form.getRawValue()
         };
     }

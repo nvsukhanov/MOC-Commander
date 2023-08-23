@@ -15,6 +15,6 @@ export class ServoPortCommandTaskSummaryBuilderService {
         payload: ServoTaskPayload
     ): Observable<string> {
         const angle = (attachedIoProps.motorEncoderOffset ?? 0) + payload.angle;
-        return this.translocoService.selectTranslate('controlScheme.servoTaskSummary', { angle });
+        return this.translocoService.selectTranslate('controlScheme.servoBinding.taskSummary', { angle });
     }
 }

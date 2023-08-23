@@ -1,5 +1,5 @@
 import { Dictionary } from '@ngrx/entity';
-import { HubIoOperationMode } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared';
 import { controllerInputIdFn } from '@app/store';
 
 import { BaseTaskBuilder } from './base-task-builder';
@@ -10,7 +10,7 @@ export class StepperTaskBuilder extends BaseTaskBuilder {
         binding: ControlSchemeBinding,
         inputsState: Dictionary<ControllerInputModel>,
     ): { payload: StepperTaskPayload; inputTimestamp: number } | null {
-        if (binding.operationMode !== HubIoOperationMode.Stepper) {
+        if (binding.operationMode !== ControlSchemeBindingType.Stepper) {
             return null;
         }
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
+import { ControlSchemeStepperBinding } from '@app/store';
 
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';
 import { StepperBindingForm } from '../types';
@@ -33,5 +34,12 @@ export class StepperBindingFormBuilderService {
             useAccelerationProfile: this.commonFormControlBuilder.toggleControl(),
             useDecelerationProfile: this.commonFormControlBuilder.toggleControl()
         });
+    }
+
+    public patchForm(
+        form: StepperBindingForm,
+        patch: Partial<ControlSchemeStepperBinding>
+    ): void {
+        form.patchValue(patch);
     }
 }

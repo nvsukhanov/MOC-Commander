@@ -1,6 +1,6 @@
 <ng-container *ngIf="form">
     <app-controller-select [inputFormGroup]="form.controls.inputs.controls.servo"
-                           [title]="'controlScheme.servoInput' | transloco "
+                           [title]="'controlScheme.servoBinding.inputServo' | transloco "
                            [acceptableInputTypes]="acceptableInputTypes"
     ></app-controller-select>
 
@@ -16,31 +16,31 @@
                 (click)="calibrate()"
         >
             <mat-icon [fontIcon]="'settings_suggest'"></mat-icon>
-            {{ 'controlScheme.servoOutputConfigurationCalibrate' | transloco }}
+            {{ 'controlScheme.servoBinding.calibrate' | transloco }}
         </button>
 
         <app-slider-control [min]="-motorLimits.maxServoDegreesRange / 2"
                             [max]="motorLimits.maxServoDegreesRange / 2"
                             [control]="form.controls.aposCenter"
-                            [translocoTitle]="'controlScheme.servoOutputConfigurationCenterOffset'"
+                            [translocoTitle]="'controlScheme.servoBinding.outputCenterOffset'"
         ></app-slider-control>
 
         <app-slider-control [min]="motorLimits.minServoDegreesRange"
                             [max]="motorLimits.maxServoDegreesRange"
                             [control]="form.controls.range"
-                            [translocoTitle]="'controlScheme.servoOutputConfigurationAngleRange'"
+                            [translocoTitle]="'controlScheme.servoBinding.outputAngleRange'"
         ></app-slider-control>
 
         <app-slider-control [min]="0"
                             [max]="motorLimits.maxSpeed"
                             [control]="form.controls.speed"
-                            [translocoTitle]="'controlScheme.outputSpeedControlTitle'"
+                            [translocoTitle]="'controlScheme.servoBinding.outputSpeed'"
         ></app-slider-control>
 
         <app-slider-control [min]="motorLimits.minPower"
                             [max]="motorLimits.maxPower"
                             [control]="form.controls.power"
-                            [translocoTitle]="'controlScheme.outputPowerControlTitle'"
+                            [translocoTitle]="'controlScheme.servoBinding.outputPower'"
         ></app-slider-control>
 
         <app-toggle-control [translocoTitle]="'controlScheme.outputInvertControlTitle'"

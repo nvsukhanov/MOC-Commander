@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ControlSchemeInput, ControlSchemeLinearBinding } from '@app/store';
-import { HubIoOperationMode } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared';
 
 import { LinearBindingForm } from '../types';
 
@@ -10,7 +10,7 @@ export class LinearBindingFormMapperService {
         form: LinearBindingForm
     ): ControlSchemeLinearBinding {
         const result: ControlSchemeLinearBinding = {
-            operationMode: HubIoOperationMode.Linear,
+            operationMode: ControlSchemeBindingType.Linear,
             id: form.controls.id.getRawValue(),
             inputs: {
                 accelerate: form.controls.inputs.controls.accelerate.getRawValue(),

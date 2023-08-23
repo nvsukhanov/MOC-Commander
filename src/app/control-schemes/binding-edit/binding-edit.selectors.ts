@@ -11,7 +11,7 @@ import {
     attachedIoModesIdFn,
     attachedIoPortModeInfoIdFn
 } from '@app/store';
-import { HubIoOperationMode } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared';
 
 import { getIoPortModes } from './get-hub-io-operation-modes';
 import { ioHasMatchingModeForOpMode } from '../io-has-matching-mode-for-op-mode';
@@ -59,8 +59,8 @@ export const BINDING_EDIT_SELECTORS = {
         HUBS_SELECTORS.selectEntities,
         (ios, supportedModes, portModeData, hubs): BindingEditAvailableOperationModesModel => {
             const result: BindingEditAvailableOperationModesModel = {};
-            const allOperationModes = Object.values(HubIoOperationMode) as ReadonlyArray<HubIoOperationMode>;
-            const ioOperationModesMap = new Map<AttachedIoModel, HubIoOperationMode[]>(
+            const allOperationModes = Object.values(ControlSchemeBindingType) as ReadonlyArray<ControlSchemeBindingType>;
+            const ioOperationModesMap = new Map<AttachedIoModel, ControlSchemeBindingType[]>(
                 ios.map((io) => {
                     const portModes = getIoPortModes(io, supportedModes, portModeData);
                     const controllableOpModes = allOperationModes.filter((mode) => ioHasMatchingModeForOpMode(mode, portModes));

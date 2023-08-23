@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { ControlSchemeLinearBinding } from '@app/store';
 
 import { LinearBindingForm } from '../types';
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';
@@ -28,5 +29,12 @@ export class LinearBindingFormBuilderService {
             useAccelerationProfile: this.commonFormControlBuilder.toggleControl(),
             useDecelerationProfile: this.commonFormControlBuilder.toggleControl()
         });
+    }
+
+    public patchForm(
+        form: LinearBindingForm,
+        patch: Partial<ControlSchemeLinearBinding>
+    ): void {
+        form.patchValue(patch);
     }
 }

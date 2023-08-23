@@ -15,6 +15,6 @@ export class SetAnglePortCommandTaskSummaryBuilderService {
         payload: SetAngleTaskPayload
     ): Observable<string> {
         const angle = (attachedIoProps.motorEncoderOffset ?? 0) + payload.angle;
-        return this.translocoService.selectTranslate('controlScheme.setAngleTaskSummary', { angle });
+        return this.translocoService.selectTranslate('controlScheme.setAngleBinding.taskSummary', { angle });
     }
 }

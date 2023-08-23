@@ -11,5 +11,6 @@ export function queueCompressorFactory(): ITaskQueueCompressor {
         new LastOfTypeTaskCompressor(PortCommandTaskType.SetAngle),
         new StepperTaskCompressor(),
         new SetSpeedQueueCompressor(),
+        new LastOfTypeTaskCompressor(PortCommandTaskType.SpeedStepper)
     ]);
 }
