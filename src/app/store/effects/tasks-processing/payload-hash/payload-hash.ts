@@ -1,4 +1,6 @@
-import { PortCommandTaskPayload, PortCommandTaskType } from '../../../models';
+import { ControlSchemeBindingType } from '@app/shared';
+
+import { PortCommandTaskPayload } from '../../../models';
 import { servoPayloadHash } from './servo-payload-hash';
 import { setAnglePayloadHash } from './set-angle-payload-hash';
 import { setSpeedPayloadHash } from './set-speed-payload-hash';
@@ -8,16 +10,16 @@ import { speedStepperPayloadHash } from './speed-stepper-payload-hash';
 export function payloadHash(
     payload: PortCommandTaskPayload
 ): string {
-    switch (payload.taskType) {
-        case PortCommandTaskType.Servo:
+    switch (payload.bindingType) {
+        case ControlSchemeBindingType.Servo:
             return servoPayloadHash(payload);
-        case PortCommandTaskType.SetAngle:
+        case ControlSchemeBindingType.SetAngle:
             return setAnglePayloadHash(payload);
-        case PortCommandTaskType.SetSpeed:
+        case ControlSchemeBindingType.Linear:
             return setSpeedPayloadHash(payload);
-        case PortCommandTaskType.Stepper:
+        case ControlSchemeBindingType.Stepper:
             return stepperPayloadHash(payload);
-        case PortCommandTaskType.SpeedStepper:
+        case ControlSchemeBindingType.SpeedStepper:
             return speedStepperPayloadHash(payload);
     }
 }

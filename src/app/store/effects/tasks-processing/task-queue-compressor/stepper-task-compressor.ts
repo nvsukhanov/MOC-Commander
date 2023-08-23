@@ -1,14 +1,16 @@
-import { PortCommandTask, PortCommandTaskPayload, PortCommandTaskType } from '../../../models';
+import { ControlSchemeBindingType } from '@app/shared';
+
+import { PortCommandTask, PortCommandTaskPayload } from '../../../models';
 import { AccumulatingTaskCompressor } from './accumulating-task-compressor';
 
-export class StepperTaskCompressor extends AccumulatingTaskCompressor<PortCommandTaskType.Stepper> {
+export class StepperTaskCompressor extends AccumulatingTaskCompressor<ControlSchemeBindingType.Stepper> {
     constructor() {
-        super(PortCommandTaskType.Stepper);
+        super(ControlSchemeBindingType.Stepper);
     }
 
     protected buildPayloadChanges(
-        accumulatedTasks: ReadonlyArray<PortCommandTask<PortCommandTaskType.Stepper>>
-    ): Partial<PortCommandTaskPayload & { taskType: PortCommandTaskType.Stepper }> {
+        accumulatedTasks: ReadonlyArray<PortCommandTask<ControlSchemeBindingType.Stepper>>
+    ): Partial<PortCommandTaskPayload & { bindingType: ControlSchemeBindingType.Stepper }> {
         return {
             degree: accumulatedTasks.reduce((acc, task) => acc + task.payload.degree, 0)
         };

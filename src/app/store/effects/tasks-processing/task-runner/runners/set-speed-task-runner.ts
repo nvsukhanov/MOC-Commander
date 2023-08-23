@@ -1,8 +1,9 @@
 import { IHub, PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 import { Observable } from 'rxjs';
+import { ControlSchemeBindingType } from '@app/shared';
 
 import { TaskRunner } from '../task-runner';
-import { PortCommandTask, PortCommandTaskType } from '../../../../models';
+import { PortCommandTask } from '../../../../models';
 import { mapUseProfile } from '../map-use-profile';
 
 export class SetSpeedTaskRunner extends TaskRunner {
@@ -10,7 +11,7 @@ export class SetSpeedTaskRunner extends TaskRunner {
         task: PortCommandTask,
         hub: IHub
     ): Observable<PortCommandExecutionStatus> | null {
-        if (task.payload.taskType === PortCommandTaskType.SetSpeed) {
+        if (task.payload.bindingType === ControlSchemeBindingType.Linear) {
             return hub.motors.setSpeed(
                 task.portId,
                 task.payload.speed,

@@ -1,10 +1,10 @@
-import { SpeedStepperTaskPayload } from '@app/store';
+import { SpeedStepperTaskPayload } from '../../../models';
 
 export function speedStepperPayloadHash(
     payload: SpeedStepperTaskPayload
 ): string {
     return [
-        payload.taskType,
+        payload.bindingType,
         payload.level,
         payload.nextSpeedActiveInput,
         payload.prevSpeedActiveInput

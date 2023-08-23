@@ -1,8 +1,9 @@
 import { IHub, PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 import { Observable, last } from 'rxjs';
+import { ControlSchemeBindingType } from '@app/shared';
 
 import { TaskRunner } from '../task-runner';
-import { PortCommandTask, PortCommandTaskType } from '../../../../models';
+import { PortCommandTask } from '../../../../models';
 import { mapUseProfile } from '../map-use-profile';
 
 export class StepperTaskRunner extends TaskRunner {
@@ -10,7 +11,7 @@ export class StepperTaskRunner extends TaskRunner {
         task: PortCommandTask,
         hub: IHub
     ): Observable<PortCommandExecutionStatus> | null {
-        if (task.payload.taskType === PortCommandTaskType.Stepper) {
+        if (task.payload.bindingType === ControlSchemeBindingType.Stepper) {
             return hub.motors.rotateByDegree(
                 task.portId,
                 task.payload.degree,

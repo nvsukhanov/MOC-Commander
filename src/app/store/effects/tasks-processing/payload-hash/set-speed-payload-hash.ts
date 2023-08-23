@@ -4,7 +4,7 @@ export function setSpeedPayloadHash(
     payload: SetLinearSpeedTaskPayload
 ): string {
     return [
-        payload.taskType,
+        payload.bindingType,
         payload.speed,
         payload.power,
     ].join('_');

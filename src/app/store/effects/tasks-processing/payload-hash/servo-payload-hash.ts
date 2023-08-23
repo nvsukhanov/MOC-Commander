@@ -4,7 +4,7 @@ export function servoPayloadHash(
     payload: ServoTaskPayload
 ): string {
     return [
-        payload.taskType,
+        payload.bindingType,
         payload.angle,
         payload.speed,
         payload.power,

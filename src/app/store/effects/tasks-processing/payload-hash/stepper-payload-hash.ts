@@ -4,7 +4,7 @@ export function stepperPayloadHash(
     payload: StepperTaskPayload
 ): string {
     return [
-        payload.taskType,
+        payload.bindingType,
         payload.degree,
         payload.speed,
         payload.power,

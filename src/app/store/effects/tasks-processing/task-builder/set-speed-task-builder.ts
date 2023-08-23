@@ -10,7 +10,6 @@ import {
     ControllerInputModel,
     PortCommandTask,
     PortCommandTaskPayload,
-    PortCommandTaskType,
     SetLinearSpeedTaskPayload
 } from '../../../models';
 import { calcInputGain } from './calc-input-gain';
@@ -58,7 +57,7 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
         );
 
         const payload: SetLinearSpeedTaskPayload = {
-            taskType: PortCommandTaskType.SetSpeed,
+            bindingType: ControlSchemeBindingType.Linear,
             speed: targetSpeed,
             power: this.calculatePower(targetSpeed, brakeInputValue, binding.power),
             activeInput: accelerateInputValue !== 0,
@@ -72,11 +71,11 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
     protected buildCleanupPayload(
         previousTask: PortCommandTask
     ): PortCommandTaskPayload | null {
-        if (previousTask.payload.taskType !== PortCommandTaskType.SetSpeed) {
+        if (previousTask.payload.bindingType !== ControlSchemeBindingType.Linear) {
             return null;
         }
         return {
-            taskType: PortCommandTaskType.SetSpeed,
+            bindingType: ControlSchemeBindingType.Linear,
             speed: 0,
             power: 0,
             activeInput: false,
@@ -107,7 +106,7 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
                 binding.inputs.accelerate.gain
             );
             return {
-                taskType: PortCommandTaskType.SetSpeed,
+                bindingType: ControlSchemeBindingType.Linear,
                 speed,
                 power: this.calculatePower(speed, assumedBrakeInput, binding.power),
                 activeInput: true,
@@ -117,7 +116,7 @@ export class SetSpeedTaskBuilder extends BaseTaskBuilder {
         }
 
         return {
-            taskType: PortCommandTaskType.SetSpeed,
+            bindingType: ControlSchemeBindingType.Linear,
             speed: 0,
             power: this.calculatePower(0, assumedBrakeInput, binding.power),
             activeInput: true,
