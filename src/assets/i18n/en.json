@@ -166,6 +166,7 @@
       "outputAngle": "Target angle (°)",
       "outputSpeed": "Speed (%)",
       "outputPower": "Power (%)",
+      "readAngleFromPort": "Read angle from port",
       "taskSummary": "Set angle: { angle }°"
     },
     "speedStepperBinding": {

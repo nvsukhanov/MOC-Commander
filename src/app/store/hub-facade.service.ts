@@ -30,4 +30,21 @@ export class HubFacadeService {
             last()
         );
     }
+
+    public getMotorPosition(
+        hubId: string,
+        portId: number
+    ): Observable<number> {
+        return this.store.select(ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectHubPortInputModeForPortModeName({
+            hubId,
+            portId,
+            portModeName: PortModeName.position
+        })).pipe(
+            take(1),
+            switchMap((modeInfo) => modeInfo !== null
+                                    ? this.hubStorage.get(hubId).motors.getPosition(portId, modeInfo.modeId)
+                                    : throwError(() => new Error('Required position mode not found'))),
+            last()
+        );
+    }
 }
