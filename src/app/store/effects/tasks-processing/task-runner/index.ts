@@ -1,1 +1,1 @@
-export * from './task-runner-factory';
+export * from './task-runner.service';

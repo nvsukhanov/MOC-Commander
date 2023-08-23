@@ -9,9 +9,9 @@ import { ControlSchemeBinding, ControlSchemeModel, PortCommandTask } from '../..
 import { attachedIosIdFn } from '../../reducers';
 import { HubStorageService } from '../../hub-storage.service';
 import { ITaskQueueCompressor, TASK_QUEUE_COMPRESSOR } from './i-task-queue-compressor';
-import { ITaskRunner, TASK_RUNNER } from './i-task-runner';
 import { taskFilter } from './task-filter';
 import { TaskBuilderService } from './task-builder';
+import { TaskRunnerService } from './task-runner';
 
 @Injectable()
 export class TaskProcessingEffects {
@@ -118,7 +118,7 @@ export class TaskProcessingEffects {
         private readonly actions: Actions,
         private readonly hubStorage: HubStorageService,
         private readonly taskBuilder: TaskBuilderService,
-        @Inject(TASK_RUNNER) private readonly taskRunner: ITaskRunner,
+        private readonly taskRunner: TaskRunnerService,
         @Inject(TASK_QUEUE_COMPRESSOR) private readonly taskQueueCompressor: ITaskQueueCompressor
     ) {
     }

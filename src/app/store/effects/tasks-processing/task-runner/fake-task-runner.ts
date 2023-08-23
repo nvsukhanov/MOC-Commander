@@ -1,10 +1,13 @@
 import { PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 import { Observable, debounceTime, from, take } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { ControlSchemeBindingType } from '@app/shared';
 
-import { ITaskRunner } from '../i-task-runner';
 import { PortCommandTask } from '../../../models';
+import { ITaskRunner } from './i-task-runner';
 
-export class FakeTaskRunner implements ITaskRunner {
+@Injectable({ providedIn: 'root' })
+export class FakeTaskRunner implements ITaskRunner<ControlSchemeBindingType> {
     constructor(
         private readonly taskExecutionDuration: number,
     ) {
