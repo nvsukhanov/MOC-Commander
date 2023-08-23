@@ -1,9 +1,9 @@
 import { Dictionary } from '@ngrx/entity';
 import { ControlSchemeBindingType } from '@app/shared';
-import { controllerInputIdFn } from '@app/store';
 
+import { controllerInputIdFn } from '../../../reducers';
 import { BaseTaskBuilder } from './base-task-builder';
-import { ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, PortCommandTaskType, SetAngleTaskPayload } from '../../../models';
+import { ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, SetAngleTaskPayload } from '../../../models';
 
 export class SetAngleTaskBuilder extends BaseTaskBuilder {
     private readonly inputValueThreshold = 0.5;
@@ -23,7 +23,7 @@ export class SetAngleTaskBuilder extends BaseTaskBuilder {
             return null;
         }
         const payload: SetAngleTaskPayload = {
-            taskType: PortCommandTaskType.SetAngle,
+            bindingType: ControlSchemeBindingType.SetAngle,
             angle: binding.angle,
             speed: binding.speed,
             power: binding.power,
@@ -38,11 +38,11 @@ export class SetAngleTaskBuilder extends BaseTaskBuilder {
     protected buildCleanupPayload(
         previousTask: PortCommandTask
     ): PortCommandTaskPayload | null {
-        if (previousTask.payload.taskType !== PortCommandTaskType.SetAngle) {
+        if (previousTask.payload.bindingType !== ControlSchemeBindingType.SetAngle) {
             return null;
         }
         return {
-            taskType: PortCommandTaskType.SetSpeed,
+            bindingType: ControlSchemeBindingType.Linear,
             speed: 0,
             power: 0,
             activeInput: false,

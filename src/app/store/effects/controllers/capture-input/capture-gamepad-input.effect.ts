@@ -2,9 +2,11 @@ import { concatLatestFrom, createEffect } from '@ngrx/effects';
 import { NEVER, Observable, animationFrames, filter, from, map, merge, share, switchMap } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
-import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, controllerInputIdFn } from '@app/store';
 import { APP_CONFIG, ControllerInputType, ControllerType, IAppConfig, WINDOW } from '@app/shared';
 
+import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_INPUT_SELECTORS } from '../../../selectors';
+import { CONTROLLER_INPUT_ACTIONS } from '../../../actions';
+import { controllerInputIdFn } from '../../../reducers';
 import { GamepadValueTransformService } from '../../../../controller-profiles';
 
 function readGamepads(

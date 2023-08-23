@@ -1,9 +1,9 @@
 import { Dictionary } from '@ngrx/entity';
 import { ControlSchemeBindingType } from '@app/shared';
-import { controllerInputIdFn } from '@app/store';
 
+import { ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, StepperTaskPayload } from '../../../models';
+import { controllerInputIdFn } from '../../../reducers';
 import { BaseTaskBuilder } from './base-task-builder';
-import { ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, PortCommandTaskType, StepperTaskPayload } from '../../../models';
 
 export class StepperTaskBuilder extends BaseTaskBuilder {
     protected buildPayload(
@@ -22,7 +22,7 @@ export class StepperTaskBuilder extends BaseTaskBuilder {
         }
 
         const payload: StepperTaskPayload = {
-            taskType: PortCommandTaskType.Stepper,
+            bindingType: ControlSchemeBindingType.Stepper,
             degree: binding.degree,
             speed: binding.speed,
             power: binding.power,
@@ -37,11 +37,11 @@ export class StepperTaskBuilder extends BaseTaskBuilder {
     protected buildCleanupPayload(
         previousTask: PortCommandTask
     ): PortCommandTaskPayload | null {
-        if (previousTask.payload.taskType !== PortCommandTaskType.Stepper) {
+        if (previousTask.payload.bindingType !== ControlSchemeBindingType.Stepper) {
             return null;
         }
         return {
-            taskType: PortCommandTaskType.SetSpeed,
+            bindingType: ControlSchemeBindingType.Linear,
             speed: 0,
             power: 0,
             activeInput: false,

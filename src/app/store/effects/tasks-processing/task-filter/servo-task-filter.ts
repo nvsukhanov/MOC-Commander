@@ -1,12 +1,14 @@
-import { PortCommandTask, PortCommandTaskType } from '../../../models';
+import { ControlSchemeBindingType } from '@app/shared';
+
+import { PortCommandTask } from '../../../models';
 
 const SERVO_DEGREES_THRESHOLD = 10;
 
 export function servoTaskFilter(
-    task: PortCommandTask<PortCommandTaskType.Servo>,
+    task: PortCommandTask<ControlSchemeBindingType.Servo>,
     lastExecutedTask: PortCommandTask | null
 ): boolean {
-    if (!lastExecutedTask || lastExecutedTask.payload.taskType !== PortCommandTaskType.Servo) {
+    if (!lastExecutedTask || lastExecutedTask.payload.bindingType !== ControlSchemeBindingType.Servo) {
         return true;
     }
 

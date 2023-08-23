@@ -1,10 +1,12 @@
-import { PortCommandTask, PortCommandTaskType } from '@app/store';
+import { ControlSchemeBindingType } from '@app/shared';
+
+import { PortCommandTask } from '../../../models';
 
 export function speedStepperTaskFilter(
-    task: PortCommandTask<PortCommandTaskType.SpeedStepper>,
+    task: PortCommandTask<ControlSchemeBindingType.SpeedStepper>,
     lastExecutedTask: PortCommandTask | null
 ): boolean {
-    if (!lastExecutedTask || lastExecutedTask.payload.taskType !== PortCommandTaskType.SpeedStepper) {
+    if (!lastExecutedTask || lastExecutedTask.payload.bindingType !== ControlSchemeBindingType.SpeedStepper) {
         return true;
     }
 

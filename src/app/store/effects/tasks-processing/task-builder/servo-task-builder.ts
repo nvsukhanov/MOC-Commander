@@ -4,7 +4,7 @@ import { ControlSchemeBindingType, getTranslationArcs } from '@app/shared';
 import { controllerInputIdFn } from '@app/store';
 
 import { BaseTaskBuilder } from './base-task-builder';
-import { ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, PortCommandTaskType, ServoTaskPayload } from '../../../models';
+import { ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, ServoTaskPayload } from '../../../models';
 import { calcInputGain } from './calc-input-gain';
 
 export class ServoTaskBuilder extends BaseTaskBuilder {
@@ -35,7 +35,7 @@ export class ServoTaskBuilder extends BaseTaskBuilder {
         const snappedAngle = this.snapAngle(targetAngle, resultingCenter, minAngle, maxAngle);
 
         const payload: ServoTaskPayload = {
-            taskType: PortCommandTaskType.Servo,
+            bindingType: ControlSchemeBindingType.Servo,
             angle: Math.round(snappedAngle),
             speed: Math.round(binding.speed),
             power: binding.power,
@@ -49,11 +49,11 @@ export class ServoTaskBuilder extends BaseTaskBuilder {
     protected buildCleanupPayload(
         previousTask: PortCommandTask
     ): PortCommandTaskPayload | null {
-        if (previousTask.payload.taskType !== PortCommandTaskType.Servo) {
+        if (previousTask.payload.bindingType !== ControlSchemeBindingType.Servo) {
             return null;
         }
         return {
-            taskType: PortCommandTaskType.SetSpeed,
+            bindingType: ControlSchemeBindingType.Linear,
             speed: 0,
             power: 0,
             activeInput: false,

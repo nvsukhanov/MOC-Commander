@@ -1,8 +1,9 @@
 import { Observable } from 'rxjs';
 import { IHub, PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
+import { ControlSchemeBindingType } from '@app/shared';
 
 import { TaskRunner } from '../task-runner';
-import { PortCommandTask, PortCommandTaskType } from '../../../../models';
+import { PortCommandTask } from '../../../../models';
 import { mapUseProfile } from '../map-use-profile';
 
 export class SetAngleTaskRunner extends TaskRunner {
@@ -10,7 +11,7 @@ export class SetAngleTaskRunner extends TaskRunner {
         task: PortCommandTask,
         hub: IHub
     ): Observable<PortCommandExecutionStatus> | null {
-        if (task.payload.taskType === PortCommandTaskType.SetAngle) {
+        if (task.payload.bindingType === ControlSchemeBindingType.SetAngle) {
             return hub.motors.goToPosition(
                 task.portId,
                 task.payload.angle,

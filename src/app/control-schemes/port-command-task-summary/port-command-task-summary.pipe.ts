@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Observable, filter, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { ATTACHED_IO_PROPS_SELECTORS, AttachedIoPropsModel, PortCommandTask, PortCommandTaskType } from '@app/store';
+import { ATTACHED_IO_PROPS_SELECTORS, AttachedIoPropsModel, PortCommandTask } from '@app/store';
+import { ControlSchemeBindingType } from '@app/shared';
 
 import { LinearPortCommandTaskSummaryBuilderService } from './linear-port-command-task-summary-builder.service';
 import { ServoPortCommandTaskSummaryBuilderService } from './servo-port-command-task-summary-builder.service';
@@ -29,10 +30,10 @@ export class PortCommandTaskSummaryPipe implements PipeTransform {
         portCommandTask: PortCommandTask
     ): Observable<string> {
         const payload = portCommandTask.payload;
-        switch (payload.taskType) {
-            case PortCommandTaskType.SetSpeed:
+        switch (payload.bindingType) {
+            case ControlSchemeBindingType.Linear:
                 return this.linearPortCommandTaskSummaryBuilder.build(payload);
-            case PortCommandTaskType.SetAngle:
+            case ControlSchemeBindingType.SetAngle:
                 return this.store.select(ATTACHED_IO_PROPS_SELECTORS.selectById(portCommandTask)).pipe(
                     filter((ioProps): ioProps is AttachedIoPropsModel => !!ioProps),
                     switchMap((ioProps) => this.setAnglePortCommandTaskSummaryBuilder.build(
@@ -40,7 +41,7 @@ export class PortCommandTaskSummaryPipe implements PipeTransform {
                         payload
                     ))
                 );
-            case PortCommandTaskType.Servo:
+            case ControlSchemeBindingType.Servo:
                 return this.store.select(ATTACHED_IO_PROPS_SELECTORS.selectById(portCommandTask)).pipe(
                     filter((ioProps): ioProps is AttachedIoPropsModel => !!ioProps),
                     switchMap((ioProps) => this.servoPortCommandTaskSummaryBuilder.build(
@@ -48,9 +49,9 @@ export class PortCommandTaskSummaryPipe implements PipeTransform {
                         payload
                     ))
                 );
-            case PortCommandTaskType.Stepper:
+            case ControlSchemeBindingType.Stepper:
                 return this.stepperPortCommandTaskSummaryBuilder.build(payload);
-            case PortCommandTaskType.SpeedStepper:
+            case ControlSchemeBindingType.SpeedStepper:
                 return this.speedStepperPortCommandTaskSummaryBuilder.build(payload);
         }
     }

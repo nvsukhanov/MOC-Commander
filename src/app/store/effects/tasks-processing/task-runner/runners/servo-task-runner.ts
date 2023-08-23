@@ -1,8 +1,9 @@
 import { IHub, PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 import { Observable } from 'rxjs';
+import { ControlSchemeBindingType } from '@app/shared';
 
 import { TaskRunner } from '../task-runner';
-import { PortCommandTask, PortCommandTaskType } from '../../../../models';
+import { PortCommandTask } from '../../../../models';
 import { mapUseProfile } from '../map-use-profile';
 
 export class ServoTaskRunner extends TaskRunner {
@@ -10,7 +11,7 @@ export class ServoTaskRunner extends TaskRunner {
         task: PortCommandTask,
         hub: IHub
     ): Observable<PortCommandExecutionStatus> | null {
-        if (task.payload.taskType === PortCommandTaskType.Servo) {
+        if (task.payload.bindingType === ControlSchemeBindingType.Servo) {
             return hub.motors.goToPosition(
                 task.portId,
                 task.payload.angle,

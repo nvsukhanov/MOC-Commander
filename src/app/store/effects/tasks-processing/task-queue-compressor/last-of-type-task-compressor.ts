@@ -1,9 +1,11 @@
+import { ControlSchemeBindingType } from '@app/shared';
+
 import { ITaskQueueCompressor } from '../i-task-queue-compressor';
-import { PortCommandTask, PortCommandTaskType } from '../../../models';
+import { PortCommandTask } from '../../../models';
 
 export class LastOfTypeTaskCompressor implements ITaskQueueCompressor {
     constructor(
-        protected readonly taskType: PortCommandTaskType
+        protected readonly taskType: ControlSchemeBindingType
     ) {
     }
 
@@ -14,7 +16,7 @@ export class LastOfTypeTaskCompressor implements ITaskQueueCompressor {
 
         for (let index = queue.length - 1; index >= 0; index--) {
             const command = queue[index];
-            if (command.payload.taskType === this.taskType) {
+            if (command.payload.bindingType === this.taskType) {
                 lastCommandsOfType = command;
                 break;
             }
@@ -24,6 +26,6 @@ export class LastOfTypeTaskCompressor implements ITaskQueueCompressor {
             return queue;
         }
 
-        return queue.filter((command) => command.payload.taskType !== this.taskType || command === lastCommandsOfType);
+        return queue.filter((command) => command.payload.bindingType !== this.taskType || command === lastCommandsOfType);
     }
 }

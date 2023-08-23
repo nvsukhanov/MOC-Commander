@@ -5,7 +5,6 @@ import {
     ControllerInputModel,
     PortCommandTask,
     PortCommandTaskPayload,
-    PortCommandTaskType,
     SpeedStepperTaskPayload,
     controllerInputIdFn
 } from '@app/store';
@@ -30,11 +29,11 @@ export class SpeedStepperTaskBuilder extends BaseTaskBuilder {
         const isPrevSpeedInputActive = !!binding.inputs.prevSpeed
             && (inputsState[controllerInputIdFn(binding.inputs.prevSpeed)]?.value ?? 0) > this.inputThreshold;
         const isStopInputActive = !!binding.inputs.stop && (inputsState[controllerInputIdFn(binding.inputs.stop)]?.value ?? 0) > this.inputThreshold;
-        
+
         if (isStopInputActive) {
             return {
                 payload: {
-                    taskType: PortCommandTaskType.SpeedStepper,
+                    bindingType: ControlSchemeBindingType.SpeedStepper,
                     nextSpeedActiveInput: isNextSpeedInputActive,
                     prevSpeedActiveInput: isPrevSpeedInputActive,
                     speed: 0,
@@ -64,7 +63,7 @@ export class SpeedStepperTaskBuilder extends BaseTaskBuilder {
         }
 
         const payload: SpeedStepperTaskPayload = {
-            taskType: PortCommandTaskType.SpeedStepper,
+            bindingType: ControlSchemeBindingType.SpeedStepper,
             level: nextLevel,
             speed: binding.steps[nextLevel],
             power: binding.power,
@@ -79,11 +78,11 @@ export class SpeedStepperTaskBuilder extends BaseTaskBuilder {
     protected buildCleanupPayload(
         previousTask: PortCommandTask
     ): PortCommandTaskPayload | null {
-        if (previousTask.payload.taskType !== PortCommandTaskType.SetAngle) {
+        if (previousTask.payload.bindingType !== ControlSchemeBindingType.SetAngle) {
             return null;
         }
         return {
-            taskType: PortCommandTaskType.SetSpeed,
+            bindingType: ControlSchemeBindingType.Linear,
             speed: 0,
             power: 0,
             activeInput: false,
