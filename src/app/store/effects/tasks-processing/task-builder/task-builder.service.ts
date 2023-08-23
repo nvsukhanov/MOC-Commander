@@ -4,11 +4,13 @@ import { ControlSchemeBindingType } from '@app/shared';
 
 import { ControlSchemeBinding, ControllerInputModel, PortCommandTask } from '../../../models';
 import { ITaskBuilder } from './i-task-builder';
-import { ServoTaskBuilderService } from './servo-task-builder-service';
-import { SetAngleTaskBuilderService } from './set-angle-task-builder-service';
-import { SetSpeedTaskBuilderService } from './set-speed-task-builder-service';
-import { SpeedStepperTaskBuilderService } from './speed-stepper-task-builder-service';
-import { StepperTaskBuilderService } from './stepper-task-builder-service';
+import {
+    ServoTaskBuilderService,
+    SetAngleTaskBuilderService,
+    SetSpeedTaskBuilderService,
+    SpeedStepperTaskBuilderService,
+    StepperTaskBuilderService
+} from './builders';
 
 @Injectable({ providedIn: 'root' })
 export class TaskBuilderService implements ITaskBuilder {

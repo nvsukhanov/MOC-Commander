@@ -2,9 +2,9 @@ import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared';
 
-import { controllerInputIdFn } from '../../../reducers';
-import { ControlSchemeSpeedStepperBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, SpeedStepperTaskPayload, } from '../../../models';
-import { BaseTaskBuilder } from './base-task-builder';
+import { controllerInputIdFn } from '../../../../reducers';
+import { ControlSchemeSpeedStepperBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, SpeedStepperTaskPayload, } from '../../../../models';
+import { BaseTaskBuilder } from '../base-task-builder';
 
 @Injectable({ providedIn: 'root' })
 export class SpeedStepperTaskBuilderService extends BaseTaskBuilder<ControlSchemeSpeedStepperBinding, SpeedStepperTaskPayload> {
