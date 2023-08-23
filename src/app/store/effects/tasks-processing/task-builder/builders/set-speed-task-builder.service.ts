@@ -10,10 +10,10 @@ import {
     PortCommandTask,
     PortCommandTaskPayload,
     SetLinearSpeedTaskPayload
-} from '../../../models';
-import { controllerInputIdFn } from '../../../reducers';
-import { BaseTaskBuilder } from './base-task-builder';
-import { calcInputGain } from './calc-input-gain';
+} from '../../../../models';
+import { controllerInputIdFn } from '../../../../reducers';
+import { BaseTaskBuilder } from '../base-task-builder';
+import { calcInputGain } from '../calc-input-gain';
 
 @Injectable({ providedIn: 'root' })
 export class SetSpeedTaskBuilderService extends BaseTaskBuilder<ControlSchemeLinearBinding, SetLinearSpeedTaskPayload> {

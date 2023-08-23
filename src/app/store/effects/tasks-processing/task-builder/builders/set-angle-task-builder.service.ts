@@ -2,9 +2,9 @@ import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared';
 
-import { controllerInputIdFn } from '../../../reducers';
-import { BaseTaskBuilder } from './base-task-builder';
-import { ControlSchemeSetAngleBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, SetAngleTaskPayload } from '../../../models';
+import { controllerInputIdFn } from '../../../../reducers';
+import { BaseTaskBuilder } from '../base-task-builder';
+import { ControlSchemeSetAngleBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, SetAngleTaskPayload } from '../../../../models';
 
 @Injectable({ providedIn: 'root' })
 export class SetAngleTaskBuilderService extends BaseTaskBuilder<ControlSchemeSetAngleBinding, SetAngleTaskPayload> {

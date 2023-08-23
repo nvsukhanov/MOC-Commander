@@ -3,10 +3,10 @@ import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType, getTranslationArcs } from '@app/shared';
 
-import { ControlSchemeServoBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, ServoTaskPayload } from '../../../models';
-import { controllerInputIdFn } from '../../../reducers';
-import { BaseTaskBuilder } from './base-task-builder';
-import { calcInputGain } from './calc-input-gain';
+import { ControlSchemeServoBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, ServoTaskPayload } from '../../../../models';
+import { controllerInputIdFn } from '../../../../reducers';
+import { BaseTaskBuilder } from '../base-task-builder';
+import { calcInputGain } from '../calc-input-gain';
 
 @Injectable({ providedIn: 'root' })
 export class ServoTaskBuilderService extends BaseTaskBuilder<ControlSchemeServoBinding, ServoTaskPayload> {
