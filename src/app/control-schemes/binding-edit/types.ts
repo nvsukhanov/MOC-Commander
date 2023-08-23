@@ -1,7 +1,7 @@
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ButtonGroupButtonId, MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 import { AttachedIoModel, InputGain } from '@app/store';
-import { ControllerInputType, HubIoOperationMode } from '@app/shared';
+import { ControlSchemeBindingType, ControllerInputType } from '@app/shared';
 
 export type InputFormGroup = FormGroup<{
     controllerId: FormControl<string>;
@@ -83,16 +83,33 @@ export type SetAngleBindingForm = FormGroup<{
     useDecelerationProfile: FormControl<boolean>;
 }>;
 
+export type SpeedStepperBindingForm = FormGroup<{
+    id: FormControl<string>;
+    inputs: FormGroup<{
+        nextSpeed: InputFormGroup;
+        prevSpeed: OptionalInputFormGroup;
+        stop: OptionalInputFormGroup;
+    }>;
+    hubId: FormControl<string>;
+    portId: FormControl<number>;
+    steps: FormArray<FormControl<number>>;
+    power: FormControl<number>;
+    useAccelerationProfile: FormControl<boolean>;
+    useDecelerationProfile: FormControl<boolean>;
+    initialStepIndex: FormControl<number>;
+}>;
+
 export type ControlSchemeBindingForm = FormGroup<{
-    bindingFormOperationMode: FormControl<HubIoOperationMode>;
-    [HubIoOperationMode.Linear]: LinearBindingForm;
-    [HubIoOperationMode.Servo]: ServoBindingForm;
-    [HubIoOperationMode.Stepper]: StepperBindingForm;
-    [HubIoOperationMode.SetAngle]: SetAngleBindingForm;
+    bindingFormOperationMode: FormControl<ControlSchemeBindingType>;
+    [ControlSchemeBindingType.Linear]: LinearBindingForm;
+    [ControlSchemeBindingType.Servo]: ServoBindingForm;
+    [ControlSchemeBindingType.Stepper]: StepperBindingForm;
+    [ControlSchemeBindingType.SetAngle]: SetAngleBindingForm;
+    [ControlSchemeBindingType.SpeedStepper]: SpeedStepperBindingForm;
 }>;
 
 export type BindingEditAvailableOperationModesModel = {
-    [operationMode in HubIoOperationMode]?: {
+    [operationMode in ControlSchemeBindingType]?: {
         hubs: Array<{ id: string; name: string }>;
         hubIos: {
             [hubId in string]: AttachedIoModel[]

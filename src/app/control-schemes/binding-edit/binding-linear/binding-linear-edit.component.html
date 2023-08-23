@@ -1,13 +1,13 @@
 <ng-container *ngIf="form">
     <app-controller-select [inputFormGroup]="form.controls.inputs.controls.accelerate"
-                           [title]="'controlScheme.linearInputSpeed' | transloco "
+                           [title]="'controlScheme.linearBinding.inputSpeed' | transloco "
                            [acceptableInputTypes]="accelerationInputTypes"
     ></app-controller-select>
 
     <ng-container *ngIf="isAccelerationInputAssigned">
         <app-controller-select *ngIf="!form.controls.isToggle.value"
                                [inputFormGroup]="form.controls.inputs.controls.brake"
-                               [title]="'controlScheme.linearInputBrake' | transloco "
+                               [title]="'controlScheme.linearBinding.inputBrake' | transloco "
                                [acceptableInputTypes]="brakeInputTypes"
         ></app-controller-select>
 
@@ -18,17 +18,17 @@
         <app-slider-control [min]="0"
                             [max]="motorLimits.maxSpeed"
                             [control]="form.controls.maxSpeed"
-                            [translocoTitle]="'controlScheme.outputSpeedControlTitle'"
+                            [translocoTitle]="'controlScheme.linearBinding.outputSpeed'"
         ></app-slider-control>
 
         <app-slider-control [min]="motorLimits.minPower"
                             [max]="motorLimits.maxPower"
                             [control]="form.controls.power"
-                            [translocoTitle]="'controlScheme.outputPowerControlTitle'"
+                            [translocoTitle]="'controlScheme.linearBinding.outputPower'"
         ></app-slider-control>
 
         <app-toggle-control *ngIf="isToggleable"
-                            [translocoTitle]="'controlScheme.linearOutputConfigurationTreatAsSwitch'"
+                            [translocoTitle]="'controlScheme.linearBinding.treatAsSwitch'"
                             [control]="form.controls.isToggle"
         ></app-toggle-control>
 

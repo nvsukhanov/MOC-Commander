@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { NgIf } from '@angular/common';
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { TranslocoModule } from '@ngneat/transloco';
-import { HubIoOperationMode, SliderControlComponent, ToggleControlComponent } from '@app/shared';
+import { ControlSchemeBindingType, SliderControlComponent, ToggleControlComponent } from '@app/shared';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { BindingControlNumInputComponent } from '../control-num-input';
@@ -40,7 +40,7 @@ export class BindingStepperEditComponent implements IBindingsDetailsEditComponen
 
     public readonly maxPower = MOTOR_LIMITS.maxPower;
 
-    public readonly acceptableInputTypes = getInputTypesForOperationMode(HubIoOperationMode.Stepper);
+    public readonly acceptableInputTypes = getInputTypesForOperationMode(ControlSchemeBindingType.Stepper);
 
     private _form?: StepperBindingForm;
 

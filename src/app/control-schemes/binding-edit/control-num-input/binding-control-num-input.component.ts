@@ -7,7 +7,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
     standalone: true,
-    selector: 'app-binding-control-num-input[translocoTitle][control]',
+    selector: 'app-binding-control-num-input[controlTitle][control]',
     templateUrl: './binding-control-num-input.component.html',
     styleUrls: [ './binding-control-num-input.component.scss' ],
     imports: [
@@ -26,5 +26,5 @@ export class BindingControlNumInputComponent {
 
     @Input() public control?: FormControl<number>;
 
-    @Input() public translocoTitle = '';
+    @Input() public controlTitle = '';
 }

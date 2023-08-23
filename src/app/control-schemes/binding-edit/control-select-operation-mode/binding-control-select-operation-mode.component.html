@@ -6,7 +6,7 @@
         <ng-container *ngFor="let operationType of availableOperationTypes">
             <mat-option *ngIf="availabilityData[operationType]"
                         [value]="operationType">
-                {{ operationType | ioOperationTypeToL10nKey | transloco }}
+                {{ operationType | bindingTypeToL10nKey | transloco }}
             </mat-option>
         </ng-container>
     </mat-select>

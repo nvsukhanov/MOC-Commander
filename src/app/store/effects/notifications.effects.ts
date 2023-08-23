@@ -40,7 +40,7 @@ export class NotificationsEffects {
     public readonly servoCalibrationErrorNotification$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(CONTROL_SCHEME_ACTIONS.servoCalibrationError),
-            switchMap(() => this.translocoService.selectTranslate('controlScheme.servoCalibrationError')),
+            switchMap(() => this.translocoService.selectTranslate('controlScheme.servoBinding.calibrationError')),
             this.showMessage()
         );
     }, { dispatch: false });

@@ -1,51 +1,16 @@
-import { ITaskQueueCompressor } from '../i-task-queue-compressor';
-import { PortCommandTask, PortCommandTaskType } from '../../../models';
-import { payloadHash } from '../payload-hash';
+import { PortCommandTask, PortCommandTaskPayload, PortCommandTaskType } from '../../../models';
+import { AccumulatingTaskCompressor } from './accumulating-task-compressor';
 
-export class StepperTaskCompressor implements ITaskQueueCompressor {
-    /**
-     * Compresses stepper tasks into one task with accumulated degree
-     * @param queue
-     */
-    public compress(
-        queue: PortCommandTask[]
-    ): PortCommandTask[] {
-        let firstStepperTask: PortCommandTask<PortCommandTaskType.Stepper> | null = null;
-        let totalStepperTaskCount = 0;
-        let accumulatedDegree = 0;
+export class StepperTaskCompressor extends AccumulatingTaskCompressor<PortCommandTaskType.Stepper> {
+    constructor() {
+        super(PortCommandTaskType.Stepper);
+    }
 
-        for (let index = 0; index < queue.length; index++) {
-            const command = queue[index];
-            if (command.payload.taskType === PortCommandTaskType.Stepper) {
-                const task = command as PortCommandTask<PortCommandTaskType.Stepper>;
-                if (totalStepperTaskCount === 0) {
-                    firstStepperTask = task;
-                }
-                accumulatedDegree += task.payload.degree;
-                totalStepperTaskCount++;
-            }
-        }
-
-        if (totalStepperTaskCount > 1) {
-            return queue.map((task) => {
-                if (task === firstStepperTask) {
-                    const updatedFirstTask = {
-                        ...firstStepperTask,
-                        payload: {
-                            ...firstStepperTask.payload,
-                            degree: accumulatedDegree,
-
-                        }
-                    };
-                    updatedFirstTask.hash = payloadHash(updatedFirstTask.payload);
-                    return updatedFirstTask;
-                }
-                if (task.payload.taskType === PortCommandTaskType.Stepper) {
-                    return null;
-                }
-                return task;
-            }).filter((task) => task !== null) as PortCommandTask[];
-        }
-        return queue;
+    protected buildPayloadChanges(
+        accumulatedTasks: ReadonlyArray<PortCommandTask<PortCommandTaskType.Stepper>>
+    ): Partial<PortCommandTaskPayload & { taskType: PortCommandTaskType.Stepper }> {
+        return {
+            degree: accumulatedTasks.reduce((acc, task) => acc + task.payload.degree, 0)
+        };
     }
 }

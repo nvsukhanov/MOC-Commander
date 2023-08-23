@@ -4,7 +4,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { Observable, map, startWith } from 'rxjs';
-import { IoOperationTypeToL10nKeyPipe } from '@app/shared';
+import { BindingTypeToL10nKeyPipe } from '@app/shared';
 import { ControlSchemeBinding } from '@app/store';
 
 import { ControlSchemeFormBuilderService, ControlSchemeFormMapperService } from './forms';
@@ -22,7 +22,7 @@ import { BindingEditAvailableOperationModesModel, ControlSchemeBindingForm } fro
     imports: [
         MatCardModule,
         NgIf,
-        IoOperationTypeToL10nKeyPipe,
+        BindingTypeToL10nKeyPipe,
         TranslocoModule,
         NgForOf,
         BindingControlSelectOperationModeComponent,
@@ -63,8 +63,7 @@ export class BindingEditComponent {
         binding: Partial<ControlSchemeBinding> | undefined
     ) {
         if (binding && binding.operationMode !== undefined) {
-            this.form.controls.bindingFormOperationMode.setValue(binding.operationMode);
-            this.form.controls[binding.operationMode].patchValue(binding);
+            this.formBuilder.patchForm(this.form, binding);
         }
     }
 

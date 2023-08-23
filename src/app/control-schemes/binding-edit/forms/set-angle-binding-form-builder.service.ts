@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ControlSchemeSetAngleBinding } from '@app/store';
 
 import { SetAngleBindingForm } from '../types';
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';
@@ -30,5 +31,12 @@ export class SetAngleBindingFormBuilderService {
             useAccelerationProfile: this.commonFormControlBuilder.toggleControl(),
             useDecelerationProfile: this.commonFormControlBuilder.toggleControl()
         });
+    }
+
+    public patchForm(
+        form: SetAngleBindingForm,
+        patch: Partial<ControlSchemeSetAngleBinding>
+    ): void {
+        form.patchValue(patch);
     }
 }

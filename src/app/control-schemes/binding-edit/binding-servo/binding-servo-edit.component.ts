@@ -9,7 +9,7 @@ import { Observable, combineLatest, map, of, startWith, switchMap } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CONTROL_SCHEME_ACTIONS } from '@app/store';
-import { ControllerInputType, HubIoOperationMode, SliderControlComponent, ToggleControlComponent } from '@app/shared';
+import { ControlSchemeBindingType, ControllerInputType, SliderControlComponent, ToggleControlComponent } from '@app/shared';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { CalibrationResult, CalibrationResultType, ServoCalibrationDialogComponent } from '../servo-calibration-dialog';
@@ -41,7 +41,7 @@ import { getInputTypesForOperationMode } from '../wait-for-controller-input-dial
 export class BindingServoEditComponent implements IBindingsDetailsEditComponent<ServoBindingForm> {
     public readonly motorLimits = MOTOR_LIMITS;
 
-    public readonly acceptableInputTypes = getInputTypesForOperationMode(HubIoOperationMode.Servo);
+    public readonly acceptableInputTypes = getInputTypesForOperationMode(ControlSchemeBindingType.Servo);
 
     private _form?: ServoBindingForm;
 

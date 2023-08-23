@@ -4,7 +4,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { HubIoOperationMode } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared';
 
 import { BindingEditAvailableOperationModesModel } from '../types';
 
@@ -28,7 +28,7 @@ export class BindingControlSelectHubComponent implements OnChanges {
 
     @Input() public control?: FormControl<string>;
 
-    @Input() public operationMode?: HubIoOperationMode;
+    @Input() public operationMode?: ControlSchemeBindingType;
 
     private _availableHubs: Array<{ id: string; name: string }> = [];
 

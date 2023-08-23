@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import { Dictionary } from '@ngrx/entity';
 import { CONTROLLER_CONNECTION_SELECTORS, ControlSchemeInput, ControlSchemeInputsRecord, ControllerConnectionModel } from '@app/store';
-import { HubIoOperationMode } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared';
 
 import { BindingTreeNodeRecord, BindingTreeNodeViewModel } from './binding-tree-node-view-model';
 
@@ -9,7 +9,7 @@ import { BindingTreeNodeRecord, BindingTreeNodeViewModel } from './binding-tree-
 export const INPUT_TREE_NODE_VIEW_MODEL_SELECTOR = (
     controlSchemeId: string,
     inputs: ControlSchemeInputsRecord,
-    operationMode: HubIoOperationMode,
+    operationMode: ControlSchemeBindingType,
     bindingId: string,
     isActive: boolean,
     ioHasNoRequiredCapabilities: boolean

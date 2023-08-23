@@ -1,20 +1,36 @@
-import { ControllerInputType, HubIoOperationMode } from '@app/shared';
+import { ControlSchemeBindingType, ControllerInputType } from '@app/shared';
 
-const CONTROLLER_TO_IO_OPERATION_MODES: { [k in ControllerInputType]: ReadonlyArray<HubIoOperationMode> } = {
-    [ControllerInputType.Axis]: [ HubIoOperationMode.Linear, HubIoOperationMode.Servo ],
-    [ControllerInputType.Button]: [ HubIoOperationMode.Linear, HubIoOperationMode.Servo, HubIoOperationMode.SetAngle, HubIoOperationMode.Stepper ],
-    [ControllerInputType.Trigger]: [ HubIoOperationMode.Linear, HubIoOperationMode.Servo, HubIoOperationMode.SetAngle, HubIoOperationMode.Stepper ],
-    [ControllerInputType.ButtonGroup]: [ HubIoOperationMode.Linear, HubIoOperationMode.Servo, HubIoOperationMode.SetAngle, HubIoOperationMode.Stepper ]
+const CONTROLLER_TO_IO_OPERATION_MODES: { [k in ControllerInputType]: ReadonlyArray<ControlSchemeBindingType> } = { // TODO: is this really necessary?
+    [ControllerInputType.Axis]: [
+        ControlSchemeBindingType.Linear,
+        ControlSchemeBindingType.Servo,
+        ControlSchemeBindingType.SpeedStepper
+    ],
+    [ControllerInputType.Button]: [
+        ControlSchemeBindingType.Linear,
+        ControlSchemeBindingType.Servo,
+        ControlSchemeBindingType.SetAngle,
+        ControlSchemeBindingType.Stepper,
+        ControlSchemeBindingType.SpeedStepper
+    ],
+    [ControllerInputType.Trigger]: [
+        ControlSchemeBindingType.Linear,
+        ControlSchemeBindingType.Servo,
+        ControlSchemeBindingType.SetAngle,
+        ControlSchemeBindingType.Stepper,
+        ControlSchemeBindingType.SpeedStepper
+    ],
+    [ControllerInputType.ButtonGroup]: [
+        ControlSchemeBindingType.Linear,
+        ControlSchemeBindingType.Servo,
+        ControlSchemeBindingType.SetAngle,
+        ControlSchemeBindingType.Stepper,
+        ControlSchemeBindingType.SpeedStepper
+    ],
 };
 
-export function getIoOperationModesForControllerInputType(
-    inputType: ControllerInputType,
-): HubIoOperationMode[] {
-    return [ ...CONTROLLER_TO_IO_OPERATION_MODES[inputType] || [] ];
-}
-
 export function getInputTypesForOperationMode(
-    operationMode: HubIoOperationMode
+    operationMode: ControlSchemeBindingType
 ): ControllerInputType[] {
     const inputTypes = new Set<ControllerInputType>();
     for (const [ inputType, ioOperationModes ] of Object.entries(CONTROLLER_TO_IO_OPERATION_MODES)) {

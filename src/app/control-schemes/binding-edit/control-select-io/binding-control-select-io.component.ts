@@ -9,7 +9,7 @@ import { PushPipe } from '@ngrx/component';
 import { Observable, map, of, startWith } from 'rxjs';
 import { IOType } from '@nvsukhanov/rxpoweredup';
 import { AttachedIoModel } from '@app/store';
-import { HubIoOperationMode, IoOperationTypeToL10nKeyPipe, IoTypeToL10nKeyPipe } from '@app/shared';
+import { BindingTypeToL10nKeyPipe, ControlSchemeBindingType, IoTypeToL10nKeyPipe } from '@app/shared';
 
 import { BindingEditAvailableOperationModesModel } from '../types';
 
@@ -19,7 +19,7 @@ import { BindingEditAvailableOperationModesModel } from '../types';
     templateUrl: './binding-control-select-io.component.html',
     styleUrls: [ './binding-control-select-io.component.scss' ],
     imports: [
-        IoOperationTypeToL10nKeyPipe,
+        BindingTypeToL10nKeyPipe,
         MatFormFieldModule,
         MatOptionModule,
         MatSelectModule,
@@ -37,7 +37,7 @@ export class BindingControlSelectIoComponent implements OnChanges {
 
     @Input() public availabilityData: BindingEditAvailableOperationModesModel = {};
 
-    @Input() public operationMode?: HubIoOperationMode;
+    @Input() public operationMode?: ControlSchemeBindingType;
 
     @Input() public hubId?: string;
 

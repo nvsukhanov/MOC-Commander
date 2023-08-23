@@ -1,5 +1,5 @@
 import { Dictionary } from '@ngrx/entity';
-import { HubIoOperationMode } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared';
 import { controllerInputIdFn } from '@app/store';
 
 import { BaseTaskBuilder } from './base-task-builder';
@@ -12,7 +12,7 @@ export class SetAngleTaskBuilder extends BaseTaskBuilder {
         binding: ControlSchemeBinding,
         inputsState: Dictionary<ControllerInputModel>,
     ): { payload: SetAngleTaskPayload; inputTimestamp: number } | null {
-        if (binding.operationMode !== HubIoOperationMode.SetAngle) {
+        if (binding.operationMode !== ControlSchemeBindingType.SetAngle) {
             return null;
         }
 

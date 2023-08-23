@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ControlSchemeStepperBinding } from '@app/store';
-import { HubIoOperationMode } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared';
 
 import { StepperBindingForm } from '../types';
 
@@ -10,7 +10,7 @@ export class StepperBindingFormMapperService {
         form: StepperBindingForm
     ): ControlSchemeStepperBinding {
         return {
-            operationMode: HubIoOperationMode.Stepper,
+            operationMode: ControlSchemeBindingType.Stepper,
             ...form.getRawValue()
         };
     }

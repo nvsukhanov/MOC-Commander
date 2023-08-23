@@ -3,7 +3,7 @@ import { NgIf } from '@angular/common';
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { merge } from 'rxjs';
 import { TranslocoModule } from '@ngneat/transloco';
-import { ControllerInputType, HubIoOperationMode, SliderControlComponent, ToggleControlComponent } from '@app/shared';
+import { ControlSchemeBindingType, ControllerInputType, SliderControlComponent, ToggleControlComponent } from '@app/shared';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
@@ -29,7 +29,7 @@ import { getInputTypesForOperationMode } from '../wait-for-controller-input-dial
 export class BindingLinearEditComponent implements IBindingsDetailsEditComponent<LinearBindingForm> {
     public readonly motorLimits = MOTOR_LIMITS;
 
-    public readonly accelerationInputTypes = getInputTypesForOperationMode(HubIoOperationMode.Linear);
+    public readonly accelerationInputTypes = getInputTypesForOperationMode(ControlSchemeBindingType.Linear);
 
     public readonly brakeInputTypes: ControllerInputType[] = [
         ControllerInputType.Button,

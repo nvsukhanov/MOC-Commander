@@ -1,5 +1,5 @@
 import { ButtonGroupButtonId, MotorServoEndState } from '@nvsukhanov/rxpoweredup';
-import { ControllerInputType, HubIoOperationMode } from '@app/shared';
+import { ControlSchemeBindingType, ControllerInputType } from '@app/shared';
 
 export enum InputGain {
     None,
@@ -35,7 +35,7 @@ export type ControlSchemeInputsRecord = Record<string, ControlSchemeInput>;
 
 export type ControlSchemeLinearBinding = {
     id: string;
-    operationMode: HubIoOperationMode.Linear;
+    operationMode: ControlSchemeBindingType.Linear;
     inputs: {
         accelerate: ControlSchemeInput;
         brake?: ControlSchemeInput;
@@ -50,7 +50,7 @@ export type ControlSchemeLinearBinding = {
 
 export type ControlSchemeServoBinding = {
     id: string;
-    operationMode: HubIoOperationMode.Servo;
+    operationMode: ControlSchemeBindingType.Servo;
     inputs: {
         servo: ControlSchemeInput;
     } & ControlSchemeInputsRecord;
@@ -65,7 +65,7 @@ export type ControlSchemeServoBinding = {
 
 export type ControlSchemeSetAngleBinding = {
     id: string;
-    operationMode: HubIoOperationMode.SetAngle;
+    operationMode: ControlSchemeBindingType.SetAngle;
     inputs: {
         setAngle: ControlSchemeInput;
     } & ControlSchemeInputsRecord;
@@ -79,7 +79,7 @@ export type ControlSchemeSetAngleBinding = {
 
 export type ControlSchemeStepperBinding = {
     id: string;
-    operationMode: HubIoOperationMode.Stepper;
+    operationMode: ControlSchemeBindingType.Stepper;
     inputs: {
         step: ControlSchemeInput;
     } & ControlSchemeInputsRecord;
@@ -91,10 +91,26 @@ export type ControlSchemeStepperBinding = {
     endState: MotorServoEndState;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
+export type ControlSchemeSpeedStepperBinding = {
+    id: string;
+    operationMode: ControlSchemeBindingType.SpeedStepper;
+    inputs: {
+        nextSpeed: ControlSchemeInput;
+        prevSpeed?: ControlSchemeInput;
+        stop?: ControlSchemeInput;
+    } & ControlSchemeInputsRecord;
+    hubId: string;
+    portId: number;
+    steps: number[];
+    power: number;
+    initialStepIndex: number;
+} & AccelerationProfileMixin & DecelerationProfileMixin;
+
 export type ControlSchemeBinding = ControlSchemeLinearBinding
     | ControlSchemeServoBinding
     | ControlSchemeSetAngleBinding
-    | ControlSchemeStepperBinding;
+    | ControlSchemeStepperBinding
+    | ControlSchemeSpeedStepperBinding;
 
 export type ControlSchemeModel = {
     id: string;

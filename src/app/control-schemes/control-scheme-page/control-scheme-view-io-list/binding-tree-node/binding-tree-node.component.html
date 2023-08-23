@@ -5,12 +5,12 @@
                [class.binding__operation-type_active]="viewModel.isActive"
                [routerLink]="viewModel.controlSchemeId | bindingViewUrl: viewModel.bindingId"
             >
-                {{ viewModel.operationMode | ioOperationTypeToL10nKey | transloco }}
+                {{ viewModel.operationMode | bindingTypeToL10nKey | transloco }}
             </a>
         </ng-container>
         <ng-template #ioCapabilitiesMismatch>
             <mat-error class="binding__operation-type">
-                {{ viewModel.operationMode | ioOperationTypeToL10nKey | transloco }}
+                {{ viewModel.operationMode | bindingTypeToL10nKey | transloco }}
             </mat-error>
             <span class="cdk-visually-hidden">
                 {{ 'controlScheme.ioCapabilitiesMismatch' | transloco }}

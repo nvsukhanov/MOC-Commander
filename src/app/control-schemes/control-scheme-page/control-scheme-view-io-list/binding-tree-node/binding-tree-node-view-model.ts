@@ -1,4 +1,4 @@
-import { HubIoOperationMode } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared';
 import { ControlSchemeInput } from '@app/store';
 
 export type BindingTreeNodeRecord = {
@@ -11,6 +11,6 @@ export type BindingTreeNodeViewModel = {
     bindingId: string;
     isActive: boolean;
     ioHasNoRequiredCapabilities: boolean;
-    operationMode: HubIoOperationMode;
+    operationMode: ControlSchemeBindingType;
     controlData: BindingTreeNodeRecord[];
 };
