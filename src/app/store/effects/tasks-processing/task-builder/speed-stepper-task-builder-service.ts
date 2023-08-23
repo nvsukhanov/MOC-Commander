@@ -1,30 +1,21 @@
 import { Dictionary } from '@ngrx/entity';
-import {
-    ControlSchemeBinding,
-    ControlSchemeSpeedStepperBinding,
-    ControllerInputModel,
-    PortCommandTask,
-    PortCommandTaskPayload,
-    SpeedStepperTaskPayload,
-    controllerInputIdFn
-} from '@app/store';
+import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared';
 
+import { controllerInputIdFn } from '../../../reducers';
+import { ControlSchemeSpeedStepperBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, SpeedStepperTaskPayload, } from '../../../models';
 import { BaseTaskBuilder } from './base-task-builder';
 
-export class SpeedStepperTaskBuilder extends BaseTaskBuilder {
+@Injectable({ providedIn: 'root' })
+export class SpeedStepperTaskBuilderService extends BaseTaskBuilder<ControlSchemeSpeedStepperBinding, SpeedStepperTaskPayload> {
     private readonly inputThreshold = 0.5;
 
     protected buildPayload(
-        binding: ControlSchemeBinding,
+        binding: ControlSchemeSpeedStepperBinding,
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
         previousTask: PortCommandTask | null
     ): { payload: SpeedStepperTaskPayload; inputTimestamp: number } | null {
-        if (binding.operationMode !== ControlSchemeBindingType.SpeedStepper) {
-            return null;
-        }
-
         const isNextSpeedInputActive = (inputsState[controllerInputIdFn(binding.inputs.nextSpeed)]?.value ?? 0) > this.inputThreshold;
         const isPrevSpeedInputActive = !!binding.inputs.prevSpeed
             && (inputsState[controllerInputIdFn(binding.inputs.prevSpeed)]?.value ?? 0) > this.inputThreshold;
@@ -78,7 +69,7 @@ export class SpeedStepperTaskBuilder extends BaseTaskBuilder {
     protected buildCleanupPayload(
         previousTask: PortCommandTask
     ): PortCommandTaskPayload | null {
-        if (previousTask.payload.bindingType !== ControlSchemeBindingType.SetAngle) {
+        if (previousTask.payload.bindingType !== ControlSchemeBindingType.SpeedStepper) {
             return null;
         }
         return {

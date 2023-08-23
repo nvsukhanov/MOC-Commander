@@ -1,34 +1,32 @@
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { Dictionary } from '@ngrx/entity';
+import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared';
-import { InputGain, controllerInputIdFn } from '@app/store';
 
-import { BaseTaskBuilder } from './base-task-builder';
 import {
-    ControlSchemeBinding,
     ControlSchemeLinearBinding,
     ControllerInputModel,
+    InputGain,
     PortCommandTask,
     PortCommandTaskPayload,
     SetLinearSpeedTaskPayload
 } from '../../../models';
+import { controllerInputIdFn } from '../../../reducers';
+import { BaseTaskBuilder } from './base-task-builder';
 import { calcInputGain } from './calc-input-gain';
 
-export class SetSpeedTaskBuilder extends BaseTaskBuilder {
+@Injectable({ providedIn: 'root' })
+export class SetSpeedTaskBuilderService extends BaseTaskBuilder<ControlSchemeLinearBinding, SetLinearSpeedTaskPayload> {
     private readonly speedStep = 5;
 
     private readonly speedSnapThreshold = 10;
 
     protected buildPayload(
-        binding: ControlSchemeBinding,
+        binding: ControlSchemeLinearBinding,
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
         lastExecutedTask: PortCommandTask | null
     ): { payload: SetLinearSpeedTaskPayload; inputTimestamp: number } | null {
-        if (binding.operationMode !== ControlSchemeBindingType.Linear) {
-            return null;
-        }
-
         const accelerateInput = inputsState[controllerInputIdFn(binding.inputs.accelerate)];
         const accelerateInputValue = accelerateInput?.value ?? 0;
 

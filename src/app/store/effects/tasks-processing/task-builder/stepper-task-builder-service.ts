@@ -1,19 +1,17 @@
 import { Dictionary } from '@ngrx/entity';
+import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared';
 
-import { ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, StepperTaskPayload } from '../../../models';
+import { ControlSchemeStepperBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, StepperTaskPayload } from '../../../models';
 import { controllerInputIdFn } from '../../../reducers';
 import { BaseTaskBuilder } from './base-task-builder';
 
-export class StepperTaskBuilder extends BaseTaskBuilder {
+@Injectable({ providedIn: 'root' })
+export class StepperTaskBuilderService extends BaseTaskBuilder<ControlSchemeStepperBinding, StepperTaskPayload> {
     protected buildPayload(
-        binding: ControlSchemeBinding,
+        binding: ControlSchemeStepperBinding,
         inputsState: Dictionary<ControllerInputModel>,
     ): { payload: StepperTaskPayload; inputTimestamp: number } | null {
-        if (binding.operationMode !== ControlSchemeBindingType.Stepper) {
-            return null;
-        }
-
         const stepInput = inputsState[controllerInputIdFn(binding.inputs.step)];
         const stepInputValue = stepInput?.value ?? 0;
 

@@ -1,1 +1,1 @@
-export * from './task-builder-factory';
+export * from './task-builder.service';

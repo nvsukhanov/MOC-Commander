@@ -8,10 +8,10 @@ import { BindingTaskComposingData, CONTROL_SCHEME_SELECTORS, PORT_TASKS_SELECTOR
 import { ControlSchemeBinding, ControlSchemeModel, PortCommandTask } from '../../models';
 import { attachedIosIdFn } from '../../reducers';
 import { HubStorageService } from '../../hub-storage.service';
-import { ITaskBuilder, TASK_BUILDER } from './i-task-builder';
 import { ITaskQueueCompressor, TASK_QUEUE_COMPRESSOR } from './i-task-queue-compressor';
 import { ITaskRunner, TASK_RUNNER } from './i-task-runner';
 import { taskFilter } from './task-filter';
+import { TaskBuilderService } from './task-builder';
 
 @Injectable()
 export class TaskProcessingEffects {
@@ -117,7 +117,7 @@ export class TaskProcessingEffects {
         private readonly store: Store,
         private readonly actions: Actions,
         private readonly hubStorage: HubStorageService,
-        @Inject(TASK_BUILDER) private taskBuilder: ITaskBuilder,
+        private readonly taskBuilder: TaskBuilderService,
         @Inject(TASK_RUNNER) private readonly taskRunner: ITaskRunner,
         @Inject(TASK_QUEUE_COMPRESSOR) private readonly taskQueueCompressor: ITaskQueueCompressor
     ) {

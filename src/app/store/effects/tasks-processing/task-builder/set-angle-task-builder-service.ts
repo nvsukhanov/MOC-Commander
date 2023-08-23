@@ -1,22 +1,20 @@
 import { Dictionary } from '@ngrx/entity';
+import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import { controllerInputIdFn } from '../../../reducers';
 import { BaseTaskBuilder } from './base-task-builder';
-import { ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, SetAngleTaskPayload } from '../../../models';
+import { ControlSchemeSetAngleBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, SetAngleTaskPayload } from '../../../models';
 
-export class SetAngleTaskBuilder extends BaseTaskBuilder {
+@Injectable({ providedIn: 'root' })
+export class SetAngleTaskBuilderService extends BaseTaskBuilder<ControlSchemeSetAngleBinding, SetAngleTaskPayload> {
     private readonly inputValueThreshold = 0.5;
 
     protected buildPayload(
-        binding: ControlSchemeBinding,
+        binding: ControlSchemeSetAngleBinding,
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
     ): { payload: SetAngleTaskPayload; inputTimestamp: number } | null {
-        if (binding.operationMode !== ControlSchemeBindingType.SetAngle) {
-            return null;
-        }
-
         const setAngleInput = inputsState[controllerInputIdFn(binding.inputs.setAngle)];
         const setAngleInputValue = setAngleInput?.value ?? 0;
 
@@ -24,7 +22,7 @@ export class SetAngleTaskBuilder extends BaseTaskBuilder {
             return null;
         }
         const resultingAngle = binding.angle - motorEncoderOffset;
-        
+
         const payload: SetAngleTaskPayload = {
             bindingType: ControlSchemeBindingType.SetAngle,
             angle: resultingAngle,
