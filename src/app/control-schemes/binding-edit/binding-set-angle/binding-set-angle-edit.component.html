@@ -5,11 +5,20 @@
     ></app-controller-select>
 
     <ng-container *ngIf="form.controls.inputs.valid">
-        <app-binding-control-num-input [controlTitle]="'controlScheme.setAngleBinding.outputAngle' | transloco"
-                                       [control]="form.controls.angle"
-                                       [min]="motorLimits.minRawAngle"
-                                       [max]="motorLimits.maxRawAngle"
-        ></app-binding-control-num-input>
+        <div class="readable-input-container">
+            <app-binding-control-num-input class="readable-input"
+                                           [controlTitle]="'controlScheme.setAngleBinding.outputAngle' | transloco"
+                                           [control]="form.controls.angle"
+                                           [min]="motorLimits.minRawAngle"
+                                           [max]="motorLimits.maxRawAngle"
+            ></app-binding-control-num-input>
+            <app-binding-control-read-motor-position [controlTitle]="'controlScheme.setAngleBinding.readAngleFromPort' | transloco"
+                                                     [portModeName]="portModeNames.position"
+                                                     [hubId]="form.controls.hubId.value"
+                                                     [portId]="form.controls.portId.value"
+                                                     (aposChange)="onAngleRead($event)"
+            ></app-binding-control-read-motor-position>
+        </div>
 
         <app-slider-control [min]="0"
                             [max]="motorLimits.maxSpeed"

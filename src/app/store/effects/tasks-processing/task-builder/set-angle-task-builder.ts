@@ -11,6 +11,7 @@ export class SetAngleTaskBuilder extends BaseTaskBuilder {
     protected buildPayload(
         binding: ControlSchemeBinding,
         inputsState: Dictionary<ControllerInputModel>,
+        motorEncoderOffset: number,
     ): { payload: SetAngleTaskPayload; inputTimestamp: number } | null {
         if (binding.operationMode !== ControlSchemeBindingType.SetAngle) {
             return null;
@@ -22,9 +23,11 @@ export class SetAngleTaskBuilder extends BaseTaskBuilder {
         if (setAngleInputValue < this.inputValueThreshold) { // TODO: inject threshold
             return null;
         }
+        const resultingAngle = binding.angle - motorEncoderOffset;
+        
         const payload: SetAngleTaskPayload = {
             bindingType: ControlSchemeBindingType.SetAngle,
-            angle: binding.angle,
+            angle: resultingAngle,
             speed: binding.speed,
             power: binding.power,
             endState: binding.endState,

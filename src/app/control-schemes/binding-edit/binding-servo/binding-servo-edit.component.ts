@@ -1,15 +1,14 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { MOTOR_LIMITS, PortModeName } from '@nvsukhanov/rxpoweredup';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable, Subscription, combineLatest, combineLatestWith, finalize, map, of, startWith, switchMap, take } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, combineLatestWith, map, of, startWith, switchMap } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { concatLatestFrom } from '@ngrx/effects';
-import { ATTACHED_IO_PORT_MODE_INFO_SELECTORS, ATTACHED_IO_PROPS_SELECTORS, CONTROL_SCHEME_ACTIONS, HubFacadeService } from '@app/store';
+import { CONTROL_SCHEME_ACTIONS } from '@app/store';
 import { ControlSchemeBindingType, ControllerInputType, SliderControlComponent, ToggleControlComponent, getTranslationArcs } from '@app/shared';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
@@ -19,6 +18,7 @@ import { BINDING_EDIT_SELECTORS } from '../binding-edit.selectors';
 import { ServoBindingForm } from '../types';
 import { BindingInputGainSelectComponent } from '../control-axial-output-modifier-select';
 import { getInputTypesForOperationMode } from '../wait-for-controller-input-dialog/get-io-operation-modes-for-controller-input-type';
+import { BindingControlReadMotorPositionComponent } from '../control-read-apos';
 
 @Component({
     standalone: true,
@@ -35,22 +35,21 @@ import { getInputTypesForOperationMode } from '../wait-for-controller-input-dial
         SliderControlComponent,
         ToggleControlComponent,
         BindingControlSelectControllerComponent,
-        BindingInputGainSelectComponent
+        BindingInputGainSelectComponent,
+        BindingControlReadMotorPositionComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BindingServoEditComponent implements IBindingsDetailsEditComponent<ServoBindingForm>, OnDestroy {
+export class BindingServoEditComponent implements IBindingsDetailsEditComponent<ServoBindingForm> {
     public readonly motorLimits = MOTOR_LIMITS;
 
     public readonly acceptableInputTypes = getInputTypesForOperationMode(ControlSchemeBindingType.Servo);
 
+    public readonly portModeNames = PortModeName;
+
     private _form?: ServoBindingForm;
 
     private _canCalibrate$: Observable<boolean> = of(false);
-
-    private readAposCenterSubscription?: Subscription;
-
-    private readServoRangeSubscription?: Subscription;
 
     private readonly isQueryingPort = new BehaviorSubject<boolean>(false);
 
@@ -58,7 +57,6 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
         private readonly cd: ChangeDetectorRef,
         private readonly store: Store,
         private readonly matDialog: MatDialog,
-        private readonly hubFacadeService: HubFacadeService
     ) {
     }
 
@@ -78,7 +76,7 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
         );
     }
 
-    public get canReadAposFromMotor$(): Observable<boolean> {
+    public get canQueryPort$(): Observable<boolean> {
         if (!this._form
             || !this._form.value
             || this._form.value.hubId === undefined
@@ -86,69 +84,33 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
         ) {
             return of(false);
         }
-        const hubId = this._form.value.hubId;
-        const portId = this._form.value.portId;
-        return this.store.select(ATTACHED_IO_PROPS_SELECTORS.selectById({ hubId, portId })).pipe(
-            concatLatestFrom(() => this.store.select(ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectHubPortHastInputModeForPortModeName({
-                hubId,
-                portId,
-                portModeName: PortModeName.absolutePosition
-            }))),
-            combineLatestWith(this.isQueryingPort),
-            map(([ [ props, hasAbsolutePositionMode ], isQueringPort ]) => !isQueringPort && hasAbsolutePositionMode && !!props),
+        return this.isQueryingPort.pipe(
+            map((isQueryingPort) => !isQueryingPort)
         );
     }
 
-    public readAposCenterFromMotor(): void {
-        if (!this._form
-            || !this._form.value
-            || this._form.value.hubId === undefined
-            || this._form.value.portId === undefined
-            || this.isQueryingPort.value
-        ) {
-            return;
-        }
-        this.readAposCenterSubscription?.unsubscribe();
-        this.isQueryingPort.next(true);
-        this.readAposCenterSubscription = this.hubFacadeService.getMotorAbsolutePosition(
-            this._form.value.hubId,
-            this._form.value.portId
-        ).pipe(
-            take(1),
-            finalize(() => this.isQueryingPort.next(false))
-        ).subscribe((apos) => {
-            this._form?.controls.aposCenter.setValue(apos);
-        });
+    public updateIsQueryingPort(
+        isQueryingPort: boolean
+    ): void {
+        this.isQueryingPort.next(isQueryingPort);
     }
 
-    public readServoRangeFromMotor(): void {
-        if (!this._form
-            || !this._form.value
-            || this._form.value.hubId === undefined
-            || this._form.value.portId === undefined
-            || this._form.value.aposCenter === undefined
-            || this.isQueryingPort.value
-        ) {
-            return;
-        }
-        const aposCenter = this._form.value.aposCenter;
-        this.readServoRangeSubscription?.unsubscribe();
-        this.isQueryingPort.next(true);
-        this.readServoRangeSubscription = this.hubFacadeService.getMotorAbsolutePosition(
-            this._form.value.hubId,
-            this._form.value.portId
-        ).pipe(
-            take(1),
-            finalize(() => this.isQueryingPort.next(false))
-        ).subscribe((apos) => {
-            const { cw, ccw } = getTranslationArcs(aposCenter, apos);
-            this._form?.controls.range.setValue(Math.min(Math.abs(cw), Math.abs(ccw)));
-        });
+    public aposCenterFromMotorChanged(
+        aposCenter: number
+    ): void {
+        this._form?.controls.aposCenter.setValue(aposCenter);
+        this._form?.controls.aposCenter.markAsDirty();
+        this._form?.controls.aposCenter.markAsTouched();
     }
 
-    public ngOnDestroy(): void {
-        this.readAposCenterSubscription?.unsubscribe();
-        this.readServoRangeSubscription?.unsubscribe();
+    public rangeFromMotorChanged(
+        result: number
+    ): void {
+        const aposCenter = this._form?.controls.aposCenter.value ?? 0;
+        const { cw, ccw } = getTranslationArcs(aposCenter, result);
+        this._form?.controls.range.setValue(Math.min(Math.abs(cw), Math.abs(ccw)));
+        this._form?.controls.range.markAsDirty();
+        this._form?.controls.range.markAsTouched();
     }
 
     public calibrate(): void {
