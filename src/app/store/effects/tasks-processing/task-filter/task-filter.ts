@@ -19,7 +19,7 @@ export function taskFilter(
             return setAngleTaskFilter(task as PortCommandTask<ControlSchemeBindingType.SetAngle>, lastExecutedTask);
         case ControlSchemeBindingType.SpeedStepper:
             return speedStepperTaskFilter(task as PortCommandTask<ControlSchemeBindingType.SpeedStepper>, lastExecutedTask);
-        default:
+        case ControlSchemeBindingType.Stepper:
             return true;
     }
 }
