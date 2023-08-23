@@ -1,8 +1,6 @@
-import { InjectionToken } from '@angular/core';
 import { Dictionary } from '@ngrx/entity';
 
-import { ControlSchemeBinding, ControllerInputModel, PortCommandTask } from '../../models';
-import { taskBuilderFactory } from './task-builder';
+import { ControlSchemeBinding, ControllerInputModel, PortCommandTask } from '../../../models';
 
 export interface ITaskBuilder {
     buildTask(
@@ -16,5 +14,3 @@ export interface ITaskBuilder {
         previousTask: PortCommandTask
     ): PortCommandTask | null;
 }
-
-export const TASK_BUILDER = new InjectionToken<ITaskBuilder>('TASK BUILDER', { factory: taskBuilderFactory });

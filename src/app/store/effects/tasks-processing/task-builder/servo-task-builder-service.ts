@@ -1,24 +1,22 @@
 import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 import { Dictionary } from '@ngrx/entity';
+import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType, getTranslationArcs } from '@app/shared';
-import { controllerInputIdFn } from '@app/store';
 
+import { ControlSchemeServoBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, ServoTaskPayload } from '../../../models';
+import { controllerInputIdFn } from '../../../reducers';
 import { BaseTaskBuilder } from './base-task-builder';
-import { ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, ServoTaskPayload } from '../../../models';
 import { calcInputGain } from './calc-input-gain';
 
-export class ServoTaskBuilder extends BaseTaskBuilder {
+@Injectable({ providedIn: 'root' })
+export class ServoTaskBuilderService extends BaseTaskBuilder<ControlSchemeServoBinding, ServoTaskPayload> {
     private readonly snappingThreshold = 10;
 
     protected buildPayload(
-        binding: ControlSchemeBinding,
+        binding: ControlSchemeServoBinding,
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
-    ): { payload: ServoTaskPayload; inputTimestamp: number } | null {
-        if (binding.operationMode !== ControlSchemeBindingType.Servo) {
-            return null;
-        }
-
+    ): { payload: ServoTaskPayload; inputTimestamp: number } {
         const servoInput = inputsState[controllerInputIdFn(binding.inputs.servo)];
         const servoInputValue = calcInputGain(servoInput?.value ?? 0, binding.inputs.servo.gain);
 
