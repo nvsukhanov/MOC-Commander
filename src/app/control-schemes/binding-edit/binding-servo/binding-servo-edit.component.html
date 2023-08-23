@@ -19,17 +19,39 @@
             {{ 'controlScheme.servoBinding.calibrate' | transloco }}
         </button>
 
-        <app-slider-control [min]="-motorLimits.maxServoDegreesRange / 2"
-                            [max]="motorLimits.maxServoDegreesRange / 2"
-                            [control]="form.controls.aposCenter"
-                            [translocoTitle]="'controlScheme.servoBinding.outputCenterOffset'"
-        ></app-slider-control>
+        <div class="readable-input-container">
+            <app-slider-control class="readable-input"
+                                [min]="-motorLimits.maxServoDegreesRange / 2"
+                                [max]="motorLimits.maxServoDegreesRange / 2"
+                                [control]="form.controls.aposCenter"
+                                [translocoTitle]="'controlScheme.servoBinding.outputCenterOffset'"
+            ></app-slider-control>
+            <button mat-icon-button
+                    [disabled]="!(canReadAposFromMotor$ | ngrxPush)"
+                    [title]="'controlScheme.servoBinding.readServoCenterFromPort' | transloco"
+                    (click)="readAposCenterFromMotor()"
+            >
+                <mat-icon [fontIcon]="'sync'"></mat-icon>
+                <span class="cdk-visually-hidden">{{ 'controlScheme.servoBinding.readServoCenterFromPort' | transloco }}</span>
+            </button>
+        </div>
 
-        <app-slider-control [min]="motorLimits.minServoDegreesRange"
-                            [max]="motorLimits.maxServoDegreesRange"
-                            [control]="form.controls.range"
-                            [translocoTitle]="'controlScheme.servoBinding.outputAngleRange'"
-        ></app-slider-control>
+        <div class="readable-input-container">
+            <app-slider-control class="readable-input"
+                                [min]="motorLimits.minServoDegreesRange"
+                                [max]="motorLimits.maxServoDegreesRange"
+                                [control]="form.controls.range"
+                                [translocoTitle]="'controlScheme.servoBinding.outputAngleRange'"
+            ></app-slider-control>
+            <button mat-icon-button
+                    [disabled]="!(canReadAposFromMotor$ | ngrxPush)"
+                    [title]="'controlScheme.servoBinding.readServoRangeFromPort' | transloco"
+                    (click)="readServoRangeFromMotor()"
+            >
+                <mat-icon [fontIcon]="'sync'"></mat-icon>
+                <span class="cdk-visually-hidden">{{ 'controlScheme.servoBinding.readServoRangeFromPort' | transloco }}</span>
+            </button>
+        </div>
 
         <app-slider-control [min]="0"
                             [max]="motorLimits.maxSpeed"

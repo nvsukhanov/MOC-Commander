@@ -148,6 +148,8 @@
       "calibrationIsInProgress": "Servo calibration is in progress",
       "calibrationError": "An error occurred during servo calibration",
       "calibrationCancel": "Cancel",
+      "readServoCenterFromPort": "Read servo center from port",
+      "readServoRangeFromPort": "Read servo range from port",
       "taskSummary": "Servo: { angle }°"
     },
     "stepperBinding": {

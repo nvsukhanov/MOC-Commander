@@ -40,6 +40,7 @@ import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-chec
 import { HubStorageService } from './hub-storage.service';
 import { RoutesBuilderService } from '../routing';
 import { HUB_STATS_ACTIONS } from './actions';
+import { HubFacadeService } from './hub-facade.service';
 
 const STORAGE_VERSION = '14';
 
@@ -121,6 +122,7 @@ export function provideApplicationStore(): EnvironmentProviders {
             multi: true
         },
         HubStorageService,
+        HubFacadeService,
         ControllerProfileFactoryService,
         provideRouterStore()
     ]);

@@ -24,10 +24,10 @@ export class ServoCalibrationService {
             const cancel$ = new Subject<void>();
             zip(
                 this.store.select(
-                    ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectHubPortInputModeForPortModeName(hubId, portId, PortModeName.position)
+                    ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectHubPortInputModeForPortModeName({ hubId, portId, portModeName: PortModeName.position })
                 ),
                 this.store.select(
-                    ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectHubPortInputModeForPortModeName(hubId, portId, PortModeName.absolutePosition)
+                    ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectHubPortInputModeForPortModeName({ hubId, portId, portModeName: PortModeName.absolutePosition })
                 )
             ).pipe(
                 take(1),

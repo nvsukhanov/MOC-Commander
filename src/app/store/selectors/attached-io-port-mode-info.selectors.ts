@@ -1,8 +1,7 @@
 import { createSelector } from '@ngrx/store';
-import { PortModeName } from '@nvsukhanov/rxpoweredup';
+import { IOType, PortModeName } from '@nvsukhanov/rxpoweredup';
 
 import { ATTACHED_IO_MODES_SELECTORS } from './attached-io-modes.selectors';
-import { AttachedIoModel } from '../models';
 import { ATTACHED_IO_SELECTORS } from './attached-ios.selectors';
 import { ATTACHED_IO_PORT_MODE_INFO_ENTITY_ADAPTER, ATTACHED_IO_PORT_MODE_INFO_FEATURE, attachedIoModesIdFn, attachedIoPortModeInfoIdFn } from '../reducers';
 
@@ -15,16 +14,21 @@ export const ATTACHED_IO_PORT_MODE_INFO_SELECTORS = {
         ATTACHED_IO_PORT_MODE_INFO_FEATURE.selectAttachedIoPortModeInfoState,
         ATTACHED_IO_PORT_MODE_INFO_ENTITY_ADAPTER.getSelectors().selectEntities
     ),
-    selectModeIdForInputModeName: (io: AttachedIoModel, portModeName: PortModeName) => createSelector(
-        ATTACHED_IO_MODES_SELECTORS.selectIoPortModes(io),
+    selectModeIdForIoAndPortModeName: (
+        { hardwareRevision, softwareRevision, ioType }: { hardwareRevision: string; softwareRevision: string; ioType: IOType },
+        portModeName: PortModeName
+    ) => createSelector(
+        ATTACHED_IO_MODES_SELECTORS.selectIoPortModes({ hardwareRevision, softwareRevision, ioType }),
         ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
         (ioPortModes, portModeInfo): number | null => {
             return ioPortModes?.portInputModes.find((modeId) => {
-                return portModeInfo[attachedIoPortModeInfoIdFn({ ...io, modeId })]?.name === portModeName;
+                return portModeInfo[attachedIoPortModeInfoIdFn({ hardwareRevision, softwareRevision, ioType, modeId })]?.name === portModeName;
             }) ?? null;
         }
     ),
-    selectHubPortInputModeForPortModeName: (hubId: string, portId: number, portModeName: PortModeName) => createSelector(
+    selectHubPortInputModeForPortModeName: (
+        { hubId, portId, portModeName }: { hubId: string; portId: number; portModeName: PortModeName }
+    ) => createSelector(
         ATTACHED_IO_SELECTORS.selectIoAtPort({ hubId, portId }),
         ATTACHED_IO_MODES_SELECTORS.selectEntities,
         ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
@@ -42,4 +46,11 @@ export const ATTACHED_IO_PORT_MODE_INFO_SELECTORS = {
             return null;
         }
     ),
+    selectHubPortHastInputModeForPortModeName: (
+        { hubId, portId, portModeName }: { hubId: string; portId: number; portModeName: PortModeName }
+    ) => createSelector(
+        ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectHubPortInputModeForPortModeName({ hubId, portId, portModeName }),
+        (modeInfo) => modeInfo !== null
+    ),
+
 } as const;
