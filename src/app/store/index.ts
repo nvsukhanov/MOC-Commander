@@ -7,3 +7,4 @@ export * from './reducers';
 export * from './models';
 export * from './effects';
 export * from './i-state';
+export * from './hub-facade.service';
