@@ -5,6 +5,7 @@ import { ControlSchemeBindingType } from '@app/shared';
 import { ControlSchemeBinding, ControllerInputModel, PortCommandTask } from '../../../models';
 import { ITaskBuilder } from './i-task-builder';
 import {
+    AngleShiftTaskBuilderService,
     ServoTaskBuilderService,
     SetAngleTaskBuilderService,
     SetSpeedTaskBuilderService,
@@ -20,6 +21,7 @@ export class TaskBuilderService implements ITaskBuilder {
         [ControlSchemeBindingType.SetSpeed]: this.setSpeedTaskBuilder,
         [ControlSchemeBindingType.SpeedShift]: this.speedShiftTaskBuilder,
         [ControlSchemeBindingType.Stepper]: this.stepperTaskBuilder,
+        [ControlSchemeBindingType.AngleShift]: this.angleShiftTaskBuilder,
     };
 
     constructor(
@@ -28,6 +30,7 @@ export class TaskBuilderService implements ITaskBuilder {
         private readonly setSpeedTaskBuilder: SetSpeedTaskBuilderService,
         private readonly speedShiftTaskBuilder: SpeedShiftTaskBuilderService,
         private readonly stepperTaskBuilder: StepperTaskBuilderService,
+        private readonly angleShiftTaskBuilder: AngleShiftTaskBuilderService
     ) {
     }
 

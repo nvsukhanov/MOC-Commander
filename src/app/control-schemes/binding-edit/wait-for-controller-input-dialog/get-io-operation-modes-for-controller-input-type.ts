@@ -4,28 +4,32 @@ const CONTROLLER_TO_IO_OPERATION_MODES: { [k in ControllerInputType]: ReadonlyAr
     [ControllerInputType.Axis]: [
         ControlSchemeBindingType.SetSpeed,
         ControlSchemeBindingType.Servo,
-        ControlSchemeBindingType.SpeedShift
+        ControlSchemeBindingType.SpeedShift,
+        ControlSchemeBindingType.AngleShift
     ],
     [ControllerInputType.Button]: [
         ControlSchemeBindingType.SetSpeed,
         ControlSchemeBindingType.Servo,
         ControlSchemeBindingType.SetAngle,
         ControlSchemeBindingType.Stepper,
-        ControlSchemeBindingType.SpeedShift
+        ControlSchemeBindingType.SpeedShift,
+        ControlSchemeBindingType.AngleShift
     ],
     [ControllerInputType.Trigger]: [
         ControlSchemeBindingType.SetSpeed,
         ControlSchemeBindingType.Servo,
         ControlSchemeBindingType.SetAngle,
         ControlSchemeBindingType.Stepper,
-        ControlSchemeBindingType.SpeedShift
+        ControlSchemeBindingType.SpeedShift,
+        ControlSchemeBindingType.AngleShift
     ],
     [ControllerInputType.ButtonGroup]: [
         ControlSchemeBindingType.SetSpeed,
         ControlSchemeBindingType.Servo,
         ControlSchemeBindingType.SetAngle,
         ControlSchemeBindingType.Stepper,
-        ControlSchemeBindingType.SpeedShift
+        ControlSchemeBindingType.SpeedShift,
+        ControlSchemeBindingType.AngleShift
     ],
 };
 

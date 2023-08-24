@@ -69,6 +69,15 @@ export class CommonFormControlsBuilderService {
         });
     }
 
+    public angleSelectControl(
+        initialValue: number = 0
+    ): FormControl<number> {
+        return this.formBuilder.control<number>(initialValue, {
+            nonNullable: true,
+            validators: [ Validators.required, Validators.min(MOTOR_LIMITS.minRawAngle), Validators.max(MOTOR_LIMITS.maxRawAngle) ]
+        });
+    }
+
     public servoEndStateControl(
         initialValue: MotorServoEndState = MotorServoEndState.float
     ): FormControl<MotorServoEndState> {

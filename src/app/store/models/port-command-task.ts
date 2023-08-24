@@ -46,7 +46,20 @@ export type SpeedShiftTaskPayload = {
     prevSpeedActiveInput: boolean;
     speed: number;
     power: number;
-    level: number;
+    speedIndex: number;
+    useAccelerationProfile: boolean;
+    useDecelerationProfile: boolean;
+};
+
+export type AngleShiftTaskPayload = {
+    bindingType: ControlSchemeBindingType.AngleShift;
+    nextAngleActiveInput: boolean;
+    prevAngleActiveInput: boolean;
+    angle: number;
+    power: number;
+    speed: number;
+    angleIndex: number;
+    endState: MotorServoEndState;
     useAccelerationProfile: boolean;
     useDecelerationProfile: boolean;
 };
@@ -55,7 +68,8 @@ export type PortCommandTaskPayload = SetSpeedTaskPayload
     | ServoTaskPayload
     | SetAngleTaskPayload
     | StepperTaskPayload
-    | SpeedShiftTaskPayload;
+    | SpeedShiftTaskPayload
+    | AngleShiftTaskPayload;
 
 export type PortCommandTask<TPayloadType extends ControlSchemeBindingType = ControlSchemeBindingType> = {
     hubId: string;

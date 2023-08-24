@@ -9,6 +9,7 @@ import { ServoPortCommandTaskSummaryBuilderService } from './servo-port-command-
 import { SetAnglePortCommandTaskSummaryBuilderService } from './set-angle-port-command-task-summary-builder.service';
 import { StepperPortCommandTaskSummaryBuilderService } from './stepper-port-command-task-summary-builder.service';
 import { SpeedShiftPortCommandTaskSummaryBuilderService } from './speed-shift-port-command-task-summary-builder.service';
+import { AngleShiftPortCommandTaskSummaryBuilderService } from './angle-shift-port-command-task-summary-builder.service';
 
 @Pipe({
     standalone: true,
@@ -22,6 +23,7 @@ export class PortCommandTaskSummaryPipe implements PipeTransform {
         private readonly servoPortCommandTaskSummaryBuilder: ServoPortCommandTaskSummaryBuilderService,
         private readonly stepperPortCommandTaskSummaryBuilder: StepperPortCommandTaskSummaryBuilderService,
         private readonly speedShiftPortCommandTaskSummaryBuilder: SpeedShiftPortCommandTaskSummaryBuilderService,
+        private readonly angleShiftPortCommandTaskSummaryBuilder: AngleShiftPortCommandTaskSummaryBuilderService,
         private readonly store: Store
     ) {
     }
@@ -53,6 +55,14 @@ export class PortCommandTaskSummaryPipe implements PipeTransform {
                 return this.stepperPortCommandTaskSummaryBuilder.build(payload);
             case ControlSchemeBindingType.SpeedShift:
                 return this.speedShiftPortCommandTaskSummaryBuilder.build(payload);
+            case ControlSchemeBindingType.AngleShift:
+                return this.store.select(ATTACHED_IO_PROPS_SELECTORS.selectById(portCommandTask)).pipe(
+                    filter((ioProps): ioProps is AttachedIoPropsModel => !!ioProps),
+                    switchMap((ioProps) => this.angleShiftPortCommandTaskSummaryBuilder.build(
+                        ioProps,
+                        payload
+                    ))
+                );
         }
     }
 }

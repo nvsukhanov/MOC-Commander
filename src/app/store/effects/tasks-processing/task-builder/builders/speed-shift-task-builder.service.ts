@@ -29,7 +29,7 @@ export class SpeedShiftTaskBuilderService extends BaseTaskBuilder<ControlSchemeS
                     prevSpeedActiveInput: isPrevSpeedInputActive,
                     speed: 0,
                     power: 0,
-                    level: binding.initialStepIndex,
+                    speedIndex: binding.initialStepIndex,
                     useAccelerationProfile: binding.useAccelerationProfile,
                     useDecelerationProfile: binding.useDecelerationProfile
                 },
@@ -40,7 +40,7 @@ export class SpeedShiftTaskBuilderService extends BaseTaskBuilder<ControlSchemeS
         const sameBindingPrevTaskPayload: SpeedShiftTaskPayload | null = previousTask?.bindingId === binding.id
                                                                          ? previousTask.payload as SpeedShiftTaskPayload
                                                                          : null;
-        const previousLevel = sameBindingPrevTaskPayload?.level ?? binding.initialStepIndex;
+        const previousLevel = sameBindingPrevTaskPayload?.speedIndex ?? binding.initialStepIndex;
         const isPreviousTaskNextSpeedInputActive = sameBindingPrevTaskPayload?.nextSpeedActiveInput ?? false;
         const isPreviousTaskPreviousSpeedInputActive = sameBindingPrevTaskPayload?.prevSpeedActiveInput ?? false;
 
@@ -55,7 +55,7 @@ export class SpeedShiftTaskBuilderService extends BaseTaskBuilder<ControlSchemeS
 
         const payload: SpeedShiftTaskPayload = {
             bindingType: ControlSchemeBindingType.SpeedShift,
-            level: nextLevel,
+            speedIndex: nextLevel,
             speed: binding.levels[nextLevel],
             power: binding.power,
             nextSpeedActiveInput: isNextSpeedInputActive,

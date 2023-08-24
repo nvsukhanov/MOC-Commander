@@ -1,7 +1,8 @@
 export enum ControlSchemeBindingType {
     SetSpeed = 'setSpeed',
-    Servo = 'servo',
     SetAngle = 'setAngle',
+    Servo = 'servo',
     Stepper = 'stepper',
     SpeedShift = 'speedShift',
+    AngleShift = 'angleShift',
 }

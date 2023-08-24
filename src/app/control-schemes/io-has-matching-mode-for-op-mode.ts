@@ -6,14 +6,16 @@ const REQUIRED_PORT_MODES_FOR_OPERATION_MODE: { [k in ControlSchemeBindingType]:
     [ControlSchemeBindingType.Servo]: [ PortModeName.absolutePosition, PortModeName.position ],
     [ControlSchemeBindingType.SetAngle]: [ PortModeName.absolutePosition, PortModeName.position ],
     [ControlSchemeBindingType.Stepper]: [ PortModeName.position ],
-    [ControlSchemeBindingType.SpeedShift]: [ PortModeName.speed ]
+    [ControlSchemeBindingType.SpeedShift]: [ PortModeName.speed ],
+    [ControlSchemeBindingType.AngleShift]: [ PortModeName.absolutePosition, PortModeName.position ]
 };
 
 export function ioHasMatchingModeForOpMode(
     operationMode: ControlSchemeBindingType,
     ioOutputPortModeNames: PortModeName[],
 ): boolean {
-    return REQUIRED_PORT_MODES_FOR_OPERATION_MODE[operationMode]?.some((requiredPortModeName) =>
-        ioOutputPortModeNames.includes(requiredPortModeName)
+    const ioOuputPortModeNamesSet = new Set(ioOutputPortModeNames);
+    return REQUIRED_PORT_MODES_FOR_OPERATION_MODE[operationMode].every((requiredPortModeName) =>
+        ioOuputPortModeNamesSet.has(requiredPortModeName)
     ) ?? false;
 }

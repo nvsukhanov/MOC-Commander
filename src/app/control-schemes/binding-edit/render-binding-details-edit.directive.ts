@@ -9,6 +9,7 @@ import { BindingSetAngleEditComponent } from './binding-set-angle';
 import { BindingStepperEditComponent } from './binding-stepper';
 import { ControlSchemeBindingForm } from './types';
 import { BindingSpeedShiftComponent } from './binding-speed-shift';
+import { BindingAngleShiftEditComponent } from './binding-angle-shift';
 
 @Directive({
     standalone: true,
@@ -21,7 +22,8 @@ export class RenderBindingDetailsEditDirective implements OnDestroy {
         [ControlSchemeBindingType.Servo]: BindingServoEditComponent,
         [ControlSchemeBindingType.SetAngle]: BindingSetAngleEditComponent,
         [ControlSchemeBindingType.Stepper]: BindingStepperEditComponent,
-        [ControlSchemeBindingType.SpeedShift]: BindingSpeedShiftComponent
+        [ControlSchemeBindingType.SpeedShift]: BindingSpeedShiftComponent,
+        [ControlSchemeBindingType.AngleShift]: BindingAngleShiftEditComponent
     };
 
     private operationMode?: ControlSchemeBindingType;
