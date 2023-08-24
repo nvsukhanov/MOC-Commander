@@ -1,0 +1,20 @@
+:host {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-level-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.level-input-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.level-input {
+    flex-grow: 1;
+}

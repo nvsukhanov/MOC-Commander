@@ -14,6 +14,7 @@ export class BindingTypeToL10nKeyPipe implements PipeTransform {
         [ControlSchemeBindingType.SetAngle]: 'controlScheme.setAngleBinding.operationMode',
         [ControlSchemeBindingType.Stepper]: 'controlScheme.stepperBinding.operationMode',
         [ControlSchemeBindingType.SpeedShift]: 'controlScheme.speedShiftBinding.operationMode',
+        [ControlSchemeBindingType.AngleShift]: 'controlScheme.angleShiftBinding.operationMode',
     };
 
     public transform(

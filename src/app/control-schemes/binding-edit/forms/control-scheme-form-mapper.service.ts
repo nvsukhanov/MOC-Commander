@@ -8,6 +8,7 @@ import { ServoBindingFormMapperService } from './servo-binding-form-mapper.servi
 import { SetAngleBindingFormMapperService } from './set-angle-binding-form-mapper.service';
 import { StepperBindingFormMapperService } from './stepper-binding-form-mapper.service';
 import { SpeedShiftBindingFormMapperService } from './speed-shift-binding-form-mapper.service';
+import { AngleShiftBindingFormMapperService } from './angle-shift-binding-form-mapper.service';
 
 @Injectable({ providedIn: 'root' })
 export class ControlSchemeFormMapperService {
@@ -17,6 +18,7 @@ export class ControlSchemeFormMapperService {
         private readonly setAngleBindingMapper: SetAngleBindingFormMapperService,
         private readonly stepperBindingMapper: StepperBindingFormMapperService,
         private readonly speedShiftBindingMapper: SpeedShiftBindingFormMapperService,
+        private readonly angleShiftBindingMapper: AngleShiftBindingFormMapperService
     ) {
     }
 
@@ -35,6 +37,8 @@ export class ControlSchemeFormMapperService {
                 return this.stepperBindingMapper.mapToModel(form.controls[ControlSchemeBindingType.Stepper]);
             case ControlSchemeBindingType.SpeedShift:
                 return this.speedShiftBindingMapper.mapToModel(form.controls[ControlSchemeBindingType.SpeedShift]);
+            case ControlSchemeBindingType.AngleShift:
+                return this.angleShiftBindingMapper.mapToModel(form.controls[ControlSchemeBindingType.AngleShift]);
         }
     }
 }

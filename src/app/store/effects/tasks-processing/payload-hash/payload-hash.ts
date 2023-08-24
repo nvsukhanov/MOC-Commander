@@ -6,6 +6,7 @@ import { setAnglePayloadHash } from './set-angle-payload-hash';
 import { setSpeedPayloadHash } from './set-speed-payload-hash';
 import { stepperPayloadHash } from './stepper-payload-hash';
 import { speedShiftPayloadHash } from './speed-shift-payload-hash';
+import { angleShiftPayloadHash } from './angle-shift-payload-hash';
 
 export function payloadHash(
     payload: PortCommandTaskPayload
@@ -21,5 +22,7 @@ export function payloadHash(
             return stepperPayloadHash(payload);
         case ControlSchemeBindingType.SpeedShift:
             return speedShiftPayloadHash(payload);
+        case ControlSchemeBindingType.AngleShift:
+            return angleShiftPayloadHash(payload);
     }
 }

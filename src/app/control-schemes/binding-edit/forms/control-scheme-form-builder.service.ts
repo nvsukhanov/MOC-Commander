@@ -9,6 +9,7 @@ import { SetSpeedBindingFormBuilderService } from './set-speed-binding-form-buil
 import { SetAngleBindingFormBuilderService } from './set-angle-binding-form-builder.service';
 import { StepperBindingFormBuilderService } from './stepper-binding-form-builder.service';
 import { SpeedShiftBindingFormBuilderService } from './speed-shift-binding-form-builder.service';
+import { AngleShiftBindingFormBuilderService } from './angle-shift-binding-form-builder.service';
 
 @Injectable({ providedIn: 'root' })
 export class ControlSchemeFormBuilderService {
@@ -19,6 +20,7 @@ export class ControlSchemeFormBuilderService {
         private readonly setAngleBindingFormBuilder: SetAngleBindingFormBuilderService,
         private readonly stepperBindingFormBuilder: StepperBindingFormBuilderService,
         private readonly speedShiftBindingFormBuilder: SpeedShiftBindingFormBuilderService,
+        private readonly angleShiftBindingFormBuilder: AngleShiftBindingFormBuilderService
     ) {
     }
 
@@ -29,7 +31,8 @@ export class ControlSchemeFormBuilderService {
             [ControlSchemeBindingType.Servo]: this.servoBindingFormBuilder.build(),
             [ControlSchemeBindingType.SetAngle]: this.setAngleBindingFormBuilder.build(),
             [ControlSchemeBindingType.Stepper]: this.stepperBindingFormBuilder.build(),
-            [ControlSchemeBindingType.SpeedShift]: this.speedShiftBindingFormBuilder.build()
+            [ControlSchemeBindingType.SpeedShift]: this.speedShiftBindingFormBuilder.build(),
+            [ControlSchemeBindingType.AngleShift]: this.angleShiftBindingFormBuilder.build()
         });
     }
 
@@ -55,6 +58,9 @@ export class ControlSchemeFormBuilderService {
                 break;
             case ControlSchemeBindingType.SpeedShift:
                 this.speedShiftBindingFormBuilder.patchForm(form.controls[ControlSchemeBindingType.SpeedShift], patch);
+                break;
+            case ControlSchemeBindingType.AngleShift:
+                this.angleShiftBindingFormBuilder.patchForm(form.controls[ControlSchemeBindingType.AngleShift], patch);
                 break;
             default:
                 return patch.operationMode satisfies void;

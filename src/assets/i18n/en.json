@@ -177,8 +177,20 @@
       "level": "Speed level { level } (%)",
       "outputLevelAdd": "Add speed level",
       "outputLevelRemove": "Remove level",
-      "ouputPower": "Power (%)",
+      "outputPower": "Power (%)",
       "taskSummary": "Speed shift: {speed}%"
+    },
+    "angleShiftBinding": {
+      "operationMode": "Angle shift",
+      "inputNextAngle": "Next angle",
+      "inputPrevAngle": "Previous angle",
+      "angleLevel": "Angle level { level } (°)",
+      "readAngleFromPort": "Read angle from port",
+      "outputAngleLevelAdd": "Add angle",
+      "outputAngleLevelRemove": "Remove angle",
+      "outputSpeed": "Speed (%)",
+      "outputPower": "Power (%)",
+      "taskSummary": "Angle shift: {angle}°"
     }
   },
   "motorServoEndState": {

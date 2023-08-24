@@ -106,11 +106,28 @@ export type ControlSchemeSpeedShiftBinding = {
     initialStepIndex: number;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
+export type ControlSchemeAngleShiftBinding = {
+    id: string;
+    operationMode: ControlSchemeBindingType.AngleShift;
+    inputs: {
+        nextAngle: ControlSchemeInput;
+        prevAngle?: ControlSchemeInput;
+    } & ControlSchemeInputsRecord;
+    hubId: string;
+    portId: number;
+    angles: number[];
+    speed: number;
+    power: number;
+    endState: MotorServoEndState;
+    initialStepIndex: number;
+} & AccelerationProfileMixin & DecelerationProfileMixin;
+
 export type ControlSchemeBinding = ControlSchemeSetSpeedBinding
     | ControlSchemeServoBinding
     | ControlSchemeSetAngleBinding
     | ControlSchemeStepperBinding
-    | ControlSchemeSpeedShiftBinding;
+    | ControlSchemeSpeedShiftBinding
+    | ControlSchemeAngleShiftBinding;
 
 export type ControlSchemeModel = {
     id: string;

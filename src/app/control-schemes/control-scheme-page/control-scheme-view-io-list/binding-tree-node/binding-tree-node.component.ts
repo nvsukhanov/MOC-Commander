@@ -9,7 +9,7 @@ import { Store } from '@ngrx/store';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
-import { BindingTypeToL10nKeyPipe, ControlSchemeBindingType, EllipsisTitleDirective } from '@app/shared';
+import { BindingTypeToL10nKeyPipe, EllipsisTitleDirective } from '@app/shared';
 
 import { BindingTreeNodeViewModel } from './binding-tree-node-view-model';
 import { INPUT_TREE_NODE_VIEW_MODEL_SELECTOR } from './input-tree-node-view-model.selector';
@@ -63,21 +63,7 @@ export class BindingTreeNodeComponent {
             if (!treeNodeData) {
                 this._viewModel$ = NEVER;
             } else {
-                this._viewModel$ = this.recalculateTreeNodeViewSelector(treeNodeData);
-            }
-        }
-    }
-
-    private recalculateTreeNodeViewSelector(
-        treeNodeData: ControlSchemeViewBindingTreeNodeData
-    ): Observable<BindingTreeNodeViewModel> {
-        switch (treeNodeData.binding.operationMode) {
-            case ControlSchemeBindingType.Stepper:
-            case ControlSchemeBindingType.SetAngle:
-            case ControlSchemeBindingType.Servo:
-            case ControlSchemeBindingType.SetSpeed:
-            case ControlSchemeBindingType.SpeedShift:
-                return this.store.select(INPUT_TREE_NODE_VIEW_MODEL_SELECTOR(
+                this._viewModel$ = this.store.select(INPUT_TREE_NODE_VIEW_MODEL_SELECTOR(
                     treeNodeData.controlSchemeId,
                     treeNodeData.binding.inputs,
                     treeNodeData.binding.operationMode,
@@ -85,6 +71,7 @@ export class BindingTreeNodeComponent {
                     treeNodeData.isActive,
                     treeNodeData.ioHasNoRequiredCapabilities
                 ));
+            }
         }
     }
 }
