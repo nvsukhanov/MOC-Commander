@@ -1,22 +1,23 @@
 import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { ControlSchemeBindingType, getTranslationArcs } from '@app/shared';
 
 import { ControlSchemeServoBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, ServoTaskPayload } from '../../../../models';
 import { controllerInputIdFn } from '../../../../reducers';
-import { BaseTaskBuilder } from '../base-task-builder';
-import { calcInputGain } from '../calc-input-gain';
+import { calcInputGain } from './calc-input-gain';
+import { ITaskPayloadFactory } from './i-task-payload-factory';
 
 @Injectable({ providedIn: 'root' })
-export class ServoTaskBuilderService extends BaseTaskBuilder<ControlSchemeServoBinding, ServoTaskPayload> {
+export class ServoTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.Servo> {
     private readonly snappingThreshold = 10;
 
-    protected buildPayload(
+    public buildPayload(
         binding: ControlSchemeServoBinding,
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
-    ): { payload: ServoTaskPayload; inputTimestamp: number } {
+    ): Observable<{ payload: ServoTaskPayload; inputTimestamp: number }> {
         const servoInput = inputsState[controllerInputIdFn(binding.inputs.servo)];
         const servoInputValue = calcInputGain(servoInput?.value ?? 0, binding.inputs.servo.gain);
 
@@ -41,23 +42,23 @@ export class ServoTaskBuilderService extends BaseTaskBuilder<ControlSchemeServoB
             useAccelerationProfile: binding.useAccelerationProfile,
             useDecelerationProfile: binding.useDecelerationProfile,
         };
-        return { payload, inputTimestamp: servoInput?.timestamp ?? Date.now() };
+        return of({ payload, inputTimestamp: servoInput?.timestamp ?? Date.now() });
     }
 
-    protected buildCleanupPayload(
+    public buildCleanupPayload(
         previousTask: PortCommandTask
-    ): PortCommandTaskPayload | null {
+    ): Observable<PortCommandTaskPayload | null> {
         if (previousTask.payload.bindingType !== ControlSchemeBindingType.Servo) {
-            return null;
+            return of(null);
         }
-        return {
+        return of({
             bindingType: ControlSchemeBindingType.SetSpeed,
             speed: 0,
             power: 0,
             activeInput: false,
             useAccelerationProfile: previousTask.payload.useAccelerationProfile,
             useDecelerationProfile: previousTask.payload.useDecelerationProfile
-        };
+        });
     }
 
     private snapAngle(

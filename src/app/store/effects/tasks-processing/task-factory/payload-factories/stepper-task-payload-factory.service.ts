@@ -1,22 +1,23 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import { ControlSchemeStepperBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, StepperTaskPayload } from '../../../../models';
 import { controllerInputIdFn } from '../../../../reducers';
-import { BaseTaskBuilder } from '../base-task-builder';
+import { ITaskPayloadFactory } from './i-task-payload-factory';
 
 @Injectable({ providedIn: 'root' })
-export class StepperTaskBuilderService extends BaseTaskBuilder<ControlSchemeStepperBinding, StepperTaskPayload> {
-    protected buildPayload(
+export class StepperTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.Stepper> {
+    public buildPayload(
         binding: ControlSchemeStepperBinding,
         inputsState: Dictionary<ControllerInputModel>,
-    ): { payload: StepperTaskPayload; inputTimestamp: number } | null {
+    ): Observable<{ payload: StepperTaskPayload; inputTimestamp: number } | null> {
         const stepInput = inputsState[controllerInputIdFn(binding.inputs.step)];
         const stepInputValue = stepInput?.value ?? 0;
 
         if (stepInputValue < 0.5) { // TODO: inject threshold
-            return null;
+            return of(null);
         }
 
         const payload: StepperTaskPayload = {
@@ -29,22 +30,22 @@ export class StepperTaskBuilderService extends BaseTaskBuilder<ControlSchemeStep
             useDecelerationProfile: binding.useDecelerationProfile
         };
 
-        return { payload, inputTimestamp: stepInput?.timestamp ?? Date.now() };
+        return of({ payload, inputTimestamp: stepInput?.timestamp ?? Date.now() });
     }
 
-    protected buildCleanupPayload(
+    public buildCleanupPayload(
         previousTask: PortCommandTask
-    ): PortCommandTaskPayload | null {
+    ): Observable<PortCommandTaskPayload | null> {
         if (previousTask.payload.bindingType !== ControlSchemeBindingType.Stepper) {
-            return null;
+            return of(null);
         }
-        return {
+        return of({
             bindingType: ControlSchemeBindingType.SetSpeed,
             speed: 0,
             power: 0,
             activeInput: false,
             useAccelerationProfile: previousTask.payload.useAccelerationProfile,
             useDecelerationProfile: previousTask.payload.useDecelerationProfile
-        };
+        });
     }
 }

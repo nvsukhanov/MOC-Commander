@@ -1,28 +1,29 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import { controllerInputIdFn } from '../../../../reducers';
 import { ControlSchemeSpeedShiftBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, SpeedShiftTaskPayload, } from '../../../../models';
-import { BaseTaskBuilder } from '../base-task-builder';
+import { ITaskPayloadFactory } from './i-task-payload-factory';
 
 @Injectable({ providedIn: 'root' })
-export class SpeedShiftTaskBuilderService extends BaseTaskBuilder<ControlSchemeSpeedShiftBinding, SpeedShiftTaskPayload> {
+export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.SpeedShift> {
     private readonly inputThreshold = 0.5;
 
-    protected buildPayload(
+    public buildPayload(
         binding: ControlSchemeSpeedShiftBinding,
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
         previousTask: PortCommandTask | null
-    ): { payload: SpeedShiftTaskPayload; inputTimestamp: number } | null {
+    ): Observable<{ payload: SpeedShiftTaskPayload; inputTimestamp: number } | null> {
         const isNextSpeedInputActive = (inputsState[controllerInputIdFn(binding.inputs.nextSpeed)]?.value ?? 0) > this.inputThreshold;
         const isPrevSpeedInputActive = !!binding.inputs.prevSpeed
             && (inputsState[controllerInputIdFn(binding.inputs.prevSpeed)]?.value ?? 0) > this.inputThreshold;
         const isStopInputActive = !!binding.inputs.stop && (inputsState[controllerInputIdFn(binding.inputs.stop)]?.value ?? 0) > this.inputThreshold;
 
         if (isStopInputActive) {
-            return {
+            return of({
                 payload: {
                     bindingType: ControlSchemeBindingType.SpeedShift,
                     nextSpeedActiveInput: isNextSpeedInputActive,
@@ -34,7 +35,7 @@ export class SpeedShiftTaskBuilderService extends BaseTaskBuilder<ControlSchemeS
                     useDecelerationProfile: binding.useDecelerationProfile
                 },
                 inputTimestamp: Date.now()
-            };
+            });
         }
 
         const sameBindingPrevTaskPayload: SpeedShiftTaskPayload | null = previousTask?.bindingId === binding.id
@@ -63,23 +64,23 @@ export class SpeedShiftTaskBuilderService extends BaseTaskBuilder<ControlSchemeS
             useAccelerationProfile: binding.useAccelerationProfile,
             useDecelerationProfile: binding.useDecelerationProfile
         };
-        return { payload, inputTimestamp: Date.now() };
+        return of({ payload, inputTimestamp: Date.now() });
     }
 
-    protected buildCleanupPayload(
+    public buildCleanupPayload(
         previousTask: PortCommandTask
-    ): PortCommandTaskPayload | null {
+    ): Observable<PortCommandTaskPayload | null> {
         if (previousTask.payload.bindingType !== ControlSchemeBindingType.SpeedShift) {
-            return null;
+            return of(null);
         }
-        return {
+        return of({
             bindingType: ControlSchemeBindingType.SetSpeed,
             speed: 0,
             power: 0,
             activeInput: false,
             useAccelerationProfile: previousTask.payload.useAccelerationProfile,
             useDecelerationProfile: previousTask.payload.useDecelerationProfile
-        };
+        });
     }
 
     private calculateUpdatedLevel(
