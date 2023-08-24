@@ -1,21 +1,22 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import { controllerInputIdFn } from '../../../../reducers';
 import { AngleShiftTaskPayload, ControlSchemeAngleShiftBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, } from '../../../../models';
-import { BaseTaskBuilder } from '../base-task-builder';
+import { ITaskPayloadFactory } from './i-task-payload-factory';
 
 @Injectable({ providedIn: 'root' })
-export class AngleShiftTaskBuilderService extends BaseTaskBuilder<ControlSchemeAngleShiftBinding, AngleShiftTaskPayload> {
+export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.AngleShift> {
     private readonly inputThreshold = 0.5;
 
-    protected buildPayload(
+    public buildPayload(
         binding: ControlSchemeAngleShiftBinding,
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
         previousTask: PortCommandTask | null
-    ): { payload: AngleShiftTaskPayload; inputTimestamp: number } | null {
+    ): Observable<{ payload: AngleShiftTaskPayload; inputTimestamp: number } | null> {
         const isNextAngleInputActive = (inputsState[controllerInputIdFn(binding.inputs.nextAngle)]?.value ?? 0) > this.inputThreshold;
         const isPrevAngleInputActive = !!binding.inputs.prevAngle
             && (inputsState[controllerInputIdFn(binding.inputs.prevAngle)]?.value ?? 0) > this.inputThreshold;
@@ -48,23 +49,23 @@ export class AngleShiftTaskBuilderService extends BaseTaskBuilder<ControlSchemeA
             useDecelerationProfile: binding.useDecelerationProfile,
             endState: binding.endState,
         };
-        return { payload, inputTimestamp: Date.now() };
+        return of({ payload, inputTimestamp: Date.now() });
     }
 
-    protected buildCleanupPayload(
+    public buildCleanupPayload(
         previousTask: PortCommandTask
-    ): PortCommandTaskPayload | null {
+    ): Observable<PortCommandTaskPayload | null> {
         if (previousTask.payload.bindingType !== ControlSchemeBindingType.SpeedShift) {
-            return null;
+            return of(null);
         }
-        return {
+        return of({
             bindingType: ControlSchemeBindingType.SetSpeed,
             speed: 0,
             power: 0,
             activeInput: false,
             useAccelerationProfile: previousTask.payload.useAccelerationProfile,
             useDecelerationProfile: previousTask.payload.useDecelerationProfile
-        };
+        });
     }
 
     private calculateUpdatedLevel(

@@ -1,4 +1,4 @@
-import { InputGain } from '../../../models';
+import { InputGain } from '../../../../models';
 
 const EXPONENTIAL_SLOPE_GAIN = 0.7;
 const EXPONENTIAL_SHARPNESS = 3;

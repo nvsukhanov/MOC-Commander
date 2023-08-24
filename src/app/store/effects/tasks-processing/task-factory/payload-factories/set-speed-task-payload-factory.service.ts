@@ -1,6 +1,7 @@
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import {
@@ -12,34 +13,34 @@ import {
     SetSpeedTaskPayload
 } from '../../../../models';
 import { controllerInputIdFn } from '../../../../reducers';
-import { BaseTaskBuilder } from '../base-task-builder';
-import { calcInputGain } from '../calc-input-gain';
+import { calcInputGain } from './calc-input-gain';
+import { ITaskPayloadFactory } from './i-task-payload-factory';
 
 @Injectable({ providedIn: 'root' })
-export class SetSpeedTaskBuilderService extends BaseTaskBuilder<ControlSchemeSetSpeedBinding, SetSpeedTaskPayload> {
+export class SetSpeedTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.SetSpeed> {
     private readonly speedStep = 5;
 
     private readonly speedSnapThreshold = 10;
 
-    protected buildPayload(
+    public buildPayload(
         binding: ControlSchemeSetSpeedBinding,
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
         lastExecutedTask: PortCommandTask | null
-    ): { payload: SetSpeedTaskPayload; inputTimestamp: number } | null {
+    ): Observable<{ payload: SetSpeedTaskPayload; inputTimestamp: number } | null> {
         const accelerateInput = inputsState[controllerInputIdFn(binding.inputs.accelerate)];
         const accelerateInputValue = accelerateInput?.value ?? 0;
 
         // brake input is ignored for toggle bindings
         if (binding.isToggle) {
             if (accelerateInputValue === 0) {
-                return null;
+                return of(null);
             }
             const payload = this.createTogglePayload(binding, lastExecutedTask);
             if (payload) {
-                return { payload, inputTimestamp: accelerateInput?.timestamp ?? Date.now() };
+                return of({ payload, inputTimestamp: accelerateInput?.timestamp ?? Date.now() });
             }
-            return null;
+            return of(null);
         }
 
         const brakeInput = binding.inputs.brake
@@ -63,23 +64,23 @@ export class SetSpeedTaskBuilderService extends BaseTaskBuilder<ControlSchemeSet
             useDecelerationProfile: binding.useDecelerationProfile
         };
 
-        return { payload, inputTimestamp: accelerateInput?.timestamp ?? Date.now() };
+        return of({ payload, inputTimestamp: accelerateInput?.timestamp ?? Date.now() });
     }
 
-    protected buildCleanupPayload(
+    public buildCleanupPayload(
         previousTask: PortCommandTask
-    ): PortCommandTaskPayload | null {
+    ): Observable<PortCommandTaskPayload | null> {
         if (previousTask.payload.bindingType !== ControlSchemeBindingType.SetSpeed) {
-            return null;
+            return of(null);
         }
-        return {
+        return of({
             bindingType: ControlSchemeBindingType.SetSpeed,
             speed: 0,
             power: 0,
             activeInput: false,
             useAccelerationProfile: previousTask.payload.useAccelerationProfile,
             useDecelerationProfile: previousTask.payload.useDecelerationProfile
-        };
+        });
     }
 
     private createTogglePayload(
