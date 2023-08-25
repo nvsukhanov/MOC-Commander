@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
-import { AngleShiftTaskPayload, AttachedIoPropsModel } from '@app/store';
+import { AngleShiftTaskPayload } from '@app/store';
 
 @Injectable({ providedIn: 'root' })
 export class AngleShiftPortCommandTaskSummaryBuilderService {
@@ -11,10 +11,8 @@ export class AngleShiftPortCommandTaskSummaryBuilderService {
     }
 
     public build(
-        attachedIoProps: AttachedIoPropsModel,
         payload: AngleShiftTaskPayload
     ): Observable<string> {
-        const angle = payload.angle - (attachedIoProps.motorEncoderOffset ?? 0);
-        return this.translocoService.selectTranslate('controlScheme.angleShiftBinding.taskSummary', { angle });
+        return this.translocoService.selectTranslate('controlScheme.angleShiftBinding.taskSummary', payload);
     }
 }

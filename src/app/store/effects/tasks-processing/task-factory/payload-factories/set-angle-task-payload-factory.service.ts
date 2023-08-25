@@ -7,7 +7,7 @@ import { controllerInputIdFn } from '../../../../reducers';
 import { ControlSchemeSetAngleBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, SetAngleTaskPayload } from '../../../../models';
 import { ITaskPayloadFactory } from './i-task-payload-factory';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class SetAngleTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.SetAngle> {
     private readonly inputValueThreshold = 0.5;
 

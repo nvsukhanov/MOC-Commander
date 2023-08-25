@@ -7,7 +7,7 @@ import { controllerInputIdFn } from '../../../../reducers';
 import { ControlSchemeSpeedShiftBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, SpeedShiftTaskPayload, } from '../../../../models';
 import { ITaskPayloadFactory } from './i-task-payload-factory';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.SpeedShift> {
     private readonly inputThreshold = 0.5;
 

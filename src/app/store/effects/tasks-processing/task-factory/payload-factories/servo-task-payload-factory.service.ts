@@ -9,7 +9,7 @@ import { controllerInputIdFn } from '../../../../reducers';
 import { calcInputGain } from './calc-input-gain';
 import { ITaskPayloadFactory } from './i-task-payload-factory';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ServoTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.Servo> {
     private readonly snappingThreshold = 10;
 

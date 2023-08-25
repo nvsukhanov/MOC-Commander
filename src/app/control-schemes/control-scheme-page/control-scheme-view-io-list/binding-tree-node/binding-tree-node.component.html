@@ -9,7 +9,9 @@
             </a>
         </ng-container>
         <ng-template #ioCapabilitiesMismatch>
-            <mat-error class="binding__operation-type">
+            <mat-error class="binding__operation-type"
+                       [title]="'controlScheme.ioCapabilitiesMismatch' | transloco"
+            >
                 {{ viewModel.operationMode | bindingTypeToL10nKey | transloco }}
             </mat-error>
             <span class="cdk-visually-hidden">

@@ -55,6 +55,7 @@ export type AngleShiftTaskPayload = {
     bindingType: ControlSchemeBindingType.AngleShift;
     nextAngleActiveInput: boolean;
     prevAngleActiveInput: boolean;
+    offset: number;
     angle: number;
     power: number;
     speed: number;

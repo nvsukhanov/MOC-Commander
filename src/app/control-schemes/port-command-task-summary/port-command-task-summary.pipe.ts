@@ -56,13 +56,7 @@ export class PortCommandTaskSummaryPipe implements PipeTransform {
             case ControlSchemeBindingType.SpeedShift:
                 return this.speedShiftPortCommandTaskSummaryBuilder.build(payload);
             case ControlSchemeBindingType.AngleShift:
-                return this.store.select(ATTACHED_IO_PROPS_SELECTORS.selectById(portCommandTask)).pipe(
-                    filter((ioProps): ioProps is AttachedIoPropsModel => !!ioProps),
-                    switchMap((ioProps) => this.angleShiftPortCommandTaskSummaryBuilder.build(
-                        ioProps,
-                        payload
-                    ))
-                );
+                return this.angleShiftPortCommandTaskSummaryBuilder.build(payload);
         }
     }
 }

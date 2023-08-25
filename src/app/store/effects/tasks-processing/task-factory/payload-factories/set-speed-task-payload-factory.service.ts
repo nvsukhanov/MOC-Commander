@@ -16,7 +16,7 @@ import { controllerInputIdFn } from '../../../../reducers';
 import { calcInputGain } from './calc-input-gain';
 import { ITaskPayloadFactory } from './i-task-payload-factory';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class SetSpeedTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.SetSpeed> {
     private readonly speedStep = 5;
 

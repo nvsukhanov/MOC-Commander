@@ -4,11 +4,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MOTOR_LIMITS, PortModeName } from '@nvsukhanov/rxpoweredup';
-import { BehaviorSubject, Observable, take } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
-import { Store } from '@ngrx/store';
 import { ControlSchemeBindingType, ControllerInputType, SliderControlComponent, ToggleControlComponent } from '@app/shared';
-import { ATTACHED_IO_PROPS_SELECTORS } from '@app/store';
 
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { BindingControlNumInputComponent } from '../control-num-input';
@@ -17,7 +15,7 @@ import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-compon
 import { BindingControlOutputEndStateComponent } from '../control-output-end-state-select';
 import { CommonFormControlsBuilderService } from '../forms';
 import { getInputTypesForOperationMode } from '../wait-for-controller-input-dialog/get-io-operation-modes-for-controller-input-type';
-import { BindingControlReadMotorPositionComponent } from '../control-read-apos';
+import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
 
 @Component({
     standalone: true,
@@ -45,6 +43,10 @@ export class BindingAngleShiftEditComponent implements IBindingsDetailsEditCompo
 
     public readonly motorLimits = MOTOR_LIMITS;
 
+    public readonly minAngle = -(MOTOR_LIMITS.maxServoDegreesRange / 2);
+
+    public readonly maxAngle = MOTOR_LIMITS.maxServoDegreesRange / 2;
+
     public readonly portModeNames = PortModeName;
 
     private _form?: AngleShiftBindingForm;
@@ -52,8 +54,7 @@ export class BindingAngleShiftEditComponent implements IBindingsDetailsEditCompo
     private readonly _isQueryingPort$ = new BehaviorSubject<boolean>(false);
 
     constructor(
-        private readonly commonFormControlBuilder: CommonFormControlsBuilderService,
-        private readonly store: Store
+        private readonly commonFormControlBuilder: CommonFormControlsBuilderService
     ) {
     }
 
@@ -91,18 +92,12 @@ export class BindingAngleShiftEditComponent implements IBindingsDetailsEditCompo
         ) {
             return;
         }
-        const hubId = this.form.controls.hubId.value;
-        const portId = this.form.controls.portId.value;
         const control = this.form.controls.angles.at(at);
 
-        this.store.select(ATTACHED_IO_PROPS_SELECTORS.selectMotorEncoderOffset({ hubId, portId })).pipe(
-            take(1)
-        ).subscribe((offset) => {
-            control.setValue(angle + offset);
-            control.markAsTouched();
-            control.markAsDirty();
-            this.form?.updateValueAndValidity();
-        });
+        control.setValue(angle);
+        control.markAsTouched();
+        control.markAsDirty();
+        this.form?.updateValueAndValidity();
     }
 
     public addNextAngleLevel(): void {

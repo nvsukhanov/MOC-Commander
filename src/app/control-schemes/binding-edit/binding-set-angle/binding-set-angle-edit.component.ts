@@ -16,7 +16,7 @@ import { BindingControlSelectControllerComponent } from '../control-select-contr
 import { BindingControlOutputEndStateComponent } from '../control-output-end-state-select';
 import { SetAngleBindingForm } from '../types';
 import { getInputTypesForOperationMode } from '../wait-for-controller-input-dialog/get-io-operation-modes-for-controller-input-type';
-import { BindingControlReadMotorPositionComponent } from '../control-read-apos';
+import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
 
 @Component({
     standalone: true,
