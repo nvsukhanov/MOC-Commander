@@ -7,7 +7,7 @@ import { ControlSchemeStepperBinding, ControllerInputModel, PortCommandTask, Por
 import { controllerInputIdFn } from '../../../../reducers';
 import { ITaskPayloadFactory } from './i-task-payload-factory';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class StepperTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.Stepper> {
     public buildPayload(
         binding: ControlSchemeStepperBinding,

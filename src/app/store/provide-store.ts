@@ -35,6 +35,7 @@ import {
     HubsEffects,
     NotificationsEffects,
     TaskProcessingEffects,
+    provideTaskProcessingFactories
 } from './effects';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { HubStorageService } from './hub-storage.service';
@@ -124,6 +125,7 @@ export function provideApplicationStore(): EnvironmentProviders {
         HubStorageService,
         HubFacadeService,
         ControllerProfileFactoryService,
-        provideRouterStore()
+        provideRouterStore(),
+        provideTaskProcessingFactories()
     ]);
 }

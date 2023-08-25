@@ -18,7 +18,7 @@ import { BINDING_EDIT_SELECTORS } from '../binding-edit.selectors';
 import { ServoBindingForm } from '../types';
 import { BindingInputGainSelectComponent } from '../control-axial-output-modifier-select';
 import { getInputTypesForOperationMode } from '../wait-for-controller-input-dialog/get-io-operation-modes-for-controller-input-type';
-import { BindingControlReadMotorPositionComponent } from '../control-read-apos';
+import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
 
 @Component({
     standalone: true,

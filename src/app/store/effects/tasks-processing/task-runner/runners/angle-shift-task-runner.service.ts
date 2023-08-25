@@ -15,7 +15,7 @@ export class AngleShiftTaskRunnerService implements ITaskRunner<ControlSchemeBin
     ): Observable<PortCommandExecutionStatus> {
         return hub.motors.goToPosition(
             task.portId,
-            task.payload.angle,
+            task.payload.angle + task.payload.offset,
             {
                 speed: task.payload.speed,
                 power: task.payload.power,
