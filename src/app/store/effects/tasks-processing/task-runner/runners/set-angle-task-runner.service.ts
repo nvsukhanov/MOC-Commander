@@ -10,8 +10,8 @@ import { ITaskRunner } from '../i-task-runner';
 @Injectable({ providedIn: 'root' })
 export class SetAngleTaskRunnerService implements ITaskRunner<ControlSchemeBindingType.SetAngle> {
     public runTask(
+        hub: IHub,
         task: PortCommandTask<ControlSchemeBindingType.SetAngle>,
-        hub: IHub
     ): Observable<PortCommandExecutionStatus> {
         return hub.motors.goToPosition(
             task.portId,

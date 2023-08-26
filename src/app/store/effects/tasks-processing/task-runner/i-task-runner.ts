@@ -6,7 +6,8 @@ import { PortCommandTask } from '../../../models';
 
 export interface ITaskRunner<TType extends ControlSchemeBindingType> {
     runTask(
+        hub: IHub,
         task: PortCommandTask<TType>,
-        hub: IHub
+        previousTask?: PortCommandTask,
     ): Observable<PortCommandExecutionStatus>;
 }

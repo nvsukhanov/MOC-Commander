@@ -36,10 +36,11 @@ export class TaskRunnerService implements ITaskRunner<ControlSchemeBindingType> 
     }
 
     public runTask<TBindingType extends ControlSchemeBindingType>(
+        hub: IHub,
         task: PortCommandTask<TBindingType>,
-        hub: IHub
+        previousTask?: PortCommandTask
     ): Observable<PortCommandExecutionStatus> {
         const runner: ITaskRunner<TBindingType> = this.runnersMap[task.payload.bindingType];
-        return runner.runTask(task, hub);
+        return runner.runTask(hub, task, previousTask);
     }
 }

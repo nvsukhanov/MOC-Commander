@@ -10,8 +10,8 @@ import { ITaskRunner } from '../i-task-runner';
 @Injectable({ providedIn: 'root' })
 export class SetSpeedTaskRunnerService implements ITaskRunner<ControlSchemeBindingType.SetSpeed> {
     public runTask(
+        hub: IHub,
         task: PortCommandTask<ControlSchemeBindingType.SetSpeed>,
-        hub: IHub
     ): Observable<PortCommandExecutionStatus> {
         return hub.motors.setSpeed(
             task.portId,
