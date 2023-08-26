@@ -1,6 +1,5 @@
 <ng-container *ngIf="form">
-    <app-controller-select [acceptableInputTypes]="acceptableInputTypes"
-                           [inputFormGroup]="form.controls.inputs.controls.step"
+    <app-controller-select [inputFormGroup]="form.controls.inputs.controls.step"
                            [title]="'controlScheme.stepperBinding.inputMakeStep' | transloco "
     ></app-controller-select>
 

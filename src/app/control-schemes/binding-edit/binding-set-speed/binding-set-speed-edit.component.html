@@ -1,14 +1,12 @@
 <ng-container *ngIf="form">
     <app-controller-select [inputFormGroup]="form.controls.inputs.controls.accelerate"
                            [title]="'controlScheme.setSpeedBinding.inputSpeed' | transloco "
-                           [acceptableInputTypes]="accelerationInputTypes"
     ></app-controller-select>
 
     <ng-container *ngIf="isAccelerationInputAssigned">
         <app-controller-select *ngIf="!form.controls.isToggle.value"
                                [inputFormGroup]="form.controls.inputs.controls.brake"
                                [title]="'controlScheme.setSpeedBinding.inputBrake' | transloco "
-                               [acceptableInputTypes]="brakeInputTypes"
         ></app-controller-select>
 
         <app-binding-input-gain-select *ngIf="isInputGainConfigurable"

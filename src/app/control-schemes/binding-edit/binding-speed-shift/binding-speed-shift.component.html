@@ -1,18 +1,15 @@
 <ng-container *ngIf="form">
     <app-controller-select [inputFormGroup]="form.controls.inputs.controls.nextSpeed"
                            [title]="'controlScheme.speedShiftBinding.inputNextSpeed' | transloco "
-                           [acceptableInputTypes]="acceptableInputTypes"
     ></app-controller-select>
 
     <ng-container *ngIf="isNextSpeedControlAssigned">
         <app-controller-select [inputFormGroup]="form.controls.inputs.controls.prevSpeed"
                                [title]="'controlScheme.speedShiftBinding.inputPrevSpeed' | transloco "
-                               [acceptableInputTypes]="acceptableInputTypes"
         ></app-controller-select>
 
         <app-controller-select [inputFormGroup]="form.controls.inputs.controls.stop"
                                [title]="'controlScheme.speedShiftBinding.inputStop' | transloco "
-                               [acceptableInputTypes]="acceptableInputTypes"
         ></app-controller-select>
 
         <div class="add-level-button-container">

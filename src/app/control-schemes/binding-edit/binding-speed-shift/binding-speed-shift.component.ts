@@ -4,12 +4,11 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { ControlSchemeBindingType, ControllerInputType, SliderControlComponent, ToggleControlComponent } from '@app/shared';
+import { SliderControlComponent, ToggleControlComponent } from '@app/shared';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { SpeedShiftBindingForm } from '../types';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
-import { getInputTypesForOperationMode } from '../wait-for-controller-input-dialog/get-io-operation-modes-for-controller-input-type';
 import { CommonFormControlsBuilderService } from '../forms';
 import { BindingControlNumInputComponent } from '../control-num-input';
 
@@ -32,8 +31,6 @@ import { BindingControlNumInputComponent } from '../control-num-input';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingSpeedShiftComponent implements IBindingsDetailsEditComponent<SpeedShiftBindingForm> {
-    public readonly acceptableInputTypes: ControllerInputType[] = getInputTypesForOperationMode(ControlSchemeBindingType.SpeedShift);
-
     public readonly motorLimits = MOTOR_LIMITS;
 
     private _form?: SpeedShiftBindingForm;

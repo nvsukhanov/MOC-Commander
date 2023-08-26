@@ -6,7 +6,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { MOTOR_LIMITS, PortModeName } from '@nvsukhanov/rxpoweredup';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
-import { ControlSchemeBindingType, ControllerInputType, SliderControlComponent, ToggleControlComponent } from '@app/shared';
+import { SliderControlComponent, ToggleControlComponent } from '@app/shared';
 
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { BindingControlNumInputComponent } from '../control-num-input';
@@ -14,7 +14,6 @@ import { AngleShiftBindingForm } from '../types';
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { BindingControlOutputEndStateComponent } from '../control-output-end-state-select';
 import { CommonFormControlsBuilderService } from '../forms';
-import { getInputTypesForOperationMode } from '../wait-for-controller-input-dialog/get-io-operation-modes-for-controller-input-type';
 import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
 
 @Component({
@@ -39,8 +38,6 @@ import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingAngleShiftEditComponent implements IBindingsDetailsEditComponent<AngleShiftBindingForm> {
-    public readonly acceptableInputTypes: ControllerInputType[] = getInputTypesForOperationMode(ControlSchemeBindingType.AngleShift);
-
     public readonly motorLimits = MOTOR_LIMITS;
 
     public readonly minAngle = -(MOTOR_LIMITS.maxServoDegreesRange / 2);

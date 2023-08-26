@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { PushPipe } from '@ngrx/component';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
-import { ControlSchemeBindingType, SliderControlComponent, ToggleControlComponent } from '@app/shared';
+import { SliderControlComponent, ToggleControlComponent } from '@app/shared';
 import { ATTACHED_IO_PROPS_SELECTORS } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
@@ -15,7 +15,6 @@ import { BindingControlNumInputComponent } from '../control-num-input';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { BindingControlOutputEndStateComponent } from '../control-output-end-state-select';
 import { SetAngleBindingForm } from '../types';
-import { getInputTypesForOperationMode } from '../wait-for-controller-input-dialog/get-io-operation-modes-for-controller-input-type';
 import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
 
 @Component({
@@ -40,8 +39,6 @@ import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
 })
 export class BindingSetAngleEditComponent implements IBindingsDetailsEditComponent<SetAngleBindingForm> {
     public readonly motorLimits = MOTOR_LIMITS;
-
-    public readonly acceptableInputTypes = getInputTypesForOperationMode(ControlSchemeBindingType.SetAngle);
 
     public readonly portModeNames = PortModeName;
 
