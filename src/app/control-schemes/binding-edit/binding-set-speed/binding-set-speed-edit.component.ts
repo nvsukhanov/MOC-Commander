@@ -45,7 +45,7 @@ export class BindingSetSpeedEditComponent implements IBindingsDetailsEditCompone
     }
 
     public get isAccelerationInputAssigned(): boolean {
-        return this.form?.controls.inputs.controls.accelerate.controls.inputId.value !== undefined;
+        return !!this.form?.controls.inputs.controls.accelerate.controls.inputId.value;
     }
 
     public get isToggleable(): boolean {

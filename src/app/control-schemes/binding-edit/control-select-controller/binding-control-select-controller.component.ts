@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { Validators } from '@angular/forms';
 import { ControlSchemeInput, ControllerInputModel } from '@app/store';
 import { ControllerInputType } from '@app/shared';
 
@@ -41,8 +42,27 @@ export class BindingControlSelectControllerComponent {
     ) {
     }
 
+    public get isRequired(): boolean {
+        return this.inputFormGroup?.controls.controllerId.hasValidator(Validators.required) ?? false;
+    }
+
     public get controllerData(): ControlSchemeInput | undefined {
-        return this.inputFormGroup?.getRawValue() as ControlSchemeInput | undefined; // TODO: fix hack
+        return this.inputFormGroup?.getRawValue() as ControlSchemeInput | undefined;
+    }
+
+    public get isControllerAssigned(): boolean {
+        return !!this.inputFormGroup?.controls.controllerId.value;
+    }
+
+    public onUnbind(): void {
+        if (!this.inputFormGroup) {
+            return;
+        }
+        this.inputFormGroup.reset();
+        this.inputFormGroup.markAsDirty();
+        this.inputFormGroup.markAsTouched();
+        this.inputFormGroup.updateValueAndValidity();
+        this.cd.detectChanges();
     }
 
     public onBind(): void {
