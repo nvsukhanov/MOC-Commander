@@ -1,4 +1,4 @@
-import { PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
+import { IHub, PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
 import { Observable, debounceTime, from, take } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared';
@@ -14,6 +14,7 @@ export class FakeTaskRunner implements ITaskRunner<ControlSchemeBindingType> {
     }
 
     public runTask(
+        hub: IHub,
         task: PortCommandTask,
     ): Observable<PortCommandExecutionStatus> {
         // eslint-disable-next-line no-console

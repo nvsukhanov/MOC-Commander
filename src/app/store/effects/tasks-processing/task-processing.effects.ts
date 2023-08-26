@@ -77,7 +77,7 @@ export class TaskProcessingEffects {
             switchMap((cleanupTasks: PortCommandTask[]) => {
                 return cleanupTasks.length === 0
                        ? of(null)
-                       : forkJoin(cleanupTasks.map((task) => this.taskRunner.runTask(task, this.hubStorage.get(task.hubId))));
+                       : forkJoin(cleanupTasks.map((task) => this.taskRunner.runTask(this.hubStorage.get(task.hubId), task)));
             }),
             map(() => CONTROL_SCHEME_ACTIONS.schemeStopped())
         ) as Observable<Action>;
@@ -106,9 +106,18 @@ export class TaskProcessingEffects {
     public readonly executeTask$ = createEffect(() => {
         return this.actions.pipe(
             ofType(PORT_TASKS_ACTIONS.runTask),
-            mergeMap((action) => this.taskRunner.runTask(action.task, this.hubStorage.get(action.task.hubId)).pipe(
-                map(() => PORT_TASKS_ACTIONS.taskExecuted({ task: action.task })),
-            )),
+            concatLatestFrom(({ task }) => [
+                this.store.select(PORT_TASKS_SELECTORS.selectLastExecutedTask(task))
+            ]),
+            mergeMap(([ action, lastExecutedTask ]) => {
+                return this.taskRunner.runTask(
+                    this.hubStorage.get(action.task.hubId),
+                    action.task,
+                    lastExecutedTask ?? undefined
+                ).pipe(
+                    map(() => PORT_TASKS_ACTIONS.taskExecuted({ task: action.task })),
+                );
+            }),
         );
     });
 

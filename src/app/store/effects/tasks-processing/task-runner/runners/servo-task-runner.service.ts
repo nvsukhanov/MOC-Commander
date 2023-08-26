@@ -10,8 +10,8 @@ import { ITaskRunner } from '../i-task-runner';
 @Injectable({ providedIn: 'root' })
 export class ServoTaskRunnerService implements ITaskRunner<ControlSchemeBindingType.Servo> {
     public runTask(
+        hub: IHub,
         task: PortCommandTask<ControlSchemeBindingType.Servo>,
-        hub: IHub
     ): Observable<PortCommandExecutionStatus> {
         return hub.motors.goToPosition(
             task.portId,

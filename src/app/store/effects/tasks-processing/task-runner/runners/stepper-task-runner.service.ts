@@ -10,8 +10,8 @@ import { ITaskRunner } from '../i-task-runner';
 @Injectable({ providedIn: 'root' })
 export class StepperTaskRunnerService implements ITaskRunner<ControlSchemeBindingType.Stepper> {
     public runTask(
+        hub: IHub,
         task: PortCommandTask<ControlSchemeBindingType.Stepper>,
-        hub: IHub
     ): Observable<PortCommandExecutionStatus> {
         return hub.motors.rotateByDegree(
             task.portId,
