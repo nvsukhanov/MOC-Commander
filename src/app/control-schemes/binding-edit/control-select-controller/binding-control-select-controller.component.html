@@ -2,21 +2,28 @@
     <div class="control-info">
         <mat-icon [fontIcon]="'gamepad'"></mat-icon>
         <mat-label class="title">
-            {{ title }}
+            {{ title }}<span *ngIf="isRequired">*</span>
         </mat-label>
-        <ng-container *ngIf="inputFormGroup.valid; else controllerIsNotAssigned">
+        <ng-container *ngIf="isControllerAssigned; else controllerIsNotAssigned">
             <app-full-controller-input-name class="control-info__control-name"
                                             [inputData]="controllerData"
             ></app-full-controller-input-name>
 
-            <button mat-raised-button
+            <button mat-icon-button
                     (click)="onBind()"
             >
-                {{ 'controlScheme.bindToAnotherInputButtonTitle' | transloco }}
+                <mat-icon [fontIcon]="'edit'"></mat-icon>
+                <span class="cdk-visually-hidden">{{ 'controlScheme.bindToAnotherInputButtonTitle' | transloco }}</span>
+            </button>
+            <button mat-icon-button
+                    (click)="onUnbind()"
+            >
+                <mat-icon [fontIcon]="'delete'"></mat-icon>
+                <span class="cdk-visually-hidden">{{ 'controlScheme.bindingInputControlUnassignButtonTitle' | transloco }}</span>
             </button>
         </ng-container>
         <ng-template #controllerIsNotAssigned>
-            <span class="control-info__control-name">
+            <span class="cdk-visually-hidden">
                 {{ 'controlScheme.bindingInputIsNotAssigned' | transloco }}
             </span>
 
