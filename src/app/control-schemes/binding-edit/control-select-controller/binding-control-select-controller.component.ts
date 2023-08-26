@@ -7,9 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { Validators } from '@angular/forms';
 import { ControlSchemeInput, ControllerInputModel } from '@app/store';
-import { ControllerInputType } from '@app/shared';
 
-import { IWaitingForInputDialogData, WaitForControllerInputDialogComponent } from '../wait-for-controller-input-dialog';
+import { WaitForControllerInputDialogComponent } from '../wait-for-controller-input-dialog';
 import { FullControllerInputNameComponent } from '../../full-controller-input-name';
 import { InputFormGroup, OptionalInputFormGroup } from '../types';
 
@@ -33,8 +32,6 @@ export class BindingControlSelectControllerComponent {
     @Input() public inputFormGroup?: InputFormGroup | OptionalInputFormGroup;
 
     @Input() public title = '';
-
-    @Input() public acceptableInputTypes: ControllerInputType[] = [];
 
     constructor(
         private readonly dialog: MatDialog,
@@ -66,14 +63,11 @@ export class BindingControlSelectControllerComponent {
     }
 
     public onBind(): void {
-        const dialog = this.dialog.open<WaitForControllerInputDialogComponent, IWaitingForInputDialogData, ControllerInputModel>(
+        const dialog = this.dialog.open<WaitForControllerInputDialogComponent, undefined, ControllerInputModel>(
             WaitForControllerInputDialogComponent,
             {
                 disableClose: true,
-                hasBackdrop: true,
-                data: {
-                    acceptableInputTypes: this.acceptableInputTypes,
-                }
+                hasBackdrop: true
             }
         );
         dialog.afterClosed().subscribe((result) => {

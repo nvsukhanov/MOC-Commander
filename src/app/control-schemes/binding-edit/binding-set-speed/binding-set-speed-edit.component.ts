@@ -3,13 +3,12 @@ import { NgIf } from '@angular/common';
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { merge } from 'rxjs';
 import { TranslocoModule } from '@ngneat/transloco';
-import { ControlSchemeBindingType, ControllerInputType, SliderControlComponent, ToggleControlComponent } from '@app/shared';
+import { ControllerInputType, SliderControlComponent, ToggleControlComponent } from '@app/shared';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { SetSpeedBindingForm } from '../types';
 import { BindingInputGainSelectComponent } from '../control-axial-output-modifier-select';
-import { getInputTypesForOperationMode } from '../wait-for-controller-input-dialog/get-io-operation-modes-for-controller-input-type';
 
 @Component({
     standalone: true,
@@ -28,14 +27,6 @@ import { getInputTypesForOperationMode } from '../wait-for-controller-input-dial
 })
 export class BindingSetSpeedEditComponent implements IBindingsDetailsEditComponent<SetSpeedBindingForm> {
     public readonly motorLimits = MOTOR_LIMITS;
-
-    public readonly accelerationInputTypes = getInputTypesForOperationMode(ControlSchemeBindingType.SetSpeed);
-
-    public readonly brakeInputTypes: ControllerInputType[] = [
-        ControllerInputType.Button,
-        ControllerInputType.ButtonGroup,
-        ControllerInputType.Trigger
-    ];
 
     public form?: SetSpeedBindingForm;
 

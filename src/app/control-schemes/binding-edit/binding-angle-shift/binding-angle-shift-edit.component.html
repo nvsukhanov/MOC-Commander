@@ -1,13 +1,11 @@
 <ng-container *ngIf="form">
     <app-controller-select [inputFormGroup]="form.controls.inputs.controls.nextAngle"
                            [title]="'controlScheme.angleShiftBinding.inputNextAngle' | transloco "
-                           [acceptableInputTypes]="acceptableInputTypes"
     ></app-controller-select>
 
     <ng-container *ngIf="isNextAngleControlAssigned">
         <app-controller-select [inputFormGroup]="form.controls.inputs.controls.prevAngle"
                                [title]="'controlScheme.angleShiftBinding.inputPrevAngle' | transloco "
-                               [acceptableInputTypes]="acceptableInputTypes"
         ></app-controller-select>
 
         <div class="add-level-button-container">

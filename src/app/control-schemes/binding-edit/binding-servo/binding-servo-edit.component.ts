@@ -9,7 +9,7 @@ import { BehaviorSubject, Observable, combineLatest, combineLatestWith, map, of,
 import { PushPipe } from '@ngrx/component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CONTROL_SCHEME_ACTIONS } from '@app/store';
-import { ControlSchemeBindingType, ControllerInputType, SliderControlComponent, ToggleControlComponent, getTranslationArcs } from '@app/shared';
+import { ControllerInputType, SliderControlComponent, ToggleControlComponent, getTranslationArcs } from '@app/shared';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { CalibrationResult, CalibrationResultType, ServoCalibrationDialogComponent } from '../servo-calibration-dialog';
@@ -17,7 +17,6 @@ import { BindingControlSelectControllerComponent } from '../control-select-contr
 import { BINDING_EDIT_SELECTORS } from '../binding-edit.selectors';
 import { ServoBindingForm } from '../types';
 import { BindingInputGainSelectComponent } from '../control-axial-output-modifier-select';
-import { getInputTypesForOperationMode } from '../wait-for-controller-input-dialog/get-io-operation-modes-for-controller-input-type';
 import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
 
 @Component({
@@ -42,8 +41,6 @@ import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
 })
 export class BindingServoEditComponent implements IBindingsDetailsEditComponent<ServoBindingForm> {
     public readonly motorLimits = MOTOR_LIMITS;
-
-    public readonly acceptableInputTypes = getInputTypesForOperationMode(ControlSchemeBindingType.Servo);
 
     public readonly portModeNames = PortModeName;
 
