@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ControlSchemeSetAngleBinding } from '@app/store';
+import { ControlSchemeInputAction, ControlSchemeSetAngleBinding } from '@app/store';
 
 import { SetAngleBindingForm } from '../types';
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';
@@ -17,7 +17,7 @@ export class SetAngleBindingFormBuilderService {
         return this.formBuilder.group({
             id: this.commonFormControlBuilder.schemeIdControl(),
             inputs: this.formBuilder.group({
-                setAngle: this.commonFormControlBuilder.inputFormGroup()
+                [ControlSchemeInputAction.SetAngle]: this.commonFormControlBuilder.inputFormGroup()
             }),
             hubId: this.commonFormControlBuilder.hubIdControl(),
             portId: this.commonFormControlBuilder.portIdControl(),

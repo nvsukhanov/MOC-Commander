@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ControlSchemeAngleShiftBinding } from '@app/store';
+import { ControlSchemeAngleShiftBinding, ControlSchemeInputAction } from '@app/store';
 
 import { AngleShiftBindingForm } from '../types';
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';
@@ -17,8 +17,8 @@ export class AngleShiftBindingFormBuilderService {
         return this.formBuilder.group({
             id: this.commonFormControlsBuilder.schemeIdControl(),
             inputs: this.formBuilder.group({
-                nextAngle: this.commonFormControlsBuilder.inputFormGroup(),
-                prevAngle: this.commonFormControlsBuilder.optionalInputFormGroup()
+                [ControlSchemeInputAction.NextLevel]: this.commonFormControlsBuilder.inputFormGroup(),
+                [ControlSchemeInputAction.PrevLevel]: this.commonFormControlsBuilder.optionalInputFormGroup()
             }),
             hubId: this.commonFormControlsBuilder.hubIdControl(),
             portId: this.commonFormControlsBuilder.portIdControl(),

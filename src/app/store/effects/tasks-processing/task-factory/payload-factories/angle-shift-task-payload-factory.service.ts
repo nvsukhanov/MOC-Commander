@@ -2,7 +2,7 @@ import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
 import { Observable, first, map, of } from 'rxjs';
 import { ControlSchemeBindingType, transformRelativeDegToAbsoluteDeg } from '@app/shared';
-import { HubFacadeService } from '@app/store';
+import { ControlSchemeInputAction, HubFacadeService } from '@app/store';
 
 import { controllerInputIdFn } from '../../../../reducers';
 import { AngleShiftTaskPayload, ControlSchemeAngleShiftBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, } from '../../../../models';
@@ -24,7 +24,10 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
         previousTask: PortCommandTask | null
-    ): Observable<{ payload: AngleShiftTaskPayload; inputTimestamp: number } | null> {
+    ): Observable<{
+        payload: AngleShiftTaskPayload;
+        inputTimestamp: number;
+    } | null> {
         if (previousTask && previousTask.bindingId === binding.id) {
             // we know where we are, so we can use the previous task to calculate the next one
             return this.buildPayloadUsingPreviousTask(
@@ -171,18 +174,22 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
         inputsState: Dictionary<ControllerInputModel>,
         isNextAngleInputActive: boolean,
         isPrevAngleInputActive: boolean
-    ): { change: 1 | -1 | 0; inputTimestamp: number } {
+    ): {
+        change: 1 | -1 | 0;
+        inputTimestamp: number;
+    } {
         if (isNextAngleInputActive) {
             return {
                 change: -1,
-                inputTimestamp: inputsState[controllerInputIdFn(binding.inputs.nextAngle)]?.timestamp ?? Date.now()
+                inputTimestamp: inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.NextLevel])]?.timestamp ?? Date.now()
             };
         }
 
         if (isPrevAngleInputActive) {
             return {
                 change: 1,
-                inputTimestamp: (!!binding.inputs.prevAngle && inputsState[controllerInputIdFn(binding.inputs.prevAngle)]?.timestamp) || Date.now()
+                inputTimestamp: (!!binding.inputs[ControlSchemeInputAction.PrevLevel]
+                    && inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.PrevLevel])]?.timestamp) || Date.now()
             };
         }
 
@@ -202,14 +209,15 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
         if (isNextAngleInputActive && !previousTaskPayload.nextAngleActiveInput) {
             return {
                 change: -1,
-                inputTimestamp: inputsState[controllerInputIdFn(binding.inputs.nextAngle)]?.timestamp ?? Date.now()
+                inputTimestamp: inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.NextLevel])]?.timestamp ?? Date.now()
             };
         }
 
         if (isPrevAngleInputActive && !previousTaskPayload.nextAngleActiveInput) {
             return {
                 change: 1,
-                inputTimestamp: (!!binding.inputs.prevAngle && inputsState[controllerInputIdFn(binding.inputs.prevAngle)]?.timestamp) || Date.now()
+                inputTimestamp: (!!binding.inputs[ControlSchemeInputAction.PrevLevel]
+                    && inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.PrevLevel])]?.timestamp) || Date.now()
             };
         }
 
@@ -249,9 +257,9 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
         binding: ControlSchemeAngleShiftBinding,
         inputsState: Dictionary<ControllerInputModel>
     ): { isNextAngleInputActive: boolean; isPrevAngleInputActive: boolean } {
-        const isNextAngleInputActive = (inputsState[controllerInputIdFn(binding.inputs.nextAngle)]?.value ?? 0) > this.inputThreshold;
-        const isPrevAngleInputActive = !!binding.inputs.prevAngle
-            && (inputsState[controllerInputIdFn(binding.inputs.prevAngle)]?.value ?? 0) > this.inputThreshold;
+        const isNextAngleInputActive = (inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.NextLevel])]?.value ?? 0) > this.inputThreshold;
+        const isPrevAngleInputActive = !!binding.inputs[ControlSchemeInputAction.PrevLevel]
+            && (inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.PrevLevel])]?.value ?? 0) > this.inputThreshold;
         return { isNextAngleInputActive, isPrevAngleInputActive };
     }
 

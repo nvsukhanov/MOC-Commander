@@ -1,7 +1,8 @@
 import { ControlSchemeBindingType } from '@app/shared';
-import { ControlSchemeInput } from '@app/store';
+import { ControlSchemeInput, ControlSchemeInputAction } from '@app/store';
 
 export type BindingTreeNodeRecord = {
+    action: ControlSchemeInputAction;
     input: ControlSchemeInput;
     isControllerConnected: boolean;
 };

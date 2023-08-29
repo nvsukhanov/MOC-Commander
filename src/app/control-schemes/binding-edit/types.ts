@@ -1,6 +1,6 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ButtonGroupButtonId, MotorServoEndState } from '@nvsukhanov/rxpoweredup';
-import { InputGain } from '@app/store';
+import { ControlSchemeInputAction, InputGain } from '@app/store';
 import { ControlSchemeBindingType, ControllerInputType } from '@app/shared';
 
 export type InputFormGroup = FormGroup<{
@@ -24,8 +24,8 @@ export type OptionalInputFormGroup = FormGroup<{
 export type SetSpeedBindingForm = FormGroup<{
     id: FormControl<string>;
     inputs: FormGroup<{
-        accelerate: InputFormGroup;
-        brake: OptionalInputFormGroup;
+        [ControlSchemeInputAction.Accelerate]: InputFormGroup;
+        [ControlSchemeInputAction.Brake]: OptionalInputFormGroup;
     }>;
     hubId: FormControl<string>;
     portId: FormControl<number>;
@@ -40,7 +40,7 @@ export type SetSpeedBindingForm = FormGroup<{
 export type ServoBindingForm = FormGroup<{
     id: FormControl<string>;
     inputs: FormGroup<{
-        servo: InputFormGroup;
+        [ControlSchemeInputAction.Servo]: InputFormGroup;
     }>;
     hubId: FormControl<string>;
     portId: FormControl<number>;
@@ -56,7 +56,7 @@ export type ServoBindingForm = FormGroup<{
 export type StepperBindingForm = FormGroup<{
     id: FormControl<string>;
     inputs: FormGroup<{
-        step: InputFormGroup;
+        [ControlSchemeInputAction.Step]: InputFormGroup;
     }>;
     hubId: FormControl<string>;
     portId: FormControl<number>;
@@ -71,7 +71,7 @@ export type StepperBindingForm = FormGroup<{
 export type SetAngleBindingForm = FormGroup<{
     id: FormControl<string>;
     inputs: FormGroup<{
-        setAngle: InputFormGroup;
+        [ControlSchemeInputAction.SetAngle]: InputFormGroup;
     }>;
     hubId: FormControl<string>;
     portId: FormControl<number>;
@@ -86,9 +86,9 @@ export type SetAngleBindingForm = FormGroup<{
 export type SpeedShiftBindingForm = FormGroup<{
     id: FormControl<string>;
     inputs: FormGroup<{
-        nextSpeed: InputFormGroup;
-        prevSpeed: OptionalInputFormGroup;
-        stop: OptionalInputFormGroup;
+        [ControlSchemeInputAction.NextLevel]: InputFormGroup;
+        [ControlSchemeInputAction.PrevLevel]: OptionalInputFormGroup;
+        [ControlSchemeInputAction.Reset]: OptionalInputFormGroup;
     }>;
     hubId: FormControl<string>;
     portId: FormControl<number>;
@@ -102,8 +102,8 @@ export type SpeedShiftBindingForm = FormGroup<{
 export type AngleShiftBindingForm = FormGroup<{
     id: FormControl<string>;
     inputs: FormGroup<{
-        nextAngle: InputFormGroup;
-        prevAngle: OptionalInputFormGroup;
+        [ControlSchemeInputAction.NextLevel]: InputFormGroup;
+        [ControlSchemeInputAction.PrevLevel]: OptionalInputFormGroup;
     }>;
     hubId: FormControl<string>;
     portId: FormControl<number>;

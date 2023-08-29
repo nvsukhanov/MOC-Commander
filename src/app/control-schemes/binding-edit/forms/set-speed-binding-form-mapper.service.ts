@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ControlSchemeInput, ControlSchemeSetSpeedBinding } from '@app/store';
+import { ControlSchemeInput, ControlSchemeInputAction, ControlSchemeSetSpeedBinding } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import { SetSpeedBindingForm } from '../types';
@@ -13,7 +13,7 @@ export class SetSpeedBindingFormMapperService {
             operationMode: ControlSchemeBindingType.SetSpeed,
             id: form.controls.id.getRawValue(),
             inputs: {
-                accelerate: form.controls.inputs.controls.accelerate.getRawValue(),
+                [ControlSchemeInputAction.Accelerate]: form.controls.inputs.controls[ControlSchemeInputAction.Accelerate].getRawValue(),
             },
             hubId: form.controls.hubId.getRawValue(),
             portId: form.controls.portId.getRawValue(),
@@ -24,8 +24,8 @@ export class SetSpeedBindingFormMapperService {
             useAccelerationProfile: form.controls.useAccelerationProfile.getRawValue(),
             useDecelerationProfile: form.controls.useDecelerationProfile.getRawValue(),
         };
-        if (form.controls.inputs.controls.brake.valid) {
-            result.inputs.brake = form.controls.inputs.controls.brake.getRawValue() as ControlSchemeInput;
+        if (form.controls.inputs.controls[ControlSchemeInputAction.Brake].valid) {
+            result.inputs[ControlSchemeInputAction.Brake] = form.controls.inputs.controls[ControlSchemeInputAction.Brake].getRawValue() as ControlSchemeInput;
         }
         return result;
     }

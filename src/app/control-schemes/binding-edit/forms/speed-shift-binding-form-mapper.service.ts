@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ControlSchemeInput, ControlSchemeSpeedShiftBinding } from '@app/store';
+import { ControlSchemeInput, ControlSchemeInputAction, ControlSchemeSpeedShiftBinding } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import { SpeedShiftBindingForm } from '../types';
@@ -13,7 +13,7 @@ export class SpeedShiftBindingFormMapperService {
             id: form.controls.id.getRawValue(),
             operationMode: ControlSchemeBindingType.SpeedShift,
             inputs: {
-                nextSpeed: form.controls.inputs.controls.nextSpeed.getRawValue(),
+                [ControlSchemeInputAction.NextLevel]: form.controls.inputs.controls[ControlSchemeInputAction.NextLevel].getRawValue(),
             },
             hubId: form.controls.hubId.getRawValue(),
             portId: form.controls.portId.getRawValue(),
@@ -23,11 +23,12 @@ export class SpeedShiftBindingFormMapperService {
             useDecelerationProfile: form.controls.useDecelerationProfile.getRawValue(),
             initialStepIndex: form.controls.initialStepIndex.getRawValue()
         };
-        if (form.controls.inputs.controls.stop.controls.controllerId.value !== '') {
-            result.inputs.stop = form.controls.inputs.controls.stop.getRawValue() as ControlSchemeInput;
+        if (form.controls.inputs.controls[ControlSchemeInputAction.Reset].controls.controllerId.value !== '') {
+            result.inputs[ControlSchemeInputAction.Reset] = form.controls.inputs.controls[ControlSchemeInputAction.Reset].getRawValue() as ControlSchemeInput;
         }
-        if (form.controls.inputs.controls.prevSpeed.controls.controllerId.value !== '') {
-            result.inputs.prevSpeed = form.controls.inputs.controls.prevSpeed.getRawValue() as ControlSchemeInput;
+        if (form.controls.inputs.controls[ControlSchemeInputAction.PrevLevel].controls.controllerId.value !== '') {
+            result.inputs[ControlSchemeInputAction.PrevLevel] =
+                form.controls.inputs.controls[ControlSchemeInputAction.PrevLevel].getRawValue() as ControlSchemeInput;
         }
         return result;
     }

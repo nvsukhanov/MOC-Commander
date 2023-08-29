@@ -28,9 +28,12 @@ function readKeyboard(
         take(1),
         mergeMap((settings) => {
             return fromEvent(window.document, KEY_DOWN_EVENT).pipe(
-                mergeWith(fromEvent(window.document, KEY_UP_EVENT)),
                 filterKeyboardInput(settings?.captureNonAlphaNumerics),
                 map((event) => ({ isPressed: true, event })),
+                mergeWith(fromEvent(window.document, KEY_UP_EVENT).pipe(
+                    filterKeyboardInput(settings?.captureNonAlphaNumerics),
+                    map((event) => ({ isPressed: false, event })),
+                )),
             );
         }),
         concatLatestFrom(() => store.select(CONTROLLER_INPUT_SELECTORS.selectEntities)),

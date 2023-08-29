@@ -1,6 +1,6 @@
 <ng-container *ngIf="form">
-    <app-controller-select [inputFormGroup]="form.controls.inputs.controls.setAngle"
-                           [title]="'controlScheme.setAngleBinding.inputSetAngle' | transloco "
+    <app-controller-select [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.SetAngle]"
+                           [title]="controlSchemeInputActions.SetAngle | controlSchemeInputActionToL10nKey | transloco "
     ></app-controller-select>
 
     <ng-container *ngIf="form.controls.inputs.valid">

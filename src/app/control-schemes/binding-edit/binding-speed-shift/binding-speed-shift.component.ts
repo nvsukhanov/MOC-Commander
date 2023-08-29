@@ -5,12 +5,14 @@ import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { SliderControlComponent, ToggleControlComponent } from '@app/shared';
+import { ControlSchemeInputAction } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { SpeedShiftBindingForm } from '../types';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { CommonFormControlsBuilderService } from '../forms';
 import { BindingControlNumInputComponent } from '../control-num-input';
+import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
 
 @Component({
     standalone: true,
@@ -26,12 +28,15 @@ import { BindingControlNumInputComponent } from '../control-num-input';
         MatButtonModule,
         MatIconModule,
         ToggleControlComponent,
-        SliderControlComponent
+        SliderControlComponent,
+        ControlSchemeInputActionToL10nKeyPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingSpeedShiftComponent implements IBindingsDetailsEditComponent<SpeedShiftBindingForm> {
     public readonly motorLimits = MOTOR_LIMITS;
+
+    public readonly controlSchemeInputActions = ControlSchemeInputAction;
 
     private _form?: SpeedShiftBindingForm;
 
@@ -45,7 +50,7 @@ export class BindingSpeedShiftComponent implements IBindingsDetailsEditComponent
     }
 
     public get isNextSpeedControlAssigned(): boolean {
-        return this.form?.controls.inputs.controls.nextSpeed.controls.controllerId.value !== '';
+        return this.form?.controls.inputs.controls[ControlSchemeInputAction.NextLevel].controls.controllerId.value !== '';
     }
 
     public setForm(

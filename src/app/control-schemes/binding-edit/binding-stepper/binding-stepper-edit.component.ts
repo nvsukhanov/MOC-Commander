@@ -3,12 +3,14 @@ import { NgIf } from '@angular/common';
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { TranslocoModule } from '@ngneat/transloco';
 import { SliderControlComponent, ToggleControlComponent } from '@app/shared';
+import { ControlSchemeInputAction } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { BindingControlNumInputComponent } from '../control-num-input';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { BindingControlOutputEndStateComponent } from '../control-output-end-state-select';
 import { StepperBindingForm } from '../types';
+import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
 
 @Component({
     standalone: true,
@@ -22,7 +24,8 @@ import { StepperBindingForm } from '../types';
         BindingControlOutputEndStateComponent,
         BindingControlSelectControllerComponent,
         TranslocoModule,
-        ToggleControlComponent
+        ToggleControlComponent,
+        ControlSchemeInputActionToL10nKeyPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -38,6 +41,8 @@ export class BindingStepperEditComponent implements IBindingsDetailsEditComponen
     public readonly minPower = MOTOR_LIMITS.minPower;
 
     public readonly maxPower = MOTOR_LIMITS.maxPower;
+
+    public readonly controlSchemeInputActions = ControlSchemeInputAction;
 
     private _form?: StepperBindingForm;
 

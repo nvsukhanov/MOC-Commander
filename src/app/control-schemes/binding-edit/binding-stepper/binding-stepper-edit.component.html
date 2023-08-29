@@ -1,6 +1,6 @@
 <ng-container *ngIf="form">
-    <app-controller-select [inputFormGroup]="form.controls.inputs.controls.step"
-                           [title]="'controlScheme.stepperBinding.inputMakeStep' | transloco "
+    <app-controller-select [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.Step]"
+                           [title]="controlSchemeInputActions.Step | controlSchemeInputActionToL10nKey | transloco "
     ></app-controller-select>
 
     <ng-container *ngIf="form.controls.inputs.valid">

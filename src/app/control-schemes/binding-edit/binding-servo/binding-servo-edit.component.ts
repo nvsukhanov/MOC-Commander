@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, combineLatest, combineLatestWith, map, of, startWith, switchMap } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { CONTROL_SCHEME_ACTIONS } from '@app/store';
+import { CONTROL_SCHEME_ACTIONS, ControlSchemeInputAction } from '@app/store';
 import { ControllerInputType, SliderControlComponent, ToggleControlComponent, getTranslationArcs } from '@app/shared';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
@@ -18,6 +18,7 @@ import { BINDING_EDIT_SELECTORS } from '../binding-edit.selectors';
 import { ServoBindingForm } from '../types';
 import { BindingInputGainSelectComponent } from '../control-axial-output-modifier-select';
 import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
+import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
 
 @Component({
     standalone: true,
@@ -35,12 +36,15 @@ import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
         ToggleControlComponent,
         BindingControlSelectControllerComponent,
         BindingInputGainSelectComponent,
-        BindingControlReadMotorPositionComponent
+        BindingControlReadMotorPositionComponent,
+        ControlSchemeInputActionToL10nKeyPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingServoEditComponent implements IBindingsDetailsEditComponent<ServoBindingForm> {
     public readonly motorLimits = MOTOR_LIMITS;
+
+    public readonly controlSchemeInputActions = ControlSchemeInputAction;
 
     public readonly portModeNames = PortModeName;
 
@@ -62,8 +66,9 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
     }
 
     public get isInputGainConfigurable(): boolean {
-        return this.form?.controls.inputs.controls.servo.controls.inputType.value === ControllerInputType.Axis
-            || this.form?.controls.inputs.controls.servo.controls.inputType.value === ControllerInputType.Trigger;
+        const servoInput = this.form?.controls.inputs.controls[ControlSchemeInputAction.Servo];
+        return servoInput?.controls.inputType.value === ControllerInputType.Axis
+            || servoInput?.controls.inputType.value === ControllerInputType.Trigger;
     }
 
     public get canCalibrate$(): Observable<boolean> {

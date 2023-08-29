@@ -7,6 +7,7 @@ import { MOTOR_LIMITS, PortModeName } from '@nvsukhanov/rxpoweredup';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 import { SliderControlComponent, ToggleControlComponent } from '@app/shared';
+import { ControlSchemeInputAction } from '@app/store';
 
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { BindingControlNumInputComponent } from '../control-num-input';
@@ -15,6 +16,7 @@ import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-compon
 import { BindingControlOutputEndStateComponent } from '../control-output-end-state-select';
 import { CommonFormControlsBuilderService } from '../forms';
 import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
+import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
 
 @Component({
     standalone: true,
@@ -33,12 +35,15 @@ import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
         TranslocoModule,
         BindingControlOutputEndStateComponent,
         BindingControlReadMotorPositionComponent,
-        PushPipe
+        PushPipe,
+        ControlSchemeInputActionToL10nKeyPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingAngleShiftEditComponent implements IBindingsDetailsEditComponent<AngleShiftBindingForm> {
     public readonly motorLimits = MOTOR_LIMITS;
+
+    public readonly controlSchemeInputActions = ControlSchemeInputAction;
 
     public readonly minAngle = -(MOTOR_LIMITS.maxServoDegreesRange / 2);
 
@@ -60,7 +65,7 @@ export class BindingAngleShiftEditComponent implements IBindingsDetailsEditCompo
     }
 
     public get isNextAngleControlAssigned(): boolean {
-        return this.form?.controls.inputs.controls.nextAngle.controls.controllerId.value !== '';
+        return this.form?.controls.inputs.controls[ControlSchemeInputAction.NextLevel].controls.controllerId.value !== '';
     }
 
     public get isQueryingPort$(): Observable<boolean> {

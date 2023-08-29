@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { Dictionary } from '@ngrx/entity';
-import { CONTROLLER_CONNECTION_SELECTORS, ControlSchemeInput, ControlSchemeInputsRecord, ControllerConnectionModel } from '@app/store';
+import { CONTROLLER_CONNECTION_SELECTORS, ControlSchemeInputAction, ControlSchemeInputsRecord, ControllerConnectionModel } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import { BindingTreeNodeRecord, BindingTreeNodeViewModel } from './binding-tree-node-view-model';
@@ -22,12 +22,13 @@ export const INPUT_TREE_NODE_VIEW_MODEL_SELECTOR = (
             isActive,
             ioHasNoRequiredCapabilities,
             operationMode,
-            controlData: Object.values(inputs).map((input: ControlSchemeInput): BindingTreeNodeRecord => {
+            controlData: Object.entries(inputs).map(([ action, input ]): BindingTreeNodeRecord => {
                 return {
+                    action: action as ControlSchemeInputAction,
                     input,
                     isControllerConnected: !!controllerConnectionEntities[input.controllerId]
                 };
-            })
+            }).filter((data) => !!data.input.controllerId)
         };
     }
 );

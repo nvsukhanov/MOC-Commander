@@ -1,15 +1,15 @@
 <ng-container *ngIf="form">
-    <app-controller-select [inputFormGroup]="form.controls.inputs.controls.nextSpeed"
-                           [title]="'controlScheme.speedShiftBinding.inputNextSpeed' | transloco "
+    <app-controller-select [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.NextLevel]"
+                           [title]="controlSchemeInputActions.NextLevel | controlSchemeInputActionToL10nKey | transloco "
     ></app-controller-select>
 
     <ng-container *ngIf="isNextSpeedControlAssigned">
-        <app-controller-select [inputFormGroup]="form.controls.inputs.controls.prevSpeed"
-                               [title]="'controlScheme.speedShiftBinding.inputPrevSpeed' | transloco "
+        <app-controller-select [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.PrevLevel]"
+                               [title]="controlSchemeInputActions.PrevLevel | controlSchemeInputActionToL10nKey | transloco "
         ></app-controller-select>
 
-        <app-controller-select [inputFormGroup]="form.controls.inputs.controls.stop"
-                               [title]="'controlScheme.speedShiftBinding.inputStop' | transloco "
+        <app-controller-select [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.Reset]"
+                               [title]="controlSchemeInputActions.Reset | controlSchemeInputActionToL10nKey | transloco "
         ></app-controller-select>
 
         <div class="add-level-button-container">

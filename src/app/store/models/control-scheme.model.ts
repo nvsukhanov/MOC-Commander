@@ -31,14 +31,25 @@ export type ControlSchemeInput = {
     portId: number | null;
 };
 
-export type ControlSchemeInputsRecord = Record<string, ControlSchemeInput>;
+export enum ControlSchemeInputAction {
+    Accelerate = 'accelerate',
+    Brake = 'brake',
+    Servo = 'servo',
+    SetAngle = 'setAngle',
+    Step = 'step',
+    NextLevel = 'nextLevel',
+    PrevLevel = 'prevLevel',
+    Reset = 'reset',
+}
+
+export type ControlSchemeInputsRecord = { [k in ControlSchemeInputAction]?: ControlSchemeInput };
 
 export type ControlSchemeSetSpeedBinding = {
     id: string;
     operationMode: ControlSchemeBindingType.SetSpeed;
     inputs: {
-        accelerate: ControlSchemeInput;
-        brake?: ControlSchemeInput;
+        [ControlSchemeInputAction.Accelerate]: ControlSchemeInput;
+        [ControlSchemeInputAction.Brake]?: ControlSchemeInput;
     } & ControlSchemeInputsRecord;
     hubId: string;
     portId: number;
@@ -52,7 +63,7 @@ export type ControlSchemeServoBinding = {
     id: string;
     operationMode: ControlSchemeBindingType.Servo;
     inputs: {
-        servo: ControlSchemeInput;
+        [ControlSchemeInputAction.Servo]: ControlSchemeInput;
     } & ControlSchemeInputsRecord;
     hubId: string;
     portId: number;
@@ -67,7 +78,7 @@ export type ControlSchemeSetAngleBinding = {
     id: string;
     operationMode: ControlSchemeBindingType.SetAngle;
     inputs: {
-        setAngle: ControlSchemeInput;
+        [ControlSchemeInputAction.SetAngle]: ControlSchemeInput;
     } & ControlSchemeInputsRecord;
     hubId: string;
     portId: number;
@@ -81,7 +92,7 @@ export type ControlSchemeStepperBinding = {
     id: string;
     operationMode: ControlSchemeBindingType.Stepper;
     inputs: {
-        step: ControlSchemeInput;
+        [ControlSchemeInputAction.Step]: ControlSchemeInput;
     } & ControlSchemeInputsRecord;
     hubId: string;
     portId: number;
@@ -95,9 +106,9 @@ export type ControlSchemeSpeedShiftBinding = {
     id: string;
     operationMode: ControlSchemeBindingType.SpeedShift;
     inputs: {
-        nextSpeed: ControlSchemeInput;
-        prevSpeed?: ControlSchemeInput;
-        stop?: ControlSchemeInput;
+        [ControlSchemeInputAction.NextLevel]: ControlSchemeInput;
+        [ControlSchemeInputAction.PrevLevel]?: ControlSchemeInput;
+        [ControlSchemeInputAction.Reset]?: ControlSchemeInput;
     } & ControlSchemeInputsRecord;
     hubId: string;
     portId: number;
@@ -110,8 +121,8 @@ export type ControlSchemeAngleShiftBinding = {
     id: string;
     operationMode: ControlSchemeBindingType.AngleShift;
     inputs: {
-        nextAngle: ControlSchemeInput;
-        prevAngle?: ControlSchemeInput;
+        [ControlSchemeInputAction.NextLevel]: ControlSchemeInput;
+        [ControlSchemeInputAction.PrevLevel]?: ControlSchemeInput;
     } & ControlSchemeInputsRecord;
     hubId: string;
     portId: number;

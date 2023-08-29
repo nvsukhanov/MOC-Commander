@@ -16,6 +16,7 @@ import { INPUT_TREE_NODE_VIEW_MODEL_SELECTOR } from './input-tree-node-view-mode
 import { FullControllerInputNameComponent } from '../../../full-controller-input-name';
 import { BindingViewUrlPipe } from './binding-view-url.pipe';
 import { ControlSchemeViewBindingTreeNodeData } from '../../types';
+import { ControlSchemeInputActionToL10nKeyPipe } from '../../../control-scheme-input-action-to-l10n-key.pipe';
 
 @Component({
     standalone: true,
@@ -36,7 +37,8 @@ import { ControlSchemeViewBindingTreeNodeData } from '../../types';
         MatButtonModule,
         RouterLink,
         BindingViewUrlPipe,
-        MatListModule
+        MatListModule,
+        ControlSchemeInputActionToL10nKeyPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
