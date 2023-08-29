@@ -1,7 +1,7 @@
 import { createEffect } from '@ngrx/effects';
 import { Action, Store, createSelector } from '@ngrx/store';
 import { inject } from '@angular/core';
-import { NEVER, Observable, map, mergeAll, switchMap } from 'rxjs';
+import { NEVER, Observable, map, mergeAll, mergeMap, switchMap } from 'rxjs';
 import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, HUBS_SELECTORS, HUB_STATS_SELECTORS, HubStorageService, controllerIdFn } from '@app/store';
 import { ControllerInputType, ControllerType } from '@app/shared';
 
@@ -39,7 +39,7 @@ function readHubsGreenButtons(
             });
         }),
         mergeAll(),
-        switchMap((t) => t),
+        mergeMap((t) => t),
     );
 }
 
