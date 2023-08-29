@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ControlSchemeAngleShiftBinding, ControlSchemeInput } from '@app/store';
+import { ControlSchemeAngleShiftBinding, ControlSchemeInput, ControlSchemeInputAction } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import { AngleShiftBindingForm } from '../types';
@@ -13,7 +13,7 @@ export class AngleShiftBindingFormMapperService {
             id: form.controls.id.getRawValue(),
             operationMode: ControlSchemeBindingType.AngleShift,
             inputs: {
-                nextAngle: form.controls.inputs.controls.nextAngle.getRawValue(),
+                [ControlSchemeInputAction.NextLevel]: form.controls.inputs.controls[ControlSchemeInputAction.NextLevel].getRawValue(),
             },
             hubId: form.controls.hubId.getRawValue(),
             portId: form.controls.portId.getRawValue(),
@@ -25,8 +25,9 @@ export class AngleShiftBindingFormMapperService {
             useDecelerationProfile: form.controls.useDecelerationProfile.getRawValue(),
             initialStepIndex: form.controls.initialStepIndex.getRawValue()
         };
-        if (form.controls.inputs.controls.prevAngle.controls.controllerId.value !== '') {
-            result.inputs.prevAngle = form.controls.inputs.controls.prevAngle.getRawValue() as ControlSchemeInput;
+        if (form.controls.inputs.controls[ControlSchemeInputAction.PrevLevel].controls.controllerId.value !== '') {
+            result.inputs[ControlSchemeInputAction.PrevLevel] =
+                form.controls.inputs.controls[ControlSchemeInputAction.PrevLevel].getRawValue() as ControlSchemeInput;
         }
         return result;
     }

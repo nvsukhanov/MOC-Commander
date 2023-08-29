@@ -132,10 +132,18 @@
     "inputGainExponential": "Exponential",
     "fullControllerInputName": "{controllerName} / {inputName}",
     "fullControllerInputNameWithPort": "{controllerName} / Port {portId} / {inputName}",
+    "inputActions": {
+      "servo": "Servo",
+      "brake": "Brake",
+      "accelerate": "Accelerate",
+      "step": "Step",
+      "setAngle": "Set angle",
+      "nextLevel": "Next level",
+      "prevLevel": "Previous level",
+      "reset": "Reset"
+    },
     "setSpeedBinding": {
       "operationMode": "Set speed",
-      "inputSpeed": "Set speed",
-      "inputBrake": "Brake",
       "outputSpeed": "Max speed (%)",
       "outputPower": "Power (%)",
       "treatAsSwitch": "Treat button as a switch",
@@ -144,7 +152,6 @@
     },
     "servoBinding": {
       "operationMode": "Servo",
-      "inputServo": "Servo control",
       "outputCenterOffset": "Center offset (°)",
       "outputAngleRange": "Servo range (°)",
       "outputSpeed": "Speed (%)",
@@ -159,7 +166,6 @@
     },
     "stepperBinding": {
       "operationMode": "Stepper",
-      "inputMakeStep": "Make step",
       "outputDegree": "Angle (°)",
       "outputSpeed": "Speed (%)",
       "outputPower": "Power (%)",
@@ -167,7 +173,6 @@
     },
     "setAngleBinding": {
       "operationMode": "Set angle",
-      "inputSetAngle": "Set angle",
       "outputAngle": "Target angle (°)",
       "outputSpeed": "Speed (%)",
       "outputPower": "Power (%)",
@@ -176,9 +181,6 @@
     },
     "speedShiftBinding": {
       "operationMode": "Speed shift",
-      "inputNextSpeed": "Next speed",
-      "inputPrevSpeed": "Previous speed",
-      "inputStop": "Stop",
       "level": "Speed level { level } (%)",
       "outputLevelAdd": "Add speed level",
       "outputLevelRemove": "Remove level",
@@ -187,8 +189,6 @@
     },
     "angleShiftBinding": {
       "operationMode": "Angle shift",
-      "inputNextAngle": "Next angle",
-      "inputPrevAngle": "Previous angle",
       "angleLevel": "Angle level { level } (°)",
       "readAngleFromPort": "Read angle from port",
       "outputAngleLevelAdd": "Add angle",

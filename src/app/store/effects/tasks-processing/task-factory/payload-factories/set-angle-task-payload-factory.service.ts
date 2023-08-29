@@ -4,7 +4,14 @@ import { Observable, of } from 'rxjs';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import { controllerInputIdFn } from '../../../../reducers';
-import { ControlSchemeSetAngleBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, SetAngleTaskPayload } from '../../../../models';
+import {
+    ControlSchemeInputAction,
+    ControlSchemeSetAngleBinding,
+    ControllerInputModel,
+    PortCommandTask,
+    PortCommandTaskPayload,
+    SetAngleTaskPayload
+} from '../../../../models';
 import { ITaskPayloadFactory } from './i-task-payload-factory';
 
 @Injectable()
@@ -16,7 +23,7 @@ export class SetAngleTaskPayloadFactoryService implements ITaskPayloadFactory<Co
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
     ): Observable<{ payload: SetAngleTaskPayload; inputTimestamp: number } | null> {
-        const setAngleInput = inputsState[controllerInputIdFn(binding.inputs.setAngle)];
+        const setAngleInput = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.SetAngle])];
         const setAngleInputValue = setAngleInput?.value ?? 0;
 
         if (setAngleInputValue < this.inputValueThreshold) { // TODO: inject threshold

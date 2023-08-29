@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import {
+    ControlSchemeInputAction,
     ControlSchemeSetSpeedBinding,
     ControllerInputModel,
     InputGain,
@@ -27,8 +28,11 @@ export class SetSpeedTaskPayloadFactoryService implements ITaskPayloadFactory<Co
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
         lastExecutedTask: PortCommandTask | null
-    ): Observable<{ payload: SetSpeedTaskPayload; inputTimestamp: number } | null> {
-        const accelerateInput = inputsState[controllerInputIdFn(binding.inputs.accelerate)];
+    ): Observable<{
+        payload: SetSpeedTaskPayload;
+        inputTimestamp: number;
+    } | null> {
+        const accelerateInput = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Accelerate])];
         const accelerateInputValue = accelerateInput?.value ?? 0;
 
         // brake input is ignored for toggle bindings
@@ -43,8 +47,8 @@ export class SetSpeedTaskPayloadFactoryService implements ITaskPayloadFactory<Co
             return of(null);
         }
 
-        const brakeInput = binding.inputs.brake
-                           ? inputsState[controllerInputIdFn(binding.inputs.brake)]
+        const brakeInput = binding.inputs[ControlSchemeInputAction.Brake]
+                           ? inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Brake])]
                            : undefined;
         const brakeInputValue = brakeInput?.value ?? 0;
         const targetSpeed = this.calculateSpeed(
@@ -52,7 +56,7 @@ export class SetSpeedTaskPayloadFactoryService implements ITaskPayloadFactory<Co
             brakeInputValue,
             binding.maxSpeed,
             binding.invert,
-            binding.inputs.accelerate.gain
+            binding.inputs[ControlSchemeInputAction.Accelerate].gain
         );
 
         const payload: SetSpeedTaskPayload = {
@@ -102,7 +106,7 @@ export class SetSpeedTaskPayloadFactoryService implements ITaskPayloadFactory<Co
                 assumedBrakeInput,
                 binding.maxSpeed,
                 binding.invert,
-                binding.inputs.accelerate.gain
+                binding.inputs[ControlSchemeInputAction.Accelerate].gain
             );
             return {
                 bindingType: ControlSchemeBindingType.SetSpeed,

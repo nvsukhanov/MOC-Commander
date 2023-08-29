@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { ControlSchemeSetSpeedBinding } from '@app/store';
+import { ControlSchemeInputAction, ControlSchemeSetSpeedBinding } from '@app/store';
 
 import { SetSpeedBindingForm } from '../types';
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';
@@ -17,8 +17,8 @@ export class SetSpeedBindingFormBuilderService {
         return this.formBuilder.group({
             id: this.commonFormControlBuilder.schemeIdControl(),
             inputs: this.formBuilder.group({
-                accelerate: this.commonFormControlBuilder.inputFormGroup(),
-                brake: this.commonFormControlBuilder.optionalInputFormGroup(),
+                [ControlSchemeInputAction.Accelerate]: this.commonFormControlBuilder.inputFormGroup(),
+                [ControlSchemeInputAction.Brake]: this.commonFormControlBuilder.optionalInputFormGroup(),
             }),
             hubId: this.commonFormControlBuilder.hubIdControl(),
             portId: this.commonFormControlBuilder.portIdControl(),

@@ -4,7 +4,14 @@ import { Observable, of } from 'rxjs';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import { controllerInputIdFn } from '../../../../reducers';
-import { ControlSchemeSpeedShiftBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, SpeedShiftTaskPayload, } from '../../../../models';
+import {
+    ControlSchemeInputAction,
+    ControlSchemeSpeedShiftBinding,
+    ControllerInputModel,
+    PortCommandTask,
+    PortCommandTaskPayload,
+    SpeedShiftTaskPayload,
+} from '../../../../models';
 import { ITaskPayloadFactory } from './i-task-payload-factory';
 
 @Injectable()
@@ -17,10 +24,11 @@ export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
         motorEncoderOffset: number,
         previousTask: PortCommandTask | null
     ): Observable<{ payload: SpeedShiftTaskPayload; inputTimestamp: number } | null> {
-        const isNextSpeedInputActive = (inputsState[controllerInputIdFn(binding.inputs.nextSpeed)]?.value ?? 0) > this.inputThreshold;
-        const isPrevSpeedInputActive = !!binding.inputs.prevSpeed
-            && (inputsState[controllerInputIdFn(binding.inputs.prevSpeed)]?.value ?? 0) > this.inputThreshold;
-        const isStopInputActive = !!binding.inputs.stop && (inputsState[controllerInputIdFn(binding.inputs.stop)]?.value ?? 0) > this.inputThreshold;
+        const isNextSpeedInputActive = (inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.NextLevel])]?.value ?? 0) > this.inputThreshold;
+        const isPrevSpeedInputActive = !!binding.inputs[ControlSchemeInputAction.PrevLevel]
+            && (inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.PrevLevel])]?.value ?? 0) > this.inputThreshold;
+        const isStopInputActive = !!binding.inputs[ControlSchemeInputAction.Reset]
+            && (inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Reset])]?.value ?? 0) > this.inputThreshold;
 
         if (isStopInputActive) {
             return of({

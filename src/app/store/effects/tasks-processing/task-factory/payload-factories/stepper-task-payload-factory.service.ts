@@ -3,7 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ControlSchemeBindingType } from '@app/shared';
 
-import { ControlSchemeStepperBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, StepperTaskPayload } from '../../../../models';
+import {
+    ControlSchemeInputAction,
+    ControlSchemeStepperBinding,
+    ControllerInputModel,
+    PortCommandTask,
+    PortCommandTaskPayload,
+    StepperTaskPayload
+} from '../../../../models';
 import { controllerInputIdFn } from '../../../../reducers';
 import { ITaskPayloadFactory } from './i-task-payload-factory';
 
@@ -13,7 +20,7 @@ export class StepperTaskPayloadFactoryService implements ITaskPayloadFactory<Con
         binding: ControlSchemeStepperBinding,
         inputsState: Dictionary<ControllerInputModel>,
     ): Observable<{ payload: StepperTaskPayload; inputTimestamp: number } | null> {
-        const stepInput = inputsState[controllerInputIdFn(binding.inputs.step)];
+        const stepInput = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Step])];
         const stepInputValue = stepInput?.value ?? 0;
 
         if (stepInputValue < 0.5) { // TODO: inject threshold

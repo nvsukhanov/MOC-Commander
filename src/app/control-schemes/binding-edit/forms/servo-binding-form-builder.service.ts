@@ -1,7 +1,7 @@
 import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Injectable } from '@angular/core';
-import { ControlSchemeServoBinding } from '@app/store';
+import { ControlSchemeInputAction, ControlSchemeServoBinding } from '@app/store';
 
 import { ServoBindingForm } from '../types';
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';
@@ -18,7 +18,7 @@ export class ServoBindingFormBuilderService {
         return this.formBuilder.group({
             id: this.commonFormControlBuilder.schemeIdControl(),
             inputs: this.formBuilder.group({
-                servo: this.commonFormControlBuilder.inputFormGroup()
+                [ControlSchemeInputAction.Servo]: this.commonFormControlBuilder.inputFormGroup()
             }),
             hubId: this.commonFormControlBuilder.hubIdControl(),
             portId: this.commonFormControlBuilder.portIdControl(),

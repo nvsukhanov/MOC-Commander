@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ControlSchemeSpeedShiftBinding } from '@app/store';
+import { ControlSchemeInputAction, ControlSchemeSpeedShiftBinding } from '@app/store';
 
 import { SpeedShiftBindingForm } from '../types';
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';
@@ -17,9 +17,9 @@ export class SpeedShiftBindingFormBuilderService {
         return this.formBuilder.group({
             id: this.commonFormControlBuilder.schemeIdControl(),
             inputs: this.formBuilder.group({
-                nextSpeed: this.commonFormControlBuilder.inputFormGroup(),
-                prevSpeed: this.commonFormControlBuilder.optionalInputFormGroup(),
-                stop: this.commonFormControlBuilder.optionalInputFormGroup()
+                [ControlSchemeInputAction.NextLevel]: this.commonFormControlBuilder.inputFormGroup(),
+                [ControlSchemeInputAction.PrevLevel]: this.commonFormControlBuilder.optionalInputFormGroup(),
+                [ControlSchemeInputAction.Reset]: this.commonFormControlBuilder.optionalInputFormGroup()
             }),
             hubId: this.commonFormControlBuilder.hubIdControl(),
             portId: this.commonFormControlBuilder.portIdControl(),

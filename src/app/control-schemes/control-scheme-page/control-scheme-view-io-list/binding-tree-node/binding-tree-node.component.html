@@ -19,13 +19,14 @@
             </ng-template>
         </a>
     </div>
-    <ng-container *ngFor="let controlData of viewModel.controlData">
-        <div class="binding__controls">
+    <div class="binding__controls">
+        <div *ngFor="let controlData of viewModel.controlData">
+            <span class="binding__controls-action-name">{{ controlData.action | controlSchemeInputActionToL10nKey | transloco }}:</span>
             <app-full-controller-input-name class="binding__controls-label"
                                             [class.binding__controls-label_disconnected]="!controlData.isControllerConnected"
                                             [inputData]="controlData.input"
                                             [showDisconnectedState]="true"
             ></app-full-controller-input-name>
         </div>
-    </ng-container>
+    </div>
 </ng-container>

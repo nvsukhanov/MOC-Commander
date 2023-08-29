@@ -8,7 +8,7 @@ import { PushPipe } from '@ngrx/component';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
 import { SliderControlComponent, ToggleControlComponent } from '@app/shared';
-import { ATTACHED_IO_PROPS_SELECTORS } from '@app/store';
+import { ATTACHED_IO_PROPS_SELECTORS, ControlSchemeInputAction } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { BindingControlNumInputComponent } from '../control-num-input';
@@ -16,6 +16,7 @@ import { BindingControlSelectControllerComponent } from '../control-select-contr
 import { BindingControlOutputEndStateComponent } from '../control-output-end-state-select';
 import { SetAngleBindingForm } from '../types';
 import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
+import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
 
 @Component({
     standalone: true,
@@ -33,12 +34,15 @@ import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
         MatButtonModule,
         MatIconModule,
         PushPipe,
-        BindingControlReadMotorPositionComponent
+        BindingControlReadMotorPositionComponent,
+        ControlSchemeInputActionToL10nKeyPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingSetAngleEditComponent implements IBindingsDetailsEditComponent<SetAngleBindingForm> {
     public readonly motorLimits = MOTOR_LIMITS;
+
+    public readonly controlSchemeInputActions = ControlSchemeInputAction;
 
     public readonly portModeNames = PortModeName;
 

@@ -4,7 +4,14 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ControlSchemeBindingType, getTranslationArcs } from '@app/shared';
 
-import { ControlSchemeServoBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, ServoTaskPayload } from '../../../../models';
+import {
+    ControlSchemeInputAction,
+    ControlSchemeServoBinding,
+    ControllerInputModel,
+    PortCommandTask,
+    PortCommandTaskPayload,
+    ServoTaskPayload
+} from '../../../../models';
 import { controllerInputIdFn } from '../../../../reducers';
 import { calcInputGain } from './calc-input-gain';
 import { ITaskPayloadFactory } from './i-task-payload-factory';
@@ -18,8 +25,8 @@ export class ServoTaskPayloadFactoryService implements ITaskPayloadFactory<Contr
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
     ): Observable<{ payload: ServoTaskPayload; inputTimestamp: number }> {
-        const servoInput = inputsState[controllerInputIdFn(binding.inputs.servo)];
-        const servoInputValue = calcInputGain(servoInput?.value ?? 0, binding.inputs.servo.gain);
+        const servoInput = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Servo])];
+        const servoInputValue = calcInputGain(servoInput?.value ?? 0, binding.inputs[ControlSchemeInputAction.Servo].gain);
 
         const translationPaths = getTranslationArcs(motorEncoderOffset, binding.aposCenter);
         const resultingCenter = translationPaths.cw < translationPaths.ccw ? translationPaths.cw : -translationPaths.ccw;

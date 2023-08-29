@@ -1,16 +1,16 @@
 <ng-container *ngIf="form">
-    <app-controller-select [inputFormGroup]="form.controls.inputs.controls.accelerate"
-                           [title]="'controlScheme.setSpeedBinding.inputSpeed' | transloco "
+    <app-controller-select [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.Accelerate]"
+                           [title]="controlSchemeInputActions.Accelerate | controlSchemeInputActionToL10nKey | transloco "
     ></app-controller-select>
 
     <ng-container *ngIf="isAccelerationInputAssigned">
         <app-controller-select *ngIf="!form.controls.isToggle.value"
-                               [inputFormGroup]="form.controls.inputs.controls.brake"
-                               [title]="'controlScheme.setSpeedBinding.inputBrake' | transloco "
+                               [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.Brake]"
+                               [title]="controlSchemeInputActions.Brake | controlSchemeInputActionToL10nKey | transloco "
         ></app-controller-select>
 
         <app-binding-input-gain-select *ngIf="isInputGainConfigurable"
-                                       [control]="form.controls.inputs.controls.accelerate.controls.gain"
+                                       [control]="form.controls.inputs.controls[controlSchemeInputActions.Accelerate].controls.gain"
         ></app-binding-input-gain-select>
 
         <app-slider-control [min]="0"
