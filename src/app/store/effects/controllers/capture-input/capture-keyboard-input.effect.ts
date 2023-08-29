@@ -12,6 +12,8 @@ import {
 } from '@app/store';
 import { ControllerInputType, WINDOW } from '@app/shared';
 
+import { filterKeyboardInput } from '../filter-keyboard-input';
+
 const KEY_DOWN_EVENT = 'keydown';
 
 const KEY_UP_EVENT = 'keyup';
@@ -25,18 +27,12 @@ function readKeyboard(
         map((s) => s as KeyboardSettingsModel),
         take(1),
         mergeMap((settings) => {
-            if (settings?.captureNonAlphaNumerics) {
-                return fromEvent(window.document, KEY_DOWN_EVENT);
-            } else {
-                return fromEvent(window.document, KEY_DOWN_EVENT).pipe(
-                    filter((event) => /^[a-zA-Z0-9]$/.test((event as KeyboardEvent).key))
-                );
-            }
+            return fromEvent(window.document, KEY_DOWN_EVENT).pipe(
+                mergeWith(fromEvent(window.document, KEY_UP_EVENT)),
+                filterKeyboardInput(settings?.captureNonAlphaNumerics),
+                map((event) => ({ isPressed: true, event })),
+            );
         }),
-        map((event) => ({ isPressed: true, event: event as KeyboardEvent })),
-        mergeWith(fromEvent(window.document, KEY_UP_EVENT).pipe(
-            map((event) => ({ isPressed: false, event: event as KeyboardEvent })),
-        )),
         concatLatestFrom(() => store.select(CONTROLLER_INPUT_SELECTORS.selectEntities)),
         map(([ eventData, controllerInputEntities ]) => {
             const inputId = eventData.event.key;
