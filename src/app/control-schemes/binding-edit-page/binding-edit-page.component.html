@@ -1,28 +1,25 @@
-<ng-container *ngIf="viewModel$ | ngrxPush; let viewModel">
-    <app-binding [binding]="viewModel.binding"
-                 [availabilityData]="viewModel.availabilityData"
-                 #binding="appBindingEdit"
-    ></app-binding>
+<app-binding-edit [binding]="binding$ | ngrxPush"
+                  #binding="appBindingEdit"
+></app-binding-edit>
 
-    <div *appFeatureToolbarControls>
-        <button mat-raised-button
-                class="toolbar-button"
-                [disabled]="!(binding.canSave$ | ngrxPush)"
-                (click)="onSave(binding.getValue())">
-            {{ 'controlScheme.saveEdited' | transloco }}
-        </button>
-        <button mat-raised-button
-                class="toolbar-button"
-                [color]="'warn'"
-                (click)="onDelete()"
-        >
-            {{ 'controlScheme.deleteBinding' | transloco }}
-        </button>
-        <button mat-raised-button
-                class="toolbar-button"
-                (click)="onCancel()"
-        >
-            {{ 'controlScheme.cancelEdit' | transloco }}
-        </button>
-    </div>
-</ng-container>
+<div *appFeatureToolbarControls>
+    <button mat-raised-button
+            class="toolbar-button"
+            [disabled]="!(binding.canSave$ | ngrxPush)"
+            (click)="onSave(binding.getValue())">
+        {{ 'controlScheme.saveEdited' | transloco }}
+    </button>
+    <button mat-raised-button
+            class="toolbar-button"
+            [color]="'warn'"
+            (click)="onDelete()"
+    >
+        {{ 'controlScheme.deleteBinding' | transloco }}
+    </button>
+    <button mat-raised-button
+            class="toolbar-button"
+            (click)="onCancel()"
+    >
+        {{ 'controlScheme.cancelEdit' | transloco }}
+    </button>
+</div>

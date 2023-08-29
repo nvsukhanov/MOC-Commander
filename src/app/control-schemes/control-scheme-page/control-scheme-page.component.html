@@ -1,5 +1,4 @@
 <mat-card *ngIf="selectedScheme$ | ngrxPush; let scheme; else schemeNotFound">
-
     <mat-card-header>
         <mat-card-title>
             <app-control-scheme-general-info [name]="scheme.name"
@@ -34,12 +33,23 @@
                 {{ 'controlScheme.stop' | transloco }}
             </button>
 
-            <button mat-raised-button
+            <button *ngIf="canCreateBinding$ | ngrxPush; else cannotCreateBinding"
+                    mat-raised-button
                     class="toolbar-button"
                     (click)="addBinding()"
             >
                 {{ 'controlScheme.addBinding' | transloco }}
             </button>
+            <ng-template #cannotCreateBinding>
+                <button mat-raised-button
+                        class="toolbar-button"
+                        [disabled]="true"
+                        [title]="'controlScheme.cannotCreateBinding' | transloco"
+                >
+                    {{ 'controlScheme.addBinding' | transloco }}
+                    <span class="cdk-visually-hidden">{{ 'controlScheme.cannotCreateBinding' | transloco }}</span>
+                </button>
+            </ng-template>
             <button mat-raised-button
                     class="toolbar-button"
                     [color]="'warn'"

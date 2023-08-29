@@ -46,9 +46,9 @@ export class RenderBindingDetailsEditDirective implements OnDestroy {
         this._form = form;
         this.sub?.unsubscribe();
 
-        const opModeChanges = form.controls.bindingFormOperationMode.valueChanges;
+        const opModeChanges = form.controls.bindingType.valueChanges;
         this.sub = opModeChanges.pipe(
-            startWith(form.controls.bindingFormOperationMode.value)
+            startWith(form.controls.bindingType.value)
         ).subscribe((operationMode: ControlSchemeBindingType) => {
             this.operationMode = operationMode;
             this.updateRenderer();

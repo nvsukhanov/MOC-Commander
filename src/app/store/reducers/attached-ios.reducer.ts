@@ -39,6 +39,10 @@ export const ATTACHED_IOS_FEATURE = createFeature({
         on(HUBS_ACTIONS.connected, (state, data): AttachedIOState => ATTACHED_IOS_ENTITY_ADAPTER.removeMany(
             (d) => d.hubId === data.hubId,
             state
-        ))
+        )),
+        on(HUBS_ACTIONS.forgetHub, (state, data): AttachedIOState => ATTACHED_IOS_ENTITY_ADAPTER.removeMany(
+            (d) => d.hubId === data.hubId,
+            state
+        )),
     )
 });

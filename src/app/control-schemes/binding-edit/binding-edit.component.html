@@ -1,19 +1,19 @@
 <mat-card>
     <mat-card-content class="card-content">
-        <app-binding-select-operation-mode [control]="form.controls.bindingFormOperationMode"
-                                           [availabilityData]="availabilityData"
-        ></app-binding-select-operation-mode>
-
-        <app-binding-select-hub [control]="form.controls[form.controls.bindingFormOperationMode.value].controls.hubId"
-                                [operationMode]="form.controls.bindingFormOperationMode.value"
-                                [availabilityData]="availabilityData"
+        <app-binding-select-hub *ngIf="hubsWithConnectionState$ | ngrxPush; let hubWithConnectionStates"
+                                [control]="form.controls[form.controls.bindingType.value].controls.hubId"
+                                [hubsWithConnectionState]="hubWithConnectionStates"
         ></app-binding-select-hub>
 
-        <app-binding-control-select-io [control]="form.controls[form.controls.bindingFormOperationMode.value].controls.portId"
-                                       [operationMode]="form.controls.bindingFormOperationMode.value"
-                                       [hubId]="form.controls[form.controls.bindingFormOperationMode.value].controls.hubId.value"
-                                       [availabilityData]="availabilityData"
+        <app-binding-control-select-io *ngIf="availableIos$ | ngrxPush; let availableIos"
+                                       [portIdControl]="form.controls[form.controls.bindingType.value].controls.portId"
+                                       [hubIos]="availableIos"
         ></app-binding-control-select-io>
+
+        <app-binding-select-operation-mode *ngIf="availableBindingTypes$ | ngrxPush; let availableBindingTypes"
+                                           [control]="form.controls.bindingType"
+                                           [availableBindingTypes]="availableBindingTypes"
+        ></app-binding-select-operation-mode>
 
         <div *appRenderBindingDetailsEdit="form"></div>
     </mat-card-content>

@@ -42,9 +42,5 @@ export const CONTROL_SCHEME_SELECTORS = {
     selectIsAnySchemeRunning: createSelector(
         CONTROL_SCHEME_FEATURE.selectRunningState,
         (runningState) => runningState !== ControlSchemeRunState.Idle
-    ),
-    selectSchemeBinding: (schemeId: string, bindingId: string) => createSelector(
-        CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
-        (scheme) => scheme?.bindings.find((binding) => binding.id === bindingId) ?? null
-    ),
+    )
 } as const;

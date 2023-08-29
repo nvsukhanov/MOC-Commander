@@ -12,7 +12,12 @@
             [disabled]="true"
             [title]="'hub.notConnected' | transloco"
     >
-        {{ name }}
+        <ng-container *ngIf="isHubKnown; else unknownHub">
+            {{ name }}
+        </ng-container>
+        <ng-template #unknownHub>
+            {{ 'hub.unknownHub' | transloco: { hubId } }}
+        </ng-template>
     </button>
     <span class="cdk-visually-hidden">{{ 'hub.notConnected' | transloco }}</span>
 </ng-template>

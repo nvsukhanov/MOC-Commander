@@ -3,9 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
-import { MatLineModule } from '@angular/material/core';
 import { RouterLink } from '@angular/router';
-import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { EllipsisTitleDirective } from '../ellipsis-title.directive';
 import { RoutesBuilderService } from '../../routing';
@@ -20,10 +18,8 @@ import { RoutesBuilderService } from '../../routing';
         MatIconModule,
         TranslocoModule,
         NgIf,
-        MatLineModule,
         RouterLink,
         EllipsisTitleDirective,
-        MatFormFieldModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -47,6 +43,8 @@ export class HubInlineViewComponent {
     @Output() public readonly forget = new EventEmitter<void>();
 
     private _hubViewHref: string[] = [];
+
+    private _hubId: string | undefined;
 
     constructor(
         private routesBuilderService: RoutesBuilderService,
@@ -99,17 +97,27 @@ export class HubInlineViewComponent {
     }
 
     @Input()
-    public set hubId(value: string | undefined) {
-        if (value === undefined) {
+    public set hubId(
+        hubId: string | undefined
+    ) {
+        if (hubId === undefined) {
             this._hubViewHref = [];
-            return;
         } else {
-            this._hubViewHref = this.routesBuilderService.hubView(value);
+            this._hubViewHref = this.routesBuilderService.hubView(hubId);
         }
+        this._hubId = hubId;
+    }
+
+    public get hubId(): string | undefined {
+        return this._hubId;
     }
 
     public get hubViewHref(): string[] {
         return this._hubViewHref;
+    }
+
+    public get isHubKnown(): boolean {
+        return this.name !== undefined;
     }
 
     public onDisconnectClick(): void {

@@ -2,15 +2,13 @@ import { ChangeDetectionStrategy, Component, OnDestroy, TemplateRef, ViewChild }
 import { Observable, Subscription, filter, map, of, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
-import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { Router, RouterLink } from '@angular/router';
-import { MatExpansionModule } from '@angular/material/expansion';
+import { Router } from '@angular/router';
 import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel, ROUTER_SELECTORS, } from '@app/store';
-import { ConfirmationDialogModule, ConfirmationDialogService, EllipsisTitleDirective, FeatureToolbarControlsDirective, HintComponent } from '@app/shared';
+import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared';
 
 import { RoutesBuilderService } from '../../routing';
 import { CONTROL_SCHEME_VIEW_SELECTORS } from './control-scheme-view.selectors';
@@ -30,17 +28,11 @@ import { ControlSchemeViewTreeNode } from './types';
         MatCardModule,
         MatButtonModule,
         LetDirective,
-        NgSwitch,
-        NgSwitchCase,
-        MatIconModule,
         ControlSchemeViewIoListComponent,
-        EllipsisTitleDirective,
-        RouterLink,
-        MatExpansionModule,
         ControlSchemeGeneralInfoComponent,
         ConfirmationDialogModule,
         HintComponent,
-        FeatureToolbarControlsDirective
+        FeatureToolbarControlsDirective,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -63,6 +55,8 @@ export class ControlSchemePageComponent implements OnDestroy {
                           : this.store.select(CONTROL_SCHEME_VIEW_SELECTORS.schemeViewTree(id))
         )
     );
+
+    public readonly canCreateBinding$: Observable<boolean> = this.store.select(CONTROL_SCHEME_VIEW_SELECTORS.canCreateBinding);
 
     private sub?: Subscription;
 

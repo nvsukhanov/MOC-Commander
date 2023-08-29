@@ -1,17 +1,16 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, filter, map, switchMap, take } from 'rxjs';
+import { Observable, filter, map, take } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
-import { JsonPipe, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { Router } from '@angular/router';
+import { concatLatestFrom } from '@ngrx/effects';
 import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective } from '@app/shared';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeBinding, ROUTER_SELECTORS } from '@app/store';
 
-import { BINDING_EDIT_PAGE_SELECTORS } from './binding-edit.selectors';
+import { BINDING_EDIT_PAGE_SELECTORS } from './binding-edit-page.selectors';
 import { BindingEditComponent } from '../binding-edit';
-import { BindingEditViewPageModel } from './binding-edit-view-page-model';
 import { RoutesBuilderService } from '../../routing';
 
 @Component({
@@ -21,8 +20,6 @@ import { RoutesBuilderService } from '../../routing';
     styleUrls: [ './binding-edit-page.component.scss' ],
     imports: [
         PushPipe,
-        NgIf,
-        JsonPipe,
         BindingEditComponent,
         MatButtonModule,
         TranslocoModule,
@@ -32,7 +29,7 @@ import { RoutesBuilderService } from '../../routing';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingEditPageComponent {
-    public readonly viewModel$: Observable<BindingEditViewPageModel | null>;
+    public readonly binding$: Observable<ControlSchemeBinding | undefined>;
 
     constructor(
         private readonly store: Store,
@@ -41,7 +38,7 @@ export class BindingEditPageComponent {
         private readonly confirmationDialogService: ConfirmationDialogService,
         private readonly translocoService: TranslocoService
     ) {
-        this.viewModel$ = store.select(BINDING_EDIT_PAGE_SELECTORS.selectViewModel);
+        this.binding$ = this.store.select(BINDING_EDIT_PAGE_SELECTORS.selectEditedBinding);
     }
 
     public onSave(
@@ -81,14 +78,17 @@ export class BindingEditPageComponent {
             }
         ).pipe(
             take(1),
-            filter((result): result is true => result === true),
-            switchMap(() => this.viewModel$),
-            take(1),
-            filter((vm): vm is BindingEditViewPageModel => vm !== null),
-        ).subscribe((vm) => {
-            this.store.dispatch(CONTROL_SCHEME_ACTIONS.deleteBinding({ schemeId: vm.controlSchemeId, bindingId: vm.binding.id }));
+            concatLatestFrom(() => [
+                this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeId),
+                this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedBindingId)
+            ]),
+        ).subscribe(([ isConfirmed, schemeId, bindingId ]) => {
+            if (isConfirmed === false || schemeId === null || bindingId === null) {
+                return;
+            }
+            this.store.dispatch(CONTROL_SCHEME_ACTIONS.deleteBinding({ schemeId, bindingId }));
 
-            const route = this.routesBuilderService.controlSchemeView(vm.controlSchemeId);
+            const route = this.routesBuilderService.controlSchemeView(schemeId);
             this.router.navigate(route);
         });
     }
