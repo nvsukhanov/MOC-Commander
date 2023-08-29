@@ -1,6 +1,6 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ButtonGroupButtonId, MotorServoEndState } from '@nvsukhanov/rxpoweredup';
-import { AttachedIoModel, InputGain } from '@app/store';
+import { InputGain } from '@app/store';
 import { ControlSchemeBindingType, ControllerInputType } from '@app/shared';
 
 export type InputFormGroup = FormGroup<{
@@ -117,7 +117,7 @@ export type AngleShiftBindingForm = FormGroup<{
 }>;
 
 export type ControlSchemeBindingForm = FormGroup<{
-    bindingFormOperationMode: FormControl<ControlSchemeBindingType>;
+    bindingType: FormControl<ControlSchemeBindingType>;
     [ControlSchemeBindingType.SetSpeed]: SetSpeedBindingForm;
     [ControlSchemeBindingType.Servo]: ServoBindingForm;
     [ControlSchemeBindingType.Stepper]: StepperBindingForm;
@@ -126,11 +126,8 @@ export type ControlSchemeBindingForm = FormGroup<{
     [ControlSchemeBindingType.AngleShift]: AngleShiftBindingForm;
 }>;
 
-export type BindingEditAvailableOperationModesModel = {
-    [operationMode in ControlSchemeBindingType]?: {
-        hubs: Array<{ id: string; name: string }>;
-        hubIos: {
-            [hubId in string]: AttachedIoModel[]
-        };
-    }
+export type HubWithConnectionState = {
+    hubId: string;
+    name: string;
+    isConnected: boolean;
 };

@@ -1,15 +1,17 @@
-<mat-form-field *ngIf="control"
+<mat-form-field *ngIf="portIdControl"
                 class="form-field"
 >
     <mat-label>{{ 'controlScheme.bindingOutputSectionPortLabel' | transloco }}</mat-label>
-    <mat-select [formControl]="control">
-        <mat-select-trigger *ngIf="ioType$ | ngrxPush; let ioType">
-            {{ control.value }} ({{ ioType | ioTypeToL10nKey | transloco }})
-        </mat-select-trigger>
-        <ng-container *ngFor="let io of availableIos">
+    <mat-select [formControl]="portIdControl">
+        <ng-container *ngFor="let io of hubIos">
             <mat-option [value]="io.portId">
                 {{ io.portId }} ({{ io.ioType | ioTypeToL10nKey | transloco }})
             </mat-option>
         </ng-container>
+        <mat-option *ngIf="!(isSelectedIoAttached$ | ngrxPush)"
+                    [value]="portIdControl.value"
+        >
+            {{ portIdControl.value }} ({{ 'controlScheme.noDeviceConnected' | transloco }})
+        </mat-option>
     </mat-select>
 </mat-form-field>

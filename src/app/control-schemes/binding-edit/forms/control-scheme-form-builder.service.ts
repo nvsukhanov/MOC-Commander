@@ -26,7 +26,7 @@ export class ControlSchemeFormBuilderService {
 
     public createBindingForm(): ControlSchemeBindingForm {
         return this.formBuilder.group({
-            bindingFormOperationMode: this.formBuilder.control<ControlSchemeBindingType>(ControlSchemeBindingType.SetSpeed, { nonNullable: true }),
+            bindingType: this.formBuilder.control<ControlSchemeBindingType>(ControlSchemeBindingType.SetSpeed, { nonNullable: true }),
             [ControlSchemeBindingType.SetSpeed]: this.setSpeedBindingFormBuilder.build(),
             [ControlSchemeBindingType.Servo]: this.servoBindingFormBuilder.build(),
             [ControlSchemeBindingType.SetAngle]: this.setAngleBindingFormBuilder.build(),
@@ -41,7 +41,7 @@ export class ControlSchemeFormBuilderService {
         patch: Partial<ControlSchemeBinding>
     ): void {
         if (patch.operationMode) {
-            form.controls.bindingFormOperationMode.patchValue(patch.operationMode);
+            form.controls.bindingType.patchValue(patch.operationMode);
         }
         switch (patch.operationMode) {
             case ControlSchemeBindingType.SetSpeed:

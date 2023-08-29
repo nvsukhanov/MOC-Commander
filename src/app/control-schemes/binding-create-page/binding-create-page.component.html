@@ -1,7 +1,8 @@
-<ng-container *ngIf="availabilityData$ | ngrxPush; let availabilityData">
-    <app-binding [availabilityData]="availabilityData"
-                 #binding="appBindingEdit"
-    ></app-binding>
+<ng-container *ngIf="initialBindingData$ | ngrxPush; let initialData; else unableToCreateBinding">
+    <app-binding-edit #binding="appBindingEdit"
+                      [binding]="initialData"
+                      [bindingType]="initialData.operationMode"
+    ></app-binding-edit>
 
     <div *appFeatureToolbarControls>
         <button mat-raised-button
@@ -19,3 +20,6 @@
     </div>
 </ng-container>
 
+<ng-template #unableToCreateBinding>
+    <app-hint [hintL10nKey]="'controlScheme.cannotCreateBinding'"></app-hint>
+</ng-template>

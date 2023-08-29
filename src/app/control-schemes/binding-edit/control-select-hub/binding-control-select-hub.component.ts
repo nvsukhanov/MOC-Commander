@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { ControlSchemeBindingType } from '@app/shared';
+import { Observable, map, of, startWith } from 'rxjs';
+import { PushPipe } from '@ngrx/component';
 
-import { BindingEditAvailableOperationModesModel } from '../types';
+import { HubWithConnectionState } from '../types';
 
 @Component({
     standalone: true,
@@ -14,7 +14,7 @@ import { BindingEditAvailableOperationModesModel } from '../types';
     templateUrl: './binding-control-select-hub.component.html',
     styleUrls: [ './binding-control-select-hub.component.scss' ],
     imports: [
-        MatInputModule,
+        PushPipe,
         MatSelectModule,
         ReactiveFormsModule,
         NgIf,
@@ -24,38 +24,47 @@ import { BindingEditAvailableOperationModesModel } from '../types';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingControlSelectHubComponent implements OnChanges {
-    @Input() public availabilityData: BindingEditAvailableOperationModesModel = {};
-
     @Input() public control?: FormControl<string>;
 
-    @Input() public operationMode?: ControlSchemeBindingType;
+    private _hubIds: string[] = [];
 
-    private _availableHubs: Array<{ id: string; name: string }> = [];
+    private _hubMap: { [k in string]?: HubWithConnectionState } = {};
 
-    public get availableHubs(): Array<{ id: string; name: string }> {
-        return this._availableHubs;
+    private _isHubKnown$: Observable<boolean> = of(false);
+
+    @Input()
+    public set hubsWithConnectionState(
+        data: HubWithConnectionState[]
+    ) {
+        this._hubIds = data.map((hubData) => hubData.hubId);
+        this._hubMap = {};
+        for (const hubData of data) {
+            this._hubMap[hubData.hubId] = hubData;
+        }
+    }
+
+    public get hubIds(): string[] {
+        return this._hubIds;
+    }
+
+    public get isHubKnown$(): Observable<boolean> {
+        return this._isHubKnown$;
     }
 
     public ngOnChanges(): void {
-        if (this.operationMode === undefined) {
-            this.control?.reset();
-            this._availableHubs = [];
-            return;
+        if (this.control) {
+            this._isHubKnown$ = this.control.valueChanges.pipe(
+                startWith(this.control.value),
+                map((hubId) => this._hubMap[hubId] !== undefined),
+            );
+        } else {
+            this._isHubKnown$ = of(false);
         }
+    }
 
-        this._availableHubs = this.availabilityData[this.operationMode]?.hubs ?? [];
-
-        if (!this.control) {
-            return;
-        }
-
-        const availableHubs = this.availabilityData[this.operationMode]?.hubs;
-        if (!availableHubs || availableHubs.length === 0) {
-            this.control.reset();
-            return;
-        }
-        if (this.control && this.control.value !== null && !availableHubs.find((hubData) => hubData.id === this.control?.value)) {
-            this.control.setValue(availableHubs[0].id);
-        }
+    public getHubName(
+        hubId: string
+    ): string | undefined {
+        return this._hubMap[hubId]?.name;
     }
 }

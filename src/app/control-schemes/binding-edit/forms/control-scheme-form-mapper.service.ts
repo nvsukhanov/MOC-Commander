@@ -25,7 +25,7 @@ export class ControlSchemeFormMapperService {
     public mapToModel(
         form: ControlSchemeBindingForm
     ): ControlSchemeBinding {
-        const operationMode = form.controls.bindingFormOperationMode.value;
+        const operationMode = form.controls.bindingType.value;
         switch (operationMode) {
             case ControlSchemeBindingType.SetSpeed:
                 return this.setSpeedBindingMapper.mapToModel(form.controls[ControlSchemeBindingType.SetSpeed]);

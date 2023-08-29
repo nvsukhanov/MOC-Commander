@@ -1,23 +1,23 @@
 <ng-container *ngIf="viewModel$ | ngrxPush; let viewModel">
     <div class="binding__general-info">
-        <ng-container *ngIf="!viewModel.ioHasNoRequiredCapabilities; else ioCapabilitiesMismatch">
-            <a class="binding__operation-type mat-mdc-button"
-               [class.binding__operation-type_active]="viewModel.isActive"
-               [routerLink]="viewModel.controlSchemeId | bindingViewUrl: viewModel.bindingId"
-            >
+        <a class="binding__operation-type mat-mdc-button"
+           [class.binding__operation-type_active]="viewModel.isActive"
+           [routerLink]="viewModel.controlSchemeId | bindingViewUrl: viewModel.bindingId"
+        >
+            <ng-container *ngIf="!viewModel.ioHasNoRequiredCapabilities; else ioCapabilitiesMismatch">
                 {{ viewModel.operationMode | bindingTypeToL10nKey | transloco }}
-            </a>
-        </ng-container>
-        <ng-template #ioCapabilitiesMismatch>
-            <mat-error class="binding__operation-type"
-                       [title]="'controlScheme.ioCapabilitiesMismatch' | transloco"
-            >
-                {{ viewModel.operationMode | bindingTypeToL10nKey | transloco }}
-            </mat-error>
-            <span class="cdk-visually-hidden">
-                {{ 'controlScheme.ioCapabilitiesMismatch' | transloco }}
-            </span>
-        </ng-template>
+            </ng-container>
+            <ng-template #ioCapabilitiesMismatch>
+                <mat-error class="binding__operation-type"
+                           [title]="'controlScheme.ioCapabilitiesMismatch' | transloco"
+                >
+                    {{ viewModel.operationMode | bindingTypeToL10nKey | transloco }}
+                </mat-error>
+                <span class="cdk-visually-hidden">
+                    {{ 'controlScheme.ioCapabilitiesMismatch' | transloco }}
+                </span>
+            </ng-template>
+        </a>
     </div>
     <ng-container *ngFor="let controlData of viewModel.controlData">
         <div class="binding__controls">

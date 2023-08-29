@@ -51,7 +51,8 @@
     "rssiLevelUnknown": "RSSI unknown",
     "buttonStateTitle": "Button state",
     "buttonState": "Hub button state: {isButtonPressed, select, true {pressed} other {released}}",
-    "port": "Port {portId}"
+    "port": "Port {portId}",
+    "unknownHub": "Unknown hub ''{ hubId }''"
   },
   "hubTypes": {
     "boost": "Boost Hub",
@@ -103,6 +104,9 @@
     "bindingOutputSectionOperationModeLabel": "Operation mode",
     "expandCollapseHub": "Expand/collapse hub {name}",
     "expandCollapseIo": "Expand/collapse port {portId}",
+    "cannotCreateBinding": "Cannot create binding - there are no controllable IOs present",
+    "noDeviceConnected": "No device connected",
+    "unsupportedBindingType": "{ bindingType } (unsupported)",
     "ioCapabilitiesMismatch": "Attached device does not have required capabilities",
     "outputConfigurationNotRequired": "No configuration required",
     "runningDetailsIsRunningNotification": "Control scheme is running",

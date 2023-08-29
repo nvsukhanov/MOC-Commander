@@ -8,47 +8,47 @@ export enum ControlSchemeNodeTypes {
 }
 
 export type ControlSchemeViewBindingTreeNodeData = {
-    readonly path: string;
-    readonly nodeType: ControlSchemeNodeTypes.Binding;
-    readonly isActive: boolean; // TODO: remove, may impact performance, Use ad-hoc selector instead
-    readonly controlSchemeId: string;
-    readonly binding: ControlSchemeBinding;
-    readonly ioHasNoRequiredCapabilities: boolean;
-    readonly children: [];
-    readonly initiallyExpanded: boolean;
+    path: string;
+    nodeType: ControlSchemeNodeTypes.Binding;
+    isActive: boolean; // TODO: remove, may impact performance, Use ad-hoc selector instead
+    controlSchemeId: string;
+    binding: ControlSchemeBinding;
+    ioHasNoRequiredCapabilities: boolean;
+    children: [];
+    initiallyExpanded: boolean;
 };
 
 export type ControlSchemeViewIoTreeNode = {
-    readonly path: string;
-    readonly nodeType: ControlSchemeNodeTypes.Io;
-    readonly controlSchemeId: string;
-    readonly hubId: string;
-    readonly portId: number;
-    readonly ioType: IOType | null;
-    readonly isConnected: boolean;
-    readonly useAccelerationProfile: boolean;
-    readonly accelerationTimeMs: number;
-    readonly useDecelerationProfile: boolean;
-    readonly decelerationTimeMs: number;
-    readonly runningTask?: PortCommandTask;
-    readonly lastExecutedTask?: PortCommandTask;
-    readonly children: ControlSchemeViewBindingTreeNodeData[];
-    readonly initiallyExpanded: boolean;
+    path: string;
+    nodeType: ControlSchemeNodeTypes.Io;
+    controlSchemeId: string;
+    hubId: string;
+    portId: number;
+    ioType: IOType | null;
+    isConnected: boolean;
+    useAccelerationProfile: boolean;
+    accelerationTimeMs: number;
+    useDecelerationProfile: boolean;
+    decelerationTimeMs: number;
+    runningTask?: PortCommandTask;
+    lastExecutedTask?: PortCommandTask;
+    children: ControlSchemeViewBindingTreeNodeData[];
+    initiallyExpanded: boolean;
 };
 
 export type ControlSchemeViewHubTreeNode = {
-    readonly path: string;
-    readonly nodeType: ControlSchemeNodeTypes.Hub;
-    readonly hubId: string;
-    readonly name: string;
-    readonly batteryLevel: number | null;  // TODO: remove, may impact performance, Use ad-hoc selector instead
-    readonly rssi: number | null;  // TODO: remove, may impact performance, Use ad-hoc selector instead
-    readonly hubType: HubType;
-    readonly isButtonPressed: boolean;  // TODO: remove, may impact performance, Use ad-hoc selector instead
-    readonly hasCommunication: boolean;  // TODO: remove, may impact performance, Use ad-hoc selector instead
-    readonly isConnected: boolean;
-    readonly children: ControlSchemeViewIoTreeNode[];
-    readonly initiallyExpanded: boolean;
+    path: string;
+    nodeType: ControlSchemeNodeTypes.Hub;
+    hubId: string;
+    name?: string;
+    batteryLevel: number | null;  // TODO: remove, may impact performance, Use ad-hoc selector instead
+    rssi: number | null;  // TODO: remove, may impact performance, Use ad-hoc selector instead
+    hubType?: HubType;
+    isButtonPressed: boolean;  // TODO: remove, may impact performance, Use ad-hoc selector instead
+    hasCommunication: boolean;  // TODO: remove, may impact performance, Use ad-hoc selector instead
+    isConnected: boolean;
+    children: ControlSchemeViewIoTreeNode[];
+    initiallyExpanded: boolean;
 };
 
 export type ControlSchemeViewTreeNode = ControlSchemeViewHubTreeNode
