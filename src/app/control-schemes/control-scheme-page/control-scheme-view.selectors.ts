@@ -28,8 +28,9 @@ import {
     hubPortTasksIdFn
 } from '@app/store';
 
-import { getMatchingBindingTypes, ioHasMatchingModeForOpMode } from '../io-has-matching-mode-for-op-mode';
+import { ioHasMatchingModeForOpMode } from '../io-has-matching-mode-for-op-mode';
 import { ControlSchemeNodeTypes, ControlSchemeViewBindingTreeNodeData, ControlSchemeViewHubTreeNode, ControlSchemeViewIoTreeNode } from './types';
+import { areControllableIosPresent } from '../are-controllable-ios-present';
 
 function createHubTreeNode(
     hubConfig: { hubId: string; name?: string; hubType?: HubType },
@@ -263,23 +264,6 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
         ATTACHED_IO_SELECTORS.selectAll,
         ATTACHED_IO_MODES_SELECTORS.selectEntities,
         ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
-        (
-            ios,
-            ioSupportedModesEntities,
-            portModeInfoEntities
-        ) => {
-            return ios.some((io) => {
-                const ioSupportedModes = ioSupportedModesEntities[attachedIoModesIdFn(io)];
-                if (!ioSupportedModes) {
-                    return false;
-                }
-                const ioOutputModes = ioSupportedModes.portOutputModes;
-                const ioOutputPortModeNames = ioOutputModes.map((modeId) => {
-                    const portModeInfo = portModeInfoEntities[attachedIoPortModeInfoIdFn({ ...io, modeId })];
-                    return portModeInfo?.name ?? null;
-                }).filter((name): name is PortModeName => !!name);
-                return getMatchingBindingTypes(ioOutputPortModeNames).length > 0;
-            });
-        }
+        (ios, ioSupportedModesEntities, portModeInfoEntities) => areControllableIosPresent(ios, ioSupportedModesEntities, portModeInfoEntities)
     )
 } as const;
