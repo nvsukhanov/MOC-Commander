@@ -37,11 +37,11 @@ import { ControlSchemeViewTreeNode } from './types';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemePageComponent implements OnDestroy {
-    public readonly selectedScheme$: Observable<ControlSchemeModel | undefined> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
+    public readonly selectedScheme$: Observable<ControlSchemeModel | undefined> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeName).pipe(
         switchMap((id) => id === null ? of(undefined) : this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(id))),
     );
 
-    public readonly canRunScheme$: Observable<boolean> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
+    public readonly canRunScheme$: Observable<boolean> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeName).pipe(
         switchMap((id) => id === null
                           ? of(false)
                           : this.store.select(CONTROL_SCHEME_VIEW_SELECTORS.canRunScheme(id))),
@@ -49,7 +49,7 @@ export class ControlSchemePageComponent implements OnDestroy {
 
     public readonly isCurrentControlSchemeRunning$ = this.store.select(CONTROL_SCHEME_VIEW_SELECTORS.isCurrentControlSchemeRunning);
 
-    public readonly schemeViewTree$: Observable<ControlSchemeViewTreeNode[]> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeId).pipe(
+    public readonly schemeViewTree$: Observable<ControlSchemeViewTreeNode[]> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeName).pipe(
         switchMap((id) => id === null
                           ? of([])
                           : this.store.select(CONTROL_SCHEME_VIEW_SELECTORS.schemeViewTree(id))
@@ -84,9 +84,9 @@ export class ControlSchemePageComponent implements OnDestroy {
         this.sub?.unsubscribe();
     }
 
-    public runScheme(schemeId: string): void {
+    public runScheme(name: string): void {
         this.startControllerInputCapture();
-        this.store.dispatch(CONTROL_SCHEME_ACTIONS.startScheme({ schemeId }));
+        this.store.dispatch(CONTROL_SCHEME_ACTIONS.startScheme({ name }));
     }
 
     public stopRunningScheme(): void {
@@ -100,7 +100,7 @@ export class ControlSchemePageComponent implements OnDestroy {
             filter((scheme): scheme is ControlSchemeModel => scheme !== undefined),
         ).subscribe((scheme) => {
             this.router.navigate(
-                this.routesBuilderService.bindingCreate(scheme.id)
+                this.routesBuilderService.bindingCreate(scheme.name)
             );
         });
     }
@@ -113,7 +113,7 @@ export class ControlSchemePageComponent implements OnDestroy {
             filter((scheme): scheme is ControlSchemeModel => scheme !== undefined),
         ).subscribe((scheme) => {
             this.store.dispatch(CONTROL_SCHEME_ACTIONS.updateControlSchemeName({
-                id: scheme.id,
+                previousName: scheme.name,
                 name
             }));
         });
@@ -134,10 +134,10 @@ export class ControlSchemePageComponent implements OnDestroy {
                     map((isConfirmed) => [ scheme, isConfirmed ] as const)
                 )
             )
-        ).subscribe(([ { id }, isConfirmed ]) => {
+        ).subscribe(([ { name }, isConfirmed ]) => {
             if (isConfirmed) {
                 this.router.navigate(this.routesBuilderService.controlSchemesList);
-                this.store.dispatch(CONTROL_SCHEME_ACTIONS.deleteControlScheme({ id }));
+                this.store.dispatch(CONTROL_SCHEME_ACTIONS.deleteControlScheme({ name }));
             }
         });
     }

@@ -21,5 +21,7 @@
 </ng-container>
 
 <ng-template #unableToCreateBinding>
-    <app-hint [hintL10nKey]="'controlScheme.cannotCreateBinding'"></app-hint>
+    <app-hint>
+        {{ 'controlScheme.cannotCreateBinding' | transloco }}
+    </app-hint>
 </ng-template>

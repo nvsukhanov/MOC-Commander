@@ -20,7 +20,9 @@
     </ng-container>
 
     <ng-template #noControlSchemes>
-        <app-hint [hintL10nKey]="'controlScheme.noControlSchemes'"></app-hint>
+        <app-hint>
+            {{ 'controlScheme.noControlSchemes' | transloco }}
+        </app-hint>
     </ng-template>
 </ng-container>
 

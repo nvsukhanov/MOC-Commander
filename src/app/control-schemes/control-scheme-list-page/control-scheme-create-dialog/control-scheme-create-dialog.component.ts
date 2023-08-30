@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -7,7 +7,7 @@ import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { NgIf } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ValidationErrorMappingDirective, ValidationErrorsL10nMap, WINDOW } from '@app/shared';
+import { ValidationErrorMappingDirective, ValidationErrorsL10nMap } from '@app/shared';
 
 import { CONTROL_SCHEME_NAME_IS_NOT_UNIQUE, ControlSchemeValidators } from '../../validation';
 
@@ -37,9 +37,8 @@ export class ControlSchemeCreateDialogComponent {
     };
 
     constructor(
-        private readonly dialogRef: MatDialogRef<ControlSchemeCreateDialogComponent, { name: string; id: string }>,
+        private readonly dialogRef: MatDialogRef<ControlSchemeCreateDialogComponent, { name: string }>,
         private readonly formBuilder: FormBuilder,
-        @Inject(WINDOW) private readonly window: Window,
         private readonly translocoService: TranslocoService,
         private readonly store: Store
     ) {
@@ -68,7 +67,6 @@ export class ControlSchemeCreateDialogComponent {
         if (this.canSubmit()) {
             this.dialogRef.close({
                 name: this.nameFormControl.value,
-                id: this.window.crypto.randomUUID()
             });
         }
     }

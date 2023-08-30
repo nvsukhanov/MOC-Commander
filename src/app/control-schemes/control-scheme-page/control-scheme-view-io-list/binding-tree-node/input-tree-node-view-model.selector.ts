@@ -7,7 +7,7 @@ import { BindingTreeNodeRecord, BindingTreeNodeViewModel } from './binding-tree-
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const INPUT_TREE_NODE_VIEW_MODEL_SELECTOR = (
-    controlSchemeId: string,
+    schemeName: string,
     inputs: ControlSchemeInputsRecord,
     operationMode: ControlSchemeBindingType,
     bindingId: string,
@@ -17,7 +17,7 @@ export const INPUT_TREE_NODE_VIEW_MODEL_SELECTOR = (
     CONTROLLER_CONNECTION_SELECTORS.selectEntities,
     (controllerConnectionEntities: Dictionary<ControllerConnectionModel>): BindingTreeNodeViewModel => {
         return {
-            controlSchemeId,
+            schemeName,
             bindingId,
             isActive,
             ioHasNoRequiredCapabilities,

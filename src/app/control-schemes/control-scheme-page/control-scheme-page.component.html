@@ -20,7 +20,7 @@
             <button mat-raised-button
                     class="toolbar-button"
                     [disabled]="!canRunScheme"
-                    (click)="runScheme(scheme.id)"
+                    (click)="runScheme(scheme.name)"
             >
                 {{ 'controlScheme.run' | transloco }}
             </button>
@@ -65,5 +65,7 @@
 </ng-template>
 
 <ng-template #bindingsListEmpty>
-    <app-hint [hintL10nKey]="'controlScheme.bindingsListEmptyNotification'"></app-hint>
+    <app-hint>
+        {{ 'controlScheme.bindingsListEmptyNotification' | transloco }}
+    </app-hint>
 </ng-template>

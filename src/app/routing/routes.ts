@@ -7,7 +7,7 @@ export const ROUTE_PATHS = {
     controlSchemes: 'control-schemes',
     binding: 'binding',
     bindingCreate: 'binding-create',
-    portConfigEdit: 'port',
+    portEdit: 'port',
     hubEdit: 'edit',
     controlSchemeCreate: 'create',
     about: 'about',
@@ -70,22 +70,22 @@ export const ROUTES: Routes = [
                 pathMatch: 'full',
             },
             {
-                path: [ ':schemeId' ].join('/'),
+                path: [ ':schemeName' ].join('/'),
                 loadComponent: () => import('../control-schemes/control-scheme-page').then((m) => m.ControlSchemePageComponent),
                 pathMatch: 'full',
             },
             {
-                path: [ ':schemeId', ROUTE_PATHS.binding, ':bindingId' ].join('/'),
+                path: [ ':schemeName', ROUTE_PATHS.binding, ':bindingId' ].join('/'),
                 loadComponent: () => import('../control-schemes/binding-edit-page').then((m) => m.BindingEditPageComponent),
                 pathMatch: 'full'
             },
             {
-                path: [ ':schemeId', ROUTE_PATHS.bindingCreate ].join('/'),
+                path: [ ':schemeName', ROUTE_PATHS.bindingCreate ].join('/'),
                 loadComponent: () => import('../control-schemes/binding-create-page').then((m) => m.BindingCreatePageComponent),
                 pathMatch: 'full'
             },
             {
-                path: [ ':schemeId', ROUTE_PATHS.portConfigEdit, ':hubId', ':portId' ].join('/'),
+                path: [ ':schemeName', ROUTE_PATHS.hubEdit, ':hubId', ROUTE_PATHS.portEdit, ':portId' ].join('/'),
                 loadComponent: () => import('../control-schemes/port-config-edit-page').then((m) => m.PortConfigEditPageComponent),
                 pathMatch: 'full'
             }

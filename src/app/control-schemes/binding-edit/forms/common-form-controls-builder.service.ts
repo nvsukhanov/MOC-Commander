@@ -14,7 +14,7 @@ export class CommonFormControlsBuilderService {
     ) {
     }
 
-    public schemeIdControl(): FormControl<string> {
+    public bindingIdControl(): FormControl<string> {
         return this.formBuilder.control<string>(this.window.crypto.randomUUID(), { nonNullable: true });
     }
 

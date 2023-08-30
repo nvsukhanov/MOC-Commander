@@ -6,11 +6,11 @@ import { areControllableIosPresent } from '../are-controllable-ios-present';
 export const CONTROL_SCHEMES_LIST_PAGE_SELECTORS = {
     selectSchemesList: createSelector(
         CONTROL_SCHEME_SELECTORS.selectAll,
-        CONTROL_SCHEME_SELECTORS.selectRunningSchemeId,
-        (schemes, runningSchemeId) => {
+        CONTROL_SCHEME_SELECTORS.selectRunningSchemeName,
+        (schemes, runningSchemeName) => {
             return schemes.map((scheme) => ({
                 ...scheme,
-                isRunning: scheme.id === runningSchemeId
+                isRunning: scheme.name === runningSchemeName
             }));
         }
     ),

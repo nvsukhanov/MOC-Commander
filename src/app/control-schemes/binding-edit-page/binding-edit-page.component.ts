@@ -44,22 +44,22 @@ export class BindingEditPageComponent {
     public onSave(
         binding: ControlSchemeBinding
     ): void {
-        this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeId).pipe(
+        this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName).pipe(
             take(1),
-            filter((schemeId): schemeId is string => (schemeId) !== null)
-        ).subscribe((schemeId) => {
+            filter((schemeName): schemeName is string => (schemeName) !== null)
+        ).subscribe((schemeName) => {
             this.store.dispatch(CONTROL_SCHEME_ACTIONS.saveBinding({
-                schemeId,
+                schemeName,
                 binding
             }));
             this.router.navigate(
-                this.routesBuilderService.controlSchemeView(schemeId)
+                this.routesBuilderService.controlSchemeView(schemeName)
             );
         });
     }
 
     public onCancel(): void {
-        this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeId).pipe(
+        this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName).pipe(
             take(1),
             filter((id): id is string => id !== null),
             map((id) => this.routesBuilderService.controlSchemeView(id))
@@ -79,16 +79,16 @@ export class BindingEditPageComponent {
         ).pipe(
             take(1),
             concatLatestFrom(() => [
-                this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeId),
+                this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName),
                 this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedBindingId)
             ]),
-        ).subscribe(([ isConfirmed, schemeId, bindingId ]) => {
-            if (isConfirmed === false || schemeId === null || bindingId === null) {
+        ).subscribe(([ isConfirmed, schemeName, bindingId ]) => {
+            if (isConfirmed === false || schemeName === null || bindingId === null) {
                 return;
             }
-            this.store.dispatch(CONTROL_SCHEME_ACTIONS.deleteBinding({ schemeId, bindingId }));
+            this.store.dispatch(CONTROL_SCHEME_ACTIONS.deleteBinding({ schemeName, bindingId }));
 
-            const route = this.routesBuilderService.controlSchemeView(schemeId);
+            const route = this.routesBuilderService.controlSchemeView(schemeName);
             this.router.navigate(route);
         });
     }

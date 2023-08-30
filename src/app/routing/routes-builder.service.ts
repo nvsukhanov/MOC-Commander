@@ -22,7 +22,7 @@ export class RoutesBuilderService {
     private readonly baseHref = this.locationStrategy.getBaseHref();
 
     constructor(
-        private locationStrategy: LocationStrategy
+        private locationStrategy: LocationStrategy,
     ) {
         this.controlSchemesList = [ this.baseHref, ROUTE_PATHS.controlSchemes ];
         this.controlSchemesCreate = [ this.baseHref, ROUTE_PATHS.controlSchemes, ROUTE_PATHS.controlSchemeCreate ];
@@ -41,45 +41,46 @@ export class RoutesBuilderService {
         return [ this.baseHref, ROUTE_PATHS.hubs, hubId, ROUTE_PATHS.hubEdit ];
     }
 
-    public controlSchemeView(controlSchemeId: string): string[] {
-        return [ this.baseHref, ROUTE_PATHS.controlSchemes, controlSchemeId ];
+    public controlSchemeView(schemeName: string): string[] {
+        return [ this.baseHref, ROUTE_PATHS.controlSchemes, encodeURI(schemeName) ];
     }
 
     public bindingView(
-        controlSchemeId: string,
+        schemeName: string,
         bindingId: string
     ): string[] {
         return [
             this.baseHref,
             ROUTE_PATHS.controlSchemes,
-            controlSchemeId,
+            encodeURI(schemeName),
             ROUTE_PATHS.binding,
             bindingId
         ];
     }
 
     public bindingCreate(
-        controlSchemeId: string
+        schemeName: string
     ): string[] {
         return [
             this.baseHref,
             ROUTE_PATHS.controlSchemes,
-            controlSchemeId,
+            encodeURI(schemeName),
             ROUTE_PATHS.bindingCreate
         ];
     }
 
     public portConfigEdit(
-        controlSchemeId: string,
+        schemeName: string,
         hubId: string,
         portId: number
     ): string[] {
         return [
             this.baseHref,
             ROUTE_PATHS.controlSchemes,
-            controlSchemeId,
-            ROUTE_PATHS.portConfigEdit,
+            encodeURI(schemeName),
+            ROUTE_PATHS.hubEdit,
             hubId,
+            ROUTE_PATHS.portEdit,
             portId.toString()
         ];
     }

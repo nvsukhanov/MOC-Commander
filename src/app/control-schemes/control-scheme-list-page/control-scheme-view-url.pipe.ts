@@ -17,6 +17,6 @@ export class ControlSchemeViewUrlPipe implements PipeTransform {
     public transform(
         controlScheme: ControlSchemeModel
     ): string[] {
-        return this.routesBuilder.controlSchemeView(controlScheme.id);
+        return this.routesBuilder.controlSchemeView(controlScheme.name);
     }
 }

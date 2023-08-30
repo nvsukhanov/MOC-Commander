@@ -6,10 +6,14 @@ const BASE_ROUTER_SELECTORS = { ...getRouterSelectors() } as const;
 
 export const ROUTER_SELECTORS = {
     ...BASE_ROUTER_SELECTORS,
-    selectCurrentlyViewedSchemeId: createSelector(
+    selectCurrentlyViewedSchemeName: createSelector(
         BASE_ROUTER_SELECTORS.selectCurrentRoute,
         (route: ActivatedRouteSnapshot | undefined): string | null => {
-            return route?.params?.['schemeId'] ?? null;
+            const schemeName = route?.params?.['schemeName'] ?? null;
+            if (schemeName === null) {
+                return null;
+            }
+            return decodeURI(schemeName);
         }
     ),
     selectCurrentlyEditedHubId: createSelector(
@@ -18,10 +22,14 @@ export const ROUTER_SELECTORS = {
             return route?.params?.['id'] ?? null;
         }
     ),
-    selectCurrentlyEditedSchemeId: createSelector(
+    selectCurrentlyEditedSchemeName: createSelector(
         BASE_ROUTER_SELECTORS.selectCurrentRoute,
         (route: ActivatedRouteSnapshot | undefined): string | null => {
-            return route?.params?.['schemeId'] ?? null;
+            const schemeName = route?.params?.['schemeName'] ?? null;
+            if (schemeName === null) {
+                return null;
+            }
+            return decodeURI(schemeName);
         }
     ),
     selectCurrentlyEditedBindingId: createSelector(

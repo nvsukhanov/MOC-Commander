@@ -105,7 +105,7 @@ export class PortConfigEditPageComponent implements OnInit, OnDestroy {
             ).subscribe((portConfig) => {
                 if (portConfig) {
                     this.store.dispatch(CONTROL_SCHEME_ACTIONS.savePortConfig({
-                        schemeId: portConfig.controlSchemeId,
+                        schemeName: portConfig.schemeName,
                         portConfig: {
                             hubId: portConfig.hubId,
                             portId: portConfig.portId,
@@ -114,7 +114,7 @@ export class PortConfigEditPageComponent implements OnInit, OnDestroy {
                         }
                     }));
                     this.router.navigate(
-                        this.routesBuilder.controlSchemeView(portConfig.controlSchemeId)
+                        this.routesBuilder.controlSchemeView(portConfig.schemeName)
                     );
                 }
             });
@@ -127,7 +127,7 @@ export class PortConfigEditPageComponent implements OnInit, OnDestroy {
         ).subscribe((portConfig) => {
             if (portConfig) {
                 this.router.navigate(
-                    this.routesBuilder.controlSchemeView(portConfig.controlSchemeId)
+                    this.routesBuilder.controlSchemeView(portConfig.schemeName)
                 );
             }
         });

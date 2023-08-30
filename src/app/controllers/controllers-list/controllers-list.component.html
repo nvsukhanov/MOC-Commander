@@ -13,6 +13,8 @@
 
     <ng-template #noConnectedControllers>
         <h3 class="no-controller-connected-notification-header">{{ 'controller.noControllerConnected' | transloco }}</h3>
-        <app-hint [hintL10nKey]="'controller.detectControllerTip'"></app-hint>
+        <app-hint>
+            {{ 'controller.detectControllerTip' | transloco }}
+        </app-hint>
     </ng-template>
 </ng-container>

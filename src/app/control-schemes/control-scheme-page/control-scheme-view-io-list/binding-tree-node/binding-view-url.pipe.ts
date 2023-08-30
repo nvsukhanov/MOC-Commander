@@ -14,10 +14,10 @@ export class BindingViewUrlPipe implements PipeTransform {
     }
 
     public transform(
-        controlSchemeId: string,
+        schemeName: string,
         bindingId: string
     ): string[] {
-        return this.routesBuilder.bindingView(controlSchemeId, bindingId);
+        return this.routesBuilder.bindingView(schemeName, bindingId);
     }
 
 }
