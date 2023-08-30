@@ -16,6 +16,7 @@ import {
 import { controllerInputIdFn } from '../../../../reducers';
 import { calcInputGain } from './calc-input-gain';
 import { ITaskPayloadFactory } from './i-task-payload-factory';
+import { isInputActivated } from './is-input-activated';
 
 @Injectable()
 export class SetSpeedTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.SetSpeed> {
@@ -37,7 +38,7 @@ export class SetSpeedTaskPayloadFactoryService implements ITaskPayloadFactory<Co
 
         // brake input is ignored for toggle bindings
         if (binding.isToggle) {
-            if (accelerateInputValue === 0) {
+            if (!isInputActivated(accelerateInputValue)) {
                 return of(null);
             }
             const payload = this.createTogglePayload(binding, lastExecutedTask);

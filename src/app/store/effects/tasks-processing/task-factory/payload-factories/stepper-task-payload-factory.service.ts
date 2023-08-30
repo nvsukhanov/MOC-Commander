@@ -13,6 +13,7 @@ import {
 } from '../../../../models';
 import { controllerInputIdFn } from '../../../../reducers';
 import { ITaskPayloadFactory } from './i-task-payload-factory';
+import { isInputActivated } from './is-input-activated';
 
 @Injectable()
 export class StepperTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.Stepper> {
@@ -23,7 +24,7 @@ export class StepperTaskPayloadFactoryService implements ITaskPayloadFactory<Con
         const stepInput = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Step])];
         const stepInputValue = stepInput?.value ?? 0;
 
-        if (stepInputValue < 0.5) { // TODO: inject threshold
+        if (!isInputActivated(stepInputValue)) {
             return of(null);
         }
 

@@ -7,11 +7,10 @@ import { ControlSchemeInputAction, HubFacadeService } from '@app/store';
 import { controllerInputIdFn } from '../../../../reducers';
 import { AngleShiftTaskPayload, ControlSchemeAngleShiftBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, } from '../../../../models';
 import { ITaskPayloadFactory } from './i-task-payload-factory';
+import { isInputActivated } from './is-input-activated';
 
 @Injectable()
 export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.AngleShift> {
-    private readonly inputThreshold = 0.5;
-
     private readonly angleSnapThresholdDegrees = 15;
 
     constructor(
@@ -64,7 +63,6 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
         const { isNextAngleInputActive, isPrevAngleInputActive } = this.getInputsState(binding, inputsState);
 
         if ((!isNextAngleInputActive && previousTask.payload.nextAngleActiveInput) || (!isPrevAngleInputActive && previousTask.payload.prevAngleActiveInput)) {
-            // TODO: this is a hack to preserve the input states when the input is released. Fix this, it lead to issuing a command with the same angle twice
             return of(this.buildPayloadFromTemplate(
                 binding,
                 previousTask.payload.offset,
@@ -257,9 +255,11 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
         binding: ControlSchemeAngleShiftBinding,
         inputsState: Dictionary<ControllerInputModel>
     ): { isNextAngleInputActive: boolean; isPrevAngleInputActive: boolean } {
-        const isNextAngleInputActive = (inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.NextLevel])]?.value ?? 0) > this.inputThreshold;
-        const isPrevAngleInputActive = !!binding.inputs[ControlSchemeInputAction.PrevLevel]
-            && (inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.PrevLevel])]?.value ?? 0) > this.inputThreshold;
+        const nextAngleInputValue = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.NextLevel])]?.value ?? 0;
+        const isNextAngleInputActive = isInputActivated(nextAngleInputValue);
+        const prevAngleInputValue = (!!binding.inputs[ControlSchemeInputAction.PrevLevel]
+            && inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.PrevLevel])]?.value) || 0;
+        const isPrevAngleInputActive = isInputActivated(prevAngleInputValue);
         return { isNextAngleInputActive, isPrevAngleInputActive };
     }
 

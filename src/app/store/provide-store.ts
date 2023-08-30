@@ -40,7 +40,7 @@ import {
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { HubStorageService } from './hub-storage.service';
 import { RoutesBuilderService } from '../routing';
-import { HUB_STATS_ACTIONS } from './actions';
+import { CONTROLLER_INPUT_ACTIONS, HUB_STATS_ACTIONS } from './actions';
 import { HubFacadeService } from './hub-facade.service';
 
 const STORAGE_VERSION = '17';
@@ -64,6 +64,10 @@ const REDUCERS: ActionReducerMap<IState> = {
     settings: SETTINGS_FEATURE.reducer
 };
 
+type StoredKeys<TState extends object> = Array<{
+    [k in keyof TState]?: Array<keyof TState[k]>
+} | keyof TState>;
+
 function localStorageSyncReducer(
     reducer: ActionReducer<IState>
 ): ActionReducer<IState> {
@@ -77,7 +81,7 @@ function localStorageSyncReducer(
             { attachedIoModes: [ 'ids', 'entities' ] },
             { attachedIoPortModeInfo: [ 'ids', 'entities' ] },
             'settings'
-        ], // TODO: add types for this
+        ] satisfies StoredKeys<IState>,
         rehydrate: true,
         storageKeySerializer: (key: string) => `${STORAGE_VERSION}/${key}`,
     })(reducer);
@@ -108,7 +112,7 @@ export function provideApplicationStore(): EnvironmentProviders {
                 HUB_STATS_ACTIONS.setHasCommunication.type,
                 HUB_STATS_ACTIONS.rssiLevelReceived.type,
                 HUB_STATS_ACTIONS.batteryLevelReceived.type,
-                // CONTROLLER_INPUT_ACTIONS.inputReceived.type
+                CONTROLLER_INPUT_ACTIONS.inputReceived.type
             ]
         }),
         {
