@@ -11,7 +11,6 @@
     "test:ci": "jest -c=setup-jest.js --runInBand",
     "lint": "ng lint"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^16.1.2",
     "@angular/cdk": "^16.1.2",
