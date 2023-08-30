@@ -2,7 +2,7 @@
     <div class="binding__general-info">
         <a class="binding__operation-type mat-mdc-button"
            [class.binding__operation-type_active]="viewModel.isActive"
-           [routerLink]="viewModel.controlSchemeId | bindingViewUrl: viewModel.bindingId"
+           [routerLink]="viewModel.schemeName | bindingViewUrl: viewModel.bindingId"
         >
             <ng-container *ngIf="!viewModel.ioHasNoRequiredCapabilities; else ioCapabilitiesMismatch">
                 {{ viewModel.operationMode | bindingTypeToL10nKey | transloco }}

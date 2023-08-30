@@ -55,11 +55,11 @@ export enum ControlSchemeRunState {
 
 export interface ControlSchemeState extends EntityState<ControlSchemeModel> {
     runningState: ControlSchemeRunState;
-    runningSchemeId: string | null;
+    runningSchemeName: string | null;
 }
 
 export const CONTROL_SCHEME_ENTITY_ADAPTER = createEntityAdapter({
-    selectId: (model: ControlSchemeModel) => model.id,
+    selectId: (model: ControlSchemeModel) => model.name,
 });
 
 export const CONTROL_SCHEME_FEATURE = createFeature({
@@ -67,11 +67,10 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
     reducer: createReducer(
         CONTROL_SCHEME_ENTITY_ADAPTER.getInitialState({
             runningState: ControlSchemeRunState.Idle,
-            runningSchemeId: null as string | null
+            runningSchemeName: null as string | null
         }),
         on(CONTROL_SCHEME_ACTIONS.createControlScheme, (state, action): ControlSchemeState => {
             return CONTROL_SCHEME_ENTITY_ADAPTER.addOne({
-                id: action.id,
                 name: action.name,
                 portConfigs: [],
                 bindings: [],
@@ -81,10 +80,10 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
             ...state,
             runningState: ControlSchemeRunState.Starting
         })),
-        on(CONTROL_SCHEME_ACTIONS.schemeStarted, (state, { schemeId }): ControlSchemeState => ({
+        on(CONTROL_SCHEME_ACTIONS.schemeStarted, (state, { name }): ControlSchemeState => ({
             ...state,
             runningState: ControlSchemeRunState.Running,
-            runningSchemeId: schemeId
+            runningSchemeName: name
         })),
         on(CONTROL_SCHEME_ACTIONS.stopScheme, (state): ControlSchemeState => {
             if (state.runningState === ControlSchemeRunState.Running || state.runningState === ControlSchemeRunState.Starting) {
@@ -97,12 +96,12 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
         }),
         on(CONTROL_SCHEME_ACTIONS.schemeStopped, (state): ControlSchemeState => ({
             ...state,
-            runningSchemeId: null,
+            runningSchemeName: null,
             runningState: ControlSchemeRunState.Idle
         })),
-        on(CONTROL_SCHEME_ACTIONS.deleteControlScheme, (state, { id }): ControlSchemeState => CONTROL_SCHEME_ENTITY_ADAPTER.removeOne(id, state)),
-        on(CONTROL_SCHEME_ACTIONS.saveBinding, (state, { binding, schemeId }): ControlSchemeState => {
-            const scheme = state.entities[schemeId];
+        on(CONTROL_SCHEME_ACTIONS.deleteControlScheme, (state, { name }): ControlSchemeState => CONTROL_SCHEME_ENTITY_ADAPTER.removeOne(name, state)),
+        on(CONTROL_SCHEME_ACTIONS.saveBinding, (state, { binding, schemeName }): ControlSchemeState => {
+            const scheme = state.entities[schemeName];
             if (!scheme) {
                 return state;
             }
@@ -114,7 +113,7 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
             const newBindings = [ ...scheme.bindings ];
             newBindings[bindingIndex] = binding;
             const update: Update<ControlSchemeModel> = {
-                id: schemeId,
+                id: schemeName,
                 changes: {
                     bindings: newBindings,
                 }
@@ -125,14 +124,14 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
             }
             return CONTROL_SCHEME_ENTITY_ADAPTER.updateOne(update, state);
         }),
-        on(CONTROL_SCHEME_ACTIONS.createBinding, (state, { binding, schemeId }): ControlSchemeState => {
-            const scheme = state.entities[schemeId];
+        on(CONTROL_SCHEME_ACTIONS.createBinding, (state, { binding, schemeName }): ControlSchemeState => {
+            const scheme = state.entities[schemeName];
             if (!scheme) {
                 return state;
             }
             const nextBindings = [ ...scheme.bindings, binding ];
             const update: Update<ControlSchemeModel> = {
-                id: schemeId,
+                id: schemeName,
                 changes: {
                     bindings: nextBindings,
                 }
@@ -143,13 +142,13 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
             }
             return CONTROL_SCHEME_ENTITY_ADAPTER.updateOne(update, state);
         }),
-        on(CONTROL_SCHEME_ACTIONS.deleteBinding, (state, { schemeId, bindingId }): ControlSchemeState => {
-            const scheme = state.entities[schemeId];
+        on(CONTROL_SCHEME_ACTIONS.deleteBinding, (state, { schemeName, bindingId }): ControlSchemeState => {
+            const scheme = state.entities[schemeName];
             if (!scheme) {
                 return state;
             }
             const update: Update<ControlSchemeModel> = {
-                id: schemeId,
+                id: schemeName,
                 changes: {}
             };
             update.changes.bindings = scheme.bindings.filter((b) => b.id !== bindingId);
@@ -160,16 +159,16 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
             }
             return CONTROL_SCHEME_ENTITY_ADAPTER.updateOne(update, state);
         }),
-        on(CONTROL_SCHEME_ACTIONS.updateControlSchemeName, (state, { id, name }) => {
+        on(CONTROL_SCHEME_ACTIONS.updateControlSchemeName, (state, { previousName, name }) => {
             return CONTROL_SCHEME_ENTITY_ADAPTER.updateOne({
-                id,
+                id: previousName,
                 changes: {
                     name
                 }
             }, state);
         }),
-        on(CONTROL_SCHEME_ACTIONS.savePortConfig, (state, { portConfig, schemeId }): ControlSchemeState => {
-            const scheme = state.entities[schemeId];
+        on(CONTROL_SCHEME_ACTIONS.savePortConfig, (state, { portConfig, schemeName }): ControlSchemeState => {
+            const scheme = state.entities[schemeName];
             if (!scheme) {
                 return state;
             }
@@ -180,7 +179,7 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
             const newPortConfigs = [ ...scheme.portConfigs ];
             newPortConfigs[portConfigIndex] = portConfig;
             return CONTROL_SCHEME_ENTITY_ADAPTER.updateOne({
-                id: schemeId,
+                id: schemeName,
                 changes: {
                     portConfigs: newPortConfigs,
                 }

@@ -15,14 +15,14 @@ export const PORT_CONFIG_EDIT_PAGE_SELECTORS = {
             controlSchemes: Dictionary<ControlSchemeModel>,
             hubEntities: Dictionary<HubModel>
         ): PortConfigEditViewModel | null => {
-            const controlSchemeId = route?.params?.['schemeId'] ?? null;
+            const schemeName = route?.params?.['schemeName'] ?? null;
             const hubId: string | null = route?.params?.['hubId'] ?? null;
             const portId: string | null = route?.params?.['portId'] ?? null;
 
-            if (!controlSchemeId || !hubId || !portId) {
+            if (!schemeName || !hubId || !portId) {
                 return null;
             }
-            const scheme = controlSchemes[controlSchemeId];
+            const scheme = controlSchemes[schemeName];
             const hub = hubEntities[hubId];
             if (!hub) {
                 return null;
@@ -34,7 +34,7 @@ export const PORT_CONFIG_EDIT_PAGE_SELECTORS = {
             }
 
             return {
-                controlSchemeId,
+                schemeName,
                 hubId,
                 hubName: hub.name,
                 portId: parseInt(portId),

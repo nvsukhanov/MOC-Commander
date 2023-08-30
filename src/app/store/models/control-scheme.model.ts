@@ -141,7 +141,6 @@ export type ControlSchemeBinding = ControlSchemeSetSpeedBinding
     | ControlSchemeAngleShiftBinding;
 
 export type ControlSchemeModel = {
-    id: string;
     name: string;
     portConfigs: ControlSchemePortConfig[];
     bindings: ControlSchemeBinding[];

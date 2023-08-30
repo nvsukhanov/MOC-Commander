@@ -23,6 +23,8 @@
     </ul>
 
     <ng-template #noConnectedHubs>
-        <app-hint [hintL10nKey]="'hub.noneConnected'"></app-hint>
+        <app-hint>
+            {{ 'hub.noneConnected' | transloco }}
+        </app-hint>
     </ng-template>
 </ng-container>

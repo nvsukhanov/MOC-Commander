@@ -65,7 +65,7 @@ function createIoTreeNode(
     portId: number,
     bindings: ControlSchemeBinding[],
     portConfigs: ControlSchemePortConfig[],
-    controlSchemeId: string,
+    schemeName: string,
     portTasksModelDictionary: Dictionary<PortTasksModel>
 ): ControlSchemeViewIoTreeNode {
     const ioId = attachedIosIdFn({ hubId, portId });
@@ -86,7 +86,7 @@ function createIoTreeNode(
         ioType: io?.ioType ?? null,
         isConnected: isHubConnected && !!io,
         hubId,
-        controlSchemeId,
+        schemeName,
         useAccelerationProfile,
         accelerationTimeMs: portConfig?.accelerationTimeMs ?? 0,
         useDecelerationProfile,
@@ -101,7 +101,7 @@ function createIoTreeNode(
 function createBindingTreeNode(
     ioPath: string,
     binding: ControlSchemeBinding,
-    controlSchemeId: string,
+    schemeName: string,
     portOutputModeNames: PortModeName[],
     lastExecutedTasksBindingIds: ReadonlySet<string>,
     io?: AttachedIoModel,
@@ -114,7 +114,7 @@ function createBindingTreeNode(
         nodeType: ControlSchemeNodeTypes.Binding,
         isActive: lastExecutedTasksBindingIds.has(binding.id),
         binding,
-        controlSchemeId,
+        schemeName,
         ioHasNoRequiredCapabilities,
         children: [],
         initiallyExpanded: false
@@ -122,8 +122,8 @@ function createBindingTreeNode(
 }
 
 export const CONTROL_SCHEME_VIEW_SELECTORS = {
-    schemeViewTree: (schemeId: string) => createSelector(
-        CONTROL_SCHEME_SELECTORS.selectScheme(schemeId),
+    schemeViewTree: (schemeName: string) => createSelector(
+        CONTROL_SCHEME_SELECTORS.selectScheme(schemeName),
         HUBS_SELECTORS.selectEntities,
         HUB_STATS_SELECTORS.selectEntities,
         ATTACHED_IO_SELECTORS.selectEntities,
@@ -194,7 +194,7 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
                         binding.portId,
                         scheme.bindings,
                         scheme.portConfigs,
-                        schemeId,
+                        schemeName,
                         portCommandTasksEntities
                     );
                     hubIosViewMap.set(ioId, ioViewModel);
@@ -206,7 +206,7 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
                 const bindingTreeNode = createBindingTreeNode(
                     ioViewModel.path,
                     binding,
-                    schemeId,
+                    schemeName,
                     ioOutputPortModeNamesMap.get(ioId) ?? [],
                     lastExecutedTasksBindingIds,
                     io
@@ -217,8 +217,8 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
             return [ ...hubsViewMap.values() ];
         }
     ),
-    canRunScheme: (schemeId: string) => createSelector( // TODO: performance-wise, this selector is not optimal (should not use viewTree)
-        CONTROL_SCHEME_VIEW_SELECTORS.schemeViewTree(schemeId),
+    canRunScheme: (schemeName: string) => createSelector( // TODO: performance-wise, this selector is not optimal (should not use viewTree)
+        CONTROL_SCHEME_VIEW_SELECTORS.schemeViewTree(schemeName),
         CONTROL_SCHEME_SELECTORS.selectRunningState,
         CONTROLLER_CONNECTION_SELECTORS.selectEntities,
         (
@@ -253,12 +253,12 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
         }
     ),
     isCurrentControlSchemeRunning: createSelector(
-        CONTROL_SCHEME_SELECTORS.selectRunningSchemeId,
-        ROUTER_SELECTORS.selectRouteParam('schemeId'),
+        CONTROL_SCHEME_SELECTORS.selectRunningSchemeName,
+        ROUTER_SELECTORS.selectCurrentlyViewedSchemeName,
         (
-            runningSchemeId,
-            schemeId
-        ) => runningSchemeId !== null && runningSchemeId === schemeId
+            runningSchemeName,
+            routerSchemeName
+        ) => runningSchemeName !== null && runningSchemeName === routerSchemeName
     ),
     canCreateBinding: createSelector(
         ATTACHED_IO_SELECTORS.selectAll,

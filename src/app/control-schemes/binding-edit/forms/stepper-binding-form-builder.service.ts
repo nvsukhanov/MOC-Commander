@@ -18,7 +18,7 @@ export class StepperBindingFormBuilderService {
 
     public build(): StepperBindingForm {
         return this.formBuilder.group({
-            id: this.commonFormControlBuilder.schemeIdControl(),
+            id: this.commonFormControlBuilder.bindingIdControl(),
             inputs: this.formBuilder.group({
                 [ControlSchemeInputAction.Step]: this.commonFormControlBuilder.inputFormGroup()
             }),

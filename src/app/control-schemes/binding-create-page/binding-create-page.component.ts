@@ -41,12 +41,12 @@ export class BindingCreatePageComponent {
     }
 
     public onCancel(): void {
-        this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeId).pipe(
+        this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName).pipe(
             take(1),
-            filter((schemeId): schemeId is string => (schemeId) !== null)
-        ).subscribe((schemeId) => {
+            filter((schemeName): schemeName is string => (schemeName) !== null)
+        ).subscribe((schemeName) => {
             this.router.navigate(
-                this.routesBuilderService.controlSchemeView(schemeId)
+                this.routesBuilderService.controlSchemeView(schemeName)
             );
         });
     }
@@ -54,16 +54,16 @@ export class BindingCreatePageComponent {
     public onSave(
         binding: ControlSchemeBinding
     ): void {
-        this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeId).pipe(
+        this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName).pipe(
             take(1),
-            filter((schemeId): schemeId is string => (schemeId) !== null)
-        ).subscribe((schemeId) => {
+            filter((schemeName): schemeName is string => (schemeName) !== null)
+        ).subscribe((schemeName) => {
             this.store.dispatch(CONTROL_SCHEME_ACTIONS.createBinding({
-                schemeId,
+                schemeName: schemeName,
                 binding
             }));
             this.router.navigate(
-                this.routesBuilderService.controlSchemeView(schemeId)
+                this.routesBuilderService.controlSchemeView(schemeName)
             );
         });
     }

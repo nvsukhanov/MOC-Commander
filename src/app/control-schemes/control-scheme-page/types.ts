@@ -11,7 +11,7 @@ export type ControlSchemeViewBindingTreeNodeData = {
     path: string;
     nodeType: ControlSchemeNodeTypes.Binding;
     isActive: boolean; // TODO: remove, may impact performance, Use ad-hoc selector instead
-    controlSchemeId: string;
+    schemeName: string;
     binding: ControlSchemeBinding;
     ioHasNoRequiredCapabilities: boolean;
     children: [];
@@ -21,7 +21,7 @@ export type ControlSchemeViewBindingTreeNodeData = {
 export type ControlSchemeViewIoTreeNode = {
     path: string;
     nodeType: ControlSchemeNodeTypes.Io;
-    controlSchemeId: string;
+    schemeName: string;
     hubId: string;
     portId: number;
     ioType: IOType | null;

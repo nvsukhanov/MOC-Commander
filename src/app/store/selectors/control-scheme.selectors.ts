@@ -28,16 +28,16 @@ export const CONTROL_SCHEME_SELECTORS = {
     selectEntities: SELECT_ENTITIES,
     selectIds: SELECT_IDS,
     selectTotal: SELECT_TOTAL,
-    selectScheme: (id: string) => createSelector(
+    selectScheme: (name: string) => createSelector(
         SELECT_ENTITIES,
-        (state) => state[id]
+        (state) => state[name]
     ),
     selectRunningState: CONTROL_SCHEME_FEATURE.selectRunningState,
-    selectRunningSchemeId: CONTROL_SCHEME_FEATURE.selectRunningSchemeId,
+    selectRunningSchemeName: CONTROL_SCHEME_FEATURE.selectRunningSchemeName,
     selectRunningScheme: createSelector(
         SELECT_ENTITIES,
-        CONTROL_SCHEME_FEATURE.selectRunningSchemeId,
-        (entities, runningSchemeId): ControlSchemeModel | null => runningSchemeId !== null ? entities[runningSchemeId] ?? null : null
+        CONTROL_SCHEME_FEATURE.selectRunningSchemeName,
+        (entities, runningSchemeName): ControlSchemeModel | null => runningSchemeName !== null ? entities[runningSchemeName] ?? null : null
     ),
     selectIsAnySchemeRunning: createSelector(
         CONTROL_SCHEME_FEATURE.selectRunningState,

@@ -16,7 +16,7 @@ export class ServoBindingFormBuilderService {
 
     public build(): ServoBindingForm {
         return this.formBuilder.group({
-            id: this.commonFormControlBuilder.schemeIdControl(),
+            id: this.commonFormControlBuilder.bindingIdControl(),
             inputs: this.formBuilder.group({
                 [ControlSchemeInputAction.Servo]: this.commonFormControlBuilder.inputFormGroup()
             }),

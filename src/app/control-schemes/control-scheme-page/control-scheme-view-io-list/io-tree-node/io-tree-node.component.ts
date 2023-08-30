@@ -41,7 +41,7 @@ export class IoTreeNodeComponent {
         this._node = v;
         if (v) {
             this._portConfigRoute = this.routeBuilderService.portConfigEdit(
-                v.controlSchemeId,
+                v.schemeName,
                 v.hubId,
                 v.portId
             );

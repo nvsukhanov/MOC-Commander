@@ -66,7 +66,7 @@ export class BindingTreeNodeComponent {
                 this._viewModel$ = NEVER;
             } else {
                 this._viewModel$ = this.store.select(INPUT_TREE_NODE_VIEW_MODEL_SELECTOR(
-                    treeNodeData.controlSchemeId,
+                    treeNodeData.schemeName,
                     treeNodeData.binding.inputs,
                     treeNodeData.binding.operationMode,
                     treeNodeData.binding.id,

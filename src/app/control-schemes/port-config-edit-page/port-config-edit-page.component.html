@@ -50,5 +50,7 @@
 </mat-card>
 
 <ng-template #notFound>
-    <app-hint [hintL10nKey]="'controlScheme.portConfigNotFound'"></app-hint>
+    <app-hint>
+        {{ 'controlScheme.portConfigNotFound' | transloco }}
+    </app-hint>
 </ng-template>

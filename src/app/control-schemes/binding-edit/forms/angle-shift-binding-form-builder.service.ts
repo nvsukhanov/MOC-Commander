@@ -15,7 +15,7 @@ export class AngleShiftBindingFormBuilderService {
 
     public build(): AngleShiftBindingForm {
         return this.formBuilder.group({
-            id: this.commonFormControlsBuilder.schemeIdControl(),
+            id: this.commonFormControlsBuilder.bindingIdControl(),
             inputs: this.formBuilder.group({
                 [ControlSchemeInputAction.NextLevel]: this.commonFormControlsBuilder.inputFormGroup(),
                 [ControlSchemeInputAction.PrevLevel]: this.commonFormControlsBuilder.optionalInputFormGroup()

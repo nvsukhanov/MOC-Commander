@@ -14,7 +14,7 @@ import { FeatureToolbarControlsDirective, HintComponent } from '@app/shared';
 
 import { RoutesBuilderService } from '../../routing';
 import { CONTROL_SCHEMES_LIST_PAGE_SELECTORS } from './control-schemes-list.selectors';
-import { ControlSchemeCreateDialogComponent } from '../control-scheme-page/control-scheme-create-dialog';
+import { ControlSchemeCreateDialogComponent } from './control-scheme-create-dialog';
 import { ControlSchemeViewUrlPipe } from './control-scheme-view-url.pipe';
 
 @Component({
@@ -54,18 +54,18 @@ export class ControlSchemeListPageComponent {
     }
 
     public trackSchemeById(index: number, scheme: ControlSchemeModel): string {
-        return scheme.id;
+        return scheme.name;
     }
 
     public onCreate(): void {
-        const dialogRef = this.dialog.open<ControlSchemeCreateDialogComponent, null, { name: string; id: string }>(
+        const dialogRef = this.dialog.open<ControlSchemeCreateDialogComponent, null, { name: string }>(
             ControlSchemeCreateDialogComponent,
         );
 
         dialogRef.afterClosed().subscribe((result) => {
             if (result !== undefined) {
                 this.router.navigate(
-                    this.routesBuilderService.controlSchemeView(result.id)
+                    this.routesBuilderService.controlSchemeView(result.name)
                 );
                 this.store.dispatch(CONTROL_SCHEME_ACTIONS.createControlScheme(result));
             }

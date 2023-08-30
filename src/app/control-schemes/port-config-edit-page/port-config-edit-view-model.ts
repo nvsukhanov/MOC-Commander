@@ -1,5 +1,5 @@
 export type PortConfigEditViewModel = {
-    controlSchemeId: string;
+    schemeName: string;
     hubId: string;
     hubName: string;
     portId: number;

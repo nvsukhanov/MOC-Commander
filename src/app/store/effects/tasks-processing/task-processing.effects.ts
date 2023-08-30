@@ -19,7 +19,7 @@ export class TaskProcessingEffects {
         return this.actions.pipe(
             ofType(CONTROL_SCHEME_ACTIONS.startScheme),
             this.initializeScheme(),
-            map((action) => CONTROL_SCHEME_ACTIONS.schemeStarted({ schemeId: action.schemeId }))
+            map((action) => CONTROL_SCHEME_ACTIONS.schemeStarted({ name: action.name }))
         );
     });
 
@@ -131,9 +131,9 @@ export class TaskProcessingEffects {
     ) {
     }
 
-    private initializeScheme(): OperatorFunction<{ schemeId: string }, { schemeId: string }> {
-        return (source: Observable<{ schemeId: string }>) => source.pipe(
-            concatLatestFrom(({ schemeId }) => this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(schemeId))),
+    private initializeScheme(): OperatorFunction<{ name: string }, { name: string }> {
+        return (source: Observable<{ name: string }>) => source.pipe(
+            concatLatestFrom(({ name }) => this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(name))),
             map(([ , scheme ]) => scheme),
             filter((scheme): scheme is ControlSchemeModel => !!scheme),
             switchMap((scheme) => {
@@ -159,13 +159,13 @@ export class TaskProcessingEffects {
                                                                 .setDecelerationTime(portConfig.portId, portConfig.decelerationTimeMs);
                                                  });
                 if (setAccProfileTasks.length === 0 && setDecProfileTasks.length === 0) {
-                    return of({ schemeId: scheme.id });
+                    return of({ name: scheme.name });
                 }
                 return forkJoin([
                     ...setAccProfileTasks,
                     ...setDecProfileTasks
                 ]).pipe(
-                    map(() => ({ schemeId: scheme.id }))
+                    map(() => ({ name: scheme.name }))
                 );
             })
         );
