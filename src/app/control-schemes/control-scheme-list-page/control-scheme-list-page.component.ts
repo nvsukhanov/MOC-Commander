@@ -43,6 +43,8 @@ import { ControlSchemeViewUrlPipe } from './control-scheme-view-url.pipe';
 export class ControlSchemeListPageComponent {
     public readonly controlSchemes$ = this.store.select(CONTROL_SCHEMES_LIST_PAGE_SELECTORS.selectSchemesList);
 
+    public readonly canCreateScheme$ = this.store.select(CONTROL_SCHEMES_LIST_PAGE_SELECTORS.canCreateScheme);
+
     constructor(
         private readonly store: Store,
         protected readonly routesBuilderService: RoutesBuilderService,
