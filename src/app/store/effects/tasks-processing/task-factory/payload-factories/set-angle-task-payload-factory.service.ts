@@ -13,11 +13,10 @@ import {
     SetAngleTaskPayload
 } from '../../../../models';
 import { ITaskPayloadFactory } from './i-task-payload-factory';
+import { isInputActivated } from './is-input-activated';
 
 @Injectable()
 export class SetAngleTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.SetAngle> {
-    private readonly inputValueThreshold = 0.5;
-
     public buildPayload(
         binding: ControlSchemeSetAngleBinding,
         inputsState: Dictionary<ControllerInputModel>,
@@ -26,7 +25,7 @@ export class SetAngleTaskPayloadFactoryService implements ITaskPayloadFactory<Co
         const setAngleInput = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.SetAngle])];
         const setAngleInputValue = setAngleInput?.value ?? 0;
 
-        if (setAngleInputValue < this.inputValueThreshold) { // TODO: inject threshold
+        if (!isInputActivated(setAngleInputValue)) {
             return of(null);
         }
         const resultingAngle = binding.angle - motorEncoderOffset;

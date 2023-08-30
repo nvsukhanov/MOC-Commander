@@ -13,22 +13,24 @@ import {
     SpeedShiftTaskPayload,
 } from '../../../../models';
 import { ITaskPayloadFactory } from './i-task-payload-factory';
+import { isInputActivated } from './is-input-activated';
 
 @Injectable()
 export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.SpeedShift> {
-    private readonly inputThreshold = 0.5;
-
     public buildPayload(
         binding: ControlSchemeSpeedShiftBinding,
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
         previousTask: PortCommandTask | null
     ): Observable<{ payload: SpeedShiftTaskPayload; inputTimestamp: number } | null> {
-        const isNextSpeedInputActive = (inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.NextLevel])]?.value ?? 0) > this.inputThreshold;
-        const isPrevSpeedInputActive = !!binding.inputs[ControlSchemeInputAction.PrevLevel]
-            && (inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.PrevLevel])]?.value ?? 0) > this.inputThreshold;
-        const isStopInputActive = !!binding.inputs[ControlSchemeInputAction.Reset]
-            && (inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Reset])]?.value ?? 0) > this.inputThreshold;
+        const nextSpeedInputValue = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.NextLevel])]?.value ?? 0;
+        const isNextSpeedInputActive = isInputActivated(nextSpeedInputValue);
+        const prevSpeedInputValue = !!binding.inputs[ControlSchemeInputAction.PrevLevel]
+            && inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.PrevLevel])]?.value || 0;
+        const isPrevSpeedInputActive = isInputActivated(prevSpeedInputValue);
+        const stopInputValue = !!binding.inputs[ControlSchemeInputAction.Reset]
+            && inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Reset])]?.value || 0;
+        const isStopInputActive = isInputActivated(stopInputValue);
 
         if (isStopInputActive) {
             return of({

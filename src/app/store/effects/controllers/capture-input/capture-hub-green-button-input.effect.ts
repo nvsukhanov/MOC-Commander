@@ -11,7 +11,7 @@ const CONNECTED_HUBS_SELECTOR = createSelector(
     HUBS_SELECTORS.selectAll,
     HUB_STATS_SELECTORS.selectIds,
     (hubs, hubStatsIds) => {
-        const hubStatsIdsSet = new Set(hubStatsIds.map((id) => id.toString())); // TODO: I don't like this toString() here
+        const hubStatsIdsSet = new Set<string | number>(hubStatsIds);
         return hubs.filter((hub) => hubStatsIdsSet.has(hub.hubId)).map((hub) => hub.hubId);
     }
 );
