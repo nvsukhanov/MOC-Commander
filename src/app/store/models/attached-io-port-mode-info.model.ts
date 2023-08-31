@@ -1,4 +1,4 @@
-import { PortModeName, PortModeSymbol } from '@nvsukhanov/rxpoweredup';
+import { PortModeName, PortModeSymbol } from 'rxpoweredup';
 
 export type AttachedIoPortModeInfoModel = {
     id: string;

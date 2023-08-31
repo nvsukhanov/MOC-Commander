@@ -1,5 +1,5 @@
 import { Dictionary } from '@ngrx/entity';
-import { HubType, PortModeName } from '@nvsukhanov/rxpoweredup';
+import { HubType, PortModeName } from 'rxpoweredup';
 import { createSelector } from '@ngrx/store';
 import {
     ATTACHED_IO_MODES_SELECTORS,

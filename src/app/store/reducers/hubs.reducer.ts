@@ -1,5 +1,5 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { HubType } from '@nvsukhanov/rxpoweredup';
+import { HubType } from 'rxpoweredup';
 import { EntityAdapter, EntityState, createEntityAdapter } from '@ngrx/entity';
 
 import { HubDiscoveryState, HubModel } from '../models';

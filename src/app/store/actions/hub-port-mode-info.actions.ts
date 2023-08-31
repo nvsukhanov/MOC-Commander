@@ -1,5 +1,5 @@
 import { createActionGroup, props } from '@ngrx/store';
-import { IOType } from '@nvsukhanov/rxpoweredup';
+import { IOType } from 'rxpoweredup';
 
 import { AttachedIoPortModeInfoModel } from '../models';
 

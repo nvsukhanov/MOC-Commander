@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
+import { MotorServoEndState } from 'rxpoweredup';
 import { ControlSchemeInputAction, ControlSchemeStepperBinding } from '@app/store';
 
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';

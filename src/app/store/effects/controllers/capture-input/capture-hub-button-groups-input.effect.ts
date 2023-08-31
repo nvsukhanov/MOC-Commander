@@ -2,7 +2,7 @@ import { createEffect } from '@ngrx/effects';
 import { Action, Store, createSelector } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { NEVER, Observable, from, map, mergeMap, pairwise, startWith, switchMap } from 'rxjs';
-import { PortModeName } from '@nvsukhanov/rxpoweredup';
+import { PortModeName } from 'rxpoweredup';
 import {
     ATTACHED_IO_MODES_SELECTORS,
     ATTACHED_IO_PORT_MODE_INFO_SELECTORS,

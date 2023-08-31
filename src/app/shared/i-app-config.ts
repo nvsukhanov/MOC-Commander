@@ -1,5 +1,5 @@
 import { InjectionToken, isDevMode } from '@angular/core';
-import { LogLevel } from '@nvsukhanov/rxpoweredup';
+import { LogLevel } from 'rxpoweredup';
 
 export interface IAppConfig {
     readonly gamepadConnectionReadInterval: number;

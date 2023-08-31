@@ -1,4 +1,4 @@
-import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
+import { MOTOR_LIMITS } from 'rxpoweredup';
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';

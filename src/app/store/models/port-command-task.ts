@@ -1,4 +1,4 @@
-import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
+import { MotorServoEndState } from 'rxpoweredup';
 import { ControlSchemeBindingType } from '@app/shared';
 
 export type SetSpeedTaskPayload = {

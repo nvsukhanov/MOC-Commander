@@ -1,4 +1,4 @@
-import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
+import { MOTOR_LIMITS } from 'rxpoweredup';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { ControlSchemeInputAction, ControlSchemeServoBinding } from '@app/store';

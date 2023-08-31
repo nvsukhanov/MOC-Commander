@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MOTOR_LIMITS, MotorServoEndState, PortModeName } from '@nvsukhanov/rxpoweredup';
+import { MOTOR_LIMITS, MotorServoEndState, PortModeName } from 'rxpoweredup';
 import { Observable, Subject, bufferCount, catchError, concat, concatWith, first, last, map, of, switchMap, take, takeUntil, timeout, zip } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ATTACHED_IO_PORT_MODE_INFO_SELECTORS, HubStorageService } from '@app/store';

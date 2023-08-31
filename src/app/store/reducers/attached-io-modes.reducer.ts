@@ -1,5 +1,5 @@
 import { EntityAdapter, EntityState, createEntityAdapter } from '@ngrx/entity';
-import { IOType } from '@nvsukhanov/rxpoweredup';
+import { IOType } from 'rxpoweredup';
 import { createFeature, createReducer, on } from '@ngrx/store';
 
 import { AttachedIoModesModel } from '../models';

@@ -1,4 +1,4 @@
-import { HubType } from '@nvsukhanov/rxpoweredup';
+import { HubType } from 'rxpoweredup';
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
 export const HUBS_ACTIONS = createActionGroup({

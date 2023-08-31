@@ -1,5 +1,5 @@
 import { createSelector } from '@ngrx/store';
-import { IOType, PortModeName } from '@nvsukhanov/rxpoweredup';
+import { IOType, PortModeName } from 'rxpoweredup';
 
 import { ATTACHED_IO_MODES_SELECTORS } from './attached-io-modes.selectors';
 import { ATTACHED_IO_SELECTORS } from './attached-ios.selectors';

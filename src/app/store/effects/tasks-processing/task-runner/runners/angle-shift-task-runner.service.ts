@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IHub, PortCommandExecutionStatus } from '@nvsukhanov/rxpoweredup';
+import { IHub, PortCommandExecutionStatus } from 'rxpoweredup';
 import { Observable, first, of } from 'rxjs';
 import { ControlSchemeBindingType } from '@app/shared';
 import { PortCommandTask } from '@app/store';

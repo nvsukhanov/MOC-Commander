@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { createSelector } from '@ngrx/store';
-import { IOType } from '@nvsukhanov/rxpoweredup';
+import { IOType } from 'rxpoweredup';
 
 import { ATTACHED_IO_MODES_ENTITY_ADAPTER, ATTACHED_IO_MODES_FEATURE, attachedIoModesIdFn } from '../reducers';
 

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
+import { MotorServoEndState } from 'rxpoweredup';
 
 import { L10nScopes, composeL10nKey } from '../i18n';
 

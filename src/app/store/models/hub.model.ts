@@ -1,4 +1,4 @@
-import { HubType } from '@nvsukhanov/rxpoweredup';
+import { HubType } from 'rxpoweredup';
 
 export type HubModel = {
     hubId: string;

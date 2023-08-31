@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { ILogger } from '@nvsukhanov/rxpoweredup';
+import { ILogger } from 'rxpoweredup';
 
 import { PrefixedConsoleLogger } from './prefixed-console-logger';
 import { APP_CONFIG, IAppConfig } from '../i-app-config';

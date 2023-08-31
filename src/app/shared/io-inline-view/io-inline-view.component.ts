@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { IOType } from '@nvsukhanov/rxpoweredup';
+import { IOType } from 'rxpoweredup';
 import { TranslocoModule } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
 

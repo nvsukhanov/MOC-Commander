@@ -1,6 +1,6 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Observable, bufferCount, concatWith, filter, map, mergeMap, take } from 'rxjs';
-import { PortModeName } from '@nvsukhanov/rxpoweredup';
+import { PortModeName } from 'rxpoweredup';
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 

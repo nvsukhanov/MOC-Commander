@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { NgIf } from '@angular/common';
-import { MOTOR_LIMITS, PortModeName } from '@nvsukhanov/rxpoweredup';
+import { MOTOR_LIMITS, PortModeName } from 'rxpoweredup';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
