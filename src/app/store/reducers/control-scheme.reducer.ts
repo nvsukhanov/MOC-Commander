@@ -5,18 +5,14 @@ import { ControlSchemeBinding, ControlSchemeModel, ControlSchemePortConfig } fro
 import { CONTROL_SCHEME_ACTIONS } from '../actions';
 import { attachedIosIdFn } from './attached-ios.reducer';
 
-const DEFAULT_ACCELERATION_PROFILE_TIME_MS = 1000;
-
-const DEFAULT_DECELERATION_PROFILE_TIME_MS = 1000;
-
 function createDefaultPortConfig(
     { hubId, portId }: { hubId: string; portId: number },
 ): ControlSchemePortConfig {
     return {
         hubId,
         portId,
-        accelerationTimeMs: DEFAULT_ACCELERATION_PROFILE_TIME_MS,
-        decelerationTimeMs: DEFAULT_DECELERATION_PROFILE_TIME_MS,
+        accelerationTimeMs: DEFAULT_ACC_DEC_PROFILE_TIME_MS,
+        decelerationTimeMs: DEFAULT_ACC_DEC_PROFILE_TIME_MS,
     };
 }
 
@@ -45,6 +41,8 @@ function ensurePortConfigsAreUpToDate(
     }
     return portConfigs;
 }
+
+export const DEFAULT_ACC_DEC_PROFILE_TIME_MS = 100;
 
 export enum ControlSchemeRunState {
     Idle,

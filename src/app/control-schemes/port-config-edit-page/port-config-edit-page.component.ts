@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { JsonPipe, NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
@@ -9,8 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
-import { APP_CONFIG, HintComponent, IAppConfig } from '@app/shared';
-import { CONTROL_SCHEME_ACTIONS } from '@app/store';
+import { HintComponent } from '@app/shared';
+import { CONTROL_SCHEME_ACTIONS, DEFAULT_ACC_DEC_PROFILE_TIME_MS } from '@app/store';
 
 import { PORT_CONFIG_EDIT_PAGE_SELECTORS } from './port-config-edit-page.selectors';
 import { RoutesBuilderService } from '../../routing';
@@ -38,11 +38,11 @@ export class PortConfigEditPageComponent implements OnInit, OnDestroy {
 
     public readonly minAccDecProfileTimeMs = 0;
 
-    public readonly maxAccDecProfileTimeMs = this.config.maxAccDecProfileTimeMs;
+    public readonly maxAccDecProfileTimeMs = 10000;
 
     public readonly formGroup = this.formBuilder.group({
         accelerationTimeMs: this.formBuilder.control<number>(
-            this.config.defaultAccDecProfileTimeMs,
+            DEFAULT_ACC_DEC_PROFILE_TIME_MS,
             {
                 nonNullable: true,
                 validators: [
@@ -53,7 +53,7 @@ export class PortConfigEditPageComponent implements OnInit, OnDestroy {
             }
         ),
         decelerationTimeMs: this.formBuilder.control<number>(
-            this.config.defaultAccDecProfileTimeMs,
+            DEFAULT_ACC_DEC_PROFILE_TIME_MS,
             {
                 nonNullable: true,
                 validators: [
@@ -70,7 +70,6 @@ export class PortConfigEditPageComponent implements OnInit, OnDestroy {
     constructor(
         private readonly store: Store,
         private readonly formBuilder: FormBuilder,
-        @Inject(APP_CONFIG) private readonly config: IAppConfig,
         private readonly routesBuilder: RoutesBuilderService,
         private readonly router: Router
     ) {
