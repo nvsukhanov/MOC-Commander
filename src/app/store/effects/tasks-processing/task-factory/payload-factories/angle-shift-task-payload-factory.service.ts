@@ -36,7 +36,7 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
                 previousTask as PortCommandTask<ControlSchemeBindingType.AngleShift>,
             );
         }
-        // there were no previous task or it was for a different binding, so we need to find out where we are
+        // there were no previous task, or it was for a different binding, so we need to find out where we are
         return this.buildPayloadFromUnknownInitialPosition(binding, inputsState, motorEncoderOffset);
     }
 
@@ -117,7 +117,7 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
                 // we need to find an angle index that can be used as a starting point
                 // best case scenario - we are already at one of the angles
                 const previousAngleIndex = this.findAngleIndexWithingThreshold(binding.angles, absPosition)
-                    // if none found - we look for an index with a shortest travel distance from the current position based
+                    // if none found - we look for an index with the shortest travel distance from the current position based
                     ?? this.findStartingIndexForInput(binding.angles, absPosition, isNextAngleInputActive, isPrevAngleInputActive)
                     // worst case scenario - we just pick the nearest angle
                     ?? this.findNearestAngleIndex(binding.angles, absPosition);

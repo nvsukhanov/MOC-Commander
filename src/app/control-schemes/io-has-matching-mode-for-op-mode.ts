@@ -39,8 +39,8 @@ export function ioHasMatchingModeForOpMode(
     operationMode: ControlSchemeBindingType,
     ioOutputPortModeNames: PortModeName[],
 ): boolean {
-    const ioOuputPortModeNamesSet = new Set(ioOutputPortModeNames);
+    const ioOutputPortModeNamesSet = new Set(ioOutputPortModeNames);
     return REQUIRED_PORT_MODES_FOR_OPERATION_MODE[operationMode].every((requiredPortModeName) =>
-        ioOuputPortModeNamesSet.has(requiredPortModeName)
+        ioOutputPortModeNamesSet.has(requiredPortModeName)
     ) ?? false;
 }

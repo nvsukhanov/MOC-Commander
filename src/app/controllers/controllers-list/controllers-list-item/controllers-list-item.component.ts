@@ -79,16 +79,4 @@ export class ControllersListItemComponent {
     public get isConnected(): boolean {
         return this._isConnected;
     }
-
-    public controllerSettingsUpdate(
-        settings: ControllerSettings
-    ): void {
-        if (!this._controllerSettings) {
-            return;
-        }
-        this.settingsChanges.emit({
-            controllerId: this._controllerSettings.controllerId,
-            ...settings
-        });
-    }
 }

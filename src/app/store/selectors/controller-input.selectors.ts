@@ -20,10 +20,6 @@ export const CONTROLLER_INPUT_SELECTORS = {
         CONTROLLER_INPUT_SELECTORS.selectEntities,
         (entities) => entities[id]?.value ?? 0
     ),
-    selectRawValueById: (id: string) => createSelector(
-        CONTROLLER_INPUT_SELECTORS.selectEntities,
-        (entities) => entities[id]?.rawValue ?? 0
-    ),
     selectFirst: createSelector(
         SELECT_ALL,
         (inputsList) => inputsList[0]
