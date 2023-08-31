@@ -1,3 +1,5 @@
+import { Language } from '../../i18n';
+
 export enum UserSelectedTheme {
     System,
     Dark,
@@ -6,4 +8,5 @@ export enum UserSelectedTheme {
 
 export type SettingsModel = {
     theme: UserSelectedTheme;
+    language: Language;
 };

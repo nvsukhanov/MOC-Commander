@@ -25,7 +25,12 @@
     "theme": "Theme",
     "themeSystem": "System",
     "themeLight": "Light",
-    "themeDark": "Dark"
+    "themeDark": "Dark",
+    "language": "Language"
+  },
+  "language": {
+    "en": "English",
+    "ru": "Русский"
   },
   "hub": {
     "hub": "Hub",
@@ -81,7 +86,6 @@
     "cancelAddBinding": "Cancel",
     "createBindingWaitingForInputTitle": "Waiting for input",
     "createBindingWaitingForInputContent": "Move the controller's stick or press a button",
-    "noMatchingIoForInputFound": "There are no IOs that can be controlled by this input",
     "view": "View",
     "edit": "Edit",
     "run": "Start",
@@ -209,8 +213,6 @@
     "legalNotice": "LEGO® is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this app.",
     "licenseTitle": "License",
     "licenseText": "MIT License",
-    "authorTitle": "Author",
-    "authorName": "Nikolai Sukhanov",
     "sourcesTitle": "Sources",
     "githubTitle": "ngPoweredUP GitHub",
     "githubApiTitle": "rxPoweredUP GitHub",
