@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { NgIf } from '@angular/common';
-import { Observable, Subscription, combineLatestWith, distinctUntilChanged, map, mergeWith, of, startWith, switchMap } from 'rxjs';
+import { Observable, Subscription, combineLatestWith, distinctUntilChanged, map, mergeWith, of, pairwise, startWith, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { PushPipe } from '@ngrx/component';
 import { concatLatestFrom } from '@ngrx/effects';
@@ -119,6 +119,16 @@ export class BindingEditComponent implements OnDestroy {
                 }
             })
         );
+        this.formUpdateSubscription.add(
+            this.form.controls.bindingType.valueChanges.pipe(
+                pairwise(),
+            ).subscribe(([ prevOpMode, nextOpMode ]) => {
+                const prevOpModeHubId = this.form.controls[prevOpMode].controls.hubId.value;
+                const prevOpModePortId = this.form.controls[prevOpMode].controls.portId.value;
+                this.form.controls[nextOpMode].controls.hubId.setValue(prevOpModeHubId);
+                this.form.controls[nextOpMode].controls.portId.setValue(prevOpModePortId);
+            })
+        );
     }
 
     @Input()
@@ -136,7 +146,7 @@ export class BindingEditComponent implements OnDestroy {
         operationMode: ControlSchemeBindingType | undefined
     ) {
         if (operationMode !== undefined) {
-            this.formBuilder.patchForm(this.form, { operationMode });
+            this.form.controls.bindingType.setValue(operationMode);
         }
     }
 
