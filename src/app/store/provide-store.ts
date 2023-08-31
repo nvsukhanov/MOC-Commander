@@ -34,6 +34,7 @@ import {
     HubPortModeInfoEffects,
     HubsEffects,
     NotificationsEffects,
+    SETTINGS_EFFECTS,
     TaskProcessingEffects,
     provideTaskProcessingFactories
 } from './effects';
@@ -43,7 +44,7 @@ import { RoutesBuilderService } from '../routing';
 import { CONTROLLER_INPUT_ACTIONS, HUB_STATS_ACTIONS } from './actions';
 import { HubFacadeService } from './hub-facade.service';
 
-const STORAGE_VERSION = '17';
+const STORAGE_VERSION = '18';
 
 const REDUCERS: ActionReducerMap<IState> = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,
@@ -101,6 +102,7 @@ export function provideApplicationStore(): EnvironmentProviders {
             NotificationsEffects,
             HubAttachedIosStateEffects,
             CONTROLLER_EFFECTS,
+            SETTINGS_EFFECTS
         ),
         provideStoreDevtools({
             maxAge: 100,

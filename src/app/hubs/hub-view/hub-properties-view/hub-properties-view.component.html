@@ -31,7 +31,7 @@
             <p>{{ 'hub.rssiLevelUnknown' | transloco }}</p>
         </ng-template>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-actions [align]="'end'">
         <a [routerLink]="hubEditRoute" mat-button>{{ 'hub.edit' | transloco }}</a>
         <button mat-button (click)="onDisconnect()">{{ 'hub.disconnect' | transloco }}</button>
     </mat-card-actions>

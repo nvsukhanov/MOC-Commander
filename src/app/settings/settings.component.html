@@ -1,21 +1,35 @@
 <mat-card class="settings-card">
     <mat-card-content>
         <ul class="options__list">
-            <li class="option">
-                <span class="option__title">
-                    {{ 'settings.theme' | transloco }}
-                </span>
-                <span class="option__value">
-                                    <mat-button-toggle-group [value]="currentThemeSelection$ | ngrxPush"
-                                                             (valueChange)="onThemeChange($event)"
-                                                             [attr.aria-label]="'settings.theme' | transloco">
-                    <mat-button-toggle *ngFor="let theme of themes"
-                                       [value]="theme"
+            <li class="option__container">
+                <mat-form-field class="option">
+                    <mat-label>{{ 'settings.theme' | transloco }}</mat-label>
+                    <mat-select [value]="currentThemeSelection$ | ngrxPush"
+                                (valueChange)="onThemeChange($event)"
+                                [attr.aria-label]="'settings.theme' | transloco"
                     >
-                        {{ theme | themeToL10nKey | transloco }}
-                    </mat-button-toggle>
-                </mat-button-toggle-group>
-                </span>
+                        <mat-option *ngFor="let theme of themes"
+                                    [value]="theme"
+                        >
+                            {{ theme | themeToL10nKey | transloco }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </li>
+            <li class="option">
+                <mat-form-field class="option">
+                    <mat-label>{{ 'settings.language' | transloco }}</mat-label>
+                    <mat-select [value]="currentLanguageSelection$ | ngrxPush"
+                                (valueChange)="onLanguageChange($event)"
+                                [attr.aria-label]="'settings.language' | transloco"
+                    >
+                        <mat-option *ngFor="let language of languages"
+                                    [value]="language"
+                        >
+                            {{ language | languageToL10nKey | transloco }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
             </li>
         </ul>
     </mat-card-content>

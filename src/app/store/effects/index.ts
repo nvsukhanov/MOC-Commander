@@ -6,3 +6,4 @@ export * from './attached-io-modes.effects';
 export * from './hub-port-mode-info-effects';
 export * from './hubs.effects';
 export * from './notifications.effects';
+export * from './settings.effects';
