@@ -63,8 +63,8 @@ export class BindingControlReadMotorPositionComponent implements OnDestroy {
                 portModeName: PortModeName.absolutePosition
             }))),
             combineLatestWith(this.isQueryingPort, this._disabled$),
-            map(([ [ props, hasAbsolutePositionMode ], isQueringPort, disabled ]) => {
-                return !isQueringPort && hasAbsolutePositionMode && !!props && !disabled;
+            map(([ [ props, hasAbsolutePositionMode ], isQueryingPort, disabled ]) => {
+                return !isQueryingPort && hasAbsolutePositionMode && !!props && !disabled;
             }),
         );
     }

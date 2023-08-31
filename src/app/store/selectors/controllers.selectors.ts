@@ -44,9 +44,5 @@ export const CONTROLLER_SELECTORS = {
     selectById: (id: string) => createSelector(
         CONTROLLERS_SELECT_ENTITIES,
         (entities) => entities[id]
-    ),
-    selectByProfileUid: (profileUid: string) => createSelector(
-        CONTROLLERS_SELECT_ALL,
-        (controllers) => controllers.find((c) => c.profileUid === profileUid)
-    ),
+    )
 } as const;

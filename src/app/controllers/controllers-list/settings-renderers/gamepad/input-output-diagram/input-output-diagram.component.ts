@@ -72,10 +72,6 @@ export class InputOutputDiagramComponent {
         return `${Math.round(Math.abs(this.normalizedOutputValue) * 100)}%`;
     }
 
-    public get isInputValueInActiveZone(): boolean {
-        return this.normalizedRawValue !== 0;
-    }
-
     private get normalizedRawValue(): number {
         if (this.rawValue === undefined) {
             return 0;

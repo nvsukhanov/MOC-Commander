@@ -55,7 +55,7 @@
     "rssiLevel": "RSSI: {rssi}",
     "rssiLevelUnknown": "RSSI неизвестно",
     "buttonStateTitle": "Кнопка",
-    "buttonState": "Кпнока хаба: {isButtonPressed, select, true {нажата} other {не нажата}}",
+    "buttonState": "Кнопка хаба: {isButtonPressed, select, true {нажата} other {не нажата}}",
     "port": "Порт {portId}",
     "unknownHub": "Неизвестный хаб ''{ hubId }''"
   },
@@ -118,7 +118,7 @@
     "outputPowerControlTitle": "Мощность",
     "outputInvertControlTitle": "Инвертировать",
     "outputEndStateControlTitle": "Конечное состояние",
-    "accelerationTimeMs": "Длительеность ускорения",
+    "accelerationTimeMs": "Длительность ускорения",
     "decelerationTimeMs": "Длительность замедления",
     "profileTimingPostfix": "мс",
     "useAccelerationProfile": "Использовать профиль ускорения",
@@ -130,7 +130,7 @@
     "portConfigCancelButtonTitle": "Отмена",
     "newSchemeDialogNameRequired": "Имя схемы должно быть заполнено",
     "newSchemeDialogNameUniqueness": "Схема с таким именем уже существует",
-    "inputGain": "Услиение ввода",
+    "inputGain": "Усиление ввода",
     "inputGainLinear": "Отсутствует",
     "inputGainLogarithmic": "Логарифмическое",
     "inputGainExponential": "Экспоненциальное",
@@ -217,7 +217,7 @@
     "legalNotice": "LEGO® является товарным знаком LEGO Group компаний, которые не спонсируют, не авторизуют и не поддерживают это приложение.",
     "licenseTitle": "Лицензия",
     "licenseText": "Лицензия MIT",
-    "sourcesTitle": "Исходный кодв",
+    "sourcesTitle": "Исходный код",
     "githubTitle": "ngPoweredUP GitHub",
     "githubApiTitle": "rxPoweredUP GitHub",
     "versionTitle": "Версия"
@@ -240,7 +240,7 @@
     "ioTypeMotionSensor": "Сенсор движения",
     "ioTypeVisionSensor": "Оптический сенсор",
     "ioTypeExternalMotorWithTacho": "Внешний мотор с тахометром",
-    "ioTypeInternalMotorWithTacho": "Внутренний мотор с тахометорм",
+    "ioTypeInternalMotorWithTacho": "Внутренний мотор с тахометром",
     "ioTypeInternalTilt": "Внутренний сенсор наклона",
     "ioTypeLargeTechnicMotor": "Большой мотор Technic",
     "ioTypeXLargeTechnicMotor": "XБольшой мотор Technic",
@@ -255,7 +255,7 @@
     "ioIsNotConnectedInlineNotification": "не подключено",
     "ioTypeMismatchNotification": "Несовпадение тип, ожидалось ''{expectedType} HW/{expectedHardwareRevision} SW/{expectedSoftwareRevision}''",
     "unknownIoType": "Неизвестный тип устройства",
-    "ioSynchronizableTitle": "Сихронизируемое"
+    "ioSynchronizableTitle": "Синхронизируемое"
   },
   "controller": {
     "detectControllerTip": "Чтобы подключить контроллер, нажмите любую кнопку или двигайте стик",
