@@ -9,28 +9,28 @@ $dark-primary-text: rgba(black, 0.87);
 $light-primary-text: #EEE;
 
 $dark-palette: (
-        50: #aaa,
-        100: #999,
-        200: #888,
-        300: #777,
-        400: #666,
-        500: #555,
-        600: #444,
-        700: #333,
-        800: #222,
-        900: #111,
-        contrast: (
-                50: $dark-primary-text,
-                100: $dark-primary-text,
-                200: $light-primary-text,
-                300: $light-primary-text,
-                400: $light-primary-text,
-                500: $light-primary-text,
-                600: $light-primary-text,
-                700: $light-primary-text,
-                800: $light-primary-text,
-                900: $light-primary-text,
-        )
+    50: #aaa,
+    100: #999,
+    200: #888,
+    300: #777,
+    400: #666,
+    500: #555,
+    600: #444,
+    700: #333,
+    800: #222,
+    900: #111,
+    contrast: (
+        50: $dark-primary-text,
+        100: $dark-primary-text,
+        200: $light-primary-text,
+        300: $light-primary-text,
+        400: $light-primary-text,
+        500: $light-primary-text,
+        600: $light-primary-text,
+        700: $light-primary-text,
+        800: $light-primary-text,
+        900: $light-primary-text,
+    )
 );
 
 $dark-accent-palette: mat.$deep-purple-palette;
@@ -41,21 +41,21 @@ $light-accent-palette: mat.$amber-palette;
 $light-warn-palette: mat.$red-palette;
 
 $theme-light: mat.define-light-theme((
-        color: (
-                primary: mat.define-palette($light-palette),
-                accent: mat.define-palette($light-accent-palette),
-                warn: mat.define-palette($light-warn-palette),
-        ),
-        typography: $typography,
-        density: 0
+    color: (
+        primary: mat.define-palette($light-palette),
+        accent: mat.define-palette($light-accent-palette),
+        warn: mat.define-palette($light-warn-palette),
+    ),
+    typography: $typography,
+    density: 0
 ));
 
 $theme-dark: mat.define-dark-theme((
-        color: (
-                primary: mat.define-palette($dark-palette, 700, 600, 900),
-                accent: mat.define-palette($dark-accent-palette, 800, 700, 900),
-                warn: mat.define-palette($dark-warn-palette),
-        ),
+    color: (
+        primary: mat.define-palette($dark-palette, 700, 600, 900),
+        accent: mat.define-palette($dark-accent-palette, 800, 700, 900),
+        warn: mat.define-palette($dark-warn-palette),
+    ),
 ));
 
 @include mat.core-theme($theme-light);
@@ -136,5 +136,14 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
         .mdc-floating-label {
             color: $light-primary-text;
         }
+    }
+
+    label {
+        --mdc-filled-text-field-focus-label-text-color: #{$light-primary-text};
+    }
+
+    mat-option > .mdc-list-item__primary-text {
+        --mat-option-selected-state-label-text-color: #{$light-primary-text};
+        --mat-option-label-text-color: #{$light-primary-text};
     }
 }
