@@ -45,8 +45,7 @@ function createHubTreeNode(
         hasCommunication: hubStats?.hasCommunication ?? false,
         nodeType: ControlSchemeNodeTypes.Hub,
         isConnected: !!hubStats,
-        children: [],
-        initiallyExpanded: true
+        children: []
     };
     if (hubConfig.name !== undefined) {
         result.name = hubConfig.name;
@@ -93,8 +92,7 @@ function createIoTreeNode(
         decelerationTimeMs: portConfig?.decelerationTimeMs ?? 0,
         runningTask,
         lastExecutedTask,
-        children: [],
-        initiallyExpanded: false
+        children: []
     };
 }
 
@@ -116,8 +114,7 @@ function createBindingTreeNode(
         binding,
         schemeName,
         ioHasNoRequiredCapabilities,
-        children: [],
-        initiallyExpanded: false
+        children: []
     };
 }
 
