@@ -15,7 +15,6 @@ export type ControlSchemeViewBindingTreeNodeData = {
     binding: ControlSchemeBinding;
     ioHasNoRequiredCapabilities: boolean;
     children: [];
-    initiallyExpanded: boolean;
 };
 
 export type ControlSchemeViewIoTreeNode = {
@@ -33,7 +32,6 @@ export type ControlSchemeViewIoTreeNode = {
     runningTask?: PortCommandTask;
     lastExecutedTask?: PortCommandTask;
     children: ControlSchemeViewBindingTreeNodeData[];
-    initiallyExpanded: boolean;
 };
 
 export type ControlSchemeViewHubTreeNode = {
@@ -48,7 +46,6 @@ export type ControlSchemeViewHubTreeNode = {
     hasCommunication: boolean;  // TODO: remove, may impact performance, Use ad-hoc selector instead
     isConnected: boolean;
     children: ControlSchemeViewIoTreeNode[];
-    initiallyExpanded: boolean;
 };
 
 export type ControlSchemeViewTreeNode = ControlSchemeViewHubTreeNode
