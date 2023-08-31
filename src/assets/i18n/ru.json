@@ -136,6 +136,10 @@
     "inputGainExponential": "Экспоненциальное",
     "fullControllerInputName": "{controllerName} / {inputName}",
     "fullControllerInputNameWithPort": "{controllerName} / Port {portId} / {inputName}",
+    "loopingModeTitle": "Циклический режим",
+    "loopingModeNone": "Отсутствует",
+    "loopingModeWrap": "Перенос",
+    "loopingModeMirror": "Отскок",
     "inputActions": {
       "servo": "Серво",
       "brake": "Тормоз",
@@ -189,7 +193,7 @@
       "outputLevelAdd": "Добавить уровень",
       "outputLevelRemove": "Удалить уровень",
       "outputPower": "Мощность (%)",
-      "taskSummary": "Выбор скорости: {speed}%"
+      "taskSummary": "Выбор скорости: {speed}%{ isLooping, select, true { (инв.)} other {}}"
     },
     "angleShiftBinding": {
       "operationMode": "Выбор угла",
@@ -199,7 +203,7 @@
       "outputAngleLevelRemove": "Удалить уровень",
       "outputSpeed": "Скорость (%)",
       "outputPower": "Мощность (%)",
-      "taskSummary": "Выбор угла: {angle}°"
+      "taskSummary": "Выбор угла: {angle}°{ isLooping, select, true { (инв.)} other {}}"
     }
   },
   "motorServoEndState": {

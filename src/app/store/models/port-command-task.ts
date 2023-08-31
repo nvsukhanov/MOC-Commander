@@ -47,6 +47,7 @@ export type SpeedShiftTaskPayload = {
     speed: number;
     power: number;
     speedIndex: number;
+    isLooping: boolean;
     useAccelerationProfile: boolean;
     useDecelerationProfile: boolean;
 };
@@ -60,6 +61,7 @@ export type AngleShiftTaskPayload = {
     power: number;
     speed: number;
     angleIndex: number;
+    isLooping: boolean;
     endState: MotorServoEndState;
     useAccelerationProfile: boolean;
     useDecelerationProfile: boolean;

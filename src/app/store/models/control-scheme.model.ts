@@ -1,6 +1,12 @@
 import { ButtonGroupButtonId, MotorServoEndState } from 'rxpoweredup';
 import { ControlSchemeBindingType, ControllerInputType } from '@app/shared';
 
+export enum LoopingMode {
+    None = 'None',
+    Wrap = 'Wrap',
+    Mirror = 'Mirror'
+}
+
 export enum InputGain {
     None,
     Exponential,
@@ -114,6 +120,7 @@ export type ControlSchemeSpeedShiftBinding = {
     portId: number;
     levels: number[];
     power: number;
+    loopingMode: LoopingMode;
     initialStepIndex: number;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
@@ -129,6 +136,7 @@ export type ControlSchemeAngleShiftBinding = {
     angles: number[];
     speed: number;
     power: number;
+    loopingMode: LoopingMode;
     endState: MotorServoEndState;
     initialStepIndex: number;
 } & AccelerationProfileMixin & DecelerationProfileMixin;

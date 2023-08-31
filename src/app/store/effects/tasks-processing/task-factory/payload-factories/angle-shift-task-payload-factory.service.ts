@@ -8,6 +8,7 @@ import { controllerInputIdFn } from '../../../../reducers';
 import { AngleShiftTaskPayload, ControlSchemeAngleShiftBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, } from '../../../../models';
 import { ITaskPayloadFactory } from './i-task-payload-factory';
 import { isInputActivated } from './is-input-activated';
+import { calculateNextLoopingIndex } from './calculate-next-looping-index';
 
 @Injectable()
 export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.AngleShift> {
@@ -60,7 +61,7 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
         inputsState: Dictionary<ControllerInputModel>,
         previousTask: PortCommandTask<ControlSchemeBindingType.AngleShift>
     ): Observable<{ payload: AngleShiftTaskPayload; inputTimestamp: number } | null> {
-        const { isNextAngleInputActive, isPrevAngleInputActive } = this.getInputsState(binding, inputsState);
+        const { isNextAngleInputActive, isPrevAngleInputActive } = this.calculateActiveInputs(binding, inputsState);
 
         if ((!isNextAngleInputActive && previousTask.payload.nextAngleActiveInput) || (!isPrevAngleInputActive && previousTask.payload.prevAngleActiveInput)) {
             return of(this.buildPayloadFromTemplate(
@@ -69,7 +70,8 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
                 previousTask.payload.angleIndex,
                 isNextAngleInputActive,
                 isPrevAngleInputActive,
-                Date.now()
+                Date.now(),
+                previousTask.payload.isLooping
             ));
         }
 
@@ -81,14 +83,21 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
             isNextAngleInputActive,
             isPrevAngleInputActive
         );
-        const nextAngleIndex = this.calculateUpdatedAngleIndex(binding.angles, previousAngleIndex, angleChange.change);
+        const { nextIndex, isLooping } = calculateNextLoopingIndex(
+            binding.angles,
+            previousAngleIndex,
+            angleChange.change,
+            previousTask.payload.isLooping,
+            binding.loopingMode
+        );
         return of(this.buildPayloadFromTemplate(
             binding,
             previousTask.payload.offset,
-            nextAngleIndex,
+            nextIndex,
             isNextAngleInputActive,
             isPrevAngleInputActive,
-            angleChange.inputTimestamp
+            angleChange.inputTimestamp,
+            isLooping
         ));
     }
 
@@ -103,7 +112,7 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
             map((position) => {
                 // we got the position relative to the motor encoder offset, so we need to transform it to absolute position
                 const absPosition = transformRelativeDegToAbsoluteDeg(motorEncoderOffset + position);
-                const { isNextAngleInputActive, isPrevAngleInputActive } = this.getInputsState(binding, inputsState);
+                const { isNextAngleInputActive, isPrevAngleInputActive } = this.calculateActiveInputs(binding, inputsState);
 
                 // we need to find an angle index that can be used as a starting point
                 // best case scenario - we are already at one of the angles
@@ -122,7 +131,13 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
                 );
 
                 // and the next angle index
-                const nextAngleIndex = this.calculateUpdatedAngleIndex(binding.angles, previousAngleIndex, angleChange.change);
+                const { nextIndex, isLooping } = calculateNextLoopingIndex(
+                    binding.angles,
+                    previousAngleIndex,
+                    angleChange.change,
+                    false,
+                    binding.loopingMode
+                );
 
                 // there is a chance that the motor axle has been rotated by more than 360 degrees when the scheme was not active
                 // so we need to store the offset and use it to calculate the absolute position
@@ -132,10 +147,11 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
                 return this.buildPayloadFromTemplate(
                     binding,
                     offset,
-                    nextAngleIndex,
+                    nextIndex,
                     isNextAngleInputActive,
                     isPrevAngleInputActive,
-                    angleChange.inputTimestamp
+                    angleChange.inputTimestamp,
+                    isLooping
                 );
             })
         );
@@ -155,16 +171,6 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
             }
         }
         return nearestAngleIndex;
-    }
-
-    private calculateUpdatedAngleIndex(
-        angles: number[],
-        previousIndex: number,
-        indexIncrement: 1 | -1 | 0
-    ): number {
-        return angles[previousIndex + indexIncrement] !== undefined
-               ? previousIndex + indexIncrement
-               : previousIndex;
     }
 
     private calculateExpectedAngleIndexChangeDirection(
@@ -206,14 +212,14 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
     ): { change: 1 | -1 | 0; inputTimestamp: number } {
         if (isNextAngleInputActive && !previousTaskPayload.nextAngleActiveInput) {
             return {
-                change: -1,
+                change: previousTaskPayload.isLooping ? 1 : -1,
                 inputTimestamp: inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.NextLevel])]?.timestamp ?? Date.now()
             };
         }
 
         if (isPrevAngleInputActive && !previousTaskPayload.nextAngleActiveInput) {
             return {
-                change: 1,
+                change: previousTaskPayload.isLooping ? -1 : 1,
                 inputTimestamp: (!!binding.inputs[ControlSchemeInputAction.PrevLevel]
                     && inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.PrevLevel])]?.timestamp) || Date.now()
             };
@@ -232,6 +238,7 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
         isNextAngleInputActive: boolean,
         isPrevAngleInputActive: boolean,
         inputTimestamp: number,
+        isLooping: boolean
     ): { payload: AngleShiftTaskPayload; inputTimestamp: number } {
         return {
             payload: {
@@ -241,6 +248,7 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
                 angle: binding.angles[angleIndex],
                 speed: binding.speed,
                 power: binding.power,
+                isLooping,
                 nextAngleActiveInput: isNextAngleInputActive,
                 prevAngleActiveInput: isPrevAngleInputActive,
                 useAccelerationProfile: binding.useAccelerationProfile,
@@ -251,9 +259,9 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
         };
     }
 
-    private getInputsState(
+    private calculateActiveInputs(
         binding: ControlSchemeAngleShiftBinding,
-        inputsState: Dictionary<ControllerInputModel>
+        inputsState: Dictionary<ControllerInputModel>,
     ): { isNextAngleInputActive: boolean; isPrevAngleInputActive: boolean } {
         const nextAngleInputValue = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.NextLevel])]?.value ?? 0;
         const isNextAngleInputActive = isInputActivated(nextAngleInputValue);

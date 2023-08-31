@@ -32,6 +32,7 @@ export class AngleShiftBindingFormBuilderService {
             }),
             speed: this.commonFormControlsBuilder.speedControl(),
             power: this.commonFormControlsBuilder.powerControl(),
+            loopingMode: this.commonFormControlsBuilder.loopingModeControl(),
             endState: this.commonFormControlsBuilder.servoEndStateControl(),
             useAccelerationProfile: this.commonFormControlsBuilder.toggleControl(),
             useDecelerationProfile: this.commonFormControlsBuilder.toggleControl(),

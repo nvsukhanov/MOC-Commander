@@ -9,31 +9,32 @@ import { CommonFormControlsBuilderService } from './common-form-controls-builder
 export class SpeedShiftBindingFormBuilderService {
     constructor(
         private readonly formBuilder: FormBuilder,
-        private commonFormControlBuilder: CommonFormControlsBuilderService
+        private commonFormControlsBuilder: CommonFormControlsBuilderService
     ) {
     }
 
     public build(): SpeedShiftBindingForm {
         return this.formBuilder.group({
-            id: this.commonFormControlBuilder.bindingIdControl(),
+            id: this.commonFormControlsBuilder.bindingIdControl(),
             inputs: this.formBuilder.group({
-                [ControlSchemeInputAction.NextLevel]: this.commonFormControlBuilder.inputFormGroup(),
-                [ControlSchemeInputAction.PrevLevel]: this.commonFormControlBuilder.optionalInputFormGroup(),
-                [ControlSchemeInputAction.Reset]: this.commonFormControlBuilder.optionalInputFormGroup()
+                [ControlSchemeInputAction.NextLevel]: this.commonFormControlsBuilder.inputFormGroup(),
+                [ControlSchemeInputAction.PrevLevel]: this.commonFormControlsBuilder.optionalInputFormGroup(),
+                [ControlSchemeInputAction.Reset]: this.commonFormControlsBuilder.optionalInputFormGroup()
             }),
-            hubId: this.commonFormControlBuilder.hubIdControl(),
-            portId: this.commonFormControlBuilder.portIdControl(),
+            hubId: this.commonFormControlsBuilder.hubIdControl(),
+            portId: this.commonFormControlsBuilder.portIdControl(),
             levels: this.formBuilder.array<FormControl<number>>([
-                this.commonFormControlBuilder.speedSelectControl(0)
+                this.commonFormControlsBuilder.speedSelectControl(0)
             ], {
                 validators: [
                     Validators.required,
                     Validators.minLength(2)
                 ]
             }),
-            power: this.commonFormControlBuilder.powerControl(),
-            useAccelerationProfile: this.commonFormControlBuilder.toggleControl(),
-            useDecelerationProfile: this.commonFormControlBuilder.toggleControl(),
+            power: this.commonFormControlsBuilder.powerControl(),
+            loopingMode: this.commonFormControlsBuilder.loopingModeControl(),
+            useAccelerationProfile: this.commonFormControlsBuilder.toggleControl(),
+            useDecelerationProfile: this.commonFormControlsBuilder.toggleControl(),
             initialStepIndex: this.formBuilder.control<number>(0, { nonNullable: true })
         });
     }
@@ -46,10 +47,10 @@ export class SpeedShiftBindingFormBuilderService {
         form.controls.levels.clear();
         if (patch.levels) {
             patch.levels.forEach((step) =>
-                form.controls.levels.push(this.commonFormControlBuilder.speedSelectControl(step))
+                form.controls.levels.push(this.commonFormControlsBuilder.speedSelectControl(step))
             );
         } else {
-            form.controls.levels.push(this.commonFormControlBuilder.speedSelectControl(0));
+            form.controls.levels.push(this.commonFormControlsBuilder.speedSelectControl(0));
             form.controls.initialStepIndex.setValue(0);
         }
     }

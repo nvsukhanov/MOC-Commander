@@ -19,6 +19,7 @@ export class SpeedShiftBindingFormMapperService {
             portId: form.controls.portId.getRawValue(),
             levels: form.controls.levels.getRawValue(),
             power: form.controls.power.getRawValue(),
+            loopingMode: form.controls.loopingMode.getRawValue(),
             useAccelerationProfile: form.controls.useAccelerationProfile.getRawValue(),
             useDecelerationProfile: form.controls.useDecelerationProfile.getRawValue(),
             initialStepIndex: form.controls.initialStepIndex.getRawValue()

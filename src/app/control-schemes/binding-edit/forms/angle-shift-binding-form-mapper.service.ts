@@ -20,6 +20,7 @@ export class AngleShiftBindingFormMapperService {
             angles: form.controls.angles.getRawValue(),
             speed: form.controls.speed.getRawValue(),
             power: form.controls.power.getRawValue(),
+            loopingMode: form.controls.loopingMode.getRawValue(),
             endState: form.controls.endState.getRawValue(),
             useAccelerationProfile: form.controls.useAccelerationProfile.getRawValue(),
             useDecelerationProfile: form.controls.useDecelerationProfile.getRawValue(),

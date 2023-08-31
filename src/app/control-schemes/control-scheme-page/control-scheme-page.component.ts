@@ -116,6 +116,7 @@ export class ControlSchemePageComponent implements OnDestroy {
                 previousName: scheme.name,
                 name
             }));
+            this.router.navigate(this.routesBuilderService.controlSchemeView(name));
         });
     }
 
