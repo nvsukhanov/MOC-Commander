@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { NgIf } from '@angular/common';
-import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
+import { MOTOR_LIMITS } from 'rxpoweredup';
 import { TranslocoModule } from '@ngneat/transloco';
 import { SliderControlComponent, ToggleControlComponent } from '@app/shared';
 import { ControlSchemeInputAction } from '@app/store';

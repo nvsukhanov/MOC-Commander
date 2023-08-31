@@ -1,4 +1,4 @@
-import { IMessageMiddleware, MessageType, RawMessage } from '@nvsukhanov/rxpoweredup';
+import { IMessageMiddleware, MessageType, RawMessage } from 'rxpoweredup';
 import { Observable, Subject, map, mergeWith, of, switchMap, timer } from 'rxjs';
 
 export class HubCommunicationNotifierMiddleware implements IMessageMiddleware {

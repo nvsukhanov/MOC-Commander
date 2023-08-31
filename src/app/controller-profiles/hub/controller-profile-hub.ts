@@ -1,6 +1,6 @@
 import { Observable, of } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
-import { ButtonGroupButtonId } from '@nvsukhanov/rxpoweredup';
+import { ButtonGroupButtonId } from 'rxpoweredup';
 
 import { IControllerProfile } from '../i-controller-profile';
 

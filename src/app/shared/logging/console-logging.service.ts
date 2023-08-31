@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { Inject, Injectable } from '@angular/core';
-import { ILogger, LogLevel } from '@nvsukhanov/rxpoweredup';
+import { ILogger, LogLevel } from 'rxpoweredup';
 
 import { APP_CONFIG, IAppConfig } from '../i-app-config';
 

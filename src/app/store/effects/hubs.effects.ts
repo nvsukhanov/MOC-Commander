@@ -3,7 +3,7 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Observable, catchError, combineLatestWith, filter, from, interval, map, mergeMap, of, startWith, switchMap, takeUntil, tap } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { Router } from '@angular/router';
-import { IHub, MessageLoggingMiddleware, connectHub } from '@nvsukhanov/rxpoweredup';
+import { IHub, MessageLoggingMiddleware, connectHub } from 'rxpoweredup';
 import { APP_CONFIG, IAppConfig, NAVIGATOR, PrefixedConsoleLoggerFactoryService } from '@app/shared';
 
 import { HubStorageService } from '../hub-storage.service';

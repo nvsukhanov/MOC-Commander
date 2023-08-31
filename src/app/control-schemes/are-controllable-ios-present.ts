@@ -1,4 +1,4 @@
-import { PortModeName } from '@nvsukhanov/rxpoweredup';
+import { PortModeName } from 'rxpoweredup';
 import { Dictionary } from '@ngrx/entity';
 import { AttachedIoModel, AttachedIoModesModel, AttachedIoPortModeInfoModel, attachedIoModesIdFn, attachedIoPortModeInfoIdFn } from '@app/store';
 

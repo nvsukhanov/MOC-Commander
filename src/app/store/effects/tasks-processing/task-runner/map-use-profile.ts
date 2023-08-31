@@ -1,4 +1,4 @@
-import { MotorUseProfile } from '@nvsukhanov/rxpoweredup';
+import { MotorUseProfile } from 'rxpoweredup';
 
 export function mapUseProfile(
     { useAccelerationProfile, useDecelerationProfile }: { useAccelerationProfile: boolean; useDecelerationProfile: boolean }

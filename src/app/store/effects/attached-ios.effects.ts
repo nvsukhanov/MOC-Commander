@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap, takeUntil } from 'rxjs';
-import { AttachIoEvent, AttachedIoAttachInboundMessage } from '@nvsukhanov/rxpoweredup';
+import { AttachIoEvent, AttachedIoAttachInboundMessage } from 'rxpoweredup';
 
 import { HubStorageService } from '../hub-storage.service';
 import { ATTACHED_IOS_ACTIONS, HUBS_ACTIONS } from '../actions';

@@ -1,4 +1,4 @@
-import { IOType } from '@nvsukhanov/rxpoweredup';
+import { IOType } from 'rxpoweredup';
 
 export type AttachedIoModel = {
     hubId: string;

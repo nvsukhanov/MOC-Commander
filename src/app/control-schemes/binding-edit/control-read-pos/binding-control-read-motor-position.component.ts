@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription, combineLatestWith, finalize, map, of, take } from 'rxjs';
 import { concatLatestFrom } from '@ngrx/effects';
-import { PortModeName } from '@nvsukhanov/rxpoweredup';
+import { PortModeName } from 'rxpoweredup';
 import { Store } from '@ngrx/store';
 import { MatIconModule } from '@angular/material/icon';
 import { PushPipe } from '@ngrx/component';

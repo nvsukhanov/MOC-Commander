@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { LogLevel } from '@nvsukhanov/rxpoweredup';
+import { LogLevel } from 'rxpoweredup';
 
 import { ConsoleLoggingService } from './console-logging.service';
 import { IAppConfig } from '../i-app-config';

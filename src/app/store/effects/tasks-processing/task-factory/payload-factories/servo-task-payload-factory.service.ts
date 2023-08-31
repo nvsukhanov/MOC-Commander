@@ -1,4 +1,4 @@
-import { MotorServoEndState } from '@nvsukhanov/rxpoweredup';
+import { MotorServoEndState } from 'rxpoweredup';
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';

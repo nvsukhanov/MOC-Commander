@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, last, switchMap, take, throwError } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { PortModeName } from '@nvsukhanov/rxpoweredup';
+import { PortModeName } from 'rxpoweredup';
 
 import { ATTACHED_IO_PORT_MODE_INFO_SELECTORS } from './selectors';
 import { HubStorageService } from './hub-storage.service';

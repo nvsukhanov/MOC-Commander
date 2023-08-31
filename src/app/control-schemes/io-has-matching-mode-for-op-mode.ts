@@ -1,4 +1,4 @@
-import { PortModeName } from '@nvsukhanov/rxpoweredup';
+import { PortModeName } from 'rxpoweredup';
 import { ControlSchemeBindingType } from '@app/shared';
 
 const REQUIRED_PORT_MODES_FOR_OPERATION_MODE: { [k in ControlSchemeBindingType]: PortModeName[] } = {

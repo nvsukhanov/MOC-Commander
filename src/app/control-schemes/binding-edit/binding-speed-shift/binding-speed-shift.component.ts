@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { MOTOR_LIMITS } from '@nvsukhanov/rxpoweredup';
+import { MOTOR_LIMITS } from 'rxpoweredup';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { SliderControlComponent, ToggleControlComponent } from '@app/shared';

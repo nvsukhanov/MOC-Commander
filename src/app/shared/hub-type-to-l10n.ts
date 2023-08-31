@@ -1,4 +1,4 @@
-import { HubType } from '@nvsukhanov/rxpoweredup';
+import { HubType } from 'rxpoweredup';
 
 export const HUB_TYPE_TO_L10N_MAPPING: Readonly<{ [type in HubType]: string }> = {
     [HubType.BoostHub]: 'hubTypes.boost',

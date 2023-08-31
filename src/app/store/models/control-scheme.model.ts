@@ -1,4 +1,4 @@
-import { ButtonGroupButtonId, MotorServoEndState } from '@nvsukhanov/rxpoweredup';
+import { ButtonGroupButtonId, MotorServoEndState } from 'rxpoweredup';
 import { ControlSchemeBindingType, ControllerInputType } from '@app/shared';
 
 export enum InputGain {

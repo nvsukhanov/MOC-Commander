@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { MOTOR_LIMITS, PortModeName } from '@nvsukhanov/rxpoweredup';
+import { MOTOR_LIMITS, PortModeName } from 'rxpoweredup';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 import { SliderControlComponent, ToggleControlComponent } from '@app/shared';

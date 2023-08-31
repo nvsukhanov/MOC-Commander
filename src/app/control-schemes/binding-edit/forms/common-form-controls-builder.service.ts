@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ButtonGroupButtonId, MOTOR_LIMITS, MotorServoEndState } from '@nvsukhanov/rxpoweredup';
+import { ButtonGroupButtonId, MOTOR_LIMITS, MotorServoEndState } from 'rxpoweredup';
 import { ControllerInputType, WINDOW } from '@app/shared';
 import { ControlSchemeInput, InputGain } from '@app/store';
 

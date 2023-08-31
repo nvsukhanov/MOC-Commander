@@ -1,5 +1,5 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { ButtonGroupButtonId, MotorServoEndState } from '@nvsukhanov/rxpoweredup';
+import { ButtonGroupButtonId, MotorServoEndState } from 'rxpoweredup';
 import { ControlSchemeInputAction, InputGain } from '@app/store';
 import { ControlSchemeBindingType, ControllerInputType } from '@app/shared';
 

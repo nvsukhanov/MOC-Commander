@@ -1,4 +1,4 @@
-import { HubType, IOType } from '@nvsukhanov/rxpoweredup';
+import { HubType, IOType } from 'rxpoweredup';
 import { ControlSchemeBinding, PortCommandTask } from '@app/store';
 
 export enum ControlSchemeNodeTypes {
