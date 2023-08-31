@@ -14,6 +14,7 @@ import {
 } from '../../../../models';
 import { ITaskPayloadFactory } from './i-task-payload-factory';
 import { isInputActivated } from './is-input-activated';
+import { calculateNextLoopingIndex } from './calculate-next-looping-index';
 
 @Injectable()
 export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.SpeedShift> {
@@ -23,14 +24,7 @@ export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
         motorEncoderOffset: number,
         previousTask: PortCommandTask | null
     ): Observable<{ payload: SpeedShiftTaskPayload; inputTimestamp: number } | null> {
-        const nextSpeedInputValue = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.NextLevel])]?.value ?? 0;
-        const isNextSpeedInputActive = isInputActivated(nextSpeedInputValue);
-        const prevSpeedInputValue = !!binding.inputs[ControlSchemeInputAction.PrevLevel]
-            && inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.PrevLevel])]?.value || 0;
-        const isPrevSpeedInputActive = isInputActivated(prevSpeedInputValue);
-        const stopInputValue = !!binding.inputs[ControlSchemeInputAction.Reset]
-            && inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Reset])]?.value || 0;
-        const isStopInputActive = isInputActivated(stopInputValue);
+        const { isNextSpeedInputActive, isPrevSpeedInputActive, isStopInputActive } = this.calculateActiveInputs(binding, inputsState);
 
         if (isStopInputActive) {
             return of({
@@ -40,6 +34,7 @@ export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
                     prevSpeedActiveInput: isPrevSpeedInputActive,
                     speed: 0,
                     power: 0,
+                    isLooping: false,
                     speedIndex: binding.initialStepIndex,
                     useAccelerationProfile: binding.useAccelerationProfile,
                     useDecelerationProfile: binding.useDecelerationProfile
@@ -52,16 +47,31 @@ export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
                                                                          ? previousTask.payload as SpeedShiftTaskPayload
                                                                          : null;
         const previousLevel = sameBindingPrevTaskPayload?.speedIndex ?? binding.initialStepIndex;
+        const isLooping = sameBindingPrevTaskPayload?.isLooping ?? false;
         const isPreviousTaskNextSpeedInputActive = sameBindingPrevTaskPayload?.nextSpeedActiveInput ?? false;
         const isPreviousTaskPreviousSpeedInputActive = sameBindingPrevTaskPayload?.prevSpeedActiveInput ?? false;
 
+        let expectedAngleChangeDirection: -1 | 1 | 0 = 0;
         let nextLevel = previousLevel;
+        let isLoopingNext = isLooping;
         if (isNextSpeedInputActive && !isPreviousTaskNextSpeedInputActive) {
-            nextLevel = this.calculateUpdatedLevel(binding, previousLevel, -1);
+            expectedAngleChangeDirection = isLooping ? 1 : -1;
         }
 
         if (isPrevSpeedInputActive && !isPreviousTaskPreviousSpeedInputActive) {
-            nextLevel = this.calculateUpdatedLevel(binding, previousLevel, 1);
+            expectedAngleChangeDirection = isLooping ? -1 : 1;
+        }
+
+        if (expectedAngleChangeDirection !== 0) {
+            const nextLevelResult = calculateNextLoopingIndex(
+                binding.levels,
+                previousLevel,
+                expectedAngleChangeDirection,
+                isLooping,
+                binding.loopingMode
+            );
+            nextLevel = nextLevelResult.nextIndex;
+            isLoopingNext = nextLevelResult.isLooping;
         }
 
         const payload: SpeedShiftTaskPayload = {
@@ -69,6 +79,7 @@ export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
             speedIndex: nextLevel,
             speed: binding.levels[nextLevel],
             power: binding.power,
+            isLooping: isLoopingNext,
             nextSpeedActiveInput: isNextSpeedInputActive,
             prevSpeedActiveInput: isPrevSpeedInputActive,
             useAccelerationProfile: binding.useAccelerationProfile,
@@ -93,13 +104,18 @@ export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
         });
     }
 
-    private calculateUpdatedLevel(
+    private calculateActiveInputs(
         binding: ControlSchemeSpeedShiftBinding,
-        previousLevel: number,
-        levelIncrement: 1 | -1
-    ): number {
-        return binding.levels[previousLevel + levelIncrement] !== undefined
-               ? previousLevel + levelIncrement
-               : previousLevel;
+        inputsState: Dictionary<ControllerInputModel>,
+    ): { isNextSpeedInputActive: boolean; isPrevSpeedInputActive: boolean; isStopInputActive: boolean } {
+        const nextSpeedInputValue = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.NextLevel])]?.value ?? 0;
+        const isNextSpeedInputActive = isInputActivated(nextSpeedInputValue);
+        const prevSpeedInputValue = !!binding.inputs[ControlSchemeInputAction.PrevLevel]
+            && inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.PrevLevel])]?.value || 0;
+        const isPrevSpeedInputActive = isInputActivated(prevSpeedInputValue);
+        const stopInputValue = !!binding.inputs[ControlSchemeInputAction.Reset]
+            && inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Reset])]?.value || 0;
+        const isStopInputActive = isInputActivated(stopInputValue);
+        return { isNextSpeedInputActive, isPrevSpeedInputActive, isStopInputActive };
     }
 }

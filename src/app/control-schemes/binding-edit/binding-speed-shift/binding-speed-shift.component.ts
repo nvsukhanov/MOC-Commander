@@ -13,6 +13,7 @@ import { BindingControlSelectControllerComponent } from '../control-select-contr
 import { CommonFormControlsBuilderService } from '../forms';
 import { BindingControlNumInputComponent } from '../control-num-input';
 import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
+import { BindingControlSelectLoopingModeComponent } from '../contorl-select-looping-mode';
 
 @Component({
     standalone: true,
@@ -29,7 +30,8 @@ import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-inpu
         MatIconModule,
         ToggleControlComponent,
         SliderControlComponent,
-        ControlSchemeInputActionToL10nKeyPipe
+        ControlSchemeInputActionToL10nKeyPipe,
+        BindingControlSelectLoopingModeComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

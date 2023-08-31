@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ButtonGroupButtonId, MOTOR_LIMITS, MotorServoEndState } from 'rxpoweredup';
 import { ControllerInputType, WINDOW } from '@app/shared';
-import { ControlSchemeInput, InputGain } from '@app/store';
+import { ControlSchemeInput, InputGain, LoopingMode } from '@app/store';
 
 import { InputFormGroup, OptionalInputFormGroup } from '../types';
 
@@ -82,6 +82,15 @@ export class CommonFormControlsBuilderService {
         initialValue: MotorServoEndState = MotorServoEndState.float
     ): FormControl<MotorServoEndState> {
         return this.formBuilder.control<MotorServoEndState>(initialValue, {
+            nonNullable: true,
+            validators: [ Validators.required ]
+        });
+    }
+
+    public loopingModeControl(
+        initialValue: LoopingMode = LoopingMode.None
+    ): FormControl<LoopingMode> {
+        return this.formBuilder.control<LoopingMode>(initialValue, {
             nonNullable: true,
             validators: [ Validators.required ]
         });

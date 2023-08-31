@@ -17,6 +17,7 @@ import { BindingControlOutputEndStateComponent } from '../control-output-end-sta
 import { CommonFormControlsBuilderService } from '../forms';
 import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
 import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
+import { BindingControlSelectLoopingModeComponent } from '../contorl-select-looping-mode';
 
 @Component({
     standalone: true,
@@ -36,7 +37,8 @@ import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-inpu
         BindingControlOutputEndStateComponent,
         BindingControlReadMotorPositionComponent,
         PushPipe,
-        ControlSchemeInputActionToL10nKeyPipe
+        ControlSchemeInputActionToL10nKeyPipe,
+        BindingControlSelectLoopingModeComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

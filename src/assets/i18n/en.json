@@ -136,6 +136,10 @@
     "inputGainExponential": "Exponential",
     "fullControllerInputName": "{controllerName} / {inputName}",
     "fullControllerInputNameWithPort": "{controllerName} / Port {portId} / {inputName}",
+    "loopingModeTitle": "Looping mode",
+    "loopingModeNone": "None",
+    "loopingModeWrap": "Wrap",
+    "loopingModeMirror": "Mirror",
     "inputActions": {
       "servo": "Servo",
       "brake": "Brake",
@@ -181,7 +185,7 @@
       "outputSpeed": "Speed (%)",
       "outputPower": "Power (%)",
       "readAngleFromPort": "Read angle from port",
-      "taskSummary": "Set angle: { angle }°"
+      "taskSummary": "Set angle: { angle }°{ isLooping, select, true { (looping)} other {}}"
     },
     "speedShiftBinding": {
       "operationMode": "Speed shift",
@@ -189,7 +193,7 @@
       "outputLevelAdd": "Add speed level",
       "outputLevelRemove": "Remove level",
       "outputPower": "Power (%)",
-      "taskSummary": "Speed shift: {speed}%"
+      "taskSummary": "Speed shift: {speed}%{ isLooping, select, true { (looping)} other {}}"
     },
     "angleShiftBinding": {
       "operationMode": "Angle shift",

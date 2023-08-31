@@ -1,6 +1,6 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ButtonGroupButtonId, MotorServoEndState } from 'rxpoweredup';
-import { ControlSchemeInputAction, InputGain } from '@app/store';
+import { ControlSchemeInputAction, InputGain, LoopingMode } from '@app/store';
 import { ControlSchemeBindingType, ControllerInputType } from '@app/shared';
 
 export type InputFormGroup = FormGroup<{
@@ -94,6 +94,7 @@ export type SpeedShiftBindingForm = FormGroup<{
     portId: FormControl<number>;
     levels: FormArray<FormControl<number>>;
     power: FormControl<number>;
+    loopingMode: FormControl<LoopingMode>;
     useAccelerationProfile: FormControl<boolean>;
     useDecelerationProfile: FormControl<boolean>;
     initialStepIndex: FormControl<number>;
@@ -110,6 +111,7 @@ export type AngleShiftBindingForm = FormGroup<{
     angles: FormArray<FormControl<number>>;
     power: FormControl<number>;
     speed: FormControl<number>;
+    loopingMode: FormControl<LoopingMode>;
     endState: FormControl<MotorServoEndState>;
     useAccelerationProfile: FormControl<boolean>;
     useDecelerationProfile: FormControl<boolean>;
