@@ -139,10 +139,12 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
                     binding.loopingMode
                 );
 
-                // there is a chance that the motor axle has been rotated by more than 360 degrees when the scheme was not active
-                // so we need to store the offset and use it to calculate the absolute position
+                // There is a chance that the motor axle has been rotated by more than 360 degrees while the hub was powered and not connected,
+                // so we need to find distance from current relative position to nearest absolute zero position
+                // and use it as an offset for the current and all future tasks
+                const motorEncoderOffsetZeroDistance = motorEncoderOffset % 360;
                 const positionZero = position - position % 360;
-                const offset = positionZero - motorEncoderOffset;
+                const offset = positionZero - motorEncoderOffsetZeroDistance;
 
                 return this.buildPayloadFromTemplate(
                     binding,
