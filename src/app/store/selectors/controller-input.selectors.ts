@@ -16,6 +16,10 @@ export const CONTROLLER_INPUT_SELECTORS = {
         CONTROLLER_INPUT_FEATURE.selectControllerInputState,
         CONTROLLER_INPUT_ENTITY_ADAPTER_SELECTORS.selectEntities
     ),
+    selectRawValueById: (id: string) => createSelector(
+        CONTROLLER_INPUT_SELECTORS.selectEntities,
+        (entities) => entities[id]?.rawValue ?? 0
+    ),
     selectValueById: (id: string) => createSelector(
         CONTROLLER_INPUT_SELECTORS.selectEntities,
         (entities) => entities[id]?.value ?? 0

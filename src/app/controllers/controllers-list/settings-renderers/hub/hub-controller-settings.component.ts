@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, filter, map } from 'rxjs';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { HubControllerSettingsModel } from '@app/store';
 
@@ -17,9 +17,9 @@ import { ControlIgnoreInputComponent } from '../control-ignore-input';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HubControllerSettingsComponent implements IControllerSettingsRenderer<HubControllerSettingsModel> {
-    public readonly canSave$: Observable<boolean>;
-
     public readonly ignoreInputControl: FormControl<boolean>;
+
+    public readonly settingsChanges$: Observable<HubControllerSettingsModel>;
 
     private settings?: HubControllerSettingsModel;
 
@@ -30,8 +30,17 @@ export class HubControllerSettingsComponent implements IControllerSettingsRender
             false,
             { nonNullable: true }
         );
-        this.canSave$ = this.ignoreInputControl.valueChanges.pipe(
-            map(() => this.ignoreInputControl.dirty)
+        this.settingsChanges$ = this.ignoreInputControl.valueChanges.pipe(
+            map(() => {
+                if (!this.settings) {
+                    return;
+                }
+                return {
+                    ...this.settings,
+                    ignoreInput: this.ignoreInputControl.value
+                };
+            }),
+            filter((settings): settings is HubControllerSettingsModel => !!settings)
         );
     }
 
@@ -39,17 +48,6 @@ export class HubControllerSettingsComponent implements IControllerSettingsRender
         settings: HubControllerSettingsModel
     ): void {
         this.settings = settings;
-        this.ignoreInputControl.setValue(settings.ignoreInput);
+        this.ignoreInputControl.setValue(settings.ignoreInput, { emitEvent: false });
     }
-
-    public readSettings(): HubControllerSettingsModel | undefined {
-        if (!this.settings) {
-            return undefined;
-        }
-        return {
-            ...this.settings,
-            ignoreInput: this.ignoreInputControl.value
-        };
-    }
-
 }

@@ -271,7 +271,6 @@
     "rawInput": "input",
     "output": "output",
     "invert": "Invert",
-    "save": "Save",
     "ignoreInputControlTitle": "Ignore input",
     "inputIsIgnored": "Input is ignored"
   },

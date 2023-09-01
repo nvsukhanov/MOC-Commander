@@ -4,9 +4,7 @@
             <li *ngFor="let controllerWithSettings of controllersWithSettings; trackBy: controllerTrackById"
                 class="card-list-item"
             >
-                <app-controllers-list-item [controller]="controllerWithSettings"
-                                           (settingsChanges)="controllerSettingsUpdate(controllerWithSettings.controller.id, $event)"
-                ></app-controllers-list-item>
+                <app-controllers-list-item [controller]="controllerWithSettings"></app-controllers-list-item>
             </li>
         </ul>
     </ng-container>

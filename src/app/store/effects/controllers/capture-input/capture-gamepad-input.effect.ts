@@ -41,8 +41,8 @@ function readGamepads(
                         rawValue: valueTransformer.trimValue(apiGamepad.axes[axisIndex]),
                         value: valueTransformer.transformAxisValue(apiGamepad.axes[axisIndex], settings.axisConfigs[axisIndex])
                     })),
-                    concatLatestFrom(() => store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(inputId))),
-                    filter(([ current, previousValue ]) => current.value !== previousValue),
+                    concatLatestFrom(() => store.select(CONTROLLER_INPUT_SELECTORS.selectRawValueById(inputId))),
+                    filter(([ current, previousRawValue ]) => current.rawValue !== previousRawValue),
                     map(([ current ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
                         controllerId: connection.controllerId,
                         inputType: ControllerInputType.Axis,

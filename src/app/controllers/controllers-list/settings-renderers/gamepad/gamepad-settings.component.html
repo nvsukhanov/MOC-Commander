@@ -2,7 +2,7 @@
     <section>
         <app-control-ignore-input [control]="viewModel.ignoreInputControl"></app-control-ignore-input>
     </section>
-    <ng-container *ngFor="let axis of viewModel.axes">
+    <ng-container *ngFor="let axis of viewModel.axes; trackBy: trackAxisByFn">
         <div class="axis-configuration">
             <div class="axis-configuration__info">
                 <h3 class="axis-configuration__info-title">{{ axis.name$ | ngrxPush }}</h3>

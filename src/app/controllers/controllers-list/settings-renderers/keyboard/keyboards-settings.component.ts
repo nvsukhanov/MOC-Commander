@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslocoModule } from '@ngneat/transloco';
-import { Observable, map, of, startWith } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgIf } from '@angular/common';
@@ -29,37 +29,32 @@ import { ControlIgnoreInputComponent } from '../control-ignore-input';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class KeyboardsSettingsComponent implements IControllerSettingsRenderer<KeyboardSettingsModel> {
-    public canSave$: Observable<boolean> = of(false);
+    public formGroup: ToFormGroup<KeyboardSettingsModel>;
 
-    public formGroup?: ToFormGroup<KeyboardSettingsModel>;
+    public settingsChanges$: Observable<KeyboardSettingsModel>;
 
     constructor(
         private readonly formBuilder: FormBuilder,
         private readonly cdRef: ChangeDetectorRef
     ) {
+        this.formGroup = this.formBuilder.group({
+            controllerId: this.formBuilder.control('', {
+                nonNullable: true,
+                validators: [ Validators.required ]
+            }),
+            controllerType: this.formBuilder.control(ControllerType.Keyboard, { nonNullable: true }) as FormControl<ControllerType.Keyboard>,
+            captureNonAlphaNumerics: this.formBuilder.control(false, { nonNullable: true }),
+            ignoreInput: this.formBuilder.control(false, { nonNullable: true })
+        });
+        this.settingsChanges$ = this.formGroup.valueChanges.pipe(
+            map(() => this.formGroup.getRawValue())
+        );
     }
 
     public loadSettings(
         settings: KeyboardSettingsModel
     ): void {
-        this.formGroup = this.formBuilder.group({
-            controllerId: this.formBuilder.control(settings.controllerId, {
-                nonNullable: true,
-                validators: [ Validators.required ]
-            }),
-            controllerType: this.formBuilder.control(ControllerType.Keyboard, { nonNullable: true }) as FormControl<ControllerType.Keyboard>,
-            captureNonAlphaNumerics: this.formBuilder.control(settings.captureNonAlphaNumerics, { nonNullable: true }),
-            ignoreInput: this.formBuilder.control(settings.ignoreInput, { nonNullable: true })
-        });
-
-        this.canSave$ = this.formGroup.valueChanges.pipe(
-            startWith(this.formGroup.value),
-            map(() => !!(this.formGroup?.valid && this.formGroup?.dirty)),
-        );
+        this.formGroup.patchValue(settings, { emitEvent: false });
         this.cdRef.detectChanges();
-    }
-
-    public readSettings(): KeyboardSettingsModel | undefined {
-        return this.formGroup?.getRawValue();
     }
 }
