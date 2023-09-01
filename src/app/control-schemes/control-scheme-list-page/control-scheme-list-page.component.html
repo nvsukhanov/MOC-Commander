@@ -13,6 +13,12 @@
                                 {{ scheme.name }}
                             </a>
                         </mat-card-title>
+                        <button mat-button
+                                class="toolbar-button"
+                                [color]="'warn'"
+                                (click)="onDelete(scheme.name)">
+                            {{ 'controlScheme.delete' | transloco }}
+                        </button>
                     </mat-card-header>
                 </mat-card>
             </li>
