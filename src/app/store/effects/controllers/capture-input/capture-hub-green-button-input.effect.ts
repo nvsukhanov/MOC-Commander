@@ -2,17 +2,31 @@ import { createEffect } from '@ngrx/effects';
 import { Action, Store, createSelector } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { NEVER, Observable, map, mergeAll, mergeMap, switchMap } from 'rxjs';
-import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, HUBS_SELECTORS, HUB_STATS_SELECTORS, HubStorageService, controllerIdFn } from '@app/store';
+import {
+    CONTROLLER_INPUT_ACTIONS,
+    CONTROLLER_INPUT_SELECTORS,
+    CONTROLLER_SETTINGS_SELECTORS,
+    HUBS_SELECTORS,
+    HUB_STATS_SELECTORS,
+    HubStorageService,
+    controllerIdFn
+} from '@app/store';
 import { ControllerInputType, ControllerType } from '@app/shared';
 
 import { GREEN_BUTTON_INPUT_ID } from '../../../../controller-profiles/hub';
 
-const CONNECTED_HUBS_SELECTOR = createSelector(
+const HUB_INPUT_READ_SELECTOR = createSelector(
     HUBS_SELECTORS.selectAll,
     HUB_STATS_SELECTORS.selectIds,
-    (hubs, hubStatsIds) => {
+    CONTROLLER_SETTINGS_SELECTORS.selectEntities,
+    (hubs, hubStatsIds, settings) => {
         const hubStatsIdsSet = new Set<string | number>(hubStatsIds);
-        return hubs.filter((hub) => hubStatsIdsSet.has(hub.hubId)).map((hub) => hub.hubId);
+        return hubs.filter((hub) => hubStatsIdsSet.has(hub.hubId)).map((hub) => hub.hubId)
+                   .filter((hub) => {
+                       const hubControllerId = controllerIdFn({ hubId: hub, controllerType: ControllerType.Hub });
+                       const hubSettings = settings[hubControllerId];
+                       return !(hubSettings?.ignoreInput);
+                   });
     }
 );
 
@@ -20,7 +34,7 @@ function readHubsGreenButtons(
     store: Store,
     hubStorage: HubStorageService
 ): Observable<Action> {
-    return store.select(CONNECTED_HUBS_SELECTOR).pipe(
+    return store.select(HUB_INPUT_READ_SELECTOR).pipe(
         map((hubIds) => {
             return hubIds.map((hubId) => {
                 return hubStorage.get(hubId).properties.buttonState.pipe(

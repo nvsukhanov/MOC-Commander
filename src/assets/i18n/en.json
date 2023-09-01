@@ -271,7 +271,9 @@
     "rawInput": "input",
     "output": "output",
     "invert": "Invert",
-    "save": "Save"
+    "save": "Save",
+    "ignoreInputControlTitle": "Ignore input",
+    "inputIsIgnored": "Input is ignored"
   },
   "controllerProfiles": {
     "buttonState": "{ value, select, 1 {Pressed} other {Released} }",

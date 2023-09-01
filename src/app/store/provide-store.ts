@@ -44,7 +44,7 @@ import { RoutesBuilderService } from '../routing';
 import { CONTROLLER_INPUT_ACTIONS, HUB_STATS_ACTIONS } from './actions';
 import { HubFacadeService } from './hub-facade.service';
 
-const STORAGE_VERSION = '18';
+const STORAGE_VERSION = '19';
 
 const REDUCERS: ActionReducerMap<IState> = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,

@@ -27,6 +27,7 @@ export const CONTROLLER_SETTINGS_FEATURE = createFeature({
             }
             const settingsModel: ControllerSettingsModel = {
                 controllerId: action.id,
+                ignoreInput: false,
                 ...action.defaultSettings
             };
             return CONTROLLER_SETTINGS_ENTITY_ADAPTER.addOne(settingsModel, state);
@@ -37,6 +38,7 @@ export const CONTROLLER_SETTINGS_FEATURE = createFeature({
             }
             const settingsModel: ControllerSettingsModel = {
                 controllerId: action.profileUid,
+                ignoreInput: false,
                 ...action.defaultSettings
             };
             return CONTROLLER_SETTINGS_ENTITY_ADAPTER.addOne(settingsModel, state);
@@ -47,6 +49,7 @@ export const CONTROLLER_SETTINGS_FEATURE = createFeature({
             }
             const settingsModel: ControllerSettingsModel = {
                 controllerId: controllerIdFn({ hubId: action.hubId, controllerType: ControllerType.Hub }),
+                ignoreInput: false,
                 ...action.defaultSettings
             };
             return CONTROLLER_SETTINGS_ENTITY_ADAPTER.addOne(settingsModel, state);

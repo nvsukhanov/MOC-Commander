@@ -10,7 +10,7 @@ import {
     KeyboardSettingsModel,
     controllerInputIdFn
 } from '@app/store';
-import { ControllerInputType, WINDOW } from '@app/shared';
+import { ControllerInputType, ControllerType, WINDOW } from '@app/shared';
 
 import { filterKeyboardInput } from '../filter-keyboard-input';
 
@@ -24,14 +24,14 @@ function readKeyboard(
     controllerId: string
 ): Observable<Action> {
     return store.select(CONTROLLER_SETTINGS_SELECTORS.selectByControllerId(controllerId)).pipe(
-        map((s) => s as KeyboardSettingsModel),
+        filter((s): s is KeyboardSettingsModel => s?.controllerType === ControllerType.Keyboard && !s.ignoreInput),
         take(1),
         mergeMap((settings) => {
             return fromEvent(window.document, KEY_DOWN_EVENT).pipe(
-                filterKeyboardInput(settings?.captureNonAlphaNumerics),
+                filterKeyboardInput(settings.captureNonAlphaNumerics),
                 map((event) => ({ isPressed: true, event })),
                 mergeWith(fromEvent(window.document, KEY_UP_EVENT).pipe(
-                    filterKeyboardInput(settings?.captureNonAlphaNumerics),
+                    filterKeyboardInput(settings.captureNonAlphaNumerics),
                     map((event) => ({ isPressed: false, event })),
                 )),
             );

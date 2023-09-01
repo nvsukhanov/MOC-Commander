@@ -2,7 +2,7 @@ import { concatLatestFrom, createEffect } from '@ngrx/effects';
 import { NEVER, Observable, animationFrames, filter, from, map, merge, share, switchMap } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
-import { APP_CONFIG, ControllerInputType, ControllerType, IAppConfig, WINDOW } from '@app/shared';
+import { ControllerInputType, ControllerType, WINDOW } from '@app/shared';
 
 import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_INPUT_SELECTORS } from '../../../selectors';
 import { CONTROLLER_INPUT_ACTIONS } from '../../../actions';
@@ -12,13 +12,16 @@ import { GamepadValueTransformService } from '../../../../controller-profiles';
 function readGamepads(
     store: Store,
     navigator: Navigator,
-    config: IAppConfig,
     valueTransformer: GamepadValueTransformService
 ): Observable<Action> {
     return store.select(CONTROLLER_CONNECTION_SELECTORS.selectGamepadConnections).pipe(
         switchMap((connectedGamepads) => from(connectedGamepads)),
         map(({ connection, gamepad, settings }) => {
-            if (!gamepad || gamepad.controllerType !== ControllerType.Gamepad || !settings || !settings || settings.controllerType !== ControllerType.Gamepad) {
+            if (!gamepad
+                || gamepad.controllerType !== ControllerType.Gamepad
+                || settings?.controllerType !== ControllerType.Gamepad
+                || settings.ignoreInput
+            ) {
                 return [ NEVER ];
             }
             const browserGamepad = navigator.getGamepads()[connection.gamepadIndex] as Gamepad;
@@ -86,12 +89,11 @@ function createGamepadScheduler(): Observable<unknown> {
 export const CAPTURE_GAMEPAD_INPUT = createEffect((
     store: Store = inject(Store),
     window: Window = inject(WINDOW),
-    config: IAppConfig = inject(APP_CONFIG),
     valueTransformer: GamepadValueTransformService = inject(GamepadValueTransformService)
 ) => {
     return store.select(CONTROLLER_INPUT_SELECTORS.isCapturing).pipe(
         switchMap((isCapturing) => isCapturing
-                                   ? readGamepads(store, window.navigator, config, valueTransformer)
+                                   ? readGamepads(store, window.navigator, valueTransformer)
                                    : NEVER
         )
     );

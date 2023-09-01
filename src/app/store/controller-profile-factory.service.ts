@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 
-import { ControllerSettings, GamepadSettings, IControllerProfile, KeyboardSettings } from '../controller-profiles';
+import { ControllerSettings, GamepadSettings, HubControllerSettings, IControllerProfile, KeyboardSettings } from '../controller-profiles';
 import { ControllerProfileKeyboardService } from '../controller-profiles/keyboard';
 import { ControllerProfileGenericGamepadFactoryService } from '../controller-profiles/gamepad';
 import { GamepadProfile } from '../controller-profiles/gamepad-profile';
@@ -37,7 +37,7 @@ export class ControllerProfileFactoryService { // TODO: refactor, this is a mess
 
     public getHubProfile(
         hubId: string,
-    ): IControllerProfile<null> {
+    ): IControllerProfile<HubControllerSettings> {
         const profile = this.hubProfileFactory.build(
             hubId,
         );

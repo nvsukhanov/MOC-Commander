@@ -1,10 +1,13 @@
-<section *ngIf="formGroup"
-         class="keyboard-settings-section"
->
-    <mat-slide-toggle [formControl]="formGroup.controls.captureNonAlphaNumerics">
-        {{ 'controllerProfiles.keyboard.captureNonAlphaNumerics' | transloco }}
-    </mat-slide-toggle>
-    <span class="capture-non-alpha-numerics-hint">
+<ng-container *ngIf="formGroup">
+    <section class="keyboard-settings-section">
+        <app-control-ignore-input [control]="formGroup.controls.ignoreInput"></app-control-ignore-input>
+    </section>
+    <section class="keyboard-settings-section">
+        <mat-slide-toggle [formControl]="formGroup.controls.captureNonAlphaNumerics">
+            {{ 'controllerProfiles.keyboard.captureNonAlphaNumerics' | transloco }}
+        </mat-slide-toggle>
+        <span class="capture-non-alpha-numerics-hint">
         ({{ 'controllerProfiles.keyboard.captureNonAlphaNumericsHint' | transloco }})
     </span>
-</section>
+    </section>
+</ng-container>
