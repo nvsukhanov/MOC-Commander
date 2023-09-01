@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgForOf, NgIf } from '@angular/common';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterLink } from '@angular/router';
@@ -10,7 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeModel } from '@app/store';
-import { FeatureToolbarControlsDirective, HintComponent } from '@app/shared';
+import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared';
 
 import { RoutesBuilderService } from '../../routing';
 import { CONTROL_SCHEMES_LIST_PAGE_SELECTORS } from './control-schemes-list.selectors';
@@ -36,7 +36,8 @@ import { ControlSchemeViewUrlPipe } from './control-scheme-view-url.pipe';
         MatDialogModule,
         ControlSchemeViewUrlPipe,
         HintComponent,
-        FeatureToolbarControlsDirective
+        FeatureToolbarControlsDirective,
+        ConfirmationDialogModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -49,7 +50,9 @@ export class ControlSchemeListPageComponent {
         private readonly store: Store,
         protected readonly routesBuilderService: RoutesBuilderService,
         private readonly dialog: MatDialog,
-        private readonly router: Router
+        private readonly router: Router,
+        private readonly confirmationDialogService: ConfirmationDialogService,
+        private readonly transloco: TranslocoService
     ) {
     }
 
@@ -68,6 +71,23 @@ export class ControlSchemeListPageComponent {
                     this.routesBuilderService.controlSchemeView(result.name)
                 );
                 this.store.dispatch(CONTROL_SCHEME_ACTIONS.createControlScheme(result));
+            }
+        });
+    }
+
+    public onDelete(
+        name: string
+    ): void {
+        this.confirmationDialogService.confirm(
+            this.transloco.selectTranslate('controlScheme.deleteSchemeConfirmationTitle', { name }),
+            {
+                content$: this.transloco.selectTranslate('controlScheme.deleteSchemeConfirmationContent'),
+                confirmTitle$: this.transloco.selectTranslate('controlScheme.deleteSchemeConfirmationConfirmButtonTitle'),
+                cancelTitle$: this.transloco.selectTranslate('controlScheme.deleteSchemeConfirmationCancelButtonTitle')
+            }
+        ).subscribe((isConfirmed) => {
+            if (isConfirmed) {
+                this.store.dispatch(CONTROL_SCHEME_ACTIONS.deleteControlScheme({ name }));
             }
         });
     }
