@@ -1,12 +1,14 @@
 import { Observable, of } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { ButtonGroupButtonId } from 'rxpoweredup';
+import { ControllerType } from '@app/shared';
 
 import { IControllerProfile } from '../i-controller-profile';
+import { HubControllerSettings } from '../controller-settings';
 
 export const GREEN_BUTTON_INPUT_ID = 'green-button';
 
-export class ControllerProfileHub implements IControllerProfile<null> {
+export class ControllerProfileHub implements IControllerProfile<HubControllerSettings> {
     public readonly axisStateL10nKey: string = '';
 
     public readonly buttonStateL10nKey: string = 'controllerProfiles.buttonState';
@@ -53,7 +55,9 @@ export class ControllerProfileHub implements IControllerProfile<null> {
         }
     }
 
-    public getDefaultSettings(): null {
-        return null;
+    public getDefaultSettings(): HubControllerSettings {
+        return {
+            controllerType: ControllerType.Hub,
+        };
     }
 }

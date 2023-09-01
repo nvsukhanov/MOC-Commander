@@ -23,6 +23,7 @@ import { IControllerSettingsRenderer } from '../i-controller-settings-renderer';
 import { GamepadAxisSettings, GamepadSettings, GamepadValueTransformService, IControllerProfile } from '../../../../controller-profiles';
 import { InputOutputDiagramComponent } from './input-output-diagram';
 import { ActiveZoneHumanReadableValuePipe } from './active-zone-human-readable-value.pipe';
+import { ControlIgnoreInputComponent } from '../control-ignore-input';
 
 type AxisSettingsViewModel = {
     inputId: string;
@@ -36,12 +37,14 @@ type AxisSettingsViewModel = {
 
 type ViewModel = {
     axes: AxisSettingsViewModel[];
+    ignoreInputControl: FormControl<boolean>;
 };
 
 type GamepadSettingsForm = FormGroup<{
     controllerId: FormControl<string>;
     controllerType: FormControl<ControllerType.Gamepad>;
     axisConfigs: FormGroup<{ [k in string]: ToFormGroup<GamepadAxisSettings> }>;
+    ignoreInput: FormControl<boolean>;
 }>;
 
 @Component({
@@ -64,7 +67,8 @@ type GamepadSettingsForm = FormGroup<{
         RangeControlComponent,
         TranslocoModule,
         ActiveZoneHumanReadableValuePipe,
-        MatDividerModule
+        MatDividerModule,
+        ControlIgnoreInputComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -114,6 +118,7 @@ export class GamepadSettingsComponent implements IControllerSettingsRenderer<Gam
             }),
             controllerType: this.formBuilder.control<ControllerType.Gamepad>(ControllerType.Gamepad, { nonNullable: true }),
             axisConfigs: this.formBuilder.group<{ [k in string]: ToFormGroup<GamepadAxisSettings> }>({}),
+            ignoreInput: this.formBuilder.control<boolean>(settings.ignoreInput, { nonNullable: true }),
         });
 
         this.canSave$ = this.gamepadSettingsForm.valueChanges.pipe(
@@ -132,7 +137,8 @@ export class GamepadSettingsComponent implements IControllerSettingsRenderer<Gam
         );
 
         const viewModel: ViewModel = {
-            axes: []
+            axes: [],
+            ignoreInputControl: this.gamepadSettingsForm.controls.ignoreInput,
         };
 
         for (const [ axisId, axisSettings ] of Object.entries(settings.axisConfigs)) {
@@ -175,7 +181,7 @@ export class GamepadSettingsComponent implements IControllerSettingsRenderer<Gam
                     switchMap((profile) => profile.getAxisName$(axisId)),
                 ),
                 rawValue$,
-                outputValue$
+                outputValue$,
             });
         }
 

@@ -11,6 +11,7 @@ import {
     CONTROLLER_INPUT_ACTIONS,
     CONTROLLER_INPUT_SELECTORS,
     CONTROLLER_SELECTORS,
+    CONTROLLER_SETTINGS_SELECTORS,
     HubStorageService,
     attachedIoModesIdFn,
     attachedIoPortModeInfoIdFn,
@@ -39,7 +40,8 @@ const SELECT_ATTACHED_IOS_BUTTON_GROUPS_SELECTOR = createSelector(
     ATTACHED_IO_SELECTORS.selectAll,
     CONTROLLER_SELECTORS.selectEntities,
     CONTROLLER_CONNECTION_SELECTORS.selectAll,
-    (attachedIOModeInfos, attachedIOModes, attachedIOs, controllers, controllerConnections): ListenablePortModeData[] => {
+    CONTROLLER_SETTINGS_SELECTORS.selectEntities,
+    (attachedIOModeInfos, attachedIOModes, attachedIOs, controllers, controllerConnections, settings): ListenablePortModeData[] => {
         const hubControllerConnections = controllerConnections.filter((c) => c.controllerType === ControllerType.Hub);
 
         const portModeResult: Map<string, ListenablePortModeData> = new Map();
@@ -47,6 +49,10 @@ const SELECT_ATTACHED_IOS_BUTTON_GROUPS_SELECTOR = createSelector(
         for (const hubControllerConnection of hubControllerConnections) {
             const hubController = controllers[hubControllerConnection.controllerId];
             if (!hubController || hubController.controllerType !== ControllerType.Hub) {
+                continue;
+            }
+            const hubControllerSettings = settings[hubControllerConnection.controllerId];
+            if (hubControllerSettings?.ignoreInput) {
                 continue;
             }
             const hubIos = attachedIOs.filter((io) => io.hubId === hubController.hubId);

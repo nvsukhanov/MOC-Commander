@@ -10,6 +10,7 @@ import { ControllerType, ToFormGroup } from '@app/shared';
 import { KeyboardSettingsModel } from '@app/store';
 
 import { IControllerSettingsRenderer } from '../i-controller-settings-renderer';
+import { ControlIgnoreInputComponent } from '../control-ignore-input';
 
 @Component({
     standalone: true,
@@ -22,7 +23,8 @@ import { IControllerSettingsRenderer } from '../i-controller-settings-renderer';
         TranslocoModule,
         MatIconModule,
         MatTooltipModule,
-        NgIf
+        NgIf,
+        ControlIgnoreInputComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -46,7 +48,8 @@ export class KeyboardsSettingsComponent implements IControllerSettingsRenderer<K
                 validators: [ Validators.required ]
             }),
             controllerType: this.formBuilder.control(ControllerType.Keyboard, { nonNullable: true }) as FormControl<ControllerType.Keyboard>,
-            captureNonAlphaNumerics: this.formBuilder.control(settings.captureNonAlphaNumerics, { nonNullable: true })
+            captureNonAlphaNumerics: this.formBuilder.control(settings.captureNonAlphaNumerics, { nonNullable: true }),
+            ignoreInput: this.formBuilder.control(settings.ignoreInput, { nonNullable: true })
         });
 
         this.canSave$ = this.formGroup.valueChanges.pipe(

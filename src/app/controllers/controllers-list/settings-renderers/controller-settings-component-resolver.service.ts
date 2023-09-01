@@ -5,6 +5,7 @@ import { ControllerSettingsModel } from '@app/store';
 import { IControllerSettingsRenderer } from './i-controller-settings-renderer';
 import { GamepadSettingsComponent } from './gamepad';
 import { KeyboardsSettingsComponent } from './keyboard';
+import { HubControllerSettingsComponent } from './hub';
 
 type InferControllerSettings<T extends ControllerType> = ControllerSettingsModel & { controllerType: T };
 
@@ -12,7 +13,8 @@ type InferControllerSettings<T extends ControllerType> = ControllerSettingsModel
 export class ControllerSettingsComponentResolverService {
     private renderers: { [k in ControllerType]?: Type<IControllerSettingsRenderer<InferControllerSettings<k>>> } = {
         [ControllerType.Keyboard]: KeyboardsSettingsComponent,
-        [ControllerType.Gamepad]: GamepadSettingsComponent
+        [ControllerType.Gamepad]: GamepadSettingsComponent,
+        [ControllerType.Hub]: HubControllerSettingsComponent
     };
 
     public resolveComponentFor<T extends ControllerType>(

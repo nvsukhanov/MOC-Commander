@@ -5,6 +5,11 @@
 
 .controller-panel {
     width: 100%;
+
+    &__ignore-input-icon {
+        margin-left: 10px;
+        color: var(--app-disabled-color);
+    }
 }
 
 .controller-icon {

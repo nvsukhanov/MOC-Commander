@@ -20,6 +20,7 @@ export const LISTEN_HUB_CONNECT = createEffect((
             return CONTROLLERS_ACTIONS.hubDiscovered({
                 hubId: action.hubId,
                 profileUid: profile.uid,
+                defaultSettings: profile.getDefaultSettings()
             });
         })
     );

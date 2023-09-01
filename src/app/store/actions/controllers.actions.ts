@@ -1,12 +1,12 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
-import { ControllerSettings } from '../../controller-profiles';
+import { GamepadSettings, HubControllerSettings, KeyboardSettings } from '../../controller-profiles';
 
 export const CONTROLLERS_ACTIONS = createActionGroup({
     source: 'Controllers',
     events: {
         'wait for connect': emptyProps(),
-        'keyboardDiscovered': props<{ profileUid: string; defaultSettings: ControllerSettings }>(),
+        'keyboardDiscovered': props<{ profileUid: string; defaultSettings: KeyboardSettings }>(),
         'keyboardConnected': props<{ profileUid: string }>(),
         'gamepadDiscovered': props<{
             id: string;
@@ -16,11 +16,11 @@ export const CONTROLLERS_ACTIONS = createActionGroup({
             triggerButtonsIndices: number[];
             gamepadApiIndex: number;
             gamepadOfTypeIndex: number;
-            defaultSettings: ControllerSettings;
+            defaultSettings: GamepadSettings;
         }>(),
         'gamepadConnected': props<{ id: string; gamepadApiIndex: number; profileUid: string }>(),
         'gamepadDisconnected': props<{ id: string }>(),
-        'hubDiscovered': props<{ profileUid: string; hubId: string; defaultSettings?: ControllerSettings }>(),
+        'hubDiscovered': props<{ profileUid: string; hubId: string; defaultSettings: HubControllerSettings }>(),
         'hubConnected': props<{ hubId: string }>(),
         'hubDisconnected': props<{ hubId: string }>()
     }
