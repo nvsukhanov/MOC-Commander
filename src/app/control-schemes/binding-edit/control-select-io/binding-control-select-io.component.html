@@ -5,13 +5,13 @@
     <mat-select [formControl]="portIdControl">
         <ng-container *ngFor="let io of hubIos">
             <mat-option [value]="io.portId">
-                {{ io.portId }} ({{ io.ioType | ioTypeToL10nKey | transloco }})
+                {{ io.portId | portIdToPortName }} ({{ io.ioType | ioTypeToL10nKey | transloco }})
             </mat-option>
         </ng-container>
         <mat-option *ngIf="!(isSelectedIoAttached$ | ngrxPush)"
                     [value]="portIdControl.value"
         >
-            {{ portIdControl.value }} ({{ 'controlScheme.noDeviceConnected' | transloco }})
+            {{ portIdControl.value | portIdToPortName }} ({{ 'controlScheme.noDeviceConnected' | transloco }})
         </mat-option>
     </mat-select>
 </mat-form-field>

@@ -6,7 +6,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
 import { Observable, map, of, startWith } from 'rxjs';
 import { AttachedIoModel } from '@app/store';
-import { IoTypeToL10nKeyPipe } from '@app/shared';
+import { IoTypeToL10nKeyPipe, PortIdToPortNamePipe } from '@app/shared';
 
 @Component({
     standalone: true,
@@ -20,7 +20,8 @@ import { IoTypeToL10nKeyPipe } from '@app/shared';
         TranslocoModule,
         ReactiveFormsModule,
         IoTypeToL10nKeyPipe,
-        PushPipe
+        PushPipe,
+        PortIdToPortNamePipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -6,7 +6,7 @@
     <mat-expansion-panel-header>
         <mat-panel-title>
             <h3 class="io-port__title">
-                {{ 'hub.port' | transloco: hubIoViewModel }}
+                {{ 'hub.port' | transloco: { portId: hubIoViewModel.portId | portIdToPortName } }}
             </h3>
         </mat-panel-title>
         <mat-panel-description>
