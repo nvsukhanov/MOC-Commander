@@ -166,7 +166,7 @@ export class SetSpeedTaskPayloadFactoryService implements ITaskPayloadFactory<Co
         if (Math.abs(speedWithStep) >= MOTOR_LIMITS.maxSpeed - this.speedSnapThreshold) {
             return MOTOR_LIMITS.maxSpeed * Math.sign(speedWithStep);
         }
-        return speed;
+        return Math.round(speed);
     }
 
     private calculatePower(
