@@ -5,8 +5,12 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { Subscription, filter } from 'rxjs';
-import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, ControllerInputModel } from '@app/store';
+import { Observable, Subscription, combineLatestWith, filter, map, of, switchMap } from 'rxjs';
+import { LetDirective } from '@ngrx/component';
+import { NgForOf, NgIf } from '@angular/common';
+import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, ControllerInputModel, ControllerProfileFactoryService } from '@app/store';
+
+import { WAIT_FOR_CONTROLLER_INPUT_DIALOG_SELECTORS } from './wait-for-controller-input-dialog.selectors';
 
 @Component({
     standalone: true,
@@ -19,16 +23,38 @@ import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, ControllerInputMo
         MatProgressBarModule,
         TranslocoModule,
         MatDialogModule,
+        LetDirective,
+        NgForOf,
+        NgIf,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WaitForControllerInputDialogComponent implements OnInit, OnDestroy {
+    public readonly controllerNames$: Observable<string[]>;
+
     private readonly subscriptions = new Subscription();
 
     constructor(
         private readonly dialogRef: MatDialogRef<ControllerInputModel | null>,
-        private readonly store: Store
+        private readonly store: Store,
+        private readonly controllerProfileFactory: ControllerProfileFactoryService
     ) {
+        this.controllerNames$ = this.store.select(WAIT_FOR_CONTROLLER_INPUT_DIALOG_SELECTORS.selectConnectedControllers).pipe(
+            map((controllerModels) => controllerModels.map((c) => this.controllerProfileFactory.getByProfileUid(c.profileUid).name$)),
+            switchMap((names) => {
+                if (names.length === 0) {
+                    return of([]);
+                } else if (names.length === 1) {
+                    return names[0].pipe(
+                        map((name) => [ name ])
+                    );
+                } else {
+                    return names[0].pipe(
+                        combineLatestWith(...names.slice(1)),
+                    );
+                }
+            })
+        );
     }
 
     public ngOnInit(): void {
