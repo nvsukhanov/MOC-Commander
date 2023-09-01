@@ -65,7 +65,8 @@
     "duploTrain": "Duplo Train",
     "twoPortHub": "Two-port Hub",
     "twoPortHandset": "Two-port Handset",
-    "unknown": "Unknown hub type"
+    "unknown": "Unknown hub type",
+    "fourPortHub": "Four-port Hub"
   },
   "controlScheme": {
     "newSchemeDialogTitle": "Create new control scheme",

@@ -65,7 +65,8 @@
     "duploTrain": "Поезд Duplo",
     "twoPortHub": "Двухпортовый хаб",
     "twoPortHandset": "Двухпортовый пульт",
-    "unknown": "Неизвестный тип хаба"
+    "unknown": "Неизвестный тип хаба",
+    "fourPortHub": "Четырехпортовый хаб"
   },
   "controlScheme": {
     "newSchemeDialogTitle": "Создание новой схемы управления",

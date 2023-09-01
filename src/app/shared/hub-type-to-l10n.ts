@@ -6,5 +6,6 @@ export const HUB_TYPE_TO_L10N_MAPPING: Readonly<{ [type in HubType]: string }> =
     [HubType.DuploTrain]: 'hubTypes.duploTrain',
     [HubType.TwoPortHub]: 'hubTypes.twoPortHub',
     [HubType.TwoPortHandset]: 'hubTypes.twoPortHandset',
+    [HubType.FourPortHub]: 'hubTypes.fourPortHub',
     [HubType.Unknown]: 'hubTypes.unknown'
 };
