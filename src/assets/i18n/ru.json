@@ -271,7 +271,8 @@
     "rawInput": "ввод",
     "output": "вывод",
     "invert": "Инвертировать",
-    "save": "Сохранить"
+    "ignoreInputControlTitle": "Игнорировать ввод",
+    "inputIsIgnored": "Ввод игнорируется"
   },
   "controllerProfiles": {
     "buttonState": "{ value, select, 1 {Нажато} other {Не нажато} }",

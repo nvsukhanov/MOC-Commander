@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { TranslocoModule } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
@@ -31,8 +31,6 @@ import { ControllerSettingsContainerComponent } from '../controller-settings-con
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControllersListItemComponent {
-    @Output() public readonly settingsChanges = new EventEmitter<ControllerSettingsModel>();
-
     private _controllerProfile?: IControllerProfile<ControllerSettings | null>;
 
     private _controllerSettings?: ControllerSettingsModel;
