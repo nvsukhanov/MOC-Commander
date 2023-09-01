@@ -272,7 +272,9 @@
     "output": "вывод",
     "invert": "Инвертировать",
     "ignoreInputControlTitle": "Игнорировать ввод",
-    "inputIsIgnored": "Ввод игнорируется"
+    "inputIsIgnored": "Ввод игнорируется",
+    "connectedControllers": "Подключенные контроллеры:",
+    "noConnectedControllers": "Нет подключенных контроллеров"
   },
   "controllerProfiles": {
     "buttonState": "{ value, select, 1 {Нажато} other {Не нажато} }",

@@ -2,10 +2,25 @@
     {{ 'controlScheme.createBindingWaitingForInputTitle' | transloco }}
 </h1>
 
-<div mat-dialog-content>
+<div *ngrxLet="controllerNames$ as controllerNames"
+     mat-dialog-content
+>
     <p>
         {{ 'controlScheme.createBindingWaitingForInputContent' | transloco }}
     </p>
+    <ng-container *ngIf="controllerNames.length; else noControllers">
+        <p>
+            {{ 'controller.connectedControllers' | transloco }}
+        </p>
+        <p *ngFor="let controllerName of controllerNames"
+           class="controller-name"
+        >
+            {{ controllerName }}
+        </p>
+    </ng-container>
+    <ng-template #noControllers>
+        {{ 'controller.noConnectedControllers' | transloco }}
+    </ng-template>
 </div>
 
 <div mat-dialog-actions

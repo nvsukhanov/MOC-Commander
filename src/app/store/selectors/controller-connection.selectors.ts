@@ -16,9 +16,15 @@ const SELECT_ALL = createSelector(
     CONTROLLER_CONNECTION_ADAPTER.getSelectors().selectAll
 );
 
+const SELECT_IDS = createSelector(
+    CONTROLLER_CONNECTION_FEATURE.selectControllerConnectionsState,
+    CONTROLLER_CONNECTION_ADAPTER.getSelectors().selectIds
+);
+
 export const CONTROLLER_CONNECTION_SELECTORS = {
     selectEntities: SELECT_ENTITIES,
     selectAll: SELECT_ALL,
+    selectIds: SELECT_IDS,
     selectTotal: createSelector(
         CONTROLLER_CONNECTION_FEATURE.selectControllerConnectionsState,
         CONTROLLER_CONNECTION_ADAPTER.getSelectors().selectTotal

@@ -272,7 +272,9 @@
     "output": "output",
     "invert": "Invert",
     "ignoreInputControlTitle": "Ignore input",
-    "inputIsIgnored": "Input is ignored"
+    "inputIsIgnored": "Input is ignored",
+    "connectedControllers": "Connected controllers:",
+    "noConnectedControllers": "No connected controllers"
   },
   "controllerProfiles": {
     "buttonState": "{ value, select, 1 {Pressed} other {Released} }",
