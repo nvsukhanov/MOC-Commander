@@ -32,7 +32,7 @@
     "@ngrx/store-devtools": "^16.0.1",
     "ngrx-store-localstorage": "^16.0.0",
     "rxjs": "^7.8.1",
-    "rxpoweredup": "^0.0.37",
+    "rxpoweredup": "^0.0.38",
     "tslib": "^2.5.2",
     "typescript-memoize": "^1.1.1",
     "zone.js": "^0.13.1"
