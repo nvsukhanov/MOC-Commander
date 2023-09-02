@@ -15,7 +15,7 @@ export const PORT_CONFIG_EDIT_PAGE_SELECTORS = {
             controlSchemes: Dictionary<ControlSchemeModel>,
             hubEntities: Dictionary<HubModel>
         ): PortConfigEditViewModel | null => {
-            const schemeName = route?.params?.['schemeName'] ?? null;
+            const schemeName = decodeURI(route?.params?.['schemeName'] ?? '');
             const hubId: string | null = route?.params?.['hubId'] ?? null;
             const portId: string | null = route?.params?.['portId'] ?? null;
 

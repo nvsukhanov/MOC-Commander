@@ -2,9 +2,9 @@ import { ButtonGroupButtonId, MotorServoEndState } from 'rxpoweredup';
 import { ControlSchemeBindingType, ControllerInputType } from '@app/shared';
 
 export enum LoopingMode {
-    None = 'None',
-    Wrap = 'Wrap',
-    Mirror = 'Mirror'
+    None,
+    Wrap,
+    Mirror
 }
 
 export enum InputGain {
@@ -33,25 +33,25 @@ export type ControlSchemeInput = {
     inputId: string;
     inputType: ControllerInputType;
     gain: InputGain;
-    buttonId: ButtonGroupButtonId | null;
-    portId: number | null;
+    buttonId?: ButtonGroupButtonId;
+    portId?: number;
 };
 
 export enum ControlSchemeInputAction {
-    Accelerate = 'accelerate',
-    Brake = 'brake',
-    Servo = 'servo',
-    SetAngle = 'setAngle',
-    Step = 'step',
-    NextLevel = 'nextLevel',
-    PrevLevel = 'prevLevel',
-    Reset = 'reset',
+    Accelerate,
+    Brake,
+    Servo,
+    SetAngle,
+    Step,
+    NextLevel,
+    PrevLevel,
+    Reset,
 }
 
 export type ControlSchemeInputsRecord = { [k in ControlSchemeInputAction]?: ControlSchemeInput };
 
 export type ControlSchemeSetSpeedBinding = {
-    id: string;
+    id: number;
     operationMode: ControlSchemeBindingType.SetSpeed;
     inputs: {
         [ControlSchemeInputAction.Accelerate]: ControlSchemeInput;
@@ -66,7 +66,7 @@ export type ControlSchemeSetSpeedBinding = {
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
 export type ControlSchemeServoBinding = {
-    id: string;
+    id: number;
     operationMode: ControlSchemeBindingType.Servo;
     inputs: {
         [ControlSchemeInputAction.Servo]: ControlSchemeInput;
@@ -81,7 +81,7 @@ export type ControlSchemeServoBinding = {
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
 export type ControlSchemeSetAngleBinding = {
-    id: string;
+    id: number;
     operationMode: ControlSchemeBindingType.SetAngle;
     inputs: {
         [ControlSchemeInputAction.SetAngle]: ControlSchemeInput;
@@ -95,7 +95,7 @@ export type ControlSchemeSetAngleBinding = {
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
 export type ControlSchemeStepperBinding = {
-    id: string;
+    id: number;
     operationMode: ControlSchemeBindingType.Stepper;
     inputs: {
         [ControlSchemeInputAction.Step]: ControlSchemeInput;
@@ -109,7 +109,7 @@ export type ControlSchemeStepperBinding = {
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
 export type ControlSchemeSpeedShiftBinding = {
-    id: string;
+    id: number;
     operationMode: ControlSchemeBindingType.SpeedShift;
     inputs: {
         [ControlSchemeInputAction.NextLevel]: ControlSchemeInput;
@@ -125,7 +125,7 @@ export type ControlSchemeSpeedShiftBinding = {
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
 export type ControlSchemeAngleShiftBinding = {
-    id: string;
+    id: number;
     operationMode: ControlSchemeBindingType.AngleShift;
     inputs: {
         [ControlSchemeInputAction.NextLevel]: ControlSchemeInput;

@@ -7,7 +7,7 @@ import { BindingSetSpeedEditComponent } from './binding-set-speed';
 import { BindingServoEditComponent } from './binding-servo';
 import { BindingSetAngleEditComponent } from './binding-set-angle';
 import { BindingStepperEditComponent } from './binding-stepper';
-import { ControlSchemeBindingForm } from './types';
+import { ControlSchemeBindingForm } from '../common';
 import { BindingSpeedShiftComponent } from './binding-speed-shift';
 import { BindingAngleShiftEditComponent } from './binding-angle-shift';
 

@@ -84,6 +84,22 @@ export class NotificationsEffects {
         );
     }, { dispatch: false });
 
+    public readonly controlSchemeExportStringCopied$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(CONTROL_SCHEME_ACTIONS.copyExportString),
+            switchMap(() => this.translocoService.selectTranslate('controlScheme.exportStringCopiedNotification')),
+            this.showMessage()
+        );
+    }, { dispatch: false });
+
+    public readonly controlSchemeImported$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(CONTROL_SCHEME_ACTIONS.importControlScheme),
+            switchMap((action) => this.translocoService.selectTranslate('controlScheme.importSuccessNotification', action.scheme)),
+            this.showMessage()
+        );
+    }, { dispatch: false });
+
     constructor(
         private readonly actions$: Actions,
         private readonly snackBar: MatSnackBar,

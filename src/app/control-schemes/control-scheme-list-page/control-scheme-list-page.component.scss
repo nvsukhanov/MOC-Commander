@@ -11,3 +11,7 @@
     flex-direction: row;
     align-items: center;
 }
+
+.toolbar-button + .toolbar-button {
+    margin-left: 10px;
+}

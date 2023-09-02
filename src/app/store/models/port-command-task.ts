@@ -77,7 +77,7 @@ export type PortCommandTaskPayload = SetSpeedTaskPayload
 export type PortCommandTask<TPayloadType extends ControlSchemeBindingType = ControlSchemeBindingType> = {
     hubId: string;
     portId: number;
-    bindingId: string;
+    bindingId: number;
     payload: PortCommandTaskPayload & { bindingType: TPayloadType };
     hash: string;
     inputTimestamp: number;

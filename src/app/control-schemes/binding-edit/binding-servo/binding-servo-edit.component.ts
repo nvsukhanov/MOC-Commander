@@ -15,10 +15,9 @@ import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-compon
 import { CalibrationResult, CalibrationResultType, ServoCalibrationDialogComponent } from '../servo-calibration-dialog';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { BINDING_EDIT_SELECTORS } from '../binding-edit.selectors';
-import { ServoBindingForm } from '../types';
+import { ControlSchemeInputActionToL10nKeyPipe, ServoBindingForm } from '../../common';
 import { BindingInputGainSelectComponent } from '../control-axial-output-modifier-select';
 import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
-import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
 
 @Component({
     standalone: true,

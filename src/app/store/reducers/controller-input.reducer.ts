@@ -16,7 +16,7 @@ export const CONTROLLER_INPUT_ENTITY_ADAPTER: EntityAdapter<ControllerInputModel
 
 export function controllerInputIdFn(
     idArgs: { controllerId: string; inputId: string; inputType: ControllerInputType.Button | ControllerInputType.Axis | ControllerInputType.Trigger } |
-        { controllerId: string; inputId: string; inputType: ControllerInputType.ButtonGroup; portId: number | null; buttonId: number | null }
+        { controllerId: string; inputId: string; inputType: ControllerInputType.ButtonGroup; portId?: number; buttonId?: number }
 ): string {
     switch (idArgs.inputType) {
         case ControllerInputType.Button:

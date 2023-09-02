@@ -11,12 +11,10 @@ import { ControlSchemeInputAction } from '@app/store';
 
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { BindingControlNumInputComponent } from '../control-num-input';
-import { AngleShiftBindingForm } from '../types';
+import { AngleShiftBindingForm, CommonFormControlsBuilderService, ControlSchemeInputActionToL10nKeyPipe } from '../../common';
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { BindingControlOutputEndStateComponent } from '../control-output-end-state-select';
-import { CommonFormControlsBuilderService } from '../forms';
 import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
-import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
 import { BindingControlSelectLoopingModeComponent } from '../contorl-select-looping-mode';
 
 @Component({

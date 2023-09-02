@@ -54,7 +54,7 @@ export const PORT_TASKS_SELECTORS = {
     selectLastExecutedBindingIds: createSelector(
         SELECT_ALL,
         (items) => {
-            const result: Set<string> = new Set();
+            const result: Set<number> = new Set();
             for (const item of items) {
                 if (item.lastExecutedTask) {
                     result.add(item.lastExecutedTask.bindingId);

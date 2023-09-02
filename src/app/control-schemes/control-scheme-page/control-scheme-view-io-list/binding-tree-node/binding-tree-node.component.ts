@@ -13,10 +13,9 @@ import { BindingTypeToL10nKeyPipe, EllipsisTitleDirective } from '@app/shared';
 
 import { BindingTreeNodeViewModel } from './binding-tree-node-view-model';
 import { INPUT_TREE_NODE_VIEW_MODEL_SELECTOR } from './input-tree-node-view-model.selector';
-import { FullControllerInputNameComponent } from '../../../full-controller-input-name';
+import { ControlSchemeInputActionToL10nKeyPipe, FullControllerInputNameComponent } from '../../../common';
 import { BindingViewUrlPipe } from './binding-view-url.pipe';
 import { ControlSchemeViewBindingTreeNodeData } from '../../types';
-import { ControlSchemeInputActionToL10nKeyPipe } from '../../../control-scheme-input-action-to-l10n-key.pipe';
 
 @Component({
     standalone: true,

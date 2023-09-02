@@ -8,9 +8,8 @@ import { ControlSchemeInputAction } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
-import { InputFormGroup, SetSpeedBindingForm } from '../types';
+import { ControlSchemeInputActionToL10nKeyPipe, InputFormGroup, SetSpeedBindingForm } from '../../common';
 import { BindingInputGainSelectComponent } from '../control-axial-output-modifier-select';
-import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
 
 @Component({
     standalone: true,

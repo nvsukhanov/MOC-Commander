@@ -1,15 +1,14 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
-import { Store } from '@ngrx/store';
+import { TranslocoModule } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ValidationErrorMappingDirective, ValidationErrorsL10nMap } from '@app/shared';
 
-import { CONTROL_SCHEME_NAME_IS_NOT_UNIQUE, ControlSchemeValidators } from '../../validation';
+import { CONTROL_SCHEME_NAME_IS_NOT_UNIQUE, CommonFormControlsBuilderService } from '../../common';
 
 @Component({
     standalone: true,
@@ -38,22 +37,9 @@ export class ControlSchemeCreateDialogComponent {
 
     constructor(
         private readonly dialogRef: MatDialogRef<ControlSchemeCreateDialogComponent, { name: string }>,
-        private readonly formBuilder: FormBuilder,
-        private readonly translocoService: TranslocoService,
-        private readonly store: Store
+        private readonly commonFormControlBuilder: CommonFormControlsBuilderService,
     ) {
-        this.nameFormControl = this.formBuilder.control<string>(
-            this.translocoService.translate('controlScheme.newSchemeDialogDefaultName'),
-            {
-                nonNullable: true,
-                validators: [
-                    Validators.required,
-                ],
-                asyncValidators: [
-                    ControlSchemeValidators.nameUniqueness(this.store)
-                ]
-            }
-        );
+        this.nameFormControl = this.commonFormControlBuilder.controlSchemeNameControl();
     }
 
     public canSubmit(): boolean {

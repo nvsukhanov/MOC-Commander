@@ -31,6 +31,10 @@
       "jest",
       "node"
     ],
+    "typeRoots": [
+      "node_modules/@types",
+      "src/types"
+    ],
     "paths": {
       "@app/shared": [
         "src/app/shared"

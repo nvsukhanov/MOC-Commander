@@ -8,11 +8,9 @@ import { SliderControlComponent, ToggleControlComponent } from '@app/shared';
 import { ControlSchemeInputAction } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
-import { SpeedShiftBindingForm } from '../types';
+import { CommonFormControlsBuilderService, ControlSchemeInputActionToL10nKeyPipe, SpeedShiftBindingForm } from '../../common';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
-import { CommonFormControlsBuilderService } from '../forms';
 import { BindingControlNumInputComponent } from '../control-num-input';
-import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
 import { BindingControlSelectLoopingModeComponent } from '../contorl-select-looping-mode';
 
 @Component({

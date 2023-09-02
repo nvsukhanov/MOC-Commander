@@ -9,13 +9,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { CONTROL_SCHEME_ACTIONS, ControlSchemeModel } from '@app/store';
+import { filter, take } from 'rxjs';
+import { concatLatestFrom } from '@ngrx/effects';
+import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel } from '@app/store';
 import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared';
 
 import { RoutesBuilderService } from '../../routing';
 import { CONTROL_SCHEMES_LIST_PAGE_SELECTORS } from './control-schemes-list.selectors';
 import { ControlSchemeCreateDialogComponent } from './control-scheme-create-dialog';
 import { ControlSchemeViewUrlPipe } from './control-scheme-view-url.pipe';
+import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData, ImportControlSchemeDialogComponent } from '../common';
 
 @Component({
     standalone: true,
@@ -58,6 +61,29 @@ export class ControlSchemeListPageComponent {
 
     public trackSchemeById(index: number, scheme: ControlSchemeModel): string {
         return scheme.name;
+    }
+
+    public onImport(): void {
+        this.dialog.open<ImportControlSchemeDialogComponent, undefined, ControlSchemeModel | void>(ImportControlSchemeDialogComponent)
+            .afterClosed()
+            .pipe(
+                take(1),
+                filter((r): r is ControlSchemeModel => !!r),
+                concatLatestFrom((scheme: ControlSchemeModel) => this.store.select(CONTROL_SCHEME_SELECTORS.selectNextSchemeName(scheme.name)))
+            ).subscribe(([ importedScheme, newName ]) => {
+            const scheme = { ...importedScheme, name: newName };
+            this.store.dispatch(CONTROL_SCHEME_ACTIONS.importControlScheme({ scheme }));
+            this.router.navigate(this.routesBuilderService.controlSchemeView(newName));
+        });
+    }
+
+    public onExport(
+        name: string
+    ): void {
+        this.dialog.open<ExportControlSchemeDialogComponent, ExportControlSchemeDialogData>(
+            ExportControlSchemeDialogComponent,
+            { data: { name } }
+        );
     }
 
     public onCreate(): void {
