@@ -1,13 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { NgForOf, NgIf } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
+import { NgIf } from '@angular/common';
 import { MatTreeModule, MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { LetDirective } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
-import { RouterLink } from '@angular/router';
 
 import { IoTreeNodeComponent } from './io-tree-node';
 import { HubTreeNodeComponent } from './hub-tree-node';
@@ -20,18 +17,14 @@ import { ControlSchemeNodeTypes, ControlSchemeViewTreeNode } from '../types';
     templateUrl: './control-scheme-view-io-list.component.html',
     styleUrls: [ './control-scheme-view-io-list.component.scss' ],
     imports: [
-        NgForOf,
         NgIf,
-        MatCardModule,
         MatTreeModule,
         MatButtonModule,
         MatIconModule,
-        LetDirective,
         BindingTreeNodeComponent,
         IoTreeNodeComponent,
         HubTreeNodeComponent,
-        TranslocoModule,
-        RouterLink,
+        TranslocoModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

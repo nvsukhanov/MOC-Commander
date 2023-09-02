@@ -3,7 +3,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { TranslocoModule } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
 import { MatCardModule } from '@angular/material/card';
-import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { EMPTY, Observable } from 'rxjs';
 import { ControllerModel, ControllerProfileFactoryService, ControllerSettingsModel } from '@app/store';
@@ -24,7 +24,6 @@ import { ControllerSettingsContainerComponent } from '../controller-settings-con
         MatCardModule,
         NgIf,
         MatIconModule,
-        NgTemplateOutlet,
         ControllerSettingsContainerComponent,
         ControllerTypeIconNamePipe
     ],

@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
-import { NgIf } from '@angular/common';
+import { TranslocoService } from '@ngneat/transloco';
 import { Observable, of } from 'rxjs';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -20,8 +19,6 @@ export type ConfirmDialogData = {
     styleUrls: [ './confirmation-dialog.component.scss' ],
     imports: [
         MatButtonModule,
-        TranslocoModule,
-        NgIf,
         PushPipe,
         LetDirective,
         MatDialogModule

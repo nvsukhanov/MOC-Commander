@@ -3,8 +3,6 @@ import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angu
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Observable, map } from 'rxjs';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgIf } from '@angular/common';
 import { ControllerType, ToFormGroup } from '@app/shared';
 import { KeyboardSettingsModel } from '@app/store';
@@ -21,8 +19,6 @@ import { ControlIgnoreInputComponent } from '../control-ignore-input';
         ReactiveFormsModule,
         MatSlideToggleModule,
         TranslocoModule,
-        MatIconModule,
-        MatTooltipModule,
         NgIf,
         ControlIgnoreInputComponent
     ],

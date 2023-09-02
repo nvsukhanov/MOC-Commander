@@ -1,15 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { JsonPipe, NgForOf, NgIf } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
+import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NEVER, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
-import { MatListModule } from '@angular/material/list';
-import { BindingTypeToL10nKeyPipe, EllipsisTitleDirective } from '@app/shared';
+import { BindingTypeToL10nKeyPipe } from '@app/shared';
 
 import { BindingTreeNodeViewModel } from './binding-tree-node-view-model';
 import { INPUT_TREE_NODE_VIEW_MODEL_SELECTOR } from './input-tree-node-view-model.selector';
@@ -24,19 +21,14 @@ import { ControlSchemeViewBindingTreeNodeData } from '../../types';
     styleUrls: [ './binding-tree-node.component.scss' ],
     imports: [
         NgIf,
-        MatIconModule,
         BindingTypeToL10nKeyPipe,
         TranslocoModule,
-        EllipsisTitleDirective,
         PushPipe,
         MatFormFieldModule,
-        JsonPipe,
         NgForOf,
         FullControllerInputNameComponent,
-        MatButtonModule,
         RouterLink,
         BindingViewUrlPipe,
-        MatListModule,
         ControlSchemeInputActionToL10nKeyPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
