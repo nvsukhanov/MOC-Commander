@@ -7,13 +7,13 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { HUBS_ACTIONS, HUBS_SELECTORS, HUB_EDIT_FORM_ACTIVE_SAVES_SELECTORS, ROUTER_SELECTORS } from '@app/store';
 import { NotFoundComponent } from '@app/shared';
 
-import { HubEditFormComponent, HubEditFormSaveResult } from '../hub-edit-form';
+import { HubEditFormComponent, HubEditFormSaveResult } from './hub-edit-form';
 
 @Component({
     standalone: true,
-    selector: 'app-hub-edit',
-    templateUrl: './hub-edit.component.html',
-    styleUrls: [ './hub-edit.component.scss' ],
+    selector: 'app-hub-edit-page',
+    templateUrl: './hub-edit-page.component.html',
+    styleUrls: [ './hub-edit-page.component.scss' ],
     imports: [
         HubEditFormComponent,
         PushPipe,
@@ -24,7 +24,7 @@ import { HubEditFormComponent, HubEditFormSaveResult } from '../hub-edit-form';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HubEditComponent {
+export class HubEditPageComponent {
     public readonly editedHubConfiguration$ = this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedHubId).pipe(
         switchMap((id) => id !== null ? this.store.select(HUBS_SELECTORS.selectHub(id)) : of(null))
     );

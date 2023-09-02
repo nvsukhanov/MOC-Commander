@@ -14,9 +14,9 @@ import { LanguageToL10nKeyPipe } from './language-to-l10n-key.pipe';
 
 @Component({
     standalone: true,
-    selector: 'app-settings',
-    templateUrl: './settings.component.html',
-    styleUrls: [ './settings.component.scss' ],
+    selector: 'app-settings-page',
+    templateUrl: './settings-page.component.html',
+    styleUrls: [ './settings-page.component.scss' ],
     imports: [
         MatCardModule,
         NgForOf,
@@ -29,7 +29,7 @@ import { LanguageToL10nKeyPipe } from './language-to-l10n-key.pipe';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SettingsComponent {
+export class SettingsPageComponent {
     public readonly themes: ReadonlyArray<UserSelectedTheme> = [
         UserSelectedTheme.System,
         UserSelectedTheme.Light,

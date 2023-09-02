@@ -4,15 +4,15 @@ import { HintComponent } from '@app/shared';
 
 @Component({
     standalone: true,
-    selector: 'app-bluetooth-unavailable',
-    templateUrl: './bluetooth-unavailable.component.html',
-    styleUrls: [ './bluetooth-unavailable.component.scss' ],
+    selector: 'app-bluetooth-unavailable-page',
+    templateUrl: './bluetooth-unavailable-page.component.html',
+    styleUrls: [ './bluetooth-unavailable-page.component.scss' ],
     imports: [
         TranslocoModule,
         HintComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BluetoothUnavailableComponent {
+export class BluetoothUnavailablePageComponent {
     public readonly canIUseBluetoothLink = 'https://caniuse.com/web-bluetooth';
 }

@@ -9,7 +9,7 @@ import { EMPTY, Observable } from 'rxjs';
 import { ControllerModel, ControllerProfileFactoryService, ControllerSettingsModel } from '@app/store';
 import { ControllerType, ControllerTypeIconNamePipe } from '@app/shared';
 
-import { ControllerSettings, IControllerProfile } from '../../../controller-profiles';
+import { ControllerSettings, IControllerProfile } from '../../controller-profiles';
 import { ControllerSettingsContainerComponent } from '../controller-settings-container';
 
 @Component({
