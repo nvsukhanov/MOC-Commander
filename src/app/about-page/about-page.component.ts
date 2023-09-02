@@ -5,15 +5,15 @@ import packageJson from '../../../package.json';
 
 @Component({
     standalone: true,
-    selector: 'app-about',
-    templateUrl: './about.component.html',
-    styleUrls: [ './about.component.scss' ],
+    selector: 'app-about-page',
+    templateUrl: './about-page.component.html',
+    styleUrls: [ './about-page.component.scss' ],
     imports: [
         TranslocoModule,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AboutComponent {
+export class AboutPageComponent {
     public readonly ngPoweredUpURL = 'https://github.com/nvsukhanov/ngPoweredUP';
 
     public readonly rxPoweredUpURL = 'https://github.com/nvsukhanov/rxPoweredUP';

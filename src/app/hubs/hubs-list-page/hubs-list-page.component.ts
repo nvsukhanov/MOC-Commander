@@ -14,9 +14,9 @@ import { HUBS_LIST_SELECTORS, HubListViewModel } from './hubs-list.selectors';
 
 @Component({
     standalone: true,
-    selector: 'app-hubs-list',
-    templateUrl: './hubs-list.component.html',
-    styleUrls: [ './hubs-list.component.scss' ],
+    selector: 'app-hubs-list-page',
+    templateUrl: './hubs-list-page.component.html',
+    styleUrls: [ './hubs-list-page.component.scss' ],
     imports: [
         TranslocoModule,
         LetDirective,
@@ -33,7 +33,7 @@ import { HUBS_LIST_SELECTORS, HubListViewModel } from './hubs-list.selectors';
     providers: [],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HubsListComponent {
+export class HubsListPageComponent {
     public readonly hubsList$: Observable<HubListViewModel> = this.store.select(HUBS_LIST_SELECTORS.selectHubListViewModel);
 
     constructor(

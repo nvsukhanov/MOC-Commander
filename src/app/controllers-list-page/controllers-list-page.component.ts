@@ -1,12 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatButtonModule } from '@angular/material/button';
-import { NgForOf, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
-import { TranslocoModule } from '@ngneat/transloco';
+import { NgForOf, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { MatIconModule } from '@angular/material/icon';
-import { LetDirective, PushPipe } from '@ngrx/component';
-import { MatListModule } from '@angular/material/list';
+import { LetDirective } from '@ngrx/component';
+import { TranslocoModule } from '@ngneat/transloco';
 import { CONTROLLER_SETTINGS_ACTIONS, ControllerModel, ControllerSettingsModel } from '@app/store';
 import { HintComponent } from '@app/shared';
 
@@ -15,27 +11,20 @@ import { CONTROLLERS_LIST_SELECTORS } from './controllers-list.selectors';
 
 @Component({
     standalone: true,
-    selector: 'app-controllers-list',
-    templateUrl: './controllers-list.component.html',
-    styleUrls: [ './controllers-list.component.scss' ],
+    selector: 'app-controllers-list-page',
+    templateUrl: './controllers-list-page.component.html',
+    styleUrls: [ './controllers-list-page.component.scss' ],
     imports: [
-        MatExpansionModule,
-        MatButtonModule,
-        NgForOf,
-        TranslocoModule,
-        MatIconModule,
-        NgSwitch,
-        PushPipe,
-        NgSwitchCase,
-        NgIf,
         LetDirective,
+        NgIf,
+        NgForOf,
         ControllersListItemComponent,
-        MatListModule,
         HintComponent,
+        TranslocoModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ControllersListComponent {
+export class ControllersListPageComponent {
     public readonly controllersWithSettings$ = this.store.select(CONTROLLERS_LIST_SELECTORS.viewModel);
 
     constructor(

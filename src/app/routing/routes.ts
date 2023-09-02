@@ -23,22 +23,22 @@ export const ROUTES: Routes = [
     },
     {
         path: ROUTE_PATHS.about,
-        loadComponent: () => import('../about').then(m => m.AboutComponent),
+        loadComponent: () => import('../about-page').then(m => m.AboutPageComponent),
         pathMatch: 'full',
     },
     {
         path: ROUTE_PATHS.bluetoothUnavailable,
-        loadComponent: () => import('../bluetooth-unavailable').then(m => m.BluetoothUnavailableComponent),
+        loadComponent: () => import('../bluetooth-unavailable-page').then(m => m.BluetoothUnavailablePageComponent),
         pathMatch: 'full',
     },
     {
         path: ROUTE_PATHS.controllers,
-        loadComponent: () => import('../controllers/controllers-list').then(m => m.ControllersListComponent),
+        loadComponent: () => import('../controllers-list-page').then(m => m.ControllersListPageComponent),
         pathMatch: 'full'
     },
     {
         path: ROUTE_PATHS.settings,
-        loadComponent: () => import('../settings').then((m) => m.SettingsComponent),
+        loadComponent: () => import('../settings-page').then((m) => m.SettingsPageComponent),
         pathMatch: 'full'
     },
     {
@@ -46,17 +46,17 @@ export const ROUTES: Routes = [
         children: [
             {
                 path: '',
-                loadComponent: () => import('../hubs/hubs-list').then(m => m.HubsListComponent),
+                loadComponent: () => import('../hubs/hubs-list-page').then(m => m.HubsListPageComponent),
                 pathMatch: 'full',
             },
             {
                 path: [ ':id' ].join('/'),
-                loadComponent: () => import('../hubs/hub-view').then(m => m.HubViewComponent),
+                loadComponent: () => import('../hubs/hub-view-page').then(m => m.HubViewPageComponent),
                 pathMatch: 'full'
             },
             {
                 path: [ ':id', ROUTE_PATHS.hubEdit ].join('/'),
-                loadComponent: () => import('../hubs/hub-edit').then(m => m.HubEditComponent),
+                loadComponent: () => import('../hubs/hub-edit-page').then(m => m.HubEditPageComponent),
                 pathMatch: 'full',
             },
         ]

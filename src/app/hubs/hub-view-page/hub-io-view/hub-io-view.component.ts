@@ -8,7 +8,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { AttachedIoPortModeInfoModel } from '@app/store';
 import { IoTypeToL10nKeyPipe, PortIdToPortNamePipe } from '@app/shared';
 
-import { HubIoViewModel } from '../hub-view.selectors';
+import { HubIoViewModel } from '../hub-view-page.selectors';
 
 @Component({
     standalone: true,

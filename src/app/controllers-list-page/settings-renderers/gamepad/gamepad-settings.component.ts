@@ -20,7 +20,7 @@ import {
 import { ControllerInputType, ControllerType, RangeControlComponent, SliderControlComponent, ToFormGroup, ToggleControlComponent } from '@app/shared';
 
 import { IControllerSettingsRenderer } from '../i-controller-settings-renderer';
-import { GamepadAxisSettings, GamepadSettings, IControllerProfile } from '../../../../controller-profiles';
+import { GamepadAxisSettings, GamepadSettings, IControllerProfile } from '../../../controller-profiles';
 import { InputOutputDiagramComponent } from './input-output-diagram';
 import { ActiveZoneHumanReadableValuePipe } from './active-zone-human-readable-value.pipe';
 import { ControlIgnoreInputComponent } from '../control-ignore-input';

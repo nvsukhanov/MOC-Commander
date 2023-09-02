@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
@@ -13,16 +12,16 @@ import { MatCardModule } from '@angular/material/card';
 import { HUBS_ACTIONS, HUBS_SELECTORS, HUB_STATS_SELECTORS, HubModel, HubStatsModel, ROUTER_SELECTORS, attachedIosIdFn, } from '@app/store';
 import { NotFoundComponent } from '@app/shared';
 
-import { HubPropertiesViewComponent } from '../hub-properties-view';
-import { HubIoViewComponent } from '../hub-io-view';
-import { RoutesBuilderService } from '../../../routing';
-import { HUB_VIEW_SELECTORS, HubIoViewModel } from '../hub-view.selectors';
+import { HubPropertiesViewComponent } from './hub-properties-view';
+import { HubIoViewComponent } from './hub-io-view';
+import { RoutesBuilderService } from '../../routing';
+import { HUB_VIEW_PAGE_SELECTORS, HubIoViewModel } from './hub-view-page.selectors';
 
 @Component({
     standalone: true,
-    selector: 'app-hub-view',
-    templateUrl: './hub-view.component.html',
-    styleUrls: [ './hub-view.component.scss' ],
+    selector: 'app-hub-view-page',
+    templateUrl: './hub-view-page.component.html',
+    styleUrls: [ './hub-view-page.component.scss' ],
     imports: [
         PushPipe,
         LetDirective,
@@ -39,7 +38,7 @@ import { HUB_VIEW_SELECTORS, HubIoViewModel } from '../hub-view.selectors';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HubViewComponent {
+export class HubViewPageComponent {
     public readonly selectedHub$: Observable<HubModel | undefined> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
         switchMap((id) => id === undefined ? EMPTY : this.store.select(HUBS_SELECTORS.selectHub(id)))
     );
@@ -49,7 +48,7 @@ export class HubViewComponent {
     );
 
     public readonly ioFullInfoList$: Observable<HubIoViewModel[]> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
-        switchMap((id) => id === undefined ? EMPTY : this.store.select(HUB_VIEW_SELECTORS.selectFullIosInfoForHub(id)))
+        switchMap((id) => id === undefined ? EMPTY : this.store.select(HUB_VIEW_PAGE_SELECTORS.selectFullIosInfoForHub(id)))
     );
 
     constructor(

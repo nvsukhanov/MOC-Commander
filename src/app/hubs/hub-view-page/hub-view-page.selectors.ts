@@ -45,7 +45,7 @@ export type HubIoViewModel = {
     synchronizable: boolean;
 } & AttachedIoModel;
 
-export const HUB_VIEW_SELECTORS = {
+export const HUB_VIEW_PAGE_SELECTORS = {
     selectFullIosInfoForHub: (hubId: string) => createSelector(
         ATTACHED_IO_SELECTORS.selectHubIos(hubId),
         ATTACHED_IO_MODES_SELECTORS.selectEntities,
