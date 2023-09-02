@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
 import { NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
@@ -18,11 +17,10 @@ import { RoutesBuilderService } from '../../../routing';
     imports: [
         MatButtonModule,
         MatCardModule,
-        MatDividerModule,
         NgIf,
         TranslocoModule,
         RouterLink,
-        EllipsisTitleDirective,
+        EllipsisTitleDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

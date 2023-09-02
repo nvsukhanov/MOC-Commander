@@ -1,6 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { MatSliderModule } from '@angular/material/slider';
-import { FormsModule } from '@angular/forms';
 import { TranslocoModule } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
 
@@ -10,8 +8,6 @@ import { NgIf } from '@angular/common';
     templateUrl: './input-output-diagram.component.html',
     styleUrls: [ './input-output-diagram.component.scss' ],
     imports: [
-        MatSliderModule,
-        FormsModule,
         TranslocoModule,
         NgIf
     ],

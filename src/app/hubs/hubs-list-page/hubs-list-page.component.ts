@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
-import { LetDirective, PushPipe } from '@ngrx/component';
+import { LetDirective } from '@ngrx/component';
 import { NgForOf, NgIf } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { Observable } from 'rxjs';
 import { HUBS_ACTIONS } from '@app/store';
@@ -20,12 +18,9 @@ import { HUBS_LIST_SELECTORS, HubListViewModel } from './hubs-list.selectors';
     imports: [
         TranslocoModule,
         LetDirective,
-        PushPipe,
         NgIf,
         HubInlineViewComponent,
         NgForOf,
-        MatButtonModule,
-        MatIconModule,
         MatCardModule,
         ConfirmationDialogModule,
         HintComponent

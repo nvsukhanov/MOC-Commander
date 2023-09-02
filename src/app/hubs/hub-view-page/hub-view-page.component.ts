@@ -3,14 +3,9 @@ import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { EMPTY, Observable, switchMap, take } from 'rxjs';
 import { NgForOf, NgIf } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Router } from '@angular/router';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatCardModule } from '@angular/material/card';
 import { HUBS_ACTIONS, HUBS_SELECTORS, HUB_STATS_SELECTORS, HubModel, HubStatsModel, ROUTER_SELECTORS, attachedIosIdFn, } from '@app/store';
-import { NotFoundComponent } from '@app/shared';
 
 import { HubPropertiesViewComponent } from './hub-properties-view';
 import { HubIoViewComponent } from './hub-io-view';
@@ -25,16 +20,11 @@ import { HUB_VIEW_PAGE_SELECTORS, HubIoViewModel } from './hub-view-page.selecto
     imports: [
         PushPipe,
         LetDirective,
-        MatButtonModule,
         NgIf,
         NgForOf,
-        MatDividerModule,
         TranslocoModule,
         HubPropertiesViewComponent,
-        HubIoViewComponent,
-        NotFoundComponent,
-        MatDialogModule,
-        MatCardModule
+        HubIoViewComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

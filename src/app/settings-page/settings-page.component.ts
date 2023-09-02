@@ -4,7 +4,6 @@ import { NgForOf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { PushPipe } from '@ngrx/component';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { SETTINGS_ACTIONS, SETTINGS_SELECTORS, UserSelectedTheme } from '@app/store';
 
@@ -23,9 +22,8 @@ import { LanguageToL10nKeyPipe } from './language-to-l10n-key.pipe';
         ThemeToL10nKeyPipe,
         TranslocoModule,
         PushPipe,
-        MatButtonToggleModule,
         MatSelectModule,
-        LanguageToL10nKeyPipe,
+        LanguageToL10nKeyPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

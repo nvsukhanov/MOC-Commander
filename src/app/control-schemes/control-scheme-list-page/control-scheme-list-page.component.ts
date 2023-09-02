@@ -5,9 +5,7 @@ import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterLink } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { MatListModule } from '@angular/material/list';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { filter, take } from 'rxjs';
 import { concatLatestFrom } from '@ngrx/effects';
@@ -32,10 +30,8 @@ import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData, Impo
         PushPipe,
         TranslocoModule,
         MatButtonModule,
-        MatIconModule,
         RouterLink,
         MatCardModule,
-        MatListModule,
         MatDialogModule,
         ControlSchemeViewUrlPipe,
         HintComponent,

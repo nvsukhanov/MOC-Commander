@@ -1,11 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { JsonPipe, NgForOf, NgIf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject, Subscription, filter, map, switchMap, throttleTime } from 'rxjs';
-import { LetDirective, PushPipe } from '@ngrx/component';
-import { MatInputModule } from '@angular/material/input';
-import { MatSliderModule } from '@angular/material/slider';
+import { PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatDividerModule } from '@angular/material/divider';
 import {
@@ -17,7 +15,7 @@ import {
     GamepadSettingsModel,
     controllerInputIdFn
 } from '@app/store';
-import { ControllerInputType, ControllerType, RangeControlComponent, SliderControlComponent, ToFormGroup, ToggleControlComponent } from '@app/shared';
+import { ControllerInputType, ControllerType, RangeControlComponent, ToFormGroup, ToggleControlComponent } from '@app/shared';
 
 import { IControllerSettingsRenderer } from '../i-controller-settings-renderer';
 import { GamepadAxisSettings, GamepadSettings, IControllerProfile } from '../../../controller-profiles';
@@ -54,21 +52,15 @@ type GamepadSettingsForm = FormGroup<{
     styleUrls: [ './gamepad-settings.component.scss' ],
     imports: [
         NgIf,
-        JsonPipe,
-        LetDirective,
+        ControlIgnoreInputComponent,
         NgForOf,
         PushPipe,
-        MatInputModule,
-        MatSliderModule,
-        ReactiveFormsModule,
-        SliderControlComponent,
         InputOutputDiagramComponent,
         ToggleControlComponent,
         RangeControlComponent,
         TranslocoModule,
         ActiveZoneHumanReadableValuePipe,
-        MatDividerModule,
-        ControlIgnoreInputComponent
+        MatDividerModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

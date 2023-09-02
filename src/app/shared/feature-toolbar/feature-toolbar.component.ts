@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, TemplateRef } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { TranslocoModule } from '@ngneat/transloco';
 import { Observable } from 'rxjs';
-import { NgIf, NgTemplateOutlet } from '@angular/common';
-import { LetDirective, PushPipe } from '@ngrx/component';
+import { NgTemplateOutlet } from '@angular/common';
+import { LetDirective } from '@ngrx/component';
 
 import { FeatureToolbarService } from './feature-toolbar-service';
 
@@ -14,11 +13,8 @@ import { FeatureToolbarService } from './feature-toolbar-service';
     styleUrls: [ './feature-toolbar.component.scss' ],
     imports: [
         MatToolbarModule,
-        TranslocoModule,
-        NgIf,
-        NgTemplateOutlet,
         LetDirective,
-        PushPipe
+        NgTemplateOutlet
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
