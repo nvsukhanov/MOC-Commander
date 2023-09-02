@@ -1,0 +1,41 @@
+import { Injectable } from '@angular/core';
+import { ControlSchemeInputAction, ControlSchemeSetSpeedBinding } from '@app/store';
+import { ControlSchemeBindingType } from '@app/shared';
+
+import { InputFormGroup, SetSpeedBindingForm } from '../types';
+import { CommonFormMapperService } from './common-form-mapper.service';
+
+@Injectable({ providedIn: 'root' })
+export class SetSpeedBindingFormMapperService {
+    constructor(
+        private readonly commonFormMapperService: CommonFormMapperService
+    ) {
+    }
+
+    public mapToModel(
+        form: SetSpeedBindingForm
+    ): ControlSchemeSetSpeedBinding {
+        const result: ControlSchemeSetSpeedBinding = {
+            operationMode: ControlSchemeBindingType.SetSpeed,
+            id: form.controls.id.getRawValue(),
+            inputs: {
+                [ControlSchemeInputAction.Accelerate]: this.commonFormMapperService.mapInputFormToSchemeInput(
+                    form.controls.inputs.controls[ControlSchemeInputAction.Accelerate]
+                )
+            },
+            hubId: form.controls.hubId.getRawValue(),
+            portId: form.controls.portId.getRawValue(),
+            maxSpeed: form.controls.maxSpeed.getRawValue(),
+            isToggle: form.controls.isToggle.getRawValue(),
+            invert: form.controls.invert.getRawValue(),
+            power: form.controls.power.getRawValue(),
+            useAccelerationProfile: form.controls.useAccelerationProfile.getRawValue(),
+            useDecelerationProfile: form.controls.useDecelerationProfile.getRawValue(),
+        };
+        if (form.controls.inputs.controls[ControlSchemeInputAction.Brake].valid) {
+            result.inputs[ControlSchemeInputAction.Brake] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ControlSchemeInputAction.Brake] as InputFormGroup);
+        }
+        return result;
+    }
+}

@@ -9,8 +9,7 @@ import { Validators } from '@angular/forms';
 import { ControlSchemeInput, ControllerInputModel } from '@app/store';
 
 import { WaitForControllerInputDialogComponent } from '../wait-for-controller-input-dialog';
-import { FullControllerInputNameComponent } from '../../full-controller-input-name';
-import { InputFormGroup, OptionalInputFormGroup } from '../types';
+import { FullControllerInputNameComponent, InputFormGroup, OptionalInputFormGroup } from '../../common';
 
 @Component({
     standalone: true,

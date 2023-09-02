@@ -47,14 +47,14 @@ export class RoutesBuilderService {
 
     public bindingView(
         schemeName: string,
-        bindingId: string
+        bindingId: number
     ): string[] {
         return [
             this.baseHref,
             ROUTE_PATHS.controlSchemes,
             encodeURI(schemeName),
             ROUTE_PATHS.binding,
-            bindingId
+            bindingId.toString()
         ];
     }
 

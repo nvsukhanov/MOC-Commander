@@ -6,7 +6,7 @@
             {{ 'controlScheme.portConfigTitle' | transloco }}
         </mat-card-title>
         <mat-card-subtitle>
-            {{ 'controlScheme.portConfigSubtitle' | transloco: portConfig }}
+            {{ 'controlScheme.portConfigSubtitle' | transloco: { hubName: portConfig.hubName, portId: portConfig.portId | portIdToPortName } }}
         </mat-card-subtitle>
     </mat-card-header>
     <form (submit)="onSubmit($event)">

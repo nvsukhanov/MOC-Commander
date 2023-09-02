@@ -8,7 +8,7 @@ import { IoInlineViewComponent } from '@app/shared';
 
 import { ControlSchemeViewIoTreeNode } from '../../types';
 import { RoutesBuilderService } from '../../../../routing';
-import { PortCommandTaskSummaryPipe } from '../../../port-command-task-summary';
+import { PortCommandTaskSummaryPipe } from '../../port-command-task-summary';
 
 @Component({
     standalone: true,

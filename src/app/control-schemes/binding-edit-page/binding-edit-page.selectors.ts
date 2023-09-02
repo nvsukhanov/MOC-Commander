@@ -7,7 +7,7 @@ export const BINDING_EDIT_PAGE_SELECTORS = {
         ROUTER_SELECTORS.selectCurrentlyEditedSchemeName,
         ROUTER_SELECTORS.selectCurrentlyEditedBindingId,
         CONTROL_SCHEME_SELECTORS.selectEntities,
-        (schemeName: string | null, bindingId: string | null, controlSchemeEntities: Dictionary<ControlSchemeModel>) => {
+        (schemeName: string | null, bindingId: number | null, controlSchemeEntities: Dictionary<ControlSchemeModel>) => {
             if (schemeName === null || bindingId === null) {
                 return undefined;
             }

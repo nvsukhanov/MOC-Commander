@@ -6,7 +6,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { Observable, map, of, startWith } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 
-import { HubWithConnectionState } from '../types';
+import { HubWithConnectionState } from '../binding-edit.selectors';
 
 @Component({
     standalone: true,

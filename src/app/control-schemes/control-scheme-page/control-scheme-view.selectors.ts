@@ -28,9 +28,8 @@ import {
     hubPortTasksIdFn
 } from '@app/store';
 
-import { ioHasMatchingModeForOpMode } from '../io-has-matching-mode-for-op-mode';
+import { areControllableIosPresent, ioHasMatchingModeForOpMode } from '../common';
 import { ControlSchemeNodeTypes, ControlSchemeViewBindingTreeNodeData, ControlSchemeViewHubTreeNode, ControlSchemeViewIoTreeNode } from './types';
-import { areControllableIosPresent } from '../are-controllable-ios-present';
 
 function createHubTreeNode(
     hubConfig: { hubId: string; name?: string; hubType?: HubType },
@@ -101,7 +100,7 @@ function createBindingTreeNode(
     binding: ControlSchemeBinding,
     schemeName: string,
     portOutputModeNames: PortModeName[],
-    lastExecutedTasksBindingIds: ReadonlySet<string>,
+    lastExecutedTasksBindingIds: ReadonlySet<number>,
     io?: AttachedIoModel,
 ): ControlSchemeViewBindingTreeNodeData {
     const ioHasNoRequiredCapabilities = io ?
@@ -135,7 +134,7 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
             iosEntities: Dictionary<AttachedIoModel>,
             ioSupportedModesEntities: Dictionary<AttachedIoModesModel>,
             portModeInfoEntities: Dictionary<AttachedIoPortModeInfoModel>,
-            lastExecutedTasksBindingIds: ReadonlySet<string>,
+            lastExecutedTasksBindingIds: ReadonlySet<number>,
             portCommandTasksEntities: Dictionary<PortTasksModel>,
         ): ControlSchemeViewHubTreeNode[] => {
             if (!scheme) {

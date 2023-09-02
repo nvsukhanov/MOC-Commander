@@ -7,3 +7,4 @@ export * from './hub-port-mode-info-effects';
 export * from './hubs.effects';
 export * from './notifications.effects';
 export * from './settings.effects';
+export * from './control-scheme.effects';

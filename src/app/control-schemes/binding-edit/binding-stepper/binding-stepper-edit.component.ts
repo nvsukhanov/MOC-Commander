@@ -9,8 +9,7 @@ import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-compon
 import { BindingControlNumInputComponent } from '../control-num-input';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { BindingControlOutputEndStateComponent } from '../control-output-end-state-select';
-import { StepperBindingForm } from '../types';
-import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
+import { ControlSchemeInputActionToL10nKeyPipe, StepperBindingForm } from '../../common';
 
 @Component({
     standalone: true,

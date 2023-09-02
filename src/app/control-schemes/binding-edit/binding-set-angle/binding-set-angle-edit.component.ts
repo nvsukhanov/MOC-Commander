@@ -14,9 +14,8 @@ import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-compon
 import { BindingControlNumInputComponent } from '../control-num-input';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { BindingControlOutputEndStateComponent } from '../control-output-end-state-select';
-import { SetAngleBindingForm } from '../types';
+import { ControlSchemeInputActionToL10nKeyPipe, SetAngleBindingForm } from '../../common';
 import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
-import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
 
 @Component({
     standalone: true,

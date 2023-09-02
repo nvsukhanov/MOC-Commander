@@ -15,7 +15,7 @@ export class BindingViewUrlPipe implements PipeTransform {
 
     public transform(
         schemeName: string,
-        bindingId: string
+        bindingId: number
     ): string[] {
         return this.routesBuilder.bindingView(schemeName, bindingId);
     }

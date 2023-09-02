@@ -52,6 +52,13 @@
             </ng-template>
             <button mat-raised-button
                     class="toolbar-button"
+                    (click)="onExport(scheme.name)"
+                    [title]="'controlScheme.export' | transloco"
+            >
+                {{ 'controlScheme.export' | transloco }}
+            </button>
+            <button mat-raised-button
+                    class="toolbar-button"
                     [color]="'warn'"
                     (click)="onDelete()">
                 {{ 'controlScheme.delete' | transloco }}

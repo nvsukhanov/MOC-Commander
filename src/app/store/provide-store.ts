@@ -29,6 +29,7 @@ import {
     AttachedIOsEffects,
     AttachedIoModesEffects,
     CONTROLLER_EFFECTS,
+    CONTROL_SCHEME_EFFECTS,
     ControllerProfileFactoryService,
     HubAttachedIosStateEffects,
     HubPortModeInfoEffects,
@@ -43,8 +44,6 @@ import { HubStorageService } from './hub-storage.service';
 import { RoutesBuilderService } from '../routing';
 import { CONTROLLER_INPUT_ACTIONS, HUB_STATS_ACTIONS } from './actions';
 import { HubFacadeService } from './hub-facade.service';
-
-const STORAGE_VERSION = '19';
 
 const REDUCERS: ActionReducerMap<IState> = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,
@@ -90,6 +89,8 @@ function localStorageSyncReducer(
 
 const metaReducers: Array<MetaReducer<IState>> = [ localStorageSyncReducer ];
 
+export const STORAGE_VERSION = '20';
+
 export function provideApplicationStore(): EnvironmentProviders {
     return makeEnvironmentProviders([
         provideStore<IState>(REDUCERS, { metaReducers }),
@@ -102,7 +103,8 @@ export function provideApplicationStore(): EnvironmentProviders {
             NotificationsEffects,
             HubAttachedIosStateEffects,
             CONTROLLER_EFFECTS,
-            SETTINGS_EFFECTS
+            SETTINGS_EFFECTS,
+            CONTROL_SCHEME_EFFECTS
         ),
         provideStoreDevtools({
             maxAge: 100,

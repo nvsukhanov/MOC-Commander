@@ -9,7 +9,7 @@ export type BindingTreeNodeRecord = {
 
 export type BindingTreeNodeViewModel = {
     schemeName: string;
-    bindingId: string;
+    bindingId: number;
     isActive: boolean;
     ioHasNoRequiredCapabilities: boolean;
     operationMode: ControlSchemeBindingType;

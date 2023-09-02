@@ -8,13 +8,13 @@ import { concatLatestFrom } from '@ngrx/effects';
 import { ControlSchemeBindingType } from '@app/shared';
 import { AttachedIoModel, ControlSchemeBinding } from '@app/store';
 
-import { ControlSchemeFormBuilderService, ControlSchemeFormMapperService } from './forms';
+import { ControlSchemeFormBuilderService, ControlSchemeFormMapperService } from '../common/forms';
 import { RenderBindingDetailsEditDirective } from './render-binding-details-edit.directive';
 import { BindingControlSelectOperationModeComponent } from './control-select-operation-mode';
 import { BindingControlSelectHubComponent } from './control-select-hub';
 import { BindingControlSelectIoComponent } from './control-select-io';
-import { ControlSchemeBindingForm, HubWithConnectionState } from './types';
-import { BINDING_EDIT_SELECTORS } from './binding-edit.selectors';
+import { ControlSchemeBindingForm } from '../common';
+import { BINDING_EDIT_SELECTORS, HubWithConnectionState } from './binding-edit.selectors';
 
 @Component({
     standalone: true,

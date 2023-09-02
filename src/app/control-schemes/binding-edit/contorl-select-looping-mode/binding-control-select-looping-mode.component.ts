@@ -29,5 +29,6 @@ import { LoopingModeToL10nKeyPipe } from './looping-mode-to-l10n-key.pipe';
 export class BindingControlSelectLoopingModeComponent {
     @Input() public control?: FormControl<LoopingMode>;
 
-    public readonly availableLoopingModes: ReadonlyArray<LoopingMode> = Object.values(LoopingMode);
+    // There should be a better way to iterate over enum values
+    public readonly availableLoopingModes: ReadonlyArray<LoopingMode> = Object.values(LoopingMode).filter((p) => !isNaN(Number(p))) as LoopingMode[];
 }

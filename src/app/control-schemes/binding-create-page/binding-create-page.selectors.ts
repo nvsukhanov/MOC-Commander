@@ -1,8 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import { ATTACHED_IO_MODES_SELECTORS, ATTACHED_IO_PORT_MODE_INFO_SELECTORS, ATTACHED_IO_SELECTORS, ControlSchemeBinding, HUBS_SELECTORS } from '@app/store';
 
-import { getAvailableOperationModesForIoOutputPortModeNames } from '../io-has-matching-mode-for-op-mode';
-import { getIoOutputPortModeNames } from '../get-io-output-port-mode-names';
+import { getAvailableOperationModesForIoOutputPortModeNames, getIoOutputPortModeNames } from '../common';
 
 export const BINDING_CREATE_PAGE_SELECTORS = {
     selectDataForNewBinding: createSelector(

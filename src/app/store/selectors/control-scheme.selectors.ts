@@ -42,5 +42,17 @@ export const CONTROL_SCHEME_SELECTORS = {
     selectIsAnySchemeRunning: createSelector(
         CONTROL_SCHEME_FEATURE.selectRunningState,
         (runningState) => runningState !== ControlSchemeRunState.Idle
+    ),
+    selectNextSchemeName: (name: string) => createSelector(
+        SELECT_IDS,
+        (ids) => {
+            let postfix = '';
+            let postfixValue = 0;
+            while (ids.some((id) => id === name + postfix)) {
+                postfixValue++;
+                postfix = ` (${postfixValue})`;
+            }
+            return name + postfix;
+        }
     )
 } as const;

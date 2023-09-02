@@ -16,9 +16,7 @@ import {
 } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared';
 
-import { HubWithConnectionState } from './types';
-import { getIoOutputPortModeNames } from '../get-io-output-port-mode-names';
-import { getAvailableOperationModesForIoOutputPortModeNames } from '../io-has-matching-mode-for-op-mode';
+import { getAvailableOperationModesForIoOutputPortModeNames, getIoOutputPortModeNames } from '../common';
 
 function getControllableIos(
     attachedIos: AttachedIoModel[],
@@ -31,6 +29,12 @@ function getControllableIos(
             return getAvailableOperationModesForIoOutputPortModeNames(inputPortModeNames).length > 0;
         });
 }
+
+export type HubWithConnectionState = {
+    hubId: string;
+    name: string;
+    isConnected: boolean;
+};
 
 export const BINDING_EDIT_SELECTORS = {
     selectHubsWithConnectionState: createSelector(

@@ -127,7 +127,12 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
             if (!scheme) {
                 return state;
             }
-            const nextBindings = [ ...scheme.bindings, binding ];
+            const nextBindingId = Math.max(...scheme.bindings.map((b) => b.id), 0) + 1;
+            const resultingBinding = {
+                ...binding,
+                id: nextBindingId
+            };
+            const nextBindings = [ ...scheme.bindings, resultingBinding ];
             const update: Update<ControlSchemeModel> = {
                 id: schemeName,
                 changes: {
@@ -182,6 +187,9 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
                     portConfigs: newPortConfigs,
                 }
             }, state);
+        }),
+        on(CONTROL_SCHEME_ACTIONS.importControlScheme, (state, { scheme }): ControlSchemeState => {
+            return CONTROL_SCHEME_ENTITY_ADAPTER.addOne(scheme, state);
         })
     ),
 });

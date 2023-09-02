@@ -10,7 +10,7 @@ export const INPUT_TREE_NODE_VIEW_MODEL_SELECTOR = (
     schemeName: string,
     inputs: ControlSchemeInputsRecord,
     operationMode: ControlSchemeBindingType,
-    bindingId: string,
+    bindingId: number,
     isActive: boolean,
     ioHasNoRequiredCapabilities: boolean
 ) => createSelector(
@@ -24,7 +24,7 @@ export const INPUT_TREE_NODE_VIEW_MODEL_SELECTOR = (
             operationMode,
             controlData: Object.entries(inputs).map(([ action, input ]): BindingTreeNodeRecord => {
                 return {
-                    action: action as ControlSchemeInputAction,
+                    action: +action as ControlSchemeInputAction,
                     input,
                     isControllerConnected: !!controllerConnectionEntities[input.controllerId]
                 };

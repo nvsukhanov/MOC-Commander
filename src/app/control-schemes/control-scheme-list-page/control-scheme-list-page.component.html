@@ -15,6 +15,13 @@
                         </mat-card-title>
                         <button mat-button
                                 class="toolbar-button"
+                                (click)="onExport(scheme.name)"
+                                [title]="'controlScheme.export' | transloco"
+                        >
+                            {{ 'controlScheme.export' | transloco }}
+                        </button>
+                        <button mat-button
+                                class="toolbar-button"
                                 [color]="'warn'"
                                 (click)="onDelete(scheme.name)">
                             {{ 'controlScheme.delete' | transloco }}
@@ -34,6 +41,13 @@
 
 <div *appFeatureToolbarControls>
     <button mat-raised-button
+            class="toolbar-button"
+            (click)="onImport()"
+    >
+        {{ 'controlScheme.import' | transloco }}
+    </button>
+    <button mat-raised-button
+            class="toolbar-button"
             [disabled]="!(canCreateScheme$ | ngrxPush)"
             (click)="onCreate()"
     >

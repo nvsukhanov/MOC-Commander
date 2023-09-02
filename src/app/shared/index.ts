@@ -21,3 +21,4 @@ export * from './controls';
 export * from './validation-errors';
 export * from './controller-type-icon-name.pipe';
 export * from './port-id-to-port-name.pipe';
+export * from './lzma.service';

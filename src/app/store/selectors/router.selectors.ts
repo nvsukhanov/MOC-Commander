@@ -34,8 +34,8 @@ export const ROUTER_SELECTORS = {
     ),
     selectCurrentlyEditedBindingId: createSelector(
         BASE_ROUTER_SELECTORS.selectCurrentRoute,
-        (route: ActivatedRouteSnapshot | undefined): string | null => {
-            return route?.params?.['bindingId'] ?? null;
+        (route: ActivatedRouteSnapshot | undefined): number | null => {
+            return Number.parseInt(route?.params?.['bindingId'] ?? '0');
         }
     ),
 } as const;

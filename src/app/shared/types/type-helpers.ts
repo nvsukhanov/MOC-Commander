@@ -8,6 +8,12 @@ export type DeepReadonly<T extends object> = {
     readonly [k in keyof T]: T[k] extends object ? DeepReadonly<T[k]> : T[k];
 };
 
+export type DeepPartial<T> = {
+    [k in keyof T]?: T[k] extends Array<infer R> ? Array<DeepPartial<R>>
+                                                 : T[k] extends object ? DeepPartial<T[k]>
+                                                                       : T[k];
+};
+
 export type ToFormGroup<T extends object> = FormGroup<{
     [K in keyof T]: T[K] extends object ? ToFormGroup<T[K]> : FormControl<T[K]>;
 }>;

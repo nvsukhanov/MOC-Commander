@@ -7,6 +7,7 @@ import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel, ROUTER_SELECTORS, } from '@app/store';
 import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared';
 
@@ -15,6 +16,7 @@ import { CONTROL_SCHEME_VIEW_SELECTORS } from './control-scheme-view.selectors';
 import { ControlSchemeViewIoListComponent } from './control-scheme-view-io-list';
 import { ControlSchemeGeneralInfoComponent } from './control-scheme-general-info';
 import { ControlSchemeViewTreeNode } from './types';
+import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData } from '../common';
 
 @Component({
     standalone: true,
@@ -33,6 +35,7 @@ import { ControlSchemeViewTreeNode } from './types';
         ConfirmationDialogModule,
         HintComponent,
         FeatureToolbarControlsDirective,
+        MatDialogModule,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -67,7 +70,8 @@ export class ControlSchemePageComponent implements OnDestroy {
         private readonly routesBuilderService: RoutesBuilderService,
         private readonly router: Router,
         private readonly confirmationDialogService: ConfirmationDialogService,
-        private readonly transloco: TranslocoService
+        private readonly transloco: TranslocoService,
+        private readonly dialog: MatDialog,
     ) {
     }
 
@@ -82,6 +86,15 @@ export class ControlSchemePageComponent implements OnDestroy {
     public ngOnDestroy(): void {
         this.stopRunningScheme();
         this.sub?.unsubscribe();
+    }
+
+    public onExport(
+        name: string
+    ): void {
+        this.dialog.open<ExportControlSchemeDialogComponent, ExportControlSchemeDialogData>(
+            ExportControlSchemeDialogComponent,
+            { data: { name } }
+        );
     }
 
     public runScheme(name: string): void {
