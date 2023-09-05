@@ -24,7 +24,7 @@ export class AngleShiftBindingFormBuilderService {
             hubId: this.commonFormControlsBuilder.hubIdControl(),
             portId: this.commonFormControlsBuilder.portIdControl(),
             angles: this.formBuilder.array<FormControl<number>>([
-                this.commonFormControlsBuilder.angleSelectControl(0)
+                this.commonFormControlsBuilder.angleControl(0)
             ], {
                 validators: [
                     Validators.required,
@@ -52,10 +52,10 @@ export class AngleShiftBindingFormBuilderService {
         form.controls.angles.clear();
         if (binding.angles) {
             binding.angles.forEach((angle) =>
-                form.controls.angles.push(this.commonFormControlsBuilder.angleSelectControl(angle))
+                form.controls.angles.push(this.commonFormControlsBuilder.angleControl(angle))
             );
         } else {
-            form.controls.angles.push(this.commonFormControlsBuilder.angleSelectControl(0));
+            form.controls.angles.push(this.commonFormControlsBuilder.angleControl(0));
             form.controls.initialStepIndex.setValue(0);
         }
     }

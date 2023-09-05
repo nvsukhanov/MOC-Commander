@@ -1,6 +1,7 @@
 :host {
     display: flex;
     flex-direction: column;
+    margin-bottom: 10px; // adhere to the mat-form-field margin
 }
 
 .slider-label {

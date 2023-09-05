@@ -3,7 +3,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { LetDirective } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
-import { CONTROLLER_SETTINGS_ACTIONS, ControllerModel, ControllerSettingsModel } from '@app/store';
+import { ControllerModel, ControllerSettingsModel } from '@app/store';
 import { HintComponent } from '@app/shared';
 
 import { ControllersListItemComponent } from './controllers-list-item';
@@ -37,19 +37,5 @@ export class ControllersListPageComponent {
         controllerWithSettings: { controller: ControllerModel; settings?: ControllerSettingsModel }
     ): string {
         return controllerWithSettings.controller.id;
-    }
-
-    public controllerSettingsUpdate(
-        controllerId: string,
-        settings: ControllerSettingsModel
-    ): void {
-        this.store.dispatch(
-            CONTROLLER_SETTINGS_ACTIONS.updateSettings({
-                settings: {
-                    ...settings,
-                    controllerId
-                }
-            })
-        );
     }
 }

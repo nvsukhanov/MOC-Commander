@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { map, startWith } from 'rxjs';
+import { distinctUntilChanged, map, startWith } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ScreenSizeObserverService {
@@ -12,16 +12,8 @@ export class ScreenSizeObserverService {
         startWith(this.breakpointObserver.isMatched([
             Breakpoints.Small,
             Breakpoints.XSmall
-        ]))
-    );
-
-    public readonly isXsScreen$ = this.breakpointObserver.observe([
-        Breakpoints.XSmall
-    ]).pipe(
-        map((breakpointState) => breakpointState.matches),
-        startWith(this.breakpointObserver.isMatched([
-            Breakpoints.XSmall
-        ]))
+        ])),
+        distinctUntilChanged()
     );
 
     constructor(

@@ -32,7 +32,8 @@ export class StepperBindingFormBuilderService {
                     Validators.required,
                     Validators.min(-MOTOR_LIMITS.maxServoDegreesRange),
                     Validators.max(MOTOR_LIMITS.maxServoDegreesRange),
-                    ControlSchemeValidators.requireNonZero
+                    ControlSchemeValidators.requireNonZero,
+                    ControlSchemeValidators.requireInteger
                 ]
             }),
             power: this.commonFormControlBuilder.powerControl(),

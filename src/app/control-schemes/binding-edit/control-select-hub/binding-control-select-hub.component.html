@@ -5,16 +5,15 @@
         {{ 'hub.name' | transloco }}
     </mat-label>
     <mat-select [formControl]="control">
-        <mat-option *ngFor="let hubId of hubIds"
-                    [value]="hubId"
+        <mat-option *ngFor="let hubWithConnectionState of hubsWithConnectionState$ | ngrxPush"
+                    [value]="hubWithConnectionState.hubId"
         >
-            {{ getHubName(hubId) }}
+            {{ hubWithConnectionState.name }}
         </mat-option>
         <mat-option *ngIf="!(isHubKnown$ | ngrxPush)"
                     [value]="control.value"
         >
             {{ 'hub.unknownHub' | transloco: { hubId: control.value } }}
         </mat-option>
-
     </mat-select>
 </mat-form-field>

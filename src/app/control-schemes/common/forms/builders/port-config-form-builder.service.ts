@@ -4,6 +4,7 @@ import { DEFAULT_ACC_DEC_PROFILE_TIME_MS } from '@app/store';
 
 import { PortConfigEditForm } from '../types';
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';
+import { ControlSchemeValidators } from '../../validation';
 
 @Injectable({ providedIn: 'root' })
 export class PortConfigFormBuilderService {
@@ -28,7 +29,8 @@ export class PortConfigFormBuilderService {
                     validators: [
                         Validators.required,
                         Validators.min(PortConfigFormBuilderService.minAccDecProfileTimeMs),
-                        Validators.max(PortConfigFormBuilderService.maxAccDecProfileTimeMs)
+                        Validators.max(PortConfigFormBuilderService.maxAccDecProfileTimeMs),
+                        ControlSchemeValidators.requireInteger
                     ]
                 }
             ),
@@ -39,7 +41,8 @@ export class PortConfigFormBuilderService {
                     validators: [
                         Validators.required,
                         Validators.min(PortConfigFormBuilderService.minAccDecProfileTimeMs),
-                        Validators.max(PortConfigFormBuilderService.maxAccDecProfileTimeMs)
+                        Validators.max(PortConfigFormBuilderService.maxAccDecProfileTimeMs),
+                        ControlSchemeValidators.requireInteger
                     ]
                 }
             )

@@ -2,17 +2,6 @@
     display: block;
 }
 
-.title {
-    font-weight: 500;
-    margin: 0 10px;
-}
-
-.control-info {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    &__control-name {
-        flex-grow: 1;
-    }
+.control-select-form-field {
+    width: 100%;
 }

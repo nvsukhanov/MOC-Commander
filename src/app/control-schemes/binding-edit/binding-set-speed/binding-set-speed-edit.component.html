@@ -1,18 +1,42 @@
-<ng-container *ngIf="form">
-    <app-controller-select [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.Accelerate]"
-                           [title]="controlSchemeInputActions.Accelerate | controlSchemeInputActionToL10nKey | transloco "
-    ></app-controller-select>
+<app-binding-edit-sections-container *ngIf="form">
+    <app-binding-edit-section [largeScreenWidthPercentage]="33"
+                              [caption]="'controlScheme.bindingSectionOutputTitle' | transloco"
+    >
+        <app-binding-select-hub [control]="form.controls.hubId"
+                                [bindingType]="bindingType"
+        ></app-binding-select-hub>
 
-    <ng-container *ngIf="isAccelerationInputAssigned">
+        <app-binding-control-select-io [portIdControl]="form.controls.portId"
+                                       [hubId]="form.controls.hubId.value"
+                                       [bindingType]="bindingType"
+        ></app-binding-control-select-io>
+    </app-binding-edit-section>
+
+    <mat-divider [vertical]="true" *appHideOnSmallScreen></mat-divider>
+
+    <app-binding-edit-section [largeScreenWidthPercentage]="33"
+                              [caption]="'controlScheme.bindingSectionInputTitle' | transloco"
+    >
+        <app-controller-select [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.Accelerate]"
+                               [title]="controlSchemeInputActions.Accelerate | controlSchemeInputActionToL10nKey | transloco "
+        ></app-controller-select>
+
+        <app-binding-input-gain-select *ngIf="isInputGainConfigurable"
+                                       [translocoTitle]="'controlScheme.setSpeedBinding.accelerationInputGainTitle'"
+                                       [control]="form.controls.inputs.controls[controlSchemeInputActions.Accelerate].controls.gain"
+        ></app-binding-input-gain-select>
+
         <app-controller-select *ngIf="!form.controls.isToggle.value"
                                [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.Brake]"
                                [title]="controlSchemeInputActions.Brake | controlSchemeInputActionToL10nKey | transloco "
         ></app-controller-select>
+    </app-binding-edit-section>
 
-        <app-binding-input-gain-select *ngIf="isInputGainConfigurable"
-                                       [control]="form.controls.inputs.controls[controlSchemeInputActions.Accelerate].controls.gain"
-        ></app-binding-input-gain-select>
+    <mat-divider [vertical]="true" *appHideOnSmallScreen></mat-divider>
 
+    <app-binding-edit-section [largeScreenWidthPercentage]="33"
+                              [caption]="'controlScheme.bindingSectionConfigTitle' | transloco"
+    >
         <app-slider-control [min]="0"
                             [max]="motorLimits.maxSpeed"
                             [control]="form.controls.maxSpeed"
@@ -41,5 +65,5 @@
         <app-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'"
                             [control]="form.controls.useDecelerationProfile"
         ></app-toggle-control>
-    </ng-container>
-</ng-container>
+    </app-binding-edit-section>
+</app-binding-edit-sections-container>

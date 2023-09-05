@@ -1,21 +1,12 @@
 :host {
     display: block;
-
-    & > * {
-        margin-bottom: 10px;
-    }
 }
 
 .calibrate-button {
     width: 100%;
+    margin-bottom: 10px;
 }
 
-.readable-input-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.readable-input {
-    flex: 1;
+mat-form-field {
+    width: 100%;
 }

@@ -4,14 +4,20 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { MOTOR_LIMITS } from 'rxpoweredup';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { SliderControlComponent, ToggleControlComponent } from '@app/shared';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ControlSchemeBindingType, HideOnSmallScreenDirective, SliderControlComponent, ToggleControlComponent } from '@app/shared';
 import { ControlSchemeInputAction } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { CommonFormControlsBuilderService, ControlSchemeInputActionToL10nKeyPipe, SpeedShiftBindingForm } from '../../common';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
-import { BindingControlNumInputComponent } from '../control-num-input';
 import { BindingControlSelectLoopingModeComponent } from '../contorl-select-looping-mode';
+import { BindingControlSelectHubComponent } from '../control-select-hub';
+import { BindingControlSelectIoComponent } from '../control-select-io';
+import { BindingEditSectionComponent } from '../section';
+import { BindingEditSectionsContainerComponent } from '../sections-container';
 
 @Component({
     standalone: true,
@@ -19,22 +25,31 @@ import { BindingControlSelectLoopingModeComponent } from '../contorl-select-loop
     templateUrl: './binding-speed-shift.component.html',
     styleUrls: [ './binding-speed-shift.component.scss' ],
     imports: [
-        BindingControlSelectControllerComponent,
         NgIf,
+        BindingEditSectionComponent,
+        BindingControlSelectHubComponent,
+        BindingControlSelectIoComponent,
         TranslocoModule,
-        NgForOf,
-        BindingControlNumInputComponent,
-        MatButtonModule,
+        MatDividerModule,
+        HideOnSmallScreenDirective,
+        BindingControlSelectControllerComponent,
+        MatInputModule,
+        ReactiveFormsModule,
         MatIconModule,
-        ToggleControlComponent,
+        MatButtonModule,
         SliderControlComponent,
+        BindingControlSelectLoopingModeComponent,
+        ToggleControlComponent,
         ControlSchemeInputActionToL10nKeyPipe,
-        BindingControlSelectLoopingModeComponent
+        NgForOf,
+        BindingEditSectionsContainerComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingSpeedShiftComponent implements IBindingsDetailsEditComponent<SpeedShiftBindingForm> {
     public readonly motorLimits = MOTOR_LIMITS;
+
+    public readonly bindingType = ControlSchemeBindingType.SpeedShift;
 
     public readonly controlSchemeInputActions = ControlSchemeInputAction;
 
@@ -49,10 +64,6 @@ export class BindingSpeedShiftComponent implements IBindingsDetailsEditComponent
         return this._form;
     }
 
-    public get isNextSpeedControlAssigned(): boolean {
-        return this.form?.controls.inputs.controls[ControlSchemeInputAction.NextLevel].controls.controllerId.value !== '';
-    }
-
     public setForm(
         form: SpeedShiftBindingForm
     ): void {
@@ -65,7 +76,7 @@ export class BindingSpeedShiftComponent implements IBindingsDetailsEditComponent
         }
         this._form.controls.levels.insert(
             0,
-            this.commonFormControlBuilder.speedSelectControl(MOTOR_LIMITS.maxSpeed)
+            this.commonFormControlBuilder.speedControl(MOTOR_LIMITS.maxSpeed)
         );
         this._form.controls.initialStepIndex.setValue(
             this._form.controls.initialStepIndex.value + 1
@@ -80,7 +91,7 @@ export class BindingSpeedShiftComponent implements IBindingsDetailsEditComponent
             return;
         }
         this._form.controls.levels.push(
-            this.commonFormControlBuilder.speedSelectControl(MOTOR_LIMITS.minSpeed)
+            this.commonFormControlBuilder.speedControl(MOTOR_LIMITS.minSpeed)
         );
         this._form.controls.levels.markAsTouched();
         this._form.controls.levels.markAsDirty();

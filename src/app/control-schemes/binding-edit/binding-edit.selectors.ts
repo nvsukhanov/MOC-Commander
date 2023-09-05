@@ -9,31 +9,31 @@ import {
     AttachedIoModesModel,
     AttachedIoPortModeInfoModel,
     HUBS_SELECTORS,
-    HUB_STATS_SELECTORS,
-    attachedIoModesIdFn,
-    attachedIoPortModeInfoIdFn,
-    attachedIosIdFn
+    HUB_STATS_SELECTORS
 } from '@app/store';
-import { ControlSchemeBindingType } from '@app/shared';
+import { ControlSchemeBindingType, getEnumValues } from '@app/shared';
 
-import { getAvailableOperationModesForIoOutputPortModeNames, getIoOutputPortModeNames } from '../common';
+import { getAvailableOperationModesForIoOutputPortModeNames, getIoOutputPortModeNames, ioHasMatchingModeForOpMode } from '../common';
 
-function getControllableIos(
-    attachedIos: AttachedIoModel[],
+function isIoControllableByBindingType(
+    io: AttachedIoModel,
     attachedIoModesEntities: Dictionary<AttachedIoModesModel>,
-    attachedIoPortModeInfoEntities: Dictionary<AttachedIoPortModeInfoModel>
-): AttachedIoModel[] {
-    return attachedIos
-        .filter((io) => {
-            const inputPortModeNames = getIoOutputPortModeNames(io, attachedIoModesEntities, attachedIoPortModeInfoEntities);
-            return getAvailableOperationModesForIoOutputPortModeNames(inputPortModeNames).length > 0;
-        });
+    attachedIoPortModeInfoEntities: Dictionary<AttachedIoPortModeInfoModel>,
+    bindingType: ControlSchemeBindingType
+): boolean {
+    const ioPortModeNames = getIoOutputPortModeNames(io, attachedIoModesEntities, attachedIoPortModeInfoEntities);
+    return ioHasMatchingModeForOpMode(bindingType, ioPortModeNames);
 }
 
 export type HubWithConnectionState = {
     hubId: string;
     name: string;
     isConnected: boolean;
+};
+
+export type BindingTypeSelectViewModel = {
+    bindingType: ControlSchemeBindingType;
+    hubsCount: number;
 };
 
 export const BINDING_EDIT_SELECTORS = {
@@ -48,53 +48,66 @@ export const BINDING_EDIT_SELECTORS = {
             }));
         }
     ),
-    selectHubControllableIos: (hubId: string) => createSelector(
+    selectBindingTypeSelectViewModel: createSelector(
         ATTACHED_IO_SELECTORS.selectAll,
         ATTACHED_IO_MODES_SELECTORS.selectEntities,
         ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
-        (attachedIos, attachedIoModesEntities, attachedIoPortModeInfoEntities) => {
-            return getControllableIos(
-                attachedIos.filter((io) => io.hubId === hubId),
-                attachedIoModesEntities,
-                attachedIoPortModeInfoEntities
-            );
+        (attachedIos, attachedIoModesEntities, attachedIoPortModeInfoEntities): BindingTypeSelectViewModel[] => {
+            const allBindingTypes = getEnumValues(ControlSchemeBindingType);
+            return allBindingTypes.map((bindingType) => {
+                const applicableHubsCount = attachedIos.reduce((acc, io) => {
+                    const inputPortModeNames = getIoOutputPortModeNames(io, attachedIoModesEntities, attachedIoPortModeInfoEntities);
+                    const availableOperationModes = getAvailableOperationModesForIoOutputPortModeNames(inputPortModeNames);
+                    if (availableOperationModes.includes(bindingType)) {
+                        acc++;
+                    }
+                    return acc;
+                }, 0);
+                return { bindingType, hubsCount: applicableHubsCount };
+            });
         }
     ),
-    selectAvailableBindingTypes: ({ hubId, portId }: { hubId: string; portId: number }) => createSelector(
-        ATTACHED_IO_SELECTORS.selectEntities,
+    selectControllableHubs: (bindingType: ControlSchemeBindingType) => createSelector(
+        HUBS_SELECTORS.selectAll,
+        ATTACHED_IO_SELECTORS.selectAll,
         ATTACHED_IO_MODES_SELECTORS.selectEntities,
         ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
-        (iosEntities, attachedIoModesEntities, attachedIoPortModeInfoEntities): ControlSchemeBindingType[] => {
-            const io = iosEntities[attachedIosIdFn({ hubId, portId })];
-            if (!io) {
-                return [];
-            }
-            const inputPortModeNames = getIoOutputPortModeNames(io, attachedIoModesEntities, attachedIoPortModeInfoEntities);
-            return getAvailableOperationModesForIoOutputPortModeNames(inputPortModeNames);
+        HUB_STATS_SELECTORS.selectEntities,
+        (hubs, attachedIos, attachedIoModesEntities, attachedIoPortModeInfoEntities, hubsConnectionStates): HubWithConnectionState[] => {
+            // Inefficient due to the nested loops, but the number of hubs and attached IOs is small. Also, it keeps sorting of the hubs.
+            return hubs.filter(({ hubId }) => attachedIos.some((io) =>
+                io.hubId === hubId && isIoControllableByBindingType(io, attachedIoModesEntities, attachedIoPortModeInfoEntities, bindingType)
+            )).map((hub) => ({
+                hubId: hub.hubId,
+                name: hub.name,
+                isConnected: !!hubsConnectionStates[hub.hubId]
+            }));
+        }
+    ),
+    selectControllableIos: ({ hubId, bindingType }: { hubId: string; bindingType: ControlSchemeBindingType }) => createSelector(
+        ATTACHED_IO_SELECTORS.selectAll,
+        ATTACHED_IO_MODES_SELECTORS.selectEntities,
+        ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
+        (attachedIos, attachedIoModesEntities, attachedIoPortModeInfoEntities): AttachedIoModel[] => {
+            return attachedIos.filter((io) => {
+                return io.hubId === hubId && isIoControllableByBindingType(io, attachedIoModesEntities, attachedIoPortModeInfoEntities, bindingType);
+            });
+        }
+    ),
+    canRequestPortValue: ({ hubId, portId, portModeName }: { hubId: string; portId: number; portModeName: PortModeName }) => createSelector(
+        HUB_STATS_SELECTORS.selectIsHubConnected(hubId),
+        HUB_STATS_SELECTORS.isPortValueRequested({ hubId, portId }),
+        ATTACHED_IO_SELECTORS.selectIoAtPort({ hubId, portId }),
+        ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectHubPortInputModeForPortModeName({ hubId, portId, portModeName }),
+        (isHubConnected, isPortValueRequested, io, modeInfo): boolean => {
+            return isHubConnected && !isPortValueRequested && !!io && !!modeInfo;
         }
     ),
     canCalibrateServo: ({ hubId, portId }: { hubId: string; portId: number }) => createSelector(
-        HUB_STATS_SELECTORS.selectIsHubConnected(hubId),
-        ATTACHED_IO_SELECTORS.selectIoAtPort({ hubId, portId }),
-        ATTACHED_IO_MODES_SELECTORS.selectEntities,
-        ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
-        (isHubConnected, io, supportedModesEntities, portModesEntities): boolean => {
-            if (!io || !isHubConnected) {
-                return false;
-            }
-            const modesInfo: AttachedIoModesModel | undefined =
-                supportedModesEntities[attachedIoModesIdFn(io)];
-            if (!modesInfo) {
-                return false;
-            }
-            const portOutputModes = modesInfo.portOutputModes;
-            const portModes = new Set(portOutputModes
-                .map((modeId) => portModesEntities[attachedIoPortModeInfoIdFn({ ...io, modeId })])
-                .map((portModeInfo) => portModeInfo?.name)
-                .filter((portModeInfo) => !!portModeInfo)
-            ) as ReadonlySet<PortModeName>;
-
-            return portModes.has(PortModeName.position) && portModes.has(PortModeName.absolutePosition);
+        BINDING_EDIT_SELECTORS.canRequestPortValue({ hubId, portId, portModeName: PortModeName.position }),
+        BINDING_EDIT_SELECTORS.canRequestPortValue({ hubId, portId, portModeName: PortModeName.absolutePosition }),
+        (canRequestPosition, canRequestAbsolutePosition): boolean => {
+            return canRequestPosition && canRequestAbsolutePosition;
         }
-    )
+    ),
 } as const;

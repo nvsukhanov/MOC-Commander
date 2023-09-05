@@ -1,38 +1,40 @@
-<ng-container *ngIf="inputFormGroup">
-    <div class="control-info">
-        <mat-icon [fontIcon]="'gamepad'"></mat-icon>
-        <mat-label class="title">
-            {{ title }}<span *ngIf="isRequired">*</span>
-        </mat-label>
-        <ng-container *ngIf="isControllerAssigned; else controllerIsNotAssigned">
-            <app-full-controller-input-name class="control-info__control-name"
-                                            [inputData]="controllerData"
-            ></app-full-controller-input-name>
-
-            <button mat-icon-button
-                    (click)="onBind()"
-            >
-                <mat-icon [fontIcon]="'edit'"></mat-icon>
-                <span class="cdk-visually-hidden">{{ 'controlScheme.bindToAnotherInputButtonTitle' | transloco }}</span>
-            </button>
-            <button mat-icon-button
-                    (click)="onUnbind()"
-            >
-                <mat-icon [fontIcon]="'delete'"></mat-icon>
-                <span class="cdk-visually-hidden">{{ 'controlScheme.bindingInputControlUnassignButtonTitle' | transloco }}</span>
-            </button>
-        </ng-container>
-        <ng-template #controllerIsNotAssigned>
-            <span class="cdk-visually-hidden">
-                {{ 'controlScheme.bindingInputIsNotAssigned' | transloco }}
-            </span>
-
-            <button class="assign-control"
-                    mat-raised-button
-                    (click)="onBind()"
-            >
-                {{ 'controlScheme.bindingAssignControlButtonTitle' | transloco }}
-            </button>
-        </ng-template>
-    </div>
-</ng-container>
+<mat-form-field *ngIf="inputFormGroup"
+                class="control-select-form-field"
+>
+    <mat-label>{{ title }}</mat-label>
+    <input *ngIf="isControllerAssigned"
+           matInput
+           readonly
+           [required]="true"
+           [attr.value]="controllerData | fullControllerInputName | ngrxPush"
+    />
+    <input *ngIf="!isControllerAssigned"
+           matInput
+           readonly
+           [required]="isRequired"
+    />
+    <button *ngIf="isControllerAssigned"
+            mat-icon-button
+            matSuffix
+            [attr.aria-label]="'controlScheme.bindToAnotherInputButtonTitle' | transloco"
+            (click)="onBind()"
+    >
+        <mat-icon [fontIcon]="'refresh'"></mat-icon>
+    </button>
+    <button *ngIf="isControllerAssigned"
+            mat-icon-button
+            (click)="onUnbind()"
+            matSuffix
+            [attr.aria-label]="'controlScheme.bindingInputControlUnassignButtonTitle' | transloco"
+    >
+        <mat-icon [fontIcon]="'delete'"></mat-icon>
+    </button>
+    <button *ngIf="!isControllerAssigned"
+            mat-icon-button
+            (click)="onBind()"
+            matSuffix
+            [attr.aria-label]="'controlScheme.bindingAssignControlButtonTitle' | transloco"
+    >
+        <mat-icon [fontIcon]="'refresh'"></mat-icon>
+    </button>
+</mat-form-field>

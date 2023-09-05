@@ -10,7 +10,7 @@ import { BindingTypeToL10nKeyPipe } from '@app/shared';
 
 import { BindingTreeNodeViewModel } from './binding-tree-node-view-model';
 import { INPUT_TREE_NODE_VIEW_MODEL_SELECTOR } from './input-tree-node-view-model.selector';
-import { ControlSchemeInputActionToL10nKeyPipe, FullControllerInputNameComponent } from '../../../common';
+import { ControlSchemeInputActionToL10nKeyPipe, FullControllerInputNamePipe } from '../../../common';
 import { BindingViewUrlPipe } from './binding-view-url.pipe';
 import { ControlSchemeViewBindingTreeNodeData } from '../../types';
 
@@ -26,10 +26,10 @@ import { ControlSchemeViewBindingTreeNodeData } from '../../types';
         PushPipe,
         MatFormFieldModule,
         NgForOf,
-        FullControllerInputNameComponent,
         RouterLink,
         BindingViewUrlPipe,
-        ControlSchemeInputActionToL10nKeyPipe
+        ControlSchemeInputActionToL10nKeyPipe,
+        FullControllerInputNamePipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

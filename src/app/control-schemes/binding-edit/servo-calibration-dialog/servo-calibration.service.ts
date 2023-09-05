@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { MOTOR_LIMITS, MotorServoEndState, PortModeName } from 'rxpoweredup';
-import { Observable, Subject, bufferCount, catchError, concat, concatWith, first, last, map, of, switchMap, take, takeUntil, timeout, zip } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { ATTACHED_IO_PORT_MODE_INFO_SELECTORS, HubStorageService } from '@app/store';
+import { MOTOR_LIMITS, MotorServoEndState } from 'rxpoweredup';
+import { Observable, Subject, bufferCount, catchError, concat, concatWith, first, last, map, of, switchMap, take, takeUntil, timeout } from 'rxjs';
+import { HubFacadeService, HubStorageService } from '@app/store';
 import { transformRelativeDegToAbsoluteDeg } from '@app/shared';
 
 import { CalibrationResult, CalibrationResultError, CalibrationResultFinished, CalibrationResultType } from './servo-calibration-result';
@@ -10,8 +9,8 @@ import { CalibrationResult, CalibrationResultError, CalibrationResultFinished, C
 @Injectable()
 export class ServoCalibrationService {
     constructor(
-        private readonly store: Store,
-        private readonly hubStorage: HubStorageService
+        private readonly hubStorage: HubStorageService,
+        private readonly hubFacade: HubFacadeService
     ) {
     }
 
@@ -22,30 +21,11 @@ export class ServoCalibrationService {
     ): Observable<CalibrationResult> {
         return new Observable<CalibrationResult>((subscriber) => {
             const cancel$ = new Subject<void>();
-            zip(
-                this.store.select(
-                    ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectHubPortInputModeForPortModeName({ hubId, portId, portModeName: PortModeName.position })
-                ),
-                this.store.select(
-                    ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectHubPortInputModeForPortModeName({ hubId, portId, portModeName: PortModeName.absolutePosition })
-                )
+            this.doCalibration(
+                hubId,
+                portId,
+                power
             ).pipe(
-                take(1),
-                switchMap(([ positionModeInfo, absolutePositionModeInfo ]) => {
-                    if (absolutePositionModeInfo === null) {
-                        throw new Error('Required absolute position mode not found');
-                    }
-                    if (positionModeInfo === null) {
-                        throw new Error('Required position mode found not found');
-                    }
-                    return this.doCalibration(
-                        hubId,
-                        portId,
-                        positionModeInfo.modeId,
-                        absolutePositionModeInfo.modeId,
-                        power
-                    );
-                }),
                 takeUntil(cancel$),
                 catchError((error) => {
                     const result: CalibrationResultError = {
@@ -66,8 +46,6 @@ export class ServoCalibrationService {
     private doCalibration(
         hubId: string,
         portId: number,
-        positionModeId: number,
-        absolutePositionModeId: number,
         power: number,
     ): Observable<CalibrationResultFinished> {
         const hub = this.hubStorage.get(hubId);
@@ -77,14 +55,14 @@ export class ServoCalibrationService {
 
         const probeReachability = (degree: number): Observable<number> => {
             return hub.motors.goToPosition(portId, degree, { power, endState: MotorServoEndState.brake }).pipe(
-                concatWith(hub.motors.getPosition(portId, positionModeId)),
+                concatWith(this.hubFacade.getMotorPosition(hubId, portId)),
                 last()
             ) as Observable<number>;
         };
 
-        return hub.motors.getPosition(portId, positionModeId).pipe(
+        return this.hubFacade.getMotorPosition(hubId, portId).pipe(
             last(),
-            concatWith(hub.motors.getAbsolutePosition(portId, absolutePositionModeId)),
+            concatWith(this.hubFacade.getMotorAbsolutePosition(hubId, portId)),
             bufferCount(2),
             map(([ startRelativePosition, startAbsolutePosition ]) => ({
                 startRelativePosition,

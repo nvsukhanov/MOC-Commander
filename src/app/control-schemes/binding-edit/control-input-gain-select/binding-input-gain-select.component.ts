@@ -5,7 +5,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { MotorServoEndStateL10nKeyPipe } from '@app/shared';
+import { MotorServoEndStateL10nKeyPipe, getEnumValues } from '@app/shared';
 import { InputGain } from '@app/store';
 
 import { InputGainL10nKeyPipe } from '../output-gain-l10n-key.pipe';
@@ -32,11 +32,7 @@ import { InputGainL10nKeyPipe } from '../output-gain-l10n-key.pipe';
 export class BindingInputGainSelectComponent {
     @Input() public control?: FormControl<InputGain>;
 
-    protected readonly translocoTitle = 'controlScheme.inputGain';
+    @Input() public translocoTitle = 'controlScheme.inputGain';
 
-    protected readonly gainOptions: ReadonlyArray<InputGain> = [
-        InputGain.None,
-        InputGain.Logarithmic,
-        InputGain.Exponential
-    ];
+    protected readonly gainOptions: ReadonlyArray<InputGain> = getEnumValues(InputGain);
 }

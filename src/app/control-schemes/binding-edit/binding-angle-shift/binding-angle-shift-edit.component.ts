@@ -1,21 +1,28 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MOTOR_LIMITS, PortModeName } from 'rxpoweredup';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable, Subscription, mergeWith, of, startWith, switchMap, take } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
-import { SliderControlComponent, ToggleControlComponent } from '@app/shared';
-import { ControlSchemeInputAction } from '@app/store';
+import { MatDividerModule } from '@angular/material/divider';
+import { Store } from '@ngrx/store';
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ControlSchemeBindingType, HideOnSmallScreenDirective, SliderControlComponent, ToggleControlComponent } from '@app/shared';
+import { ControlSchemeInputAction, HubFacadeService } from '@app/store';
 
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
-import { BindingControlNumInputComponent } from '../control-num-input';
 import { AngleShiftBindingForm, CommonFormControlsBuilderService, ControlSchemeInputActionToL10nKeyPipe } from '../../common';
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { BindingControlOutputEndStateComponent } from '../control-output-end-state-select';
-import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
 import { BindingControlSelectLoopingModeComponent } from '../contorl-select-looping-mode';
+import { BindingEditSectionComponent } from '../section';
+import { BINDING_EDIT_SELECTORS } from '../binding-edit.selectors';
+import { BindingControlSelectHubComponent } from '../control-select-hub';
+import { BindingControlSelectIoComponent } from '../control-select-io';
+import { BindingEditSectionsContainerComponent } from '../sections-container';
 
 @Component({
     standalone: true,
@@ -23,7 +30,6 @@ import { BindingControlSelectLoopingModeComponent } from '../contorl-select-loop
     templateUrl: './binding-angle-shift-edit.component.html',
     styleUrls: [ './binding-angle-shift-edit.component.scss' ],
     imports: [
-        BindingControlNumInputComponent,
         BindingControlSelectControllerComponent,
         MatButtonModule,
         MatIconModule,
@@ -33,14 +39,21 @@ import { BindingControlSelectLoopingModeComponent } from '../contorl-select-loop
         ToggleControlComponent,
         TranslocoModule,
         BindingControlOutputEndStateComponent,
-        BindingControlReadMotorPositionComponent,
         PushPipe,
         ControlSchemeInputActionToL10nKeyPipe,
-        BindingControlSelectLoopingModeComponent
+        BindingControlSelectLoopingModeComponent,
+        BindingEditSectionComponent,
+        BindingControlSelectHubComponent,
+        BindingControlSelectIoComponent,
+        MatDividerModule,
+        HideOnSmallScreenDirective,
+        MatInputModule,
+        ReactiveFormsModule,
+        BindingEditSectionsContainerComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BindingAngleShiftEditComponent implements IBindingsDetailsEditComponent<AngleShiftBindingForm> {
+export class BindingAngleShiftEditComponent implements IBindingsDetailsEditComponent<AngleShiftBindingForm>, OnDestroy {
     public readonly motorLimits = MOTOR_LIMITS;
 
     public readonly controlSchemeInputActions = ControlSchemeInputAction;
@@ -49,14 +62,19 @@ export class BindingAngleShiftEditComponent implements IBindingsDetailsEditCompo
 
     public readonly maxAngle = MOTOR_LIMITS.maxServoDegreesRange / 2;
 
-    public readonly portModeNames = PortModeName;
+    public readonly bindingType = ControlSchemeBindingType.AngleShift;
 
     private _form?: AngleShiftBindingForm;
 
-    private readonly _isQueryingPort$ = new BehaviorSubject<boolean>(false);
+    private _canRequestPortValue$: Observable<boolean> = of(false);
+
+    private portRequestSubscription?: Subscription;
 
     constructor(
-        private readonly commonFormControlBuilder: CommonFormControlsBuilderService
+        private readonly commonFormControlBuilder: CommonFormControlsBuilderService,
+        private readonly store: Store,
+        private readonly changeDetectorRef: ChangeDetectorRef,
+        private readonly hubFacade: HubFacadeService
     ) {
     }
 
@@ -64,83 +82,95 @@ export class BindingAngleShiftEditComponent implements IBindingsDetailsEditCompo
         return this._form;
     }
 
-    public get isNextAngleControlAssigned(): boolean {
-        return this.form?.controls.inputs.controls[ControlSchemeInputAction.NextLevel].controls.controllerId.value !== '';
+    public get canRequestPortValue$(): Observable<boolean> {
+        return this._canRequestPortValue$;
     }
 
-    public get isQueryingPort$(): Observable<boolean> {
-        return this._isQueryingPort$;
+    public ngOnDestroy(): void {
+        this.portRequestSubscription?.unsubscribe();
     }
 
     public setForm(
         form: AngleShiftBindingForm
     ): void {
         this._form = form;
+        this.portRequestSubscription?.unsubscribe();
+        this._canRequestPortValue$ = form.controls.hubId.valueChanges.pipe(
+            mergeWith(form.controls.portId.valueChanges),
+            startWith(null),
+            switchMap(() => {
+                return this.store.select(BINDING_EDIT_SELECTORS.canRequestPortValue({
+                    hubId: form.controls.hubId.value,
+                    portId: form.controls.portId.value,
+                    portModeName: PortModeName.absolutePosition
+                }));
+            })
+        );
+        this.changeDetectorRef.detectChanges();
     }
 
-    public updateIsQueryingPort(
-        isQuerying: boolean
+    public onPortAbsolutePositionRequest(
+        levelIndex: number
     ): void {
-        this._isQueryingPort$.next(isQuerying);
-    }
-
-    public onAngleRead(
-        angle: number,
-        at: number
-    ): void {
-        if (this.form === undefined
-            || this.form.controls.hubId.value === undefined
-            || this.form.controls.portId.value === undefined
-        ) {
+        this.portRequestSubscription?.unsubscribe();
+        if (!this.form) {
             return;
         }
-        const control = this.form.controls.angles.at(at);
-
-        control.setValue(angle);
-        control.markAsTouched();
-        control.markAsDirty();
-        this.form?.updateValueAndValidity();
+        const control = this.form.controls.angles.at(levelIndex);
+        if (!control) {
+            return;
+        }
+        this.portRequestSubscription = this.hubFacade.getMotorAbsolutePosition(
+            this.form.controls.hubId.value,
+            this.form.controls.portId.value
+        ).pipe(
+            take(1)
+        ).subscribe((position) => {
+            control.setValue(position);
+        });
     }
 
     public addNextAngleLevel(): void {
-        if (!this._form) {
+        if (!this.form) {
             return;
         }
-        this._form.controls.angles.insert(
+        this.form.controls.angles.insert(
             0,
-            this.commonFormControlBuilder.angleSelectControl(0)
+            this.commonFormControlBuilder.angleControl(0)
         );
-        this._form.controls.initialStepIndex.setValue(
-            this._form.controls.initialStepIndex.value + 1
+        this.form.controls.initialStepIndex.setValue(
+            this.form.controls.initialStepIndex.value + 1
         );
-        this._form.controls.angles.markAsTouched();
-        this._form.controls.angles.markAsDirty();
-        this._form.updateValueAndValidity();
+        this.form.controls.angles.markAsDirty();
+        this.form.controls.initialStepIndex.markAsDirty();
+        this.form.updateValueAndValidity();
     }
 
     public addPrevAngleLevel(): void {
-        if (!this._form) {
+        if (!this.form) {
             return;
         }
-        this._form.controls.angles.push(
-            this.commonFormControlBuilder.angleSelectControl(0)
+        this.form.controls.angles.push(
+            this.commonFormControlBuilder.angleControl(0)
         );
-        this._form.controls.angles.markAsTouched();
-        this._form.controls.angles.markAsDirty();
-        this._form.updateValueAndValidity();
+        this.form.controls.angles.markAsDirty();
+        this.form.updateValueAndValidity();
     }
 
     public removeAngleLevel(
         index: number
     ): void {
-        if (!this._form) {
+        if (!this.form) {
             return;
         }
-        this._form.controls.angles.removeAt(index);
-        if (this._form.controls.initialStepIndex.value > index) {
-            this._form.controls.initialStepIndex.setValue(
-                this._form.controls.initialStepIndex.value - 1
+        this.form.controls.angles.removeAt(index);
+        if (this.form.controls.initialStepIndex.value > index) {
+            this.form.controls.initialStepIndex.setValue(
+                this.form.controls.initialStepIndex.value - 1
             );
         }
+        this.form.controls.angles.markAsDirty();
+        this.form.controls.initialStepIndex.markAsDirty();
+        this.form.updateValueAndValidity();
     }
 }

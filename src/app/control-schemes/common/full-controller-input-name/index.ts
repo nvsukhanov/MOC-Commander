@@ -1,1 +1,1 @@
-export * from './full-controller-input-name.component';
+export * from './full-controller-input-name.pipe';

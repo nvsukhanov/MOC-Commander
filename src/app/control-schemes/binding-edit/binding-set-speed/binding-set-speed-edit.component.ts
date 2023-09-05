@@ -3,13 +3,18 @@ import { NgIf } from '@angular/common';
 import { MOTOR_LIMITS } from 'rxpoweredup';
 import { merge } from 'rxjs';
 import { TranslocoModule } from '@ngneat/transloco';
-import { ControllerInputType, SliderControlComponent, ToggleControlComponent } from '@app/shared';
+import { MatDividerModule } from '@angular/material/divider';
+import { ControlSchemeBindingType, ControllerInputType, HideOnSmallScreenDirective, SliderControlComponent, ToggleControlComponent } from '@app/shared';
 import { ControlSchemeInputAction } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { ControlSchemeInputActionToL10nKeyPipe, InputFormGroup, SetSpeedBindingForm } from '../../common';
-import { BindingInputGainSelectComponent } from '../control-axial-output-modifier-select';
+import { BindingInputGainSelectComponent } from '../control-input-gain-select';
+import { BindingEditSectionComponent } from '../section';
+import { BindingControlSelectHubComponent } from '../control-select-hub';
+import { BindingControlSelectIoComponent } from '../control-select-io';
+import { BindingEditSectionsContainerComponent } from '../sections-container';
 
 @Component({
     standalone: true,
@@ -18,12 +23,18 @@ import { BindingInputGainSelectComponent } from '../control-axial-output-modifie
     styleUrls: [ './binding-set-speed-edit.component.scss' ],
     imports: [
         NgIf,
-        SliderControlComponent,
-        ToggleControlComponent,
-        BindingControlSelectControllerComponent,
+        BindingEditSectionComponent,
         TranslocoModule,
+        BindingControlSelectHubComponent,
+        BindingControlSelectIoComponent,
+        MatDividerModule,
+        BindingControlSelectControllerComponent,
         BindingInputGainSelectComponent,
+        SliderControlComponent,
+        HideOnSmallScreenDirective,
+        ToggleControlComponent,
         ControlSchemeInputActionToL10nKeyPipe,
+        BindingEditSectionsContainerComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -32,19 +43,17 @@ export class BindingSetSpeedEditComponent implements IBindingsDetailsEditCompone
 
     public readonly controlSchemeInputActions = ControlSchemeInputAction;
 
+    public readonly bindingType = ControlSchemeBindingType.SetSpeed;
+
     public form?: SetSpeedBindingForm;
 
     constructor(
-        private readonly cd: ChangeDetectorRef,
+        private readonly cd: ChangeDetectorRef
     ) {
     }
 
     private get accelerationControl(): InputFormGroup | undefined {
         return this.form?.controls.inputs.controls[ControlSchemeInputAction.Accelerate];
-    }
-
-    public get isAccelerationInputAssigned(): boolean {
-        return !!this.accelerationControl?.controls.inputId.value;
     }
 
     public get isToggleable(): boolean {

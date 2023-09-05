@@ -55,13 +55,16 @@ export class CommonFormControlsBuilderService {
         });
     }
 
-    public speedControl(): FormControl<number> {
-        return this.formBuilder.control<number>(MOTOR_LIMITS.maxSpeed, {
+    public speedControl(
+        initialValue: number = MOTOR_LIMITS.maxSpeed
+    ): FormControl<number> {
+        return this.formBuilder.control<number>(initialValue, {
             nonNullable: true,
             validators: [
                 Validators.required,
                 Validators.min(0),
-                Validators.max(MOTOR_LIMITS.maxSpeed)
+                Validators.max(MOTOR_LIMITS.maxSpeed),
+                ControlSchemeValidators.requireInteger
             ]
         });
     }
@@ -72,7 +75,8 @@ export class CommonFormControlsBuilderService {
             validators: [
                 Validators.required,
                 Validators.min(MOTOR_LIMITS.minPower),
-                Validators.max(MOTOR_LIMITS.maxPower)
+                Validators.max(MOTOR_LIMITS.maxPower),
+                ControlSchemeValidators.requireInteger
             ]
         });
     }
@@ -86,20 +90,7 @@ export class CommonFormControlsBuilderService {
         });
     }
 
-    public speedSelectControl(
-        initialValue: number = MOTOR_LIMITS.maxSpeed
-    ): FormControl<number> {
-        return this.formBuilder.control<number>(initialValue, {
-            nonNullable: true,
-            validators: [
-                Validators.required,
-                Validators.min(MOTOR_LIMITS.minSpeed),
-                Validators.max(MOTOR_LIMITS.maxSpeed)
-            ]
-        });
-    }
-
-    public angleSelectControl(
+    public angleControl(
         initialValue: number = 0
     ): FormControl<number> {
         return this.formBuilder.control<number>(initialValue, {
@@ -107,7 +98,8 @@ export class CommonFormControlsBuilderService {
             validators: [
                 Validators.required,
                 Validators.min(MOTOR_LIMITS.minRawAngle),
-                Validators.max(MOTOR_LIMITS.maxRawAngle)
+                Validators.max(MOTOR_LIMITS.maxRawAngle),
+                ControlSchemeValidators.requireInteger
             ]
         });
     }

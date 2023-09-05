@@ -1,9 +1,8 @@
-.readable-input-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+:host {
+    display: block;
+    flex-grow: 1;
 }
 
-.readable-input {
-    flex: 1;
+mat-form-field {
+    width: 100%;
 }

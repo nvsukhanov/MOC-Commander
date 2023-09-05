@@ -1,14 +1,43 @@
-<ng-container *ngIf="form">
-    <app-controller-select [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.Step]"
-                           [title]="controlSchemeInputActions.Step | controlSchemeInputActionToL10nKey | transloco "
-    ></app-controller-select>
+<app-binding-edit-sections-container *ngIf="form">
+    <app-binding-edit-section [largeScreenWidthPercentage]="33"
+                              [caption]="'controlScheme.bindingSectionOutputTitle' | transloco"
+    >
+        <app-binding-select-hub [control]="form.controls.hubId"
+                                [bindingType]="bindingType"
+        ></app-binding-select-hub>
 
-    <ng-container *ngIf="form.controls.inputs.valid">
-        <app-binding-control-num-input [controlTitle]="'controlScheme.stepperBinding.outputDegree' | transloco"
-                                       [control]="form.controls.degree"
-                                       [min]="minStepperDegree"
-                                       [max]="maxStepperDegree"
-        ></app-binding-control-num-input>
+        <app-binding-control-select-io [portIdControl]="form.controls.portId"
+                                       [hubId]="form.controls.hubId.value"
+                                       [bindingType]="bindingType"
+        ></app-binding-control-select-io>
+    </app-binding-edit-section>
+
+    <mat-divider [vertical]="true" *appHideOnSmallScreen></mat-divider>
+
+    <app-binding-edit-section [largeScreenWidthPercentage]="33"
+                              [caption]="'controlScheme.bindingSectionInputTitle' | transloco"
+    >
+        <app-controller-select [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.Step]"
+                               [title]="controlSchemeInputActions.Step | controlSchemeInputActionToL10nKey | transloco "
+        ></app-controller-select>
+    </app-binding-edit-section>
+
+    <mat-divider [vertical]="true" *appHideOnSmallScreen></mat-divider>
+
+    <app-binding-edit-section [largeScreenWidthPercentage]="33"
+                              [caption]="'controlScheme.bindingSectionConfigTitle' | transloco"
+    >
+        <mat-form-field>
+            <mat-label>
+                {{ 'controlScheme.stepperBinding.outputDegree' | transloco }}
+            </mat-label>
+            <input type="number"
+                   matInput
+                   [formControl]="form.controls.degree"
+                   [min]="minStepperDegree"
+                   [max]="maxStepperDegree"
+            />
+        </mat-form-field>
 
         <app-slider-control [min]="minSpeed"
                             [max]="maxSpeed"
@@ -33,5 +62,5 @@
         <app-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'"
                             [control]="form.controls.useDecelerationProfile"
         ></app-toggle-control>
-    </ng-container>
-</ng-container>
+    </app-binding-edit-section>
+</app-binding-edit-sections-container>
