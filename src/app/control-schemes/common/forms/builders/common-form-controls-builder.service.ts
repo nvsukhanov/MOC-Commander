@@ -34,13 +34,6 @@ export class CommonFormControlsBuilderService {
         });
     }
 
-    public bindingIdControl(): FormControl<number> {
-        return this.formBuilder.control<number>(0, {
-            nonNullable: true,
-            validators: [ Validators.required ]
-        });
-    }
-
     public hubIdControl(): FormControl<string> {
         return this.formBuilder.control<string>('', {
             nonNullable: true,

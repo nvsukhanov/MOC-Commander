@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ControlSchemeInputAction, ControlSchemeSetAngleBinding } from '@app/store';
+import { ControlSchemeBinding, ControlSchemeInputAction, ControlSchemeSetAngleBinding } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import { SetAngleBindingForm } from '../types';
@@ -13,9 +13,11 @@ export class SetAngleBindingFormMapperService {
     }
 
     public mapToModel(
+        id: ControlSchemeBinding['id'],
         form: SetAngleBindingForm
     ): ControlSchemeSetAngleBinding {
         return {
+            id,
             operationMode: ControlSchemeBindingType.SetAngle,
             ...form.getRawValue(),
             inputs: {

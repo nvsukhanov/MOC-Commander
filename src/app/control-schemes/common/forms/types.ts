@@ -22,7 +22,6 @@ export type OptionalInputFormGroup = FormGroup<{
 }>;
 
 export type SetSpeedBindingForm = FormGroup<{
-    id: FormControl<number>;
     inputs: FormGroup<{
         [ControlSchemeInputAction.Accelerate]: InputFormGroup;
         [ControlSchemeInputAction.Brake]: OptionalInputFormGroup;
@@ -38,7 +37,6 @@ export type SetSpeedBindingForm = FormGroup<{
 }>;
 
 export type ServoBindingForm = FormGroup<{
-    id: FormControl<number>;
     inputs: FormGroup<{
         [ControlSchemeInputAction.Servo]: InputFormGroup;
     }>;
@@ -54,7 +52,6 @@ export type ServoBindingForm = FormGroup<{
 }>;
 
 export type StepperBindingForm = FormGroup<{
-    id: FormControl<number>;
     inputs: FormGroup<{
         [ControlSchemeInputAction.Step]: InputFormGroup;
     }>;
@@ -69,7 +66,6 @@ export type StepperBindingForm = FormGroup<{
 }>;
 
 export type SetAngleBindingForm = FormGroup<{
-    id: FormControl<number>;
     inputs: FormGroup<{
         [ControlSchemeInputAction.SetAngle]: InputFormGroup;
     }>;
@@ -84,7 +80,6 @@ export type SetAngleBindingForm = FormGroup<{
 }>;
 
 export type SpeedShiftBindingForm = FormGroup<{
-    id: FormControl<number>;
     inputs: FormGroup<{
         [ControlSchemeInputAction.NextLevel]: InputFormGroup;
         [ControlSchemeInputAction.PrevLevel]: OptionalInputFormGroup;
@@ -101,7 +96,6 @@ export type SpeedShiftBindingForm = FormGroup<{
 }>;
 
 export type AngleShiftBindingForm = FormGroup<{
-    id: FormControl<number>;
     inputs: FormGroup<{
         [ControlSchemeInputAction.NextLevel]: InputFormGroup;
         [ControlSchemeInputAction.PrevLevel]: OptionalInputFormGroup;
@@ -119,6 +113,7 @@ export type AngleShiftBindingForm = FormGroup<{
 }>;
 
 export type ControlSchemeBindingForm = FormGroup<{
+    id: FormControl<number>;
     bindingType: FormControl<ControlSchemeBindingType>;
     [ControlSchemeBindingType.SetSpeed]: SetSpeedBindingForm;
     [ControlSchemeBindingType.Servo]: ServoBindingForm;

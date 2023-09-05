@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ControlSchemeAngleShiftBinding, ControlSchemeInputAction } from '@app/store';
+import { ControlSchemeAngleShiftBinding, ControlSchemeBinding, ControlSchemeInputAction } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import { AngleShiftBindingForm, InputFormGroup } from '../types';
@@ -13,10 +13,11 @@ export class AngleShiftBindingFormMapperService {
     }
 
     public mapToModel(
+        id: ControlSchemeBinding['id'],
         form: AngleShiftBindingForm
     ): ControlSchemeAngleShiftBinding {
         const result: ControlSchemeAngleShiftBinding = {
-            id: form.controls.id.getRawValue(),
+            id,
             operationMode: ControlSchemeBindingType.AngleShift,
             inputs: {
                 [ControlSchemeInputAction.NextLevel]: this.commonFormMapperService.mapInputFormToSchemeInput(

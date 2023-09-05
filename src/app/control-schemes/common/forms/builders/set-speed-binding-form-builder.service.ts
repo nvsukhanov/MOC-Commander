@@ -16,7 +16,6 @@ export class SetSpeedBindingFormBuilderService {
 
     public build(): SetSpeedBindingForm {
         return this.formBuilder.group({
-            id: this.commonFormControlBuilder.bindingIdControl(),
             inputs: this.formBuilder.group({
                 [ControlSchemeInputAction.Accelerate]: this.commonFormControlBuilder.inputFormGroup(),
                 [ControlSchemeInputAction.Brake]: this.commonFormControlBuilder.optionalInputFormGroup(),

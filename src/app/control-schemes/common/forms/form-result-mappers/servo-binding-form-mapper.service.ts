@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ControlSchemeInputAction, ControlSchemeServoBinding } from '@app/store';
+import { ControlSchemeBinding, ControlSchemeInputAction, ControlSchemeServoBinding } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import { ServoBindingForm } from '../types';
@@ -13,9 +13,11 @@ export class ServoBindingFormMapperService {
     }
 
     public mapToModel(
+        id: ControlSchemeBinding['id'],
         form: ServoBindingForm
     ): ControlSchemeServoBinding {
         return {
+            id,
             operationMode: ControlSchemeBindingType.Servo,
             ...form.getRawValue(),
             inputs: {
