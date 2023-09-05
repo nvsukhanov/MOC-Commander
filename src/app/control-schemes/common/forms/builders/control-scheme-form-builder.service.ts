@@ -21,17 +21,26 @@ export class ControlSchemeFormBuilderService {
         private readonly setAngleBindingFormBuilder: SetAngleBindingFormBuilderService,
         private readonly stepperBindingFormBuilder: StepperBindingFormBuilderService,
         private readonly speedShiftBindingFormBuilder: SpeedShiftBindingFormBuilderService,
-        private readonly angleShiftBindingFormBuilder: AngleShiftBindingFormBuilderService
+        private readonly angleShiftBindingFormBuilder: AngleShiftBindingFormBuilderService,
     ) {
     }
 
     public createBindingForm(): ControlSchemeBindingForm {
         return this.formBuilder.group({
+            id: this.formBuilder.control<number>(0, {
+                nonNullable: true,
+                validators: [
+                    Validators.required
+                ]
+            }),
             bindingType: this.formBuilder.control<ControlSchemeBindingType>(
                 ControlSchemeBindingType.SetSpeed,
                 {
                     nonNullable: true,
-                    validators: [ Validators.required, ControlSchemeValidators.isInEnum(ControlSchemeBindingType) ]
+                    validators: [
+                        Validators.required,
+                        ControlSchemeValidators.isInEnum(ControlSchemeBindingType)
+                    ]
                 }
             ),
             [ControlSchemeBindingType.SetSpeed]: this.setSpeedBindingFormBuilder.build(),
@@ -47,8 +56,11 @@ export class ControlSchemeFormBuilderService {
         form: ControlSchemeBindingForm,
         patch: DeepPartial<ControlSchemeBinding>
     ): void {
-        if (patch.operationMode) {
+        if (patch.operationMode !== undefined) {
             form.controls.bindingType.setValue(patch.operationMode);
+        }
+        if (patch.id !== undefined) {
+            form.controls.id.setValue(patch.id);
         }
         switch (patch.operationMode) {
             case ControlSchemeBindingType.SetSpeed:

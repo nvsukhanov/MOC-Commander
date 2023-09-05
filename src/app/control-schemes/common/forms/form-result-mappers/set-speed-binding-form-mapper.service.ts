@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ControlSchemeInputAction, ControlSchemeSetSpeedBinding } from '@app/store';
+import { ControlSchemeBinding, ControlSchemeInputAction, ControlSchemeSetSpeedBinding } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import { InputFormGroup, SetSpeedBindingForm } from '../types';
@@ -13,11 +13,12 @@ export class SetSpeedBindingFormMapperService {
     }
 
     public mapToModel(
+        id: ControlSchemeBinding['id'],
         form: SetSpeedBindingForm
     ): ControlSchemeSetSpeedBinding {
         const result: ControlSchemeSetSpeedBinding = {
+            id,
             operationMode: ControlSchemeBindingType.SetSpeed,
-            id: form.controls.id.getRawValue(),
             inputs: {
                 [ControlSchemeInputAction.Accelerate]: this.commonFormMapperService.mapInputFormToSchemeInput(
                     form.controls.inputs.controls[ControlSchemeInputAction.Accelerate]

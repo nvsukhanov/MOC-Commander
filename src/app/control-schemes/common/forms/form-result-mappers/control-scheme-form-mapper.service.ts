@@ -26,19 +26,20 @@ export class ControlSchemeFormMapperService {
         form: ControlSchemeBindingForm
     ): ControlSchemeBinding {
         const operationMode = form.controls.bindingType.value;
+        const id = form.controls.id.value;
         switch (operationMode) {
             case ControlSchemeBindingType.SetSpeed:
-                return this.setSpeedBindingMapper.mapToModel(form.controls[ControlSchemeBindingType.SetSpeed]);
+                return this.setSpeedBindingMapper.mapToModel(id, form.controls[ControlSchemeBindingType.SetSpeed]);
             case ControlSchemeBindingType.Servo:
-                return this.servoBindingMapper.mapToModel(form.controls[ControlSchemeBindingType.Servo]);
+                return this.servoBindingMapper.mapToModel(id, form.controls[ControlSchemeBindingType.Servo]);
             case ControlSchemeBindingType.SetAngle:
-                return this.setAngleBindingMapper.mapToModel(form.controls[ControlSchemeBindingType.SetAngle]);
+                return this.setAngleBindingMapper.mapToModel(id, form.controls[ControlSchemeBindingType.SetAngle]);
             case ControlSchemeBindingType.Stepper:
-                return this.stepperBindingMapper.mapToModel(form.controls[ControlSchemeBindingType.Stepper]);
+                return this.stepperBindingMapper.mapToModel(id, form.controls[ControlSchemeBindingType.Stepper]);
             case ControlSchemeBindingType.SpeedShift:
-                return this.speedShiftBindingMapper.mapToModel(form.controls[ControlSchemeBindingType.SpeedShift]);
+                return this.speedShiftBindingMapper.mapToModel(id, form.controls[ControlSchemeBindingType.SpeedShift]);
             case ControlSchemeBindingType.AngleShift:
-                return this.angleShiftBindingMapper.mapToModel(form.controls[ControlSchemeBindingType.AngleShift]);
+                return this.angleShiftBindingMapper.mapToModel(id, form.controls[ControlSchemeBindingType.AngleShift]);
         }
     }
 }

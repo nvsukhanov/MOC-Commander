@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ControlSchemeInputAction, ControlSchemeStepperBinding } from '@app/store';
+import { ControlSchemeBinding, ControlSchemeInputAction, ControlSchemeStepperBinding } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import { StepperBindingForm } from '../types';
@@ -13,9 +13,11 @@ export class StepperBindingFormMapperService {
     }
 
     public mapToModel(
+        id: ControlSchemeBinding['id'],
         form: StepperBindingForm
     ): ControlSchemeStepperBinding {
         return {
+            id,
             operationMode: ControlSchemeBindingType.Stepper,
             ...form.getRawValue(),
             inputs: {

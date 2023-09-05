@@ -16,7 +16,6 @@ export class SpeedShiftBindingFormBuilderService {
 
     public build(): SpeedShiftBindingForm {
         return this.formBuilder.group({
-            id: this.commonFormControlsBuilder.bindingIdControl(),
             inputs: this.formBuilder.group({
                 [ControlSchemeInputAction.NextLevel]: this.commonFormControlsBuilder.inputFormGroup(),
                 [ControlSchemeInputAction.PrevLevel]: this.commonFormControlsBuilder.optionalInputFormGroup(),
