@@ -59,6 +59,7 @@
             >
                 <mat-icon [fontIcon]="'gps_fixed'"></mat-icon>
             </button>
+            <mat-error [appValidationMessages]="form.controls.aposCenter"></mat-error>
         </mat-form-field>
 
         <mat-form-field>
@@ -77,6 +78,7 @@
             >
                 <mat-icon [fontIcon]="'gps_fixed'"></mat-icon>
             </button>
+            <mat-error [appValidationMessages]="form.controls.range"></mat-error>
         </mat-form-field>
 
         <app-slider-control [min]="0"

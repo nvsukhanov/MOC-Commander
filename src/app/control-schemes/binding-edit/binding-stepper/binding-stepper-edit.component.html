@@ -34,9 +34,8 @@
             <input type="number"
                    matInput
                    [formControl]="form.controls.degree"
-                   [min]="minStepperDegree"
-                   [max]="maxStepperDegree"
             />
+            <mat-error [appValidationMessages]="form.controls.degree"></mat-error>
         </mat-form-field>
 
         <app-slider-control [min]="minSpeed"

@@ -18,6 +18,7 @@ import {
     HideOnSmallScreenDirective,
     SliderControlComponent,
     ToggleControlComponent,
+    ValidationMessagesDirective,
     getTranslationArcs
 } from '@app/shared';
 
@@ -56,7 +57,8 @@ import { BindingEditSectionsContainerComponent } from '../sections-container';
         MatInputModule,
         ReactiveFormsModule,
         HideOnSmallScreenDirective,
-        BindingEditSectionsContainerComponent
+        BindingEditSectionsContainerComponent,
+        ValidationMessagesDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

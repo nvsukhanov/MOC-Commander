@@ -23,7 +23,7 @@ export class FullControllerInputNameService {
     }
 
     public getFullControllerInputNameData(
-        data: ControlSchemeInput
+        data: Pick<ControlSchemeInput, 'inputId' | 'buttonId' | 'portId' | 'inputType' | 'controllerId'>
     ): FullControllerInputNameData {
         const profile$ = this.store.select(CONTROLLER_SELECTORS.selectById(data.controllerId)).pipe(
             filter((controller): controller is ControllerModel => !!controller),
@@ -47,7 +47,7 @@ export class FullControllerInputNameService {
 
     private getButtonName$(
         profile$: Observable<IControllerProfile<ControllerSettings | null>>,
-        inputData: ControlSchemeInput
+        inputData: Pick<ControlSchemeInput, 'inputId' | 'buttonId' | 'portId' | 'inputType'>
     ): Observable<string> {
         switch (inputData.inputType) {
             case ControllerInputType.Axis:

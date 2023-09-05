@@ -8,8 +8,10 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { HubModel } from '@app/store';
+import { ValidationMessagesDirective } from '@app/shared';
 
 import { RoutesBuilderService } from '../../../routing';
+import { HUB_EDIT_ERRORS_L10N_MAP } from './hub-edit-errors-l10n-map';
 
 export type HubEditFormSaveResult = {
     hubId: string;
@@ -29,7 +31,8 @@ export type HubEditFormSaveResult = {
         ReactiveFormsModule,
         TranslocoModule,
         RouterLink,
-        MatProgressBarModule
+        MatProgressBarModule,
+        ValidationMessagesDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -37,6 +40,8 @@ export class HubEditFormComponent {
     @Input() public isSaving: boolean | undefined;
 
     @Output() public readonly save = new EventEmitter<HubEditFormSaveResult>();
+
+    public readonly validationErrorsMap = HUB_EDIT_ERRORS_L10N_MAP;
 
     public readonly form: FormGroup<{
         hubId: FormControl<string>;
@@ -59,7 +64,7 @@ export class HubEditFormComponent {
                 Validators.required,
                 Validators.minLength(1),
                 Validators.maxLength(this.maxHubNameLength),
-                Validators.pattern(/^[a-zA-Z0-9_.\s]+$/)
+                Validators.pattern(/^[a-zA-Z0-9_.\s-]+$/)
             ])
         });
     }

@@ -1,18 +1,21 @@
 import { ChangeDetectorRef, Directive, ElementRef, Input, OnChanges, OnDestroy, Renderer2 } from '@angular/core';
-import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { BehaviorSubject, Subscription, combineLatestWith, distinctUntilChanged, map, of, switchMap } from 'rxjs';
+import { AbstractControl } from '@angular/forms';
+import { BehaviorSubject, Subscription, combineLatestWith, distinctUntilChanged, map, of, startWith, switchMap } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 
 import { ValidationErrorsL10nMap } from './validation-errors-l10n-map';
+import { COMMON_VALIDATION_ERRORS_L10N_MAP } from './common-validation-errors-l10n-map';
 
 @Directive({
     standalone: true,
-    selector: '[appValidationErrorMapping]'
+    selector: '[appValidationMessages]'
 })
-export class ValidationErrorMappingDirective implements OnChanges, OnDestroy {
-    @Input() public control?: AbstractControl;
+export class ValidationMessagesDirective implements OnChanges, OnDestroy {
+    @Input('appValidationMessages') public control?: AbstractControl;
 
     private controlSubscription?: Subscription;
+
+    private readonly commonValidationErrorsL10nMap: ValidationErrorsL10nMap = COMMON_VALIDATION_ERRORS_L10N_MAP;
 
     private readonly l10nSubject = new BehaviorSubject<ValidationErrorsL10nMap>({});
 
@@ -20,12 +23,12 @@ export class ValidationErrorMappingDirective implements OnChanges, OnDestroy {
         private readonly translocoService: TranslocoService,
         private readonly renderer: Renderer2,
         private readonly elementRef: ElementRef<HTMLElement>,
-        private readonly cdRef: ChangeDetectorRef
+        private readonly cdRef: ChangeDetectorRef,
     ) {
     }
 
-    @Input('appValidationErrorMapping')
-    public set l10n(v: ValidationErrorsL10nMap) {
+    @Input()
+    public set l10nMap(v: ValidationErrorsL10nMap) {
         this.l10nSubject.next(v);
     }
 
@@ -44,29 +47,35 @@ export class ValidationErrorMappingDirective implements OnChanges, OnDestroy {
         this.controlSubscription?.unsubscribe();
         if (this.control) {
             this.controlSubscription = this.control.statusChanges.pipe(
+                startWith(null),
                 combineLatestWith(this.l10nSubject),
-                map(([ , l10n ]) => this.extractFirstErrorL10nKey(l10n)),
-                switchMap((l10nKey) => l10nKey ? this.translocoService.selectTranslate(l10nKey) : of(null)),
+                map(([ , l10n ]) => this.extractFirstErrorData(l10n)),
+                switchMap((errorData) => errorData ? this.translocoService.selectTranslate(errorData.l10nKey, errorData.payload) : of(null)),
                 distinctUntilChanged()
-            ).subscribe((result) => {
+            ).subscribe((result: string | null) => {
                 this.renderer.setProperty(this.elementRef.nativeElement, 'innerText', result ?? '');
                 this.cdRef.detectChanges();
             });
         }
     }
 
-    private extractFirstErrorL10nKey(
+    private extractFirstErrorData(
         l10nMap: ValidationErrorsL10nMap
-    ): string | undefined {
+    ): {
+        l10nKey: string;
+        payload: object;
+    } | undefined {
         if (!this.control) {
             return undefined;
         }
         if (this.control && this.control.invalid) {
-            const errors = this.control.errors as ValidationErrors;
-            for (const errorName in errors) {
-                if (errorName && l10nMap[errorName]) {
-                    return l10nMap[errorName];
-                }
+            const error = Object.keys(this.control.errors ?? {})[0];
+            if (error !== undefined) {
+                const payload = this.control.errors?.[error] instanceof Object ? this.control.errors?.[error] : { value: this.control.errors?.[error] };
+                return {
+                    l10nKey: l10nMap[error] || this.commonValidationErrorsL10nMap[error] || error,
+                    payload
+                };
             }
         }
         return undefined;

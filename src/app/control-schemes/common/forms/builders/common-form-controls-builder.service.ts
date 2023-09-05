@@ -3,7 +3,7 @@ import { AsyncValidatorFn, FormBuilder, FormControl, Validators } from '@angular
 import { ButtonGroupButtonId, MOTOR_LIMITS, MotorServoEndState } from 'rxpoweredup';
 import { Store } from '@ngrx/store';
 import { TranslocoService } from '@ngneat/transloco';
-import { ControllerInputType } from '@app/shared';
+import { AppValidators, ControllerInputType } from '@app/shared';
 import { ControlSchemeInput, InputGain, LoopingMode } from '@app/store';
 
 import { InputFormGroup, OptionalInputFormGroup } from '../types';
@@ -57,7 +57,7 @@ export class CommonFormControlsBuilderService {
                 Validators.required,
                 Validators.min(0),
                 Validators.max(MOTOR_LIMITS.maxSpeed),
-                ControlSchemeValidators.requireInteger
+                AppValidators.requireInteger
             ]
         });
     }
@@ -69,7 +69,7 @@ export class CommonFormControlsBuilderService {
                 Validators.required,
                 Validators.min(MOTOR_LIMITS.minPower),
                 Validators.max(MOTOR_LIMITS.maxPower),
-                ControlSchemeValidators.requireInteger
+                AppValidators.requireInteger
             ]
         });
     }
@@ -92,7 +92,7 @@ export class CommonFormControlsBuilderService {
                 Validators.required,
                 Validators.min(MOTOR_LIMITS.minRawAngle),
                 Validators.max(MOTOR_LIMITS.maxRawAngle),
-                ControlSchemeValidators.requireInteger
+                AppValidators.requireInteger
             ]
         });
     }

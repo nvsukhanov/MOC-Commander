@@ -5,7 +5,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ControlSchemeBindingType, HideOnSmallScreenDirective, SliderControlComponent, ToggleControlComponent } from '@app/shared';
+import { ControlSchemeBindingType, HideOnSmallScreenDirective, SliderControlComponent, ToggleControlComponent, ValidationMessagesDirective } from '@app/shared';
 import { ControlSchemeInputAction } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
@@ -37,15 +37,12 @@ import { BindingEditSectionsContainerComponent } from '../sections-container';
         BindingControlOutputEndStateComponent,
         ToggleControlComponent,
         ReactiveFormsModule,
-        BindingEditSectionsContainerComponent
+        BindingEditSectionsContainerComponent,
+        ValidationMessagesDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingStepperEditComponent implements IBindingsDetailsEditComponent<StepperBindingForm> {
-    public readonly minStepperDegree = -MOTOR_LIMITS.maxServoDegreesRange;
-
-    public readonly maxStepperDegree = MOTOR_LIMITS.maxServoDegreesRange;
-
     public readonly bindingType = ControlSchemeBindingType.Stepper;
 
     public readonly minSpeed = 0;

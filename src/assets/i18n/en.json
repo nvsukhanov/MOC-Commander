@@ -48,6 +48,8 @@
     "noneConnected": "There are no connected hubs yet",
     "notConnected": "disconnected",
     "isNotConnectedTitle": "Hub is not connected",
+    "isNotConnectedEditNotification": "Hub ''{name}'' is not connected",
+    "isNotFoundTitle": "Hub is not found",
     "connected": "Hub {name} connected",
     "disconnected": "Hub {name} disconnected",
     "batteryLevel": "Battery: {batteryLevel}%",
@@ -57,7 +59,10 @@
     "buttonStateTitle": "Button state",
     "buttonState": "Hub button state: {isButtonPressed, select, true {pressed} other {released}}",
     "port": "Port {portId}",
-    "unknownHub": "Unknown hub ''{ hubId }''"
+    "unknownHub": "Unknown hub ''{ hubId }''",
+    "hubNameErrorMinLength": "Hub name must be at least { requiredLength } character long",
+    "hubNameErrorMaxLength": "Hub name must be no more than { requiredLength } characters long",
+    "hubNameErrorPattern": "Hub name can only contain letters, numbers, spaces and the following characters: ''-'' ''_'' ''.''"
   },
   "hubTypes": {
     "boost": "Boost Hub",
@@ -364,5 +369,13 @@
       "genericButton": "Button {inputId}",
       "unknownButton": "Unknown button"
     }
+  },
+  "validation": {
+    "required": "Required",
+    "max": "Max value is { max }",
+    "min": "Min value is { min }",
+    "minLength": "At least { requiredLength } is required",
+    "valueShouldNotBeZero": "Value should not be zero",
+    "valueShouldBeInteger": "Value must be integer"
   }
 }
