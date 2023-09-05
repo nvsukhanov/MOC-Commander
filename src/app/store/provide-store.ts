@@ -31,9 +31,9 @@ import {
     CONTROLLER_EFFECTS,
     CONTROL_SCHEME_EFFECTS,
     ControllerProfileFactoryService,
+    HUB_EFFECTS,
     HubAttachedIosStateEffects,
     HubPortModeInfoEffects,
-    HubsEffects,
     NotificationsEffects,
     SETTINGS_EFFECTS,
     TaskProcessingEffects,
@@ -98,13 +98,13 @@ export function provideApplicationStore(): EnvironmentProviders {
             AttachedIOsEffects,
             HubPortModeInfoEffects,
             AttachedIoModesEffects,
-            HubsEffects,
             TaskProcessingEffects,
             NotificationsEffects,
             HubAttachedIosStateEffects,
             CONTROLLER_EFFECTS,
             SETTINGS_EFFECTS,
-            CONTROL_SCHEME_EFFECTS
+            CONTROL_SCHEME_EFFECTS,
+            HUB_EFFECTS
         ),
         provideStoreDevtools({
             maxAge: 100,

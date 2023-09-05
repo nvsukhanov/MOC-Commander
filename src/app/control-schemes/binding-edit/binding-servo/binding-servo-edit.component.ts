@@ -1,23 +1,36 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { MOTOR_LIMITS, PortModeName } from 'rxpoweredup';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable, combineLatest, combineLatestWith, map, of, startWith, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, combineLatestWith, map, mergeWith, of, startWith, switchMap, take } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { CONTROL_SCHEME_ACTIONS, ControlSchemeInputAction } from '@app/store';
-import { ControllerInputType, SliderControlComponent, ToggleControlComponent, getTranslationArcs } from '@app/shared';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CONTROL_SCHEME_ACTIONS, ControlSchemeInputAction, HubFacadeService } from '@app/store';
+import {
+    ControlSchemeBindingType,
+    ControllerInputType,
+    HideOnSmallScreenDirective,
+    SliderControlComponent,
+    ToggleControlComponent,
+    getTranslationArcs
+} from '@app/shared';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { CalibrationResult, CalibrationResultType, ServoCalibrationDialogComponent } from '../servo-calibration-dialog';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { BINDING_EDIT_SELECTORS } from '../binding-edit.selectors';
 import { ControlSchemeInputActionToL10nKeyPipe, ServoBindingForm } from '../../common';
-import { BindingInputGainSelectComponent } from '../control-axial-output-modifier-select';
-import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
+import { BindingInputGainSelectComponent } from '../control-input-gain-select';
+import { BindingEditSectionComponent } from '../section';
+import { BindingControlSelectHubComponent } from '../control-select-hub';
+import { BindingControlSelectIoComponent } from '../control-select-io';
+import { BindingEditSectionsContainerComponent } from '../sections-container';
 
 @Component({
     standalone: true,
@@ -26,6 +39,7 @@ import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
     styleUrls: [ './binding-servo-edit.component.scss' ],
     imports: [
         NgIf,
+        BindingEditSectionComponent,
         TranslocoModule,
         MatButtonModule,
         MatIconModule,
@@ -35,28 +49,39 @@ import { BindingControlReadMotorPositionComponent } from '../control-read-pos';
         ToggleControlComponent,
         BindingControlSelectControllerComponent,
         BindingInputGainSelectComponent,
-        BindingControlReadMotorPositionComponent,
-        ControlSchemeInputActionToL10nKeyPipe
+        ControlSchemeInputActionToL10nKeyPipe,
+        BindingControlSelectHubComponent,
+        BindingControlSelectIoComponent,
+        MatDividerModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        HideOnSmallScreenDirective,
+        BindingEditSectionsContainerComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BindingServoEditComponent implements IBindingsDetailsEditComponent<ServoBindingForm> {
+export class BindingServoEditComponent implements IBindingsDetailsEditComponent<ServoBindingForm>, OnDestroy {
     public readonly motorLimits = MOTOR_LIMITS;
 
     public readonly controlSchemeInputActions = ControlSchemeInputAction;
 
-    public readonly portModeNames = PortModeName;
+    public readonly bindingType = ControlSchemeBindingType.Servo;
 
     private _form?: ServoBindingForm;
 
     private _canCalibrate$: Observable<boolean> = of(false);
 
-    private readonly isQueryingPort = new BehaviorSubject<boolean>(false);
+    private _canRequestPortValue$: Observable<boolean> = of(false);
+
+    private readonly _isCalibrating$ = new BehaviorSubject(false);
+
+    private portRequestSubscription?: Subscription;
 
     constructor(
         private readonly cd: ChangeDetectorRef,
         private readonly store: Store,
         private readonly matDialog: MatDialog,
+        private readonly hubFacade: HubFacadeService
     ) {
     }
 
@@ -72,58 +97,60 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
 
     public get canCalibrate$(): Observable<boolean> {
         return this._canCalibrate$.pipe(
-            combineLatestWith(this.isQueryingPort),
-            map(([ canCalibrate, isQueryingPort ]) => canCalibrate && !isQueryingPort)
+            combineLatestWith(this._isCalibrating$),
+            map(([ canCalibrate, isCalibrating ]) => canCalibrate && !isCalibrating)
         );
     }
 
-    public get canQueryPort$(): Observable<boolean> {
-        if (!this._form
-            || !this._form.value
-            || this._form.value.hubId === undefined
-            || this._form.value.portId === undefined
-        ) {
-            return of(false);
+    public get canRequestPortValue$(): Observable<boolean> {
+        return this._canRequestPortValue$;
+    }
+
+    public ngOnDestroy(): void {
+        this.portRequestSubscription?.unsubscribe();
+    }
+
+    public onServoCenterReadRequest(): void {
+        if (!this._form) {
+            return;
         }
-        return this.isQueryingPort.pipe(
-            map((isQueryingPort) => !isQueryingPort)
-        );
+        this.portRequestSubscription?.unsubscribe();
+        this.portRequestSubscription = this.hubFacade.getMotorAbsolutePosition(
+            this._form.controls.hubId.value,
+            this._form.controls.portId.value
+        ).pipe(
+            take(1)
+        ).subscribe((result: number) => {
+            this._form?.controls.aposCenter.setValue(result);
+            this._form?.controls.aposCenter.markAsDirty();
+            this._form?.controls.aposCenter.markAsTouched();
+        });
     }
 
-    public updateIsQueryingPort(
-        isQueryingPort: boolean
-    ): void {
-        this.isQueryingPort.next(isQueryingPort);
-    }
-
-    public aposCenterFromMotorChanged(
-        aposCenter: number
-    ): void {
-        this._form?.controls.aposCenter.setValue(aposCenter);
-        this._form?.controls.aposCenter.markAsDirty();
-        this._form?.controls.aposCenter.markAsTouched();
-    }
-
-    public rangeFromMotorChanged(
-        result: number
-    ): void {
-        const aposCenter = this._form?.controls.aposCenter.value ?? 0;
-        const { cw, ccw } = getTranslationArcs(aposCenter, result);
-        this._form?.controls.range.setValue(Math.min(Math.abs(cw), Math.abs(ccw)));
-        this._form?.controls.range.markAsDirty();
-        this._form?.controls.range.markAsTouched();
+    public onServoRangeReadRequest(): void {
+        if (!this._form) {
+            return;
+        }
+        this.portRequestSubscription?.unsubscribe();
+        this.portRequestSubscription = this.hubFacade.getMotorAbsolutePosition(
+            this._form.controls.hubId.value,
+            this._form.controls.portId.value
+        ).pipe(
+            take(1)
+        ).subscribe((result: number) => {
+            const aposCenter = this._form?.controls.aposCenter.value ?? 0;
+            const { cw, ccw } = getTranslationArcs(aposCenter, result);
+            this._form?.controls.range.setValue(Math.min(Math.abs(cw), Math.abs(ccw)));
+            this._form?.controls.range.markAsDirty();
+            this._form?.controls.range.markAsTouched();
+        });
     }
 
     public calibrate(): void {
-        if (!this._form
-            || !this._form.value
-            || this._form.value.hubId === undefined
-            || this._form.value.portId === undefined
-            || this._form.value.power === undefined
-        ) {
+        if (!this._form) {
             return;
         }
-        this.isQueryingPort.next(true);
+        this._isCalibrating$.next(true);
         this.matDialog.open(ServoCalibrationDialogComponent, {
             data: {
                 hubId: this._form.value.hubId,
@@ -131,7 +158,7 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
                 power: this._form.value.power
             }
         }).afterClosed().subscribe((result: CalibrationResult | null) => {
-            this.isQueryingPort.next(false);
+            this._isCalibrating$.next(false);
             if (!result) { // cancelled
                 return;
             }
@@ -151,22 +178,35 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
         form: ServoBindingForm
     ): void {
         if (form !== this._form) {
-            const hubId$ = form.controls.hubId.valueChanges.pipe(
-                startWith(form.controls.hubId.value),
-                map(() => form.controls.hubId.value),
-            );
-            const portId$ = form.controls.portId.valueChanges.pipe(
-                startWith(form.controls.portId.value),
-                map(() => form.controls.portId.value),
+            this._form = form;
+            this.portRequestSubscription?.unsubscribe();
+
+            this._canCalibrate$ = form.controls.hubId.valueChanges.pipe(
+                mergeWith(form.controls.portId.valueChanges),
+                startWith(null),
+                switchMap(() => {
+                    return this.store.select(BINDING_EDIT_SELECTORS.canCalibrateServo({
+                        hubId: form.controls.hubId.value,
+                        portId: form.controls.portId.value,
+                    }));
+                })
             );
 
-            this._canCalibrate$ = combineLatest([
-                hubId$,
-                portId$
-            ]).pipe(
-                switchMap(([ hubId, portId ]) => this.store.select(BINDING_EDIT_SELECTORS.canCalibrateServo({ hubId, portId })))
+            this._canRequestPortValue$ = form.controls.hubId.valueChanges.pipe(
+                mergeWith(form.controls.portId.valueChanges),
+                startWith(null),
+                combineLatestWith(this._isCalibrating$),
+                switchMap(([ , isCalibrating ]) => {
+                    if (isCalibrating) {
+                        return of(false);
+                    }
+                    return this.store.select(BINDING_EDIT_SELECTORS.canRequestPortValue({
+                        hubId: form.controls.hubId.value,
+                        portId: form.controls.portId.value,
+                        portModeName: PortModeName.absolutePosition
+                    }));
+                })
             );
-            this._form = form;
             this.cd.detectChanges();
         }
     }

@@ -1,0 +1,14 @@
+:host {
+    display: block;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+
+    &_small-screen {
+        flex-direction: column;
+        gap: 0;
+    }
+}

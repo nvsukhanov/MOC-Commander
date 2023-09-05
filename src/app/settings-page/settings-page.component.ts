@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { PushPipe } from '@ngrx/component';
 import { MatSelectModule } from '@angular/material/select';
 import { SETTINGS_ACTIONS, SETTINGS_SELECTORS, UserSelectedTheme } from '@app/store';
+import { getEnumValues } from '@app/shared';
 
 import { ThemeToL10nKeyPipe } from './theme-to-l10n-key.pipe';
 import { Language } from '../i18n';
@@ -28,13 +29,9 @@ import { LanguageToL10nKeyPipe } from './language-to-l10n-key.pipe';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SettingsPageComponent {
-    public readonly themes: ReadonlyArray<UserSelectedTheme> = [
-        UserSelectedTheme.System,
-        UserSelectedTheme.Light,
-        UserSelectedTheme.Dark
-    ];
+    public readonly themes: ReadonlyArray<UserSelectedTheme> = getEnumValues(UserSelectedTheme);
 
-    public readonly languages: ReadonlyArray<Language> = Object.values(Language) as Language[];
+    public readonly languages: ReadonlyArray<Language> = getEnumValues(Language);
 
     public readonly currentThemeSelection$ = this.store.select(SETTINGS_SELECTORS.theme);
 

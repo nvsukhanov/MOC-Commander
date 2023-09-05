@@ -4,7 +4,7 @@ import { JsonPipe, NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Subscription, take } from 'rxjs';
+import { Observable, Subscription, take } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,6 +15,7 @@ import { CONTROL_SCHEME_ACTIONS } from '@app/store';
 import { PORT_CONFIG_EDIT_PAGE_SELECTORS } from './port-config-edit-page.selectors';
 import { RoutesBuilderService } from '../../routing';
 import { PortConfigFormBuilderService } from '../common';
+import { PortConfigEditViewModel } from './port-config-edit-view-model';
 
 @Component({
     standalone: true,
@@ -36,7 +37,7 @@ import { PortConfigFormBuilderService } from '../common';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PortConfigEditPageComponent implements OnInit, OnDestroy {
-    public readonly portConfig$ = this.store.select(PORT_CONFIG_EDIT_PAGE_SELECTORS.selectPortConfig);
+    public readonly portConfig$: Observable<PortConfigEditViewModel | null> = this.store.select(PORT_CONFIG_EDIT_PAGE_SELECTORS.selectPortConfig);
 
     public readonly minAccDecProfileTimeMs = PortConfigFormBuilderService.minAccDecProfileTimeMs;
 

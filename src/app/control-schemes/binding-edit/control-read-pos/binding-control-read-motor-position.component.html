@@ -1,8 +1,0 @@
-<button mat-icon-button
-        [disabled]="!(canReadAposFromMotor$ | ngrxPush)"
-        [title]="controlTitle"
-        (click)="readAposFromMotor()"
->
-    <mat-icon [fontIcon]="'gps_fixed'"></mat-icon>
-    <span class="cdk-visually-hidden">{{ controlTitle }}</span>
-</button>

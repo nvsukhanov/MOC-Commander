@@ -25,7 +25,7 @@ export class SpeedShiftBindingFormBuilderService {
             hubId: this.commonFormControlsBuilder.hubIdControl(),
             portId: this.commonFormControlsBuilder.portIdControl(),
             levels: this.formBuilder.array<FormControl<number>>([
-                this.commonFormControlsBuilder.speedSelectControl(0)
+                this.commonFormControlsBuilder.speedControl(0)
             ], {
                 validators: [
                     Validators.required,
@@ -53,11 +53,11 @@ export class SpeedShiftBindingFormBuilderService {
         form.patchValue(patch);
         form.controls.levels.clear();
         if (patch.levels) {
-            patch.levels.forEach((step) =>
-                form.controls.levels.push(this.commonFormControlsBuilder.speedSelectControl(step))
+            patch.levels.forEach((speed) =>
+                form.controls.levels.push(this.commonFormControlsBuilder.speedControl(speed))
             );
         } else {
-            form.controls.levels.push(this.commonFormControlsBuilder.speedSelectControl(0));
+            form.controls.levels.push(this.commonFormControlsBuilder.speedControl(0));
             form.controls.initialStepIndex.setValue(0);
         }
     }

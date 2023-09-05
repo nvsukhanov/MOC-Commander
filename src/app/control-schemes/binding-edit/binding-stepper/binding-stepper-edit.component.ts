@@ -2,14 +2,20 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { NgIf } from '@angular/common';
 import { MOTOR_LIMITS } from 'rxpoweredup';
 import { TranslocoModule } from '@ngneat/transloco';
-import { SliderControlComponent, ToggleControlComponent } from '@app/shared';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ControlSchemeBindingType, HideOnSmallScreenDirective, SliderControlComponent, ToggleControlComponent } from '@app/shared';
 import { ControlSchemeInputAction } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
-import { BindingControlNumInputComponent } from '../control-num-input';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { BindingControlOutputEndStateComponent } from '../control-output-end-state-select';
 import { ControlSchemeInputActionToL10nKeyPipe, StepperBindingForm } from '../../common';
+import { BindingControlSelectHubComponent } from '../control-select-hub';
+import { BindingControlSelectIoComponent } from '../control-select-io';
+import { BindingEditSectionComponent } from '../section';
+import { BindingEditSectionsContainerComponent } from '../sections-container';
 
 @Component({
     standalone: true,
@@ -18,13 +24,20 @@ import { ControlSchemeInputActionToL10nKeyPipe, StepperBindingForm } from '../..
     styleUrls: [ './binding-stepper-edit.component.scss' ],
     imports: [
         NgIf,
-        SliderControlComponent,
-        BindingControlNumInputComponent,
-        BindingControlOutputEndStateComponent,
-        BindingControlSelectControllerComponent,
+        BindingEditSectionComponent,
+        BindingControlSelectHubComponent,
+        BindingControlSelectIoComponent,
+        MatDividerModule,
         TranslocoModule,
+        BindingControlSelectControllerComponent,
+        ControlSchemeInputActionToL10nKeyPipe,
+        HideOnSmallScreenDirective,
+        MatInputModule,
+        SliderControlComponent,
+        BindingControlOutputEndStateComponent,
         ToggleControlComponent,
-        ControlSchemeInputActionToL10nKeyPipe
+        ReactiveFormsModule,
+        BindingEditSectionsContainerComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -32,6 +45,8 @@ export class BindingStepperEditComponent implements IBindingsDetailsEditComponen
     public readonly minStepperDegree = -MOTOR_LIMITS.maxServoDegreesRange;
 
     public readonly maxStepperDegree = MOTOR_LIMITS.maxServoDegreesRange;
+
+    public readonly bindingType = ControlSchemeBindingType.Stepper;
 
     public readonly minSpeed = 0;
 

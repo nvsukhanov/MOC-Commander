@@ -22,11 +22,18 @@
     <div class="binding__controls">
         <div *ngFor="let controlData of viewModel.controlData">
             <span class="binding__controls-action-name">{{ controlData.action | controlSchemeInputActionToL10nKey | transloco }}:</span>
-            <app-full-controller-input-name class="binding__controls-label"
-                                            [class.binding__controls-label_disconnected]="!controlData.isControllerConnected"
-                                            [inputData]="controlData.input"
-                                            [showDisconnectedState]="true"
-            ></app-full-controller-input-name>
+            <ng-container *ngIf="controlData.isControllerConnected; else controllerIsNotConnected">
+                {{ controlData.input | fullControllerInputName | ngrxPush }}
+            </ng-container>
+            <ng-template #controllerIsNotConnected>
+                <span [class.binding__controls_disconnected]="!controlData.isControllerConnected"
+                      [title]="'controller.isNotConnectedInlineNotification' | transloco"
+                >{{ controlData.input | fullControllerInputName | ngrxPush }}</span>
+                <span *ngIf="!controlData.isControllerConnected"
+                      class="cdk-visually-hidden"
+                >{{ 'controller.isNotConnectedInlineNotification' | transloco }}</span>
+            </ng-template>
+
         </div>
     </div>
 </ng-container>

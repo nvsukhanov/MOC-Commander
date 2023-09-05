@@ -1,12 +1,14 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { Observable, map, of, startWith } from 'rxjs';
+import { Observable, Subscription, map, of, startWith, switchMap } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
+import { Store } from '@ngrx/store';
+import { ControlSchemeBindingType } from '@app/shared';
 
-import { HubWithConnectionState } from '../binding-edit.selectors';
+import { BINDING_EDIT_SELECTORS, HubWithConnectionState } from '../binding-edit.selectors';
 
 @Component({
     standalone: true,
@@ -23,28 +25,24 @@ import { HubWithConnectionState } from '../binding-edit.selectors';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BindingControlSelectHubComponent implements OnChanges {
+export class BindingControlSelectHubComponent implements OnChanges, OnDestroy {
     @Input() public control?: FormControl<string>;
 
-    private _hubIds: string[] = [];
+    @Input() public bindingType?: ControlSchemeBindingType;
 
-    private _hubMap: { [k in string]?: HubWithConnectionState } = {};
+    private _hubsWithConnectionState$: Observable<HubWithConnectionState[]> = of([]);
 
     private _isHubKnown$: Observable<boolean> = of(false);
 
-    @Input()
-    public set hubsWithConnectionState(
-        data: HubWithConnectionState[]
+    private formUpdateSubscription?: Subscription;
+
+    constructor(
+        private readonly store: Store
     ) {
-        this._hubIds = data.map((hubData) => hubData.hubId);
-        this._hubMap = {};
-        for (const hubData of data) {
-            this._hubMap[hubData.hubId] = hubData;
-        }
     }
 
-    public get hubIds(): string[] {
-        return this._hubIds;
+    public get hubsWithConnectionState$(): Observable<HubWithConnectionState[]> {
+        return this._hubsWithConnectionState$;
     }
 
     public get isHubKnown$(): Observable<boolean> {
@@ -52,19 +50,46 @@ export class BindingControlSelectHubComponent implements OnChanges {
     }
 
     public ngOnChanges(): void {
+        this.formUpdateSubscription?.unsubscribe();
+
+        if (this.bindingType !== undefined) {
+            this._hubsWithConnectionState$ = this.store.select(BINDING_EDIT_SELECTORS.selectControllableHubs(this.bindingType));
+        } else {
+            this._hubsWithConnectionState$ = of([]);
+        }
+
         if (this.control) {
             this._isHubKnown$ = this.control.valueChanges.pipe(
-                startWith(this.control.value),
-                map((hubId) => this._hubMap[hubId] !== undefined),
+                startWith(null),
+                switchMap(() => this._hubsWithConnectionState$),
+                map((hubsWithConnectionStates) => {
+                    if (!this.control) {
+                        return false;
+                    }
+                    return hubsWithConnectionStates.some((hubWithConnectionState) => hubWithConnectionState.hubId === this.control?.value);
+                }),
             );
+
+            this.formUpdateSubscription = this.control.valueChanges.pipe(
+                startWith(null),
+                switchMap(() => this._hubsWithConnectionState$),
+            ).subscribe((hubsWithConnectionStates) => {
+                // If the control is empty (invalid), set it to the first available hub
+                if (this.control && this.control.invalid) {
+                    const firstHub = hubsWithConnectionStates[0];
+                    if (firstHub) {
+                        this.control.setValue(firstHub.hubId);
+                    } else {
+                        this.control.reset();
+                    }
+                }
+            });
         } else {
             this._isHubKnown$ = of(false);
         }
     }
 
-    public getHubName(
-        hubId: string
-    ): string | undefined {
-        return this._hubMap[hubId]?.name;
+    public ngOnDestroy(): void {
+        this.formUpdateSubscription?.unsubscribe();
     }
 }

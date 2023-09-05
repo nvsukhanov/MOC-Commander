@@ -1,5 +1,7 @@
-.card-content {
-    display: flex;
-    flex-direction: column;
+:host {
+    display: block;
 }
 
+.binding-type-select {
+    width: 100%;
+}

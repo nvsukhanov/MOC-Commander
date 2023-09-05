@@ -1,20 +1,22 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { NgIf } from '@angular/common';
-import { Observable, Subscription, combineLatestWith, distinctUntilChanged, map, mergeWith, of, pairwise, startWith, switchMap } from 'rxjs';
+import { JsonPipe, NgForOf, NgIf } from '@angular/common';
+import { Observable, map, startWith } from 'rxjs';
+import { LetDirective, PushPipe } from '@ngrx/component';
+import { MatDividerModule } from '@angular/material/divider';
+import { TranslocoModule } from '@ngneat/transloco';
+import { MatSelectModule } from '@angular/material/select';
+import { ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { PushPipe } from '@ngrx/component';
-import { concatLatestFrom } from '@ngrx/effects';
-import { ControlSchemeBindingType } from '@app/shared';
-import { AttachedIoModel, ControlSchemeBinding } from '@app/store';
+import { BindingTypeToL10nKeyPipe, ControlSchemeBindingType, HideOnSmallScreenDirective } from '@app/shared';
+import { ControlSchemeBinding } from '@app/store';
 
-import { ControlSchemeFormBuilderService, ControlSchemeFormMapperService } from '../common/forms';
+import { ControlSchemeBindingForm, ControlSchemeFormBuilderService, ControlSchemeFormMapperService } from '../common';
 import { RenderBindingDetailsEditDirective } from './render-binding-details-edit.directive';
-import { BindingControlSelectOperationModeComponent } from './control-select-operation-mode';
 import { BindingControlSelectHubComponent } from './control-select-hub';
 import { BindingControlSelectIoComponent } from './control-select-io';
-import { ControlSchemeBindingForm } from '../common';
-import { BINDING_EDIT_SELECTORS, HubWithConnectionState } from './binding-edit.selectors';
+import { BindingEditSectionComponent } from './section';
+import { BINDING_EDIT_SELECTORS, BindingTypeSelectViewModel } from './binding-edit.selectors';
 
 @Component({
     standalone: true,
@@ -24,27 +26,30 @@ import { BINDING_EDIT_SELECTORS, HubWithConnectionState } from './binding-edit.s
     imports: [
         MatCardModule,
         NgIf,
-        BindingControlSelectOperationModeComponent,
         BindingControlSelectHubComponent,
         PushPipe,
         BindingControlSelectIoComponent,
         RenderBindingDetailsEditDirective,
+        MatDividerModule,
+        BindingEditSectionComponent,
+        TranslocoModule,
+        LetDirective,
+        HideOnSmallScreenDirective,
+        MatSelectModule,
+        BindingTypeToL10nKeyPipe,
+        NgForOf,
+        ReactiveFormsModule,
+        JsonPipe,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'appBindingEdit'
 })
-export class BindingEditComponent implements OnDestroy {
+export class BindingEditComponent {
     public readonly canSave$: Observable<boolean>;
 
-    public readonly hubsWithConnectionState$: Observable<HubWithConnectionState[]>;
-
-    public readonly availableIos$: Observable<AttachedIoModel[]>;
-
-    public readonly availableBindingTypes$: Observable<ControlSchemeBindingType[]>;
+    public readonly availableBindingTypes$: Observable<BindingTypeSelectViewModel[]>;
 
     protected readonly form: ControlSchemeBindingForm;
-
-    private readonly formUpdateSubscription: Subscription;
 
     constructor(
         private readonly formBuilder: ControlSchemeFormBuilderService,
@@ -53,6 +58,9 @@ export class BindingEditComponent implements OnDestroy {
         private readonly cdRef: ChangeDetectorRef
     ) {
         this.form = this.formBuilder.createBindingForm();
+
+        this.availableBindingTypes$ = this.store.select(BINDING_EDIT_SELECTORS.selectBindingTypeSelectViewModel);
+
         this.canSave$ = this.form.statusChanges.pipe(
             startWith(null),
             map(() => {
@@ -61,72 +69,6 @@ export class BindingEditComponent implements OnDestroy {
                 const isBindingFormDirty = this.form.controls[this.form.controls.bindingType.value].dirty;
                 const isBindingFormValid = this.form.controls[this.form.controls.bindingType.value].valid;
                 return (isOpModeDirty || isBindingFormDirty) && isOpModeValid && isBindingFormValid;
-            })
-        );
-
-        this.hubsWithConnectionState$ = this.store.select(BINDING_EDIT_SELECTORS.selectHubsWithConnectionState);
-
-        const selectedHubId$ = this.form.controls.bindingType.valueChanges.pipe(
-            startWith(this.form.controls.bindingType.value),
-            switchMap((operationMode) => this.form.controls[operationMode].controls.hubId.valueChanges.pipe(
-                startWith(this.form.controls[this.form.controls.bindingType.value].controls.hubId.value)
-            )),
-            distinctUntilChanged()
-        );
-
-        this.availableIos$ = selectedHubId$.pipe(
-            switchMap((hubId) => hubId ? this.store.select(BINDING_EDIT_SELECTORS.selectHubControllableIos(hubId)) : of([]))
-        );
-
-        const selectedPortId$ = this.form.controls.bindingType.valueChanges.pipe(
-            startWith(this.form.controls.bindingType.value),
-            switchMap((operationMode) => this.form.controls[operationMode].controls.portId.valueChanges.pipe(
-                startWith(this.form.controls[this.form.controls.bindingType.value].controls.portId.value)
-            )),
-            distinctUntilChanged()
-        );
-
-        this.availableBindingTypes$ = selectedHubId$.pipe(
-            combineLatestWith(selectedPortId$),
-            switchMap(([ hubId, portId ]) => this.store.select(BINDING_EDIT_SELECTORS.selectAvailableBindingTypes({ hubId, portId })))
-        );
-
-        this.formUpdateSubscription = new Subscription();
-        this.formUpdateSubscription.add(
-            this.form.controls[this.form.controls.bindingType.value].controls.hubId.valueChanges.pipe(
-                concatLatestFrom(() => this.availableIos$),
-            ).subscribe(([ hubId, availableIos ]) => {
-                const currentPortId = this.form.controls[this.form.controls.bindingType.value].controls.portId.value;
-                if (!availableIos.find((io) => io.hubId === hubId && io.portId === currentPortId)) {
-                    const firstAvailableIo = availableIos[0];
-                    if (firstAvailableIo) {
-                        this.form.controls[this.form.controls.bindingType.value].controls.portId.setValue(firstAvailableIo.portId);
-                    }
-                }
-            })
-        );
-        this.formUpdateSubscription.add(
-            this.form.controls[this.form.controls.bindingType.value].controls.portId.valueChanges.pipe(
-                mergeWith(this.form.controls[this.form.controls.bindingType.value].controls.hubId.valueChanges),
-                concatLatestFrom(() => this.availableBindingTypes$),
-            ).subscribe(([ , availableBindingTypes ]) => {
-                const currentBindingType = this.form.controls.bindingType.value;
-                if (!availableBindingTypes.includes(currentBindingType)) {
-                    const firstAvailableBindingType = availableBindingTypes[0];
-                    if (firstAvailableBindingType) {
-                        this.form.controls.bindingType.setValue(firstAvailableBindingType);
-                    }
-                }
-            })
-        );
-        this.formUpdateSubscription.add(
-            this.form.controls.bindingType.valueChanges.pipe(
-                pairwise(),
-            ).subscribe(([ prevOpMode, nextOpMode ]) => {
-                const prevOpModeHubId = this.form.controls[prevOpMode].controls.hubId.value;
-                const prevOpModePortId = this.form.controls[prevOpMode].controls.portId.value;
-                this.form.controls[nextOpMode].controls.hubId.setValue(prevOpModeHubId);
-                this.form.controls[nextOpMode].controls.portId.setValue(prevOpModePortId);
             })
         );
     }
@@ -148,10 +90,6 @@ export class BindingEditComponent implements OnDestroy {
         if (operationMode !== undefined) {
             this.form.controls.bindingType.setValue(operationMode);
         }
-    }
-
-    public ngOnDestroy(): void {
-        this.formUpdateSubscription.unsubscribe();
     }
 
     public getValue(): ControlSchemeBinding {

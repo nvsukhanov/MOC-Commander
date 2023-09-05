@@ -1,54 +1,85 @@
-<ng-container *ngIf="form">
-    <app-controller-select [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.NextLevel]"
-                           [title]="controlSchemeInputActions.NextLevel | controlSchemeInputActionToL10nKey | transloco "
-    ></app-controller-select>
+<app-binding-edit-sections-container *ngIf="form">
+    <app-binding-edit-section [largeScreenWidthPercentage]="33"
+                              [caption]="'controlScheme.bindingSectionOutputTitle' | transloco"
+    >
+        <app-binding-select-hub [control]="form.controls.hubId"
+                                [bindingType]="bindingType"
+        ></app-binding-select-hub>
 
-    <ng-container *ngIf="isNextAngleControlAssigned">
+        <app-binding-control-select-io [portIdControl]="form.controls.portId"
+                                       [hubId]="form.controls.hubId.value"
+                                       [bindingType]="bindingType"
+        ></app-binding-control-select-io>
+    </app-binding-edit-section>
+
+    <mat-divider [vertical]="true" *appHideOnSmallScreen></mat-divider>
+
+    <app-binding-edit-section [largeScreenWidthPercentage]="33"
+                              [caption]="'controlScheme.bindingSectionInputTitle' | transloco"
+    >
+        <app-controller-select [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.NextLevel]"
+                               [title]="controlSchemeInputActions.NextLevel | controlSchemeInputActionToL10nKey | transloco "
+        ></app-controller-select>
+
         <app-controller-select [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.PrevLevel]"
                                [title]="controlSchemeInputActions.PrevLevel | controlSchemeInputActionToL10nKey | transloco "
         ></app-controller-select>
+    </app-binding-edit-section>
 
+    <mat-divider [vertical]="true" *appHideOnSmallScreen></mat-divider>
+
+    <app-binding-edit-section [largeScreenWidthPercentage]="33"
+                              [caption]="'controlScheme.bindingSectionConfigTitle' | transloco"
+    >
         <div class="add-level-button-container">
             <button class="add-level-button"
                     mat-raised-button
-                    (click)="addNextAngleLevel()">
-                {{ 'controlScheme.angleShiftBinding.outputAngleLevelAdd' | transloco }}
-            </button>
-        </div>
-
-        <div *ngFor="let angleControl of form.controls.angles.controls; let idx = index"
-             class="level-input-container"
-        >
-            <app-binding-control-num-input [control]="angleControl"
-                                           class="level-input"
-                                           [controlTitle]="'controlScheme.angleShiftBinding.angleLevel' | transloco: { level: form.controls.initialStepIndex.value - idx }"
-                                           [min]="minAngle"
-                                           [max]="maxAngle"
-            ></app-binding-control-num-input>
-            <app-binding-control-read-motor-position [disabled]="!!(isQueryingPort$ | ngrxPush)"
-                                                     [controlTitle]="'controlScheme.angleShiftBinding.readAngleFromPort' | transloco"
-                                                     [portModeName]="portModeNames.absolutePosition"
-                                                     [hubId]="form.controls.hubId.value"
-                                                     [portId]="form.controls.portId.value"
-                                                     (aposChange)="onAngleRead($event, idx)"
-                                                     (isQueryingPortChange)="updateIsQueryingPort($event)"
-            ></app-binding-control-read-motor-position>
-            <button mat-icon-button
-                    [disabled]="form.controls.initialStepIndex.value === idx"
-                    (click)="removeAngleLevel(idx)"
+                    (click)="addNextAngleLevel()"
             >
-                <mat-icon [fontIcon]="'delete'"></mat-icon>
-                <span class="cdk-visually-hidden">{{ 'controlScheme.angleShiftBinding.outputAngleLevelRemove' | transloco }}</span>
+                {{ 'controlScheme.angleShiftBinding.outputAngleLevelAdd' | transloco }}
             </button>
+        </div>
+
+        <div *ngFor="let angleControl of form.controls.angles.controls; let idx = index">
+            <mat-form-field>
+                <mat-label>
+                    {{ 'controlScheme.angleShiftBinding.angleLevel' | transloco: { level: form.controls.initialStepIndex.value - idx } }}
+                </mat-label>
+                <input type="number"
+                       matInput
+                       [formControl]="angleControl"
+                       [min]="minAngle"
+                       [max]="maxAngle"
+                />
+                <button mat-icon-button
+                        matSuffix
+                        [disabled]="!(canRequestPortValue$ | ngrxPush)"
+                        [title]="'controlScheme.angleShiftBinding.readAngleFromPort' | transloco"
+                        (click)="onPortAbsolutePositionRequest(idx)"
+                >
+                    <mat-icon [fontIcon]="'gps_fixed'"></mat-icon>
+                </button>
+                <button mat-icon-button
+                        matSuffix
+                        [disabled]="form.controls.initialStepIndex.value === idx"
+                        (click)="removeAngleLevel(idx)"
+                >
+                    <mat-icon [fontIcon]="'delete'"></mat-icon>
+                    <span class="cdk-visually-hidden">{{ 'controlScheme.angleShiftBinding.outputAngleLevelRemove' | transloco }}</span>
+                </button>
+            </mat-form-field>
         </div>
 
         <div class="add-level-button-container">
             <button class="add-level-button"
                     mat-raised-button
-                    (click)="addPrevAngleLevel()">
+                    (click)="addPrevAngleLevel()"
+            >
                 {{ 'controlScheme.angleShiftBinding.outputAngleLevelAdd' | transloco }}
             </button>
         </div>
+
+        <mat-divider class="sections-divider"></mat-divider>
 
         <app-slider-control [min]="0"
                             [max]="motorLimits.maxSpeed"
@@ -75,5 +106,5 @@
         <app-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'"
                             [control]="form.controls.useDecelerationProfile"
         ></app-toggle-control>
-    </ng-container>
-</ng-container>
+    </app-binding-edit-section>
+</app-binding-edit-sections-container>

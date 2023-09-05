@@ -6,10 +6,12 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { Validators } from '@angular/forms';
+import { PushPipe } from '@ngrx/component';
 import { ControlSchemeInput, ControllerInputModel } from '@app/store';
+import { HideOnSmallScreenDirective } from '@app/shared';
 
 import { WaitForControllerInputDialogComponent } from '../wait-for-controller-input-dialog';
-import { FullControllerInputNameComponent, InputFormGroup, OptionalInputFormGroup } from '../../common';
+import { FullControllerInputNamePipe, InputFormGroup, OptionalInputFormGroup } from '../../common';
 
 @Component({
     standalone: true,
@@ -19,23 +21,34 @@ import { FullControllerInputNameComponent, InputFormGroup, OptionalInputFormGrou
     imports: [
         NgIf,
         MatDialogModule,
-        FullControllerInputNameComponent,
         MatButtonModule,
         TranslocoModule,
         MatInputModule,
-        MatIconModule
+        MatIconModule,
+        HideOnSmallScreenDirective,
+        FullControllerInputNamePipe,
+        PushPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingControlSelectControllerComponent {
-    @Input() public inputFormGroup?: InputFormGroup | OptionalInputFormGroup;
-
     @Input() public title = '';
+
+    private _inputFormGroup?: InputFormGroup | OptionalInputFormGroup;
 
     constructor(
         private readonly dialog: MatDialog,
         private readonly cd: ChangeDetectorRef
     ) {
+    }
+
+    @Input()
+    public set inputFormGroup(v: InputFormGroup | OptionalInputFormGroup | undefined) {
+        this._inputFormGroup = v;
+    }
+
+    public get inputFormGroup(): InputFormGroup | OptionalInputFormGroup | undefined {
+        return this._inputFormGroup;
     }
 
     public get isRequired(): boolean {

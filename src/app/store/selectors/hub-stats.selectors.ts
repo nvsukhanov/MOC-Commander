@@ -32,5 +32,13 @@ export const HUB_STATS_SELECTORS = {
     selectIsHubConnected: (hubId: string) => createSelector(
         HUB_STATS_SELECTORS.selectByHubId(hubId),
         (hubStats): boolean => !!hubStats
-    )
+    ),
+    canRequestPortValue: ({ hubId, portId }: { hubId: string; portId: number }) => createSelector(
+        HUB_STATS_SELECTORS.selectByHubId(hubId),
+        (hubStats) => !hubStats?.valueRequestPortIds.includes(portId)
+    ),
+    isPortValueRequested: ({ hubId, portId }: { hubId: string; portId: number }) => createSelector(
+        HUB_STATS_SELECTORS.selectByHubId(hubId),
+        (hubStats) => !!hubStats?.valueRequestPortIds.includes(portId)
+    ),
 } as const;

@@ -45,12 +45,5 @@ export const ATTACHED_IO_PORT_MODE_INFO_SELECTORS = {
             }
             return null;
         }
-    ),
-    selectHubPortHastInputModeForPortModeName: (
-        { hubId, portId, portModeName }: { hubId: string; portId: number; portModeName: PortModeName }
-    ) => createSelector(
-        ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectHubPortInputModeForPortModeName({ hubId, portId, portModeName }),
-        (modeInfo) => modeInfo !== null
-    ),
-
+    )
 } as const;

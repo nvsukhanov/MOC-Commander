@@ -41,6 +41,6 @@ export const HUBS_FEATURE = createFeature({
                 ...state,
                 discoveryState: HubDiscoveryState.Idle
             })
-        ),
+        )
     )
 });

@@ -23,6 +23,7 @@ export const HUB_STATS_FEATURE = createFeature({
                 isButtonPressed: false,
                 batteryLevel: null,
                 hasCommunication: false,
+                valueRequestPortIds: []
             }, state)
         ),
         on(HUBS_ACTIONS.disconnected, (state, { hubId }): HubStatsState => HUB_STATS_ENTITY_ADAPTER.removeOne(hubId, state)),
@@ -33,7 +34,8 @@ export const HUB_STATS_FEATURE = createFeature({
                         hasCommunication: data.hasCommunication,
                     }
                 }, state
-            )),
+            )
+        ),
         on(HUB_STATS_ACTIONS.batteryLevelReceived,
             (state, data): HubStatsState => HUB_STATS_ENTITY_ADAPTER.updateOne({
                     id: data.hubId,
@@ -41,7 +43,8 @@ export const HUB_STATS_FEATURE = createFeature({
                         batteryLevel: data.batteryLevel,
                     }
                 }, state
-            )),
+            )
+        ),
         on(HUB_STATS_ACTIONS.rssiLevelReceived,
             (state, { hubId, rssi }): HubStatsState => HUB_STATS_ENTITY_ADAPTER.updateOne({
                     id: hubId,
@@ -49,7 +52,8 @@ export const HUB_STATS_FEATURE = createFeature({
                         rssi
                     }
                 }, state
-            )),
+            )
+        ),
         on(HUB_STATS_ACTIONS.buttonStateReceived,
             (state, { hubId, isButtonPressed }): HubStatsState => HUB_STATS_ENTITY_ADAPTER.updateOne({
                     id: hubId,
@@ -57,6 +61,35 @@ export const HUB_STATS_FEATURE = createFeature({
                         isButtonPressed
                     }
                 }, state
-            ))
+            )
+        ),
+        on(HUBS_ACTIONS.requestPortPosition, HUBS_ACTIONS.requestPortAbsolutePosition,
+            (state, { hubId, portId }): HubStatsState => {
+                const currentlyRequestedPorts = state.entities[hubId]?.valueRequestPortIds || [];
+                return HUB_STATS_ENTITY_ADAPTER.updateOne({
+                        id: hubId,
+                        changes: {
+                            valueRequestPortIds: [ ...currentlyRequestedPorts, portId ]
+                        }
+                    }, state
+                );
+            }
+        ),
+        on(
+            HUBS_ACTIONS.portAbsolutePositionRead,
+            HUBS_ACTIONS.portAbsolutePositionReadFailed,
+            HUBS_ACTIONS.portPositionRead,
+            HUBS_ACTIONS.portPositionReadFailed,
+            (state, { hubId, portId }): HubStatsState => {
+                const currentlyRequestedPorts = state.entities[hubId]?.valueRequestPortIds || [];
+                return HUB_STATS_ENTITY_ADAPTER.updateOne({
+                        id: hubId,
+                        changes: {
+                            valueRequestPortIds: currentlyRequestedPorts.filter((id) => id !== portId)
+                        }
+                    }, state
+                );
+            }
+        )
     )
 });

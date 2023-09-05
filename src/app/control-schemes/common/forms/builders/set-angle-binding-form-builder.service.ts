@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { MOTOR_LIMITS } from 'rxpoweredup';
+import { FormBuilder } from '@angular/forms';
 import { ControlSchemeInputAction, ControlSchemeSetAngleBinding } from '@app/store';
 import { DeepPartial } from '@app/shared';
 
@@ -23,10 +22,7 @@ export class SetAngleBindingFormBuilderService {
             }),
             hubId: this.commonFormControlBuilder.hubIdControl(),
             portId: this.commonFormControlBuilder.portIdControl(),
-            angle: this.formBuilder.control<number>(0, {
-                nonNullable: true,
-                validators: [ Validators.required, Validators.min(MOTOR_LIMITS.minRawAngle), Validators.max(MOTOR_LIMITS.maxRawAngle) ]
-            }),
+            angle: this.commonFormControlBuilder.angleControl(),
             speed: this.commonFormControlBuilder.speedControl(),
             power: this.commonFormControlBuilder.powerControl(),
             endState: this.commonFormControlBuilder.servoEndStateControl(),
