@@ -57,7 +57,10 @@
     "buttonStateTitle": "Кнопка",
     "buttonState": "Кнопка хаба: {isButtonPressed, select, true {нажата} other {не нажата}}",
     "port": "Порт {portId}",
-    "unknownHub": "Неизвестный хаб ''{ hubId }''"
+    "unknownHub": "Неизвестный хаб ''{ hubId }''",
+    "hubNameErrorMinLength": "Имя хаба должно быть не менее { requiredLength } символов",
+    "hubNameErrorMaxLength": "Имя хаба должно быть не более { requiredLength } символов",
+    "hubNameErrorPattern": "Имя хаба может содержать только латинские буквы, цифры, пробелы и символы ''-'' ''_'' ''.''"
   },
   "hubTypes": {
     "boost": "Хаб Boost",
@@ -364,5 +367,13 @@
       "genericButton": "Кнопка {inputId}",
       "unknownButton": "Неизвестная кнопка"
     }
+  },
+  "validation": {
+    "required": "Поле обязательно для заполнения",
+    "max": "Максимальное значение { max }",
+    "min": "Минимальное значение { min }",
+    "minLength": "Требуется минимум { requiredLength }",
+    "valueShouldNotBeZero": "Значение не должно быть нулевым",
+    "valueShouldBeInteger": "Значение должно быть целым числом"
   }
 }

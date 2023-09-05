@@ -2,16 +2,10 @@
                 class="control-select-form-field"
 >
     <mat-label>{{ title }}</mat-label>
-    <input *ngIf="isControllerAssigned"
+    <input *ngIf="syntheticInputControl"
            matInput
            readonly
-           [required]="true"
-           [attr.value]="controllerData | fullControllerInputName | ngrxPush"
-    />
-    <input *ngIf="!isControllerAssigned"
-           matInput
-           readonly
-           [required]="isRequired"
+           [formControl]="syntheticInputControl"
     />
     <button *ngIf="isControllerAssigned"
             mat-icon-button
@@ -37,4 +31,5 @@
     >
         <mat-icon [fontIcon]="'refresh'"></mat-icon>
     </button>
+    <mat-error [appValidationMessages]="syntheticInputControl"></mat-error>
 </mat-form-field>

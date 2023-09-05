@@ -1,11 +1,5 @@
 :host {
     display: flex;
     flex-direction: column;
-}
-
-.hub-is-not-connected {
-    font-weight: 300;
-    margin: 0;
-    padding: 10px 8px;
-    font-size: 20px;
+    align-items: center;
 }

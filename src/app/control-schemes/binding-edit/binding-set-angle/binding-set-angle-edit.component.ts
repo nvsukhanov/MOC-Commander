@@ -11,7 +11,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { concatLatestFrom } from '@ngrx/effects';
-import { ControlSchemeBindingType, HideOnSmallScreenDirective, SliderControlComponent, ToggleControlComponent } from '@app/shared';
+import { ControlSchemeBindingType, HideOnSmallScreenDirective, SliderControlComponent, ToggleControlComponent, ValidationMessagesDirective } from '@app/shared';
 import { ATTACHED_IO_PROPS_SELECTORS, ControlSchemeInputAction, HubFacadeService } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
@@ -47,7 +47,8 @@ import { BindingEditSectionsContainerComponent } from '../sections-container';
         HideOnSmallScreenDirective,
         PushPipe,
         ControlSchemeInputActionToL10nKeyPipe,
-        BindingEditSectionsContainerComponent
+        BindingEditSectionsContainerComponent,
+        ValidationMessagesDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

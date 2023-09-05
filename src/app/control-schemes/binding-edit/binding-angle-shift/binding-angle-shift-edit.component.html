@@ -67,6 +67,7 @@
                     <mat-icon [fontIcon]="'delete'"></mat-icon>
                     <span class="cdk-visually-hidden">{{ 'controlScheme.angleShiftBinding.outputAngleLevelRemove' | transloco }}</span>
                 </button>
+                <mat-error [appValidationMessages]="angleControl"></mat-error>
             </mat-form-field>
         </div>
 
@@ -78,6 +79,8 @@
                 {{ 'controlScheme.angleShiftBinding.outputAngleLevelAdd' | transloco }}
             </button>
         </div>
+
+        <mat-error [appValidationMessages]="form.controls.angles"></mat-error>
 
         <mat-divider class="sections-divider"></mat-divider>
 

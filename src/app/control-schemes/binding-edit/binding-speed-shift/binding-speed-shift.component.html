@@ -52,8 +52,6 @@
             <input type="number"
                    matInput
                    [formControl]="speedControl"
-                   [min]="motorLimits.minSpeed"
-                   [max]="motorLimits.maxSpeed"
             />
             <button mat-icon-button
                     matSuffix
@@ -63,6 +61,7 @@
                 <mat-icon [fontIcon]="'delete'"></mat-icon>
                 <span class="cdk-visually-hidden">{{ 'controlScheme.speedShiftBinding.outputLevelRemove' | transloco }}</span>
             </button>
+            <mat-error [appValidationMessages]="speedControl"></mat-error>
         </mat-form-field>
 
         <div class="add-level-button-container">
@@ -72,6 +71,8 @@
                 {{ 'controlScheme.speedShiftBinding.outputLevelAdd' | transloco }}
             </button>
         </div>
+
+        <mat-error [appValidationMessages]="form.controls.levels"></mat-error>
 
         <mat-divider class="sections-divider"></mat-divider>
 

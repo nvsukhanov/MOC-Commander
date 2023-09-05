@@ -4,7 +4,8 @@ import { PushPipe } from '@ngrx/component';
 import { Observable, of, switchMap } from 'rxjs';
 import { NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { HUBS_ACTIONS, HUBS_SELECTORS, HUB_EDIT_FORM_ACTIVE_SAVES_SELECTORS, ROUTER_SELECTORS } from '@app/store';
+import { HUBS_ACTIONS, HUBS_SELECTORS, HUB_EDIT_FORM_ACTIVE_SAVES_SELECTORS, HUB_STATS_SELECTORS, HubModel, ROUTER_SELECTORS } from '@app/store';
+import { HintComponent } from '@app/shared';
 
 import { HubEditFormComponent, HubEditFormSaveResult } from './hub-edit-form';
 
@@ -18,12 +19,17 @@ import { HubEditFormComponent, HubEditFormSaveResult } from './hub-edit-form';
         PushPipe,
         NgIf,
         TranslocoModule,
+        HintComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HubEditPageComponent {
-    public readonly editedHubConfiguration$ = this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedHubId).pipe(
-        switchMap((id) => id !== null ? this.store.select(HUBS_SELECTORS.selectHub(id)) : of(null))
+    public readonly isHubConnected$: Observable<boolean> = this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedHubId).pipe(
+        switchMap((id) => id !== null ? this.store.select(HUB_STATS_SELECTORS.selectIsHubConnected(id)) : of(false))
+    );
+
+    public readonly editedHubConfiguration$: Observable<HubModel | undefined> = this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedHubId).pipe(
+        switchMap((id) => id !== null ? this.store.select(HUBS_SELECTORS.selectHub(id)) : of(undefined))
     );
 
     public readonly isSaving$: Observable<boolean> = this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedHubId).pipe(

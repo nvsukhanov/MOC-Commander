@@ -4,7 +4,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoModule } from '@ngneat/transloco';
-import { ValidationErrorMappingDirective, ValidationErrorsL10nMap } from '@app/shared';
+import { ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared';
 
 import { CONTROL_SCHEME_NAME_IS_NOT_UNIQUE, CommonFormControlsBuilderService } from '../../common';
 
@@ -19,7 +19,7 @@ import { CONTROL_SCHEME_NAME_IS_NOT_UNIQUE, CommonFormControlsBuilderService } f
         ReactiveFormsModule,
         MatButtonModule,
         TranslocoModule,
-        ValidationErrorMappingDirective,
+        ValidationMessagesDirective,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

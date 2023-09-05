@@ -1,5 +1,11 @@
 :host {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
+    display: block;
+}
+
+.card {
+    width: max(300px, 40vw);
+}
+
+mat-form-field {
+    width: 100%;
 }

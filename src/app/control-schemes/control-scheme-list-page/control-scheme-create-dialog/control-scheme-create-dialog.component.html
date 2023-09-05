@@ -10,8 +10,8 @@
                    type="text"
                    [formControl]="nameFormControl"
             />
-            <mat-error [appValidationErrorMapping]="validationErrorsL10nMap"
-                       [control]="nameFormControl"
+            <mat-error [appValidationMessages]="nameFormControl"
+                       [l10nMap]="validationErrorsL10nMap"
             ></mat-error>
         </mat-form-field>
     </div>

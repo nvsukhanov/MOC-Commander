@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MOTOR_LIMITS, MotorServoEndState } from 'rxpoweredup';
 import { ControlSchemeInputAction, ControlSchemeStepperBinding } from '@app/store';
-import { DeepPartial } from '@app/shared';
+import { AppValidators, DeepPartial } from '@app/shared';
 
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';
 import { StepperBindingForm } from '../types';
-import { ControlSchemeValidators } from '../../validation';
 
 @Injectable({ providedIn: 'root' })
 export class StepperBindingFormBuilderService {
@@ -31,8 +30,8 @@ export class StepperBindingFormBuilderService {
                     Validators.required,
                     Validators.min(-MOTOR_LIMITS.maxServoDegreesRange),
                     Validators.max(MOTOR_LIMITS.maxServoDegreesRange),
-                    ControlSchemeValidators.requireNonZero,
-                    ControlSchemeValidators.requireInteger
+                    AppValidators.requireNonZero,
+                    AppValidators.requireInteger
                 ]
             }),
             power: this.commonFormControlBuilder.powerControl(),

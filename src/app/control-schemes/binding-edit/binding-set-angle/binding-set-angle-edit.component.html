@@ -35,8 +35,6 @@
             <input type="number"
                    matInput
                    [formControl]="form.controls.angle"
-                   [min]="motorLimits.minRawAngle"
-                   [max]="motorLimits.maxRawAngle"
             />
             <button mat-icon-button
                     matSuffix
@@ -46,6 +44,7 @@
             >
                 <mat-icon [fontIcon]="'gps_fixed'"></mat-icon>
             </button>
+            <mat-error [appValidationMessages]="form.controls.angle"></mat-error>
         </mat-form-field>
 
         <app-slider-control [min]="0"
