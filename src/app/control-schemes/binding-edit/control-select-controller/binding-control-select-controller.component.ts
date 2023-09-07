@@ -67,7 +67,7 @@ export class BindingControlSelectControllerComponent implements OnDestroy {
         this._syntheticInputControl = this.formBuilder.control<string>('', {
             validators: isRequired ? [ Validators.required ] : [],
         });
-        this.syntheticInputUpdateSubscription = (formGroup.controls.controllerId.valueChanges as Observable<string | null>).pipe(
+        this.syntheticInputUpdateSubscription = (formGroup.valueChanges as Observable<unknown>).pipe(
             startWith(null),
             switchMap(() => {
                 const data = this.inputFormGroup?.getRawValue();

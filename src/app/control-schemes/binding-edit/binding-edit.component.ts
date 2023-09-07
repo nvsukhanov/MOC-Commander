@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { JsonPipe, NgForOf, NgIf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { Observable, map, startWith } from 'rxjs';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { MatDividerModule } from '@angular/material/divider';
@@ -38,8 +38,7 @@ import { BINDING_EDIT_SELECTORS, BindingTypeSelectViewModel } from './binding-ed
         MatSelectModule,
         BindingTypeToL10nKeyPipe,
         NgForOf,
-        ReactiveFormsModule,
-        JsonPipe,
+        ReactiveFormsModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'appBindingEdit'
