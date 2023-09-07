@@ -1,7 +1,7 @@
 import { createActionGroup, props } from '@ngrx/store';
+import { Language } from '@app/shared';
 
 import { UserSelectedTheme } from '../models';
-import { Language } from '../../i18n';
 
 export const SETTINGS_ACTIONS = createActionGroup({
     source: 'Settings',

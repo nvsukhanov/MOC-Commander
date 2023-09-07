@@ -8,13 +8,13 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { MotorServoEndStateL10nKeyPipe, getEnumValues } from '@app/shared';
 import { InputGain } from '@app/store';
 
-import { InputGainL10nKeyPipe } from '../output-gain-l10n-key.pipe';
+import { InputGainL10nKeyPipe } from './output-gain-l10n-key.pipe';
 
 @Component({
     standalone: true,
-    selector: 'app-binding-input-gain-select',
-    templateUrl: './binding-input-gain-select.component.html',
-    styleUrls: [ './binding-input-gain-select.component.scss' ],
+    selector: 'app-binding-control-select-input-gain',
+    templateUrl: './binding-control-select-input-gain.component.html',
+    styleUrls: [ './binding-control-select-input-gain.component.scss' ],
     imports: [
         FormsModule,
         MatFormFieldModule,
@@ -29,7 +29,7 @@ import { InputGainL10nKeyPipe } from '../output-gain-l10n-key.pipe';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BindingInputGainSelectComponent {
+export class BindingControlSelectInputGainComponent {
     @Input() public control?: FormControl<InputGain>;
 
     @Input() public translocoTitle = 'controlScheme.inputGain';

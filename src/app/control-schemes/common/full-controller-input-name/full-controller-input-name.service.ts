@@ -4,9 +4,7 @@ import { Store } from '@ngrx/store';
 import { TranslocoService } from '@ngneat/transloco';
 import { ButtonGroupButtonId } from 'rxpoweredup';
 import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS, ControlSchemeInput, ControllerModel, ControllerProfileFactoryService } from '@app/store';
-import { ControllerInputType } from '@app/shared';
-
-import { ControllerSettings, IControllerProfile } from '../../../controller-profiles';
+import { ControllerInputType, ControllerSettings, IControllerProfile } from '@app/shared';
 
 export type FullControllerInputNameData = {
     readonly name$: Observable<string>;

@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { IOType } from 'rxpoweredup';
 
-import { L10nScopes, composeL10nKey } from '../i18n';
+import { L10nScopes, composeL10nKey } from './i18n';
 
 @Pipe({
     name: 'ioTypeToL10nKey',

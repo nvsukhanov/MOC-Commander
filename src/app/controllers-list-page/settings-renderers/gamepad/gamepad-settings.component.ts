@@ -15,10 +15,18 @@ import {
     GamepadSettingsModel,
     controllerInputIdFn
 } from '@app/store';
-import { ControllerInputType, ControllerType, RangeControlComponent, ToFormGroup, ToggleControlComponent } from '@app/shared';
+import {
+    ControllerInputType,
+    ControllerType,
+    GamepadAxisSettings,
+    GamepadSettings,
+    IControllerProfile,
+    RangeControlComponent,
+    ToFormGroup,
+    ToggleControlComponent
+} from '@app/shared';
 
 import { IControllerSettingsRenderer } from '../i-controller-settings-renderer';
-import { GamepadAxisSettings, GamepadSettings, IControllerProfile } from '../../../controller-profiles';
 import { InputOutputDiagramComponent } from './input-output-diagram';
 import { ActiveZoneHumanReadableValuePipe } from './active-zone-human-readable-value.pipe';
 import { ControlIgnoreInputComponent } from '../control-ignore-input';

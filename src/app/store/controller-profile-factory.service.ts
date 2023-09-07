@@ -1,12 +1,18 @@
 import { Inject, Injectable } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
+import {
+    ControllerProfileGenericGamepadFactoryService,
+    ControllerProfileHubFactoryService,
+    ControllerProfileKeyboardService,
+    ControllerSettings,
+    GamepadProfile,
+    GamepadSettings,
+    HubControllerSettings,
+    IControllerProfile,
+    KeyboardSettings
+} from '@app/shared';
 
-import { ControllerSettings, GamepadSettings, HubControllerSettings, IControllerProfile, KeyboardSettings } from '../controller-profiles';
-import { ControllerProfileKeyboardService } from '../controller-profiles/keyboard';
-import { ControllerProfileGenericGamepadFactoryService } from '../controller-profiles/gamepad';
-import { GamepadProfile } from '../controller-profiles/gamepad-profile';
-import { ControllerProfileHubFactoryService } from '../controller-profiles/hub';
 import { HUBS_SELECTORS } from './selectors';
 
 @Injectable()

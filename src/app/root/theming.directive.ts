@@ -1,8 +1,7 @@
-import { Directive, HostBinding, Inject, OnDestroy, OnInit, Renderer2, ViewContainerRef } from '@angular/core';
+import { Directive, HostBinding, OnDestroy, OnInit, Renderer2, ViewContainerRef } from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { WINDOW } from '@app/shared';
 import { SETTINGS_SELECTORS, UserSelectedTheme } from '@app/store';
 
 enum AppTheme {
@@ -29,7 +28,6 @@ export class ThemingDirective implements OnInit, OnDestroy {
     private currentTheme?: AppTheme;
 
     constructor(
-        @Inject(WINDOW) window: Window,
         private readonly overlayContainer: OverlayContainer,
         private readonly store: Store,
         private readonly viewContainerRef: ViewContainerRef,

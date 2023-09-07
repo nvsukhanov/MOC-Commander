@@ -27,7 +27,7 @@ import { CalibrationResult, CalibrationResultType, ServoCalibrationDialogCompone
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { BINDING_EDIT_SELECTORS } from '../binding-edit.selectors';
 import { ControlSchemeInputActionToL10nKeyPipe, ServoBindingForm } from '../../common';
-import { BindingInputGainSelectComponent } from '../control-input-gain-select';
+import { BindingControlSelectInputGainComponent } from '../control-select-input-gain';
 import { BindingEditSectionComponent } from '../section';
 import { BindingControlSelectHubComponent } from '../control-select-hub';
 import { BindingControlSelectIoComponent } from '../control-select-io';
@@ -49,7 +49,7 @@ import { BindingEditSectionsContainerComponent } from '../sections-container';
         SliderControlComponent,
         ToggleControlComponent,
         BindingControlSelectControllerComponent,
-        BindingInputGainSelectComponent,
+        BindingControlSelectInputGainComponent,
         ControlSchemeInputActionToL10nKeyPipe,
         BindingControlSelectHubComponent,
         BindingControlSelectIoComponent,

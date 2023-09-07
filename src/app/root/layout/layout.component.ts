@@ -9,7 +9,7 @@ import { CdkScrollable } from '@angular/cdk/overlay';
 import { CONTROLLERS_ACTIONS } from '@app/store';
 import { FeatureToolbarComponent, IScrollContainer, SCROLL_CONTAINER, ScreenSizeObserverService } from '@app/shared';
 
-import { MAIN_SELECTORS } from '../main.selectors';
+import { ROOT_SELECTORS } from '../root.selectors';
 import { NavMenuComponent } from '../nav-menu';
 
 @Component({
@@ -35,7 +35,7 @@ import { NavMenuComponent } from '../nav-menu';
 export class LayoutComponent implements OnInit, OnDestroy, IScrollContainer {
     @ViewChild(CdkScrollable, { static: true }) public scrollable!: CdkScrollable;
 
-    public readonly shouldShowProgressBar$ = this.store.select(MAIN_SELECTORS.shouldShowProgressBar);
+    public readonly shouldShowProgressBar$ = this.store.select(ROOT_SELECTORS.shouldShowProgressBar);
 
     private _isSmallScreen = false;
 

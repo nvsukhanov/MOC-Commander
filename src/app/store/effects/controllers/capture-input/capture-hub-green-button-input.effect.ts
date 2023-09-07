@@ -11,9 +11,7 @@ import {
     HubStorageService,
     controllerIdFn
 } from '@app/store';
-import { ControllerInputType, ControllerType } from '@app/shared';
-
-import { GREEN_BUTTON_INPUT_ID } from '../../../../controller-profiles/hub';
+import { ControllerInputType, ControllerType, GREEN_BUTTON_INPUT_ID } from '@app/shared';
 
 const HUB_INPUT_READ_SELECTOR = createSelector(
     HUBS_SELECTORS.selectAll,

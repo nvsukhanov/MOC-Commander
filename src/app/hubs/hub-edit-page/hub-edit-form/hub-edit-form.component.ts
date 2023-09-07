@@ -7,10 +7,10 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslocoModule } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { RoutesBuilderService } from '@app/routing';
 import { HubModel } from '@app/store';
 import { ValidationMessagesDirective } from '@app/shared';
 
-import { RoutesBuilderService } from '../../../routing';
 import { HUB_EDIT_ERRORS_L10N_MAP } from './hub-edit-errors-l10n-map';
 
 export type HubEditFormSaveResult = {

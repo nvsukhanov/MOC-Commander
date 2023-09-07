@@ -21,10 +21,10 @@
                                [title]="controlSchemeInputActions.Accelerate | controlSchemeInputActionToL10nKey | transloco "
         ></app-controller-select>
 
-        <app-binding-input-gain-select *ngIf="isInputGainConfigurable"
-                                       [translocoTitle]="'controlScheme.setSpeedBinding.accelerationInputGainTitle'"
-                                       [control]="form.controls.inputs.controls[controlSchemeInputActions.Accelerate].controls.gain"
-        ></app-binding-input-gain-select>
+        <app-binding-control-select-input-gain *ngIf="isInputGainConfigurable"
+                                               [translocoTitle]="'controlScheme.setSpeedBinding.accelerationInputGainTitle'"
+                                               [control]="form.controls.inputs.controls[controlSchemeInputActions.Accelerate].controls.gain"
+        ></app-binding-control-select-input-gain>
 
         <app-controller-select *ngIf="!form.controls.isToggle.value"
                                [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.Brake]"

@@ -117,7 +117,7 @@ function createBindingTreeNode(
     };
 }
 
-export const CONTROL_SCHEME_VIEW_SELECTORS = {
+export const CONTROL_SCHEME_PAGE_SELECTORS = {
     schemeViewTree: (schemeName: string) => createSelector(
         CONTROL_SCHEME_SELECTORS.selectScheme(schemeName),
         HUBS_SELECTORS.selectEntities,
@@ -214,7 +214,7 @@ export const CONTROL_SCHEME_VIEW_SELECTORS = {
         }
     ),
     canRunScheme: (schemeName: string) => createSelector( // TODO: performance-wise, this selector is not optimal (should not use viewTree)
-        CONTROL_SCHEME_VIEW_SELECTORS.schemeViewTree(schemeName),
+        CONTROL_SCHEME_PAGE_SELECTORS.schemeViewTree(schemeName),
         CONTROL_SCHEME_SELECTORS.selectRunningState,
         CONTROLLER_CONNECTION_SELECTORS.selectEntities,
         (

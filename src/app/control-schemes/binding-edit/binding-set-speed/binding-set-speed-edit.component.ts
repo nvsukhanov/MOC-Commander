@@ -10,7 +10,7 @@ import { ControlSchemeInputAction } from '@app/store';
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { BindingControlSelectControllerComponent } from '../control-select-controller';
 import { ControlSchemeInputActionToL10nKeyPipe, InputFormGroup, SetSpeedBindingForm } from '../../common';
-import { BindingInputGainSelectComponent } from '../control-input-gain-select';
+import { BindingControlSelectInputGainComponent } from '../control-select-input-gain';
 import { BindingEditSectionComponent } from '../section';
 import { BindingControlSelectHubComponent } from '../control-select-hub';
 import { BindingControlSelectIoComponent } from '../control-select-io';
@@ -29,7 +29,7 @@ import { BindingEditSectionsContainerComponent } from '../sections-container';
         BindingControlSelectIoComponent,
         MatDividerModule,
         BindingControlSelectControllerComponent,
-        BindingInputGainSelectComponent,
+        BindingControlSelectInputGainComponent,
         SliderControlComponent,
         HideOnSmallScreenDirective,
         ToggleControlComponent,

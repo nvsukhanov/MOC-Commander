@@ -3,9 +3,8 @@ import { filter, tap } from 'rxjs';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { RoutesBuilderService } from '@app/routing';
 import { HUBS_ACTIONS, ROUTER_SELECTORS } from '@app/store';
-
-import { RoutesBuilderService } from '../../../routing';
 
 export const NAVIGATE_TO_HUB_VIEW_PAGE_ON_SAVE = createEffect((
     actions$: Actions = inject(Actions),

@@ -2,8 +2,8 @@ import { EMPTY, Observable } from 'rxjs';
 import { Memoize } from 'typescript-memoize';
 import { TranslocoService } from '@ngneat/transloco';
 import { Injectable } from '@angular/core';
-import { ControllerType } from '@app/shared';
 
+import { ControllerType } from '../controller-type';
 import { createControllerL10nKey, createScopedControllerL10nKey } from '../create-controller-l10n-key';
 import { IControllerProfile } from '../i-controller-profile';
 import { KeyboardSettings } from '../controller-settings';

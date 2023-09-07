@@ -1,8 +1,9 @@
 import { TranslocoService } from '@ngneat/transloco';
 import { Observable } from 'rxjs';
 import { Memoize } from 'typescript-memoize';
-import { ControllerType, IAppConfig } from '@app/shared';
 
+import { IAppConfig } from '../../i-app-config';
+import { ControllerType } from '../controller-type';
 import { IControllerProfile } from '../i-controller-profile';
 import { createControllerL10nKey, createScopedControllerL10nKeyBuilder } from '../create-controller-l10n-key';
 import { GamepadAxisSettings, GamepadSettings } from '../controller-settings';
