@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-
-import { RoutesBuilderService } from '../../../../routing';
+import { RoutesBuilderService } from '@app/routing';
 
 @Pipe({
     standalone: true,

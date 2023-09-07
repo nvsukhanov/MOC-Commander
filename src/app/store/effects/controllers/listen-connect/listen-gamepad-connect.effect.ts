@@ -2,10 +2,8 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { inject } from '@angular/core';
 import { Action, Store } from '@ngrx/store';
 import { Observable, filter, interval, map, switchMap } from 'rxjs';
-import { APP_CONFIG, ControllerType, IAppConfig, WINDOW } from '@app/shared';
+import { APP_CONFIG, ControllerType, GamepadSettings, IAppConfig, IControllerProfile, WINDOW } from '@app/shared';
 import { CONTROLLERS_ACTIONS, CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS, ControllerProfileFactoryService, controllerIdFn } from '@app/store';
-
-import { GamepadSettings, IControllerProfile } from '../../../../controller-profiles';
 
 const GAMEPAD_DETECTION_INPUT_THRESHOLD = 0.5;
 

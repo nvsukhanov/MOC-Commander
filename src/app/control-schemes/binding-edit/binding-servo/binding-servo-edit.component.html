@@ -20,9 +20,9 @@
         <app-controller-select [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.Servo]"
                                [title]="controlSchemeInputActions.Servo | controlSchemeInputActionToL10nKey | transloco "
         ></app-controller-select>
-        <app-binding-input-gain-select *ngIf="isInputGainConfigurable"
-                                       [control]="form.controls.inputs.controls[controlSchemeInputActions.Servo].controls.gain"
-        ></app-binding-input-gain-select>
+        <app-binding-control-select-input-gain *ngIf="isInputGainConfigurable"
+                                               [control]="form.controls.inputs.controls[controlSchemeInputActions.Servo].controls.gain"
+        ></app-binding-control-select-input-gain>
     </app-binding-edit-section>
 
     <mat-divider [vertical]="true" *appHideOnSmallScreen></mat-divider>

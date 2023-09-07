@@ -5,11 +5,11 @@ import { EMPTY, Observable, switchMap, take } from 'rxjs';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Router } from '@angular/router';
+import { RoutesBuilderService } from '@app/routing';
 import { HUBS_ACTIONS, HUBS_SELECTORS, HUB_STATS_SELECTORS, HubModel, HubStatsModel, ROUTER_SELECTORS, attachedIosIdFn, } from '@app/store';
 
 import { HubPropertiesViewComponent } from './hub-properties-view';
 import { HubIoViewComponent } from './hub-io-view';
-import { RoutesBuilderService } from '../../routing';
 import { HUB_VIEW_PAGE_SELECTORS, HubIoViewModel } from './hub-view-page.selectors';
 
 @Component({

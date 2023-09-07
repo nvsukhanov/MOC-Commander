@@ -6,9 +6,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslocoModule } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
 import { NgIf } from '@angular/common';
+import { RoutesBuilderService } from '@app/routing';
 import { EllipsisTitleDirective } from '@app/shared';
 
-import { RoutesBuilderService } from '../../../routing';
 
 @Component({
     standalone: true,

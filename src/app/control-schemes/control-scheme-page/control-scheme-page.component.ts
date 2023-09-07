@@ -8,11 +8,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { RoutesBuilderService } from '@app/routing';
 import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel, ROUTER_SELECTORS, } from '@app/store';
 import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared';
 
-import { RoutesBuilderService } from '../../routing';
-import { CONTROL_SCHEME_VIEW_SELECTORS } from './control-scheme-view.selectors';
+import { CONTROL_SCHEME_PAGE_SELECTORS } from './control-scheme-view.selectors';
 import { ControlSchemeViewIoListComponent } from './control-scheme-view-io-list';
 import { ControlSchemeGeneralInfoComponent } from './control-scheme-general-info';
 import { ControlSchemeViewTreeNode } from './types';
@@ -47,19 +47,19 @@ export class ControlSchemePageComponent implements OnDestroy {
     public readonly canRunScheme$: Observable<boolean> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeName).pipe(
         switchMap((id) => id === null
                           ? of(false)
-                          : this.store.select(CONTROL_SCHEME_VIEW_SELECTORS.canRunScheme(id))),
+                          : this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canRunScheme(id))),
     );
 
-    public readonly isCurrentControlSchemeRunning$ = this.store.select(CONTROL_SCHEME_VIEW_SELECTORS.isCurrentControlSchemeRunning);
+    public readonly isCurrentControlSchemeRunning$ = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.isCurrentControlSchemeRunning);
 
     public readonly schemeViewTree$: Observable<ControlSchemeViewTreeNode[]> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeName).pipe(
         switchMap((id) => id === null
                           ? of([])
-                          : this.store.select(CONTROL_SCHEME_VIEW_SELECTORS.schemeViewTree(id))
+                          : this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.schemeViewTree(id))
         )
     );
 
-    public readonly canCreateBinding$: Observable<boolean> = this.store.select(CONTROL_SCHEME_VIEW_SELECTORS.canCreateBinding);
+    public readonly canCreateBinding$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canCreateBinding);
 
     private sub?: Subscription;
 

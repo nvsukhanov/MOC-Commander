@@ -4,9 +4,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { RoutesBuilderService } from '@app/routing';
 
 import { EllipsisTitleDirective } from '../ellipsis-title.directive';
-import { RoutesBuilderService } from '../../routing';
 
 @Component({
     standalone: true,
@@ -124,7 +124,7 @@ export class HubInlineViewComponent {
         this.disconnect.emit();
     }
 
-    public onForgerClick(): void {
+    public onForgetClick(): void {
         this.forget.emit();
     }
 }

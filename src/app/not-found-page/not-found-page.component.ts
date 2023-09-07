@@ -3,13 +3,13 @@ import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
     standalone: true,
-    selector: 'app-not-found',
-    templateUrl: './not-found.component.html',
-    styleUrls: [ './not-found.component.scss' ],
+    selector: 'app-not-found-page',
+    templateUrl: './not-found-page.component.html',
+    styleUrls: [ './not-found-page.component.scss' ],
     imports: [
         TranslocoModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NotFoundComponent {
+export class NotFoundPageComponent {
 }

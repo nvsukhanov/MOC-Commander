@@ -6,12 +6,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { Router } from '@angular/router';
 import { concatLatestFrom } from '@ngrx/effects';
+import { RoutesBuilderService } from '@app/routing';
 import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective } from '@app/shared';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeBinding, ROUTER_SELECTORS } from '@app/store';
 
 import { BINDING_EDIT_PAGE_SELECTORS } from './binding-edit-page.selectors';
 import { BindingEditComponent } from '../binding-edit';
-import { RoutesBuilderService } from '../../routing';
 
 @Component({
     standalone: true,

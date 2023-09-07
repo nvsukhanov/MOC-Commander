@@ -1,4 +1,4 @@
-import { ControllerType } from '@app/shared';
+import { ControllerType } from './controller-type';
 
 export type KeyboardSettings = {
     controllerType: ControllerType.Keyboard;

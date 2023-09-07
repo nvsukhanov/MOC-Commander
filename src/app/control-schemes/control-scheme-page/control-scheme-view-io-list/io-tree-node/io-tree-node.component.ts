@@ -4,10 +4,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
 import { PushPipe } from '@ngrx/component';
-import { IoInlineViewComponent } from '@app/shared';
+import { RoutesBuilderService } from '@app/routing';
 
+import { IoInlineViewComponent } from './io-inline-view';
 import { ControlSchemeViewIoTreeNode } from '../../types';
-import { RoutesBuilderService } from '../../../../routing';
 import { PortCommandTaskSummaryPipe } from '../../port-command-task-summary';
 
 @Component({

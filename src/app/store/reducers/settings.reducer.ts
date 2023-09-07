@@ -1,8 +1,8 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
+import { Language } from '@app/shared';
 
 import { SettingsModel, UserSelectedTheme } from '../models';
 import { SETTINGS_ACTIONS } from '../actions';
-import { Language } from '../../i18n';
 
 const DEFAULT_STATE: SettingsState = {
     theme: UserSelectedTheme.System,

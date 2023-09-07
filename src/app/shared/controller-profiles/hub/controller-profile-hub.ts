@@ -1,8 +1,8 @@
 import { Observable, of } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { ButtonGroupButtonId } from 'rxpoweredup';
-import { ControllerType } from '@app/shared';
 
+import { ControllerType } from '../controller-type';
 import { IControllerProfile } from '../i-controller-profile';
 import { HubControllerSettings } from '../controller-settings';
 

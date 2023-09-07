@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
-import { NotFoundComponent } from '@app/shared';
+
+import { NotFoundPageComponent } from '../not-found-page';
 
 export const ROUTE_PATHS = {
     controllers: 'controllers',
@@ -93,6 +94,6 @@ export const ROUTES: Routes = [
     },
     {
         path: '**',
-        component: NotFoundComponent,
+        component: NotFoundPageComponent,
     }
 ];

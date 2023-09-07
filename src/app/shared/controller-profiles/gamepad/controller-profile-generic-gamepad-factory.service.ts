@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
-import { APP_CONFIG, IAppConfig } from '@app/shared';
 
+import { APP_CONFIG, IAppConfig } from '../../i-app-config';
 import { ControllerProfileGenericGamepad } from './controller-profile-generic-gamepad';
 
 @Injectable()

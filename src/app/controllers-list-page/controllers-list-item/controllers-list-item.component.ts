@@ -7,9 +7,8 @@ import { NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { EMPTY, Observable } from 'rxjs';
 import { ControllerModel, ControllerProfileFactoryService, ControllerSettingsModel } from '@app/store';
-import { ControllerType, ControllerTypeIconNamePipe } from '@app/shared';
+import { ControllerSettings, ControllerType, ControllerTypeIconNamePipe, IControllerProfile } from '@app/shared';
 
-import { ControllerSettings, IControllerProfile } from '../../controller-profiles';
 import { ControllerSettingsContainerComponent } from '../controller-settings-container';
 
 @Component({

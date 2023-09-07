@@ -6,10 +6,9 @@ import { Store } from '@ngrx/store';
 import { PushPipe } from '@ngrx/component';
 import { MatSelectModule } from '@angular/material/select';
 import { SETTINGS_ACTIONS, SETTINGS_SELECTORS, UserSelectedTheme } from '@app/store';
-import { getEnumValues } from '@app/shared';
+import { Language, getEnumValues } from '@app/shared';
 
 import { ThemeToL10nKeyPipe } from './theme-to-l10n-key.pipe';
-import { Language } from '../i18n';
 import { LanguageToL10nKeyPipe } from './language-to-l10n-key.pipe';
 
 @Component({
