@@ -1,7 +1,7 @@
 import { Directive, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { ScreenSizeObserverService } from './screen-size-observer.service';
+import { ScreenSizeObserverService } from '../screen-size-observer.service';
 
 @Directive({
     standalone: true,
