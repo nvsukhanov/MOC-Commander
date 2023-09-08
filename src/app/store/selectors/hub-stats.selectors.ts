@@ -1,4 +1,4 @@
-import { createSelector } from '@ngrx/store';
+import { Selector, createSelector } from '@ngrx/store';
 
 import { HUB_STATS_ENTITY_ADAPTER, HUB_STATS_FEATURE } from '../reducers';
 
@@ -10,7 +10,7 @@ const SELECT_ALL = createSelector(
 const SELECT_IDS = createSelector(
     HUB_STATS_FEATURE.selectHubStatsState,
     HUB_STATS_ENTITY_ADAPTER.getSelectors().selectIds
-);
+) as Selector<unknown, string[]>;
 
 const SELECT_ENTITIES = createSelector(
     HUB_STATS_FEATURE.selectHubStatsState,

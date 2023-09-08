@@ -46,18 +46,21 @@ function readKeyboard(
             })];
             return {
                 inputId,
-                prevState: prevState?.value,
-                nextState: +eventData.isPressed
+                prevValue: prevState?.value ?? 0,
+                value: +eventData.isPressed
             };
         }),
-        filter(({ prevState, nextState }) => prevState === undefined || prevState !== nextState),
-        map(({ inputId, nextState }) => CONTROLLER_INPUT_ACTIONS.inputReceived({
-            controllerId,
-            inputId,
-            inputType: ControllerInputType.Button,
-            rawValue: nextState,
-            value: nextState,
-            timestamp: Date.now()
+        filter(({ prevValue, value }) => prevValue !== value),
+        map(({ inputId, prevValue, value }) => CONTROLLER_INPUT_ACTIONS.inputReceived({
+            nextState: {
+                controllerId,
+                inputId,
+                inputType: ControllerInputType.Button,
+                rawValue: value,
+                value,
+                timestamp: Date.now()
+            },
+            prevValue
         }))
     );
 }

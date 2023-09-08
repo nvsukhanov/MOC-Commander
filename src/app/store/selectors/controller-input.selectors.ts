@@ -26,7 +26,7 @@ export const CONTROLLER_INPUT_SELECTORS = {
     ),
     selectFirst: createSelector(
         SELECT_ALL,
-        (inputsList) => inputsList[0]
+        (inputsList) => inputsList.find((input) => input.value !== 0)
     ),
     listenersCount: CONTROLLER_INPUT_FEATURE.selectListenersCount,
     isCapturing: createSelector(

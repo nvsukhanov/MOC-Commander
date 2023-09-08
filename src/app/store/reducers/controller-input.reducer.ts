@@ -36,26 +36,26 @@ export const CONTROLLER_INPUT_FEATURE = createFeature({
     name: 'controllerInput',
     reducer: createReducer(
         CONTROLLER_INPUT_INITIAL_STATE,
-        on(CONTROLLER_INPUT_ACTIONS.inputReceived, (state, action): ControllerInputState => {
-            if (action.inputType === ControllerInputType.ButtonGroup) {
+        on(CONTROLLER_INPUT_ACTIONS.inputReceived, (state, { nextState }): ControllerInputState => {
+            if (nextState.inputType === ControllerInputType.ButtonGroup) {
                 return CONTROLLER_INPUT_ENTITY_ADAPTER.upsertOne({
-                    controllerId: action.controllerId,
-                    value: action.value,
-                    rawValue: action.rawValue,
-                    inputId: action.inputId,
-                    inputType: action.inputType,
-                    portId: action.portId,
-                    buttonId: action.buttonId,
-                    timestamp: action.timestamp
+                    controllerId: nextState.controllerId,
+                    value: nextState.value,
+                    rawValue: nextState.rawValue,
+                    inputId: nextState.inputId,
+                    inputType: nextState.inputType,
+                    portId: nextState.portId,
+                    buttonId: nextState.buttonId,
+                    timestamp: nextState.timestamp
                 }, state);
             }
             return CONTROLLER_INPUT_ENTITY_ADAPTER.upsertOne({
-                controllerId: action.controllerId,
-                value: action.value,
-                rawValue: action.rawValue,
-                inputId: action.inputId,
-                inputType: action.inputType,
-                timestamp: action.timestamp
+                controllerId: nextState.controllerId,
+                value: nextState.value,
+                rawValue: nextState.rawValue,
+                inputId: nextState.inputId,
+                inputType: nextState.inputType,
+                timestamp: nextState.timestamp
             }, state);
         }),
         on(CONTROLLER_INPUT_ACTIONS.requestInputCapture,

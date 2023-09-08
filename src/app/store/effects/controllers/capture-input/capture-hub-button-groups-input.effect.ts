@@ -102,14 +102,17 @@ function readButtonGroups(
                         const value = activeInput ? 1 : 0;
                         const inputId = activeInput ? nextValue : prevValue;
                         return CONTROLLER_INPUT_ACTIONS.inputReceived({
-                            controllerId: controllerIdFn({ controllerType: ControllerType.Hub, hubId }),
-                            inputType: ControllerInputType.ButtonGroup,
-                            inputId: inputId.toString(),
-                            portId,
-                            buttonId: activeInput ? nextValue : prevValue,
-                            rawValue: value,
-                            value,
-                            timestamp: Date.now(),
+                            nextState: {
+                                controllerId: controllerIdFn({ controllerType: ControllerType.Hub, hubId }),
+                                inputType: ControllerInputType.ButtonGroup,
+                                inputId: inputId.toString(),
+                                portId,
+                                buttonId: activeInput ? nextValue : prevValue,
+                                rawValue: value,
+                                value,
+                                timestamp: Date.now(),
+                            },
+                            prevValue
                         });
                     }
 

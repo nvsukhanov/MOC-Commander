@@ -23,7 +23,6 @@ export class SetSpeedBindingFormBuilderService {
             hubId: this.commonFormControlBuilder.hubIdControl(),
             portId: this.commonFormControlBuilder.portIdControl(),
             maxSpeed: this.commonFormControlBuilder.speedControl(),
-            isToggle: this.commonFormControlBuilder.toggleControl(),
             invert: this.commonFormControlBuilder.toggleControl(),
             power: this.commonFormControlBuilder.powerControl(),
             useAccelerationProfile: this.commonFormControlBuilder.toggleControl(),

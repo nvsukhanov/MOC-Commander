@@ -33,11 +33,11 @@ export class SpeedShiftBindingFormMapperService {
             useDecelerationProfile: form.controls.useDecelerationProfile.getRawValue(),
             initialStepIndex: form.controls.initialStepIndex.getRawValue()
         };
-        if (form.controls.inputs.controls[ControlSchemeInputAction.Reset].controls.controllerId.value !== '') {
+        if (form.controls.inputs.controls[ControlSchemeInputAction.Reset].controls.controllerId.value !== null) {
             result.inputs[ControlSchemeInputAction.Reset] =
                 this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ControlSchemeInputAction.Reset] as InputFormGroup);
         }
-        if (form.controls.inputs.controls[ControlSchemeInputAction.PrevLevel].controls.controllerId.value !== '') {
+        if (form.controls.inputs.controls[ControlSchemeInputAction.PrevLevel].controls.controllerId.value !== null) {
             result.inputs[ControlSchemeInputAction.PrevLevel] =
                 this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ControlSchemeInputAction.PrevLevel] as InputFormGroup);
         }

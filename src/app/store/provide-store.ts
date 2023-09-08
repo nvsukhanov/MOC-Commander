@@ -37,7 +37,7 @@ import {
     HubPortModeInfoEffects,
     NotificationsEffects,
     SETTINGS_EFFECTS,
-    TaskProcessingEffects,
+    TASK_PROCESSING_EFFECTS,
     provideTaskProcessingFactories
 } from './effects';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
@@ -98,13 +98,13 @@ export function provideApplicationStore(): EnvironmentProviders {
             AttachedIOsEffects,
             HubPortModeInfoEffects,
             AttachedIoModesEffects,
-            TaskProcessingEffects,
             NotificationsEffects,
             HubAttachedIosStateEffects,
             CONTROLLER_EFFECTS,
             SETTINGS_EFFECTS,
             CONTROL_SCHEME_EFFECTS,
-            HUB_EFFECTS
+            HUB_EFFECTS,
+            TASK_PROCESSING_EFFECTS
         ),
         provideStoreDevtools({
             maxAge: 100,

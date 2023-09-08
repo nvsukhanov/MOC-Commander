@@ -51,7 +51,7 @@ export class StepperTaskPayloadFactoryService implements ITaskPayloadFactory<Con
             bindingType: ControlSchemeBindingType.SetSpeed,
             speed: 0,
             power: 0,
-            activeInput: false,
+            brakeFactor: 0,
             useAccelerationProfile: previousTask.payload.useAccelerationProfile,
             useDecelerationProfile: previousTask.payload.useDecelerationProfile
         });

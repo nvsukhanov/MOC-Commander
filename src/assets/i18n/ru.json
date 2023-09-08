@@ -175,7 +175,6 @@
       "accelerationInputGainTitle": "Усиление ввода ускорения",
       "outputSpeed": "Макс. скорость (%)",
       "outputPower": "Мощность (%)",
-      "treatAsSwitch": "Кнопка как переключатель",
       "taskSummary": "Скорость: { speed }%",
       "brakeTaskSummary": "Тормоз"
     },
@@ -286,8 +285,8 @@
     "keyboardControllerType": "Клавиатура",
     "gamepadControllerType": "Геймпад",
     "controllerDiscoveredNotification": "Обнаружен новый контроллер: { name }",
-    "controllerConnectedNotification": "{ name } контроллер подключен",
-    "controllerDisconnectedNotification": "{ name } контроллер отключен",
+    "controllerConnectedNotification": "Контроллер ''{ name }'' подключен",
+    "controllerDisconnectedNotification": "Контроллер ''{ name }'' отключен",
     "activeZone": "Активная зона",
     "rawInput": "ввод",
     "output": "вывод",

@@ -27,13 +27,12 @@ export class SetSpeedBindingFormMapperService {
             hubId: form.controls.hubId.getRawValue(),
             portId: form.controls.portId.getRawValue(),
             maxSpeed: form.controls.maxSpeed.getRawValue(),
-            isToggle: form.controls.isToggle.getRawValue(),
             invert: form.controls.invert.getRawValue(),
             power: form.controls.power.getRawValue(),
             useAccelerationProfile: form.controls.useAccelerationProfile.getRawValue(),
             useDecelerationProfile: form.controls.useDecelerationProfile.getRawValue(),
         };
-        if (form.controls.inputs.controls[ControlSchemeInputAction.Brake].valid) {
+        if (form.controls.inputs.controls[ControlSchemeInputAction.Brake].controls.controllerId.value !== null) {
             result.inputs[ControlSchemeInputAction.Brake] =
                 this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ControlSchemeInputAction.Brake] as InputFormGroup);
         }

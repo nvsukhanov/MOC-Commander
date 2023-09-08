@@ -7,5 +7,6 @@ export function setSpeedPayloadHash(
         payload.bindingType,
         payload.speed,
         payload.power,
+        payload.brakeFactor
     ].join('_');
 }
