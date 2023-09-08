@@ -3,8 +3,8 @@ import { ControlSchemeBindingType } from '@app/shared';
 
 export type SetSpeedTaskPayload = {
     bindingType: ControlSchemeBindingType.SetSpeed;
-    activeInput: boolean;
     speed: number;
+    brakeFactor: number; // 0 - MOTOR_LIMITS.MAX_SPEED
     power: number;
     useAccelerationProfile: boolean;
     useDecelerationProfile: boolean;

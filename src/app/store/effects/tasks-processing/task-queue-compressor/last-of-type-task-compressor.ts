@@ -12,15 +12,15 @@ export class LastOfTypeTaskCompressor implements ITaskQueueCompressor {
     public compress(
         queue: PortCommandTask[]
     ): PortCommandTask[] {
-        let lastCommandsOfType: PortCommandTask | null = null;
-
-        for (let index = queue.length - 1; index >= 0; index--) {
-            const command = queue[index];
-            if (command.payload.bindingType === this.taskType) {
-                lastCommandsOfType = command;
-                break;
+        const lastCommandsOfType = queue.reduce((acc, val) => {
+            if (val.payload.bindingType !== this.taskType) {
+                return acc;
             }
-        }
+            if (!acc || val.inputTimestamp > acc.inputTimestamp) {
+                return val;
+            }
+            return acc;
+        }, null as PortCommandTask | null);
 
         if (lastCommandsOfType === null) {
             return queue;

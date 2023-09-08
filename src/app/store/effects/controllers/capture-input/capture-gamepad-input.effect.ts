@@ -40,15 +40,21 @@ function readGamepads(
                         rawValue: valueTransformer.trimValue(apiGamepad.axes[axisIndex]),
                         value: valueTransformer.transformAxisValue(apiGamepad.axes[axisIndex], settings.axisConfigs[axisIndex])
                     })),
-                    concatLatestFrom(() => store.select(CONTROLLER_INPUT_SELECTORS.selectRawValueById(inputId))),
+                    concatLatestFrom(() => [
+                        store.select(CONTROLLER_INPUT_SELECTORS.selectRawValueById(inputId)),
+                        store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(inputId))
+                    ]),
                     filter(([ current, previousRawValue ]) => current.rawValue !== previousRawValue),
-                    map(([ current ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
-                        controllerId: connection.controllerId,
-                        inputType: ControllerInputType.Axis,
-                        inputId: axisIndex.toString(),
-                        value: current.value,
-                        rawValue: current.rawValue,
-                        timestamp: Date.now()
+                    map(([ current, , prevValue ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
+                        nextState: {
+                            controllerId: connection.controllerId,
+                            inputType: ControllerInputType.Axis,
+                            inputId: axisIndex.toString(),
+                            value: current.value,
+                            rawValue: current.rawValue,
+                            timestamp: Date.now()
+                        },
+                        prevValue
                     }))
                 );
             });
@@ -64,13 +70,16 @@ function readGamepads(
                     map((apiGamepad) => valueTransformer.trimValue(apiGamepad.buttons[buttonIndex].value)),
                     concatLatestFrom(() => store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(inputId))),
                     filter(([ currentValue, previousValue ]) => currentValue !== previousValue),
-                    map(([ value ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
-                        controllerId: connection.controllerId,
-                        inputType,
-                        inputId: buttonIndex.toString(),
-                        value,
-                        rawValue: value,
-                        timestamp: Date.now()
+                    map(([ value, prevValue ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
+                        nextState: {
+                            controllerId: connection.controllerId,
+                            inputType,
+                            inputId: buttonIndex.toString(),
+                            value,
+                            rawValue: value,
+                            timestamp: Date.now()
+                        },
+                        prevValue
                     }))
                 );
             });

@@ -29,7 +29,6 @@ export type SetSpeedBindingForm = FormGroup<{
     hubId: FormControl<string>;
     portId: FormControl<number>;
     maxSpeed: FormControl<number>;
-    isToggle: FormControl<boolean>;
     invert: FormControl<boolean>;
     power: FormControl<number>;
     useAccelerationProfile: FormControl<boolean>;

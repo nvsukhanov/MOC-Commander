@@ -7,7 +7,7 @@ export function setSpeedTaskFilter(
     lastExecutedTask: PortCommandTask | null
 ): boolean {
     if (!lastExecutedTask || lastExecutedTask.payload.bindingType !== ControlSchemeBindingType.SetSpeed) {
-        return task.payload.activeInput;
+        return true;
     }
 
     return task.hash !== lastExecutedTask.hash;

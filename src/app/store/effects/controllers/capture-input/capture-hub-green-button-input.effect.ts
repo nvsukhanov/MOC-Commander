@@ -1,7 +1,7 @@
 import { createEffect } from '@ngrx/effects';
 import { Action, Store, createSelector } from '@ngrx/store';
 import { inject } from '@angular/core';
-import { NEVER, Observable, map, mergeAll, mergeMap, switchMap } from 'rxjs';
+import { NEVER, Observable, distinctUntilChanged, map, mergeAll, mergeMap, pairwise, startWith, switchMap } from 'rxjs';
 import {
     CONTROLLER_INPUT_ACTIONS,
     CONTROLLER_INPUT_SELECTORS,
@@ -36,15 +36,21 @@ function readHubsGreenButtons(
         map((hubIds) => {
             return hubIds.map((hubId) => {
                 return hubStorage.get(hubId).properties.buttonState.pipe(
-                    map((isButtonPressed) => {
-                        const value = isButtonPressed ? 1 : 0;
+                    startWith(null),
+                    distinctUntilChanged(),
+                    pairwise(),
+                    map(([ prev, next ]) => {
+                        const value = next ? 1 : 0;
                         return CONTROLLER_INPUT_ACTIONS.inputReceived({
-                            controllerId: controllerIdFn({ hubId, controllerType: ControllerType.Hub }),
-                            inputType: ControllerInputType.Button,
-                            inputId: GREEN_BUTTON_INPUT_ID,
-                            value,
-                            rawValue: value,
-                            timestamp: Date.now()
+                            nextState: {
+                                controllerId: controllerIdFn({ hubId, controllerType: ControllerType.Hub }),
+                                inputType: ControllerInputType.Button,
+                                inputId: GREEN_BUTTON_INPUT_ID,
+                                value,
+                                rawValue: value,
+                                timestamp: Date.now()
+                            },
+                            prevValue: +!prev
                         });
                     })
                 );

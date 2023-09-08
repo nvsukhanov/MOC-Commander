@@ -177,7 +177,6 @@
       "accelerationInputGainTitle": "Acceleration input gain",
       "outputSpeed": "Max speed (%)",
       "outputPower": "Power (%)",
-      "treatAsSwitch": "Treat button as a switch",
       "taskSummary": "Speed: { speed }%",
       "brakeTaskSummary": "Brake"
     },

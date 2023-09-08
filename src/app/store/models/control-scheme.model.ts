@@ -60,7 +60,6 @@ export type ControlSchemeSetSpeedBinding = {
     hubId: string;
     portId: number;
     maxSpeed: number;
-    isToggle: boolean;
     invert: boolean;
     power: number;
 } & AccelerationProfileMixin & DecelerationProfileMixin;

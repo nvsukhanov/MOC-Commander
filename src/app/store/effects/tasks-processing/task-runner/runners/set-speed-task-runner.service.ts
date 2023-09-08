@@ -6,6 +6,7 @@ import { ControlSchemeBindingType } from '@app/shared';
 import { PortCommandTask } from '../../../../models';
 import { mapUseProfile } from '../map-use-profile';
 import { ITaskRunner } from '../i-task-runner';
+import { calculateSpeedPower } from '../../calculate-speed-power';
 
 @Injectable({ providedIn: 'root' })
 export class SetSpeedTaskRunnerService implements ITaskRunner<ControlSchemeBindingType.SetSpeed> {
@@ -13,11 +14,12 @@ export class SetSpeedTaskRunnerService implements ITaskRunner<ControlSchemeBindi
         hub: IHub,
         task: PortCommandTask<ControlSchemeBindingType.SetSpeed>,
     ): Observable<PortCommandExecutionStatus> {
+        const { speed, power } = calculateSpeedPower(task.payload.speed, task.payload.brakeFactor, task.payload.power);
         return hub.motors.setSpeed(
             task.portId,
-            task.payload.speed,
+            speed,
             {
-                power: task.payload.power,
+                power,
                 useProfile: mapUseProfile(task.payload),
                 noFeedback: true
             }

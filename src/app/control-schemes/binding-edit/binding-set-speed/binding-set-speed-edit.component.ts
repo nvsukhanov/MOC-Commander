@@ -56,11 +56,6 @@ export class BindingSetSpeedEditComponent implements IBindingsDetailsEditCompone
         return this.form?.controls.inputs.controls[ControlSchemeInputAction.Accelerate];
     }
 
-    public get isToggleable(): boolean {
-        const inputType = this.accelerationControl?.controls.inputType.value;
-        return inputType === ControllerInputType.Button || inputType === ControllerInputType.ButtonGroup;
-    }
-
     public get isInputGainConfigurable(): boolean {
         return this.accelerationControl?.controls.inputType.value === ControllerInputType.Axis
             || this.accelerationControl?.controls.inputType.value === ControllerInputType.Trigger;

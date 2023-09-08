@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
-import { SetSpeedTaskPayload } from '@app/store';
+import { SetSpeedTaskPayload, calculateSpeedPower } from '@app/store';
 
 @Injectable({ providedIn: 'root' })
 export class SetSpeedPortCommandTaskSummaryBuilderService {
@@ -13,9 +13,10 @@ export class SetSpeedPortCommandTaskSummaryBuilderService {
     public build(
         payload: SetSpeedTaskPayload
     ): Observable<string> {
-        if (payload.power !== 0 && payload.speed === 0) {
+        const { speed, power } = calculateSpeedPower(payload.speed, payload.brakeFactor, payload.power);
+        if (power !== 0 && speed === 0) {
             return this.translocoService.selectTranslate('controlScheme.setSpeedBinding.brakeTaskSummary');
         }
-        return this.translocoService.selectTranslate('controlScheme.setSpeedBinding.taskSummary', payload);
+        return this.translocoService.selectTranslate('controlScheme.setSpeedBinding.taskSummary', { speed });
     }
 }

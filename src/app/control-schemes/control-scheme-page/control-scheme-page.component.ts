@@ -12,7 +12,7 @@ import { RoutesBuilderService } from '@app/routing';
 import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel, ROUTER_SELECTORS, } from '@app/store';
 import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared';
 
-import { CONTROL_SCHEME_PAGE_SELECTORS } from './control-scheme-view.selectors';
+import { CONTROL_SCHEME_PAGE_SELECTORS } from './control-scheme-page.selectors';
 import { ControlSchemeViewIoListComponent } from './control-scheme-view-io-list';
 import { ControlSchemeGeneralInfoComponent } from './control-scheme-general-info';
 import { ControlSchemeViewTreeNode } from './types';
