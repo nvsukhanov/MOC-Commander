@@ -1,36 +1,36 @@
-<ng-container *ngIf="node">
-    <app-io-inline-view [portId]="node.portId"
-                        [ioType]="node.ioType"
-                        [isConnected]="node.isConnected"
+<ng-container *ngIf="viewModel$ | ngrxPush; let viewModel">
+    <app-io-inline-view [portId]="viewModel.portId"
+                        [ioType]="viewModel.ioType"
+                        [isConnected]="viewModel.isConnected"
     ></app-io-inline-view>
 
-    <a *ngIf="node.useAccelerationProfile || node.useDecelerationProfile"
+    <a *ngIf="viewModel.useAccelerationProfile || viewModel.useDecelerationProfile"
        class="mat-mdc-button port-config"
        [routerLink]="portConfigRoute"
     >
-        <span *ngIf="node.useAccelerationProfile"
+        <span *ngIf="viewModel.useAccelerationProfile"
               class="port-profile"
               [title]="'controlScheme.accelerationTimeMs' | transloco"
         >
             <mat-icon [fontIcon]="'north_east'"></mat-icon>
-            {{ node.accelerationTimeMs }}{{ 'controlScheme.profileTimingPostfix' | transloco }}
+            {{ viewModel.accelerationTimeMs }}{{ 'controlScheme.profileTimingPostfix' | transloco }}
         </span>
-        <span *ngIf="node.useDecelerationProfile"
+        <span *ngIf="viewModel.useDecelerationProfile"
               class="port-profile"
               [title]="'controlScheme.decelerationTimeMs' | transloco"
         >
             <mat-icon [fontIcon]="'south_east'"></mat-icon>
-            {{ node.decelerationTimeMs }}{{ 'controlScheme.profileTimingPostfix' | transloco }}
+            {{ viewModel.decelerationTimeMs }}{{ 'controlScheme.profileTimingPostfix' | transloco }}
         </span>
     </a>
 
-    <ng-container *ngIf="node.runningTask">
+    <ng-container *ngIf="viewModel.runningTask">
         <mat-icon [fontIcon]="'sync'"></mat-icon>
-        {{ node.runningTask | portCommandTaskSummary | ngrxPush }}
+        {{ viewModel.runningTask | portCommandTaskSummary | ngrxPush }}
     </ng-container>
 
-    <ng-container *ngIf="node.lastExecutedTask && !node.runningTask">
+    <ng-container *ngIf="viewModel.lastExecutedTask && !viewModel.runningTask">
         <mat-icon [fontIcon]="'check_circle'"></mat-icon>
-        {{ node.lastExecutedTask | portCommandTaskSummary | ngrxPush }}
+        {{ viewModel.lastExecutedTask | portCommandTaskSummary | ngrxPush }}
     </ng-container>
 </ng-container>

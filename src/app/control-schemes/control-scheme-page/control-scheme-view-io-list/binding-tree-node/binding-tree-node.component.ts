@@ -61,7 +61,6 @@ export class BindingTreeNodeComponent {
                     treeNodeData.binding.inputs,
                     treeNodeData.binding.bindingType,
                     treeNodeData.binding.id,
-                    treeNodeData.isActive,
                     treeNodeData.ioHasNoRequiredCapabilities
                 ));
             }
