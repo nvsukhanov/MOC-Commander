@@ -22,8 +22,7 @@ export class SpeedShiftTaskRunnerService implements ITaskRunner<ControlSchemeBin
             task.payload.speed,
             {
                 power: task.payload.power,
-                useProfile: mapUseProfile(task.payload),
-                noFeedback: true
+                useProfile: mapUseProfile(task.payload)
             }
         );
     }

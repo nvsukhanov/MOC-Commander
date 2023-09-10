@@ -19,8 +19,7 @@ export class ServoTaskRunnerService implements ITaskRunner<ControlSchemeBindingT
             {
                 speed: task.payload.speed,
                 power: task.payload.power,
-                useProfile: mapUseProfile(task.payload),
-                noFeedback: false
+                useProfile: mapUseProfile(task.payload)
             }
         );
     }
