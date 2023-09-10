@@ -14,11 +14,11 @@ import packageJson from '../../../package.json';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AboutPageComponent {
-    public readonly ngPoweredUpURL = 'https://github.com/nvsukhanov/ngPoweredUP';
+    public readonly webPoweredUpURL = 'https://github.com/nvsukhanov/webPoweredUP';
 
     public readonly rxPoweredUpURL = 'https://github.com/nvsukhanov/rxPoweredUP';
 
-    public readonly licenseURL = 'https://github.com/nvsukhanov/ngPoweredUP/blob/main/LICENSE.md';
+    public readonly licenseURL = 'https://github.com/nvsukhanov/webPoweredUP/blob/main/LICENSE.md';
 
     public readonly version = packageJson.version;
 }

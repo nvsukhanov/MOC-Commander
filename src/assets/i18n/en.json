@@ -1,5 +1,5 @@
 {
-  "appTitle": "ngPoweredUP",
+  "appTitle": "webPoweredUP",
   "pageNotFound": "Page not found",
   "hubListHubIsNotConnected": "disconnected",
   "discoverHub": "Discover hub",
@@ -240,7 +240,7 @@
     "licenseTitle": "License",
     "licenseText": "MIT License",
     "sourcesTitle": "Sources",
-    "githubTitle": "ngPoweredUP GitHub",
+    "githubTitle": "webPoweredUP GitHub",
     "githubApiTitle": "rxPoweredUP GitHub",
     "versionTitle": "Version"
   },
