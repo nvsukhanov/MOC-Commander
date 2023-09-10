@@ -300,7 +300,6 @@
   "controllerProfiles": {
     "buttonState": "{ value, select, 1 {Pressed} other {Released} }",
     "axisState": "Position: { value }",
-    "settings": "Settings",
     "genericGamepad": {
       "name": "Generic gamepad",
       "axis": "Axis {inputId}",
