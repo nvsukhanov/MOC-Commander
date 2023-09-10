@@ -298,7 +298,6 @@
   "controllerProfiles": {
     "buttonState": "{ value, select, 1 {Нажато} other {Не нажато} }",
     "axisState": "Положение: { value }",
-    "settings": "Настройки",
     "genericGamepad": {
       "name": "Неизвестный геймпад",
       "axis": "Ось {inputId}",
