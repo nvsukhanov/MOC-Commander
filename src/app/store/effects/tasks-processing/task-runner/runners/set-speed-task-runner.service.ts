@@ -20,8 +20,7 @@ export class SetSpeedTaskRunnerService implements ITaskRunner<ControlSchemeBindi
             speed,
             {
                 power,
-                useProfile: mapUseProfile(task.payload),
-                noFeedback: true
+                useProfile: mapUseProfile(task.payload)
             }
         );
     }
