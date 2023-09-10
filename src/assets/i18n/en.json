@@ -162,6 +162,7 @@
     "bindingSectionOutputTitle": "Output",
     "bindingSectionInputTitle": "Input",
     "bindingSectionConfigTitle": "Settings",
+    "menu": "Menu",
     "inputActions": {
       "servo": "Servo",
       "brake": "Brake",

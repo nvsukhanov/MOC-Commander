@@ -13,7 +13,9 @@
         </section>
     </mat-card-content>
 
-    <div *appFeatureToolbarControls>
+    <div *appFeatureToolbarControls
+         class="toolbar"
+    >
         <ng-container *ngrxLet="canRunScheme$; let canRunScheme">
             <span class="spacer"></span>
 
@@ -50,19 +52,41 @@
                     <span class="cdk-visually-hidden">{{ 'controlScheme.cannotCreateBinding' | transloco }}</span>
                 </button>
             </ng-template>
-            <button mat-raised-button
-                    class="toolbar-button"
-                    (click)="onExport(scheme.name)"
-                    [title]="'controlScheme.export' | transloco"
-            >
-                {{ 'controlScheme.export' | transloco }}
-            </button>
-            <button mat-raised-button
-                    class="toolbar-button"
-                    [color]="'warn'"
-                    (click)="onDelete()">
-                {{ 'controlScheme.delete' | transloco }}
-            </button>
+            <ng-container *ngIf="isSmallScreen$ | ngrxPush; else largeScreen">
+                <button mat-icon-button
+                        [matMenuTriggerFor]="menu"
+                        [attr.aria-label]="'controlScheme.menu' | ngrxPush"
+                        class="toolbar-button"
+                >
+                    <mat-icon [fontIcon]="'more_vert'"></mat-icon>
+                </button>
+
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item
+                            (click)="onExport(scheme.name)"
+                    >
+                        {{ 'controlScheme.export' | transloco }}
+                    </button>
+                    <button mat-menu-item
+                            (click)="onDelete()">
+                        {{ 'controlScheme.delete' | transloco }}
+                    </button>
+                </mat-menu>
+            </ng-container>
+            <ng-template #largeScreen>
+                <button mat-raised-button
+                        class="toolbar-button"
+                        (click)="onExport(scheme.name)"
+                >
+                    {{ 'controlScheme.export' | transloco }}
+                </button>
+                <button mat-raised-button
+                        class="toolbar-button"
+                        [color]="'warn'"
+                        (click)="onDelete()">
+                    {{ 'controlScheme.delete' | transloco }}
+                </button>
+            </ng-template>
         </ng-container>
     </div>
 </mat-card>

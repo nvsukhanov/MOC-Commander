@@ -8,9 +8,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { RoutesBuilderService } from '@app/routing';
 import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel, ROUTER_SELECTORS, } from '@app/store';
-import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared';
+import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective, HintComponent, ScreenSizeObserverService } from '@app/shared';
 
 import { CONTROL_SCHEME_PAGE_SELECTORS } from './control-scheme-page.selectors';
 import { ControlSchemeViewIoListComponent } from './control-scheme-view-io-list';
@@ -36,6 +38,8 @@ import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData } fro
         HintComponent,
         FeatureToolbarControlsDirective,
         MatDialogModule,
+        MatIconModule,
+        MatMenuModule,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -61,6 +65,8 @@ export class ControlSchemePageComponent implements OnDestroy {
 
     public readonly canCreateBinding$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canCreateBinding);
 
+    public readonly isSmallScreen$: Observable<boolean> = this.screenSizeObserverService.isSmallScreen$;
+
     private sub?: Subscription;
 
     private isCapturingInput = false;
@@ -72,6 +78,7 @@ export class ControlSchemePageComponent implements OnDestroy {
         private readonly confirmationDialogService: ConfirmationDialogService,
         private readonly transloco: TranslocoService,
         private readonly dialog: MatDialog,
+        private readonly screenSizeObserverService: ScreenSizeObserverService
     ) {
     }
 

@@ -11,7 +11,14 @@ import { filter, take } from 'rxjs';
 import { concatLatestFrom } from '@ngrx/effects';
 import { RoutesBuilderService } from '@app/routing';
 import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel } from '@app/store';
-import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared';
+import {
+    ConfirmationDialogModule,
+    ConfirmationDialogService,
+    EllipsisTitleDirective,
+    FeatureToolbarControlsDirective,
+    HintComponent,
+    ScreenSizeObserverService
+} from '@app/shared';
 
 import { CONTROL_SCHEMES_LIST_PAGE_SELECTORS } from './control-scheme-list-page.selectors';
 import { ControlSchemeCreateDialogComponent } from './control-scheme-create-dialog';
@@ -36,7 +43,8 @@ import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData, Impo
         ControlSchemeViewUrlPipe,
         HintComponent,
         FeatureToolbarControlsDirective,
-        ConfirmationDialogModule
+        ConfirmationDialogModule,
+        EllipsisTitleDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -45,13 +53,16 @@ export class ControlSchemeListPageComponent {
 
     public readonly canCreateScheme$ = this.store.select(CONTROL_SCHEMES_LIST_PAGE_SELECTORS.canCreateScheme);
 
+    public readonly isSmallScreen$ = this.screenSizeObserverService.isSmallScreen$;
+
     constructor(
         private readonly store: Store,
         protected readonly routesBuilderService: RoutesBuilderService,
         private readonly dialog: MatDialog,
         private readonly router: Router,
         private readonly confirmationDialogService: ConfirmationDialogService,
-        private readonly transloco: TranslocoService
+        private readonly transloco: TranslocoService,
+        private readonly screenSizeObserverService: ScreenSizeObserverService
     ) {
     }
 

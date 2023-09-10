@@ -7,6 +7,7 @@ import { RouterLink } from '@angular/router';
 import { RoutesBuilderService } from '@app/routing';
 
 import { EllipsisTitleDirective } from '../ellipsis-title.directive';
+import { HideOnSmallScreenDirective } from '../hide-on-small-screen.directive';
 
 @Component({
     standalone: true,
@@ -20,6 +21,7 @@ import { EllipsisTitleDirective } from '../ellipsis-title.directive';
         NgIf,
         RouterLink,
         EllipsisTitleDirective,
+        HideOnSmallScreenDirective,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
