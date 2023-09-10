@@ -5,7 +5,7 @@
 
 An open-source serverless web application designed for controlling LEGO Powered Up MOCs using a variety of physical input devices.
 
-[Demo](https://nvsukhanov.github.io).
+[Demo](https://ngpoweredup.pages.dev)
 
 ## Features
 
