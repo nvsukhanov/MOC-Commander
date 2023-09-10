@@ -18,7 +18,7 @@ export class SetSpeedBindingFormMapperService {
     ): ControlSchemeSetSpeedBinding {
         const result: ControlSchemeSetSpeedBinding = {
             id,
-            operationMode: ControlSchemeBindingType.SetSpeed,
+            bindingType: ControlSchemeBindingType.SetSpeed,
             inputs: {
                 [ControlSchemeInputAction.Accelerate]: this.commonFormMapperService.mapInputFormToSchemeInput(
                     form.controls.inputs.controls[ControlSchemeInputAction.Accelerate]

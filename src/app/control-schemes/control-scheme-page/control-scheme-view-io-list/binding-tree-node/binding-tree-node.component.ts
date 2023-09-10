@@ -59,7 +59,7 @@ export class BindingTreeNodeComponent {
                 this._viewModel$ = this.store.select(INPUT_TREE_NODE_VIEW_MODEL_SELECTOR(
                     treeNodeData.schemeName,
                     treeNodeData.binding.inputs,
-                    treeNodeData.binding.operationMode,
+                    treeNodeData.binding.bindingType,
                     treeNodeData.binding.id,
                     treeNodeData.isActive,
                     treeNodeData.ioHasNoRequiredCapabilities

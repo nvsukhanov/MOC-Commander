@@ -52,7 +52,7 @@ export type ControlSchemeInputsRecord = { [k in ControlSchemeInputAction]?: Cont
 
 export type ControlSchemeSetSpeedBinding = {
     id: number;
-    operationMode: ControlSchemeBindingType.SetSpeed;
+    bindingType: ControlSchemeBindingType.SetSpeed;
     inputs: {
         [ControlSchemeInputAction.Accelerate]: ControlSchemeInput;
         [ControlSchemeInputAction.Brake]?: ControlSchemeInput;
@@ -66,7 +66,7 @@ export type ControlSchemeSetSpeedBinding = {
 
 export type ControlSchemeServoBinding = {
     id: number;
-    operationMode: ControlSchemeBindingType.Servo;
+    bindingType: ControlSchemeBindingType.Servo;
     inputs: {
         [ControlSchemeInputAction.Servo]: ControlSchemeInput;
     } & ControlSchemeInputsRecord;
@@ -81,7 +81,7 @@ export type ControlSchemeServoBinding = {
 
 export type ControlSchemeSetAngleBinding = {
     id: number;
-    operationMode: ControlSchemeBindingType.SetAngle;
+    bindingType: ControlSchemeBindingType.SetAngle;
     inputs: {
         [ControlSchemeInputAction.SetAngle]: ControlSchemeInput;
     } & ControlSchemeInputsRecord;
@@ -95,7 +95,7 @@ export type ControlSchemeSetAngleBinding = {
 
 export type ControlSchemeStepperBinding = {
     id: number;
-    operationMode: ControlSchemeBindingType.Stepper;
+    bindingType: ControlSchemeBindingType.Stepper;
     inputs: {
         [ControlSchemeInputAction.Step]: ControlSchemeInput;
     } & ControlSchemeInputsRecord;
@@ -109,7 +109,7 @@ export type ControlSchemeStepperBinding = {
 
 export type ControlSchemeSpeedShiftBinding = {
     id: number;
-    operationMode: ControlSchemeBindingType.SpeedShift;
+    bindingType: ControlSchemeBindingType.SpeedShift;
     inputs: {
         [ControlSchemeInputAction.NextLevel]: ControlSchemeInput;
         [ControlSchemeInputAction.PrevLevel]?: ControlSchemeInput;
@@ -125,7 +125,7 @@ export type ControlSchemeSpeedShiftBinding = {
 
 export type ControlSchemeAngleShiftBinding = {
     id: number;
-    operationMode: ControlSchemeBindingType.AngleShift;
+    bindingType: ControlSchemeBindingType.AngleShift;
     inputs: {
         [ControlSchemeInputAction.NextLevel]: ControlSchemeInput;
         [ControlSchemeInputAction.PrevLevel]?: ControlSchemeInput;

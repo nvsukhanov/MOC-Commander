@@ -1,7 +1,6 @@
 <ng-container *ngIf="initialBindingData$ | ngrxPush; let initialData; else unableToCreateBinding">
     <app-binding-edit #binding="appBindingEdit"
                       [binding]="initialData"
-                      [bindingType]="initialData.operationMode"
     ></app-binding-edit>
 
     <div *appFeatureToolbarControls>

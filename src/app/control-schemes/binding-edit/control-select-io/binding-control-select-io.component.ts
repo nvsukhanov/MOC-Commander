@@ -30,6 +30,8 @@ import { BINDING_EDIT_SELECTORS } from '../binding-edit.selectors';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingControlSelectIoComponent implements OnChanges, OnDestroy {
+    @Input() public hubIdControl?: FormControl<string>;
+
     @Input() public portIdControl?: FormControl<number>;
 
     @Input() public bindingType?: ControlSchemeBindingType;
@@ -40,26 +42,9 @@ export class BindingControlSelectIoComponent implements OnChanges, OnDestroy {
 
     private formUpdateSubscription?: Subscription;
 
-    private _hubId?: string;
-
     constructor(
         private readonly store: Store
     ) {
-    }
-
-    @Input()
-    public set hubId(
-        v: string | undefined
-    ) {
-        if (v !== this._hubId) {
-            this._hubId = v;
-            this.formUpdateSubscription?.unsubscribe();
-            this.portIdControl?.reset();
-        }
-    }
-
-    public get hubId(): string | undefined {
-        return this._hubId;
     }
 
     public get availableIos$(): Observable<AttachedIoModel[]> {
@@ -84,25 +69,36 @@ export class BindingControlSelectIoComponent implements OnChanges, OnDestroy {
             );
         }
 
-        if (this.bindingType !== undefined && this.hubId !== undefined) {
-            this._availableIos = this.store.select(BINDING_EDIT_SELECTORS.selectControllableIos({
-                hubId: this.hubId,
-                bindingType: this.bindingType
-            }));
+        if (this.bindingType !== undefined && this.hubIdControl !== undefined) {
+            this._availableIos = this.hubIdControl?.valueChanges.pipe(
+                startWith(null),
+                switchMap(() => {
+                    const hubId = this.hubIdControl?.value;
+                    const bindingType = this.bindingType;
+                    if (hubId === undefined || bindingType === undefined) {
+                        return of([]);
+                    }
+                    return this.store.select(BINDING_EDIT_SELECTORS.selectControllableIos({ hubId, bindingType }));
+                })
+            );
         } else {
             this._availableIos = of([]);
         }
 
-        if (this.portIdControl && this._hubId) {
-            this.formUpdateSubscription = this.portIdControl.valueChanges.pipe(
-                startWith(null),
+        if (this.portIdControl && this.hubIdControl) {
+            this.formUpdateSubscription = this.hubIdControl.valueChanges.pipe(
                 concatLatestFrom(() => this._availableIos),
             ).subscribe(([ , availableIos ]) => {
                 if (!this.portIdControl) {
                     return;
                 }
-                if (this.portIdControl.invalid && availableIos.length > 0) {
+                if (!availableIos.length) {
+                    this.portIdControl.reset();
+                    return;
+                }
+                if (!availableIos.find((io) => io.portId === this.portIdControl?.value)) {
                     this.portIdControl.setValue(availableIos[0].portId);
+                    this.portIdControl.markAsDirty();
                 }
             });
         }

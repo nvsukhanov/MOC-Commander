@@ -18,7 +18,7 @@ export class AngleShiftBindingFormMapperService {
     ): ControlSchemeAngleShiftBinding {
         const result: ControlSchemeAngleShiftBinding = {
             id,
-            operationMode: ControlSchemeBindingType.AngleShift,
+            bindingType: ControlSchemeBindingType.AngleShift,
             inputs: {
                 [ControlSchemeInputAction.NextLevel]: this.commonFormMapperService.mapInputFormToSchemeInput(
                     form.controls.inputs.controls[ControlSchemeInputAction.NextLevel]

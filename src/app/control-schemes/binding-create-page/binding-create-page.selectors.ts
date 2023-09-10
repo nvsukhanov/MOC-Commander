@@ -24,7 +24,7 @@ export const BINDING_CREATE_PAGE_SELECTORS = {
                         return {
                             hubId: hub.hubId,
                             portId: io.portId,
-                            operationMode: availableBindingTypes[0]
+                            bindingType: availableBindingTypes[0]
                         };
                     }
                 }

@@ -89,7 +89,7 @@ function localStorageSyncReducer(
 
 const metaReducers: Array<MetaReducer<IState>> = [ localStorageSyncReducer ];
 
-export const STORAGE_VERSION = '20';
+export const STORAGE_VERSION = '21';
 
 export function provideApplicationStore(): EnvironmentProviders {
     return makeEnvironmentProviders([

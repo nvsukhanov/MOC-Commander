@@ -56,13 +56,13 @@ export class ControlSchemeFormBuilderService {
         form: ControlSchemeBindingForm,
         patch: DeepPartial<ControlSchemeBinding>
     ): void {
-        if (patch.operationMode !== undefined) {
-            form.controls.bindingType.setValue(patch.operationMode);
+        if (patch.bindingType !== undefined) {
+            form.controls.bindingType.setValue(patch.bindingType);
         }
         if (patch.id !== undefined) {
             form.controls.id.setValue(patch.id);
         }
-        switch (patch.operationMode) {
+        switch (patch.bindingType) {
             case ControlSchemeBindingType.SetSpeed:
                 this.setSpeedBindingFormBuilder.patchForm(form.controls[ControlSchemeBindingType.SetSpeed], patch);
                 break;
@@ -82,7 +82,7 @@ export class ControlSchemeFormBuilderService {
                 this.angleShiftBindingFormBuilder.patchForm(form.controls[ControlSchemeBindingType.AngleShift], patch);
                 break;
             default:
-                return patch.operationMode satisfies void;
+                return patch.bindingType satisfies void;
         }
     }
 }
