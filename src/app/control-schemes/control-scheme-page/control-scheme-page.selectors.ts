@@ -102,7 +102,7 @@ function createBindingTreeNode(
     io?: AttachedIoModel,
 ): ControlSchemeViewBindingTreeNodeData {
     const ioHasNoRequiredCapabilities = io ?
-                                        !ioHasMatchingModeForOpMode(binding.operationMode, portOutputModeNames)
+                                        !ioHasMatchingModeForOpMode(binding.bindingType, portOutputModeNames)
                                            : true;
     return {
         path: `${ioPath}.${binding.id}`,
@@ -229,7 +229,7 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
                 return false;
             }
             // ensure all ios are connected and has matching necessary capabilities
-            if (scheme.bindings.some((b) => !ioHasMatchingModeForOpMode(b.operationMode, ioOutputModes[attachedIosIdFn(b)] ?? []))) {
+            if (scheme.bindings.some((b) => !ioHasMatchingModeForOpMode(b.bindingType, ioOutputModes[attachedIosIdFn(b)] ?? []))) {
                 return false;
             }
             // ensure all controllers are connected

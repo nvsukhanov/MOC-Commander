@@ -18,7 +18,7 @@ export class SetAngleBindingFormMapperService {
     ): ControlSchemeSetAngleBinding {
         return {
             id,
-            operationMode: ControlSchemeBindingType.SetAngle,
+            bindingType: ControlSchemeBindingType.SetAngle,
             ...form.getRawValue(),
             inputs: {
                 [ControlSchemeInputAction.SetAngle]: this.commonFormMapperService.mapInputFormToSchemeInput(

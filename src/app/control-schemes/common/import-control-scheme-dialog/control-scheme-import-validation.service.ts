@@ -53,12 +53,12 @@ export class ControlSchemeImportValidationService {
             return { [ControlSchemeImportValidationErrors.CorruptedBindings]: true };
         }
         for (const binding of controlScheme.bindings) {
-            if (!binding || binding.operationMode === undefined) {
+            if (!binding || binding.bindingType === undefined) {
                 return { [ControlSchemeImportValidationErrors.CorruptedBindings]: true };
             }
             const bindingFormGroup = this.controlSchemeFormBuilder.createBindingForm();
             this.controlSchemeFormBuilder.patchForm(bindingFormGroup, binding);
-            const targetForm = bindingFormGroup.controls[binding.operationMode];
+            const targetForm = bindingFormGroup.controls[binding.bindingType];
             if (targetForm.invalid || bindingFormGroup.controls.bindingType.invalid) {
                 return { [ControlSchemeImportValidationErrors.CorruptedBindings]: true };
             }

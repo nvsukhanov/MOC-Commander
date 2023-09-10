@@ -18,7 +18,7 @@ export class SpeedShiftBindingFormMapperService {
     ): ControlSchemeSpeedShiftBinding {
         const result: ControlSchemeSpeedShiftBinding = {
             id,
-            operationMode: ControlSchemeBindingType.SpeedShift,
+            bindingType: ControlSchemeBindingType.SpeedShift,
             inputs: {
                 [ControlSchemeInputAction.NextLevel]: this.commonFormMapperService.mapInputFormToSchemeInput(
                     form.controls.inputs.controls[ControlSchemeInputAction.NextLevel]

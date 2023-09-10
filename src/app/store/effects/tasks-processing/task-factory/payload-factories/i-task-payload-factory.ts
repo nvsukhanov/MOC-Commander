@@ -5,7 +5,7 @@ import { ControlSchemeBindingType } from '@app/shared';
 
 export interface ITaskPayloadFactory<TBindingType extends ControlSchemeBindingType> {
     buildPayload(
-        binding: ControlSchemeBinding & { operationMode: TBindingType },
+        binding: ControlSchemeBinding & { bindingType: TBindingType },
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
         previousTaskPayload: PortCommandTask | null

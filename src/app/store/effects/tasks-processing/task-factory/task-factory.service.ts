@@ -70,12 +70,12 @@ export class TaskFactoryService {
     }
 
     private buildPayload<T extends ControlSchemeBindingType>(
-        binding: ControlSchemeBinding & { operationMode: T },
+        binding: ControlSchemeBinding & { bindingType: T },
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
         previousTask: PortCommandTask | null
     ): Observable<{ payload: PortCommandTaskPayload; inputTimestamp: number } | null> {
-        const taskPayloadFactory: ITaskPayloadFactory<T> = this.taskPayloadFactories[binding.operationMode];
+        const taskPayloadFactory: ITaskPayloadFactory<T> = this.taskPayloadFactories[binding.bindingType];
         return taskPayloadFactory.buildPayload(
             binding,
             inputsState,

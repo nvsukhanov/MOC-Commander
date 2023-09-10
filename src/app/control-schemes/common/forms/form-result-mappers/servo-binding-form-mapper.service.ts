@@ -18,7 +18,7 @@ export class ServoBindingFormMapperService {
     ): ControlSchemeServoBinding {
         return {
             id,
-            operationMode: ControlSchemeBindingType.Servo,
+            bindingType: ControlSchemeBindingType.Servo,
             ...form.getRawValue(),
             inputs: {
                 [ControlSchemeInputAction.Servo]: this.commonFormMapperService.mapInputFormToSchemeInput(

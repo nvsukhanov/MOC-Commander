@@ -18,7 +18,7 @@ export class StepperBindingFormMapperService {
     ): ControlSchemeStepperBinding {
         return {
             id,
-            operationMode: ControlSchemeBindingType.Stepper,
+            bindingType: ControlSchemeBindingType.Stepper,
             ...form.getRawValue(),
             inputs: {
                 [ControlSchemeInputAction.Step]: this.commonFormMapperService.mapInputFormToSchemeInput(
