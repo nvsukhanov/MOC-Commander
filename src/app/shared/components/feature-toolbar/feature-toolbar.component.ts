@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, TemplateRef } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Observable } from 'rxjs';
-import { NgTemplateOutlet } from '@angular/common';
-import { LetDirective } from '@ngrx/component';
+import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { LetDirective, PushPipe } from '@ngrx/component';
 
 import { FeatureToolbarService } from './feature-toolbar-service';
 
@@ -14,7 +14,9 @@ import { FeatureToolbarService } from './feature-toolbar-service';
     imports: [
         MatToolbarModule,
         LetDirective,
-        NgTemplateOutlet
+        NgTemplateOutlet,
+        NgIf,
+        PushPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
