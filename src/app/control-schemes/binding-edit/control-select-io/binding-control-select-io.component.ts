@@ -87,6 +87,7 @@ export class BindingControlSelectIoComponent implements OnChanges, OnDestroy {
 
         if (this.portIdControl && this.hubIdControl) {
             this.formUpdateSubscription = this.hubIdControl.valueChanges.pipe(
+                startWith(null),
                 concatLatestFrom(() => this._availableIos),
             ).subscribe(([ , availableIos ]) => {
                 if (!this.portIdControl) {
@@ -96,7 +97,7 @@ export class BindingControlSelectIoComponent implements OnChanges, OnDestroy {
                     this.portIdControl.reset();
                     return;
                 }
-                if (!availableIos.find((io) => io.portId === this.portIdControl?.value)) {
+                if (this.portIdControl.invalid || !availableIos.find((io) => io.portId === this.portIdControl?.value)) {
                     this.portIdControl.setValue(availableIos[0].portId);
                     this.portIdControl.markAsDirty();
                 }
