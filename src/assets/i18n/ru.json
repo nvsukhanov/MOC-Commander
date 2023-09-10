@@ -160,6 +160,7 @@
     "bindingSectionOutputTitle": "Основные настройки",
     "bindingSectionInputTitle": "Контроллеры",
     "bindingSectionConfigTitle": "Конфигурация",
+    "menu": "Menu",
     "inputActions": {
       "servo": "Серво",
       "brake": "Тормоз",

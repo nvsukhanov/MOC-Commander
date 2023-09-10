@@ -7,6 +7,7 @@ import { PushPipe } from '@ngrx/component';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { RoutesBuilderService } from '@app/routing';
+import { ScreenSizeObserverService } from '@app/shared';
 
 import { IoInlineViewComponent } from './io-inline-view';
 import { ControlSchemeViewIoTreeNode } from '../../types';
@@ -30,13 +31,16 @@ import { IHubTreeNodeViewModel, IO_TREE_NODE_SELECTORS } from './io-tree-node.se
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IoTreeNodeComponent {
+    public readonly isSmallScreen$ = this.screenSizeObserverService.isSmallScreen$;
+
     private _viewModel$: Observable<IHubTreeNodeViewModel | null> = of(null);
 
     private _portConfigRoute: string[] = [];
 
     constructor(
         private readonly routeBuilderService: RoutesBuilderService,
-        private readonly store: Store
+        private readonly store: Store,
+        private readonly screenSizeObserverService: ScreenSizeObserverService
     ) {
     }
 

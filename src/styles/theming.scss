@@ -146,4 +146,12 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
         --mat-option-selected-state-label-text-color: #{$light-primary-text};
         --mat-option-label-text-color: #{$light-primary-text};
     }
+
+    .mat-mdc-dialog-container .mdc-dialog__surface {
+        --mdc-dialog-container-color: #{$elevated-dark-color};
+    }
+
+    .mat-mdc-form-field-focus-overlay {
+        background-color: unset;
+    }
 }

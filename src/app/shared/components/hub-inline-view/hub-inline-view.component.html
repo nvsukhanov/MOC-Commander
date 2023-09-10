@@ -30,6 +30,7 @@
                   class="button-state"
                   [class.muted]="!isConnected"
                   [fontIcon]="'radio_button_checked'"
+                  *appHideOnSmallScreen
         ></mat-icon>
         <span class="cdk-visually-hidden">{{ 'hub.buttonState' | transloco: { isButtonPressed } }}</span>
     </ng-container>
@@ -39,6 +40,7 @@
                   class="button-state"
                   [class.muted]="!isConnected"
                   [fontIcon]="'radio_button_off'"
+                  *appHideOnSmallScreen
         ></mat-icon>
         <span class="cdk-visually-hidden">{{ 'hub.buttonState' | transloco: { isButtonPressed } }}</span>
     </ng-template>
@@ -55,6 +57,7 @@
         <mat-icon class="rssi-level"
                   [title]="'hub.rssiLevel' | transloco: { rssi: rssiLevel }"
                   [fontIcon]="rssiLevelIcon"
+                  *appHideOnSmallScreen
         ></mat-icon>
         <span class="cdk-visually-hidden">{{ 'hub.rssiLevel' | transloco: { rssi: rssiLevel } }}</span>
     </ng-container>

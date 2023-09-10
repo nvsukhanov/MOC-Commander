@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslocoModule } from '@ngneat/transloco';
+import { EllipsisTitleDirective } from '@app/shared';
 
 @Component({
     standalone: true,
@@ -17,7 +18,8 @@ import { TranslocoModule } from '@ngneat/transloco';
         MatIconModule,
         MatInputModule,
         ReactiveFormsModule,
-        TranslocoModule
+        TranslocoModule,
+        EllipsisTitleDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
