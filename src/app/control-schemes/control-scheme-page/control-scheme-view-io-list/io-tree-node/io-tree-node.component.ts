@@ -4,11 +4,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
 import { PushPipe } from '@ngrx/component';
+import { Observable, of } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { RoutesBuilderService } from '@app/routing';
 
 import { IoInlineViewComponent } from './io-inline-view';
 import { ControlSchemeViewIoTreeNode } from '../../types';
 import { PortCommandTaskSummaryPipe } from '../../port-command-task-summary';
+import { IHubTreeNodeViewModel, IO_TREE_NODE_SELECTORS } from './io-tree-node.selectors';
 
 @Component({
     standalone: true,
@@ -27,32 +30,33 @@ import { PortCommandTaskSummaryPipe } from '../../port-command-task-summary';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IoTreeNodeComponent {
-    private _node?: ControlSchemeViewIoTreeNode;
+    private _viewModel$: Observable<IHubTreeNodeViewModel | null> = of(null);
 
     private _portConfigRoute: string[] = [];
 
     constructor(
-        private readonly routeBuilderService: RoutesBuilderService
+        private readonly routeBuilderService: RoutesBuilderService,
+        private readonly store: Store
     ) {
     }
 
     @Input()
     public set node(v: ControlSchemeViewIoTreeNode | undefined) {
-        this._node = v;
         if (v) {
             this._portConfigRoute = this.routeBuilderService.portConfigEdit(
                 v.schemeName,
                 v.hubId,
                 v.portId
             );
+            this._viewModel$ = this.store.select(IO_TREE_NODE_SELECTORS.selectViewModel(v));
         } else {
             this._portConfigRoute = [];
+            this._viewModel$ = of(null);
         }
-
     }
 
-    public get node(): ControlSchemeViewIoTreeNode | undefined {
-        return this._node;
+    public get viewModel$(): Observable<IHubTreeNodeViewModel | null> {
+        return this._viewModel$;
     }
 
     public get portConfigRoute(): string[] {

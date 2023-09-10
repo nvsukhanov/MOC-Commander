@@ -33,7 +33,7 @@
                               [fontIcon]="treeControl.isExpanded(hubNodeData) ? 'expand_more' : 'chevron_right'"
                     ></mat-icon>
                 </button>
-                <app-hub-tree-node [hub]="hubNodeData"></app-hub-tree-node>
+                <app-hub-tree-node [hubTreeNode]="hubNodeData"></app-hub-tree-node>
             </div>
             <div [class.control-scheme-tree__node_invisible]="!treeControl.isExpanded(hubNodeData)"
                  role="group">

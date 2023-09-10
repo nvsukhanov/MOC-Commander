@@ -13,11 +13,6 @@
 
     &__operation-type {
         width: 100px;
-
-        &_active {
-            font-weight: 500;
-            color: var(--app-accent-color);
-        }
     }
 
     &__controls {

@@ -1,5 +1,5 @@
 import { concatLatestFrom, createEffect } from '@ngrx/effects';
-import { NEVER, Observable, animationFrames, filter, from, map, merge, share, switchMap } from 'rxjs';
+import { NEVER, Observable, animationFrames, distinctUntilChanged, filter, from, map, merge, share, startWith, switchMap } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { ControllerInputType, ControllerType, GamepadValueTransformService, WINDOW } from '@app/shared';
@@ -36,16 +36,15 @@ function readGamepads(
                 });
 
                 return gamepadRead$.pipe(
-                    map((apiGamepad) => ({
-                        rawValue: valueTransformer.trimValue(apiGamepad.axes[axisIndex]),
-                        value: valueTransformer.transformAxisValue(apiGamepad.axes[axisIndex], settings.axisConfigs[axisIndex])
+                    map((data) => valueTransformer.trimValue(data.axes[axisIndex])),
+                    startWith(valueTransformer.trimValue(axisValue)),
+                    distinctUntilChanged(),
+                    map((rawValue) => ({
+                        rawValue,
+                        value: valueTransformer.transformAxisValue(rawValue, settings.axisConfigs[axisIndex])
                     })),
-                    concatLatestFrom(() => [
-                        store.select(CONTROLLER_INPUT_SELECTORS.selectRawValueById(inputId)),
-                        store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(inputId))
-                    ]),
-                    filter(([ current, previousRawValue ]) => current.rawValue !== previousRawValue),
-                    map(([ current, , prevValue ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
+                    concatLatestFrom(() => store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(inputId))),
+                    map(([ current, prevValue ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
                         nextState: {
                             controllerId: connection.controllerId,
                             inputType: ControllerInputType.Axis,
@@ -68,6 +67,8 @@ function readGamepads(
                 });
                 return gamepadRead$.pipe(
                     map((apiGamepad) => valueTransformer.trimValue(apiGamepad.buttons[buttonIndex].value)),
+                    startWith(valueTransformer.trimValue(browserGamepad.buttons[buttonIndex].value)),
+                    distinctUntilChanged(),
                     concatLatestFrom(() => store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(inputId))),
                     filter(([ currentValue, previousValue ]) => currentValue !== previousValue),
                     map(([ value, prevValue ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
