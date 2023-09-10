@@ -17,9 +17,14 @@ export class PortIdToPortNamePipe implements PipeTransform {
         5: 'F'
     };
 
+    private readonly nullPortName: string = '-';
+
     public transform(
-        portId: number
+        portId: number | null
     ): string {
+        if (portId === null) {
+            return this.nullPortName;
+        }
         return this.portIdToPortNameMapping[portId] ?? portId.toString();
     }
 }

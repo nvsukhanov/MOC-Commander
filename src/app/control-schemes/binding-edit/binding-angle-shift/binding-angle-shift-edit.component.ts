@@ -100,6 +100,9 @@ export class BindingAngleShiftEditComponent implements IBindingsDetailsEditCompo
             mergeWith(form.controls.portId.valueChanges),
             startWith(null),
             switchMap(() => {
+                if (!form.controls.hubId.value || !form.controls.portId.value) {
+                    return of(false);
+                }
                 return this.store.select(BINDING_EDIT_SELECTORS.canRequestPortValue({
                     hubId: form.controls.hubId.value,
                     portId: form.controls.portId.value,
@@ -114,7 +117,7 @@ export class BindingAngleShiftEditComponent implements IBindingsDetailsEditCompo
         levelIndex: number
     ): void {
         this.portRequestSubscription?.unsubscribe();
-        if (!this.form) {
+        if (!this.form || !this.form.controls.hubId.value || !this.form.controls.portId.value) {
             return;
         }
         const control = this.form.controls.angles.at(levelIndex);

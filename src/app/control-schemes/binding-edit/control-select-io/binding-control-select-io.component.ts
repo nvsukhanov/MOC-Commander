@@ -30,9 +30,9 @@ import { BINDING_EDIT_SELECTORS } from '../binding-edit.selectors';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingControlSelectIoComponent implements OnChanges, OnDestroy {
-    @Input() public hubIdControl?: FormControl<string>;
+    @Input() public hubIdControl?: FormControl<string | null>;
 
-    @Input() public portIdControl?: FormControl<number>;
+    @Input() public portIdControl?: FormControl<number | null>;
 
     @Input() public bindingType?: ControlSchemeBindingType;
 
@@ -75,7 +75,7 @@ export class BindingControlSelectIoComponent implements OnChanges, OnDestroy {
                 switchMap(() => {
                     const hubId = this.hubIdControl?.value;
                     const bindingType = this.bindingType;
-                    if (hubId === undefined || bindingType === undefined) {
+                    if (!hubId || bindingType === undefined) {
                         return of([]);
                     }
                     return this.store.select(BINDING_EDIT_SELECTORS.selectControllableIos({ hubId, bindingType }));

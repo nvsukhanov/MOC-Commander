@@ -16,6 +16,11 @@ export class AngleShiftBindingFormMapperService {
         id: ControlSchemeBinding['id'],
         form: AngleShiftBindingForm
     ): ControlSchemeAngleShiftBinding {
+        const hubId = form.controls.hubId.value;
+        const portId = form.controls.portId.value;
+        if (hubId === null || portId === null) {
+            throw new Error('Hub ID and port ID must be set');
+        }
         const result: ControlSchemeAngleShiftBinding = {
             id,
             bindingType: ControlSchemeBindingType.AngleShift,
@@ -24,8 +29,8 @@ export class AngleShiftBindingFormMapperService {
                     form.controls.inputs.controls[ControlSchemeInputAction.NextLevel]
                 )
             },
-            hubId: form.controls.hubId.getRawValue(),
-            portId: form.controls.portId.getRawValue(),
+            hubId,
+            portId,
             angles: form.controls.angles.getRawValue(),
             speed: form.controls.speed.getRawValue(),
             power: form.controls.power.getRawValue(),

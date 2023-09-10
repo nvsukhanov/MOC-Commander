@@ -26,8 +26,8 @@ export type SetSpeedBindingForm = FormGroup<{
         [ControlSchemeInputAction.Accelerate]: InputFormGroup;
         [ControlSchemeInputAction.Brake]: OptionalInputFormGroup;
     }>;
-    hubId: FormControl<string>;
-    portId: FormControl<number>;
+    hubId: FormControl<string | null>;
+    portId: FormControl<number | null>;
     maxSpeed: FormControl<number>;
     invert: FormControl<boolean>;
     power: FormControl<number>;
@@ -39,8 +39,8 @@ export type ServoBindingForm = FormGroup<{
     inputs: FormGroup<{
         [ControlSchemeInputAction.Servo]: InputFormGroup;
     }>;
-    hubId: FormControl<string>;
-    portId: FormControl<number>;
+    hubId: FormControl<string | null>;
+    portId: FormControl<number | null>;
     range: FormControl<number>;
     aposCenter: FormControl<number>;
     speed: FormControl<number>;
@@ -54,8 +54,8 @@ export type StepperBindingForm = FormGroup<{
     inputs: FormGroup<{
         [ControlSchemeInputAction.Step]: InputFormGroup;
     }>;
-    hubId: FormControl<string>;
-    portId: FormControl<number>;
+    hubId: FormControl<string | null>;
+    portId: FormControl<number | null>;
     degree: FormControl<number>;
     speed: FormControl<number>;
     power: FormControl<number>;
@@ -68,8 +68,8 @@ export type SetAngleBindingForm = FormGroup<{
     inputs: FormGroup<{
         [ControlSchemeInputAction.SetAngle]: InputFormGroup;
     }>;
-    hubId: FormControl<string>;
-    portId: FormControl<number>;
+    hubId: FormControl<string | null>;
+    portId: FormControl<number | null>;
     angle: FormControl<number>;
     speed: FormControl<number>;
     power: FormControl<number>;
@@ -84,8 +84,8 @@ export type SpeedShiftBindingForm = FormGroup<{
         [ControlSchemeInputAction.PrevLevel]: OptionalInputFormGroup;
         [ControlSchemeInputAction.Reset]: OptionalInputFormGroup;
     }>;
-    hubId: FormControl<string>;
-    portId: FormControl<number>;
+    hubId: FormControl<string | null>;
+    portId: FormControl<number | null>;
     levels: FormArray<FormControl<number>>;
     power: FormControl<number>;
     loopingMode: FormControl<LoopingMode>;
@@ -99,8 +99,8 @@ export type AngleShiftBindingForm = FormGroup<{
         [ControlSchemeInputAction.NextLevel]: InputFormGroup;
         [ControlSchemeInputAction.PrevLevel]: OptionalInputFormGroup;
     }>;
-    hubId: FormControl<string>;
-    portId: FormControl<number>;
+    hubId: FormControl<string | null>;
+    portId: FormControl<number | null>;
     angles: FormArray<FormControl<number>>;
     power: FormControl<number>;
     speed: FormControl<number>;
@@ -123,8 +123,8 @@ export type ControlSchemeBindingForm = FormGroup<{
 }>;
 
 export type PortConfigEditForm = FormGroup<{
-    hubId: FormControl<string>;
-    portId: FormControl<number>;
+    hubId: FormControl<string | null>;
+    portId: FormControl<number | null>;
     accelerationTimeMs: FormControl<number>;
     decelerationTimeMs: FormControl<number>;
 }>;
