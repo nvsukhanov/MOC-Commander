@@ -85,9 +85,18 @@ export class PortConfigEditPageComponent implements OnInit, OnDestroy {
                 take(1)
             ).subscribe((portConfig) => {
                 if (portConfig) {
+                    const hubId = this.formGroup.controls.hubId.value;
+                    const portId = this.formGroup.controls.portId.value;
+                    if (hubId === null || portId === null) {
+                        throw new Error('Hub ID and port ID must be set');
+                    }
                     this.store.dispatch(CONTROL_SCHEME_ACTIONS.savePortConfig({
                         schemeName: portConfig.schemeName,
-                        portConfig: this.formGroup.getRawValue()
+                        portConfig: {
+                            ...this.formGroup.getRawValue(),
+                            hubId,
+                            portId
+                        }
                     }));
                     this.router.navigate(
                         this.routesBuilder.controlSchemeView(portConfig.schemeName)

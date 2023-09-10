@@ -16,6 +16,11 @@ export class SetSpeedBindingFormMapperService {
         id: ControlSchemeBinding['id'],
         form: SetSpeedBindingForm
     ): ControlSchemeSetSpeedBinding {
+        const hubId = form.controls.hubId.value;
+        const portId = form.controls.portId.value;
+        if (hubId === null || portId === null) {
+            throw new Error('Hub ID and port ID must be set');
+        }
         const result: ControlSchemeSetSpeedBinding = {
             id,
             bindingType: ControlSchemeBindingType.SetSpeed,
@@ -24,8 +29,8 @@ export class SetSpeedBindingFormMapperService {
                     form.controls.inputs.controls[ControlSchemeInputAction.Accelerate]
                 )
             },
-            hubId: form.controls.hubId.getRawValue(),
-            portId: form.controls.portId.getRawValue(),
+            hubId,
+            portId,
             maxSpeed: form.controls.maxSpeed.getRawValue(),
             invert: form.controls.invert.getRawValue(),
             power: form.controls.power.getRawValue(),

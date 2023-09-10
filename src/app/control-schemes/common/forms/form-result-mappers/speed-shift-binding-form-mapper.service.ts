@@ -16,6 +16,11 @@ export class SpeedShiftBindingFormMapperService {
         id: ControlSchemeBinding['id'],
         form: SpeedShiftBindingForm
     ): ControlSchemeSpeedShiftBinding {
+        const hubId = form.controls.hubId.value;
+        const portId = form.controls.portId.value;
+        if (hubId === null || portId === null) {
+            throw new Error('Hub ID and port ID must be set');
+        }
         const result: ControlSchemeSpeedShiftBinding = {
             id,
             bindingType: ControlSchemeBindingType.SpeedShift,
@@ -24,8 +29,8 @@ export class SpeedShiftBindingFormMapperService {
                     form.controls.inputs.controls[ControlSchemeInputAction.NextLevel]
                 )
             },
-            hubId: form.controls.hubId.getRawValue(),
-            portId: form.controls.portId.getRawValue(),
+            hubId,
+            portId,
             levels: form.controls.levels.getRawValue(),
             power: form.controls.power.getRawValue(),
             loopingMode: form.controls.loopingMode.getRawValue(),

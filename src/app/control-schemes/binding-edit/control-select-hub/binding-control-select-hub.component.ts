@@ -26,7 +26,7 @@ import { BINDING_EDIT_SELECTORS, HubWithConnectionState } from '../binding-edit.
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingControlSelectHubComponent implements OnChanges, OnDestroy {
-    @Input() public control?: FormControl<string>;
+    @Input() public control?: FormControl<string | null>;
 
     @Input() public bindingType?: ControlSchemeBindingType;
 

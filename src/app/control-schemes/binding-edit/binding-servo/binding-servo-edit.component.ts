@@ -113,7 +113,7 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
     }
 
     public onServoCenterReadRequest(): void {
-        if (!this._form) {
+        if (!this._form || this._form.controls.hubId.value === null || this._form.controls.portId.value === null) {
             return;
         }
         this.portRequestSubscription?.unsubscribe();
@@ -130,7 +130,7 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
     }
 
     public onServoRangeReadRequest(): void {
-        if (!this._form) {
+        if (!this._form || this._form.controls.hubId.value === null || this._form.controls.portId.value === null) {
             return;
         }
         this.portRequestSubscription?.unsubscribe();
@@ -187,6 +187,9 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
                 mergeWith(form.controls.portId.valueChanges),
                 startWith(null),
                 switchMap(() => {
+                    if (!form.controls.hubId.value || !form.controls.portId.value) {
+                        return of(false);
+                    }
                     return this.store.select(BINDING_EDIT_SELECTORS.canCalibrateServo({
                         hubId: form.controls.hubId.value,
                         portId: form.controls.portId.value,
@@ -200,6 +203,9 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
                 combineLatestWith(this._isCalibrating$),
                 switchMap(([ , isCalibrating ]) => {
                     if (isCalibrating) {
+                        return of(false);
+                    }
+                    if (!form.controls.hubId.value || !form.controls.portId.value) {
                         return of(false);
                     }
                     return this.store.select(BINDING_EDIT_SELECTORS.canRequestPortValue({

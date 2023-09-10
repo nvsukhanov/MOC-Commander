@@ -89,6 +89,9 @@ export class BindingSetAngleEditComponent implements IBindingsDetailsEditCompone
                 mergeWith(form.controls.portId.valueChanges),
                 startWith(null),
                 switchMap(() => {
+                    if (!form.controls.hubId.value || !form.controls.portId.value) {
+                        return of(false);
+                    }
                     return this.store.select(BINDING_EDIT_SELECTORS.canRequestPortValue({
                         hubId: form.controls.hubId.value,
                         portId: form.controls.portId.value,
@@ -108,6 +111,9 @@ export class BindingSetAngleEditComponent implements IBindingsDetailsEditCompone
         this.portRequestSubscription?.unsubscribe();
         const hubId = form.controls.hubId.value;
         const portId = form.controls.portId.value;
+        if (hubId === null || portId === null) {
+            return;
+        }
         this.portRequestSubscription = this.hubFacade.getMotorAbsolutePosition(hubId, portId).pipe(
             take(1),
             concatLatestFrom(() => this.store.select(ATTACHED_IO_PROPS_SELECTORS.selectMotorEncoderOffset({ hubId, portId })))

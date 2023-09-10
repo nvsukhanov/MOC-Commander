@@ -34,16 +34,16 @@ export class CommonFormControlsBuilderService {
         });
     }
 
-    public hubIdControl(): FormControl<string> {
-        return this.formBuilder.control<string>('', {
-            nonNullable: true,
+    public hubIdControl(): FormControl<string | null> {
+        return this.formBuilder.control<string | null>(null, {
+            nonNullable: false,
             validators: [ Validators.required ]
         });
     }
 
-    public portIdControl(): FormControl<number> {
-        return this.formBuilder.control<number>(-1, {
-            nonNullable: true,
+    public portIdControl(): FormControl<number | null> {
+        return this.formBuilder.control<number | null>(null, {
+            nonNullable: false,
             validators: [ Validators.required, Validators.min(0), Validators.max(0xFF) ]
         });
     }
