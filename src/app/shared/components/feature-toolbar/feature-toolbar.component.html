@@ -1,4 +1,4 @@
-<ng-container *ngrxLet="controlsTemplate$; let controlsTemplate">
+<ng-container *ngIf="controlsTemplate$ | ngrxPush; let controlsTemplate">
     <mat-toolbar class="toolbar">
         <span class="spacer"></span>
         <ng-container *ngTemplateOutlet="controlsTemplate"></ng-container>
