@@ -1,13 +1,21 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { PushPipe } from '@ngrx/component';
-import { Observable, of, switchMap } from 'rxjs';
+import { LetDirective, PushPipe } from '@ngrx/component';
+import { Observable, Subscription, filter, map, take } from 'rxjs';
 import { NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { HUBS_ACTIONS, HUBS_SELECTORS, HUB_EDIT_FORM_ACTIVE_SAVES_SELECTORS, HUB_STATS_SELECTORS, HubModel, ROUTER_SELECTORS } from '@app/store';
-import { HintComponent } from '@app/shared';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { Router, RouterLink } from '@angular/router';
+import { Actions, ofType } from '@ngrx/effects';
+import { RoutesBuilderService } from '@app/routing';
+import { FeatureToolbarControlsDirective, HintComponent, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared';
+import { HUBS_ACTIONS, HubModel, ROUTER_SELECTORS } from '@app/store';
 
-import { HubEditFormComponent, HubEditFormSaveResult } from './hub-edit-form';
+import { HUB_EDIT_PAGE_SELECTORS } from './hub-edit-page.selectors';
 
 @Component({
     standalone: true,
@@ -15,33 +23,96 @@ import { HubEditFormComponent, HubEditFormSaveResult } from './hub-edit-form';
     templateUrl: './hub-edit-page.component.html',
     styleUrls: [ './hub-edit-page.component.scss' ],
     imports: [
-        HubEditFormComponent,
         PushPipe,
         NgIf,
         TranslocoModule,
         HintComponent,
+        MatButtonModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        ValidationMessagesDirective,
+        RouterLink,
+        LetDirective,
+        FeatureToolbarControlsDirective,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HubEditPageComponent {
-    public readonly isHubConnected$: Observable<boolean> = this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedHubId).pipe(
-        switchMap((id) => id !== null ? this.store.select(HUB_STATS_SELECTORS.selectIsHubConnected(id)) : of(false))
+export class HubEditPageComponent implements OnInit, OnDestroy {
+    public readonly isHubConnected$ = this.store.select(HUB_EDIT_PAGE_SELECTORS.selectIsEditedHubConnected);
+
+    public readonly editedHubConfiguration$ = this.store.select(HUB_EDIT_PAGE_SELECTORS.selectEditedHubModel);
+
+    public readonly isSaving$: Observable<boolean> = this.store.select(HUB_EDIT_PAGE_SELECTORS.selectIsEditedHubIsSaving);
+
+    public readonly cancelPath$: Observable<string[]> = this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedHubId).pipe(
+        map((id) => id !== null ? this.routesBuilderService.hubView(id) : [])
     );
 
-    public readonly editedHubConfiguration$: Observable<HubModel | undefined> = this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedHubId).pipe(
-        switchMap((id) => id !== null ? this.store.select(HUBS_SELECTORS.selectHub(id)) : of(undefined))
-    );
+    public readonly form: FormGroup<{
+        name: FormControl<string | null>;
+    }>;
 
-    public readonly isSaving$: Observable<boolean> = this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedHubId).pipe(
-        switchMap((id) => id !== null ? this.store.select(HUB_EDIT_FORM_ACTIVE_SAVES_SELECTORS.isSaveInProgress(id)) : of(false))
-    );
+    public readonly validationErrorsMap: ValidationErrorsL10nMap = {
+        minlength: 'hub.hubNameErrorMinLength',
+        maxlength: 'hub.hubNameErrorMaxLength',
+        pattern: 'hub.hubNameErrorPattern'
+    };
+
+    private readonly maxHubNameLength = 14;
+
+    private readonly subscriptions = new Subscription();
 
     constructor(
-        private readonly store: Store
+        private readonly store: Store,
+        private readonly routesBuilderService: RoutesBuilderService,
+        private readonly actions: Actions,
+        private readonly router: Router,
+        formBuilder: FormBuilder
     ) {
+        this.form = formBuilder.group({
+            name: formBuilder.control<string | null>(null, [
+                Validators.required,
+                Validators.minLength(1),
+                Validators.maxLength(this.maxHubNameLength),
+                Validators.pattern(/^[a-zA-Z0-9_.\s-]+$/)
+            ])
+        });
     }
 
-    public onSave(data: HubEditFormSaveResult): void {
-        this.store.dispatch(HUBS_ACTIONS.requestSetHubName({ name: data.name, hubId: data.hubId }));
+    public ngOnInit(): void {
+        this.subscriptions.add(
+            this.editedHubConfiguration$.pipe(
+                filter((hub): hub is HubModel => hub !== undefined),
+                take(1)
+            ).subscribe((hub) => {
+                this.form.controls.name.setValue(hub.name);
+            })
+        );
+    }
+
+    public ngOnDestroy(): void {
+        this.subscriptions.unsubscribe();
+    }
+
+    public onSave(
+        hubId: string
+    ): void {
+        const name = this.form.controls.name.value;
+        if (this.form.valid && name !== null) {
+            this.store.dispatch(HUBS_ACTIONS.requestSetHubName({ name, hubId }));
+            this.subscriptions.add(
+                this.actions.pipe(
+                    ofType(HUBS_ACTIONS.hubNameSet, HUBS_ACTIONS.hubNameSetError),
+                    filter((action) => action.hubId === hubId),
+                    take(1)
+                ).subscribe((action) => {
+                    if (action.type === HUBS_ACTIONS.hubNameSet.type) {
+                        this.router.navigate(this.routesBuilderService.hubView(hubId));
+                    }
+                })
+            );
+        }
     }
 }

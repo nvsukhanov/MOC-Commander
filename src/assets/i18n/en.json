@@ -47,9 +47,8 @@
     "forgerHubNotificationConfirmationCancelButtonTitle": "Cancel",
     "noneConnected": "There are no connected hubs yet",
     "notConnected": "disconnected",
-    "isNotConnectedTitle": "Hub is not connected",
-    "isNotConnectedEditNotification": "Hub ''{name}'' is not connected",
-    "isNotFoundTitle": "Hub is not found",
+    "isNotConnected": "Hub ''{name}'' is not connected",
+    "isNotFound": "Hub is not found",
     "connected": "Hub {name} connected",
     "disconnected": "Hub {name} disconnected",
     "batteryLevel": "Battery: {batteryLevel}%",
@@ -62,7 +61,8 @@
     "unknownHub": "Unknown hub ''{ hubId }''",
     "hubNameErrorMinLength": "Hub name must be at least { requiredLength } character long",
     "hubNameErrorMaxLength": "Hub name must be no more than { requiredLength } characters long",
-    "hubNameErrorPattern": "Hub name can only contain letters, numbers, spaces and the following characters: ''-'' ''_'' ''.''"
+    "hubNameErrorPattern": "Hub name can only contain letters, numbers, spaces and the following characters: ''-'' ''_'' ''.''",
+    "hubNameSetError": "An error occurred while setting hub name"
   },
   "hubTypes": {
     "boost": "Boost Hub",
@@ -208,7 +208,7 @@
       "outputSpeed": "Speed (%)",
       "outputPower": "Power (%)",
       "readAngleFromPort": "Read angle from port",
-      "taskSummary": "Set angle: { angle }°{ isLooping, select, true { (looping)} other {}}"
+      "taskSummary": "Set angle: { angle }°"
     },
     "speedShiftBinding": {
       "operationMode": "Speed shift",
@@ -226,7 +226,7 @@
       "outputAngleLevelRemove": "Remove angle",
       "outputSpeed": "Speed (%)",
       "outputPower": "Power (%)",
-      "taskSummary": "Angle shift: {angle}°"
+      "taskSummary": "Angle shift: {angle}°{ isLooping, select, true { (looping)} other {}}"
     }
   },
   "motorServoEndState": {

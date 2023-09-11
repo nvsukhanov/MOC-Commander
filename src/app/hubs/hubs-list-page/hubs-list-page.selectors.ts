@@ -9,7 +9,7 @@ export type HubListViewModel = Array<{
     isConnected: boolean;
 } & HubModel>;
 
-export const HUBS_LIST_SELECTORS = {
+export const HUBS_LIST_PAGE_SELECTORS = {
     selectHubListViewModel: createSelector(
         HUBS_SELECTORS.selectAll,
         HUB_STATS_SELECTORS.selectEntities,

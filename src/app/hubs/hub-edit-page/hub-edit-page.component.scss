@@ -1,5 +1,22 @@
 :host {
+    display: block;
+}
+
+.card {
+    width: max(300px, 40vw);
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.edit-form-container {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+}
+
+.toolbar-panel {
+    display: flex;
     align-items: center;
+    gap: 10px;
 }

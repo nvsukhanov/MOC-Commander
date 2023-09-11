@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { HUBS_ACTIONS } from '@app/store';
 import { ConfirmationDialogModule, ConfirmationDialogService, HintComponent, HubInlineViewComponent } from '@app/shared';
 
-import { HUBS_LIST_SELECTORS, HubListViewModel } from './hubs-list.selectors';
+import { HUBS_LIST_PAGE_SELECTORS, HubListViewModel } from './hubs-list-page.selectors';
 
 @Component({
     standalone: true,
@@ -29,7 +29,7 @@ import { HUBS_LIST_SELECTORS, HubListViewModel } from './hubs-list.selectors';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HubsListPageComponent {
-    public readonly hubsList$: Observable<HubListViewModel> = this.store.select(HUBS_LIST_SELECTORS.selectHubListViewModel);
+    public readonly hubsList$: Observable<HubListViewModel> = this.store.select(HUBS_LIST_PAGE_SELECTORS.selectHubListViewModel);
 
     constructor(
         private readonly store: Store,

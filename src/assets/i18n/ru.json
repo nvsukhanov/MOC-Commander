@@ -47,7 +47,8 @@
     "forgerHubNotificationConfirmationCancelButtonTitle": "Отмена",
     "noneConnected": "Пока нет ни одного известного хаба",
     "notConnected": "отключен",
-    "isNotConnectedTitle": "Хаб не подключен",
+    "isNotConnected": "Хаб ''{name}'' не подключен",
+    "isNotFound": "Хаб не найден",
     "connected": "Хаб {name} подключен",
     "disconnected": "Хаб {name} отключен",
     "batteryLevel": "Заряд батареи: {batteryLevel}%",
@@ -60,7 +61,8 @@
     "unknownHub": "Неизвестный хаб ''{ hubId }''",
     "hubNameErrorMinLength": "Имя хаба должно быть не менее { requiredLength } символов",
     "hubNameErrorMaxLength": "Имя хаба должно быть не более { requiredLength } символов",
-    "hubNameErrorPattern": "Имя хаба может содержать только латинские буквы, цифры, пробелы и символы ''-'' ''_'' ''.''"
+    "hubNameErrorPattern": "Имя хаба может содержать только латинские буквы, цифры, пробелы и символы ''-'' ''_'' ''.''",
+    "hubNameSetError": "Произошла ошибка при попытке изменить имя хаба"
   },
   "hubTypes": {
     "boost": "Хаб Boost",

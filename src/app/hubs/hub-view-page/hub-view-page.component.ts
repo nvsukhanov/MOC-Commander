@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
-import { EMPTY, Observable, switchMap, take } from 'rxjs';
+import { take } from 'rxjs';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Router } from '@angular/router';
 import { RoutesBuilderService } from '@app/routing';
-import { HUBS_ACTIONS, HUBS_SELECTORS, HUB_STATS_SELECTORS, HubModel, HubStatsModel, ROUTER_SELECTORS, attachedIosIdFn, } from '@app/store';
+import { HUBS_ACTIONS, ROUTER_SELECTORS, attachedIosIdFn, } from '@app/store';
+import { HintComponent } from '@app/shared';
 
 import { HubPropertiesViewComponent } from './hub-properties-view';
 import { HubIoViewComponent } from './hub-io-view';
@@ -24,22 +25,17 @@ import { HUB_VIEW_PAGE_SELECTORS, HubIoViewModel } from './hub-view-page.selecto
         NgForOf,
         TranslocoModule,
         HubPropertiesViewComponent,
-        HubIoViewComponent
+        HubIoViewComponent,
+        HintComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HubViewPageComponent {
-    public readonly selectedHub$: Observable<HubModel | undefined> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
-        switchMap((id) => id === undefined ? EMPTY : this.store.select(HUBS_SELECTORS.selectHub(id)))
-    );
+    public readonly selectedHub$ = this.store.select(HUB_VIEW_PAGE_SELECTORS.selectCurrentlyViewedHubModel);
 
-    public readonly selectedHubStats$: Observable<HubStatsModel | undefined> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
-        switchMap((id) => id === undefined ? EMPTY : this.store.select(HUB_STATS_SELECTORS.selectByHubId(id)))
-    );
+    public readonly selectedHubStats$ = this.store.select(HUB_VIEW_PAGE_SELECTORS.selectCurrentlyViewedHubStats);
 
-    public readonly ioFullInfoList$: Observable<HubIoViewModel[]> = this.store.select(ROUTER_SELECTORS.selectRouteParam('id')).pipe(
-        switchMap((id) => id === undefined ? EMPTY : this.store.select(HUB_VIEW_PAGE_SELECTORS.selectFullIosInfoForHub(id)))
-    );
+    public readonly ioFullInfoList$ = this.store.select(HUB_VIEW_PAGE_SELECTORS.selectCurrentlyViewedHubIoFullInfo);
 
     constructor(
         private readonly store: Store,

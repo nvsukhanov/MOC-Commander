@@ -1,15 +1,46 @@
 <ng-container *ngIf="editedHubConfiguration$ | ngrxPush; let hubConfiguration; else hubIsNotFound">
-    <app-hub-edit-form *ngIf="isHubConnected$ | ngrxPush; else hubIsNotConnected"
-                       [hubConfiguration]="hubConfiguration"
-                       [isSaving]="isSaving$ | ngrxPush"
-                       (save)="onSave($event)"
-    ></app-hub-edit-form>
+    <section *ngIf="isHubConnected$ | ngrxPush; else hubIsNotConnected"
+             class="edit-form-container"
+    >
+        <mat-card class="card">
+            <mat-card-header>
+                <mat-card-title>{{ hubConfiguration.name }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-form-field>
+                    <mat-label>{{ 'hub.name' | transloco }}</mat-label>
+                    <input matInput [formControl]="form.controls.name"/>
+                    <mat-error [appValidationMessages]="form.controls.name"
+                               [l10nMap]="validationErrorsMap"
+                    ></mat-error>
+                </mat-form-field>
+            </mat-card-content>
+        </mat-card>
+
+        <div *appFeatureToolbarControls
+             class="toolbar-panel"
+        >
+            <button mat-raised-button
+                    [disabled]="(isSaving$ | ngrxPush) || form.controls.name.invalid"
+                    (click)="onSave(hubConfiguration.hubId)"
+            >
+                {{ 'hub.save' | transloco }}
+            </button>
+            <a mat-raised-button
+               [routerLink]="cancelPath$ | ngrxPush"
+               [disabled]="!!(isSaving$ | ngrxPush)"
+            >
+                {{ 'hub.cancel' | transloco }}
+            </a>
+        </div>
+    </section>
 
     <ng-template #hubIsNotConnected>
-        <app-hint>{{ 'hub.isNotConnectedEditNotification' | transloco: hubConfiguration }}</app-hint>
+        <app-hint>{{ 'hub.isNotConnected' | transloco: hubConfiguration }}</app-hint>
     </ng-template>
 </ng-container>
 
 <ng-template #hubIsNotFound>
-    <app-hint>{{ 'hub.isNotFoundTitle' | transloco }}</app-hint>
+    <app-hint>{{ 'hub.isNotFound' | transloco }}</app-hint>
 </ng-template>
+
