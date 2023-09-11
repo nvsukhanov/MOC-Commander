@@ -100,6 +100,14 @@ export class NotificationsEffects {
         );
     }, { dispatch: false });
 
+    public readonly hubNameSetError$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(HUBS_ACTIONS.hubNameSetError),
+            switchMap(() => this.translocoService.selectTranslate('hub.hubNameSetError')),
+            this.showMessage()
+        );
+    }, { dispatch: false });
+
     constructor(
         private readonly actions$: Actions,
         private readonly snackBar: MatSnackBar,

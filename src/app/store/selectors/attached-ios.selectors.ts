@@ -18,10 +18,6 @@ const SELECT_ENTITIES = createSelector(
 export const ATTACHED_IO_SELECTORS = {
     selectAll: SELECT_ALL,
     selectEntities: SELECT_ENTITIES,
-    selectHubIos: (hubId: string) => createSelector(
-        ATTACHED_IO_SELECTORS.selectAll,
-        (ios) => ios.filter((io) => io.hubId === hubId)
-    ),
     selectIoAtPort: (data: { hubId: string; portId: number }) => createSelector(
         ATTACHED_IO_SELECTORS.selectEntities,
         (ios) => ios[attachedIosIdFn(data)]

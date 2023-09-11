@@ -12,6 +12,7 @@ export const HUBS_ACTIONS = createActionGroup({
         'hub type received': props<{ hubId: string; hubType: HubType }>(),
         'request set hub name': props<{ hubId: string; name: string }>(),
         'hub name set': props<{ hubId: string; name: string }>(),
+        'hub name set error': props<{ hubId: string }>(),
         'forget hub': props<{ hubId: string }>(),
 
         'request port position': props<{ hubId: string; portId: number }>(),

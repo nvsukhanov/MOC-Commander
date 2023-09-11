@@ -38,4 +38,10 @@ export const ROUTER_SELECTORS = {
             return Number.parseInt(route?.params?.['bindingId'] ?? '0');
         }
     ),
+    selectCurrentlyViewedHubId: createSelector(
+        BASE_ROUTER_SELECTORS.selectCurrentRoute,
+        (route: ActivatedRouteSnapshot | undefined): string | null => {
+            return route?.params?.['id'] ?? null;
+        }
+    ),
 } as const;

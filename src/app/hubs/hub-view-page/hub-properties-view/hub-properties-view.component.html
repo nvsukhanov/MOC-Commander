@@ -1,17 +1,10 @@
 <mat-card *ngIf="configuration && stats">
     <mat-card-header>
         <mat-card-subtitle>
-            <ng-container *ngIf="hubTypeL10nMap[configuration.hubType]; let hubTypeL10nKey; else hubTypeUnknown">
-                {{ hubTypeL10nKey | transloco }}
-            </ng-container>
-            <ng-template #hubTypeUnknown>
-                {{ 'hubTypes.unknown' | transloco }}
-            </ng-template>
+            {{ configuration.hubType | hubTypeToL10nKey | transloco }}
         </mat-card-subtitle>
         <mat-card-title appEllipsisTitle>
-            <h2>
-                {{ configuration.name }}
-            </h2>
+            {{ configuration.name }}
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
@@ -31,8 +24,19 @@
             <p>{{ 'hub.rssiLevelUnknown' | transloco }}</p>
         </ng-template>
     </mat-card-content>
-    <mat-card-actions [align]="'end'">
-        <a [routerLink]="hubEditRoute" mat-button>{{ 'hub.edit' | transloco }}</a>
-        <button mat-button (click)="onDisconnect()">{{ 'hub.disconnect' | transloco }}</button>
-    </mat-card-actions>
 </mat-card>
+
+<div *appFeatureToolbarControls
+     class="toolbar-panel"
+>
+    <a mat-raised-button
+       [routerLink]="hubEditRoute"
+    >
+        {{ 'hub.edit' | transloco }}
+    </a>
+    <button mat-raised-button
+            (click)="onDisconnect()"
+    >
+        {{ 'hub.disconnect' | transloco }}
+    </button>
+</div>

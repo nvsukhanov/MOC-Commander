@@ -7,6 +7,9 @@ import {
     AttachedIoModel,
     AttachedIoModesModel,
     AttachedIoPortModeInfoModel,
+    HUBS_SELECTORS,
+    HUB_STATS_SELECTORS,
+    ROUTER_SELECTORS,
     attachedIoModesIdFn,
     attachedIoPortModeInfoIdFn
 } from '@app/store';
@@ -46,11 +49,30 @@ export type HubIoViewModel = {
 } & AttachedIoModel;
 
 export const HUB_VIEW_PAGE_SELECTORS = {
-    selectFullIosInfoForHub: (hubId: string) => createSelector(
-        ATTACHED_IO_SELECTORS.selectHubIos(hubId),
+    selectCurrentlyViewedHubModel: createSelector(
+        ROUTER_SELECTORS.selectCurrentlyViewedHubId,
+        HUBS_SELECTORS.selectEntities,
+        (hubId, hubs) => {
+            return hubId !== null ? hubs[hubId] : undefined;
+        }
+    ),
+    selectCurrentlyViewedHubStats: createSelector(
+        ROUTER_SELECTORS.selectCurrentlyViewedHubId,
+        HUB_STATS_SELECTORS.selectEntities,
+        (hubId, hubStats) => {
+            return hubId !== null && !!hubStats ? hubStats[hubId] : undefined;
+        }
+    ),
+    selectCurrentlyViewedHubIoFullInfo: createSelector(
+        ROUTER_SELECTORS.selectCurrentlyViewedHubId,
+        ATTACHED_IO_SELECTORS.selectAll,
         ATTACHED_IO_MODES_SELECTORS.selectEntities,
         ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
-        (ios, supportedModesEntities, portModeDataEntities): HubIoViewModel[] => {
+        (hubId, allIos, supportedModesEntities, portModeDataEntities): HubIoViewModel[] => {
+            if (hubId === null) {
+                return [];
+            }
+            const ios = allIos.filter((io) => io.hubId === hubId);
             return combineFullIoInfo(ios, supportedModesEntities, portModeDataEntities);
         }
     ),

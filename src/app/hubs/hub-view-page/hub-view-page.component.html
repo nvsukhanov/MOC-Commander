@@ -1,5 +1,5 @@
 <ng-container *ngIf="selectedHub$ | ngrxPush; let hub; else hubNotFound">
-    <ng-container *ngIf="selectedHubStats$ | ngrxPush; else hubNotFound">
+    <ng-container *ngIf="selectedHubStats$ | ngrxPush; else hubIsNotConnected">
         <app-hub-properties-view class="hub-properties-view"
                                  [configuration]="hub"
                                  [stats]="selectedHubStats$ | ngrxPush"
@@ -20,8 +20,10 @@
     </ng-container>
 </ng-container>
 
+<ng-template #hubIsNotConnected>
+    <app-hint>{{ 'hub.isNotConnected' | transloco:(selectedHub$ | ngrxPush) }}</app-hint>
+</ng-template>
+
 <ng-template #hubNotFound>
-    <div class="hub-is-not-connected__container">
-        <h2 class="hub-is-not-connected__title">{{ 'hub.isNotConnectedTitle' | transloco }}</h2>
-    </div>
+    <app-hint>{{ 'hub.isNotFound' | transloco }}</app-hint>
 </ng-template>

@@ -7,8 +7,7 @@ import { POLL_RSSI_LEVEL_ON_CONNECT } from './poll-rssi-level-on-connect.effect'
 import { SUBSCRIBE_TO_BUTTON_STATE_ON_CONNECT } from './subscribe-to-button-state-on-connect';
 import { TRACK_HUB_DISCONNECTS_EFFECT } from './track-hub-disconnects.effect';
 import { DISCONNECT_HUB_ON_USER_REQUEST } from './disconnect-hub-on-user-request.effect';
-import { SET_HUB_NAME_EFFECT } from './set-hub-name.effect';
-import { NAVIGATE_TO_HUB_VIEW_PAGE_ON_SAVE } from './navigate-to-hub-view-page-on-save.effect';
+import { REQUEST_SET_HUB_NAME_EFFECT } from './request-set-hub-name.effect';
 import { REQUEST_PORT_POSITION_EFFECT } from './request-port-position.effect';
 import { REQUEST_PORT_ABSOLUTE_POSITION_EFFECT } from './request-port-absolute-position.effect';
 
@@ -20,8 +19,7 @@ export const HUB_EFFECTS: { [k in string]: FunctionalEffect } = {
     subscribeToButtonStateOnConnect: SUBSCRIBE_TO_BUTTON_STATE_ON_CONNECT,
     trackHubDisconnects: TRACK_HUB_DISCONNECTS_EFFECT,
     disconnectHubOnUserRequest: DISCONNECT_HUB_ON_USER_REQUEST,
-    setHubName: SET_HUB_NAME_EFFECT,
-    navigateToHubViewPageOnSave: NAVIGATE_TO_HUB_VIEW_PAGE_ON_SAVE,
+    requestSetHubName: REQUEST_SET_HUB_NAME_EFFECT,
     requestPortPosition: REQUEST_PORT_POSITION_EFFECT,
     requestPortAbsolutePosition: REQUEST_PORT_ABSOLUTE_POSITION_EFFECT,
 } as const;
