@@ -13,86 +13,38 @@
         </section>
     </mat-card-content>
 
-    <div *appFeatureToolbarControls
-         class="toolbar"
-    >
-        <ng-container *ngrxLet="canRunScheme$; let canRunScheme">
-            <span class="spacer"></span>
-
-            <button mat-raised-button
-                    class="toolbar-button"
-                    [disabled]="!canRunScheme"
-                    (click)="runScheme(scheme.name)"
-            >
-                {{ 'controlScheme.run' | transloco }}
-            </button>
-
-            <button mat-raised-button
-                    class="toolbar-button"
-                    [disabled]="!(isCurrentControlSchemeRunning$ | ngrxPush)"
-                    (click)="stopRunningScheme()"
-            >
-                {{ 'controlScheme.stop' | transloco }}
-            </button>
-
-            <button *ngIf="canCreateBinding$ | ngrxPush; else cannotCreateBinding"
-                    mat-raised-button
-                    class="toolbar-button"
-                    (click)="addBinding()"
-            >
-                {{ 'controlScheme.addBinding' | transloco }}
-            </button>
-            <ng-template #cannotCreateBinding>
-                <button mat-raised-button
-                        class="toolbar-button"
-                        [disabled]="true"
-                        [title]="'controlScheme.cannotCreateBinding' | transloco"
-                >
-                    {{ 'controlScheme.addBinding' | transloco }}
-                    <span class="cdk-visually-hidden">{{ 'controlScheme.cannotCreateBinding' | transloco }}</span>
-                </button>
-            </ng-template>
-            <ng-container *ngIf="isSmallScreen$ | ngrxPush; else largeScreen">
-                <button mat-icon-button
-                        [matMenuTriggerFor]="menu"
-                        [attr.aria-label]="'controlScheme.menu' | ngrxPush"
-                        class="toolbar-button"
-                >
-                    <mat-icon [fontIcon]="'more_vert'"></mat-icon>
-                </button>
-
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item
-                            (click)="onExport(scheme.name)"
-                    >
-                        {{ 'controlScheme.export' | transloco }}
-                    </button>
-                    <button mat-menu-item
-                            (click)="onDelete()">
-                        {{ 'controlScheme.delete' | transloco }}
-                    </button>
-                </mat-menu>
-            </ng-container>
-            <ng-template #largeScreen>
-                <button mat-raised-button
-                        class="toolbar-button"
-                        (click)="onExport(scheme.name)"
-                >
-                    {{ 'controlScheme.export' | transloco }}
-                </button>
-                <button mat-raised-button
-                        class="toolbar-button"
-                        [color]="'warn'"
-                        (click)="onDelete()">
-                    {{ 'controlScheme.delete' | transloco }}
-                </button>
-            </ng-template>
-        </ng-container>
-    </div>
+    <ng-container *ngIf="isSmallScreen$ | ngrxPush; else largeScreen">
+        <app-control-scheme-page-compact-toolbar *appFeatureToolbarControls
+                                                 [canRun]="!!(canRunScheme$ | ngrxPush)"
+                                                 [canStop]="!!(isCurrentControlSchemeRunning$ | ngrxPush)"
+                                                 [canAddBinding]="!!(canCreateBinding$ | ngrxPush)"
+                                                 [canExport]="!!(canExportScheme$ | ngrxPush)"
+                                                 (run)="runScheme(scheme.name)"
+                                                 (stop)="stopRunningScheme()"
+                                                 (addBinding)="addBinding()"
+                                                 (export)="onExport(scheme.name)"
+                                                 (delete)="onDelete()"
+        ></app-control-scheme-page-compact-toolbar>
+    </ng-container>
+    <ng-template #largeScreen>
+        <app-control-scheme-page-full-toolbar *appFeatureToolbarControls
+                                              [canRun]="!!(canRunScheme$ | ngrxPush)"
+                                              [canStop]="!!(isCurrentControlSchemeRunning$ | ngrxPush)"
+                                              [canAddBinding]="!!(canCreateBinding$ | ngrxPush)"
+                                              [canExport]="!!(canExportScheme$ | ngrxPush)"
+                                              (run)="runScheme(scheme.name)"
+                                              (stop)="stopRunningScheme()"
+                                              (addBinding)="addBinding()"
+                                              (export)="onExport(scheme.name)"
+                                              (delete)="onDelete()"
+        ></app-control-scheme-page-full-toolbar>
+    </ng-template>
 </mat-card>
 
 <ng-template #schemeNotFound>
-    <h3 class="scheme-is-not-found">{{ 'controlScheme.notFound' | transloco }}</h3>
+    <app-hint>
+        {{ 'controlScheme.notFound' | transloco }}
+    </app-hint>
 </ng-template>
 
 <ng-template #bindingsListEmpty>

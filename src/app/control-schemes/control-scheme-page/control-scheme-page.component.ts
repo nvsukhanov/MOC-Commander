@@ -1,15 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { Observable, Subscription, filter, map, of, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { LetDirective, PushPipe } from '@ngrx/component';
+import { PushPipe } from '@ngrx/component';
 import { NgIf } from '@angular/common';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
 import { RoutesBuilderService } from '@app/routing';
 import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel, ROUTER_SELECTORS, } from '@app/store';
 import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective, HintComponent, ScreenSizeObserverService } from '@app/shared';
@@ -19,6 +16,8 @@ import { ControlSchemeViewIoListComponent } from './control-scheme-view-io-list'
 import { ControlSchemeGeneralInfoComponent } from './control-scheme-general-info';
 import { ControlSchemeViewTreeNode } from './types';
 import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData } from '../common';
+import { ControlSchemePageCompactToolbarComponent } from './compact-toolbar';
+import { ControlSchemePageFullToolbarComponent } from './full-toolbar';
 
 @Component({
     standalone: true,
@@ -30,16 +29,14 @@ import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData } fro
         TranslocoModule,
         NgIf,
         MatCardModule,
-        MatButtonModule,
-        LetDirective,
         ControlSchemeViewIoListComponent,
         ControlSchemeGeneralInfoComponent,
         ConfirmationDialogModule,
         HintComponent,
         FeatureToolbarControlsDirective,
-        MatDialogModule,
-        MatIconModule,
-        MatMenuModule,
+        ControlSchemePageCompactToolbarComponent,
+        ControlSchemePageFullToolbarComponent,
+        MatDialogModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -61,6 +58,10 @@ export class ControlSchemePageComponent implements OnDestroy {
                           ? of([])
                           : this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.schemeViewTree(id))
         )
+    );
+
+    public readonly canExportScheme$: Observable<boolean> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeName).pipe(
+        switchMap((name) => name === null ? of(false) : this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canExportScheme(name))),
     );
 
     public readonly canCreateBinding$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canCreateBinding);
