@@ -217,7 +217,7 @@
       "outputLevelAdd": "Add speed level",
       "outputLevelRemove": "Remove level",
       "outputPower": "Power (%)",
-      "taskSummary": "Speed shift: {speed}%{ isLooping, select, true { (looping)} other {}}"
+      "taskSummary": "Speed shift: {speed}%{ isLooping, select, true { (mirror)} other {}}"
     },
     "angleShiftBinding": {
       "operationMode": "Angle shift",
@@ -227,7 +227,7 @@
       "outputAngleLevelRemove": "Remove angle",
       "outputSpeed": "Speed (%)",
       "outputPower": "Power (%)",
-      "taskSummary": "Angle shift: {angle}°{ isLooping, select, true { (looping)} other {}}"
+      "taskSummary": "Angle shift: {angle}°{ isLooping, select, true { (mirror)} other {}}"
     }
   },
   "motorServoEndState": {

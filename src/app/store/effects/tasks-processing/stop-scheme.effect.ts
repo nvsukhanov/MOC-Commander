@@ -73,7 +73,7 @@ export const STOP_SCHEME_EFFECT = createEffect((
         map((cleanupTasks) => cleanupTasks.filter((cleanupTask: PortCommandTask | null): cleanupTask is PortCommandTask => !!cleanupTask)),
         switchMap((cleanupTasks: PortCommandTask[]) => {
             if (cleanupTasks.length === 0) {
-                return of(null);
+                return of(CONTROL_SCHEME_ACTIONS.schemeStopped());
             }
             return forkJoin(cleanupTasks.map((task) => taskRunner.runTask(hubStorage.get(task.hubId), task))).pipe(
                 map(() => CONTROL_SCHEME_ACTIONS.schemeStopped()),

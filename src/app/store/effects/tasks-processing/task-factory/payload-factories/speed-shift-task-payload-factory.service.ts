@@ -74,6 +74,13 @@ export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
             isLoopingNext = nextLevelResult.isLooping;
         }
 
+        if (sameBindingPrevTaskPayload?.nextSpeedActiveInput === isNextSpeedInputActive
+            && sameBindingPrevTaskPayload?.prevSpeedActiveInput === isPrevSpeedInputActive
+            || (!sameBindingPrevTaskPayload && !isNextSpeedInputActive && !isPrevSpeedInputActive)
+        ) {
+            return of(null);
+        }
+
         const payload: SpeedShiftTaskPayload = {
             bindingType: ControlSchemeBindingType.SpeedShift,
             speedIndex: nextLevel,
