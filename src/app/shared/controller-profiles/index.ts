@@ -8,3 +8,4 @@ export * from './gamepad';
 export * from './hub';
 export * from './keyboard';
 export * from './gamepad-profile';
+export * from './unknown-controller';

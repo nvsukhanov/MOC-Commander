@@ -4,6 +4,7 @@ import { GamepadProfile } from './gamepad-profile';
 import { ControllerProfileKeyboardService } from './keyboard';
 import { ControllerProfileDualshockService, ControllerProfileGenericGamepadFactoryService, ControllerProfileXbox360Service } from './gamepad';
 import { ControllerProfileHubFactoryService } from './hub';
+import { UnknownControllerProfileFactoryService } from './unknown-controller';
 
 export function provideControllerProfiles(): EnvironmentProviders {
     return makeEnvironmentProviders([
@@ -11,6 +12,7 @@ export function provideControllerProfiles(): EnvironmentProviders {
         { provide: GamepadProfile, useClass: ControllerProfileXbox360Service, multi: true },
         ControllerProfileKeyboardService,
         ControllerProfileGenericGamepadFactoryService,
-        ControllerProfileHubFactoryService
+        ControllerProfileHubFactoryService,
+        UnknownControllerProfileFactoryService
     ]);
 }

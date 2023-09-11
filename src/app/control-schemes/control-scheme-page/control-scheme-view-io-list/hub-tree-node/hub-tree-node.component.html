@@ -1,4 +1,5 @@
 <app-hub-inline-view *ngIf="viewModel$ | ngrxPush; let viewModel"
+                     [isHubKnown]="viewModel.isHubKnown"
                      [name]="viewModel.name"
                      [hubId]="viewModel.hubId"
                      [batteryLevel]="viewModel.batteryLevel"

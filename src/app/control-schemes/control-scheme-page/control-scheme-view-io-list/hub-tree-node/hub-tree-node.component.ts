@@ -3,6 +3,7 @@ import { NgIf } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
+import { TranslocoModule } from '@ngneat/transloco';
 import { HubInlineViewComponent } from '@app/shared';
 
 import { ControlSchemeViewHubTreeNode } from '../../types';
@@ -17,7 +18,8 @@ import { HUB_TREE_NODE_SELECTORS, IHubTreeNodeViewModel } from './hub-tree-node.
         NgIf,
         HubInlineViewComponent,
         LetDirective,
-        PushPipe
+        PushPipe,
+        TranslocoModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -2,6 +2,7 @@ import { MemoizedSelector, createSelector } from '@ngrx/store';
 import { HUBS_SELECTORS, HUB_STATS_SELECTORS } from '@app/store';
 
 export interface IHubTreeNodeViewModel {
+    isHubKnown: boolean;
     name: string;
     hubId: string;
     batteryLevel: number;
@@ -17,6 +18,7 @@ export const HUB_TREE_NODE_SELECTORS = {
         HUB_STATS_SELECTORS.selectByHubId(hubId),
         (hub, hubStats): IHubTreeNodeViewModel => {
             return {
+                isHubKnown: !!hub,
                 name: hub?.name ?? '',
                 hubId,
                 batteryLevel: hubStats?.batteryLevel ?? 0,
