@@ -198,5 +198,9 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
         ATTACHED_IO_MODES_SELECTORS.selectEntities,
         ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
         (ios, ioSupportedModesEntities, portModeInfoEntities) => areControllableIosPresent(ios, ioSupportedModesEntities, portModeInfoEntities)
-    )
+    ),
+    canExportScheme: (schemeName: string) => createSelector(
+        CONTROL_SCHEME_SELECTORS.selectScheme(schemeName),
+        (scheme) => !!scheme && scheme.bindings.length > 0
+    ),
 } as const;
