@@ -42,6 +42,7 @@ export class ControlSchemeDecompressorService {
     private isPayloadObject(
         result: unknown
     ): result is ControlSchemeCompressionResult {
+        // noinspection SuspiciousTypeOfGuard
         return (
             typeof result === 'object' &&
             result !== null &&
