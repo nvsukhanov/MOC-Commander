@@ -26,6 +26,8 @@ import { HideOnSmallScreenDirective } from '../hide-on-small-screen.directive';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HubInlineViewComponent {
+    @Input() public isHubKnown = true;
+
     @Input() public name?: string;
 
     @Input() public batteryLevel: number | null = null;
@@ -116,10 +118,6 @@ export class HubInlineViewComponent {
 
     public get hubViewHref(): string[] {
         return this._hubViewHref;
-    }
-
-    public get isHubKnown(): boolean {
-        return this.name !== undefined;
     }
 
     public onDisconnectClick(): void {

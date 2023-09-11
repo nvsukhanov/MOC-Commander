@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, combineLatestWith, filter, map, switchMap } from 'rxjs';
+import { Observable, combineLatestWith, map, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { TranslocoService } from '@ngneat/transloco';
 import { ButtonGroupButtonId } from 'rxpoweredup';
-import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS, ControlSchemeInput, ControllerModel, ControllerProfileFactoryService } from '@app/store';
+import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS, ControlSchemeInput, ControllerProfileFactoryService } from '@app/store';
 import { ControllerInputType, ControllerSettings, IControllerProfile } from '@app/shared';
 
 export type FullControllerInputNameData = {
@@ -24,8 +24,12 @@ export class FullControllerInputNameService {
         data: Pick<ControlSchemeInput, 'inputId' | 'buttonId' | 'portId' | 'inputType' | 'controllerId'>
     ): FullControllerInputNameData {
         const profile$ = this.store.select(CONTROLLER_SELECTORS.selectById(data.controllerId)).pipe(
-            filter((controller): controller is ControllerModel => !!controller),
-            map((controller) => this.profileFactory.getByProfileUid(controller.profileUid))
+            map((controller) => {
+                if (controller) {
+                    return this.profileFactory.getByProfileUid(controller.profileUid);
+                }
+                return this.profileFactory.getUnknownControllerProfile(data.controllerId);
+            })
         );
 
         const controllerName$ = profile$.pipe(switchMap((profile) => profile.name$));

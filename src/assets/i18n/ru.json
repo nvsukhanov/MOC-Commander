@@ -367,6 +367,11 @@
       "minusButton": "Кнопка ''-''",
       "genericButton": "Кнопка {inputId}",
       "unknownButton": "Неизвестная кнопка"
+    },
+    "unknown": {
+      "name": "{ uid }",
+      "button": "Кнопка {inputId}",
+      "axis": "Ось {inputId}"
     }
   },
   "validation": {

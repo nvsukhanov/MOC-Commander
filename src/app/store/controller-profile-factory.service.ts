@@ -10,7 +10,8 @@ import {
     GamepadSettings,
     HubControllerSettings,
     IControllerProfile,
-    KeyboardSettings
+    KeyboardSettings,
+    UnknownControllerProfileFactoryService
 } from '@app/shared';
 
 import { HUBS_SELECTORS } from './selectors';
@@ -23,7 +24,8 @@ export class ControllerProfileFactoryService { // TODO: refactor, this is a mess
         private readonly translocoService: TranslocoService,
         private readonly genericGamepadFactory: ControllerProfileGenericGamepadFactoryService,
         private readonly hubProfileFactory: ControllerProfileHubFactoryService,
-        private readonly store: Store
+        private readonly store: Store,
+        private readonly unknownControllerProfileFactory: UnknownControllerProfileFactoryService
     ) {
     }
 
@@ -71,6 +73,12 @@ export class ControllerProfileFactoryService { // TODO: refactor, this is a mess
         if (genericGamepadProfile) {
             return genericGamepadProfile;
         }
-        throw new Error(`No profile found for uid ${profileUid}`);
+        return this.unknownControllerProfileFactory.fromUid(profileUid);
+    }
+
+    public getUnknownControllerProfile(
+        controllerId: string
+    ): IControllerProfile<null> {
+        return this.unknownControllerProfileFactory.fromUid(controllerId);
     }
 }
