@@ -108,6 +108,14 @@ export class NotificationsEffects {
         );
     }, { dispatch: false });
 
+    public readonly startSchemeFailed$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(CONTROL_SCHEME_ACTIONS.schemeStartFailed),
+            switchMap(() => this.translocoService.selectTranslate('controlScheme.runFailed')),
+            this.showMessage()
+        );
+    }, { dispatch: false });
+
     constructor(
         private readonly actions$: Actions,
         private readonly snackBar: MatSnackBar,

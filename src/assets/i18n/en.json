@@ -95,6 +95,7 @@
     "view": "View",
     "edit": "Edit",
     "run": "Start",
+    "runFailed": "Failed to start",
     "stop": "Stop",
     "delete": "Delete",
     "export": "Export",

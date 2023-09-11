@@ -18,6 +18,7 @@ export const CONTROL_SCHEME_ACTIONS = createActionGroup({
 
         'start scheme': props<{ name: string }>(),
         'scheme started': props<{ name: string }>(),
+        'scheme start failed': emptyProps(),
         'stop scheme': emptyProps(),
         'scheme stopped': emptyProps(),
 
