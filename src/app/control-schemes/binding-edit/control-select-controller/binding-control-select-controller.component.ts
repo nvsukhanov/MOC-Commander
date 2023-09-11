@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PushPipe } from '@ngrx/component';
 import { Observable, Subscription, of, startWith, switchMap } from 'rxjs';
-import { ControlSchemeInput, ControllerInputModel } from '@app/store';
+import { ControllerInputModel } from '@app/store';
 import { HideOnSmallScreenDirective, ValidationMessagesDirective } from '@app/shared';
 
 import { WaitForControllerInputDialogComponent } from '../wait-for-controller-input-dialog';
@@ -96,14 +96,6 @@ export class BindingControlSelectControllerComponent implements OnDestroy {
 
     public get syntheticInputControl(): FormControl | undefined {
         return this._syntheticInputControl;
-    }
-
-    public get isRequired(): boolean {
-        return this.inputFormGroup?.controls.controllerId.hasValidator(Validators.required) ?? false;
-    }
-
-    public get controllerData(): ControlSchemeInput | undefined {
-        return this.inputFormGroup?.getRawValue() as ControlSchemeInput | undefined;
     }
 
     public get isControllerAssigned(): boolean {

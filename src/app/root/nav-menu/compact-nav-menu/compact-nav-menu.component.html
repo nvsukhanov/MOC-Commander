@@ -1,11 +1,9 @@
 <mat-toolbar color="primary"
              class="toolbar"
 >
-    <span class="cdk-visually-hidden">
-        <h1 class="title">
-            {{ 'appTitle' | transloco }}
-        </h1>
-    </span>
+    <h1 class="cdk-visually-hidden">
+        {{ 'appTitle' | transloco }}
+    </h1>
     <nav class="nav">
         <a mat-icon-button
            [routerLink]="routesBuilderService.controllersList"
