@@ -107,7 +107,7 @@ export class ServoCalibrationService {
                     switchMap((data) => hub.motors.goToPosition( // TODO: fix issue with acrCenterFromStart being absolute. It should be relative
                         portId,
                         data.arcCenterFromStart,
-                        { power, endState: MotorServoEndState.brake }
+                        { power, endState: MotorServoEndState.float }
                     ).pipe(
                         first(),
                         map(() => {

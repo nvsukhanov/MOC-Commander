@@ -30,7 +30,7 @@ export const LISTEN_GAMEPAD_CONNECT = createEffect((
             }> = [];
             gamepads.forEach((gamepad) => {
                 const profile = controllerProfileFactory.getGamepadProfile(gamepad);
-                const hasInput = gamepad.axes.some((a) => a > GAMEPAD_DETECTION_INPUT_THRESHOLD)
+                const hasInput = gamepad.axes.some((a) => Math.abs(a) > GAMEPAD_DETECTION_INPUT_THRESHOLD)
                     || gamepad.buttons.some((b) => b.value > GAMEPAD_DETECTION_INPUT_THRESHOLD);
                 if (!profileCounts[profile.uid]) {
                     profileCounts[profile.uid] = 0;
