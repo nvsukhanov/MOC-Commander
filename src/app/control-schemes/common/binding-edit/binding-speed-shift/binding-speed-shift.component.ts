@@ -80,7 +80,7 @@ export class BindingSpeedShiftComponent implements IBindingsDetailsEditComponent
         }
         this._form.controls.levels.insert(
             0,
-            this.commonFormControlBuilder.speedControl(MOTOR_LIMITS.maxSpeed)
+            this.commonFormControlBuilder.speedLevelControl(MOTOR_LIMITS.maxSpeed)
         );
         this._form.controls.initialStepIndex.setValue(
             this._form.controls.initialStepIndex.value + 1
@@ -95,7 +95,7 @@ export class BindingSpeedShiftComponent implements IBindingsDetailsEditComponent
             return;
         }
         this._form.controls.levels.push(
-            this.commonFormControlBuilder.speedControl(MOTOR_LIMITS.minSpeed)
+            this.commonFormControlBuilder.speedLevelControl(MOTOR_LIMITS.minSpeed)
         );
         this._form.controls.levels.markAsTouched();
         this._form.controls.levels.markAsDirty();

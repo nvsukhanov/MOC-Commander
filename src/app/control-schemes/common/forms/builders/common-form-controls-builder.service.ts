@@ -62,6 +62,20 @@ export class CommonFormControlsBuilderService {
         });
     }
 
+    public speedLevelControl(
+        initialValue: number = MOTOR_LIMITS.maxSpeed
+    ): FormControl<number> {
+        return this.formBuilder.control<number>(initialValue, {
+            nonNullable: true,
+            validators: [
+                Validators.required,
+                Validators.min(MOTOR_LIMITS.minSpeed),
+                Validators.max(MOTOR_LIMITS.maxSpeed),
+                AppValidators.requireInteger
+            ]
+        });
+    }
+
     public powerControl(): FormControl<number> {
         return this.formBuilder.control<number>(MOTOR_LIMITS.maxPower, {
             nonNullable: true,
