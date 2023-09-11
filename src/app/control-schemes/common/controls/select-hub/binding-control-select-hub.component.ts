@@ -8,7 +8,7 @@ import { PushPipe } from '@ngrx/component';
 import { Store } from '@ngrx/store';
 import { ControlSchemeBindingType } from '@app/shared';
 
-import { BINDING_EDIT_SELECTORS, HubWithConnectionState } from '../binding-edit.selectors';
+import { BINDING_CONTROL_SELECT_HUB_SELECTORS, HubWithConnectionState } from './binding-control-select-hub.selectors';
 
 @Component({
     standalone: true,
@@ -53,7 +53,7 @@ export class BindingControlSelectHubComponent implements OnChanges, OnDestroy {
         this.formUpdateSubscription?.unsubscribe();
 
         if (this.bindingType !== undefined) {
-            this._hubsWithConnectionState$ = this.store.select(BINDING_EDIT_SELECTORS.selectControllableHubs(this.bindingType));
+            this._hubsWithConnectionState$ = this.store.select(BINDING_CONTROL_SELECT_HUB_SELECTORS.selectControllableHubs(this.bindingType));
         } else {
             this._hubsWithConnectionState$ = of([]);
         }

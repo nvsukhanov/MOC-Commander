@@ -10,7 +10,7 @@ import { concatLatestFrom } from '@ngrx/effects';
 import { AttachedIoModel } from '@app/store';
 import { ControlSchemeBindingType, IoTypeToL10nKeyPipe, PortIdToPortNamePipe } from '@app/shared';
 
-import { BINDING_EDIT_SELECTORS } from '../binding-edit.selectors';
+import { BINDING_CONTROL_SELECT_IO_SELECTORS } from './binding-control-select-io.selectors';
 
 @Component({
     standalone: true,
@@ -78,7 +78,7 @@ export class BindingControlSelectIoComponent implements OnChanges, OnDestroy {
                     if (!hubId || bindingType === undefined) {
                         return of([]);
                     }
-                    return this.store.select(BINDING_EDIT_SELECTORS.selectControllableIos({ hubId, bindingType }));
+                    return this.store.select(BINDING_CONTROL_SELECT_IO_SELECTORS.selectControllableIos({ hubId, bindingType }));
                 })
             );
         } else {
@@ -90,14 +90,10 @@ export class BindingControlSelectIoComponent implements OnChanges, OnDestroy {
                 startWith(null),
                 concatLatestFrom(() => this._availableIos),
             ).subscribe(([ , availableIos ]) => {
-                if (!this.portIdControl) {
+                if (!this.portIdControl || !availableIos.length) {
                     return;
                 }
-                if (!availableIos.length) {
-                    this.portIdControl.reset();
-                    return;
-                }
-                if (this.portIdControl.invalid || !availableIos.find((io) => io.portId === this.portIdControl?.value)) {
+                if (this.portIdControl.invalid) {
                     this.portIdControl.setValue(availableIos[0].portId);
                     this.portIdControl.markAsDirty();
                 }

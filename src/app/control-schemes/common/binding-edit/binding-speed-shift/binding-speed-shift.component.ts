@@ -11,13 +11,16 @@ import { ControlSchemeBindingType, HideOnSmallScreenDirective, SliderControlComp
 import { ControlSchemeInputAction } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
-import { CommonFormControlsBuilderService, ControlSchemeInputActionToL10nKeyPipe, SpeedShiftBindingForm } from '../../common';
-import { BindingControlSelectControllerComponent } from '../control-select-controller';
-import { BindingControlSelectLoopingModeComponent } from '../contorl-select-looping-mode';
-import { BindingControlSelectHubComponent } from '../control-select-hub';
-import { BindingControlSelectIoComponent } from '../control-select-io';
+import {
+    BindingControlSelectControllerComponent,
+    BindingControlSelectHubComponent,
+    BindingControlSelectIoComponent,
+    BindingControlSelectLoopingModeComponent
+} from '../../controls';
 import { BindingEditSectionComponent } from '../section';
 import { BindingEditSectionsContainerComponent } from '../sections-container';
+import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
+import { CommonFormControlsBuilderService, SpeedShiftBindingForm } from '../../forms';
 
 @Component({
     standalone: true,

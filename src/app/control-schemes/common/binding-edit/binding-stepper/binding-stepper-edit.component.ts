@@ -9,13 +9,16 @@ import { ControlSchemeBindingType, HideOnSmallScreenDirective, SliderControlComp
 import { ControlSchemeInputAction } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
-import { BindingControlSelectControllerComponent } from '../control-select-controller';
-import { BindingControlOutputEndStateComponent } from '../control-output-end-state-select';
-import { ControlSchemeInputActionToL10nKeyPipe, StepperBindingForm } from '../../common';
-import { BindingControlSelectHubComponent } from '../control-select-hub';
-import { BindingControlSelectIoComponent } from '../control-select-io';
+import {
+    BindingControlOutputEndStateComponent,
+    BindingControlSelectControllerComponent,
+    BindingControlSelectHubComponent,
+    BindingControlSelectIoComponent
+} from '../../controls';
 import { BindingEditSectionComponent } from '../section';
 import { BindingEditSectionsContainerComponent } from '../sections-container';
+import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
+import { StepperBindingForm } from '../../forms';
 
 @Component({
     standalone: true,

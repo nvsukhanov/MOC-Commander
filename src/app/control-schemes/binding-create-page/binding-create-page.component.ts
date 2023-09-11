@@ -10,7 +10,7 @@ import { RoutesBuilderService } from '@app/routing';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeBinding, ROUTER_SELECTORS } from '@app/store';
 import { FeatureToolbarControlsDirective, HintComponent } from '@app/shared';
 
-import { BindingEditComponent } from '../binding-edit';
+import { BindingEditComponent } from '../common';
 import { BINDING_CREATE_PAGE_SELECTORS } from './binding-create-page.selectors';
 
 @Component({

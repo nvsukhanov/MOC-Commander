@@ -11,7 +11,7 @@ import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarCont
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeBinding, ROUTER_SELECTORS } from '@app/store';
 
 import { BINDING_EDIT_PAGE_SELECTORS } from './binding-edit-page.selectors';
-import { BindingEditComponent } from '../binding-edit';
+import { BindingEditComponent } from '../common';
 
 @Component({
     standalone: true,

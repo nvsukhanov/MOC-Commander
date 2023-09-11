@@ -8,13 +8,16 @@ import { ControlSchemeBindingType, ControllerInputType, HideOnSmallScreenDirecti
 import { ControlSchemeInputAction } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
-import { BindingControlSelectControllerComponent } from '../control-select-controller';
-import { ControlSchemeInputActionToL10nKeyPipe, InputFormGroup, SetSpeedBindingForm } from '../../common';
-import { BindingControlSelectInputGainComponent } from '../control-select-input-gain';
+import {
+    BindingControlSelectControllerComponent,
+    BindingControlSelectHubComponent,
+    BindingControlSelectInputGainComponent,
+    BindingControlSelectIoComponent
+} from '../../controls';
 import { BindingEditSectionComponent } from '../section';
-import { BindingControlSelectHubComponent } from '../control-select-hub';
-import { BindingControlSelectIoComponent } from '../control-select-io';
 import { BindingEditSectionsContainerComponent } from '../sections-container';
+import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
+import { InputFormGroup, SetSpeedBindingForm } from '../../forms';
 
 @Component({
     standalone: true,
