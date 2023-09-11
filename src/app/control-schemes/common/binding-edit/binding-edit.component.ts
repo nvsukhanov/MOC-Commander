@@ -11,10 +11,9 @@ import { Store } from '@ngrx/store';
 import { BindingTypeToL10nKeyPipe, HideOnSmallScreenDirective } from '@app/shared';
 import { ControlSchemeBinding } from '@app/store';
 
-import { ControlSchemeBindingForm, ControlSchemeFormBuilderService, ControlSchemeFormMapperService } from '../common';
+import { ControlSchemeBindingForm, ControlSchemeFormBuilderService, ControlSchemeFormMapperService } from '../forms';
 import { RenderBindingDetailsEditDirective } from './render-binding-details-edit.directive';
-import { BindingControlSelectHubComponent } from './control-select-hub';
-import { BindingControlSelectIoComponent } from './control-select-io';
+import { BindingControlSelectHubComponent, BindingControlSelectIoComponent } from '../controls';
 import { BindingEditSectionComponent } from './section';
 import { BINDING_EDIT_SELECTORS, BindingTypeSelectViewModel } from './binding-edit.selectors';
 

@@ -13,16 +13,19 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ControlSchemeBindingType, HideOnSmallScreenDirective, SliderControlComponent, ToggleControlComponent, ValidationMessagesDirective } from '@app/shared';
 import { ControlSchemeInputAction, HubFacadeService } from '@app/store';
 
-import { BindingControlSelectControllerComponent } from '../control-select-controller';
-import { AngleShiftBindingForm, CommonFormControlsBuilderService, ControlSchemeInputActionToL10nKeyPipe } from '../../common';
+import {
+    BindingControlOutputEndStateComponent,
+    BindingControlSelectControllerComponent,
+    BindingControlSelectHubComponent,
+    BindingControlSelectIoComponent,
+    BindingControlSelectLoopingModeComponent
+} from '../../controls';
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
-import { BindingControlOutputEndStateComponent } from '../control-output-end-state-select';
-import { BindingControlSelectLoopingModeComponent } from '../contorl-select-looping-mode';
 import { BindingEditSectionComponent } from '../section';
 import { BINDING_EDIT_SELECTORS } from '../binding-edit.selectors';
-import { BindingControlSelectHubComponent } from '../control-select-hub';
-import { BindingControlSelectIoComponent } from '../control-select-io';
 import { BindingEditSectionsContainerComponent } from '../sections-container';
+import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
+import { AngleShiftBindingForm, CommonFormControlsBuilderService } from '../../forms';
 
 @Component({
     standalone: true,

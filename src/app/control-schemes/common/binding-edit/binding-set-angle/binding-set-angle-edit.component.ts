@@ -15,14 +15,17 @@ import { ControlSchemeBindingType, HideOnSmallScreenDirective, SliderControlComp
 import { ATTACHED_IO_PROPS_SELECTORS, ControlSchemeInputAction, HubFacadeService } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
-import { BindingControlSelectControllerComponent } from '../control-select-controller';
-import { BindingControlOutputEndStateComponent } from '../control-output-end-state-select';
-import { ControlSchemeInputActionToL10nKeyPipe, SetAngleBindingForm } from '../../common';
+import {
+    BindingControlOutputEndStateComponent,
+    BindingControlSelectControllerComponent,
+    BindingControlSelectHubComponent,
+    BindingControlSelectIoComponent
+} from '../../controls';
 import { BindingEditSectionComponent } from '../section';
-import { BindingControlSelectHubComponent } from '../control-select-hub';
-import { BindingControlSelectIoComponent } from '../control-select-io';
 import { BINDING_EDIT_SELECTORS } from '../binding-edit.selectors';
 import { BindingEditSectionsContainerComponent } from '../sections-container';
+import { SetAngleBindingForm } from '../../forms';
+import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
 
 @Component({
     standalone: true,

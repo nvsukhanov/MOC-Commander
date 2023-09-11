@@ -7,3 +7,5 @@ export * from './are-controllable-ios-present';
 export * from './control-scheme-input-action-to-l10n-key.pipe';
 export * from './get-io-output-port-mode-names';
 export * from './io-has-matching-mode-for-op-mode';
+export * from './binding-edit';
+export * from './wait-for-controller-input-dialog';

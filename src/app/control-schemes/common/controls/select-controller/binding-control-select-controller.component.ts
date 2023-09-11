@@ -11,8 +11,9 @@ import { Observable, Subscription, of, startWith, switchMap } from 'rxjs';
 import { ControllerInputModel } from '@app/store';
 import { HideOnSmallScreenDirective, ValidationMessagesDirective } from '@app/shared';
 
-import { WaitForControllerInputDialogComponent } from '../wait-for-controller-input-dialog';
-import { FullControllerInputNamePipe, FullControllerInputNameService, InputFormGroup, OptionalInputFormGroup } from '../../common';
+import { WaitForControllerInputDialogComponent } from '../../wait-for-controller-input-dialog';
+import { FullControllerInputNamePipe, FullControllerInputNameService } from '../../full-controller-input-name';
+import { InputFormGroup, OptionalInputFormGroup } from '../../forms';
 
 @Component({
     standalone: true,

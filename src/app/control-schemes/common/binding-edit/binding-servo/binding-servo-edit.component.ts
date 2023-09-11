@@ -24,14 +24,17 @@ import {
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { CalibrationResult, CalibrationResultType, ServoCalibrationDialogComponent } from '../servo-calibration-dialog';
-import { BindingControlSelectControllerComponent } from '../control-select-controller';
+import {
+    BindingControlSelectControllerComponent,
+    BindingControlSelectHubComponent,
+    BindingControlSelectInputGainComponent,
+    BindingControlSelectIoComponent
+} from '../../controls';
 import { BINDING_EDIT_SELECTORS } from '../binding-edit.selectors';
-import { ControlSchemeInputActionToL10nKeyPipe, ServoBindingForm } from '../../common';
-import { BindingControlSelectInputGainComponent } from '../control-select-input-gain';
 import { BindingEditSectionComponent } from '../section';
-import { BindingControlSelectHubComponent } from '../control-select-hub';
-import { BindingControlSelectIoComponent } from '../control-select-io';
 import { BindingEditSectionsContainerComponent } from '../sections-container';
+import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
+import { ServoBindingForm } from '../../forms';
 
 @Component({
     standalone: true,
