@@ -190,7 +190,7 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
                 mergeWith(form.controls.portId.valueChanges),
                 startWith(null),
                 switchMap(() => {
-                    if (!form.controls.hubId.value || !form.controls.portId.value) {
+                    if (form.controls.hubId.value === null || form.controls.portId.value === null) {
                         return of(false);
                     }
                     return this.store.select(BINDING_EDIT_SELECTORS.canCalibrateServo({
@@ -208,7 +208,7 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
                     if (isCalibrating) {
                         return of(false);
                     }
-                    if (!form.controls.hubId.value || !form.controls.portId.value) {
+                    if (form.controls.hubId.value === null || form.controls.portId.value === null) {
                         return of(false);
                     }
                     return this.store.select(BINDING_EDIT_SELECTORS.canRequestPortValue({
