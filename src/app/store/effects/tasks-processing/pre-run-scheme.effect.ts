@@ -1,5 +1,5 @@
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { Observable, filter, forkJoin, map, of, switchMap } from 'rxjs';
+import { Observable, catchError, filter, forkJoin, map, of, switchMap } from 'rxjs';
 import { inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel, HubStorageService, attachedIosIdFn } from '@app/store';
@@ -52,12 +52,12 @@ export const PRE_RUN_SCHEME_EFFECT = createEffect((
                 ...createSetDecelerationProfileTasks(scheme, hubStorage)
             ];
             if (combinedTasks.length === 0) {
-                return of({ name: scheme.name });
+                return of(CONTROL_SCHEME_ACTIONS.schemeStarted({ name: scheme.name }));
             }
             return forkJoin(combinedTasks).pipe(
-                map(() => ({ name: scheme.name }))
+                map(() => CONTROL_SCHEME_ACTIONS.schemeStarted({ name: scheme.name })),
+                catchError(() => of(CONTROL_SCHEME_ACTIONS.schemeStartFailed()))
             );
-        }),
-        map((action) => CONTROL_SCHEME_ACTIONS.schemeStarted({ name: action.name }))
+        })
     );
 }, { functional: true });

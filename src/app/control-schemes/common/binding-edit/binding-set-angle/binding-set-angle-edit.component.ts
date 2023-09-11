@@ -10,9 +10,8 @@ import { Observable, Subscription, mergeWith, of, startWith, switchMap, take } f
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { concatLatestFrom } from '@ngrx/effects';
 import { ControlSchemeBindingType, HideOnSmallScreenDirective, SliderControlComponent, ToggleControlComponent, ValidationMessagesDirective } from '@app/shared';
-import { ATTACHED_IO_PROPS_SELECTORS, ControlSchemeInputAction, HubFacadeService } from '@app/store';
+import { ControlSchemeInputAction, HubFacadeService } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import {
@@ -92,7 +91,7 @@ export class BindingSetAngleEditComponent implements IBindingsDetailsEditCompone
                 mergeWith(form.controls.portId.valueChanges),
                 startWith(null),
                 switchMap(() => {
-                    if (!form.controls.hubId.value || !form.controls.portId.value) {
+                    if (form.controls.hubId.value === null || form.controls.portId.value === null) {
                         return of(false);
                     }
                     return this.store.select(BINDING_EDIT_SELECTORS.canRequestPortValue({
@@ -111,6 +110,7 @@ export class BindingSetAngleEditComponent implements IBindingsDetailsEditCompone
         if (!form) {
             return;
         }
+        form.controls.angle.markAsTouched();
         this.portRequestSubscription?.unsubscribe();
         const hubId = form.controls.hubId.value;
         const portId = form.controls.portId.value;
@@ -119,10 +119,10 @@ export class BindingSetAngleEditComponent implements IBindingsDetailsEditCompone
         }
         this.portRequestSubscription = this.hubFacade.getMotorAbsolutePosition(hubId, portId).pipe(
             take(1),
-            concatLatestFrom(() => this.store.select(ATTACHED_IO_PROPS_SELECTORS.selectMotorEncoderOffset({ hubId, portId })))
-        ).subscribe(([ position, encoderOffset ]: [ number, number ]) => {
-            form.controls.angle.setValue(position + encoderOffset);
+        ).subscribe((position: number) => {
+            form.controls.angle.setValue(position);
             form.controls.angle.markAsDirty();
+            form.updateValueAndValidity();
         });
     }
 

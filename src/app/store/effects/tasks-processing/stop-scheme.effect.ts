@@ -1,5 +1,5 @@
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { Observable, filter, forkJoin, map, of, switchMap, take } from 'rxjs';
+import { Observable, catchError, filter, forkJoin, map, of, switchMap, take } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { Dictionary } from '@ngrx/entity';
@@ -72,10 +72,13 @@ export const STOP_SCHEME_EFFECT = createEffect((
         switchMap((tasks) => tasks.length ? forkJoin(tasks) : of([])),
         map((cleanupTasks) => cleanupTasks.filter((cleanupTask: PortCommandTask | null): cleanupTask is PortCommandTask => !!cleanupTask)),
         switchMap((cleanupTasks: PortCommandTask[]) => {
-            return cleanupTasks.length === 0
-                   ? of(null)
-                   : forkJoin(cleanupTasks.map((task) => taskRunner.runTask(hubStorage.get(task.hubId), task)));
-        }),
-        map(() => CONTROL_SCHEME_ACTIONS.schemeStopped())
+            if (cleanupTasks.length === 0) {
+                return of(null);
+            }
+            return forkJoin(cleanupTasks.map((task) => taskRunner.runTask(hubStorage.get(task.hubId), task))).pipe(
+                map(() => CONTROL_SCHEME_ACTIONS.schemeStopped()),
+                catchError(() => of(CONTROL_SCHEME_ACTIONS.schemeStopped()))
+            );
+        })
     ) as Observable<Action>;
 }, { functional: true });

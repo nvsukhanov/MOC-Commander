@@ -92,7 +92,7 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
             }
             return state;
         }),
-        on(CONTROL_SCHEME_ACTIONS.schemeStopped, (state): ControlSchemeState => ({
+        on(CONTROL_SCHEME_ACTIONS.schemeStopped, CONTROL_SCHEME_ACTIONS.schemeStartFailed, (state): ControlSchemeState => ({
             ...state,
             runningSchemeName: null,
             runningState: ControlSchemeRunState.Idle
