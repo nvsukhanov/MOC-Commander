@@ -8,6 +8,5 @@ export interface ITaskRunner<TType extends ControlSchemeBindingType> {
     runTask(
         hub: IHub,
         task: PortCommandTask<TType>,
-        previousTask?: PortCommandTask,
     ): Observable<PortCommandExecutionStatus>;
 }

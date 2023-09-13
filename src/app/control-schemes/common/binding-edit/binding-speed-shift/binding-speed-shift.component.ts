@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MOTOR_LIMITS } from 'rxpoweredup';
@@ -60,7 +60,8 @@ export class BindingSpeedShiftComponent implements IBindingsDetailsEditComponent
     private _form?: SpeedShiftBindingForm;
 
     constructor(
-        private readonly commonFormControlBuilder: CommonFormControlsBuilderService
+        private readonly commonFormControlBuilder: CommonFormControlsBuilderService,
+        private readonly changeDetectorRef: ChangeDetectorRef
     ) {
     }
 
@@ -85,9 +86,9 @@ export class BindingSpeedShiftComponent implements IBindingsDetailsEditComponent
         this._form.controls.initialStepIndex.setValue(
             this._form.controls.initialStepIndex.value + 1
         );
-        this._form.controls.levels.markAsTouched();
+        this._form.controls.initialStepIndex.markAsDirty();
         this._form.controls.levels.markAsDirty();
-        this._form.updateValueAndValidity();
+        this.changeDetectorRef.detectChanges(); // somehow this is needed to update the view
     }
 
     public addPrevSpeedControl(): void {
@@ -97,9 +98,9 @@ export class BindingSpeedShiftComponent implements IBindingsDetailsEditComponent
         this._form.controls.levels.push(
             this.commonFormControlBuilder.speedLevelControl(MOTOR_LIMITS.minSpeed)
         );
-        this._form.controls.levels.markAsTouched();
+        this._form.controls.initialStepIndex.markAsDirty();
         this._form.controls.levels.markAsDirty();
-        this._form.updateValueAndValidity();
+        this.changeDetectorRef.detectChanges(); // somehow this is needed to update the view
     }
 
     public removeSpeedControl(
@@ -109,10 +110,13 @@ export class BindingSpeedShiftComponent implements IBindingsDetailsEditComponent
             return;
         }
         this._form.controls.levels.removeAt(index);
-        if (this._form.controls.initialStepIndex.value > index) {
+        if (index < this._form.controls.initialStepIndex.value) {
             this._form.controls.initialStepIndex.setValue(
                 this._form.controls.initialStepIndex.value - 1
             );
         }
+        this._form.controls.initialStepIndex.markAsDirty();
+        this._form.controls.levels.markAsDirty();
+        this.changeDetectorRef.detectChanges(); // somehow this is needed to update the view
     }
 }

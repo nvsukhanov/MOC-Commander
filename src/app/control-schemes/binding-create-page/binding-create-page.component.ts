@@ -37,7 +37,9 @@ export class BindingCreatePageComponent {
         private readonly routesBuilderService: RoutesBuilderService,
         private readonly router: Router
     ) {
-        this.initialBindingData$ = this.store.select(BINDING_CREATE_PAGE_SELECTORS.selectDataForNewBinding);
+        this.initialBindingData$ = this.store.select(BINDING_CREATE_PAGE_SELECTORS.selectDataForNewBinding).pipe(
+            take(1)
+        );
     }
 
     public onCancel(): void {

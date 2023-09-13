@@ -1,6 +1,5 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import {
@@ -22,26 +21,33 @@ export class SetSpeedTaskPayloadFactoryService implements ITaskPayloadFactory<Co
     public buildPayload(
         binding: ControlSchemeSetSpeedBinding,
         inputsState: Dictionary<ControllerInputModel>
-    ): Observable<{
-        payload: SetSpeedTaskPayload;
-        inputTimestamp: number;
-    } | null> {
+    ): { payload: SetSpeedTaskPayload; inputTimestamp: number } | null {
         const accelerateInputModel = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Accelerate])];
 
+        const brakeInputModel = binding.inputs[ControlSchemeInputAction.Brake]
+                                ? inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Brake])]
+                                : undefined;
+
+        let inputTimestamp = 0;
+        if (accelerateInputModel && brakeInputModel) {
+            inputTimestamp = Math.max(accelerateInputModel.timestamp, brakeInputModel.timestamp);
+        } else if (accelerateInputModel) {
+            inputTimestamp = accelerateInputModel.timestamp;
+        } else if (brakeInputModel) {
+            inputTimestamp = brakeInputModel.timestamp;
+        } else {
+            return null;
+        }
+
         const speedInput = accelerateInputModel?.value ?? 0;
+        const brakeInput = brakeInputModel?.value ?? 0;
+
         const speed = this.calculateSpeed(
             speedInput,
             binding.maxSpeed,
             binding.invert,
             binding.inputs[ControlSchemeInputAction.Accelerate].gain
         );
-
-        const brakeInputModel = binding.inputs[ControlSchemeInputAction.Brake]
-                                ? inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Brake])]
-                                : undefined;
-        const brakeInput = brakeInputModel?.value ?? 0;
-
-        const inputTimestamp = Math.max(accelerateInputModel?.timestamp ?? 0, brakeInputModel?.timestamp ?? 0);
 
         const payload: SetSpeedTaskPayload = {
             bindingType: ControlSchemeBindingType.SetSpeed,
@@ -52,23 +58,23 @@ export class SetSpeedTaskPayloadFactoryService implements ITaskPayloadFactory<Co
             useDecelerationProfile: binding.useDecelerationProfile
         };
 
-        return of({ payload, inputTimestamp });
+        return { payload, inputTimestamp };
     }
 
     public buildCleanupPayload(
         previousTask: PortCommandTask
-    ): Observable<PortCommandTaskPayload | null> {
+    ): PortCommandTaskPayload | null {
         if (previousTask.payload.bindingType !== ControlSchemeBindingType.SetSpeed) {
-            return of(null);
+            return null;
         }
-        return of({
+        return {
             bindingType: ControlSchemeBindingType.SetSpeed,
             speed: 0,
             brakeFactor: 0,
             power: 0,
             useAccelerationProfile: previousTask.payload.useAccelerationProfile,
             useDecelerationProfile: previousTask.payload.useDecelerationProfile
-        });
+        };
     }
 
     private calculateSpeed(

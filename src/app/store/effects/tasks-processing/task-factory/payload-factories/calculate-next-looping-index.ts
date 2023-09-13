@@ -10,7 +10,7 @@ export function calculateNextLoopingIndex(
     if (levels[previousIndex + indexIncrement] !== undefined) {
         return {
             nextIndex: previousIndex + indexIncrement,
-            isLooping
+            isLooping: loopingMode !== LoopingMode.None ? isLooping : false
         };
     } else if (loopingMode === LoopingMode.Wrap) {
         return {

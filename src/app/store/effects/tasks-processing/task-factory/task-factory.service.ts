@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Dictionary } from '@ngrx/entity';
-import { Observable, map } from 'rxjs';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import { ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload } from '../../../models';
@@ -41,32 +40,26 @@ export class TaskFactoryService {
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
         lastExecutedTask: PortCommandTask | null
-    ): Observable<PortCommandTask | null> {
-        return this.buildPayload(binding, inputsState, motorEncoderOffset, lastExecutedTask).pipe(
-            map((payloadBuildResult) => {
-                if (payloadBuildResult) {
-                    return this.composeTask(binding, payloadBuildResult.payload, payloadBuildResult.inputTimestamp);
-                }
-                return null;
-            })
-        );
+    ): PortCommandTask | null {
+        const payload = this.buildPayload(binding, inputsState, motorEncoderOffset, lastExecutedTask);
+        if (payload) {
+            return this.composeTask(binding, payload.payload, payload.inputTimestamp);
+        }
+        return null;
     }
 
     public buildCleanupTask(
         previousTask: PortCommandTask
-    ): Observable<PortCommandTask | null> {
-        return this.buildCleanupPayload(previousTask).pipe(
-            map((payload) => {
-                if (payload) {
-                    return {
-                        ...previousTask,
-                        payload,
-                        hash: this.calculateHash(previousTask.hubId, previousTask.portId, payload)
-                    };
-                }
-                return null;
-            })
-        );
+    ): PortCommandTask | null {
+        const payload = this.buildCleanupPayload(previousTask);
+        if (payload) {
+            return {
+                ...previousTask,
+                payload,
+                hash: this.calculateHash(previousTask.hubId, previousTask.portId, payload)
+            };
+        }
+        return null;
     }
 
     private buildPayload<T extends ControlSchemeBindingType>(
@@ -74,7 +67,7 @@ export class TaskFactoryService {
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
         previousTask: PortCommandTask | null
-    ): Observable<{ payload: PortCommandTaskPayload; inputTimestamp: number } | null> {
+    ): { payload: PortCommandTaskPayload; inputTimestamp: number } | null {
         const taskPayloadFactory: ITaskPayloadFactory<T> = this.taskPayloadFactories[binding.bindingType];
         return taskPayloadFactory.buildPayload(
             binding,
@@ -86,7 +79,7 @@ export class TaskFactoryService {
 
     private buildCleanupPayload(
         previousTask: PortCommandTask
-    ): Observable<PortCommandTaskPayload | null> {
+    ): PortCommandTaskPayload | null {
         return this.taskPayloadFactories[previousTask.payload.bindingType].buildCleanupPayload(previousTask);
     }
 
@@ -106,7 +99,6 @@ export class TaskFactoryService {
         return {
             hubId: binding.hubId,
             portId: binding.portId,
-            bindingId: binding.id,
             payload,
             hash: this.calculateHash(binding.hubId, binding.portId, payload),
             inputTimestamp

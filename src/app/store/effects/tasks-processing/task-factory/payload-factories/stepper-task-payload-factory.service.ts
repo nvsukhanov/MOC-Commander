@@ -1,6 +1,5 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import {
@@ -20,12 +19,12 @@ export class StepperTaskPayloadFactoryService implements ITaskPayloadFactory<Con
     public buildPayload(
         binding: ControlSchemeStepperBinding,
         inputsState: Dictionary<ControllerInputModel>,
-    ): Observable<{ payload: StepperTaskPayload; inputTimestamp: number } | null> {
+    ): { payload: StepperTaskPayload; inputTimestamp: number } | null {
         const stepInput = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Step])];
         const stepInputValue = stepInput?.value ?? 0;
 
         if (!isInputActivated(stepInputValue)) {
-            return of(null);
+            return null;
         }
 
         const payload: StepperTaskPayload = {
@@ -38,22 +37,22 @@ export class StepperTaskPayloadFactoryService implements ITaskPayloadFactory<Con
             useDecelerationProfile: binding.useDecelerationProfile
         };
 
-        return of({ payload, inputTimestamp: stepInput?.timestamp ?? Date.now() });
+        return { payload, inputTimestamp: stepInput?.timestamp ?? Date.now() };
     }
 
     public buildCleanupPayload(
         previousTask: PortCommandTask
-    ): Observable<PortCommandTaskPayload | null> {
+    ): PortCommandTaskPayload | null {
         if (previousTask.payload.bindingType !== ControlSchemeBindingType.Stepper) {
-            return of(null);
+            return null;
         }
-        return of({
+        return {
             bindingType: ControlSchemeBindingType.SetSpeed,
             speed: 0,
             power: 0,
             brakeFactor: 0,
             useAccelerationProfile: previousTask.payload.useAccelerationProfile,
             useDecelerationProfile: previousTask.payload.useDecelerationProfile
-        });
+        };
     }
 }

@@ -20,21 +20,20 @@ export const PORT_TASKS_FEATURE = createFeature({
     name: 'portTasks',
     reducer: createReducer(
         PORT_TASKS_ENTITY_ADAPTER.getInitialState(),
-        on(PORT_TASKS_ACTIONS.updateQueue, (state, { hubId, portId, queue }): PortTasksState => {
+        on(PORT_TASKS_ACTIONS.updateQueue, (state, { hubId, portId, pendingTask }): PortTasksState => {
             return PORT_TASKS_ENTITY_ADAPTER.upsertOne({
                 hubId,
                 portId,
-                queue,
+                pendingTask,
                 runningTask: state.entities[hubPortTasksIdFn({ hubId, portId })]?.runningTask ?? null,
                 lastExecutedTask: state.entities[hubPortTasksIdFn({ hubId, portId })]?.lastExecutedTask ?? null,
             }, state);
         }),
         on(PORT_TASKS_ACTIONS.runTask, (state, { task }): PortTasksState => {
-            const nextQueue = [ ...(state.entities[hubPortTasksIdFn(task)]?.queue ?? []) ].filter((queueItem) => queueItem !== task);
             return PORT_TASKS_ENTITY_ADAPTER.upsertOne({
                 hubId: task.hubId,
                 portId: task.portId,
-                queue: nextQueue,
+                pendingTask: null,
                 runningTask: task,
                 lastExecutedTask: state.entities[hubPortTasksIdFn(task)]?.lastExecutedTask ?? null,
             }, state);
@@ -44,9 +43,19 @@ export const PORT_TASKS_FEATURE = createFeature({
             return PORT_TASKS_ENTITY_ADAPTER.upsertOne({
                 hubId: task.hubId,
                 portId: task.portId,
-                queue: state.entities[hubPortTasksIdFn(task)]?.queue ?? [],
+                pendingTask: state.entities[hubPortTasksIdFn(task)]?.pendingTask ?? null,
                 runningTask: runningTask === task ? null : runningTask,
                 lastExecutedTask: task,
+            }, state);
+        }),
+        on(PORT_TASKS_ACTIONS.taskExecutionFailed, (state, { task }): PortTasksState => {
+            const runningTask = state.entities[hubPortTasksIdFn(task)]?.runningTask ?? null;
+            return PORT_TASKS_ENTITY_ADAPTER.upsertOne({
+                hubId: task.hubId,
+                portId: task.portId,
+                pendingTask: state.entities[hubPortTasksIdFn(task)]?.pendingTask ?? null,
+                runningTask: runningTask === task ? null : runningTask,
+                lastExecutedTask: state.entities[hubPortTasksIdFn(task)]?.lastExecutedTask ?? null,
             }, state);
         }),
         on(CONTROL_SCHEME_ACTIONS.stopScheme, (state) => {

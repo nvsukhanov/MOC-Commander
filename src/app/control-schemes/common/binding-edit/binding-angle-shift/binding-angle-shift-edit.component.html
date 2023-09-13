@@ -24,6 +24,10 @@
         <app-controller-select [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.PrevLevel]"
                                [title]="controlSchemeInputActions.PrevLevel | controlSchemeInputActionToL10nKey | transloco "
         ></app-controller-select>
+
+        <app-controller-select [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.Reset]"
+                               [title]="controlSchemeInputActions.Reset | controlSchemeInputActionToL10nKey | transloco "
+        ></app-controller-select>
     </app-binding-edit-section>
 
     <mat-divider [vertical]="true" *appHideOnSmallScreen></mat-divider>
@@ -48,8 +52,6 @@
                 <input type="number"
                        matInput
                        [formControl]="angleControl"
-                       [min]="minAngle"
-                       [max]="maxAngle"
                 />
                 <button mat-icon-button
                         matSuffix

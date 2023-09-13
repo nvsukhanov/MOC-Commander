@@ -62,10 +62,6 @@ export class BindingAngleShiftEditComponent implements IBindingsDetailsEditCompo
 
     public readonly controlSchemeInputActions = ControlSchemeInputAction;
 
-    public readonly minAngle = -(MOTOR_LIMITS.maxServoDegreesRange / 2);
-
-    public readonly maxAngle = MOTOR_LIMITS.maxServoDegreesRange / 2;
-
     public readonly bindingType = ControlSchemeBindingType.AngleShift;
 
     private _form?: AngleShiftBindingForm;
@@ -103,7 +99,7 @@ export class BindingAngleShiftEditComponent implements IBindingsDetailsEditCompo
             mergeWith(form.controls.portId.valueChanges),
             startWith(null),
             switchMap(() => {
-                if (!form.controls.hubId.value || !form.controls.portId.value) {
+                if (form.controls.hubId.value === null || form.controls.portId.value === null) {
                     return of(false);
                 }
                 return this.store.select(BINDING_EDIT_SELECTORS.canRequestPortValue({
@@ -120,13 +116,14 @@ export class BindingAngleShiftEditComponent implements IBindingsDetailsEditCompo
         levelIndex: number
     ): void {
         this.portRequestSubscription?.unsubscribe();
-        if (!this.form || !this.form.controls.hubId.value || !this.form.controls.portId.value) {
+        if (!this.form || this.form.controls.hubId.value === null || this.form.controls.portId.value === null) {
             return;
         }
         const control = this.form.controls.angles.at(levelIndex);
         if (!control) {
             return;
         }
+        control.markAsTouched();
         this.portRequestSubscription = this.hubFacade.getMotorAbsolutePosition(
             this.form.controls.hubId.value,
             this.form.controls.portId.value
@@ -134,6 +131,8 @@ export class BindingAngleShiftEditComponent implements IBindingsDetailsEditCompo
             take(1)
         ).subscribe((position) => {
             control.setValue(position);
+            control.markAsDirty();
+            control.updateValueAndValidity();
         });
     }
 
@@ -150,7 +149,7 @@ export class BindingAngleShiftEditComponent implements IBindingsDetailsEditCompo
         );
         this.form.controls.angles.markAsDirty();
         this.form.controls.initialStepIndex.markAsDirty();
-        this.form.updateValueAndValidity();
+        this.changeDetectorRef.detectChanges(); // somehow this is needed to update the view
     }
 
     public addPrevAngleLevel(): void {
@@ -161,7 +160,7 @@ export class BindingAngleShiftEditComponent implements IBindingsDetailsEditCompo
             this.commonFormControlBuilder.angleControl(0)
         );
         this.form.controls.angles.markAsDirty();
-        this.form.updateValueAndValidity();
+        this.changeDetectorRef.detectChanges(); // somehow this is needed to update the view
     }
 
     public removeAngleLevel(
@@ -171,13 +170,13 @@ export class BindingAngleShiftEditComponent implements IBindingsDetailsEditCompo
             return;
         }
         this.form.controls.angles.removeAt(index);
-        if (this.form.controls.initialStepIndex.value > index) {
+        if (index < this.form.controls.initialStepIndex.value) {
             this.form.controls.initialStepIndex.setValue(
                 this.form.controls.initialStepIndex.value - 1
             );
         }
         this.form.controls.angles.markAsDirty();
         this.form.controls.initialStepIndex.markAsDirty();
-        this.form.updateValueAndValidity();
+        this.changeDetectorRef.detectChanges(); // somehow this is needed to update the view
     }
 }

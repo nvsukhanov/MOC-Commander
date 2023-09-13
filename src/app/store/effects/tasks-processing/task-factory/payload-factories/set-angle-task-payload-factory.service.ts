@@ -1,6 +1,5 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import { controllerInputIdFn } from '../../../../reducers';
@@ -21,12 +20,12 @@ export class SetAngleTaskPayloadFactoryService implements ITaskPayloadFactory<Co
         binding: ControlSchemeSetAngleBinding,
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
-    ): Observable<{ payload: SetAngleTaskPayload; inputTimestamp: number } | null> {
+    ): { payload: SetAngleTaskPayload; inputTimestamp: number } | null {
         const setAngleInput = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.SetAngle])];
         const setAngleInputValue = setAngleInput?.value ?? 0;
 
         if (!isInputActivated(setAngleInputValue)) {
-            return of(null);
+            return null;
         }
         const resultingAngle = binding.angle - motorEncoderOffset;
 
@@ -40,22 +39,22 @@ export class SetAngleTaskPayloadFactoryService implements ITaskPayloadFactory<Co
             useDecelerationProfile: binding.useDecelerationProfile
         };
 
-        return of({ payload, inputTimestamp: setAngleInput?.timestamp ?? Date.now() });
+        return { payload, inputTimestamp: setAngleInput?.timestamp ?? Date.now() };
     }
 
     public buildCleanupPayload(
         previousTask: PortCommandTask
-    ): Observable<PortCommandTaskPayload | null> {
+    ): PortCommandTaskPayload | null {
         if (previousTask.payload.bindingType !== ControlSchemeBindingType.SetAngle) {
-            return of(null);
+            return null;
         }
-        return of({
+        return {
             bindingType: ControlSchemeBindingType.SetSpeed,
             speed: 0,
             power: 0,
             brakeFactor: 0,
             useAccelerationProfile: previousTask.payload.useAccelerationProfile,
             useDecelerationProfile: previousTask.payload.useDecelerationProfile
-        });
+        };
     }
 }

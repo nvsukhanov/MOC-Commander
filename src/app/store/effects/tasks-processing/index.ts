@@ -7,7 +7,8 @@ import { STOP_SCHEME_EFFECT } from './stop-scheme.effect';
 import { CONSUME_QUEUE_EFFECT } from './consume-queue.effect';
 import { EXECUTE_TASK_EFFECT } from './execute-task.effect';
 
-export { provideTaskProcessingFactories } from './task-factory';
+export { provideTaskFactories } from './task-factory';
+export { provideTaskFilter } from './task-filter';
 export { calculateSpeedPower } from './calculate-speed-power';
 
 export const TASK_PROCESSING_EFFECTS: Record<string, FunctionalEffect> = {

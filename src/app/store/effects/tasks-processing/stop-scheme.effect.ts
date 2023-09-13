@@ -1,5 +1,5 @@
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { Observable, catchError, filter, forkJoin, map, of, switchMap, take } from 'rxjs';
+import { Observable, catchError, forkJoin, map, mergeMap, of, switchMap, take } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { Dictionary } from '@ngrx/entity';
@@ -38,18 +38,17 @@ function getUniqueConnectedHubPorts(
     return result;
 }
 
-export const STOP_SCHEME_EFFECT = createEffect((
-    actions: Actions = inject(Actions),
-    store: Store = inject(Store),
-    taskBuilder: TaskFactoryService = inject(TaskFactoryService),
-    taskRunner: TaskRunnerService = inject(TaskRunnerService),
-    hubStorage: HubStorageService = inject(HubStorageService)
-) => {
-    return actions.pipe(
-        ofType(CONTROL_SCHEME_ACTIONS.stopScheme),
-        concatLatestFrom(() => store.select(CONTROL_SCHEME_SELECTORS.selectRunningScheme)),
-        map(([ , runningScheme ]) => runningScheme),
-        filter((runningScheme): runningScheme is ControlSchemeModel => !!runningScheme),
+function terminateScheme(
+    schemeModel: ControlSchemeModel | null,
+    store: Store,
+    taskBuilder: TaskFactoryService,
+    hubStorage: HubStorageService,
+    taskRunner: TaskRunnerService
+): Observable<Action> {
+    if (!schemeModel) {
+        return of(CONTROL_SCHEME_ACTIONS.schemeStopped());
+    }
+    return of(schemeModel).pipe(
         concatLatestFrom(() => [
             store.select(HUB_STATS_SELECTORS.selectIds),
             store.select(ATTACHED_IO_SELECTORS.selectEntities)
@@ -69,7 +68,6 @@ export const STOP_SCHEME_EFFECT = createEffect((
                 .filter((lastExecutedTask): lastExecutedTask is PortCommandTask => !!lastExecutedTask)
                 .map((lastExecutedTask) => taskBuilder.buildCleanupTask(lastExecutedTask));
         }),
-        switchMap((tasks) => tasks.length ? forkJoin(tasks) : of([])),
         map((cleanupTasks) => cleanupTasks.filter((cleanupTask: PortCommandTask | null): cleanupTask is PortCommandTask => !!cleanupTask)),
         switchMap((cleanupTasks: PortCommandTask[]) => {
             if (cleanupTasks.length === 0) {
@@ -80,5 +78,19 @@ export const STOP_SCHEME_EFFECT = createEffect((
                 catchError(() => of(CONTROL_SCHEME_ACTIONS.schemeStopped()))
             );
         })
+    );
+}
+
+export const STOP_SCHEME_EFFECT = createEffect((
+    actions: Actions = inject(Actions),
+    store: Store = inject(Store),
+    taskBuilder: TaskFactoryService = inject(TaskFactoryService),
+    taskRunner: TaskRunnerService = inject(TaskRunnerService),
+    hubStorage: HubStorageService = inject(HubStorageService)
+) => {
+    return actions.pipe(
+        ofType(CONTROL_SCHEME_ACTIONS.stopScheme),
+        concatLatestFrom(() => store.select(CONTROL_SCHEME_SELECTORS.selectRunningScheme)),
+        mergeMap(([ , runningScheme ]) => terminateScheme(runningScheme, store, taskBuilder, hubStorage, taskRunner))
     ) as Observable<Action>;
 }, { functional: true });

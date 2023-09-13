@@ -44,6 +44,10 @@ export class AngleShiftBindingFormMapperService {
             result.inputs[ControlSchemeInputAction.PrevLevel] =
                 this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ControlSchemeInputAction.PrevLevel] as InputFormGroup);
         }
+        if (form.controls.inputs.controls[ControlSchemeInputAction.Reset].controls.controllerId.value !== null) {
+            result.inputs[ControlSchemeInputAction.Reset] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ControlSchemeInputAction.Reset] as InputFormGroup);
+        }
         return result;
     }
 }

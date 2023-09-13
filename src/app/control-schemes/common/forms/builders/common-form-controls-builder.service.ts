@@ -104,8 +104,8 @@ export class CommonFormControlsBuilderService {
             nonNullable: true,
             validators: [
                 Validators.required,
-                Validators.min(MOTOR_LIMITS.minRawAngle),
-                Validators.max(MOTOR_LIMITS.maxRawAngle),
+                Validators.min(-MOTOR_LIMITS.maxServoDegreesRange / 2),
+                Validators.max(MOTOR_LIMITS.maxServoDegreesRange / 2),
                 AppValidators.requireInteger
             ]
         });

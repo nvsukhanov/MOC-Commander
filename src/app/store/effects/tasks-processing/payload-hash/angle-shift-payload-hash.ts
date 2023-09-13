@@ -6,7 +6,7 @@ export function angleShiftPayloadHash(
     return [
         payload.bindingType,
         payload.angleIndex,
-        payload.nextAngleActiveInput,
-        payload.prevAngleActiveInput,
+        payload.isLooping,
+        payload.angle
     ].join('_');
 }

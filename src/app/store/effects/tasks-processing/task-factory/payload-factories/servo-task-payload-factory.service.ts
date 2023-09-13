@@ -1,7 +1,6 @@
 import { MotorServoEndState } from 'rxpoweredup';
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { ControlSchemeBindingType, getTranslationArcs } from '@app/shared';
 
 import {
@@ -24,8 +23,11 @@ export class ServoTaskPayloadFactoryService implements ITaskPayloadFactory<Contr
         binding: ControlSchemeServoBinding,
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
-    ): Observable<{ payload: ServoTaskPayload; inputTimestamp: number }> {
+    ): { payload: ServoTaskPayload; inputTimestamp: number } | null {
         const servoInput = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Servo])];
+        if (!servoInput) {
+            return null;
+        }
         const servoInputValue = calcInputGain(servoInput?.value ?? 0, binding.inputs[ControlSchemeInputAction.Servo].gain);
 
         const translationPaths = getTranslationArcs(motorEncoderOffset, binding.aposCenter);
@@ -49,23 +51,23 @@ export class ServoTaskPayloadFactoryService implements ITaskPayloadFactory<Contr
             useAccelerationProfile: binding.useAccelerationProfile,
             useDecelerationProfile: binding.useDecelerationProfile,
         };
-        return of({ payload, inputTimestamp: servoInput?.timestamp ?? Date.now() });
+        return { payload, inputTimestamp: servoInput.timestamp };
     }
 
     public buildCleanupPayload(
         previousTask: PortCommandTask
-    ): Observable<PortCommandTaskPayload | null> {
+    ): PortCommandTaskPayload | null {
         if (previousTask.payload.bindingType !== ControlSchemeBindingType.Servo) {
-            return of(null);
+            return null;
         }
-        return of({
+        return {
             bindingType: ControlSchemeBindingType.SetSpeed,
             speed: 0,
             power: 0,
             brakeFactor: 0,
             useAccelerationProfile: previousTask.payload.useAccelerationProfile,
             useDecelerationProfile: previousTask.payload.useDecelerationProfile
-        });
+        };
     }
 
     private snapAngle(
