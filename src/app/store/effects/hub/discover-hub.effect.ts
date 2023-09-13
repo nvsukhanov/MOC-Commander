@@ -3,7 +3,7 @@ import { catchError, combineLatestWith, map, mergeMap, of, switchMap, takeUntil,
 import { IHub, MessageLoggingMiddleware, connectHub } from 'rxpoweredup';
 import { inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { NAVIGATOR, PrefixedConsoleLoggerFactoryService } from '@app/shared';
+import { APP_CONFIG, IAppConfig, NAVIGATOR, PrefixedConsoleLoggerFactoryService } from '@app/shared';
 import { HUBS_ACTIONS, HUB_STATS_ACTIONS, HubStorageService } from '@app/store';
 
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../../hub-communication-notifier-middleware-factory.service';
@@ -15,6 +15,7 @@ export const DISCOVER_HUB_EFFECT = createEffect((
     prefixedConsoleLoggerFactory: PrefixedConsoleLoggerFactoryService = inject(PrefixedConsoleLoggerFactoryService),
     store: Store = inject(Store),
     hubStorage: HubStorageService = inject(HubStorageService),
+    config: IAppConfig = inject(APP_CONFIG)
 ) => {
     return actions$.pipe(
         ofType(HUBS_ACTIONS.startDiscovery),
@@ -28,9 +29,9 @@ export const DISCOVER_HUB_EFFECT = createEffect((
                 {
                     incomingMessageMiddleware: [ incomingLoggerMiddleware, communicationNotifierMiddleware ],
                     outgoingMessageMiddleware: [ outgoingLoggerMiddleware, communicationNotifierMiddleware ],
-                    messageSendTimeout: 200,
-                    maxMessageSendAttempts: 5,
-                    initialMessageSendRetryDelayMs: 100
+                    messageSendTimeout: config.messageSendTimeout,
+                    maxMessageSendAttempts: config.maxMessageSendAttempts,
+                    initialMessageSendRetryDelayMs: config.initialMessageSendRetryDelayMs
                 }
             ).pipe(
                 switchMap((hub: IHub) => {
