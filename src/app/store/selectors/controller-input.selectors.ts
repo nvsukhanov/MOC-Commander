@@ -1,4 +1,5 @@
 import { createSelector } from '@ngrx/store';
+import { isInputActivated } from '@app/shared';
 
 import { CONTROLLER_INPUT_ENTITY_ADAPTER, CONTROLLER_INPUT_FEATURE } from '../reducers';
 import { CONTROLLER_CONNECTION_SELECTORS } from './controller-connection.selectors';
@@ -26,7 +27,7 @@ export const CONTROLLER_INPUT_SELECTORS = {
     ),
     selectFirst: createSelector(
         SELECT_ALL,
-        (inputsList) => inputsList.find((input) => input.value !== 0)
+        (inputsList) => inputsList.find((input) => isInputActivated(input.value))
     ),
     listenersCount: CONTROLLER_INPUT_FEATURE.selectListenersCount,
     isCapturing: createSelector(

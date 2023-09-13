@@ -1,5 +1,5 @@
 import { concatLatestFrom, createEffect } from '@ngrx/effects';
-import { NEVER, Observable, animationFrames, distinctUntilChanged, filter, from, map, merge, share, startWith, switchMap } from 'rxjs';
+import { NEVER, Observable, distinctUntilChanged, filter, from, interval, map, merge, share, startWith, switchMap } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { ControllerInputType, ControllerType, GamepadValueTransformService, WINDOW } from '@app/shared';
@@ -94,7 +94,7 @@ function readGamepads(
 }
 
 function createGamepadScheduler(): Observable<unknown> {
-    return animationFrames();
+    return interval(1000 / 30);
 }
 
 export const CAPTURE_GAMEPAD_INPUT = createEffect((

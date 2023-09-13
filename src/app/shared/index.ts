@@ -13,3 +13,4 @@ export * from './get-enum-keys';
 export * from './get-enum-values';
 export * from './controller-profiles';
 export * from './i18n';
+export * from './is-input-activated';
