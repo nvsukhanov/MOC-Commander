@@ -17,7 +17,7 @@ import { InputFormGroup, OptionalInputFormGroup } from '../../forms';
 
 @Component({
     standalone: true,
-    selector: 'app-controller-select',
+    selector: 'app-binding-control-select-controller',
     templateUrl: './binding-control-select-controller.component.html',
     styleUrls: [ './binding-control-select-controller.component.scss' ],
     imports: [

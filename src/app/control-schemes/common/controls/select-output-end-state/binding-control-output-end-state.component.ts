@@ -10,7 +10,7 @@ import { MotorServoEndStateL10nKeyPipe } from '@app/shared';
 
 @Component({
     standalone: true,
-    selector: 'app-binding-control-output-end-state[control][translocoTitle]',
+    selector: 'app-binding-control-output-end-state',
     templateUrl: './binding-control-output-end-state.component.html',
     styleUrls: [ './binding-control-output-end-state.component.scss' ],
     imports: [

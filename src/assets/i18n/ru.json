@@ -1,5 +1,5 @@
 {
-  "appTitle": "webPoweredUP",
+  "appTitle": "webPoweredUp",
   "pageNotFound": "Страница не найдена",
   "hubListHubIsNotConnected": "не подключен",
   "discoverHub": "Обнаружить хаб",
@@ -242,8 +242,8 @@
     "licenseTitle": "Лицензия",
     "licenseText": "Лицензия MIT",
     "sourcesTitle": "Исходный код",
-    "githubTitle": "webPoweredUP GitHub",
-    "githubApiTitle": "rxPoweredUP GitHub",
+    "githubTitle": "webPoweredUp GitHub",
+    "githubApiTitle": "rxPoweredUp GitHub",
     "versionTitle": "Версия"
   },
   "io": {

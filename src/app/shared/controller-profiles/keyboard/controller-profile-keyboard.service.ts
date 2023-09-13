@@ -30,6 +30,7 @@ export class ControllerProfileKeyboardService implements IControllerProfile<Keyb
         this.name$ = this.translocoService.selectTranslate(createScopedControllerL10nKey(this.l10nScope, 'name'));
     }
 
+    // TODO: keyboard should not have an axis. Refactor this.
     public getAxisName$(): Observable<string> {
         return this.axisName;
     }

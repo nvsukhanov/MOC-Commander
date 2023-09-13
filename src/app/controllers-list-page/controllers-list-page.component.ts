@@ -7,7 +7,7 @@ import { ControllerModel, ControllerSettingsModel } from '@app/store';
 import { HintComponent } from '@app/shared';
 
 import { ControllersListItemComponent } from './controllers-list-item';
-import { CONTROLLERS_LIST_SELECTORS } from './controllers-list.selectors';
+import { CONTROLLERS_LIST_PAGE_SELECTORS } from './controllers-list-page.selectors';
 
 @Component({
     standalone: true,
@@ -25,7 +25,7 @@ import { CONTROLLERS_LIST_SELECTORS } from './controllers-list.selectors';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControllersListPageComponent {
-    public readonly controllersWithSettings$ = this.store.select(CONTROLLERS_LIST_SELECTORS.viewModel);
+    public readonly controllersWithSettings$ = this.store.select(CONTROLLERS_LIST_PAGE_SELECTORS.viewModel);
 
     constructor(
         private readonly store: Store

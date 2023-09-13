@@ -1,1 +1,1 @@
-export * from './binding-speed-shift.component';
+export * from './binding-speed-shift-edit.component';

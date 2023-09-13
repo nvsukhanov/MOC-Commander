@@ -12,7 +12,7 @@ import { BINDING_CONTROL_SELECT_HUB_SELECTORS, HubWithConnectionState } from './
 
 @Component({
     standalone: true,
-    selector: 'app-binding-select-hub',
+    selector: 'app-binding-control-select-hub',
     templateUrl: './binding-control-select-hub.component.html',
     styleUrls: [ './binding-control-select-hub.component.scss' ],
     imports: [

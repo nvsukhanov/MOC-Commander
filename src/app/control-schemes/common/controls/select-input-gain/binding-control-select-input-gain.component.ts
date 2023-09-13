@@ -8,7 +8,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { MotorServoEndStateL10nKeyPipe, getEnumValues } from '@app/shared';
 import { InputGain } from '@app/store';
 
-import { InputGainL10nKeyPipe } from './output-gain-l10n-key.pipe';
+import { InputGainL10nKeyPipe } from './input-gain-l10n-key.pipe';
 
 @Component({
     standalone: true,
