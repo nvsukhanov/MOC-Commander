@@ -1,0 +1,9 @@
+<ng-container *ngIf="control">
+    <mat-form-field>
+        <mat-label>{{ translocoTitle | transloco }}</mat-label>
+        <input type="number"
+               matInput
+               [formControl]="control"/>
+        <mat-error [appValidationMessages]="control"></mat-error>
+    </mat-form-field>
+</ng-container>

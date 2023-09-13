@@ -16,7 +16,6 @@ import {
     ControlSchemeBindingType,
     ControllerInputType,
     HideOnSmallScreenDirective,
-    SliderControlComponent,
     ToggleControlComponent,
     ValidationMessagesDirective,
     getTranslationArcs
@@ -25,10 +24,12 @@ import {
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { CalibrationResult, CalibrationResultType, ServoCalibrationDialogComponent } from '../servo-calibration-dialog';
 import {
+    BindingControlPowerInputComponent,
     BindingControlSelectControllerComponent,
     BindingControlSelectHubComponent,
     BindingControlSelectInputGainComponent,
-    BindingControlSelectIoComponent
+    BindingControlSelectIoComponent,
+    BindingControlSpeedInputComponent
 } from '../../controls';
 import { BINDING_EDIT_SELECTORS } from '../binding-edit.selectors';
 import { BindingEditSectionComponent } from '../section';
@@ -49,7 +50,6 @@ import { ServoBindingForm } from '../../forms';
         MatIconModule,
         PushPipe,
         MatDialogModule,
-        SliderControlComponent,
         ToggleControlComponent,
         BindingControlSelectControllerComponent,
         BindingControlSelectInputGainComponent,
@@ -61,7 +61,9 @@ import { ServoBindingForm } from '../../forms';
         ReactiveFormsModule,
         HideOnSmallScreenDirective,
         BindingEditSectionsContainerComponent,
-        ValidationMessagesDirective
+        ValidationMessagesDirective,
+        BindingControlSpeedInputComponent,
+        BindingControlPowerInputComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

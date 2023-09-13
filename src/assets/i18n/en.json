@@ -164,6 +164,8 @@
     "bindingSectionInputTitle": "Input",
     "bindingSectionConfigTitle": "Settings",
     "menu": "Menu",
+    "outputSpeed": "Speed",
+    "outputPower": "Power",
     "inputActions": {
       "servo": "Servo",
       "brake": "Brake",
@@ -177,8 +179,7 @@
     "setSpeedBinding": {
       "operationMode": "Set speed",
       "accelerationInputGainTitle": "Acceleration input gain",
-      "outputSpeed": "Max speed (%)",
-      "outputPower": "Power (%)",
+      "outputSpeed": "Max speed",
       "taskSummary": "Speed: { speed }%",
       "brakeTaskSummary": "Brake"
     },
@@ -186,8 +187,6 @@
       "operationMode": "Servo",
       "outputCenterOffset": "Center offset (°)",
       "outputAngleRange": "Servo range (°)",
-      "outputSpeed": "Speed (%)",
-      "outputPower": "Power (%)",
       "calibrate": "Calibrate",
       "calibrationIsInProgress": "Servo calibration is in progress",
       "calibrationError": "An error occurred during servo calibration",
@@ -199,15 +198,11 @@
     "stepperBinding": {
       "operationMode": "Stepper",
       "outputDegree": "Angle (°)",
-      "outputSpeed": "Speed (%)",
-      "outputPower": "Power (%)",
       "taskSummary": "Step: { degree }°"
     },
     "setAngleBinding": {
       "operationMode": "Set angle",
       "outputAngle": "Target angle (°)",
-      "outputSpeed": "Speed (%)",
-      "outputPower": "Power (%)",
       "readAngleFromPort": "Read angle from port",
       "taskSummary": "Set angle: { angle }°"
     },
@@ -216,17 +211,14 @@
       "level": "Speed level { level } (%)",
       "outputLevelAdd": "Add speed level",
       "outputLevelRemove": "Remove level",
-      "outputPower": "Power (%)",
       "taskSummary": "Speed shift, level {level}{ isLooping, select, true { (mirror)} other {}}"
     },
     "angleShiftBinding": {
       "operationMode": "Angle shift",
       "angleLevel": "Angle level { level } (°)",
       "readAngleFromPort": "Read angle from port",
-      "outputAngleLevelAdd": "Add angle",
-      "outputAngleLevelRemove": "Remove angle",
-      "outputSpeed": "Speed (%)",
-      "outputPower": "Power (%)",
+      "outputAngleLevelAdd": "Add level",
+      "outputAngleLevelRemove": "Remove level",
       "taskSummary": "Angle shift, level {level}{ isLooping, select, true { (mirror)} other {}}"
     }
   },
