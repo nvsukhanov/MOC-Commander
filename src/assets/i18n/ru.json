@@ -164,6 +164,8 @@
     "bindingSectionInputTitle": "Контроллеры",
     "bindingSectionConfigTitle": "Конфигурация",
     "menu": "Menu",
+    "outputSpeed": "Скорость",
+    "outputPower": "Мощность",
     "inputActions": {
       "servo": "Серво",
       "brake": "Тормоз",
@@ -177,8 +179,7 @@
     "setSpeedBinding": {
       "operationMode": "Скорость",
       "accelerationInputGainTitle": "Усиление ввода ускорения",
-      "outputSpeed": "Макс. скорость (%)",
-      "outputPower": "Мощность (%)",
+      "outputSpeed": "Макс. скорость",
       "taskSummary": "Скорость: { speed }%",
       "brakeTaskSummary": "Тормоз"
     },
@@ -186,8 +187,6 @@
       "operationMode": "Сервопривод",
       "outputCenterOffset": "Центр (°)",
       "outputAngleRange": "Диапазон (°)",
-      "outputSpeed": "Скорость (%)",
-      "outputPower": "Мощность (%)",
       "calibrate": "Калибровка",
       "calibrationIsInProgress": "Идёт калибровка",
       "calibrationError": "Произошла ошибка в процессе калибровки",
@@ -199,15 +198,11 @@
     "stepperBinding": {
       "operationMode": "Шаговый двигатель",
       "outputDegree": "Угол шага (°)",
-      "outputSpeed": "Скорость (%)",
-      "outputPower": "Мощность (%)",
       "taskSummary": "Шаговый двигатель: { degree }°"
     },
     "setAngleBinding": {
       "operationMode": "Установка угла",
       "outputAngle": "Целевой угол (°)",
-      "outputSpeed": "Скорость (%)",
-      "outputPower": "Мощность (%)",
       "readAngleFromPort": "Прочитать угол из порта",
       "taskSummary": "Установка угла: { angle }°"
     },
@@ -216,7 +211,6 @@
       "level": "Уровень { level } (%)",
       "outputLevelAdd": "Добавить уровень",
       "outputLevelRemove": "Удалить уровень",
-      "outputPower": "Мощность (%)",
       "taskSummary": "Выбор скорости, уровень {level}{ isLooping, select, true { (инв.)} other {}}"
     },
     "angleShiftBinding": {
@@ -225,8 +219,6 @@
       "readAngleFromPort": "Прочитать угол с порта",
       "outputAngleLevelAdd": "Добавить уровень",
       "outputAngleLevelRemove": "Удалить уровень",
-      "outputSpeed": "Скорость (%)",
-      "outputPower": "Мощность (%)",
       "taskSummary": "Выбор угла, уровень {level}{ isLooping, select, true { (инв.)} other {}}"
     }
   },

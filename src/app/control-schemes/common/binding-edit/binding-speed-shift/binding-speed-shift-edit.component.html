@@ -76,11 +76,7 @@
 
         <mat-divider class="sections-divider"></mat-divider>
 
-        <app-slider-control [min]="motorLimits.minPower"
-                            [max]="motorLimits.maxPower"
-                            [control]="form.controls.power"
-                            [translocoTitle]="'controlScheme.speedShiftBinding.outputPower'"
-        ></app-slider-control>
+        <app-binding-control-power-input [control]="form.controls.power"></app-binding-control-power-input>
 
         <app-binding-control-select-looping-mode [control]="form.controls.loopingMode"></app-binding-control-select-looping-mode>
 

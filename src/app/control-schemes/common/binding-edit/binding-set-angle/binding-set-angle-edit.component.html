@@ -47,17 +47,8 @@
             <mat-error [appValidationMessages]="form.controls.angle"></mat-error>
         </mat-form-field>
 
-        <app-slider-control [min]="0"
-                            [max]="motorLimits.maxSpeed"
-                            [control]="form.controls.speed"
-                            [translocoTitle]="'controlScheme.setAngleBinding.outputSpeed'"
-        ></app-slider-control>
-
-        <app-slider-control [min]="motorLimits.minPower"
-                            [max]="motorLimits.maxPower"
-                            [control]="form.controls.power"
-                            [translocoTitle]="'controlScheme.setAngleBinding.outputPower'"
-        ></app-slider-control>
+        <app-binding-control-speed-input [control]="form.controls.speed"></app-binding-control-speed-input>
+        <app-binding-control-power-input [control]="form.controls.power"></app-binding-control-power-input>
 
         <app-binding-control-output-end-state [control]="form.controls.endState"
                                               [translocoTitle]="'controlScheme.outputEndStateControlTitle'"
