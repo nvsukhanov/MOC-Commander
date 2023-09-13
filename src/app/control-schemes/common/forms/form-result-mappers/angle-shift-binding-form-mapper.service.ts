@@ -38,7 +38,7 @@ export class AngleShiftBindingFormMapperService {
             endState: form.controls.endState.getRawValue(),
             useAccelerationProfile: form.controls.useAccelerationProfile.getRawValue(),
             useDecelerationProfile: form.controls.useDecelerationProfile.getRawValue(),
-            initialStepIndex: form.controls.initialStepIndex.getRawValue()
+            initialLevelIndex: form.controls.initialLevelIndex.getRawValue()
         };
         if (form.controls.inputs.controls[ControlSchemeInputAction.PrevLevel].controls.controllerId.value !== null) {
             result.inputs[ControlSchemeInputAction.PrevLevel] =

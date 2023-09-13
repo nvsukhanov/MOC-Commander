@@ -35,7 +35,8 @@ export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
                     speed: 0,
                     power: 0,
                     isLooping: false,
-                    speedIndex: binding.initialStepIndex,
+                    speedIndex: binding.initialLevelIndex,
+                    initialLevelIndex: binding.initialLevelIndex,
                     useAccelerationProfile: binding.useAccelerationProfile,
                     useDecelerationProfile: binding.useDecelerationProfile
                 },
@@ -52,7 +53,7 @@ export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
                               : false;
 
         const previousLevelIndexUnguarded = binding.levels.indexOf(prevSpeed);
-        const previousLevelIndex = previousLevelIndexUnguarded === -1 ? binding.initialStepIndex : previousLevelIndexUnguarded;
+        const previousLevelIndex = previousLevelIndexUnguarded === -1 ? binding.initialLevelIndex : previousLevelIndexUnguarded;
 
         const expectedAngleChangeDirection = (+prevLevelInput.isActivated - +nextLevelInput.isActivated) as -1 | 1 | 0;
 
@@ -69,6 +70,7 @@ export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
             speedIndex: nextIndex,
             speed: binding.levels[nextIndex],
             power: binding.levels[nextIndex] === 0 ? 0 : binding.power,
+            initialLevelIndex: binding.initialLevelIndex,
             isLooping: isLooping,
             useAccelerationProfile: binding.useAccelerationProfile,
             useDecelerationProfile: binding.useDecelerationProfile

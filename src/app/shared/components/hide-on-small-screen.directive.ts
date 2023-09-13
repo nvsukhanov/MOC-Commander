@@ -1,4 +1,4 @@
-import { Directive, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Directive, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { ScreenSizeObserverService } from '../screen-size-observer.service';
@@ -13,7 +13,8 @@ export class HideOnSmallScreenDirective implements OnInit, OnDestroy {
     constructor(
         private readonly templateRef: TemplateRef<unknown>,
         private readonly viewContainer: ViewContainerRef,
-        private readonly screenSizeObserverService: ScreenSizeObserverService
+        private readonly screenSizeObserverService: ScreenSizeObserverService,
+        private readonly cdRef: ChangeDetectorRef
     ) {
     }
 
@@ -22,8 +23,10 @@ export class HideOnSmallScreenDirective implements OnInit, OnDestroy {
         this.subscription = this.screenSizeObserverService.isSmallScreen$.subscribe((isSmallScreen) => {
             if (isSmallScreen) {
                 this.viewContainer.clear();
+                this.cdRef.markForCheck();
             } else {
                 this.viewContainer.createEmbeddedView(this.templateRef);
+                this.cdRef.markForCheck();
             }
         });
     }

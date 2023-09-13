@@ -38,7 +38,7 @@ export class AngleShiftBindingFormBuilderService {
             endState: this.commonFormControlsBuilder.servoEndStateControl(MotorServoEndState.hold),
             useAccelerationProfile: this.commonFormControlsBuilder.toggleControl(),
             useDecelerationProfile: this.commonFormControlsBuilder.toggleControl(),
-            initialStepIndex: this.formBuilder.control<number>(0, {
+            initialLevelIndex: this.formBuilder.control<number>(0, {
                 nonNullable: true,
                 validators: [ Validators.required, Validators.min(0) ]
             })
@@ -57,7 +57,7 @@ export class AngleShiftBindingFormBuilderService {
             );
         } else {
             form.controls.angles.push(this.commonFormControlsBuilder.angleControl(0));
-            form.controls.initialStepIndex.setValue(0);
+            form.controls.initialLevelIndex.setValue(0);
         }
     }
 }

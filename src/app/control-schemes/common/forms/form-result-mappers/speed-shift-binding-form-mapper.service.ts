@@ -36,7 +36,7 @@ export class SpeedShiftBindingFormMapperService {
             loopingMode: form.controls.loopingMode.getRawValue(),
             useAccelerationProfile: form.controls.useAccelerationProfile.getRawValue(),
             useDecelerationProfile: form.controls.useDecelerationProfile.getRawValue(),
-            initialStepIndex: form.controls.initialStepIndex.getRawValue()
+            initialLevelIndex: form.controls.initialLevelIndex.getRawValue()
         };
         if (form.controls.inputs.controls[ControlSchemeInputAction.Reset].controls.controllerId.value !== null) {
             result.inputs[ControlSchemeInputAction.Reset] =

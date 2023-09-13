@@ -217,7 +217,7 @@
       "outputLevelAdd": "Добавить уровень",
       "outputLevelRemove": "Удалить уровень",
       "outputPower": "Мощность (%)",
-      "taskSummary": "Выбор скорости: {speed}%{ isLooping, select, true { (инв.)} other {}}"
+      "taskSummary": "Выбор скорости, уровень {level}{ isLooping, select, true { (инв.)} other {}}"
     },
     "angleShiftBinding": {
       "operationMode": "Выбор угла",
@@ -227,7 +227,7 @@
       "outputAngleLevelRemove": "Удалить уровень",
       "outputSpeed": "Скорость (%)",
       "outputPower": "Мощность (%)",
-      "taskSummary": "Выбор угла: {angle}°{ isLooping, select, true { (инв.)} other {}}"
+      "taskSummary": "Выбор угла, уровень {level}{ isLooping, select, true { (инв.)} other {}}"
     }
   },
   "motorServoEndState": {

@@ -67,7 +67,7 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
 
         const previousAngleIndexUnguarded = binding.angles.findIndex((angle) => angle === previousTask?.payload.angle);
         // TODO: we can probably find nearest angle instead of just using the initial step index
-        const previousAngleIndex = previousAngleIndexUnguarded === -1 ? binding.initialStepIndex : previousAngleIndexUnguarded;
+        const previousAngleIndex = previousAngleIndexUnguarded === -1 ? binding.initialLevelIndex : previousAngleIndexUnguarded;
 
         const angleChange = (+prevLevelInput.isActivated - +nextLevelInput.isActivated) as -1 | 1 | 0;
 
@@ -82,6 +82,7 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
         return {
             payload: {
                 bindingType: ControlSchemeBindingType.AngleShift,
+                initialLevelIndex: binding.initialLevelIndex,
                 angleIndex: nextIndex,
                 offset: motorEncoderOffset,
                 angle: binding.angles[nextIndex],
@@ -102,9 +103,10 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
     ): AngleShiftTaskPayload {
         return {
             bindingType: ControlSchemeBindingType.AngleShift,
-            angleIndex: binding.initialStepIndex,
+            initialLevelIndex: binding.initialLevelIndex,
+            angleIndex: binding.initialLevelIndex,
             offset: motorEncoderOffset,
-            angle: binding.angles[binding.initialStepIndex],
+            angle: binding.angles[binding.initialLevelIndex],
             speed: binding.speed,
             power: binding.power,
             isLooping: false,

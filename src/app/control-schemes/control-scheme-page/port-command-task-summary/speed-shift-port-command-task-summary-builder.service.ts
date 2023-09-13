@@ -13,6 +13,7 @@ export class SpeedShiftPortCommandTaskSummaryBuilderService {
     public build(
         payload: SpeedShiftTaskPayload
     ): Observable<string> {
-        return this.translocoService.selectTranslate('controlScheme.speedShiftBinding.taskSummary', payload);
+        const level = payload.initialLevelIndex - payload.speedIndex;
+        return this.translocoService.selectTranslate('controlScheme.speedShiftBinding.taskSummary', { level });
     }
 }

@@ -91,7 +91,7 @@ export type SpeedShiftBindingForm = FormGroup<{
     loopingMode: FormControl<LoopingMode>;
     useAccelerationProfile: FormControl<boolean>;
     useDecelerationProfile: FormControl<boolean>;
-    initialStepIndex: FormControl<number>;
+    initialLevelIndex: FormControl<number>;
 }>;
 
 export type AngleShiftBindingForm = FormGroup<{
@@ -109,7 +109,7 @@ export type AngleShiftBindingForm = FormGroup<{
     endState: FormControl<MotorServoEndState>;
     useAccelerationProfile: FormControl<boolean>;
     useDecelerationProfile: FormControl<boolean>;
-    initialStepIndex: FormControl<number>;
+    initialLevelIndex: FormControl<number>;
 }>;
 
 export type ControlSchemeBindingForm = FormGroup<{
