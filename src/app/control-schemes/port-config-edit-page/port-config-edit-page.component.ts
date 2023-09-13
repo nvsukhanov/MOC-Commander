@@ -10,7 +10,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { RoutesBuilderService } from '@app/routing';
-import { HintComponent, PortIdToPortNamePipe } from '@app/shared';
+import { HintComponent, PortIdToPortNamePipe, ValidationMessagesDirective } from '@app/shared';
 import { CONTROL_SCHEME_ACTIONS } from '@app/store';
 
 import { PORT_CONFIG_EDIT_PAGE_SELECTORS } from './port-config-edit-page.selectors';
@@ -32,7 +32,8 @@ import { PortConfigEditViewModel } from './port-config-edit-view-model';
         TranslocoModule,
         ReactiveFormsModule,
         MatButtonModule,
-        PortIdToPortNamePipe
+        PortIdToPortNamePipe,
+        ValidationMessagesDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

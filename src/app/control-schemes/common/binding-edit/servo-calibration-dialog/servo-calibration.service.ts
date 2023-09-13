@@ -104,7 +104,7 @@ export class ServoCalibrationService {
                             arcAbsoluteCenter
                         };
                     }),
-                    switchMap((data) => hub.motors.goToPosition( // TODO: fix issue with acrCenterFromStart being absolute. It should be relative
+                    switchMap((data) => hub.motors.goToPosition(
                         portId,
                         data.arcCenterFromStart,
                         { power, endState: MotorServoEndState.float }
@@ -113,8 +113,8 @@ export class ServoCalibrationService {
                         map(() => {
                             const result: CalibrationResultFinished = {
                                 type: CalibrationResultType.finished,
-                                aposCenter: data.arcAbsoluteCenter,
-                                range: data.servoRange
+                                aposCenter: Math.round(data.arcAbsoluteCenter),
+                                range: Math.round(data.servoRange)
                             };
                             return result;
                         })

@@ -1,6 +1,6 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
-import { ControlSchemeBindingType } from '@app/shared';
+import { ControlSchemeBindingType, isInputActivated } from '@app/shared';
 
 import { controllerInputIdFn } from '../../../../reducers';
 import {
@@ -12,7 +12,6 @@ import {
     SetAngleTaskPayload
 } from '../../../../models';
 import { ITaskPayloadFactory } from './i-task-payload-factory';
-import { isInputActivated } from './is-input-activated';
 
 @Injectable()
 export class SetAngleTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.SetAngle> {

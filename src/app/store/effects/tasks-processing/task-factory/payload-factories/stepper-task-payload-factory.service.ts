@@ -1,6 +1,6 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
-import { ControlSchemeBindingType } from '@app/shared';
+import { ControlSchemeBindingType, isInputActivated } from '@app/shared';
 
 import {
     ControlSchemeInputAction,
@@ -12,7 +12,6 @@ import {
 } from '../../../../models';
 import { controllerInputIdFn } from '../../../../reducers';
 import { ITaskPayloadFactory } from './i-task-payload-factory';
-import { isInputActivated } from './is-input-activated';
 
 @Injectable()
 export class StepperTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.Stepper> {

@@ -20,6 +20,7 @@
                        [formControl]="formGroup.controls.accelerationTimeMs"
                 />
                 <span matTextSuffix>{{ 'controlScheme.profileTimingPostfix' | transloco }}</span>
+                <mat-error [appValidationMessages]="formGroup.controls.accelerationTimeMs"></mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>{{ 'controlScheme.decelerationTimeMs' | transloco }}</mat-label>
@@ -30,6 +31,7 @@
                        [formControl]="formGroup.controls.decelerationTimeMs"
                 />
                 <span matTextSuffix>{{ 'controlScheme.profileTimingPostfix' | transloco }}</span>
+                <mat-error [appValidationMessages]="formGroup.controls.decelerationTimeMs"></mat-error>
             </mat-form-field>
         </mat-card-content>
         <mat-card-actions [align]="'end'">
