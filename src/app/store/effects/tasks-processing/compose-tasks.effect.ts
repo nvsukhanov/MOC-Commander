@@ -1,5 +1,5 @@
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { Observable, filter, forkJoin, from, map, mergeMap, of, switchMap, takeUntil } from 'rxjs';
+import { Observable, filter, from, map, mergeMap, of, switchMap, takeUntil } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
 import {
@@ -15,9 +15,8 @@ import {
     attachedIosIdFn
 } from '@app/store';
 
-import { ITaskQueueCompressor, TASK_QUEUE_COMPRESSOR } from './i-task-queue-compressor';
-import { taskFilter } from './task-filter';
 import { TaskFactoryService } from './task-factory';
+import { ITaskFilter, TASK_FILTER } from './i-task-filter';
 
 function groupBindingsByHubsPortId(
     bindings: ControlSchemeBinding[]
@@ -59,48 +58,21 @@ function getTaskComposingData$(
 function composeTasksForBindingGroup(
     composingData: BindingTaskComposingData,
     taskBuilder: TaskFactoryService
-): Observable<PortCommandTask[]> {
-    const result: Array<Observable<PortCommandTask | null>> = [];
+): PortCommandTask[] {
     const previousTask: PortCommandTask | null = composingData.runningTask
         || composingData.lastExecutedTask
-        || composingData.queue.at(-1)
+        || composingData.pendingTask
         || null;
 
-    for (const binding of composingData.bindings) {
-        result.push(taskBuilder.buildTask(
-            binding,
-            composingData.inputState,
-            composingData.encoderOffset,
-            previousTask
-        ));
-    }
-    return forkJoin(result).pipe(
-        map((tasks) => tasks.filter((task): task is PortCommandTask => !!task)),
-        map((tasks) => tasks.sort((a, b) => a.inputTimestamp - b.inputTimestamp))
-    );
-}
-
-function filterQueue(
-    queue: PortCommandTask[],
-    runningTask: PortCommandTask | null,
-    lastExecutedTask: PortCommandTask | null
-): PortCommandTask[] {
-    let previousTask: PortCommandTask | null = runningTask || lastExecutedTask || null;
-    const resultingQueue: PortCommandTask[] = new Array(queue.length);
-    for (let i = 0; i < queue.length; i++) {
-        const task = queue[i];
-        if (taskFilter(task, previousTask)) {
-            resultingQueue[i] = task;
-            previousTask = task;
-        }
-    }
-    return resultingQueue.filter((i) => !!i);
+    return composingData.bindings.map((binding) => taskBuilder.buildTask(binding, composingData.inputState, composingData.encoderOffset, previousTask))
+                        .filter((task): task is PortCommandTask => !!task)
+                        .sort((a, b) => a.inputTimestamp - b.inputTimestamp);
 }
 
 export const COMPOSE_TASKS_EFFECT = createEffect((
     actions: Actions = inject(Actions),
     store: Store = inject(Store),
-    taskQueueCompressor: ITaskQueueCompressor = inject(TASK_QUEUE_COMPRESSOR),
+    taskFilter: ITaskFilter = inject(TASK_FILTER),
     taskBuilder: TaskFactoryService = inject(TaskFactoryService)
 ) => {
     return actions.pipe(
@@ -112,26 +84,31 @@ export const COMPOSE_TASKS_EFFECT = createEffect((
         filter((scheme): scheme is ControlSchemeModel => !!scheme),
         switchMap((scheme) => from(groupBindingsByHubsPortId(scheme.bindings))),
         mergeMap((groupedBindings) => getTaskComposingData$(store, actions, groupedBindings)),
-        switchMap((composingData) => {
-            return composeTasksForBindingGroup(composingData, taskBuilder).pipe(
-                map((tasks) => ({ ...composingData, tasks }))
-            );
+        map((composingData) => {
+            return {
+                ...composingData,
+                tasks: composeTasksForBindingGroup(composingData, taskBuilder)
+            };
         }),
         filter(({ tasks }) => tasks.length > 0),
-        map(({ queue, tasks, lastExecutedTask, runningTask, portId, hubId }) => {
-            const nonCompressedCombinedQueue = [ ...queue, ...tasks ];
-            const compressedQueue = taskQueueCompressor.compress(nonCompressedCombinedQueue);
-            const filteredQueue = filterQueue(compressedQueue, runningTask, lastExecutedTask);
-            const shouldUpdateQueue = filteredQueue.length !== queue.length
-                || filteredQueue.some((task, index) => task.hash !== queue[index]?.hash);
+        map(({ pendingTask, tasks, lastExecutedTask, runningTask, portId, hubId }) => {
+            const currentTask = runningTask || lastExecutedTask || null;
+            const nextPendingTask = taskFilter.calculateNextPendingTask(
+                currentTask,
+                pendingTask,
+                tasks
+            );
+            const shouldUpdateQueue = nextPendingTask !== pendingTask;
             return {
                 hubId,
                 portId,
-                queue: filteredQueue,
+                pendingTask: nextPendingTask,
                 shouldUpdateQueue
             };
         }),
         filter(({ shouldUpdateQueue }) => shouldUpdateQueue),
-        map(({ hubId, portId, queue }) => PORT_TASKS_ACTIONS.updateQueue({ hubId, portId, queue }))
+        map(({ hubId, portId, pendingTask }: { hubId: string; portId: number; pendingTask: PortCommandTask | null }) =>
+            PORT_TASKS_ACTIONS.updateQueue({ hubId, portId, pendingTask })
+        )
     ) as Observable<Action>;
 }, { functional: true });

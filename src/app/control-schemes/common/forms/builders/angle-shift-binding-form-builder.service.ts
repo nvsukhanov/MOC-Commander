@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { MotorServoEndState } from 'rxpoweredup';
 import { ControlSchemeAngleShiftBinding, ControlSchemeInputAction } from '@app/store';
 import { DeepPartial } from '@app/shared';
 
@@ -18,7 +19,8 @@ export class AngleShiftBindingFormBuilderService {
         return this.formBuilder.group({
             inputs: this.formBuilder.group({
                 [ControlSchemeInputAction.NextLevel]: this.commonFormControlsBuilder.inputFormGroup(),
-                [ControlSchemeInputAction.PrevLevel]: this.commonFormControlsBuilder.optionalInputFormGroup()
+                [ControlSchemeInputAction.PrevLevel]: this.commonFormControlsBuilder.optionalInputFormGroup(),
+                [ControlSchemeInputAction.Reset]: this.commonFormControlsBuilder.optionalInputFormGroup()
             }),
             hubId: this.commonFormControlsBuilder.hubIdControl(),
             portId: this.commonFormControlsBuilder.portIdControl(),
@@ -33,7 +35,7 @@ export class AngleShiftBindingFormBuilderService {
             speed: this.commonFormControlsBuilder.speedControl(),
             power: this.commonFormControlsBuilder.powerControl(),
             loopingMode: this.commonFormControlsBuilder.loopingModeControl(),
-            endState: this.commonFormControlsBuilder.servoEndStateControl(),
+            endState: this.commonFormControlsBuilder.servoEndStateControl(MotorServoEndState.hold),
             useAccelerationProfile: this.commonFormControlsBuilder.toggleControl(),
             useDecelerationProfile: this.commonFormControlsBuilder.toggleControl(),
             initialStepIndex: this.formBuilder.control<number>(0, {

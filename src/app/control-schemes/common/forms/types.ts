@@ -98,6 +98,7 @@ export type AngleShiftBindingForm = FormGroup<{
     inputs: FormGroup<{
         [ControlSchemeInputAction.NextLevel]: InputFormGroup;
         [ControlSchemeInputAction.PrevLevel]: OptionalInputFormGroup;
+        [ControlSchemeInputAction.Reset]: OptionalInputFormGroup;
     }>;
     hubId: FormControl<string | null>;
     portId: FormControl<number | null>;

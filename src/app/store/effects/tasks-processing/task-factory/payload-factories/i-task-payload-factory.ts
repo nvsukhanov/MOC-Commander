@@ -1,5 +1,4 @@
 import { Dictionary } from '@ngrx/entity';
-import { Observable } from 'rxjs';
 import { ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared';
 
@@ -9,9 +8,9 @@ export interface ITaskPayloadFactory<TBindingType extends ControlSchemeBindingTy
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
         previousTaskPayload: PortCommandTask | null
-    ): Observable<{ payload: PortCommandTaskPayload & { bindingType: TBindingType }; inputTimestamp: number } | null>;
+    ): { payload: PortCommandTaskPayload & { bindingType: TBindingType }; inputTimestamp: number } | null;
 
     buildCleanupPayload(
         previousTask: PortCommandTask
-    ): Observable<PortCommandTaskPayload | null>;
+    ): PortCommandTaskPayload | null;
 }

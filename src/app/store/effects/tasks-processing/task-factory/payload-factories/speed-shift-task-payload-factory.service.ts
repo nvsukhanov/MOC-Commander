@@ -1,6 +1,5 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import { controllerInputIdFn } from '../../../../reducers';
@@ -8,6 +7,7 @@ import {
     ControlSchemeInputAction,
     ControlSchemeSpeedShiftBinding,
     ControllerInputModel,
+    LoopingMode,
     PortCommandTask,
     PortCommandTaskPayload,
     SpeedShiftTaskPayload,
@@ -23,15 +23,15 @@ export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
         previousTask: PortCommandTask | null
-    ): Observable<{ payload: SpeedShiftTaskPayload; inputTimestamp: number } | null> {
-        const { isNextSpeedInputActive, isPrevSpeedInputActive, isStopInputActive } = this.calculateActiveInputs(binding, inputsState);
+    ): { payload: SpeedShiftTaskPayload; inputTimestamp: number } | null {
+        const nextLevelInput = this.getActiveInput(binding, inputsState, ControlSchemeInputAction.NextLevel);
+        const prevLevelInput = this.getActiveInput(binding, inputsState, ControlSchemeInputAction.PrevLevel);
+        const resetLevelInput = this.getActiveInput(binding, inputsState, ControlSchemeInputAction.Reset);
 
-        if (isStopInputActive) {
-            return of({
+        if (resetLevelInput.isActivated) {
+            return {
                 payload: {
                     bindingType: ControlSchemeBindingType.SpeedShift,
-                    nextSpeedActiveInput: isNextSpeedInputActive,
-                    prevSpeedActiveInput: isPrevSpeedInputActive,
                     speed: 0,
                     power: 0,
                     isLooping: false,
@@ -40,89 +40,76 @@ export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
                     useDecelerationProfile: binding.useDecelerationProfile
                 },
                 inputTimestamp: Date.now()
-            });
+            };
         }
 
-        const sameBindingPrevTaskPayload: SpeedShiftTaskPayload | null = previousTask?.bindingId === binding.id
-                                                                         ? previousTask.payload as SpeedShiftTaskPayload
-                                                                         : null;
-        const previousLevel = sameBindingPrevTaskPayload?.speedIndex ?? binding.initialStepIndex;
-        const isLooping = sameBindingPrevTaskPayload?.isLooping ?? false;
-        const isPreviousTaskNextSpeedInputActive = sameBindingPrevTaskPayload?.nextSpeedActiveInput ?? false;
-        const isPreviousTaskPreviousSpeedInputActive = sameBindingPrevTaskPayload?.prevSpeedActiveInput ?? false;
-
-        let expectedAngleChangeDirection: -1 | 1 | 0 = 0;
-        let nextLevel = previousLevel;
-        let isLoopingNext = isLooping;
-        if (isNextSpeedInputActive && !isPreviousTaskNextSpeedInputActive) {
-            expectedAngleChangeDirection = isLooping ? 1 : -1;
+        if (!nextLevelInput.isActivated && !prevLevelInput.isActivated) {
+            return null;
         }
+        const prevSpeed = previousTask?.payload.speed ?? 0;
+        const isLoopingPrev = previousTask?.payload.bindingType === ControlSchemeBindingType.SpeedShift && binding.loopingMode !== LoopingMode.None
+                              ? previousTask.payload.isLooping
+                              : false;
 
-        if (isPrevSpeedInputActive && !isPreviousTaskPreviousSpeedInputActive) {
-            expectedAngleChangeDirection = isLooping ? -1 : 1;
-        }
+        const previousLevelIndexUnguarded = binding.levels.indexOf(prevSpeed);
+        const previousLevelIndex = previousLevelIndexUnguarded === -1 ? binding.initialStepIndex : previousLevelIndexUnguarded;
 
-        if (expectedAngleChangeDirection !== 0) {
-            const nextLevelResult = calculateNextLoopingIndex(
-                binding.levels,
-                previousLevel,
-                expectedAngleChangeDirection,
-                isLooping,
-                binding.loopingMode
-            );
-            nextLevel = nextLevelResult.nextIndex;
-            isLoopingNext = nextLevelResult.isLooping;
-        }
+        const expectedAngleChangeDirection = (+prevLevelInput.isActivated - +nextLevelInput.isActivated) as -1 | 1 | 0;
 
-        if (sameBindingPrevTaskPayload?.nextSpeedActiveInput === isNextSpeedInputActive
-            && sameBindingPrevTaskPayload?.prevSpeedActiveInput === isPrevSpeedInputActive
-            || (!sameBindingPrevTaskPayload && !isNextSpeedInputActive && !isPrevSpeedInputActive)
-        ) {
-            return of(null);
-        }
+        const { nextIndex, isLooping } = calculateNextLoopingIndex(
+            binding.levels,
+            previousLevelIndex,
+            expectedAngleChangeDirection,
+            isLoopingPrev,
+            binding.loopingMode
+        );
 
         const payload: SpeedShiftTaskPayload = {
             bindingType: ControlSchemeBindingType.SpeedShift,
-            speedIndex: nextLevel,
-            speed: binding.levels[nextLevel],
-            power: binding.power,
-            isLooping: isLoopingNext,
-            nextSpeedActiveInput: isNextSpeedInputActive,
-            prevSpeedActiveInput: isPrevSpeedInputActive,
+            speedIndex: nextIndex,
+            speed: binding.levels[nextIndex],
+            power: binding.levels[nextIndex] === 0 ? 0 : binding.power,
+            isLooping: isLooping,
             useAccelerationProfile: binding.useAccelerationProfile,
             useDecelerationProfile: binding.useDecelerationProfile
         };
-        return of({ payload, inputTimestamp: Date.now() });
+        return { payload, inputTimestamp: Math.max(nextLevelInput.timestamp, prevLevelInput.timestamp) };
     }
 
     public buildCleanupPayload(
         previousTask: PortCommandTask
-    ): Observable<PortCommandTaskPayload | null> {
+    ): PortCommandTaskPayload | null {
         if (previousTask.payload.bindingType !== ControlSchemeBindingType.SpeedShift) {
-            return of(null);
+            return null;
         }
-        return of({
+        return {
             bindingType: ControlSchemeBindingType.SetSpeed,
             speed: 0,
             power: 0,
             brakeFactor: 0,
             useAccelerationProfile: previousTask.payload.useAccelerationProfile,
             useDecelerationProfile: previousTask.payload.useDecelerationProfile
-        });
+        };
     }
 
-    private calculateActiveInputs(
+    private getActiveInput(
         binding: ControlSchemeSpeedShiftBinding,
-        inputsState: Dictionary<ControllerInputModel>,
-    ): { isNextSpeedInputActive: boolean; isPrevSpeedInputActive: boolean; isStopInputActive: boolean } {
-        const nextSpeedInputValue = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.NextLevel])]?.value ?? 0;
-        const isNextSpeedInputActive = isInputActivated(nextSpeedInputValue);
-        const prevSpeedInputValue = !!binding.inputs[ControlSchemeInputAction.PrevLevel]
-            && inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.PrevLevel])]?.value || 0;
-        const isPrevSpeedInputActive = isInputActivated(prevSpeedInputValue);
-        const stopInputValue = !!binding.inputs[ControlSchemeInputAction.Reset]
-            && inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Reset])]?.value || 0;
-        const isStopInputActive = isInputActivated(stopInputValue);
-        return { isNextSpeedInputActive, isPrevSpeedInputActive, isStopInputActive };
+        inputState: Dictionary<ControllerInputModel>,
+        inputAction: ControlSchemeInputAction,
+    ): { isActivated: boolean; timestamp: number } {
+        const bindingInputModel = binding.inputs[inputAction];
+        if (bindingInputModel) {
+            const input = inputState[controllerInputIdFn(bindingInputModel)];
+            if (input) {
+                return {
+                    isActivated: isInputActivated(input.value),
+                    timestamp: input.timestamp,
+                };
+            }
+        }
+        return {
+            isActivated: false,
+            timestamp: -Infinity,
+        };
     }
 }

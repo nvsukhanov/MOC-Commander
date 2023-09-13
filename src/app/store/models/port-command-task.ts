@@ -42,8 +42,6 @@ export type StepperTaskPayload = {
 
 export type SpeedShiftTaskPayload = {
     bindingType: ControlSchemeBindingType.SpeedShift;
-    nextSpeedActiveInput: boolean;
-    prevSpeedActiveInput: boolean;
     speed: number;
     power: number;
     speedIndex: number;
@@ -54,8 +52,6 @@ export type SpeedShiftTaskPayload = {
 
 export type AngleShiftTaskPayload = {
     bindingType: ControlSchemeBindingType.AngleShift;
-    nextAngleActiveInput: boolean;
-    prevAngleActiveInput: boolean;
     offset: number;
     angle: number;
     power: number;
@@ -77,7 +73,6 @@ export type PortCommandTaskPayload = SetSpeedTaskPayload
 export type PortCommandTask<TPayloadType extends ControlSchemeBindingType = ControlSchemeBindingType> = {
     hubId: string;
     portId: number;
-    bindingId: number;
     payload: PortCommandTaskPayload & { bindingType: TPayloadType };
     hash: string;
     inputTimestamp: number;

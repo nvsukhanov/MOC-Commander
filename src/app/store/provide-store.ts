@@ -38,11 +38,12 @@ import {
     NotificationsEffects,
     SETTINGS_EFFECTS,
     TASK_PROCESSING_EFFECTS,
-    provideTaskProcessingFactories
+    provideTaskFactories,
+    provideTaskFilter
 } from './effects';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { HubStorageService } from './hub-storage.service';
-import { CONTROLLER_INPUT_ACTIONS, HUB_STATS_ACTIONS } from './actions';
+import { HUB_STATS_ACTIONS } from './actions';
 import { HubFacadeService } from './hub-facade.service';
 
 const REDUCERS: ActionReducerMap<IState> = {
@@ -116,7 +117,7 @@ export function provideApplicationStore(): EnvironmentProviders {
                 HUB_STATS_ACTIONS.setHasCommunication.type,
                 HUB_STATS_ACTIONS.rssiLevelReceived.type,
                 HUB_STATS_ACTIONS.batteryLevelReceived.type,
-                CONTROLLER_INPUT_ACTIONS.inputReceived.type
+                // CONTROLLER_INPUT_ACTIONS.inputReceived.type
             ]
         }),
         {
@@ -134,6 +135,7 @@ export function provideApplicationStore(): EnvironmentProviders {
         HubFacadeService,
         ControllerProfileFactoryService,
         provideRouterStore(),
-        provideTaskProcessingFactories()
+        provideTaskFactories(),
+        provideTaskFilter()
     ]);
 }

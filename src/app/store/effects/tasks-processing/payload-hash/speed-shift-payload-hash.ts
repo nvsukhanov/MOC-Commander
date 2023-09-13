@@ -6,7 +6,7 @@ export function speedShiftPayloadHash(
     return [
         payload.bindingType,
         payload.speedIndex,
-        payload.nextSpeedActiveInput,
-        payload.prevSpeedActiveInput
+        payload.isLooping,
+        payload.speed
     ].join('_');
 }

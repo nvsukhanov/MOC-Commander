@@ -1,5 +1,5 @@
 import { IHub, PortCommandExecutionStatus } from 'rxpoweredup';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared';
 
@@ -12,11 +12,7 @@ export class SpeedShiftTaskRunnerService implements ITaskRunner<ControlSchemeBin
     public runTask(
         hub: IHub,
         task: PortCommandTask<ControlSchemeBindingType.SpeedShift>,
-        prevTask?: PortCommandTask
     ): Observable<PortCommandExecutionStatus> {
-        if (this.isTaskAlreadyExecuted(task, prevTask)) {
-            return of(PortCommandExecutionStatus.completed);
-        }
         return hub.motors.setSpeed(
             task.portId,
             task.payload.speed,
@@ -25,18 +21,5 @@ export class SpeedShiftTaskRunnerService implements ITaskRunner<ControlSchemeBin
                 useProfile: mapUseProfile(task.payload)
             }
         );
-    }
-
-    // see AngleShiftTaskRunnerService for details
-    private isTaskAlreadyExecuted(
-        task: PortCommandTask<ControlSchemeBindingType.SpeedShift>,
-        prevTask?: PortCommandTask
-    ): boolean {
-        return !!prevTask
-            && prevTask.payload.bindingType === ControlSchemeBindingType.SpeedShift
-            && prevTask.portId === task.portId
-            && prevTask.payload.speed === task.payload.speed
-            && prevTask.payload.power === task.payload.power
-            && mapUseProfile(prevTask.payload) === mapUseProfile(task.payload);
     }
 }

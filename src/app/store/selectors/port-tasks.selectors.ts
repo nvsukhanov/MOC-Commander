@@ -6,11 +6,6 @@ import { ControlSchemeBinding, ControllerInputModel, PortCommandTask } from '../
 import { CONTROLLER_INPUT_SELECTORS } from './controller-input.selectors';
 import { ATTACHED_IO_PROPS_SELECTORS } from './attached-io-props.selectors';
 
-const SELECT_ALL = createSelector(
-    PORT_TASKS_FEATURE.selectPortTasksState,
-    PORT_TASKS_ENTITY_ADAPTER.getSelectors().selectAll
-);
-
 export type BindingTaskComposingData = {
     hubId: string;
     portId: number;
@@ -19,7 +14,7 @@ export type BindingTaskComposingData = {
     encoderOffset: number;
     lastExecutedTask: PortCommandTask | null;
     runningTask: PortCommandTask | null;
-    queue: PortCommandTask[];
+    pendingTask: PortCommandTask | null;
 };
 
 export const PORT_TASKS_SELECTORS = {
@@ -39,29 +34,11 @@ export const PORT_TASKS_SELECTORS = {
         PORT_TASKS_SELECTORS.selectEntities,
         (entities) => entities[hubPortTasksIdFn(q)]?.runningTask ?? null
     ),
-    selectQueue: (
+    selectPendingTask: (
         q: { hubId: string; portId: number }
     ) => createSelector(
         PORT_TASKS_SELECTORS.selectEntities,
-        (entities) => entities[hubPortTasksIdFn(q)]?.queue ?? []
-    ),
-    selectFirstItemInQueue: (
-        q: { hubId: string; portId: number }
-    ) => createSelector(
-        PORT_TASKS_SELECTORS.selectQueue(q),
-        (queue) => queue[0] ?? null
-    ),
-    selectLastExecutedBindingIds: createSelector(
-        SELECT_ALL,
-        (items) => {
-            const result: Set<number> = new Set();
-            for (const item of items) {
-                if (item.lastExecutedTask) {
-                    result.add(item.lastExecutedTask.bindingId);
-                }
-            }
-            return result;
-        }
+        (entities) => entities[hubPortTasksIdFn(q)]?.pendingTask ?? null
     ),
     selectBindingTaskCreationModel: (
         { hubId, portId, bindings }: { hubId: string; portId: number; bindings: ControlSchemeBinding[] }
@@ -70,15 +47,15 @@ export const PORT_TASKS_SELECTORS = {
         ATTACHED_IO_PROPS_SELECTORS.selectMotorEncoderOffset({ hubId, portId }),
         PORT_TASKS_SELECTORS.selectRunningTask({ hubId, portId }),
         PORT_TASKS_SELECTORS.selectLastExecutedTask({ hubId, portId }),
-        PORT_TASKS_SELECTORS.selectQueue({ hubId, portId }),
-        (inputState, encoderOffset, runningTask, lastExecutedTask, queue): BindingTaskComposingData => {
+        PORT_TASKS_SELECTORS.selectPendingTask({ hubId, portId }),
+        (inputState, encoderOffset, runningTask, lastExecutedTask, pendingTask): BindingTaskComposingData => {
             return {
                 encoderOffset,
                 runningTask,
                 lastExecutedTask,
                 hubId,
                 portId,
-                queue,
+                pendingTask,
                 bindings,
                 inputState
             };

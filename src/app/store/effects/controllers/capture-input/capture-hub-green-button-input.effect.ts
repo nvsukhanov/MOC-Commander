@@ -50,7 +50,7 @@ function readHubsGreenButtons(
                                 rawValue: value,
                                 timestamp: Date.now()
                             },
-                            prevValue: +!prev
+                            prevValue: +!!prev
                         });
                     })
                 );

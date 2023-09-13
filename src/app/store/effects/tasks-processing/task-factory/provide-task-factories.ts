@@ -10,7 +10,7 @@ import {
 } from './payload-factories';
 import { TaskFactoryService } from './task-factory.service';
 
-export function provideTaskProcessingFactories(): Provider[] {
+export function provideTaskFactories(): Provider[] {
     return [
         AngleShiftTaskPayloadFactoryService,
         ServoTaskPayloadFactoryService,
