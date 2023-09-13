@@ -1,5 +1,5 @@
 {
-  "appTitle": "webPoweredUP",
+  "appTitle": "webPoweredUp",
   "pageNotFound": "Page not found",
   "hubListHubIsNotConnected": "disconnected",
   "discoverHub": "Discover hub",
@@ -242,8 +242,8 @@
     "licenseTitle": "License",
     "licenseText": "MIT License",
     "sourcesTitle": "Sources",
-    "githubTitle": "webPoweredUP GitHub",
-    "githubApiTitle": "rxPoweredUP GitHub",
+    "githubTitle": "webPoweredUp GitHub",
+    "githubApiTitle": "rxPoweredUp GitHub",
     "versionTitle": "Version"
   },
   "io": {

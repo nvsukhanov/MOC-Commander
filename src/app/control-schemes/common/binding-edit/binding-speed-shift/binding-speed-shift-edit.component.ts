@@ -24,9 +24,9 @@ import { CommonFormControlsBuilderService, SpeedShiftBindingForm } from '../../f
 
 @Component({
     standalone: true,
-    selector: 'app-binding-speed-stepper',
-    templateUrl: './binding-speed-shift.component.html',
-    styleUrls: [ './binding-speed-shift.component.scss' ],
+    selector: 'app-binding-speed-shift-edit',
+    templateUrl: './binding-speed-shift-edit.component.html',
+    styleUrls: [ './binding-speed-shift-edit.component.scss' ],
     imports: [
         NgIf,
         BindingEditSectionComponent,
@@ -50,7 +50,7 @@ import { CommonFormControlsBuilderService, SpeedShiftBindingForm } from '../../f
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BindingSpeedShiftComponent implements IBindingsDetailsEditComponent<SpeedShiftBindingForm> {
+export class BindingSpeedShiftEditComponent implements IBindingsDetailsEditComponent<SpeedShiftBindingForm> {
     public readonly motorLimits = MOTOR_LIMITS;
 
     public readonly bindingType = ControlSchemeBindingType.SpeedShift;

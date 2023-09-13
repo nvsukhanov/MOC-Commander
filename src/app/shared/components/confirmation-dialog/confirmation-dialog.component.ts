@@ -14,7 +14,7 @@ export type ConfirmDialogData = {
 
 @Component({
     standalone: true,
-    selector: 'app-confirm-dialog',
+    selector: 'app-confirmation-dialog',
     templateUrl: './confirmation-dialog.component.html',
     styleUrls: [ './confirmation-dialog.component.scss' ],
     imports: [

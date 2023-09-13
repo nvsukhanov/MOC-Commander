@@ -2,9 +2,9 @@
     <app-binding-edit-section [largeScreenWidthPercentage]="33"
                               [caption]="'controlScheme.bindingSectionOutputTitle' | transloco"
     >
-        <app-binding-select-hub [control]="form.controls.hubId"
-                                [bindingType]="bindingType"
-        ></app-binding-select-hub>
+        <app-binding-control-select-hub [control]="form.controls.hubId"
+                                        [bindingType]="bindingType"
+        ></app-binding-control-select-hub>
 
         <app-binding-control-select-io [portIdControl]="form.controls.portId"
                                        [hubIdControl]="form.controls.hubId"
@@ -17,9 +17,9 @@
     <app-binding-edit-section [largeScreenWidthPercentage]="33"
                               [caption]="'controlScheme.bindingSectionInputTitle' | transloco"
     >
-        <app-controller-select [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.Servo]"
-                               [title]="controlSchemeInputActions.Servo | controlSchemeInputActionToL10nKey | transloco "
-        ></app-controller-select>
+        <app-binding-control-select-controller [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.Servo]"
+                                               [title]="controlSchemeInputActions.Servo | controlSchemeInputActionToL10nKey | transloco "
+        ></app-binding-control-select-controller>
         <app-binding-control-select-input-gain *ngIf="isInputGainConfigurable"
                                                [control]="form.controls.inputs.controls[controlSchemeInputActions.Servo].controls.gain"
         ></app-binding-control-select-input-gain>
