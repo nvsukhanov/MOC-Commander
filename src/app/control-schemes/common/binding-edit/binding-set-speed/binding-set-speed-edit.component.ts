@@ -4,15 +4,17 @@ import { MOTOR_LIMITS } from 'rxpoweredup';
 import { merge } from 'rxjs';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatDividerModule } from '@angular/material/divider';
-import { ControlSchemeBindingType, ControllerInputType, HideOnSmallScreenDirective, SliderControlComponent, ToggleControlComponent } from '@app/shared';
+import { ControlSchemeBindingType, ControllerInputType, HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared';
 import { ControlSchemeInputAction } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import {
+    BindingControlPowerInputComponent,
     BindingControlSelectControllerComponent,
     BindingControlSelectHubComponent,
     BindingControlSelectInputGainComponent,
-    BindingControlSelectIoComponent
+    BindingControlSelectIoComponent,
+    BindingControlSpeedInputComponent
 } from '../../controls';
 import { BindingEditSectionComponent } from '../section';
 import { BindingEditSectionsContainerComponent } from '../sections-container';
@@ -33,11 +35,12 @@ import { InputFormGroup, SetSpeedBindingForm } from '../../forms';
         MatDividerModule,
         BindingControlSelectControllerComponent,
         BindingControlSelectInputGainComponent,
-        SliderControlComponent,
         HideOnSmallScreenDirective,
         ToggleControlComponent,
         ControlSchemeInputActionToL10nKeyPipe,
-        BindingEditSectionsContainerComponent
+        BindingEditSectionsContainerComponent,
+        BindingControlPowerInputComponent,
+        BindingControlSpeedInputComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

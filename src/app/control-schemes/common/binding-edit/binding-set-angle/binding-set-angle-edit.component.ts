@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { NgIf } from '@angular/common';
-import { MOTOR_LIMITS, PortModeName } from 'rxpoweredup';
+import { PortModeName } from 'rxpoweredup';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,15 +10,17 @@ import { Observable, Subscription, mergeWith, of, startWith, switchMap, take } f
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ControlSchemeBindingType, HideOnSmallScreenDirective, SliderControlComponent, ToggleControlComponent, ValidationMessagesDirective } from '@app/shared';
+import { ControlSchemeBindingType, HideOnSmallScreenDirective, ToggleControlComponent, ValidationMessagesDirective } from '@app/shared';
 import { ControlSchemeInputAction, HubFacadeService } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import {
     BindingControlOutputEndStateComponent,
+    BindingControlPowerInputComponent,
     BindingControlSelectControllerComponent,
     BindingControlSelectHubComponent,
-    BindingControlSelectIoComponent
+    BindingControlSelectIoComponent,
+    BindingControlSpeedInputComponent
 } from '../../controls';
 import { BindingEditSectionComponent } from '../section';
 import { BINDING_EDIT_SELECTORS } from '../binding-edit.selectors';
@@ -33,7 +35,6 @@ import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-inpu
     styleUrls: [ './binding-set-angle-edit.component.scss' ],
     imports: [
         NgIf,
-        SliderControlComponent,
         BindingControlOutputEndStateComponent,
         BindingControlSelectControllerComponent,
         BindingEditSectionComponent,
@@ -50,13 +51,13 @@ import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-inpu
         PushPipe,
         ControlSchemeInputActionToL10nKeyPipe,
         BindingEditSectionsContainerComponent,
-        ValidationMessagesDirective
+        ValidationMessagesDirective,
+        BindingControlSpeedInputComponent,
+        BindingControlPowerInputComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingSetAngleEditComponent implements IBindingsDetailsEditComponent<SetAngleBindingForm>, OnDestroy {
-    public readonly motorLimits = MOTOR_LIMITS;
-
     public readonly controlSchemeInputActions = ControlSchemeInputAction;
 
     public readonly bindingType = ControlSchemeBindingType.SetAngle;

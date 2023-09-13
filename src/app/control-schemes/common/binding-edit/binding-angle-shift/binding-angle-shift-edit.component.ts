@@ -3,22 +3,24 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { MOTOR_LIMITS, PortModeName } from 'rxpoweredup';
+import { PortModeName } from 'rxpoweredup';
 import { Observable, Subscription, mergeWith, of, startWith, switchMap, take } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 import { MatDividerModule } from '@angular/material/divider';
 import { Store } from '@ngrx/store';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ControlSchemeBindingType, HideOnSmallScreenDirective, SliderControlComponent, ToggleControlComponent, ValidationMessagesDirective } from '@app/shared';
+import { ControlSchemeBindingType, HideOnSmallScreenDirective, ToggleControlComponent, ValidationMessagesDirective } from '@app/shared';
 import { ControlSchemeInputAction, HubFacadeService } from '@app/store';
 
 import {
     BindingControlOutputEndStateComponent,
+    BindingControlPowerInputComponent,
     BindingControlSelectControllerComponent,
     BindingControlSelectHubComponent,
     BindingControlSelectIoComponent,
-    BindingControlSelectLoopingModeComponent
+    BindingControlSelectLoopingModeComponent,
+    BindingControlSpeedInputComponent
 } from '../../controls';
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { BindingEditSectionComponent } from '../section';
@@ -38,7 +40,6 @@ import { AngleShiftBindingForm, CommonFormControlsBuilderService } from '../../f
         MatIconModule,
         NgForOf,
         NgIf,
-        SliderControlComponent,
         ToggleControlComponent,
         TranslocoModule,
         BindingControlOutputEndStateComponent,
@@ -53,13 +54,13 @@ import { AngleShiftBindingForm, CommonFormControlsBuilderService } from '../../f
         MatInputModule,
         ReactiveFormsModule,
         BindingEditSectionsContainerComponent,
-        ValidationMessagesDirective
+        ValidationMessagesDirective,
+        BindingControlSpeedInputComponent,
+        BindingControlPowerInputComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingAngleShiftEditComponent implements IBindingsDetailsEditComponent<AngleShiftBindingForm>, OnDestroy {
-    public readonly motorLimits = MOTOR_LIMITS;
-
     public readonly controlSchemeInputActions = ControlSchemeInputAction;
 
     public readonly bindingType = ControlSchemeBindingType.AngleShift;

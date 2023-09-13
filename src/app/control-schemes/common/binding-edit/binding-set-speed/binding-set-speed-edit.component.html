@@ -36,17 +36,10 @@
     <app-binding-edit-section [largeScreenWidthPercentage]="33"
                               [caption]="'controlScheme.bindingSectionConfigTitle' | transloco"
     >
-        <app-slider-control [min]="0"
-                            [max]="motorLimits.maxSpeed"
-                            [control]="form.controls.maxSpeed"
-                            [translocoTitle]="'controlScheme.setSpeedBinding.outputSpeed'"
-        ></app-slider-control>
-
-        <app-slider-control [min]="motorLimits.minPower"
-                            [max]="motorLimits.maxPower"
-                            [control]="form.controls.power"
-                            [translocoTitle]="'controlScheme.setSpeedBinding.outputPower'"
-        ></app-slider-control>
+        <app-binding-control-speed-input [control]="form.controls.maxSpeed"
+                                         [translocoTitle]="'controlScheme.setSpeedBinding.outputSpeed'"
+        ></app-binding-control-speed-input>
+        <app-binding-control-power-input [control]="form.controls.power"></app-binding-control-power-input>
 
         <app-toggle-control [translocoTitle]="'controlScheme.outputInvertControlTitle'"
                             [control]="form.controls.invert"
