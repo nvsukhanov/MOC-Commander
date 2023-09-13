@@ -44,6 +44,7 @@ export type SpeedShiftTaskPayload = {
     bindingType: ControlSchemeBindingType.SpeedShift;
     speed: number;
     power: number;
+    initialLevelIndex: number;
     speedIndex: number;
     isLooping: boolean;
     useAccelerationProfile: boolean;
@@ -54,6 +55,7 @@ export type AngleShiftTaskPayload = {
     bindingType: ControlSchemeBindingType.AngleShift;
     offset: number;
     angle: number;
+    initialLevelIndex: number;
     power: number;
     speed: number;
     angleIndex: number;

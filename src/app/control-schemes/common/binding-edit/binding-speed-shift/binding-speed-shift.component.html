@@ -47,7 +47,7 @@
                         class="speed-level-form-field"
         >
             <mat-label>
-                {{ 'controlScheme.speedShiftBinding.level' | transloco: { level: form.controls.initialStepIndex.value - idx } }}
+                {{ 'controlScheme.speedShiftBinding.level' | transloco: { level: form.controls.initialLevelIndex.value - idx } }}
             </mat-label>
             <input type="number"
                    matInput
@@ -55,7 +55,7 @@
             />
             <button mat-icon-button
                     matSuffix
-                    [disabled]="form.controls.initialStepIndex.value === idx"
+                    [disabled]="form.controls.initialLevelIndex.value === idx"
                     (click)="removeSpeedControl(idx)"
             >
                 <mat-icon [fontIcon]="'delete'"></mat-icon>

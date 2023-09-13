@@ -144,11 +144,11 @@ export class BindingAngleShiftEditComponent implements IBindingsDetailsEditCompo
             0,
             this.commonFormControlBuilder.angleControl(0)
         );
-        this.form.controls.initialStepIndex.setValue(
-            this.form.controls.initialStepIndex.value + 1
+        this.form.controls.initialLevelIndex.setValue(
+            this.form.controls.initialLevelIndex.value + 1
         );
         this.form.controls.angles.markAsDirty();
-        this.form.controls.initialStepIndex.markAsDirty();
+        this.form.controls.initialLevelIndex.markAsDirty();
         this.changeDetectorRef.detectChanges(); // somehow this is needed to update the view
     }
 
@@ -170,13 +170,13 @@ export class BindingAngleShiftEditComponent implements IBindingsDetailsEditCompo
             return;
         }
         this.form.controls.angles.removeAt(index);
-        if (index < this.form.controls.initialStepIndex.value) {
-            this.form.controls.initialStepIndex.setValue(
-                this.form.controls.initialStepIndex.value - 1
+        if (index < this.form.controls.initialLevelIndex.value) {
+            this.form.controls.initialLevelIndex.setValue(
+                this.form.controls.initialLevelIndex.value - 1
             );
         }
         this.form.controls.angles.markAsDirty();
-        this.form.controls.initialStepIndex.markAsDirty();
+        this.form.controls.initialLevelIndex.markAsDirty();
         this.changeDetectorRef.detectChanges(); // somehow this is needed to update the view
     }
 }

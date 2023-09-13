@@ -1,10 +1,19 @@
 :host {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+    display: block;
+    margin-bottom: 5px;
 }
 
 .binding {
+    &__info-container {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+
+        &_small-screen {
+            flex-direction: column;
+        }
+    }
+
     &__general-info {
         display: flex;
         flex-direction: row;
@@ -13,6 +22,7 @@
 
     &__operation-type {
         width: 100px;
+        height: unset;
     }
 
     &__controls {

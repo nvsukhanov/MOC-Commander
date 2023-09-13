@@ -1,4 +1,7 @@
-<ng-container *ngIf="viewModel$ | ngrxPush; let viewModel">
+<div *ngIf="viewModel$ | ngrxPush; let viewModel"
+     class="binding__info-container"
+     [class.binding__info-container_small-screen]="isSmallScreen$ | ngrxPush"
+>
     <div class="binding__general-info">
         <a class="binding__operation-type mat-mdc-button"
            [routerLink]="viewModel.schemeName | bindingViewUrl: viewModel.bindingId"
@@ -32,7 +35,6 @@
                       class="cdk-visually-hidden"
                 >{{ 'controller.isNotConnectedInlineNotification' | transloco }}</span>
             </ng-template>
-
         </div>
     </div>
-</ng-container>
+</div>

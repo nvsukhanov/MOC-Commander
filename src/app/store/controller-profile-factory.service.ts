@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import {
@@ -19,20 +19,20 @@ import { HUBS_SELECTORS } from './selectors';
 @Injectable()
 export class ControllerProfileFactoryService { // TODO: refactor, this is a mess
     constructor(
-        @Inject(GamepadProfile) private readonly controllerProfiles: readonly GamepadProfile[],
         private readonly keyboardProfile: ControllerProfileKeyboardService,
         private readonly translocoService: TranslocoService,
         private readonly genericGamepadFactory: ControllerProfileGenericGamepadFactoryService,
         private readonly hubProfileFactory: ControllerProfileHubFactoryService,
         private readonly store: Store,
-        private readonly unknownControllerProfileFactory: UnknownControllerProfileFactoryService
+        private readonly unknownControllerProfileFactory: UnknownControllerProfileFactoryService,
+        @Optional() @Inject(GamepadProfile) private readonly controllerProfiles?: readonly GamepadProfile[]
     ) {
     }
 
     public getGamepadProfile(
         gamepad: Gamepad
     ): IControllerProfile<GamepadSettings> {
-        const profile = this.controllerProfiles.find((p) => p.controllerIdMatch(gamepad.id));
+        const profile = this.controllerProfiles?.find((p) => p.controllerIdMatch(gamepad.id));
         if (profile) {
             return profile;
         }
@@ -59,7 +59,7 @@ export class ControllerProfileFactoryService { // TODO: refactor, this is a mess
         if (profileUid === this.keyboardProfile.uid) {
             return this.keyboardProfile;
         }
-        const profile = this.controllerProfiles.find((p) => p.uid === profileUid);
+        const profile = this.controllerProfiles?.find((p) => p.uid === profileUid);
         if (profile) {
             return profile;
         }

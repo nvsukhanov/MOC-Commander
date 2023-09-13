@@ -120,7 +120,7 @@ export type ControlSchemeSpeedShiftBinding = {
     levels: number[];
     power: number;
     loopingMode: LoopingMode;
-    initialStepIndex: number;
+    initialLevelIndex: number;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
 export type ControlSchemeAngleShiftBinding = {
@@ -137,7 +137,7 @@ export type ControlSchemeAngleShiftBinding = {
     power: number;
     loopingMode: LoopingMode;
     endState: MotorServoEndState;
-    initialStepIndex: number;
+    initialLevelIndex: number;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
 export type ControlSchemeBinding = ControlSchemeSetSpeedBinding

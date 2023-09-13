@@ -83,10 +83,10 @@ export class BindingSpeedShiftComponent implements IBindingsDetailsEditComponent
             0,
             this.commonFormControlBuilder.speedLevelControl(MOTOR_LIMITS.maxSpeed)
         );
-        this._form.controls.initialStepIndex.setValue(
-            this._form.controls.initialStepIndex.value + 1
+        this._form.controls.initialLevelIndex.setValue(
+            this._form.controls.initialLevelIndex.value + 1
         );
-        this._form.controls.initialStepIndex.markAsDirty();
+        this._form.controls.initialLevelIndex.markAsDirty();
         this._form.controls.levels.markAsDirty();
         this.changeDetectorRef.detectChanges(); // somehow this is needed to update the view
     }
@@ -98,7 +98,7 @@ export class BindingSpeedShiftComponent implements IBindingsDetailsEditComponent
         this._form.controls.levels.push(
             this.commonFormControlBuilder.speedLevelControl(MOTOR_LIMITS.minSpeed)
         );
-        this._form.controls.initialStepIndex.markAsDirty();
+        this._form.controls.initialLevelIndex.markAsDirty();
         this._form.controls.levels.markAsDirty();
         this.changeDetectorRef.detectChanges(); // somehow this is needed to update the view
     }
@@ -110,12 +110,12 @@ export class BindingSpeedShiftComponent implements IBindingsDetailsEditComponent
             return;
         }
         this._form.controls.levels.removeAt(index);
-        if (index < this._form.controls.initialStepIndex.value) {
-            this._form.controls.initialStepIndex.setValue(
-                this._form.controls.initialStepIndex.value - 1
+        if (index < this._form.controls.initialLevelIndex.value) {
+            this._form.controls.initialLevelIndex.setValue(
+                this._form.controls.initialLevelIndex.value - 1
             );
         }
-        this._form.controls.initialStepIndex.markAsDirty();
+        this._form.controls.initialLevelIndex.markAsDirty();
         this._form.controls.levels.markAsDirty();
         this.changeDetectorRef.detectChanges(); // somehow this is needed to update the view
     }

@@ -35,7 +35,7 @@ export class SpeedShiftBindingFormBuilderService {
             loopingMode: this.commonFormControlsBuilder.loopingModeControl(),
             useAccelerationProfile: this.commonFormControlsBuilder.toggleControl(),
             useDecelerationProfile: this.commonFormControlsBuilder.toggleControl(),
-            initialStepIndex: this.formBuilder.control<number>(0, {
+            initialLevelIndex: this.formBuilder.control<number>(0, {
                 nonNullable: true,
                 validators: [
                     Validators.required,
@@ -57,7 +57,7 @@ export class SpeedShiftBindingFormBuilderService {
             );
         } else {
             form.controls.levels.push(this.commonFormControlsBuilder.speedLevelControl(0));
-            form.controls.initialStepIndex.setValue(0);
+            form.controls.initialLevelIndex.setValue(0);
         }
     }
 }

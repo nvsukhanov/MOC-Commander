@@ -47,7 +47,7 @@
         <div *ngFor="let angleControl of form.controls.angles.controls; let idx = index">
             <mat-form-field>
                 <mat-label>
-                    {{ 'controlScheme.angleShiftBinding.angleLevel' | transloco: { level: form.controls.initialStepIndex.value - idx } }}
+                    {{ 'controlScheme.angleShiftBinding.angleLevel' | transloco: { level: form.controls.initialLevelIndex.value - idx } }}
                 </mat-label>
                 <input type="number"
                        matInput
@@ -63,7 +63,7 @@
                 </button>
                 <button mat-icon-button
                         matSuffix
-                        [disabled]="form.controls.initialStepIndex.value === idx"
+                        [disabled]="form.controls.initialLevelIndex.value === idx"
                         (click)="removeAngleLevel(idx)"
                 >
                     <mat-icon [fontIcon]="'delete'"></mat-icon>

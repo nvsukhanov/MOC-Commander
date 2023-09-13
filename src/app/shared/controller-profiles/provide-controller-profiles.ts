@@ -1,10 +1,10 @@
 import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
 
-import { GamepadProfile } from './gamepad-profile';
 import { ControllerProfileKeyboardService } from './keyboard';
 import { ControllerProfileDualshockService, ControllerProfileGenericGamepadFactoryService, ControllerProfileXbox360Service } from './gamepad';
 import { ControllerProfileHubFactoryService } from './hub';
 import { UnknownControllerProfileFactoryService } from './unknown-controller';
+import { GamepadProfile } from './gamepad-profile';
 
 export function provideControllerProfiles(): EnvironmentProviders {
     return makeEnvironmentProviders([
