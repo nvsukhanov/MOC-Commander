@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { MonoTypeOperatorFunction, Observable, filter, map, switchMap, take, tap } from 'rxjs';
+import { MonoTypeOperatorFunction, Observable, filter, map, switchMap, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
@@ -128,7 +128,6 @@ export class NotificationsEffects {
 
     private showMessage(): MonoTypeOperatorFunction<string> {
         return (source: Observable<string>) => source.pipe(
-            take(1),
             concatLatestFrom(() => this.screenSizeObserverService.isSmallScreen$),
             tap(([ message, isSmallScreen ]) => {
                 this.snackBar.open(
