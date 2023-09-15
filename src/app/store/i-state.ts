@@ -17,6 +17,7 @@ import {
     PortTasksState,
     SettingsState,
 } from './reducers';
+import { AppStoreVersion } from './app-store-version';
 
 export interface IState {
     bluetoothAvailability: BluetoothAvailabilityState;
@@ -35,6 +36,7 @@ export interface IState {
     portTasks: PortTasksState;
     router: RouterState;
     settings: SettingsState;
+    storeVersion: AppStoreVersion;
 }
 
 
