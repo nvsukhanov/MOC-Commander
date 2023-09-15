@@ -7,6 +7,6 @@ export enum UserSelectedTheme {
 }
 
 export type SettingsModel = {
-    theme: UserSelectedTheme;
+    appTheme: UserSelectedTheme;
     language: Language;
 };

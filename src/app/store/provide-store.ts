@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, EnvironmentProviders, Provider, isDevMode, makeEnvironmentProviders } from '@angular/core';
+import { APP_INITIALIZER, EnvironmentProviders, Provider, inject, isDevMode, makeEnvironmentProviders } from '@angular/core';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { Action, ActionReducer, ActionReducerMap, INIT, MetaReducer, Store, UPDATE, provideStore } from '@ngrx/store';
@@ -46,6 +46,7 @@ import { HubStorageService } from './hub-storage.service';
 import { HUB_STATS_ACTIONS } from './actions';
 import { HubFacadeService } from './hub-facade.service';
 import { AppStoreVersion } from './app-store-version';
+import { MigrateStoreService, provideStoreMigrations } from './migrations';
 
 const REDUCERS: ActionReducerMap<IState> = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,
@@ -89,11 +90,23 @@ function localStorageSyncReducer(
         rehydrate: true,
         mergeReducer: (state: IState, rehydratedState: object, action: Action) => {
             if (action.type === INIT || action.type === UPDATE) {
-                // early store versions didn't have storeVersion property, so we need to add it manually
                 const isHydrated = (v: object): v is DeepPartial<IState> => !!rehydratedState && Object.keys(rehydratedState).length > 0;
                 const storeVersionKey: keyof IState = 'storeVersion';
-                if (isHydrated(rehydratedState) && !Object.hasOwn(rehydratedState, storeVersionKey)) {
-                    rehydratedState.storeVersion = AppStoreVersion.first;
+                if (isHydrated(rehydratedState)) {
+                    if (!Object.hasOwn(rehydratedState, storeVersionKey)) {
+                        // eslint-disable-next-line no-console
+                        console.log('Store version not found in local storage, assuming first version');
+                        rehydratedState.storeVersion = AppStoreVersion.first;
+                        return defaultMergeReducer(state, rehydratedState, action);
+                    }
+                    if ((rehydratedState as DeepPartial<IState>).storeVersion !== AppStoreVersion.latest) {
+                        // injecting in methods is a bad practice, but it seems to be the only way to get the service in a meta reducer
+                        const migrator = inject(MigrateStoreService);
+                        const migrationResult = migrator.migrateToVersion(rehydratedState, AppStoreVersion.latest);
+                        // eslint-disable-next-line no-console
+                        console.log(`Store migrated from ${rehydratedState.storeVersion} to ${migrationResult.storeVersion}`);
+                        return defaultMergeReducer(state, migrationResult, action);
+                    }
                 }
                 return defaultMergeReducer(state, rehydratedState, action);
             }
@@ -136,7 +149,8 @@ export function provideApplicationStore(): EnvironmentProviders {
             ControllerProfileFactoryService,
             provideRouterStore(),
             provideTaskFactories(),
-            provideTaskFilter()
+            provideTaskFilter(),
+            provideStoreMigrations()
         ]
     ];
     if (isDevMode()) {

@@ -29,7 +29,8 @@
     "types": [
       "web-bluetooth",
       "jest",
-      "node"
+      "node",
+      "ts-mockito"
     ],
     "typeRoots": [
       "node_modules/@types",

@@ -6,7 +6,7 @@ import { UserSelectedTheme } from '../models';
 export const SETTINGS_ACTIONS = createActionGroup({
     source: 'Settings',
     events: {
-        'set theme': props<{ theme: UserSelectedTheme }>(),
+        'set theme': props<{ appTheme: UserSelectedTheme }>(),
         'set language': props<{ language: Language }>()
     }
 });

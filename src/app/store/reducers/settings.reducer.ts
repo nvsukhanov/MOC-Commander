@@ -5,7 +5,7 @@ import { SettingsModel, UserSelectedTheme } from '../models';
 import { SETTINGS_ACTIONS } from '../actions';
 
 const DEFAULT_STATE: SettingsState = {
-    theme: UserSelectedTheme.System,
+    appTheme: UserSelectedTheme.System,
     language: Language.English
 };
 
@@ -15,7 +15,7 @@ export const SETTINGS_FEATURE = createFeature({
     name: 'settings',
     reducer: createReducer(
         DEFAULT_STATE,
-        on(SETTINGS_ACTIONS.setTheme, (state, { theme }): SettingsState => ({ ...state, theme })),
+        on(SETTINGS_ACTIONS.setTheme, (state, { appTheme }): SettingsState => ({ ...state, appTheme })),
         on(SETTINGS_ACTIONS.setLanguage, (state, { language }): SettingsState => ({ ...state, language }))
     )
 });
