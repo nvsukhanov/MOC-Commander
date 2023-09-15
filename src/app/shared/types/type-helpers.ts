@@ -17,3 +17,5 @@ export type DeepPartial<T> = {
 export type ToFormGroup<T extends object> = FormGroup<{
     [K in keyof T]: T[K] extends object ? ToFormGroup<T[K]> : FormControl<T[K]>;
 }>;
+
+export type Override<Source extends object, Target extends object> = Omit<Source, keyof Target> & Target;

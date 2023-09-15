@@ -7,7 +7,7 @@ export enum ExportVersion {
 }
 
 export type ControlSchemeCompressionResult = {
-    s: string; // storage version
+    s: AppStoreVersion; // storage version
     c: ControlSchemeModel; // control scheme
 };
 

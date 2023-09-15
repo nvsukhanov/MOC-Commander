@@ -44,7 +44,7 @@ export class SettingsPageComponent {
     public onThemeChange(
         nextTheme: UserSelectedTheme
     ): void {
-        this.store.dispatch(SETTINGS_ACTIONS.setTheme({ theme: nextTheme }));
+        this.store.dispatch(SETTINGS_ACTIONS.setTheme({ appTheme: nextTheme }));
     }
 
     public onLanguageChange(
