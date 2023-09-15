@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, EnvironmentProviders, isDevMode, makeEnvironmentProviders } from '@angular/core';
+import { APP_INITIALIZER, EnvironmentProviders, Provider, isDevMode, makeEnvironmentProviders } from '@angular/core';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { ActionReducer, ActionReducerMap, MetaReducer, Store, provideStore } from '@ngrx/store';
@@ -93,49 +93,56 @@ const metaReducers: Array<MetaReducer<IState>> = [ localStorageSyncReducer ];
 export const STORAGE_VERSION = '21';
 
 export function provideApplicationStore(): EnvironmentProviders {
-    return makeEnvironmentProviders([
-        provideStore<IState>(REDUCERS, { metaReducers }),
-        provideEffects(
-            AttachedIOsEffects,
-            HubPortModeInfoEffects,
-            AttachedIoModesEffects,
-            NotificationsEffects,
-            HubAttachedIosStateEffects,
-            CONTROLLER_EFFECTS,
-            SETTINGS_EFFECTS,
-            CONTROL_SCHEME_EFFECTS,
-            HUB_EFFECTS,
-            TASK_PROCESSING_EFFECTS
-        ),
-        provideStoreDevtools({
-            maxAge: 100,
-            logOnly: !isDevMode(),
-            autoPause: true,
-            trace: true,
-            traceLimit: 75,
-            actionsBlocklist: [
-                HUB_STATS_ACTIONS.setHasCommunication.type,
-                HUB_STATS_ACTIONS.rssiLevelReceived.type,
-                HUB_STATS_ACTIONS.batteryLevelReceived.type,
-                // CONTROLLER_INPUT_ACTIONS.inputReceived.type
-            ]
-        }),
-        {
-            provide: APP_INITIALIZER,
-            useFactory: bluetoothAvailabilityCheckFactory,
-            deps: [
-                NAVIGATOR,
-                Store,
-                Router,
-                RoutesBuilderService
-            ],
-            multi: true
-        },
-        HubStorageService,
-        HubFacadeService,
-        ControllerProfileFactoryService,
-        provideRouterStore(),
-        provideTaskFactories(),
-        provideTaskFilter()
-    ]);
+    const providers: (Provider | EnvironmentProviders)[] = [
+        [
+            provideStore<IState>(REDUCERS, { metaReducers }),
+            provideEffects(
+                AttachedIOsEffects,
+                HubPortModeInfoEffects,
+                AttachedIoModesEffects,
+                NotificationsEffects,
+                HubAttachedIosStateEffects,
+                CONTROLLER_EFFECTS,
+                SETTINGS_EFFECTS,
+                CONTROL_SCHEME_EFFECTS,
+                HUB_EFFECTS,
+                TASK_PROCESSING_EFFECTS
+            ),
+            {
+                provide: APP_INITIALIZER,
+                useFactory: bluetoothAvailabilityCheckFactory,
+                deps: [
+                    NAVIGATOR,
+                    Store,
+                    Router,
+                    RoutesBuilderService
+                ],
+                multi: true
+            },
+            HubStorageService,
+            HubFacadeService,
+            ControllerProfileFactoryService,
+            provideRouterStore(),
+            provideTaskFactories(),
+            provideTaskFilter()
+        ]
+    ];
+    if (isDevMode()) {
+        providers.push(
+            provideStoreDevtools({
+                maxAge: 100,
+                logOnly: !isDevMode(),
+                autoPause: true,
+                trace: true,
+                traceLimit: 75,
+                actionsBlocklist: [
+                    HUB_STATS_ACTIONS.setHasCommunication.type,
+                    HUB_STATS_ACTIONS.rssiLevelReceived.type,
+                    HUB_STATS_ACTIONS.batteryLevelReceived.type,
+                    // CONTROLLER_INPUT_ACTIONS.inputReceived.type
+                ]
+            }),
+        );
+    }
+    return makeEnvironmentProviders(providers);
 }
