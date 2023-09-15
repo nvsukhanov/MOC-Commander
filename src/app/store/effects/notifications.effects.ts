@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { MonoTypeOperatorFunction, Observable, filter, map, switchMap, tap } from 'rxjs';
+import { Observable, OperatorFunction, filter, of, switchMap, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';
-import { Store } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { ScreenSizeObserverService } from '@app/shared';
 
 import { CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS } from '../actions';
@@ -16,103 +16,86 @@ export class NotificationsEffects {
     public readonly deviceConnectFailedNotification$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.deviceConnectFailed),
-            map((error) => error.error.message),
-            this.showMessage()
+            this.showMessage((error) => of(error.error.message))
         );
     }, { dispatch: false });
 
     public readonly deviceConnectedNotification$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.connected),
-            switchMap((action) => this.translocoService.selectTranslate('hub.connected', action)),
-            this.showMessage()
+            this.showMessage((action) => this.translocoService.selectTranslate('hub.connected', action))
         );
     }, { dispatch: false });
 
     public readonly deviceDisconnectedNotification$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.disconnected),
-            switchMap((action) => this.translocoService.selectTranslate('hub.disconnected', action)),
-            this.showMessage()
+            this.showMessage((action) => this.translocoService.selectTranslate('hub.disconnected', action))
         );
     }, { dispatch: false });
 
     public readonly servoCalibrationErrorNotification$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(CONTROL_SCHEME_ACTIONS.servoCalibrationError),
-            switchMap(() => this.translocoService.selectTranslate('controlScheme.servoBinding.calibrationError')),
-            this.showMessage()
+            this.showMessage(() => this.translocoService.selectTranslate('controlScheme.servoBinding.calibrationError')),
         );
     }, { dispatch: false });
 
     public readonly controllerDiscovered$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(CONTROLLERS_ACTIONS.gamepadDiscovered, CONTROLLERS_ACTIONS.keyboardDiscovered),
-            switchMap((action) => {
-                const controllerProfile = this.controllerProfilesFactory.getByProfileUid(action.profileUid);
-                return controllerProfile.name$;
-            }),
-            switchMap((name) => this.translocoService.selectTranslate('controller.controllerDiscoveredNotification', { name })),
-            this.showMessage()
+            this.showMessage((action) => this.controllerProfilesFactory.getByProfileUid(action.profileUid).name$.pipe(
+                switchMap((name) => this.translocoService.selectTranslate('controller.controllerDiscoveredNotification', { name }))
+            ))
         );
     }, { dispatch: false });
 
     public readonly controllerConnected$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(CONTROLLERS_ACTIONS.gamepadConnected, CONTROLLERS_ACTIONS.keyboardConnected),
-            switchMap((action) => {
-                const controllerProfile = this.controllerProfilesFactory.getByProfileUid(action.profileUid);
-                return controllerProfile.name$;
-            }),
-            switchMap((name) => this.translocoService.selectTranslate('controller.controllerConnectedNotification', { name })),
-            this.showMessage()
+            this.showMessage((action) => this.controllerProfilesFactory.getByProfileUid(action.profileUid).name$.pipe(
+                    switchMap((name) => this.translocoService.selectTranslate('controller.controllerConnectedNotification', { name }))
+                )
+            )
         );
     }, { dispatch: false });
 
     public readonly controllerDisconnected$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(CONTROLLERS_ACTIONS.gamepadDisconnected),
-            concatLatestFrom((action) => this.store.select(CONTROLLER_SELECTORS.selectById(action.id))),
-            map(([ , controllerModel ]) => controllerModel),
-            filter((controllerModel): controllerModel is ControllerModel => !!controllerModel),
-            switchMap((controllerModel) => {
-                const controllerProfile = this.controllerProfilesFactory.getByProfileUid(controllerModel.profileUid);
-                return controllerProfile.name$;
-            }),
-            switchMap((name) => this.translocoService.selectTranslate('controller.controllerDisconnectedNotification', { name })),
-            this.showMessage()
+            this.showMessage((action) => this.store.select(CONTROLLER_SELECTORS.selectById(action.id)).pipe(
+                filter((controller): controller is ControllerModel => !!controller),
+                switchMap((controller) => this.controllerProfilesFactory.getByProfileUid(controller.profileUid).name$),
+                switchMap((name) => this.translocoService.selectTranslate('controller.controllerDisconnectedNotification', { name }))
+            ))
         );
     }, { dispatch: false });
 
     public readonly controlSchemeExportStringCopied$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(CONTROL_SCHEME_ACTIONS.copyExportString),
-            switchMap(() => this.translocoService.selectTranslate('controlScheme.exportStringCopiedNotification')),
-            this.showMessage()
+            this.showMessage(() => this.translocoService.selectTranslate('controlScheme.exportStringCopiedNotification')),
         );
     }, { dispatch: false });
 
     public readonly controlSchemeImported$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(CONTROL_SCHEME_ACTIONS.importControlScheme),
-            switchMap((action) => this.translocoService.selectTranslate('controlScheme.importSuccessNotification', action.scheme)),
-            this.showMessage()
+            this.showMessage((action) => this.translocoService.selectTranslate('controlScheme.importSuccessNotification', action.scheme)),
         );
     }, { dispatch: false });
 
     public readonly hubNameSetError$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.hubNameSetError),
-            switchMap(() => this.translocoService.selectTranslate('hub.hubNameSetError')),
-            this.showMessage()
+            this.showMessage(() => this.translocoService.selectTranslate('hub.hubNameSetError')),
         );
     }, { dispatch: false });
 
     public readonly startSchemeFailed$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(CONTROL_SCHEME_ACTIONS.schemeStartFailed),
-            switchMap(() => this.translocoService.selectTranslate('controlScheme.runFailed')),
-            this.showMessage()
+            this.showMessage(() => this.translocoService.selectTranslate('controlScheme.runFailed')),
         );
     }, { dispatch: false });
 
@@ -126,10 +109,15 @@ export class NotificationsEffects {
     ) {
     }
 
-    private showMessage(): MonoTypeOperatorFunction<string> {
-        return (source: Observable<string>) => source.pipe(
-            concatLatestFrom(() => this.screenSizeObserverService.isSmallScreen$),
-            tap(([ message, isSmallScreen ]) => {
+    private showMessage<T extends Action>(
+        fn: (action: T) => Observable<string>
+    ): OperatorFunction<T, unknown> {
+        return (source: Observable<T>) => source.pipe(
+            concatLatestFrom((action) => [
+                fn(action),
+                this.screenSizeObserverService.isSmallScreen$
+            ]),
+            tap(([ , message, isSmallScreen ]) => {
                 this.snackBar.open(
                     message,
                     'OK',
@@ -140,7 +128,6 @@ export class NotificationsEffects {
                     }
                 );
             }),
-            map(([ message ]) => message)
         );
     }
 }
