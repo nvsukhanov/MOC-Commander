@@ -67,7 +67,7 @@ function readGamepads(
                     inputType
                 });
                 return gamepadRead$.pipe(
-                    filter((data): data is Gamepad => !!data),
+                    filter((data): data is Gamepad => !!data && !!data.buttons[buttonIndex]),
                     map((apiGamepad) => valueTransformer.trimValue(apiGamepad.buttons[buttonIndex].value)),
                     startWith(valueTransformer.trimValue(browserGamepad.buttons[buttonIndex].value)),
                     distinctUntilChanged(),
