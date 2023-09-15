@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { DeepPartial, LzmaService, WINDOW } from '@app/shared';
-import { ControlSchemeModel, STORAGE_VERSION } from '@app/store';
+import { AppStoreVersion, ControlSchemeModel } from '@app/store';
 
 import { ControlSchemeCompressionResult, ExportVersion } from '../export-control-scheme-dialog';
 
@@ -32,7 +32,7 @@ export class ControlSchemeDecompressorService {
         if (!this.isPayloadObject(payloadObject)) {
             throw new Error('Invalid import string');
         }
-        if (payloadObject.s !== STORAGE_VERSION) {
+        if (payloadObject.s !== AppStoreVersion.latest) {
             // TODO: add migration logic
             throw new Error('Invalid storage version');
         }

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { ControlSchemeModel, STORAGE_VERSION } from '@app/store';
+import { AppStoreVersion, ControlSchemeModel } from '@app/store';
 import { LzmaService, WINDOW } from '@app/shared';
 
 export enum ExportVersion {
@@ -23,7 +23,7 @@ export class ControlSchemeCompressorService {
         scheme: ControlSchemeModel
     ): string {
         const payload: ControlSchemeCompressionResult = {
-            s: STORAGE_VERSION,
+            s: AppStoreVersion.latest,
             c: scheme
         };
         const payloadStringified = JSON.stringify(payload);

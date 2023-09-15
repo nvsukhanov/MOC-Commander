@@ -1,12 +1,12 @@
 import { APP_INITIALIZER, EnvironmentProviders, Provider, isDevMode, makeEnvironmentProviders } from '@angular/core';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { ActionReducer, ActionReducerMap, MetaReducer, Store, provideStore } from '@ngrx/store';
+import { Action, ActionReducer, ActionReducerMap, INIT, MetaReducer, Store, UPDATE, provideStore } from '@ngrx/store';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
-import { localStorageSync } from 'ngrx-store-localstorage';
+import { defaultMergeReducer, localStorageSync } from 'ngrx-store-localstorage';
 import { Router } from '@angular/router';
 import { RoutesBuilderService } from '@app/routing';
-import { NAVIGATOR } from '@app/shared';
+import { DeepPartial, NAVIGATOR } from '@app/shared';
 
 import { IState } from './i-state';
 import {
@@ -45,6 +45,7 @@ import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-chec
 import { HubStorageService } from './hub-storage.service';
 import { HUB_STATS_ACTIONS } from './actions';
 import { HubFacadeService } from './hub-facade.service';
+import { AppStoreVersion } from './app-store-version';
 
 const REDUCERS: ActionReducerMap<IState> = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,
@@ -62,7 +63,8 @@ const REDUCERS: ActionReducerMap<IState> = {
     hubEditFormActiveSaves: HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE.reducer,
     portTasks: PORT_TASKS_FEATURE.reducer,
     router: routerReducer,
-    settings: SETTINGS_FEATURE.reducer
+    settings: SETTINGS_FEATURE.reducer,
+    storeVersion: (state?: AppStoreVersion) => state ?? AppStoreVersion.latest
 };
 
 type StoredKeys<TState extends object> = Array<{
@@ -81,16 +83,26 @@ function localStorageSyncReducer(
             { controlSchemes: [ 'ids', 'entities' ] },
             { attachedIoModes: [ 'ids', 'entities' ] },
             { attachedIoPortModeInfo: [ 'ids', 'entities' ] },
-            'settings'
+            'settings',
+            'storeVersion'
         ] satisfies StoredKeys<IState>,
         rehydrate: true,
-        storageKeySerializer: (key: string) => `${STORAGE_VERSION}/${key}`,
+        mergeReducer: (state: IState, rehydratedState: object, action: Action) => {
+            if (action.type === INIT || action.type === UPDATE) {
+                // early store versions didn't have storeVersion property, so we need to add it manually
+                const isHydrated = (v: object): v is DeepPartial<IState> => !!rehydratedState && Object.keys(rehydratedState).length > 0;
+                const storeVersionKey: keyof IState = 'storeVersion';
+                if (isHydrated(rehydratedState) && !Object.hasOwn(rehydratedState, storeVersionKey)) {
+                    rehydratedState.storeVersion = AppStoreVersion.first;
+                }
+                return defaultMergeReducer(state, rehydratedState, action);
+            }
+            return state;
+        }
     })(reducer);
 }
 
 const metaReducers: Array<MetaReducer<IState>> = [ localStorageSyncReducer ];
-
-export const STORAGE_VERSION = '21';
 
 export function provideApplicationStore(): EnvironmentProviders {
     const providers: (Provider | EnvironmentProviders)[] = [

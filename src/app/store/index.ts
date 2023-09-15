@@ -8,3 +8,4 @@ export * from './models';
 export * from './effects';
 export * from './i-state';
 export * from './hub-facade.service';
+export { AppStoreVersion } from './app-store-version';
