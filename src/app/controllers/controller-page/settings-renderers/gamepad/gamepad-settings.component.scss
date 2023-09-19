@@ -1,3 +1,9 @@
+.settings-section {
+    & + & {
+        margin-top: 20px;
+    }
+}
+
 .axis-configuration {
     display: flex;
     flex-direction: row;

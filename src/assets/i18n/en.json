@@ -289,7 +289,16 @@
     "invert": "Invert",
     "ignoreInputControlTitle": "Ignore input",
     "inputIsIgnored": "Input is ignored",
-    "connectedControllers": "Connected controllers:"
+    "connectedControllers": "Connected controllers:",
+    "controllerNotFound": "Controller is not found",
+    "controllerConnectionState": "Connection state:",
+    "controllerType": "Type:",
+    "controllerConnectionStateConnected": "Connected",
+    "controllerConnectionStateDisconnected": "Disconnected",
+    "controllerSettingsSection": "Settings",
+    "controllerTypeHub": "Hub",
+    "controllerTypeGamepad": "Gamepad",
+    "controllerTypeKeyboard": "Keyboard"
   },
   "controllerProfiles": {
     "buttonState": "{ value, select, 1 {Pressed} other {Released} }",

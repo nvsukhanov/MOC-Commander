@@ -3,12 +3,14 @@ import { TranslocoService } from '@ngneat/transloco';
 
 import { APP_CONFIG, IAppConfig } from '../../i-app-config';
 import { ControllerProfileGenericGamepad } from './controller-profile-generic-gamepad';
+import { ControllerProfileGenericGamepadUidBuilderService } from './controller-profile-generic-gamepad-uid-builder.service';
 
 @Injectable()
 export class ControllerProfileGenericGamepadFactoryService {
     constructor(
         private readonly transloco: TranslocoService,
-        @Inject(APP_CONFIG) private readonly appConfig: IAppConfig
+        @Inject(APP_CONFIG) private readonly appConfig: IAppConfig,
+        private readonly uidBuilder: ControllerProfileGenericGamepadUidBuilderService
     ) {
     }
 
@@ -16,7 +18,7 @@ export class ControllerProfileGenericGamepadFactoryService {
         gamepad: Gamepad
     ): ControllerProfileGenericGamepad {
         return new ControllerProfileGenericGamepad(
-            this.buildUid(gamepad.id, gamepad.axes.length, gamepad.buttons.length),
+            this.uidBuilder.buildUid(gamepad.id, gamepad.axes.length, gamepad.buttons.length),
             gamepad.axes.length,
             this.transloco,
             this.appConfig
@@ -27,7 +29,7 @@ export class ControllerProfileGenericGamepadFactoryService {
         uid: string,
         transloco: TranslocoService
     ): ControllerProfileGenericGamepad | null {
-        const parsedUid = this.parseUid(uid);
+        const parsedUid = this.uidBuilder.parseUid(uid);
         if (!parsedUid) {
             return null;
         }
@@ -37,27 +39,5 @@ export class ControllerProfileGenericGamepadFactoryService {
             transloco,
             this.appConfig
         );
-    }
-
-    private buildUid(
-        id: string,
-        axesCount: number,
-        buttonsCount: number
-    ): string {
-        const clearId = id.replace(/[^a-zA-Z0-9]/g, '');
-        return `[${clearId}][a${axesCount}][b${buttonsCount}]`;
-    }
-
-    private parseUid(
-        uid: string
-    ): { axesCount: number; buttonsCount: number } | null {
-        const match = uid.match(/^\[([a-zA-Z0-9]*)\]\[a(\d+)\]\[b(\d+)\]$/);
-        if (!match) {
-            return null;
-        }
-        return {
-            axesCount: parseInt(match[1], 10),
-            buttonsCount: parseInt(match[2], 10)
-        };
     }
 }

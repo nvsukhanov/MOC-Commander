@@ -14,3 +14,4 @@ export * from './get-enum-values';
 export * from './controller-profiles';
 export * from './i18n';
 export * from './is-input-activated';
+export * from './hash.service';

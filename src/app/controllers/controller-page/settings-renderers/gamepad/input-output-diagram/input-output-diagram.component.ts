@@ -28,6 +28,8 @@ export class InputOutputDiagramComponent {
 
     @Input() public translocoTitle = '';
 
+    @Input() public compact = false;
+
     public get shouldShowLeftActiveZone(): boolean {
         return this.min < 0;
     }

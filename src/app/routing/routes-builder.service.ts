@@ -84,4 +84,14 @@ export class RoutesBuilderService {
             portId.toString()
         ];
     }
+
+    public controllerView(
+        controllerId: string,
+    ): string[] {
+        return [
+            this.baseHref,
+            ROUTE_PATHS.controllers,
+            encodeURI(controllerId)
+        ];
+    }
 }

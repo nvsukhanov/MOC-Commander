@@ -34,13 +34,18 @@ export const ROUTES: Routes = [
     },
     {
         path: ROUTE_PATHS.controllers,
-        loadComponent: () => import('../controllers-list-page').then(m => m.ControllersListPageComponent),
-        pathMatch: 'full'
-    },
-    {
-        path: ROUTE_PATHS.settings,
-        loadComponent: () => import('../settings-page').then((m) => m.SettingsPageComponent),
-        pathMatch: 'full'
+        children: [
+            {
+                path: '',
+                loadComponent: () => import('../controllers/controllers-list-page').then(m => m.ControllersListPageComponent),
+                pathMatch: 'full'
+            },
+            {
+                path: [ ':id' ].join('/'),
+                loadComponent: () => import('../controllers/controller-page').then(m => m.ControllerPageComponent),
+                pathMatch: 'full'
+            }
+        ]
     },
     {
         path: ROUTE_PATHS.hubs,
@@ -59,7 +64,7 @@ export const ROUTES: Routes = [
                 path: [ ':id', ROUTE_PATHS.hubEdit ].join('/'),
                 loadComponent: () => import('../hubs/hub-edit-page').then(m => m.HubEditPageComponent),
                 pathMatch: 'full',
-            },
+            }
         ]
     },
     {
@@ -91,6 +96,11 @@ export const ROUTES: Routes = [
                 pathMatch: 'full'
             }
         ]
+    },
+    {
+        path: ROUTE_PATHS.settings,
+        loadComponent: () => import('../settings-page').then((m) => m.SettingsPageComponent),
+        pathMatch: 'full'
     },
     {
         path: '**',

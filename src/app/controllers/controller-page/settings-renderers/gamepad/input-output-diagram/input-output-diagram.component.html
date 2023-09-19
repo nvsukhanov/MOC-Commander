@@ -13,10 +13,14 @@
     ></div>
 </div>
 
-<div class="input-label">
+<div *ngIf="!compact"
+     class="input-label"
+>
     {{ 'controller.rawInput' | transloco }}
 </div>
-<div class="output-label">
+<div *ngIf="!compact"
+     class="output-label"
+>
     {{ 'controller.output' | transloco }}
 </div>
 
@@ -24,7 +28,8 @@
     <div class="indicator indicator_input"
          [style.left.%]="rawPositionPercent"
     >
-        <div class="indicator__value indicator__value_input">
+        <div *ngIf="!compact"
+             class="indicator__value indicator__value_input">
             {{ humanReadableRawValue }}
         </div>
         <div class="indicator__tick indicator__tick_input"></div>
@@ -32,7 +37,8 @@
     <div class="indicator indicator_output"
          [style.left.%]="outputPositionPercent"
     >
-        <div class="indicator__value indicator__value_output">
+        <div *ngIf="!compact"
+             class="indicator__value indicator__value_output">
             {{ humanReadableOutputValue }}
         </div>
         <div class="indicator__tick indicator__tick_output"></div>
