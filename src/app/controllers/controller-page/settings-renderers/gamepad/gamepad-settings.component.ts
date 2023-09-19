@@ -6,6 +6,7 @@ import { Observable, Subject, Subscription, filter, map, switchMap, throttleTime
 import { PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
 import {
     CONTROLLER_INPUT_ACTIONS,
     CONTROLLER_INPUT_SELECTORS,
@@ -68,7 +69,8 @@ type GamepadSettingsForm = FormGroup<{
         RangeControlComponent,
         TranslocoModule,
         ActiveZoneHumanReadableValuePipe,
-        MatDividerModule
+        MatDividerModule,
+        MatExpansionModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

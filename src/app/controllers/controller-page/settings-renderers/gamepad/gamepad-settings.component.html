@@ -1,0 +1,63 @@
+<ng-container *ngIf="viewModel">
+    <section class="settings-section">
+        <app-control-ignore-input [control]="viewModel.ignoreInputControl"></app-control-ignore-input>
+    </section>
+    <section class="settings-section">
+        <mat-accordion multi>
+            <mat-expansion-panel *ngFor="let axis of viewModel.axes; trackBy: trackAxisByFn"
+                                 #panel="matExpansionPanel"
+            >
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{ axis.name$ | ngrxPush }}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <app-input-output-diagram *ngIf="!panel.expanded"
+                                                  [compact]="true"
+                                                  [rawValue]="axis.rawValue$ | ngrxPush"
+                                                  [outputValue]="axis.outputValue$ | ngrxPush"
+                                                  [activeZoneStart]="axis.activeZoneStartControl.value"
+                                                  [activeZoneEnd]="axis.activeZoneEndControl.value"
+                        ></app-input-output-diagram>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <div class="axis-configuration">
+                    <div class="axis-configuration__info">
+                        <div class="axis-configuration__input-output-diagram-container">
+                            <app-input-output-diagram class="axis-configuration__input-output-diagram"
+                                                      [translocoTitle]="'controller.rawInput'"
+                                                      [rawValue]="axis.rawValue$ | ngrxPush"
+                                                      [outputValue]="axis.outputValue$ | ngrxPush"
+                                                      [activeZoneStart]="axis.activeZoneStartControl.value"
+                                                      [activeZoneEnd]="axis.activeZoneEndControl.value"
+                            ></app-input-output-diagram>
+                        </div>
+                    </div>
+
+                    <mat-divider [vertical]="true"></mat-divider>
+
+                    <div class="axis-configuration__content">
+                        <div class="axis-configuration__items">
+
+                            <app-range-control class="axis-configuration__item"
+                                               [startControl]="axis.activeZoneStartControl"
+                                               [endControl]="axis.activeZoneEndControl"
+                                               [min]="0"
+                                               [max]="1"
+                                               [step]="0.01"
+                            >
+                                <span startLabel>{{ axis.activeZoneStartControl.value | activeZoneHumanReadableValue }}</span>
+                                <span endLabel>{{ axis.activeZoneEndControl.value | activeZoneHumanReadableValue }}</span>
+                                <span description>{{ 'controller.activeZone' | transloco }}</span>
+                            </app-range-control>
+                            <app-toggle-control [translocoTitle]="'controller.invert'"
+                                                [control]="axis.invertControl"
+                            ></app-toggle-control>
+                        </div>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </section>
+</ng-container>

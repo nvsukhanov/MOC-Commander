@@ -289,7 +289,16 @@
     "invert": "Инвертировать",
     "ignoreInputControlTitle": "Игнорировать ввод",
     "inputIsIgnored": "Ввод игнорируется",
-    "connectedControllers": "Подключенные контроллеры:"
+    "connectedControllers": "Подключенные контроллеры:",
+    "controllerNotFound": "Контроллер не найден",
+    "controllerConnectionState": "Состояние подключения:",
+    "controllerType": "Тип контроллера:",
+    "controllerConnectionStateConnected": "Подключен",
+    "controllerConnectionStateDisconnected": "Отключен",
+    "controllerSettingsSection": "Настройки контроллера",
+    "controllerTypeHub": "Хаб",
+    "controllerTypeGamepad": "Геймпад",
+    "controllerTypeKeyboard": "Клавиатура"
   },
   "controllerProfiles": {
     "buttonState": "{ value, select, 1 {Нажато} other {Не нажато} }",
