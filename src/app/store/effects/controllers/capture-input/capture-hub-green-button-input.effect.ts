@@ -2,16 +2,12 @@ import { createEffect } from '@ngrx/effects';
 import { Action, Store, createSelector } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { NEVER, Observable, distinctUntilChanged, map, mergeAll, mergeMap, pairwise, startWith, switchMap } from 'rxjs';
-import {
-    CONTROLLER_INPUT_ACTIONS,
-    CONTROLLER_INPUT_SELECTORS,
-    CONTROLLER_SETTINGS_SELECTORS,
-    HUBS_SELECTORS,
-    HUB_STATS_SELECTORS,
-    HubStorageService,
-    controllerIdFn
-} from '@app/store';
 import { ControllerInputType, ControllerType, GREEN_BUTTON_INPUT_ID } from '@app/shared';
+
+import { CONTROLLER_INPUT_SELECTORS, CONTROLLER_SETTINGS_SELECTORS, HUBS_SELECTORS, HUB_STATS_SELECTORS, } from '../../../selectors';
+import { controllerIdFn } from '../../../reducers';
+import { CONTROLLER_INPUT_ACTIONS } from '../../../actions';
+import { HubStorageService } from '../../../hub-storage.service';
 
 const HUB_INPUT_READ_SELECTOR = createSelector(
     HUBS_SELECTORS.selectAll,

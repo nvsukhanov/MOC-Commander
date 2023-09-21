@@ -3,8 +3,8 @@ import { inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, filter, fromEvent, map } from 'rxjs';
 import { WINDOW } from '@app/shared';
-import { CONTROLLERS_ACTIONS } from '@app/store';
 
+import { CONTROLLERS_ACTIONS } from '../../../actions';
 import { CONTROLLER_CONNECTION_SELECTORS } from '../../../selectors';
 
 const GAMEPAD_DISCONNECT_EVENT = 'gamepaddisconnected';

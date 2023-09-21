@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { PortCommandTask } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared';
 
+import { PortCommandTask } from '../../../models';
 import { ITaskFilter } from '../i-task-filter';
 import { MostRecentTaskFilterService } from './most-recent-task-filter.service';
 import { SetSpeedFilterService } from './set-speed-filter.service';

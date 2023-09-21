@@ -1,14 +1,14 @@
 import { Inject, Injectable } from '@angular/core';
-import { IState } from '@app/store';
 import { DeepPartial } from '@app/shared';
 
+import { IState } from '../i-state';
 import { AppStoreVersion } from '../app-store-version';
-import { IMigration, STORE_MIGRATION } from './i-migration';
+import { IMigration, STORE_MIGRATION, StoreWithVersion } from './i-migration';
 
 @Injectable()
 export class MigrateStoreService {
     constructor(
-        @Inject(STORE_MIGRATION) private readonly migrations: IMigration<object, object>[],
+        @Inject(STORE_MIGRATION) private readonly migrations: IMigration<StoreWithVersion, StoreWithVersion>[],
     ) {
     }
 
@@ -28,8 +28,8 @@ export class MigrateStoreService {
     private buildMigrationChain(
         fromVersion: AppStoreVersion,
         toVersion: AppStoreVersion,
-    ): IMigration<object, object>[] {
-        const chain: IMigration<object, object>[] = [];
+    ): IMigration<StoreWithVersion, StoreWithVersion>[] {
+        const chain: IMigration<StoreWithVersion, StoreWithVersion>[] = [];
         let currentVersion = fromVersion;
         while (currentVersion !== toVersion) {
             const migration = this.migrations.find((m) => m.fromVersion === currentVersion);

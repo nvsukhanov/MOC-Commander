@@ -3,7 +3,8 @@ import { inject } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
 import { tap } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { SETTINGS_SELECTORS } from '@app/store';
+
+import { SETTINGS_SELECTORS } from '../selectors';
 
 const SET_LANGUAGE_EFFECT = createEffect((
     translocoService = inject(TranslocoService),

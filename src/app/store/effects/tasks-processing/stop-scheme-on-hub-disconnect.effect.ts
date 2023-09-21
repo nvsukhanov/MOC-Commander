@@ -2,7 +2,9 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { filter, map } from 'rxjs';
 import { inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, HUBS_ACTIONS } from '@app/store';
+
+import { CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS } from '../../actions';
+import { CONTROL_SCHEME_SELECTORS } from '../../selectors';
 
 export const STOP_SCHEME_ON_HUB_DISCONNECT_EFFECT = createEffect((
     actions: Actions = inject(Actions),

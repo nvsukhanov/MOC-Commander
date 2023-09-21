@@ -1,6 +1,7 @@
 import { Dictionary } from '@ngrx/entity';
-import { ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared';
+
+import { ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload } from '../../../../models';
 
 export interface ITaskPayloadFactory<TBindingType extends ControlSchemeBindingType> {
     buildPayload(

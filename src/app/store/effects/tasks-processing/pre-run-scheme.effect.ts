@@ -2,7 +2,12 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Observable, catchError, filter, forkJoin, map, of, switchMap } from 'rxjs';
 import { inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel, HubStorageService, attachedIosIdFn } from '@app/store';
+
+import { CONTROL_SCHEME_ACTIONS } from '../../actions';
+import { ControlSchemeModel } from '../../models';
+import { HubStorageService } from '../../hub-storage.service';
+import { attachedIosIdFn } from '../../reducers';
+import { CONTROL_SCHEME_SELECTORS } from '../../selectors';
 
 function createSetAccelerationProfileTasks(
     scheme: ControlSchemeModel,

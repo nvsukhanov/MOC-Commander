@@ -12,6 +12,9 @@ import {
 import { ControllerProfileHubFactoryService } from './hub';
 import { UnknownControllerProfileFactoryService } from './unknown-controller';
 import { GamepadProfile } from './gamepad-profile';
+import { GamepadProfileFactoryService } from './gamepad-profile-factory.service';
+import { KeyboardProfileFactoryService } from './keyboard-profile-factory.service';
+import { HubProfileFactoryService } from './hub-profile-factory.service';
 
 export function provideControllerProfiles(): EnvironmentProviders {
     return makeEnvironmentProviders([
@@ -23,6 +26,9 @@ export function provideControllerProfiles(): EnvironmentProviders {
         ControllerProfileKeyboardService,
         ControllerProfileGenericGamepadFactoryService,
         ControllerProfileHubFactoryService,
-        UnknownControllerProfileFactoryService
+        UnknownControllerProfileFactoryService,
+        GamepadProfileFactoryService,
+        KeyboardProfileFactoryService,
+        HubProfileFactoryService
     ]);
 }

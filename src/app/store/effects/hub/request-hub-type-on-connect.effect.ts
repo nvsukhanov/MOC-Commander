@@ -1,7 +1,9 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap, takeUntil } from 'rxjs';
 import { inject } from '@angular/core';
-import { HUBS_ACTIONS, HubStorageService } from '@app/store';
+
+import { HUBS_ACTIONS } from '../../actions';
+import { HubStorageService } from '../../hub-storage.service';
 
 export const REQUEST_HUB_TYPE_ON_CONNECT = createEffect((
     actions$: Actions = inject(Actions),

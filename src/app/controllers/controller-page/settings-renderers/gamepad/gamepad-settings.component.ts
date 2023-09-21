@@ -12,7 +12,6 @@ import {
     CONTROLLER_INPUT_SELECTORS,
     CONTROLLER_SELECTORS,
     ControllerModel,
-    ControllerProfileFactoryService,
     GamepadSettingsModel,
     controllerInputIdFn
 } from '@app/store';
@@ -20,6 +19,8 @@ import {
     ControllerInputType,
     ControllerType,
     GamepadAxisSettings,
+    GamepadButtonSettings,
+    GamepadProfileFactoryService,
     GamepadSettings,
     IControllerProfile,
     RangeControlComponent,
@@ -51,6 +52,7 @@ type GamepadSettingsForm = FormGroup<{
     controllerId: FormControl<string>;
     controllerType: FormControl<ControllerType.Gamepad>;
     axisConfigs: FormGroup<{ [k in string]: ToFormGroup<GamepadAxisSettings> }>;
+    buttonConfigs: FormGroup<{ [k in string]: ToFormGroup<GamepadButtonSettings> }>;
     ignoreInput: FormControl<boolean>;
 }>;
 
@@ -89,7 +91,7 @@ export class GamepadSettingsComponent implements IControllerSettingsRenderer<Gam
         private readonly cdRef: ChangeDetectorRef,
         private readonly store: Store,
         private readonly formBuilder: FormBuilder,
-        private readonly profileFactoryService: ControllerProfileFactoryService,
+        private readonly profileFactoryService: GamepadProfileFactoryService,
     ) {
     }
 
@@ -148,6 +150,7 @@ export class GamepadSettingsComponent implements IControllerSettingsRenderer<Gam
             }),
             controllerType: this.formBuilder.control<ControllerType.Gamepad>(settings.controllerType, { nonNullable: true }),
             axisConfigs: this.formBuilder.group<{ [k in string]: ToFormGroup<GamepadAxisSettings> }>({}),
+            buttonConfigs: this.formBuilder.group<{ [k in string]: ToFormGroup<GamepadButtonSettings> }>({}),
             ignoreInput: this.formBuilder.control<boolean>(settings.ignoreInput, { nonNullable: true }),
         });
     }
@@ -175,6 +178,8 @@ export class GamepadSettingsComponent implements IControllerSettingsRenderer<Gam
                     activeZoneStart: this.formBuilder.control<number>(axisSettings.activeZoneStart, { nonNullable: true }),
                     activeZoneEnd: this.formBuilder.control<number>(axisSettings.activeZoneEnd, { nonNullable: true }),
                     invert: this.formBuilder.control<boolean>(axisSettings.invert, { nonNullable: true }),
+                    ignoreInput: this.formBuilder.control<boolean>(axisSettings.ignoreInput, { nonNullable: true }),
+                    trim: this.formBuilder.control<number>(axisSettings.trim, { nonNullable: true }),
                 })
             );
 

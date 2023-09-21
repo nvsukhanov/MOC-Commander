@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ControllerModel, ControllerProfileFactoryService } from '@app/store';
+import { ControllerModel, ControllerProfilesFacadeService } from '@app/store';
 
 @Pipe({
     standalone: true,
@@ -9,14 +9,13 @@ import { ControllerModel, ControllerProfileFactoryService } from '@app/store';
 })
 export class ControllerNamePipe implements PipeTransform {
     constructor(
-        private readonly controllerProfileFactory: ControllerProfileFactoryService,
+        private readonly controllerFacadeService: ControllerProfilesFacadeService
     ) {
     }
 
     public transform(
         model: ControllerModel
     ): Observable<string> {
-        return this.controllerProfileFactory.getByProfileUid(model.profileUid).name$;
-
+        return this.controllerFacadeService.getByControllerModel(model).name$;
     }
 }

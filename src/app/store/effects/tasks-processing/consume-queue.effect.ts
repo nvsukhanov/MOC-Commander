@@ -2,7 +2,10 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { filter, map } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { inject } from '@angular/core';
-import { PORT_TASKS_ACTIONS, PORT_TASKS_SELECTORS, PortCommandTask } from '@app/store';
+
+import { PORT_TASKS_ACTIONS } from '../../actions';
+import { PORT_TASKS_SELECTORS } from '../../selectors';
+import { PortCommandTask } from '../../models';
 
 export const CONSUME_QUEUE_EFFECT = createEffect((
     actions: Actions = inject(Actions),

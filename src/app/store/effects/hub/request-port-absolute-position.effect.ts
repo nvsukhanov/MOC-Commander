@@ -3,7 +3,10 @@ import { inject } from '@angular/core';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { PortModeName } from 'rxpoweredup';
-import { ATTACHED_IO_PORT_MODE_INFO_SELECTORS, HUBS_ACTIONS, HubStorageService } from '@app/store';
+
+import { ATTACHED_IO_PORT_MODE_INFO_SELECTORS } from '../../selectors';
+import { HUBS_ACTIONS } from '../../actions';
+import { HubStorageService } from '../../hub-storage.service';
 
 export const REQUEST_PORT_ABSOLUTE_POSITION_EFFECT = createEffect((
     actions$: Actions = inject(Actions),

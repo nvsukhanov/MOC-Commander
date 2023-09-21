@@ -3,20 +3,12 @@ import { Observable, catchError, forkJoin, map, mergeMap, of, switchMap, take } 
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { Dictionary } from '@ngrx/entity';
-import {
-    ATTACHED_IO_SELECTORS,
-    AttachedIoModel,
-    CONTROL_SCHEME_ACTIONS,
-    CONTROL_SCHEME_SELECTORS,
-    ControlSchemeBinding,
-    ControlSchemeModel,
-    HUB_STATS_SELECTORS,
-    HubStorageService,
-    PORT_TASKS_SELECTORS,
-    PortCommandTask,
-    attachedIosIdFn
-} from '@app/store';
 
+import { ATTACHED_IO_SELECTORS, CONTROL_SCHEME_SELECTORS, HUB_STATS_SELECTORS, PORT_TASKS_SELECTORS } from '../../selectors';
+import { AttachedIoModel, ControlSchemeBinding, ControlSchemeModel, PortCommandTask } from '../../models';
+import { CONTROL_SCHEME_ACTIONS } from '../../actions';
+import { HubStorageService } from '../../hub-storage.service';
+import { attachedIosIdFn } from '../../reducers';
 import { TaskFactoryService } from './task-factory';
 import { TaskRunnerService } from './task-runner';
 

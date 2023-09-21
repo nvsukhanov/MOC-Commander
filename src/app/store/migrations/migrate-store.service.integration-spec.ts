@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { DeepPartial } from '@app/shared';
-import { AppStoreVersion, IState } from '@app/store';
 
+import { AppStoreVersion } from '../app-store-version';
+import { IState } from '../i-state';
 import { V21Store } from './v21-store';
 import { V21_STORE_SAMPLE } from './v21-store-sample';
 import { provideStoreMigrations } from './provide-store-migrations';

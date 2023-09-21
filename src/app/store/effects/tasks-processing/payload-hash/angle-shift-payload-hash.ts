@@ -1,4 +1,4 @@
-import { AngleShiftTaskPayload } from '@app/store';
+import { AngleShiftTaskPayload } from '../../../models';
 
 export function angleShiftPayloadHash(
     payload: AngleShiftTaskPayload

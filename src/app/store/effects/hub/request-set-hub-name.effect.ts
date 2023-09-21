@@ -1,7 +1,9 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, from, map, mergeMap, of, switchMap } from 'rxjs';
 import { inject } from '@angular/core';
-import { HUBS_ACTIONS, HubStorageService } from '@app/store';
+
+import { HUBS_ACTIONS } from '../../actions';
+import { HubStorageService } from '../../hub-storage.service';
 
 export const REQUEST_SET_HUB_NAME_EFFECT = createEffect((
     actions$: Actions = inject(Actions),

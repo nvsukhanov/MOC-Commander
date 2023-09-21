@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription, combineLatestWith, filter, map, of, switchMap } from 'rxjs';
 import { LetDirective } from '@ngrx/component';
 import { NgForOf, NgIf } from '@angular/common';
-import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, ControllerInputModel, ControllerProfileFactoryService } from '@app/store';
+import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, ControllerInputModel, ControllerProfilesFacadeService } from '@app/store';
 
 import { WAIT_FOR_CONTROLLER_INPUT_DIALOG_SELECTORS } from './wait-for-controller-input-dialog.selectors';
 
@@ -37,10 +37,10 @@ export class WaitForControllerInputDialogComponent implements OnInit, OnDestroy 
     constructor(
         private readonly dialogRef: MatDialogRef<ControllerInputModel | null>,
         private readonly store: Store,
-        private readonly controllerProfileFactory: ControllerProfileFactoryService
+        private readonly controllerProfilesFacadeService: ControllerProfilesFacadeService
     ) {
         this.controllerNames$ = this.store.select(WAIT_FOR_CONTROLLER_INPUT_DIALOG_SELECTORS.selectConnectedControllers).pipe(
-            map((controllerModels) => controllerModels.map((c) => this.controllerProfileFactory.getByProfileUid(c.profileUid).name$)),
+            map((controllerModels) => controllerModels.map((c) => this.controllerProfilesFacadeService.getByControllerModel(c).name$)),
             switchMap((names) => {
                 if (names.length === 0) {
                     return of([]);

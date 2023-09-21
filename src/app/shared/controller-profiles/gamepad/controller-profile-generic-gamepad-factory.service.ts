@@ -20,6 +20,7 @@ export class ControllerProfileGenericGamepadFactoryService {
         return new ControllerProfileGenericGamepad(
             this.uidBuilder.buildUid(gamepad.id, gamepad.axes.length, gamepad.buttons.length),
             gamepad.axes.length,
+            gamepad.buttons.length,
             this.transloco,
             this.appConfig
         );
@@ -36,6 +37,7 @@ export class ControllerProfileGenericGamepadFactoryService {
         return new ControllerProfileGenericGamepad(
             uid,
             parsedUid.axesCount,
+            parsedUid.buttonsCount,
             transloco,
             this.appConfig
         );

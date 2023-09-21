@@ -2,16 +2,12 @@ import { concatLatestFrom, createEffect } from '@ngrx/effects';
 import { NEVER, Observable, filter, fromEvent, map, mergeMap, mergeWith, switchMap, take } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
-import {
-    CONTROLLER_CONNECTION_SELECTORS,
-    CONTROLLER_INPUT_ACTIONS,
-    CONTROLLER_INPUT_SELECTORS,
-    CONTROLLER_SETTINGS_SELECTORS,
-    KeyboardSettingsModel,
-    controllerInputIdFn
-} from '@app/store';
 import { ControllerInputType, ControllerType, WINDOW } from '@app/shared';
 
+import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SETTINGS_SELECTORS, } from '../../../selectors';
+import { CONTROLLER_INPUT_ACTIONS } from '../../../actions';
+import { controllerInputIdFn } from '../../../reducers';
+import { KeyboardSettingsModel } from '../../../models';
 import { filterKeyboardInput } from '../filter-keyboard-input';
 
 const KEY_DOWN_EVENT = 'keydown';

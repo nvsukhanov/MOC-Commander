@@ -1,7 +1,10 @@
 import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { CONTROLLERS_ACTIONS, ControllerConnectionModel, HUBS_ACTIONS, controllerIdFn } from '@app/store';
 import { ControllerType } from '@app/shared';
+
+import { CONTROLLERS_ACTIONS, HUBS_ACTIONS } from '../actions';
+import { ControllerConnectionModel } from '../models';
+import { controllerIdFn } from './controllers.reducer';
 
 export type ControllerConnectionState = EntityState<ControllerConnectionModel>;
 

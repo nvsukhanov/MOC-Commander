@@ -31,7 +31,6 @@ import {
     AttachedIoModesEffects,
     CONTROLLER_EFFECTS,
     CONTROL_SCHEME_EFFECTS,
-    ControllerProfileFactoryService,
     HUB_EFFECTS,
     HubAttachedIosStateEffects,
     HubPortModeInfoEffects,
@@ -47,6 +46,7 @@ import { HUB_STATS_ACTIONS } from './actions';
 import { HubFacadeService } from './hub-facade.service';
 import { AppStoreVersion } from './app-store-version';
 import { MigrateStoreService, provideStoreMigrations } from './migrations';
+import { ControllerProfilesFacadeService } from './controller-profiles-facade.service';
 
 const REDUCERS: ActionReducerMap<IState> = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,
@@ -146,7 +146,7 @@ export function provideApplicationStore(): EnvironmentProviders {
             },
             HubStorageService,
             HubFacadeService,
-            ControllerProfileFactoryService,
+            ControllerProfilesFacadeService,
             provideRouterStore(),
             provideTaskFactories(),
             provideTaskFilter(),

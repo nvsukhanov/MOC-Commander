@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 
 import { ControllerSettings } from './controller-settings';
 
-export interface IControllerProfile<TSettings extends ControllerSettings | null> {
+export interface IControllerProfile<TSettings extends ControllerSettings | null | unknown> {
     readonly uid: string;
 
     readonly name$: Observable<string>;

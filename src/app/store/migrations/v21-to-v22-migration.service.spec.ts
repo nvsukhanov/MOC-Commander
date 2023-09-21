@@ -1,30 +1,16 @@
 import { Language } from '@app/shared';
-import { AppStoreVersion } from '@app/store';
 
+import { AppStoreVersion } from '../app-store-version';
 import { V21_STORE_SAMPLE } from './v21-store-sample';
-import { V21ToV22Migration } from './v21-to-v22-migration';
+import { V21ToV22MigrationService } from './v21-to-v22-migration-service';
 import { V22Store } from './v22-store';
-
-function ensureStorePropsNotChanged<TKeys extends string>(
-    prev: Partial<{ [k in TKeys]: unknown }>,
-    next: Partial<{ [k in TKeys]: unknown }>,
-    changedProps: Array<TKeys>,
-): void {
-    const changedPropsSet = new Set(changedProps);
-    const prevKeys = Object.keys(prev) as Array<TKeys>;
-    for (const prop of prevKeys) {
-        if (changedPropsSet.has(prop)) {
-            continue;
-        }
-        expect(prev[prop]).toBe(next[prop]);
-    }
-}
+import { ensureStorePropsNotChanged } from './ensure-props-not-changed';
 
 describe('v21 to v22 migration', () => {
-    let subject: V21ToV22Migration;
+    let subject: V21ToV22MigrationService;
 
     beforeEach(() => {
-        subject = new V21ToV22Migration();
+        subject = new V21ToV22MigrationService();
     });
 
     it('should migrate theme', () => {
