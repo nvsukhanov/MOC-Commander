@@ -2,7 +2,8 @@ import { Actions, FunctionalEffect, createEffect, ofType } from '@ngrx/effects';
 import { inject } from '@angular/core';
 import { tap } from 'rxjs';
 import { WINDOW } from '@app/shared';
-import { CONTROL_SCHEME_ACTIONS } from '@app/store';
+
+import { CONTROL_SCHEME_ACTIONS } from '../actions';
 
 export const COPY_EXPORT_STRING_TO_CLIPBOARD = createEffect((
     actions: Actions = inject(Actions),

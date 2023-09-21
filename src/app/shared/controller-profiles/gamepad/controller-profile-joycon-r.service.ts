@@ -5,8 +5,6 @@ import { Observable } from 'rxjs';
 import { APP_CONFIG, IAppConfig } from '../../i-app-config';
 import { GamepadProfile } from '../gamepad-profile';
 import { createControllerL10nKey, createScopedControllerL10nKey } from '../create-controller-l10n-key';
-import { GamepadSettings } from '../controller-settings';
-import { ControllerType } from '../controller-type';
 
 @Injectable()
 export class ControllerProfileJoyconRService extends GamepadProfile {
@@ -20,6 +18,8 @@ export class ControllerProfileJoyconRService extends GamepadProfile {
 
     public readonly triggerButtonsIndices: ReadonlyArray<number> = [ 6, 7 ];
 
+    protected readonly invertedAxisIndices: ReadonlyArray<number> = [ 1 ];
+
     protected axisNames: { readonly [k in number]: Observable<string> } = {
         0: this.getTranslation('stickXAxis'),
         1: this.getTranslation('stickYAxis'),
@@ -32,16 +32,10 @@ export class ControllerProfileJoyconRService extends GamepadProfile {
         3: this.getTranslation('buttonY'),
         4: this.getTranslation('buttonSL'),
         5: this.getTranslation('buttonSR'),
-        6: this.getTranslation('unknownButton'),
         7: this.getTranslation('zrTrigger'),
         8: this.getTranslation('zlTrigger'),
         9: this.getTranslation('buttonPlus'),
         10: this.getTranslation('buttonRStick'),
-        11: this.getTranslation('unknownButton'),
-        12: this.getTranslation('unknownButton'),
-        13: this.getTranslation('unknownButton'),
-        14: this.getTranslation('unknownButton'),
-        15: this.getTranslation('unknownButton'),
         16: this.getTranslation('buttonHome'),
     };
 
@@ -52,31 +46,13 @@ export class ControllerProfileJoyconRService extends GamepadProfile {
 
     constructor(
         translocoService: TranslocoService,
-        @Inject(APP_CONFIG) private readonly appConfig: IAppConfig
+        @Inject(APP_CONFIG) appConfig: IAppConfig
     ) {
-        super(translocoService, 'joycon');
+        super(translocoService, 'joycon', appConfig);
         this.name$ = translocoService.selectTranslate(createScopedControllerL10nKey(this.l10nScopeName, 'r-name'));
     }
 
     public controllerIdMatch(id: string): boolean {
         return this.ids.has(id);
-    }
-
-    public getDefaultSettings(): GamepadSettings {
-        return {
-            controllerType: ControllerType.Gamepad,
-            axisConfigs: {
-                0: {
-                    invert: false,
-                    activeZoneStart: this.appConfig.gamepadAxisDefaultDeadZone,
-                    activeZoneEnd: 1
-                },
-                1: {
-                    invert: true,
-                    activeZoneStart: this.appConfig.gamepadAxisDefaultDeadZone,
-                    activeZoneEnd: 1
-                }
-            }
-        };
     }
 }

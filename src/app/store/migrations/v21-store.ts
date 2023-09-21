@@ -1,7 +1,10 @@
-import { AppStoreVersion, IState, UserSelectedTheme } from '@app/store';
 import { Language, Override } from '@app/shared';
 
-export type V21Store = Override<IState, {
+import { AppStoreVersion } from '../app-store-version';
+import { UserSelectedTheme } from '../models';
+import { V22Store } from './v22-store';
+
+export type V21Store = Override<V22Store, {
     settings: {
         theme: UserSelectedTheme;
         language: Language;

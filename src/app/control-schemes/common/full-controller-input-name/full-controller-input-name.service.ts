@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, combineLatestWith, map, switchMap } from 'rxjs';
+import { Observable, combineLatestWith, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { TranslocoService } from '@ngneat/transloco';
 import { ButtonGroupButtonId } from 'rxpoweredup';
-import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS, ControlSchemeInput, ControllerProfileFactoryService } from '@app/store';
-import { ControllerInputType, ControllerSettings, IControllerProfile } from '@app/shared';
+import { CONTROLLER_CONNECTION_SELECTORS, ControlSchemeInput, ControllerProfilesFacadeService } from '@app/store';
+import { ControllerInputType, IControllerProfile } from '@app/shared';
 
 export type FullControllerInputNameData = {
     readonly name$: Observable<string>;
@@ -16,21 +16,14 @@ export class FullControllerInputNameService {
     constructor(
         private readonly store: Store,
         private readonly translocoService: TranslocoService,
-        private readonly profileFactory: ControllerProfileFactoryService
+        private readonly controllerProfilesFacadeService: ControllerProfilesFacadeService
     ) {
     }
 
     public getFullControllerInputNameData(
         data: Pick<ControlSchemeInput, 'inputId' | 'buttonId' | 'portId' | 'inputType' | 'controllerId'>
     ): FullControllerInputNameData {
-        const profile$ = this.store.select(CONTROLLER_SELECTORS.selectById(data.controllerId)).pipe(
-            map((controller) => {
-                if (controller) {
-                    return this.profileFactory.getByProfileUid(controller.profileUid);
-                }
-                return this.profileFactory.getUnknownControllerProfile(data.controllerId);
-            })
-        );
+        const profile$ = this.controllerProfilesFacadeService.getByControllerId(data.controllerId);
 
         const controllerName$ = profile$.pipe(switchMap((profile) => profile.name$));
         const buttonName$ = this.getButtonName$(profile$, data);
@@ -48,7 +41,7 @@ export class FullControllerInputNameService {
     }
 
     private getButtonName$(
-        profile$: Observable<IControllerProfile<ControllerSettings | null>>,
+        profile$: Observable<IControllerProfile<unknown>>,
         inputData: Pick<ControlSchemeInput, 'inputId' | 'buttonId' | 'portId' | 'inputType'>
     ): Observable<string> {
         switch (inputData.inputType) {

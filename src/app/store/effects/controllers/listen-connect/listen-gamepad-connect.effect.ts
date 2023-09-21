@@ -2,8 +2,11 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { inject } from '@angular/core';
 import { Action, Store } from '@ngrx/store';
 import { Observable, filter, interval, map, switchMap } from 'rxjs';
-import { APP_CONFIG, ControllerType, GamepadSettings, IAppConfig, IControllerProfile, WINDOW } from '@app/shared';
-import { CONTROLLERS_ACTIONS, CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS, ControllerProfileFactoryService, controllerIdFn } from '@app/store';
+import { APP_CONFIG, ControllerType, GamepadProfileFactoryService, GamepadSettings, IAppConfig, IControllerProfile, WINDOW } from '@app/shared';
+
+import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS } from '../../../selectors';
+import { CONTROLLERS_ACTIONS } from '../../../actions';
+import { controllerIdFn } from '../../../reducers';
 
 const GAMEPAD_DETECTION_INPUT_THRESHOLD = 0.5;
 
@@ -11,7 +14,7 @@ export const LISTEN_GAMEPAD_CONNECT = createEffect((
     actions$: Actions = inject(Actions),
     store: Store = inject(Store),
     window: Window = inject(WINDOW),
-    controllerProfileFactory: ControllerProfileFactoryService = inject(ControllerProfileFactoryService),
+    gamepadProfileFactoryService: GamepadProfileFactoryService = inject(GamepadProfileFactoryService),
     config: IAppConfig = inject(APP_CONFIG),
 ) => {
     return actions$.pipe(
@@ -29,7 +32,7 @@ export const LISTEN_GAMEPAD_CONNECT = createEffect((
                 storeId: string;
             }> = [];
             gamepads.forEach((gamepad) => {
-                const profile = controllerProfileFactory.getGamepadProfile(gamepad);
+                const profile = gamepadProfileFactoryService.getGamepadProfile(gamepad);
                 const hasInput = gamepad.axes.some((a) => Math.abs(a) > GAMEPAD_DETECTION_INPUT_THRESHOLD)
                     || gamepad.buttons.some((b) => b.value > GAMEPAD_DETECTION_INPUT_THRESHOLD);
                 if (!profileCounts[profile.uid]) {

@@ -4,8 +4,9 @@ import { IHub, MessageLoggingMiddleware, connectHub } from 'rxpoweredup';
 import { inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { APP_CONFIG, IAppConfig, NAVIGATOR, PrefixedConsoleLoggerFactoryService } from '@app/shared';
-import { HUBS_ACTIONS, HUB_STATS_ACTIONS, HubStorageService } from '@app/store';
 
+import { HUBS_ACTIONS, HUB_STATS_ACTIONS } from '../../actions';
+import { HubStorageService } from '../../hub-storage.service';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../../hub-communication-notifier-middleware-factory.service';
 
 export const DISCOVER_HUB_EFFECT = createEffect((

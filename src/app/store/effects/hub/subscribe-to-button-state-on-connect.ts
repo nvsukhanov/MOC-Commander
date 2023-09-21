@@ -1,7 +1,9 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap, takeUntil } from 'rxjs';
 import { inject } from '@angular/core';
-import { HUBS_ACTIONS, HUB_STATS_ACTIONS, HubStorageService } from '@app/store';
+
+import { HUBS_ACTIONS, HUB_STATS_ACTIONS } from '../../actions';
+import { HubStorageService } from '../../hub-storage.service';
 
 export const SUBSCRIBE_TO_BUTTON_STATE_ON_CONNECT = createEffect((
     actions$: Actions = inject(Actions),

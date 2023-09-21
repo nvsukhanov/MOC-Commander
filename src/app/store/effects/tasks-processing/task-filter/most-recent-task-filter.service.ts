@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { PortCommandTask } from '@app/store';
 
+import { PortCommandTask } from '../../../models';
 import { ITaskFilter } from '../i-task-filter';
 
 @Injectable()

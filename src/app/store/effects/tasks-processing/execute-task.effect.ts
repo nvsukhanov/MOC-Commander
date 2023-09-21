@@ -1,8 +1,9 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { inject } from '@angular/core';
-import { HubStorageService, PORT_TASKS_ACTIONS } from '@app/store';
 
+import { HubStorageService } from '../../hub-storage.service';
+import { PORT_TASKS_ACTIONS } from '../../actions';
 import { TaskRunnerService } from './task-runner';
 
 export const EXECUTE_TASK_EFFECT = createEffect((

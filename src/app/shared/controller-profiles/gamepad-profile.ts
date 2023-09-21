@@ -5,6 +5,8 @@ import { Memoize } from 'typescript-memoize';
 import { createScopedControllerL10nKeyBuilder } from './create-controller-l10n-key';
 import { IControllerProfile } from './i-controller-profile';
 import { GamepadSettings } from './controller-settings';
+import { ControllerType } from './controller-type';
+import { IAppConfig } from '../i-app-config';
 
 export abstract class GamepadProfile implements IControllerProfile<GamepadSettings> {
     public abstract readonly uid: string;
@@ -21,19 +23,20 @@ export abstract class GamepadProfile implements IControllerProfile<GamepadSettin
 
     protected abstract buttonNames: { readonly [k in string]: Observable<string> };
 
+    protected abstract invertedAxisIndices: ReadonlyArray<number>;
+
     private readonly l10nScopeKeyBuilder: (key: string) => string;
 
     private readonly genericGamepadL10nScopeKeyBuilder: (key: string) => string;
 
     protected constructor(
         protected readonly translocoService: TranslocoService,
-        protected readonly l10nScopeName: string
+        protected readonly l10nScopeName: string,
+        protected readonly config: IAppConfig
     ) {
         this.l10nScopeKeyBuilder = createScopedControllerL10nKeyBuilder(l10nScopeName);
         this.genericGamepadL10nScopeKeyBuilder = createScopedControllerL10nKeyBuilder('genericGamepad');
     }
-
-    public abstract getDefaultSettings(): GamepadSettings;
 
     public abstract controllerIdMatch(id: string): boolean;
 
@@ -51,6 +54,32 @@ export abstract class GamepadProfile implements IControllerProfile<GamepadSettin
     ): Observable<string> {
         return this.buttonNames[inputId]
             ?? this.translocoService.selectTranslate(this.genericGamepadL10nScopeKeyBuilder('button'), { inputId });
+    }
+
+    public getDefaultSettings(): GamepadSettings {
+        const result: GamepadSettings = {
+            controllerType: ControllerType.Gamepad,
+            axisConfigs: {},
+            buttonConfigs: {}
+        };
+        Object.keys(this.axisNames).forEach((axisId) => {
+            result.axisConfigs[axisId] = {
+                activeZoneStart: this.config.gamepadDefaultDeadZoneStart,
+                activeZoneEnd: 1,
+                invert: this.invertedAxisIndices.includes(Number(axisId)),
+                ignoreInput: false,
+                trim: 0
+            };
+        });
+        Object.keys(this.buttonNames).forEach((buttonId) => {
+            result.buttonConfigs[buttonId] = {
+                activeZoneStart: this.config.gamepadDefaultDeadZoneStart,
+                activeZoneEnd: 1,
+                ignoreInput: false,
+                trim: 0
+            };
+        });
+        return result;
     }
 
     protected getTranslation(

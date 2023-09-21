@@ -1,4 +1,4 @@
-import { LoopingMode } from '@app/store';
+import { LoopingMode } from '../../../../models';
 
 export function calculateNextLoopingIndex(
     levels: number[],

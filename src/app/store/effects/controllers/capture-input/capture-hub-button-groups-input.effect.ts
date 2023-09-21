@@ -3,22 +3,20 @@ import { Action, Store, createSelector } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { NEVER, Observable, from, map, mergeMap, pairwise, startWith, switchMap } from 'rxjs';
 import { PortModeName } from 'rxpoweredup';
+import { ControllerInputType, ControllerType } from '@app/shared';
+
 import {
     ATTACHED_IO_MODES_SELECTORS,
     ATTACHED_IO_PORT_MODE_INFO_SELECTORS,
     ATTACHED_IO_SELECTORS,
     CONTROLLER_CONNECTION_SELECTORS,
-    CONTROLLER_INPUT_ACTIONS,
     CONTROLLER_INPUT_SELECTORS,
     CONTROLLER_SELECTORS,
-    CONTROLLER_SETTINGS_SELECTORS,
-    HubStorageService,
-    attachedIoModesIdFn,
-    attachedIoPortModeInfoIdFn,
-    attachedIosIdFn,
-    controllerIdFn
-} from '@app/store';
-import { ControllerInputType, ControllerType } from '@app/shared';
+    CONTROLLER_SETTINGS_SELECTORS
+} from '../../../selectors';
+import { attachedIoModesIdFn, attachedIoPortModeInfoIdFn, attachedIosIdFn, controllerIdFn } from '../../../reducers';
+import { HubStorageService } from '../../../hub-storage.service';
+import { CONTROLLER_INPUT_ACTIONS } from '../../../actions';
 
 const BUTTON_PORT_MODE_NAMES = new Set<PortModeName>([
     PortModeName.handsetKeyD,

@@ -1,7 +1,7 @@
 import { IOType, PortModeName, PortModeSymbol } from 'rxpoweredup';
 import { ControllerType, DeepPartial, Language } from '@app/shared';
-import { AppStoreVersion } from '@app/store';
 
+import { AppStoreVersion } from '../app-store-version';
 import { V21Store } from './v21-store';
 
 export const V21_STORE_SAMPLE: DeepPartial<V21Store> = {

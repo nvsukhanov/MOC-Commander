@@ -2,7 +2,10 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { filter, mergeMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { inject } from '@angular/core';
-import { HUBS_ACTIONS, HUBS_SELECTORS, HubStorageService } from '@app/store';
+
+import { HUBS_ACTIONS } from '../../actions';
+import { HUBS_SELECTORS } from '../../selectors';
+import { HubStorageService } from '../../hub-storage.service';
 
 export const DISCONNECT_HUB_ON_USER_REQUEST = createEffect((
     actions$: Actions = inject(Actions),

@@ -4,12 +4,12 @@ import { Observable, OperatorFunction, filter, of, switchMap, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';
 import { Action, Store } from '@ngrx/store';
-import { ScreenSizeObserverService } from '@app/shared';
+import { GamepadProfileFactoryService, KeyboardProfileFactoryService, ScreenSizeObserverService } from '@app/shared';
 
 import { CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS } from '../actions';
 import { CONTROLLER_SELECTORS } from '../selectors';
 import { ControllerModel } from '../models';
-import { ControllerProfileFactoryService } from '../controller-profile-factory.service';
+import { ControllerProfilesFacadeService } from '../controller-profiles-facade.service';
 
 @Injectable()
 export class NotificationsEffects {
@@ -44,19 +44,36 @@ export class NotificationsEffects {
     public readonly controllerDiscovered$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(CONTROLLERS_ACTIONS.gamepadDiscovered, CONTROLLERS_ACTIONS.keyboardDiscovered),
-            this.showMessage((action) => this.controllerProfilesFactory.getByProfileUid(action.profileUid).name$.pipe(
-                switchMap((name) => this.translocoService.selectTranslate('controller.controllerDiscoveredNotification', { name }))
-            ))
+            this.showMessage((action) => {
+                switch (action.type) {
+                    case CONTROLLERS_ACTIONS.gamepadDiscovered.type:
+                        return this.gamepadProfileFactoryService.getByProfileUid(action.profileUid).name$.pipe(
+                            switchMap((name) => this.translocoService.selectTranslate('controller.controllerDiscoveredNotification', { name }))
+                        );
+                    case CONTROLLERS_ACTIONS.keyboardDiscovered.type:
+                        return this.keyboardProfileFactoryService.getByProfileUid(action.profileUid).name$.pipe(
+                            switchMap((name) => this.translocoService.selectTranslate('controller.controllerDiscoveredNotification', { name }))
+                        );
+                }
+            })
         );
     }, { dispatch: false });
 
     public readonly controllerConnected$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(CONTROLLERS_ACTIONS.gamepadConnected, CONTROLLERS_ACTIONS.keyboardConnected),
-            this.showMessage((action) => this.controllerProfilesFactory.getByProfileUid(action.profileUid).name$.pipe(
-                    switchMap((name) => this.translocoService.selectTranslate('controller.controllerConnectedNotification', { name }))
-                )
-            )
+            this.showMessage((action) => {
+                switch (action.type) {
+                    case CONTROLLERS_ACTIONS.gamepadConnected.type:
+                        return this.gamepadProfileFactoryService.getByProfileUid(action.profileUid).name$.pipe(
+                            switchMap((name) => this.translocoService.selectTranslate('controller.controllerConnectedNotification', { name }))
+                        );
+                    case CONTROLLERS_ACTIONS.keyboardConnected.type:
+                        return this.keyboardProfileFactoryService.getByProfileUid(action.profileUid).name$.pipe(
+                            switchMap((name) => this.translocoService.selectTranslate('controller.controllerConnectedNotification', { name }))
+                        );
+                }
+            })
         );
     }, { dispatch: false });
 
@@ -65,7 +82,7 @@ export class NotificationsEffects {
             ofType(CONTROLLERS_ACTIONS.gamepadDisconnected),
             this.showMessage((action) => this.store.select(CONTROLLER_SELECTORS.selectById(action.id)).pipe(
                 filter((controller): controller is ControllerModel => !!controller),
-                switchMap((controller) => this.controllerProfilesFactory.getByProfileUid(controller.profileUid).name$),
+                switchMap((controller) => this.controllerProfilesFacade.getByControllerModel(controller).name$),
                 switchMap((name) => this.translocoService.selectTranslate('controller.controllerDisconnectedNotification', { name }))
             ))
         );
@@ -103,9 +120,11 @@ export class NotificationsEffects {
         private readonly actions$: Actions,
         private readonly snackBar: MatSnackBar,
         private readonly translocoService: TranslocoService,
-        private readonly controllerProfilesFactory: ControllerProfileFactoryService,
         private readonly store: Store,
-        private readonly screenSizeObserverService: ScreenSizeObserverService
+        private readonly screenSizeObserverService: ScreenSizeObserverService,
+        private readonly controllerProfilesFacade: ControllerProfilesFacadeService,
+        private readonly keyboardProfileFactoryService: KeyboardProfileFactoryService,
+        private readonly gamepadProfileFactoryService: GamepadProfileFactoryService,
     ) {
     }
 

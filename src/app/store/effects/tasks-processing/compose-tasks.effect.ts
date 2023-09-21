@@ -2,19 +2,11 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Observable, filter, from, map, mergeMap, of, switchMap, takeUntil } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
-import {
-    BindingTaskComposingData,
-    CONTROLLER_INPUT_ACTIONS,
-    CONTROL_SCHEME_ACTIONS,
-    CONTROL_SCHEME_SELECTORS,
-    ControlSchemeBinding,
-    ControlSchemeModel,
-    PORT_TASKS_ACTIONS,
-    PORT_TASKS_SELECTORS,
-    PortCommandTask,
-    attachedIosIdFn
-} from '@app/store';
 
+import { attachedIosIdFn } from '../../reducers';
+import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, PORT_TASKS_ACTIONS, } from '../../actions';
+import { BindingTaskComposingData, CONTROL_SCHEME_SELECTORS, PORT_TASKS_SELECTORS } from '../../selectors';
+import { ControlSchemeBinding, ControlSchemeModel, PortCommandTask, } from '../../models';
 import { TaskFactoryService } from './task-factory';
 import { ITaskFilter, TASK_FILTER } from './i-task-filter';
 

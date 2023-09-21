@@ -1,10 +1,16 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType, isInputActivated } from '@app/shared';
-import { ControlSchemeInputAction } from '@app/store';
 
+import {
+    AngleShiftTaskPayload,
+    ControlSchemeAngleShiftBinding,
+    ControlSchemeInputAction,
+    ControllerInputModel,
+    PortCommandTask,
+    PortCommandTaskPayload
+} from '../../../../models';
 import { controllerInputIdFn } from '../../../../reducers';
-import { AngleShiftTaskPayload, ControlSchemeAngleShiftBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, } from '../../../../models';
 import { ITaskPayloadFactory } from './i-task-payload-factory';
 import { calculateNextLoopingIndex } from './calculate-next-looping-index';
 
