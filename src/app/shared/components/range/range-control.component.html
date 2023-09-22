@@ -1,12 +1,16 @@
 <ng-container *ngIf="startControl && endControl">
     <div class="slider-label">
-        <label class="slider-label-value-left">
+        <label class="slider-label-value-left"
+               [for]="startId"
+        >
             <ng-content select="[startLabel]"></ng-content>
         </label>
-        <label class="slider-label-description">
+        <span class="slider-label-description">
             <ng-content select="[description]"></ng-content>
-        </label>
-        <label class="slider-label-value-right">
+        </span>
+        <label class="slider-label-value-right"
+               [for]="endId"
+        >
             <ng-content select="[endLabel]"></ng-content>
         </label>
     </div>
@@ -15,7 +19,13 @@
                 [max]="max"
                 [step]="step"
     >
-        <input matSliderStartThumb [formControl]="startControl"/>
-        <input matSliderEndThumb [formControl]="endControl"/>
+        <input matSliderStartThumb
+               [formControl]="startControl"
+               [id]="startId"
+        />
+        <input matSliderEndThumb
+               [formControl]="endControl"
+               [id]="endId"
+        />
     </mat-slider>
 </ng-container>

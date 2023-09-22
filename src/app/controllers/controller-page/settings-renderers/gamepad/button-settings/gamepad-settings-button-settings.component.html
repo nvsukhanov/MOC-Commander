@@ -1,0 +1,51 @@
+<div *ngIf="buttonSettingsViewModel"
+     class="button-configuration">
+    <div class="button-configuration__info">
+        <div class="button-configuration__input-output-diagram-container">
+            <app-input-output-diagram class="button-configuration__input-output-diagram"
+                                      [translocoTitle]="'controller.rawInput'"
+                                      [rawValue]="buttonSettingsViewModel.rawValue$ | ngrxPush"
+                                      [outputValue]="buttonSettingsViewModel.outputValue$ | ngrxPush"
+                                      [activeZoneStart]="buttonSettingsViewModel.form.controls.activeZoneStart.value"
+                                      [activeZoneEnd]="buttonSettingsViewModel.form.controls.activeZoneEnd.value"
+            ></app-input-output-diagram>
+        </div>
+    </div>
+
+    <mat-divider [vertical]="true"></mat-divider>
+
+    <div class="button-configuration__content">
+        <div class="button-configuration__items">
+            <app-slider-control [control]="buttonSettingsViewModel.form.controls.trim"
+                                [step]="0.01"
+            >
+                <span description>{{ 'controller.trim' | transloco }}</span>
+                <span value>{{ buttonSettingsViewModel.form.controls.trim.value | inputValuePercentHumanReadableValue }}</span>
+            </app-slider-control>
+            <app-range-control class="button-configuration__item"
+                               [startControl]="buttonSettingsViewModel.form.controls.activeZoneStart"
+                               [endControl]="buttonSettingsViewModel.form.controls.activeZoneEnd"
+                               [step]="0.01"
+            >
+                <span startLabel>{{ buttonSettingsViewModel.form.controls.activeZoneStart.value | inputValuePercentHumanReadableValue }}</span>
+                <span endLabel>{{ buttonSettingsViewModel.form.controls.activeZoneEnd.value | inputValuePercentHumanReadableValue }}</span>
+                <span description>{{ 'controller.activeZone' | transloco }}</span>
+            </app-range-control>
+            <app-slider-control [control]="buttonSettingsViewModel.form.controls.activationThreshold"
+                                [step]="0.01"
+            >
+                <span description>{{ 'controller.activationThreshold' | transloco }}</span>
+                <span value>{{ buttonSettingsViewModel.form.controls.activationThreshold.value | inputValuePercentHumanReadableValue }}</span>
+            </app-slider-control>
+            <app-toggle-control [translocoTitle]="'controller.ignoreInputControlTitle'"
+                                [control]="buttonSettingsViewModel.form.controls.ignoreInput"
+            ></app-toggle-control>
+            <app-toggle-control [translocoTitle]="'controller.invert'"
+                                [control]="buttonSettingsViewModel.form.controls.invert"
+            ></app-toggle-control>
+            <app-toggle-control [translocoTitle]="'controller.negativeValuesCanActivate'"
+                                [control]="buttonSettingsViewModel.form.controls.negativeValueCanActivate"
+            ></app-toggle-control>
+        </div>
+    </div>
+</div>

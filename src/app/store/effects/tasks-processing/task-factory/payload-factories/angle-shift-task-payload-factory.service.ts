@@ -1,6 +1,6 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
-import { ControlSchemeBindingType, isInputActivated } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared';
 
 import {
     AngleShiftTaskPayload,
@@ -131,7 +131,7 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
             const input = inputState[controllerInputIdFn(bindingInputModel)];
             if (input) {
                 return {
-                    isActivated: isInputActivated(input.value),
+                    isActivated: input.isActivated,
                     timestamp: input.timestamp,
                 };
             }

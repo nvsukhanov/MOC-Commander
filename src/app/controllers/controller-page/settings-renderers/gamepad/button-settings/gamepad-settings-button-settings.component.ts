@@ -1,0 +1,34 @@
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { MatDividerModule } from '@angular/material/divider';
+import { PushPipe } from '@ngrx/component';
+import { TranslocoModule } from '@ngneat/transloco';
+import { NgIf } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { RangeControlComponent, SliderControlComponent, ToggleControlComponent } from '@app/shared';
+
+import { GamepadSettingsButtonSettingsViewModel } from '../types';
+import { InputOutputDiagramComponent } from '../input-output-diagram';
+import { InputValuePercentHumanReadableValuePipe } from '../active-zone-human-readable-value.pipe';
+
+@Component({
+    standalone: true,
+    selector: 'app-gamepad-settings-button-settings',
+    templateUrl: './gamepad-settings-button-settings.component.html',
+    styleUrls: [ './gamepad-settings-button-settings.component.scss' ],
+    imports: [
+        InputValuePercentHumanReadableValuePipe,
+        InputOutputDiagramComponent,
+        MatDividerModule,
+        PushPipe,
+        RangeControlComponent,
+        ToggleControlComponent,
+        TranslocoModule,
+        NgIf,
+        SliderControlComponent,
+        MatIconModule
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class GamepadSettingsButtonSettingsComponent {
+    @Input() public buttonSettingsViewModel?: GamepadSettingsButtonSettingsViewModel;
+}

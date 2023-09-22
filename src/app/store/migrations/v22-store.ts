@@ -14,7 +14,7 @@ export type V22ControllerSettings = EntityState<V23KeyboardSettings | V23HubSett
     controllerId: string;
     ignoreInput: boolean;
     controllerType: ControllerType.Gamepad;
-    axisConfigs: { [k in string]: Omit<V23GamepadAxisSettings, 'ignoreInput' | 'trim'> };
+    axisConfigs: { [k in string]: Omit<V23GamepadAxisSettings, 'ignoreInput' | 'trim' | 'activationThreshold' | 'negativeValueCanActivate'> };
 }>;
 
 export type V22Store = Override<V23Store, {

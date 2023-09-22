@@ -1,6 +1,7 @@
 import { TranslocoService } from '@ngneat/transloco';
 import { Observable } from 'rxjs';
 import { Memoize } from 'typescript-memoize';
+import { MAX_INPUT_VALUE } from '@app/shared';
 
 import { IAppConfig } from '../../i-app-config';
 import { ControllerType } from '../controller-type';
@@ -48,20 +49,25 @@ export class ControllerProfileGenericGamepad implements IControllerProfile<Gamep
         const axisConfigs: { [k in string]: GamepadAxisSettings } = {};
         for (let i = 0; i < this.axesCount; i++) {
             axisConfigs[i] = {
-                activeZoneStart: this.appConfig.gamepadDefaultDeadZoneStart,
-                activeZoneEnd: 1,
+                activeZoneStart: this.appConfig.gamepad.defaultAxisActiveZoneStart,
+                activeZoneEnd: MAX_INPUT_VALUE,
                 invert: false,
                 ignoreInput: false,
-                trim: 0
+                trim: 0,
+                activationThreshold: this.appConfig.gamepad.defaultActivationThreshold,
+                negativeValueCanActivate: true
             };
         }
         const buttonConfigs: { [k in string]: GamepadButtonSettings } = {};
         for (let i = 0; i < this.buttonsCount; i++) {
             buttonConfigs[i] = {
-                activeZoneStart: this.appConfig.gamepadDefaultDeadZoneStart,
-                activeZoneEnd: 1,
+                activeZoneStart: this.appConfig.gamepad.defaultButtonActiveZoneStart,
+                activeZoneEnd: MAX_INPUT_VALUE,
                 ignoreInput: false,
-                trim: 0
+                trim: 0,
+                activationThreshold: this.appConfig.gamepad.defaultActivationThreshold,
+                negativeValueCanActivate: true,
+                invert: false
             };
         }
         return {

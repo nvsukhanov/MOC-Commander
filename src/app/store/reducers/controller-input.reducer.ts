@@ -46,6 +46,7 @@ export const CONTROLLER_INPUT_FEATURE = createFeature({
                     inputType: nextState.inputType,
                     portId: nextState.portId,
                     buttonId: nextState.buttonId,
+                    isActivated: nextState.isActivated,
                     timestamp: nextState.timestamp
                 }, state);
             }
@@ -55,7 +56,8 @@ export const CONTROLLER_INPUT_FEATURE = createFeature({
                 rawValue: nextState.rawValue,
                 inputId: nextState.inputId,
                 inputType: nextState.inputType,
-                timestamp: nextState.timestamp
+                timestamp: nextState.timestamp,
+                isActivated: nextState.isActivated
             }, state);
         }),
         on(CONTROLLER_INPUT_ACTIONS.requestInputCapture,

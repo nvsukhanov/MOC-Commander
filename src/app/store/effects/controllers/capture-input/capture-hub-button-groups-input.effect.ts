@@ -3,7 +3,7 @@ import { Action, Store, createSelector } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { NEVER, Observable, from, map, mergeMap, pairwise, startWith, switchMap } from 'rxjs';
 import { PortModeName } from 'rxpoweredup';
-import { ControllerInputType, ControllerType } from '@app/shared';
+import { ControllerInputType, ControllerType, MAX_INPUT_VALUE, NULL_INPUT_VALUE } from '@app/shared';
 
 import {
     ATTACHED_IO_MODES_SELECTORS,
@@ -97,7 +97,7 @@ function readButtonGroups(
                     const result: Action[] = [];
 
                     function composeInputReceivedAction(activeInput: boolean): Action {
-                        const value = activeInput ? 1 : 0;
+                        const value = activeInput ? MAX_INPUT_VALUE : NULL_INPUT_VALUE;
                         const inputId = activeInput ? nextValue : prevValue;
                         return CONTROLLER_INPUT_ACTIONS.inputReceived({
                             nextState: {
@@ -108,6 +108,7 @@ function readButtonGroups(
                                 buttonId: activeInput ? nextValue : prevValue,
                                 rawValue: value,
                                 value,
+                                isActivated: activeInput,
                                 timestamp: Date.now(),
                             },
                             prevValue
