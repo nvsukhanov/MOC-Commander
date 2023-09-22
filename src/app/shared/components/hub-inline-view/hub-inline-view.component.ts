@@ -8,6 +8,7 @@ import { RoutesBuilderService } from '@app/routing';
 
 import { EllipsisTitleDirective } from '../ellipsis-title.directive';
 import { HideOnSmallScreenDirective } from '../hide-on-small-screen.directive';
+import { InputActivityIndicatorComponent } from '../input-activity-indicator';
 
 @Component({
     standalone: true,
@@ -22,6 +23,7 @@ import { HideOnSmallScreenDirective } from '../hide-on-small-screen.directive';
         RouterLink,
         EllipsisTitleDirective,
         HideOnSmallScreenDirective,
+        InputActivityIndicatorComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

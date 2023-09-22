@@ -42,7 +42,9 @@ describe('v22 to v23 migration', () => {
                     mutatedAxisConfigs[key] = {
                         ...value,
                         ignoreInput: false,
-                        trim: 0
+                        trim: 0,
+                        activationThreshold: 0,
+                        negativeValueCanActivate: false
                     };
                 });
                 expect(result.controllerSettings?.entities?.[id]).toEqual({

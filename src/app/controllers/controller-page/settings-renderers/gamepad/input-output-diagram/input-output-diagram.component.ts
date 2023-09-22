@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { TranslocoModule } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
+import { MAX_INPUT_VALUE, MIN_INPUT_VALUE, NULL_INPUT_VALUE } from '@app/shared';
 
 @Component({
     standalone: true,
@@ -14,13 +15,13 @@ import { NgIf } from '@angular/common';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputOutputDiagramComponent {
-    @Input() public min = -1;
+    @Input() public min = MIN_INPUT_VALUE;
 
-    @Input() public max = 1;
+    @Input() public max = MAX_INPUT_VALUE;
 
-    @Input() public rawValue? = 0;
+    @Input() public rawValue? = NULL_INPUT_VALUE;
 
-    @Input() public outputValue? = 0;
+    @Input() public outputValue? = NULL_INPUT_VALUE;
 
     @Input() public activeZoneStart? = 0;
 
@@ -63,16 +64,16 @@ export class InputOutputDiagramComponent {
     }
 
     public get humanReadableRawValue(): string {
-        return `${Math.round(Math.abs(this.normalizedRawValue) * 100)}%`;
+        return `${Math.round(this.normalizedRawValue * 100)}%`;
     }
 
     public get humanReadableOutputValue(): string {
-        return `${Math.round(Math.abs(this.normalizedOutputValue) * 100)}%`;
+        return `${Math.round(this.normalizedOutputValue * 100)}%`;
     }
 
     private get normalizedRawValue(): number {
         if (this.rawValue === undefined) {
-            return 0;
+            return NULL_INPUT_VALUE;
         }
         if (this.rawValue < this.min) {
             return this.min;

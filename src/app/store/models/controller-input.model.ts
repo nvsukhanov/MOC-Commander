@@ -7,6 +7,7 @@ export type ButtonInputModel = {
     inputId: string;
     rawValue: number;
     value: number;
+    isActivated: boolean;
     timestamp: number;
 };
 
@@ -18,6 +19,7 @@ export type ButtonGroupInputModel = {
     buttonId: ButtonGroupButtonId;
     rawValue: number;
     value: number;
+    isActivated: boolean;
     timestamp: number;
 };
 
@@ -27,6 +29,7 @@ export type AxisInputModel = {
     inputId: string;
     rawValue: number;
     value: number;
+    isActivated: boolean;
     timestamp: number;
 };
 
@@ -36,6 +39,7 @@ export type TriggerInputModel = {
     inputId: string;
     rawValue: number;
     value: number;
+    isActivated: boolean;
     timestamp: number;
 };
 

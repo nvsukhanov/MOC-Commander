@@ -1,6 +1,6 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
-import { ControlSchemeBindingType, isInputActivated } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared';
 
 import { controllerInputIdFn } from '../../../../reducers';
 import {
@@ -21,9 +21,8 @@ export class SetAngleTaskPayloadFactoryService implements ITaskPayloadFactory<Co
         motorEncoderOffset: number,
     ): { payload: SetAngleTaskPayload; inputTimestamp: number } | null {
         const setAngleInput = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.SetAngle])];
-        const setAngleInputValue = setAngleInput?.value ?? 0;
 
-        if (!isInputActivated(setAngleInputValue)) {
+        if (!setAngleInput?.isActivated) {
             return null;
         }
         const resultingAngle = binding.angle - motorEncoderOffset;

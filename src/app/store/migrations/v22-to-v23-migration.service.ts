@@ -32,7 +32,6 @@ export class V22ToV23MigrationService implements IMigration<V22Store, V23Store> 
         if (prev.controllers?.ids && prev.controllers.entities && prev.controllerSettings?.entities) {
             const controllersSettingsEntities = prev.controllerSettings.entities;
             const controllerEntities = prev.controllers.entities;
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             Object.values(controllersSettingsEntities).forEach((settings) => {
                 if (!settings) {
                     return;
@@ -45,6 +44,7 @@ export class V22ToV23MigrationService implements IMigration<V22Store, V23Store> 
                     const profile = this.gamepadProfileFactory.getByProfileUid(profileUid);
                     const defaultConfig = profile?.getDefaultSettings();
                     if (!defaultConfig || defaultConfig.controllerType !== ControllerType.Gamepad) {
+                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                         result.controllerSettings!.entities![settings.controllerId] = settings as unknown as ControllerSettingsModel;
                     }
                     const axisConfigs: { [k in string]: V23GamepadAxisSettings } = {};
@@ -52,15 +52,19 @@ export class V22ToV23MigrationService implements IMigration<V22Store, V23Store> 
                         axisConfigs[axisId] = {
                             ...axisConfig,
                             ignoreInput: defaultConfig?.axisConfigs[axisId]?.ignoreInput ?? false,
-                            trim: defaultConfig?.axisConfigs[axisId]?.trim ?? 0
+                            trim: defaultConfig?.axisConfigs[axisId]?.trim ?? 0,
+                            activationThreshold: defaultConfig?.axisConfigs[axisId]?.activationThreshold ?? 0,
+                            negativeValueCanActivate: defaultConfig?.axisConfigs[axisId]?.negativeValueCanActivate ?? false
                         };
                     });
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     result.controllerSettings!.entities![settings.controllerId] = {
                         ...settings,
                         axisConfigs,
                         buttonConfigs: (defaultConfig as GamepadSettings).buttonConfigs
                     } satisfies V23GamepadSettings;
                 } else {
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     result.controllerSettings!.entities![settings.controllerId] = settings as unknown as ControllerSettingsModel;
                 }
             });

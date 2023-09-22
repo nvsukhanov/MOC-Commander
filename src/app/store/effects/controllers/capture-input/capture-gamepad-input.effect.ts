@@ -37,8 +37,8 @@ function readGamepads(
 
                 return gamepadRead$.pipe(
                     filter((data): data is Gamepad => !!data),
-                    map((data) => valueTransformer.trimValue(data.axes[axisIndex])),
-                    startWith(valueTransformer.trimValue(axisValue)),
+                    map((data) => valueTransformer.transformAxisRawValue(data.axes[axisIndex], settings.axisConfigs[axisIndex])),
+                    startWith(valueTransformer.transformAxisRawValue(axisValue, settings.axisConfigs[axisIndex])),
                     distinctUntilChanged(),
                     map((rawValue) => ({
                         rawValue,
@@ -52,6 +52,7 @@ function readGamepads(
                             inputId: axisIndex.toString(),
                             value: current.value,
                             rawValue: current.rawValue,
+                            isActivated: valueTransformer.isAxisActivationThresholdReached(current.rawValue, settings.axisConfigs[axisIndex]),
                             timestamp: Date.now()
                         },
                         prevValue
@@ -68,18 +69,22 @@ function readGamepads(
                 });
                 return gamepadRead$.pipe(
                     filter((data): data is Gamepad => !!data && !!data.buttons[buttonIndex]),
-                    map((apiGamepad) => valueTransformer.trimValue(apiGamepad.buttons[buttonIndex].value)),
-                    startWith(valueTransformer.trimValue(browserGamepad.buttons[buttonIndex].value)),
+                    map((apiGamepad) => valueTransformer.transformButtonRawValue(apiGamepad.buttons[buttonIndex].value, settings.buttonConfigs[buttonIndex])),
+                    startWith(valueTransformer.transformButtonRawValue(browserGamepad.buttons[buttonIndex].value, settings.buttonConfigs[buttonIndex])),
                     distinctUntilChanged(),
+                    map((rawValue) => ({
+                        rawValue,
+                        value: valueTransformer.transformButtonValue(rawValue, settings.buttonConfigs[buttonIndex])
+                    })),
                     concatLatestFrom(() => store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(inputId))),
-                    filter(([ currentValue, previousValue ]) => currentValue !== previousValue),
-                    map(([ value, prevValue ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
+                    map(([ current, prevValue ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
                         nextState: {
                             controllerId: connection.controllerId,
                             inputType,
                             inputId: buttonIndex.toString(),
-                            value,
-                            rawValue: value,
+                            value: current.value,
+                            rawValue: current.rawValue,
+                            isActivated: valueTransformer.isButtonActivationThresholdReached(current.rawValue, settings.buttonConfigs[buttonIndex]),
                             timestamp: Date.now()
                         },
                         prevValue

@@ -19,7 +19,7 @@ export const LISTEN_GAMEPAD_CONNECT = createEffect((
 ) => {
     return actions$.pipe(
         ofType(CONTROLLERS_ACTIONS.waitForConnect),
-        switchMap(() => interval(config.gamepadConnectionReadInterval)),
+        switchMap(() => interval(config.gamepad.connectionReadInterval)),
         map(() => window.navigator.getGamepads().filter((d) => !!d) as Gamepad[]),
         filter((r) => r.length > 0),
         map((gamepads) => {

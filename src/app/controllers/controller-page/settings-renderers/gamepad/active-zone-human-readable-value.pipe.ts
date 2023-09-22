@@ -2,10 +2,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
     standalone: true,
-    name: 'activeZoneHumanReadableValue',
+    name: 'inputValuePercentHumanReadableValue',
     pure: true
 })
-export class ActiveZoneHumanReadableValuePipe implements PipeTransform {
+export class InputValuePercentHumanReadableValuePipe implements PipeTransform {
     public transform(
         value: number
     ): string {

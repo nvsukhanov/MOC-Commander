@@ -7,6 +7,7 @@ import { IControllerProfile } from './i-controller-profile';
 import { GamepadSettings } from './controller-settings';
 import { ControllerType } from './controller-type';
 import { IAppConfig } from '../i-app-config';
+import { MAX_INPUT_VALUE } from '../consts';
 
 export abstract class GamepadProfile implements IControllerProfile<GamepadSettings> {
     public abstract readonly uid: string;
@@ -64,19 +65,24 @@ export abstract class GamepadProfile implements IControllerProfile<GamepadSettin
         };
         Object.keys(this.axisNames).forEach((axisId) => {
             result.axisConfigs[axisId] = {
-                activeZoneStart: this.config.gamepadDefaultDeadZoneStart,
-                activeZoneEnd: 1,
+                activeZoneStart: this.config.gamepad.defaultAxisActiveZoneStart,
+                activeZoneEnd: MAX_INPUT_VALUE,
                 invert: this.invertedAxisIndices.includes(Number(axisId)),
                 ignoreInput: false,
-                trim: 0
+                trim: 0,
+                activationThreshold: this.config.gamepad.defaultActivationThreshold,
+                negativeValueCanActivate: true
             };
         });
         Object.keys(this.buttonNames).forEach((buttonId) => {
             result.buttonConfigs[buttonId] = {
-                activeZoneStart: this.config.gamepadDefaultDeadZoneStart,
-                activeZoneEnd: 1,
+                activeZoneStart: this.config.gamepad.defaultButtonActiveZoneStart,
+                activeZoneEnd: MAX_INPUT_VALUE,
                 ignoreInput: false,
-                trim: 0
+                trim: 0,
+                activationThreshold: this.config.gamepad.defaultActivationThreshold,
+                negativeValueCanActivate: true,
+                invert: false
             };
         });
         return result;

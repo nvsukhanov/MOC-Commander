@@ -1,6 +1,6 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
-import { ControlSchemeBindingType, isInputActivated } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared';
 
 import {
     ControlSchemeInputAction,
@@ -20,9 +20,8 @@ export class StepperTaskPayloadFactoryService implements ITaskPayloadFactory<Con
         inputsState: Dictionary<ControllerInputModel>,
     ): { payload: StepperTaskPayload; inputTimestamp: number } | null {
         const stepInput = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Step])];
-        const stepInputValue = stepInput?.value ?? 0;
 
-        if (!isInputActivated(stepInputValue)) {
+        if (!stepInput?.isActivated) {
             return null;
         }
 
