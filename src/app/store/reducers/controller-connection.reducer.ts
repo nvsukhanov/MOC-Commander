@@ -63,5 +63,8 @@ export const CONTROLLER_CONNECTION_FEATURE = createFeature({
                 state
             );
         }),
+        on(CONTROLLERS_ACTIONS.forgetController, (state, action): ControllerConnectionState => {
+            return CONTROLLER_CONNECTION_ADAPTER.removeOne(action.controllerId, state);
+        })
     )
 });

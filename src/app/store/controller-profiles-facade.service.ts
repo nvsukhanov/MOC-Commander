@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { ControllerType, GamepadProfileFactoryService, HubProfileFactoryService, IControllerProfile, KeyboardProfileFactoryService } from '@app/shared';
+import {
+    ControllerType,
+    GamepadProfileFactoryService,
+    HubProfileFactoryService,
+    IControllerProfile,
+    KeyboardProfileFactoryService,
+    UnknownControllerProfileFactoryService
+} from '@app/shared';
 
 import { ControllerModel } from './models';
 import { CONTROLLER_SELECTORS, HUBS_SELECTORS } from './selectors';
@@ -12,7 +19,8 @@ export class ControllerProfilesFacadeService {
         private readonly store: Store,
         private readonly gamepadProfileFactoryService: GamepadProfileFactoryService,
         private readonly hubProfileFactoryService: HubProfileFactoryService,
-        private readonly keyboardProfileFactoryService: KeyboardProfileFactoryService
+        private readonly keyboardProfileFactoryService: KeyboardProfileFactoryService,
+        private readonly unknownControllerProfileFactoryService: UnknownControllerProfileFactoryService
     ) {
     }
 
@@ -22,7 +30,7 @@ export class ControllerProfilesFacadeService {
         return this.store.select(CONTROLLER_SELECTORS.selectById(controllerId)).pipe(
             map((controllerModel) => {
                 if (!controllerModel) {
-                    throw new Error(`Controller with id ${controllerId} not found`);
+                    return this.unknownControllerProfileFactoryService.fromUid(controllerId);
                 }
                 return this.getByControllerModel(controllerModel);
             })

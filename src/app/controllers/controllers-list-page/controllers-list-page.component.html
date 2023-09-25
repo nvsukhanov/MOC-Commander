@@ -32,6 +32,14 @@
                             >
                                 {{ 'controller.isNotConnectedInlineNotification' | transloco }}
                             </span>
+                            <span class="spacer"></span>
+                            <button *ngIf="controller.canForget"
+                                    mat-button
+                                    [color]="'warn'"
+                                    (click)="forgetController(controller.id)"
+                            >
+                                {{ 'controller.forget' | transloco }}
+                            </button>
                         </mat-card-title>
                     </mat-card-header>
                 </mat-card>

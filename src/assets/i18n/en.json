@@ -306,7 +306,12 @@
     "controllerTypeKeyboard": "Keyboard",
     "isActivatedValueTrue": "Activation zone reached",
     "isActivatedValueFalse": "Activation zone not reached",
-    "resetInputSettingsToDefault": "Reset to default"
+    "resetInputSettingsToDefault": "Reset to default",
+    "forget": "Forget",
+    "forgetControllerDialogTitle": "Are you sure you want to forget this controller?",
+    "forgetControllerDialogDescription": "Some control schemes may stop working. You can revert this action by reconnecting the controller; however, controller settings will be lost.",
+    "forgetControllerDialogConfirmButtonTitle": "Forget",
+    "forgetControllerDialogCancelButtonTitle": "Cancel"
   },
   "controllerProfiles": {
     "buttonState": "{ value, select, 1 {Pressed} other {Released} }",

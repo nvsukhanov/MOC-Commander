@@ -21,6 +21,7 @@ export const CONTROLLERS_ACTIONS = createActionGroup({
         'gamepadDisconnected': props<{ id: string }>(),
         'hubDiscovered': props<{ profileUid: string; hubId: string; defaultSettings: HubControllerSettings }>(),
         'hubConnected': props<{ hubId: string }>(),
-        'hubDisconnected': props<{ hubId: string }>()
+        'hubDisconnected': props<{ hubId: string }>(),
+        'forgetController': props<{ controllerId: string }>()
     }
 });

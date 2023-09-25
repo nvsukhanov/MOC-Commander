@@ -56,6 +56,9 @@ export const CONTROLLER_SETTINGS_FEATURE = createFeature({
         }),
         on(HUBS_ACTIONS.forgetHub, (state, action): ControllerSettingsState => {
             return CONTROLLER_SETTINGS_ENTITY_ADAPTER.removeOne(action.hubId, state);
+        }),
+        on(CONTROLLERS_ACTIONS.forgetController, (state, action): ControllerSettingsState => {
+            return CONTROLLER_SETTINGS_ENTITY_ADAPTER.removeOne(action.controllerId, state);
         })
     ),
 });

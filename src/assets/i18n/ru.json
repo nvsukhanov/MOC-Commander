@@ -306,7 +306,12 @@
     "controllerTypeKeyboard": "Клавиатура",
     "isActivatedValueTrue": "Достигнут порог активации",
     "isActivatedValueFalse": "Порог активации не достигнут",
-    "resetInputSettingsToDefault": "Сбросить настройки ввода"
+    "resetInputSettingsToDefault": "Сбросить настройки ввода",
+    "forget": "Забыть",
+    "forgetControllerDialogTitle": "Вы уверены что хотите забыть этот контроллер?",
+    "forgetControllerDialogDescription": "Некоторые схемы управления могут перестать работать. Повторное подключение контроллера восстановит работу схем, однако настройки контроллера будут потеряны.",
+    "forgetControllerDialogConfirmButtonTitle": "Забыть",
+    "forgetControllerDialogCancelButtonTitle": "Отмена"
   },
   "controllerProfiles": {
     "buttonState": "{ value, select, 1 {Нажато} other {Не нажато} }",
