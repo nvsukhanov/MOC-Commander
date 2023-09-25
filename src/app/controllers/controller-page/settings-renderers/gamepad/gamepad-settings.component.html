@@ -27,6 +27,13 @@
                 <app-gamepad-settings-axis-settings *ngIf="panel.expanded"
                                                     [axisSettingsViewModel]="axis"
                 ></app-gamepad-settings-axis-settings>
+
+                <mat-action-row>
+                    <button mat-button
+                            [disabled]="!!(axis.areSettingsDefault$ | ngrxPush)"
+                            (click)="resetAxisSettings(axis.inputId)"
+                    >{{ 'controller.resetInputSettingsToDefault' | transloco }}</button>
+                </mat-action-row>
             </mat-expansion-panel>
 
             <mat-expansion-panel *ngFor="let button of viewModel.buttons; trackBy: trackButtonByInputIdFn"
@@ -47,6 +54,13 @@
                 <app-gamepad-settings-button-settings *ngIf="panel.expanded"
                                                       [buttonSettingsViewModel]="button"
                 ></app-gamepad-settings-button-settings>
+
+                <mat-action-row>
+                    <button mat-button
+                            [disabled]="!!(button.areSettingsDefault$ | ngrxPush)"
+                            (click)="resetButtonSettings(button.inputId)"
+                    >{{ 'controller.resetInputSettingsToDefault' | transloco }}</button>
+                </mat-action-row>
             </mat-expansion-panel>
         </mat-accordion>
     </section>
