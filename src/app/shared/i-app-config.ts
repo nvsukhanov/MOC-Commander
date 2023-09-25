@@ -1,5 +1,5 @@
 import { InjectionToken, isDevMode } from '@angular/core';
-import { LogLevel } from 'rxpoweredup';
+import { LogLevel, PortOperationStartupInformation } from 'rxpoweredup';
 
 export interface IAppConfig {
     readonly gamepad: {
@@ -14,6 +14,7 @@ export interface IAppConfig {
     readonly messageSendTimeout: number;
     readonly maxMessageSendAttempts: number;
     readonly initialMessageSendRetryDelayMs: number;
+    readonly defaultBufferingMode: PortOperationStartupInformation;
 }
 
 export const APP_CONFIG = new InjectionToken<IAppConfig>('APP_CONFIG', {
@@ -29,7 +30,8 @@ export const APP_CONFIG = new InjectionToken<IAppConfig>('APP_CONFIG', {
         logLevel: isDevMode() ? LogLevel.Debug : LogLevel.Warning,
         messageSendTimeout: 200,
         maxMessageSendAttempts: 5,
-        initialMessageSendRetryDelayMs: 100
+        initialMessageSendRetryDelayMs: 100,
+        defaultBufferingMode: PortOperationStartupInformation.executeImmediately
     }),
     providedIn: 'root'
 });

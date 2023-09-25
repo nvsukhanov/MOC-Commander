@@ -32,7 +32,8 @@ export const DISCOVER_HUB_EFFECT = createEffect((
                     outgoingMessageMiddleware: [ outgoingLoggerMiddleware, communicationNotifierMiddleware ],
                     messageSendTimeout: config.messageSendTimeout,
                     maxMessageSendAttempts: config.maxMessageSendAttempts,
-                    initialMessageSendRetryDelayMs: config.initialMessageSendRetryDelayMs
+                    initialMessageSendRetryDelayMs: config.initialMessageSendRetryDelayMs,
+                    defaultBufferMode: config.defaultBufferingMode
                 }
             ).pipe(
                 switchMap((hub: IHub) => {
