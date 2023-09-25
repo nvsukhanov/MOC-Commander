@@ -16,12 +16,12 @@ $border-width: 3px;
         border-width: $border-width;
         border-style: solid;
         border-radius: 5px;
+        border-color: var(--app-text-color);
         display: flex;
         align-items: center;
         justify-content: center;
         width: calc(#{$width} - #{$border-width * 2});
         height: calc(#{$height} - #{$border-width * 2});
-        color: var(--app-text-color);
     }
 
     &-center {
