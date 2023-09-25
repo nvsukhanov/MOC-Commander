@@ -31,6 +31,7 @@ function createHubTreeNode(
         path: hubConfig.hubId,
         hubId: hubConfig.hubId,
         nodeType: ControlSchemeNodeTypes.Hub,
+        name: hubConfig.name ?? '',
         children: []
     };
 }

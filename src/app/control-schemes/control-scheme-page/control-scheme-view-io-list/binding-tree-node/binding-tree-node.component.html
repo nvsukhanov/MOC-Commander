@@ -16,9 +16,14 @@
                     {{ viewModel.operationMode | bindingTypeToL10nKey | transloco }}
                 </mat-error>
                 <span class="cdk-visually-hidden">
-                    {{ 'controlScheme.ioCapabilitiesMismatch' | transloco }}
+                    ({{ 'controlScheme.ioCapabilitiesMismatch' | transloco }})
                 </span>
             </ng-template>
+            <span *ngIf="!viewModel.areAllControllersConnected"
+                  class="cdk-visually-hidden"
+            >
+                ({{ 'controlScheme.controllerIsNotConnectedLabel' | transloco }})
+            </span>
         </a>
     </div>
     <div class="binding__controls">
@@ -31,9 +36,6 @@
                 <span [class.binding__controls_disconnected]="!controlData.isControllerConnected"
                       [title]="'controller.isNotConnectedInlineNotification' | transloco"
                 >{{ controlData.input | fullControllerInputName | ngrxPush }}</span>
-                <span *ngIf="!controlData.isControllerConnected"
-                      class="cdk-visually-hidden"
-                >{{ 'controller.isNotConnectedInlineNotification' | transloco }}</span>
             </ng-template>
         </div>
     </div>

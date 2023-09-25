@@ -29,6 +29,7 @@ export type ControlSchemeViewHubTreeNode = {
     path: string;
     nodeType: ControlSchemeNodeTypes.Hub;
     hubId: string;
+    name: string;
     children: ControlSchemeViewIoTreeNode[];
 };
 

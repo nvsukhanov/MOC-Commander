@@ -15,7 +15,7 @@ export const INPUT_TREE_NODE_VIEW_MODEL_SELECTOR = (
 ) => createSelector(
     CONTROLLER_CONNECTION_SELECTORS.selectEntities,
     (controllerConnectionEntities: Dictionary<ControllerConnectionModel>): BindingTreeNodeViewModel => {
-        return {
+        const result: BindingTreeNodeViewModel = {
             schemeName,
             bindingId,
             ioHasNoRequiredCapabilities,
@@ -26,7 +26,11 @@ export const INPUT_TREE_NODE_VIEW_MODEL_SELECTOR = (
                     input,
                     isControllerConnected: !!controllerConnectionEntities[input.controllerId]
                 };
-            }).filter((data) => !!data.input.controllerId)
+            }).filter((data) => !!data.input.controllerId),
+            areAllControllersConnected: true
         };
+        result.areAllControllersConnected = result.controlData.every((data) => data.isControllerConnected);
+
+        return result;
     }
 );
