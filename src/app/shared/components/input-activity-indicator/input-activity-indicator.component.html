@@ -1,16 +1,14 @@
-<ng-container *ngIf="isActive; else buttonNotPressed">
-    <mat-icon [title]="activeTitle"
-              class="button-state"
-              [fontIcon]="'radio_button_checked'"
-              [color]="'primary'"
-    ></mat-icon>
-    <span class="cdk-visually-hidden">{{ activeTitle }}</span>
+<ng-container *ngIf="isActive; else inactive">
+    <div class="indicator-container indicator-container_active"
+         [title]="activeTitle"
+    >
+        <div class="indicator-center indicator-center_active"></div>
+    </div>
 </ng-container>
 
-<ng-template #buttonNotPressed>
-    <mat-icon [title]="inactiveTitle"
-              class="button-state"
-              [fontIcon]="'radio_button_off'"
-    ></mat-icon>
-    <span class="cdk-visually-hidden">{{ inactiveTitle }}</span>
+<ng-template #inactive>
+    <div class="indicator-container"
+         [title]="inactiveTitle"
+    >
+    </div>
 </ng-template>

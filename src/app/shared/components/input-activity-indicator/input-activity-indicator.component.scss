@@ -1,5 +1,33 @@
+$height: 24px;
+$width: 24px;
+$internal-padding: 2px;
+$border-width: 3px;
+
 :host {
     display: inline-block;
-    height: 24px;
-    width: 24px;
+    height: $height;
+    width: $width;
+    min-width: $height;
+    min-height: $width;
+}
+
+.indicator {
+    &-container {
+        border-width: $border-width;
+        border-style: solid;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: calc(#{$width} - #{$border-width * 2});
+        height: calc(#{$height} - #{$border-width * 2});
+        color: var(--app-text-color);
+    }
+
+    &-center {
+        width: calc(#{$width} - #{$border-width * 2} - #{$internal-padding * 2});
+        height: calc(#{$height} - #{$border-width * 2} - #{$internal-padding * 2});
+        background-color: var(--app-text-color);
+        border-radius: 2px;
+    }
 }
