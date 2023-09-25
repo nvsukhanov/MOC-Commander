@@ -1,11 +1,11 @@
-# webPoweredUp
+# webPoweredApp
 
-[![GitHub license](https://img.shields.io/github/license/nvsukhanov/webPoweredUp)](https://github.com/nvsukhanov/webPoweredUp/blob/main/LICENSE.md)
-[![CI Status](https://github.com/nvsukhanov/webPoweredUp/actions/workflows/ci.yml/badge.svg)](https://github.com/nvsukhanov/webPoweredUp/actions)
+[![GitHub license](https://img.shields.io/github/license/nvsukhanov/webPoweredApp)](https://github.com/nvsukhanov/webPoweredApp/blob/main/LICENSE.md)
+[![CI Status](https://github.com/nvsukhanov/webPoweredApp/actions/workflows/ci.yml/badge.svg)](https://github.com/nvsukhanov/webPoweredApp/actions)
 
 An open-source serverless web application designed for controlling LEGO Powered Up MOCs using a variety of physical input devices.
 
-[Demo](https://webpoweredup.pages.dev)
+[Demo](https://webpoweredapp.pages.dev)
 
 # Disclaimer
 

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "webPoweredUp": {
+    "webPoweredApp": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "webPoweredUp:build:production"
+              "browserTarget": "webPoweredApp:build:production"
             },
             "development": {
-              "browserTarget": "webPoweredUp:build:development"
+              "browserTarget": "webPoweredApp:build:development"
             }
           },
           "defaultConfiguration": "development"
