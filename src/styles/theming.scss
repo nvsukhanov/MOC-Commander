@@ -71,6 +71,7 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
     --app-warning-color: #{mat.get-color-from-palette($light-warn-palette, 500)};
     --app-warning-contrast-color: #{mat.get-contrast-color-from-palette($light-warn-palette, 500)};
     --app-disabled-color: rgba(0, 0, 0, 0.38);
+    --app-text-color: #{$dark-primary-text};
 }
 
 .theme-dark {
@@ -84,6 +85,7 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
     --app-warning-color: #{mat.get-color-from-palette($dark-warn-palette, 500)};
     --app-warning-contrast-color: #{mat.get-contrast-color-from-palette($dark-warn-palette, 500)};
     --app-disabled-color: rgba(255, 255, 255, 0.5);
+    --app-text-color: #{$light-primary-text};
 
     --mdc-theme-primary: #{$light-primary-text};
     --mdc-theme-text-primary-on-background: #{$light-primary-text};
