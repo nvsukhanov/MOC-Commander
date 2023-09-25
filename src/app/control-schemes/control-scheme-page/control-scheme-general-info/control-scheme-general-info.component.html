@@ -13,12 +13,14 @@
                         matSuffix
                         [disabled]="!canSave()"
                         (click)="onSave($event)"
+                        [attr.aria-label]="'controlScheme.editNameSaveButtonTitle' | transloco"
                 >
                     <mat-icon [fontIcon]="'save'"></mat-icon>
                 </button>
                 <button mat-icon-button
                         matSuffix
                         (click)="onCancel()"
+                        [attr.aria-label]="'controlScheme.editNameCancelButtonTitle' | transloco"
                 >
                     <mat-icon [fontIcon]="'cancel'"></mat-icon>
                 </button>
@@ -36,6 +38,7 @@
         </h2>
         <button mat-icon-button
                 (click)="onEditMode()"
+                [attr.aria-label]="'controlScheme.editNameButtonTitle' | transloco"
         >
             <mat-icon [fontIcon]="'edit'"></mat-icon>
         </button>

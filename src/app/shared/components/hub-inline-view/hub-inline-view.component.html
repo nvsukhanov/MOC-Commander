@@ -68,6 +68,7 @@
             class="forget-button"
             color="warn"
             (click)="onForgetClick()"
+            [attr.aria-label]="'hub.forgetHubLabel' | transloco: { name }"
     >
         {{ 'hub.forget' | transloco }}
     </button>

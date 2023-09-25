@@ -13,4 +13,5 @@ export type BindingTreeNodeViewModel = {
     ioHasNoRequiredCapabilities: boolean;
     operationMode: ControlSchemeBindingType;
     controlData: BindingTreeNodeRecord[];
+    areAllControllersConnected: boolean;
 };

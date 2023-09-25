@@ -12,6 +12,7 @@
            [matBadge]="connectedControllersCount"
            [matBadgeColor]="'primary'"
            [matBadgeHidden]="!connectedControllersCount"
+           [attr.aria-label]="'nav.controllersList' | transloco"
         >
             <mat-icon [fontIcon]="'gamepad'"></mat-icon>
         </a>

@@ -7,15 +7,13 @@ import { MatDividerModule } from '@angular/material/divider';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { BindingTypeToL10nKeyPipe, HideOnSmallScreenDirective } from '@app/shared';
+import { BindingTypeToL10nKeyPipe, ControlSchemeBindingType, HideOnSmallScreenDirective, getEnumValues } from '@app/shared';
 import { ControlSchemeBinding } from '@app/store';
 
 import { ControlSchemeBindingForm, ControlSchemeFormBuilderService, ControlSchemeFormMapperService } from '../forms';
 import { RenderBindingDetailsEditDirective } from './render-binding-details-edit.directive';
 import { BindingControlSelectHubComponent, BindingControlSelectIoComponent } from '../controls';
 import { BindingEditSectionComponent } from './section';
-import { BINDING_EDIT_SELECTORS, BindingTypeSelectViewModel } from './binding-edit.selectors';
 
 @Component({
     standalone: true,
@@ -43,7 +41,7 @@ import { BINDING_EDIT_SELECTORS, BindingTypeSelectViewModel } from './binding-ed
     exportAs: 'appBindingEdit'
 })
 export class BindingEditComponent {
-    public readonly availableBindingTypes$: Observable<BindingTypeSelectViewModel[]>;
+    public readonly availableBindingTypes = getEnumValues(ControlSchemeBindingType);
 
     private _canSave$: Observable<boolean> = of(false);
 
@@ -52,9 +50,7 @@ export class BindingEditComponent {
     constructor(
         private readonly formBuilder: ControlSchemeFormBuilderService,
         private readonly formMapper: ControlSchemeFormMapperService,
-        private readonly store: Store
     ) {
-        this.availableBindingTypes$ = this.store.select(BINDING_EDIT_SELECTORS.selectBindingTypeSelectViewModel);
     }
 
     @Input()
