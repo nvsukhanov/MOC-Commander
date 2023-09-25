@@ -303,7 +303,9 @@
     "controllerSettingsSection": "Настройки контроллера",
     "controllerTypeHub": "Хаб",
     "controllerTypeGamepad": "Геймпад",
-    "controllerTypeKeyboard": "Клавиатура"
+    "controllerTypeKeyboard": "Клавиатура",
+    "isActivatedValueTrue": "Достигнут порог активации",
+    "isActivatedValueFalse": "Порог активации не достигнут"
   },
   "controllerProfiles": {
     "buttonState": "{ value, select, 1 {Нажато} other {Не нажато} }",

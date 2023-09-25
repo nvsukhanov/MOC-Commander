@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RangeControlComponent, SliderControlComponent, ToggleControlComponent } from '@app/shared';
+import { InputActivityIndicatorComponent, RangeControlComponent, SliderControlComponent, ToggleControlComponent } from '@app/shared';
 
 import { GamepadSettingsAxisSettingsViewModel } from '../types';
 import { InputOutputDiagramComponent } from '../input-output-diagram';
@@ -32,6 +32,7 @@ import { InputValuePercentHumanReadableValuePipe } from '../active-zone-human-re
         SliderControlComponent,
         MatIconModule,
         MatTooltipModule,
+        InputActivityIndicatorComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

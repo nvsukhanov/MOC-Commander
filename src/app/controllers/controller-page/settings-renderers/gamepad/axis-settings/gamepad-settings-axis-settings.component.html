@@ -2,6 +2,10 @@
      class="axis-configuration">
     <div class="axis-configuration__info">
         <div class="axis-configuration__input-output-diagram-container">
+            <app-input-activity-indicator [isActive]="!!(axisSettingsViewModel.isActivated$ | ngrxPush)"
+                                          [activeTitle]="'controller.isActivatedValueTrue' | transloco"
+                                          [inactiveTitle]="'controller.isActivatedValueFalse' | transloco"
+            ></app-input-activity-indicator>
             <app-input-output-diagram class="axis-configuration__input-output-diagram"
                                       [translocoTitle]="'controller.rawInput'"
                                       [rawValue]="axisSettingsViewModel.rawValue$ | ngrxPush"
