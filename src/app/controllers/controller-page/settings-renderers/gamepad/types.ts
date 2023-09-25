@@ -12,6 +12,7 @@ export type GamepadSettingsAxisSettingsViewModel = {
     rawValue$: Observable<number>;
     outputValue$: Observable<number>;
     isActivated$: Observable<boolean>;
+    areSettingsDefault$: Observable<boolean>;
 };
 
 export type GamepadSettingsButtonSettingsViewModel = {
@@ -21,6 +22,7 @@ export type GamepadSettingsButtonSettingsViewModel = {
     rawValue$: Observable<number>;
     outputValue$: Observable<number>;
     isActivated$: Observable<boolean>;
+    areSettingsDefault$: Observable<boolean>;
 };
 
 export type GamepadSettingsViewModel = {

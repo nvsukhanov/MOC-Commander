@@ -305,7 +305,8 @@
     "controllerTypeGamepad": "Gamepad",
     "controllerTypeKeyboard": "Keyboard",
     "isActivatedValueTrue": "Activation zone reached",
-    "isActivatedValueFalse": "Activation zone not reached"
+    "isActivatedValueFalse": "Activation zone not reached",
+    "resetInputSettingsToDefault": "Reset to default"
   },
   "controllerProfiles": {
     "buttonState": "{ value, select, 1 {Pressed} other {Released} }",

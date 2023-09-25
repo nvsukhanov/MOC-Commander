@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, filter, map, switchMap } from 'rxjs';
+import { Observable, animationFrameScheduler, filter, map, startWith, switchMap, throttleTime } from 'rxjs';
+import deepEqual from 'deep-equal';
 import { CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS, ControllerModel, GamepadSettingsModel, controllerInputIdFn } from '@app/store';
 import { ControllerInputType, GamepadProfileFactoryService, GamepadSettings, IControllerProfile } from '@app/shared';
 
@@ -48,6 +49,14 @@ export class GamepadSettingsViewModelBuilderService {
             const rawValue$ = this.store.select(CONTROLLER_INPUT_SELECTORS.selectRawValueById(controllerId));
             const outputValue$ = this.store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(controllerId));
             const isActivated$ = this.store.select(CONTROLLER_INPUT_SELECTORS.selectIsActivatedById(controllerId));
+            const areSettingsDefault$ = form.controls.axisConfigs.controls[axisId].valueChanges.pipe(
+                throttleTime(50, animationFrameScheduler, { trailing: true }),
+                startWith(null),
+                switchMap(() => profile$),
+                map((profile) => {
+                    return deepEqual(profile.getDefaultSettings().axisConfigs[axisId], form.controls.axisConfigs.controls[axisId].getRawValue());
+                })
+            );
 
             result.push({
                 inputId: axisId,
@@ -57,7 +66,8 @@ export class GamepadSettingsViewModelBuilderService {
                 ),
                 rawValue$,
                 outputValue$,
-                isActivated$
+                isActivated$,
+                areSettingsDefault$
             });
         }
         return result;
@@ -99,6 +109,15 @@ export class GamepadSettingsViewModelBuilderService {
                 switchMap((controllerId) => this.store.select(CONTROLLER_INPUT_SELECTORS.selectIsActivatedById(controllerId)))
             );
 
+            const areSettingsDefault$ = form.controls.buttonConfigs.controls[buttonId].valueChanges.pipe(
+                throttleTime(50, animationFrameScheduler, { trailing: true }),
+                startWith(null),
+                switchMap(() => profile$),
+                map((profile) => {
+                    return deepEqual(profile.getDefaultSettings().buttonConfigs[buttonId], form.controls.buttonConfigs.controls[buttonId].getRawValue());
+                })
+            );
+
             result.push({
                 inputId: buttonId,
                 form: form.controls.buttonConfigs.controls[buttonId],
@@ -107,7 +126,8 @@ export class GamepadSettingsViewModelBuilderService {
                 ),
                 rawValue$,
                 outputValue$,
-                isActivated$
+                isActivated$,
+                areSettingsDefault$
             });
         }
         return result;

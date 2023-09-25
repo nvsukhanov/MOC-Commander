@@ -1,13 +1,21 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { Observable, Subject, Subscription, throttleTime } from 'rxjs';
+import { Observable, Subject, Subscription, animationFrameScheduler, map, of, take, throttleTime } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { CONTROLLER_INPUT_ACTIONS, GamepadSettingsModel } from '@app/store';
-import { HideOnSmallScreenDirective, InputActivityIndicatorComponent, RangeControlComponent, ToggleControlComponent } from '@app/shared';
+import { MatButtonModule } from '@angular/material/button';
+import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_SELECTORS, GamepadSettingsModel } from '@app/store';
+import {
+    GamepadProfile,
+    GamepadProfileFactoryService,
+    HideOnSmallScreenDirective,
+    InputActivityIndicatorComponent,
+    RangeControlComponent,
+    ToggleControlComponent
+} from '@app/shared';
 
 import { IControllerSettingsRenderer } from '../i-controller-settings-renderer';
 import { InputOutputDiagramComponent } from './input-output-diagram';
@@ -39,7 +47,8 @@ import { GamepadSettingsButtonSettingsComponent } from './button-settings';
         GamepadSettingsAxisSettingsComponent,
         GamepadSettingsButtonSettingsComponent,
         InputActivityIndicatorComponent,
-        HideOnSmallScreenDirective
+        HideOnSmallScreenDirective,
+        MatButtonModule
     ],
     providers: [
         GamepadSettingsFormBuilderService,
@@ -56,6 +65,8 @@ export class GamepadSettingsComponent implements IControllerSettingsRenderer<Gam
 
     private gamepadSettingsForm?: GamepadSettingsForm;
 
+    private profile$: Observable<GamepadProfile | null> = of(null);
+
     private readonly _settingsChanges$ = new Subject<GamepadSettingsModel>();
 
     constructor(
@@ -63,6 +74,7 @@ export class GamepadSettingsComponent implements IControllerSettingsRenderer<Gam
         private readonly store: Store,
         private readonly formBuilder: GamepadSettingsFormBuilderService,
         private readonly viewModelBuilder: GamepadSettingsViewModelBuilderService,
+        private readonly profileFactoryService: GamepadProfileFactoryService
     ) {
     }
 
@@ -111,7 +123,7 @@ export class GamepadSettingsComponent implements IControllerSettingsRenderer<Gam
 
         this.formValueChangesSubscription?.unsubscribe();
         this.formValueChangesSubscription = settingsForm.valueChanges.pipe(
-            throttleTime(100, undefined, { trailing: true }),
+            throttleTime(100, animationFrameScheduler, { trailing: true }),
         ).subscribe(() => {
             const rawValue = this.gamepadSettingsForm?.getRawValue();
             if (rawValue) {
@@ -119,8 +131,53 @@ export class GamepadSettingsComponent implements IControllerSettingsRenderer<Gam
             }
         });
 
+        this.profile$ = this.store.select(CONTROLLER_SELECTORS.selectById(settingsForm.controls.controllerId.value)).pipe(
+            map((controllerModel) => controllerModel
+                                     ? this.profileFactoryService.getByProfileUid(controllerModel.profileUid) as GamepadProfile
+                                     : null
+            )
+        );
+
         this._viewModel = viewModel;
         this.gamepadSettingsForm = settingsForm;
         this.cdRef.detectChanges();
+    }
+
+    public resetAxisSettings(
+        axisId: string
+    ): void {
+        if (!this.gamepadSettingsForm) {
+            throw new Error('Gamepad settings form not found');
+        }
+
+        this.profile$.pipe(
+            take(1)
+        ).subscribe((profile) => {
+            if (!profile) {
+                throw new Error(`Profile with uid "${this.gamepadSettingsForm?.controls.controllerId.value}" not found`);
+            }
+            const defaultAxisSettings = profile.getDefaultSettings()?.axisConfigs[axisId];
+            if (!defaultAxisSettings) {
+                throw new Error(`Default axis settings for axis with id "${axisId}" not found`);
+            }
+            this.gamepadSettingsForm?.controls.axisConfigs.controls[axisId].setValue(defaultAxisSettings);
+        });
+    }
+
+    public resetButtonSettings(
+        buttonId: string
+    ): void {
+        this.profile$.pipe(
+            take(1)
+        ).subscribe((profile) => {
+            if (!profile) {
+                throw new Error(`Profile with uid "${this.gamepadSettingsForm?.controls.controllerId.value}" not found`);
+            }
+            const defaultButtonSettings = profile.getDefaultSettings()?.buttonConfigs[buttonId];
+            if (!defaultButtonSettings) {
+                throw new Error(`Default button settings for button with id "${buttonId}" not found`);
+            }
+            this.gamepadSettingsForm?.controls.buttonConfigs.controls[buttonId].setValue(defaultButtonSettings);
+        });
     }
 }
