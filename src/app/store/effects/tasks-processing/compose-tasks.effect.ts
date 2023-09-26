@@ -1,5 +1,5 @@
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { Observable, filter, from, map, mergeMap, of, switchMap, takeUntil } from 'rxjs';
+import { Observable, filter, from, map, mergeMap, of, startWith, switchMap, takeUntil } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
 
@@ -35,6 +35,7 @@ function getTaskComposingData$(
     return actions.pipe(
         ofType(CONTROLLER_INPUT_ACTIONS.inputReceived),
         filter((a) => a.nextState.value !== a.prevValue),
+        startWith(null),
         concatLatestFrom(() =>
             store.select(PORT_TASKS_SELECTORS.selectBindingTaskCreationModel({
                 hubId: bindingsGroup[0].hubId,
