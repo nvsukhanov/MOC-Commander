@@ -216,7 +216,7 @@
       "level": "Speed level { level } (%)",
       "outputLevelAdd": "Add speed level",
       "outputLevelRemove": "Remove level",
-      "taskSummary": "Speed shift, level {level}{ isLooping, select, true { (mirror)} other {}}"
+      "taskSummary": "Speed shift, level {level} ({speedPercent}%){ isLooping, select, true { (mirror)} other {}}"
     },
     "angleShiftBinding": {
       "operationMode": "Angle shift",
@@ -224,7 +224,7 @@
       "readAngleFromPort": "Read angle from port",
       "outputAngleLevelAdd": "Add level",
       "outputAngleLevelRemove": "Remove level",
-      "taskSummary": "Angle shift, level {level}{ isLooping, select, true { (mirror)} other {}}"
+      "taskSummary": "Angle shift, level {level} ({angle}°){ isLooping, select, true { (mirror)} other {}}"
     }
   },
   "motorServoEndState": {

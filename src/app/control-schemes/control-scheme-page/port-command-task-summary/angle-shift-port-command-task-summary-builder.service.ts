@@ -14,6 +14,7 @@ export class AngleShiftPortCommandTaskSummaryBuilderService {
         payload: AngleShiftTaskPayload
     ): Observable<string> {
         const level = payload.initialLevelIndex - payload.angleIndex;
-        return this.translocoService.selectTranslate('controlScheme.angleShiftBinding.taskSummary', { level });
+        const angle = payload.angle;
+        return this.translocoService.selectTranslate('controlScheme.angleShiftBinding.taskSummary', { level, angle });
     }
 }

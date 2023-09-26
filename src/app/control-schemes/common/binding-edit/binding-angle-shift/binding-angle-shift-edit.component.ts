@@ -131,9 +131,11 @@ export class BindingAngleShiftEditComponent implements IBindingsDetailsEditCompo
         ).pipe(
             take(1)
         ).subscribe((position) => {
-            control.setValue(position);
-            control.markAsDirty();
-            control.updateValueAndValidity();
+            if (control.value !== position) {
+                control.setValue(position);
+                control.markAsDirty();
+                control.updateValueAndValidity();
+            }
         });
     }
 
