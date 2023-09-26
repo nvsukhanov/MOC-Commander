@@ -216,7 +216,7 @@
       "level": "Уровень { level } (%)",
       "outputLevelAdd": "Добавить уровень",
       "outputLevelRemove": "Удалить уровень",
-      "taskSummary": "Выбор скорости, уровень {level}{ isLooping, select, true { (инв.)} other {}}"
+      "taskSummary": "Выбор скорости, уровень {level} ({speedPercent}%){ isLooping, select, true { (инв.)} other {}}"
     },
     "angleShiftBinding": {
       "operationMode": "Выбор угла",
@@ -224,7 +224,7 @@
       "readAngleFromPort": "Прочитать угол с порта",
       "outputAngleLevelAdd": "Добавить уровень",
       "outputAngleLevelRemove": "Удалить уровень",
-      "taskSummary": "Выбор угла, уровень {level}{ isLooping, select, true { (инв.)} other {}}"
+      "taskSummary": "Выбор угла, уровень {level} ({angle}°){ isLooping, select, true { (инв.)} other {}}"
     }
   },
   "motorServoEndState": {

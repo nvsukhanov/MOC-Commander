@@ -128,9 +128,12 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
         ).pipe(
             take(1)
         ).subscribe((result: number) => {
-            this._form?.controls.aposCenter.setValue(result);
-            this._form?.controls.aposCenter.markAsDirty();
-            this._form?.controls.aposCenter.markAsTouched();
+            if (this._form && this._form.controls.aposCenter.value !== result) {
+                this._form.controls.aposCenter.setValue(result);
+                this._form.controls.aposCenter.markAsDirty();
+                this._form.controls.aposCenter.markAsTouched();
+                this._form.updateValueAndValidity();
+            }
         });
     }
 
@@ -147,9 +150,13 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
         ).subscribe((result: number) => {
             const aposCenter = this._form?.controls.aposCenter.value ?? 0;
             const { cw, ccw } = getTranslationArcs(aposCenter, result);
-            this._form?.controls.range.setValue(Math.min(Math.abs(cw), Math.abs(ccw)));
-            this._form?.controls.range.markAsDirty();
-            this._form?.controls.range.markAsTouched();
+            const nextValue = Math.min(Math.abs(cw), Math.abs(ccw));
+            if (this._form && nextValue !== this._form.controls.range.value) {
+                this._form.controls.range.setValue(nextValue);
+                this._form.controls.range.markAsDirty();
+                this._form.controls.range.markAsTouched();
+                this._form.updateValueAndValidity();
+            }
         });
     }
 
@@ -170,10 +177,20 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
                 return;
             }
             if (result.type === CalibrationResultType.finished) {
-                this._form?.patchValue({
-                    range: result.range,
-                    aposCenter: result.aposCenter,
-                });
+                if (!this._form) {
+                    return;
+                }
+                if (this._form.controls.aposCenter.value !== result.aposCenter) {
+                    this._form.controls.aposCenter.setValue(result.aposCenter);
+                    this._form.controls.aposCenter.markAsDirty();
+                    this._form.controls.aposCenter.markAsTouched();
+                }
+                if (this._form.controls.range.value !== result.range) {
+                    this._form.controls.range.setValue(result.range);
+                    this._form.controls.range.markAsDirty();
+                    this._form.controls.range.markAsTouched();
+                }
+                this._form.updateValueAndValidity();
             }
             if (result.type === CalibrationResultType.error) {
                 this.store.dispatch(CONTROL_SCHEME_ACTIONS.servoCalibrationError({ error: result.error }));
