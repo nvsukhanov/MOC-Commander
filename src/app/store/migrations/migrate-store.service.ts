@@ -20,6 +20,9 @@ export class MigrateStoreService {
         if (!initialVersion) {
             throw new Error(`Initial version not found`);
         }
+        if (initialVersion === toVersion) {
+            return data as IState;
+        }
         const migrationChain = this.buildMigrationChain(initialVersion, toVersion);
         return migrationChain.reduce((prev, migration) => migration.migrate(prev), data) as IState;
     }

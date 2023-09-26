@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { DeepPartial, LzmaService, WINDOW } from '@app/shared';
-import { AppStoreVersion, ControlSchemeModel } from '@app/store';
+import { AppStoreVersion, ControlSchemeModel, IState, MigrateStoreService } from '@app/store';
 
 import { ControlSchemeCompressionResult, ExportVersion } from '../export-control-scheme-dialog';
 
@@ -10,7 +10,8 @@ export class ControlSchemeDecompressorService {
 
     constructor(
         @Inject(WINDOW) private readonly window: Window,
-        private readonly lzma: LzmaService
+        private readonly lzma: LzmaService,
+        private readonly migrateStoreService: MigrateStoreService
     ) {
     }
 
@@ -32,11 +33,7 @@ export class ControlSchemeDecompressorService {
         if (!this.isPayloadObject(payloadObject)) {
             throw new Error('Invalid import string');
         }
-        if (payloadObject.s !== AppStoreVersion.latest) {
-            // TODO: add migration logic
-            throw new Error('Invalid storage version');
-        }
-        return payloadObject.c;
+        return this.migrateToLatest(payloadObject.c, payloadObject.s);
     }
 
     private isPayloadObject(
@@ -49,5 +46,41 @@ export class ControlSchemeDecompressorService {
             typeof (result as ControlSchemeCompressionResult).s === 'string' &&
             typeof (result as ControlSchemeCompressionResult).c === 'object'
         );
+    }
+
+    private migrateToLatest(
+        controlScheme: DeepPartial<ControlSchemeModel>,
+        importedStoreVersion: AppStoreVersion
+    ): DeepPartial<ControlSchemeModel> {
+        if (importedStoreVersion !== AppStoreVersion.latest) {
+            if (!controlScheme.name) {
+                throw new Error('Control scheme name is required');
+            }
+            const result = this.migrateStoreService.migrateToVersion(
+                this.buildStateForMigration(controlScheme.name, controlScheme, importedStoreVersion),
+                AppStoreVersion.latest
+            ).controlSchemes.entities[controlScheme.name];
+            if (!result) {
+                throw new Error('Invalid import string');
+            }
+            return result;
+        }
+        return controlScheme;
+    }
+
+    private buildStateForMigration(
+        controlSchemeId: string,
+        controlScheme: DeepPartial<ControlSchemeModel>,
+        storeVersion: AppStoreVersion
+    ): DeepPartial<IState> {
+        return {
+            controlSchemes: {
+                ids: [ controlSchemeId ],
+                entities: {
+                    [controlSchemeId]: controlScheme as ControlSchemeModel,
+                }
+            },
+            storeVersion,
+        };
     }
 }

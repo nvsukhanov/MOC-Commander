@@ -10,3 +10,4 @@ export * from './i-state';
 export * from './hub-facade.service';
 export * from './controller-profiles-facade.service';
 export { AppStoreVersion } from './app-store-version';
+export * from './migrations';
