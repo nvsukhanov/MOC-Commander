@@ -2,7 +2,7 @@ import { concatLatestFrom, createEffect } from '@ngrx/effects';
 import { NEVER, Observable, distinctUntilChanged, filter, from, interval, map, merge, share, startWith, switchMap } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
-import { ControllerInputType, ControllerType, GamepadValueTransformService, WINDOW } from '@app/shared';
+import { APP_CONFIG, ControllerInputType, ControllerType, GamepadValueTransformService, IAppConfig, WINDOW } from '@app/shared';
 
 import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_INPUT_SELECTORS } from '../../../selectors';
 import { CONTROLLER_INPUT_ACTIONS } from '../../../actions';
@@ -11,7 +11,8 @@ import { controllerInputIdFn } from '../../../reducers';
 function readGamepads(
     store: Store,
     navigator: Navigator,
-    valueTransformer: GamepadValueTransformService
+    valueTransformer: GamepadValueTransformService,
+    config: IAppConfig
 ): Observable<Action> {
     return store.select(CONTROLLER_CONNECTION_SELECTORS.selectGamepadConnections).pipe(
         switchMap((connectedGamepads) => from(connectedGamepads)),
@@ -24,7 +25,7 @@ function readGamepads(
                 return [ NEVER ];
             }
             const browserGamepad = navigator.getGamepads()[connection.gamepadIndex] as Gamepad;
-            const gamepadRead$ = createGamepadScheduler().pipe(
+            const gamepadRead$ = interval(config.gamepad.connectionReadInterval).pipe(
                 map(() => navigator.getGamepads()[connection.gamepadIndex] as Gamepad),
                 share()
             );
@@ -98,18 +99,15 @@ function readGamepads(
     ) as Observable<Action>;
 }
 
-function createGamepadScheduler(): Observable<unknown> {
-    return interval(1000 / 30);
-}
-
 export const CAPTURE_GAMEPAD_INPUT = createEffect((
     store: Store = inject(Store),
     window: Window = inject(WINDOW),
-    valueTransformer: GamepadValueTransformService = inject(GamepadValueTransformService)
+    valueTransformer: GamepadValueTransformService = inject(GamepadValueTransformService),
+    config: IAppConfig = inject(APP_CONFIG)
 ) => {
     return store.select(CONTROLLER_INPUT_SELECTORS.isCapturing).pipe(
         switchMap((isCapturing) => isCapturing
-                                   ? readGamepads(store, window.navigator, valueTransformer)
+                                   ? readGamepads(store, window.navigator, valueTransformer, config)
                                    : NEVER
         )
     );
