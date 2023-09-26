@@ -1,4 +1,4 @@
-import { instance, mock, when } from 'ts-mockito';
+import { anything, instance, mock, verify, when } from 'ts-mockito';
 
 import { AppStoreVersion } from '../app-store-version';
 import { MigrateStoreService } from './migrate-store.service';
@@ -49,5 +49,11 @@ describe('MigrateStoreService', () => {
 
     it('should migrate data from version 1 to version 3', () => {
         expect(subject.migrateToVersion(dataV1, AppStoreVersion.v23)).toEqual(dataV3);
+    });
+
+    it('should not migrate data from version 3 to version 3', () => {
+        expect(subject.migrateToVersion(dataV3, AppStoreVersion.v23)).toEqual(dataV3);
+        verify(migrator1.migrate(anything())).never();
+        verify(migrator2.migrate(anything())).never();
     });
 });
