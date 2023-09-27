@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
-import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Observable } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -26,7 +26,7 @@ import { ControllerViewHrefPipe } from '../controller-view-href.pipe';
         NgIf,
         NgForOf,
         HintComponent,
-        TranslocoModule,
+        TranslocoPipe,
         PushPipe,
         ControllerNamePipe,
         MatCardModule,

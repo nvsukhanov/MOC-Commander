@@ -3,7 +3,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NgIf } from '@angular/common';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { ValidationMessagesDirective } from '@app/shared';
 
 @Component({
@@ -16,7 +16,7 @@ import { ValidationMessagesDirective } from '@app/shared';
         MatInputModule,
         NgIf,
         ReactiveFormsModule,
-        TranslocoModule,
+        TranslocoPipe,
         ValidationMessagesDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush

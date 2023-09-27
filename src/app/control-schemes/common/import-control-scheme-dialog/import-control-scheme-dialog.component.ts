@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { PushPipe } from '@ngrx/component';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { JsonPipe, NgIf } from '@angular/common';
@@ -19,7 +19,7 @@ import { ControlSchemeImportValidationService } from './control-scheme-import-va
         MatButtonModule,
         MatDialogModule,
         PushPipe,
-        TranslocoModule,
+        TranslocoPipe,
         MatInputModule,
         ReactiveFormsModule,
         NgIf,

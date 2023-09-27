@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/c
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NgForOf, NgIf } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { Observable, map, of, startWith } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 import { BindingTypeToL10nKeyPipe, ControlSchemeBindingType } from '@app/shared';
@@ -18,7 +18,7 @@ import { BindingTypeToL10nKeyPipe, ControlSchemeBindingType } from '@app/shared'
         PushPipe,
         MatSelectModule,
         NgForOf,
-        TranslocoModule,
+        TranslocoPipe,
         ReactiveFormsModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush

@@ -3,12 +3,11 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
 import { NgIf } from '@angular/common';
 import { RoutesBuilderService } from '@app/routing';
 import { EllipsisTitleDirective } from '@app/shared';
-
 
 @Component({
     standalone: true,
@@ -21,7 +20,7 @@ import { EllipsisTitleDirective } from '@app/shared';
         MatButtonModule,
         MatIconModule,
         MatToolbarModule,
-        TranslocoModule,
+        TranslocoPipe,
         PushPipe,
         EllipsisTitleDirective,
         NgIf

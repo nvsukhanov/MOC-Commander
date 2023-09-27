@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
 import { PushPipe } from '@ngrx/component';
 import { Observable, of } from 'rxjs';
@@ -23,7 +23,7 @@ import { IHubTreeNodeViewModel, IO_TREE_NODE_SELECTORS } from './io-tree-node.se
         NgIf,
         IoInlineViewComponent,
         MatIconModule,
-        TranslocoModule,
+        TranslocoPipe,
         RouterLink,
         PortCommandTaskSummaryPipe,
         PushPipe

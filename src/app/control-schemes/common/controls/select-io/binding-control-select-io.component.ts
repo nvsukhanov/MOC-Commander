@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy } from 
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { NgForOf, NgIf } from '@angular/common';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
 import { Observable, Subscription, map, of, startWith, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -21,7 +21,7 @@ import { BINDING_CONTROL_SELECT_IO_SELECTORS } from './binding-control-select-io
         MatSelectModule,
         NgForOf,
         NgIf,
-        TranslocoModule,
+        TranslocoPipe,
         ReactiveFormsModule,
         IoTypeToL10nKeyPipe,
         PushPipe,

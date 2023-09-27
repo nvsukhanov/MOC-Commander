@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
@@ -15,7 +15,7 @@ import { MatMenuModule } from '@angular/material/menu';
         MatButtonModule,
         NgIf,
         PushPipe,
-        TranslocoModule,
+        TranslocoPipe,
         MatIconModule,
         MatMenuModule
     ],

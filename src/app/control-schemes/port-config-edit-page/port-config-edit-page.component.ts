@@ -6,7 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Observable, Subscription, take } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { RoutesBuilderService } from '@app/routing';
@@ -29,7 +29,7 @@ import { PortConfigEditViewModel } from './port-config-edit-view-model';
         HintComponent,
         MatCardModule,
         MatInputModule,
-        TranslocoModule,
+        TranslocoPipe,
         ReactiveFormsModule,
         MatButtonModule,
         PortIdToPortNamePipe,

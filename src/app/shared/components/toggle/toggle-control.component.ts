@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NgIf } from '@angular/common';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
     standalone: true,
@@ -13,7 +13,7 @@ import { TranslocoModule } from '@ngneat/transloco';
         MatSlideToggleModule,
         ReactiveFormsModule,
         NgIf,
-        TranslocoModule
+        TranslocoPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { MOTOR_LIMITS } from 'rxpoweredup';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -33,7 +33,7 @@ import { CommonFormControlsBuilderService, SpeedShiftBindingForm } from '../../f
         BindingEditSectionComponent,
         BindingControlSelectHubComponent,
         BindingControlSelectIoComponent,
-        TranslocoModule,
+        TranslocoPipe,
         MatDividerModule,
         HideOnSmallScreenDirective,
         BindingControlSelectControllerComponent,

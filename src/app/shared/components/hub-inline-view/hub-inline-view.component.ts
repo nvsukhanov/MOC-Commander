@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { RoutesBuilderService } from '@app/routing';
@@ -18,7 +18,7 @@ import { InputActivityIndicatorComponent } from '../input-activity-indicator';
     imports: [
         MatButtonModule,
         MatIconModule,
-        TranslocoModule,
+        TranslocoPipe,
         NgIf,
         RouterLink,
         EllipsisTitleDirective,

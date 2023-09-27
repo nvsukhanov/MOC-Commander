@@ -4,7 +4,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { Observable, map, of, startWith } from 'rxjs';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { MatDividerModule } from '@angular/material/divider';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BindingTypeToL10nKeyPipe, ControlSchemeBindingType, HideOnSmallScreenDirective, getEnumValues } from '@app/shared';
@@ -29,7 +29,7 @@ import { BindingEditSectionComponent } from './section';
         RenderBindingDetailsEditDirective,
         MatDividerModule,
         BindingEditSectionComponent,
-        TranslocoModule,
+        TranslocoPipe,
         LetDirective,
         HideOnSmallScreenDirective,
         MatSelectModule,

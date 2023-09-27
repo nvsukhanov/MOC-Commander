@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { take } from 'rxjs';
 import { NgForOf, NgIf } from '@angular/common';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { Router } from '@angular/router';
 import { RoutesBuilderService } from '@app/routing';
 import { HUBS_ACTIONS, ROUTER_SELECTORS, attachedIosIdFn, } from '@app/store';
@@ -23,7 +23,7 @@ import { HUB_VIEW_PAGE_SELECTORS, HubIoViewModel } from './hub-view-page.selecto
         LetDirective,
         NgIf,
         NgForOf,
-        TranslocoModule,
+        TranslocoPipe,
         HubPropertiesViewComponent,
         HubIoViewComponent,
         HintComponent

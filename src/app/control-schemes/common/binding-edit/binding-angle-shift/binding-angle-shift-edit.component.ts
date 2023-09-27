@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NgForOf, NgIf } from '@angular/common';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { PortModeName } from 'rxpoweredup';
 import { Observable, Subscription, mergeWith, of, startWith, switchMap, take } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
@@ -41,7 +41,7 @@ import { AngleShiftBindingForm, CommonFormControlsBuilderService } from '../../f
         NgForOf,
         NgIf,
         ToggleControlComponent,
-        TranslocoModule,
+        TranslocoPipe,
         BindingControlOutputEndStateComponent,
         PushPipe,
         ControlSchemeInputActionToL10nKeyPipe,

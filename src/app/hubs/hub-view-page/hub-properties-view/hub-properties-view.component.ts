@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { NgIf } from '@angular/common';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
 import { RoutesBuilderService } from '@app/routing';
 import { HubModel, HubStatsModel } from '@app/store';
@@ -17,7 +17,7 @@ import { EllipsisTitleDirective, FeatureToolbarControlsDirective, HubTypeToL10nK
         MatButtonModule,
         MatCardModule,
         NgIf,
-        TranslocoModule,
+        TranslocoPipe,
         RouterLink,
         EllipsisTitleDirective,
         FeatureToolbarControlsDirective,

@@ -3,7 +3,7 @@ import { Observable, Subscription, filter, map, of, switchMap, take } from 'rxjs
 import { Store } from '@ngrx/store';
 import { PushPipe } from '@ngrx/component';
 import { NgIf } from '@angular/common';
-import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -26,7 +26,7 @@ import { ControlSchemePageFullToolbarComponent } from './full-toolbar';
     styleUrls: [ './control-scheme-page.component.scss' ],
     imports: [
         PushPipe,
-        TranslocoModule,
+        TranslocoPipe,
         NgIf,
         MatCardModule,
         ControlSchemeViewIoListComponent,

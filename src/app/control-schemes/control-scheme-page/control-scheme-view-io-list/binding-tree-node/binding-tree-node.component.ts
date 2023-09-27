@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NEVER, Observable } from 'rxjs';
@@ -22,7 +22,7 @@ import { ControlSchemeViewBindingTreeNodeData } from '../../types';
     imports: [
         NgIf,
         BindingTypeToL10nKeyPipe,
-        TranslocoModule,
+        TranslocoPipe,
         PushPipe,
         MatFormFieldModule,
         NgForOf,

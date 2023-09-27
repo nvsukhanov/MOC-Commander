@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { NgIf } from '@angular/common';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -32,7 +32,7 @@ import { StepperBindingForm } from '../../forms';
         BindingControlSelectHubComponent,
         BindingControlSelectIoComponent,
         MatDividerModule,
-        TranslocoModule,
+        TranslocoPipe,
         BindingControlSelectControllerComponent,
         ControlSchemeInputActionToL10nKeyPipe,
         HideOnSmallScreenDirective,

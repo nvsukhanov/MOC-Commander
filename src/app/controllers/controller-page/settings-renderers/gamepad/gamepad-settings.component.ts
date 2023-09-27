@@ -3,7 +3,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, Subscription, animationFrameScheduler, map, of, take, throttleTime } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
@@ -40,7 +40,7 @@ import { GamepadSettingsButtonSettingsComponent } from './button-settings';
         InputOutputDiagramComponent,
         ToggleControlComponent,
         RangeControlComponent,
-        TranslocoModule,
+        TranslocoPipe,
         InputValuePercentHumanReadableValuePipe,
         MatDividerModule,
         MatExpansionModule,

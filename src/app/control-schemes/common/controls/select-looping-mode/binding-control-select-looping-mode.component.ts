@@ -4,7 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { NgForOf, NgIf } from '@angular/common';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { LoopingMode } from '@app/store';
 import { getEnumValues } from '@app/shared';
 
@@ -22,7 +22,7 @@ import { LoopingModeToL10nKeyPipe } from './looping-mode-to-l10n-key.pipe';
         NgForOf,
         NgIf,
         ReactiveFormsModule,
-        TranslocoModule,
+        TranslocoPipe,
         LoopingModeToL10nKeyPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush

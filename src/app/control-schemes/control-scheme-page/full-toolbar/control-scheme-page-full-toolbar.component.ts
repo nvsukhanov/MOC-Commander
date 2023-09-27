@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
     standalone: true,
@@ -11,7 +11,7 @@ import { TranslocoModule } from '@ngneat/transloco';
     imports: [
         MatButtonModule,
         NgIf,
-        TranslocoModule
+        TranslocoPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

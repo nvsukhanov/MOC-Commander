@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { HintComponent } from '@app/shared';
 
 @Component({
@@ -8,7 +8,7 @@ import { HintComponent } from '@app/shared';
     templateUrl: './not-found-page.component.html',
     styleUrls: [ './not-found-page.component.scss' ],
     imports: [
-        TranslocoModule,
+        TranslocoPipe,
         HintComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush

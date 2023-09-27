@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
@@ -21,7 +21,7 @@ export type ServoCalibrationDialogData = {
     imports: [
         MatButtonModule,
         MatProgressBarModule,
-        TranslocoModule,
+        TranslocoPipe,
         MatDialogModule
     ],
     providers: [
