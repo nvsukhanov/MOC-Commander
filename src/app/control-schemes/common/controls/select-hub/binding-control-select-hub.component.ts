@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy } from 
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { NgForOf, NgIf } from '@angular/common';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { Observable, Subscription, map, of, startWith, switchMap } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 import { Store } from '@ngrx/store';
@@ -21,7 +21,7 @@ import { BINDING_CONTROL_SELECT_HUB_SELECTORS, HubWithConnectionState } from './
         ReactiveFormsModule,
         NgIf,
         NgForOf,
-        TranslocoModule
+        TranslocoPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

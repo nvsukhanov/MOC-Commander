@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy
 import { NgIf } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -24,7 +24,7 @@ import { InputFormGroup, OptionalInputFormGroup } from '../../forms';
         NgIf,
         MatDialogModule,
         MatButtonModule,
-        TranslocoModule,
+        TranslocoPipe,
         MatInputModule,
         MatIconModule,
         HideOnSmallScreenDirective,

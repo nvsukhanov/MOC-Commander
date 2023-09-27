@@ -4,7 +4,7 @@ import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { EllipsisTitleDirective } from '@app/shared';
 
 @Component({
@@ -18,7 +18,7 @@ import { EllipsisTitleDirective } from '@app/shared';
         MatIconModule,
         MatInputModule,
         ReactiveFormsModule,
-        TranslocoModule,
+        TranslocoPipe,
         EllipsisTitleDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush

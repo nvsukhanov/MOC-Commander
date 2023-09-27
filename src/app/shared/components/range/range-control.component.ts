@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
 import { NgIf } from '@angular/common';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 import { IdGeneratorService } from '../../id-generator.service';
 import { getFormControlMaxValue, getFormControlMinValue } from '../../form-helpers';
@@ -16,7 +16,7 @@ import { getFormControlMaxValue, getFormControlMinValue } from '../../form-helpe
         MatSliderModule,
         NgIf,
         ReactiveFormsModule,
-        TranslocoModule
+        TranslocoPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

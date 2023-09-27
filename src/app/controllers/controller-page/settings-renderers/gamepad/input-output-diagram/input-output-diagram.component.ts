@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
 import { MAX_INPUT_VALUE, MIN_INPUT_VALUE, NULL_INPUT_VALUE } from '@app/shared';
 
@@ -9,7 +9,7 @@ import { MAX_INPUT_VALUE, MIN_INPUT_VALUE, NULL_INPUT_VALUE } from '@app/shared'
     templateUrl: './input-output-diagram.component.html',
     styleUrls: [ './input-output-diagram.component.scss' ],
     imports: [
-        TranslocoModule,
+        TranslocoPipe,
         NgIf
     ],
     changeDetection: ChangeDetectionStrategy.OnPush

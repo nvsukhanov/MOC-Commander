@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { PortModeName } from 'rxpoweredup';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { PushPipe } from '@ngrx/component';
@@ -38,7 +38,7 @@ import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-inpu
         BindingControlOutputEndStateComponent,
         BindingControlSelectControllerComponent,
         BindingEditSectionComponent,
-        TranslocoModule,
+        TranslocoPipe,
         BindingControlSelectHubComponent,
         BindingControlSelectIoComponent,
         MatDividerModule,

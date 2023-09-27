@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 import packageJson from '../../../package.json';
 
@@ -9,7 +9,7 @@ import packageJson from '../../../package.json';
     templateUrl: './about-page.component.html',
     styleUrls: [ './about-page.component.scss' ],
     imports: [
-        TranslocoModule,
+        TranslocoPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

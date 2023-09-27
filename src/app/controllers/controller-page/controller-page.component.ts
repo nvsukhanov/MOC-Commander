@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { MatCardModule } from '@angular/material/card';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { MatIconModule } from '@angular/material/icon';
 import { ControllerTypeIconNamePipe, ControllerTypeToL10nKeyPipe, HintComponent, ScreenSizeObserverService } from '@app/shared';
 
@@ -21,7 +21,7 @@ import { ControllerSettingsContainerComponent } from './controller-settings-cont
         PushPipe,
         MatCardModule,
         HintComponent,
-        TranslocoModule,
+        TranslocoPipe,
         ControllerNamePipe,
         ControllerSettingsContainerComponent,
         MatIconModule,

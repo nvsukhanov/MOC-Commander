@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
 import { NgIf } from '@angular/common';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { MatInputModule } from '@angular/material/input';
 import { ValidationMessagesDirective } from '@app/shared';
 
@@ -15,7 +15,7 @@ import { ValidationMessagesDirective } from '@app/shared';
         MatSliderModule,
         NgIf,
         ReactiveFormsModule,
-        TranslocoModule,
+        TranslocoPipe,
         MatInputModule,
         ValidationMessagesDirective
     ],

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IOType } from 'rxpoweredup';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
 import { EllipsisTitleDirective, IoTypeToL10nKeyPipe, PortIdToPortNamePipe } from '@app/shared';
 
@@ -10,7 +10,7 @@ import { EllipsisTitleDirective, IoTypeToL10nKeyPipe, PortIdToPortNamePipe } fro
     templateUrl: './io-inline-view.component.html',
     styleUrls: [ './io-inline-view.component.scss' ],
     imports: [
-        TranslocoModule,
+        TranslocoPipe,
         NgIf,
         IoTypeToL10nKeyPipe,
         EllipsisTitleDirective,

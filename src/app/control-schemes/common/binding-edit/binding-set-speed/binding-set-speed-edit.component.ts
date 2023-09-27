@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { NgIf } from '@angular/common';
 import { MOTOR_LIMITS } from 'rxpoweredup';
 import { merge } from 'rxjs';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { MatDividerModule } from '@angular/material/divider';
 import { ControlSchemeBindingType, ControllerInputType, HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared';
 import { ControlSchemeInputAction } from '@app/store';
@@ -29,7 +29,7 @@ import { InputFormGroup, SetSpeedBindingForm } from '../../forms';
     imports: [
         NgIf,
         BindingEditSectionComponent,
-        TranslocoModule,
+        TranslocoPipe,
         BindingControlSelectHubComponent,
         BindingControlSelectIoComponent,
         MatDividerModule,

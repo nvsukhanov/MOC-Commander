@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AttachedIoPortModeInfoModel } from '@app/store';
@@ -15,7 +15,7 @@ import { HubIoViewModel } from '../hub-view-page.selectors';
     styleUrls: [ './hub-io-view.component.scss' ],
     imports: [
         NgIf,
-        TranslocoModule,
+        TranslocoPipe,
         IoTypeToL10nKeyPipe,
         NgForOf,
         MatIconModule,

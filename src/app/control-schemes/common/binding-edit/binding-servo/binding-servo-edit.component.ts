@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { MOTOR_LIMITS, PortModeName } from 'rxpoweredup';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
@@ -45,7 +45,7 @@ import { ServoBindingForm } from '../../forms';
     imports: [
         NgIf,
         BindingEditSectionComponent,
-        TranslocoModule,
+        TranslocoPipe,
         MatButtonModule,
         MatIconModule,
         PushPipe,

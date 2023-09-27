@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { NgForOf } from '@angular/common';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { PushPipe } from '@ngrx/component';
 import { MatSelectModule } from '@angular/material/select';
@@ -20,7 +20,7 @@ import { LanguageToL10nKeyPipe } from './language-to-l10n-key.pipe';
         MatCardModule,
         NgForOf,
         ThemeToL10nKeyPipe,
-        TranslocoModule,
+        TranslocoPipe,
         PushPipe,
         MatSelectModule,
         LanguageToL10nKeyPipe

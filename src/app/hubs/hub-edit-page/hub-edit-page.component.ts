@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { Observable, Subscription, filter, map, take } from 'rxjs';
 import { NgIf } from '@angular/common';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -25,7 +25,7 @@ import { HUB_EDIT_PAGE_SELECTORS } from './hub-edit-page.selectors';
     imports: [
         PushPipe,
         NgIf,
-        TranslocoModule,
+        TranslocoPipe,
         HintComponent,
         MatButtonModule,
         MatCardModule,

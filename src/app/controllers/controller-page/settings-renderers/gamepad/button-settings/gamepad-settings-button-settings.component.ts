@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { PushPipe } from '@ngrx/component';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { InputActivityIndicatorComponent, RangeControlComponent, SliderControlComponent, ToggleControlComponent } from '@app/shared';
@@ -22,7 +22,7 @@ import { InputValuePercentHumanReadableValuePipe } from '../active-zone-human-re
         PushPipe,
         RangeControlComponent,
         ToggleControlComponent,
-        TranslocoModule,
+        TranslocoPipe,
         NgIf,
         SliderControlComponent,
         MatIconModule,

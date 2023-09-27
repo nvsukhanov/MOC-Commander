@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { LetDirective } from '@ngrx/component';
 import { NgForOf, NgIf } from '@angular/common';
@@ -16,7 +16,7 @@ import { HUBS_LIST_PAGE_SELECTORS, HubListViewModel } from './hubs-list-page.sel
     templateUrl: './hubs-list-page.component.html',
     styleUrls: [ './hubs-list-page.component.scss' ],
     imports: [
-        TranslocoModule,
+        TranslocoPipe,
         LetDirective,
         NgIf,
         HubInlineViewComponent,

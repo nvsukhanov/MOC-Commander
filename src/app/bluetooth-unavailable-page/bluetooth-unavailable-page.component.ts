@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { HintComponent } from '@app/shared';
 
 @Component({
@@ -8,8 +8,8 @@ import { HintComponent } from '@app/shared';
     templateUrl: './bluetooth-unavailable-page.component.html',
     styleUrls: [ './bluetooth-unavailable-page.component.scss' ],
     imports: [
-        TranslocoModule,
         HintComponent,
+        TranslocoPipe,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

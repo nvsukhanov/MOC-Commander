@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { Observable, map, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { PushPipe } from '@ngrx/component';
@@ -21,7 +21,7 @@ export type ExportControlSchemeDialogData = {
     imports: [
         MatButtonModule,
         MatDialogModule,
-        TranslocoModule,
+        TranslocoPipe,
         PushPipe
     ],
     providers: [

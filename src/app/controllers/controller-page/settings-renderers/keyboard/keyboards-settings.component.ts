@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { Observable, map } from 'rxjs';
 import { NgIf } from '@angular/common';
 import { ControllerType, ToFormGroup } from '@app/shared';
@@ -18,7 +18,7 @@ import { ControlIgnoreInputComponent } from '../control-ignore-input';
     imports: [
         ReactiveFormsModule,
         MatSlideToggleModule,
-        TranslocoModule,
+        TranslocoPipe,
         NgIf,
         ControlIgnoreInputComponent
     ],

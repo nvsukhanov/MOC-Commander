@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable, filter, map, take } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Router } from '@angular/router';
 import { concatLatestFrom } from '@ngrx/effects';
 import { RoutesBuilderService } from '@app/routing';
@@ -22,7 +22,7 @@ import { BindingEditComponent } from '../common';
         PushPipe,
         BindingEditComponent,
         MatButtonModule,
-        TranslocoModule,
+        TranslocoPipe,
         FeatureToolbarControlsDirective,
         ConfirmationDialogModule
     ],

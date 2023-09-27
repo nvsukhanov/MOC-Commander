@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { PushPipe } from '@ngrx/component';
 import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { RoutesBuilderService } from '@app/routing';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeBinding, ROUTER_SELECTORS } from '@app/store';
 import { FeatureToolbarControlsDirective, HintComponent } from '@app/shared';
@@ -24,7 +24,7 @@ import { BINDING_CREATE_PAGE_SELECTORS } from './binding-create-page.selectors';
         NgIf,
         MatButtonModule,
         HintComponent,
-        TranslocoModule,
+        TranslocoPipe,
         FeatureToolbarControlsDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush

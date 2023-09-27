@@ -3,14 +3,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { PushPipe } from '@ngrx/component';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatBadgeModule } from '@angular/material/badge';
 import { NgIf } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { RoutesBuilderService } from '@app/routing';
 import { EllipsisTitleDirective } from '@app/shared';
-
 
 @Component({
     standalone: true,
@@ -23,7 +22,7 @@ import { EllipsisTitleDirective } from '@app/shared';
         MatBadgeModule,
         MatIconModule,
         MatButtonModule,
-        TranslocoModule,
+        TranslocoPipe,
         PushPipe,
         MatToolbarModule,
         EllipsisTitleDirective,

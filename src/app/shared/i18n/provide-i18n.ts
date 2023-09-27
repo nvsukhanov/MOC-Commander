@@ -1,31 +1,26 @@
-import { EnvironmentProviders, importProvidersFrom, isDevMode, makeEnvironmentProviders } from '@angular/core';
-import { TRANSLOCO_CONFIG, TRANSLOCO_LOADER, TranslocoModule, translocoConfig } from '@ngneat/transloco';
+import { EnvironmentProviders, isDevMode, makeEnvironmentProviders } from '@angular/core';
+import { provideTransloco } from '@ngneat/transloco';
 import { provideHttpClient } from '@angular/common/http';
-import { TranslocoMessageFormatModule } from '@ngneat/transloco-messageformat';
+import { provideTranslocoMessageformat } from '@ngneat/transloco-messageformat';
 
 import { I18nLoaderService } from './i18n-loader.service';
 import { Language } from './language';
-import { LOCALES } from './locales';
+import { getEnumValues } from '../get-enum-values';
 
 export function provideI18n(): EnvironmentProviders {
     return makeEnvironmentProviders([
-        {
-            provide: TRANSLOCO_CONFIG,
-            useValue: translocoConfig({
-                availableLangs: Object.values(Language),
+        provideTransloco({
+            config: {
+                availableLangs: getEnumValues(Language),
                 defaultLang: Language.English,
                 reRenderOnLangChange: true,
                 prodMode: !isDevMode()
-            })
-        },
-        { provide: TRANSLOCO_LOADER, useClass: I18nLoaderService },
-        importProvidersFrom(TranslocoModule),
-        importProvidersFrom(TranslocoMessageFormatModule.forRoot({
-            locales: [
-                LOCALES[Language.English],
-                LOCALES[Language.Russian]
-            ]
-        })),
+            },
+            loader: I18nLoaderService
+        }),
+        provideTranslocoMessageformat({
+            locales: getEnumValues(Language)
+        }),
         provideHttpClient()
     ]);
 }

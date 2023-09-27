@@ -4,7 +4,7 @@ import { MatTreeModule, MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { PortIdToPortNamePipe } from '@app/shared';
 
 import { IoTreeNodeComponent } from './io-tree-node';
@@ -25,7 +25,7 @@ import { ControlSchemeNodeTypes, ControlSchemeViewTreeNode } from '../types';
         BindingTreeNodeComponent,
         IoTreeNodeComponent,
         HubTreeNodeComponent,
-        TranslocoModule,
+        TranslocoPipe,
         PortIdToPortNamePipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
