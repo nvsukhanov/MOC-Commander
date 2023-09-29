@@ -5,13 +5,13 @@ import { tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { DOCUMENT } from '@angular/common';
 
-import { SETTINGS_SELECTORS } from '../selectors';
+import { SETTINGS_FEATURE } from '../reducers';
 
 const SET_LANGUAGE_EFFECT = createEffect((
     translocoService = inject(TranslocoService),
     store: Store = inject(Store),
 ) => {
-    return store.select(SETTINGS_SELECTORS.language).pipe(
+    return store.select(SETTINGS_FEATURE.selectLanguage).pipe(
         tap((language) => {
             translocoService.setActiveLang(language);
         })
@@ -22,7 +22,7 @@ const SET_PAGE_LANGUAGE_EFFECT = createEffect((
     store: Store = inject(Store),
     document: Document = inject(DOCUMENT)
 ) => {
-    return store.select(SETTINGS_SELECTORS.language).pipe(
+    return store.select(SETTINGS_FEATURE.selectLanguage).pipe(
         tap((language) => {
             document.documentElement.lang = language;
         })
