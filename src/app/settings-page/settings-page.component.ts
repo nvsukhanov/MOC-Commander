@@ -5,7 +5,7 @@ import { TranslocoPipe } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { PushPipe } from '@ngrx/component';
 import { MatSelectModule } from '@angular/material/select';
-import { SETTINGS_ACTIONS, SETTINGS_SELECTORS, UserSelectedTheme } from '@app/store';
+import { SETTINGS_ACTIONS, SETTINGS_FEATURE, UserSelectedTheme } from '@app/store';
 import { Language, getEnumValues } from '@app/shared';
 
 import { ThemeToL10nKeyPipe } from './theme-to-l10n-key.pipe';
@@ -32,9 +32,9 @@ export class SettingsPageComponent {
 
     public readonly languages: ReadonlyArray<Language> = getEnumValues(Language);
 
-    public readonly currentThemeSelection$ = this.store.select(SETTINGS_SELECTORS.theme);
+    public readonly currentThemeSelection$ = this.store.select(SETTINGS_FEATURE.selectAppTheme);
 
-    public readonly currentLanguageSelection$ = this.store.select(SETTINGS_SELECTORS.language);
+    public readonly currentLanguageSelection$ = this.store.select(SETTINGS_FEATURE.selectLanguage);
 
     constructor(
         private readonly store: Store

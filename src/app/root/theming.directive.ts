@@ -2,7 +2,7 @@ import { Directive, HostBinding, OnDestroy, OnInit, Renderer2, ViewContainerRef 
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { SETTINGS_SELECTORS, UserSelectedTheme } from '@app/store';
+import { SETTINGS_FEATURE, UserSelectedTheme } from '@app/store';
 
 enum AppTheme {
     Light,
@@ -37,7 +37,7 @@ export class ThemingDirective implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         // eslint-disable-next-line @ngrx/no-store-subscription
-        this.sub.add(this.store.select(SETTINGS_SELECTORS.theme).subscribe((theme) => {
+        this.sub.add(this.store.select(SETTINGS_FEATURE.selectAppTheme).subscribe((theme) => {
             const nextTheme = this.mapUserSelectedThemeToAppTheme(theme);
             if (this.currentTheme !== nextTheme) {
                 this.applyTheme(nextTheme);
