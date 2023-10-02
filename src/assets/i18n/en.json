@@ -4,6 +4,8 @@
   "hubListHubIsNotConnected": "disconnected",
   "discoverHub": "Discover hub",
   "bluetoothIsNotAvailable": "Bluetooth is not available",
+  "uploadFileButtonTitle": "Upload",
+  "uploadFileDialogTitle": "Select a file",
   "confirmationDialog": {
     "defaultTitle": "Are you sure?",
     "defaultConfirmButtonTitle": "Confirm",
@@ -26,7 +28,14 @@
     "themeSystem": "System",
     "themeLight": "Light",
     "themeDark": "Dark",
-    "language": "Language"
+    "language": "Language",
+    "createStateBackupButtonTitle": "Create backup",
+    "restoreStateFromBackupButtonTitle": "Restore from backup",
+    "restoreStateFromBackupDialogTitle": "Restore from backup",
+    "restoreStateFromBackupDialogDescription": "Restoring from backup will replace the current settings, erasing all previous data, and will restart the application. This action cannot be undone.",
+    "restoreStateFromBackupDialogConfirmButtonTitle": "Restore",
+    "restoreStateFromBackupDialogCancelButtonTitle": "Cancel",
+    "restoreStateFromBackupDialogFileCorrupted": "Backup file is corrupted"
   },
   "language": {
     "en": "English",

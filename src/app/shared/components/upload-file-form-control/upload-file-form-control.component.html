@@ -1,0 +1,28 @@
+<input #fileInput
+       type="file"
+       class="file-input"
+       (change)="onUploaded($event)"
+/>
+
+<div class="file-container">
+    <p class="filename"
+       appEllipsisTitle
+    >
+        <ng-container *ngIf="file; else placeholder">
+            {{ file.name }}
+        </ng-container>
+
+        <ng-template #placeholder>
+            {{ 'uploadFileDialogTitle' | transloco }}
+        </ng-template>
+    </p>
+
+    <button mat-raised-button
+            [color]="'primary'"
+            (click)="onUploadClick($event)"
+            [disabled]="isDisabled"
+            class="upload-button"
+    >
+        {{ translocoTitle | transloco }}
+    </button>
+</div>

@@ -15,3 +15,4 @@ export * from './controller-type-to-l10n-key.pipe';
 export * from './slider';
 export * from './hint';
 export * from './input-activity-indicator';
+export * from './upload-file-form-control';

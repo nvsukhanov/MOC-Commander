@@ -4,6 +4,8 @@
   "hubListHubIsNotConnected": "не подключен",
   "discoverHub": "Обнаружить хаб",
   "bluetoothIsNotAvailable": "Bluetooth недоступен",
+  "uploadFileButtonTitle": "Загрузить",
+  "uploadFileDialogTitle": "Выберите файл",
   "confirmationDialog": {
     "defaultTitle": "Вы уверены?",
     "defaultConfirmButtonTitle": "Да",
@@ -26,7 +28,14 @@
     "themeSystem": "Системная",
     "themeLight": "Светлая",
     "themeDark": "Тёмная",
-    "language": "Язык"
+    "language": "Язык",
+    "createStateBackupButtonTitle": "Бэкап настроек",
+    "restoreStateFromBackupButtonTitle": "Восстановить бэкап",
+    "restoreStateFromBackupDialogTitle": "Восстановление из бэкапа",
+    "restoreStateFromBackupDialogDescription": "Восстановление из бэкапа перезапишет текущие настройки. Приложение будет перезапущено. Это действие будет невозможно отменить.",
+    "restoreStateFromBackupDialogConfirmButtonTitle": "Восстановить",
+    "restoreStateFromBackupDialogCancelButtonTitle": "Отмена",
+    "restoreStateFromBackupDialogFileCorrupted": "Файл поврежден или имеет неверный формат"
   },
   "language": {
     "en": "English",

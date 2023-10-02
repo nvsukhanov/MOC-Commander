@@ -1,0 +1,16 @@
+.file-input {
+    display: none;
+}
+
+.file-container {
+    display: flex;
+    align-items: center;
+}
+
+.filename {
+    flex: 1;
+}
+
+.upload-button {
+    flex-shrink: 0;
+}
