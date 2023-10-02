@@ -32,5 +32,22 @@
                 </mat-form-field>
             </li>
         </ul>
+
+        <mat-divider></mat-divider>
+
+        <section class="debug-actions">
+            <button mat-raised-button
+                    class="debug-actions__button"
+                    (click)="onStateDump()"
+            >
+                {{ 'settings.createStateBackupButtonTitle' | transloco }}
+            </button>
+            <button mat-raised-button
+                    class="debug-actions__button"
+                    (click)="onStateRestore()"
+            >
+                {{ 'settings.restoreStateFromBackupButtonTitle' | transloco }}
+            </button>
+        </section>
     </mat-card-content>
 </mat-card>

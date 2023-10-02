@@ -5,11 +5,15 @@ import { TranslocoPipe } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { PushPipe } from '@ngrx/component';
 import { MatSelectModule } from '@angular/material/select';
-import { SETTINGS_ACTIONS, SETTINGS_FEATURE, UserSelectedTheme } from '@app/store';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { IState, SETTINGS_ACTIONS, SETTINGS_FEATURE, UserSelectedTheme } from '@app/store';
 import { Language, getEnumValues } from '@app/shared';
 
 import { ThemeToL10nKeyPipe } from './theme-to-l10n-key.pipe';
 import { LanguageToL10nKeyPipe } from './language-to-l10n-key.pipe';
+import { RestoreStateFromDumpDialogComponent } from './restore-state-from-dump-dialog';
 
 @Component({
     standalone: true,
@@ -23,7 +27,10 @@ import { LanguageToL10nKeyPipe } from './language-to-l10n-key.pipe';
         TranslocoPipe,
         PushPipe,
         MatSelectModule,
-        LanguageToL10nKeyPipe
+        LanguageToL10nKeyPipe,
+        MatDividerModule,
+        MatButtonModule,
+        MatDialogModule,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -37,7 +44,8 @@ export class SettingsPageComponent {
     public readonly currentLanguageSelection$ = this.store.select(SETTINGS_FEATURE.selectLanguage);
 
     constructor(
-        private readonly store: Store
+        private readonly store: Store,
+        private readonly matDialog: MatDialog,
     ) {
     }
 
@@ -51,5 +59,19 @@ export class SettingsPageComponent {
         nextLanguage: Language
     ): void {
         this.store.dispatch(SETTINGS_ACTIONS.setLanguage({ language: nextLanguage }));
+    }
+
+    public onStateDump(): void {
+        this.store.dispatch(SETTINGS_ACTIONS.createStateBackup());
+    }
+
+    public onStateRestore(): void {
+        this.matDialog.open<RestoreStateFromDumpDialogComponent, void, IState | undefined>(
+            RestoreStateFromDumpDialogComponent
+        ).afterClosed().subscribe((result) => {
+            if (result) {
+                this.store.dispatch(SETTINGS_ACTIONS.restoreStateFromBackup({ state: result }));
+            }
+        });
     }
 }
