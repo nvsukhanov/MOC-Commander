@@ -16,3 +16,4 @@ export * from './hash.service';
 export * from './consts';
 export * from './id-generator.service';
 export * from './form-helpers';
+export * from './title.service';

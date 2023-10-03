@@ -9,7 +9,7 @@ export * from './ellipsis-title.directive';
 export * from './hide-on-small-screen.directive';
 export * from './io-type-to-l10n-key.pipe';
 export * from './motor-servo-end-state-l10n-key.pipe';
-export * from './port-id-to-port-name.pipe';
+export * from './port-id-to-port-name';
 export * from './hub-type-to-l10n-key.pipe';
 export * from './controller-type-to-l10n-key.pipe';
 export * from './slider';

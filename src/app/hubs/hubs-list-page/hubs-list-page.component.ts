@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { LetDirective } from '@ngrx/component';
@@ -6,7 +6,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { Observable } from 'rxjs';
 import { HUBS_ACTIONS } from '@app/store';
-import { ConfirmationDialogModule, ConfirmationDialogService, HintComponent, HubInlineViewComponent } from '@app/shared';
+import { ConfirmationDialogModule, ConfirmationDialogService, HintComponent, HubInlineViewComponent, TitleService } from '@app/shared';
 
 import { HUBS_LIST_PAGE_SELECTORS, HubListViewModel } from './hubs-list-page.selectors';
 
@@ -25,17 +25,24 @@ import { HUBS_LIST_PAGE_SELECTORS, HubListViewModel } from './hubs-list-page.sel
         ConfirmationDialogModule,
         HintComponent
     ],
-    providers: [],
+    providers: [
+        TitleService
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HubsListPageComponent {
+export class HubsListPageComponent implements OnInit {
     public readonly hubsList$: Observable<HubListViewModel> = this.store.select(HUBS_LIST_PAGE_SELECTORS.selectHubListViewModel);
 
     constructor(
         private readonly store: Store,
         private readonly confirmationService: ConfirmationDialogService,
-        private readonly translocoService: TranslocoService
+        private readonly translocoService: TranslocoService,
+        private readonly titleService: TitleService
     ) {
+    }
+
+    public ngOnInit(): void {
+        this.titleService.setTitle$(this.translocoService.selectTranslate('pageTitle.hubList'));
     }
 
     public hubTrackByFn(

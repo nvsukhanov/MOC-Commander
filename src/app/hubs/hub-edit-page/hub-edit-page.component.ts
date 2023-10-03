@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
-import { Observable, Subscription, filter, map, take } from 'rxjs';
+import { Observable, Subscription, filter, map, switchMap, take } from 'rxjs';
 import { NgIf } from '@angular/common';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -12,7 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { RoutesBuilderService } from '@app/routing';
-import { FeatureToolbarControlsDirective, HintComponent, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared';
+import { FeatureToolbarControlsDirective, HintComponent, TitleService, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared';
 import { HUBS_ACTIONS, HubModel, ROUTER_SELECTORS } from '@app/store';
 
 import { HUB_EDIT_PAGE_SELECTORS } from './hub-edit-page.selectors';
@@ -36,6 +36,9 @@ import { HUB_EDIT_PAGE_SELECTORS } from './hub-edit-page.selectors';
         RouterLink,
         LetDirective,
         FeatureToolbarControlsDirective,
+    ],
+    providers: [
+        TitleService
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -69,6 +72,8 @@ export class HubEditPageComponent implements OnInit, OnDestroy {
         private readonly routesBuilderService: RoutesBuilderService,
         private readonly actions: Actions,
         private readonly router: Router,
+        private readonly titleService: TitleService,
+        private readonly translocoService: TranslocoService,
         formBuilder: FormBuilder
     ) {
         this.form = formBuilder.group({
@@ -90,6 +95,11 @@ export class HubEditPageComponent implements OnInit, OnDestroy {
                 this.form.controls.name.setValue(hub.name);
             })
         );
+        const title$ = this.editedHubConfiguration$.pipe(
+            filter((hubModel): hubModel is HubModel => !!hubModel),
+            switchMap((hubModel) => this.translocoService.selectTranslate('pageTitle.hubEdit', { hubName: hubModel.name }))
+        );
+        this.titleService.setTitle$(title$);
     }
 
     public ngOnDestroy(): void {

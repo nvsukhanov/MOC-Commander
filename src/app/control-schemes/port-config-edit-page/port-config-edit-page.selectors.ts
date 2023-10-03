@@ -34,7 +34,7 @@ export const PORT_CONFIG_EDIT_PAGE_SELECTORS = {
             }
 
             return {
-                schemeName,
+                controlSchemeName: schemeName,
                 hubId,
                 hubName: hub.name,
                 portId: parseInt(portId),

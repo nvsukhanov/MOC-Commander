@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
@@ -17,7 +17,8 @@ import {
     EllipsisTitleDirective,
     FeatureToolbarControlsDirective,
     HintComponent,
-    ScreenSizeObserverService
+    ScreenSizeObserverService,
+    TitleService
 } from '@app/shared';
 
 import { CONTROL_SCHEMES_LIST_PAGE_SELECTORS } from './control-scheme-list-page.selectors';
@@ -46,9 +47,12 @@ import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData, Impo
         ConfirmationDialogModule,
         EllipsisTitleDirective
     ],
+    providers: [
+        TitleService
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ControlSchemeListPageComponent {
+export class ControlSchemeListPageComponent implements OnInit {
     public readonly controlSchemes$ = this.store.select(CONTROL_SCHEMES_LIST_PAGE_SELECTORS.selectSchemesList);
 
     public readonly canCreateScheme$ = this.store.select(CONTROL_SCHEMES_LIST_PAGE_SELECTORS.canCreateScheme);
@@ -62,8 +66,13 @@ export class ControlSchemeListPageComponent {
         private readonly router: Router,
         private readonly confirmationDialogService: ConfirmationDialogService,
         private readonly transloco: TranslocoService,
-        private readonly screenSizeObserverService: ScreenSizeObserverService
+        private readonly screenSizeObserverService: ScreenSizeObserverService,
+        private readonly titleService: TitleService
     ) {
+    }
+
+    public ngOnInit(): void {
+        this.titleService.setTitle$(this.transloco.selectTranslate('pageTitle.controlSchemesList'));
     }
 
     public trackSchemeById(index: number, scheme: ControlSchemeModel): string {

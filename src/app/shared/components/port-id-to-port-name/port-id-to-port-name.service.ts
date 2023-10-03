@@ -1,11 +1,7 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Injectable } from '@angular/core';
 
-@Pipe({
-    standalone: true,
-    name: 'portIdToPortName',
-    pure: true
-})
-export class PortIdToPortNamePipe implements PipeTransform {
+@Injectable({ providedIn: 'root' })
+export class PortIdToPortNameService {
     // This assumption is incorrect, but it's good enough for now.
     // TODO: Replace this with a mapping that is based on the hub type.
     private readonly portIdToPortNameMapping: Readonly<{ [portId: number]: string }> = {
@@ -19,7 +15,7 @@ export class PortIdToPortNamePipe implements PipeTransform {
 
     private readonly nullPortName: string = '-';
 
-    public transform(
+    public mapPortId(
         portId: number | null
     ): string {
         if (portId === null) {

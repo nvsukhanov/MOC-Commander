@@ -1,11 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { MatCardModule } from '@angular/material/card';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { MatIconModule } from '@angular/material/icon';
-import { ControllerTypeIconNamePipe, ControllerTypeToL10nKeyPipe, HintComponent, ScreenSizeObserverService } from '@app/shared';
+import { filter, switchMap } from 'rxjs';
+import { ControllerTypeIconNamePipe, ControllerTypeToL10nKeyPipe, HintComponent, ScreenSizeObserverService, TitleService } from '@app/shared';
+import { ControllerProfilesFacadeService } from '@app/store';
 
 import { CONTROLLER_PAGE_SELECTORS } from './controller-page-selectors';
 import { ControllerNamePipe } from '../controller-name.pipe';
@@ -28,16 +30,32 @@ import { ControllerSettingsContainerComponent } from './controller-settings-cont
         ControllerTypeIconNamePipe,
         ControllerTypeToL10nKeyPipe
     ],
+    providers: [
+        TitleService
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ControllerPageComponent {
+export class ControllerPageComponent implements OnInit {
     public readonly viewModel$ = this.store.select(CONTROLLER_PAGE_SELECTORS.selectViewModel);
 
     public readonly isSmallScreen$ = this.screenSizeObserver.isSmallScreen$;
 
     constructor(
         private readonly store: Store,
-        private readonly screenSizeObserver: ScreenSizeObserverService
+        private readonly screenSizeObserver: ScreenSizeObserverService,
+        private readonly titleService: TitleService,
+        private readonly controllerProfilesFacadeService: ControllerProfilesFacadeService,
+        private readonly translocoService: TranslocoService
     ) {
+    }
+
+    public ngOnInit(): void {
+        const title$ = this.store.select(CONTROLLER_PAGE_SELECTORS.selectCurrentlyViewedControllerId).pipe(
+            filter((controllerId): controllerId is string => !!controllerId),
+            switchMap((controllerId) => this.controllerProfilesFacadeService.getByControllerId(controllerId)),
+            switchMap((controllerProfile) => controllerProfile.name$),
+            switchMap((controllerName) => this.translocoService.selectTranslate('pageTitle.controllerView', { controllerName }))
+        );
+        this.titleService.setTitle$(title$);
     }
 }

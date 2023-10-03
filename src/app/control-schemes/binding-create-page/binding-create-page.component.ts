@@ -1,14 +1,14 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, filter, take } from 'rxjs';
+import { Observable, filter, switchMap, take } from 'rxjs';
 import { Router } from '@angular/router';
 import { PushPipe } from '@ngrx/component';
 import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { RoutesBuilderService } from '@app/routing';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeBinding, ROUTER_SELECTORS } from '@app/store';
-import { FeatureToolbarControlsDirective, HintComponent } from '@app/shared';
+import { FeatureToolbarControlsDirective, HintComponent, TitleService } from '@app/shared';
 
 import { BindingEditComponent } from '../common';
 import { BINDING_CREATE_PAGE_SELECTORS } from './binding-create-page.selectors';
@@ -27,18 +27,31 @@ import { BINDING_CREATE_PAGE_SELECTORS } from './binding-create-page.selectors';
         TranslocoPipe,
         FeatureToolbarControlsDirective
     ],
+    providers: [
+        TitleService
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BindingCreatePageComponent {
+export class BindingCreatePageComponent implements OnInit {
     public readonly initialBindingData$: Observable<Partial<ControlSchemeBinding | null>>;
 
     constructor(
         private readonly store: Store,
         private readonly routesBuilderService: RoutesBuilderService,
-        private readonly router: Router
+        private readonly router: Router,
+        private readonly titleService: TitleService,
+        private readonly translocoService: TranslocoService
     ) {
         this.initialBindingData$ = this.store.select(BINDING_CREATE_PAGE_SELECTORS.selectDataForNewBinding).pipe(
             take(1)
+        );
+    }
+
+    public ngOnInit(): void {
+        this.titleService.setTitle$(
+            this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName).pipe(
+                switchMap((controlSchemeName) => this.translocoService.selectTranslate('pageTitle.bindingCreate', { controlSchemeName }))
+            )
         );
     }
 

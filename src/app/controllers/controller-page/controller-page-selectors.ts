@@ -9,6 +9,17 @@ import {
     ROUTER_SELECTORS
 } from '@app/store';
 
+const SELECT_CURRENTLY_VIEWED_CONTROLLER_ID = createSelector(
+    ROUTER_SELECTORS.selectCurrentRoute,
+    (route: ActivatedRouteSnapshot | undefined): string | null => {
+        const rawId = route?.params?.['id'] ?? null;
+        if (rawId === null) {
+            return null;
+        }
+        return decodeURI(rawId);
+    }
+);
+
 export type ControllerPageViewModel = {
     controller: ControllerModel;
     settings: ControllerSettingsModel;
@@ -16,17 +27,16 @@ export type ControllerPageViewModel = {
 };
 
 export const CONTROLLER_PAGE_SELECTORS = {
+    selectCurrentlyViewedControllerId: SELECT_CURRENTLY_VIEWED_CONTROLLER_ID,
     selectViewModel: createSelector(
-        ROUTER_SELECTORS.selectCurrentRoute,
+        SELECT_CURRENTLY_VIEWED_CONTROLLER_ID,
         CONTROLLER_SELECTORS.selectEntities,
         CONTROLLER_CONNECTION_SELECTORS.selectEntities,
         CONTROLLER_SETTINGS_SELECTORS.selectEntities,
-        (route: ActivatedRouteSnapshot | undefined, controllerEntities, connectionEntities, settingsEntities): ControllerPageViewModel | null => {
-            const rawId = route?.params?.['id'] ?? null;
-            if (rawId === null) {
+        (id, controllerEntities, connectionEntities, settingsEntities): ControllerPageViewModel | null => {
+            if (id === null) {
                 return null;
             }
-            const id = decodeURI(rawId);
             const controller = controllerEntities[id];
             const connection = connectionEntities[id];
             const settings = settingsEntities[id];

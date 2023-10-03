@@ -1,13 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, filter, map, take } from 'rxjs';
+import { Observable, filter, map, switchMap, take } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Router } from '@angular/router';
 import { concatLatestFrom } from '@ngrx/effects';
 import { RoutesBuilderService } from '@app/routing';
-import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective } from '@app/shared';
+import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective, TitleService } from '@app/shared';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeBinding, ROUTER_SELECTORS } from '@app/store';
 
 import { BINDING_EDIT_PAGE_SELECTORS } from './binding-edit-page.selectors';
@@ -26,9 +26,12 @@ import { BindingEditComponent } from '../common';
         FeatureToolbarControlsDirective,
         ConfirmationDialogModule
     ],
+    providers: [
+        TitleService
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BindingEditPageComponent {
+export class BindingEditPageComponent implements OnInit {
     public readonly binding$: Observable<ControlSchemeBinding | undefined>;
 
     constructor(
@@ -36,9 +39,18 @@ export class BindingEditPageComponent {
         private readonly routesBuilderService: RoutesBuilderService,
         private readonly router: Router,
         private readonly confirmationDialogService: ConfirmationDialogService,
-        private readonly translocoService: TranslocoService
+        private readonly translocoService: TranslocoService,
+        private readonly titleService: TitleService
     ) {
         this.binding$ = this.store.select(BINDING_EDIT_PAGE_SELECTORS.selectEditedBinding);
+    }
+
+    public ngOnInit(): void {
+        this.titleService.setTitle$(
+            this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName).pipe(
+                switchMap((controlSchemeName) => this.translocoService.selectTranslate('pageTitle.bindingEdit', { controlSchemeName }))
+            )
+        );
     }
 
     public onSave(
