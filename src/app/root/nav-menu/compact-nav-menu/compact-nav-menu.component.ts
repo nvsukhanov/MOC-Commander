@@ -11,6 +11,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { RoutesBuilderService } from '@app/routing';
 import { EllipsisTitleDirective } from '@app/shared';
 
+import { DiscoverHubButtonComponent } from '../discover-hub-button';
+
 @Component({
     standalone: true,
     selector: 'app-compact-nav-menu',
@@ -27,7 +29,8 @@ import { EllipsisTitleDirective } from '@app/shared';
         MatToolbarModule,
         EllipsisTitleDirective,
         NgIf,
-        MatMenuModule
+        MatMenuModule,
+        DiscoverHubButtonComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

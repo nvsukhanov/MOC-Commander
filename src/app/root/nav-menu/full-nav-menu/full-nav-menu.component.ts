@@ -9,6 +9,8 @@ import { NgIf } from '@angular/common';
 import { RoutesBuilderService } from '@app/routing';
 import { EllipsisTitleDirective } from '@app/shared';
 
+import { DiscoverHubButtonComponent } from '../discover-hub-button';
+
 @Component({
     standalone: true,
     selector: 'app-full-nav-menu',
@@ -23,7 +25,8 @@ import { EllipsisTitleDirective } from '@app/shared';
         TranslocoPipe,
         PushPipe,
         EllipsisTitleDirective,
-        NgIf
+        NgIf,
+        DiscoverHubButtonComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

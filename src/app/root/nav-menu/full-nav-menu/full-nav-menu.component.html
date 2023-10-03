@@ -50,31 +50,10 @@
         </span>
 
         <span class="right-side-nav">
-            <ng-container *ngIf="isBluetoothAvailable | ngrxPush; else bluetoothUnavailable">
-                <button mat-mini-fab
-                        class="discover-hub-button"
-                        color="accent"
-                        [title]="'discoverHub' | transloco"
-                        [attr.aria-label]="'discoverHub' | transloco"
-                        (click)="onDiscoveryStart()"
-                        [disabled]="isDiscoveryBusy"
-                >
-                    <mat-icon [fontIcon]="'bluetooth_searching'"></mat-icon>
-                </button>
-            </ng-container>
-
-            <ng-template #bluetoothUnavailable>
-                <a mat-mini-fab
-                   color="warn"
-                   class="no-bluetooth-indicator"
-                   [routerLink]="routesBuilderService.bluetoothUnavailable"
-                   [title]="'bluetoothIsNotAvailable' | transloco"
-                   appEllipsisTitle
-                >
-                    <mat-icon [fontIcon]="'bluetooth_disabled'"></mat-icon>
-                    <span class="cdk-visually-hidden">{{ 'bluetoothIsNotAvailable' | transloco }}</span>
-                </a>
-            </ng-template>
+            <app-discover-hub-button [isBluetoothAvailable]="isBluetoothAvailable"
+                                     [isDiscoveryBusy]="isDiscoveryBusy"
+                                     (discoveryStart)="onDiscoveryStart()"
+            ></app-discover-hub-button>
 
             <a mat-icon-button
                class="about-button"
