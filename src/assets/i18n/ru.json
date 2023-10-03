@@ -35,7 +35,12 @@
     "restoreStateFromBackupDialogDescription": "Восстановление из бэкапа перезапишет текущие настройки. Приложение будет перезапущено. Это действие будет невозможно отменить.",
     "restoreStateFromBackupDialogConfirmButtonTitle": "Восстановить",
     "restoreStateFromBackupDialogCancelButtonTitle": "Отмена",
-    "restoreStateFromBackupDialogFileCorrupted": "Файл поврежден или имеет неверный формат"
+    "restoreStateFromBackupDialogFileCorrupted": "Файл поврежден или имеет неверный формат",
+    "resetStateButtonTitle": "Сброс",
+    "resetStateDialogTitle": "Сброс состояния приложения",
+    "resetStateDialogDescription": "Сброс состояния приложения перезапишет текущие настройки. Приложение будет перезапущено. Это действие будет невозможно отменить.",
+    "resetStateDialogConfirmButtonTitle": "Сброс",
+    "resetStateDialogCancelButtonTitle": "Отмена"
   },
   "language": {
     "en": "English",

@@ -35,7 +35,12 @@
     "restoreStateFromBackupDialogDescription": "Restoring from backup will replace the current settings, erasing all previous data, and will restart the application. This action cannot be undone.",
     "restoreStateFromBackupDialogConfirmButtonTitle": "Restore",
     "restoreStateFromBackupDialogCancelButtonTitle": "Cancel",
-    "restoreStateFromBackupDialogFileCorrupted": "Backup file is corrupted"
+    "restoreStateFromBackupDialogFileCorrupted": "Backup file is corrupted",
+    "resetStateButtonTitle": "Reset",
+    "resetStateDialogTitle": "Reset app",
+    "resetStateDialogDescription": "Resetting the app will erase all data and restart the application. This action cannot be undone.",
+    "resetStateDialogConfirmButtonTitle": "Reset",
+    "resetStateDialogCancelButtonTitle": "Cancel"
   },
   "language": {
     "en": "English",

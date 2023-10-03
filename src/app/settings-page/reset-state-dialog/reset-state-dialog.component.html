@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>
+    {{ 'settings.resetStateDialogTitle' | transloco }}
+</h1>
+
+<div mat-dialog-content>
+    <p>{{ 'settings.resetStateDialogDescription' | transloco }}</p>
+</div>
+
+<div mat-dialog-actions
+     [align]="'end'"
+>
+    <button mat-raised-button
+            [color]="'warn'"
+            (click)="onReset()"
+    >
+        {{ 'settings.resetStateDialogConfirmButtonTitle' | transloco }}
+    </button>
+    <button mat-button
+            (click)="onCancel()"
+    >
+        {{ 'settings.resetStateDialogCancelButtonTitle' | transloco }}
+    </button>
+</div>
+
+

@@ -12,9 +12,9 @@ import { STATE_FILE_VALIDATION_ERRORS, createStateFileValidatorFn } from './stat
 
 @Component({
     standalone: true,
-    selector: 'app-restore-state-from-dump-dialog',
-    templateUrl: './restore-state-from-dump-dialog.component.html',
-    styleUrls: [ './restore-state-from-dump-dialog.component.scss' ],
+    selector: 'app-restore-state-from-backup-dialog',
+    templateUrl: './restore-state-from-backup-dialog.component.html',
+    styleUrls: [ './restore-state-from-backup-dialog.component.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         MatDialogModule,
@@ -27,7 +27,7 @@ import { STATE_FILE_VALIDATION_ERRORS, createStateFileValidatorFn } from './stat
         NgIf,
     ]
 })
-export class RestoreStateFromDumpDialogComponent {
+export class RestoreStateFromBackupDialogComponent {
     public readonly control: FormControl<string | null>;
 
     public readonly errorsMap: ValidationErrorsL10nMap = {
@@ -35,13 +35,16 @@ export class RestoreStateFromDumpDialogComponent {
     };
 
     constructor(
-        private readonly dialog: MatDialogRef<RestoreStateFromDumpDialogComponent>,
+        private readonly dialog: MatDialogRef<RestoreStateFromBackupDialogComponent>,
         formBuilder: FormBuilder,
         private readonly migrationService: MigrateStoreService,
     ) {
         this.control = formBuilder.control<string | null>(
             '',
-            [ Validators.required, createStateFileValidatorFn(migrationService) ]
+            {
+                nonNullable: false,
+                validators: [ Validators.required, createStateFileValidatorFn(migrationService) ]
+            }
         );
     }
 

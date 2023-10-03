@@ -25,6 +25,7 @@ import {
     PORT_TASKS_FEATURE,
     SETTINGS_FEATURE,
     localStorageSyncMetaReducer,
+    stateResetMetaReducer,
     stateRestoreMetaReducer,
 } from './reducers';
 import {
@@ -75,7 +76,8 @@ export function provideApplicationStore(): EnvironmentProviders {
             provideStore<IState>(REDUCERS, {
                 metaReducers: [
                     localStorageSyncMetaReducer,
-                    stateRestoreMetaReducer
+                    stateRestoreMetaReducer,
+                    stateResetMetaReducer
                 ]
             }),
             provideEffects(

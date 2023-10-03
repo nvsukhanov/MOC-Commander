@@ -42,11 +42,20 @@
             >
                 {{ 'settings.createStateBackupButtonTitle' | transloco }}
             </button>
+
             <button mat-raised-button
                     class="debug-actions__button"
                     (click)="onStateRestore()"
             >
                 {{ 'settings.restoreStateFromBackupButtonTitle' | transloco }}
+            </button>
+
+            <button mat-raised-button
+                    [color]="'warn'"
+                    class="debug-actions__button"
+                    (click)="onStateReset()"
+            >
+                {{ 'settings.resetStateButtonTitle' | transloco }}
             </button>
         </section>
     </mat-card-content>
