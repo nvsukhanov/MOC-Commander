@@ -1,13 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
-import { take } from 'rxjs';
+import { filter, switchMap, take } from 'rxjs';
 import { NgForOf, NgIf } from '@angular/common';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Router } from '@angular/router';
 import { RoutesBuilderService } from '@app/routing';
-import { HUBS_ACTIONS, ROUTER_SELECTORS, attachedIosIdFn, } from '@app/store';
-import { HintComponent } from '@app/shared';
+import { HUBS_ACTIONS, HubModel, ROUTER_SELECTORS, attachedIosIdFn, } from '@app/store';
+import { HintComponent, TitleService } from '@app/shared';
 
 import { HubPropertiesViewComponent } from './hub-properties-view';
 import { HubIoViewComponent } from './hub-io-view';
@@ -28,9 +28,12 @@ import { HUB_VIEW_PAGE_SELECTORS, HubIoViewModel } from './hub-view-page.selecto
         HubIoViewComponent,
         HintComponent
     ],
+    providers: [
+        TitleService
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HubViewPageComponent {
+export class HubViewPageComponent implements OnInit {
     public readonly selectedHub$ = this.store.select(HUB_VIEW_PAGE_SELECTORS.selectCurrentlyViewedHubModel);
 
     public readonly selectedHubStats$ = this.store.select(HUB_VIEW_PAGE_SELECTORS.selectCurrentlyViewedHubStats);
@@ -41,7 +44,17 @@ export class HubViewPageComponent {
         private readonly store: Store,
         private readonly router: Router,
         private readonly routesBuilderService: RoutesBuilderService,
+        private readonly titleService: TitleService,
+        private readonly translocoService: TranslocoService
     ) {
+    }
+
+    public ngOnInit(): void {
+        const title$ = this.selectedHub$.pipe(
+            filter((hub): hub is HubModel => !!hub),
+            switchMap((hub) => this.translocoService.selectTranslate('pageTitle.hubView', { hubName: hub.name }))
+        );
+        this.titleService.setTitle$(title$);
     }
 
     public disconnectHub(): void {

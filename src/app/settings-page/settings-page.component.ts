@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { NgForOf } from '@angular/common';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { PushPipe } from '@ngrx/component';
 import { MatSelectModule } from '@angular/material/select';
@@ -9,7 +9,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { IState, SETTINGS_ACTIONS, SETTINGS_FEATURE, UserSelectedTheme } from '@app/store';
-import { Language, getEnumValues } from '@app/shared';
+import { Language, TitleService, getEnumValues } from '@app/shared';
 
 import { ThemeToL10nKeyPipe } from './theme-to-l10n-key.pipe';
 import { LanguageToL10nKeyPipe } from './language-to-l10n-key.pipe';
@@ -33,9 +33,12 @@ import { ResetStateDialogComponent } from './reset-state-dialog';
         MatButtonModule,
         MatDialogModule,
     ],
+    providers: [
+        TitleService
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SettingsPageComponent {
+export class SettingsPageComponent implements OnInit {
     public readonly themes: ReadonlyArray<UserSelectedTheme> = getEnumValues(UserSelectedTheme);
 
     public readonly languages: ReadonlyArray<Language> = getEnumValues(Language);
@@ -47,7 +50,13 @@ export class SettingsPageComponent {
     constructor(
         private readonly store: Store,
         private readonly matDialog: MatDialog,
+        private readonly titleService: TitleService,
+        private readonly translocoService: TranslocoService
     ) {
+    }
+
+    public ngOnInit(): void {
+        this.titleService.setTitle$(this.translocoService.selectTranslate('pageTitle.settings'));
     }
 
     public onThemeChange(

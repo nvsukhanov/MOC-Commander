@@ -1,5 +1,6 @@
 {
-  "appTitle": "webPoweredApp",
+  "appName": "webPoweredApp",
+  "appTitleTemplate": "{ pageTitle } | { appName }",
   "pageNotFound": "Страница не найдена",
   "hubListHubIsNotConnected": "не подключен",
   "discoverHub": "Обнаружить хаб",
@@ -22,6 +23,22 @@
     "navMenuAriaLabel": "Меню",
     "aboutPageButton": "О программе",
     "settingsPageButton": "Настройки"
+  },
+  "pageTitle": {
+    "bindingCreate": "{ controlSchemeName } - Создание привязки",
+    "bindingEdit": "{ controlSchemeName } - Редактирование привязки",
+    "controlSchemesList": "Control schemes",
+    "controlSchemeView": "{ controlSchemeName }",
+    "controlSchemePortEdit": "{ controlSchemeName } - {hubName}, порт {portId}",
+    "controllerList": "Контроллеры",
+    "controllerView": "{ controllerName } - Настройки контроллера",
+    "hubEdit": "{ hubName } - настройки",
+    "hubList": "Хабы",
+    "hubView": "{ hubName }",
+    "notFound": "Страница не найдена",
+    "bluetoothUnavailable": "Bluetooth недоступен",
+    "about": "О программе",
+    "settings": "Настройки"
   },
   "settings": {
     "theme": "Тема оформления",

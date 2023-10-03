@@ -1,5 +1,6 @@
 {
-  "appTitle": "webPoweredApp",
+  "appName": "webPoweredApp",
+  "appTitleTemplate": "{ pageTitle } | { appName }",
   "pageNotFound": "Page not found",
   "hubListHubIsNotConnected": "disconnected",
   "discoverHub": "Discover hub",
@@ -22,6 +23,22 @@
     "navMenuAriaLabel": "Menu",
     "aboutPageButton": "About",
     "settingsPageButton": "Settings"
+  },
+  "pageTitle": {
+    "bindingCreate": "{ controlSchemeName } - Create binding",
+    "bindingEdit": "{ controlSchemeName } - Edit binding",
+    "controlSchemesList": "Control schemes",
+    "controlSchemeView": "{ controlSchemeName }",
+    "controlSchemePortEdit": "{ controlSchemeName } - {hubName}, port {portId}",
+    "controllerList": "Controllers",
+    "controllerView": "{ controllerName } controller settings",
+    "hubEdit": "{ hubName } settings",
+    "hubList": "Hubs",
+    "hubView": "{ hubName }",
+    "notFound": "Page not found",
+    "bluetoothUnavailable": "Bluetooth is not available",
+    "about": "About",
+    "settings": "Settings"
   },
   "settings": {
     "theme": "Theme",

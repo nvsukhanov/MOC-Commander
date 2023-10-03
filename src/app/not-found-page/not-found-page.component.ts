@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TranslocoPipe } from '@ngneat/transloco';
-import { HintComponent } from '@app/shared';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { HintComponent, TitleService } from '@app/shared';
 
 @Component({
     standalone: true,
@@ -11,7 +11,19 @@ import { HintComponent } from '@app/shared';
         TranslocoPipe,
         HintComponent
     ],
+    providers: [
+        TitleService
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NotFoundPageComponent {
+export class NotFoundPageComponent implements OnInit {
+    constructor(
+        private readonly titleService: TitleService,
+        private readonly translocoService: TranslocoService
+    ) {
+    }
+
+    public ngOnInit(): void {
+        this.titleService.setTitle$(this.translocoService.selectTranslate('pageTitle.notFound'));
+    }
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Observable, Subscription, filter, map, of, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { PushPipe } from '@ngrx/component';
@@ -9,7 +9,14 @@ import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { RoutesBuilderService } from '@app/routing';
 import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel, ROUTER_SELECTORS, } from '@app/store';
-import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective, HintComponent, ScreenSizeObserverService } from '@app/shared';
+import {
+    ConfirmationDialogModule,
+    ConfirmationDialogService,
+    FeatureToolbarControlsDirective,
+    HintComponent,
+    ScreenSizeObserverService,
+    TitleService
+} from '@app/shared';
 
 import { CONTROL_SCHEME_PAGE_SELECTORS } from './control-scheme-page.selectors';
 import { ControlSchemeViewIoListComponent } from './control-scheme-view-io-list';
@@ -38,9 +45,12 @@ import { ControlSchemePageFullToolbarComponent } from './full-toolbar';
         ControlSchemePageFullToolbarComponent,
         MatDialogModule
     ],
+    providers: [
+        TitleService
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ControlSchemePageComponent implements OnDestroy {
+export class ControlSchemePageComponent implements OnInit, OnDestroy {
     public readonly selectedScheme$: Observable<ControlSchemeModel | undefined> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeName).pipe(
         switchMap((id) => id === null ? of(undefined) : this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(id))),
     );
@@ -79,7 +89,8 @@ export class ControlSchemePageComponent implements OnDestroy {
         private readonly confirmationDialogService: ConfirmationDialogService,
         private readonly transloco: TranslocoService,
         private readonly dialog: MatDialog,
-        private readonly screenSizeObserverService: ScreenSizeObserverService
+        private readonly screenSizeObserverService: ScreenSizeObserverService,
+        private readonly titleService: TitleService
     ) {
     }
 
@@ -89,6 +100,14 @@ export class ControlSchemePageComponent implements OnDestroy {
         if (!controls) {
             return;
         }
+    }
+
+    public ngOnInit(): void {
+        this.titleService.setTitle$(
+            this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeName).pipe(
+                switchMap((controlSchemeName) => this.transloco.selectTranslate('pageTitle.controlSchemeView', { controlSchemeName }))
+            )
+        );
     }
 
     public ngOnDestroy(): void {

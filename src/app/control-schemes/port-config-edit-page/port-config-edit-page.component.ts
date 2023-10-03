@@ -4,13 +4,13 @@ import { JsonPipe, NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Observable, Subscription, take } from 'rxjs';
+import { Observable, Subscription, switchMap, take } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { RoutesBuilderService } from '@app/routing';
-import { HintComponent, PortIdToPortNamePipe, ValidationMessagesDirective } from '@app/shared';
+import { HintComponent, PortIdToPortNamePipe, PortIdToPortNameService, TitleService, ValidationMessagesDirective } from '@app/shared';
 import { CONTROL_SCHEME_ACTIONS } from '@app/store';
 
 import { PORT_CONFIG_EDIT_PAGE_SELECTORS } from './port-config-edit-page.selectors';
@@ -35,6 +35,9 @@ import { PortConfigEditViewModel } from './port-config-edit-view-model';
         PortIdToPortNamePipe,
         ValidationMessagesDirective
     ],
+    providers: [
+        TitleService
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PortConfigEditPageComponent implements OnInit, OnDestroy {
@@ -52,7 +55,10 @@ export class PortConfigEditPageComponent implements OnInit, OnDestroy {
         private readonly store: Store,
         private readonly formBuilder: PortConfigFormBuilderService,
         private readonly routesBuilder: RoutesBuilderService,
-        private readonly router: Router
+        private readonly router: Router,
+        private readonly titleService: TitleService,
+        private readonly translocoService: TranslocoService,
+        private readonly portIdToPortNameService: PortIdToPortNameService
     ) {
     }
 
@@ -71,6 +77,17 @@ export class PortConfigEditPageComponent implements OnInit, OnDestroy {
                 }
             })
         );
+
+        const pageTitle$ = this.store.select(PORT_CONFIG_EDIT_PAGE_SELECTORS.selectPortConfig).pipe(
+            switchMap((portConfig) => {
+                    const portId = this.portIdToPortNameService.mapPortId(portConfig?.portId ?? null);
+                    return this.translocoService.selectTranslate(
+                        'pageTitle.controlSchemePortEdit',
+                        { portId, hubName: portConfig?.hubName, controlSchemeName: portConfig?.controlSchemeName }
+                    );
+                }
+            ));
+        this.titleService.setTitle$(pageTitle$);
     }
 
     public ngOnDestroy(): void {
@@ -92,7 +109,7 @@ export class PortConfigEditPageComponent implements OnInit, OnDestroy {
                         throw new Error('Hub ID and port ID must be set');
                     }
                     this.store.dispatch(CONTROL_SCHEME_ACTIONS.savePortConfig({
-                        schemeName: portConfig.schemeName,
+                        schemeName: portConfig.controlSchemeName,
                         portConfig: {
                             ...this.formGroup.getRawValue(),
                             hubId,
@@ -100,7 +117,7 @@ export class PortConfigEditPageComponent implements OnInit, OnDestroy {
                         }
                     }));
                     this.router.navigate(
-                        this.routesBuilder.controlSchemeView(portConfig.schemeName)
+                        this.routesBuilder.controlSchemeView(portConfig.controlSchemeName)
                     );
                 }
             });
@@ -113,7 +130,7 @@ export class PortConfigEditPageComponent implements OnInit, OnDestroy {
         ).subscribe((portConfig) => {
             if (portConfig) {
                 this.router.navigate(
-                    this.routesBuilder.controlSchemeView(portConfig.schemeName)
+                    this.routesBuilder.controlSchemeView(portConfig.controlSchemeName)
                 );
             }
         });

@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TitleService } from '@app/shared';
 
 import packageJson from '../../../package.json';
 
@@ -11,9 +12,12 @@ import packageJson from '../../../package.json';
     imports: [
         TranslocoPipe
     ],
+    providers: [
+        TitleService
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AboutPageComponent {
+export class AboutPageComponent implements OnInit {
     public readonly webPoweredAppURL = 'https://github.com/nvsukhanov/webPoweredApp';
 
     public readonly rxPoweredUpURL = 'https://github.com/nvsukhanov/rxPoweredUp';
@@ -21,4 +25,14 @@ export class AboutPageComponent {
     public readonly licenseURL = 'https://github.com/nvsukhanov/webPoweredApp/blob/main/LICENSE.md';
 
     public readonly version = packageJson.version;
+
+    constructor(
+        private readonly titleService: TitleService,
+        private readonly translocoService: TranslocoService
+    ) {
+    }
+
+    public ngOnInit(): void {
+        this.titleService.setTitle$(this.translocoService.selectTranslate('pageTitle.about'));
+    }
 }
