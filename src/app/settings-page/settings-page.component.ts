@@ -13,7 +13,8 @@ import { Language, getEnumValues } from '@app/shared';
 
 import { ThemeToL10nKeyPipe } from './theme-to-l10n-key.pipe';
 import { LanguageToL10nKeyPipe } from './language-to-l10n-key.pipe';
-import { RestoreStateFromDumpDialogComponent } from './restore-state-from-dump-dialog';
+import { RestoreStateFromBackupDialogComponent } from './restore-state-from-backup-dialog';
+import { ResetStateDialogComponent } from './reset-state-dialog';
 
 @Component({
     standalone: true,
@@ -66,11 +67,19 @@ export class SettingsPageComponent {
     }
 
     public onStateRestore(): void {
-        this.matDialog.open<RestoreStateFromDumpDialogComponent, void, IState | undefined>(
-            RestoreStateFromDumpDialogComponent
+        this.matDialog.open<RestoreStateFromBackupDialogComponent, void, IState | undefined>(
+            RestoreStateFromBackupDialogComponent
         ).afterClosed().subscribe((result) => {
             if (result) {
                 this.store.dispatch(SETTINGS_ACTIONS.restoreStateFromBackup({ state: result }));
+            }
+        });
+    }
+
+    public onStateReset(): void {
+        this.matDialog.open<ResetStateDialogComponent, void, boolean>(ResetStateDialogComponent).afterClosed().subscribe((result) => {
+            if (result) {
+                this.store.dispatch(SETTINGS_ACTIONS.resetState());
             }
         });
     }
