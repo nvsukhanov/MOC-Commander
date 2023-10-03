@@ -68,11 +68,11 @@
                    color="warn"
                    class="no-bluetooth-indicator"
                    [routerLink]="routesBuilderService.bluetoothUnavailable"
-                   [title]="'bluetoothUnavailableToolbarTitle' | transloco"
+                   [title]="'bluetoothIsNotAvailable' | transloco"
                    appEllipsisTitle
                 >
                     <mat-icon [fontIcon]="'bluetooth_disabled'"></mat-icon>
-                    <span class="cdk-visually-hidden">{{ 'bluetoothUnavailableToolbarTitle' | transloco }}</span>
+                    <span class="cdk-visually-hidden">{{ 'bluetoothIsNotAvailable' | transloco }}</span>
                 </a>
             </ng-template>
 
