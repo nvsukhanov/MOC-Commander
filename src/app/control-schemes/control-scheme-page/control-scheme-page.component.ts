@@ -1,14 +1,15 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { Observable, Subscription, filter, map, of, switchMap, take } from 'rxjs';
+import { Observable, Subscription, filter, map, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { PushPipe } from '@ngrx/component';
-import { NgIf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { RoutesBuilderService } from '@app/routing';
-import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel, ROUTER_SELECTORS, } from '@app/store';
+import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, ControlSchemeModel, ROUTER_SELECTORS, } from '@app/store';
 import {
     ConfirmationDialogModule,
     ConfirmationDialogService,
@@ -21,10 +22,11 @@ import {
 import { CONTROL_SCHEME_PAGE_SELECTORS } from './control-scheme-page.selectors';
 import { ControlSchemeViewIoListComponent } from './control-scheme-view-io-list';
 import { ControlSchemeGeneralInfoComponent } from './control-scheme-general-info';
-import { ControlSchemeViewTreeNode } from './types';
+import { ControlSchemeViewTreeNode, SchemeRunBlocker } from './types';
 import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData } from '../common';
 import { ControlSchemePageCompactToolbarComponent } from './compact-toolbar';
 import { ControlSchemePageFullToolbarComponent } from './full-toolbar';
+import { ControlSchemeRunBlockersL10nPipe } from './control-scheme-run-blockers-l10n.pipe';
 
 @Component({
     standalone: true,
@@ -43,7 +45,10 @@ import { ControlSchemePageFullToolbarComponent } from './full-toolbar';
         FeatureToolbarControlsDirective,
         ControlSchemePageCompactToolbarComponent,
         ControlSchemePageFullToolbarComponent,
-        MatDialogModule
+        MatDialogModule,
+        NgForOf,
+        MatIconModule,
+        ControlSchemeRunBlockersL10nPipe
     ],
     providers: [
         TitleService
@@ -51,28 +56,19 @@ import { ControlSchemePageFullToolbarComponent } from './full-toolbar';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemePageComponent implements OnInit, OnDestroy {
-    public readonly selectedScheme$: Observable<ControlSchemeModel | undefined> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeName).pipe(
-        switchMap((id) => id === null ? of(undefined) : this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(id))),
+    public readonly selectedScheme$ = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.selectCurrentlyViewedScheme);
+
+    public readonly schemeRunBlockers$: Observable<SchemeRunBlocker[]> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.selectSchemeRunBlockers).pipe(
+        map((blockers) => blockers.filter((blocker) => !this.hiddenSchemeRunBlockers.has(blocker)))
     );
 
-    public readonly canRunScheme$: Observable<boolean> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeName).pipe(
-        switchMap((id) => id === null
-                          ? of(false)
-                          : this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canRunScheme(id))),
-    );
+    public readonly canRunScheme$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canRunViewedScheme);
 
     public readonly isCurrentControlSchemeRunning$ = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.isCurrentControlSchemeRunning);
 
-    public readonly schemeViewTree$: Observable<ControlSchemeViewTreeNode[]> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeName).pipe(
-        switchMap((id) => id === null
-                          ? of([])
-                          : this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.schemeViewTree(id))
-        )
-    );
+    public readonly schemeViewTree$: Observable<ControlSchemeViewTreeNode[]> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.schemeViewTree);
 
-    public readonly canExportScheme$: Observable<boolean> = this.store.select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeName).pipe(
-        switchMap((name) => name === null ? of(false) : this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canExportScheme(name))),
-    );
+    public readonly canExportScheme$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canExportViewedScheme);
 
     public readonly canCreateBinding$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canCreateBinding);
 
@@ -81,6 +77,10 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
     private sub?: Subscription;
 
     private isCapturingInput = false;
+
+    private readonly hiddenSchemeRunBlockers: ReadonlySet<SchemeRunBlocker> = new Set([
+        SchemeRunBlocker.AlreadyRunning,
+    ]);
 
     constructor(
         private readonly store: Store,

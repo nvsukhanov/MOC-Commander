@@ -22,7 +22,13 @@ import {
 } from '@app/store';
 
 import { areControllableIosPresent, ioHasMatchingModeForOpMode } from '../common';
-import { ControlSchemeNodeTypes, ControlSchemeViewBindingTreeNodeData, ControlSchemeViewHubTreeNode, ControlSchemeViewIoTreeNode } from './types';
+import {
+    ControlSchemeNodeTypes,
+    ControlSchemeViewBindingTreeNodeData,
+    ControlSchemeViewHubTreeNode,
+    ControlSchemeViewIoTreeNode,
+    SchemeRunBlocker
+} from './types';
 
 function createHubTreeNode(
     hubConfig: { hubId: string; name?: string; hubType?: HubType },
@@ -74,28 +80,85 @@ function createBindingTreeNode(
     };
 }
 
-export const CONTROL_SCHEME_PAGE_SELECTORS = {
-    selectIoOutputModes: createSelector(
-        ATTACHED_IO_SELECTORS.selectAll,
-        ATTACHED_IO_MODES_SELECTORS.selectEntities,
-        ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
-        (ios, ioSupportedModesEntities, portModeInfoEntities): Record<string, PortModeName[]> => {
-            const result: Record<string, PortModeName[]> = {};
-            for (const io of ios) {
-                const ioId = attachedIosIdFn(io);
-                result[ioId] = (ioSupportedModesEntities[attachedIoModesIdFn(io)]?.portOutputModes ?? []).map((modeId) => {
-                    const portModeInfo = portModeInfoEntities[attachedIoPortModeInfoIdFn({ ...io, modeId })];
-                    return portModeInfo?.name ?? null;
-                }).filter((name): name is PortModeName => !!name);
-            }
-            return result;
+const SELECT_CURRENTLY_VIEWED_SCHEME = createSelector(
+    ROUTER_SELECTORS.selectCurrentlyViewedSchemeName,
+    CONTROL_SCHEME_SELECTORS.selectEntities,
+    (schemeName, schemes) => schemeName === null ? undefined : schemes[schemeName]
+);
+
+const SELECT_IO_OUTPUT_MODES = createSelector(
+    ATTACHED_IO_SELECTORS.selectAll,
+    ATTACHED_IO_MODES_SELECTORS.selectEntities,
+    ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
+    (ios, ioSupportedModesEntities, portModeInfoEntities): Record<string, PortModeName[]> => {
+        const result: Record<string, PortModeName[]> = {};
+        for (const io of ios) {
+            const ioId = attachedIosIdFn(io);
+            result[ioId] = (ioSupportedModesEntities[attachedIoModesIdFn(io)]?.portOutputModes ?? []).map((modeId) => {
+                const portModeInfo = portModeInfoEntities[attachedIoPortModeInfoIdFn({ ...io, modeId })];
+                return portModeInfo?.name ?? null;
+            }).filter((name): name is PortModeName => !!name);
         }
-    ),
-    schemeViewTree: (schemeName: string) => createSelector(
-        CONTROL_SCHEME_SELECTORS.selectScheme(schemeName),
+        return result;
+    }
+);
+
+const SELECT_SCHEME_RUN_BLOCKERS = createSelector(
+    SELECT_CURRENTLY_VIEWED_SCHEME,
+    CONTROL_SCHEME_SELECTORS.selectRunningState,
+    HUB_STATS_SELECTORS.selectIds,
+    SELECT_IO_OUTPUT_MODES,
+    CONTROLLER_CONNECTION_SELECTORS.selectEntities,
+    ATTACHED_IO_SELECTORS.selectEntities,
+    (
+        scheme: ControlSchemeModel | undefined,
+        runningState: ControlSchemeRunState,
+        connectedHubIds: string[],
+        ioOutputModes: Record<string, PortModeName[]>,
+        controllerConnections: Dictionary<ControllerConnectionModel>,
+        attachedIos: Dictionary<AttachedIoModel>
+    ): SchemeRunBlocker[] => {
+        if (!scheme) {
+            return [ SchemeRunBlocker.SchemeDoesNotExist ];
+        }
+        const result = new Set<SchemeRunBlocker>();
+
+        if (runningState !== ControlSchemeRunState.Idle) {
+            result.add(SchemeRunBlocker.AlreadyRunning);
+        }
+        if (!scheme.bindings.length) {
+            result.add(SchemeRunBlocker.SchemeBindingsDoesNotExist);
+        }
+
+        if (scheme.bindings.some((b) => !connectedHubIds.includes(b.hubId))) {
+            result.add(SchemeRunBlocker.SomeHubsAreNotConnected);
+        }
+
+        if (scheme.bindings.some((b) => !attachedIos[attachedIosIdFn(b)])) {
+            result.add(SchemeRunBlocker.SomeIosAreNotConnected);
+        }
+
+        if (scheme.bindings.filter((b) => !!attachedIos[attachedIosIdFn(b)])
+                  .some((b) => !ioHasMatchingModeForOpMode(b.bindingType, ioOutputModes[attachedIosIdFn(b)] ?? []))
+        ) {
+            result.add(SchemeRunBlocker.SomeIosHaveNoRequiredCapabilities);
+        }
+
+        if (scheme.bindings.some((b) => !Object.values(b.inputs).every((input) => !!controllerConnections[input.controllerId]))) {
+            result.add(SchemeRunBlocker.SomeControllersAreNotConnected);
+        }
+        return [ ...result ];
+    }
+);
+
+export const CONTROL_SCHEME_PAGE_SELECTORS = {
+    selectCurrentlyViewedScheme: SELECT_CURRENTLY_VIEWED_SCHEME,
+    selectIoOutputModes: SELECT_IO_OUTPUT_MODES,
+    schemeViewTree: createSelector(
+        SELECT_CURRENTLY_VIEWED_SCHEME,
         HUBS_SELECTORS.selectEntities,
         ATTACHED_IO_SELECTORS.selectEntities,
-        CONTROL_SCHEME_PAGE_SELECTORS.selectIoOutputModes,
+        SELECT_IO_OUTPUT_MODES,
         (
             scheme: ControlSchemeModel | undefined,
             hubEntities: Dictionary<HubModel>,
@@ -133,7 +196,7 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
                         binding.hubId,
                         binding.portId,
                         scheme.bindings,
-                        schemeName
+                        scheme.name
                     );
                     hubIosViewMap.set(ioId, ioViewModel);
 
@@ -144,7 +207,7 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
                 const bindingTreeNode = createBindingTreeNode(
                     ioViewModel.path,
                     binding,
-                    schemeName,
+                    scheme.name,
                     ioOutputModes[ioId] ?? [],
                     io
                 );
@@ -154,36 +217,11 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
             return [ ...hubsViewMap.values() ];
         }
     ),
-    canRunScheme: (schemeName: string) => createSelector(
-        CONTROL_SCHEME_SELECTORS.selectScheme(schemeName),
-        CONTROL_SCHEME_SELECTORS.selectRunningState,
-        HUB_STATS_SELECTORS.selectIds,
-        CONTROL_SCHEME_PAGE_SELECTORS.selectIoOutputModes,
-        CONTROLLER_CONNECTION_SELECTORS.selectEntities,
-        (
-            scheme: ControlSchemeModel | undefined,
-            runningState: ControlSchemeRunState,
-            connectedHubIds: string[],
-            ioOutputModes: Record<string, PortModeName[]>,
-            controllerConnections: Dictionary<ControllerConnectionModel>
-        ): boolean => {
-            // ensure scheme is runnable (exists, there are no currently running schemes and scheme has bindings)
-            if (!scheme || runningState !== ControlSchemeRunState.Idle || !scheme.bindings.length) {
-                return false;
-            }
-            // ensure all hubs are connected
-            if (scheme.bindings.some((b) => !connectedHubIds.includes(b.hubId))) {
-                return false;
-            }
-            // ensure all ios are connected and has matching necessary capabilities
-            if (scheme.bindings.some((b) => !ioHasMatchingModeForOpMode(b.bindingType, ioOutputModes[attachedIosIdFn(b)] ?? []))) {
-                return false;
-            }
-            // ensure all controllers are connected
-            return scheme.bindings.every((b) => {
-                const controllerIds = Object.values(b.inputs).map((input) => input.controllerId);
-                return controllerIds.every((controllerId) => !!controllerConnections[controllerId]);
-            });
+    selectSchemeRunBlockers: SELECT_SCHEME_RUN_BLOCKERS,
+    canRunViewedScheme: createSelector(
+        SELECT_SCHEME_RUN_BLOCKERS,
+        (blockers): boolean => {
+            return blockers.length === 0;
         }
     ),
     isCurrentControlSchemeRunning: createSelector(
@@ -200,8 +238,8 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
         ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
         (ios, ioSupportedModesEntities, portModeInfoEntities) => areControllableIosPresent(ios, ioSupportedModesEntities, portModeInfoEntities)
     ),
-    canExportScheme: (schemeName: string) => createSelector(
-        CONTROL_SCHEME_SELECTORS.selectScheme(schemeName),
+    canExportViewedScheme: createSelector(
+        SELECT_CURRENTLY_VIEWED_SCHEME,
         (scheme) => !!scheme && scheme.bindings.length > 0
     ),
 } as const;
