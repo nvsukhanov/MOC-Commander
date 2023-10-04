@@ -8,6 +8,18 @@
     </mat-card-header>
 
     <mat-card-content>
+        <section *ngIf="schemeRunBlockers$ | ngrxPush; let blockers"
+                 class="run-blockers"
+        >
+            <p *ngFor="let blocker of blockers"
+               class="run-blockers__item"
+            >
+                <mat-icon [fontIcon]="'highlight_off'"
+                          [color]="'warn'"
+                ></mat-icon>
+                {{ blocker | controlSchemeRunBlockersL10nPipe | transloco }}
+            </p>
+        </section>
         <section *ngIf="scheme.bindings.length; else bindingsListEmpty">
             <app-control-scheme-view-io-list [tree]="schemeViewTree$ | ngrxPush"></app-control-scheme-view-io-list>
         </section>

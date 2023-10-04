@@ -36,3 +36,13 @@ export type ControlSchemeViewHubTreeNode = {
 export type ControlSchemeViewTreeNode = ControlSchemeViewHubTreeNode
     | ControlSchemeViewIoTreeNode
     | ControlSchemeViewBindingTreeNodeData;
+
+export enum SchemeRunBlocker {
+    SchemeDoesNotExist,
+    AlreadyRunning,
+    SchemeBindingsDoesNotExist,
+    SomeHubsAreNotConnected,
+    SomeIosAreNotConnected,
+    SomeIosHaveNoRequiredCapabilities,
+    SomeControllersAreNotConnected,
+}
