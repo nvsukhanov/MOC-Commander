@@ -68,7 +68,7 @@ export class ValidationMessagesDirective implements OnChanges, OnDestroy {
         if (!this.control) {
             return undefined;
         }
-        if (this.control && this.control.invalid) {
+        if (this.control && this.control.dirty && this.control.invalid) {
             const error = Object.keys(this.control.errors ?? {})[0];
             if (error !== undefined) {
                 const payload = this.control.errors?.[error] instanceof Object ? this.control.errors?.[error] : { value: this.control.errors?.[error] };
