@@ -1,13 +1,11 @@
 <button *ngIf="isBluetoothAvailable | ngrxPush; else bluetoothUnavailable"
         mat-mini-fab
-        matRipple
         class="discover-hub-button"
         [color]="'accent'"
         [title]="'discoverHub' | transloco"
         [attr.aria-label]="'discoverHub' | transloco"
         (click)="onDiscoveryStart()"
         [disabled]="isDiscoveryBusy"
-        #discoverHubRipples="matRipple"
 >
     <mat-icon [fontIcon]="'bluetooth_searching'"></mat-icon>
 </button>
