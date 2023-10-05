@@ -6,7 +6,7 @@ export class HubCommunicationNotifierMiddleware implements IMessageMiddleware {
 
     private internalCommunicationNotifierSubject = new Subject<void>();
 
-    private readonly communicationDebounceTime = 200;
+    private readonly communicationDebounceTime = 100;
 
     constructor() {
         this.communicationNotifier$ = this.internalCommunicationNotifierSubject.pipe(
