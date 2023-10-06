@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Dictionary } from '@ngrx/entity';
 import { ControlSchemeBindingType } from '@app/shared';
 
-import { ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload } from '../../../models';
+import { AttachedIoPropsModel, ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload } from '../../../models';
 import {
     AngleShiftTaskPayloadFactoryService,
     ITaskPayloadFactory,
@@ -38,10 +38,10 @@ export class TaskFactoryService {
     public buildTask(
         binding: ControlSchemeBinding,
         inputsState: Dictionary<ControllerInputModel>,
-        motorEncoderOffset: number,
+        ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         lastExecutedTask: PortCommandTask | null
     ): PortCommandTask | null {
-        const payload = this.buildPayload(binding, inputsState, motorEncoderOffset, lastExecutedTask);
+        const payload = this.buildPayload(binding, inputsState, ioProps, lastExecutedTask);
         if (payload) {
             return this.composeTask(binding, payload.payload, payload.inputTimestamp);
         }
@@ -65,14 +65,14 @@ export class TaskFactoryService {
     private buildPayload<T extends ControlSchemeBindingType>(
         binding: ControlSchemeBinding & { bindingType: T },
         inputsState: Dictionary<ControllerInputModel>,
-        motorEncoderOffset: number,
+        ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTask: PortCommandTask | null
     ): { payload: PortCommandTaskPayload; inputTimestamp: number } | null {
         const taskPayloadFactory: ITaskPayloadFactory<T> = this.taskPayloadFactories[binding.bindingType];
         return taskPayloadFactory.buildPayload(
             binding,
             inputsState,
-            motorEncoderOffset,
+            ioProps,
             previousTask
         );
     }

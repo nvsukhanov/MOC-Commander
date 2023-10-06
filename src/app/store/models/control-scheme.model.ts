@@ -72,6 +72,7 @@ export type ControlSchemeServoBinding = {
     } & ControlSchemeInputsRecord;
     hubId: string;
     portId: number;
+    calibrateOnStart: boolean;
     range: number;
     aposCenter: number;
     speed: number;

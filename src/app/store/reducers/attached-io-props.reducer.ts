@@ -30,10 +30,23 @@ export const ATTACHED_IO_PROPS_FEATURE = createFeature({
                     hubId: data.hubId,
                     portId: data.portId,
                     motorEncoderOffset: data.offset,
+                    startupServoCalibrationData: state.entities[hubAttachedIoPropsIdFn(data)]?.startupServoCalibrationData ?? null,
                 },
                 state
             )
         ),
+        on(ATTACHED_IO_PROPS_ACTIONS.startupServoCalibrationDataReceived, (state, data): AttacheIoPropsState =>
+            ATTACHED_IO_PROPS_ENTITY_ADAPTER.upsertOne({
+                    hubId: data.hubId,
+                    portId: data.portId,
+                    motorEncoderOffset: state.entities[hubAttachedIoPropsIdFn(data)]?.motorEncoderOffset ?? 0,
+                    startupServoCalibrationData: {
+                        aposCenter: data.aposCenter,
+                        range: data.range,
+                    },
+                },
+                state
+            )),
         on(HUBS_ACTIONS.forgetHub, (state, { hubId }): AttacheIoPropsState =>
             ATTACHED_IO_PROPS_ENTITY_ADAPTER.removeMany((io) => io.hubId === hubId, state)
         )

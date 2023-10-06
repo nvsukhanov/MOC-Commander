@@ -4,6 +4,7 @@ import { ControlSchemeBindingType } from '@app/shared';
 
 import { controllerInputIdFn } from '../../../../reducers';
 import {
+    AttachedIoPropsModel,
     ControlSchemeInputAction,
     ControlSchemeSpeedShiftBinding,
     ControllerInputModel,
@@ -20,7 +21,7 @@ export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
     public buildPayload(
         binding: ControlSchemeSpeedShiftBinding,
         inputsState: Dictionary<ControllerInputModel>,
-        motorEncoderOffset: number,
+        ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTask: PortCommandTask | null
     ): { payload: SpeedShiftTaskPayload; inputTimestamp: number } | null {
         const nextLevelInput = this.getActiveInput(binding, inputsState, ControlSchemeInputAction.NextLevel);

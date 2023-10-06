@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType, getTranslationArcs } from '@app/shared';
 
 import {
+    AttachedIoPropsModel,
     ControlSchemeInputAction,
     ControlSchemeServoBinding,
     ControllerInputModel,
@@ -22,7 +23,7 @@ export class ServoTaskPayloadFactoryService implements ITaskPayloadFactory<Contr
     public buildPayload(
         binding: ControlSchemeServoBinding,
         inputsState: Dictionary<ControllerInputModel>,
-        motorEncoderOffset: number,
+        ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
     ): { payload: ServoTaskPayload; inputTimestamp: number } | null {
         const servoInput = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Servo])];
         if (!servoInput) {
@@ -30,10 +31,13 @@ export class ServoTaskPayloadFactoryService implements ITaskPayloadFactory<Contr
         }
         const servoInputValue = calcInputGain(servoInput?.value ?? 0, binding.inputs[ControlSchemeInputAction.Servo].gain);
 
-        const translationPaths = getTranslationArcs(motorEncoderOffset, binding.aposCenter);
+        const translationPaths = getTranslationArcs(
+            ioProps?.motorEncoderOffset ?? 0,
+            this.getArcCenter(binding, ioProps)
+        );
         const resultingCenter = translationPaths.cw < translationPaths.ccw ? translationPaths.cw : -translationPaths.ccw;
 
-        const arcSize = binding.range;
+        const arcSize = this.getArcSize(binding, ioProps);
         const arcPosition = servoInputValue * arcSize / 2 * (binding.invert ? -1 : 1);
 
         const targetAngle = arcPosition + resultingCenter;
@@ -79,5 +83,33 @@ export class ServoTaskPayloadFactoryService implements ITaskPayloadFactory<Contr
         const snappedToZeroAngle = Math.abs(targetAngle - arcCenter) < this.snappingThreshold ? arcCenter : targetAngle;
         const snappedToMaxAngle = Math.abs(snappedToZeroAngle - maxAngle) < this.snappingThreshold ? maxAngle : snappedToZeroAngle;
         return Math.abs(snappedToMaxAngle - minAngle) < this.snappingThreshold ? minAngle : snappedToMaxAngle;
+    }
+
+    private getArcSize(
+        binding: ControlSchemeServoBinding,
+        ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
+    ): number {
+        if (binding.calibrateOnStart) {
+            const range = ioProps?.startupServoCalibrationData?.range;
+            if (range === undefined) {
+                throw new Error('Servo range is not defined');
+            }
+            return range;
+        }
+        return binding.range;
+    }
+
+    private getArcCenter(
+        binding: ControlSchemeServoBinding,
+        ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
+    ): number {
+        if (binding.calibrateOnStart) {
+            const center = ioProps?.startupServoCalibrationData?.aposCenter;
+            if (center === undefined) {
+                throw new Error('Servo center is not defined');
+            }
+            return center;
+        }
+        return binding.aposCenter;
     }
 }

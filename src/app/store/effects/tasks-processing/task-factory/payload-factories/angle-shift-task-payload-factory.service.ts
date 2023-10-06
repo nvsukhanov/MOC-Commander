@@ -4,6 +4,7 @@ import { ControlSchemeBindingType } from '@app/shared';
 
 import {
     AngleShiftTaskPayload,
+    AttachedIoPropsModel,
     ControlSchemeAngleShiftBinding,
     ControlSchemeInputAction,
     ControllerInputModel,
@@ -19,7 +20,7 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
     public buildPayload(
         binding: ControlSchemeAngleShiftBinding,
         inputsState: Dictionary<ControllerInputModel>,
-        motorEncoderOffset: number,
+        ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTask: PortCommandTask | null
     ): { payload: AngleShiftTaskPayload; inputTimestamp: number } | null {
         const angleShiftPrevTask = previousTask && previousTask.payload.bindingType === ControlSchemeBindingType.AngleShift
@@ -28,7 +29,7 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
         return this.buildPayloadUsingPreviousTask(
             binding,
             inputsState,
-            motorEncoderOffset,
+            ioProps?.motorEncoderOffset ?? 0,
             angleShiftPrevTask
         );
     }

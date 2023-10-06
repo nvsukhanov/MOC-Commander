@@ -22,6 +22,7 @@ export class ServoBindingFormBuilderService {
             }),
             hubId: this.commonFormControlBuilder.hubIdControl(),
             portId: this.commonFormControlBuilder.portIdControl(),
+            calibrateOnStart: this.commonFormControlBuilder.toggleControl(true),
             range: this.formBuilder.control<number>(MOTOR_LIMITS.maxServoDegreesRange, {
                 nonNullable: true,
                 validators: [

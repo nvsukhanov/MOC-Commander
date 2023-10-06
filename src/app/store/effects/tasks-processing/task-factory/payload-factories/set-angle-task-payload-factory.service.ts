@@ -4,6 +4,7 @@ import { ControlSchemeBindingType } from '@app/shared';
 
 import { controllerInputIdFn } from '../../../../reducers';
 import {
+    AttachedIoPropsModel,
     ControlSchemeInputAction,
     ControlSchemeSetAngleBinding,
     ControllerInputModel,
@@ -18,14 +19,14 @@ export class SetAngleTaskPayloadFactoryService implements ITaskPayloadFactory<Co
     public buildPayload(
         binding: ControlSchemeSetAngleBinding,
         inputsState: Dictionary<ControllerInputModel>,
-        motorEncoderOffset: number,
+        ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
     ): { payload: SetAngleTaskPayload; inputTimestamp: number } | null {
         const setAngleInput = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.SetAngle])];
 
         if (!setAngleInput?.isActivated) {
             return null;
         }
-        const resultingAngle = binding.angle - motorEncoderOffset;
+        const resultingAngle = binding.angle - (ioProps?.motorEncoderOffset ?? 0);
 
         const payload: SetAngleTaskPayload = {
             bindingType: ControlSchemeBindingType.SetAngle,
