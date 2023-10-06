@@ -230,6 +230,7 @@
       "operationMode": "Сервопривод",
       "outputCenterOffset": "Центр (°)",
       "outputAngleRange": "Диапазон (°)",
+      "calibrateOnStart": "Калибровать при запуске",
       "calibrate": "Калибровка",
       "calibrationIsInProgress": "Идёт калибровка",
       "calibrationError": "Произошла ошибка в процессе калибровки",

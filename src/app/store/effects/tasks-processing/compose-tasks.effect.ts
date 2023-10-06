@@ -57,7 +57,7 @@ function composeTasksForBindingGroup(
         || composingData.pendingTask
         || null;
 
-    return composingData.bindings.map((binding) => taskBuilder.buildTask(binding, composingData.inputState, composingData.encoderOffset, previousTask))
+    return composingData.bindings.map((binding) => taskBuilder.buildTask(binding, composingData.inputState, composingData.ioProps, previousTask))
                         .filter((task): task is PortCommandTask => !!task)
                         .sort((a, b) => a.inputTimestamp - b.inputTimestamp);
 }

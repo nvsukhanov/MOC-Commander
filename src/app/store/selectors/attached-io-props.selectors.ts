@@ -19,4 +19,10 @@ export const ATTACHED_IO_PROPS_SELECTORS = {
         ATTACHED_IO_PROPS_SELECTORS.selectEntities,
         (entities) => entities[hubAttachedIoPropsIdFn(q)]?.motorEncoderOffset ?? 0
     ),
+    selectServoCalibrationData: (
+        q: { hubId: string; portId: number }
+    ) => createSelector(
+        ATTACHED_IO_PROPS_SELECTORS.selectEntities,
+        (entities) => entities[hubAttachedIoPropsIdFn(q)]?.startupServoCalibrationData ?? null
+    )
 } as const;

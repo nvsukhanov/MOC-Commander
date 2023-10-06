@@ -41,6 +41,7 @@ export type ServoBindingForm = FormGroup<{
     }>;
     hubId: FormControl<string | null>;
     portId: FormControl<number | null>;
+    calibrateOnStart: FormControl<boolean>;
     range: FormControl<number>;
     aposCenter: FormControl<number>;
     speed: FormControl<number>;

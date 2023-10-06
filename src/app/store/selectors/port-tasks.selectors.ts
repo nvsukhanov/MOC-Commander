@@ -2,7 +2,7 @@ import { createSelector } from '@ngrx/store';
 import { Dictionary } from '@ngrx/entity';
 
 import { PORT_TASKS_ENTITY_ADAPTER, PORT_TASKS_FEATURE, hubPortTasksIdFn } from '../reducers';
-import { ControlSchemeBinding, ControllerInputModel, PortCommandTask } from '../models';
+import { AttachedIoPropsModel, ControlSchemeBinding, ControllerInputModel, PortCommandTask } from '../models';
 import { CONTROLLER_INPUT_SELECTORS } from './controller-input.selectors';
 import { ATTACHED_IO_PROPS_SELECTORS } from './attached-io-props.selectors';
 
@@ -11,7 +11,7 @@ export type BindingTaskComposingData = {
     portId: number;
     bindings: ControlSchemeBinding[];
     inputState: Dictionary<ControllerInputModel>;
-    encoderOffset: number;
+    ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null;
     lastExecutedTask: PortCommandTask | null;
     runningTask: PortCommandTask | null;
     pendingTask: PortCommandTask | null;
@@ -44,13 +44,13 @@ export const PORT_TASKS_SELECTORS = {
         { hubId, portId, bindings }: { hubId: string; portId: number; bindings: ControlSchemeBinding[] }
     ) => createSelector(
         CONTROLLER_INPUT_SELECTORS.selectEntities,
-        ATTACHED_IO_PROPS_SELECTORS.selectMotorEncoderOffset({ hubId, portId }),
+        ATTACHED_IO_PROPS_SELECTORS.selectById({ hubId, portId }),
         PORT_TASKS_SELECTORS.selectRunningTask({ hubId, portId }),
         PORT_TASKS_SELECTORS.selectLastExecutedTask({ hubId, portId }),
         PORT_TASKS_SELECTORS.selectPendingTask({ hubId, portId }),
-        (inputState, encoderOffset, runningTask, lastExecutedTask, pendingTask): BindingTaskComposingData => {
+        (inputState, ioProps, runningTask, lastExecutedTask, pendingTask): BindingTaskComposingData => {
             return {
-                encoderOffset,
+                ioProps: ioProps ?? null,
                 runningTask,
                 lastExecutedTask,
                 hubId,

@@ -230,6 +230,7 @@
       "operationMode": "Servo",
       "outputCenterOffset": "Center offset (°)",
       "outputAngleRange": "Servo range (°)",
+      "calibrateOnStart": "Auto-calibrate on start",
       "calibrate": "Calibrate",
       "calibrationIsInProgress": "Servo calibration is in progress",
       "calibrationError": "An error occurred during servo calibration",

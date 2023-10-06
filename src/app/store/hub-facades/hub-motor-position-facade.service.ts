@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, switchMap, take, throwError } from 'rxjs';
+import { Observable, filter, of, switchMap, take, throwError, timeout } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
 
@@ -22,11 +22,13 @@ export class HubMotorPositionFacadeService {
             take(1),
             switchMap((canRequest) => {
                     if (!canRequest) {
-                        return throwError(() => new Error('Cannot request port absolute position'));
+                        return throwError(() => new Error(`Cannot request port absolute position for ${hubId}/${portId}`));
                     }
                     this.store.dispatch(HUBS_ACTIONS.requestPortAbsolutePosition({ hubId, portId }));
                     return this.actions.pipe(
                         ofType(HUBS_ACTIONS.portAbsolutePositionRead, HUBS_ACTIONS.portAbsolutePositionReadFailed),
+                        filter((action) => action.portId === portId && action.hubId === hubId),
+                        timeout(1000),
                         take(1),
                         switchMap((action) => {
                             if (action.type === HUBS_ACTIONS.portAbsolutePositionRead.type) {
@@ -52,6 +54,8 @@ export class HubMotorPositionFacadeService {
                     this.store.dispatch(HUBS_ACTIONS.requestPortPosition({ hubId, portId }));
                     return this.actions.pipe(
                         ofType(HUBS_ACTIONS.portPositionRead, HUBS_ACTIONS.portPositionReadFailed),
+                        filter((action) => action.portId === portId && action.hubId === hubId),
+                        timeout(1000),
                         take(1),
                         switchMap((action) => {
                             if (action.type === HUBS_ACTIONS.portPositionRead.type) {
