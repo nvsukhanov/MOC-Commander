@@ -4,12 +4,12 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
-
-import { ServoCalibrationService } from './servo-calibration.service';
+import { HubServoCalibrationFacadeService } from '@app/store';
 
 export type ServoCalibrationDialogData = {
     hubId: string;
     portId: number;
+    speed: number;
     power: number;
 };
 
@@ -24,9 +24,6 @@ export type ServoCalibrationDialogData = {
         TranslocoPipe,
         MatDialogModule
     ],
-    providers: [
-        ServoCalibrationService
-    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ServoCalibrationDialogComponent implements OnInit, OnDestroy {
@@ -35,13 +32,13 @@ export class ServoCalibrationDialogComponent implements OnInit, OnDestroy {
     constructor(
         private readonly dialog: MatDialogRef<ServoCalibrationDialogComponent>,
         @Inject(MAT_DIALOG_DATA) private readonly data: ServoCalibrationDialogData,
-        private readonly calibrationService: ServoCalibrationService
+        private readonly calibrationService: HubServoCalibrationFacadeService
     ) {
     }
 
     public ngOnInit(): void {
         this.sub.add(
-            this.calibrationService.calibrateServo(this.data.hubId, this.data.portId, this.data.power).subscribe((result) => {
+            this.calibrationService.calibrateServo(this.data.hubId, this.data.portId, this.data.speed, this.data.power).subscribe((result) => {
                 this.dialog.close(result);
             })
         );

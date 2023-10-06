@@ -45,7 +45,7 @@ import {
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { HubStorageService } from './hub-storage.service';
 import { HUB_STATS_ACTIONS } from './actions';
-import { HubFacadeService } from './hub-facade.service';
+import { HubMotorPositionFacadeService, HubServoCalibrationFacadeService } from './hub-facades';
 import { AppStoreVersion } from './app-store-version';
 import { provideStoreMigrations } from './migrations';
 import { ControllerProfilesFacadeService } from './controller-profiles-facade.service';
@@ -104,7 +104,8 @@ export function provideApplicationStore(): EnvironmentProviders {
                 multi: true
             },
             HubStorageService,
-            HubFacadeService,
+            HubMotorPositionFacadeService,
+            HubServoCalibrationFacadeService,
             ControllerProfilesFacadeService,
             provideRouterStore(),
             provideTaskFactories(),
