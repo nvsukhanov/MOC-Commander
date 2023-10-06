@@ -3,11 +3,11 @@ import { Observable, of, switchMap, take, throwError } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
 
-import { HUB_STATS_SELECTORS } from './selectors';
-import { HUBS_ACTIONS } from './actions';
+import { HUB_STATS_SELECTORS } from '../selectors';
+import { HUBS_ACTIONS } from '../actions';
 
 @Injectable()
-export class HubFacadeService {
+export class HubMotorPositionFacadeService {
     constructor(
         private readonly store: Store,
         private readonly actions: Actions

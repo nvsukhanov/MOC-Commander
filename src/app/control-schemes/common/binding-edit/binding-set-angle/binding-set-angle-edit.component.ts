@@ -11,7 +11,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ControlSchemeBindingType, HideOnSmallScreenDirective, ToggleControlComponent, ValidationMessagesDirective } from '@app/shared';
-import { ControlSchemeInputAction, HubFacadeService } from '@app/store';
+import { ControlSchemeInputAction, HubMotorPositionFacadeService } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import {
@@ -71,7 +71,7 @@ export class BindingSetAngleEditComponent implements IBindingsDetailsEditCompone
     constructor(
         private readonly cdRef: ChangeDetectorRef,
         private readonly store: Store,
-        private readonly hubFacade: HubFacadeService
+        private readonly hubFacade: HubMotorPositionFacadeService
     ) {
     }
 

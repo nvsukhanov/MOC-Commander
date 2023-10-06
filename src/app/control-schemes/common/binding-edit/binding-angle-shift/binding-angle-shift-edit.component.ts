@@ -11,7 +11,7 @@ import { Store } from '@ngrx/store';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ControlSchemeBindingType, HideOnSmallScreenDirective, ToggleControlComponent, ValidationMessagesDirective } from '@app/shared';
-import { ControlSchemeInputAction, HubFacadeService } from '@app/store';
+import { ControlSchemeInputAction, HubMotorPositionFacadeService } from '@app/store';
 
 import {
     BindingControlOutputEndStateComponent,
@@ -75,7 +75,7 @@ export class BindingAngleShiftEditComponent implements IBindingsDetailsEditCompo
         private readonly commonFormControlBuilder: CommonFormControlsBuilderService,
         private readonly store: Store,
         private readonly changeDetectorRef: ChangeDetectorRef,
-        private readonly hubFacade: HubFacadeService
+        private readonly hubFacade: HubMotorPositionFacadeService
     ) {
     }
 

@@ -11,7 +11,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CONTROL_SCHEME_ACTIONS, ControlSchemeInputAction, HubFacadeService } from '@app/store';
+import { CONTROL_SCHEME_ACTIONS, CalibrationResult, CalibrationResultType, ControlSchemeInputAction, HubMotorPositionFacadeService } from '@app/store';
 import {
     ControlSchemeBindingType,
     ControllerInputType,
@@ -22,7 +22,7 @@ import {
 } from '@app/shared';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
-import { CalibrationResult, CalibrationResultType, ServoCalibrationDialogComponent } from '../servo-calibration-dialog';
+import { ServoCalibrationDialogComponent } from '../servo-calibration-dialog';
 import {
     BindingControlPowerInputComponent,
     BindingControlSelectControllerComponent,
@@ -88,7 +88,7 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
         private readonly cd: ChangeDetectorRef,
         private readonly store: Store,
         private readonly matDialog: MatDialog,
-        private readonly hubFacade: HubFacadeService
+        private readonly hubFacade: HubMotorPositionFacadeService
     ) {
     }
 
@@ -169,6 +169,7 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
             data: {
                 hubId: this._form.value.hubId,
                 portId: this._form.value.portId,
+                speed: this._form.value.speed,
                 power: this._form.value.power
             }
         }).afterClosed().subscribe((result: CalibrationResult | null) => {
