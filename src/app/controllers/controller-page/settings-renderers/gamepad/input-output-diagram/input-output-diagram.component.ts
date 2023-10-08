@@ -48,11 +48,11 @@ export class InputOutputDiagramComponent {
     }
 
     public get leftActiveZoneHighlight(): boolean {
-        return this.normalizedRawValue < -this.normalizedActiveZoneStart && this.normalizedRawValue > -this.normalizedActiveZoneEnd;
+        return this.normalizedRawValue <= -this.normalizedActiveZoneStart && this.normalizedRawValue >= -this.normalizedActiveZoneEnd;
     }
 
     public get rightActiveZoneHighlight(): boolean {
-        return this.normalizedRawValue > this.normalizedActiveZoneStart && this.normalizedRawValue < this.normalizedActiveZoneEnd;
+        return this.normalizedRawValue >= this.normalizedActiveZoneStart && this.normalizedRawValue <= this.normalizedActiveZoneEnd;
     }
 
     public get rawPositionPercent(): number {
