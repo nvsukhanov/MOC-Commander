@@ -46,9 +46,9 @@ export class ControllerProfileXbox360Service extends GamepadProfile {
         15: this.getTranslation('buttonDpadRight'),
     };
 
-    // chrome only, firefox has different ids
     private readonly ids: ReadonlySet<string> = new Set([
         'Xbox 360 Controller (XInput STANDARD GAMEPAD)',
+        'HID-compliant game controller (STANDARD GAMEPAD Vendor: 045e Product: 0b13)'
     ]);
 
     constructor(
