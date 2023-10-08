@@ -1,7 +1,7 @@
-import { AngleShiftTaskPayload } from '../../../models';
+import { GearboxControlTaskPayload } from '../../../models';
 
-export function angleShiftPayloadHash(
-    payload: AngleShiftTaskPayload
+export function gearboxControlPayloadHash(
+    payload: GearboxControlTaskPayload
 ): string {
     return [
         payload.bindingType,

@@ -108,9 +108,9 @@ export type ControlSchemeStepperBinding = {
     endState: MotorServoEndState;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
-export type ControlSchemeSpeedShiftBinding = {
+export type ControlSchemeTrainControlBinding = {
     id: number;
-    bindingType: ControlSchemeBindingType.SpeedShift;
+    bindingType: ControlSchemeBindingType.TrainControl;
     inputs: {
         [ControlSchemeInputAction.NextLevel]: ControlSchemeInput;
         [ControlSchemeInputAction.PrevLevel]?: ControlSchemeInput;
@@ -124,9 +124,9 @@ export type ControlSchemeSpeedShiftBinding = {
     initialLevelIndex: number;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
-export type ControlSchemeAngleShiftBinding = {
+export type ControlSchemeGearboxControlBinding = {
     id: number;
-    bindingType: ControlSchemeBindingType.AngleShift;
+    bindingType: ControlSchemeBindingType.GearboxControl;
     inputs: {
         [ControlSchemeInputAction.NextLevel]: ControlSchemeInput;
         [ControlSchemeInputAction.PrevLevel]?: ControlSchemeInput;
@@ -145,8 +145,8 @@ export type ControlSchemeBinding = ControlSchemeSetSpeedBinding
     | ControlSchemeServoBinding
     | ControlSchemeSetAngleBinding
     | ControlSchemeStepperBinding
-    | ControlSchemeSpeedShiftBinding
-    | ControlSchemeAngleShiftBinding;
+    | ControlSchemeTrainControlBinding
+    | ControlSchemeGearboxControlBinding;
 
 export type ControlSchemeModel = {
     name: string;

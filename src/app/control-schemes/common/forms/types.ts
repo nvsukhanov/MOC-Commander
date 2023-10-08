@@ -79,7 +79,7 @@ export type SetAngleBindingForm = FormGroup<{
     useDecelerationProfile: FormControl<boolean>;
 }>;
 
-export type SpeedShiftBindingForm = FormGroup<{
+export type TrainControlBindingForm = FormGroup<{
     inputs: FormGroup<{
         [ControlSchemeInputAction.NextLevel]: InputFormGroup;
         [ControlSchemeInputAction.PrevLevel]: OptionalInputFormGroup;
@@ -95,7 +95,7 @@ export type SpeedShiftBindingForm = FormGroup<{
     initialLevelIndex: FormControl<number>;
 }>;
 
-export type AngleShiftBindingForm = FormGroup<{
+export type GearboxControlBindingForm = FormGroup<{
     inputs: FormGroup<{
         [ControlSchemeInputAction.NextLevel]: InputFormGroup;
         [ControlSchemeInputAction.PrevLevel]: OptionalInputFormGroup;
@@ -120,8 +120,8 @@ export type ControlSchemeBindingForm = FormGroup<{
     [ControlSchemeBindingType.Servo]: ServoBindingForm;
     [ControlSchemeBindingType.Stepper]: StepperBindingForm;
     [ControlSchemeBindingType.SetAngle]: SetAngleBindingForm;
-    [ControlSchemeBindingType.SpeedShift]: SpeedShiftBindingForm;
-    [ControlSchemeBindingType.AngleShift]: AngleShiftBindingForm;
+    [ControlSchemeBindingType.TrainControl]: TrainControlBindingForm;
+    [ControlSchemeBindingType.GearboxControl]: GearboxControlBindingForm;
 }>;
 
 export type PortConfigEditForm = FormGroup<{

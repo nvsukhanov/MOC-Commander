@@ -215,8 +215,8 @@
       "accelerate": "Accelerate",
       "step": "Step",
       "setAngle": "Set angle",
-      "nextLevel": "Next level",
-      "prevLevel": "Previous level",
+      "nextLevel": "Next",
+      "prevLevel": "Prev",
       "reset": "Reset"
     },
     "setSpeedBinding": {
@@ -250,20 +250,20 @@
       "readAngleFromPort": "Read angle from port",
       "taskSummary": "Set angle: { angle }°"
     },
-    "speedShiftBinding": {
-      "operationMode": "Speed shift",
+    "trainControlBinding": {
+      "operationMode": "Train control",
       "level": "Speed level { level } (%)",
       "outputLevelAdd": "Add speed level",
       "outputLevelRemove": "Remove level",
-      "taskSummary": "Speed shift, level {level} ({speedPercent}%){ isLooping, select, true { (mirror)} other {}}"
+      "taskSummary": "Train, level {level} ({speedPercent}%){ isLooping, select, true { (mirror)} other {}}"
     },
-    "angleShiftBinding": {
-      "operationMode": "Angle shift",
+    "gearboxControlBinding": {
+      "operationMode": "Gearbox control",
       "angleLevel": "Angle level { level } (°)",
       "readAngleFromPort": "Read angle from port",
       "outputAngleLevelAdd": "Add level",
       "outputAngleLevelRemove": "Remove level",
-      "taskSummary": "Angle shift, level {level} ({angle}°){ isLooping, select, true { (mirror)} other {}}"
+      "taskSummary": "Gearbox, level {level} ({angle}°){ isLooping, select, true { (mirror)} other {}}"
     }
   },
   "motorServoEndState": {

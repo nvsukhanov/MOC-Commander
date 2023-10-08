@@ -6,24 +6,24 @@ import { controllerInputIdFn } from '../../../../reducers';
 import {
     AttachedIoPropsModel,
     ControlSchemeInputAction,
-    ControlSchemeSpeedShiftBinding,
+    ControlSchemeTrainControlBinding,
     ControllerInputModel,
     LoopingMode,
     PortCommandTask,
     PortCommandTaskPayload,
-    SpeedShiftTaskPayload,
+    TrainControlTaskPayload,
 } from '../../../../models';
 import { ITaskPayloadFactory } from './i-task-payload-factory';
 import { calculateNextLoopingIndex } from './calculate-next-looping-index';
 
 @Injectable()
-export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.SpeedShift> {
+export class TrainControlTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.TrainControl> {
     public buildPayload(
-        binding: ControlSchemeSpeedShiftBinding,
+        binding: ControlSchemeTrainControlBinding,
         inputsState: Dictionary<ControllerInputModel>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTask: PortCommandTask | null
-    ): { payload: SpeedShiftTaskPayload; inputTimestamp: number } | null {
+    ): { payload: TrainControlTaskPayload; inputTimestamp: number } | null {
         const nextLevelInput = this.getActiveInput(binding, inputsState, ControlSchemeInputAction.NextLevel);
         const prevLevelInput = this.getActiveInput(binding, inputsState, ControlSchemeInputAction.PrevLevel);
         const resetLevelInput = this.getActiveInput(binding, inputsState, ControlSchemeInputAction.Reset);
@@ -31,7 +31,7 @@ export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
         if (resetLevelInput.isActivated) {
             return {
                 payload: {
-                    bindingType: ControlSchemeBindingType.SpeedShift,
+                    bindingType: ControlSchemeBindingType.TrainControl,
                     speed: 0,
                     power: 0,
                     isLooping: false,
@@ -48,7 +48,7 @@ export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
             return null;
         }
         const prevSpeed = previousTask?.payload.speed ?? 0;
-        const isLoopingPrev = previousTask?.payload.bindingType === ControlSchemeBindingType.SpeedShift && binding.loopingMode !== LoopingMode.None
+        const isLoopingPrev = previousTask?.payload.bindingType === ControlSchemeBindingType.TrainControl && binding.loopingMode !== LoopingMode.None
                               ? previousTask.payload.isLooping
                               : false;
 
@@ -65,8 +65,8 @@ export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
             binding.loopingMode
         );
 
-        const payload: SpeedShiftTaskPayload = {
-            bindingType: ControlSchemeBindingType.SpeedShift,
+        const payload: TrainControlTaskPayload = {
+            bindingType: ControlSchemeBindingType.TrainControl,
             speedIndex: nextIndex,
             speed: binding.levels[nextIndex],
             power: binding.levels[nextIndex] === 0 ? 0 : binding.power,
@@ -81,7 +81,7 @@ export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
     public buildCleanupPayload(
         previousTask: PortCommandTask
     ): PortCommandTaskPayload | null {
-        if (previousTask.payload.bindingType !== ControlSchemeBindingType.SpeedShift) {
+        if (previousTask.payload.bindingType !== ControlSchemeBindingType.TrainControl) {
             return null;
         }
         return {
@@ -95,7 +95,7 @@ export class SpeedShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
     }
 
     private getActiveInput(
-        binding: ControlSchemeSpeedShiftBinding,
+        binding: ControlSchemeTrainControlBinding,
         inputState: Dictionary<ControllerInputModel>,
         inputAction: ControlSchemeInputAction,
     ): { isActivated: boolean; timestamp: number } {

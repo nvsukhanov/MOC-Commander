@@ -40,14 +40,14 @@
                     mat-raised-button
                     (click)="addNextAngleLevel()"
             >
-                {{ 'controlScheme.angleShiftBinding.outputAngleLevelAdd' | transloco }}
+                {{ 'controlScheme.gearboxControlBinding.outputAngleLevelAdd' | transloco }}
             </button>
         </div>
 
         <div *ngFor="let angleControl of form.controls.angles.controls; let idx = index">
             <mat-form-field>
                 <mat-label>
-                    {{ 'controlScheme.angleShiftBinding.angleLevel' | transloco: { level: form.controls.initialLevelIndex.value - idx } }}
+                    {{ 'controlScheme.gearboxControlBinding.angleLevel' | transloco: { level: form.controls.initialLevelIndex.value - idx } }}
                 </mat-label>
                 <input type="number"
                        matInput
@@ -56,7 +56,7 @@
                 <button mat-icon-button
                         matSuffix
                         [disabled]="!(canRequestPortValue$ | ngrxPush)"
-                        [title]="'controlScheme.angleShiftBinding.readAngleFromPort' | transloco"
+                        [title]="'controlScheme.gearboxControlBinding.readAngleFromPort' | transloco"
                         (click)="onPortAbsolutePositionRequest(idx)"
                 >
                     <mat-icon [fontIcon]="'gps_fixed'"></mat-icon>
@@ -67,7 +67,7 @@
                         (click)="removeAngleLevel(idx)"
                 >
                     <mat-icon [fontIcon]="'delete'"></mat-icon>
-                    <span class="cdk-visually-hidden">{{ 'controlScheme.angleShiftBinding.outputAngleLevelRemove' | transloco }}</span>
+                    <span class="cdk-visually-hidden">{{ 'controlScheme.gearboxControlBinding.outputAngleLevelRemove' | transloco }}</span>
                 </button>
                 <mat-error [appValidationMessages]="angleControl"></mat-error>
             </mat-form-field>
@@ -78,7 +78,7 @@
                     mat-raised-button
                     (click)="addPrevAngleLevel()"
             >
-                {{ 'controlScheme.angleShiftBinding.outputAngleLevelAdd' | transloco }}
+                {{ 'controlScheme.gearboxControlBinding.outputAngleLevelAdd' | transloco }}
             </button>
         </div>
 

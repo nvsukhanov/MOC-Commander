@@ -3,6 +3,6 @@ export enum ControlSchemeBindingType {
     SetAngle,
     Servo,
     Stepper,
-    SpeedShift,
-    AngleShift,
+    TrainControl,
+    GearboxControl,
 }

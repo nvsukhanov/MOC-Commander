@@ -13,8 +13,8 @@ export class BindingTypeToL10nKeyPipe implements PipeTransform {
         [ControlSchemeBindingType.Servo]: 'controlScheme.servoBinding.operationMode',
         [ControlSchemeBindingType.SetAngle]: 'controlScheme.setAngleBinding.operationMode',
         [ControlSchemeBindingType.Stepper]: 'controlScheme.stepperBinding.operationMode',
-        [ControlSchemeBindingType.SpeedShift]: 'controlScheme.speedShiftBinding.operationMode',
-        [ControlSchemeBindingType.AngleShift]: 'controlScheme.angleShiftBinding.operationMode',
+        [ControlSchemeBindingType.TrainControl]: 'controlScheme.trainControlBinding.operationMode',
+        [ControlSchemeBindingType.GearboxControl]: 'controlScheme.gearboxControlBinding.operationMode',
     };
 
     public transform(

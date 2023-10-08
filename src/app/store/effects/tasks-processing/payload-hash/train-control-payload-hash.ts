@@ -1,7 +1,7 @@
-import { SpeedShiftTaskPayload } from '../../../models';
+import { TrainControlTaskPayload } from '../../../models';
 
-export function speedShiftPayloadHash(
-    payload: SpeedShiftTaskPayload
+export function trainControlPayloadHash(
+    payload: TrainControlTaskPayload
 ): string {
     return [
         payload.bindingType,

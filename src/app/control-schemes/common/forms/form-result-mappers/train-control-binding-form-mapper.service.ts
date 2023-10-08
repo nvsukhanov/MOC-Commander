@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ControlSchemeBinding, ControlSchemeInputAction, ControlSchemeSpeedShiftBinding } from '@app/store';
+import { ControlSchemeBinding, ControlSchemeInputAction, ControlSchemeTrainControlBinding } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared';
 
-import { InputFormGroup, SpeedShiftBindingForm } from '../types';
+import { InputFormGroup, TrainControlBindingForm } from '../types';
 import { CommonFormMapperService } from './common-form-mapper.service';
 
 @Injectable({ providedIn: 'root' })
-export class SpeedShiftBindingFormMapperService {
+export class TrainControlBindingFormMapperService {
     constructor(
         private readonly commonFormMapperService: CommonFormMapperService
     ) {
@@ -14,16 +14,16 @@ export class SpeedShiftBindingFormMapperService {
 
     public mapToModel(
         id: ControlSchemeBinding['id'],
-        form: SpeedShiftBindingForm
-    ): ControlSchemeSpeedShiftBinding {
+        form: TrainControlBindingForm
+    ): ControlSchemeTrainControlBinding {
         const hubId = form.controls.hubId.value;
         const portId = form.controls.portId.value;
         if (hubId === null || portId === null) {
             throw new Error('Hub ID and port ID must be set');
         }
-        const result: ControlSchemeSpeedShiftBinding = {
+        const result: ControlSchemeTrainControlBinding = {
             id,
-            bindingType: ControlSchemeBindingType.SpeedShift,
+            bindingType: ControlSchemeBindingType.TrainControl,
             inputs: {
                 [ControlSchemeInputAction.NextLevel]: this.commonFormMapperService.mapInputFormToSchemeInput(
                     form.controls.inputs.controls[ControlSchemeInputAction.NextLevel]

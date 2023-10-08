@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ControlSchemeInputAction, ControlSchemeSpeedShiftBinding } from '@app/store';
+import { MotorServoEndState } from 'rxpoweredup';
+import { ControlSchemeGearboxControlBinding, ControlSchemeInputAction } from '@app/store';
 import { DeepPartial } from '@app/shared';
 
-import { SpeedShiftBindingForm } from '../types';
+import { GearboxControlBindingForm } from '../types';
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';
 
 @Injectable({ providedIn: 'root' })
-export class SpeedShiftBindingFormBuilderService {
+export class GearboxControlBindingFormBuilderService {
     constructor(
         private readonly formBuilder: FormBuilder,
-        private commonFormControlsBuilder: CommonFormControlsBuilderService
+        private readonly commonFormControlsBuilder: CommonFormControlsBuilderService
     ) {
     }
 
-    public build(): SpeedShiftBindingForm {
+    public build(): GearboxControlBindingForm {
         return this.formBuilder.group({
             inputs: this.formBuilder.group({
                 [ControlSchemeInputAction.NextLevel]: this.commonFormControlsBuilder.inputFormGroup(),
@@ -23,40 +24,39 @@ export class SpeedShiftBindingFormBuilderService {
             }),
             hubId: this.commonFormControlsBuilder.hubIdControl(),
             portId: this.commonFormControlsBuilder.portIdControl(),
-            levels: this.formBuilder.array<FormControl<number>>([
-                this.commonFormControlsBuilder.speedLevelControl(0)
+            angles: this.formBuilder.array<FormControl<number>>([
+                this.commonFormControlsBuilder.angleControl(0)
             ], {
                 validators: [
                     Validators.required,
                     Validators.minLength(2)
                 ]
             }),
+            speed: this.commonFormControlsBuilder.speedControl(),
             power: this.commonFormControlsBuilder.powerControl(),
             loopingMode: this.commonFormControlsBuilder.loopingModeControl(),
+            endState: this.commonFormControlsBuilder.servoEndStateControl(MotorServoEndState.hold),
             useAccelerationProfile: this.commonFormControlsBuilder.toggleControl(),
             useDecelerationProfile: this.commonFormControlsBuilder.toggleControl(),
             initialLevelIndex: this.formBuilder.control<number>(0, {
                 nonNullable: true,
-                validators: [
-                    Validators.required,
-                    Validators.min(0)
-                ]
+                validators: [ Validators.required, Validators.min(0) ]
             })
         });
     }
 
     public patchForm(
-        form: SpeedShiftBindingForm,
-        patch: DeepPartial<ControlSchemeSpeedShiftBinding>
+        form: GearboxControlBindingForm,
+        binding: DeepPartial<ControlSchemeGearboxControlBinding>
     ): void {
-        form.patchValue(patch);
-        form.controls.levels.clear();
-        if (patch.levels) {
-            patch.levels.forEach((speed) =>
-                form.controls.levels.push(this.commonFormControlsBuilder.speedLevelControl(speed))
+        form.patchValue(binding);
+        form.controls.angles.clear();
+        if (binding.angles) {
+            binding.angles.forEach((angle) =>
+                form.controls.angles.push(this.commonFormControlsBuilder.angleControl(angle))
             );
         } else {
-            form.controls.levels.push(this.commonFormControlsBuilder.speedLevelControl(0));
+            form.controls.angles.push(this.commonFormControlsBuilder.angleControl(0));
             form.controls.initialLevelIndex.setValue(0);
         }
     }

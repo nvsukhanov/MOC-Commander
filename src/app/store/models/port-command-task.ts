@@ -40,8 +40,8 @@ export type StepperTaskPayload = {
     useDecelerationProfile: boolean;
 };
 
-export type SpeedShiftTaskPayload = {
-    bindingType: ControlSchemeBindingType.SpeedShift;
+export type TrainControlTaskPayload = {
+    bindingType: ControlSchemeBindingType.TrainControl;
     speed: number;
     power: number;
     initialLevelIndex: number;
@@ -51,8 +51,8 @@ export type SpeedShiftTaskPayload = {
     useDecelerationProfile: boolean;
 };
 
-export type AngleShiftTaskPayload = {
-    bindingType: ControlSchemeBindingType.AngleShift;
+export type GearboxControlTaskPayload = {
+    bindingType: ControlSchemeBindingType.GearboxControl;
     offset: number;
     angle: number;
     initialLevelIndex: number;
@@ -69,8 +69,8 @@ export type PortCommandTaskPayload = SetSpeedTaskPayload
     | ServoTaskPayload
     | SetAngleTaskPayload
     | StepperTaskPayload
-    | SpeedShiftTaskPayload
-    | AngleShiftTaskPayload;
+    | TrainControlTaskPayload
+    | GearboxControlTaskPayload;
 
 export type PortCommandTask<TPayloadType extends ControlSchemeBindingType = ControlSchemeBindingType> = {
     hubId: string;

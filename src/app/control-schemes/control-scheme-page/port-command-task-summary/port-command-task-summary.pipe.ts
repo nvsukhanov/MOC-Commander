@@ -8,8 +8,8 @@ import { SetSpeedPortCommandTaskSummaryBuilderService } from './set-speed-port-c
 import { ServoPortCommandTaskSummaryBuilderService } from './servo-port-command-task-summary-builder.service';
 import { SetAnglePortCommandTaskSummaryBuilderService } from './set-angle-port-command-task-summary-builder.service';
 import { StepperPortCommandTaskSummaryBuilderService } from './stepper-port-command-task-summary-builder.service';
-import { SpeedShiftPortCommandTaskSummaryBuilderService } from './speed-shift-port-command-task-summary-builder.service';
-import { AngleShiftPortCommandTaskSummaryBuilderService } from './angle-shift-port-command-task-summary-builder.service';
+import { TrainControlPortCommandTaskSummaryBuilderService } from './train-control-port-command-task-summary-builder.service';
+import { GearboxControlPortCommandTaskSummaryBuilderService } from './gearbox-control-port-command-task-summary-builder.service';
 
 @Pipe({
     standalone: true,
@@ -22,8 +22,8 @@ export class PortCommandTaskSummaryPipe implements PipeTransform {
         private readonly setAnglePortCommandTaskSummaryBuilder: SetAnglePortCommandTaskSummaryBuilderService,
         private readonly servoPortCommandTaskSummaryBuilder: ServoPortCommandTaskSummaryBuilderService,
         private readonly stepperPortCommandTaskSummaryBuilder: StepperPortCommandTaskSummaryBuilderService,
-        private readonly speedShiftPortCommandTaskSummaryBuilder: SpeedShiftPortCommandTaskSummaryBuilderService,
-        private readonly angleShiftPortCommandTaskSummaryBuilder: AngleShiftPortCommandTaskSummaryBuilderService,
+        private readonly trainControlPortCommandTaskSummaryBuilder: TrainControlPortCommandTaskSummaryBuilderService,
+        private readonly gearboxControlPortCommandTaskSummaryBuilder: GearboxControlPortCommandTaskSummaryBuilderService,
         private readonly store: Store
     ) {
     }
@@ -53,10 +53,10 @@ export class PortCommandTaskSummaryPipe implements PipeTransform {
                 );
             case ControlSchemeBindingType.Stepper:
                 return this.stepperPortCommandTaskSummaryBuilder.build(payload);
-            case ControlSchemeBindingType.SpeedShift:
-                return this.speedShiftPortCommandTaskSummaryBuilder.build(payload);
-            case ControlSchemeBindingType.AngleShift:
-                return this.angleShiftPortCommandTaskSummaryBuilder.build(payload);
+            case ControlSchemeBindingType.TrainControl:
+                return this.trainControlPortCommandTaskSummaryBuilder.build(payload);
+            case ControlSchemeBindingType.GearboxControl:
+                return this.gearboxControlPortCommandTaskSummaryBuilder.build(payload);
         }
     }
 }
