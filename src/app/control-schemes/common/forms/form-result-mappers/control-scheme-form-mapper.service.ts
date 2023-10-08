@@ -7,8 +7,8 @@ import { SetSpeedBindingFormMapperService } from './set-speed-binding-form-mappe
 import { ServoBindingFormMapperService } from './servo-binding-form-mapper.service';
 import { SetAngleBindingFormMapperService } from './set-angle-binding-form-mapper.service';
 import { StepperBindingFormMapperService } from './stepper-binding-form-mapper.service';
-import { SpeedShiftBindingFormMapperService } from './speed-shift-binding-form-mapper.service';
-import { AngleShiftBindingFormMapperService } from './angle-shift-binding-form-mapper.service';
+import { TrainControlBindingFormMapperService } from './train-control-binding-form-mapper.service';
+import { GearboxControlBindingFormMapperService } from './gearbox-control-binding-form-mapper.service';
 
 @Injectable({ providedIn: 'root' })
 export class ControlSchemeFormMapperService {
@@ -17,8 +17,8 @@ export class ControlSchemeFormMapperService {
         private readonly servoBindingMapper: ServoBindingFormMapperService,
         private readonly setAngleBindingMapper: SetAngleBindingFormMapperService,
         private readonly stepperBindingMapper: StepperBindingFormMapperService,
-        private readonly speedShiftBindingMapper: SpeedShiftBindingFormMapperService,
-        private readonly angleShiftBindingMapper: AngleShiftBindingFormMapperService
+        private readonly trainControlBindingMapper: TrainControlBindingFormMapperService,
+        private readonly gearboxControlBindingMapper: GearboxControlBindingFormMapperService
     ) {
     }
 
@@ -36,10 +36,10 @@ export class ControlSchemeFormMapperService {
                 return this.setAngleBindingMapper.mapToModel(id, form.controls[ControlSchemeBindingType.SetAngle]);
             case ControlSchemeBindingType.Stepper:
                 return this.stepperBindingMapper.mapToModel(id, form.controls[ControlSchemeBindingType.Stepper]);
-            case ControlSchemeBindingType.SpeedShift:
-                return this.speedShiftBindingMapper.mapToModel(id, form.controls[ControlSchemeBindingType.SpeedShift]);
-            case ControlSchemeBindingType.AngleShift:
-                return this.angleShiftBindingMapper.mapToModel(id, form.controls[ControlSchemeBindingType.AngleShift]);
+            case ControlSchemeBindingType.TrainControl:
+                return this.trainControlBindingMapper.mapToModel(id, form.controls[ControlSchemeBindingType.TrainControl]);
+            case ControlSchemeBindingType.GearboxControl:
+                return this.gearboxControlBindingMapper.mapToModel(id, form.controls[ControlSchemeBindingType.GearboxControl]);
         }
     }
 }

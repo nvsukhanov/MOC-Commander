@@ -8,8 +8,8 @@ import { ServoBindingFormBuilderService } from './servo-binding-form-builder.ser
 import { SetSpeedBindingFormBuilderService } from './set-speed-binding-form-builder.service';
 import { SetAngleBindingFormBuilderService } from './set-angle-binding-form-builder.service';
 import { StepperBindingFormBuilderService } from './stepper-binding-form-builder.service';
-import { SpeedShiftBindingFormBuilderService } from './speed-shift-binding-form-builder.service';
-import { AngleShiftBindingFormBuilderService } from './angle-shift-binding-form-builder.service';
+import { TrainControlBindingFormBuilderService } from './train-control-binding-form-builder.service';
+import { GearboxControlBindingFormBuilderService } from './gearbox-control-binding-form-builder.service';
 import { ControlSchemeValidators } from '../../validation';
 
 @Injectable({ providedIn: 'root' })
@@ -20,8 +20,8 @@ export class ControlSchemeFormBuilderService {
         private readonly setSpeedBindingFormBuilder: SetSpeedBindingFormBuilderService,
         private readonly setAngleBindingFormBuilder: SetAngleBindingFormBuilderService,
         private readonly stepperBindingFormBuilder: StepperBindingFormBuilderService,
-        private readonly speedShiftBindingFormBuilder: SpeedShiftBindingFormBuilderService,
-        private readonly angleShiftBindingFormBuilder: AngleShiftBindingFormBuilderService,
+        private readonly trainControlBindingFormBuilder: TrainControlBindingFormBuilderService,
+        private readonly gearboxControlBindingFormBuilder: GearboxControlBindingFormBuilderService,
     ) {
     }
 
@@ -47,8 +47,8 @@ export class ControlSchemeFormBuilderService {
             [ControlSchemeBindingType.Servo]: this.servoBindingFormBuilder.build(),
             [ControlSchemeBindingType.SetAngle]: this.setAngleBindingFormBuilder.build(),
             [ControlSchemeBindingType.Stepper]: this.stepperBindingFormBuilder.build(),
-            [ControlSchemeBindingType.SpeedShift]: this.speedShiftBindingFormBuilder.build(),
-            [ControlSchemeBindingType.AngleShift]: this.angleShiftBindingFormBuilder.build()
+            [ControlSchemeBindingType.TrainControl]: this.trainControlBindingFormBuilder.build(),
+            [ControlSchemeBindingType.GearboxControl]: this.gearboxControlBindingFormBuilder.build()
         });
     }
 
@@ -75,11 +75,11 @@ export class ControlSchemeFormBuilderService {
             case ControlSchemeBindingType.Stepper:
                 this.stepperBindingFormBuilder.patchForm(form.controls[ControlSchemeBindingType.Stepper], patch);
                 break;
-            case ControlSchemeBindingType.SpeedShift:
-                this.speedShiftBindingFormBuilder.patchForm(form.controls[ControlSchemeBindingType.SpeedShift], patch);
+            case ControlSchemeBindingType.TrainControl:
+                this.trainControlBindingFormBuilder.patchForm(form.controls[ControlSchemeBindingType.TrainControl], patch);
                 break;
-            case ControlSchemeBindingType.AngleShift:
-                this.angleShiftBindingFormBuilder.patchForm(form.controls[ControlSchemeBindingType.AngleShift], patch);
+            case ControlSchemeBindingType.GearboxControl:
+                this.gearboxControlBindingFormBuilder.patchForm(form.controls[ControlSchemeBindingType.GearboxControl], patch);
                 break;
             default:
                 return patch.bindingType satisfies void;

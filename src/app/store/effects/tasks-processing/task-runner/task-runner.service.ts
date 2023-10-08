@@ -6,12 +6,12 @@ import { ControlSchemeBindingType } from '@app/shared';
 import { PortCommandTask } from '../../../models';
 import { ITaskRunner } from './i-task-runner';
 import {
-    AngleShiftTaskRunnerService,
+    GearboxControlTaskRunnerService,
     ServoTaskRunnerService,
     SetAngleTaskRunnerService,
     SetSpeedTaskRunnerService,
-    SpeedShiftTaskRunnerService,
-    StepperTaskRunnerService
+    StepperTaskRunnerService,
+    TrainControlTaskRunnerService
 } from './runners';
 
 @Injectable({ providedIn: 'root' })
@@ -21,17 +21,17 @@ export class TaskRunnerService implements ITaskRunner<ControlSchemeBindingType> 
         [ControlSchemeBindingType.SetAngle]: this.setAngleTaskRunnerService,
         [ControlSchemeBindingType.SetSpeed]: this.setSpeedTaskRunnerService,
         [ControlSchemeBindingType.Stepper]: this.stepperTaskRunnerService,
-        [ControlSchemeBindingType.SpeedShift]: this.speedShiftTaskRunnerService,
-        [ControlSchemeBindingType.AngleShift]: this.angleShiftTaskRunnerService,
+        [ControlSchemeBindingType.TrainControl]: this.trainControlTaskRunnerService,
+        [ControlSchemeBindingType.GearboxControl]: this.gearboxControlTaskRunnerService,
     };
 
     constructor(
         private readonly servoTaskRunnerService: ServoTaskRunnerService,
         private readonly setAngleTaskRunnerService: SetAngleTaskRunnerService,
         private readonly setSpeedTaskRunnerService: SetSpeedTaskRunnerService,
-        private readonly speedShiftTaskRunnerService: SpeedShiftTaskRunnerService,
+        private readonly trainControlTaskRunnerService: TrainControlTaskRunnerService,
         private readonly stepperTaskRunnerService: StepperTaskRunnerService,
-        private readonly angleShiftTaskRunnerService: AngleShiftTaskRunnerService
+        private readonly gearboxControlTaskRunnerService: GearboxControlTaskRunnerService
     ) {
     }
 

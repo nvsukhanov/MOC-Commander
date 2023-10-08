@@ -27,13 +27,13 @@ import { BindingEditSectionComponent } from '../section';
 import { BINDING_EDIT_SELECTORS } from '../binding-edit.selectors';
 import { BindingEditSectionsContainerComponent } from '../sections-container';
 import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
-import { AngleShiftBindingForm, CommonFormControlsBuilderService } from '../../forms';
+import { CommonFormControlsBuilderService, GearboxControlBindingForm } from '../../forms';
 
 @Component({
     standalone: true,
-    selector: 'app-binding-angle-shift-edit',
-    templateUrl: './binding-angle-shift-edit.component.html',
-    styleUrls: [ './binding-angle-shift-edit.component.scss' ],
+    selector: 'app-binding-gearbox-control-edit',
+    templateUrl: './binding-gearbox-control-edit.component.html',
+    styleUrls: [ './binding-gearbox-control-edit.component.scss' ],
     imports: [
         BindingControlSelectControllerComponent,
         MatButtonModule,
@@ -60,12 +60,12 @@ import { AngleShiftBindingForm, CommonFormControlsBuilderService } from '../../f
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BindingAngleShiftEditComponent implements IBindingsDetailsEditComponent<AngleShiftBindingForm>, OnDestroy {
+export class BindingGearboxControlEditComponent implements IBindingsDetailsEditComponent<GearboxControlBindingForm>, OnDestroy {
     public readonly controlSchemeInputActions = ControlSchemeInputAction;
 
-    public readonly bindingType = ControlSchemeBindingType.AngleShift;
+    public readonly bindingType = ControlSchemeBindingType.GearboxControl;
 
-    private _form?: AngleShiftBindingForm;
+    private _form?: GearboxControlBindingForm;
 
     private _canRequestPortValue$: Observable<boolean> = of(false);
 
@@ -79,7 +79,7 @@ export class BindingAngleShiftEditComponent implements IBindingsDetailsEditCompo
     ) {
     }
 
-    public get form(): AngleShiftBindingForm | undefined {
+    public get form(): GearboxControlBindingForm | undefined {
         return this._form;
     }
 
@@ -92,7 +92,7 @@ export class BindingAngleShiftEditComponent implements IBindingsDetailsEditCompo
     }
 
     public setForm(
-        form: AngleShiftBindingForm
+        form: GearboxControlBindingForm
     ): void {
         this._form = form;
         this.portRequestSubscription?.unsubscribe();

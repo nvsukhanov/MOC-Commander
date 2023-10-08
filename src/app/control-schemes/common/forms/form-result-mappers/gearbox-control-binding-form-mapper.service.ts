@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ControlSchemeAngleShiftBinding, ControlSchemeBinding, ControlSchemeInputAction } from '@app/store';
+import { ControlSchemeBinding, ControlSchemeGearboxControlBinding, ControlSchemeInputAction } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared';
 
-import { AngleShiftBindingForm, InputFormGroup } from '../types';
+import { GearboxControlBindingForm, InputFormGroup } from '../types';
 import { CommonFormMapperService } from './common-form-mapper.service';
 
 @Injectable({ providedIn: 'root' })
-export class AngleShiftBindingFormMapperService {
+export class GearboxControlBindingFormMapperService {
     constructor(
         private readonly commonFormMapperService: CommonFormMapperService
     ) {
@@ -14,16 +14,16 @@ export class AngleShiftBindingFormMapperService {
 
     public mapToModel(
         id: ControlSchemeBinding['id'],
-        form: AngleShiftBindingForm
-    ): ControlSchemeAngleShiftBinding {
+        form: GearboxControlBindingForm
+    ): ControlSchemeGearboxControlBinding {
         const hubId = form.controls.hubId.value;
         const portId = form.controls.portId.value;
         if (hubId === null || portId === null) {
             throw new Error('Hub ID and port ID must be set');
         }
-        const result: ControlSchemeAngleShiftBinding = {
+        const result: ControlSchemeGearboxControlBinding = {
             id,
-            bindingType: ControlSchemeBindingType.AngleShift,
+            bindingType: ControlSchemeBindingType.GearboxControl,
             inputs: {
                 [ControlSchemeInputAction.NextLevel]: this.commonFormMapperService.mapInputFormToSchemeInput(
                     form.controls.inputs.controls[ControlSchemeInputAction.NextLevel]

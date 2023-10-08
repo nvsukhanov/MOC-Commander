@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared';
 
 import {
-    AngleShiftTaskPayload,
     AttachedIoPropsModel,
-    ControlSchemeAngleShiftBinding,
+    ControlSchemeGearboxControlBinding,
     ControlSchemeInputAction,
     ControllerInputModel,
+    GearboxControlTaskPayload,
     PortCommandTask,
     PortCommandTaskPayload
 } from '../../../../models';
@@ -16,28 +16,28 @@ import { ITaskPayloadFactory } from './i-task-payload-factory';
 import { calculateNextLoopingIndex } from './calculate-next-looping-index';
 
 @Injectable()
-export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.AngleShift> {
+export class GearboxControlTaskPayloadFactoryService implements ITaskPayloadFactory<ControlSchemeBindingType.GearboxControl> {
     public buildPayload(
-        binding: ControlSchemeAngleShiftBinding,
+        binding: ControlSchemeGearboxControlBinding,
         inputsState: Dictionary<ControllerInputModel>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTask: PortCommandTask | null
-    ): { payload: AngleShiftTaskPayload; inputTimestamp: number } | null {
-        const angleShiftPrevTask = previousTask && previousTask.payload.bindingType === ControlSchemeBindingType.AngleShift
-                                   ? previousTask as PortCommandTask<ControlSchemeBindingType.AngleShift>
-                                   : null;
+    ): { payload: GearboxControlTaskPayload; inputTimestamp: number } | null {
+        const gearboxControlPrevTask = previousTask && previousTask.payload.bindingType === ControlSchemeBindingType.GearboxControl
+                                       ? previousTask as PortCommandTask<ControlSchemeBindingType.GearboxControl>
+                                       : null;
         return this.buildPayloadUsingPreviousTask(
             binding,
             inputsState,
             ioProps?.motorEncoderOffset ?? 0,
-            angleShiftPrevTask
+            gearboxControlPrevTask
         );
     }
 
     public buildCleanupPayload(
         previousTask: PortCommandTask
     ): PortCommandTaskPayload | null {
-        if (previousTask.payload.bindingType !== ControlSchemeBindingType.AngleShift) {
+        if (previousTask.payload.bindingType !== ControlSchemeBindingType.GearboxControl) {
             return null;
         }
         return {
@@ -51,11 +51,11 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
     }
 
     private buildPayloadUsingPreviousTask(
-        binding: ControlSchemeAngleShiftBinding,
+        binding: ControlSchemeGearboxControlBinding,
         inputsState: Dictionary<ControllerInputModel>,
         motorEncoderOffset: number,
-        previousTask: PortCommandTask<ControlSchemeBindingType.AngleShift> | null
-    ): { payload: AngleShiftTaskPayload; inputTimestamp: number } | null {
+        previousTask: PortCommandTask<ControlSchemeBindingType.GearboxControl> | null
+    ): { payload: GearboxControlTaskPayload; inputTimestamp: number } | null {
         const nextLevelInput = this.getActiveInput(binding, inputsState, ControlSchemeInputAction.NextLevel);
         const prevLevelInput = this.getActiveInput(binding, inputsState, ControlSchemeInputAction.PrevLevel);
         const resetLevelInput = this.getActiveInput(binding, inputsState, ControlSchemeInputAction.Reset);
@@ -87,7 +87,7 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
 
         return {
             payload: {
-                bindingType: ControlSchemeBindingType.AngleShift,
+                bindingType: ControlSchemeBindingType.GearboxControl,
                 initialLevelIndex: binding.initialLevelIndex,
                 angleIndex: nextIndex,
                 offset: motorEncoderOffset,
@@ -104,11 +104,11 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
     }
 
     private buildResetPayload(
-        binding: ControlSchemeAngleShiftBinding,
+        binding: ControlSchemeGearboxControlBinding,
         motorEncoderOffset: number
-    ): AngleShiftTaskPayload {
+    ): GearboxControlTaskPayload {
         return {
-            bindingType: ControlSchemeBindingType.AngleShift,
+            bindingType: ControlSchemeBindingType.GearboxControl,
             initialLevelIndex: binding.initialLevelIndex,
             angleIndex: binding.initialLevelIndex,
             offset: motorEncoderOffset,
@@ -123,7 +123,7 @@ export class AngleShiftTaskPayloadFactoryService implements ITaskPayloadFactory<
     }
 
     private getActiveInput(
-        binding: ControlSchemeAngleShiftBinding,
+        binding: ControlSchemeGearboxControlBinding,
         inputState: Dictionary<ControllerInputModel>,
         inputAction: ControlSchemeInputAction,
     ): { isActivated: boolean; timestamp: number } {

@@ -39,7 +39,7 @@
             <button class="add-level-button"
                     mat-raised-button
                     (click)="addNextSpeedControl()">
-                {{ 'controlScheme.speedShiftBinding.outputLevelAdd' | transloco }}
+                {{ 'controlScheme.trainControlBinding.outputLevelAdd' | transloco }}
             </button>
         </div>
 
@@ -47,7 +47,7 @@
                         class="speed-level-form-field"
         >
             <mat-label>
-                {{ 'controlScheme.speedShiftBinding.level' | transloco: { level: form.controls.initialLevelIndex.value - idx } }}
+                {{ 'controlScheme.trainControlBinding.level' | transloco: { level: form.controls.initialLevelIndex.value - idx } }}
             </mat-label>
             <input type="number"
                    matInput
@@ -59,7 +59,7 @@
                     (click)="removeSpeedControl(idx)"
             >
                 <mat-icon [fontIcon]="'delete'"></mat-icon>
-                <span class="cdk-visually-hidden">{{ 'controlScheme.speedShiftBinding.outputLevelRemove' | transloco }}</span>
+                <span class="cdk-visually-hidden">{{ 'controlScheme.trainControlBinding.outputLevelRemove' | transloco }}</span>
             </button>
             <mat-error [appValidationMessages]="speedControl"></mat-error>
         </mat-form-field>
@@ -68,7 +68,7 @@
             <button class="add-level-button"
                     mat-raised-button
                     (click)="addPrevSpeedControl()">
-                {{ 'controlScheme.speedShiftBinding.outputLevelAdd' | transloco }}
+                {{ 'controlScheme.trainControlBinding.outputLevelAdd' | transloco }}
             </button>
         </div>
 

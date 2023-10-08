@@ -8,10 +8,10 @@ import { ITaskRunner } from '../i-task-runner';
 import { mapUseProfile } from '../map-use-profile';
 
 @Injectable({ providedIn: 'root' })
-export class AngleShiftTaskRunnerService implements ITaskRunner<ControlSchemeBindingType.AngleShift> {
+export class GearboxControlTaskRunnerService implements ITaskRunner<ControlSchemeBindingType.GearboxControl> {
     public runTask(
         hub: IHub,
-        task: PortCommandTask<ControlSchemeBindingType.AngleShift>
+        task: PortCommandTask<ControlSchemeBindingType.GearboxControl>
     ): Observable<PortCommandExecutionStatus> {
         return hub.motors.goToPosition(
             task.portId,

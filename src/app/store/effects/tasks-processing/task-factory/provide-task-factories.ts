@@ -1,22 +1,22 @@
 import { Provider } from '@angular/core';
 
 import {
-    AngleShiftTaskPayloadFactoryService,
+    GearboxControlTaskPayloadFactoryService,
     ServoTaskPayloadFactoryService,
     SetAngleTaskPayloadFactoryService,
     SetSpeedTaskPayloadFactoryService,
-    SpeedShiftTaskPayloadFactoryService,
-    StepperTaskPayloadFactoryService
+    StepperTaskPayloadFactoryService,
+    TrainControlTaskPayloadFactoryService
 } from './payload-factories';
 import { TaskFactoryService } from './task-factory.service';
 
 export function provideTaskFactories(): Provider[] {
     return [
-        AngleShiftTaskPayloadFactoryService,
+        GearboxControlTaskPayloadFactoryService,
         ServoTaskPayloadFactoryService,
         SetAngleTaskPayloadFactoryService,
         SetSpeedTaskPayloadFactoryService,
-        SpeedShiftTaskPayloadFactoryService,
+        TrainControlTaskPayloadFactoryService,
         StepperTaskPayloadFactoryService,
         TaskFactoryService
     ];

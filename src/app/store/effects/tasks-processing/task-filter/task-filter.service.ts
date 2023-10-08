@@ -14,8 +14,8 @@ export class TaskFilterService implements ITaskFilter {
         [ControlSchemeBindingType.Servo]: this.hashCompareFilter,
         [ControlSchemeBindingType.SetAngle]: this.hashCompareFilter,
         [ControlSchemeBindingType.Stepper]: this.mostRecentTaskFilter,
-        [ControlSchemeBindingType.SpeedShift]: this.hashCompareFilter,
-        [ControlSchemeBindingType.AngleShift]: this.hashCompareFilter,
+        [ControlSchemeBindingType.TrainControl]: this.hashCompareFilter,
+        [ControlSchemeBindingType.GearboxControl]: this.hashCompareFilter,
     };
 
     constructor(

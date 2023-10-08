@@ -4,13 +4,13 @@ import { ControlSchemeBindingType } from '@app/shared';
 
 import { AttachedIoPropsModel, ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload } from '../../../models';
 import {
-    AngleShiftTaskPayloadFactoryService,
+    GearboxControlTaskPayloadFactoryService,
     ITaskPayloadFactory,
     ServoTaskPayloadFactoryService,
     SetAngleTaskPayloadFactoryService,
     SetSpeedTaskPayloadFactoryService,
-    SpeedShiftTaskPayloadFactoryService,
-    StepperTaskPayloadFactoryService
+    StepperTaskPayloadFactoryService,
+    TrainControlTaskPayloadFactoryService
 } from './payload-factories';
 import { payloadHash } from '../payload-hash';
 
@@ -20,18 +20,18 @@ export class TaskFactoryService {
         [ControlSchemeBindingType.Servo]: this.servoTaskPayloadFactory,
         [ControlSchemeBindingType.SetAngle]: this.setAngleTaskPayloadFactory,
         [ControlSchemeBindingType.SetSpeed]: this.setSpeedTaskPayloadFactory,
-        [ControlSchemeBindingType.SpeedShift]: this.speedShiftTaskPayloadFactory,
+        [ControlSchemeBindingType.TrainControl]: this.trainControlTaskPayloadFactory,
         [ControlSchemeBindingType.Stepper]: this.stepperTaskPayloadFactory,
-        [ControlSchemeBindingType.AngleShift]: this.angleShiftTaskPayloadFactory,
+        [ControlSchemeBindingType.GearboxControl]: this.gearboxControlTaskPayloadFactory,
     };
 
     constructor(
         private readonly servoTaskPayloadFactory: ServoTaskPayloadFactoryService,
         private readonly setAngleTaskPayloadFactory: SetAngleTaskPayloadFactoryService,
         private readonly setSpeedTaskPayloadFactory: SetSpeedTaskPayloadFactoryService,
-        private readonly speedShiftTaskPayloadFactory: SpeedShiftTaskPayloadFactoryService,
+        private readonly trainControlTaskPayloadFactory: TrainControlTaskPayloadFactoryService,
         private readonly stepperTaskPayloadFactory: StepperTaskPayloadFactoryService,
-        private readonly angleShiftTaskPayloadFactory: AngleShiftTaskPayloadFactoryService
+        private readonly gearboxControlTaskPayloadFactory: GearboxControlTaskPayloadFactoryService
     ) {
     }
 

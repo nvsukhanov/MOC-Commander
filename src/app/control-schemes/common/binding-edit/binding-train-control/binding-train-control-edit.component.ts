@@ -21,13 +21,13 @@ import {
 import { BindingEditSectionComponent } from '../section';
 import { BindingEditSectionsContainerComponent } from '../sections-container';
 import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
-import { CommonFormControlsBuilderService, SpeedShiftBindingForm } from '../../forms';
+import { CommonFormControlsBuilderService, TrainControlBindingForm } from '../../forms';
 
 @Component({
     standalone: true,
-    selector: 'app-binding-speed-shift-edit',
-    templateUrl: './binding-speed-shift-edit.component.html',
-    styleUrls: [ './binding-speed-shift-edit.component.scss' ],
+    selector: 'app-binding-train-control-edit',
+    templateUrl: './binding-train-control-edit.component.html',
+    styleUrls: [ './binding-train-control-edit.component.scss' ],
     imports: [
         NgIf,
         BindingEditSectionComponent,
@@ -51,12 +51,12 @@ import { CommonFormControlsBuilderService, SpeedShiftBindingForm } from '../../f
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BindingSpeedShiftEditComponent implements IBindingsDetailsEditComponent<SpeedShiftBindingForm> {
-    public readonly bindingType = ControlSchemeBindingType.SpeedShift;
+export class BindingTrainControlEditComponent implements IBindingsDetailsEditComponent<TrainControlBindingForm> {
+    public readonly bindingType = ControlSchemeBindingType.TrainControl;
 
     public readonly controlSchemeInputActions = ControlSchemeInputAction;
 
-    private _form?: SpeedShiftBindingForm;
+    private _form?: TrainControlBindingForm;
 
     constructor(
         private readonly commonFormControlBuilder: CommonFormControlsBuilderService,
@@ -64,12 +64,12 @@ export class BindingSpeedShiftEditComponent implements IBindingsDetailsEditCompo
     ) {
     }
 
-    public get form(): SpeedShiftBindingForm | undefined {
+    public get form(): TrainControlBindingForm | undefined {
         return this._form;
     }
 
     public setForm(
-        form: SpeedShiftBindingForm
+        form: TrainControlBindingForm
     ): void {
         this._form = form;
     }

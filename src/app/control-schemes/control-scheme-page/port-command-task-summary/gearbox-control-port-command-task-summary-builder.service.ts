@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
-import { AngleShiftTaskPayload } from '@app/store';
+import { GearboxControlTaskPayload } from '@app/store';
 
 @Injectable({ providedIn: 'root' })
-export class AngleShiftPortCommandTaskSummaryBuilderService {
+export class GearboxControlPortCommandTaskSummaryBuilderService {
     constructor(
         private readonly translocoService: TranslocoService
     ) {
     }
 
     public build(
-        payload: AngleShiftTaskPayload
+        payload: GearboxControlTaskPayload
     ): Observable<string> {
         const level = payload.initialLevelIndex - payload.angleIndex;
         const angle = payload.angle;
-        return this.translocoService.selectTranslate('controlScheme.angleShiftBinding.taskSummary', { level, angle });
+        return this.translocoService.selectTranslate('controlScheme.gearboxControlBinding.taskSummary', { level, angle });
     }
 }

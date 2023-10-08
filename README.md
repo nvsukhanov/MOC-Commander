@@ -35,8 +35,8 @@ LEGO® is a trademark of the LEGO Group of companies which does not sponsor, aut
         - Set angle
         - Servo w/ auto-calibration on start
         - Stepper
-        - Speed shift (train control)
-        - Angle shift (gearbox control)
+        - Train
+        - Gearbox
     - Allows fine-tuning of operation mode parameters such as speed limits, power output, angle limits, etc.
     - Supports acceleration and deceleration profiles (slow start and slow stop, especially useful for trains).
 

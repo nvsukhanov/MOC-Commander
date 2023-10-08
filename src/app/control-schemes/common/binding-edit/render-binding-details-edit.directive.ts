@@ -8,8 +8,8 @@ import { BindingServoEditComponent } from './binding-servo';
 import { BindingSetAngleEditComponent } from './binding-set-angle';
 import { BindingStepperEditComponent } from './binding-stepper';
 import { ControlSchemeBindingForm } from '../forms';
-import { BindingSpeedShiftEditComponent } from './binding-speed-shift';
-import { BindingAngleShiftEditComponent } from './binding-angle-shift';
+import { BindingTrainControlEditComponent } from './binding-train-control';
+import { BindingGearboxControlEditComponent } from './binding-gearbox-control';
 
 @Directive({
     standalone: true,
@@ -22,8 +22,8 @@ export class RenderBindingDetailsEditDirective implements OnDestroy {
         [ControlSchemeBindingType.Servo]: BindingServoEditComponent,
         [ControlSchemeBindingType.SetAngle]: BindingSetAngleEditComponent,
         [ControlSchemeBindingType.Stepper]: BindingStepperEditComponent,
-        [ControlSchemeBindingType.SpeedShift]: BindingSpeedShiftEditComponent,
-        [ControlSchemeBindingType.AngleShift]: BindingAngleShiftEditComponent
+        [ControlSchemeBindingType.TrainControl]: BindingTrainControlEditComponent,
+        [ControlSchemeBindingType.GearboxControl]: BindingGearboxControlEditComponent
     };
 
     private operationMode?: ControlSchemeBindingType;
