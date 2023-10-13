@@ -72,6 +72,7 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
                 name: action.name,
                 portConfigs: [],
                 bindings: [],
+                widgets: []
             }, state);
         }),
         on(CONTROL_SCHEME_ACTIONS.startScheme, (state): ControlSchemeState => ({

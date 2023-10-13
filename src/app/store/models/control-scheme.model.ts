@@ -148,8 +148,29 @@ export type ControlSchemeBinding = ControlSchemeSetSpeedBinding
     | ControlSchemeTrainControlBinding
     | ControlSchemeGearboxControlBinding;
 
+export enum WidgetType {
+    Sensor,
+}
+
+export type BaseWidgetConfigModel = {
+    order: number;
+    name: string;
+    widgetType: WidgetType;
+};
+
+export type SensorWidgetConfigModel = {
+    widgetType: WidgetType.Sensor;
+    hubId: string;
+    portId: number;
+    modeId: number;
+    valueChangeThreshold: number;
+} & BaseWidgetConfigModel;
+
+export type WidgetConfigModel = (SensorWidgetConfigModel) & BaseWidgetConfigModel;
+
 export type ControlSchemeModel = {
     name: string;
+    widgets: Array<WidgetConfigModel>;
     portConfigs: ControlSchemePortConfig[];
     bindings: ControlSchemeBinding[];
 };
