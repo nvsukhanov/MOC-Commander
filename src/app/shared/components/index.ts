@@ -7,7 +7,7 @@ export * from './binding-type-to-l10n-key.pipe';
 export * from './controller-type-icon-name.pipe';
 export * from './ellipsis-title.directive';
 export * from './hide-on-small-screen.directive';
-export * from './io-type-to-l10n-key.pipe';
+export * from './io-type-to-l10n-key';
 export * from './motor-servo-end-state-l10n-key.pipe';
 export * from './port-id-to-port-name';
 export * from './hub-type-to-l10n-key.pipe';
@@ -16,3 +16,5 @@ export * from './slider';
 export * from './hint';
 export * from './input-activity-indicator';
 export * from './upload-file-form-control';
+export * from './widget';
+

@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>
+    {{ 'controlScheme.widgets.addWidgetDialog.title' | transloco }}
+</h1>
+
+<div mat-dialog-content
+     class="dialog-content"
+>
+    <mat-form-field>
+        <mat-label>{{ 'controlScheme.widgets.addWidgetDialog.selectWidgetType' | transloco }}</mat-label>
+        <mat-select [formControl]="form.controls.selectionData">
+            <mat-option *ngFor="let widgetSelectionOption of widgetSelectionData"
+                        [value]="widgetSelectionOption"
+            >
+                {{ widgetSelectionOption.widgetType | widgetTypeToL10nKey | transloco }}
+                <ng-container
+                    *ngIf="widgetSelectionOption | widgetConnectionInfoL10n | ngrxPush; let description">
+                    {{ description }}
+                </ng-container>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <app-widget-settings-container *ngIf="form.controls.selectionData.valid"
+                                   [initialConfig]="form.controls.selectionData.value!"
+                                   (canSave)="onWidgetSettingsCanBeSavedUpdate($event)"
+    ></app-widget-settings-container>
+</div>
+
+<div mat-dialog-actions
+     [align]="'end'"
+>
+    <button mat-raised-button
+            [color]="'primary'"
+            [disabled]="!(canSave$ | ngrxPush)"
+            (click)="onSave()"
+    >
+        {{ 'controlScheme.widgets.addWidgetDialog.saveButton' | transloco }}
+    </button>
+    <button mat-button
+            (click)="onCancel()"
+    >
+        {{ 'controlScheme.widgets.addWidgetDialog.cancelButton' | transloco }}
+    </button>
+</div>

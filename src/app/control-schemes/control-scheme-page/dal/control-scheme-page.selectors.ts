@@ -21,14 +21,14 @@ import {
     attachedIosIdFn,
 } from '@app/store';
 
-import { areControllableIosPresent, ioHasMatchingModeForOpMode } from '../common';
+import { areControllableIosPresent, ioHasMatchingModeForOpMode } from '../../common';
 import {
     ControlSchemeNodeTypes,
     ControlSchemeViewBindingTreeNodeData,
     ControlSchemeViewHubTreeNode,
     ControlSchemeViewIoTreeNode,
     SchemeRunBlocker
-} from './types';
+} from '../types';
 
 function createHubTreeNode(
     hubConfig: { hubId: string; name?: string; hubType?: HubType },

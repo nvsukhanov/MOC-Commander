@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Observable, Subscription, filter, map, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { PushPipe } from '@ngrx/component';
+import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { MatCardModule } from '@angular/material/card';
@@ -9,24 +9,33 @@ import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { RoutesBuilderService } from '@app/routing';
-import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, ControlSchemeModel, ROUTER_SELECTORS, } from '@app/store';
+import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, ControlSchemeModel, ROUTER_SELECTORS, WidgetConfigModel, } from '@app/store';
 import {
     ConfirmationDialogModule,
     ConfirmationDialogService,
     FeatureToolbarControlsDirective,
     HintComponent,
     ScreenSizeObserverService,
-    TitleService
+    TitleService,
 } from '@app/shared';
 
-import { CONTROL_SCHEME_PAGE_SELECTORS } from './control-scheme-page.selectors';
-import { ControlSchemeViewIoListComponent } from './control-scheme-view-io-list';
-import { ControlSchemeGeneralInfoComponent } from './control-scheme-general-info';
+import { CONTROL_SCHEME_PAGE_SELECTORS, VoltageDataProviderService } from './dal';
 import { ControlSchemeViewTreeNode, SchemeRunBlocker } from './types';
-import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData } from '../common';
-import { ControlSchemePageCompactToolbarComponent } from './compact-toolbar';
-import { ControlSchemePageFullToolbarComponent } from './full-toolbar';
+import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData, } from '../common';
+import {
+    AddWidgetDialogComponent,
+    CONTROL_SCHEME_WIDGET_COMPONENT_RESOLVER,
+    ControlSchemeGeneralInfoComponent,
+    ControlSchemePageCompactToolbarComponent,
+    ControlSchemePageFullToolbarComponent,
+    ControlSchemeViewIoListComponent,
+    ControlSchemeWidgetComponentResolverService,
+    ControlSchemeWidgetsGridComponent,
+    VOLTAGE_WIDGET_DATA_PROVIDER
+} from './components';
 import { ControlSchemeRunBlockersL10nPipe } from './control-scheme-run-blockers-l10n.pipe';
+import { AddWidgetDialogViewModelProvider } from './dal/add-widget-dialog-view-model-provider.service';
+import { AddWidgetDialogViewModel } from './components/add-widget-dialog/add-widget-dialog-view-model';
 
 @Component({
     standalone: true,
@@ -48,15 +57,20 @@ import { ControlSchemeRunBlockersL10nPipe } from './control-scheme-run-blockers-
         MatDialogModule,
         NgForOf,
         MatIconModule,
-        ControlSchemeRunBlockersL10nPipe
+        ControlSchemeRunBlockersL10nPipe,
+        LetDirective,
+        ControlSchemeWidgetsGridComponent,
     ],
     providers: [
-        TitleService
+        TitleService,
+        { provide: CONTROL_SCHEME_WIDGET_COMPONENT_RESOLVER, useClass: ControlSchemeWidgetComponentResolverService },
+        { provide: VOLTAGE_WIDGET_DATA_PROVIDER, useClass: VoltageDataProviderService },
+        AddWidgetDialogViewModelProvider
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemePageComponent implements OnInit, OnDestroy {
-    public readonly selectedScheme$ = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.selectCurrentlyViewedScheme);
+    public readonly selectedScheme$: Observable<ControlSchemeModel | undefined> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.selectCurrentlyViewedScheme);
 
     public readonly schemeRunBlockers$: Observable<SchemeRunBlocker[]> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.selectSchemeRunBlockers).pipe(
         map((blockers) => blockers.filter((blocker) => !this.hiddenSchemeRunBlockers.has(blocker)))
@@ -90,7 +104,8 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
         private readonly transloco: TranslocoService,
         private readonly dialog: MatDialog,
         private readonly screenSizeObserverService: ScreenSizeObserverService,
-        private readonly titleService: TitleService
+        private readonly titleService: TitleService,
+        private readonly addWidgetDialogViewModelProvider: AddWidgetDialogViewModelProvider
     ) {
     }
 
@@ -179,6 +194,24 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
             if (isConfirmed) {
                 this.router.navigate(this.routesBuilderService.controlSchemesList);
                 this.store.dispatch(CONTROL_SCHEME_ACTIONS.deleteControlScheme({ name }));
+            }
+        });
+    }
+
+    public onAddWidget(): void {
+        this.selectedScheme$.pipe(
+            take(1),
+            filter((scheme): scheme is ControlSchemeModel => scheme !== undefined),
+            switchMap((scheme) => this.addWidgetDialogViewModelProvider.getAddWidgetDialogViewModel(scheme.name)),
+            switchMap((data) => this.dialog.open<AddWidgetDialogComponent, AddWidgetDialogViewModel, Omit<WidgetConfigModel, 'order'> | undefined>(
+                AddWidgetDialogComponent,
+                { data }
+            ).afterClosed().pipe(
+                map((widgetConfig) => ({ schemeName: data.controlSchemeName, widgetConfig }))
+            ))
+        ).subscribe(({ schemeName, widgetConfig }) => {
+            if (widgetConfig) {
+                this.store.dispatch(CONTROL_SCHEME_ACTIONS.addWidget({ schemeName, widgetConfig }));
             }
         });
     }

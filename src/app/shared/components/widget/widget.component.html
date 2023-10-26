@@ -1,0 +1,33 @@
+<mat-card class="widget__card">
+    <mat-card-header class="widget__header">
+        <mat-card-title>
+            {{ title }}
+        </mat-card-title>
+        <mat-card-subtitle>
+            {{ subTitle }}
+        </mat-card-subtitle>
+
+        <button *ngIf="canBeEdited || canBeRemoved" mat-icon-button
+                [matMenuTriggerFor]="widgetMenu"
+                aria-label="Example icon-button with a menu">
+            <mat-icon [fontIcon]="'more_vert'"></mat-icon>
+        </button>
+        <mat-menu #widgetMenu="matMenu">
+            <button [disabled]="!canBeEdited"
+                    mat-menu-item
+            >
+                <mat-icon [fontIcon]="'edit'"></mat-icon>
+                <span>EDIT</span>
+            </button>
+            <button [disabled]="!canBeRemoved"
+                    mat-menu-item
+            >
+                <mat-icon [fontIcon]="'delete'"></mat-icon>
+                <span>%DELETE%</span>
+            </button>
+        </mat-menu>
+    </mat-card-header>
+    <mat-card-content class="widget__body">
+        <ng-content></ng-content>
+    </mat-card-content>
+</mat-card>

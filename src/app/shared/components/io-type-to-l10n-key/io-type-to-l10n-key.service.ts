@@ -1,14 +1,10 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { IOType } from 'rxpoweredup';
 
-import { L10nScopes, composeL10nKey } from '../i18n';
+import { L10nScopes, composeL10nKey } from '../../i18n';
 
-@Pipe({
-    name: 'ioTypeToL10nKey',
-    pure: true,
-    standalone: true
-})
-export class IoTypeToL10nKeyPipe implements PipeTransform {
+@Injectable({ providedIn: 'root' })
+export class IoTypeToL10nKeyService {
     private readonly mapping: Readonly<{ [type in IOType]: string }> = {
         [IOType.motor]: composeL10nKey(L10nScopes.io, 'ioTypeMotor'),
         [IOType.systemTrainMotor]: composeL10nKey(L10nScopes.io, 'ioTypeSystemTrainMotor'),
@@ -38,7 +34,12 @@ export class IoTypeToL10nKeyPipe implements PipeTransform {
 
     private readonly unknownDeviceType = composeL10nKey(L10nScopes.io, 'unknownIoType');
 
-    public transform(ioType: IOType): string {
-        return this.mapping[ioType] ?? this.unknownDeviceType;
+    public getL10nKey(
+        ioType?: IOType
+    ): string {
+        if (ioType === undefined) {
+            return this.unknownDeviceType;
+        }
+        return this.mapping[ioType];
     }
 }

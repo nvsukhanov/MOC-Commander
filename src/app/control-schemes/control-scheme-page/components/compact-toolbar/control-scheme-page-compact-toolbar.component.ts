@@ -1,21 +1,27 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
+import { PushPipe } from '@ngrx/component';
 import { TranslocoPipe } from '@ngneat/transloco';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
     standalone: true,
-    selector: 'app-control-scheme-page-full-toolbar',
-    templateUrl: './control-scheme-page-full-toolbar.component.html',
-    styleUrls: [ './control-scheme-page-full-toolbar.component.scss' ],
+    selector: 'app-control-scheme-page-compact-toolbar',
+    templateUrl: './control-scheme-page-compact-toolbar.component.html',
+    styleUrls: [ './control-scheme-page-compact-toolbar.component.scss' ],
     imports: [
         MatButtonModule,
         NgIf,
-        TranslocoPipe
+        PushPipe,
+        TranslocoPipe,
+        MatIconModule,
+        MatMenuModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ControlSchemePageFullToolbarComponent {
+export class ControlSchemePageCompactToolbarComponent {
     @Input() public canRun = false;
 
     @Input() public canStop = false;
@@ -33,6 +39,8 @@ export class ControlSchemePageFullToolbarComponent {
     @Output() public readonly export = new EventEmitter<void>();
 
     @Output() public readonly delete = new EventEmitter<void>();
+
+    @Output() public readonly addWidget = new EventEmitter<void>();
 
     public onRun(): void {
         this.run.emit();
@@ -52,5 +60,9 @@ export class ControlSchemePageFullToolbarComponent {
 
     public onExport(): void {
         this.export.emit();
+    }
+
+    public onAddWidget(): void {
+        this.addWidget.emit();
     }
 }

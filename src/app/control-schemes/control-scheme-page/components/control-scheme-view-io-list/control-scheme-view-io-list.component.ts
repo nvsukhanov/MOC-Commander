@@ -7,10 +7,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { PortIdToPortNamePipe } from '@app/shared';
 
-import { IoTreeNodeComponent } from './io-tree-node';
-import { HubTreeNodeComponent } from './hub-tree-node';
-import { BindingTreeNodeComponent } from './binding-tree-node';
-import { ControlSchemeNodeTypes, ControlSchemeViewTreeNode } from '../types';
+import { IoTreeNodeComponent } from '../io-tree-node';
+import { HubTreeNodeComponent } from '../hub-tree-node';
+import { BindingTreeNodeComponent } from '../binding-tree-node';
+import { ControlSchemeNodeTypes, ControlSchemeViewTreeNode } from '../../types';
 
 @Component({
     standalone: true,

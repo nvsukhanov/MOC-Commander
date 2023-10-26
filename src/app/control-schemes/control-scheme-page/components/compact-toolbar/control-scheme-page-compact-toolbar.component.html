@@ -38,6 +38,11 @@
 
 <mat-menu #menu="matMenu">
     <button mat-menu-item
+            (click)="onAddWidget()"
+    >
+        {{ 'controlScheme.widgets.addWidgetButtonTitle' | transloco }}
+    </button>
+    <button mat-menu-item
             *ngIf="canExport"
             (click)="onExport()"
     >

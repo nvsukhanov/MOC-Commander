@@ -1,6 +1,6 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
-import { ControlSchemeBinding, ControlSchemeModel, ControlSchemePortConfig } from '../models';
+import { ControlSchemeBinding, ControlSchemeModel, ControlSchemePortConfig, WidgetConfigModel } from '../models';
 
 export const CONTROL_SCHEME_ACTIONS = createActionGroup({
     source: 'Control Schemes',
@@ -23,5 +23,6 @@ export const CONTROL_SCHEME_ACTIONS = createActionGroup({
         'scheme stopped': emptyProps(),
 
         'servo calibration error': props<{ error: Error }>(),
+        'add widget': props<{ schemeName: string; widgetConfig: Omit<WidgetConfigModel, 'order'> }>()
     }
 });

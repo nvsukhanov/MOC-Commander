@@ -191,6 +191,20 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
         }),
         on(CONTROL_SCHEME_ACTIONS.importControlScheme, (state, { scheme }): ControlSchemeState => {
             return CONTROL_SCHEME_ENTITY_ADAPTER.addOne(scheme, state);
-        })
+        }),
+        on(CONTROL_SCHEME_ACTIONS.addWidget, (state, { schemeName, widgetConfig }): ControlSchemeState => {
+            const scheme = state.entities[schemeName];
+            if (!scheme) {
+                return state;
+            }
+            const order = Math.max(...scheme.widgets.map((w) => w.order), 0) + 1;
+            const nextWidgets = [ ...scheme.widgets, { ...widgetConfig, order } ];
+            return CONTROL_SCHEME_ENTITY_ADAPTER.updateOne({
+                id: schemeName,
+                changes: {
+                    widgets: nextWidgets,
+                }
+            }, state);
+        }),
     ),
 });
