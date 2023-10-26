@@ -275,7 +275,7 @@
       },
       "voltage": {
         "name": "Voltage",
-        "connectionInfo": "({hubName}:{portName} - {ioName})"
+        "connectionInfo": "{hubName}:{portName} - {ioName}"
       }
     }
   },
@@ -305,8 +305,8 @@
     "ioTypeSystemTrainMotor": "System Train Motor",
     "ioTypeButton": "Button",
     "ioTypeLedLight": "LED Light",
-    "ioTypeVoltage": "Voltage",
-    "ioTypeCurrent": "Current",
+    "ioTypeVoltage": "Voltage Sensor",
+    "ioTypeCurrent": "Current Sensor",
     "ioTypePiezoTone": "Piezo Tone",
     "ioTypeRgbLight": "RGB Light",
     "ioTypeExternalTiltSensor": "External Tilt Sensor",

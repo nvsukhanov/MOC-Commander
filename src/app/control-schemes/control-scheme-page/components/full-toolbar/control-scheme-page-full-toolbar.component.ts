@@ -24,6 +24,8 @@ export class ControlSchemePageFullToolbarComponent {
 
     @Input() public canAddBinding = false;
 
+    @Input() public canAddWidgets = false;
+
     @Output() public readonly run = new EventEmitter<void>();
 
     @Output() public readonly stop = new EventEmitter<void>();

@@ -29,6 +29,7 @@
 </ng-template>
 
 <button mat-raised-button
+        [disabled]="!canAddWidgets"
         (click)="onAddWidget()"
 >
     {{ 'controlScheme.widgets.addWidgetButtonTitle' | transloco }}

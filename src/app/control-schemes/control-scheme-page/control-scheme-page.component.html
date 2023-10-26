@@ -2,7 +2,7 @@
     <app-control-scheme-widgets-grid *ngIf="scheme.widgets.length"
                                      [widgetConfigs]="scheme.widgets"
     ></app-control-scheme-widgets-grid>
-    
+
     <mat-card>
         <mat-card-header>
             <mat-card-title>
@@ -36,6 +36,7 @@
                                                      [canStop]="!!(isCurrentControlSchemeRunning$ | ngrxPush)"
                                                      [canAddBinding]="!!(canCreateBinding$ | ngrxPush)"
                                                      [canExport]="!!(canExportScheme$ | ngrxPush)"
+                                                     [canAddWidgets]="!!(canAddWidgets$ | ngrxPush)"
                                                      (run)="runScheme(scheme.name)"
                                                      (stop)="stopRunningScheme()"
                                                      (addBinding)="addBinding()"
@@ -50,6 +51,7 @@
                                                   [canStop]="!!(isCurrentControlSchemeRunning$ | ngrxPush)"
                                                   [canAddBinding]="!!(canCreateBinding$ | ngrxPush)"
                                                   [canExport]="!!(canExportScheme$ | ngrxPush)"
+                                                  [canAddWidgets]="!!(canAddWidgets$ | ngrxPush)"
                                                   (run)="runScheme(scheme.name)"
                                                   (stop)="stopRunningScheme()"
                                                   (addBinding)="addBinding()"
