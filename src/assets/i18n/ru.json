@@ -264,6 +264,17 @@
       "outputAngleLevelAdd": "Добавить передачу",
       "outputAngleLevelRemove": "Удалить передачу",
       "taskSummary": "Коробка передач, передача {level} ({angle}°){ isLooping, select, true { (инв.)} other {}}"
+    },
+    "widgets": {
+      "addWidgetButtonTitle": "Добавить виджет",
+      "addWidgetDialog": {
+        "title": "Добавление виджета",
+        "saveButton": "Сохранить",
+        "cancel": "Отмена"
+      },
+      "voltage": {
+        "name": "Напряжение"
+      }
     }
   },
   "motorServoEndState": {

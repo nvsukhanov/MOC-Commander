@@ -264,6 +264,19 @@
       "outputAngleLevelAdd": "Add level",
       "outputAngleLevelRemove": "Remove level",
       "taskSummary": "Gearbox, level {level} ({angle}°){ isLooping, select, true { (mirror)} other {}}"
+    },
+    "widgets": {
+      "addWidgetButtonTitle": "Add widget",
+      "addWidgetDialog": {
+        "title": "Add Widget",
+        "selectWidgetType": "Widget type",
+        "saveButton": "Save",
+        "cancelButton": "Cancel"
+      },
+      "voltage": {
+        "name": "Voltage",
+        "connectionInfo": "({hubName}:{portName} - {ioName})"
+      }
     }
   },
   "motorServoEndState": {

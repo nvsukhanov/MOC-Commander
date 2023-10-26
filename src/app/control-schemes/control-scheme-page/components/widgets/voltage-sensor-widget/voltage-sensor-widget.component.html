@@ -1,0 +1,5 @@
+<app-widget [title]="'controlScheme.widgets.voltage.name' | transloco"
+            [subTitle]="subtitle$  | ngrxPush"
+>
+    {{ voltage$ | ngrxPush }}
+</app-widget>

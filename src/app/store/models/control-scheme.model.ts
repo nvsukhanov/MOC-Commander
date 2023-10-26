@@ -149,7 +149,7 @@ export type ControlSchemeBinding = ControlSchemeSetSpeedBinding
     | ControlSchemeGearboxControlBinding;
 
 export enum WidgetType {
-    Sensor,
+    Voltage,
 }
 
 export type BaseWidgetConfigModel = {
@@ -158,15 +158,15 @@ export type BaseWidgetConfigModel = {
     widgetType: WidgetType;
 };
 
-export type SensorWidgetConfigModel = {
-    widgetType: WidgetType.Sensor;
+export type VoltageWidgetConfigModel = {
+    widgetType: WidgetType.Voltage;
     hubId: string;
     portId: number;
     modeId: number;
     valueChangeThreshold: number;
 } & BaseWidgetConfigModel;
 
-export type WidgetConfigModel = (SensorWidgetConfigModel) & BaseWidgetConfigModel;
+export type WidgetConfigModel = (VoltageWidgetConfigModel) & BaseWidgetConfigModel;
 
 export type ControlSchemeModel = {
     name: string;
