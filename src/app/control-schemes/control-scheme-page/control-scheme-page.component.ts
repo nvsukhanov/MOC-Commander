@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { Observable, Subscription, filter, map, switchMap, take } from 'rxjs';
+import { Observable, Subscription, filter, map, of, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgForOf, NgIf } from '@angular/common';
@@ -87,6 +87,11 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
     public readonly canCreateBinding$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canCreateBinding);
 
     public readonly isSmallScreen$: Observable<boolean> = this.screenSizeObserverService.isSmallScreen$;
+
+    public readonly canAddWidgets$ = this.selectedScheme$.pipe(
+        switchMap((scheme) => scheme ? this.addWidgetDialogViewModelProvider.getAddWidgetDialogViewModel(scheme.name) : of(null)),
+        map((r) => r && r.widgets.length)
+    );
 
     private sub?: Subscription;
 

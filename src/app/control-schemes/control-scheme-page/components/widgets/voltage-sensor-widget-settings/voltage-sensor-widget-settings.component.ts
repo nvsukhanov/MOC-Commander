@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable, map, startWith } from 'rxjs';
+import { JsonPipe } from '@angular/common';
 import { VoltageWidgetConfigModel, WidgetType } from '@app/store';
 
 import { IControlSchemeWidgetSettingsComponent } from '../../widget-settings-container';
@@ -11,6 +12,9 @@ import { CommonFormControlsBuilderService } from '../../../../common';
     selector: 'app-voltage-sensor-widget-settings',
     templateUrl: './voltage-sensor-widget-settings.component.html',
     styleUrls: [ './voltage-sensor-widget-settings.component.scss' ],
+    imports: [
+        JsonPipe
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VoltageSensorWidgetSettingsComponent implements IControlSchemeWidgetSettingsComponent<VoltageWidgetConfigModel> {
@@ -47,6 +51,7 @@ export class VoltageSensorWidgetSettingsComponent implements IControlSchemeWidge
         config: VoltageWidgetConfigModel
     ): void {
         this.form.patchValue(config);
+        console.log(this.form);
     }
 
     public getConfig(): VoltageWidgetConfigModel {
