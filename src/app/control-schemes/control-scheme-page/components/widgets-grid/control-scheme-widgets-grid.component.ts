@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { LetDirective } from '@ngrx/component';
 import { NgForOf } from '@angular/common';
 import { WidgetConfigModel } from '@app/store';
@@ -23,4 +23,20 @@ export class ControlSchemeWidgetsGridComponent {
     @Input() public widgetConfigs: WidgetConfigModel[] = [];
 
     @Input() public editable = false;
+
+    @Output() public deleteWidget = new EventEmitter<number>();
+
+    @Output() public editWidget = new EventEmitter<number>();
+
+    public onDeleteWidget(
+        widgetIndex: number
+    ): void {
+        this.deleteWidget.emit(widgetIndex);
+    }
+
+    public onEditWidget(
+        widgetIndex: number
+    ): void {
+        this.editWidget.emit(widgetIndex);
+    }
 }

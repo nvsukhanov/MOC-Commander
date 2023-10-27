@@ -2,6 +2,8 @@
             [subTitle]="subtitle$  | ngrxPush"
             [canBeEdited]="canBeEdited"
             [canBeDeleted]="canBeDeleted"
+            (edit)="onEdit()"
+            (delete)="onDelete()"
 >
     {{ voltage$ | ngrxPush }}
 </app-widget>

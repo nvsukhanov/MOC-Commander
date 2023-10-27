@@ -23,6 +23,7 @@ export const CONTROL_SCHEME_ACTIONS = createActionGroup({
         'scheme stopped': emptyProps(),
 
         'servo calibration error': props<{ error: Error }>(),
-        'add widget': props<{ schemeName: string; widgetConfig: Omit<WidgetConfigModel, 'order'> }>()
+        'add widget': props<{ schemeName: string; widgetConfig: Omit<WidgetConfigModel, 'order'> }>(),
+        'delete widget': props<{ schemeName: string; widgetIndex: number }>(),
     }
 });

@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, ComponentRef, Inject, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ComponentRef, EventEmitter, Inject, Input, OnDestroy, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { WidgetConfigModel, WidgetType } from '@app/store';
 
 import {
@@ -15,7 +16,11 @@ import { IControlSchemeWidgetComponent } from './i-control-scheme-widget-compone
     styleUrls: [ './widget-container.component.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WidgetContainerComponent {
+export class WidgetContainerComponent implements OnDestroy {
+    @Output() public readonly edit = new EventEmitter<void>();
+
+    @Output() public readonly delete = new EventEmitter<void>();
+
     private _canBeEdited = false;
 
     private _canBeDeleted = false;
@@ -23,6 +28,8 @@ export class WidgetContainerComponent {
     @ViewChild('container', { static: true, read: ViewContainerRef }) private readonly viewContainerRef!: ViewContainerRef;
 
     private widgetComponentRef?: ComponentRef<IControlSchemeWidgetComponent<WidgetConfigModel>>;
+
+    private widgetActionsSubscription?: Subscription;
 
     constructor(
         @Inject(CONTROL_SCHEME_WIDGET_COMPONENT_RESOLVER) private readonly widgetsResolver: IControlSchemeWidgetComponentResolver
@@ -70,6 +77,10 @@ export class WidgetContainerComponent {
         }
     }
 
+    public ngOnDestroy(): void {
+        this.destroyWidget();
+    }
+
     private createWidget<T extends WidgetType>(
         widgetType: T
     ): ComponentRef<ControlSchemeWidgetComponentOfType<T>> | undefined {
@@ -77,13 +88,23 @@ export class WidgetContainerComponent {
         if (componentType === undefined) {
             return;
         }
-        return this.viewContainerRef.createComponent(componentType);
+        const componentRef = this.viewContainerRef.createComponent(componentType);
+        this.widgetActionsSubscription = new Subscription();
+        this.widgetActionsSubscription.add(
+            componentRef.instance.edit.subscribe(() => this.edit.emit())
+        );
+        this.widgetActionsSubscription.add(
+            componentRef.instance.delete.subscribe(() => this.delete.emit())
+        );
+        return componentRef;
     }
 
     private destroyWidget(): void {
         if (this.widgetComponentRef) {
             this.widgetComponentRef.destroy();
             this.widgetComponentRef = undefined;
+            this.widgetActionsSubscription?.unsubscribe();
+            this.widgetActionsSubscription = undefined;
         }
     }
 }
