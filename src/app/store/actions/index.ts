@@ -10,4 +10,5 @@ export * from './port-tasks.actions';
 export * from './hub-stats.actions';
 export * from './hubs.actions';
 export * from './control-scheme.actions';
+export * from './control-scheme-widgets-data.actions';
 export * from './settings.actions';

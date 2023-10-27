@@ -153,7 +153,7 @@ export enum WidgetType {
 }
 
 export type BaseWidgetConfigModel = {
-    order: number;
+    id: number;
     name: string;
     widgetType: WidgetType;
 };

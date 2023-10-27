@@ -59,7 +59,7 @@ export class VoltageSensorWidgetSettingsComponent implements IControlSchemeWidge
         }
         return {
             widgetType: WidgetType.Voltage,
-            order: this.form.controls.order.value,
+            id: this.form.controls.order.value,
             name: this.form.controls.name.value,
             hubId: this.form.controls.hubId.value!,
             portId: this.form.controls.portId.value!,

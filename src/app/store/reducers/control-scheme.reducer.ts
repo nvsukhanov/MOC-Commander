@@ -197,8 +197,8 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
             if (!scheme) {
                 return state;
             }
-            const order = Math.max(...scheme.widgets.map((w) => w.order), 0) + 1;
-            const nextWidgets = [ ...scheme.widgets, { ...widgetConfig, order } ];
+            const id = Math.max(...scheme.widgets.map((w) => w.id), 0) + 1;
+            const nextWidgets = [ ...scheme.widgets, { ...widgetConfig, id } ];
             return CONTROL_SCHEME_ENTITY_ADAPTER.updateOne({
                 id: schemeName,
                 changes: {
@@ -206,17 +206,15 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
                 }
             }, state);
         }),
-        on(CONTROL_SCHEME_ACTIONS.deleteWidget, (state, { schemeName, widgetIndex }): ControlSchemeState => {
+        on(CONTROL_SCHEME_ACTIONS.deleteWidget, (state, { schemeName, widgetId }): ControlSchemeState => {
             const scheme = state.entities[schemeName];
             if (!scheme) {
                 return state;
             }
-            const nextWidgets = [ ...scheme.widgets ];
-            nextWidgets.splice(widgetIndex, 1);
             return CONTROL_SCHEME_ENTITY_ADAPTER.updateOne({
                 id: schemeName,
                 changes: {
-                    widgets: nextWidgets,
+                    widgets: scheme.widgets.filter((w) => w.id !== widgetId),
                 }
             }, state);
         }),
