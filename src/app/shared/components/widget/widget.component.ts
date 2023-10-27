@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { PushPipe } from '@ngrx/component';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 import { EllipsisTitleDirective } from '../ellipsis-title.directive';
 
@@ -21,7 +22,8 @@ import { EllipsisTitleDirective } from '../ellipsis-title.directive';
         MatMenuModule,
         PushPipe,
         NgTemplateOutlet,
-        EllipsisTitleDirective
+        EllipsisTitleDirective,
+        TranslocoPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

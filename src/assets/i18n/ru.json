@@ -269,13 +269,19 @@
       "addWidgetButtonTitle": "Добавить виджет",
       "addWidgetDialog": {
         "title": "Добавление виджета",
+        "selectWidgetType": "Тип виджета",
         "saveButton": "Сохранить",
-        "cancel": "Отмена"
+        "cancelButton": "Отмена"
       },
       "voltage": {
-        "name": "Напряжение"
+        "name": "Напряжение",
+        "connectionInfo": "{hubName}:{portName} - {ioName}"
       }
     }
+  },
+  "widgets": {
+    "deleteButtonTitle": "Удалить",
+    "editButtonTitle": "Редактировать"
   },
   "motorServoEndState": {
     "float": "Свободное",
@@ -303,8 +309,8 @@
     "ioTypeSystemTrainMotor": "Мотор System Train",
     "ioTypeButton": "Кнопка",
     "ioTypeLedLight": "Светодиод",
-    "ioTypeVoltage": "Напряжение",
-    "ioTypeCurrent": "Ток",
+    "ioTypeVoltage": "Датчик напряжение",
+    "ioTypeCurrent": "Датчик силы тока",
     "ioTypePiezoTone": "Piezo Tone",
     "ioTypeRgbLight": "RGB-светодиод",
     "ioTypeExternalTiltSensor": "Внешний сенсор наклона",
@@ -324,7 +330,7 @@
     "ioTypeTemperatureSensor": "Датчик температуры",
     "ioTypeGestureSensor": "Датчик жестов",
     "ioIsNotConnectedInlineNotification": "не подключено",
-    "ioTypeMismatchNotification": "Несовпадение тип, ожидалось ''{expectedType} HW/{expectedHardwareRevision} SW/{expectedSoftwareRevision}''",
+    "ioTypeMismatchNotification": "Несовпадение типа, ожидалось ''{expectedType} HW/{expectedHardwareRevision} SW/{expectedSoftwareRevision}''",
     "unknownIoType": "Неизвестный тип устройства",
     "ioSynchronizableTitle": "Синхронизируемое"
   },
