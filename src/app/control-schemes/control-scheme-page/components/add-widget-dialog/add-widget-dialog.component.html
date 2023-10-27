@@ -14,7 +14,7 @@
                 {{ widgetSelectionOption.widgetType | widgetTypeToL10nKey | transloco }}
                 <ng-container
                     *ngIf="widgetSelectionOption | widgetConnectionInfoL10n | ngrxPush; let description">
-                    {{ description }}
+                    ({{ description }})
                 </ng-container>
             </mat-option>
         </mat-select>

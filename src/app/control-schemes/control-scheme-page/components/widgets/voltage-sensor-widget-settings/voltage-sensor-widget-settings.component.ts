@@ -51,7 +51,6 @@ export class VoltageSensorWidgetSettingsComponent implements IControlSchemeWidge
         config: VoltageWidgetConfigModel
     ): void {
         this.form.patchValue(config);
-        console.log(this.form);
     }
 
     public getConfig(): VoltageWidgetConfigModel {

@@ -19,13 +19,13 @@
                         mat-menu-item
                 >
                     <mat-icon [fontIcon]="'edit'"></mat-icon>
-                    <span>EDIT</span>
+                    <span>{{ 'widgets.editButtonTitle' | transloco }}</span>
                 </button>
                 <button [disabled]="!canBeDeleted"
                         mat-menu-item
                 >
                     <mat-icon [fontIcon]="'delete'"></mat-icon>
-                    <span>%DELETE%</span>
+                    <span>{{ 'widgets.deleteButtonTitle' | transloco }}</span>
                 </button>
             </mat-menu>
         </mat-card-title>

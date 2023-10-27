@@ -279,6 +279,10 @@
       }
     }
   },
+  "widgets": {
+    "deleteButtonTitle": "Delete",
+    "editButtonTitle": "Edit"
+  },
   "motorServoEndState": {
     "float": "Float",
     "hold": "Hold",
