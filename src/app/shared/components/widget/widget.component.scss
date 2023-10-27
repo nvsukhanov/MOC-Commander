@@ -11,6 +11,20 @@
         padding: 8px 16px 0;
     }
 
+    &__title-container {
+        display: flex;
+        align-items: center;
+        height: 48px;
+    }
+
+    &__title {
+        flex-grow: 1;
+    }
+
+    &__title-menu-button {
+        flex-grow: 0;
+    }
+
     &__body {
         flex: 1;
         display: flex;

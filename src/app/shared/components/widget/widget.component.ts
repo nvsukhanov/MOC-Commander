@@ -6,6 +6,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { PushPipe } from '@ngrx/component';
 
+import { EllipsisTitleDirective } from '../ellipsis-title.directive';
+
 @Component({
     standalone: true,
     selector: 'app-widget',
@@ -18,7 +20,8 @@ import { PushPipe } from '@ngrx/component';
         MatButtonModule,
         MatMenuModule,
         PushPipe,
-        NgTemplateOutlet
+        NgTemplateOutlet,
+        EllipsisTitleDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -27,16 +30,16 @@ export class WidgetComponent {
 
     @Input() public subTitle?: string;
 
-    @Input() public canBeRemoved = false;
+    @Input() public canBeDeleted = false;
 
     @Input() public canBeEdited = false;
 
-    @Output() public readonly remove = new EventEmitter<void>();
+    @Output() public readonly delete = new EventEmitter<void>();
 
     @Output() public readonly edit = new EventEmitter<void>();
 
-    public onRemove(): void {
-        this.remove.emit();
+    public onDelete(): void {
+        this.delete.emit();
     }
 
     public onEdit(): void {

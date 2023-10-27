@@ -21,4 +21,6 @@ import { WidgetContainerComponent } from '../widget-container';
 })
 export class ControlSchemeWidgetsGridComponent {
     @Input() public widgetConfigs: WidgetConfigModel[] = [];
+
+    @Input() public editable = false;
 }
