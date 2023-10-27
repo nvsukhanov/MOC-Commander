@@ -1,6 +1,7 @@
 <ng-container *ngIf="selectedScheme$ | ngrxPush; let scheme; else schemeNotFound">
     <app-control-scheme-widgets-grid *ngIf="scheme.widgets.length"
                                      [widgetConfigs]="scheme.widgets"
+                                     [editable]="!!(canDeleteOrEditWidgets$ | ngrxPush)"
     ></app-control-scheme-widgets-grid>
 
     <mat-card>

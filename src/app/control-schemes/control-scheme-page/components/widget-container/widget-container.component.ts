@@ -16,6 +16,10 @@ import { IControlSchemeWidgetComponent } from './i-control-scheme-widget-compone
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WidgetContainerComponent {
+    private _canBeEdited = false;
+
+    private _canBeDeleted = false;
+
     @ViewChild('container', { static: true, read: ViewContainerRef }) private readonly viewContainerRef!: ViewContainerRef;
 
     private widgetComponentRef?: ComponentRef<IControlSchemeWidgetComponent<WidgetConfigModel>>;
@@ -23,6 +27,24 @@ export class WidgetContainerComponent {
     constructor(
         @Inject(CONTROL_SCHEME_WIDGET_COMPONENT_RESOLVER) private readonly widgetsResolver: IControlSchemeWidgetComponentResolver
     ) {
+    }
+
+    @Input()
+    public set canBeDeleted(
+        value: boolean
+    ) {
+        this._canBeDeleted = value;
+        if (this.widgetComponentRef) {
+            this.widgetComponentRef.instance.canBeDeleted = value;
+        }
+    }
+
+    @Input()
+    public set canBeEdited(value: boolean) {
+        this._canBeEdited = value;
+        if (this.widgetComponentRef) {
+            this.widgetComponentRef.instance.canBeEdited = value;
+        }
     }
 
     @Input()
@@ -43,6 +65,8 @@ export class WidgetContainerComponent {
         this.widgetComponentRef = this.createWidget(config.widgetType);
         if (this.widgetComponentRef) {
             this.widgetComponentRef.instance.config = config;
+            this.widgetComponentRef.instance.canBeDeleted = this._canBeDeleted;
+            this.widgetComponentRef.instance.canBeEdited = this._canBeEdited;
         }
     }
 

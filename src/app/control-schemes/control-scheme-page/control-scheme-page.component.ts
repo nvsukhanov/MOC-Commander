@@ -93,6 +93,8 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
         map((r) => r && r.widgets.length)
     );
 
+    public readonly canDeleteOrEditWidgets$ = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canDeleteOrEditWidgets);
+
     private sub?: Subscription;
 
     private isCapturingInput = false;

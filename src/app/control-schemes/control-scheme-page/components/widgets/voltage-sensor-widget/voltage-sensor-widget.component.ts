@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { JsonPipe, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { WidgetComponent } from '@app/shared';
@@ -20,11 +20,14 @@ import { WidgetConnectionInfoL10nService } from '../widget-connection-info-l10n.
         NgIf,
         WidgetComponent,
         PushPipe,
-        JsonPipe,
         TranslocoPipe
     ]
 })
 export class VoltageSensorWidgetComponent implements IControlSchemeWidgetComponent<VoltageWidgetConfigModel> {
+    @Input() public canBeDeleted = false;
+
+    @Input() public canBeEdited = false;
+
     private _subtitle$: Observable<string> = of('');
 
     private _config?: VoltageWidgetConfigModel;
@@ -32,12 +35,12 @@ export class VoltageSensorWidgetComponent implements IControlSchemeWidgetCompone
     private _voltage$: Observable<number | null> = of(null);
 
     constructor(
-        private readonly cdRef: ChangeDetectorRef,
         @Inject(VOLTAGE_WIDGET_DATA_PROVIDER) private readonly dataProvider: IVoltageWidgetDataProvider,
         private readonly widgetConnectionInfoL10nService: WidgetConnectionInfoL10nService
     ) {
     }
 
+    @Input()
     public set config(
         config: VoltageWidgetConfigModel
     ) {
@@ -47,7 +50,6 @@ export class VoltageSensorWidgetComponent implements IControlSchemeWidgetCompone
                 this._subtitle$ = this.widgetConnectionInfoL10nService.getConnectionInfo(config.widgetType, config.hubId, config.portId);
             }
             this._config = config;
-            this.cdRef.markForCheck();
         }
     }
 

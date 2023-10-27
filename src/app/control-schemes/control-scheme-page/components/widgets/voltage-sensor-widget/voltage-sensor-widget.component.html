@@ -1,5 +1,7 @@
 <app-widget [title]="'controlScheme.widgets.voltage.name' | transloco"
             [subTitle]="subtitle$  | ngrxPush"
+            [canBeEdited]="canBeEdited"
+            [canBeDeleted]="canBeDeleted"
 >
     {{ voltage$ | ngrxPush }}
 </app-widget>

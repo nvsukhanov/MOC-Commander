@@ -238,6 +238,10 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
         ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
         (ios, ioSupportedModesEntities, portModeInfoEntities) => areControllableIosPresent(ios, ioSupportedModesEntities, portModeInfoEntities)
     ),
+    canDeleteOrEditWidgets: createSelector(
+        CONTROL_SCHEME_SELECTORS.selectRunningState,
+        (runningState) => runningState === ControlSchemeRunState.Idle
+    ),
     canExportViewedScheme: createSelector(
         SELECT_CURRENTLY_VIEWED_SCHEME,
         (scheme) => !!scheme && scheme.bindings.length > 0
