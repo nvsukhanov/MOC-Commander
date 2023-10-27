@@ -1,6 +1,6 @@
 import { FunctionalEffect } from '@ngrx/effects';
 
-import { PRE_RUN_SCHEME_EFFECT } from './pre-run-scheme.effect';
+import { PRE_RUN_SCHEME_EFFECT } from './scheme-pre-run';
 import { COMPOSE_TASKS_EFFECT } from './compose-tasks.effect';
 import { STOP_SCHEME_ON_HUB_DISCONNECT_EFFECT } from './stop-scheme-on-hub-disconnect.effect';
 import { STOP_SCHEME_EFFECT } from './stop-scheme.effect';

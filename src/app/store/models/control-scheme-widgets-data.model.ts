@@ -5,6 +5,4 @@ export type ControlSchemeVoltageWidgetDataModel = {
     voltage: number;
 };
 
-export type ControlSchemeWidgetsDataModel = {
-    widgetIndex: number;
-} & ControlSchemeVoltageWidgetDataModel;
+export type ControlSchemeWidgetsDataModel = ControlSchemeVoltageWidgetDataModel;
