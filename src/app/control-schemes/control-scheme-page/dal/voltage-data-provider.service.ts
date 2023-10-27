@@ -1,38 +1,29 @@
 import { Injectable } from '@angular/core';
-import { Observable, filter, interval, map, switchMap } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { TranslocoService } from '@ngneat/transloco';
-import { ATTACHED_IO_SELECTORS, AttachedIoModel } from '@app/store';
+import { CONTROL_SCHEME_WIDGETS_DATA_SELECTORS, WidgetType } from '@app/store';
 
 import { IVoltageWidgetDataProvider } from '../components';
-import { IoTypeToL10nKeyService } from '../../../shared/components/io-type-to-l10n-key';
 
 @Injectable()
 export class VoltageDataProviderService implements IVoltageWidgetDataProvider {
     constructor(
-        private readonly store: Store,
-        private readonly ioTypeToL10nKeyService: IoTypeToL10nKeyService,
-        private readonly translocoService: TranslocoService
+        private readonly store: Store
     ) {
     }
 
     public getVoltage(
-        hubId: string,
-        portId: number
-    ): Observable<number> {
-        return interval(100).pipe(
-            map(() => Math.round(Math.random() * 100))
-        );
-    }
-
-    public getIoNameByHubAndPort(
-        hubId: string,
-        portId: number
-    ): Observable<string> {
-        return this.store.select(ATTACHED_IO_SELECTORS.selectIoAtPort({ hubId, portId })).pipe(
-            filter((io): io is AttachedIoModel => !!io),
-            map((io) => this.ioTypeToL10nKeyService.getL10nKey(io.ioType)),
-            switchMap((l10nKey) => this.translocoService.selectTranslate(l10nKey))
+        widgetId: number
+    ): Observable<number | null> {
+        return this.store.select(CONTROL_SCHEME_WIDGETS_DATA_SELECTORS.selectById(widgetId)).pipe(
+            // I don't want to make widget-specific data selectors, so I have to filter here
+            // eslint-disable-next-line @ngrx/avoid-mapping-selectors
+            map((widgetData) => {
+                if (widgetData?.widgetType === WidgetType.Voltage) {
+                    return widgetData.voltage;
+                }
+                return null;
+            })
         );
     }
 }

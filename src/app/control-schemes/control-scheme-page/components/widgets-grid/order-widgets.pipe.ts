@@ -10,6 +10,6 @@ export class OrderWidgetsPipe implements PipeTransform {
     public transform(
         widgetsWithData: WidgetConfigModel[]
     ): WidgetConfigModel[] {
-        return [ ...widgetsWithData ].sort((a, b) => a.order - b.order);
+        return [ ...widgetsWithData ].sort((a, b) => a.id - b.id);
     }
 }

@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { NgIf } from '@angular/common';
-import { PushPipe } from '@ngrx/component';
+import { LetDirective, PushPipe } from '@ngrx/component';
 import { TranslocoPipe } from '@ngneat/transloco';
+import { MatIconModule } from '@angular/material/icon';
 import { WidgetComponent } from '@app/shared';
 import { VoltageWidgetConfigModel } from '@app/store';
 
@@ -20,7 +21,9 @@ import { WidgetConnectionInfoL10nService } from '../widget-connection-info-l10n.
         NgIf,
         WidgetComponent,
         PushPipe,
-        TranslocoPipe
+        TranslocoPipe,
+        LetDirective,
+        MatIconModule
     ]
 })
 export class VoltageSensorWidgetComponent implements IControlSchemeWidgetComponent<VoltageWidgetConfigModel> {
@@ -50,7 +53,9 @@ export class VoltageSensorWidgetComponent implements IControlSchemeWidgetCompone
     ) {
         if (config !== this._config) {
             if (config.hubId !== this._config?.hubId || config.portId !== this._config?.portId) {
-                this._voltage$ = this.dataProvider.getVoltage(config.hubId, config.portId);
+                this._voltage$ = this.dataProvider.getVoltage(config.id).pipe(
+                    map((voltage) => voltage === null ? null : this.trimVoltage(voltage))
+                );
                 this._subtitle$ = this.widgetConnectionInfoL10nService.getConnectionInfo(config.widgetType, config.hubId, config.portId);
             }
             this._config = config;
@@ -78,5 +83,11 @@ export class VoltageSensorWidgetComponent implements IControlSchemeWidgetCompone
 
     public onDelete(): void {
         this.delete.emit();
+    }
+
+    private trimVoltage(
+        voltage: number
+    ): number {
+        return Math.round(voltage * 100) / 100;
     }
 }

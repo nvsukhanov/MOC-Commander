@@ -211,7 +211,7 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
             filter((scheme): scheme is ControlSchemeModel => scheme !== undefined),
             switchMap((scheme) => this.addWidgetDialogViewModelProvider.getAddWidgetDialogViewModel(scheme.name)),
             take(1),
-            switchMap((data) => this.dialog.open<AddWidgetDialogComponent, AddWidgetDialogViewModel, Omit<WidgetConfigModel, 'order'> | undefined>(
+            switchMap((data) => this.dialog.open<AddWidgetDialogComponent, AddWidgetDialogViewModel, Omit<WidgetConfigModel, 'id'> | undefined>(
                 AddWidgetDialogComponent,
                 { data }
             ).afterClosed().pipe(
@@ -231,7 +231,8 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
             take(1),
             filter((scheme): scheme is ControlSchemeModel => scheme !== undefined)
         ).subscribe((scheme) => {
-            this.store.dispatch(CONTROL_SCHEME_ACTIONS.deleteWidget({ schemeName: scheme.name, widgetIndex }));
+            const widgetId = scheme.widgets[widgetIndex].id;
+            this.store.dispatch(CONTROL_SCHEME_ACTIONS.deleteWidget({ schemeName: scheme.name, widgetId }));
         });
     }
 

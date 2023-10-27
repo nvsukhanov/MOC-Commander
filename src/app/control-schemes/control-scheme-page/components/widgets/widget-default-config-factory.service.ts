@@ -17,7 +17,7 @@ export class WidgetDefaultConfigFactoryService {
                     widgetType: WidgetType.Voltage,
                     hubId,
                     portId,
-                    order: 0,
+                    id: 0,
                     name: 'Voltage',
                     modeId: 0,
                     valueChangeThreshold: 0.05,

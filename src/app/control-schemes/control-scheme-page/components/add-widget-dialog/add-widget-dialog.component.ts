@@ -38,10 +38,10 @@ import { ControlSchemeWidgetSettingsComponentResolverService, WidgetConnectionIn
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddWidgetDialogComponent {
-    public readonly widgetSelectionData: Array<Omit<WidgetConfigModel, 'order'>>;
+    public readonly widgetSelectionData: Array<Omit<WidgetConfigModel, 'id'>>;
 
     public readonly form = this.formBuilder.group({
-        selectionData: this.formBuilder.control<Omit<WidgetConfigModel, 'order'> | null>(null, {
+        selectionData: this.formBuilder.control<Omit<WidgetConfigModel, 'id'> | null>(null, {
             validators: [ Validators.required ]
         })
     });
@@ -54,7 +54,7 @@ export class AddWidgetDialogComponent {
     private readonly _widgetSettingsCanBeSaved: BehaviorSubject<boolean>;
 
     constructor(
-        private readonly dialog: MatDialogRef<AddWidgetDialogComponent, Omit<WidgetConfigModel, 'order'>>,
+        private readonly dialog: MatDialogRef<AddWidgetDialogComponent, Omit<WidgetConfigModel, 'id'>>,
         @Inject(MAT_DIALOG_DATA) private readonly dialogData: AddWidgetDialogViewModel,
         private readonly formBuilder: FormBuilder,
         private readonly cdRef: ChangeDetectorRef
