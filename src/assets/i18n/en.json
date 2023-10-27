@@ -279,9 +279,15 @@
       }
     }
   },
-  "widgets": {
+  "widget": {
     "deleteButtonTitle": "Delete",
-    "editButtonTitle": "Edit"
+    "editButtonTitle": "Edit",
+    "delete": {
+      "title": "Are you sure you want to delete this widget?",
+      "content": "This action cannot be undone",
+      "confirmButtonTitle": "Delete",
+      "cancelButtonTitle": "Cancel"
+    }
   },
   "motorServoEndState": {
     "float": "Float",

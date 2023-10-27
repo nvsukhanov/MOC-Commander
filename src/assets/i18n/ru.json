@@ -279,9 +279,15 @@
       }
     }
   },
-  "widgets": {
+  "widget": {
     "deleteButtonTitle": "Удалить",
-    "editButtonTitle": "Редактировать"
+    "editButtonTitle": "Редактировать",
+    "delete": {
+      "title": "Вы уверены что хотите удалить этот виджет?",
+      "content": "Это действие нельзя отменить",
+      "confirmButtonTitle": "Удалить",
+      "cancelButtonTitle": "Отмена"
+    }
   },
   "motorServoEndState": {
     "float": "Свободное",

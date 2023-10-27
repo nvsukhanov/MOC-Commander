@@ -210,6 +210,7 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
             take(1),
             filter((scheme): scheme is ControlSchemeModel => scheme !== undefined),
             switchMap((scheme) => this.addWidgetDialogViewModelProvider.getAddWidgetDialogViewModel(scheme.name)),
+            take(1),
             switchMap((data) => this.dialog.open<AddWidgetDialogComponent, AddWidgetDialogViewModel, Omit<WidgetConfigModel, 'order'> | undefined>(
                 AddWidgetDialogComponent,
                 { data }
@@ -220,6 +221,17 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
             if (widgetConfig) {
                 this.store.dispatch(CONTROL_SCHEME_ACTIONS.addWidget({ schemeName, widgetConfig }));
             }
+        });
+    }
+
+    public onDeleteWidget(
+        widgetIndex: number
+    ): void {
+        this.selectedScheme$.pipe(
+            take(1),
+            filter((scheme): scheme is ControlSchemeModel => scheme !== undefined)
+        ).subscribe((scheme) => {
+            this.store.dispatch(CONTROL_SCHEME_ACTIONS.deleteWidget({ schemeName: scheme.name, widgetIndex }));
         });
     }
 

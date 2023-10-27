@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
@@ -24,6 +24,10 @@ import { WidgetConnectionInfoL10nService } from '../widget-connection-info-l10n.
     ]
 })
 export class VoltageSensorWidgetComponent implements IControlSchemeWidgetComponent<VoltageWidgetConfigModel> {
+    @Output() public readonly edit = new EventEmitter<void>();
+
+    @Output() public readonly delete = new EventEmitter<void>();
+
     @Input() public canBeDeleted = false;
 
     @Input() public canBeEdited = false;
@@ -66,5 +70,13 @@ export class VoltageSensorWidgetComponent implements IControlSchemeWidgetCompone
 
     public get voltage$(): Observable<number | null> {
         return this._voltage$;
+    }
+
+    public onEdit(): void {
+        this.edit.emit();
+    }
+
+    public onDelete(): void {
+        this.delete.emit();
     }
 }

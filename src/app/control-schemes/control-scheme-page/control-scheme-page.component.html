@@ -2,6 +2,7 @@
     <app-control-scheme-widgets-grid *ngIf="scheme.widgets.length"
                                      [widgetConfigs]="scheme.widgets"
                                      [editable]="!!(canDeleteOrEditWidgets$ | ngrxPush)"
+                                     (deleteWidget)="onDeleteWidget($event)"
     ></app-control-scheme-widgets-grid>
 
     <mat-card>

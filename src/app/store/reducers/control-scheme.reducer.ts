@@ -206,5 +206,19 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
                 }
             }, state);
         }),
+        on(CONTROL_SCHEME_ACTIONS.deleteWidget, (state, { schemeName, widgetIndex }): ControlSchemeState => {
+            const scheme = state.entities[schemeName];
+            if (!scheme) {
+                return state;
+            }
+            const nextWidgets = [ ...scheme.widgets ];
+            nextWidgets.splice(widgetIndex, 1);
+            return CONTROL_SCHEME_ENTITY_ADAPTER.updateOne({
+                id: schemeName,
+                changes: {
+                    widgets: nextWidgets,
+                }
+            }, state);
+        }),
     ),
 });

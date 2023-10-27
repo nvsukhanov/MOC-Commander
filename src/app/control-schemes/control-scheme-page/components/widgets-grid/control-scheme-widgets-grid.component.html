@@ -1,5 +1,7 @@
-<app-widget-container *ngFor="let config of widgetConfigs | orderWidgets"
+<app-widget-container *ngFor="let config of widgetConfigs | orderWidgets; let idx = index"
                       [config]="config"
                       [canBeEdited]="editable"
                       [canBeDeleted]="editable"
+                      (edit)="onEditWidget(idx)"
+                      (delete)="onDeleteWidget(idx)"
 ></app-widget-container>

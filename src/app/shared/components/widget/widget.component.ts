@@ -5,9 +5,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { PushPipe } from '@ngrx/component';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 
 import { EllipsisTitleDirective } from '../ellipsis-title.directive';
+import { ConfirmationDialogModule, ConfirmationDialogService } from '../confirmation-dialog';
 
 @Component({
     standalone: true,
@@ -23,7 +24,8 @@ import { EllipsisTitleDirective } from '../ellipsis-title.directive';
         PushPipe,
         NgTemplateOutlet,
         EllipsisTitleDirective,
-        TranslocoPipe
+        TranslocoPipe,
+        ConfirmationDialogModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -40,8 +42,25 @@ export class WidgetComponent {
 
     @Output() public readonly edit = new EventEmitter<void>();
 
+    constructor(
+        private readonly confirmationService: ConfirmationDialogService,
+        private readonly translocoService: TranslocoService
+    ) {
+    }
+
     public onDelete(): void {
-        this.delete.emit();
+        this.confirmationService.confirm(
+            this.translocoService.selectTranslate('widget.delete.title'),
+            {
+                content$: this.translocoService.selectTranslate('widget.delete.content'),
+                confirmTitle$: this.translocoService.selectTranslate('widget.delete.confirmButtonTitle'),
+                cancelTitle$: this.translocoService.selectTranslate('widget.delete.cancelButtonTitle')
+            }
+        ).subscribe((result) => {
+            if (result) {
+                this.delete.emit();
+            }
+        });
     }
 
     public onEdit(): void {
