@@ -16,6 +16,8 @@ import {
     HUB_STATS_SELECTORS,
     HubModel,
     ROUTER_SELECTORS,
+    WidgetConfigModel,
+    WidgetType,
     attachedIoModesIdFn,
     attachedIoPortModeInfoIdFn,
     attachedIosIdFn,
@@ -29,6 +31,27 @@ import {
     ControlSchemeViewIoTreeNode,
     SchemeRunBlocker
 } from '../types';
+import { ioHasMatchingModeForWidget } from '../components';
+
+function widgetHasIoAttached(
+    widgetConfig: WidgetConfigModel,
+    attachedIos: Dictionary<AttachedIoModel>
+): boolean {
+    switch (widgetConfig.widgetType) {
+        case WidgetType.Voltage:
+            return !!attachedIos[attachedIosIdFn(widgetConfig)];
+    }
+}
+
+function getWidgetIoPortInputModes(
+    widgetConfig: WidgetConfigModel,
+    ioInputModes: Record<string, PortModeName[]>
+): PortModeName[] {
+    switch (widgetConfig.widgetType) {
+        case WidgetType.Voltage:
+            return ioInputModes[attachedIosIdFn(widgetConfig)] ?? [];
+    }
+}
 
 function createHubTreeNode(
     hubConfig: { hubId: string; name?: string; hubType?: HubType },
@@ -86,20 +109,25 @@ const SELECT_CURRENTLY_VIEWED_SCHEME = createSelector(
     (schemeName, schemes) => schemeName === null ? undefined : schemes[schemeName]
 );
 
-const SELECT_IO_OUTPUT_MODES = createSelector(
+const SELECT_IO_MODES = createSelector(
     ATTACHED_IO_SELECTORS.selectAll,
     ATTACHED_IO_MODES_SELECTORS.selectEntities,
     ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
-    (ios, ioSupportedModesEntities, portModeInfoEntities): Record<string, PortModeName[]> => {
-        const result: Record<string, PortModeName[]> = {};
+    (ios, ioSupportedModesEntities, portModeInfoEntities): { input: Record<string, PortModeName[]>; output: Record<string, PortModeName[]> } => {
+        const input: Record<string, PortModeName[]> = {};
+        const output: Record<string, PortModeName[]> = {};
         for (const io of ios) {
             const ioId = attachedIosIdFn(io);
-            result[ioId] = (ioSupportedModesEntities[attachedIoModesIdFn(io)]?.portOutputModes ?? []).map((modeId) => {
+            output[ioId] = (ioSupportedModesEntities[attachedIoModesIdFn(io)]?.portOutputModes ?? []).map((modeId) => {
+                const portModeInfo = portModeInfoEntities[attachedIoPortModeInfoIdFn({ ...io, modeId })];
+                return portModeInfo?.name ?? null;
+            }).filter((name): name is PortModeName => !!name);
+            input[ioId] = (ioSupportedModesEntities[attachedIoModesIdFn(io)]?.portInputModes ?? []).map((modeId) => {
                 const portModeInfo = portModeInfoEntities[attachedIoPortModeInfoIdFn({ ...io, modeId })];
                 return portModeInfo?.name ?? null;
             }).filter((name): name is PortModeName => !!name);
         }
-        return result;
+        return { input, output };
     }
 );
 
@@ -107,14 +135,14 @@ const SELECT_SCHEME_RUN_BLOCKERS = createSelector(
     SELECT_CURRENTLY_VIEWED_SCHEME,
     CONTROL_SCHEME_SELECTORS.selectRunningState,
     HUB_STATS_SELECTORS.selectIds,
-    SELECT_IO_OUTPUT_MODES,
+    SELECT_IO_MODES,
     CONTROLLER_CONNECTION_SELECTORS.selectEntities,
     ATTACHED_IO_SELECTORS.selectEntities,
     (
         scheme: ControlSchemeModel | undefined,
         runningState: ControlSchemeRunState,
         connectedHubIds: string[],
-        ioOutputModes: Record<string, PortModeName[]>,
+        ioModes: { input: Record<string, PortModeName[]>; output: Record<string, PortModeName[]> },
         controllerConnections: Dictionary<ControllerConnectionModel>,
         attachedIos: Dictionary<AttachedIoModel>
     ): SchemeRunBlocker[] => {
@@ -138,8 +166,18 @@ const SELECT_SCHEME_RUN_BLOCKERS = createSelector(
             result.add(SchemeRunBlocker.SomeIosAreNotConnected);
         }
 
+        if (scheme.widgets.some((w) => !widgetHasIoAttached(w, attachedIos))) {
+            result.add(SchemeRunBlocker.SomeIosAreNotConnected);
+        }
+
         if (scheme.bindings.filter((b) => !!attachedIos[attachedIosIdFn(b)])
-                  .some((b) => !ioHasMatchingModeForOpMode(b.bindingType, ioOutputModes[attachedIosIdFn(b)] ?? []))
+                  .some((b) => !ioHasMatchingModeForOpMode(b.bindingType, ioModes.output[attachedIosIdFn(b)] ?? []))
+        ) {
+            result.add(SchemeRunBlocker.SomeIosHaveNoRequiredCapabilities);
+        }
+
+        if (scheme.widgets.filter((w) => widgetHasIoAttached(w, attachedIos))
+                  .some((widgetConfig) => !ioHasMatchingModeForWidget(widgetConfig.widgetType, getWidgetIoPortInputModes(widgetConfig, ioModes.input)))
         ) {
             result.add(SchemeRunBlocker.SomeIosHaveNoRequiredCapabilities);
         }
@@ -153,17 +191,17 @@ const SELECT_SCHEME_RUN_BLOCKERS = createSelector(
 
 export const CONTROL_SCHEME_PAGE_SELECTORS = {
     selectCurrentlyViewedScheme: SELECT_CURRENTLY_VIEWED_SCHEME,
-    selectIoOutputModes: SELECT_IO_OUTPUT_MODES,
+    selectIoOutputModes: SELECT_IO_MODES,
     schemeViewTree: createSelector(
         SELECT_CURRENTLY_VIEWED_SCHEME,
         HUBS_SELECTORS.selectEntities,
         ATTACHED_IO_SELECTORS.selectEntities,
-        SELECT_IO_OUTPUT_MODES,
+        SELECT_IO_MODES,
         (
             scheme: ControlSchemeModel | undefined,
             hubEntities: Dictionary<HubModel>,
             iosEntities: Dictionary<AttachedIoModel>,
-            ioOutputModes: Record<string, PortModeName[]>
+            ioModes: { input: Record<string, PortModeName[]>; output: Record<string, PortModeName[]> }
         ): ControlSchemeViewHubTreeNode[] => {
             if (!scheme) {
                 return [];
@@ -208,7 +246,7 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
                     ioViewModel.path,
                     binding,
                     scheme.name,
-                    ioOutputModes[ioId] ?? [],
+                    ioModes.output[ioId] ?? [],
                     io
                 );
 

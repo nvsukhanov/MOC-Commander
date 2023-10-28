@@ -13,17 +13,13 @@ import {
     attachedIosIdFn
 } from '@app/store';
 
-import { AddWidgetDialogViewModel, WidgetDefaultConfigFactoryService } from '../components';
+import { AddWidgetDialogViewModel, WidgetDefaultConfigFactoryService, ioHasMatchingModeForWidget } from '../components';
 
 @Injectable()
 export class AddWidgetDialogViewModelProvider {
     private readonly availableWidgetTypes: WidgetType[] = [
         WidgetType.Voltage
     ];
-
-    private readonly ioHasMatchingModeForWidgetType: { [k in WidgetType]: (modes: PortModeName[]) => boolean } = {
-        [WidgetType.Voltage]: (modes) => modes.some((mode) => mode === PortModeName.voltageL || mode === PortModeName.voltageS)
-    };
 
     constructor(
         private readonly store: Store,
@@ -67,7 +63,7 @@ export class AddWidgetDialogViewModelProvider {
                     return portModesInfo[attachedIoPortModeInfoIdFn({ ...io, modeId })]?.name;
                 }).filter((mode): mode is PortModeName => !!mode);
                 const availableIoWidgetTypes = this.availableWidgetTypes.filter((widgetType) => {
-                    return this.ioHasMatchingModeForWidgetType[widgetType](portInputModes);
+                    return ioHasMatchingModeForWidget(widgetType, portInputModes);
                 });
                 for (const widgetType of availableIoWidgetTypes) {
                     const defaultConfig = this.widgetDefaultConfigFactory.createDefaultConfig(widgetType, io.hubId, io.portId);
