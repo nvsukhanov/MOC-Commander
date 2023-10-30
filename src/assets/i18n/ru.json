@@ -273,10 +273,19 @@
         "saveButton": "Сохранить",
         "cancelButton": "Отмена"
       },
+      "editWidgetSettingsDialog": {
+        "title": "Редактирование настроек виджета",
+        "deleteButton": "Удалить",
+        "saveButton": "Сохранить",
+        "cancelButton": "Отмена"
+      },
+      "nameField": "Название виджета",
       "voltage": {
         "name": "Напряжение",
+        "defaultName": "Напряжение",
         "connectionInfo": "{hubName}:{portName} - {ioName}",
-        "value": "{voltage}В"
+        "value": "{voltage}В",
+        "valueChangeThresholdTitle": "Порог изменения значения (вольт)"
       }
     }
   },

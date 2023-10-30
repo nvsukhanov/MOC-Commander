@@ -11,3 +11,4 @@ export * from './widgets';
 export * from './widgets-grid';
 export * from './widget-container';
 export * from './widget-settings-container';
+export * from './edit-widget-settings-dialog';

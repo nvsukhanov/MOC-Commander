@@ -218,5 +218,23 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
                 }
             }, state);
         }),
+        on(CONTROL_SCHEME_ACTIONS.updateWidget, (state, { schemeName, widgetConfig }): ControlSchemeState => {
+            const scheme = state.entities[schemeName];
+            if (!scheme) {
+                return state;
+            }
+            const widgetIndex = scheme.widgets.findIndex((w) => w.id === widgetConfig.id);
+            if (widgetIndex === -1) {
+                return state;
+            }
+            const nextWidgets = [ ...scheme.widgets ];
+            nextWidgets[widgetIndex] = widgetConfig;
+            return CONTROL_SCHEME_ENTITY_ADAPTER.updateOne({
+                id: schemeName,
+                changes: {
+                    widgets: nextWidgets,
+                }
+            }, state);
+        }),
     ),
 });

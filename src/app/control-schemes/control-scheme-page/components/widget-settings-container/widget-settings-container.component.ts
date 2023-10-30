@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ComponentRef, Inject, Input, OnDestroy, Output, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ComponentRef, EventEmitter, Inject, Input, OnDestroy, Output, ViewContainerRef } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { WidgetConfigModel } from '@app/store';
 import { DeepPartial } from '@app/shared';
@@ -15,6 +15,8 @@ import { CONTROL_SCHEME_WIDGET_SETTINGS_RESOLVER, IControlSchemeWidgetSettingsCo
     exportAs: 'widgetSettingsContainer'
 })
 export class WidgetSettingsContainerComponent implements OnDestroy {
+    @Output() public save = new EventEmitter<WidgetConfigModel>();
+
     private widgetSettingsComponentRef?: ComponentRef<IControlSchemeWidgetSettingsComponent<WidgetConfigModel>>;
 
     private widgetSettingsSaveSubscription?: Subscription;
@@ -57,9 +59,18 @@ export class WidgetSettingsContainerComponent implements OnDestroy {
         }
         const result = this.viewContainerRef.createComponent(componentType);
         result.instance.useConfig(widgetConfigModel);
-        result.instance.canSave$.subscribe((v) => {
+
+        this.widgetSettingsSaveSubscription = result.instance.canSave$.subscribe((v) => {
             this._canSave.next(v);
         });
+
+        // There are two events that can trigger a save:
+        // 1. The user clicks the save button
+        // 2. The user submits the form (e.g. by pressing enter)
+        // Here we handle the second case.
+        this.widgetSettingsSaveSubscription.add(
+            result.instance.save.subscribe((config) => this.save.emit(config)
+            ));
         return result;
     }
 

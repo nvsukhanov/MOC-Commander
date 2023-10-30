@@ -1,4 +1,4 @@
-<app-widget [title]="'controlScheme.widgets.voltage.name' | transloco"
+<app-widget [title]="title"
             [subTitle]="subtitle$  | ngrxPush"
             [canBeEdited]="canBeEdited"
             [canBeDeleted]="canBeDeleted"
@@ -7,7 +7,7 @@
 >
     <ng-container *ngrxLet="voltage$; let voltage">
         <ng-container *ngIf="voltage !== null; else noData">
-            {{ 'controlScheme.widgets.voltage.value' | transloco: { voltage } }}
+            {{ 'controlScheme.widgets.voltage.value' | transloco: { voltage: (voltage | number: '1.2-2') } }}
         </ng-container>
         <ng-template #noData>
             <mat-icon [fontIcon]="'question_mark'"></mat-icon>
