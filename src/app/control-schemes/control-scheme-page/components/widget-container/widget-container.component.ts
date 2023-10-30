@@ -32,7 +32,7 @@ export class WidgetContainerComponent implements OnDestroy {
     private widgetActionsSubscription?: Subscription;
 
     constructor(
-        @Inject(CONTROL_SCHEME_WIDGET_COMPONENT_RESOLVER) private readonly widgetsResolver: IControlSchemeWidgetComponentResolver
+        @Inject(CONTROL_SCHEME_WIDGET_COMPONENT_RESOLVER) private readonly widgetsResolver: IControlSchemeWidgetComponentResolver,
     ) {
     }
 
@@ -60,7 +60,7 @@ export class WidgetContainerComponent implements OnDestroy {
     ) {
         if (this.widgetComponentRef?.instance.config.widgetType === config.widgetType) {
             if (this.widgetComponentRef.instance.config !== config) {
-                this.widgetComponentRef.instance.config = config;
+                this.widgetComponentRef.setInput('config', config);
             }
             return;
         }

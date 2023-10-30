@@ -24,6 +24,7 @@ import { ControlSchemeViewTreeNode, SchemeRunBlocker } from './types';
 import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData, } from '../common';
 import {
     AddWidgetDialogComponent,
+    AddWidgetDialogViewModel,
     CONTROL_SCHEME_WIDGET_COMPONENT_RESOLVER,
     ControlSchemeGeneralInfoComponent,
     ControlSchemePageCompactToolbarComponent,
@@ -31,11 +32,11 @@ import {
     ControlSchemeViewIoListComponent,
     ControlSchemeWidgetComponentResolverService,
     ControlSchemeWidgetsGridComponent,
+    EditWidgetSettingsDialogComponent,
     VOLTAGE_WIDGET_DATA_PROVIDER
 } from './components';
 import { ControlSchemeRunBlockersL10nPipe } from './control-scheme-run-blockers-l10n.pipe';
 import { AddWidgetDialogViewModelProvider } from './dal/add-widget-dialog-view-model-provider.service';
-import { AddWidgetDialogViewModel } from './components/add-widget-dialog/add-widget-dialog-view-model';
 
 @Component({
     standalone: true,
@@ -220,6 +221,25 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
         ).subscribe(({ schemeName, widgetConfig }) => {
             if (widgetConfig) {
                 this.store.dispatch(CONTROL_SCHEME_ACTIONS.addWidget({ schemeName, widgetConfig }));
+            }
+        });
+    }
+
+    public onEditWidget(
+        widgetIndex: number
+    ): void {
+        this.selectedScheme$.pipe(
+            take(1),
+            filter((scheme): scheme is ControlSchemeModel => scheme !== undefined),
+            switchMap((data) => this.dialog.open<EditWidgetSettingsDialogComponent, WidgetConfigModel, WidgetConfigModel | undefined>(
+                EditWidgetSettingsDialogComponent,
+                { data: data.widgets[widgetIndex] }
+            ).afterClosed().pipe(
+                map((widgetConfig) => ({ schemeName: data.name, widgetConfig }))
+            ))
+        ).subscribe(({ schemeName, widgetConfig }) => {
+            if (widgetConfig) {
+                this.store.dispatch(CONTROL_SCHEME_ACTIONS.updateWidget({ schemeName, widgetConfig }));
             }
         });
     }

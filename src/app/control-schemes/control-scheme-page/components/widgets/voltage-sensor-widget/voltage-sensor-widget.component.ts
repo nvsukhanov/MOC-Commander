@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { Observable, map, of } from 'rxjs';
-import { NgIf } from '@angular/common';
+import { Observable, of } from 'rxjs';
+import { DecimalPipe, NgIf } from '@angular/common';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,7 +23,8 @@ import { WidgetConnectionInfoL10nService } from '../widget-connection-info-l10n.
         PushPipe,
         TranslocoPipe,
         LetDirective,
-        MatIconModule
+        MatIconModule,
+        DecimalPipe
     ]
 })
 export class VoltageSensorWidgetComponent implements IControlSchemeWidgetComponent<VoltageWidgetConfigModel> {
@@ -53,9 +54,7 @@ export class VoltageSensorWidgetComponent implements IControlSchemeWidgetCompone
     ) {
         if (config !== this._config) {
             if (config.hubId !== this._config?.hubId || config.portId !== this._config?.portId) {
-                this._voltage$ = this.dataProvider.getVoltage(config.id).pipe(
-                    map((voltage) => voltage === null ? null : this.trimVoltage(voltage))
-                );
+                this._voltage$ = this.dataProvider.getVoltage(config.id);
                 this._subtitle$ = this.widgetConnectionInfoL10nService.getConnectionInfo(config.widgetType, config.hubId, config.portId);
             }
             this._config = config;
@@ -67,6 +66,13 @@ export class VoltageSensorWidgetComponent implements IControlSchemeWidgetCompone
             throw new Error('Config is not defined');
         }
         return this._config;
+    }
+
+    public get title(): string {
+        if (this._config) {
+            return this._config.name;
+        }
+        return '';
     }
 
     public get subtitle$(): Observable<string> {
@@ -83,11 +89,5 @@ export class VoltageSensorWidgetComponent implements IControlSchemeWidgetCompone
 
     public onDelete(): void {
         this.delete.emit();
-    }
-
-    private trimVoltage(
-        voltage: number
-    ): number {
-        return Math.round(voltage * 100) / 100;
     }
 }

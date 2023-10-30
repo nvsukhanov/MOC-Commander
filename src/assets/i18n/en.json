@@ -273,10 +273,19 @@
         "saveButton": "Save",
         "cancelButton": "Cancel"
       },
+      "editWidgetSettingsDialog": {
+        "title": "Edit widget settings",
+        "deleteButton": "Delete",
+        "saveButton": "Save",
+        "cancelButton": "Cancel"
+      },
+      "nameField": "Widget name",
       "voltage": {
         "name": "Voltage",
+        "defaultName": "Voltage",
         "connectionInfo": "{hubName}:{portName} - {ioName}",
-        "value": "{voltage}V"
+        "value": "{voltage}V",
+        "valueChangeThresholdTitle": "Value change threshold (volts)"
       }
     }
   },

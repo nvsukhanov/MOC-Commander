@@ -3,6 +3,7 @@
                                      [widgetConfigs]="scheme.widgets"
                                      [editable]="!!(canDeleteOrEditWidgets$ | ngrxPush)"
                                      (deleteWidget)="onDeleteWidget($event)"
+                                     (editWidget)="onEditWidget($event)"
     ></app-control-scheme-widgets-grid>
 
     <mat-card>

@@ -7,7 +7,7 @@ export class WidgetDefaultConfigFactoryService {
         widgetType: WidgetType,
         hubId?: string,
         portId?: number
-    ): WidgetConfigModel {
+    ): Omit<WidgetConfigModel, 'id' | 'name'> {
         switch (widgetType) {
             case WidgetType.Voltage:
                 if (!hubId || !portId) {
@@ -17,8 +17,6 @@ export class WidgetDefaultConfigFactoryService {
                     widgetType: WidgetType.Voltage,
                     hubId,
                     portId,
-                    id: 0,
-                    name: 'Voltage',
                     modeId: 0,
                     valueChangeThreshold: 0.05,
                 };

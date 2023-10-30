@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>
+    {{ 'controlScheme.widgets.editWidgetSettingsDialog.title' | transloco }}
+</h1>
+
+<div mat-dialog-content
+     class="dialog-content"
+>
+    <app-widget-settings-container [initialConfig]="config"
+                                   (canSave)="onCanSaveUpdate($event)"
+                                   (save)="onFormSubmit($event)"
+    ></app-widget-settings-container>
+</div>
+
+<div mat-dialog-actions
+     [align]="'end'"
+>
+    <button mat-raised-button
+            [color]="'primary'"
+            [disabled]="!(canSave$ | ngrxPush)"
+            (click)="onSaveClick()"
+    >
+        {{ 'controlScheme.widgets.editWidgetSettingsDialog.saveButton' | transloco }}
+    </button>
+    <button mat-button
+            (click)="onCancel()"
+    >
+        {{ 'controlScheme.widgets.editWidgetSettingsDialog.cancelButton' | transloco }}
+    </button>
+</div>

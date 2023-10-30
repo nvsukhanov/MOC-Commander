@@ -17,6 +17,7 @@
             <mat-menu #widgetMenu="matMenu">
                 <button [disabled]="!canBeEdited"
                         mat-menu-item
+                        (click)="onEdit()"
                 >
                     <mat-icon [fontIcon]="'edit'"></mat-icon>
                     <span>{{ 'widget.editButtonTitle' | transloco }}</span>
