@@ -35,7 +35,7 @@ export class WidgetDefaultConfigFactoryService {
                     hubId,
                     portId,
                     modeId: 0,
-                    valueChangeThreshold: 1,
+                    valueChangeThreshold: 5,
                     width: 2,
                     height: 2,
                     invertYaw: false,

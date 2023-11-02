@@ -5,10 +5,10 @@
             (delete)="onDelete()"
 >
     <div class="tilt-content"
-         *ngrxLet="tiltData$; let tilt"
+         *ngrxLet="tiltData$ as tilt"
     >
-        <app-yaw-indicator [yaw]="tilt?.yaw"></app-yaw-indicator>
-        <app-pitch-indicator [pitch]="tilt?.pitch"></app-pitch-indicator>
-        <app-roll-indicator [roll]="tilt?.roll"></app-roll-indicator>
+        <app-yaw-indicator [yaw]="tilt?.yaw ?? undefined"></app-yaw-indicator>
+        <app-pitch-indicator [pitch]="tilt?.pitch ?? undefined"></app-pitch-indicator>
+        <app-roll-indicator [roll]="tilt?.roll ?? undefined"></app-roll-indicator>
     </div>
 </app-widget>

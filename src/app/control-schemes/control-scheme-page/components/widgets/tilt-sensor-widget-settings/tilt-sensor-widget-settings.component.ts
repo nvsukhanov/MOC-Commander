@@ -38,8 +38,8 @@ export class TiltSensorWidgetSettingsComponent implements IControlSchemeWidgetSe
         valueChangeThreshold: this.formBuilder.control<number>(5, {
             validators: [
                 Validators.required,
-                Validators.min(0.01),
-                Validators.max(100)
+                Validators.min(5),
+                Validators.max(30)
             ],
             nonNullable: true
         }),
