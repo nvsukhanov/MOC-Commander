@@ -13,10 +13,6 @@
        class="brackets"
     ></g>
 
-    <g [appTiltGaugeTicks]="ticks"
-       [viewBox]="nestedViewBox"
-    ></g>
-
     <g *ngIf="iconTemplate && tiltDegrees !== undefined"
        [attr.transform]="iconTransform"
     >
