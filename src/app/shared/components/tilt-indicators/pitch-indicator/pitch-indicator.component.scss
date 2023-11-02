@@ -4,3 +4,17 @@
     position: relative;
     overflow: hidden;
 }
+
+.pitch-icon {
+    fill: none;
+    stroke: var(--app-text-color);
+    stroke-linecap: round;
+
+    &__outline {
+        stroke-width: 2;
+    }
+
+    &__inline {
+        stroke-width: 1;
+    }
+}

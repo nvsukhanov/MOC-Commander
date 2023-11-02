@@ -4,3 +4,10 @@
     position: relative;
     overflow: hidden;
 }
+
+.roll-icon {
+    fill: none;
+    stroke: var(--app-text-color);
+    stroke-linecap: round;
+    stroke-width: 2;
+}
