@@ -34,6 +34,12 @@ export class AddWidgetDialogViewModelProvider {
         return this.store.select(this.selectAvailableWidgets(controlSchemeName));
     }
 
+    public canAddWidgets(
+        controlSchemeName: string
+    ): Observable<boolean> {
+        return this.store.select(this.selectCanAddWidgets(controlSchemeName));
+    }
+
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     private readonly selectAvailableWidgets = (controlSchemeName: string) => createSelector(
         CONTROL_SCHEME_SELECTORS.selectScheme(controlSchemeName),
@@ -72,6 +78,14 @@ export class AddWidgetDialogViewModelProvider {
                 }
             }
             return result;
+        }
+    );
+
+    private readonly selectCanAddWidgets = (controlSchemeName: string) => createSelector(
+        this.selectAvailableWidgets(controlSchemeName),
+        CONTROL_SCHEME_SELECTORS.selectIsAnySchemeRunning,
+        (availableWidgets, isAnySchemeRunning): boolean => {
+            return !isAnySchemeRunning && availableWidgets.widgets.length > 0;
         }
     );
 }

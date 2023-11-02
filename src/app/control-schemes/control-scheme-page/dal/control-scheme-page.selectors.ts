@@ -276,7 +276,10 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
         ATTACHED_IO_SELECTORS.selectAll,
         ATTACHED_IO_MODES_SELECTORS.selectEntities,
         ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
-        (ios, ioSupportedModesEntities, portModeInfoEntities) => areControllableIosPresent(ios, ioSupportedModesEntities, portModeInfoEntities)
+        CONTROL_SCHEME_SELECTORS.selectIsAnySchemeRunning,
+        (ios, ioSupportedModesEntities, portModeInfoEntities, isAnySchemeRunning) => {
+            return !isAnySchemeRunning && areControllableIosPresent(ios, ioSupportedModesEntities, portModeInfoEntities);
+        }
     ),
     canDeleteOrEditWidgets: createSelector(
         CONTROL_SCHEME_SELECTORS.selectRunningState,

@@ -91,8 +91,7 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
     public readonly isSmallScreen$: Observable<boolean> = this.screenSizeObserverService.isSmallScreen$;
 
     public readonly canAddWidgets$ = this.selectedScheme$.pipe(
-        switchMap((scheme) => scheme ? this.addWidgetDialogViewModelProvider.getAddWidgetDialogViewModel(scheme.name) : of(null)),
-        map((r) => r && r.widgets.length)
+        switchMap((scheme) => scheme ? this.addWidgetDialogViewModelProvider.canAddWidgets(scheme.name) : of(false))
     );
 
     public readonly canDeleteOrEditWidgets$ = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canDeleteOrEditWidgets);
