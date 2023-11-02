@@ -286,6 +286,12 @@
         "connectionInfo": "{hubName}:{portName} - {ioName}",
         "value": "{voltage}V",
         "valueChangeThresholdTitle": "Value change threshold (volts)"
+      },
+      "tilt": {
+        "name": "Tilt",
+        "defaultName": "Tilt",
+        "connectionInfo": "{hubName}:{portName} - {ioName}",
+        "valueChangeThresholdTitle": "Value change threshold (°)"
       }
     }
   },

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     class="content"
+     preserveAspectRatio="xMidYMid meet"
+     [attr.viewBox]="viewBox"
+>
+    <g [appTiltGaugeSectors]="sectors"
+       [viewBox]="nestedViewBox"
+       [tiltDegrees]="tiltDegrees"
+    ></g>
+
+    <g [appTiltGaugeSectors]="brackets"
+       [viewBox]="nestedViewBox"
+       class="brackets"
+    ></g>
+
+    <g [appTiltGaugeTicks]="ticks"
+       [viewBox]="nestedViewBox"
+    ></g>
+
+    <g *ngIf="iconTemplate"
+       [attr.transform]="iconTransform"
+    >
+        <ng-container [ngTemplateOutlet]="iconTemplate"></ng-container>
+    </g>
+</svg>

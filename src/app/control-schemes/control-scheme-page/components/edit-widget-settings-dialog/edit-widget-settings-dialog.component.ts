@@ -8,6 +8,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ReactiveFormsModule } from '@angular/forms';
 import { WidgetConfigModel } from '@app/store';
 
 import { ControlSchemeWidgetSettingsComponentResolverService, WidgetConnectionInfoL10nPipe } from '../widgets';
@@ -31,7 +32,8 @@ import { WidgetTypeToL10nKeyPipe } from '../../../common';
         TranslocoPipe,
         WidgetConnectionInfoL10nPipe,
         WidgetSettingsContainerComponent,
-        WidgetTypeToL10nKeyPipe
+        WidgetTypeToL10nKeyPipe,
+        ReactiveFormsModule
     ],
     providers: [
         { provide: CONTROL_SCHEME_WIDGET_SETTINGS_RESOLVER, useClass: ControlSchemeWidgetSettingsComponentResolverService },
@@ -44,34 +46,36 @@ export class EditWidgetSettingsDialogComponent {
 
     private _canSave$ = new BehaviorSubject<boolean>(false);
 
+    private _config?: WidgetConfigModel;
+
     constructor(
         private readonly dialog: MatDialogRef<EditWidgetSettingsDialogComponent, WidgetConfigModel>,
         @Inject(MAT_DIALOG_DATA) public readonly config: WidgetConfigModel
     ) {
+        this._config = { ...config };
     }
 
     public get canSave$(): Observable<boolean> {
         return this._canSave$;
     }
 
-    public onCanSaveUpdate(
+    public onConfigChanges(
+        config: WidgetConfigModel
+    ): void {
+        this._config = config;
+    }
+
+    public onCanSaveChanges(
         canSave: boolean
     ): void {
         this._canSave$.next(canSave);
     }
 
     public onFormSubmit(
-        config: WidgetConfigModel
+        event: Event
     ): void {
-        this.dialog.close(config);
-    }
-
-    public onSaveClick(): void {
-        const config = this.widgetSettingsContainer?.getConfig();
-        if (!config) {
-            throw new Error('Widget settings are not valid');
-        }
-        this.dialog.close(config);
+        event.preventDefault();
+        this.dialog.close(this._config);
     }
 
     public onCancel(): void {

@@ -1,0 +1,14 @@
+<app-widget [title]="title"
+            [canBeEdited]="canBeEdited"
+            [canBeDeleted]="canBeDeleted"
+            (edit)="onEdit()"
+            (delete)="onDelete()"
+>
+    <div class="tilt-content"
+         *ngrxLet="tiltData$; let tilt"
+    >
+        <app-yaw-indicator [yaw]="tilt?.yaw"></app-yaw-indicator>
+        <app-pitch-indicator [pitch]="tilt?.pitch"></app-pitch-indicator>
+        <app-roll-indicator [roll]="tilt?.roll"></app-roll-indicator>
+    </div>
+</app-widget>

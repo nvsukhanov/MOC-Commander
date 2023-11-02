@@ -1,0 +1,9 @@
+:host {
+    display: block;
+    width: max(280px, 50vw);
+}
+
+.dialog-content {
+    display: flex;
+    flex-direction: column;
+}

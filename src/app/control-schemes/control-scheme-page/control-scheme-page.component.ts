@@ -19,7 +19,7 @@ import {
     TitleService,
 } from '@app/shared';
 
-import { CONTROL_SCHEME_PAGE_SELECTORS, VoltageDataProviderService } from './dal';
+import { AddWidgetDialogViewModelProvider, CONTROL_SCHEME_PAGE_SELECTORS, TiltDataProviderService, VoltageDataProviderService } from './dal';
 import { ControlSchemeViewTreeNode, SchemeRunBlocker } from './types';
 import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData, } from '../common';
 import {
@@ -33,10 +33,10 @@ import {
     ControlSchemeWidgetComponentResolverService,
     ControlSchemeWidgetsGridComponent,
     EditWidgetSettingsDialogComponent,
-    VOLTAGE_WIDGET_DATA_PROVIDER
+    TILT_SENSOR_WIDGET_DATA_PROVIDER,
+    VOLTAGE_SENSOR_WIDGET_DATA_PROVIDER
 } from './components';
 import { ControlSchemeRunBlockersL10nPipe } from './control-scheme-run-blockers-l10n.pipe';
-import { AddWidgetDialogViewModelProvider } from './dal/add-widget-dialog-view-model-provider.service';
 
 @Component({
     standalone: true,
@@ -65,7 +65,8 @@ import { AddWidgetDialogViewModelProvider } from './dal/add-widget-dialog-view-m
     providers: [
         TitleService,
         { provide: CONTROL_SCHEME_WIDGET_COMPONENT_RESOLVER, useClass: ControlSchemeWidgetComponentResolverService },
-        { provide: VOLTAGE_WIDGET_DATA_PROVIDER, useClass: VoltageDataProviderService },
+        { provide: VOLTAGE_SENSOR_WIDGET_DATA_PROVIDER, useClass: VoltageDataProviderService },
+        { provide: TILT_SENSOR_WIDGET_DATA_PROVIDER, useClass: TiltDataProviderService },
         AddWidgetDialogViewModelProvider
     ],
     changeDetection: ChangeDetectionStrategy.OnPush

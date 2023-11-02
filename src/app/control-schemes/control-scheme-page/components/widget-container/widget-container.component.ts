@@ -1,4 +1,16 @@
-import { ChangeDetectionStrategy, Component, ComponentRef, EventEmitter, Inject, Input, OnDestroy, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    ComponentRef,
+    EventEmitter,
+    HostBinding,
+    Inject,
+    Input,
+    OnDestroy,
+    Output,
+    ViewChild,
+    ViewContainerRef
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { WidgetConfigModel, WidgetType } from '@app/store';
 
@@ -31,9 +43,23 @@ export class WidgetContainerComponent implements OnDestroy {
 
     private widgetActionsSubscription?: Subscription;
 
+    private colSpan = 'span 1';
+
+    private rowSpan = 'span 1';
+
     constructor(
         @Inject(CONTROL_SCHEME_WIDGET_COMPONENT_RESOLVER) private readonly widgetsResolver: IControlSchemeWidgetComponentResolver,
     ) {
+    }
+
+    @HostBinding('style.grid-column')
+    public get gridColumn(): string {
+        return this.colSpan;
+    }
+
+    @HostBinding('style.grid-row')
+    public get gridRow(): string {
+        return this.rowSpan;
     }
 
     @Input()
@@ -58,6 +84,7 @@ export class WidgetContainerComponent implements OnDestroy {
     public set config(
         config: WidgetConfigModel
     ) {
+        this.updateSpans(config);
         if (this.widgetComponentRef?.instance.config.widgetType === config.widgetType) {
             if (this.widgetComponentRef.instance.config !== config) {
                 this.widgetComponentRef.setInput('config', config);
@@ -106,5 +133,12 @@ export class WidgetContainerComponent implements OnDestroy {
             this.widgetActionsSubscription?.unsubscribe();
             this.widgetActionsSubscription = undefined;
         }
+    }
+
+    private updateSpans(
+        config: WidgetConfigModel
+    ): void {
+        this.colSpan = `span ${config.width}`;
+        this.rowSpan = `span ${config.height}`;
     }
 }

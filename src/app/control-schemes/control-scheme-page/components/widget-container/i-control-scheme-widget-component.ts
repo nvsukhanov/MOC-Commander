@@ -6,15 +6,9 @@ export interface IControlSchemeWidgetComponent<TConfig extends WidgetConfigModel
 
     readonly delete: Observable<void>;
 
-    set canBeDeleted(value: boolean);
+    canBeDeleted: boolean;
 
-    get canBeDeleted(): boolean;
+    canBeEdited: boolean;
 
-    set canBeEdited(value: boolean);
-
-    get canBeEdited(): boolean;
-
-    set config(config: TConfig);
-
-    get config(): TConfig;
+    config: TConfig;
 }

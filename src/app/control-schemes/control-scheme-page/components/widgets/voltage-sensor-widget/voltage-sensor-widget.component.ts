@@ -8,7 +8,7 @@ import { WidgetComponent } from '@app/shared';
 import { VoltageWidgetConfigModel } from '@app/store';
 
 import { IControlSchemeWidgetComponent } from '../../widget-container';
-import { IVoltageWidgetDataProvider, VOLTAGE_WIDGET_DATA_PROVIDER } from './i-voltage-widget-data-provider';
+import { IVoltageSensorWidgetDataProvider, VOLTAGE_SENSOR_WIDGET_DATA_PROVIDER } from './i-voltage-sensor-widget-data-provider';
 import { WidgetConnectionInfoL10nService } from '../widget-connection-info-l10n.service';
 
 @Component({
@@ -43,7 +43,7 @@ export class VoltageSensorWidgetComponent implements IControlSchemeWidgetCompone
     private _voltage$: Observable<number | null> = of(null);
 
     constructor(
-        @Inject(VOLTAGE_WIDGET_DATA_PROVIDER) private readonly dataProvider: IVoltageWidgetDataProvider,
+        @Inject(VOLTAGE_SENSOR_WIDGET_DATA_PROVIDER) private readonly dataProvider: IVoltageSensorWidgetDataProvider,
         private readonly widgetConnectionInfoL10nService: WidgetConnectionInfoL10nService
     ) {
     }
@@ -70,7 +70,7 @@ export class VoltageSensorWidgetComponent implements IControlSchemeWidgetCompone
 
     public get title(): string {
         if (this._config) {
-            return this._config.name;
+            return this._config.title;
         }
         return '';
     }

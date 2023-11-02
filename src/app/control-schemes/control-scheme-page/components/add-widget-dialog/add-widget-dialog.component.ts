@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { PushPipe } from '@ngrx/component';
+import { LetDirective, PushPipe } from '@ngrx/component';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgForOf, NgIf } from '@angular/common';
+import { JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
-import { BehaviorSubject, Observable, map, startWith, switchMap } from 'rxjs';
-import { WidgetConfigModel } from '@app/store';
+import { BehaviorSubject, Observable, map, startWith } from 'rxjs';
+import { WidgetConfigModel, WidgetType } from '@app/store';
 
 import { AddWidgetDialogViewModel } from './add-widget-dialog-view-model';
 import { WidgetTypeToL10nKeyPipe } from '../../../common';
@@ -31,6 +31,8 @@ import { ControlSchemeWidgetSettingsComponentResolverService, WidgetConnectionIn
         WidgetSettingsContainerComponent,
         NgIf,
         WidgetConnectionInfoL10nPipe,
+        JsonPipe,
+        LetDirective,
     ],
     providers: [
         { provide: CONTROL_SCHEME_WIDGET_SETTINGS_RESOLVER, useClass: ControlSchemeWidgetSettingsComponentResolverService },
@@ -38,51 +40,66 @@ import { ControlSchemeWidgetSettingsComponentResolverService, WidgetConnectionIn
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddWidgetDialogComponent {
-    public readonly widgetSelectionData: Array<Omit<WidgetConfigModel, 'id' | 'name'>>;
+    public readonly widgetSelectionData: Array<WidgetConfigModel>;
 
     public readonly form = this.formBuilder.group({
-        selectionData: this.formBuilder.control<Omit<WidgetConfigModel, 'id' | 'name'> | null>(null, {
-            validators: [ Validators.required ]
-        })
+        widgetType: this.formBuilder.control<WidgetType | null>(null, { validators: [ Validators.required ] })
     });
+
+    public readonly selectedBaseConfig$: Observable<WidgetConfigModel | undefined>;
 
     public readonly canSave$: Observable<boolean>;
 
     @ViewChild(WidgetSettingsContainerComponent, { static: false, read: WidgetSettingsContainerComponent })
     public readonly widgetSettingsContainer?: WidgetSettingsContainerComponent;
 
-    private readonly _widgetSettingsCanBeSaved: BehaviorSubject<boolean>;
+    private readonly _canSave$: BehaviorSubject<boolean>;
+
+    private _config?: WidgetConfigModel;
 
     constructor(
-        private readonly dialog: MatDialogRef<AddWidgetDialogComponent, Omit<WidgetConfigModel, 'id' | 'name'>>,
+        private readonly dialog: MatDialogRef<AddWidgetDialogComponent, WidgetConfigModel>,
         @Inject(MAT_DIALOG_DATA) private readonly dialogData: AddWidgetDialogViewModel,
         private readonly formBuilder: FormBuilder,
         private readonly cdRef: ChangeDetectorRef
     ) {
         this.widgetSelectionData = this.dialogData.widgets;
-        this._widgetSettingsCanBeSaved = new BehaviorSubject<boolean>(false);
-        this.canSave$ = this.form.valueChanges.pipe(
+        this._canSave$ = new BehaviorSubject<boolean>(false);
+        this.canSave$ = this._canSave$;
+
+        this.selectedBaseConfig$ = this.form.controls.widgetType.valueChanges.pipe(
             startWith(null),
-            switchMap(() => this._widgetSettingsCanBeSaved),
-            map((widgetSettingsCanBeSaved) => {
-                return this.form.valid && widgetSettingsCanBeSaved;
+            map(() => this.form.controls.widgetType.value),
+            map((widgetType) => {
+                if (widgetType === null) {
+                    return undefined;
+                }
+                return this.widgetSelectionData.find((widgetSelectionData) => widgetSelectionData.widgetType === widgetType);
             })
         );
     }
 
-    public onWidgetSettingsCanBeSavedUpdate(
+    public onCanSaveChanges(
         canSave: boolean
     ): void {
-        this._widgetSettingsCanBeSaved.next(canSave);
+        this._canSave$.next(canSave);
         this.cdRef.detectChanges(); // TODO: not sure why this is needed
     }
 
-    public onSave(): void {
-        const config = this.widgetSettingsContainer?.getConfig();
-        if (!config) {
+    public onSave(
+        event: Event
+    ): void {
+        event.preventDefault();
+        if (!this._config) {
             throw new Error('Widget settings are not valid');
         }
-        this.dialog.close(config);
+        this.dialog.close(this._config);
+    }
+
+    public onConfigChanges(
+        config: WidgetConfigModel
+    ): void {
+        this._config = config;
     }
 
     public onCancel(): void {

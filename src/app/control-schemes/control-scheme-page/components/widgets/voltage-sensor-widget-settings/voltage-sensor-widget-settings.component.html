@@ -1,24 +1,22 @@
-<form (submit)="onSubmit($event)">
-    <mat-form-field class="form-field">
-        <mat-label>{{ 'controlScheme.widgets.nameField' | transloco }}</mat-label>
-        <input matInput
-               type="text"
-               [formControl]="form.controls.name"
-        />
-        <mat-error [appValidationMessages]="form.controls.name"></mat-error>
-    </mat-form-field>
+<mat-form-field class="form-field">
+    <mat-label>{{ 'controlScheme.widgets.nameField' | transloco }}</mat-label>
+    <input matInput
+           type="text"
+           [formControl]="form.controls.title"
+    />
+    <mat-error [appValidationMessages]="form.controls.title"></mat-error>
+</mat-form-field>
 
-    <mat-form-field class="form-field">
-        <mat-label>{{ 'controlScheme.widgets.voltage.valueChangeThresholdTitle' | transloco }}</mat-label>
-        <input matInput
-               type="number"
-               [formControl]="form.controls.valueChangeThreshold"
-        />
-        <mat-error [appValidationMessages]="form.controls.valueChangeThreshold"></mat-error>
-    </mat-form-field>
+<mat-form-field class="form-field">
+    <mat-label>{{ 'controlScheme.widgets.voltage.valueChangeThresholdTitle' | transloco }}</mat-label>
+    <input matInput
+           type="number"
+           [formControl]="form.controls.valueChangeThreshold"
+    />
+    <mat-error [appValidationMessages]="form.controls.valueChangeThreshold"></mat-error>
+</mat-form-field>
 
-    <button type="submit"
-            class="cdk-visually-hidden"
-            hidden
-    ></button>
-</form>
+<button type="submit"
+        class="cdk-visually-hidden"
+        hidden
+></button>

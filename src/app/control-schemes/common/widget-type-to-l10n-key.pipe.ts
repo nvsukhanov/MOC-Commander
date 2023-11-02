@@ -8,7 +8,8 @@ import { WidgetType } from '@app/store';
 })
 export class WidgetTypeToL10nKeyPipe implements PipeTransform {
     private readonly widgetTypeToL10n: { [k in WidgetType]: string } = {
-        [WidgetType.Voltage]: 'controlScheme.widgets.voltage.name'
+        [WidgetType.Voltage]: 'controlScheme.widgets.voltage.name',
+        [WidgetType.Tilt]: 'controlScheme.widgets.tilt.name',
     };
 
     public transform(

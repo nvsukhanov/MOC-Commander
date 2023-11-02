@@ -8,7 +8,8 @@ import { ATTACHED_IO_SELECTORS, HUBS_SELECTORS, WidgetType } from '@app/store';
 @Injectable({ providedIn: 'root' })
 export class WidgetConnectionInfoL10nService {
     private readonly widgetTypeToWidgetConnectionL10nKeyMap: { [k in WidgetType]?: string } = {
-        [WidgetType.Voltage]: 'controlScheme.widgets.voltage.connectionInfo'
+        [WidgetType.Voltage]: 'controlScheme.widgets.voltage.connectionInfo',
+        [WidgetType.Tilt]: 'controlScheme.widgets.tilt.connectionInfo'
     };
 
     constructor(

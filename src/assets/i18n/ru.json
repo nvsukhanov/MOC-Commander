@@ -286,6 +286,12 @@
         "connectionInfo": "{hubName}:{portName} - {ioName}",
         "value": "{voltage}В",
         "valueChangeThresholdTitle": "Порог изменения значения (вольт)"
+      },
+      "tilt": {
+        "name": "Наклон",
+        "defaultName": "Наклон",
+        "connectionInfo": "{hubName}:{portName} - {ioName}",
+        "valueChangeThresholdTitle": "Порог изменения значения (°)"
       }
     }
   },
