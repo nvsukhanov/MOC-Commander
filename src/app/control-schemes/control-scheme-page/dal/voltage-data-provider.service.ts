@@ -3,10 +3,10 @@ import { Observable, map } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { CONTROL_SCHEME_WIDGETS_DATA_SELECTORS, WidgetType } from '@app/store';
 
-import { IVoltageWidgetDataProvider } from '../components';
+import { IVoltageSensorWidgetDataProvider } from '../components';
 
 @Injectable()
-export class VoltageDataProviderService implements IVoltageWidgetDataProvider {
+export class VoltageDataProviderService implements IVoltageSensorWidgetDataProvider {
     constructor(
         private readonly store: Store
     ) {

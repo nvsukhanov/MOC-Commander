@@ -1,0 +1,18 @@
+<app-tilt-gauge [tiltDegrees]="roll"
+                [iconTemplate]="rollIconTemplate"
+></app-tilt-gauge>
+
+<ng-template #rollIconTemplate>
+    <svg xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 100 100"
+
+    >
+        <path d="M 20 50
+        L 50 40
+        L 80 50
+        Z
+        "
+              fill="red"
+        ></path>
+    </svg>
+</ng-template>

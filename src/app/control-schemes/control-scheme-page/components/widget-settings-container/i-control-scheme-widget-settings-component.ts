@@ -3,11 +3,10 @@ import { WidgetConfigModel } from '@app/store';
 import { DeepPartial } from '@app/shared';
 
 export interface IControlSchemeWidgetSettingsComponent<T extends WidgetConfigModel> {
-    readonly save: Observable<T>;
+    readonly configChanges: Observable<T>;
 
-    readonly canSave$: Observable<boolean>;
+    readonly valid: Observable<boolean>;
 
-    useConfig(config: DeepPartial<T>): void;
-
-    getConfig(): T;
+    readonly config: DeepPartial<T>;
+    // useConfig(config: DeepPartial<T>): void;
 }

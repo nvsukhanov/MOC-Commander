@@ -1,0 +1,13 @@
+<app-tilt-gauge [tiltDegrees]="yaw"
+                [options]="options"
+                [iconTemplate]="yawIcon"
+></app-tilt-gauge>
+
+<ng-template #yawIcon>
+    <svg xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 100 100"
+    >
+        <path d="M 50 20 L 70 50 L 50 60 L 30 50 Z"
+              fill="green"></path>
+    </svg>
+</ng-template>

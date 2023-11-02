@@ -7,18 +7,40 @@ export class WidgetDefaultConfigFactoryService {
         widgetType: WidgetType,
         hubId?: string,
         portId?: number
-    ): Omit<WidgetConfigModel, 'id' | 'name'> {
+    ): WidgetConfigModel {
         switch (widgetType) {
             case WidgetType.Voltage:
                 if (!hubId || !portId) {
                     throw new Error('Hub ID and port ID must be specified');
                 }
                 return {
+                    id: 0,
+                    title: '',
                     widgetType: WidgetType.Voltage,
                     hubId,
                     portId,
                     modeId: 0,
                     valueChangeThreshold: 0.05,
+                    width: 1,
+                    height: 1,
+                };
+            case WidgetType.Tilt:
+                if (!hubId || !portId) {
+                    throw new Error('Hub ID and port ID must be specified');
+                }
+                return {
+                    id: 0,
+                    title: '',
+                    widgetType: WidgetType.Tilt,
+                    hubId,
+                    portId,
+                    modeId: 0,
+                    valueChangeThreshold: 1,
+                    width: 2,
+                    height: 2,
+                    invertYaw: false,
+                    invertPitch: false,
+                    invertRoll: false,
                 };
         }
     }

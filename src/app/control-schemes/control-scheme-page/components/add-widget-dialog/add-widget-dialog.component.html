@@ -2,42 +2,51 @@
     {{ 'controlScheme.widgets.addWidgetDialog.title' | transloco }}
 </h1>
 
-<div mat-dialog-content
-     class="dialog-content"
->
-    <mat-form-field>
-        <mat-label>{{ 'controlScheme.widgets.addWidgetDialog.selectWidgetType' | transloco }}</mat-label>
-        <mat-select [formControl]="form.controls.selectionData">
-            <mat-option *ngFor="let widgetSelectionOption of widgetSelectionData"
-                        [value]="widgetSelectionOption"
-            >
-                {{ widgetSelectionOption.widgetType | widgetTypeToL10nKey | transloco }}
-                <ng-container
-                    *ngIf="widgetSelectionOption | widgetConnectionInfoL10n | ngrxPush; let description">
-                    ({{ description }})
-                </ng-container>
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <app-widget-settings-container *ngIf="form.controls.selectionData.valid"
-                                   [initialConfig]="form.controls.selectionData.value!"
-                                   (canSave)="onWidgetSettingsCanBeSavedUpdate($event)"
-    ></app-widget-settings-container>
-</div>
+<form (submit)="onSave($event)">
+    <div mat-dialog-content
+         class="dialog-content"
+    >
+        <mat-form-field>
+            <mat-label>{{ 'controlScheme.widgets.addWidgetDialog.selectWidgetType' | transloco }}</mat-label>
+            <mat-select [formControl]="form.controls.widgetType">
+                <mat-select-trigger *ngIf="selectedBaseConfig$ | ngrxPush; let config">
+                    {{ config.widgetType | widgetTypeToL10nKey | transloco }}
+                    ({{ config | widgetConnectionInfoL10n | ngrxPush }})
+                </mat-select-trigger>
+                <mat-option *ngFor="let widgetSelectionOption of widgetSelectionData"
+                            [value]="widgetSelectionOption.widgetType"
+                >
+                    {{ widgetSelectionOption.widgetType | widgetTypeToL10nKey | transloco }}
+                    <ng-container
+                        *ngIf="widgetSelectionOption | widgetConnectionInfoL10n | ngrxPush; let description">
+                        ({{ description }})
+                    </ng-container>
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
 
-<div mat-dialog-actions
-     [align]="'end'"
->
-    <button mat-raised-button
-            [color]="'primary'"
-            [disabled]="!(canSave$ | ngrxPush)"
-            (click)="onSave()"
+        <app-widget-settings-container *ngrxLet="selectedBaseConfig$; let config"
+                                       [config]="config"
+                                       (valid)="onCanSaveChanges($event)"
+                                       (configChanges)="onConfigChanges($event)"
+        ></app-widget-settings-container>
+    </div>
+
+    <div mat-dialog-actions
+         [align]="'end'"
     >
-        {{ 'controlScheme.widgets.addWidgetDialog.saveButton' | transloco }}
-    </button>
-    <button mat-button
-            (click)="onCancel()"
-    >
-        {{ 'controlScheme.widgets.addWidgetDialog.cancelButton' | transloco }}
-    </button>
-</div>
+        <button mat-raised-button
+                [color]="'primary'"
+                [disabled]="!(canSave$ | ngrxPush)"
+                (click)="onSave($event)"
+        >
+            {{ 'controlScheme.widgets.addWidgetDialog.saveButton' | transloco }}
+        </button>
+        <button mat-button
+                type="button"
+                (click)="onCancel()"
+        >
+            {{ 'controlScheme.widgets.addWidgetDialog.cancelButton' | transloco }}
+        </button>
+    </div>
+</form>

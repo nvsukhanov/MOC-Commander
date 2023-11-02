@@ -18,7 +18,8 @@ import { AddWidgetDialogViewModel, WidgetDefaultConfigFactoryService, ioHasMatch
 @Injectable()
 export class AddWidgetDialogViewModelProvider {
     private readonly availableWidgetTypes: WidgetType[] = [
-        WidgetType.Voltage
+        WidgetType.Voltage,
+        WidgetType.Tilt
     ];
 
     constructor(

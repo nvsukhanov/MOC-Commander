@@ -39,6 +39,7 @@ function widgetHasIoAttached(
 ): boolean {
     switch (widgetConfig.widgetType) {
         case WidgetType.Voltage:
+        case WidgetType.Tilt:
             return !!attachedIos[attachedIosIdFn(widgetConfig)];
     }
 }
@@ -49,6 +50,7 @@ function getWidgetIoPortInputModes(
 ): PortModeName[] {
     switch (widgetConfig.widgetType) {
         case WidgetType.Voltage:
+        case WidgetType.Tilt:
             return ioInputModes[attachedIosIdFn(widgetConfig)] ?? [];
     }
 }

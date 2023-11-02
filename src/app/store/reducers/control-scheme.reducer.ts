@@ -1,7 +1,7 @@
 import { EntityState, Update, createEntityAdapter } from '@ngrx/entity';
 import { createFeature, createReducer, on } from '@ngrx/store';
 
-import { ControlSchemeBinding, ControlSchemeModel, ControlSchemePortConfig } from '../models';
+import { ControlSchemeBinding, ControlSchemeModel, ControlSchemePortConfig, WidgetConfigModel } from '../models';
 import { CONTROL_SCHEME_ACTIONS } from '../actions';
 import { attachedIosIdFn } from './attached-ios.reducer';
 
@@ -198,7 +198,7 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
                 return state;
             }
             const id = Math.max(...scheme.widgets.map((w) => w.id), 0) + 1;
-            const nextWidgets = [ ...scheme.widgets, { ...widgetConfig, id } ];
+            const nextWidgets = [ ...scheme.widgets, { ...widgetConfig, id } ] as WidgetConfigModel[];
             return CONTROL_SCHEME_ENTITY_ADAPTER.updateOne({
                 id: schemeName,
                 changes: {
