@@ -291,7 +291,10 @@
         "name": "Наклон",
         "defaultName": "Наклон",
         "connectionInfo": "{hubName}:{portName} - {ioName}",
-        "valueChangeThresholdTitle": "Порог изменения значения (°)"
+        "valueChangeThresholdTitle": "Порог изменения значения (°)",
+        "invertYawOptionTitle": "Инвертировать рыскание",
+        "invertPitchOptionTitle": "Инвертировать тангаж",
+        "invertRollOptionTitle": "Инвертировать крен"
       }
     }
   },

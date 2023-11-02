@@ -291,7 +291,10 @@
         "name": "Tilt",
         "defaultName": "Tilt",
         "connectionInfo": "{hubName}:{portName} - {ioName}",
-        "valueChangeThresholdTitle": "Value change threshold (°)"
+        "valueChangeThresholdTitle": "Value change threshold (°)",
+        "invertYawOptionTitle": "Invert yaw",
+        "invertPitchOptionTitle": "Invert pitch",
+        "invertRollOptionTitle": "Invert roll"
       }
     }
   },
