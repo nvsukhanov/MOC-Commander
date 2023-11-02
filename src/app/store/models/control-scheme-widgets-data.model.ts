@@ -1,3 +1,4 @@
+import { TiltData } from 'rxpoweredup';
 import { WidgetType } from '@app/store';
 
 export type ControlSchemeVoltageWidgetDataModel = {
@@ -5,4 +6,9 @@ export type ControlSchemeVoltageWidgetDataModel = {
     voltage: number;
 };
 
-export type ControlSchemeWidgetsDataModel = ControlSchemeVoltageWidgetDataModel;
+export type ControlSchemeTiltWidgetDataModel = {
+    widgetType: WidgetType.Tilt;
+    tilt: TiltData;
+};
+
+export type ControlSchemeWidgetsDataModel = ControlSchemeVoltageWidgetDataModel | ControlSchemeTiltWidgetDataModel;

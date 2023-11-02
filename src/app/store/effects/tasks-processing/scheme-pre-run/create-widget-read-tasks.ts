@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { ControlSchemeModel, WidgetType } from '../../../models';
-import { createVoltageReaderTask } from './widget-read-tasks';
+import { createTiltReaderTask, createVoltageReaderTask } from './widget-read-tasks';
 import { HubStorageService } from '../../../hub-storage.service';
 
 export function createWidgetReadTasks(
@@ -16,6 +16,10 @@ export function createWidgetReadTasks(
         switch (widgetConfig.widgetType) {
             case WidgetType.Voltage:
                 result.push(createVoltageReaderTask(widgetConfig, store, hubStorage, schemeStop$));
+                break;
+            case WidgetType.Tilt:
+                result.push(createTiltReaderTask(widgetConfig, store, hubStorage, schemeStop$));
+                break;
         }
     }
     return result;

@@ -20,7 +20,7 @@ import { ITiltSensorWidgetDataProvider, TILT_SENSOR_WIDGET_DATA_PROVIDER } from 
         PushPipe,
         YawIndicatorComponent,
         PitchIndicatorComponent,
-        TiltGaugeIconDirective
+        TiltGaugeIconDirective,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -35,7 +35,7 @@ export class TiltSensorWidgetComponent implements IControlSchemeWidgetComponent<
 
     private _config?: TiltWidgetConfigModel;
 
-    private _tiltData$: Observable<TiltData | null> = of(null);
+    private _tiltData$: Observable<TiltData | undefined> = of(undefined);
 
     constructor(
         @Inject(TILT_SENSOR_WIDGET_DATA_PROVIDER) private readonly dataProvider: ITiltSensorWidgetDataProvider
@@ -68,7 +68,7 @@ export class TiltSensorWidgetComponent implements IControlSchemeWidgetComponent<
         return '';
     }
 
-    public get tiltData$(): Observable<TiltData | null> {
+    public get tiltData$(): Observable<TiltData | undefined> {
         return this._tiltData$;
     }
 

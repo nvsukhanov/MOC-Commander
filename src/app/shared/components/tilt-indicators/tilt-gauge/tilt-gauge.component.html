@@ -17,7 +17,7 @@
        [viewBox]="nestedViewBox"
     ></g>
 
-    <g *ngIf="iconTemplate"
+    <g *ngIf="iconTemplate && tiltDegrees !== undefined"
        [attr.transform]="iconTransform"
     >
         <ng-container [ngTemplateOutlet]="iconTemplate"></ng-container>
