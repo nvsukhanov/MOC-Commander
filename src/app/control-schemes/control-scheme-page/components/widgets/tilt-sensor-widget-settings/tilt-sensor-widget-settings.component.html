@@ -7,4 +7,23 @@
     <mat-error [appValidationMessages]="form.controls.title"></mat-error>
 </mat-form-field>
 
-{{ form.controls.title.value }}
+<mat-form-field class="form-field">
+    <mat-label>{{ 'controlScheme.widgets.tilt.valueChangeThresholdTitle' | transloco }}</mat-label>
+    <input matInput
+           type="number"
+           [formControl]="form.controls.valueChangeThreshold"
+    />
+    <mat-error [appValidationMessages]="form.controls.valueChangeThreshold"></mat-error>
+</mat-form-field>
+
+<app-toggle-control [translocoTitle]="'controlScheme.widgets.tilt.invertYawOptionTitle'"
+                    [control]="form.controls.invertYaw"
+></app-toggle-control>
+
+<app-toggle-control [translocoTitle]="'controlScheme.widgets.tilt.invertPitchOptionTitle'"
+                    [control]="form.controls.invertPitch"
+></app-toggle-control>
+
+<app-toggle-control [translocoTitle]="'controlScheme.widgets.tilt.invertRollOptionTitle'"
+                    [control]="form.controls.invertRoll"
+></app-toggle-control>

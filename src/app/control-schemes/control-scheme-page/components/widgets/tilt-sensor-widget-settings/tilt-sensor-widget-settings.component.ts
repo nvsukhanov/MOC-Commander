@@ -4,7 +4,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { DeepPartial, ValidationMessagesDirective } from '@app/shared';
+import { DeepPartial, ToggleControlComponent, ValidationMessagesDirective } from '@app/shared';
 import { TiltWidgetConfigModel, WidgetType } from '@app/store';
 
 import { IControlSchemeWidgetSettingsComponent } from '../../widget-settings-container';
@@ -20,7 +20,8 @@ import { CommonFormControlsBuilderService } from '../../../../common';
         MatInputModule,
         ReactiveFormsModule,
         TranslocoPipe,
-        ValidationMessagesDirective
+        ValidationMessagesDirective,
+        ToggleControlComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -74,16 +75,16 @@ export class TiltSensorWidgetSettingsComponent implements IControlSchemeWidgetSe
                 take(1)
             ).subscribe((name) => {
                 this.form.controls.title.setValue(name);
-                this.configChangesSubscription = this.form.valueChanges.pipe(
-                    startWith(null)
-                ).subscribe(() => {
-                    const result = this.getConfig();
-                    if (result !== null) {
-                        this.configChanges.emit(result);
-                    }
-                });
             });
         }
+        this.configChangesSubscription = this.form.valueChanges.pipe(
+            startWith(null)
+        ).subscribe(() => {
+            const result = this.getConfig();
+            if (result !== null) {
+                this.configChanges.emit(result);
+            }
+        });
     }
 
     public ngOnDestroy(): void {

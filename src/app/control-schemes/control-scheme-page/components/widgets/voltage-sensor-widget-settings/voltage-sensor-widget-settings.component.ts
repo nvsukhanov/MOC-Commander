@@ -69,16 +69,16 @@ export class VoltageSensorWidgetSettingsComponent implements IControlSchemeWidge
                 take(1)
             ).subscribe((name) => {
                 this.form.controls.title.setValue(name);
-                this.configChangesSubscription = this.form.valueChanges.pipe(
-                    startWith(null)
-                ).subscribe(() => {
-                    const result = this.getConfig();
-                    if (result !== null) {
-                        this.configChanges.emit(result);
-                    }
-                });
             });
         }
+        this.configChangesSubscription = this.form.valueChanges.pipe(
+            startWith(null)
+        ).subscribe(() => {
+            const result = this.getConfig();
+            if (result !== null) {
+                this.configChanges.emit(result);
+            }
+        });
     }
 
     public ngOnDestroy(): void {
