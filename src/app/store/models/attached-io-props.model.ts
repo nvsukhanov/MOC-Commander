@@ -1,3 +1,5 @@
+import { TiltData } from 'rxpoweredup';
+
 export type AttachedIoPropsModel = {
     hubId: string;
     portId: number;
@@ -6,4 +8,5 @@ export type AttachedIoPropsModel = {
         range: number;
         aposCenter: number;
     } | null;
+    runtimeTiltCompensation: TiltData | null;
 };

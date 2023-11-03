@@ -294,7 +294,9 @@
         "valueChangeThresholdTitle": "Value change threshold (°)",
         "invertYawOptionTitle": "Invert yaw",
         "invertPitchOptionTitle": "Invert pitch",
-        "invertRollOptionTitle": "Invert roll"
+        "invertRollOptionTitle": "Invert roll",
+        "compensateTiltButtonTitle": "Compensate",
+        "resetTiltCompensationButtonTitle": "Reset"
       }
     }
   },

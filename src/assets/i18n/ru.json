@@ -294,7 +294,9 @@
         "valueChangeThresholdTitle": "Порог изменения значения (°)",
         "invertYawOptionTitle": "Инвертировать рыскание",
         "invertPitchOptionTitle": "Инвертировать тангаж",
-        "invertRollOptionTitle": "Инвертировать крен"
+        "invertRollOptionTitle": "Инвертировать крен",
+        "compensateTiltButtonTitle": "Компенсация",
+        "resetTiltCompensationButtonTitle": "Сброс"
       }
     }
   },

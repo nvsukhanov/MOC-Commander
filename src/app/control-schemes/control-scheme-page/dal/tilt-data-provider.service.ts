@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { TiltData } from 'rxpoweredup';
 import { Store } from '@ngrx/store';
-import { CONTROL_SCHEME_WIDGETS_DATA_SELECTORS, WidgetType } from '@app/store';
+import { ATTACHED_IO_PROPS_ACTIONS, CONTROL_SCHEME_WIDGETS_DATA_SELECTORS, TiltWidgetConfigModel } from '@app/store';
 
 import { ITiltSensorWidgetDataProvider } from '../components';
 
@@ -14,17 +14,27 @@ export class TiltDataProviderService implements ITiltSensorWidgetDataProvider {
     }
 
     public getTilt(
-        widgetId: number
+        widgetConfig: TiltWidgetConfigModel
     ): Observable<TiltData | undefined> {
-        return this.store.select(CONTROL_SCHEME_WIDGETS_DATA_SELECTORS.selectById(widgetId)).pipe(
-            // I don't want to make widget-specific data selectors, so I have to filter here
-            // eslint-disable-next-line @ngrx/avoid-mapping-selectors
-            map((widgetData) => {
-                if (widgetData?.widgetType === WidgetType.Tilt) {
-                    return widgetData.tilt;
-                }
-                return undefined;
-            })
-        );
+        return this.store.select(CONTROL_SCHEME_WIDGETS_DATA_SELECTORS.selectWidgetTiltData(widgetConfig));
+    }
+
+    public compensateTilt(
+        hubId: string,
+        portId: number,
+        compensationData: TiltData
+    ): void {
+        this.store.dispatch(ATTACHED_IO_PROPS_ACTIONS.compensateTilt({
+            hubId,
+            portId,
+            compensationData
+        }));
+    }
+
+    public resetTiltCompensation(
+        hubId: string,
+        portId: number,
+    ): void {
+        this.store.dispatch(ATTACHED_IO_PROPS_ACTIONS.resetTiltCompensation({ hubId, portId }));
     }
 }
