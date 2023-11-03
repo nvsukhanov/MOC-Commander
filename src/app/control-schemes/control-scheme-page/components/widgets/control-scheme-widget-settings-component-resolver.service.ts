@@ -1,9 +1,9 @@
 import { Injectable, Type } from '@angular/core';
 import { WidgetType } from '@app/store';
 
-import { VoltageSensorWidgetSettingsComponent } from './voltage-sensor-widget-settings';
+import { VoltageSensorWidgetSettingsComponent } from './voltage';
 import { ControlSchemeWidgetSettingsComponentOfType, IControlSchemeWidgetSettingsComponentResolver } from '../widget-settings-container';
-import { TiltSensorWidgetSettingsComponent } from './tilt-sensor-widget-settings';
+import { TiltSensorWidgetSettingsComponent } from './tilt';
 
 @Injectable()
 export class ControlSchemeWidgetSettingsComponentResolverService implements IControlSchemeWidgetSettingsComponentResolver {

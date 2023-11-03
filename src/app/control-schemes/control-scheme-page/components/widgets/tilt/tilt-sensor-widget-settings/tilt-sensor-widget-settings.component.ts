@@ -1,31 +1,34 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable, Subscription, map, startWith, take } from 'rxjs';
-import { MatInputModule } from '@angular/material/input';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { VoltageWidgetConfigModel, WidgetType } from '@app/store';
-import { ValidationMessagesDirective } from '@app/shared';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { DeepPartial, ToggleControlComponent, ValidationMessagesDirective } from '@app/shared';
+import { TiltWidgetConfigModel, WidgetType } from '@app/store';
 
-import { IControlSchemeWidgetSettingsComponent } from '../../widget-settings-container';
-import { CommonFormControlsBuilderService } from '../../../../common';
+import { IControlSchemeWidgetSettingsComponent } from '../../../widget-settings-container';
+import { CommonFormControlsBuilderService } from '../../../../../common';
 
 @Component({
     standalone: true,
-    selector: 'app-voltage-sensor-widget-settings',
-    templateUrl: './voltage-sensor-widget-settings.component.html',
-    styleUrls: [ './voltage-sensor-widget-settings.component.scss' ],
+    selector: 'app-tilt-sensor-widget-settings',
+    templateUrl: './tilt-sensor-widget-settings.component.html',
+    styleUrls: [ './tilt-sensor-widget-settings.component.scss' ],
     imports: [
+        MatFormFieldModule,
         MatInputModule,
         ReactiveFormsModule,
-        ValidationMessagesDirective,
         TranslocoPipe,
+        ValidationMessagesDirective,
+        ToggleControlComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class VoltageSensorWidgetSettingsComponent implements IControlSchemeWidgetSettingsComponent<VoltageWidgetConfigModel>, OnDestroy {
-    @Output() public readonly configChanges = new EventEmitter<VoltageWidgetConfigModel>();
+export class TiltSensorWidgetSettingsComponent implements IControlSchemeWidgetSettingsComponent<TiltWidgetConfigModel>, OnDestroy {
+    @Output() public readonly configChanges = new EventEmitter<TiltWidgetConfigModel>();
 
-    @Output() public valid: Observable<boolean>;
+    @Output() public readonly valid: Observable<boolean>;
 
     public readonly form = this.formBuilder.group({
         id: this.formBuilder.control<number>(0, { validators: Validators.required, nonNullable: true }),
@@ -36,21 +39,24 @@ export class VoltageSensorWidgetSettingsComponent implements IControlSchemeWidge
         valueChangeThreshold: this.formBuilder.control<number>(5, {
             validators: [
                 Validators.required,
-                Validators.min(0.01),
-                Validators.max(100)
+                Validators.min(5),
+                Validators.max(30)
             ],
             nonNullable: true
         }),
-        width: this.formBuilder.control<number>(1, { validators: Validators.required, nonNullable: true }),
-        height: this.formBuilder.control<number>(1, { validators: Validators.required, nonNullable: true }),
+        width: this.formBuilder.control<number>(2, { validators: Validators.required, nonNullable: true }),
+        height: this.formBuilder.control<number>(2, { validators: Validators.required, nonNullable: true }),
+        invertRoll: this.formBuilder.control<boolean>(false, { nonNullable: true }),
+        invertPitch: this.formBuilder.control<boolean>(false, { nonNullable: true }),
+        invertYaw: this.formBuilder.control<boolean>(false, { nonNullable: true }),
     });
 
     private configChangesSubscription?: Subscription;
 
     constructor(
         private readonly formBuilder: FormBuilder,
-        private readonly commonFormBuilder: CommonFormControlsBuilderService,
         private readonly translocoService: TranslocoService,
+        private readonly commonFormBuilder: CommonFormControlsBuilderService,
     ) {
         this.valid = this.form.statusChanges.pipe(
             startWith(null),
@@ -60,12 +66,12 @@ export class VoltageSensorWidgetSettingsComponent implements IControlSchemeWidge
 
     @Input()
     public set config(
-        config: VoltageWidgetConfigModel
+        config: DeepPartial<TiltWidgetConfigModel>
     ) {
         this.configChangesSubscription?.unsubscribe();
         this.form.patchValue(config);
         if (!this.form.controls.title.valid) {
-            this.translocoService.selectTranslate('controlScheme.widgets.voltage.defaultName').pipe(
+            this.translocoService.selectTranslate('controlScheme.widgets.tilt.defaultName').pipe(
                 take(1)
             ).subscribe((name) => {
                 this.form.controls.title.setValue(name);
@@ -85,20 +91,23 @@ export class VoltageSensorWidgetSettingsComponent implements IControlSchemeWidge
         this.configChangesSubscription?.unsubscribe();
     }
 
-    private getConfig(): VoltageWidgetConfigModel | null {
+    private getConfig(): TiltWidgetConfigModel | null {
         if (this.form.controls.hubId.value === null || this.form.controls.portId.value === null || this.form.controls.modeId.value === null) {
             return null;
         }
         return {
-            widgetType: WidgetType.Voltage,
+            widgetType: WidgetType.Tilt,
             id: this.form.controls.id.value,
             title: this.form.controls.title.value,
-            hubId: this.form.controls.hubId.value,
-            portId: this.form.controls.portId.value,
+            hubId: this.form.controls.hubId.value!,
+            portId: this.form.controls.portId.value!,
             modeId: this.form.controls.modeId.value,
             valueChangeThreshold: this.form.controls.valueChangeThreshold.value,
             width: this.form.controls.width.value,
             height: this.form.controls.height.value,
+            invertRoll: this.form.controls.invertRoll.value,
+            invertPitch: this.form.controls.invertPitch.value,
+            invertYaw: this.form.controls.invertYaw.value,
         };
     }
 }

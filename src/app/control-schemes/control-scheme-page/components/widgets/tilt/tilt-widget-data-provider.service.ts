@@ -4,10 +4,8 @@ import { TiltData } from 'rxpoweredup';
 import { Store } from '@ngrx/store';
 import { ATTACHED_IO_PROPS_ACTIONS, CONTROL_SCHEME_WIDGETS_DATA_SELECTORS, TiltWidgetConfigModel } from '@app/store';
 
-import { ITiltSensorWidgetDataProvider } from '../components';
-
 @Injectable()
-export class TiltDataProviderService implements ITiltSensorWidgetDataProvider {
+export class TiltWidgetDataProviderService {
     constructor(
         private readonly store: Store
     ) {
