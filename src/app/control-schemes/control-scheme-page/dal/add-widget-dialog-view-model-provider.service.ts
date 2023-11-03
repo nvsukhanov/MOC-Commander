@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store, createSelector } from '@ngrx/store';
-import { PortModeName } from 'rxpoweredup';
 import {
     ATTACHED_IO_MODES_SELECTORS,
     ATTACHED_IO_PORT_MODE_INFO_SELECTORS,
     ATTACHED_IO_SELECTORS,
+    AttachedIoPortModeInfoModel,
     CONTROL_SCHEME_SELECTORS,
     WidgetType,
     attachedIoModesIdFn,
@@ -13,7 +13,7 @@ import {
     attachedIosIdFn
 } from '@app/store';
 
-import { AddWidgetDialogViewModel, WidgetDefaultConfigFactoryService, ioHasMatchingModeForWidget } from '../components';
+import { AddWidgetDialogViewModel, WidgetDefaultConfigFactoryService, getWidgetDataPortModeName } from '../components';
 
 @Injectable()
 export class AddWidgetDialogViewModelProvider {
@@ -67,13 +67,23 @@ export class AddWidgetDialogViewModelProvider {
 
             for (const io of remainingIos) {
                 const portInputModes = (ioPortModes[attachedIoModesIdFn(io)]?.portInputModes ?? []).map((modeId) => {
-                    return portModesInfo[attachedIoPortModeInfoIdFn({ ...io, modeId })]?.name;
-                }).filter((mode): mode is PortModeName => !!mode);
-                const availableIoWidgetTypes = this.availableWidgetTypes.filter((widgetType) => {
-                    return ioHasMatchingModeForWidget(widgetType, portInputModes);
-                });
-                for (const widgetType of availableIoWidgetTypes) {
-                    const defaultConfig = this.widgetDefaultConfigFactory.createDefaultConfig(widgetType, io.hubId, io.portId);
+                    return portModesInfo[attachedIoPortModeInfoIdFn({ ...io, modeId })];
+                }).filter((modeInfo): modeInfo is AttachedIoPortModeInfoModel => !!modeInfo);
+
+                for (const widgetType of this.availableWidgetTypes) {
+                    const portModeName = getWidgetDataPortModeName(widgetType, portInputModes.map((info) => info.name));
+                    if (!portModeName) {
+                        continue;
+                    }
+                    const targetPortMode = portInputModes.find((info) => info.name === portModeName);
+                    if (!targetPortMode) {
+                        continue;
+                    }
+                    const defaultConfig = this.widgetDefaultConfigFactory.createDefaultConfig(
+                        widgetType,
+                        io,
+                        targetPortMode.modeId
+                    );
                     result.widgets.push(defaultConfig);
                 }
             }
