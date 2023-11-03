@@ -12,15 +12,13 @@ import {
     attachedIoPortModeInfoIdFn,
     attachedIosIdFn
 } from '@app/store';
+import { getEnumValues } from '@app/shared';
 
 import { AddWidgetDialogViewModel, WidgetDefaultConfigFactoryService, getWidgetDataPortModeName } from '../components';
 
 @Injectable()
 export class AddWidgetDialogViewModelProvider {
-    private readonly availableWidgetTypes: WidgetType[] = [
-        WidgetType.Voltage,
-        WidgetType.Tilt
-    ];
+    private readonly availableWidgetTypes: WidgetType[] = getEnumValues(WidgetType);
 
     constructor(
         private readonly store: Store,

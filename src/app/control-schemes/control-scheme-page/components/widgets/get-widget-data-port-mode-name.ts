@@ -16,6 +16,12 @@ const WIDGET_IO_MATCH_FNS: { [k in WidgetType]: (modes: PortModeName[]) => PortM
             return PortModeName.position;
         }
         return null;
+    },
+    [WidgetType.Temperature]: (modes) => {
+        if (modes.includes(PortModeName.temperature)) {
+            return PortModeName.temperature;
+        }
+        return null;
     }
 };
 

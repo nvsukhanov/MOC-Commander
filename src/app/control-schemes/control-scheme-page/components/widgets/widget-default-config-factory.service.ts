@@ -36,6 +36,18 @@ export class WidgetDefaultConfigFactoryService {
                     invertPitch: false,
                     invertRoll: false,
                 };
+            case WidgetType.Temperature:
+                return {
+                    id: 0,
+                    title: '',
+                    widgetType: WidgetType.Temperature,
+                    hubId: attacheIo.hubId,
+                    portId: attacheIo.portId,
+                    modeId: modeId,
+                    valueChangeThreshold: 0.5,
+                    width: 1,
+                    height: 1,
+                };
         }
     }
 }

@@ -150,7 +150,8 @@ export type ControlSchemeBinding = ControlSchemeSetSpeedBinding
 
 export enum WidgetType {
     Voltage,
-    Tilt
+    Tilt,
+    Temperature
 }
 
 export type BaseWidgetConfigModel = {
@@ -179,7 +180,15 @@ export type TiltWidgetConfigModel = {
     invertRoll: boolean;
 } & BaseWidgetConfigModel;
 
-export type WidgetConfigModel = VoltageWidgetConfigModel | TiltWidgetConfigModel;
+export type TemperatureWidgetConfigModel = {
+    widgetType: WidgetType.Temperature;
+    hubId: string;
+    portId: number;
+    modeId: number;
+    valueChangeThreshold: number;
+} & BaseWidgetConfigModel;
+
+export type WidgetConfigModel = VoltageWidgetConfigModel | TiltWidgetConfigModel | TemperatureWidgetConfigModel;
 
 export type ControlSchemeModel = {
     name: string;
