@@ -81,6 +81,7 @@ export class AddWidgetDialogViewModelProvider {
         }
     );
 
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     private readonly selectCanAddWidgets = (controlSchemeName: string) => createSelector(
         this.selectAvailableWidgets(controlSchemeName),
         CONTROL_SCHEME_SELECTORS.selectIsAnySchemeRunning,

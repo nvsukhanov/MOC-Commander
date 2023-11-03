@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output
 import { Observable, of } from 'rxjs';
 import { TiltData } from 'rxpoweredup';
 import { LetDirective, PushPipe } from '@ngrx/component';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { PitchIndicatorComponent, RollIndicatorComponent, TiltGaugeIconDirective, WidgetComponent, YawIndicatorComponent } from '@app/shared';
 import { TiltWidgetConfigModel } from '@app/store';
 
@@ -21,6 +23,8 @@ import { ITiltSensorWidgetDataProvider, TILT_SENSOR_WIDGET_DATA_PROVIDER } from 
         YawIndicatorComponent,
         PitchIndicatorComponent,
         TiltGaugeIconDirective,
+        MatButtonModule,
+        TranslocoPipe,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -48,7 +52,7 @@ export class TiltSensorWidgetComponent implements IControlSchemeWidgetComponent<
     ) {
         if (config !== this._config) {
             if (config.hubId !== this._config?.hubId || config.portId !== this._config?.portId) {
-                this._tiltData$ = this.dataProvider.getTilt(config.id);
+                this._tiltData$ = this.dataProvider.getTilt(config);
             }
             this._config = config;
         }
@@ -70,6 +74,26 @@ export class TiltSensorWidgetComponent implements IControlSchemeWidgetComponent<
 
     public get tiltData$(): Observable<TiltData | undefined> {
         return this._tiltData$;
+    }
+
+    public onCompensateTilt(
+        compensationData?: TiltData
+    ): void {
+        if (!compensationData) {
+            return;
+        }
+        this.dataProvider.compensateTilt(
+            this.config.hubId,
+            this.config.portId,
+            compensationData
+        );
+    }
+
+    public onResetTiltCompensation(): void {
+        this.dataProvider.resetTiltCompensation(
+            this.config.hubId,
+            this.config.portId
+        );
     }
 
     public onEdit(): void {
