@@ -297,6 +297,13 @@
         "invertRollOptionTitle": "Invert roll",
         "compensateTiltButtonTitle": "Compensate",
         "resetTiltCompensationButtonTitle": "Reset"
+      },
+      "temperature": {
+        "name": "Temperature",
+        "defaultName": "Temperature",
+        "connectionInfo": "{hubName}:{portName} - {ioName}",
+        "value": "{temperature}°C",
+        "valueChangeThresholdTitle": "Value change threshold (°C)"
       }
     }
   },

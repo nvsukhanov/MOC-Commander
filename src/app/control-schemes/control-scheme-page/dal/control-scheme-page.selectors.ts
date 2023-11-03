@@ -40,6 +40,7 @@ function widgetHasIoAttached(
     switch (widgetConfig.widgetType) {
         case WidgetType.Voltage:
         case WidgetType.Tilt:
+        case WidgetType.Temperature:
             return !!attachedIos[attachedIosIdFn(widgetConfig)];
     }
 }
@@ -51,6 +52,7 @@ function getWidgetIoPortInputModes(
     switch (widgetConfig.widgetType) {
         case WidgetType.Voltage:
         case WidgetType.Tilt:
+        case WidgetType.Temperature:
             return ioInputModes[attachedIosIdFn(widgetConfig)] ?? [];
     }
 }

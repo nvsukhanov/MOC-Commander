@@ -297,6 +297,13 @@
         "invertRollOptionTitle": "Инвертировать крен",
         "compensateTiltButtonTitle": "Компенсация",
         "resetTiltCompensationButtonTitle": "Сброс"
+      },
+      "temperature": {
+        "name": "Температура",
+        "defaultName": "Температура",
+        "connectionInfo": "{hubName}:{portName} - {ioName}",
+        "value": "{temperature}°C",
+        "valueChangeThresholdTitle": "Порог изменения значения (°C)"
       }
     }
   },

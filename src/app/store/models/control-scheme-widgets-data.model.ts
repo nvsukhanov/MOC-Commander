@@ -11,4 +11,9 @@ export type ControlSchemeTiltWidgetDataModel = {
     tilt: TiltData;
 };
 
-export type ControlSchemeWidgetsDataModel = ControlSchemeVoltageWidgetDataModel | ControlSchemeTiltWidgetDataModel;
+export type ControlSchemeTemperatureWidgetDataModel = {
+    widgetType: WidgetType.Temperature;
+    temperature: number;
+};
+
+export type ControlSchemeWidgetsDataModel = ControlSchemeVoltageWidgetDataModel | ControlSchemeTiltWidgetDataModel | ControlSchemeTemperatureWidgetDataModel;
