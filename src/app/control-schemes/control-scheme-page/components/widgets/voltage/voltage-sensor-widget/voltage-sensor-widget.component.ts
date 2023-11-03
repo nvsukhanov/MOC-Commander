@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { DecimalPipe, NgIf } from '@angular/common';
 import { LetDirective, PushPipe } from '@ngrx/component';
@@ -7,9 +7,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { WidgetComponent } from '@app/shared';
 import { VoltageWidgetConfigModel } from '@app/store';
 
-import { IControlSchemeWidgetComponent } from '../../widget-container';
-import { IVoltageSensorWidgetDataProvider, VOLTAGE_SENSOR_WIDGET_DATA_PROVIDER } from './i-voltage-sensor-widget-data-provider';
-import { WidgetConnectionInfoL10nService } from '../widget-connection-info-l10n.service';
+import { IControlSchemeWidgetComponent } from '../../../widget-container';
+import { WidgetConnectionInfoL10nService } from '../../widget-connection-info-l10n.service';
+import { VoltageWidgetDataProviderService } from '../voltage-widget-data-provider.service';
 
 @Component({
     standalone: true,
@@ -25,6 +25,9 @@ import { WidgetConnectionInfoL10nService } from '../widget-connection-info-l10n.
         LetDirective,
         MatIconModule,
         DecimalPipe
+    ],
+    providers: [
+        VoltageWidgetDataProviderService
     ]
 })
 export class VoltageSensorWidgetComponent implements IControlSchemeWidgetComponent<VoltageWidgetConfigModel> {
@@ -43,7 +46,7 @@ export class VoltageSensorWidgetComponent implements IControlSchemeWidgetCompone
     private _voltage$: Observable<number | null> = of(null);
 
     constructor(
-        @Inject(VOLTAGE_SENSOR_WIDGET_DATA_PROVIDER) private readonly dataProvider: IVoltageSensorWidgetDataProvider,
+        private readonly dataProvider: VoltageWidgetDataProviderService,
         private readonly widgetConnectionInfoL10nService: WidgetConnectionInfoL10nService
     ) {
     }

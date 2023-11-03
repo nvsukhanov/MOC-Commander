@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { TiltData } from 'rxpoweredup';
 import { LetDirective, PushPipe } from '@ngrx/component';
@@ -7,8 +7,8 @@ import { TranslocoPipe } from '@ngneat/transloco';
 import { PitchIndicatorComponent, RollIndicatorComponent, TiltGaugeIconDirective, WidgetComponent, YawIndicatorComponent } from '@app/shared';
 import { TiltWidgetConfigModel } from '@app/store';
 
-import { IControlSchemeWidgetComponent } from '../../widget-container';
-import { ITiltSensorWidgetDataProvider, TILT_SENSOR_WIDGET_DATA_PROVIDER } from './i-tilt-sensor-widget-data-provider';
+import { IControlSchemeWidgetComponent } from '../../../widget-container';
+import { TiltWidgetDataProviderService } from '../tilt-widget-data-provider.service';
 
 @Component({
     standalone: true,
@@ -26,6 +26,9 @@ import { ITiltSensorWidgetDataProvider, TILT_SENSOR_WIDGET_DATA_PROVIDER } from 
         MatButtonModule,
         TranslocoPipe,
     ],
+    providers: [
+        TiltWidgetDataProviderService
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TiltSensorWidgetComponent implements IControlSchemeWidgetComponent<TiltWidgetConfigModel> {
@@ -42,7 +45,7 @@ export class TiltSensorWidgetComponent implements IControlSchemeWidgetComponent<
     private _tiltData$: Observable<TiltData | undefined> = of(undefined);
 
     constructor(
-        @Inject(TILT_SENSOR_WIDGET_DATA_PROVIDER) private readonly dataProvider: ITiltSensorWidgetDataProvider
+        private readonly dataProvider: TiltWidgetDataProviderService
     ) {
     }
 
