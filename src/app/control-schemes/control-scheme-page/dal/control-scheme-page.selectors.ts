@@ -31,7 +31,7 @@ import {
     ControlSchemeViewIoTreeNode,
     SchemeRunBlocker
 } from '../types';
-import { ioHasMatchingModeForWidget } from '../components';
+import { getWidgetDataPortModeName } from '../components';
 
 function widgetHasIoAttached(
     widgetConfig: WidgetConfigModel,
@@ -179,7 +179,7 @@ const SELECT_SCHEME_RUN_BLOCKERS = createSelector(
         }
 
         if (scheme.widgets.filter((w) => widgetHasIoAttached(w, attachedIos))
-                  .some((widgetConfig) => !ioHasMatchingModeForWidget(widgetConfig.widgetType, getWidgetIoPortInputModes(widgetConfig, ioModes.input)))
+                  .some((widgetConfig) => !getWidgetDataPortModeName(widgetConfig.widgetType, getWidgetIoPortInputModes(widgetConfig, ioModes.input)))
         ) {
             result.add(SchemeRunBlocker.SomeIosHaveNoRequiredCapabilities);
         }
