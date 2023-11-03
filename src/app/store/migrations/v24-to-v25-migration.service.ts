@@ -36,6 +36,7 @@ export class V24ToV25MigrationService implements IMigration<V24Store, V25Store> 
             if (!controlScheme) {
                 return;
             }
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             result.controlSchemes!.entities![k] = {
                 ...controlScheme,
                 widgets: []
