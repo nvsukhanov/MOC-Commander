@@ -66,5 +66,8 @@
     "jest-preset-angular": "^13.1.1",
     "ts-mockito": "^2.6.1",
     "typescript": "~5.0.4"
+  },
+  "overrides": {
+    "portcss": "8.4.31"
   }
 }
