@@ -22,12 +22,12 @@ import {
     CONTROL_SCHEME_WIDGET_DATA_FEATURE,
     HUBS_FEATURE,
     HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE,
-    HUB_STATS_FEATURE,
+    HUB_RUNTIME_DATA_FEATURE,
     PORT_TASKS_FEATURE,
     SETTINGS_FEATURE,
     localStorageSyncMetaReducer,
     stateResetMetaReducer,
-    stateRestoreMetaReducer,
+    stateRestoreMetaReducer
 } from './reducers';
 import {
     AttachedIOsEffects,
@@ -45,7 +45,7 @@ import {
 } from './effects';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { HubStorageService } from './hub-storage.service';
-import { HUB_STATS_ACTIONS } from './actions';
+import { HUB_RUNTIME_DATA_ACTIONS } from './actions';
 import { HubMotorPositionFacadeService, HubServoCalibrationFacadeService } from './hub-facades';
 import { AppStoreVersion } from './app-store-version';
 import { provideStoreMigrations } from './migrations';
@@ -60,7 +60,7 @@ const REDUCERS: ActionReducerMap<IState> = {
     controlSchemes: CONTROL_SCHEME_FEATURE.reducer,
     controlSchemeWidgetsData: CONTROL_SCHEME_WIDGET_DATA_FEATURE.reducer,
     hubs: HUBS_FEATURE.reducer,
-    hubStats: HUB_STATS_FEATURE.reducer,
+    hubRuntimeData: HUB_RUNTIME_DATA_FEATURE.reducer,
     attachedIos: ATTACHED_IOS_FEATURE.reducer,
     attachedIoProps: ATTACHED_IO_PROPS_FEATURE.reducer,
     attachedIoModes: ATTACHED_IO_MODES_FEATURE.reducer,
@@ -124,9 +124,9 @@ export function provideApplicationStore(): EnvironmentProviders {
                 trace: true,
                 traceLimit: 75,
                 actionsBlocklist: [
-                    HUB_STATS_ACTIONS.setHasCommunication.type,
-                    HUB_STATS_ACTIONS.rssiLevelReceived.type,
-                    HUB_STATS_ACTIONS.batteryLevelReceived.type,
+                    HUB_RUNTIME_DATA_ACTIONS.setHasCommunication.type,
+                    HUB_RUNTIME_DATA_ACTIONS.rssiLevelReceived.type,
+                    HUB_RUNTIME_DATA_ACTIONS.batteryLevelReceived.type,
                     // CONTROLLER_INPUT_ACTIONS.inputReceived.type
                 ]
             }),

@@ -5,7 +5,7 @@ import { inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { APP_CONFIG, IAppConfig, NAVIGATOR, PrefixedConsoleLoggerFactoryService } from '@app/shared';
 
-import { HUBS_ACTIONS, HUB_STATS_ACTIONS } from '../../actions';
+import { HUBS_ACTIONS, HUB_RUNTIME_DATA_ACTIONS } from '../../actions';
 import { HubStorageService } from '../../hub-storage.service';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../../hub-communication-notifier-middleware-factory.service';
 
@@ -48,7 +48,7 @@ export const DISCOVER_HUB_EFFECT = createEffect((
                     communicationNotifierMiddleware.communicationNotifier$.pipe(
                         takeUntil(hub.disconnected)
                     ).subscribe((v) => {
-                        store.dispatch(HUB_STATS_ACTIONS.setHasCommunication({ hubId: macAddressReply, hasCommunication: v }));
+                        store.dispatch(HUB_RUNTIME_DATA_ACTIONS.setHasCommunication({ hubId: macAddressReply, hasCommunication: v }));
                     });
                     hubStorage.store(hub, macAddressReply);
                 }),

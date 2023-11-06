@@ -1,4 +1,4 @@
-export type HubStatsModel = {
+export type HubRuntimeDataModel = {
     hubId: string;
     rssi: number | null;
     isButtonPressed: boolean;

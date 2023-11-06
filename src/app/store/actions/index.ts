@@ -7,7 +7,7 @@ export * from './attached-io-props.actions';
 export * from './attached-io-modes.actions';
 export * from './hub-port-mode-info.actions';
 export * from './port-tasks.actions';
-export * from './hub-stats.actions';
+export * from './hub-runtime-data.actions';
 export * from './hubs.actions';
 export * from './control-scheme.actions';
 export * from './control-scheme-widgets-data.actions';

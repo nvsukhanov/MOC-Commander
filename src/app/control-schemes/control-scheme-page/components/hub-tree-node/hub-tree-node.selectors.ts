@@ -1,5 +1,5 @@
 import { MemoizedSelector, createSelector } from '@ngrx/store';
-import { HUBS_SELECTORS, HUB_STATS_SELECTORS } from '@app/store';
+import { HUBS_SELECTORS, HUB_RUNTIME_DATA_SELECTORS } from '@app/store';
 
 export interface IHubTreeNodeViewModel {
     isHubKnown: boolean;
@@ -15,17 +15,17 @@ export interface IHubTreeNodeViewModel {
 export const HUB_TREE_NODE_SELECTORS = {
     selectViewModel: (hubId: string): MemoizedSelector<object, IHubTreeNodeViewModel> => createSelector(
         HUBS_SELECTORS.selectHub(hubId),
-        HUB_STATS_SELECTORS.selectByHubId(hubId),
-        (hub, hubStats): IHubTreeNodeViewModel => {
+        HUB_RUNTIME_DATA_SELECTORS.selectByHubId(hubId),
+        (hub, hubRuntimeData): IHubTreeNodeViewModel => {
             return {
                 isHubKnown: !!hub,
                 name: hub?.name ?? '',
                 hubId,
-                batteryLevel: hubStats?.batteryLevel ?? 0,
-                rssi: hubStats?.rssi ?? 0,
-                isButtonPressed: hubStats?.isButtonPressed ?? false,
-                hasCommunication: hubStats?.hasCommunication ?? false,
-                isConnected: !!hubStats
+                batteryLevel: hubRuntimeData?.batteryLevel ?? 0,
+                rssi: hubRuntimeData?.rssi ?? 0,
+                isButtonPressed: hubRuntimeData?.isButtonPressed ?? false,
+                hasCommunication: hubRuntimeData?.hasCommunication ?? false,
+                isConnected: !!hubRuntimeData
             };
         }
     )

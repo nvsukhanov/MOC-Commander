@@ -5,7 +5,7 @@ export * from './controller-settings.reducer';
 export * from './controllers.reducer';
 export * from './hub-edit-form-active-saves.reducer';
 export * from './port-tasks.reducer';
-export * from './hub-stats.reducer';
+export * from './hub-runtime-data.reducer';
 export * from './hubs.reducer';
 export * from './attached-io-props.reducer';
 export * from './attached-io-modes.reducer';

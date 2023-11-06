@@ -1,6 +1,13 @@
 import { IOType } from 'rxpoweredup';
 import { MemoizedSelector, createSelector } from '@ngrx/store';
-import { ATTACHED_IO_SELECTORS, CONTROL_SCHEME_SELECTORS, ControlSchemeBinding, HUB_STATS_SELECTORS, PORT_TASKS_SELECTORS, PortCommandTask } from '@app/store';
+import {
+    ATTACHED_IO_SELECTORS,
+    CONTROL_SCHEME_SELECTORS,
+    ControlSchemeBinding,
+    HUB_RUNTIME_DATA_SELECTORS,
+    PORT_TASKS_SELECTORS,
+    PortCommandTask
+} from '@app/store';
 
 export interface IHubTreeNodeViewModel {
     ioType: IOType | null;
@@ -19,7 +26,7 @@ export const IO_TREE_NODE_SELECTORS = {
         { hubId, portId, schemeName, bindings }: { hubId: string; portId: number; schemeName: string; bindings: ControlSchemeBinding[] }
     ): MemoizedSelector<object, IHubTreeNodeViewModel> => createSelector(
         ATTACHED_IO_SELECTORS.selectIoAtPort({ hubId, portId }),
-        HUB_STATS_SELECTORS.selectIds,
+        HUB_RUNTIME_DATA_SELECTORS.selectIds,
         CONTROL_SCHEME_SELECTORS.selectScheme(schemeName),
         PORT_TASKS_SELECTORS.selectRunningTask({ hubId, portId }),
         PORT_TASKS_SELECTORS.selectLastExecutedTask({ hubId, portId }),

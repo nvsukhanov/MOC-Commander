@@ -2,7 +2,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap, takeUntil } from 'rxjs';
 import { inject } from '@angular/core';
 
-import { HUBS_ACTIONS, HUB_STATS_ACTIONS } from '../../actions';
+import { HUBS_ACTIONS, HUB_RUNTIME_DATA_ACTIONS } from '../../actions';
 import { HubStorageService } from '../../hub-storage.service';
 
 export const SUBSCRIBE_TO_BUTTON_STATE_ON_CONNECT = createEffect((
@@ -13,7 +13,7 @@ export const SUBSCRIBE_TO_BUTTON_STATE_ON_CONNECT = createEffect((
         ofType(HUBS_ACTIONS.connected),
         mergeMap((a) => hubStorage.get(a.hubId).properties.buttonState.pipe(
             takeUntil(hubStorage.get(a.hubId).disconnected),
-            map((isButtonPressed) => HUB_STATS_ACTIONS.buttonStateReceived({ hubId: a.hubId, isButtonPressed }))
+            map((isButtonPressed) => HUB_RUNTIME_DATA_ACTIONS.buttonStateReceived({ hubId: a.hubId, isButtonPressed }))
         ))
     );
 }, { functional: true });

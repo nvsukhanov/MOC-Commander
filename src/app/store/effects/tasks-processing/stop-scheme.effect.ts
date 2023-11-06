@@ -5,7 +5,7 @@ import { inject } from '@angular/core';
 import { Dictionary } from '@ngrx/entity';
 import { APP_CONFIG, IAppConfig } from '@app/shared';
 
-import { ATTACHED_IO_SELECTORS, CONTROL_SCHEME_SELECTORS, HUB_STATS_SELECTORS, PORT_TASKS_SELECTORS } from '../../selectors';
+import { ATTACHED_IO_SELECTORS, CONTROL_SCHEME_SELECTORS, HUB_RUNTIME_DATA_SELECTORS, PORT_TASKS_SELECTORS } from '../../selectors';
 import { AttachedIoModel, ControlSchemeBinding, ControlSchemeModel, PortCommandTask } from '../../models';
 import { CONTROL_SCHEME_ACTIONS } from '../../actions';
 import { HubStorageService } from '../../hub-storage.service';
@@ -44,7 +44,7 @@ function terminateScheme(
     }
     return of(schemeModel).pipe(
         concatLatestFrom(() => [
-            store.select(HUB_STATS_SELECTORS.selectIds),
+            store.select(HUB_RUNTIME_DATA_SELECTORS.selectIds),
             store.select(ATTACHED_IO_SELECTORS.selectEntities)
         ]),
         map(([ scheme, connectedHubIds, attachedIos ]) => getUniqueConnectedHubPorts(scheme.bindings, connectedHubIds, attachedIos)),
