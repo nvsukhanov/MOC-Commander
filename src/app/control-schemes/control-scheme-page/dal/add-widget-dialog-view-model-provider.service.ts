@@ -7,12 +7,11 @@ import {
     ATTACHED_IO_SELECTORS,
     AttachedIoPortModeInfoModel,
     CONTROL_SCHEME_SELECTORS,
-    WidgetType,
     attachedIoModesIdFn,
     attachedIoPortModeInfoIdFn,
     attachedIosIdFn
 } from '@app/store';
-import { getEnumValues } from '@app/shared';
+import { WidgetType, getEnumValues } from '@app/shared';
 
 import { AddWidgetDialogViewModel, WidgetDefaultConfigFactoryService, getWidgetDataPortModeName } from '../components';
 

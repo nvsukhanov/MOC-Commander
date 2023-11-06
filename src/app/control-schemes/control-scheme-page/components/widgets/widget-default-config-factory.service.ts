@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AttachedIoModel, WidgetConfigModel, WidgetType } from '@app/store';
+import { AttachedIoModel, WidgetConfigModel } from '@app/store';
+import { WidgetType } from '@app/shared';
 
 @Injectable({ providedIn: 'root' })
 export class WidgetDefaultConfigFactoryService {

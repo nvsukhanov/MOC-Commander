@@ -4,8 +4,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { ToggleControlComponent, ValidationMessagesDirective } from '@app/shared';
-import { TiltWidgetConfigModel, WidgetType } from '@app/store';
+import { ToggleControlComponent, ValidationMessagesDirective, WidgetType } from '@app/shared';
+import { TiltWidgetConfigModel } from '@app/store';
 
 import { CommonFormControlsBuilderService } from '../../../../../common';
 

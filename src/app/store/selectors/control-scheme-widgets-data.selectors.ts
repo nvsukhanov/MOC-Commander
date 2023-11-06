@@ -1,9 +1,10 @@
 import { createSelector } from '@ngrx/store';
 import { TiltData } from 'rxpoweredup';
+import { WidgetType } from '@app/shared';
 
 import { ATTACHED_IO_PROPS_SELECTORS } from './attached-io-props.selectors';
 import { CONTROL_SCHEME_WIDGET_DATA_FEATURE } from '../reducers';
-import { TiltWidgetConfigModel, WidgetType } from '../models';
+import { TiltWidgetConfigModel } from '../models';
 
 export const CONTROL_SCHEME_WIDGETS_DATA_SELECTORS = {
     selectById: (widgetId: number) => createSelector(

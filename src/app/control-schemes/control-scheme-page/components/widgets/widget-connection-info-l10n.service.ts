@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
 import { Observable, combineLatestWith, map, of, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { IoTypeToL10nKeyService, PortIdToPortNameService } from '@app/shared';
-import { ATTACHED_IO_SELECTORS, HUBS_SELECTORS, WidgetType } from '@app/store';
+import { IoTypeToL10nKeyService, PortIdToPortNameService, WidgetType } from '@app/shared';
+import { ATTACHED_IO_SELECTORS, HUBS_SELECTORS } from '@app/store';
 
 @Injectable({ providedIn: 'root' })
 export class WidgetConnectionInfoL10nService {

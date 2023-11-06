@@ -1,6 +1,7 @@
 import { InjectionToken, ViewContainerRef } from '@angular/core';
 import { Observable } from 'rxjs';
-import { WidgetConfigModel, WidgetType } from '@app/store';
+import { WidgetConfigModel } from '@app/store';
+import { WidgetType } from '@app/shared';
 
 export type ControlSchemeWidgetSettingsDescriptor = {
     readonly config: WidgetConfigModel | undefined;

@@ -17,11 +17,11 @@ import {
     HubModel,
     ROUTER_SELECTORS,
     WidgetConfigModel,
-    WidgetType,
     attachedIoModesIdFn,
     attachedIoPortModeInfoIdFn,
-    attachedIosIdFn,
+    attachedIosIdFn
 } from '@app/store';
+import { WidgetType } from '@app/shared';
 
 import { areControllableIosPresent, ioHasMatchingModeForOpMode } from '../../common';
 import {

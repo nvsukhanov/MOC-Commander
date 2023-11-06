@@ -1,6 +1,7 @@
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CONTROL_SCHEME_WIDGETS_DATA_SELECTORS, TemperatureWidgetConfigModel, WidgetType } from '@app/store';
+import { CONTROL_SCHEME_WIDGETS_DATA_SELECTORS, TemperatureWidgetConfigModel } from '@app/store';
+import { WidgetType } from '@app/shared';
 
 import { ControlSchemeWidgetDescriptor } from '../../widget-container';
 import { TemperatureSensorWidgetComponent } from './temperature-sensor-widget';
