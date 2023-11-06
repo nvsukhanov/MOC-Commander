@@ -16,6 +16,7 @@ export interface IAppConfig {
     readonly maxMessageSendAttempts: number;
     readonly initialMessageSendRetryDelayMs: number;
     readonly defaultBufferingMode: PortOperationStartupInformation;
+    readonly schemeStartStopTimeoutMs: number;
 }
 
 export const APP_CONFIG = new InjectionToken<IAppConfig>('APP_CONFIG', {
@@ -33,7 +34,8 @@ export const APP_CONFIG = new InjectionToken<IAppConfig>('APP_CONFIG', {
         messageSendTimeout: 500,
         maxMessageSendAttempts: 5,
         initialMessageSendRetryDelayMs: 100,
-        defaultBufferingMode: PortOperationStartupInformation.executeImmediately
+        defaultBufferingMode: PortOperationStartupInformation.executeImmediately,
+        schemeStartStopTimeoutMs: 5000
     }),
     providedIn: 'root'
 });

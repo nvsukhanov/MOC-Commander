@@ -1,8 +1,9 @@
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { Observable, catchError, forkJoin, map, mergeMap, of, switchMap, take } from 'rxjs';
+import { Observable, catchError, forkJoin, map, mergeMap, of, switchMap, take, timeout } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { Dictionary } from '@ngrx/entity';
+import { APP_CONFIG, IAppConfig } from '@app/shared';
 
 import { ATTACHED_IO_SELECTORS, CONTROL_SCHEME_SELECTORS, HUB_STATS_SELECTORS, PORT_TASKS_SELECTORS } from '../../selectors';
 import { AttachedIoModel, ControlSchemeBinding, ControlSchemeModel, PortCommandTask } from '../../models';
@@ -35,7 +36,8 @@ function terminateScheme(
     store: Store,
     taskBuilder: TaskFactoryService,
     hubStorage: HubStorageService,
-    taskRunner: TaskRunnerService
+    taskRunner: TaskRunnerService,
+    timeoutMs: number,
 ): Observable<Action> {
     if (!schemeModel) {
         return of(CONTROL_SCHEME_ACTIONS.schemeStopped());
@@ -66,6 +68,7 @@ function terminateScheme(
                 return of(CONTROL_SCHEME_ACTIONS.schemeStopped());
             }
             return forkJoin(cleanupTasks.map((task) => taskRunner.runTask(hubStorage.get(task.hubId), task))).pipe(
+                timeout(timeoutMs),
                 map(() => CONTROL_SCHEME_ACTIONS.schemeStopped()),
                 catchError(() => of(CONTROL_SCHEME_ACTIONS.schemeStopped()))
             );
@@ -78,11 +81,12 @@ export const STOP_SCHEME_EFFECT = createEffect((
     store: Store = inject(Store),
     taskBuilder: TaskFactoryService = inject(TaskFactoryService),
     taskRunner: TaskRunnerService = inject(TaskRunnerService),
-    hubStorage: HubStorageService = inject(HubStorageService)
+    hubStorage: HubStorageService = inject(HubStorageService),
+    appConfig: IAppConfig = inject(APP_CONFIG)
 ) => {
     return actions.pipe(
         ofType(CONTROL_SCHEME_ACTIONS.stopScheme),
         concatLatestFrom(() => store.select(CONTROL_SCHEME_SELECTORS.selectRunningScheme)),
-        mergeMap(([ , runningScheme ]) => terminateScheme(runningScheme, store, taskBuilder, hubStorage, taskRunner))
+        mergeMap(([ , runningScheme ]) => terminateScheme(runningScheme, store, taskBuilder, hubStorage, taskRunner, appConfig.schemeStartStopTimeoutMs))
     ) as Observable<Action>;
 }, { functional: true });
