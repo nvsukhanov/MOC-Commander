@@ -3,7 +3,7 @@ import { interval, map, mergeMap, startWith, switchMap, takeUntil } from 'rxjs';
 import { inject } from '@angular/core';
 import { APP_CONFIG, IAppConfig } from '@app/shared';
 
-import { HUBS_ACTIONS, HUB_STATS_ACTIONS } from '../../actions';
+import { HUBS_ACTIONS, HUB_RUNTIME_DATA_ACTIONS } from '../../actions';
 import { HubStorageService } from '../../hub-storage.service';
 
 export const POLL_BATTERY_LEVEL_ON_CONNECT = createEffect((
@@ -17,7 +17,7 @@ export const POLL_BATTERY_LEVEL_ON_CONNECT = createEffect((
             startWith(0),
             takeUntil(hubStorage.get(a.hubId).disconnected),
             switchMap(() => hubStorage.get(a.hubId).properties.getBatteryLevel()),
-            map((batteryLevel) => HUB_STATS_ACTIONS.batteryLevelReceived({ hubId: a.hubId, batteryLevel }))
+            map((batteryLevel) => HUB_RUNTIME_DATA_ACTIONS.batteryLevelReceived({ hubId: a.hubId, batteryLevel }))
         ))
     );
 }, { functional: true });

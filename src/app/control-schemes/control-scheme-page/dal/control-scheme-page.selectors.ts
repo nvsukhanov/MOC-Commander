@@ -13,7 +13,7 @@ import {
     ControlSchemeRunState,
     ControllerConnectionModel,
     HUBS_SELECTORS,
-    HUB_STATS_SELECTORS,
+    HUB_RUNTIME_DATA_SELECTORS,
     HubModel,
     ROUTER_SELECTORS,
     WidgetConfigModel,
@@ -138,7 +138,7 @@ const SELECT_IO_MODES = createSelector(
 const SELECT_SCHEME_RUN_BLOCKERS = createSelector(
     SELECT_CURRENTLY_VIEWED_SCHEME,
     CONTROL_SCHEME_SELECTORS.selectRunningState,
-    HUB_STATS_SELECTORS.selectIds,
+    HUB_RUNTIME_DATA_SELECTORS.selectIds,
     SELECT_IO_MODES,
     CONTROLLER_CONNECTION_SELECTORS.selectEntities,
     ATTACHED_IO_SELECTORS.selectEntities,

@@ -6,7 +6,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Router } from '@angular/router';
 import { RoutesBuilderService } from '@app/routing';
-import { HUBS_ACTIONS, HubModel, ROUTER_SELECTORS, attachedIosIdFn, } from '@app/store';
+import { HUBS_ACTIONS, HubModel, ROUTER_SELECTORS, attachedIosIdFn } from '@app/store';
 import { HintComponent, TitleService } from '@app/shared';
 
 import { HubPropertiesViewComponent } from './hub-properties-view';
@@ -36,7 +36,7 @@ import { HUB_VIEW_PAGE_SELECTORS, HubIoViewModel } from './hub-view-page.selecto
 export class HubViewPageComponent implements OnInit {
     public readonly selectedHub$ = this.store.select(HUB_VIEW_PAGE_SELECTORS.selectCurrentlyViewedHubModel);
 
-    public readonly selectedHubStats$ = this.store.select(HUB_VIEW_PAGE_SELECTORS.selectCurrentlyViewedHubStats);
+    public readonly selectedHubRuntimeData$ = this.store.select(HUB_VIEW_PAGE_SELECTORS.selectCurrentlyViewedHubRuntimeData);
 
     public readonly ioFullInfoList$ = this.store.select(HUB_VIEW_PAGE_SELECTORS.selectCurrentlyViewedHubIoFullInfo);
 

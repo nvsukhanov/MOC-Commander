@@ -1,5 +1,5 @@
 import { createSelector } from '@ngrx/store';
-import { HUBS_SELECTORS, HUB_EDIT_FORM_ACTIVE_SAVES_SELECTORS, HUB_STATS_SELECTORS, HubModel, ROUTER_SELECTORS } from '@app/store';
+import { HUBS_SELECTORS, HUB_EDIT_FORM_ACTIVE_SAVES_SELECTORS, HUB_RUNTIME_DATA_SELECTORS, HubModel, ROUTER_SELECTORS } from '@app/store';
 
 export const HUB_EDIT_PAGE_SELECTORS = {
     selectEditedHubModel: createSelector(
@@ -11,9 +11,9 @@ export const HUB_EDIT_PAGE_SELECTORS = {
     ),
     selectIsEditedHubConnected: createSelector(
         ROUTER_SELECTORS.selectCurrentlyEditedHubId,
-        HUB_STATS_SELECTORS.selectIds,
-        (hubId, hubStatsIds): boolean => {
-            return hubId !== null && hubStatsIds.includes(hubId);
+        HUB_RUNTIME_DATA_SELECTORS.selectIds,
+        (hubId, hubRuntimeDataIds): boolean => {
+            return hubId !== null && hubRuntimeDataIds.includes(hubId);
         }
     ),
     selectIsEditedHubIsSaving: createSelector(

@@ -1,7 +1,7 @@
 import { createActionGroup, props } from '@ngrx/store';
 
-export const HUB_STATS_ACTIONS = createActionGroup({
-    source: 'Hub Stats',
+export const HUB_RUNTIME_DATA_ACTIONS = createActionGroup({
+    source: 'Hub runtime data',
     events: {
         'battery level subscribe': props<{ hubId: string }>(),
         'battery level received': props<{ hubId: string; batteryLevel: null | number }>(),

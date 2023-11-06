@@ -1,8 +1,8 @@
 <ng-container *ngIf="selectedHub$ | ngrxPush; let hub; else hubNotFound">
-    <ng-container *ngIf="selectedHubStats$ | ngrxPush; else hubIsNotConnected">
+    <ng-container *ngIf="selectedHubRuntimeData$ | ngrxPush; else hubIsNotConnected">
         <app-hub-properties-view class="hub-properties-view"
                                  [configuration]="hub"
-                                 [stats]="selectedHubStats$ | ngrxPush"
+                                 [runtimeData]="selectedHubRuntimeData$ | ngrxPush"
                                  (disconnect)="disconnectHub()"
         ></app-hub-properties-view>
 

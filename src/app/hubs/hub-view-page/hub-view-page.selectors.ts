@@ -8,7 +8,7 @@ import {
     AttachedIoModesModel,
     AttachedIoPortModeInfoModel,
     HUBS_SELECTORS,
-    HUB_STATS_SELECTORS,
+    HUB_RUNTIME_DATA_SELECTORS,
     ROUTER_SELECTORS,
     attachedIoModesIdFn,
     attachedIoPortModeInfoIdFn
@@ -56,11 +56,11 @@ export const HUB_VIEW_PAGE_SELECTORS = {
             return hubId !== null ? hubs[hubId] : undefined;
         }
     ),
-    selectCurrentlyViewedHubStats: createSelector(
+    selectCurrentlyViewedHubRuntimeData: createSelector(
         ROUTER_SELECTORS.selectCurrentlyViewedHubId,
-        HUB_STATS_SELECTORS.selectEntities,
-        (hubId, hubStats) => {
-            return hubId !== null && !!hubStats ? hubStats[hubId] : undefined;
+        HUB_RUNTIME_DATA_SELECTORS.selectEntities,
+        (hubId, hubRuntimeDataEntities) => {
+            return hubId !== null && !!hubRuntimeDataEntities ? hubRuntimeDataEntities[hubId] : undefined;
         }
     ),
     selectCurrentlyViewedHubIoFullInfo: createSelector(

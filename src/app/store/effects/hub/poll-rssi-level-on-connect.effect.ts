@@ -3,7 +3,7 @@ import { interval, map, mergeMap, startWith, switchMap, takeUntil } from 'rxjs';
 import { inject } from '@angular/core';
 import { APP_CONFIG, IAppConfig } from '@app/shared';
 
-import { HUBS_ACTIONS, HUB_STATS_ACTIONS } from '../../actions';
+import { HUBS_ACTIONS, HUB_RUNTIME_DATA_ACTIONS } from '../../actions';
 import { HubStorageService } from '../../hub-storage.service';
 
 export const POLL_RSSI_LEVEL_ON_CONNECT = createEffect((
@@ -17,7 +17,7 @@ export const POLL_RSSI_LEVEL_ON_CONNECT = createEffect((
             startWith(0),
             takeUntil(hubStorage.get(a.hubId).disconnected),
             switchMap(() => hubStorage.get(a.hubId).properties.getRSSILevel()),
-            map((rssi) => HUB_STATS_ACTIONS.rssiLevelReceived({ hubId: a.hubId, rssi }))
+            map((rssi) => HUB_RUNTIME_DATA_ACTIONS.rssiLevelReceived({ hubId: a.hubId, rssi }))
         ))
     );
 }, { functional: true });

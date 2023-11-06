@@ -13,10 +13,10 @@ import {
     ControllerSettingsState,
     ControllersState,
     HubEditFormActiveSavesState,
-    HubStatsState,
+    HubRuntimeDataState,
     HubsState,
     PortTasksState,
-    SettingsState,
+    SettingsState
 } from './reducers';
 import { AppStoreVersion } from './app-store-version';
 
@@ -29,7 +29,7 @@ export interface IState {
     controlSchemes: ControlSchemeState;
     controlSchemeWidgetsData: ControlSchemeWidgetsDataState;
     hubs: HubsState;
-    hubStats: HubStatsState;
+    hubRuntimeData: HubRuntimeDataState;
     attachedIos: AttachedIOState;
     attachedIoProps: AttacheIoPropsState;
     attachedIoModes: AttachedIoModesState;

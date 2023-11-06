@@ -3,7 +3,7 @@ import { Observable, filter, of, switchMap, take, throwError, timeout } from 'rx
 import { Store } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
 
-import { HUB_STATS_SELECTORS } from '../selectors';
+import { HUB_RUNTIME_DATA_SELECTORS } from '../selectors';
 import { HUBS_ACTIONS } from '../actions';
 
 @Injectable()
@@ -18,7 +18,7 @@ export class HubMotorPositionFacadeService {
         hubId: string,
         portId: number
     ): Observable<number> {
-        return this.store.select(HUB_STATS_SELECTORS.canRequestPortValue({ hubId, portId })).pipe(
+        return this.store.select(HUB_RUNTIME_DATA_SELECTORS.canRequestPortValue({ hubId, portId })).pipe(
             take(1),
             switchMap((canRequest) => {
                     if (!canRequest) {
@@ -45,7 +45,7 @@ export class HubMotorPositionFacadeService {
         hubId: string,
         portId: number
     ): Observable<number> {
-        return this.store.select(HUB_STATS_SELECTORS.canRequestPortValue({ hubId, portId })).pipe(
+        return this.store.select(HUB_RUNTIME_DATA_SELECTORS.canRequestPortValue({ hubId, portId })).pipe(
             take(1),
             switchMap((canRequest) => {
                     if (!canRequest) {

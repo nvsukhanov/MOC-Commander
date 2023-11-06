@@ -4,18 +4,18 @@ import { inject } from '@angular/core';
 import { NEVER, Observable, distinctUntilChanged, map, mergeAll, mergeMap, pairwise, startWith, switchMap } from 'rxjs';
 import { ControllerInputType, ControllerType, GREEN_BUTTON_INPUT_ID, MAX_INPUT_VALUE, NULL_INPUT_VALUE } from '@app/shared';
 
-import { CONTROLLER_INPUT_SELECTORS, CONTROLLER_SETTINGS_SELECTORS, HUBS_SELECTORS, HUB_STATS_SELECTORS, } from '../../../selectors';
+import { CONTROLLER_INPUT_SELECTORS, CONTROLLER_SETTINGS_SELECTORS, HUBS_SELECTORS, HUB_RUNTIME_DATA_SELECTORS } from '../../../selectors';
 import { controllerIdFn } from '../../../reducers';
 import { CONTROLLER_INPUT_ACTIONS } from '../../../actions';
 import { HubStorageService } from '../../../hub-storage.service';
 
 const HUB_INPUT_READ_SELECTOR = createSelector(
     HUBS_SELECTORS.selectAll,
-    HUB_STATS_SELECTORS.selectIds,
+    HUB_RUNTIME_DATA_SELECTORS.selectIds,
     CONTROLLER_SETTINGS_SELECTORS.selectEntities,
-    (hubs, hubStatsIds, settings) => {
-        const hubStatsIdsSet = new Set<string | number>(hubStatsIds);
-        return hubs.filter((hub) => hubStatsIdsSet.has(hub.hubId)).map((hub) => hub.hubId)
+    (hubs, hubRuntimeIds, settings) => {
+        const hubRuntimeIdsSet = new Set<string | number>(hubRuntimeIds);
+        return hubs.filter((hub) => hubRuntimeIdsSet.has(hub.hubId)).map((hub) => hub.hubId)
                    .filter((hub) => {
                        const hubControllerId = controllerIdFn({ hubId: hub, controllerType: ControllerType.Hub });
                        const hubSettings = settings[hubControllerId];

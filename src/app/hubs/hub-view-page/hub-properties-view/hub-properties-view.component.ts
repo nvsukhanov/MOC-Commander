@@ -5,7 +5,7 @@ import { NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
 import { RoutesBuilderService } from '@app/routing';
-import { HubModel, HubStatsModel } from '@app/store';
+import { HubModel, HubRuntimeDataModel } from '@app/store';
 import { EllipsisTitleDirective, FeatureToolbarControlsDirective, HubTypeToL10nKeyPipe } from '@app/shared';
 
 @Component({
@@ -28,7 +28,7 @@ import { EllipsisTitleDirective, FeatureToolbarControlsDirective, HubTypeToL10nK
 export class HubPropertiesViewComponent {
     @Output() public readonly disconnect = new EventEmitter<void>();
 
-    @Input() public stats?: HubStatsModel;
+    @Input() public runtimeData?: HubRuntimeDataModel;
 
     private _hubEditRoute: string[] = [];
 
