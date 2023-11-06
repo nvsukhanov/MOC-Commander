@@ -285,7 +285,8 @@
         "defaultName": "Напряжение",
         "connectionInfo": "{hubName}:{portName} - {ioName}",
         "value": "{voltage}В",
-        "valueChangeThresholdTitle": "Порог изменения значения (вольт)"
+        "valueChangeThresholdTitle": "Порог изменения значения (вольт)",
+        "noDataTitle": "Нет данных"
       },
       "tilt": {
         "name": "Наклон",
@@ -296,14 +297,16 @@
         "invertPitchOptionTitle": "Инвертировать тангаж",
         "invertRollOptionTitle": "Инвертировать крен",
         "compensateTiltButtonTitle": "Компенсация",
-        "resetTiltCompensationButtonTitle": "Сброс"
+        "resetTiltCompensationButtonTitle": "Сброс",
+        "noDataTitle": "Нет данных"
       },
       "temperature": {
         "name": "Температура",
         "defaultName": "Температура",
         "connectionInfo": "{hubName}:{portName} - {ioName}",
         "value": "{temperature}°C",
-        "valueChangeThresholdTitle": "Порог изменения значения (°C)"
+        "valueChangeThresholdTitle": "Порог изменения значения (°C)",
+        "noDataTitle": "Нет данных"
       }
     }
   },

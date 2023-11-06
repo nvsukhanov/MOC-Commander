@@ -4,9 +4,7 @@
             (edit)="onEdit()"
             (delete)="onDelete()"
 >
-    <div class="tilt-content"
-         *ngrxLet="tiltData$ as tilt"
-    >
+    <div class="tilt-content">
         <app-yaw-indicator [yaw]="tilt?.yaw ?? undefined"></app-yaw-indicator>
         <app-pitch-indicator [pitch]="tilt?.pitch ?? undefined"></app-pitch-indicator>
         <app-roll-indicator [roll]="tilt?.roll ?? undefined"></app-roll-indicator>

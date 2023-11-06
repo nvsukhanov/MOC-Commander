@@ -285,7 +285,8 @@
         "defaultName": "Voltage",
         "connectionInfo": "{hubName}:{portName} - {ioName}",
         "value": "{voltage}V",
-        "valueChangeThresholdTitle": "Value change threshold (volts)"
+        "valueChangeThresholdTitle": "Value change threshold (volts)",
+        "noDataTitle": "No data"
       },
       "tilt": {
         "name": "Tilt",
@@ -296,14 +297,16 @@
         "invertPitchOptionTitle": "Invert pitch",
         "invertRollOptionTitle": "Invert roll",
         "compensateTiltButtonTitle": "Compensate",
-        "resetTiltCompensationButtonTitle": "Reset"
+        "resetTiltCompensationButtonTitle": "Reset",
+        "noDataTitle": "No data"
       },
       "temperature": {
         "name": "Temperature",
         "defaultName": "Temperature",
         "connectionInfo": "{hubName}:{portName} - {ioName}",
         "value": "{temperature}°C",
-        "valueChangeThresholdTitle": "Value change threshold (°C)"
+        "valueChangeThresholdTitle": "Value change threshold (°C)",
+        "noDataTitle": "No data"
       }
     }
   },

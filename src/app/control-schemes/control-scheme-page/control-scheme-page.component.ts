@@ -25,16 +25,16 @@ import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData, } fr
 import {
     AddWidgetDialogComponent,
     AddWidgetDialogViewModel,
-    CONTROL_SCHEME_WIDGET_COMPONENT_RESOLVER,
+    CONTROL_SCHEME_WIDGET_COMPONENT_FACTORY,
     ControlSchemeGeneralInfoComponent,
     ControlSchemePageCompactToolbarComponent,
     ControlSchemePageFullToolbarComponent,
     ControlSchemeViewIoListComponent,
-    ControlSchemeWidgetComponentResolverService,
     ControlSchemeWidgetsGridComponent,
     EditWidgetSettingsDialogComponent
 } from './components';
 import { ControlSchemeRunBlockersL10nPipe } from './control-scheme-run-blockers-l10n.pipe';
+import { ControlSchemeWidgetComponentFactoryService } from './control-scheme-widget-component-factory.service';
 
 @Component({
     standalone: true,
@@ -62,7 +62,7 @@ import { ControlSchemeRunBlockersL10nPipe } from './control-scheme-run-blockers-
     ],
     providers: [
         TitleService,
-        { provide: CONTROL_SCHEME_WIDGET_COMPONENT_RESOLVER, useClass: ControlSchemeWidgetComponentResolverService },
+        { provide: CONTROL_SCHEME_WIDGET_COMPONENT_FACTORY, useClass: ControlSchemeWidgetComponentFactoryService },
         AddWidgetDialogViewModelProvider
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
