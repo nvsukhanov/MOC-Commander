@@ -1,4 +1,11 @@
 * text=auto
+*.ts text
+*.js text
+*.json text
+*.html text
+*.css text
+*.scss text
+*.md text
 
 *.png binary
 *.jpg binary
