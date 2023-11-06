@@ -1,8 +1,9 @@
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { catchError, filter, forkJoin, map, of, switchMap } from 'rxjs';
+import { catchError, filter, forkJoin, map, of, switchMap, timeout } from 'rxjs';
 import { inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { HubServoCalibrationFacadeService } from '@app/store';
+import { APP_CONFIG, IAppConfig } from '@app/shared';
 
 import { CONTROL_SCHEME_ACTIONS } from '../../../actions';
 import { ControlSchemeModel } from '../../../models';
@@ -17,7 +18,8 @@ export const PRE_RUN_SCHEME_EFFECT = createEffect((
     actions: Actions = inject(Actions),
     hubStorage: HubStorageService = inject(HubStorageService),
     store: Store = inject(Store),
-    hubCalibrationFacade: HubServoCalibrationFacadeService = inject(HubServoCalibrationFacadeService)
+    hubCalibrationFacade: HubServoCalibrationFacadeService = inject(HubServoCalibrationFacadeService),
+    appConfig: IAppConfig = inject(APP_CONFIG)
 ) => {
     return actions.pipe(
         ofType(CONTROL_SCHEME_ACTIONS.startScheme),
@@ -41,6 +43,7 @@ export const PRE_RUN_SCHEME_EFFECT = createEffect((
                 return of(CONTROL_SCHEME_ACTIONS.schemeStarted({ name: scheme.name }));
             }
             return forkJoin(combinedTasks).pipe(
+                timeout(appConfig.schemeStartStopTimeoutMs),
                 map(() => CONTROL_SCHEME_ACTIONS.schemeStarted({ name: scheme.name })),
                 catchError(() => of(CONTROL_SCHEME_ACTIONS.schemeStartFailed()))
             );
