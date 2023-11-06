@@ -15,14 +15,14 @@ export class HubStorageService {
         if (this.hubsMap.has(id)) {
             throw new Error(`Hub with id=${id} is already registered`);
         }
-        this.logger.debug(`[HubStorage] Storing hub`, id);
+        this.logger.debug('[HubStorage] Storing hub', id);
         this.hubsMap.set(id, hub);
     }
 
     public get(id: string): IHub {
         const hub = this.hubsMap.get(id);
         if (!hub) {
-            throw new Error(`Hub with id=${id} is not registered`);
+            throw new Error('Hub with id=${id} is not registered');
         }
         return hub;
     }
