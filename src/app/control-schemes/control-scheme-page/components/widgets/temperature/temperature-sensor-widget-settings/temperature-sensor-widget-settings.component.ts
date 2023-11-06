@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
-import { Observable, Subscription, map, startWith, take } from 'rxjs';
+import { Subscription, startWith, take } from 'rxjs';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,7 +8,6 @@ import { TemperatureWidgetConfigModel, WidgetType } from '@app/store';
 import { ValidationMessagesDirective } from '@app/shared';
 
 import { CommonFormControlsBuilderService } from '../../../../../common';
-import { IControlSchemeWidgetSettingsComponent } from '../../../widget-settings-container';
 
 @Component({
     standalone: true,
@@ -24,11 +23,8 @@ import { IControlSchemeWidgetSettingsComponent } from '../../../widget-settings-
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TemperatureSensorWidgetSettingsComponent implements IControlSchemeWidgetSettingsComponent<TemperatureWidgetConfigModel>,
-    OnDestroy {
-    @Output() public readonly configChanges = new EventEmitter<TemperatureWidgetConfigModel>();
-
-    @Output() public valid: Observable<boolean>;
+export class TemperatureSensorWidgetSettingsComponent implements OnDestroy {
+    @Output() public readonly configChanges = new EventEmitter<TemperatureWidgetConfigModel | undefined>();
 
     public readonly form = this.formBuilder.group({
         id: this.formBuilder.control<number>(0, { validators: Validators.required, nonNullable: true }),
@@ -55,42 +51,39 @@ export class TemperatureSensorWidgetSettingsComponent implements IControlSchemeW
         private readonly commonFormBuilder: CommonFormControlsBuilderService,
         private readonly translocoService: TranslocoService,
     ) {
-        this.valid = this.form.statusChanges.pipe(
-            startWith(null),
-            map(() => this.form.valid)
-        );
     }
 
     @Input()
     public set config(
-        config: TemperatureWidgetConfigModel
+        config: TemperatureWidgetConfigModel | undefined
     ) {
         this.configChangesSubscription?.unsubscribe();
-        this.form.patchValue(config);
+        if (config) {
+            this.form.patchValue(config);
+        } else {
+            this.form.reset();
+        }
         if (!this.form.controls.title.valid) {
             this.translocoService.selectTranslate('controlScheme.widgets.temperature.defaultName').pipe(
                 take(1)
             ).subscribe((name) => {
-                this.form.controls.title.setValue(name);
+                this.form.controls.title.setValue(name, { emitEvent: true });
             });
         }
         this.configChangesSubscription = this.form.valueChanges.pipe(
             startWith(null)
         ).subscribe(() => {
-            const result = this.getConfig();
-            if (result !== null) {
-                this.configChanges.emit(result);
-            }
+            this.configChanges.emit(this.config);
         });
     }
 
-    public ngOnDestroy(): void {
-        this.configChangesSubscription?.unsubscribe();
-    }
-
-    private getConfig(): TemperatureWidgetConfigModel | null {
-        if (this.form.controls.hubId.value === null || this.form.controls.portId.value === null || this.form.controls.modeId.value === null) {
-            return null;
+    public get config(): TemperatureWidgetConfigModel | undefined {
+        if (this.form.controls.hubId.value === null
+            || this.form.controls.portId.value === null
+            || this.form.controls.modeId.value === null
+            || this.form.invalid
+        ) {
+            return undefined;
         }
         return {
             widgetType: WidgetType.Temperature,
@@ -99,9 +92,13 @@ export class TemperatureSensorWidgetSettingsComponent implements IControlSchemeW
             hubId: this.form.controls.hubId.value,
             portId: this.form.controls.portId.value,
             modeId: this.form.controls.modeId.value,
-            valueChangeThreshold: this.form.controls.valueChangeThreshold.value,
+            valueChangeThreshold: +this.form.controls.valueChangeThreshold.value,
             width: this.form.controls.width.value,
             height: this.form.controls.height.value,
         };
+    }
+
+    public ngOnDestroy(): void {
+        this.configChangesSubscription?.unsubscribe();
     }
 }

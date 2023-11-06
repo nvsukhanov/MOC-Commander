@@ -74,8 +74,7 @@ export class WidgetContainerComponent implements OnDestroy {
         this.updateSpans(config);
         this.destroyWidget();
         this.widgetDescriptor = this.widgetFactory.createWidget(this.viewContainerRef, config);
-        this.widgetActionsSubscription = new Subscription();
-        this.widgetActionsSubscription.add(this.widgetDescriptor.edit$.subscribe(() => this.edit.emit()));
+        this.widgetActionsSubscription = this.widgetDescriptor.edit$.subscribe(() => this.edit.emit());
         this.widgetActionsSubscription.add(this.widgetDescriptor.delete$.subscribe(() => this.delete.emit()));
         this.widgetDescriptor.setCanBeDeleted(this._canBeDeleted);
         this.widgetDescriptor.setCanBeEdited(this._canBeEdited);

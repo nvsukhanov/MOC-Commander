@@ -2,12 +2,12 @@ import { Injectable, ViewContainerRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CONTROL_SCHEME_WIDGETS_DATA_SELECTORS, TemperatureWidgetConfigModel, WidgetType } from '@app/store';
 
-import { ControlSchemeWidgetDescriptor, IControlSchemeWidgetComponentFactory } from '../../widget-container';
+import { ControlSchemeWidgetDescriptor } from '../../widget-container';
 import { TemperatureSensorWidgetComponent } from './temperature-sensor-widget';
 import { WidgetConnectionInfoL10nService } from '../widget-connection-info-l10n.service';
 
 @Injectable({ providedIn: 'root' })
-export class TemperatureWidgetComponentFactoryService implements IControlSchemeWidgetComponentFactory<WidgetType.Temperature> {
+export class TemperatureWidgetComponentFactoryService {
     constructor(
         private readonly widgetConnectionInfoL10nService: WidgetConnectionInfoL10nService,
         private readonly store: Store

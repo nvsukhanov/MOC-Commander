@@ -6,9 +6,8 @@
     <div mat-dialog-content
          class="dialog-content"
     >
-        <app-widget-settings-container [config]="config"
+        <app-widget-settings-container [config]="initialConfig"
                                        (configChanges)="onConfigChanges($event)"
-                                       (valid)="onCanSaveChanges($event)"
         ></app-widget-settings-container>
     </div>
 
@@ -18,7 +17,7 @@
         <button mat-raised-button
                 type="submit"
                 [color]="'primary'"
-                [disabled]="!(canSave$ | ngrxPush)"
+                [disabled]="!config"
         >
             {{ 'controlScheme.widgets.editWidgetSettingsDialog.saveButton' | transloco }}
         </button>

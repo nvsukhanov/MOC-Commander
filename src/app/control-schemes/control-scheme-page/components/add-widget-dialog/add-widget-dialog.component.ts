@@ -6,13 +6,13 @@ import { TranslocoPipe } from '@ngneat/transloco';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
-import { BehaviorSubject, Observable, map, startWith } from 'rxjs';
-import { WidgetConfigModel, WidgetType } from '@app/store';
+import { WidgetConfigModel } from '@app/store';
 
 import { AddWidgetDialogViewModel } from './add-widget-dialog-view-model';
 import { WidgetTypeToL10nKeyPipe } from '../../../common';
-import { CONTROL_SCHEME_WIDGET_SETTINGS_RESOLVER, WidgetSettingsContainerComponent } from '../widget-settings-container';
-import { ControlSchemeWidgetSettingsComponentResolverService, WidgetConnectionInfoL10nPipe } from '../widgets';
+import { CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY, WidgetSettingsContainerComponent } from '../widget-settings-container';
+import { WidgetConnectionInfoL10nPipe } from '../widgets';
+import { ControlSchemeWidgetSettingsComponentFactoryService } from '../../control-scheme-widget-settings-component-factory.service';
 
 @Component({
     standalone: true,
@@ -35,25 +35,19 @@ import { ControlSchemeWidgetSettingsComponentResolverService, WidgetConnectionIn
         LetDirective,
     ],
     providers: [
-        { provide: CONTROL_SCHEME_WIDGET_SETTINGS_RESOLVER, useClass: ControlSchemeWidgetSettingsComponentResolverService },
+        { provide: CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY, useClass: ControlSchemeWidgetSettingsComponentFactoryService },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddWidgetDialogComponent {
-    public readonly widgetSelectionData: Array<WidgetConfigModel>;
+    public readonly widgetsData: Array<WidgetConfigModel>;
 
     public readonly form = this.formBuilder.group({
-        widgetType: this.formBuilder.control<WidgetType | null>(null, { validators: [ Validators.required ] })
+        selectionIndex: this.formBuilder.control<number | null>(null, { validators: [ Validators.required ] })
     });
-
-    public readonly selectedBaseConfig$: Observable<WidgetConfigModel | undefined>;
-
-    public readonly canSave$: Observable<boolean>;
 
     @ViewChild(WidgetSettingsContainerComponent, { static: false, read: WidgetSettingsContainerComponent })
     public readonly widgetSettingsContainer?: WidgetSettingsContainerComponent;
-
-    private readonly _canSave$: BehaviorSubject<boolean>;
 
     private _config?: WidgetConfigModel;
 
@@ -63,27 +57,19 @@ export class AddWidgetDialogComponent {
         private readonly formBuilder: FormBuilder,
         private readonly cdRef: ChangeDetectorRef
     ) {
-        this.widgetSelectionData = this.dialogData.widgets;
-        this._canSave$ = new BehaviorSubject<boolean>(false);
-        this.canSave$ = this._canSave$;
-
-        this.selectedBaseConfig$ = this.form.controls.widgetType.valueChanges.pipe(
-            startWith(null),
-            map(() => this.form.controls.widgetType.value),
-            map((widgetType) => {
-                if (widgetType === null) {
-                    return undefined;
-                }
-                return this.widgetSelectionData.find((widgetSelectionData) => widgetSelectionData.widgetType === widgetType);
-            })
-        );
+        this.widgetsData = this.dialogData.widgets;
     }
 
-    public onCanSaveChanges(
-        canSave: boolean
-    ): void {
-        this._canSave$.next(canSave);
-        this.cdRef.detectChanges(); // TODO: not sure why this is needed
+    public get config(): WidgetConfigModel | undefined {
+        return this._config;
+    }
+
+    public get selectedWidgetBaseConfig(): WidgetConfigModel | undefined {
+        const baseWidgetDataIndex = this.form.controls.selectionIndex.value;
+        if (baseWidgetDataIndex === null) {
+            return undefined;
+        }
+        return this.widgetsData[baseWidgetDataIndex];
     }
 
     public onSave(
@@ -97,9 +83,10 @@ export class AddWidgetDialogComponent {
     }
 
     public onConfigChanges(
-        config: WidgetConfigModel
+        config: WidgetConfigModel | undefined
     ): void {
         this._config = config;
+        this.cdRef.detectChanges(); // TODO: not sure why this is needed
     }
 
     public onCancel(): void {

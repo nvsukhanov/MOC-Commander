@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
-import { Observable, Subscription, map, startWith, take } from 'rxjs';
+import { Subscription, startWith, take } from 'rxjs';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { DeepPartial, ToggleControlComponent, ValidationMessagesDirective } from '@app/shared';
+import { ToggleControlComponent, ValidationMessagesDirective } from '@app/shared';
 import { TiltWidgetConfigModel, WidgetType } from '@app/store';
 
-import { IControlSchemeWidgetSettingsComponent } from '../../../widget-settings-container';
 import { CommonFormControlsBuilderService } from '../../../../../common';
 
 @Component({
@@ -25,10 +24,8 @@ import { CommonFormControlsBuilderService } from '../../../../../common';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TiltSensorWidgetSettingsComponent implements IControlSchemeWidgetSettingsComponent<TiltWidgetConfigModel>, OnDestroy {
-    @Output() public readonly configChanges = new EventEmitter<TiltWidgetConfigModel>();
-
-    @Output() public readonly valid: Observable<boolean>;
+export class TiltSensorWidgetSettingsComponent implements OnDestroy {
+    @Output() public readonly configChanges = new EventEmitter<TiltWidgetConfigModel | undefined>();
 
     public readonly form = this.formBuilder.group({
         id: this.formBuilder.control<number>(0, { validators: Validators.required, nonNullable: true }),
@@ -58,18 +55,18 @@ export class TiltSensorWidgetSettingsComponent implements IControlSchemeWidgetSe
         private readonly translocoService: TranslocoService,
         private readonly commonFormBuilder: CommonFormControlsBuilderService,
     ) {
-        this.valid = this.form.statusChanges.pipe(
-            startWith(null),
-            map(() => this.form.valid)
-        );
     }
 
     @Input()
     public set config(
-        config: DeepPartial<TiltWidgetConfigModel>
+        config: TiltWidgetConfigModel | undefined
     ) {
         this.configChangesSubscription?.unsubscribe();
-        this.form.patchValue(config);
+        if (config) {
+            this.form.patchValue(config);
+        } else {
+            this.form.reset();
+        }
         if (!this.form.controls.title.valid) {
             this.translocoService.selectTranslate('controlScheme.widgets.tilt.defaultName').pipe(
                 take(1)
@@ -80,20 +77,17 @@ export class TiltSensorWidgetSettingsComponent implements IControlSchemeWidgetSe
         this.configChangesSubscription = this.form.valueChanges.pipe(
             startWith(null)
         ).subscribe(() => {
-            const result = this.getConfig();
-            if (result !== null) {
-                this.configChanges.emit(result);
-            }
+            this.configChanges.emit(this.config);
         });
     }
 
-    public ngOnDestroy(): void {
-        this.configChangesSubscription?.unsubscribe();
-    }
-
-    private getConfig(): TiltWidgetConfigModel | null {
-        if (this.form.controls.hubId.value === null || this.form.controls.portId.value === null || this.form.controls.modeId.value === null) {
-            return null;
+    public get config(): TiltWidgetConfigModel | undefined {
+        if (this.form.controls.hubId.value === null
+            || this.form.controls.portId.value === null
+            || this.form.controls.modeId.value === null
+            || this.form.invalid
+        ) {
+            return undefined;
         }
         return {
             widgetType: WidgetType.Tilt,
@@ -109,5 +103,9 @@ export class TiltSensorWidgetSettingsComponent implements IControlSchemeWidgetSe
             invertPitch: this.form.controls.invertPitch.value,
             invertYaw: this.form.controls.invertYaw.value,
         };
+    }
+
+    public ngOnDestroy(): void {
+        this.configChangesSubscription?.unsubscribe();
     }
 }

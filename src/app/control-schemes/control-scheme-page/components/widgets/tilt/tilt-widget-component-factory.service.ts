@@ -1,12 +1,12 @@
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ATTACHED_IO_PROPS_ACTIONS, CONTROL_SCHEME_WIDGETS_DATA_SELECTORS, TiltWidgetConfigModel, WidgetType } from '@app/store';
+import { ATTACHED_IO_PROPS_ACTIONS, CONTROL_SCHEME_WIDGETS_DATA_SELECTORS, TiltWidgetConfigModel } from '@app/store';
 
-import { ControlSchemeWidgetDescriptor, IControlSchemeWidgetComponentFactory } from '../../widget-container';
+import { ControlSchemeWidgetDescriptor } from '../../widget-container';
 import { TiltSensorWidgetComponent } from './tilt-sensor-widget';
 
 @Injectable({ providedIn: 'root' })
-export class TiltWidgetComponentFactoryService implements IControlSchemeWidgetComponentFactory<WidgetType.Tilt> {
+export class TiltWidgetComponentFactoryService {
     constructor(
         private readonly store: Store
     ) {

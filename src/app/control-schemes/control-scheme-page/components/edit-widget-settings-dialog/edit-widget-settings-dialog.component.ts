@@ -1,19 +1,13 @@
-import { ChangeDetectionStrategy, Component, Inject, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatOptionModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
-import { NgForOf, NgIf } from '@angular/common';
-import { PushPipe } from '@ngrx/component';
+import { NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { ReactiveFormsModule } from '@angular/forms';
 import { WidgetConfigModel } from '@app/store';
 
-import { ControlSchemeWidgetSettingsComponentResolverService, WidgetConnectionInfoL10nPipe } from '../widgets';
-import { CONTROL_SCHEME_WIDGET_SETTINGS_RESOLVER, WidgetSettingsContainerComponent } from '../widget-settings-container';
-import { WidgetTypeToL10nKeyPipe } from '../../../common';
+import { WidgetConnectionInfoL10nPipe } from '../widgets';
+import { CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY, WidgetSettingsContainerComponent } from '../widget-settings-container';
+import { ControlSchemeWidgetSettingsComponentFactoryService } from '../../control-scheme-widget-settings-component-factory.service';
 
 @Component({
     standalone: true,
@@ -23,59 +17,45 @@ import { WidgetTypeToL10nKeyPipe } from '../../../common';
     imports: [
         MatButtonModule,
         MatDialogModule,
-        MatFormFieldModule,
-        MatOptionModule,
-        MatSelectModule,
-        NgForOf,
         NgIf,
-        PushPipe,
         TranslocoPipe,
         WidgetConnectionInfoL10nPipe,
         WidgetSettingsContainerComponent,
-        WidgetTypeToL10nKeyPipe,
-        ReactiveFormsModule
     ],
     providers: [
-        { provide: CONTROL_SCHEME_WIDGET_SETTINGS_RESOLVER, useClass: ControlSchemeWidgetSettingsComponentResolverService },
+        { provide: CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY, useClass: ControlSchemeWidgetSettingsComponentFactoryService },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditWidgetSettingsDialogComponent {
-    @ViewChild(WidgetSettingsContainerComponent, { static: false, read: WidgetSettingsContainerComponent })
-    public readonly widgetSettingsContainer?: WidgetSettingsContainerComponent;
-
-    private _canSave$ = new BehaviorSubject<boolean>(false);
-
     private _config?: WidgetConfigModel;
 
     constructor(
         private readonly dialog: MatDialogRef<EditWidgetSettingsDialogComponent, WidgetConfigModel>,
-        @Inject(MAT_DIALOG_DATA) public readonly config: WidgetConfigModel
+        @Inject(MAT_DIALOG_DATA) public readonly initialConfig: WidgetConfigModel,
+        private readonly changeDetectorRef: ChangeDetectorRef
     ) {
-        this._config = { ...config };
+        this._config = { ...initialConfig };
     }
 
-    public get canSave$(): Observable<boolean> {
-        return this._canSave$;
+    public get config(): WidgetConfigModel | undefined {
+        return this._config;
     }
 
     public onConfigChanges(
-        config: WidgetConfigModel
+        config: WidgetConfigModel | undefined
     ): void {
         this._config = config;
-    }
-
-    public onCanSaveChanges(
-        canSave: boolean
-    ): void {
-        this._canSave$.next(canSave);
+        this.changeDetectorRef.detectChanges();
     }
 
     public onFormSubmit(
         event: Event
     ): void {
         event.preventDefault();
-        this.dialog.close(this._config);
+        if (this._config) {
+            this.dialog.close(this._config);
+        }
     }
 
     public onCancel(): void {
