@@ -1,5 +1,5 @@
 import { PortModeName } from 'rxpoweredup';
-import { WidgetType } from '@app/store';
+import { WidgetType } from '@app/shared';
 
 const WIDGET_IO_MATCH_FNS: { [k in WidgetType]: (modes: PortModeName[]) => PortModeName | null } = {
     [WidgetType.Voltage]: (modes) => {

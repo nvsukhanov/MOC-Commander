@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { WidgetType } from '@app/store';
+import { WidgetType } from '@app/shared';
 
 @Pipe({
     standalone: true,

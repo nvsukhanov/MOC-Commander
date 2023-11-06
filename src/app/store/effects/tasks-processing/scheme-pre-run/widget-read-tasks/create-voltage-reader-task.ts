@@ -1,7 +1,8 @@
 import { Observable, concatWith, filter, switchMap, take, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { WidgetType } from '@app/shared';
 
-import { HubModel, VoltageWidgetConfigModel, WidgetType } from '../../../../models';
+import { HubModel, VoltageWidgetConfigModel } from '../../../../models';
 import { CONTROL_SCHEME_WIDGETS_DATA_ACTIONS } from '../../../../actions';
 import { HUBS_SELECTORS } from '../../../../selectors';
 import { HubStorageService } from '../../../../hub-storage.service';

@@ -1,8 +1,9 @@
 import { Store } from '@ngrx/store';
 import { Observable, concatWith, takeUntil } from 'rxjs';
 import { TiltData } from 'rxpoweredup';
+import { WidgetType } from '@app/shared';
 
-import { TiltWidgetConfigModel, WidgetType } from '../../../../models';
+import { TiltWidgetConfigModel } from '../../../../models';
 import { CONTROL_SCHEME_WIDGETS_DATA_ACTIONS } from '../../../../actions';
 import { HubStorageService } from '../../../../hub-storage.service';
 

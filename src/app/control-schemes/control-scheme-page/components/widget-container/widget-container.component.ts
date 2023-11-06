@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Inject, Input, OnDestroy, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { WidgetConfigModel, WidgetType } from '@app/store';
+import { WidgetConfigModel } from '@app/store';
+import { WidgetType } from '@app/shared';
 
 import {
     CONTROL_SCHEME_WIDGET_COMPONENT_FACTORY,

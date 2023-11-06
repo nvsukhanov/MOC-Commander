@@ -1,5 +1,6 @@
 import { Injectable, ViewContainerRef } from '@angular/core';
-import { WidgetConfigModel, WidgetType } from '@app/store';
+import { WidgetConfigModel } from '@app/store';
+import { WidgetType } from '@app/shared';
 
 import {
     ControlSchemeWidgetDescriptor,

@@ -1,7 +1,8 @@
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { WidgetType } from '@app/shared';
 
-import { ControlSchemeModel, WidgetType } from '../../../models';
+import { ControlSchemeModel } from '../../../models';
 import { createTemperatureReaderTask, createTiltReaderTask, createVoltageReaderTask } from './widget-read-tasks';
 import { HubStorageService } from '../../../hub-storage.service';
 
