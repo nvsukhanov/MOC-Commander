@@ -1,25 +1,12 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    ComponentRef,
-    EventEmitter,
-    HostBinding,
-    Inject,
-    Input,
-    OnDestroy,
-    Output,
-    ViewChild,
-    ViewContainerRef
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Inject, Input, OnDestroy, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { WidgetConfigModel, WidgetType } from '@app/store';
 
 import {
-    CONTROL_SCHEME_WIDGET_COMPONENT_RESOLVER,
-    ControlSchemeWidgetComponentOfType,
-    IControlSchemeWidgetComponentResolver
-} from './i-control-scheme-widget-component-resolver';
-import { IControlSchemeWidgetComponent } from './i-control-scheme-widget-component';
+    CONTROL_SCHEME_WIDGET_COMPONENT_FACTORY,
+    ControlSchemeWidgetDescriptor,
+    IControlSchemeWidgetComponentFactory
+} from './i-control-scheme-widget-component-factory';
 
 @Component({
     standalone: true,
@@ -39,7 +26,7 @@ export class WidgetContainerComponent implements OnDestroy {
 
     @ViewChild('container', { static: true, read: ViewContainerRef }) private readonly viewContainerRef!: ViewContainerRef;
 
-    private widgetComponentRef?: ComponentRef<IControlSchemeWidgetComponent<WidgetConfigModel>>;
+    private widgetDescriptor?: ControlSchemeWidgetDescriptor;
 
     private widgetActionsSubscription?: Subscription;
 
@@ -48,7 +35,7 @@ export class WidgetContainerComponent implements OnDestroy {
     private rowSpan = 'span 1';
 
     constructor(
-        @Inject(CONTROL_SCHEME_WIDGET_COMPONENT_RESOLVER) private readonly widgetsResolver: IControlSchemeWidgetComponentResolver,
+        @Inject(CONTROL_SCHEME_WIDGET_COMPONENT_FACTORY) private readonly widgetFactory: IControlSchemeWidgetComponentFactory<WidgetType>
     ) {
     }
 
@@ -67,16 +54,16 @@ export class WidgetContainerComponent implements OnDestroy {
         value: boolean
     ) {
         this._canBeDeleted = value;
-        if (this.widgetComponentRef) {
-            this.widgetComponentRef.instance.canBeDeleted = value;
+        if (this.widgetDescriptor) {
+            this.widgetDescriptor.setCanBeDeleted(value);
         }
     }
 
     @Input()
     public set canBeEdited(value: boolean) {
         this._canBeEdited = value;
-        if (this.widgetComponentRef) {
-            this.widgetComponentRef.instance.canBeEdited = value;
+        if (this.widgetDescriptor) {
+            this.widgetDescriptor.setCanBeEdited(value);
         }
     }
 
@@ -85,51 +72,23 @@ export class WidgetContainerComponent implements OnDestroy {
         config: WidgetConfigModel
     ) {
         this.updateSpans(config);
-        if (this.widgetComponentRef?.instance.config.widgetType === config.widgetType) {
-            if (this.widgetComponentRef.instance.config !== config) {
-                this.widgetComponentRef.setInput('config', config);
-            }
-            return;
-        }
-
-        if (this.widgetComponentRef) {
-            this.destroyWidget();
-        }
-
-        this.widgetComponentRef = this.createWidget(config.widgetType);
-        if (this.widgetComponentRef) {
-            this.widgetComponentRef.instance.config = config;
-            this.widgetComponentRef.instance.canBeDeleted = this._canBeDeleted;
-            this.widgetComponentRef.instance.canBeEdited = this._canBeEdited;
-        }
+        this.destroyWidget();
+        this.widgetDescriptor = this.widgetFactory.createWidget(this.viewContainerRef, config);
+        this.widgetActionsSubscription = new Subscription();
+        this.widgetActionsSubscription.add(this.widgetDescriptor.edit$.subscribe(() => this.edit.emit()));
+        this.widgetActionsSubscription.add(this.widgetDescriptor.delete$.subscribe(() => this.delete.emit()));
+        this.widgetDescriptor.setCanBeDeleted(this._canBeDeleted);
+        this.widgetDescriptor.setCanBeEdited(this._canBeEdited);
     }
 
     public ngOnDestroy(): void {
         this.destroyWidget();
     }
 
-    private createWidget<T extends WidgetType>(
-        widgetType: T
-    ): ComponentRef<ControlSchemeWidgetComponentOfType<T>> | undefined {
-        const componentType = this.widgetsResolver.resolveWidget(widgetType);
-        if (componentType === undefined) {
-            return;
-        }
-        const componentRef = this.viewContainerRef.createComponent(componentType);
-        this.widgetActionsSubscription = new Subscription();
-        this.widgetActionsSubscription.add(
-            componentRef.instance.edit.subscribe(() => this.edit.emit())
-        );
-        this.widgetActionsSubscription.add(
-            componentRef.instance.delete.subscribe(() => this.delete.emit())
-        );
-        return componentRef;
-    }
-
     private destroyWidget(): void {
-        if (this.widgetComponentRef) {
-            this.widgetComponentRef.destroy();
-            this.widgetComponentRef = undefined;
+        if (this.widgetDescriptor) {
+            this.widgetDescriptor.destroy();
+            this.widgetDescriptor = undefined;
             this.widgetActionsSubscription?.unsubscribe();
             this.widgetActionsSubscription = undefined;
         }
