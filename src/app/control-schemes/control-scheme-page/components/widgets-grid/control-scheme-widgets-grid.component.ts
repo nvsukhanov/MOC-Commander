@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { LetDirective } from '@ngrx/component';
 import { NgForOf } from '@angular/common';
-import { WidgetConfigModel } from '@app/store';
+import { WidgetConfigModel, WidgetType } from '@app/store';
 
 import { OrderWidgetsPipe } from './order-widgets.pipe';
 import { WidgetContainerComponent } from '../widget-container';
-import { ControlSchemeWidgetSettingsComponentResolverService } from '../widgets';
-import { CONTROL_SCHEME_WIDGET_SETTINGS_RESOLVER, IControlSchemeWidgetSettingsComponentResolver } from '../widget-settings-container';
+import { CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY, IControlSchemeWidgetSettingsComponentFactory } from '../widget-settings-container';
+import { ControlSchemeWidgetSettingsComponentFactoryService } from '../../control-scheme-widget-settings-component-factory.service';
 
 type WidgetsGridWidgetViewModel = {
     config: WidgetConfigModel;
@@ -25,7 +25,7 @@ type WidgetsGridWidgetViewModel = {
         WidgetContainerComponent
     ],
     providers: [
-        { provide: CONTROL_SCHEME_WIDGET_SETTINGS_RESOLVER, useClass: ControlSchemeWidgetSettingsComponentResolverService },
+        { provide: CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY, useClass: ControlSchemeWidgetSettingsComponentFactoryService },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -39,7 +39,7 @@ export class ControlSchemeWidgetsGridComponent {
     private _viewModels: WidgetsGridWidgetViewModel[] = [];
 
     constructor(
-        @Inject(CONTROL_SCHEME_WIDGET_SETTINGS_RESOLVER) private readonly widgetSettingsResolver: IControlSchemeWidgetSettingsComponentResolver
+        @Inject(CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY) private readonly settingsFactory: IControlSchemeWidgetSettingsComponentFactory<WidgetType>
     ) {
     }
 
@@ -50,7 +50,7 @@ export class ControlSchemeWidgetsGridComponent {
         this._viewModels = data.map((config) => {
             return {
                 config,
-                hasSettings: !!this.widgetSettingsResolver.resolveWidgetSettings(config.widgetType)
+                hasSettings: this.settingsFactory.hasSettings(config.widgetType)
             };
         }).sort((a, b) => a.config.id - b.config.id);
     }

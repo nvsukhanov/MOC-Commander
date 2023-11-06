@@ -9,7 +9,7 @@ import {
     VoltageWidgetComponentFactoryService
 } from './components';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ControlSchemeWidgetComponentFactoryService implements IControlSchemeWidgetComponentFactory<WidgetType> {
     constructor(
         private readonly temperatureWidgetFactory: TemperatureWidgetComponentFactoryService,

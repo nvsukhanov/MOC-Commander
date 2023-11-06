@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Observable, Subscription, map, startWith, take } from 'rxjs';
+import { Subscription, startWith, take } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { VoltageWidgetConfigModel, WidgetType } from '@app/store';
 import { ValidationMessagesDirective } from '@app/shared';
 
-import { IControlSchemeWidgetSettingsComponent } from '../../../widget-settings-container';
 import { CommonFormControlsBuilderService } from '../../../../../common';
 
 @Component({
@@ -22,10 +21,8 @@ import { CommonFormControlsBuilderService } from '../../../../../common';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class VoltageSensorWidgetSettingsComponent implements IControlSchemeWidgetSettingsComponent<VoltageWidgetConfigModel>, OnDestroy {
-    @Output() public readonly configChanges = new EventEmitter<VoltageWidgetConfigModel>();
-
-    @Output() public valid: Observable<boolean>;
+export class VoltageSensorWidgetSettingsComponent implements OnDestroy {
+    @Output() public readonly configChanges = new EventEmitter<VoltageWidgetConfigModel | undefined>();
 
     public readonly form = this.formBuilder.group({
         id: this.formBuilder.control<number>(0, { validators: Validators.required, nonNullable: true }),
@@ -33,7 +30,7 @@ export class VoltageSensorWidgetSettingsComponent implements IControlSchemeWidge
         hubId: this.commonFormBuilder.hubIdControl(),
         portId: this.commonFormBuilder.portIdControl(),
         modeId: this.formBuilder.control<number | null>(null, { validators: Validators.required, nonNullable: false }),
-        valueChangeThreshold: this.formBuilder.control<number>(5, {
+        valueChangeThreshold: this.formBuilder.control<number>(0.05, {
             validators: [
                 Validators.required,
                 Validators.min(0.01),
@@ -52,18 +49,18 @@ export class VoltageSensorWidgetSettingsComponent implements IControlSchemeWidge
         private readonly commonFormBuilder: CommonFormControlsBuilderService,
         private readonly translocoService: TranslocoService,
     ) {
-        this.valid = this.form.statusChanges.pipe(
-            startWith(null),
-            map(() => this.form.valid)
-        );
     }
 
     @Input()
     public set config(
-        config: VoltageWidgetConfigModel
+        config: VoltageWidgetConfigModel | undefined
     ) {
         this.configChangesSubscription?.unsubscribe();
-        this.form.patchValue(config);
+        if (config) {
+            this.form.patchValue(config);
+        } else {
+            this.form.reset();
+        }
         if (!this.form.controls.title.valid) {
             this.translocoService.selectTranslate('controlScheme.widgets.voltage.defaultName').pipe(
                 take(1)
@@ -74,20 +71,17 @@ export class VoltageSensorWidgetSettingsComponent implements IControlSchemeWidge
         this.configChangesSubscription = this.form.valueChanges.pipe(
             startWith(null)
         ).subscribe(() => {
-            const result = this.getConfig();
-            if (result !== null) {
-                this.configChanges.emit(result);
-            }
+            this.configChanges.emit(this.config);
         });
     }
 
-    public ngOnDestroy(): void {
-        this.configChangesSubscription?.unsubscribe();
-    }
-
-    private getConfig(): VoltageWidgetConfigModel | null {
-        if (this.form.controls.hubId.value === null || this.form.controls.portId.value === null || this.form.controls.modeId.value === null) {
-            return null;
+    public get config(): VoltageWidgetConfigModel | undefined {
+        if (this.form.controls.hubId.value === null
+            || this.form.controls.portId.value === null
+            || this.form.controls.modeId.value === null
+            || this.form.invalid
+        ) {
+            return undefined;
         }
         return {
             widgetType: WidgetType.Voltage,
@@ -96,9 +90,13 @@ export class VoltageSensorWidgetSettingsComponent implements IControlSchemeWidge
             hubId: this.form.controls.hubId.value,
             portId: this.form.controls.portId.value,
             modeId: this.form.controls.modeId.value,
-            valueChangeThreshold: this.form.controls.valueChangeThreshold.value,
+            valueChangeThreshold: +this.form.controls.valueChangeThreshold.value,
             width: this.form.controls.width.value,
             height: this.form.controls.height.value,
         };
+    }
+
+    public ngOnDestroy(): void {
+        this.configChangesSubscription?.unsubscribe();
     }
 }

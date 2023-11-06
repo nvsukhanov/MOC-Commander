@@ -10,7 +10,6 @@
 <mat-form-field class="form-field">
     <mat-label>{{ 'controlScheme.widgets.temperature.valueChangeThresholdTitle' | transloco }}</mat-label>
     <input matInput
-           type="number"
            [formControl]="form.controls.valueChangeThreshold"
     />
     <mat-error [appValidationMessages]="form.controls.valueChangeThreshold"></mat-error>
