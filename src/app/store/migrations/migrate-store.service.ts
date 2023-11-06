@@ -18,7 +18,7 @@ export class MigrateStoreService {
     ): IState {
         const initialVersion = this.getInitialVersion(data);
         if (!initialVersion) {
-            throw new Error(`Initial version not found`);
+            throw new Error('Initial version not found');
         }
         if (initialVersion === toVersion) {
             return data as IState;
