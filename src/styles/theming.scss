@@ -130,10 +130,14 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
 
     .mdc-text-field--filled:not(.mdc-text-field--disabled) {
         background-color: mat.get-color-from-palette($dark-palette, 800);
+        --mdc-filled-text-field-caret-color: #{$light-primary-text};
+        --mdc-outlined-text-field-caret-color: #{$light-primary-text};
     }
 
     .mdc-text-field--focused:not(.mdc-text-field--disabled) {
         background-color: mat.get-color-from-palette($dark-palette, 700);
+        --mdc-filled-text-field-caret-color: #{$light-primary-text};
+        --mdc-outlined-text-field-caret-color: #{$light-primary-text};
 
         .mdc-floating-label {
             color: $light-primary-text;
