@@ -1,11 +1,10 @@
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CONTROL_SCHEME_WIDGETS_DATA_SELECTORS, VoltageWidgetConfigModel } from '@app/store';
-import { WidgetType } from '@app/shared';
+import { VoltageSensorWidgetComponent, WidgetType } from '@app/shared';
 
-import { ControlSchemeWidgetDescriptor } from '../../widget-container';
-import { WidgetConnectionInfoL10nService } from '../widget-connection-info-l10n.service';
-import { VoltageSensorWidgetComponent } from './voltage-sensor-widget';
+import { ControlSchemeWidgetDescriptor } from '../widget-container';
+import { WidgetConnectionInfoL10nService } from './widget-connection-info-l10n.service';
 
 @Injectable({ providedIn: 'root' })
 export class VoltageWidgetComponentFactoryService {

@@ -2,7 +2,8 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { DecimalPipe, NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { WidgetComponent } from '@app/shared';
+
+import { WidgetComponent } from '../widget';
 
 @Component({
     standalone: true,

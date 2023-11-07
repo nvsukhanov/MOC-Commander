@@ -2,7 +2,12 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { TiltData } from 'rxpoweredup';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { PitchIndicatorComponent, RollIndicatorComponent, TiltGaugeIconDirective, WidgetComponent, YawIndicatorComponent } from '@app/shared';
+
+import { WidgetComponent } from '../widget';
+import { RollIndicatorComponent } from './roll-indicator';
+import { YawIndicatorComponent } from './yaw-indicator';
+import { PitchIndicatorComponent } from './pitch-indicator';
+import { TiltGaugeIconDirective } from './tilt-gauge';
 
 @Component({
     standalone: true,

@@ -17,4 +17,6 @@ export * from './hint';
 export * from './input-activity-indicator';
 export * from './upload-file-form-control';
 export * from './widget';
-export * from './tilt-indicators';
+export * from './temperature-sensor-widget';
+export * from './tilt-sensor-widget';
+export * from './voltage-sensor-widget';
