@@ -9,10 +9,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { WidgetConfigModel } from '@app/store';
 
 import { AddWidgetDialogViewModel } from './add-widget-dialog-view-model';
-import { WidgetTypeToL10nKeyPipe } from '../../../common';
+import { WidgetTypeToL10nKeyPipe } from '../../common';
 import { CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY, WidgetSettingsContainerComponent } from '../widget-settings-container';
 import { WidgetConnectionInfoL10nPipe } from '../widgets';
-import { ControlSchemeWidgetSettingsComponentFactoryService } from '../../control-scheme-widget-settings-component-factory.service';
+import { ControlSchemeWidgetSettingsComponentFactoryService } from '../control-scheme-widget-settings-component-factory.service';
 
 @Component({
     standalone: true,

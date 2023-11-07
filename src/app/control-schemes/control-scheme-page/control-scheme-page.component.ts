@@ -22,21 +22,18 @@ import {
 
 import { ControlSchemeViewTreeNode, SchemeRunBlocker } from './types';
 import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData } from '../common';
-import {
-    AddWidgetDialogComponent,
-    AddWidgetDialogViewModel,
-    CONTROL_SCHEME_WIDGET_COMPONENT_FACTORY,
-    ControlSchemeGeneralInfoComponent,
-    ControlSchemePageCompactToolbarComponent,
-    ControlSchemePageFullToolbarComponent,
-    ControlSchemeViewIoListComponent,
-    ControlSchemeWidgetsGridComponent,
-    EditWidgetSettingsDialogComponent
-} from './components';
 import { ControlSchemeRunBlockersL10nPipe } from './control-scheme-run-blockers-l10n.pipe';
 import { ControlSchemeWidgetComponentFactoryService } from './control-scheme-widget-component-factory.service';
 import { CONTROL_SCHEME_PAGE_SELECTORS } from './control-scheme-page.selectors';
 import { ControlSchemeWidgetDefaultConfigFactoryService } from './control-scheme-widget-default-config-factory.service';
+import { ControlSchemeViewIoListComponent } from './control-scheme-view-io-list';
+import { ControlSchemeGeneralInfoComponent } from './control-scheme-general-info';
+import { ControlSchemePageCompactToolbarComponent } from './compact-toolbar';
+import { ControlSchemePageFullToolbarComponent } from './full-toolbar';
+import { ControlSchemeWidgetsGridComponent } from './widgets-grid';
+import { CONTROL_SCHEME_WIDGET_COMPONENT_FACTORY } from './widget-container';
+import { AddWidgetDialogComponent, AddWidgetDialogViewModel } from './add-widget-dialog';
+import { EditWidgetSettingsDialogComponent } from './edit-widget-settings-dialog';
 
 @Component({
     standalone: true,

@@ -6,7 +6,7 @@ import { LetDirective, PushPipe } from '@ngrx/component';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { HubInlineViewComponent } from '@app/shared';
 
-import { ControlSchemeViewHubTreeNode } from '../../types';
+import { ControlSchemeViewHubTreeNode } from '../types';
 import { HUB_TREE_NODE_SELECTORS, IHubTreeNodeViewModel } from './hub-tree-node.selectors';
 
 @Component({
