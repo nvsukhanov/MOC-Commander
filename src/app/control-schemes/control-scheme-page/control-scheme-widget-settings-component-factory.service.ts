@@ -2,13 +2,12 @@ import { Injectable, ViewContainerRef } from '@angular/core';
 import { WidgetConfigModel } from '@app/store';
 import { WidgetType } from '@app/shared';
 
+import { ControlSchemeWidgetSettingsDescriptor, IControlSchemeWidgetSettingsComponentFactory } from './widget-settings-container';
 import {
-    ControlSchemeWidgetSettingsDescriptor,
-    IControlSchemeWidgetSettingsComponentFactory,
     TemperatureWidgetSettingsComponentFactoryService,
     TiltWidgetSettingsComponentFactoryService,
     VoltageWidgetSettingsComponentFactoryService
-} from './components';
+} from './widgets';
 
 @Injectable()
 export class ControlSchemeWidgetSettingsComponentFactoryService implements IControlSchemeWidgetSettingsComponentFactory<WidgetType> {

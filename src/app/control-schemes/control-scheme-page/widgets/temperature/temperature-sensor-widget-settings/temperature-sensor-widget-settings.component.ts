@@ -1,28 +1,30 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subscription, startWith, take } from 'rxjs';
-import { MatInputModule } from '@angular/material/input';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { VoltageWidgetConfigModel } from '@app/store';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { TemperatureWidgetConfigModel } from '@app/store';
 import { ValidationMessagesDirective, WidgetType } from '@app/shared';
 
-import { CommonFormControlsBuilderService } from '../../../../../common';
+import { CommonFormControlsBuilderService } from '../../../../common';
 
 @Component({
     standalone: true,
-    selector: 'app-voltage-sensor-widget-settings',
-    templateUrl: './voltage-sensor-widget-settings.component.html',
-    styleUrls: [ './voltage-sensor-widget-settings.component.scss' ],
+    selector: 'app-temperature-sensor-widget-settings',
+    templateUrl: './temperature-sensor-widget-settings.component.html',
+    styleUrls: [ './temperature-sensor-widget-settings.component.scss' ],
     imports: [
+        MatFormFieldModule,
         MatInputModule,
         ReactiveFormsModule,
-        ValidationMessagesDirective,
         TranslocoPipe,
+        ValidationMessagesDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class VoltageSensorWidgetSettingsComponent implements OnDestroy {
-    @Output() public readonly configChanges = new EventEmitter<VoltageWidgetConfigModel | undefined>();
+export class TemperatureSensorWidgetSettingsComponent implements OnDestroy {
+    @Output() public readonly configChanges = new EventEmitter<TemperatureWidgetConfigModel | undefined>();
 
     public readonly form = this.formBuilder.group({
         id: this.formBuilder.control<number>(0, { validators: Validators.required, nonNullable: true }),
@@ -30,11 +32,11 @@ export class VoltageSensorWidgetSettingsComponent implements OnDestroy {
         hubId: this.commonFormBuilder.hubIdControl(),
         portId: this.commonFormBuilder.portIdControl(),
         modeId: this.formBuilder.control<number | null>(null, { validators: Validators.required, nonNullable: false }),
-        valueChangeThreshold: this.formBuilder.control<number>(0.05, {
+        valueChangeThreshold: this.formBuilder.control<number>(5, {
             validators: [
                 Validators.required,
-                Validators.min(0.01),
-                Validators.max(100)
+                Validators.min(0.1),
+                Validators.max(10)
             ],
             nonNullable: true
         }),
@@ -53,7 +55,7 @@ export class VoltageSensorWidgetSettingsComponent implements OnDestroy {
 
     @Input()
     public set config(
-        config: VoltageWidgetConfigModel | undefined
+        config: TemperatureWidgetConfigModel | undefined
     ) {
         this.configChangesSubscription?.unsubscribe();
         if (config) {
@@ -62,10 +64,10 @@ export class VoltageSensorWidgetSettingsComponent implements OnDestroy {
             this.form.reset();
         }
         if (!this.form.controls.title.valid) {
-            this.translocoService.selectTranslate('controlScheme.widgets.voltage.defaultName').pipe(
+            this.translocoService.selectTranslate('controlScheme.widgets.temperature.defaultName').pipe(
                 take(1)
             ).subscribe((name) => {
-                this.form.controls.title.setValue(name);
+                this.form.controls.title.setValue(name, { emitEvent: true });
             });
         }
         this.configChangesSubscription = this.form.valueChanges.pipe(
@@ -75,7 +77,7 @@ export class VoltageSensorWidgetSettingsComponent implements OnDestroy {
         });
     }
 
-    public get config(): VoltageWidgetConfigModel | undefined {
+    public get config(): TemperatureWidgetConfigModel | undefined {
         if (this.form.controls.hubId.value === null
             || this.form.controls.portId.value === null
             || this.form.controls.modeId.value === null
@@ -84,7 +86,7 @@ export class VoltageSensorWidgetSettingsComponent implements OnDestroy {
             return undefined;
         }
         return {
-            widgetType: WidgetType.Voltage,
+            widgetType: WidgetType.Temperature,
             id: this.form.controls.id.value,
             title: this.form.controls.title.value,
             hubId: this.form.controls.hubId.value,

@@ -7,7 +7,7 @@ import { WidgetConfigModel } from '@app/store';
 
 import { WidgetConnectionInfoL10nPipe } from '../widgets';
 import { CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY, WidgetSettingsContainerComponent } from '../widget-settings-container';
-import { ControlSchemeWidgetSettingsComponentFactoryService } from '../../control-scheme-widget-settings-component-factory.service';
+import { ControlSchemeWidgetSettingsComponentFactoryService } from '../control-scheme-widget-settings-component-factory.service';
 
 @Component({
     standalone: true,

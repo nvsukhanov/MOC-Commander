@@ -7,7 +7,7 @@ import { WidgetType } from '@app/shared';
 import { OrderWidgetsPipe } from './order-widgets.pipe';
 import { WidgetContainerComponent } from '../widget-container';
 import { CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY, IControlSchemeWidgetSettingsComponentFactory } from '../widget-settings-container';
-import { ControlSchemeWidgetSettingsComponentFactoryService } from '../../control-scheme-widget-settings-component-factory.service';
+import { ControlSchemeWidgetSettingsComponentFactoryService } from '../control-scheme-widget-settings-component-factory.service';
 
 type WidgetsGridWidgetViewModel = {
     config: WidgetConfigModel;

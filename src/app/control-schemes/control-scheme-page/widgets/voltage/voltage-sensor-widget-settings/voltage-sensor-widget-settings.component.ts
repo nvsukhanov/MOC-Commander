@@ -1,31 +1,28 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
-import { Subscription, startWith, take } from 'rxjs';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { Subscription, startWith, take } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
-import { ToggleControlComponent, ValidationMessagesDirective, WidgetType } from '@app/shared';
-import { TiltWidgetConfigModel } from '@app/store';
+import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { VoltageWidgetConfigModel } from '@app/store';
+import { ValidationMessagesDirective, WidgetType } from '@app/shared';
 
-import { CommonFormControlsBuilderService } from '../../../../../common';
+import { CommonFormControlsBuilderService } from '../../../../common';
 
 @Component({
     standalone: true,
-    selector: 'app-tilt-sensor-widget-settings',
-    templateUrl: './tilt-sensor-widget-settings.component.html',
-    styleUrls: [ './tilt-sensor-widget-settings.component.scss' ],
+    selector: 'app-voltage-sensor-widget-settings',
+    templateUrl: './voltage-sensor-widget-settings.component.html',
+    styleUrls: [ './voltage-sensor-widget-settings.component.scss' ],
     imports: [
-        MatFormFieldModule,
         MatInputModule,
         ReactiveFormsModule,
-        TranslocoPipe,
         ValidationMessagesDirective,
-        ToggleControlComponent
+        TranslocoPipe,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TiltSensorWidgetSettingsComponent implements OnDestroy {
-    @Output() public readonly configChanges = new EventEmitter<TiltWidgetConfigModel | undefined>();
+export class VoltageSensorWidgetSettingsComponent implements OnDestroy {
+    @Output() public readonly configChanges = new EventEmitter<VoltageWidgetConfigModel | undefined>();
 
     public readonly form = this.formBuilder.group({
         id: this.formBuilder.control<number>(0, { validators: Validators.required, nonNullable: true }),
@@ -33,33 +30,30 @@ export class TiltSensorWidgetSettingsComponent implements OnDestroy {
         hubId: this.commonFormBuilder.hubIdControl(),
         portId: this.commonFormBuilder.portIdControl(),
         modeId: this.formBuilder.control<number | null>(null, { validators: Validators.required, nonNullable: false }),
-        valueChangeThreshold: this.formBuilder.control<number>(5, {
+        valueChangeThreshold: this.formBuilder.control<number>(0.05, {
             validators: [
                 Validators.required,
-                Validators.min(5),
-                Validators.max(30)
+                Validators.min(0.01),
+                Validators.max(100)
             ],
             nonNullable: true
         }),
-        width: this.formBuilder.control<number>(2, { validators: Validators.required, nonNullable: true }),
-        height: this.formBuilder.control<number>(2, { validators: Validators.required, nonNullable: true }),
-        invertRoll: this.formBuilder.control<boolean>(false, { nonNullable: true }),
-        invertPitch: this.formBuilder.control<boolean>(false, { nonNullable: true }),
-        invertYaw: this.formBuilder.control<boolean>(false, { nonNullable: true }),
+        width: this.formBuilder.control<number>(1, { validators: Validators.required, nonNullable: true }),
+        height: this.formBuilder.control<number>(1, { validators: Validators.required, nonNullable: true }),
     });
 
     private configChangesSubscription?: Subscription;
 
     constructor(
         private readonly formBuilder: FormBuilder,
-        private readonly translocoService: TranslocoService,
         private readonly commonFormBuilder: CommonFormControlsBuilderService,
+        private readonly translocoService: TranslocoService,
     ) {
     }
 
     @Input()
     public set config(
-        config: TiltWidgetConfigModel | undefined
+        config: VoltageWidgetConfigModel | undefined
     ) {
         this.configChangesSubscription?.unsubscribe();
         if (config) {
@@ -68,7 +62,7 @@ export class TiltSensorWidgetSettingsComponent implements OnDestroy {
             this.form.reset();
         }
         if (!this.form.controls.title.valid) {
-            this.translocoService.selectTranslate('controlScheme.widgets.tilt.defaultName').pipe(
+            this.translocoService.selectTranslate('controlScheme.widgets.voltage.defaultName').pipe(
                 take(1)
             ).subscribe((name) => {
                 this.form.controls.title.setValue(name);
@@ -81,7 +75,7 @@ export class TiltSensorWidgetSettingsComponent implements OnDestroy {
         });
     }
 
-    public get config(): TiltWidgetConfigModel | undefined {
+    public get config(): VoltageWidgetConfigModel | undefined {
         if (this.form.controls.hubId.value === null
             || this.form.controls.portId.value === null
             || this.form.controls.modeId.value === null
@@ -90,18 +84,15 @@ export class TiltSensorWidgetSettingsComponent implements OnDestroy {
             return undefined;
         }
         return {
-            widgetType: WidgetType.Tilt,
+            widgetType: WidgetType.Voltage,
             id: this.form.controls.id.value,
             title: this.form.controls.title.value,
             hubId: this.form.controls.hubId.value,
             portId: this.form.controls.portId.value,
             modeId: this.form.controls.modeId.value,
-            valueChangeThreshold: this.form.controls.valueChangeThreshold.value,
+            valueChangeThreshold: +this.form.controls.valueChangeThreshold.value,
             width: this.form.controls.width.value,
             height: this.form.controls.height.value,
-            invertRoll: this.form.controls.invertRoll.value,
-            invertPitch: this.form.controls.invertPitch.value,
-            invertYaw: this.form.controls.invertYaw.value,
         };
     }
 

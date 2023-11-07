@@ -10,7 +10,7 @@ import { RoutesBuilderService } from '@app/routing';
 import { ScreenSizeObserverService } from '@app/shared';
 
 import { IoInlineViewComponent } from '../io-inline-view';
-import { ControlSchemeViewIoTreeNode } from '../../types';
+import { ControlSchemeViewIoTreeNode } from '../types';
 import { PortCommandTaskSummaryPipe } from './port-command-task-summary';
 import { IHubTreeNodeViewModel, IO_TREE_NODE_SELECTORS } from './io-tree-node.selectors';
 
