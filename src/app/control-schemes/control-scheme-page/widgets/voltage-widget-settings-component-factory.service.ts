@@ -1,7 +1,7 @@
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { VoltageWidgetConfigModel } from '@app/store';
 
-import { ControlSchemeWidgetSettingsDescriptor } from '../../widget-settings-container';
+import { ControlSchemeWidgetSettingsDescriptor } from '../widget-settings-container';
 import { VoltageSensorWidgetSettingsComponent } from './voltage-sensor-widget-settings';
 
 @Injectable({ providedIn: 'root' })

@@ -1,7 +1,7 @@
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { TiltWidgetConfigModel } from '@app/store';
 
-import { ControlSchemeWidgetSettingsDescriptor } from '../../widget-settings-container';
+import { ControlSchemeWidgetSettingsDescriptor } from '../widget-settings-container';
 import { TiltSensorWidgetSettingsComponent } from './tilt-sensor-widget-settings';
 
 @Injectable({ providedIn: 'root' })

@@ -1,7 +1,7 @@
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { TemperatureWidgetConfigModel } from '@app/store';
 
-import { ControlSchemeWidgetSettingsDescriptor } from '../../widget-settings-container';
+import { ControlSchemeWidgetSettingsDescriptor } from '../widget-settings-container';
 import { TemperatureSensorWidgetSettingsComponent } from './temperature-sensor-widget-settings';
 
 @Injectable({ providedIn: 'root' })
