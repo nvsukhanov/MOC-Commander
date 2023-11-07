@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { Observable, Subscription, filter, map, of, switchMap, take } from 'rxjs';
+import { Observable, Subscription, filter, map, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgForOf, NgIf } from '@angular/common';
@@ -34,6 +34,7 @@ import { ControlSchemeWidgetsGridComponent } from './widgets-grid';
 import { CONTROL_SCHEME_WIDGET_COMPONENT_FACTORY } from './widget-container';
 import { AddWidgetDialogComponent, AddWidgetDialogViewModel } from './add-widget-dialog';
 import { EditWidgetSettingsDialogComponent } from './edit-widget-settings-dialog';
+import { ControlSchemeStartBlockerWidgetsService } from './control-scheme-start-blocker-widgets.service';
 
 @Component({
     standalone: true,
@@ -68,11 +69,15 @@ import { EditWidgetSettingsDialogComponent } from './edit-widget-settings-dialog
 export class ControlSchemePageComponent implements OnInit, OnDestroy {
     public readonly selectedScheme$: Observable<ControlSchemeModel | undefined> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.selectCurrentlyViewedScheme);
 
-    public readonly schemeRunBlockers$: Observable<SchemeRunBlocker[]> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.selectSchemeRunBlockers).pipe(
+    public readonly schemeRunBlockers$: Observable<SchemeRunBlocker[]> = this.store.select(
+        CONTROL_SCHEME_PAGE_SELECTORS.selectSchemeRunBlockers(this.controlSchemeStartWidgetCheckService)
+    ).pipe(
         map((blockers) => blockers.filter((blocker) => !this.hiddenSchemeRunBlockers.has(blocker)))
     );
 
-    public readonly canRunScheme$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canRunViewedScheme);
+    public readonly canRunScheme$: Observable<boolean> = this.store.select(
+        CONTROL_SCHEME_PAGE_SELECTORS.canRunViewedScheme(this.controlSchemeStartWidgetCheckService)
+    );
 
     public readonly isCurrentControlSchemeRunning$ = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.isCurrentControlSchemeRunning);
 
@@ -84,11 +89,22 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
 
     public readonly isSmallScreen$: Observable<boolean> = this.screenSizeObserverService.isSmallScreen$;
 
-    public readonly canAddWidgets$ = this.selectedScheme$.pipe(
-        switchMap((scheme) => scheme ? this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canAddWidgets(scheme.name)) : of(false))
-    );
+    public readonly canAddWidgets$: Observable<boolean>;
 
     public readonly canDeleteOrEditWidgets$ = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canDeleteOrEditWidgets);
+
+    private addableWidgetConfigs$: Observable<WidgetConfigModel[]> = this.selectedScheme$.pipe(
+        take(1),
+        filter((scheme): scheme is ControlSchemeModel => scheme !== undefined),
+        switchMap((scheme) => this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.addableWidgetConfigFactoryBaseData(scheme.name))),
+        map((addableWidgetData) => {
+            return this.widgetDefaultConfigFactory.createAddableConfigs(
+                addableWidgetData.ios,
+                addableWidgetData.portModes,
+                addableWidgetData.portModesInfo
+            );
+        })
+    );
 
     private sub?: Subscription;
 
@@ -108,7 +124,11 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
         private readonly screenSizeObserverService: ScreenSizeObserverService,
         private readonly titleService: TitleService,
         private readonly widgetDefaultConfigFactory: ControlSchemeWidgetDefaultConfigFactoryService,
+        private readonly controlSchemeStartWidgetCheckService: ControlSchemeStartBlockerWidgetsService,
     ) {
+        this.canAddWidgets$ = this.addableWidgetConfigs$.pipe(
+            map((configs) => configs.length > 0)
+        );
     }
 
     @ViewChild('controlsTemplate', { static: false, read: TemplateRef })
@@ -204,12 +224,8 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
         this.selectedScheme$.pipe(
             take(1),
             filter((scheme): scheme is ControlSchemeModel => scheme !== undefined),
-            concatLatestFrom((scheme) => this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.addableWidgetsData(scheme.name))),
-            switchMap(([scheme, addableWidgetData]) => {
-                const availableWidgetsConfig = addableWidgetData
-                    .map(({ widgetType, hubId, portId, modeId }) => this.widgetDefaultConfigFactory.createDefaultConfig(widgetType, hubId, portId, modeId))
-                    .filter((widgetConfig): widgetConfig is WidgetConfigModel => widgetConfig !== null);
-
+            concatLatestFrom(() => this.addableWidgetConfigs$),
+            switchMap(([scheme, availableWidgetsConfig]) => {
                 return this.dialog.open<AddWidgetDialogComponent, AddWidgetDialogViewModel, Omit<WidgetConfigModel, 'id'> | undefined>(
                     AddWidgetDialogComponent,
                     {
