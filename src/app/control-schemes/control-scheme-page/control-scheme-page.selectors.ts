@@ -6,6 +6,7 @@ import {
     ATTACHED_IO_PORT_MODE_INFO_SELECTORS,
     ATTACHED_IO_SELECTORS,
     AttachedIoModel,
+    AttachedIoModesModel,
     AttachedIoPortModeInfoModel,
     CONTROLLER_CONNECTION_SELECTORS,
     CONTROL_SCHEME_SELECTORS,
@@ -17,14 +18,12 @@ import {
     HUB_RUNTIME_DATA_SELECTORS,
     HubModel,
     ROUTER_SELECTORS,
-    WidgetConfigModel,
     attachedIoModesIdFn,
     attachedIoPortModeInfoIdFn,
     attachedIosIdFn
 } from '@app/store';
-import { WidgetType, getEnumValues } from '@app/shared';
 
-import { areControllableIosPresent, getWidgetDataPortModeName, ioHasMatchingModeForOpMode } from '../common';
+import { areControllableIosPresent, ioHasMatchingModeForOpMode } from '../common';
 import {
     ControlSchemeNodeTypes,
     ControlSchemeViewBindingTreeNodeData,
@@ -32,30 +31,7 @@ import {
     ControlSchemeViewIoTreeNode,
     SchemeRunBlocker
 } from './types';
-
-function widgetHasIoAttached(
-    widgetConfig: WidgetConfigModel,
-    attachedIos: Dictionary<AttachedIoModel>
-): boolean {
-    switch (widgetConfig.widgetType) {
-        case WidgetType.Voltage:
-        case WidgetType.Tilt:
-        case WidgetType.Temperature:
-            return !!attachedIos[attachedIosIdFn(widgetConfig)];
-    }
-}
-
-function getWidgetIoPortInputModes(
-    widgetConfig: WidgetConfigModel,
-    ioInputModes: Record<string, PortModeName[]>
-): PortModeName[] {
-    switch (widgetConfig.widgetType) {
-        case WidgetType.Voltage:
-        case WidgetType.Tilt:
-        case WidgetType.Temperature:
-            return ioInputModes[attachedIosIdFn(widgetConfig)] ?? [];
-    }
-}
+import { ControlSchemeStartBlockerWidgetsService } from './control-scheme-start-blocker-widgets.service';
 
 function createHubTreeNode(
     hubConfig: { hubId: string; name?: string; hubType?: HubType },
@@ -135,7 +111,8 @@ const SELECT_IO_MODES = createSelector(
     }
 );
 
-const SELECT_SCHEME_RUN_BLOCKERS = createSelector(
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const SELECT_SCHEME_RUN_BLOCKERS = (widgetChecks: ControlSchemeStartBlockerWidgetsService) => createSelector(
     SELECT_CURRENTLY_VIEWED_SCHEME,
     CONTROL_SCHEME_SELECTORS.selectRunningState,
     HUB_RUNTIME_DATA_SELECTORS.selectIds,
@@ -170,20 +147,17 @@ const SELECT_SCHEME_RUN_BLOCKERS = createSelector(
             result.add(SchemeRunBlocker.SomeIosAreNotConnected);
         }
 
-        if (scheme.widgets.some((w) => !widgetHasIoAttached(w, attachedIos))) {
-            result.add(SchemeRunBlocker.SomeIosAreNotConnected);
-        }
-
         if (scheme.bindings.filter((b) => !!attachedIos[attachedIosIdFn(b)])
                   .some((b) => !ioHasMatchingModeForOpMode(b.bindingType, ioModes.output[attachedIosIdFn(b)] ?? []))
         ) {
             result.add(SchemeRunBlocker.SomeIosHaveNoRequiredCapabilities);
         }
 
-        if (scheme.widgets.filter((w) => widgetHasIoAttached(w, attachedIos))
-                  .some((widgetConfig) => !getWidgetDataPortModeName(widgetConfig.widgetType, getWidgetIoPortInputModes(widgetConfig, ioModes.input)))
-        ) {
-            result.add(SchemeRunBlocker.SomeIosHaveNoRequiredCapabilities);
+        for (const widgetConfig of scheme.widgets) {
+            const blockers = widgetChecks.getBlockers(widgetConfig, attachedIos, ioModes.input);
+            for (const blocker of blockers) {
+                result.add(blocker);
+            }
         }
 
         if (scheme.bindings.some((b) => !Object.values(b.inputs).every((input) => !!controllerConnections[input.controllerId]))) {
@@ -192,13 +166,6 @@ const SELECT_SCHEME_RUN_BLOCKERS = createSelector(
         return [ ...result ];
     }
 );
-
-export type AddableWidgetData = {
-    widgetType: WidgetType;
-    hubId?: string;
-    portId?: number;
-    modeId?: number;
-};
 
 export const CONTROL_SCHEME_PAGE_SELECTORS = {
     selectCurrentlyViewedScheme: SELECT_CURRENTLY_VIEWED_SCHEME,
@@ -267,8 +234,8 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
         }
     ),
     selectSchemeRunBlockers: SELECT_SCHEME_RUN_BLOCKERS,
-    canRunViewedScheme: createSelector(
-        SELECT_SCHEME_RUN_BLOCKERS,
+    canRunViewedScheme: (widgetChecks: ControlSchemeStartBlockerWidgetsService) => createSelector(
+        SELECT_SCHEME_RUN_BLOCKERS(widgetChecks),
         (blockers): boolean => {
             return blockers.length === 0;
         }
@@ -298,18 +265,23 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
         SELECT_CURRENTLY_VIEWED_SCHEME,
         (scheme) => !!scheme && scheme.bindings.length > 0
     ),
-    addableWidgetsData: (controlSchemeName: string) => createSelector(
+    addableWidgetConfigFactoryBaseData: (controlSchemeName: string) => createSelector(
         CONTROL_SCHEME_SELECTORS.selectScheme(controlSchemeName),
         ATTACHED_IO_SELECTORS.selectAll,
         ATTACHED_IO_MODES_SELECTORS.selectEntities,
         ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
-        (controlScheme, attachedIos, ioPortModes, portModesInfo): AddableWidgetData[] => {
+        (controlScheme, attachedIos, ioPortModes, portModesInfo): {
+            ios: AttachedIoModel[];
+            portModes: Dictionary<AttachedIoModesModel>;
+            portModesInfo: Dictionary<AttachedIoPortModeInfoModel>;
+        } => {
             if (!controlScheme) {
-                return [];
+                return {
+                    ios: [],
+                    portModes: {},
+                    portModesInfo: {}
+                };
             }
-            const widgetTypes: WidgetType[] = getEnumValues(WidgetType);
-            const result: AddableWidgetData[] = [];
-
             // There are certain limitations on IO value reading: only one IO mode can be used at a time.
             // This means that if an IO is used for a widget, it cannot be re-used for another widget.
             // And if an IO is used for a binding, it also cannot be used for a widget due to output mode not strictly matching to input mode.
@@ -320,36 +292,11 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
             const controlledIosIds = new Set(controlScheme.bindings.map((binding) => attachedIosIdFn(binding)));
             const remainingIos = iosWithoutWidgets.filter((attachedIo) => !controlledIosIds.has(attachedIosIdFn(attachedIo)));
 
-            for (const io of remainingIos) {
-                const portInputModes = (ioPortModes[attachedIoModesIdFn(io)]?.portInputModes ?? []).map((modeId) => {
-                    return portModesInfo[attachedIoPortModeInfoIdFn({ ...io, modeId })];
-                }).filter((modeInfo): modeInfo is AttachedIoPortModeInfoModel => !!modeInfo);
-
-                for (const widgetType of widgetTypes) {
-                    const portModeName = getWidgetDataPortModeName(widgetType, portInputModes.map((info) => info.name));
-                    if (!portModeName) {
-                        continue;
-                    }
-                    const targetPortMode = portInputModes.find((info) => info.name === portModeName);
-                    if (!targetPortMode) {
-                        continue;
-                    }
-                    result.push({
-                        widgetType,
-                        hubId: io.hubId,
-                        portId: io.portId,
-                        modeId: targetPortMode.modeId
-                    });
-                }
-            }
-            return result;
-        }
-    ),
-    canAddWidgets: (controlSchemeName: string) => createSelector(
-        CONTROL_SCHEME_PAGE_SELECTORS.addableWidgetsData(controlSchemeName),
-        CONTROL_SCHEME_SELECTORS.selectIsAnySchemeRunning,
-        (addableWidgetsData, isAnySchemeRunning): boolean => {
-            return !isAnySchemeRunning && addableWidgetsData.length > 0;
+            return {
+                ios: remainingIos,
+                portModes: ioPortModes,
+                portModesInfo: portModesInfo
+            };
         }
     )
 } as const;
