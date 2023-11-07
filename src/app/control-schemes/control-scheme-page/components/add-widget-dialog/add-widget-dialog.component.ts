@@ -40,7 +40,7 @@ import { ControlSchemeWidgetSettingsComponentFactoryService } from '../../contro
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddWidgetDialogComponent {
-    public readonly widgetsData: Array<WidgetConfigModel>;
+    public readonly addableWidgetConfigs: Array<WidgetConfigModel>;
 
     public readonly form = this.formBuilder.group({
         selectionIndex: this.formBuilder.control<number | null>(null, { validators: [ Validators.required ] })
@@ -57,7 +57,7 @@ export class AddWidgetDialogComponent {
         private readonly formBuilder: FormBuilder,
         private readonly cdRef: ChangeDetectorRef
     ) {
-        this.widgetsData = this.dialogData.widgets;
+        this.addableWidgetConfigs = this.dialogData.addableWidgetConfigs;
     }
 
     public get config(): WidgetConfigModel | undefined {
@@ -69,7 +69,7 @@ export class AddWidgetDialogComponent {
         if (baseWidgetDataIndex === null) {
             return undefined;
         }
-        return this.widgetsData[baseWidgetDataIndex];
+        return this.addableWidgetConfigs[baseWidgetDataIndex];
     }
 
     public onSave(

@@ -13,7 +13,7 @@
                     {{ selectedBaseConfig.widgetType | widgetTypeToL10nKey | transloco }}
                     ({{ selectedBaseConfig | widgetConnectionInfoL10n | ngrxPush }})
                 </mat-select-trigger>
-                <mat-option *ngFor="let data of widgetsData; let idx = index"
+                <mat-option *ngFor="let data of addableWidgetConfigs; let idx = index"
                             [value]="idx"
                 >
                     {{ data.widgetType | widgetTypeToL10nKey | transloco }}
