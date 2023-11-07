@@ -10,3 +10,4 @@ export * from './io-has-matching-mode-for-op-mode';
 export * from './binding-edit';
 export * from './wait-for-controller-input-dialog';
 export * from './widget-type-to-l10n-key.pipe';
+export * from './get-widget-data-port-mode-name';

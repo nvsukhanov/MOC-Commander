@@ -6,6 +6,7 @@ import {
     ATTACHED_IO_PORT_MODE_INFO_SELECTORS,
     ATTACHED_IO_SELECTORS,
     AttachedIoModel,
+    AttachedIoPortModeInfoModel,
     CONTROLLER_CONNECTION_SELECTORS,
     CONTROL_SCHEME_SELECTORS,
     ControlSchemeBinding,
@@ -21,17 +22,16 @@ import {
     attachedIoPortModeInfoIdFn,
     attachedIosIdFn
 } from '@app/store';
-import { WidgetType } from '@app/shared';
+import { WidgetType, getEnumValues } from '@app/shared';
 
-import { areControllableIosPresent, ioHasMatchingModeForOpMode } from '../../common';
+import { areControllableIosPresent, getWidgetDataPortModeName, ioHasMatchingModeForOpMode } from '../common';
 import {
     ControlSchemeNodeTypes,
     ControlSchemeViewBindingTreeNodeData,
     ControlSchemeViewHubTreeNode,
     ControlSchemeViewIoTreeNode,
     SchemeRunBlocker
-} from '../types';
-import { getWidgetDataPortModeName } from '../components';
+} from './types';
 
 function widgetHasIoAttached(
     widgetConfig: WidgetConfigModel,
@@ -193,6 +193,13 @@ const SELECT_SCHEME_RUN_BLOCKERS = createSelector(
     }
 );
 
+export type AddableWidgetData = {
+    widgetType: WidgetType;
+    hubId?: string;
+    portId?: number;
+    modeId?: number;
+};
+
 export const CONTROL_SCHEME_PAGE_SELECTORS = {
     selectCurrentlyViewedScheme: SELECT_CURRENTLY_VIEWED_SCHEME,
     selectIoOutputModes: SELECT_IO_MODES,
@@ -291,4 +298,58 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
         SELECT_CURRENTLY_VIEWED_SCHEME,
         (scheme) => !!scheme && scheme.bindings.length > 0
     ),
+    addableWidgetsData: (controlSchemeName: string) => createSelector(
+        CONTROL_SCHEME_SELECTORS.selectScheme(controlSchemeName),
+        ATTACHED_IO_SELECTORS.selectAll,
+        ATTACHED_IO_MODES_SELECTORS.selectEntities,
+        ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
+        (controlScheme, attachedIos, ioPortModes, portModesInfo): AddableWidgetData[] => {
+            if (!controlScheme) {
+                return [];
+            }
+            const widgetTypes: WidgetType[] = getEnumValues(WidgetType);
+            const result: AddableWidgetData[] = [];
+
+            // There are certain limitations on IO value reading: only one IO mode can be used at a time.
+            // This means that if an IO is used for a widget, it cannot be re-used for another widget.
+            // And if an IO is used for a binding, it also cannot be used for a widget due to output mode not strictly matching to input mode.
+
+            const existingIoWidgetIds = new Set(controlScheme.widgets.map((widget) => attachedIosIdFn(widget)));
+            const iosWithoutWidgets = attachedIos.filter((attachedIo) => !existingIoWidgetIds.has(attachedIosIdFn(attachedIo)));
+
+            const controlledIosIds = new Set(controlScheme.bindings.map((binding) => attachedIosIdFn(binding)));
+            const remainingIos = iosWithoutWidgets.filter((attachedIo) => !controlledIosIds.has(attachedIosIdFn(attachedIo)));
+
+            for (const io of remainingIos) {
+                const portInputModes = (ioPortModes[attachedIoModesIdFn(io)]?.portInputModes ?? []).map((modeId) => {
+                    return portModesInfo[attachedIoPortModeInfoIdFn({ ...io, modeId })];
+                }).filter((modeInfo): modeInfo is AttachedIoPortModeInfoModel => !!modeInfo);
+
+                for (const widgetType of widgetTypes) {
+                    const portModeName = getWidgetDataPortModeName(widgetType, portInputModes.map((info) => info.name));
+                    if (!portModeName) {
+                        continue;
+                    }
+                    const targetPortMode = portInputModes.find((info) => info.name === portModeName);
+                    if (!targetPortMode) {
+                        continue;
+                    }
+                    result.push({
+                        widgetType,
+                        hubId: io.hubId,
+                        portId: io.portId,
+                        modeId: targetPortMode.modeId
+                    });
+                }
+            }
+            return result;
+        }
+    ),
+    canAddWidgets: (controlSchemeName: string) => createSelector(
+        CONTROL_SCHEME_PAGE_SELECTORS.addableWidgetsData(controlSchemeName),
+        CONTROL_SCHEME_SELECTORS.selectIsAnySchemeRunning,
+        (addableWidgetsData, isAnySchemeRunning): boolean => {
+            return !isAnySchemeRunning && addableWidgetsData.length > 0;
+        }
+    )
 } as const;

@@ -8,20 +8,20 @@ import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { concatLatestFrom } from '@ngrx/effects';
 import { RoutesBuilderService } from '@app/routing';
-import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, ControlSchemeModel, ROUTER_SELECTORS, WidgetConfigModel, } from '@app/store';
+import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, ControlSchemeModel, ROUTER_SELECTORS, WidgetConfigModel } from '@app/store';
 import {
     ConfirmationDialogModule,
     ConfirmationDialogService,
     FeatureToolbarControlsDirective,
     HintComponent,
     ScreenSizeObserverService,
-    TitleService,
+    TitleService
 } from '@app/shared';
 
-import { AddWidgetDialogViewModelProvider, CONTROL_SCHEME_PAGE_SELECTORS } from './dal';
 import { ControlSchemeViewTreeNode, SchemeRunBlocker } from './types';
-import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData, } from '../common';
+import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData } from '../common';
 import {
     AddWidgetDialogComponent,
     AddWidgetDialogViewModel,
@@ -35,6 +35,8 @@ import {
 } from './components';
 import { ControlSchemeRunBlockersL10nPipe } from './control-scheme-run-blockers-l10n.pipe';
 import { ControlSchemeWidgetComponentFactoryService } from './control-scheme-widget-component-factory.service';
+import { CONTROL_SCHEME_PAGE_SELECTORS } from './control-scheme-page.selectors';
+import { ControlSchemeWidgetDefaultConfigFactoryService } from './control-scheme-widget-default-config-factory.service';
 
 @Component({
     standalone: true,
@@ -63,7 +65,6 @@ import { ControlSchemeWidgetComponentFactoryService } from './control-scheme-wid
     providers: [
         TitleService,
         { provide: CONTROL_SCHEME_WIDGET_COMPONENT_FACTORY, useClass: ControlSchemeWidgetComponentFactoryService },
-        AddWidgetDialogViewModelProvider
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -87,7 +88,7 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
     public readonly isSmallScreen$: Observable<boolean> = this.screenSizeObserverService.isSmallScreen$;
 
     public readonly canAddWidgets$ = this.selectedScheme$.pipe(
-        switchMap((scheme) => scheme ? this.addWidgetDialogViewModelProvider.canAddWidgets(scheme.name) : of(false))
+        switchMap((scheme) => scheme ? this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canAddWidgets(scheme.name)) : of(false))
     );
 
     public readonly canDeleteOrEditWidgets$ = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canDeleteOrEditWidgets);
@@ -109,7 +110,7 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
         private readonly dialog: MatDialog,
         private readonly screenSizeObserverService: ScreenSizeObserverService,
         private readonly titleService: TitleService,
-        private readonly addWidgetDialogViewModelProvider: AddWidgetDialogViewModelProvider
+        private readonly widgetDefaultConfigFactory: ControlSchemeWidgetDefaultConfigFactoryService,
     ) {
     }
 
@@ -206,14 +207,24 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
         this.selectedScheme$.pipe(
             take(1),
             filter((scheme): scheme is ControlSchemeModel => scheme !== undefined),
-            switchMap((scheme) => this.addWidgetDialogViewModelProvider.getAddWidgetDialogViewModel(scheme.name)),
-            take(1),
-            switchMap((data) => this.dialog.open<AddWidgetDialogComponent, AddWidgetDialogViewModel, Omit<WidgetConfigModel, 'id'> | undefined>(
-                AddWidgetDialogComponent,
-                { data }
-            ).afterClosed().pipe(
-                map((widgetConfig) => ({ schemeName: data.controlSchemeName, widgetConfig }))
-            ))
+            concatLatestFrom((scheme) => this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.addableWidgetsData(scheme.name))),
+            switchMap(([scheme, addableWidgetData]) => {
+                const availableWidgetsConfig = addableWidgetData
+                    .map(({ widgetType, hubId, portId, modeId }) => this.widgetDefaultConfigFactory.createDefaultConfig(widgetType, hubId, portId, modeId))
+                    .filter((widgetConfig): widgetConfig is WidgetConfigModel => widgetConfig !== null);
+
+                return this.dialog.open<AddWidgetDialogComponent, AddWidgetDialogViewModel, Omit<WidgetConfigModel, 'id'> | undefined>(
+                    AddWidgetDialogComponent,
+                    {
+                        data: {
+                            controlSchemeName: scheme.name,
+                            addableWidgetConfigs: availableWidgetsConfig
+                        }
+                    }
+                ).afterClosed().pipe(
+                    map((widgetConfig) => ({ schemeName: scheme.name, widgetConfig }))
+                );
+            })
         ).subscribe(({ schemeName, widgetConfig }) => {
             if (widgetConfig) {
                 this.store.dispatch(CONTROL_SCHEME_ACTIONS.addWidget({ schemeName, widgetConfig }));
