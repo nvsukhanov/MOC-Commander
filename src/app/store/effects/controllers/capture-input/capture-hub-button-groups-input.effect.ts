@@ -90,7 +90,7 @@ function readButtonGroups(
     return store.select(SELECT_ATTACHED_IOS_BUTTON_GROUPS_SELECTOR).pipe(
         switchMap((buttonGroups) => from(buttonGroups)),
         mergeMap(({ hubId, portId, modeId }) => {
-            return hubStorage.get(hubId).ports.rawPortValueChanges(portId, modeId, 1).pipe(
+            return hubStorage.get(hubId).ports.portValueChanges(portId, modeId, 1).pipe(
                 startWith([ 0 ]),
                 pairwise(),
                 map(([ [ prevValue ], [ nextValue ] ]) => {

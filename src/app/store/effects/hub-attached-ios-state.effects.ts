@@ -1,6 +1,6 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Observable, bufferCount, concatWith, filter, map, mergeMap, take } from 'rxjs';
-import { PortModeName } from 'rxpoweredup';
+import { PortModeName, ValueTransformers } from 'rxpoweredup';
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 
@@ -23,14 +23,16 @@ export class HubAttachedIosStateEffects {
                     PortModeName.absolutePosition
                 )),
                 bufferCount(2),
-                map(([ positionModeId, absolutePositionModeId ]) => ({ positionModeId, absolutePositionModeId, action })),
+                map(([ positionModeId, absolutePositionModeId ]) => ({ positionModeId, absolutePositionModeId, action }))
             )),
             filter((d) => d.absolutePositionModeId !== null && d.positionModeId !== null),
             mergeMap(({ positionModeId, absolutePositionModeId, action }) => {
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                return this.hubStorage.get(action.io.hubId).motors.getPosition(action.io.portId, positionModeId!).pipe(
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    concatWith(this.hubStorage.get(action.io.hubId).motors.getAbsolutePosition(action.io.portId, absolutePositionModeId!)),
+                return this.hubStorage.get(action.io.hubId).ports.getPortValue(action.io.portId, positionModeId!, ValueTransformers.position).pipe(
+                    concatWith(this.hubStorage.get(action.io.hubId)
+                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                   .ports.getPortValue(action.io.portId, absolutePositionModeId!, ValueTransformers.absolutePosition)
+                    ),
                     bufferCount(2),
                     map(([ position, absolutePosition ]) => absolutePosition - position),
                     map((offset) => ATTACHED_IO_PROPS_ACTIONS.motorEncoderOffsetReceived({

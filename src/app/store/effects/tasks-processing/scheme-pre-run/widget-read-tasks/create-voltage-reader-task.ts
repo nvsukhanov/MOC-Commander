@@ -1,5 +1,6 @@
 import { Observable, concatWith, filter, switchMap, take, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { ValueTransformers } from 'rxpoweredup';
 import { WidgetType } from '@app/shared';
 
 import { HubModel, VoltageWidgetConfigModel } from '../../../../models';
@@ -30,8 +31,8 @@ export function createVoltageReaderTask(
             filter((hubModel): hubModel is HubModel => !!hubModel),
             switchMap(({ hubType }) => {
                 const hub = hubStorage.get(config.hubId);
-                return hub.sensors.getVoltage(config.portId, config.modeId, hubType).pipe(
-                    concatWith(hub.sensors.voltageChanges(config.portId, config.modeId, config.valueChangeThreshold, hubType))
+                return hub.ports.getPortValue(config.portId, config.modeId, ValueTransformers.voltage(hubType)).pipe(
+                    concatWith(hub.ports.portValueChanges(config.portId, config.modeId, config.valueChangeThreshold, ValueTransformers.voltage(hubType)))
                 );
             }),
             takeUntil(schemeStop$),
