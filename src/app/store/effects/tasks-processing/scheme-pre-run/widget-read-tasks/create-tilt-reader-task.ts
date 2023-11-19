@@ -1,6 +1,6 @@
 import { Store } from '@ngrx/store';
 import { Observable, concatWith, takeUntil } from 'rxjs';
-import { TiltData } from 'rxpoweredup';
+import { TiltData, ValueTransformers } from 'rxpoweredup';
 import { WidgetType } from '@app/shared';
 
 import { TiltWidgetConfigModel } from '../../../../models';
@@ -16,8 +16,8 @@ export function createTiltReaderTask(
     return new Observable((subscriber) => {
         let initialValueReceived = false;
         const hub = hubStorage.get(config.hubId);
-        hub.sensors.getTilt(config.portId, config.modeId).pipe(
-            concatWith(hub.sensors.tiltChanges(config.portId, config.modeId, config.valueChangeThreshold)),
+        hub.ports.getPortValue(config.portId, config.modeId, ValueTransformers.tilt).pipe(
+            concatWith(hub.ports.portValueChanges(config.portId, config.modeId, config.valueChangeThreshold, ValueTransformers.tilt)),
             takeUntil(schemeStop$),
         ).subscribe((tilt) => {
             if (!initialValueReceived) {
