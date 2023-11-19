@@ -5,13 +5,13 @@ import { ControlSchemeBindingType } from '@app/shared';
 
 import { BindingTreeNodeRecord, BindingTreeNodeViewModel } from './binding-tree-node-view-model';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const INPUT_TREE_NODE_VIEW_MODEL_SELECTOR = (
     schemeName: string,
     inputs: ControlSchemeInputsRecord,
     operationMode: ControlSchemeBindingType,
     bindingId: number,
     ioHasNoRequiredCapabilities: boolean
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 ) => createSelector(
     CONTROLLER_CONNECTION_SELECTORS.selectEntities,
     (controllerConnectionEntities: Dictionary<ControllerConnectionModel>): BindingTreeNodeViewModel => {
