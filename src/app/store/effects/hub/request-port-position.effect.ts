@@ -2,7 +2,7 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { inject } from '@angular/core';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { PortModeName } from 'rxpoweredup';
+import { PortModeName, ValueTransformers } from 'rxpoweredup';
 
 import { ATTACHED_IO_PORT_MODE_INFO_SELECTORS } from '../../selectors';
 import { HUBS_ACTIONS } from '../../actions';
@@ -27,7 +27,7 @@ export const REQUEST_PORT_POSITION_EFFECT = createEffect((
                     })
                 );
             }
-            return hubStorageService.get(action.hubId).motors.getPosition(action.portId, modeInfo.modeId).pipe(
+            return hubStorageService.get(action.hubId).ports.getPortValue(action.portId, modeInfo.modeId, ValueTransformers.position).pipe(
                 map((position) => HUBS_ACTIONS.portPositionRead({ hubId: action.hubId, portId: action.portId, position })),
                 catchError((error) => {
                     return of(HUBS_ACTIONS.portPositionReadFailed({ hubId: action.hubId, portId: action.portId, error }));

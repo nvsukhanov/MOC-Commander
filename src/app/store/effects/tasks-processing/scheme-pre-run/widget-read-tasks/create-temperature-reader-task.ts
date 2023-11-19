@@ -1,5 +1,6 @@
 import { Store } from '@ngrx/store';
 import { Observable, concatWith, takeUntil } from 'rxjs';
+import { ValueTransformers } from 'rxpoweredup';
 import { WidgetType } from '@app/shared';
 
 import { TemperatureWidgetConfigModel } from '../../../../models';
@@ -15,8 +16,8 @@ export function createTemperatureReaderTask(
     return new Observable((subscriber) => {
         let initialValueReceived = false;
         const hub = hubStorage.get(config.hubId);
-        hub.sensors.getTemperature(config.portId, config.modeId).pipe(
-            concatWith(hub.sensors.temperatureChanges(config.portId, config.modeId, config.valueChangeThreshold)),
+        hub.ports.getPortValue(config.portId, config.modeId, ValueTransformers.temperature).pipe(
+            concatWith(hub.ports.portValueChanges(config.portId, config.modeId, config.valueChangeThreshold, ValueTransformers.temperature)),
             takeUntil(schemeStop$),
         ).subscribe((temperature) => {
             if (!initialValueReceived) {
