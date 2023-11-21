@@ -1,0 +1,97 @@
+{
+  "$schema": "node_modules/nx/schemas/project-schema.json",
+  "name": "webPoweredApp",
+  "projectType": "application",
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
+  "sourceRoot": "src",
+  "prefix": "app",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist",
+        "index": "src/index.html",
+        "main": "src/main.ts",
+        "polyfills": [
+          "zone.js"
+        ],
+        "tsConfig": "tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "src/favicon.ico",
+          "src/assets"
+        ],
+        "styles": [
+          "src/styles/styles.scss"
+        ],
+        "allowedCommonJsDependencies": [
+          "@messageformat/core",
+          "flat",
+          "deepmerge",
+          "lzma/src/lzma_worker",
+          "murmurhash-js",
+          "deep-equal"
+        ],
+        "scripts": [
+          "node_modules/lzma/src/lzma_worker.js"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production",
+      "outputs": [
+        "{options.outputPath}"
+      ]
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "webPoweredApp:build:production"
+        },
+        "development": {
+          "buildTarget": "webPoweredApp:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "lintFilePatterns": [
+          "src/**/*.ts",
+          "src/**/*.html"
+        ]
+      },
+      "outputs": [
+        "{options.outputFile}"
+      ]
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:jest",
+      "options": {
+        "tsConfig": "tsconfig.spec.json",
+        "polyfills": [
+          "zone.js",
+          "zone.js/testing",
+          "reflect-metadata"
+        ]
+      }
+    }
+  }
+}
