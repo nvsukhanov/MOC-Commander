@@ -129,7 +129,7 @@ export function provideApplicationStore(): EnvironmentProviders {
                     HUB_RUNTIME_DATA_ACTIONS.batteryLevelReceived.type,
                     // CONTROLLER_INPUT_ACTIONS.inputReceived.type
                 ]
-            }),
+            , connectInZone: true}),
         );
     }
     return makeEnvironmentProviders(providers);
