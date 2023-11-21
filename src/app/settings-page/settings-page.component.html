@@ -2,34 +2,14 @@
     <mat-card-content>
         <ul class="options__list">
             <li class="option__container">
-                <mat-form-field class="option">
-                    <mat-label>{{ 'settings.theme' | transloco }}</mat-label>
-                    <mat-select [value]="currentThemeSelection$ | ngrxPush"
-                                (valueChange)="onThemeChange($event)"
-                                [attr.aria-label]="'settings.theme' | transloco"
-                    >
-                        <mat-option *ngFor="let theme of themes"
-                                    [value]="theme"
-                        >
-                            {{ theme | themeToL10nKey | transloco }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+                <app-theme-select [theme]="currentTheme()"
+                                  (themeChange)="onThemeChange($event)"
+                ></app-theme-select>
             </li>
             <li class="option">
-                <mat-form-field class="option">
-                    <mat-label>{{ 'settings.language' | transloco }}</mat-label>
-                    <mat-select [value]="currentLanguageSelection$ | ngrxPush"
-                                (valueChange)="onLanguageChange($event)"
-                                [attr.aria-label]="'settings.language' | transloco"
-                    >
-                        <mat-option *ngFor="let language of languages"
-                                    [value]="language"
-                        >
-                            {{ language | languageToL10nKey | transloco }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+                <app-language-select [language]="currentLanguage()"
+                                     (languageChange)="onLanguageChange($event)"
+                ></app-language-select>
             </li>
         </ul>
 
