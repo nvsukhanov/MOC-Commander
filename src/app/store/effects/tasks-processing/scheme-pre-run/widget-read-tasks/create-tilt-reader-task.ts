@@ -16,8 +16,13 @@ export function createTiltReaderTask(
     return new Observable((subscriber) => {
         let initialValueReceived = false;
         const hub = hubStorage.get(config.hubId);
+        const tiltThreshold: TiltData = {
+            roll: config.valueChangeThreshold,
+            pitch: config.valueChangeThreshold,
+            yaw: config.valueChangeThreshold
+        };
         hub.ports.getPortValue(config.portId, config.modeId, ValueTransformers.tilt).pipe(
-            concatWith(hub.ports.portValueChanges(config.portId, config.modeId, config.valueChangeThreshold, ValueTransformers.tilt)),
+            concatWith(hub.ports.portValueChanges(config.portId, config.modeId, tiltThreshold, ValueTransformers.tilt)),
             takeUntil(schemeStop$),
         ).subscribe((tilt) => {
             if (!initialValueReceived) {
