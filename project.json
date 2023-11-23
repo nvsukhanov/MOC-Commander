@@ -83,14 +83,17 @@
       ]
     },
     "test": {
-      "executor": "@angular-devkit/build-angular:jest",
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectName}"],
       "options": {
-        "tsConfig": "tsconfig.spec.json",
-        "polyfills": [
-          "zone.js",
-          "zone.js/testing",
-          "reflect-metadata"
-        ]
+        "jestConfig": "jest.config.app.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
       }
     }
   }

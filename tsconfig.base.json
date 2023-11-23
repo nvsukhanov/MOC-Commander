@@ -18,13 +18,7 @@
       "shared": ["modules/shared/src/index.ts"]
     },
     "types": ["web-bluetooth", "jest", "node", "lzma"],
-    "typeRoots": [
-      "node_modules/@types",
-      "./types/lzma"
-    ]
+    "typeRoots": ["node_modules/@types", "./types/lzma"]
   },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+  "exclude": ["node_modules", "tmp"]
 }
