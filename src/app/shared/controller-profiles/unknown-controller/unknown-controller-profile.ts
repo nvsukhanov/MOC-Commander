@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
-import { IControllerProfile } from '@app/shared';
 
+import { IControllerProfile } from '../i-controller-profile';
 import { createControllerL10nKey, createScopedControllerL10nKey } from '../create-controller-l10n-key';
 
 export class UnknownControllerProfile implements IControllerProfile<null> {

@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { isAngleInSector } from '@app/shared';
 
+import { isAngleInSector } from '../../../../math';
 import { TiltGaugeSectorDefinition } from './tilt-gauge-sector-definition';
 
 @Pipe({
