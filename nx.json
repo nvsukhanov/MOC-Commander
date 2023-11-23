@@ -53,9 +53,9 @@
       "e2eTestRunner": "none"
     },
     "@nx/angular:library": {
-      "strict": true,
       "linter": "eslint",
-      "unitTestRunner": "jest"
+      "unitTestRunner": "jest",
+      "strict": true
     },
     "@nx/angular:component": {
       "style": "css"
