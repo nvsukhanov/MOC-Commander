@@ -12,7 +12,7 @@
         ></app-binding-control-select-io>
     </app-binding-edit-section>
 
-    <mat-divider [vertical]="true" *appHideOnSmallScreen></mat-divider>
+    <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
 
     <app-binding-edit-section [largeScreenWidthPercentage]="33"
                               [caption]="'controlScheme.bindingSectionInputTitle' | transloco"
@@ -22,7 +22,7 @@
         ></app-binding-control-select-controller>
     </app-binding-edit-section>
 
-    <mat-divider [vertical]="true" *appHideOnSmallScreen></mat-divider>
+    <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
 
     <app-binding-edit-section [largeScreenWidthPercentage]="33"
                               [caption]="'controlScheme.bindingSectionConfigTitle' | transloco"
@@ -35,7 +35,7 @@
                    matInput
                    [formControl]="form.controls.degree"
             />
-            <mat-error [appValidationMessages]="form.controls.degree"></mat-error>
+            <mat-error [libValidationMessages]="form.controls.degree"></mat-error>
         </mat-form-field>
 
         <app-binding-control-speed-input [control]="form.controls.speed"></app-binding-control-speed-input>
@@ -45,12 +45,12 @@
                                               [translocoTitle]="'controlScheme.outputEndStateControlTitle'"
         ></app-binding-control-output-end-state>
 
-        <app-toggle-control [translocoTitle]="'controlScheme.useAccelerationProfile'"
+        <lib-toggle-control [translocoTitle]="'controlScheme.useAccelerationProfile'"
                             [control]="form.controls.useAccelerationProfile"
-        ></app-toggle-control>
+        ></lib-toggle-control>
 
-        <app-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'"
+        <lib-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'"
                             [control]="form.controls.useDecelerationProfile"
-        ></app-toggle-control>
+        ></lib-toggle-control>
     </app-binding-edit-section>
 </app-binding-edit-sections-container>

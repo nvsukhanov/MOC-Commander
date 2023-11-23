@@ -4,8 +4,8 @@
 
 <div mat-dialog-content>
     <p>{{ 'settings.restoreStateFromBackupDialogDescription' | transloco }}</p>
-    <app-upload-file [formControl]="control"></app-upload-file>
-    <mat-error [appValidationMessages]="control"
+    <lib-upload-file [formControl]="control"></lib-upload-file>
+    <mat-error [libValidationMessages]="control"
                [l10nMap]="errorsMap"
     ></mat-error>
 </div>

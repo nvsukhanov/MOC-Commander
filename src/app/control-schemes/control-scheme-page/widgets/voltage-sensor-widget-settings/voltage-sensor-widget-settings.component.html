@@ -4,7 +4,7 @@
            type="text"
            [formControl]="form.controls.title"
     />
-    <mat-error [appValidationMessages]="form.controls.title"></mat-error>
+    <mat-error [libValidationMessages]="form.controls.title"></mat-error>
 </mat-form-field>
 
 <mat-form-field class="form-field">
@@ -12,7 +12,7 @@
     <input matInput
            [formControl]="form.controls.valueChangeThreshold"
     />
-    <mat-error [appValidationMessages]="form.controls.valueChangeThreshold"></mat-error>
+    <mat-error [libValidationMessages]="form.controls.valueChangeThreshold"></mat-error>
 </mat-form-field>
 
 <button type="submit"

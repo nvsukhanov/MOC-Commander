@@ -1,7 +1,5 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -12,41 +10,8 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "noUnusedLocals": true,
-    "sourceMap": true,
-    "declaration": false,
     "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "target": "ES2022",
-    "module": "ES2022",
-    "useDefineForClassFields": false,
-    "skipLibCheck": true,
-    "lib": [
-      "ES2022",
-      "dom"
-    ],
-    "types": [
-      "web-bluetooth",
-      "jest",
-      "node",
-      "ts-mockito"
-    ],
-    "typeRoots": [
-      "node_modules/@types",
-      "src/types"
-    ],
-    "paths": {
-      "@app/shared": [
-        "src/app/shared"
-      ],
-      "@app/store": [
-        "src/app/store"
-      ],
-      "@app/routing": [
-        "src/app/routing"
-      ]
-    }
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -54,5 +19,6 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
     "fullTemplateTypeCheck": true
-  }
+  },
+  "extends": "./tsconfig.base.json",
 }

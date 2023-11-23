@@ -1,0 +1,30 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "lib": ["ES2022", "dom"],
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "@app/routing": ["src/app/routing"],
+      "@app/shared": ["modules/shared/src/index.ts"],
+      "@app/store": ["src/app/store"],
+      "shared": ["modules/shared/src/index.ts"]
+    },
+    "types": ["web-bluetooth", "jest", "node", "lzma"],
+    "typeRoots": [
+      "node_modules/@types",
+      "./types/lzma"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
+}

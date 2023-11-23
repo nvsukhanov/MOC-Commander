@@ -5,11 +5,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { provideRouting } from '@app/routing';
 import { AppStoreVersion, provideApplicationStore } from '@app/store';
+import { ShowOnTouchedErrorStateMatcher, provideControllerProfiles, provideI18n } from '@app/shared';
 
-import { ShowOnTouchedErrorStateMatcher } from './app/shared/validation-errors';
 import { RootComponent } from './app/root';
-import { provideI18n } from './app/shared/i18n';
-import { provideControllerProfiles } from './app/shared/controller-profiles';
 
 // removing old ls store version prefixes.
 // TODO: remove this code after a 2023-10-15

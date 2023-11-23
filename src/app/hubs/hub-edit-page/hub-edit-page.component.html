@@ -10,7 +10,7 @@
                 <mat-form-field>
                     <mat-label>{{ 'hub.name' | transloco }}</mat-label>
                     <input matInput [formControl]="form.controls.name"/>
-                    <mat-error [appValidationMessages]="form.controls.name"
+                    <mat-error [libValidationMessages]="form.controls.name"
                                [l10nMap]="validationErrorsMap"
                     ></mat-error>
                 </mat-form-field>
@@ -36,11 +36,11 @@
     </section>
 
     <ng-template #hubIsNotConnected>
-        <app-hint>{{ 'hub.isNotConnected' | transloco: hubConfiguration }}</app-hint>
+        <lib-hint>{{ 'hub.isNotConnected' | transloco: hubConfiguration }}</lib-hint>
     </ng-template>
 </ng-container>
 
 <ng-template #hubIsNotFound>
-    <app-hint>{{ 'hub.isNotFound' | transloco }}</app-hint>
+    <lib-hint>{{ 'hub.isNotFound' | transloco }}</lib-hint>
 </ng-template>
 

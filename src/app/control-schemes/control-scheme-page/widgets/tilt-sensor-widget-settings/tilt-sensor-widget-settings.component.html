@@ -4,7 +4,7 @@
            type="text"
            [formControl]="form.controls.title"
     />
-    <mat-error [appValidationMessages]="form.controls.title"></mat-error>
+    <mat-error [libValidationMessages]="form.controls.title"></mat-error>
 </mat-form-field>
 
 <mat-form-field class="form-field">
@@ -13,17 +13,17 @@
            type="number"
            [formControl]="form.controls.valueChangeThreshold"
     />
-    <mat-error [appValidationMessages]="form.controls.valueChangeThreshold"></mat-error>
+    <mat-error [libValidationMessages]="form.controls.valueChangeThreshold"></mat-error>
 </mat-form-field>
 
-<app-toggle-control [translocoTitle]="'controlScheme.widgets.tilt.invertYawOptionTitle'"
+<lib-toggle-control [translocoTitle]="'controlScheme.widgets.tilt.invertYawOptionTitle'"
                     [control]="form.controls.invertYaw"
-></app-toggle-control>
+></lib-toggle-control>
 
-<app-toggle-control [translocoTitle]="'controlScheme.widgets.tilt.invertPitchOptionTitle'"
+<lib-toggle-control [translocoTitle]="'controlScheme.widgets.tilt.invertPitchOptionTitle'"
                     [control]="form.controls.invertPitch"
-></app-toggle-control>
+></lib-toggle-control>
 
-<app-toggle-control [translocoTitle]="'controlScheme.widgets.tilt.invertRollOptionTitle'"
+<lib-toggle-control [translocoTitle]="'controlScheme.widgets.tilt.invertRollOptionTitle'"
                     [control]="form.controls.invertRoll"
-></app-toggle-control>
+></lib-toggle-control>

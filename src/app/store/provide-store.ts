@@ -5,7 +5,7 @@ import { ActionReducerMap, Store, provideStore } from '@ngrx/store';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { Router } from '@angular/router';
 import { RoutesBuilderService } from '@app/routing';
-import { NAVIGATOR } from '@app/shared';
+import { NAVIGATOR, provideControllerProfiles } from '@app/shared';
 
 import { IState } from './i-state';
 import {
@@ -112,7 +112,8 @@ export function provideApplicationStore(): EnvironmentProviders {
             provideRouterStore(),
             provideTaskFactories(),
             provideTaskFilter(),
-            provideStoreMigrations()
+            provideStoreMigrations(),
+            provideControllerProfiles()
         ]
     ];
     if (isDevMode()) {

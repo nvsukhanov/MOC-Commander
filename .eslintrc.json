@@ -5,6 +5,9 @@
   ],
   "overrides": [
     {
+      "plugins": [
+        "@nx"
+      ],
       "files": [
         "*.ts"
       ],

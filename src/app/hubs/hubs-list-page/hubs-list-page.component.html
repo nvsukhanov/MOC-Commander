@@ -6,7 +6,7 @@
             <mat-card>
                 <mat-card-header class="hub-name-container">
                     <mat-card-title>
-                        <app-hub-inline-view [hubId]="hub.hubId"
+                        <lib-hub-inline-view [hubId]="hub.hubId"
                                              [name]="hub.name"
                                              [batteryLevel]="hub.batteryLevel"
                                              [rssiLevel]="hub.rssi"
@@ -15,7 +15,7 @@
                                              [isConnected]="hub.isConnected"
                                              (disconnect)="disconnectHub(hub.hubId)"
                                              (forget)="forgetHub(hub.hubId)"
-                        ></app-hub-inline-view>
+                        ></lib-hub-inline-view>
                     </mat-card-title>
                 </mat-card-header>
             </mat-card>
@@ -23,8 +23,8 @@
     </ul>
 
     <ng-template #noConnectedHubs>
-        <app-hint>
+        <lib-hint>
             {{ 'hub.noneConnected' | transloco }}
-        </app-hint>
+        </lib-hint>
     </ng-template>
 </ng-container>

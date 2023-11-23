@@ -1,0 +1,76 @@
+<ng-container *ngIf="isConnected; else notConnected">
+    <a mat-button
+       appEllipsisTitle
+       [routerLink]="hubViewHref"
+    >
+        {{ name }}
+    </a>
+</ng-container>
+
+<ng-template #notConnected>
+    <button mat-button
+            [disabled]="true"
+            [title]="'hub.notConnected' | transloco"
+    >
+        <ng-container *ngIf="isHubKnown; else unknownHub">
+            {{ name }}
+        </ng-container>
+        <ng-template #unknownHub>
+            {{ 'hub.unknownHub' | transloco: { hubId } }}
+        </ng-template>
+    </button>
+    <span class="cdk-visually-hidden">{{ 'hub.notConnected' | transloco }}</span>
+</ng-template>
+
+<span class="spacer"></span>
+
+<ng-container *ngIf="isConnected">
+    <lib-input-activity-indicator [isActive]="isButtonPressed"
+                                  [activeTitle]="'hub.buttonState' | transloco: { isButtonPressed }"
+                                  [inactiveTitle]="'hub.buttonState' | transloco: { isButtonPressed }"
+                                  class="button-state"
+                                  *libHideOnSmallScreen
+    ></lib-input-activity-indicator>
+
+    <ng-container *ngIf="batteryLevel !== null">
+        <mat-icon class="battery-level"
+                  [title]="'hub.batteryLevel' | transloco: { batteryLevel }"
+                  [fontIcon]="batteryLevelIcon"
+        ></mat-icon>
+        <span class="cdk-visually-hidden">{{ 'hub.batteryLevel' | transloco: { batteryLevel } }}</span>
+    </ng-container>
+
+    <ng-container *ngIf="rssiLevel !== null">
+        <mat-icon class="rssi-level"
+                  [title]="'hub.rssiLevel' | transloco: { rssi: rssiLevel }"
+                  [fontIcon]="rssiLevelIcon"
+                  *appHideOnSmallScreen
+        ></mat-icon>
+        <span class="cdk-visually-hidden">{{ 'hub.rssiLevel' | transloco: { rssi: rssiLevel } }}</span>
+    </ng-container>
+
+    <mat-icon class="has-communication-icon"
+              [class.muted]="!hasCommunication"
+              [fontIcon]="'multiple_stop'"
+    ></mat-icon>
+</ng-container>
+
+<ng-container *ngIf="showControls">
+    <button *ngIf="isConnected"
+            mat-button
+            class="disconnect-button"
+            (click)="onDisconnectClick()"
+    >
+        {{ 'hub.disconnect' | transloco }}
+    </button>
+
+    <button *ngIf="!isConnected"
+            mat-button
+            class="forget-button"
+            color="warn"
+            (click)="onForgetClick()"
+            [attr.aria-label]="'hub.forgetHubLabel' | transloco: { name }"
+    >
+        {{ 'hub.forget' | transloco }}
+    </button>
+</ng-container>

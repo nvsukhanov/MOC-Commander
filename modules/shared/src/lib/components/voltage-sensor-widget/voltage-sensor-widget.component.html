@@ -1,0 +1,15 @@
+<lib-widget [title]="title"
+            [subTitle]="subtitle"
+            [canBeEdited]="canBeEdited"
+            [canBeDeleted]="canBeDeleted"
+            (edit)="onEdit()"
+            (delete)="onDelete()"
+>
+    <ng-container *ngIf="voltage !== undefined; else noData">
+        {{ 'controlScheme.widgets.voltage.value' | transloco: { voltage: (voltage | number: '1.2-2') } }}
+    </ng-container>
+    <ng-template #noData>
+        <mat-icon [fontIcon]="'question_mark'"></mat-icon>
+        <span class="cdk-visually-hidden">{{ 'controlScheme.widgets.voltage.noDataTitle' | transloco }}</span>
+    </ng-template>
+</lib-widget>
