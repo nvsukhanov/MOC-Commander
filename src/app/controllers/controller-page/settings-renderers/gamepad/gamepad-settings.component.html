@@ -12,8 +12,8 @@
                         {{ axis.name$ | ngrxPush }}
                     </mat-panel-title>
                     <ng-container *ngIf="!panel.expanded">
-                        <mat-panel-description *appHideOnSmallScreen>
-                            <app-input-activity-indicator [isActive]="!!(axis.isActivated$ | ngrxPush)"></app-input-activity-indicator>
+                        <mat-panel-description *libHideOnSmallScreen>
+                            <lib-input-activity-indicator [isActive]="!!(axis.isActivated$ | ngrxPush)"></lib-input-activity-indicator>
                             <app-input-output-diagram [compact]="true"
                                                       [rawValue]="axis.rawValue$ | ngrxPush"
                                                       [outputValue]="axis.outputValue$ | ngrxPush"
@@ -44,9 +44,9 @@
                         {{ button.name$ | ngrxPush }}
                     </mat-panel-title>
                     <ng-container *ngIf="!panel.expanded">
-                        <mat-panel-description *appHideOnSmallScreen>
-                            <app-input-activity-indicator [isActive]="!!(button.isActivated$ | ngrxPush)"
-                            ></app-input-activity-indicator>
+                        <mat-panel-description *libHideOnSmallScreen>
+                            <lib-input-activity-indicator [isActive]="!!(button.isActivated$ | ngrxPush)"
+                            ></lib-input-activity-indicator>
                         </mat-panel-description>
                     </ng-container>
                 </mat-expansion-panel-header>

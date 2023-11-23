@@ -21,9 +21,9 @@
 </ng-container>
 
 <ng-template #hubIsNotConnected>
-    <app-hint>{{ 'hub.isNotConnected' | transloco:(selectedHub$ | ngrxPush) }}</app-hint>
+    <lib-hint>{{ 'hub.isNotConnected' | transloco:(selectedHub$ | ngrxPush) }}</lib-hint>
 </ng-template>
 
 <ng-template #hubNotFound>
-    <app-hint>{{ 'hub.isNotFound' | transloco }}</app-hint>
+    <lib-hint>{{ 'hub.isNotFound' | transloco }}</lib-hint>
 </ng-template>

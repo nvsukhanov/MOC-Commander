@@ -1,4 +1,4 @@
-<app-hub-inline-view *ngIf="viewModel$ | ngrxPush; let viewModel"
+<lib-hub-inline-view *ngIf="viewModel$ | ngrxPush; let viewModel"
                      [isHubKnown]="viewModel.isHubKnown"
                      [name]="viewModel.name"
                      [hubId]="viewModel.hubId"
@@ -8,4 +8,4 @@
                      [hasCommunication]="viewModel.hasCommunication"
                      [isConnected]="viewModel.isConnected"
                      [showControls]="false"
-></app-hub-inline-view>
+></lib-hub-inline-view>

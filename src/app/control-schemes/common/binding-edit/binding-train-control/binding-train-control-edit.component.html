@@ -12,7 +12,7 @@
         ></app-binding-control-select-io>
     </app-binding-edit-section>
 
-    <mat-divider [vertical]="true" *appHideOnSmallScreen></mat-divider>
+    <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
 
     <app-binding-edit-section [largeScreenWidthPercentage]="33"
                               [caption]="'controlScheme.bindingSectionInputTitle' | transloco"
@@ -30,7 +30,7 @@
         ></app-binding-control-select-controller>
     </app-binding-edit-section>
 
-    <mat-divider [vertical]="true" *appHideOnSmallScreen></mat-divider>
+    <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
 
     <app-binding-edit-section [largeScreenWidthPercentage]="33"
                               [caption]="'controlScheme.bindingSectionConfigTitle' | transloco"
@@ -61,7 +61,7 @@
                 <mat-icon [fontIcon]="'delete'"></mat-icon>
                 <span class="cdk-visually-hidden">{{ 'controlScheme.trainControlBinding.outputLevelRemove' | transloco }}</span>
             </button>
-            <mat-error [appValidationMessages]="speedControl"></mat-error>
+            <mat-error [libValidationMessages]="speedControl"></mat-error>
         </mat-form-field>
 
         <div class="add-level-button-container">
@@ -72,7 +72,7 @@
             </button>
         </div>
 
-        <mat-error [appValidationMessages]="form.controls.levels"></mat-error>
+        <mat-error [libValidationMessages]="form.controls.levels"></mat-error>
 
         <mat-divider class="sections-divider"></mat-divider>
 
@@ -80,12 +80,12 @@
 
         <app-binding-control-select-looping-mode [control]="form.controls.loopingMode"></app-binding-control-select-looping-mode>
 
-        <app-toggle-control [translocoTitle]="'controlScheme.useAccelerationProfile'"
+        <lib-toggle-control [translocoTitle]="'controlScheme.useAccelerationProfile'"
                             [control]="form.controls.useAccelerationProfile"
-        ></app-toggle-control>
+        ></lib-toggle-control>
 
-        <app-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'"
+        <lib-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'"
                             [control]="form.controls.useDecelerationProfile"
-        ></app-toggle-control>
+        ></lib-toggle-control>
     </app-binding-edit-section>
 </app-binding-edit-sections-container>

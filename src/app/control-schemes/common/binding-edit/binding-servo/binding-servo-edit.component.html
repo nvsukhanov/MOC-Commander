@@ -12,7 +12,7 @@
         ></app-binding-control-select-io>
     </app-binding-edit-section>
 
-    <mat-divider [vertical]="true" *appHideOnSmallScreen></mat-divider>
+    <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
 
     <app-binding-edit-section [largeScreenWidthPercentage]="33"
                               [caption]="'controlScheme.bindingSectionInputTitle' | transloco"
@@ -25,7 +25,7 @@
         ></app-binding-control-select-input-gain>
     </app-binding-edit-section>
 
-    <mat-divider [vertical]="true" *appHideOnSmallScreen></mat-divider>
+    <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
 
     <app-binding-edit-section [largeScreenWidthPercentage]="33"
                               [caption]="'controlScheme.bindingSectionConfigTitle' | transloco"
@@ -34,9 +34,9 @@
         <app-binding-control-speed-input [control]="form.controls.speed"></app-binding-control-speed-input>
         <app-binding-control-power-input [control]="form.controls.power"></app-binding-control-power-input>
 
-        <app-toggle-control [translocoTitle]="'controlScheme.servoBinding.calibrateOnStart'"
+        <lib-toggle-control [translocoTitle]="'controlScheme.servoBinding.calibrateOnStart'"
                             [control]="form.controls.calibrateOnStart"
-        ></app-toggle-control>
+        ></lib-toggle-control>
 
         <ng-container *ngIf="!form.controls.calibrateOnStart.value">
             <div>
@@ -67,7 +67,7 @@
                 >
                     <mat-icon [fontIcon]="'gps_fixed'"></mat-icon>
                 </button>
-                <mat-error [appValidationMessages]="form.controls.aposCenter"></mat-error>
+                <mat-error [libValidationMessages]="form.controls.aposCenter"></mat-error>
             </mat-form-field>
 
             <mat-form-field>
@@ -86,20 +86,20 @@
                 >
                     <mat-icon [fontIcon]="'gps_fixed'"></mat-icon>
                 </button>
-                <mat-error [appValidationMessages]="form.controls.range"></mat-error>
+                <mat-error [libValidationMessages]="form.controls.range"></mat-error>
             </mat-form-field>
         </ng-container>
 
-        <app-toggle-control [translocoTitle]="'controlScheme.outputInvertControlTitle'"
+        <lib-toggle-control [translocoTitle]="'controlScheme.outputInvertControlTitle'"
                             [control]="form.controls.invert"
-        ></app-toggle-control>
+        ></lib-toggle-control>
 
-        <app-toggle-control [translocoTitle]="'controlScheme.useAccelerationProfile'"
+        <lib-toggle-control [translocoTitle]="'controlScheme.useAccelerationProfile'"
                             [control]="form.controls.useAccelerationProfile"
-        ></app-toggle-control>
+        ></lib-toggle-control>
 
-        <app-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'"
+        <lib-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'"
                             [control]="form.controls.useDecelerationProfile"
-        ></app-toggle-control>
+        ></lib-toggle-control>
     </app-binding-edit-section>
 </app-binding-edit-sections-container>
