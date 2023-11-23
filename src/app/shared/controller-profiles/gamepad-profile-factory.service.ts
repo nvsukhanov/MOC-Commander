@@ -1,12 +1,11 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
-import {
-    ControllerProfileGenericGamepadFactoryService,
-    GamepadProfile,
-    GamepadSettings,
-    IControllerProfile,
-    UnknownControllerProfileFactoryService
-} from '@app/shared';
+
+import { ControllerProfileGenericGamepadFactoryService } from './gamepad';
+import { UnknownControllerProfileFactoryService } from './unknown-controller';
+import { GamepadProfile } from './gamepad-profile';
+import { IControllerProfile } from './i-controller-profile';
+import { GamepadSettings } from './controller-settings';
 
 @Injectable()
 export class GamepadProfileFactoryService {

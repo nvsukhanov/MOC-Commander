@@ -1,8 +1,8 @@
 import { TranslocoService } from '@ngneat/transloco';
 import { Observable } from 'rxjs';
 import { Memoize } from 'typescript-memoize';
-import { MAX_INPUT_VALUE } from '@app/shared';
 
+import { MAX_INPUT_VALUE } from '../../consts';
 import { IAppConfig } from '../../i-app-config';
 import { ControllerType } from '../controller-type';
 import { IControllerProfile } from '../i-controller-profile';

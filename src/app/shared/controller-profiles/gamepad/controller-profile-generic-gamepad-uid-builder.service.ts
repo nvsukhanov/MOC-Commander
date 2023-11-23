@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HashService } from '@app/shared';
+
+import { HashService } from '../../hash.service';
 
 @Injectable({ providedIn: 'root' })
 export class ControllerProfileGenericGamepadUidBuilderService {

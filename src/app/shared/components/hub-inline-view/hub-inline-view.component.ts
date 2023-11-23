@@ -4,8 +4,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { RoutesBuilderService } from '@app/routing';
 
+import { RoutesBuilderService } from '../../../routing';
 import { EllipsisTitleDirective } from '../ellipsis-title.directive';
 import { HideOnSmallScreenDirective } from '../hide-on-small-screen.directive';
 import { InputActivityIndicatorComponent } from '../input-activity-indicator';

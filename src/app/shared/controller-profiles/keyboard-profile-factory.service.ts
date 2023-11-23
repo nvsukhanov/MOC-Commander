@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import {
-    ControllerProfileKeyboardService,
-    ControllerSettings,
-    IControllerProfile,
-    KeyboardSettings,
-    UnknownControllerProfileFactoryService
-} from '@app/shared';
+
+import { ControllerProfileKeyboardService } from './keyboard';
+import { UnknownControllerProfileFactoryService } from './unknown-controller';
+import { IControllerProfile } from './i-controller-profile';
+import { ControllerSettings, KeyboardSettings } from './controller-settings';
 
 @Injectable()
 export class KeyboardProfileFactoryService {

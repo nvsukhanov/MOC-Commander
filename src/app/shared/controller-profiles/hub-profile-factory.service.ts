@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ControllerProfileHubFactoryService, HubControllerSettings, IControllerProfile } from '@app/shared';
+
+import { ControllerProfileHubFactoryService } from './hub';
+import { IControllerProfile } from './i-controller-profile';
+import { HubControllerSettings } from './controller-settings';
 
 @Injectable()
 export class HubProfileFactoryService {
