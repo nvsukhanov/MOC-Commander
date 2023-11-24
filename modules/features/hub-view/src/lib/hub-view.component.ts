@@ -11,13 +11,13 @@ import { HUBS_ACTIONS, HubModel, ROUTER_SELECTORS, attachedIosIdFn } from '@app/
 
 import { HubPropertiesViewComponent } from './hub-properties-view';
 import { HubIoViewComponent } from './hub-io-view';
-import { HUB_VIEW_PAGE_SELECTORS, HubIoViewModel } from './hub-view-page.selectors';
+import { HUB_VIEW_SELECTORS, HubIoViewModel } from './hub-view.selectors';
 
 @Component({
     standalone: true,
-    selector: 'app-hub-view-page',
-    templateUrl: './hub-view-page.component.html',
-    styleUrls: [ './hub-view-page.component.scss' ],
+    selector: 'feat-hub-view',
+    templateUrl: './hub-view.component.html',
+    styleUrls: [ './hub-view.component.scss' ],
     imports: [
         PushPipe,
         LetDirective,
@@ -33,12 +33,12 @@ import { HUB_VIEW_PAGE_SELECTORS, HubIoViewModel } from './hub-view-page.selecto
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HubViewPageComponent implements OnInit {
-    public readonly selectedHub$ = this.store.select(HUB_VIEW_PAGE_SELECTORS.selectCurrentlyViewedHubModel);
+export class HubViewComponent implements OnInit {
+    public readonly selectedHub$ = this.store.select(HUB_VIEW_SELECTORS.selectCurrentlyViewedHubModel);
 
-    public readonly selectedHubRuntimeData$ = this.store.select(HUB_VIEW_PAGE_SELECTORS.selectCurrentlyViewedHubRuntimeData);
+    public readonly selectedHubRuntimeData$ = this.store.select(HUB_VIEW_SELECTORS.selectCurrentlyViewedHubRuntimeData);
 
-    public readonly ioFullInfoList$ = this.store.select(HUB_VIEW_PAGE_SELECTORS.selectCurrentlyViewedHubIoFullInfo);
+    public readonly ioFullInfoList$ = this.store.select(HUB_VIEW_SELECTORS.selectCurrentlyViewedHubIoFullInfo);
 
     constructor(
         private readonly store: Store,

@@ -48,7 +48,7 @@ export type HubIoViewModel = {
     synchronizable: boolean;
 } & AttachedIoModel;
 
-export const HUB_VIEW_PAGE_SELECTORS = {
+export const HUB_VIEW_SELECTORS = {
     selectCurrentlyViewedHubModel: createSelector(
         ROUTER_SELECTORS.selectCurrentlyViewedHubId,
         HUBS_SELECTORS.selectEntities,

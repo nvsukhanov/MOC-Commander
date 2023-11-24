@@ -10,7 +10,7 @@ import { HubModel, HubRuntimeDataModel } from '@app/store';
 
 @Component({
     standalone: true,
-    selector: 'app-hub-properties-view',
+    selector: 'feat-hub-view-hub-properties-view',
     templateUrl: './hub-properties-view.component.html',
     styleUrls: [ './hub-properties-view.component.scss' ],
     imports: [
