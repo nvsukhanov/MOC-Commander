@@ -5,8 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { ValidationMessagesDirective, WidgetType } from '@app/shared-misc';
 import { VoltageWidgetConfigModel } from '@app/store';
-
-import { CommonFormControlsBuilderService } from '../../../common';
+import { CommonFormControlsBuilderService } from '@app/shared-control-schemes';
 
 @Component({
     standalone: true,

@@ -1,7 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { ATTACHED_IO_MODES_SELECTORS, ATTACHED_IO_PORT_MODE_INFO_SELECTORS, ATTACHED_IO_SELECTORS, CONTROL_SCHEME_SELECTORS } from '@app/store';
-
-import { areControllableIosPresent } from '../common';
+import { areControllableIosPresent } from '@app/shared-control-schemes';
 
 export const CONTROL_SCHEMES_LIST_PAGE_SELECTORS = {
     selectSchemesList: createSelector(

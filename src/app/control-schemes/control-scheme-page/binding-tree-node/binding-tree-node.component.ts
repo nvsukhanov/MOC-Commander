@@ -8,10 +8,10 @@ import { Store } from '@ngrx/store';
 import { RouterLink } from '@angular/router';
 import { ScreenSizeObserverService } from '@app/shared-misc';
 import { BindingTypeToL10nKeyPipe } from '@app/shared-ui';
+import { ControlSchemeInputActionToL10nKeyPipe, FullControllerInputNamePipe } from '@app/shared-control-schemes';
 
 import { BindingTreeNodeViewModel } from './binding-tree-node-view-model';
 import { INPUT_TREE_NODE_VIEW_MODEL_SELECTOR } from './input-tree-node-view-model.selector';
-import { ControlSchemeInputActionToL10nKeyPipe, FullControllerInputNamePipe } from '../../common';
 import { BindingViewUrlPipe } from './binding-view-url.pipe';
 import { ControlSchemeViewBindingTreeNodeData } from '../types';
 

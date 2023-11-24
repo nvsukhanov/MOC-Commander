@@ -22,8 +22,8 @@ import {
     attachedIoPortModeInfoIdFn,
     attachedIosIdFn
 } from '@app/store';
+import { areControllableIosPresent, ioHasMatchingModeForOpMode } from '@app/shared-control-schemes';
 
-import { areControllableIosPresent, ioHasMatchingModeForOpMode } from '../common';
 import {
     ControlSchemeNodeTypes,
     ControlSchemeViewBindingTreeNodeData,

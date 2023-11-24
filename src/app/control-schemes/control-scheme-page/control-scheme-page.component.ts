@@ -12,9 +12,9 @@ import { concatLatestFrom } from '@ngrx/effects';
 import { RoutesBuilderService, ScreenSizeObserverService, TitleService } from '@app/shared-misc';
 import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared-ui';
 import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, ControlSchemeModel, ROUTER_SELECTORS, WidgetConfigModel } from '@app/store';
+import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData } from '@app/shared-control-schemes';
 
 import { ControlSchemeViewTreeNode, SchemeRunBlocker } from './types';
-import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData } from '../common';
 import { ControlSchemeRunBlockersL10nPipe } from './control-scheme-run-blockers-l10n.pipe';
 import { ControlSchemeWidgetComponentFactoryService } from './control-scheme-widget-component-factory.service';
 import { CONTROL_SCHEME_PAGE_SELECTORS } from './control-scheme-page.selectors';

@@ -1,0 +1,106 @@
+<lib-cs-binding-edit-sections-container *ngIf="form">
+    <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
+                              [caption]="'controlScheme.bindingSectionOutputTitle' | transloco"
+    >
+        <lib-cs-binding-control-select-hub [control]="form.controls.hubId"
+                                        [bindingType]="bindingType"
+        ></lib-cs-binding-control-select-hub>
+
+        <lib-cs-binding-control-select-io [portIdControl]="form.controls.portId"
+                                       [hubIdControl]="form.controls.hubId"
+                                       [bindingType]="bindingType"
+        ></lib-cs-binding-control-select-io>
+    </lib-cs-binding-edit-section>
+
+    <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
+
+    <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
+                              [caption]="'controlScheme.bindingSectionInputTitle' | transloco"
+    >
+        <lib-cs-binding-control-select-controller [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.NextLevel]"
+                                               [title]="controlSchemeInputActions.NextLevel | controlSchemeInputActionToL10nKey | transloco "
+        ></lib-cs-binding-control-select-controller>
+
+        <lib-cs-binding-control-select-controller [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.PrevLevel]"
+                                               [title]="controlSchemeInputActions.PrevLevel | controlSchemeInputActionToL10nKey | transloco "
+        ></lib-cs-binding-control-select-controller>
+
+        <lib-cs-binding-control-select-controller [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.Reset]"
+                                               [title]="controlSchemeInputActions.Reset | controlSchemeInputActionToL10nKey | transloco "
+        ></lib-cs-binding-control-select-controller>
+    </lib-cs-binding-edit-section>
+
+    <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
+
+    <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
+                              [caption]="'controlScheme.bindingSectionConfigTitle' | transloco"
+    >
+        <div class="add-level-button-container">
+            <button class="add-level-button"
+                    mat-raised-button
+                    (click)="addNextAngleLevel()"
+            >
+                {{ 'controlScheme.gearboxControlBinding.outputAngleLevelAdd' | transloco }}
+            </button>
+        </div>
+
+        <div *ngFor="let angleControl of form.controls.angles.controls; let idx = index">
+            <mat-form-field>
+                <mat-label>
+                    {{ 'controlScheme.gearboxControlBinding.angleLevel' | transloco: { level: form.controls.initialLevelIndex.value - idx } }}
+                </mat-label>
+                <input type="number"
+                       matInput
+                       [formControl]="angleControl"
+                />
+                <button mat-icon-button
+                        matSuffix
+                        [disabled]="!(canRequestPortValue$ | ngrxPush)"
+                        [title]="'controlScheme.gearboxControlBinding.readAngleFromPort' | transloco"
+                        (click)="onPortAbsolutePositionRequest(idx)"
+                >
+                    <mat-icon [fontIcon]="'gps_fixed'"></mat-icon>
+                </button>
+                <button mat-icon-button
+                        matSuffix
+                        [disabled]="form.controls.initialLevelIndex.value === idx"
+                        (click)="removeAngleLevel(idx)"
+                >
+                    <mat-icon [fontIcon]="'delete'"></mat-icon>
+                    <span class="cdk-visually-hidden">{{ 'controlScheme.gearboxControlBinding.outputAngleLevelRemove' | transloco }}</span>
+                </button>
+                <mat-error [libValidationMessages]="angleControl"></mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="add-level-button-container">
+            <button class="add-level-button"
+                    mat-raised-button
+                    (click)="addPrevAngleLevel()"
+            >
+                {{ 'controlScheme.gearboxControlBinding.outputAngleLevelAdd' | transloco }}
+            </button>
+        </div>
+
+        <mat-error [libValidationMessages]="form.controls.angles"></mat-error>
+
+        <mat-divider class="sections-divider"></mat-divider>
+
+        <lib-cs-binding-control-speed-input [control]="form.controls.speed"></lib-cs-binding-control-speed-input>
+        <lib-cs-binding-control-power-input [control]="form.controls.power"></lib-cs-binding-control-power-input>
+
+        <lib-cs-binding-control-output-end-state [control]="form.controls.endState"
+                                              [translocoTitle]="'controlScheme.outputEndStateControlTitle'"
+        ></lib-cs-binding-control-output-end-state>
+
+        <lib-cs-binding-control-select-looping-mode [control]="form.controls.loopingMode"></lib-cs-binding-control-select-looping-mode>
+
+        <lib-toggle-control [translocoTitle]="'controlScheme.useAccelerationProfile'"
+                            [control]="form.controls.useAccelerationProfile"
+        ></lib-toggle-control>
+
+        <lib-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'"
+                            [control]="form.controls.useDecelerationProfile"
+        ></lib-toggle-control>
+    </lib-cs-binding-edit-section>
+</lib-cs-binding-edit-sections-container>

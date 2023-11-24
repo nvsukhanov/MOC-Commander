@@ -9,8 +9,8 @@ import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
 import { FeatureToolbarControlsDirective, HintComponent } from '@app/shared-ui';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeBinding, ROUTER_SELECTORS } from '@app/store';
+import { BindingEditComponent } from '@app/shared-control-schemes';
 
-import { BindingEditComponent } from '../common';
 import { BINDING_CREATE_PAGE_SELECTORS } from './binding-create-page.selectors';
 
 @Component({

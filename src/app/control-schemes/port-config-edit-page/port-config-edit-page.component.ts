@@ -12,9 +12,9 @@ import { Router } from '@angular/router';
 import { RoutesBuilderService, TitleService, ValidationMessagesDirective } from '@app/shared-misc';
 import { HintComponent, PortIdToPortNamePipe, PortIdToPortNameService } from '@app/shared-ui';
 import { CONTROL_SCHEME_ACTIONS } from '@app/store';
+import { PortConfigFormBuilderService } from '@app/shared-control-schemes';
 
 import { PORT_CONFIG_EDIT_PAGE_SELECTORS } from './port-config-edit-page.selectors';
-import { PortConfigFormBuilderService } from '../common';
 import { PortConfigEditViewModel } from './port-config-edit-view-model';
 
 @Component({

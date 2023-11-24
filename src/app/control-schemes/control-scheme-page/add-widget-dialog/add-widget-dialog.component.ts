@@ -7,9 +7,9 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { WidgetConfigModel } from '@app/store';
+import { WidgetTypeToL10nKeyPipe } from '@app/shared-control-schemes';
 
 import { AddWidgetDialogViewModel } from './add-widget-dialog-view-model';
-import { WidgetTypeToL10nKeyPipe } from '../../common';
 import { CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY, WidgetSettingsContainerComponent } from '../widget-settings-container';
 import { WidgetConnectionInfoL10nPipe } from '../widgets';
 import { ControlSchemeWidgetSettingsComponentFactoryService } from '../control-scheme-widget-settings-component-factory.service';

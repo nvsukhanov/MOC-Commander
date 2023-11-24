@@ -12,11 +12,11 @@ import { concatLatestFrom } from '@ngrx/effects';
 import { RoutesBuilderService, ScreenSizeObserverService, TitleService } from '@app/shared-misc';
 import { ConfirmationDialogModule, ConfirmationDialogService, EllipsisTitleDirective, FeatureToolbarControlsDirective, HintComponent } from '@app/shared-ui';
 import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel } from '@app/store';
+import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData, ImportControlSchemeDialogComponent } from '@app/shared-control-schemes';
 
 import { CONTROL_SCHEMES_LIST_PAGE_SELECTORS } from './control-scheme-list-page.selectors';
 import { ControlSchemeCreateDialogComponent } from './control-scheme-create-dialog';
 import { ControlSchemeViewUrlPipe } from './control-scheme-view-url.pipe';
-import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData, ImportControlSchemeDialogComponent } from '../common';
 
 @Component({
     standalone: true,

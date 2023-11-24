@@ -9,9 +9,9 @@ import { concatLatestFrom } from '@ngrx/effects';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
 import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective } from '@app/shared-ui';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeBinding, ROUTER_SELECTORS } from '@app/store';
+import { BindingEditComponent } from '@app/shared-control-schemes';
 
 import { BINDING_EDIT_PAGE_SELECTORS } from './binding-edit-page.selectors';
-import { BindingEditComponent } from '../common';
 
 @Component({
     standalone: true,
