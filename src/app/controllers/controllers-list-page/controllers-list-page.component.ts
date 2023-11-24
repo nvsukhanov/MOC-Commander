@@ -11,10 +11,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { TitleService } from '@app/shared-misc';
 import { ConfirmationDialogModule, ConfirmationDialogService, ControllerTypeIconNamePipe, HintComponent } from '@app/shared-ui';
 import { CONTROLLERS_ACTIONS, ControllerModel } from '@app/store';
+import { ControlSchemeViewUrlPipe } from '@app/shared-control-schemes';
 
 import { CONTROLLERS_LIST_PAGE_SELECTORS, ControllerListViewModel } from './controllers-list-page.selectors';
 import { ControllerNamePipe } from '../controller-name.pipe';
-import { ControlSchemeViewUrlPipe } from '../../control-schemes/control-scheme-list-page/control-scheme-view-url.pipe';
 import { ControllerViewHrefPipe } from '../controller-view-href.pipe';
 
 @Component({

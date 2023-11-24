@@ -58,27 +58,27 @@ export const ROUTES: Routes = [
         children: [
             {
                 path: '',
-                loadComponent: () => import('./control-schemes/control-scheme-list-page').then((m) => m.ControlSchemeListPageComponent),
+                loadComponent: () => import('@app/control-schemes-list').then((m) => m.ControlSchemeListComponent),
                 pathMatch: 'full',
             },
             {
                 path: [ ':schemeName' ].join('/'),
-                loadComponent: () => import('./control-schemes/control-scheme-page').then((m) => m.ControlSchemePageComponent),
+                loadComponent: () => import('@app/control-scheme-view').then((m) => m.ControlSchemePageComponent),
                 pathMatch: 'full',
             },
             {
                 path: [ ':schemeName', ROUTE_SECTIONS.binding, ':bindingId' ].join('/'),
-                loadComponent: () => import('./control-schemes/binding-edit-page').then((m) => m.BindingEditPageComponent),
+                loadComponent: () => import('@app/control-scheme-binding-edit').then((m) => m.BindingEditPageComponent),
                 pathMatch: 'full'
             },
             {
                 path: [ ':schemeName', ROUTE_SECTIONS.bindingCreate ].join('/'),
-                loadComponent: () => import('./control-schemes/binding-create-page').then((m) => m.BindingCreatePageComponent),
+                loadComponent: () => import('@app/control-scheme-binding-create').then((m) => m.BindingCreateComponent),
                 pathMatch: 'full'
             },
             {
                 path: [ ':schemeName', ROUTE_SECTIONS.hubEdit, ':hubId', ROUTE_SECTIONS.portEdit, ':portId' ].join('/'),
-                loadComponent: () => import('./control-schemes/port-config-edit-page').then((m) => m.PortConfigEditPageComponent),
+                loadComponent: () => import('@app/control-scheme-port-config-edit').then((m) => m.PortConfigEditComponent),
                 pathMatch: 'full'
             }
         ]

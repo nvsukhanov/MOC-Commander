@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>
+    {{ 'controlScheme.widgets.editWidgetSettingsDialog.title' | transloco }}
+</h1>
+
+<form (submit)="onFormSubmit($event)">
+    <div mat-dialog-content
+         class="dialog-content"
+    >
+        <feat-control-scheme-view-widget-settings-container [config]="initialConfig"
+                                       (configChanges)="onConfigChanges($event)"
+        ></feat-control-scheme-view-widget-settings-container>
+    </div>
+
+    <div mat-dialog-actions
+         [align]="'end'"
+    >
+        <button mat-raised-button
+                type="submit"
+                [color]="'primary'"
+                [disabled]="!config"
+        >
+            {{ 'controlScheme.widgets.editWidgetSettingsDialog.saveButton' | transloco }}
+        </button>
+        <button mat-button
+                type="button"
+                (click)="onCancel()"
+        >
+            {{ 'controlScheme.widgets.editWidgetSettingsDialog.cancelButton' | transloco }}
+        </button>
+    </div>
+</form>

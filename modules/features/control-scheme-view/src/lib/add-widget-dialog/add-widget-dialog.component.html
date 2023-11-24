@@ -1,0 +1,48 @@
+<h1 mat-dialog-title>
+    {{ 'controlScheme.widgets.addWidgetDialog.title' | transloco }}
+</h1>
+
+<form (submit)="onSave($event)">
+    <div mat-dialog-content
+         class="dialog-content"
+    >
+        <mat-form-field>
+            <mat-label>{{ 'controlScheme.widgets.addWidgetDialog.selectWidgetType' | transloco }}</mat-label>
+            <mat-select [formControl]="form.controls.selectionIndex">
+                <mat-select-trigger *ngIf="selectedWidgetBaseConfig; let selectedBaseConfig">
+                    {{ selectedBaseConfig.widgetType | widgetTypeToL10nKey | transloco }}
+                    ({{ selectedBaseConfig | widgetConnectionInfoL10n | ngrxPush }})
+                </mat-select-trigger>
+                <mat-option *ngFor="let data of addableWidgetConfigs; let idx = index"
+                            [value]="idx"
+                >
+                    {{ data.widgetType | widgetTypeToL10nKey | transloco }}
+                    ({{ data | widgetConnectionInfoL10n | ngrxPush }})
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <feat-control-scheme-view-widget-settings-container *ngIf="selectedWidgetBaseConfig"
+                                                            [config]="selectedWidgetBaseConfig"
+                                                            (configChanges)="onConfigChanges($event)"
+        ></feat-control-scheme-view-widget-settings-container>
+    </div>
+
+    <div mat-dialog-actions
+         [align]="'end'"
+    >
+        <button mat-raised-button
+                [color]="'primary'"
+                [disabled]="!config"
+                (click)="onSave($event)"
+        >
+            {{ 'controlScheme.widgets.addWidgetDialog.saveButton' | transloco }}
+        </button>
+        <button mat-button
+                type="button"
+                (click)="onCancel()"
+        >
+            {{ 'controlScheme.widgets.addWidgetDialog.cancelButton' | transloco }}
+        </button>
+    </div>
+</form>
