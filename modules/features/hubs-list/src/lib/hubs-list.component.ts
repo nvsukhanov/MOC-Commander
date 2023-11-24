@@ -9,13 +9,13 @@ import { TitleService } from '@app/shared-misc';
 import { ConfirmationDialogModule, ConfirmationDialogService, HintComponent, HubInlineViewComponent } from '@app/shared-ui';
 import { HUBS_ACTIONS } from '@app/store';
 
-import { HUBS_LIST_PAGE_SELECTORS, HubListViewModel } from './hubs-list-page.selectors';
+import { HUBS_LIST_SELECTORS, HubListViewModel } from './hubs-list.selectors';
 
 @Component({
     standalone: true,
-    selector: 'app-hubs-list-page',
-    templateUrl: './hubs-list-page.component.html',
-    styleUrls: [ './hubs-list-page.component.scss' ],
+    selector: 'feat-hubs-list',
+    templateUrl: './hubs-list.component.html',
+    styleUrls: [ './hubs-list.component.scss' ],
     imports: [
         TranslocoPipe,
         LetDirective,
@@ -31,8 +31,8 @@ import { HUBS_LIST_PAGE_SELECTORS, HubListViewModel } from './hubs-list-page.sel
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HubsListPageComponent implements OnInit {
-    public readonly hubsList$: Observable<HubListViewModel> = this.store.select(HUBS_LIST_PAGE_SELECTORS.selectHubListViewModel);
+export class HubsListComponent implements OnInit {
+    public readonly hubsList$: Observable<HubListViewModel> = this.store.select(HUBS_LIST_SELECTORS.selectHubListViewModel);
 
     constructor(
         private readonly store: Store,
