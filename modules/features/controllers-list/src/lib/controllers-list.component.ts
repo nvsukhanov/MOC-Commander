@@ -14,13 +14,13 @@ import { ConfirmationDialogModule, ConfirmationDialogService, ControllerTypeIcon
 import { CONTROLLERS_ACTIONS, ControllerModel } from '@app/store';
 import { ControlSchemeViewUrlPipe } from '@app/shared-control-schemes';
 
-import { CONTROLLERS_LIST_PAGE_SELECTORS, ControllerListViewModel } from './controllers-list-page.selectors';
+import { CONTROLLERS_LIST_SELECTORS, ControllerListViewModel } from './controllers-list.selectors';
 
 @Component({
     standalone: true,
-    selector: 'app-controllers-list-page',
-    templateUrl: './controllers-list-page.component.html',
-    styleUrls: [ './controllers-list-page.component.scss' ],
+    selector: 'feat-controllers-list',
+    templateUrl: './controllers-list.component.html',
+    styleUrls: [ './controllers-list.component.scss' ],
     imports: [
         LetDirective,
         NgIf,
@@ -43,8 +43,8 @@ import { CONTROLLERS_LIST_PAGE_SELECTORS, ControllerListViewModel } from './cont
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ControllersListPageComponent implements OnInit {
-    public readonly controllerListViewModel$: Observable<ControllerListViewModel> = this.store.select(CONTROLLERS_LIST_PAGE_SELECTORS.viewModel);
+export class ControllersListComponent implements OnInit {
+    public readonly controllerListViewModel$: Observable<ControllerListViewModel> = this.store.select(CONTROLLERS_LIST_SELECTORS.viewModel);
 
     constructor(
         private readonly store: Store,

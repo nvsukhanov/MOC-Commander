@@ -8,7 +8,7 @@ export type ControllerListViewModel = Array<{
     canForget: boolean;
 } & ControllerModel>;
 
-export const CONTROLLERS_LIST_PAGE_SELECTORS = {
+export const CONTROLLERS_LIST_SELECTORS = {
     viewModel: createSelector(
         CONTROLLER_SELECTORS.selectAll,
         CONTROLLER_SETTINGS_SELECTORS.selectEntities,

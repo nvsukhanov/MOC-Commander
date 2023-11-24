@@ -23,7 +23,7 @@ export const ROUTES: Routes = [
         children: [
             {
                 path: '',
-                loadComponent: () => import('./controllers/controllers-list-page').then(m => m.ControllersListPageComponent),
+                loadComponent: () => import('@app/controllers-list').then(m => m.ControllersListComponent),
                 pathMatch: 'full'
             },
             {
