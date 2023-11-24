@@ -28,7 +28,7 @@ export const ROUTES: Routes = [
             },
             {
                 path: [ ':id' ].join('/'),
-                loadComponent: () => import('./controllers/controller-page').then(m => m.ControllerPageComponent),
+                loadComponent: () => import('@app/controller-view').then(m => m.ControllerViewComponent),
                 pathMatch: 'full'
             }
         ]
