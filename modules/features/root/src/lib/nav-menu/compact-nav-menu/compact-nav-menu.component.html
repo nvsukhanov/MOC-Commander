@@ -39,10 +39,10 @@
             <mat-icon [fontIcon]="'display_settings'"></mat-icon>
         </a>
 
-        <app-discover-hub-button [isBluetoothAvailable]="isBluetoothAvailable"
-                                 [isDiscoveryBusy]="isDiscoveryBusy"
-                                 (discoveryStart)="onDiscoveryStart()"
-        ></app-discover-hub-button>
+        <feat-root-discover-hub-button [isBluetoothAvailable]="isBluetoothAvailable"
+                                       [isDiscoveryBusy]="isDiscoveryBusy"
+                                       (discoveryStart)="onDiscoveryStart()"
+        ></feat-root-discover-hub-button>
 
         <button mat-icon-button
                 [matMenuTriggerFor]="menu"

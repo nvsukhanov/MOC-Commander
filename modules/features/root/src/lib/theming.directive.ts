@@ -11,7 +11,7 @@ enum AppTheme {
 
 @Directive({
     standalone: true,
-    selector: '[appTheming]'
+    selector: '[featRootTheming]'
 })
 export class ThemingDirective implements OnInit, OnDestroy {
     @HostBinding('class.mat-typography') public readonly typography = true;

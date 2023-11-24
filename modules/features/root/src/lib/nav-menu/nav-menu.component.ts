@@ -12,7 +12,7 @@ import { NAV_MENU_SELECTORS } from './nav-menu.selectors';
 
 @Component({
     standalone: true,
-    selector: 'app-nav-menu',
+    selector: 'feat-root-nav-menu',
     templateUrl: './nav-menu.component.html',
     styleUrls: [ './nav-menu.component.scss' ],
     imports: [

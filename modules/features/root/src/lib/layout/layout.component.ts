@@ -15,7 +15,7 @@ import { NavMenuComponent } from '../nav-menu';
 
 @Component({
     standalone: true,
-    selector: 'app-layout',
+    selector: 'feat-root-layout',
     templateUrl: './layout.component.html',
     styleUrls: [ './layout.component.scss' ],
     imports: [

@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { TranslocoPipe } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
+import { TranslocoPipe } from '@ngneat/transloco';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { MatBadgeModule } from '@angular/material/badge';
 import { NgIf } from '@angular/common';
+import { MatMenuModule } from '@angular/material/menu';
 import { RoutesBuilderService } from '@app/shared-misc';
 import { EllipsisTitleDirective } from '@app/shared-ui';
 
@@ -13,24 +15,26 @@ import { DiscoverHubButtonComponent } from '../discover-hub-button';
 
 @Component({
     standalone: true,
-    selector: 'app-full-nav-menu',
-    templateUrl: './full-nav-menu.component.html',
-    styleUrls: [ './full-nav-menu.component.scss' ],
+    selector: 'feat-root-compact-nav-menu',
+    templateUrl: './compact-nav-menu.component.html',
+    styleUrls: [ './compact-nav-menu.component.scss' ],
     imports: [
         RouterLink,
         RouterLinkActive,
-        MatButtonModule,
+        MatBadgeModule,
         MatIconModule,
-        MatToolbarModule,
+        MatButtonModule,
         TranslocoPipe,
         PushPipe,
+        MatToolbarModule,
         EllipsisTitleDirective,
         NgIf,
+        MatMenuModule,
         DiscoverHubButtonComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FullNavMenuComponent {
+export class CompactNavMenuComponent {
     @Input() public connectedControllersCount = 0;
 
     @Input() public connectedHubCount = 0;

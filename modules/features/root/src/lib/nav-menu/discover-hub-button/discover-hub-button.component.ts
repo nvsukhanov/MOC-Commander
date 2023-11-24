@@ -9,7 +9,7 @@ import { RoutesBuilderService } from '@app/shared-misc';
 
 @Component({
     standalone: true,
-    selector: 'app-discover-hub-button',
+    selector: 'feat-root-discover-hub-button',
     templateUrl: './discover-hub-button.component.html',
     styleUrls: [ './discover-hub-button.component.scss' ],
     imports: [

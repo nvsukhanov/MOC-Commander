@@ -4,11 +4,11 @@ import { importProvidersFrom } from '@angular/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router';
+import { RootComponent } from '@app/root';
 import { ShowOnTouchedErrorStateMatcher, provideControllerProfiles, provideI18n } from '@app/shared-misc';
 import { AppStoreVersion, provideApplicationStore } from '@app/store';
 
-import { RootComponent } from './app/root';
-import { ROUTES } from './app/routes';
+import { ROUTES } from './routes';
 
 // removing old ls store version prefixes.
 // TODO: remove this code after a 2023-10-15
