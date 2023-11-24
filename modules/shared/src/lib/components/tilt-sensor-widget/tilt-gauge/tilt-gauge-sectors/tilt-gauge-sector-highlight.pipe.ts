@@ -5,7 +5,7 @@ import { TiltGaugeSectorDefinition } from './tilt-gauge-sector-definition';
 
 @Pipe({
     standalone: true,
-    name: 'appTiltGaugeSectorHighlight',
+    name: 'libTiltGaugeSectorHighlight',
     pure: true,
 })
 export class TiltGaugeSectorHighlightPipe implements PipeTransform {
