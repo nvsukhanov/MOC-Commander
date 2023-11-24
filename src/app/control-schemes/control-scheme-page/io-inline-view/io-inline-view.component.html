@@ -1,7 +1,7 @@
 <div *ngIf="portId !== null"
      class="port-name"
      [class.port-name_not-connected]="!isConnected"
-     appEllipsisTitle
+     libEllipsisTitle
 >
     {{ 'hub.port' | transloco: { portId: portId | portIdToPortName } }}
 </div>
@@ -9,7 +9,7 @@
 <div *ngIf="ioType"
      class="io-type"
      [class.io-type_not-connected]="!isConnected"
-     appEllipsisTitle
+     libEllipsisTitle
 >
     ({{ ioType | ioTypeToL10nKey | transloco }})
 </div>

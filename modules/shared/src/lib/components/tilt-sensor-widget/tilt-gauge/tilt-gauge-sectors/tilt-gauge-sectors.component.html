@@ -16,6 +16,6 @@
             [attr.stroke-width]="sectorDef.width"
             [attr.clip-path]="sectorDef.clipPathId"
             class="gauge-sector"
-            [class.gauge-sector_active]="tiltDegrees | appTiltGaugeSectorHighlight: sectorDef"
+            [class.gauge-sector_active]="tiltDegrees | libTiltGaugeSectorHighlight: sectorDef"
     />
 </svg>

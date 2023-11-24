@@ -7,7 +7,7 @@ import { TiltGaugeSectorHighlightPipe } from './tilt-gauge-sector-highlight.pipe
 @Component({
     standalone: true,
     // eslint-disable-next-line @angular-eslint/component-selector
-    selector: 'g[appTiltGaugeSectors]',
+    selector: 'g[libTiltGaugeSectors]',
     templateUrl: './tilt-gauge-sectors.component.html',
     styleUrls: [ './tilt-gauge-sectors.component.scss' ],
     imports: [
@@ -21,7 +21,7 @@ export class TiltGaugeSectorsComponent {
 
     @Input() public tiltDegrees?: number;
 
-    @Input('appTiltGaugeSectors') public sectors: TiltGaugeSectorDefinition[] = [];
+    @Input('libTiltGaugeSectors') public sectors: TiltGaugeSectorDefinition[] = [];
 
     public trackByFn(
         index: number,
