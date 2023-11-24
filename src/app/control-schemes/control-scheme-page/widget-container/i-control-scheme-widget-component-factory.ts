@@ -1,7 +1,7 @@
 import { InjectionToken, ViewContainerRef } from '@angular/core';
 import { Observable } from 'rxjs';
+import { WidgetType } from '@app/shared-misc';
 import { WidgetConfigModel } from '@app/store';
-import { WidgetType } from '@app/shared';
 
 export type ControlSchemeWidgetDescriptor = {
     readonly edit$: Observable<void>;

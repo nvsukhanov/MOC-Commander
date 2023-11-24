@@ -2,7 +2,7 @@ import { Store } from '@ngrx/store';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { Observable, map, startWith, take } from 'rxjs';
 import { concatLatestFrom } from '@ngrx/effects';
-import { getEnumValues } from '@app/shared';
+import { getEnumValues } from '@app/shared-misc';
 
 import { CONTROL_SCHEMES_VALIDATION_SELECTORS } from './control-schemes-validation.selectors';
 import { CONTROL_SCHEME_NAME_IS_NOT_UNIQUE, VALUE_IS_NOT_BOOLEAN, VALUE_IS_NOT_IN_ENUM } from './control-schemes-validation-errors';

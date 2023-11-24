@@ -1,5 +1,5 @@
 import { ButtonGroupButtonId } from 'rxpoweredup';
-import { ControllerInputType } from '@app/shared';
+import { ControllerInputType } from '@app/shared-misc';
 
 export type ButtonInputModel = {
     controllerId: string;

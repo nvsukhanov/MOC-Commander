@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ControlSchemeBindingType, DeepPartial } from '@app/shared';
+import { ControlSchemeBindingType, DeepPartial } from '@app/shared-misc';
 import { ControlSchemeBinding } from '@app/store';
 
 import { ControlSchemeBindingForm } from '../types';

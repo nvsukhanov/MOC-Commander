@@ -9,7 +9,14 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
-import { HintComponent, PortIdToPortNamePipe, PortIdToPortNameService, RoutesBuilderService, TitleService, ValidationMessagesDirective } from '@app/shared';
+import {
+    HintComponent,
+    PortIdToPortNamePipe,
+    PortIdToPortNameService,
+    RoutesBuilderService,
+    TitleService,
+    ValidationMessagesDirective
+} from '@app/shared-misc';
 import { CONTROL_SCHEME_ACTIONS } from '@app/store';
 
 import { PORT_CONFIG_EDIT_PAGE_SELECTORS } from './port-config-edit-page.selectors';

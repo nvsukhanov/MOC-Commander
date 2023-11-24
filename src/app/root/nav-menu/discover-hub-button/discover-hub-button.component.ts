@@ -5,7 +5,7 @@ import { TranslocoPipe } from '@ngneat/transloco';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { PushPipe } from '@ngrx/component';
-import { RoutesBuilderService } from '@app/shared';
+import { RoutesBuilderService } from '@app/shared-misc';
 
 @Component({
     standalone: true,

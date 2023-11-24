@@ -1,4 +1,4 @@
-import { DeepPartial } from '@app/shared';
+import { DeepPartial } from '@app/shared-misc';
 
 import { V21Store } from './v21-store';
 import { IMigration } from './i-migration';

@@ -3,7 +3,7 @@ import { AsyncValidatorFn, FormBuilder, FormControl, Validators } from '@angular
 import { ButtonGroupButtonId, MOTOR_LIMITS, MotorServoEndState } from 'rxpoweredup';
 import { Store } from '@ngrx/store';
 import { TranslocoService } from '@ngneat/transloco';
-import { AppValidators, ControllerInputType } from '@app/shared';
+import { AppValidators, ControllerInputType } from '@app/shared-misc';
 import { ControlSchemeInput, InputGain, LoopingMode } from '@app/store';
 
 import { InputFormGroup, OptionalInputFormGroup } from '../types';

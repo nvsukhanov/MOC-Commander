@@ -1,7 +1,7 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { inject } from '@angular/core';
 import { tap } from 'rxjs';
-import { WINDOW } from '@app/shared';
+import { WINDOW } from '@app/shared-misc';
 
 import { SETTINGS_ACTIONS } from '../../actions';
 

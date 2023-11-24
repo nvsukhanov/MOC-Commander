@@ -4,7 +4,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatInputModule } from '@angular/material/input';
-import { ValidationMessagesDirective } from '@app/shared';
+import { ValidationMessagesDirective } from '@app/shared-misc';
 
 @Component({
     standalone: true,

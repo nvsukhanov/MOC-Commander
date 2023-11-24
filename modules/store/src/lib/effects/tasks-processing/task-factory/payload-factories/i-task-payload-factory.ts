@@ -1,5 +1,5 @@
 import { Dictionary } from '@ngrx/entity';
-import { ControlSchemeBindingType } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { AttachedIoPropsModel, ControlSchemeBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload } from '../../../../models';
 

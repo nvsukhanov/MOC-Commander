@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PortModeName } from 'rxpoweredup';
 import { Dictionary } from '@ngrx/entity';
-import { WidgetType } from '@app/shared';
+import { WidgetType } from '@app/shared-misc';
 import { AttachedIoModel, WidgetConfigModel, attachedIosIdFn } from '@app/store';
 
 import { TemperatureWidgetConfigFactoryService, TiltWidgetConfigFactoryService, VoltageWidgetConfigFactoryService } from './widgets';

@@ -1,5 +1,5 @@
 import { MotorServoEndState } from 'rxpoweredup';
-import { ControlSchemeBindingType } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 
 export type SetSpeedTaskPayload = {
     bindingType: ControlSchemeBindingType.SetSpeed;

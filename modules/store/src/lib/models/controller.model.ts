@@ -1,4 +1,4 @@
-import { ControllerType } from '@app/shared';
+import { ControllerType } from '@app/shared-misc';
 
 export type GamepadControllerModel = {
     id: string;

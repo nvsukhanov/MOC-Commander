@@ -2,7 +2,7 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { inject } from '@angular/core';
 import { fromEvent, map, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { KeyboardProfileFactoryService, WINDOW } from '@app/shared';
+import { KeyboardProfileFactoryService, WINDOW } from '@app/shared-misc';
 
 import { CONTROLLERS_ACTIONS } from '../../../actions';
 import { CONTROLLER_SELECTORS } from '../../../selectors';

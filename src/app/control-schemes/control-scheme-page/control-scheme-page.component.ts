@@ -17,7 +17,7 @@ import {
     RoutesBuilderService,
     ScreenSizeObserverService,
     TitleService
-} from '@app/shared';
+} from '@app/shared-misc';
 import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, ControlSchemeModel, ROUTER_SELECTORS, WidgetConfigModel } from '@app/store';
 
 import { ControlSchemeViewTreeNode, SchemeRunBlocker } from './types';

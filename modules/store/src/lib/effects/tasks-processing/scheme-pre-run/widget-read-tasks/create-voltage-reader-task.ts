@@ -1,7 +1,7 @@
 import { Observable, concatWith, filter, switchMap, take, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ValueTransformers } from 'rxpoweredup';
-import { WidgetType } from '@app/shared';
+import { WidgetType } from '@app/shared-misc';
 
 import { HubModel, VoltageWidgetConfigModel } from '../../../../models';
 import { CONTROL_SCHEME_WIDGETS_DATA_ACTIONS } from '../../../../actions';

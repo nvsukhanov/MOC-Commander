@@ -1,4 +1,4 @@
-import { ControlSchemeBindingType } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 import { ControlSchemeInput, ControlSchemeInputAction } from '@app/store';
 
 export type BindingTreeNodeRecord = {

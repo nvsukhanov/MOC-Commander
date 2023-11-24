@@ -1,5 +1,5 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { Language } from '@app/shared';
+import { Language } from '@app/shared-misc';
 
 import { SettingsModel, UserSelectedTheme } from '../models';
 import { SETTINGS_ACTIONS } from '../actions';

@@ -1,7 +1,7 @@
 import { IHub, PortCommandExecutionStatus } from 'rxpoweredup';
 import { Observable, last } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { ControlSchemeBindingType } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { PortCommandTask } from '../../../../models';
 import { mapUseProfile } from '../map-use-profile';

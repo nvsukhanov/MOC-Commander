@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { RoutesBuilderService } from '@app/shared';
+import { RoutesBuilderService } from '@app/shared-misc';
 
 @Pipe({
     standalone: true,

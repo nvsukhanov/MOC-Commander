@@ -5,8 +5,8 @@ import { LetDirective } from '@ngrx/component';
 import { NgForOf, NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { Observable } from 'rxjs';
+import { ConfirmationDialogModule, ConfirmationDialogService, HintComponent, HubInlineViewComponent, TitleService } from '@app/shared-misc';
 import { HUBS_ACTIONS } from '@app/store';
-import { ConfirmationDialogModule, ConfirmationDialogService, HintComponent, HubInlineViewComponent, TitleService } from '@app/shared';
 
 import { HUBS_LIST_PAGE_SELECTORS, HubListViewModel } from './hubs-list-page.selectors';
 

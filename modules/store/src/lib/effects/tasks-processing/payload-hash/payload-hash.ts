@@ -1,4 +1,4 @@
-import { ControlSchemeBindingType } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { PortCommandTaskPayload } from '../../../models';
 import { servoPayloadHash } from './servo-payload-hash';

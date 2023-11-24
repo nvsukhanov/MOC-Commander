@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { DeepPartial } from '@app/shared';
+import { DeepPartial } from '@app/shared-misc';
 
 import { AppStoreVersion } from '../app-store-version';
 

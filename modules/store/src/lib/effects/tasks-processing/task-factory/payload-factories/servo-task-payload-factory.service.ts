@@ -1,7 +1,7 @@
 import { MotorServoEndState } from 'rxpoweredup';
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
-import { ControlSchemeBindingType, getTranslationArcs } from '@app/shared';
+import { ControlSchemeBindingType, getTranslationArcs } from '@app/shared-misc';
 
 import {
     AttachedIoPropsModel,

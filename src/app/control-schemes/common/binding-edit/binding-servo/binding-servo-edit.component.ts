@@ -11,7 +11,6 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CONTROL_SCHEME_ACTIONS, CalibrationResult, CalibrationResultType, ControlSchemeInputAction, HubMotorPositionFacadeService } from '@app/store';
 import {
     ControlSchemeBindingType,
     ControllerInputType,
@@ -19,7 +18,8 @@ import {
     ToggleControlComponent,
     ValidationMessagesDirective,
     getTranslationArcs
-} from '@app/shared';
+} from '@app/shared-misc';
+import { CONTROL_SCHEME_ACTIONS, CalibrationResult, CalibrationResultType, ControlSchemeInputAction, HubMotorPositionFacadeService } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { ServoCalibrationDialogComponent } from '../servo-calibration-dialog';

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { NotFoundComponent } from '@app/not-found';
-import { ROUTE_SECTIONS } from '@app/shared';
+import { ROUTE_SECTIONS } from '@app/shared-misc';
 
 export const ROUTES: Routes = [
     {

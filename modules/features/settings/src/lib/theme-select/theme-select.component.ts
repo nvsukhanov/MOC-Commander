@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { MatSelectModule } from '@angular/material/select';
 import { NgForOf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { getEnumValues } from '@app/shared';
+import { getEnumValues } from '@app/shared-misc';
 import { UserSelectedTheme } from '@app/store';
 
 import { ThemeToL10nKeyPipe } from './theme-to-l10n-key.pipe';

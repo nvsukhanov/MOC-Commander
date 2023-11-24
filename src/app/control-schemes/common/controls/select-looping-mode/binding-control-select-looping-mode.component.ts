@@ -5,8 +5,8 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
+import { getEnumValues } from '@app/shared-misc';
 import { LoopingMode } from '@app/store';
-import { getEnumValues } from '@app/shared';
 
 import { LoopingModeToL10nKeyPipe } from './looping-mode-to-l10n-key.pipe';
 

@@ -1,8 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Observable, filter, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 import { ATTACHED_IO_PROPS_SELECTORS, AttachedIoPropsModel, PortCommandTask } from '@app/store';
-import { ControlSchemeBindingType } from '@app/shared';
 
 import { SetSpeedPortCommandTaskSummaryBuilderService } from './set-speed-port-command-task-summary-builder.service';
 import { ServoPortCommandTaskSummaryBuilderService } from './servo-port-command-task-summary-builder.service';

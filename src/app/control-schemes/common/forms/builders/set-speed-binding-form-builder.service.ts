@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { DeepPartial } from '@app/shared-misc';
 import { ControlSchemeInputAction, ControlSchemeSetSpeedBinding } from '@app/store';
-import { DeepPartial } from '@app/shared';
 
 import { SetSpeedBindingForm } from '../types';
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';

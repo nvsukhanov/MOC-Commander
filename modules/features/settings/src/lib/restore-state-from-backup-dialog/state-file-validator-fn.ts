@@ -1,5 +1,5 @@
 import { FormControl, ValidationErrors } from '@angular/forms';
-import { DeepPartial, getEnumValues } from '@app/shared';
+import { DeepPartial, getEnumValues } from '@app/shared-misc';
 import { AppStoreVersion, IState, MigrateStoreService } from '@app/store';
 
 function isState(

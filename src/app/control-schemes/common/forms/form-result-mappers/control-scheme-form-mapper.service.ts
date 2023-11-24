@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 import { ControlSchemeBinding } from '@app/store';
-import { ControlSchemeBindingType } from '@app/shared';
 
 import { ControlSchemeBindingForm } from '../types';
 import { SetSpeedBindingFormMapperService } from './set-speed-binding-form-mapper.service';

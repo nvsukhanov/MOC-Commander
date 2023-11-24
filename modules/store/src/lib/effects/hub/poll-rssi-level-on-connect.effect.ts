@@ -1,7 +1,7 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { interval, map, mergeMap, startWith, switchMap, takeUntil } from 'rxjs';
 import { inject } from '@angular/core';
-import { APP_CONFIG, IAppConfig } from '@app/shared';
+import { APP_CONFIG, IAppConfig } from '@app/shared-misc';
 
 import { HUBS_ACTIONS, HUB_RUNTIME_DATA_ACTIONS } from '../../actions';
 import { HubStorageService } from '../../hub-storage.service';

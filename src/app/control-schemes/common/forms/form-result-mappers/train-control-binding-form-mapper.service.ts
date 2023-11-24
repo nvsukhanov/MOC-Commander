@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 import { ControlSchemeBinding, ControlSchemeInputAction, ControlSchemeTrainControlBinding } from '@app/store';
-import { ControlSchemeBindingType } from '@app/shared';
 
 import { InputFormGroup, TrainControlBindingForm } from '../types';
 import { CommonFormMapperService } from './common-form-mapper.service';

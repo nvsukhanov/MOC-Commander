@@ -1,5 +1,5 @@
 import { TiltData } from 'rxpoweredup';
-import { WidgetType } from '@app/shared';
+import { WidgetType } from '@app/shared-misc';
 
 export type ControlSchemeVoltageWidgetDataModel = {
     widgetType: WidgetType.Voltage;

@@ -2,7 +2,7 @@ import { createEffect } from '@ngrx/effects';
 import { Action, Store, createSelector } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { NEVER, Observable, distinctUntilChanged, map, mergeAll, mergeMap, pairwise, startWith, switchMap } from 'rxjs';
-import { ControllerInputType, ControllerType, GREEN_BUTTON_INPUT_ID, MAX_INPUT_VALUE, NULL_INPUT_VALUE } from '@app/shared';
+import { ControllerInputType, ControllerType, GREEN_BUTTON_INPUT_ID, MAX_INPUT_VALUE, NULL_INPUT_VALUE } from '@app/shared-misc';
 
 import { CONTROLLER_INPUT_SELECTORS, CONTROLLER_SETTINGS_SELECTORS, HUBS_SELECTORS, HUB_RUNTIME_DATA_SELECTORS } from '../../../selectors';
 import { controllerIdFn } from '../../../reducers';

@@ -3,7 +3,7 @@ import { NgIf } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { MatDividerModule } from '@angular/material/divider';
 import { PushPipe } from '@ngrx/component';
-import { ScreenSizeObserverService } from '@app/shared';
+import { ScreenSizeObserverService } from '@app/shared-misc';
 
 @Component({
     standalone: true,

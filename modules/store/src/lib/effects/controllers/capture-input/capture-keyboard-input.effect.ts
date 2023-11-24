@@ -2,7 +2,7 @@ import { concatLatestFrom, createEffect } from '@ngrx/effects';
 import { NEVER, Observable, filter, fromEvent, map, mergeMap, mergeWith, switchMap, take } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
-import { ControllerInputType, ControllerType, WINDOW } from '@app/shared';
+import { ControllerInputType, ControllerType, WINDOW } from '@app/shared-misc';
 
 import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SETTINGS_SELECTORS, } from '../../../selectors';
 import { CONTROLLER_INPUT_ACTIONS } from '../../../actions';

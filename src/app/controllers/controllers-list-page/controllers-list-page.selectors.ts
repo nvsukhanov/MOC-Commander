@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
+import { ControllerType } from '@app/shared-misc';
 import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS, CONTROLLER_SETTINGS_SELECTORS, ControllerModel } from '@app/store';
-import { ControllerType } from '@app/shared';
 
 export type ControllerListViewModel = Array<{
     isConnected: boolean;

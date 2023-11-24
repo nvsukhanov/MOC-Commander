@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Dictionary } from '@ngrx/entity';
 import { PortModeName } from 'rxpoweredup';
+import { WidgetType } from '@app/shared-misc';
 import {
     AttachedIoModel,
     AttachedIoModesModel,
@@ -9,7 +10,6 @@ import {
     attachedIoModesIdFn,
     attachedIoPortModeInfoIdFn
 } from '@app/store';
-import { WidgetType } from '@app/shared';
 
 @Injectable({ providedIn: 'root' })
 export class TemperatureWidgetConfigFactoryService {

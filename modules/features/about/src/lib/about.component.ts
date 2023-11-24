@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { TitleService } from '@app/shared';
+import { TitleService } from '@app/shared-misc';
 
 // TODO: inject app version instead of importing package.json
 // eslint-disable-next-line @nx/enforce-module-boundaries
