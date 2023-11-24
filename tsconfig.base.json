@@ -4,6 +4,17 @@
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true,
+    "noUnusedLocals": true,
+    "downlevelIteration": true,
+    "useDefineForClassFields": false,
+    "resolveJsonModule": true,
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2022",
@@ -13,7 +24,8 @@
     "baseUrl": "./",
     "paths": {
       "@app/shared": ["modules/shared/src/index.ts"],
-      "@app/store": ["modules/store/src/index.ts"]
+      "@app/store": ["modules/store/src/index.ts"],
+      "@app/about": ["modules/features/about/src/index.ts"],
     },
     "types": ["web-bluetooth", "jest", "node", "lzma"],
     "typeRoots": ["node_modules/@types", "./types/lzma"]

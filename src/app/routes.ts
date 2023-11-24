@@ -11,7 +11,7 @@ export const ROUTES: Routes = [
     },
     {
         path: ROUTE_SECTIONS.about,
-        loadComponent: () => import('./about-page').then(m => m.AboutPageComponent),
+        loadComponent: () => import('@app/about').then(m => m.AboutPageComponent),
         pathMatch: 'full',
     },
     {

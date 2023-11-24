@@ -1,9 +1,9 @@
 {
-  "name": "store",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "modules/store/src",
+  "name": "feature:about",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "modules/features/about/src",
   "prefix": "lib",
-  "tags": ["scope:store"],
+  "tags": ["scope:feature"],
   "projectType": "library",
   "targets": {
     "test": {
@@ -12,7 +12,7 @@
         "{workspaceRoot}/coverage/{projectRoot}"
       ],
       "options": {
-        "jestConfig": "modules/store/jest.config.ts"
+        "jestConfig": "modules/features/about/jest.config.ts"
       }
     },
     "lint": {
