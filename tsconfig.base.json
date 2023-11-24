@@ -38,6 +38,7 @@
       "@app/control-schemes-list": ["modules/features/control-schemes-list/src/index.ts"],
       "@app/control-scheme-port-config-edit": ["modules/features/control-scheme-port-config-edit/src/index.ts"],
       "@app/controller-view": ["modules/features/controller-view/src/index.ts"],
+      "@app/controllers-list": ["modules/features/controllers-list/src/index.ts"],
     },
     "types": ["web-bluetooth", "jest", "node", "lzma"],
     "typeRoots": ["node_modules/@types", "./types/lzma"]
