@@ -15,13 +15,13 @@ import { RoutesBuilderService, TitleService, ValidationErrorsL10nMap, Validation
 import { FeatureToolbarControlsDirective, HintComponent } from '@app/shared-ui';
 import { HUBS_ACTIONS, HubModel, ROUTER_SELECTORS } from '@app/store';
 
-import { HUB_EDIT_PAGE_SELECTORS } from './hub-edit-page.selectors';
+import { HUB_EDIT_SELECTORS } from './hub-edit.selectors';
 
 @Component({
     standalone: true,
-    selector: 'app-hub-edit-page',
-    templateUrl: './hub-edit-page.component.html',
-    styleUrls: [ './hub-edit-page.component.scss' ],
+    selector: 'feat-hub-edit',
+    templateUrl: './hub-edit.component.html',
+    styleUrls: [ './hub-edit.component.scss' ],
     imports: [
         PushPipe,
         NgIf,
@@ -42,12 +42,12 @@ import { HUB_EDIT_PAGE_SELECTORS } from './hub-edit-page.selectors';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HubEditPageComponent implements OnInit, OnDestroy {
-    public readonly isHubConnected$ = this.store.select(HUB_EDIT_PAGE_SELECTORS.selectIsEditedHubConnected);
+export class HubEditComponent implements OnInit, OnDestroy {
+    public readonly isHubConnected$ = this.store.select(HUB_EDIT_SELECTORS.selectIsEditedHubConnected);
 
-    public readonly editedHubConfiguration$ = this.store.select(HUB_EDIT_PAGE_SELECTORS.selectEditedHubModel);
+    public readonly editedHubConfiguration$ = this.store.select(HUB_EDIT_SELECTORS.selectEditedHubModel);
 
-    public readonly isSaving$: Observable<boolean> = this.store.select(HUB_EDIT_PAGE_SELECTORS.selectIsEditedHubIsSaving);
+    public readonly isSaving$: Observable<boolean> = this.store.select(HUB_EDIT_SELECTORS.selectIsEditedHubIsSaving);
 
     public readonly cancelPath$: Observable<string[]> = this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedHubId).pipe(
         map((id) => id !== null ? this.routesBuilderService.hubView(id) : [])

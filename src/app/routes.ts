@@ -48,7 +48,7 @@ export const ROUTES: Routes = [
             },
             {
                 path: [ ':id', ROUTE_SECTIONS.hubEdit ].join('/'),
-                loadComponent: () => import('./hubs/hub-edit-page').then(m => m.HubEditPageComponent),
+                loadComponent: () => import('@app/hub-edit').then(m => m.HubEditComponent),
                 pathMatch: 'full',
             }
         ]

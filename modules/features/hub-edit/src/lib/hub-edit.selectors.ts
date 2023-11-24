@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import { HUBS_SELECTORS, HUB_EDIT_FORM_ACTIVE_SAVES_SELECTORS, HUB_RUNTIME_DATA_SELECTORS, HubModel, ROUTER_SELECTORS } from '@app/store';
 
-export const HUB_EDIT_PAGE_SELECTORS = {
+export const HUB_EDIT_SELECTORS = {
     selectEditedHubModel: createSelector(
         ROUTER_SELECTORS.selectCurrentlyEditedHubId,
         HUBS_SELECTORS.selectEntities,
