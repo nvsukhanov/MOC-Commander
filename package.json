@@ -7,8 +7,8 @@
     "serve:intra": "nx serve --host 0.0.0.0",
     "build": "nx build",
     "ci": "nx run-many -t lint test build",
-    "test": "nx test",
-    "lint": "nx lint"
+    "test": "nx run-many -t test",
+    "lint": "nx run-many -t lint"
   },
   "dependencies": {
     "@angular/animations": "^17.0.3",

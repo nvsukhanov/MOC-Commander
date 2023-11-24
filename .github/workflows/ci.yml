@@ -13,9 +13,5 @@ jobs:
           node-version: '18.15.x'
       - name: Install modules
         run: npm install --legacy-peer-deps
-      - name: Run lint
-        run: npm run lint
-      - name: Run tests
-        run: npm run test
-      - name: Run build
-        run: npm run build
+      - name: Run CI
+        run: npm run ci
