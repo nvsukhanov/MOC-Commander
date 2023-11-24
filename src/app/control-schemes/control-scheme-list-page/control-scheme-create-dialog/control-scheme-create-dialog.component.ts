@@ -5,8 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
-
-import { CONTROL_SCHEME_NAME_IS_NOT_UNIQUE, CommonFormControlsBuilderService } from '../../common';
+import { CONTROL_SCHEME_NAME_IS_NOT_UNIQUE, CommonFormControlsBuilderService } from '@app/shared-control-schemes';
 
 @Component({
     standalone: true,

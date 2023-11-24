@@ -1,8 +1,8 @@
-<app-binding-edit [binding]="binding$ | ngrxPush"
+<lib-cs-binding-edit [binding]="binding$ | ngrxPush"
                   #binding="appBindingEdit"
-></app-binding-edit>
+></lib-cs-binding-edit>
 
-<div *appFeatureToolbarControls>
+<div *libFeatureToolbarControls>
     <button mat-raised-button
             class="toolbar-button"
             [disabled]="!(binding.canSave$ | ngrxPush)"

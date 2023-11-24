@@ -1,9 +1,9 @@
 <ng-container *ngIf="initialBindingData$ | ngrxPush; let initialData; else unableToCreateBinding">
-    <app-binding-edit #binding="appBindingEdit"
+    <lib-cs-binding-edit #binding="appBindingEdit"
                       [binding]="initialData"
-    ></app-binding-edit>
+    ></lib-cs-binding-edit>
 
-    <div *appFeatureToolbarControls>
+    <div *libFeatureToolbarControls>
         <button mat-raised-button
                 class="toolbar-button"
                 [disabled]="!(binding.canSave$ | ngrxPush)"

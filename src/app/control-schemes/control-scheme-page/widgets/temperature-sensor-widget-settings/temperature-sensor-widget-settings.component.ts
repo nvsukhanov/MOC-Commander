@@ -6,8 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ValidationMessagesDirective, WidgetType } from '@app/shared-misc';
 import { TemperatureWidgetConfigModel } from '@app/store';
-
-import { CommonFormControlsBuilderService } from '../../../common';
+import { CommonFormControlsBuilderService } from '@app/shared-control-schemes';
 
 @Component({
     standalone: true,
