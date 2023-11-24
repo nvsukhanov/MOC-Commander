@@ -211,7 +211,7 @@
                 "onlyDependOnLibsWithTags": ["scope:shared"]
               },
               {
-                "sourceTag": "scope:feature",
+                "sourceTag": "type:feature",
                 "onlyDependOnLibsWithTags": ["scope:shared", "scope:store"]
               }
             ]

@@ -9,7 +9,7 @@
   },
   "sourceRoot": "src",
   "prefix": "app",
-  "tags": ["scope:app"],
+  "tags": ["type:app", "scope:app"],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
