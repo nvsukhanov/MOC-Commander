@@ -24,6 +24,7 @@
     "baseUrl": "./",
     "paths": {
       "@app/shared-misc": ["modules/shared/misc/src/index.ts"],
+      "@app/shared-ui": ["modules/shared/ui/src/index.ts"],
       "@app/store": ["modules/store/src/index.ts"],
       "@app/about": ["modules/features/about/src/index.ts"],
       "@app/bluetooth-unavailable": ["modules/features/bluetooth-unavailable/src/index.ts"],

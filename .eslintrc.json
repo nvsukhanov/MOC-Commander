@@ -173,9 +173,6 @@
         "import/no-duplicates": [
           "error"
         ],
-        "import/no-unresolved": [
-          "error"
-        ],
         "import/first": [
           "error"
         ],
@@ -203,12 +200,12 @@
                 "onlyDependOnLibsWithTags": ["*"]
               },
               {
-                "sourceTag": "scope:shared",
-                "onlyDependOnLibsWithTags": []
-              },
-              {
                 "sourceTag": "scope:store",
                 "onlyDependOnLibsWithTags": ["scope:shared"]
+              },
+              {
+                "sourceTag": "type:shared-ui",
+                "onlyDependOnLibsWithTags": ["type:shared-misc"]
               },
               {
                 "sourceTag": "type:feature",

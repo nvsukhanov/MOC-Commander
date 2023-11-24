@@ -1,6 +1,6 @@
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { TiltSensorWidgetComponent } from '@app/shared-misc';
+import { TiltSensorWidgetComponent } from '@app/shared-ui';
 import { ATTACHED_IO_PROPS_ACTIONS, CONTROL_SCHEME_WIDGETS_DATA_SELECTORS, TiltWidgetConfigModel } from '@app/store';
 
 import { ControlSchemeWidgetDescriptor } from '../widget-container';

@@ -4,7 +4,8 @@ import { MatCardModule } from '@angular/material/card';
 import { NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
-import { EllipsisTitleDirective, FeatureToolbarControlsDirective, HubTypeToL10nKeyPipe, RoutesBuilderService } from '@app/shared-misc';
+import { RoutesBuilderService } from '@app/shared-misc';
+import { EllipsisTitleDirective, FeatureToolbarControlsDirective, HubTypeToL10nKeyPipe } from '@app/shared-ui';
 import { HubModel, HubRuntimeDataModel } from '@app/store';
 
 @Component({

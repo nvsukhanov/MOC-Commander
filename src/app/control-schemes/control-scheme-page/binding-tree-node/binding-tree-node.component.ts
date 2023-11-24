@@ -6,7 +6,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { NEVER, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { RouterLink } from '@angular/router';
-import { BindingTypeToL10nKeyPipe, ScreenSizeObserverService } from '@app/shared-misc';
+import { ScreenSizeObserverService } from '@app/shared-misc';
+import { BindingTypeToL10nKeyPipe } from '@app/shared-ui';
 
 import { BindingTreeNodeViewModel } from './binding-tree-node-view-model';
 import { INPUT_TREE_NODE_VIEW_MODEL_SELECTOR } from './input-tree-node-view-model.selector';

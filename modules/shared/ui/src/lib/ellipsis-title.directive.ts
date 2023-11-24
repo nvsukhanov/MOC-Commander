@@ -1,7 +1,6 @@
 import { AfterViewInit, Directive, ElementRef, HostBinding, OnDestroy, Renderer2 } from '@angular/core';
 import { Subject, Subscription, debounceTime } from 'rxjs';
-
-import { WindowResizeTrackerService } from '../window-resize-tracker.service';
+import { WindowResizeTrackerService } from '@app/shared-misc';
 
 @Directive({
     standalone: true,

@@ -5,7 +5,6 @@ export * from './screen-size-observer.service';
 export * from './servo-math';
 export * from './i-scroll-container';
 export * from './i-app-config';
-export * from './components';
 export * from './validation-errors';
 export * from './lzma.service';
 export * from './get-enum-keys';

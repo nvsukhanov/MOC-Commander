@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
+import { IdGeneratorService, scalarMultiply, unitVectorFromAngle } from '@app/shared-misc';
 
-import { scalarMultiply, unitVectorFromAngle } from '../../../math';
-import { IdGeneratorService } from '../../../id-generator.service';
 import { TiltGaugeSectorDefinition } from './tilt-gauge-sectors';
 import { TiltGaugeOptions } from './tilt-gauge-options';
 

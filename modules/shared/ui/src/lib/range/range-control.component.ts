@@ -3,9 +3,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
 import { NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
-
-import { IdGeneratorService } from '../../id-generator.service';
-import { getFormControlMaxValue, getFormControlMinValue } from '../../form-helpers';
+import { IdGeneratorService, getFormControlMaxValue, getFormControlMinValue } from '@app/shared-misc';
 
 @Component({
     standalone: true,

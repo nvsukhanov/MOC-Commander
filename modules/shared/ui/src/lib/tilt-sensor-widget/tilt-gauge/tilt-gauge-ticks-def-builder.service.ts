@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { scalarMultiply, unitVectorFromAngle } from '@app/shared-misc';
 
-import { scalarMultiply, unitVectorFromAngle } from '../../../math';
 import { TiltGaugeTickLineDefinition } from './tilt-gauge-ticks';
 import { TiltGaugeOptions } from './tilt-gauge-options';
 

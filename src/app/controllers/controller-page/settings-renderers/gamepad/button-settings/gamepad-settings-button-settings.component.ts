@@ -4,7 +4,7 @@ import { PushPipe } from '@ngrx/component';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { InputActivityIndicatorComponent, RangeControlComponent, SliderControlComponent, ToggleControlComponent } from '@app/shared-misc';
+import { InputActivityIndicatorComponent, RangeControlComponent, SliderControlComponent, ToggleControlComponent } from '@app/shared-ui';
 
 import { GamepadSettingsButtonSettingsViewModel } from '../types';
 import { InputOutputDiagramComponent } from '../input-output-diagram';

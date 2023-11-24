@@ -8,7 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PushPipe } from '@ngrx/component';
 import { Observable, Subscription, of, startWith, switchMap } from 'rxjs';
-import { HideOnSmallScreenDirective, ValidationMessagesDirective } from '@app/shared-misc';
+import { ValidationMessagesDirective } from '@app/shared-misc';
+import { HideOnSmallScreenDirective } from '@app/shared-ui';
 import { ControllerInputModel } from '@app/store';
 
 import { WaitForControllerInputDialogComponent } from '../../wait-for-controller-input-dialog';

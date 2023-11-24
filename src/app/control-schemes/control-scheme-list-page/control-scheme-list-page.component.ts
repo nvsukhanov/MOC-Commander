@@ -9,16 +9,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { filter, take } from 'rxjs';
 import { concatLatestFrom } from '@ngrx/effects';
-import {
-    ConfirmationDialogModule,
-    ConfirmationDialogService,
-    EllipsisTitleDirective,
-    FeatureToolbarControlsDirective,
-    HintComponent,
-    RoutesBuilderService,
-    ScreenSizeObserverService,
-    TitleService
-} from '@app/shared-misc';
+import { RoutesBuilderService, ScreenSizeObserverService, TitleService } from '@app/shared-misc';
+import { ConfirmationDialogModule, ConfirmationDialogService, EllipsisTitleDirective, FeatureToolbarControlsDirective, HintComponent } from '@app/shared-ui';
 import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel } from '@app/store';
 
 import { CONTROL_SCHEMES_LIST_PAGE_SELECTORS } from './control-scheme-list-page.selectors';
