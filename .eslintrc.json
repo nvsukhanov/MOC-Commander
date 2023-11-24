@@ -192,6 +192,30 @@
         "@typescript-eslint/quotes": [
           "error",
           "single"
+        ],
+        "@nx/enforce-module-boundaries": [
+          "error",
+          {
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "scope:app",
+                "onlyDependOnLibsWithTags": ["*"]
+              },
+              {
+                "sourceTag": "scope:shared",
+                "onlyDependOnLibsWithTags": []
+              },
+              {
+                "sourceTag": "scope:store",
+                "onlyDependOnLibsWithTags": ["scope:shared"]
+              },
+              {
+                "sourceTag": "scope:feature",
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:store"]
+              }
+            ]
+          }
         ]
       }
     },

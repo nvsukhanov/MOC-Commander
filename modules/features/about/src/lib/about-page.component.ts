@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { TitleService } from '@app/shared';
 
-import packageJson from '../../../package.json';
+import packageJson from '../../../../../package.json';
 
 @Component({
     standalone: true,
-    selector: 'app-about-page',
+    selector: 'feat-about-page',
     templateUrl: './about-page.component.html',
     styleUrls: [ './about-page.component.scss' ],
     imports: [
