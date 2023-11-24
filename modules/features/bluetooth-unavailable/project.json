@@ -2,7 +2,7 @@
   "name": "feature-bluetooth-unavailable",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "modules/features/bluetooth-unavailable/src",
-  "prefix": "feat",
+  "prefix": "feat-bluetooth-unavailable",
   "tags": ["type:feature","scope:bluetooth-unavailable"],
   "projectType": "library",
   "targets": {

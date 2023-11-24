@@ -10,7 +10,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "feat",
+            "prefix": "feat-bluetooth-unavailable",
             "style": "camelCase"
           }
         ],
@@ -18,7 +18,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "feat",
+            "prefix": "feat-bluetooth-unavailable",
             "style": "kebab-case"
           }
         ]
