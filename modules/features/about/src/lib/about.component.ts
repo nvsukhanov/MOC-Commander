@@ -2,13 +2,15 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { TitleService } from '@app/shared';
 
+// TODO: inject app version instead of importing package.json
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import packageJson from '../../../../../package.json';
 
 @Component({
     standalone: true,
-    selector: 'feat-about-page',
-    templateUrl: './about-page.component.html',
-    styleUrls: [ './about-page.component.scss' ],
+    selector: 'feat-about',
+    templateUrl: './about.component.html',
+    styleUrls: [ './about.component.scss' ],
     imports: [
         TranslocoPipe
     ],
@@ -17,7 +19,7 @@ import packageJson from '../../../../../package.json';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AboutPageComponent implements OnInit {
+export class AboutComponent implements OnInit {
     public readonly webPoweredAppURL = 'https://github.com/nvsukhanov/webPoweredApp';
 
     public readonly rxPoweredUpURL = 'https://github.com/nvsukhanov/rxPoweredUp';

@@ -4,9 +4,9 @@ import { HintComponent, TitleService } from '@app/shared';
 
 @Component({
     standalone: true,
-    selector: 'app-bluetooth-unavailable-page',
-    templateUrl: './bluetooth-unavailable-page.component.html',
-    styleUrls: [ './bluetooth-unavailable-page.component.scss' ],
+    selector: 'feat-bluetooth-unavailable',
+    templateUrl: './bluetooth-unavailable.component.html',
+    styleUrls: [ './bluetooth-unavailable.component.scss' ],
     imports: [
         HintComponent,
         TranslocoPipe,
@@ -16,7 +16,7 @@ import { HintComponent, TitleService } from '@app/shared';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BluetoothUnavailablePageComponent implements OnInit {
+export class BluetoothUnavailableComponent implements OnInit {
     public readonly canIUseBluetoothLink = 'https://caniuse.com/web-bluetooth';
 
     constructor(
