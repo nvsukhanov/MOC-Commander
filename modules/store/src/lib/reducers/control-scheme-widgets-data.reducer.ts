@@ -1,7 +1,7 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_WIDGETS_DATA_ACTIONS } from '@app/store';
 
 import { ControlSchemeWidgetsDataModel } from '../models';
+import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_WIDGETS_DATA_ACTIONS } from '../actions';
 
 export type ControlSchemeWidgetsDataState = {
     widgetsData: { [widgetIndex in number]?: ControlSchemeWidgetsDataModel };

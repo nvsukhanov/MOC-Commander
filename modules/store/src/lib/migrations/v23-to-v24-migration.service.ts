@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType, DeepPartial } from '@app/shared';
-import { AppStoreVersion } from '@app/store';
 
+import { AppStoreVersion } from '../app-store-version';
 import { IMigration } from './i-migration';
 import { V23ControlSchemesEntitiesState, V23Store } from './v23-store';
 import { V24Store } from './v24-store';

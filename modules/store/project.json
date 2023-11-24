@@ -1,7 +1,7 @@
 {
-  "name": "shared",
+  "name": "store",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "modules/shared/src",
+  "sourceRoot": "modules/store/src",
   "prefix": "lib",
   "tags": [],
   "projectType": "library",
@@ -12,7 +12,7 @@
         "{workspaceRoot}/coverage/{projectRoot}"
       ],
       "options": {
-        "jestConfig": "modules/shared/jest.config.ts"
+        "jestConfig": "modules/store/jest.config.ts"
       }
     },
     "lint": {
