@@ -23,7 +23,7 @@
     "skipLibCheck": true,
     "baseUrl": "./",
     "paths": {
-      "@app/shared": ["modules/shared/src/index.ts"],
+      "@app/shared": ["modules/shared/misc/src/index.ts"],
       "@app/store": ["modules/store/src/index.ts"],
       "@app/about": ["modules/features/about/src/index.ts"],
       "@app/bluetooth-unavailable": ["modules/features/bluetooth-unavailable/src/index.ts"],

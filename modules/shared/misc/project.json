@@ -1,8 +1,8 @@
 {
-  "name": "shared",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "modules/shared/src",
-  "prefix": "lib",
+  "name": "shared-misc",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "modules/shared/misc/src",
+  "prefix": "shared-misc",
   "tags": ["type:library", "scope:shared"],
   "projectType": "library",
   "targets": {
@@ -12,7 +12,7 @@
         "{workspaceRoot}/coverage/{projectRoot}"
       ],
       "options": {
-        "jestConfig": "modules/shared/jest.config.ts"
+        "jestConfig": "modules/shared/misc/jest.config.ts"
       }
     },
     "lint": {
@@ -22,9 +22,9 @@
       ],
       "options": {
         "lintFilePatterns": [
-          "modules/shared/**/*.ts",
-          "modules/shared/**/*.html",
-          "modules/shared/package.json"
+          "modules/shared/misc/**/*.ts",
+          "modules/shared/misc/**/*.html",
+          "modules/shared/misc/package.json"
         ]
       }
     }
