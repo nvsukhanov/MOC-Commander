@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
+import { NotFoundPageComponent } from '@app/not-found';
 import { ROUTE_SECTIONS } from '@app/shared';
 
-import { NotFoundPageComponent } from './not-found-page';
 
 export const ROUTES: Routes = [
     {

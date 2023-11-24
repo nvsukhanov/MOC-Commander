@@ -4,9 +4,9 @@ import { HintComponent, TitleService } from '@app/shared';
 
 @Component({
     standalone: true,
-    selector: 'app-not-found-page',
-    templateUrl: './not-found-page.component.html',
-    styleUrls: [ './not-found-page.component.scss' ],
+    selector: 'feat-not-found-page',
+    templateUrl: './not-found.component.html',
+    styleUrls: [ './not-found.component.scss' ],
     imports: [
         TranslocoPipe,
         HintComponent
@@ -16,7 +16,7 @@ import { HintComponent, TitleService } from '@app/shared';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NotFoundPageComponent implements OnInit {
+export class NotFoundComponent implements OnInit {
     constructor(
         private readonly titleService: TitleService,
         private readonly translocoService: TranslocoService
