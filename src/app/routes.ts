@@ -11,12 +11,12 @@ export const ROUTES: Routes = [
     },
     {
         path: ROUTE_SECTIONS.about,
-        loadComponent: () => import('@app/about').then(m => m.AboutPageComponent),
+        loadComponent: () => import('@app/about').then(m => m.AboutComponent),
         pathMatch: 'full',
     },
     {
         path: ROUTE_SECTIONS.bluetoothUnavailable,
-        loadComponent: () => import('./bluetooth-unavailable-page').then(m => m.BluetoothUnavailablePageComponent),
+        loadComponent: () => import('@app/bluetooth-unavailable').then(m => m.BluetoothUnavailableComponent),
         pathMatch: 'full',
     },
     {
