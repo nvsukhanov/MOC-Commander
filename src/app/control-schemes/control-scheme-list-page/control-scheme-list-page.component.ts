@@ -9,17 +9,17 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { filter, take } from 'rxjs';
 import { concatLatestFrom } from '@ngrx/effects';
-import { RoutesBuilderService } from '@app/routing';
-import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel } from '@app/store';
 import {
     ConfirmationDialogModule,
     ConfirmationDialogService,
     EllipsisTitleDirective,
     FeatureToolbarControlsDirective,
     HintComponent,
+    RoutesBuilderService,
     ScreenSizeObserverService,
     TitleService
 } from '@app/shared';
+import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel } from '@app/store';
 
 import { CONTROL_SCHEMES_LIST_PAGE_SELECTORS } from './control-scheme-list-page.selectors';
 import { ControlSchemeCreateDialogComponent } from './control-scheme-create-dialog';

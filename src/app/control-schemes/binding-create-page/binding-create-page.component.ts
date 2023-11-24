@@ -6,9 +6,8 @@ import { PushPipe } from '@ngrx/component';
 import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { RoutesBuilderService } from '@app/routing';
+import { FeatureToolbarControlsDirective, HintComponent, RoutesBuilderService, TitleService } from '@app/shared';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeBinding, ROUTER_SELECTORS } from '@app/store';
-import { FeatureToolbarControlsDirective, HintComponent, TitleService } from '@app/shared';
 
 import { BindingEditComponent } from '../common';
 import { BINDING_CREATE_PAGE_SELECTORS } from './binding-create-page.selectors';

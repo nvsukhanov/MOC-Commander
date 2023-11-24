@@ -6,8 +6,7 @@ import { RouterLink } from '@angular/router';
 import { PushPipe } from '@ngrx/component';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { RoutesBuilderService } from '@app/routing';
-import { ScreenSizeObserverService } from '@app/shared';
+import { RoutesBuilderService, ScreenSizeObserverService } from '@app/shared';
 
 import { IoInlineViewComponent } from '../io-inline-view';
 import { ControlSchemeViewIoTreeNode } from '../types';

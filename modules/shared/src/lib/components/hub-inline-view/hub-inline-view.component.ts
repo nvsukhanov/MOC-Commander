@@ -8,6 +8,7 @@ import { RouterLink } from '@angular/router';
 import { EllipsisTitleDirective } from '../ellipsis-title.directive';
 import { HideOnSmallScreenDirective } from '../hide-on-small-screen.directive';
 import { InputActivityIndicatorComponent } from '../input-activity-indicator';
+import { RoutesBuilderService } from '../../routing';
 
 @Component({
     standalone: true,
@@ -43,13 +44,18 @@ export class HubInlineViewComponent {
 
     @Input() public showControls = true;
 
-    @Input() public hubViewHref: string[] = [];
-
     @Output() public readonly disconnect = new EventEmitter<void>();
 
     @Output() public readonly forget = new EventEmitter<void>();
 
+    private _hubViewHref: string[] = [];
+
     private _hubId: string | undefined;
+
+    constructor(
+        private routesBuilderService: RoutesBuilderService,
+    ) {
+    }
 
     public get batteryLevelIcon(): string {
         if (this.batteryLevel === null) {
@@ -100,11 +106,20 @@ export class HubInlineViewComponent {
     public set hubId(
         hubId: string | undefined
     ) {
+        if (hubId === undefined) {
+            this._hubViewHref = [];
+        } else {
+            this._hubViewHref = this.routesBuilderService.hubView(hubId);
+        }
         this._hubId = hubId;
     }
 
     public get hubId(): string | undefined {
         return this._hubId;
+    }
+
+    public get hubViewHref(): string[] {
+        return this._hubViewHref;
     }
 
     public onDisconnectClick(): void {

@@ -1,6 +1,6 @@
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
-import { RoutesBuilderService } from '@app/routing';
+import { RoutesBuilderService } from '@app/shared';
 
 import { BLUETOOTH_AVAILABILITY_ACTIONS } from './actions';
 

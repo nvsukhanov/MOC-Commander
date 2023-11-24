@@ -3,11 +3,12 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { importProvidersFrom } from '@angular/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { provideRouting } from '@app/routing';
+import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router';
 import { AppStoreVersion, provideApplicationStore } from '@app/store';
 import { ShowOnTouchedErrorStateMatcher, provideControllerProfiles, provideI18n } from '@app/shared';
 
 import { RootComponent } from './app/root';
+import { ROUTES } from './app/routes';
 
 // removing old ls store version prefixes.
 // TODO: remove this code after a 2023-10-15
@@ -25,7 +26,7 @@ for (const k in window.localStorage) {
 
 bootstrapApplication(RootComponent, {
     providers: [
-        provideRouting(),
+        provideRouter(ROUTES, withPreloading(PreloadAllModules)),
         provideI18n(),
         provideAnimations(),
         provideControllerProfiles(),

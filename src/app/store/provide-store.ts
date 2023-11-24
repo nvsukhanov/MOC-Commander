@@ -4,8 +4,7 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { ActionReducerMap, Store, provideStore } from '@ngrx/store';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { Router } from '@angular/router';
-import { RoutesBuilderService } from '@app/routing';
-import { NAVIGATOR, provideControllerProfiles } from '@app/shared';
+import { NAVIGATOR, RoutesBuilderService, provideControllerProfiles } from '@app/shared';
 
 import { IState } from './i-state';
 import {

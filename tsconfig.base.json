@@ -12,7 +12,6 @@
     "skipLibCheck": true,
     "baseUrl": "./",
     "paths": {
-      "@app/routing": ["src/app/routing"],
       "@app/shared": ["modules/shared/src/index.ts"],
       "@app/store": ["src/app/store"],
       "shared": ["modules/shared/src/index.ts"]

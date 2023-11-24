@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LocationStrategy } from '@angular/common';
 
-import { ROUTE_PATHS } from './routes';
+import { ROUTE_SECTIONS } from './routes';
 
 @Injectable({ providedIn: 'root' })
 export class RoutesBuilderService {
@@ -24,25 +24,25 @@ export class RoutesBuilderService {
     constructor(
         private locationStrategy: LocationStrategy,
     ) {
-        this.controlSchemesList = [ this.baseHref, ROUTE_PATHS.controlSchemes ];
-        this.controlSchemesCreate = [ this.baseHref, ROUTE_PATHS.controlSchemes, ROUTE_PATHS.controlSchemeCreate ];
-        this.hubsList = [ this.baseHref, ROUTE_PATHS.hubs ];
-        this.controllersList = [ this.baseHref, ROUTE_PATHS.controllers ];
-        this.about = [ this.baseHref, ROUTE_PATHS.about ];
-        this.bluetoothUnavailable = [ this.baseHref, ROUTE_PATHS.bluetoothUnavailable ];
-        this.settings = [ this.baseHref, ROUTE_PATHS.settings ];
+        this.controlSchemesList = [ this.baseHref, ROUTE_SECTIONS.controlSchemes ];
+        this.controlSchemesCreate = [ this.baseHref, ROUTE_SECTIONS.controlSchemes, ROUTE_SECTIONS.controlSchemeCreate ];
+        this.hubsList = [ this.baseHref, ROUTE_SECTIONS.hubs ];
+        this.controllersList = [ this.baseHref, ROUTE_SECTIONS.controllers ];
+        this.about = [ this.baseHref, ROUTE_SECTIONS.about ];
+        this.bluetoothUnavailable = [ this.baseHref, ROUTE_SECTIONS.bluetoothUnavailable ];
+        this.settings = [ this.baseHref, ROUTE_SECTIONS.settings ];
     }
 
     public hubView(hubId: string): string[] {
-        return [ this.baseHref, ROUTE_PATHS.hubs, hubId ];
+        return [ this.baseHref, ROUTE_SECTIONS.hubs, hubId ];
     }
 
     public hubEdit(hubId: string): string[] {
-        return [ this.baseHref, ROUTE_PATHS.hubs, hubId, ROUTE_PATHS.hubEdit ];
+        return [ this.baseHref, ROUTE_SECTIONS.hubs, hubId, ROUTE_SECTIONS.hubEdit ];
     }
 
     public controlSchemeView(schemeName: string): string[] {
-        return [ this.baseHref, ROUTE_PATHS.controlSchemes, encodeURI(schemeName) ];
+        return [ this.baseHref, ROUTE_SECTIONS.controlSchemes, encodeURI(schemeName) ];
     }
 
     public bindingView(
@@ -51,9 +51,9 @@ export class RoutesBuilderService {
     ): string[] {
         return [
             this.baseHref,
-            ROUTE_PATHS.controlSchemes,
+            ROUTE_SECTIONS.controlSchemes,
             encodeURI(schemeName),
-            ROUTE_PATHS.binding,
+            ROUTE_SECTIONS.binding,
             bindingId.toString()
         ];
     }
@@ -63,9 +63,9 @@ export class RoutesBuilderService {
     ): string[] {
         return [
             this.baseHref,
-            ROUTE_PATHS.controlSchemes,
+            ROUTE_SECTIONS.controlSchemes,
             encodeURI(schemeName),
-            ROUTE_PATHS.bindingCreate
+            ROUTE_SECTIONS.bindingCreate
         ];
     }
 
@@ -76,11 +76,11 @@ export class RoutesBuilderService {
     ): string[] {
         return [
             this.baseHref,
-            ROUTE_PATHS.controlSchemes,
+            ROUTE_SECTIONS.controlSchemes,
             encodeURI(schemeName),
-            ROUTE_PATHS.hubEdit,
+            ROUTE_SECTIONS.hubEdit,
             hubId,
-            ROUTE_PATHS.portEdit,
+            ROUTE_SECTIONS.portEdit,
             portId.toString()
         ];
     }
@@ -90,7 +90,7 @@ export class RoutesBuilderService {
     ): string[] {
         return [
             this.baseHref,
-            ROUTE_PATHS.controllers,
+            ROUTE_SECTIONS.controllers,
             encodeURI(controllerId)
         ];
     }
