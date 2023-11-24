@@ -1,0 +1,43 @@
+<ng-container *ngIf="viewModel$ | ngrxPush; let viewModel">
+    <ng-container *ngIf="isSmallScreen$ | ngrxPush; else largeScreen">
+        <feat-control-scheme-view-io-inline-view [portId]="viewModel.portId"
+                            [isConnected]="viewModel.isConnected"
+        ></feat-control-scheme-view-io-inline-view>
+    </ng-container>
+    <ng-template #largeScreen>
+        <feat-control-scheme-view-io-inline-view [portId]="viewModel.portId"
+                            [ioType]="viewModel.ioType"
+                            [isConnected]="viewModel.isConnected"
+        ></feat-control-scheme-view-io-inline-view>
+    </ng-template>
+
+    <a *ngIf="viewModel.useAccelerationProfile || viewModel.useDecelerationProfile"
+       class="mat-mdc-button port-config"
+       [routerLink]="portConfigRoute"
+    >
+        <span *ngIf="viewModel.useAccelerationProfile"
+              class="port-profile"
+              [title]="'controlScheme.accelerationTimeMs' | transloco"
+        >
+            <mat-icon [fontIcon]="'north_east'"></mat-icon>
+            {{ viewModel.accelerationTimeMs }}{{ 'controlScheme.profileTimingPostfix' | transloco }}
+        </span>
+        <span *ngIf="viewModel.useDecelerationProfile"
+              class="port-profile"
+              [title]="'controlScheme.decelerationTimeMs' | transloco"
+        >
+            <mat-icon [fontIcon]="'south_east'"></mat-icon>
+            {{ viewModel.decelerationTimeMs }}{{ 'controlScheme.profileTimingPostfix' | transloco }}
+        </span>
+    </a>
+
+    <ng-container *ngIf="viewModel.runningTask">
+        <mat-icon [fontIcon]="'sync'"></mat-icon>
+        {{ viewModel.runningTask | portCommandTaskSummary | ngrxPush }}
+    </ng-container>
+
+    <ng-container *ngIf="viewModel.lastExecutedTask && !viewModel.runningTask">
+        <mat-icon [fontIcon]="'check_circle'"></mat-icon>
+        {{ viewModel.lastExecutedTask | portCommandTaskSummary | ngrxPush }}
+    </ng-container>
+</ng-container>

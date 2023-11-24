@@ -30,7 +30,12 @@
       "@app/about": ["modules/features/about/src/index.ts"],
       "@app/bluetooth-unavailable": ["modules/features/bluetooth-unavailable/src/index.ts"],
       "@app/not-found": ["modules/features/not-found/src/index.ts"],
-      "@app/settings": ["modules/features/settings/src/index.ts"]
+      "@app/settings": ["modules/features/settings/src/index.ts"],
+      "@app/control-scheme-binding-create": ["modules/features/control-scheme-binding-create/src/index.ts"],
+      "@app/control-scheme-binding-edit": ["modules/features/control-scheme-binding-edit/src/index.ts"],
+      "@app/control-scheme-view": ["modules/features/control-scheme-view/src/index.ts"],
+      "@app/control-schemes-list": ["modules/features/control-schemes-list/src/index.ts"],
+      "@app/control-scheme-port-config-edit": ["modules/features/control-scheme-port-config-edit/src/index.ts"],
     },
     "types": ["web-bluetooth", "jest", "node", "lzma"],
     "typeRoots": ["node_modules/@types", "./types/lzma"]
