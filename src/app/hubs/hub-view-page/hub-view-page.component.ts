@@ -5,9 +5,8 @@ import { filter, switchMap, take } from 'rxjs';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Router } from '@angular/router';
-import { RoutesBuilderService } from '@app/routing';
+import { HintComponent, RoutesBuilderService, TitleService } from '@app/shared';
 import { HUBS_ACTIONS, HubModel, ROUTER_SELECTORS, attachedIosIdFn } from '@app/store';
-import { HintComponent, TitleService } from '@app/shared';
 
 import { HubPropertiesViewComponent } from './hub-properties-view';
 import { HubIoViewComponent } from './hub-io-view';

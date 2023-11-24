@@ -18,3 +18,4 @@ export * from './id-generator.service';
 export * from './form-helpers';
 export * from './title.service';
 export * from './math';
+export * from './routing';
