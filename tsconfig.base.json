@@ -13,8 +13,7 @@
     "baseUrl": "./",
     "paths": {
       "@app/shared": ["modules/shared/src/index.ts"],
-      "@app/store": ["src/app/store"],
-      "shared": ["modules/shared/src/index.ts"]
+      "@app/store": ["modules/store/src/index.ts"]
     },
     "types": ["web-bluetooth", "jest", "node", "lzma"],
     "typeRoots": ["node_modules/@types", "./types/lzma"]
