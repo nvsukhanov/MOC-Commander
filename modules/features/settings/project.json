@@ -1,9 +1,9 @@
 {
-  "name": "feature-bluetooth-unavailable",
+  "name": "feature-settings",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "modules/features/bluetooth-unavailable/src",
-  "prefix": "feat",
-  "tags": ["type:feature","scope:bluetooth-unavailable"],
+  "sourceRoot": "modules/features/settings/src",
+  "prefix": "lib",
+  "tags": ["type:feature","scope:settings"],
   "projectType": "library",
   "targets": {
     "test": {
@@ -12,7 +12,7 @@
         "{workspaceRoot}/coverage/{projectRoot}"
       ],
       "options": {
-        "jestConfig": "modules/features/bluetooth-unavailable/jest.config.ts"
+        "jestConfig": "modules/features/settings/jest.config.ts"
       }
     },
     "lint": {
@@ -22,9 +22,9 @@
       ],
       "options": {
         "lintFilePatterns": [
-          "modules/features/bluetooth-unavailable/**/*.ts",
-          "modules/features/bluetooth-unavailable/**/*.html",
-          "modules/features/bluetooth-unavailable/package.json"
+          "modules/features/settings/**/*.ts",
+          "modules/features/settings/**/*.html",
+          "modules/features/settings/package.json"
         ]
       }
     }

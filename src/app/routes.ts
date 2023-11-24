@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
-import { NotFoundPageComponent } from '@app/not-found';
+import { NotFoundComponent } from '@app/not-found';
 import { ROUTE_SECTIONS } from '@app/shared';
-
 
 export const ROUTES: Routes = [
     {
@@ -86,11 +85,11 @@ export const ROUTES: Routes = [
     },
     {
         path: ROUTE_SECTIONS.settings,
-        loadComponent: () => import('./settings-page').then((m) => m.SettingsPageComponent),
+        loadComponent: () => import('@app/settings').then((m) => m.SettingsComponent),
         pathMatch: 'full'
     },
     {
         path: '**',
-        component: NotFoundPageComponent,
+        component: NotFoundComponent,
     }
 ];

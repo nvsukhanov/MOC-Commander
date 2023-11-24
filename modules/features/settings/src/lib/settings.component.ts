@@ -15,9 +15,9 @@ import { LanguageSelectComponent } from './language-select';
 
 @Component({
     standalone: true,
-    selector: 'app-settings-page',
-    templateUrl: './settings-page.component.html',
-    styleUrls: [ './settings-page.component.scss' ],
+    selector: 'feat-settings',
+    templateUrl: './settings.component.html',
+    styleUrls: [ './settings.component.scss' ],
     imports: [
         MatCardModule,
         TranslocoPipe,
@@ -32,7 +32,7 @@ import { LanguageSelectComponent } from './language-select';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SettingsPageComponent implements OnInit {
+export class SettingsComponent implements OnInit {
     public readonly currentTheme = this.store.selectSignal(SETTINGS_FEATURE.selectAppTheme);
 
     public readonly currentLanguage = this.store.selectSignal(SETTINGS_FEATURE.selectLanguage);

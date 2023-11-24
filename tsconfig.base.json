@@ -28,6 +28,7 @@
       "@app/about": ["modules/features/about/src/index.ts"],
       "@app/bluetooth-unavailable": ["modules/features/bluetooth-unavailable/src/index.ts"],
       "@app/not-found": ["modules/features/not-found/src/index.ts"],
+      "@app/settings": ["modules/features/settings/src/index.ts"]
     },
     "types": ["web-bluetooth", "jest", "node", "lzma"],
     "typeRoots": ["node_modules/@types", "./types/lzma"]
