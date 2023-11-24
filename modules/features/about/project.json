@@ -2,7 +2,7 @@
   "name": "feature-about",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "modules/features/about/src",
-  "prefix": "feat",
+  "prefix": "feat-about",
   "tags": ["type:feature", "scope:about"],
   "projectType": "library",
   "targets": {
