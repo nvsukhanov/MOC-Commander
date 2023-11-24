@@ -11,14 +11,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import {
-    ControlSchemeBindingType,
-    ControllerInputType,
-    HideOnSmallScreenDirective,
-    ToggleControlComponent,
-    ValidationMessagesDirective,
-    getTranslationArcs
-} from '@app/shared-misc';
+import { ControlSchemeBindingType, ControllerInputType, ValidationMessagesDirective, getTranslationArcs } from '@app/shared-misc';
+import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
 import { CONTROL_SCHEME_ACTIONS, CalibrationResult, CalibrationResultType, ControlSchemeInputAction, HubMotorPositionFacadeService } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';

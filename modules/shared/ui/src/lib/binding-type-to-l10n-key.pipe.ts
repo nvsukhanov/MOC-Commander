@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-
-import { ControlSchemeBindingType } from '../types';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 
 @Pipe({
     name: 'bindingTypeToL10nKey',

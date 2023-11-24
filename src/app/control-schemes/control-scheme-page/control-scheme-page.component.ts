@@ -9,15 +9,8 @@ import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { concatLatestFrom } from '@ngrx/effects';
-import {
-    ConfirmationDialogModule,
-    ConfirmationDialogService,
-    FeatureToolbarControlsDirective,
-    HintComponent,
-    RoutesBuilderService,
-    ScreenSizeObserverService,
-    TitleService
-} from '@app/shared-misc';
+import { RoutesBuilderService, ScreenSizeObserverService, TitleService } from '@app/shared-misc';
+import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared-ui';
 import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, ControlSchemeModel, ROUTER_SELECTORS, WidgetConfigModel } from '@app/store';
 
 import { ControlSchemeViewTreeNode, SchemeRunBlocker } from './types';

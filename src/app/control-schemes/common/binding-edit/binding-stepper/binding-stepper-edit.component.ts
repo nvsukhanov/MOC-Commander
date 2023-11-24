@@ -4,7 +4,8 @@ import { TranslocoPipe } from '@ngneat/transloco';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ControlSchemeBindingType, HideOnSmallScreenDirective, ToggleControlComponent, ValidationMessagesDirective } from '@app/shared-misc';
+import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
+import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
 import { ControlSchemeInputAction } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';

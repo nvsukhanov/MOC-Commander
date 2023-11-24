@@ -5,8 +5,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
+import { ValidationMessagesDirective } from '@app/shared-misc';
 
-import { ValidationMessagesDirective } from '../../validation-errors';
 import { EllipsisTitleDirective } from '../ellipsis-title.directive';
 
 @Component({

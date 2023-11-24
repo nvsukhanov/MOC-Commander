@@ -6,7 +6,8 @@ import { PushPipe } from '@ngrx/component';
 import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { FeatureToolbarControlsDirective, HintComponent, RoutesBuilderService, TitleService } from '@app/shared-misc';
+import { RoutesBuilderService, TitleService } from '@app/shared-misc';
+import { FeatureToolbarControlsDirective, HintComponent } from '@app/shared-ui';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeBinding, ROUTER_SELECTORS } from '@app/store';
 
 import { BindingEditComponent } from '../common';

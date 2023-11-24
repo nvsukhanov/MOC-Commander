@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IOType } from 'rxpoweredup';
-
-import { L10nScopes, composeL10nKey } from '../../i18n';
+import { L10nScopes, composeL10nKey } from '@app/shared-misc';
 
 @Injectable({ providedIn: 'root' })
 export class IoTypeToL10nKeyService {

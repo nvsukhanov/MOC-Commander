@@ -11,14 +11,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
-import {
-    FeatureToolbarControlsDirective,
-    HintComponent,
-    RoutesBuilderService,
-    TitleService,
-    ValidationErrorsL10nMap,
-    ValidationMessagesDirective
-} from '@app/shared-misc';
+import { RoutesBuilderService, TitleService, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
+import { FeatureToolbarControlsDirective, HintComponent } from '@app/shared-ui';
 import { HUBS_ACTIONS, HubModel, ROUTER_SELECTORS } from '@app/store';
 
 import { HUB_EDIT_PAGE_SELECTORS } from './hub-edit-page.selectors';

@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { EllipsisTitleDirective } from '@app/shared-misc';
+import { EllipsisTitleDirective } from '@app/shared-ui';
 
 @Component({
     standalone: true,

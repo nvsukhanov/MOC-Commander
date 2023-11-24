@@ -1,9 +1,9 @@
 {
-  "name": "shared-misc",
+  "name": "shared-ui",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "modules/shared/misc/src",
-  "prefix": "shared-misc",
-  "tags": ["type:shared-misc", "scope:shared"],
+  "sourceRoot": "modules/shared/ui/src",
+  "prefix": "shared-ui",
+  "tags": ["type:shared-ui", "scope:shared"],
   "projectType": "library",
   "targets": {
     "test": {
@@ -12,7 +12,7 @@
         "{workspaceRoot}/coverage/{projectRoot}"
       ],
       "options": {
-        "jestConfig": "modules/shared/misc/jest.config.ts"
+        "jestConfig": "modules/shared/ui/jest.config.ts"
       }
     },
     "lint": {

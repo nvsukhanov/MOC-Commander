@@ -6,7 +6,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Router } from '@angular/router';
 import { concatLatestFrom } from '@ngrx/effects';
-import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective, RoutesBuilderService, TitleService } from '@app/shared-misc';
+import { RoutesBuilderService, TitleService } from '@app/shared-misc';
+import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective } from '@app/shared-ui';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeBinding, ROUTER_SELECTORS } from '@app/store';
 
 import { BINDING_EDIT_PAGE_SELECTORS } from './binding-edit-page.selectors';

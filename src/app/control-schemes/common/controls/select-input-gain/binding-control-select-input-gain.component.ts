@@ -5,7 +5,8 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { MotorServoEndStateL10nKeyPipe, getEnumValues } from '@app/shared-misc';
+import { getEnumValues } from '@app/shared-misc';
+import { MotorServoEndStateL10nKeyPipe } from '@app/shared-ui';
 import { InputGain } from '@app/store';
 
 import { InputGainL10nKeyPipe } from './input-gain-l10n-key.pipe';

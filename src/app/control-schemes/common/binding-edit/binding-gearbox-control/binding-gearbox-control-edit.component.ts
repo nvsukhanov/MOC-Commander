@@ -10,7 +10,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { Store } from '@ngrx/store';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ControlSchemeBindingType, HideOnSmallScreenDirective, ToggleControlComponent, ValidationMessagesDirective } from '@app/shared-misc';
+import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
+import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
 import { ControlSchemeInputAction, HubMotorPositionFacadeService } from '@app/store';
 
 import {

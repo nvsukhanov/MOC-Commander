@@ -8,7 +8,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatBadgeModule } from '@angular/material/badge';
 import { NgIf } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
-import { EllipsisTitleDirective, RoutesBuilderService } from '@app/shared-misc';
+import { RoutesBuilderService } from '@app/shared-misc';
+import { EllipsisTitleDirective } from '@app/shared-ui';
 
 import { DiscoverHubButtonComponent } from '../discover-hub-button';
 

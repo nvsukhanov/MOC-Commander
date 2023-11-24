@@ -7,7 +7,8 @@ import { PushPipe } from '@ngrx/component';
 import { Observable, Subscription, map, of, startWith, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { concatLatestFrom } from '@ngrx/effects';
-import { ControlSchemeBindingType, IoTypeToL10nKeyPipe, PortIdToPortNamePipe } from '@app/shared-misc';
+import { ControlSchemeBindingType } from '@app/shared-misc';
+import { IoTypeToL10nKeyPipe, PortIdToPortNamePipe } from '@app/shared-ui';
 import { AttachedIoModel } from '@app/store';
 
 import { BINDING_CONTROL_SELECT_IO_SELECTORS } from './binding-control-select-io.selectors';

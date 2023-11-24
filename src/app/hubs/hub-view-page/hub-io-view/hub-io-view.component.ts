@@ -3,7 +3,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { IoTypeToL10nKeyPipe, PortIdToPortNamePipe } from '@app/shared-misc';
+import { IoTypeToL10nKeyPipe, PortIdToPortNamePipe } from '@app/shared-ui';
 import { AttachedIoPortModeInfoModel } from '@app/store';
 
 import { HubIoViewModel } from '../hub-view-page.selectors';

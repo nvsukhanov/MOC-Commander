@@ -1,6 +1,7 @@
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { VoltageSensorWidgetComponent, WidgetType } from '@app/shared-misc';
+import { WidgetType } from '@app/shared-misc';
+import { VoltageSensorWidgetComponent } from '@app/shared-ui';
 import { CONTROL_SCHEME_WIDGETS_DATA_SELECTORS, VoltageWidgetConfigModel } from '@app/store';
 
 import { ControlSchemeWidgetDescriptor } from '../widget-container';
