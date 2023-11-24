@@ -38,7 +38,7 @@ export const ROUTES: Routes = [
         children: [
             {
                 path: '',
-                loadComponent: () => import('./hubs/hubs-list-page').then(m => m.HubsListPageComponent),
+                loadComponent: () => import('@app/hubs-list').then(m => m.HubsListComponent),
                 pathMatch: 'full',
             },
             {
