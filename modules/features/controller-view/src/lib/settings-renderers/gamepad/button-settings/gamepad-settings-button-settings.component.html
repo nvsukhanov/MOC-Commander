@@ -1,0 +1,55 @@
+<div *ngIf="buttonSettingsViewModel"
+     class="button-configuration">
+    <div class="button-configuration__info">
+        <div class="button-configuration__input-output-diagram-container">
+            <lib-input-activity-indicator [isActive]="!!(buttonSettingsViewModel.isActivated$ | ngrxPush)"
+                                          [activeTitle]="'controller.isActivatedValueTrue' | transloco"
+                                          [inactiveTitle]="'controller.isActivatedValueFalse' | transloco"
+            ></lib-input-activity-indicator>
+            <feat-controller-view-input-output-diagram class="button-configuration__input-output-diagram"
+                                                       [translocoTitle]="'controller.rawInput'"
+                                                       [rawValue]="buttonSettingsViewModel.rawValue$ | ngrxPush"
+                                                       [outputValue]="buttonSettingsViewModel.outputValue$ | ngrxPush"
+                                                       [activeZoneStart]="buttonSettingsViewModel.form.controls.activeZoneStart.value"
+                                                       [activeZoneEnd]="buttonSettingsViewModel.form.controls.activeZoneEnd.value"
+            ></feat-controller-view-input-output-diagram>
+        </div>
+    </div>
+
+    <mat-divider [vertical]="true"></mat-divider>
+
+    <div class="button-configuration__content">
+        <div class="button-configuration__items">
+            <lib-slider-control [control]="buttonSettingsViewModel.form.controls.trim"
+                                [step]="0.01"
+            >
+                <span description>{{ 'controller.trim' | transloco }}</span>
+                <span value>{{ buttonSettingsViewModel.form.controls.trim.value | inputValuePercentHumanReadableValue }}</span>
+            </lib-slider-control>
+            <lib-range-control class="button-configuration__item"
+                               [startControl]="buttonSettingsViewModel.form.controls.activeZoneStart"
+                               [endControl]="buttonSettingsViewModel.form.controls.activeZoneEnd"
+                               [step]="0.01"
+            >
+                <span startLabel>{{ buttonSettingsViewModel.form.controls.activeZoneStart.value | inputValuePercentHumanReadableValue }}</span>
+                <span endLabel>{{ buttonSettingsViewModel.form.controls.activeZoneEnd.value | inputValuePercentHumanReadableValue }}</span>
+                <span description>{{ 'controller.activeZone' | transloco }}</span>
+            </lib-range-control>
+            <lib-slider-control [control]="buttonSettingsViewModel.form.controls.activationThreshold"
+                                [step]="0.01"
+            >
+                <span description>{{ 'controller.activationThreshold' | transloco }}</span>
+                <span value>{{ buttonSettingsViewModel.form.controls.activationThreshold.value | inputValuePercentHumanReadableValue }}</span>
+            </lib-slider-control>
+            <lib-toggle-control [translocoTitle]="'controller.ignoreInputControlTitle'"
+                                [control]="buttonSettingsViewModel.form.controls.ignoreInput"
+            ></lib-toggle-control>
+            <lib-toggle-control [translocoTitle]="'controller.invert'"
+                                [control]="buttonSettingsViewModel.form.controls.invert"
+            ></lib-toggle-control>
+            <lib-toggle-control [translocoTitle]="'controller.negativeValuesCanActivate'"
+                                [control]="buttonSettingsViewModel.form.controls.negativeValueCanActivate"
+            ></lib-toggle-control>
+        </div>
+    </div>
+</div>
