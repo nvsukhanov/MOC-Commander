@@ -1,0 +1,32 @@
+{
+  "name": "feature-root",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "modules/features/root/src",
+  "prefix": "feat-root",
+  "tags": ["type:feature","scope:root"],
+  "projectType": "library",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "modules/features/root/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "modules/features/root/**/*.ts",
+          "modules/features/root/**/*.html",
+          "modules/features/root/package.json"
+        ]
+      }
+    }
+  }
+}

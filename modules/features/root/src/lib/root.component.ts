@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { LayoutComponent } from '../layout';
-import { ThemingDirective } from '../theming.directive';
+import { LayoutComponent } from './layout';
+import { ThemingDirective } from './theming.directive';
 
 @Component({
     standalone: true,
-    selector: 'app-root',
+    selector: 'feat-root',
     templateUrl: './root.component.html',
     styleUrls: [ './root.component.scss' ],
     imports: [
