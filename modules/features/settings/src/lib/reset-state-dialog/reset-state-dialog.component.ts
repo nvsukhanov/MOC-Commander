@@ -7,7 +7,7 @@ import { UploadFileFormControlComponent } from '@app/shared';
 
 @Component({
     standalone: true,
-    selector: 'app-reset-state-dialog',
+    selector: 'feat-settings-reset-state-dialog',
     templateUrl: './reset-state-dialog.component.html',
     styleUrls: [ './reset-state-dialog.component.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush,

@@ -8,7 +8,7 @@ import { LanguageToL10nKeyPipe } from './language-to-l10n-key.pipe';
 
 @Component({
     standalone: true,
-    selector: 'app-language-select',
+    selector: 'feat-settings-language-select',
     templateUrl: './language-select.component.html',
     styleUrls: [ './language-select.component.scss' ],
     imports: [

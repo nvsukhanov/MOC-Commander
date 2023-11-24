@@ -2,14 +2,14 @@
     <mat-card-content>
         <ul class="options__list">
             <li class="option__container">
-                <app-theme-select [theme]="currentTheme()"
-                                  (themeChange)="onThemeChange($event)"
-                ></app-theme-select>
+                <feat-settings-theme-select [theme]="currentTheme()"
+                                            (themeChange)="onThemeChange($event)"
+                ></feat-settings-theme-select>
             </li>
             <li class="option">
-                <app-language-select [language]="currentLanguage()"
-                                     (languageChange)="onLanguageChange($event)"
-                ></app-language-select>
+                <feat-settings-language-select [language]="currentLanguage()"
+                                               (languageChange)="onLanguageChange($event)"
+                ></feat-settings-language-select>
             </li>
         </ul>
 

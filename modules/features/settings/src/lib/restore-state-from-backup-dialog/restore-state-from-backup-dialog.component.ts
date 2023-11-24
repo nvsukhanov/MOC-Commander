@@ -12,7 +12,7 @@ import { STATE_FILE_VALIDATION_ERRORS, createStateFileValidatorFn } from './stat
 
 @Component({
     standalone: true,
-    selector: 'app-restore-state-from-backup-dialog',
+    selector: 'feat-settings-restore-state-from-backup-dialog',
     templateUrl: './restore-state-from-backup-dialog.component.html',
     styleUrls: [ './restore-state-from-backup-dialog.component.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush,

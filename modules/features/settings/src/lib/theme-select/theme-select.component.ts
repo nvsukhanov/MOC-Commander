@@ -9,7 +9,7 @@ import { ThemeToL10nKeyPipe } from './theme-to-l10n-key.pipe';
 
 @Component({
     standalone: true,
-    selector: 'app-theme-select',
+    selector: 'feat-settings-theme-select',
     templateUrl: './theme-select.component.html',
     styleUrls: [ './theme-select.component.scss' ],
     imports: [
