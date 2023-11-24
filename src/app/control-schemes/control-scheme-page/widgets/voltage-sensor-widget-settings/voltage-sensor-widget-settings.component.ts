@@ -3,8 +3,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subscription, startWith, take } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { ValidationMessagesDirective, WidgetType } from '@app/shared-misc';
 import { VoltageWidgetConfigModel } from '@app/store';
-import { ValidationMessagesDirective, WidgetType } from '@app/shared';
 
 import { CommonFormControlsBuilderService } from '../../../common';
 

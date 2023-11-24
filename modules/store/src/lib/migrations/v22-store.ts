@@ -1,5 +1,5 @@
 import { EntityState } from '@ngrx/entity';
-import { ControllerType, ExtractEntitiesType, Override } from '@app/shared';
+import { ControllerType, ExtractEntitiesType, Override } from '@app/shared-misc';
 
 import { AppStoreVersion } from '../app-store-version';
 import { V23Store } from './v23-store';

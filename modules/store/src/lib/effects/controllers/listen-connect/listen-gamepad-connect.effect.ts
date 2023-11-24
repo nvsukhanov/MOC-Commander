@@ -2,7 +2,7 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { inject } from '@angular/core';
 import { Action, Store } from '@ngrx/store';
 import { Observable, filter, interval, map, switchMap } from 'rxjs';
-import { APP_CONFIG, ControllerType, GamepadProfileFactoryService, GamepadSettings, IAppConfig, IControllerProfile, WINDOW } from '@app/shared';
+import { APP_CONFIG, ControllerType, GamepadProfileFactoryService, GamepadSettings, IAppConfig, IControllerProfile, WINDOW } from '@app/shared-misc';
 
 import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS } from '../../../selectors';
 import { CONTROLLERS_ACTIONS } from '../../../actions';

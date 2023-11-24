@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { HubInlineViewComponent } from '@app/shared';
+import { HubInlineViewComponent } from '@app/shared-misc';
 
 import { ControlSchemeViewHubTreeNode } from '../types';
 import { HUB_TREE_NODE_SELECTORS, IHubTreeNodeViewModel } from './hub-tree-node.selectors';

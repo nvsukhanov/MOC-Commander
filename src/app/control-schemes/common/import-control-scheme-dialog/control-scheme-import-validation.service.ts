@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ValidationErrors, ValidatorFn } from '@angular/forms';
-import { DeepPartial } from '@app/shared';
+import { DeepPartial } from '@app/shared-misc';
 import { ControlSchemeBinding, ControlSchemeModel, attachedIosIdFn } from '@app/store';
 
 import { CommonFormControlsBuilderService, ControlSchemeFormBuilderService, PortConfigFormBuilderService } from '../forms';

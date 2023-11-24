@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { LetDirective } from '@ngrx/component';
 import { NgForOf } from '@angular/common';
+import { WidgetType } from '@app/shared-misc';
 import { WidgetConfigModel } from '@app/store';
-import { WidgetType } from '@app/shared';
 
 import { OrderWidgetsPipe } from './order-widgets.pipe';
 import { WidgetContainerComponent } from '../widget-container';

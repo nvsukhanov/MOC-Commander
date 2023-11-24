@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
-import { ScreenSizeObserverService } from '@app/shared';
+import { ScreenSizeObserverService } from '@app/shared-misc';
 
 @Component({
     standalone: true,

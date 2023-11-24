@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IOType } from 'rxpoweredup';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
-import { EllipsisTitleDirective, IoTypeToL10nKeyPipe, PortIdToPortNamePipe } from '@app/shared';
+import { EllipsisTitleDirective, IoTypeToL10nKeyPipe, PortIdToPortNamePipe } from '@app/shared-misc';
 
 @Component({
     standalone: true,

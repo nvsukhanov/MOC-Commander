@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IHub } from 'rxpoweredup';
-import { ConsoleLoggingService } from '@app/shared';
+import { ConsoleLoggingService } from '@app/shared-misc';
 
 @Injectable()
 export class HubStorageService {

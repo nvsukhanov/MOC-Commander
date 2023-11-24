@@ -4,7 +4,7 @@ import { Observable, OperatorFunction, filter, of, switchMap, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';
 import { Action, Store } from '@ngrx/store';
-import { GamepadProfileFactoryService, KeyboardProfileFactoryService, ScreenSizeObserverService } from '@app/shared';
+import { GamepadProfileFactoryService, KeyboardProfileFactoryService, ScreenSizeObserverService } from '@app/shared-misc';
 
 import { CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS } from '../actions';
 import { CONTROLLER_SELECTORS } from '../selectors';

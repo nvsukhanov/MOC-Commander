@@ -6,8 +6,8 @@ import { NgIf } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Subscription } from 'rxjs';
 import { CdkScrollable } from '@angular/cdk/overlay';
+import { FeatureToolbarComponent, IScrollContainer, SCROLL_CONTAINER, ScreenSizeObserverService } from '@app/shared-misc';
 import { CONTROLLERS_ACTIONS } from '@app/store';
-import { FeatureToolbarComponent, IScrollContainer, SCROLL_CONTAINER, ScreenSizeObserverService } from '@app/shared';
 
 import { LAYOUT_SELECTORS } from './layout.selectors';
 import { NavMenuComponent } from '../nav-menu';

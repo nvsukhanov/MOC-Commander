@@ -1,6 +1,6 @@
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { ControllerType, GamepadAxisSettings, GamepadButtonSettings, ToFormGroup } from '@app/shared';
+import { ControllerType, GamepadAxisSettings, GamepadButtonSettings, ToFormGroup } from '@app/shared-misc';
 
 export type AxisSettingsForm = ToFormGroup<GamepadAxisSettings>;
 export type ButtonSettingsForm = ToFormGroup<GamepadButtonSettings>;

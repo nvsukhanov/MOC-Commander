@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { DeepPartial, LzmaService, WINDOW } from '@app/shared';
+import { DeepPartial, LzmaService, WINDOW } from '@app/shared-misc';
 import { AppStoreVersion, ControlSchemeModel, IState, MigrateStoreService } from '@app/store';
 
 import { ControlSchemeCompressionResult, ExportVersion } from '../export-control-scheme-dialog';

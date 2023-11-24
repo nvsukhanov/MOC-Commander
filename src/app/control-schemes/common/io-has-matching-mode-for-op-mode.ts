@@ -1,5 +1,5 @@
 import { PortModeName } from 'rxpoweredup';
-import { ControlSchemeBindingType } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 
 const REQUIRED_PORT_MODES_FOR_OPERATION_MODE: { [k in ControlSchemeBindingType]: PortModeName[] } = {
     [ControlSchemeBindingType.SetSpeed]: [ PortModeName.speed, PortModeName.power ],

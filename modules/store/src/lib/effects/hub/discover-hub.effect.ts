@@ -3,7 +3,7 @@ import { catchError, combineLatestWith, map, mergeMap, of, switchMap, takeUntil,
 import { IHub, MessageLoggingMiddleware, connectHub } from 'rxpoweredup';
 import { inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { APP_CONFIG, IAppConfig, NAVIGATOR, PrefixedConsoleLoggerFactoryService } from '@app/shared';
+import { APP_CONFIG, IAppConfig, NAVIGATOR, PrefixedConsoleLoggerFactoryService } from '@app/shared-misc';
 
 import { HUBS_ACTIONS, HUB_RUNTIME_DATA_ACTIONS } from '../../actions';
 import { HubStorageService } from '../../hub-storage.service';

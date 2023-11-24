@@ -5,7 +5,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { Observable, map, of, startWith } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
-import { BindingTypeToL10nKeyPipe, ControlSchemeBindingType } from '@app/shared';
+import { BindingTypeToL10nKeyPipe, ControlSchemeBindingType } from '@app/shared-misc';
 
 @Component({
     standalone: true,

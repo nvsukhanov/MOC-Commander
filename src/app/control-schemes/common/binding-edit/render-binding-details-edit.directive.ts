@@ -1,6 +1,6 @@
 import { ComponentRef, Directive, Input, OnDestroy, Type, ViewContainerRef } from '@angular/core';
 import { Subscription, startWith } from 'rxjs';
-import { ControlSchemeBindingType } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { IBindingsDetailsEditComponent } from './i-bindings-details-edit-component';
 import { BindingSetSpeedEditComponent } from './binding-set-speed';

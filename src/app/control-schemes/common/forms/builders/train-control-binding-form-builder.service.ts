@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { DeepPartial } from '@app/shared-misc';
 import { ControlSchemeInputAction, ControlSchemeTrainControlBinding } from '@app/store';
-import { DeepPartial } from '@app/shared';
 
 import { TrainControlBindingForm } from '../types';
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';

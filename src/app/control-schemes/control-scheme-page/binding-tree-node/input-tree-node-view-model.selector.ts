@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import { Dictionary } from '@ngrx/entity';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 import { CONTROLLER_CONNECTION_SELECTORS, ControlSchemeInputAction, ControlSchemeInputsRecord, ControllerConnectionModel } from '@app/store';
-import { ControlSchemeBindingType } from '@app/shared';
 
 import { BindingTreeNodeRecord, BindingTreeNodeViewModel } from './binding-tree-node-view-model';
 

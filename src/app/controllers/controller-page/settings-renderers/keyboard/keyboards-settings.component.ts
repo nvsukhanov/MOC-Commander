@@ -4,7 +4,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { Observable, map } from 'rxjs';
 import { NgIf } from '@angular/common';
-import { ControllerType, ToFormGroup } from '@app/shared';
+import { ControllerType, ToFormGroup } from '@app/shared-misc';
 import { KeyboardSettingsModel } from '@app/store';
 
 import { IControllerSettingsRenderer } from '../i-controller-settings-renderer';

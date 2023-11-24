@@ -1,4 +1,4 @@
-import { ControllerType, GamepadSettings, HubControllerSettings, KeyboardSettings } from '@app/shared';
+import { ControllerType, GamepadSettings, HubControllerSettings, KeyboardSettings } from '@app/shared-misc';
 
 export type KeyboardSettingsModel = {
     controllerId: string;

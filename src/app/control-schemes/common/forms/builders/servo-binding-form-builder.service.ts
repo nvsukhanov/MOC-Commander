@@ -1,8 +1,8 @@
 import { MOTOR_LIMITS } from 'rxpoweredup';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Injectable } from '@angular/core';
+import { AppValidators, DeepPartial } from '@app/shared-misc';
 import { ControlSchemeInputAction, ControlSchemeServoBinding } from '@app/store';
-import { AppValidators, DeepPartial } from '@app/shared';
 
 import { ServoBindingForm } from '../types';
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';

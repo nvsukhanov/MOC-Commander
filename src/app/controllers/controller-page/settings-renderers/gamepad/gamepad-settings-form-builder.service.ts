@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ControllerType, GamepadAxisSettings, GamepadButtonSettings, MAX_INPUT_VALUE, MIN_INPUT_VALUE, ToFormGroup } from '@app/shared-misc';
 import { GamepadSettingsModel } from '@app/store';
-import { ControllerType, GamepadAxisSettings, GamepadButtonSettings, MAX_INPUT_VALUE, MIN_INPUT_VALUE, ToFormGroup } from '@app/shared';
 
 import { GamepadSettingsForm } from './types';
 

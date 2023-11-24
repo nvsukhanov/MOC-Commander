@@ -10,7 +10,7 @@ import { Observable, Subscription, mergeWith, of, startWith, switchMap, take } f
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ControlSchemeBindingType, HideOnSmallScreenDirective, ToggleControlComponent, ValidationMessagesDirective } from '@app/shared';
+import { ControlSchemeBindingType, HideOnSmallScreenDirective, ToggleControlComponent, ValidationMessagesDirective } from '@app/shared-misc';
 import { ControlSchemeInputAction, HubMotorPositionFacadeService } from '@app/store';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';

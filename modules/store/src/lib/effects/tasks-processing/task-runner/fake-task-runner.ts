@@ -1,7 +1,7 @@
 import { IHub, PortCommandExecutionStatus } from 'rxpoweredup';
 import { Observable, debounceTime, from, take } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { ControlSchemeBindingType } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { PortCommandTask } from '../../../models';
 import { ITaskRunner } from './i-task-runner';

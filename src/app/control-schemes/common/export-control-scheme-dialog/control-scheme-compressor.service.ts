@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
+import { LzmaService, WINDOW } from '@app/shared-misc';
 import { AppStoreVersion, ControlSchemeModel } from '@app/store';
-import { LzmaService, WINDOW } from '@app/shared';
 
 export enum ExportVersion {
     V1

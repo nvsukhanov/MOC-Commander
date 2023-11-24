@@ -18,7 +18,7 @@ import {
     TitleService,
     ValidationErrorsL10nMap,
     ValidationMessagesDirective
-} from '@app/shared';
+} from '@app/shared-misc';
 import { HUBS_ACTIONS, HubModel, ROUTER_SELECTORS } from '@app/store';
 
 import { HUB_EDIT_PAGE_SELECTORS } from './hub-edit-page.selectors';

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MotorServoEndState } from 'rxpoweredup';
+import { DeepPartial } from '@app/shared-misc';
 import { ControlSchemeInputAction, ControlSchemeSetAngleBinding } from '@app/store';
-import { DeepPartial } from '@app/shared';
 
 import { SetAngleBindingForm } from '../types';
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';

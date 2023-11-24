@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MOTOR_LIMITS, MotorServoEndState } from 'rxpoweredup';
+import { AppValidators, DeepPartial } from '@app/shared-misc';
 import { ControlSchemeInputAction, ControlSchemeStepperBinding } from '@app/store';
-import { AppValidators, DeepPartial } from '@app/shared';
 
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';
 import { StepperBindingForm } from '../types';

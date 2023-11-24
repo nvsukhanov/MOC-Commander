@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ControlSchemeBindingType } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { ITaskFilter } from '../i-task-filter';
 import { PortCommandTask, SetSpeedTaskPayload } from '../../../models';

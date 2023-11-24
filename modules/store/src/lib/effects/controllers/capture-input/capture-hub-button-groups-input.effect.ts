@@ -3,7 +3,7 @@ import { Action, Store, createSelector } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { NEVER, Observable, from, map, mergeMap, pairwise, startWith, switchMap } from 'rxjs';
 import { PortModeName } from 'rxpoweredup';
-import { ControllerInputType, ControllerType, MAX_INPUT_VALUE, NULL_INPUT_VALUE } from '@app/shared';
+import { ControllerInputType, ControllerType, MAX_INPUT_VALUE, NULL_INPUT_VALUE } from '@app/shared-misc';
 
 import {
     ATTACHED_IO_MODES_SELECTORS,

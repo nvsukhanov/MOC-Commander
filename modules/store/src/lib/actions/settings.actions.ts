@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Language } from '@app/shared';
+import { Language } from '@app/shared-misc';
 
 import { UserSelectedTheme } from '../models';
 import { IState } from '../i-state';

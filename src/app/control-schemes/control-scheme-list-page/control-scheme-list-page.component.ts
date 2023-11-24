@@ -18,7 +18,7 @@ import {
     RoutesBuilderService,
     ScreenSizeObserverService,
     TitleService
-} from '@app/shared';
+} from '@app/shared-misc';
 import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel } from '@app/store';
 
 import { CONTROL_SCHEMES_LIST_PAGE_SELECTORS } from './control-scheme-list-page.selectors';

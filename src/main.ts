@@ -4,8 +4,8 @@ import { importProvidersFrom } from '@angular/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router';
+import { ShowOnTouchedErrorStateMatcher, provideControllerProfiles, provideI18n } from '@app/shared-misc';
 import { AppStoreVersion, provideApplicationStore } from '@app/store';
-import { ShowOnTouchedErrorStateMatcher, provideControllerProfiles, provideI18n } from '@app/shared';
 
 import { RootComponent } from './app/root';
 import { ROUTES } from './app/routes';

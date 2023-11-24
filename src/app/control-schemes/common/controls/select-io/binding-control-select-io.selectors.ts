@@ -1,5 +1,5 @@
 import { MemoizedSelector, createSelector } from '@ngrx/store';
-import { ControlSchemeBindingType } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 import { ATTACHED_IO_MODES_SELECTORS, ATTACHED_IO_PORT_MODE_INFO_SELECTORS, ATTACHED_IO_SELECTORS, AttachedIoModel } from '@app/store';
 
 import { isIoControllableByBindingType } from '../../is-io-controllable-by-binding-type';

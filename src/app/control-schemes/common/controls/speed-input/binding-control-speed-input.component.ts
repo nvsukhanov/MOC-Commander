@@ -4,7 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { ValidationMessagesDirective } from '@app/shared';
+import { ValidationMessagesDirective } from '@app/shared-misc';
 
 @Component({
     standalone: true,

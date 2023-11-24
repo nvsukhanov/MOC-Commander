@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, bufferCount, catchError, concatAll, concatWith, from, last, map, of, switchMap, take, takeUntil, timeout } from 'rxjs';
 import { IHub, MOTOR_LIMITS, MotorServoEndState } from 'rxpoweredup';
-import { transformRelativeDegToAbsoluteDeg } from '@app/shared';
+import { transformRelativeDegToAbsoluteDeg } from '@app/shared-misc';
 
 import { HubStorageService } from '../hub-storage.service';
 import { HubMotorPositionFacadeService } from './hub-motor-position-facade.service';

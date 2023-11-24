@@ -1,6 +1,6 @@
 import { Store } from '@ngrx/store';
 import { Observable, map, tap } from 'rxjs';
-import { ControlSchemeBindingType } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { ControlSchemeModel } from '../../../models';
 import { CalibrationResultType, HubServoCalibrationFacadeService } from '../../../hub-facades';

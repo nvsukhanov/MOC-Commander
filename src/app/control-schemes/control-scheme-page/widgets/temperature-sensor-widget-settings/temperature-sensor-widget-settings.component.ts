@@ -4,8 +4,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { ValidationMessagesDirective, WidgetType } from '@app/shared-misc';
 import { TemperatureWidgetConfigModel } from '@app/store';
-import { ValidationMessagesDirective, WidgetType } from '@app/shared';
 
 import { CommonFormControlsBuilderService } from '../../../common';
 

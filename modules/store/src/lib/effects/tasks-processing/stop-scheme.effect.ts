@@ -3,7 +3,7 @@ import { Observable, catchError, forkJoin, map, mergeMap, of, switchMap, take, t
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { Dictionary } from '@ngrx/entity';
-import { APP_CONFIG, IAppConfig } from '@app/shared';
+import { APP_CONFIG, IAppConfig } from '@app/shared-misc';
 
 import { ATTACHED_IO_SELECTORS, CONTROL_SCHEME_SELECTORS, HUB_RUNTIME_DATA_SELECTORS, PORT_TASKS_SELECTORS } from '../../selectors';
 import { AttachedIoModel, ControlSchemeBinding, ControlSchemeModel, PortCommandTask } from '../../models';

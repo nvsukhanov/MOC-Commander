@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ControllerType, DeepPartial, GamepadProfileFactoryService, GamepadSettings } from '@app/shared';
+import { ControllerType, DeepPartial, GamepadProfileFactoryService, GamepadSettings } from '@app/shared-misc';
 
 import { AppStoreVersion } from '../app-store-version';
 import { IMigration } from './i-migration';

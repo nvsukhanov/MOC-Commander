@@ -7,7 +7,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BindingTypeToL10nKeyPipe, ControlSchemeBindingType, HideOnSmallScreenDirective, getEnumValues } from '@app/shared';
+import { BindingTypeToL10nKeyPipe, ControlSchemeBindingType, HideOnSmallScreenDirective, getEnumValues } from '@app/shared-misc';
 import { ControlSchemeBinding } from '@app/store';
 
 import { ControlSchemeBindingForm, ControlSchemeFormBuilderService, ControlSchemeFormMapperService } from '../forms';

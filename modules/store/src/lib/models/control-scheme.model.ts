@@ -1,5 +1,5 @@
 import { ButtonGroupButtonId, MotorServoEndState } from 'rxpoweredup';
-import { ControlSchemeBindingType, ControllerInputType, WidgetType } from '@app/shared';
+import { ControlSchemeBindingType, ControllerInputType, WidgetType } from '@app/shared-misc';
 
 export enum LoopingMode {
     None,

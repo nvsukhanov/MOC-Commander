@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
 import { Observable, combineLatestWith, map, of, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { IoTypeToL10nKeyService, PortIdToPortNameService, WidgetType } from '@app/shared';
+import { IoTypeToL10nKeyService, PortIdToPortNameService, WidgetType } from '@app/shared-misc';
 import { ATTACHED_IO_SELECTORS, HUBS_SELECTORS } from '@app/store';
 
 @Injectable({ providedIn: 'root' })

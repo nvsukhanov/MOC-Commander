@@ -1,6 +1,6 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
-import { ControlSchemeBindingType } from '@app/shared';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import {
     AttachedIoPropsModel,

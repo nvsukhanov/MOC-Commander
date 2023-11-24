@@ -1,5 +1,5 @@
 import { IOType, PortModeName, PortModeSymbol } from 'rxpoweredup';
-import { ControllerType, DeepPartial, Language } from '@app/shared';
+import { ControllerType, DeepPartial, Language } from '@app/shared-misc';
 
 import { AppStoreVersion } from '../app-store-version';
 import { V21Store } from './v21-store';

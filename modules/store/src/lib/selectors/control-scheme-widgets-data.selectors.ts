@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { TiltData } from 'rxpoweredup';
-import { WidgetType } from '@app/shared';
+import { WidgetType } from '@app/shared-misc';
 
 import { ATTACHED_IO_PROPS_SELECTORS } from './attached-io-props.selectors';
 import { CONTROL_SCHEME_WIDGET_DATA_FEATURE } from '../reducers';

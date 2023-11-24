@@ -1,7 +1,7 @@
 import { Action, ActionReducer, INIT, UPDATE } from '@ngrx/store';
 import { defaultMergeReducer, localStorageSync } from 'ngrx-store-localstorage';
 import { inject } from '@angular/core';
-import { DeepPartial } from '@app/shared';
+import { DeepPartial } from '@app/shared-misc';
 
 import { IState } from '../../i-state';
 import { AppStoreVersion } from '../../app-store-version';

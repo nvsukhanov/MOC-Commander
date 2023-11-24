@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { DeepPartial } from '@app/shared';
+import { DeepPartial } from '@app/shared-misc';
 
 import { IState } from '../i-state';
 import { AppStoreVersion } from '../app-store-version';

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MotorServoEndState } from 'rxpoweredup';
+import { DeepPartial } from '@app/shared-misc';
 import { ControlSchemeGearboxControlBinding, ControlSchemeInputAction } from '@app/store';
-import { DeepPartial } from '@app/shared';
 
 import { GearboxControlBindingForm } from '../types';
 import { CommonFormControlsBuilderService } from './common-form-controls-builder.service';

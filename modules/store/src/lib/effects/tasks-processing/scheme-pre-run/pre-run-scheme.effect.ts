@@ -2,7 +2,7 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { catchError, filter, forkJoin, map, of, switchMap, timeout } from 'rxjs';
 import { inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { APP_CONFIG, IAppConfig } from '@app/shared';
+import { APP_CONFIG, IAppConfig } from '@app/shared-misc';
 
 import { CONTROL_SCHEME_ACTIONS } from '../../../actions';
 import { ControlSchemeModel } from '../../../models';

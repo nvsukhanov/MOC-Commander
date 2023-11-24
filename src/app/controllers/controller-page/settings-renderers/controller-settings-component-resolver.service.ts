@@ -1,5 +1,5 @@
 import { Injectable, Type } from '@angular/core';
-import { ControllerType } from '@app/shared';
+import { ControllerType } from '@app/shared-misc';
 import { ControllerSettingsModel } from '@app/store';
 
 import { IControllerSettingsRenderer } from './i-controller-settings-renderer';

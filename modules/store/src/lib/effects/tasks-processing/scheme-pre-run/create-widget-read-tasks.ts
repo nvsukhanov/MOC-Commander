@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { WidgetType } from '@app/shared';
+import { WidgetType } from '@app/shared-misc';
 
 import { ControlSchemeModel } from '../../../models';
 import { createTemperatureReaderTask, createTiltReaderTask, createVoltageReaderTask } from './widget-read-tasks';

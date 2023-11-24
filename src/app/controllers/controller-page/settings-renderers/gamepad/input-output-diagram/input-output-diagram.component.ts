@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { NgIf } from '@angular/common';
-import { MAX_INPUT_VALUE, MIN_INPUT_VALUE, NULL_INPUT_VALUE } from '@app/shared';
+import { MAX_INPUT_VALUE, MIN_INPUT_VALUE, NULL_INPUT_VALUE } from '@app/shared-misc';
 
 @Component({
     standalone: true,
