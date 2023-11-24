@@ -1,19 +1,19 @@
 <ng-container *ngIf="selectedHub$ | ngrxPush; let hub; else hubNotFound">
     <ng-container *ngIf="selectedHubRuntimeData$ | ngrxPush; else hubIsNotConnected">
-        <app-hub-properties-view class="hub-properties-view"
-                                 [configuration]="hub"
-                                 [runtimeData]="selectedHubRuntimeData$ | ngrxPush"
-                                 (disconnect)="disconnectHub()"
-        ></app-hub-properties-view>
+        <feat-hub-view-hub-properties-view class="hub-properties-view"
+                                           [configuration]="hub"
+                                           [runtimeData]="selectedHubRuntimeData$ | ngrxPush"
+                                           (disconnect)="disconnectHub()"
+        ></feat-hub-view-hub-properties-view>
 
         <ng-container *ngrxLet="ioFullInfoList$ as iosFullInfoList">
             <ul class="io-list"
                 *ngIf="iosFullInfoList.length"
             >
                 <li *ngFor="let ioFullInfo of iosFullInfoList; trackBy: hubIoTrackByFn">
-                    <app-hub-port-view class="io-list__item"
-                                       [hubIoViewModel]="ioFullInfo"
-                    ></app-hub-port-view>
+                    <feat-hub-view-hub-port-view class="io-list__item"
+                                                 [hubIoViewModel]="ioFullInfo"
+                    ></feat-hub-view-hub-port-view>
                 </li>
             </ul>
         </ng-container>

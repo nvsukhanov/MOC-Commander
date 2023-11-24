@@ -40,6 +40,7 @@
       "@app/controller-view": ["modules/features/controller-view/src/index.ts"],
       "@app/controllers-list": ["modules/features/controllers-list/src/index.ts"],
       "@app/hub-edit": ["modules/features/hub-edit/src/index.ts"],
+      "@app/hub-view": ["modules/features/hub-view/src/index.ts"],
     },
     "types": ["web-bluetooth", "jest", "node", "lzma"],
     "typeRoots": ["node_modules/@types", "./types/lzma"]

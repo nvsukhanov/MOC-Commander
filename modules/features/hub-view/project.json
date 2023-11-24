@@ -1,0 +1,32 @@
+{
+  "name": "feature-hub-view",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "modules/features/hub-view/src",
+  "prefix": "feat-hub-view",
+  "tags": ["type:feature","scope:hub-view"],
+  "projectType": "library",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "modules/features/hub-view/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "modules/features/hub-view/**/*.ts",
+          "modules/features/hub-view/**/*.html",
+          "modules/features/hub-view/package.json"
+        ]
+      }
+    }
+  }
+}

@@ -43,7 +43,7 @@ export const ROUTES: Routes = [
             },
             {
                 path: [ ':id' ].join('/'),
-                loadComponent: () => import('./hubs/hub-view-page').then(m => m.HubViewPageComponent),
+                loadComponent: () => import('@app/hub-view').then(m => m.HubViewComponent),
                 pathMatch: 'full'
             },
             {

@@ -6,11 +6,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { IoTypeToL10nKeyPipe, PortIdToPortNamePipe } from '@app/shared-ui';
 import { AttachedIoPortModeInfoModel } from '@app/store';
 
-import { HubIoViewModel } from '../hub-view-page.selectors';
+import { HubIoViewModel } from '../hub-view.selectors';
 
 @Component({
     standalone: true,
-    selector: 'app-hub-port-view',
+    selector: 'feat-hub-view-hub-port-view',
     templateUrl: './hub-io-view.component.html',
     styleUrls: [ './hub-io-view.component.scss' ],
     imports: [
