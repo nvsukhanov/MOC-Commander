@@ -154,7 +154,12 @@ const SELECT_SCHEME_RUN_BLOCKERS = (widgetChecks: ControlSchemeStartBlockerWidge
         }
 
         for (const widgetConfig of scheme.widgets) {
-            const blockers = widgetChecks.getBlockers(widgetConfig, attachedIos, ioModes.input);
+            const blockers = widgetChecks.getBlockers(
+                widgetConfig,
+                attachedIos,
+                ioModes.input,
+                connectedHubIds
+            );
             for (const blocker of blockers) {
                 result.add(blocker);
             }
