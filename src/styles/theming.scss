@@ -72,7 +72,7 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
     --app-warning-contrast-color: #{mat.get-contrast-color-from-palette($light-warn-palette, 500)};
     --app-disabled-color: rgba(0, 0, 0, 0.38);
     --app-text-color: #{$dark-primary-text};
-    --app-background-color: #{mat.get-color-from-palette($light-palette, 900)};
+    --app-background-color: #f4f4f4;
 
     &.mat-app-background {
         background-color: var(--app-background-color);

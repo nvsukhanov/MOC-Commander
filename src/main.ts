@@ -1,9 +1,10 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { importProvidersFrom } from '@angular/core';
+import { importProvidersFrom, isDevMode } from '@angular/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router';
+import { provideServiceWorker } from '@angular/service-worker';
 import { RootComponent } from '@app/root';
 import { ShowOnTouchedErrorStateMatcher, provideControllerProfiles, provideI18n } from '@app/shared-misc';
 import { AppStoreVersion, provideApplicationStore } from '@app/store';
@@ -26,12 +27,16 @@ for (const k in window.localStorage) {
 
 bootstrapApplication(RootComponent, {
     providers: [
-        provideRouter(ROUTES, withPreloading(PreloadAllModules)),
-        provideI18n(),
-        provideAnimations(),
-        provideControllerProfiles(),
-        importProvidersFrom(MatSnackBarModule),
-        provideApplicationStore(),
-        { provide: ErrorStateMatcher, useClass: ShowOnTouchedErrorStateMatcher }
-    ]
+    provideRouter(ROUTES, withPreloading(PreloadAllModules)),
+    provideI18n(),
+    provideAnimations(),
+    provideControllerProfiles(),
+    importProvidersFrom(MatSnackBarModule),
+    provideApplicationStore(),
+    { provide: ErrorStateMatcher, useClass: ShowOnTouchedErrorStateMatcher },
+    provideServiceWorker('ngsw-worker.js', {
+        enabled: !isDevMode(),
+        registrationStrategy: 'registerWhenStable:30000'
+    })
+]
 });

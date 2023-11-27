@@ -9,7 +9,10 @@
   },
   "sourceRoot": "src",
   "prefix": "app",
-  "tags": ["type:app", "scope:app"],
+  "tags": [
+    "type:app",
+    "scope:app"
+  ],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
@@ -24,7 +27,8 @@
         "inlineStyleLanguage": "scss",
         "assets": [
           "src/favicon.ico",
-          "src/assets"
+          "src/assets",
+          "src/manifest.webmanifest"
         ],
         "styles": [
           "src/styles/styles.scss"
@@ -39,7 +43,9 @@
         ],
         "scripts": [
           "node_modules/lzma/src/lzma_worker.js"
-        ]
+        ],
+        "serviceWorker": true,
+        "ngswConfigPath": "ngsw-config.json"
       },
       "configurations": {
         "production": {
@@ -85,7 +91,9 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectName}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectName}"
+      ],
       "options": {
         "jestConfig": "jest.config.app.ts",
         "passWithNoTests": true
