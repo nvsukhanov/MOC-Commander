@@ -72,6 +72,12 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
     --app-warning-contrast-color: #{mat.get-contrast-color-from-palette($light-warn-palette, 500)};
     --app-disabled-color: rgba(0, 0, 0, 0.38);
     --app-text-color: #{$dark-primary-text};
+    --app-background-color: #{mat.get-color-from-palette($light-palette, 900)};
+
+    &.mat-app-background {
+        background-color: var(--app-background-color);
+        color: var(--app-text-color);
+    }
 }
 
 .theme-dark {
@@ -86,6 +92,12 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
     --app-warning-contrast-color: #{mat.get-contrast-color-from-palette($dark-warn-palette, 500)};
     --app-disabled-color: rgba(255, 255, 255, 0.5);
     --app-text-color: #{$light-primary-text};
+    --app-background-color: #{mat.get-color-from-palette($dark-palette, 900)};
+
+    &.mat-app-background {
+        background-color: var(--app-background-color);
+        color: var(--app-text-color);
+    }
 
     --mdc-theme-primary: #{$light-primary-text};
     --mdc-theme-text-primary-on-background: #{$light-primary-text};
@@ -96,11 +108,6 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
         --mdc-slider-handle-color: #{mat.get-color-from-palette($dark-palette, 100)};
         --mdc-slider-focus-handle-color: #{mat.get-color-from-palette($dark-palette, 100)};
         --mdc-slider-hover-handle-color: #{mat.get-color-from-palette($dark-palette, 100)};
-    }
-
-    &.mat-app-background {
-        background-color: mat.get-color-from-palette($dark-palette, 900);
-        color: $light-primary-text;
     }
 
     .mat-mdc-card {

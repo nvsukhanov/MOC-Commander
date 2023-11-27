@@ -53,7 +53,7 @@ export class ControlSchemeWidgetsGridComponent {
                 config,
                 hasSettings: this.settingsFactory.hasSettings(config.widgetType)
             };
-        }).sort((a, b) => a.config.id - b.config.id);
+        });
     }
 
     public get viewModels(): WidgetsGridWidgetViewModel[] {

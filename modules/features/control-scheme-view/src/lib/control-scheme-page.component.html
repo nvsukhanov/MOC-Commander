@@ -41,12 +41,14 @@
                                                                           [canAddBinding]="!!(canCreateBinding$ | ngrxPush)"
                                                                           [canExport]="!!(canExportScheme$ | ngrxPush)"
                                                                           [canAddWidgets]="!!(canAddWidgets$ | ngrxPush)"
+                                                                          [canReorderWidgets]="!!(canReorderWidgets$ | ngrxPush)"
                                                                           (run)="runScheme(scheme.name)"
                                                                           (stop)="stopRunningScheme()"
                                                                           (addBinding)="addBinding()"
                                                                           (export)="onExport(scheme.name)"
                                                                           (delete)="onDelete()"
                                                                           (addWidget)="onAddWidget()"
+                                                                          (reorderWidgets)="onReorderWidgets()"
             ></feat-control-scheme-view-control-scheme-page-compact-toolbar>
         </ng-container>
         <ng-template #largeScreen>
@@ -56,12 +58,14 @@
                                                                        [canAddBinding]="!!(canCreateBinding$ | ngrxPush)"
                                                                        [canExport]="!!(canExportScheme$ | ngrxPush)"
                                                                        [canAddWidgets]="!!(canAddWidgets$ | ngrxPush)"
+                                                                       [canReorderWidgets]="!!(canReorderWidgets$ | ngrxPush)"
                                                                        (run)="runScheme(scheme.name)"
                                                                        (stop)="stopRunningScheme()"
                                                                        (addBinding)="addBinding()"
                                                                        (export)="onExport(scheme.name)"
                                                                        (delete)="onDelete()"
                                                                        (addWidget)="onAddWidget()"
+                                                                       (reorderWidgets)="onReorderWidgets()"
             ></feat-control-scheme-view-control-scheme-page-full-toolbar>
         </ng-template>
     </mat-card>

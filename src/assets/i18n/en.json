@@ -267,9 +267,15 @@
     },
     "widgets": {
       "addWidgetButtonTitle": "Add widget",
+      "reorderWidgetsButtonTitle": "Reorder widgets",
       "addWidgetDialog": {
         "title": "Add Widget",
         "selectWidgetType": "Widget type",
+        "saveButton": "Save",
+        "cancelButton": "Cancel"
+      },
+      "reorderWidgetsDialog": {
+        "title": "Reorder widgets",
         "saveButton": "Save",
         "cancelButton": "Cancel"
       },

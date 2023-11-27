@@ -267,9 +267,15 @@
     },
     "widgets": {
       "addWidgetButtonTitle": "Добавить виджет",
+      "reorderWidgetsButtonTitle": "Изменить порядок виджетов",
       "addWidgetDialog": {
         "title": "Добавление виджета",
         "selectWidgetType": "Тип виджета",
+        "saveButton": "Сохранить",
+        "cancelButton": "Отмена"
+      },
+      "reorderWidgetsDialog": {
+        "title": "Изменение порядка виджетов",
         "saveButton": "Сохранить",
         "cancelButton": "Отмена"
       },

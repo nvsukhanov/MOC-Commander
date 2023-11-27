@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { JsonPipe, NgForOf, NgIf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { WidgetConfigModel } from '@app/store';
 import { WidgetTypeToL10nKeyPipe } from '@app/shared-control-schemes';
@@ -31,7 +31,6 @@ import { ControlSchemeWidgetSettingsComponentFactoryService } from '../control-s
         WidgetSettingsContainerComponent,
         NgIf,
         WidgetConnectionInfoL10nPipe,
-        JsonPipe,
         LetDirective,
     ],
     providers: [

@@ -36,6 +36,14 @@
 </button>
 
 <button mat-raised-button
+        [disabled]="!canReorderWidgets"
+        (click)="onReorderWidgets()"
+>
+    {{ 'controlScheme.widgets.reorderWidgetsButtonTitle' | transloco }}
+</button>
+
+
+<button mat-raised-button
         [disabled]="!canExport"
         (click)="onExport()"
 >

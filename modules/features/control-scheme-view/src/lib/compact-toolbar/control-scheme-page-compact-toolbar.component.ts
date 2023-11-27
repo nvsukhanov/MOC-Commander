@@ -32,6 +32,8 @@ export class ControlSchemePageCompactToolbarComponent {
 
     @Input() public canAddWidgets = false;
 
+    @Input() public canReorderWidgets = false;
+
     @Output() public readonly run = new EventEmitter<void>();
 
     @Output() public readonly stop = new EventEmitter<void>();
@@ -43,6 +45,8 @@ export class ControlSchemePageCompactToolbarComponent {
     @Output() public readonly delete = new EventEmitter<void>();
 
     @Output() public readonly addWidget = new EventEmitter<void>();
+
+    @Output() public readonly reorderWidgets = new EventEmitter<void>();
 
     public onRun(): void {
         this.run.emit();
@@ -66,5 +70,9 @@ export class ControlSchemePageCompactToolbarComponent {
 
     public onAddWidget(): void {
         this.addWidget.emit();
+    }
+
+    public onReorderWidgets(): void {
+        this.reorderWidgets.emit();
     }
 }

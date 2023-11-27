@@ -26,5 +26,6 @@ export const CONTROL_SCHEME_ACTIONS = createActionGroup({
         'add widget': props<{ schemeName: string; widgetConfig: Omit<WidgetConfigModel, 'id'> }>(),
         'delete widget': props<{ schemeName: string; widgetId: number }>(),
         'update widget': props<{ schemeName: string; widgetConfig: WidgetConfigModel }>(),
+        'reorder widgets': props<{ schemeName: string; widgets: WidgetConfigModel[] }>(),
     }
 });
