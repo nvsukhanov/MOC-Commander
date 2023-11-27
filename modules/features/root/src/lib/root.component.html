@@ -1,1 +1,15 @@
-<feat-root-layout featRootTheming></feat-root-layout>
+<mat-progress-bar *ngIf="shouldShowProgressBar$ | ngrxPush"
+                  mode="indeterminate"
+                  class="progress-bar"
+                  color="accent"
+></mat-progress-bar>
+
+<feat-root-nav-menu></feat-root-nav-menu>
+
+<lib-feature-toolbar></lib-feature-toolbar>
+
+<main class="content" cdkScrollable>
+    <div class="content__wrapper">
+        <router-outlet></router-outlet>
+    </div>
+</main>
