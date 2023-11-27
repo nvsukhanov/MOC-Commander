@@ -303,5 +303,9 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
                 portModesInfo: portModesInfo
             };
         }
-    )
+    ),
+    canReorderWidgets: createSelector(
+        SELECT_CURRENTLY_VIEWED_SCHEME,
+        (scheme) => !!scheme && scheme.widgets.length > 1
+    ),
 } as const;

@@ -44,6 +44,13 @@
         {{ 'controlScheme.widgets.addWidgetButtonTitle' | transloco }}
     </button>
     <button mat-menu-item
+            [disabled]="!canReorderWidgets"
+            (click)="onReorderWidgets()"
+    >
+        {{ 'controlScheme.widgets.reorderWidgetsButtonTitle' | transloco }}
+    </button>
+
+    <button mat-menu-item
             *ngIf="canExport"
             (click)="onExport()"
     >

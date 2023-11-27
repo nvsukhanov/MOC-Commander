@@ -28,6 +28,7 @@ import { CONTROL_SCHEME_WIDGET_COMPONENT_FACTORY } from './widget-container';
 import { AddWidgetDialogComponent, AddWidgetDialogViewModel } from './add-widget-dialog';
 import { EditWidgetSettingsDialogComponent } from './edit-widget-settings-dialog';
 import { ControlSchemeStartBlockerWidgetsService } from './control-scheme-start-blocker-widgets.service';
+import { ReorderWidgetDialogComponent } from './reorder-widgets-dialog';
 
 @Component({
     standalone: true,
@@ -83,6 +84,8 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
     public readonly isSmallScreen$: Observable<boolean> = this.screenSizeObserverService.isSmallScreen$;
 
     public readonly canAddWidgets$: Observable<boolean>;
+
+    public readonly canReorderWidgets$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canReorderWidgets);
 
     public readonly canDeleteOrEditWidgets$ = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canDeleteOrEditWidgets);
 
@@ -266,6 +269,23 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
         ).subscribe((scheme) => {
             const widgetId = scheme.widgets[widgetIndex].id;
             this.store.dispatch(CONTROL_SCHEME_ACTIONS.deleteWidget({ schemeName: scheme.name, widgetId }));
+        });
+    }
+
+    public onReorderWidgets(): void {
+        this.selectedScheme$.pipe(
+            take(1),
+            filter((scheme): scheme is ControlSchemeModel => scheme !== undefined),
+            switchMap((scheme) => this.dialog.open<ReorderWidgetDialogComponent, WidgetConfigModel[], WidgetConfigModel[]>(
+                ReorderWidgetDialogComponent,
+                { data: scheme.widgets }
+            ).afterClosed().pipe(
+                map((result) => ({ schemeName: scheme.name, result }))
+            ))
+        ).subscribe(({ schemeName, result }) => {
+            if (result) {
+                this.store.dispatch(CONTROL_SCHEME_ACTIONS.reorderWidgets({ schemeName, widgets: result }));
+            }
         });
     }
 

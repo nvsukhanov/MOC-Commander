@@ -1,0 +1,22 @@
+:host {
+    display: block;
+}
+
+.widgets-list {
+    &__item {
+        display: flex;
+        gap: 15px;
+        height: 45px;
+        align-items: center;
+
+        &-container {
+            background-color: var(--mdc-dialog-container-color);
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    &__drag-handle {
+        cursor: move;
+    }
+}

@@ -1,0 +1,12 @@
+<mat-list-item  class="widgets-list__item-container"
+>
+    @if (widget) {
+        <li class="widgets-list__item">
+            <mat-icon class="widgets-list__drag-handle"
+                      [fontIcon]="'drag_handle'"
+                      cdkDragHandle
+            ></mat-icon>
+            {{ widget.title }} ({{ widget | widgetConnectionInfoL10n | ngrxPush }})
+        </li>
+    }
+</mat-list-item>
