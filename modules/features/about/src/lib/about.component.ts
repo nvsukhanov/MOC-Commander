@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { Observable, map } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { PushPipe } from '@ngrx/component';
 import { TitleService } from '@app/shared-misc';
-
-// TODO: inject app version instead of importing package.json
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import packageJson from '../../../../../package.json';
 
 @Component({
     standalone: true,
@@ -12,7 +11,8 @@ import packageJson from '../../../../../package.json';
     templateUrl: './about.component.html',
     styleUrls: [ './about.component.scss' ],
     imports: [
-        TranslocoPipe
+        TranslocoPipe,
+        PushPipe
     ],
     providers: [
         TitleService
@@ -26,12 +26,16 @@ export class AboutComponent implements OnInit {
 
     public readonly licenseURL = 'https://github.com/nvsukhanov/webPoweredApp/blob/main/LICENSE.md';
 
-    public readonly version = packageJson.version;
+    public readonly version$: Observable<string>;
 
     constructor(
         private readonly titleService: TitleService,
-        private readonly translocoService: TranslocoService
+        private readonly translocoService: TranslocoService,
+        private readonly route: ActivatedRoute
     ) {
+        this.version$ = this.route.data.pipe(
+            map((data) => data['appVersion'])
+        );
     }
 
     public ngOnInit(): void {
