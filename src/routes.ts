@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { NotFoundComponent } from '@app/not-found';
 import { ROUTE_SECTIONS } from '@app/shared-misc';
 
+import packageJson from '../package.json';
+
 export const ROUTES: Routes = [
     {
         path: '',
@@ -12,6 +14,9 @@ export const ROUTES: Routes = [
         path: ROUTE_SECTIONS.about,
         loadComponent: () => import('@app/about').then(m => m.AboutComponent),
         pathMatch: 'full',
+        data: {
+            appVersion: packageJson.version
+        }
     },
     {
         path: ROUTE_SECTIONS.bluetoothUnavailable,

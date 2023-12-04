@@ -9,7 +9,6 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
     "types": [
       "web-bluetooth",
       "jest",

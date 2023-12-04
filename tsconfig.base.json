@@ -14,7 +14,6 @@
     "noUnusedLocals": true,
     "downlevelIteration": true,
     "useDefineForClassFields": false,
-    "resolveJsonModule": true,
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2022",
