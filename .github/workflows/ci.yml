@@ -12,6 +12,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           node-version: '18.15.x'
       - name: Install modules
-        run: npm install --legacy-peer-deps
+        run: npm install
       - name: Run CI
         run: npm run ci

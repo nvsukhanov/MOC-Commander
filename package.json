@@ -81,6 +81,11 @@
   },
   "overrides": {
     "portcss": "8.4.31",
-    "axios": "1.6.0"
+    "axios": "1.6.0",
+    "ngrx-store-localstorage": {
+      "@angular/common": "$@angular/common",
+      "@angular/core": "$@angular/core",
+      "@ngrx/store": "$@ngrx/store"
+    }
   }
 }
