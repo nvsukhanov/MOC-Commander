@@ -80,7 +80,6 @@
     "typescript": "~5.2.2"
   },
   "overrides": {
-    "portcss": "8.4.31",
     "axios": "1.6.0",
     "ngrx-store-localstorage": {
       "@angular/common": "$@angular/common",
