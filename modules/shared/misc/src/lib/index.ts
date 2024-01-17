@@ -18,3 +18,4 @@ export * from './form-helpers';
 export * from './title.service';
 export * from './math';
 export * from './routing';
+export * from './get-gamepad-vendor-and-product';

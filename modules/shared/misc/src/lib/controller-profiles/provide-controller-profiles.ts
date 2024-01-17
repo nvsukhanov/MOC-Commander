@@ -7,6 +7,7 @@ import {
     ControllerProfileJoyconLService,
     ControllerProfileJoyconLrService,
     ControllerProfileJoyconRService,
+    ControllerProfileSteamDeckService,
     ControllerProfileXbox360Service
 } from './gamepad';
 import { ControllerProfileHubFactoryService } from './hub';
@@ -23,6 +24,7 @@ export function provideControllerProfiles(): EnvironmentProviders {
         { provide: GamepadProfile, useClass: ControllerProfileJoyconRService, multi: true },
         { provide: GamepadProfile, useClass: ControllerProfileJoyconLService, multi: true },
         { provide: GamepadProfile, useClass: ControllerProfileJoyconLrService, multi: true },
+        { provide: GamepadProfile, useClass: ControllerProfileSteamDeckService, multi: true },
         ControllerProfileKeyboardService,
         ControllerProfileGenericGamepadFactoryService,
         ControllerProfileHubFactoryService,
