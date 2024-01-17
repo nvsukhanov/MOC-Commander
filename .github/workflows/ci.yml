@@ -10,7 +10,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           registry-url: 'https://registry.npmjs.org'
-          node-version: '18.15.x'
+          node-version: '20.11.x'
       - name: Install modules
         run: npm install
       - name: Run CI
