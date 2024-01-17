@@ -36,7 +36,7 @@ export abstract class GamepadProfile implements IControllerProfile<GamepadSettin
         protected readonly config: IAppConfig
     ) {
         this.l10nScopeKeyBuilder = createScopedControllerL10nKeyBuilder(l10nScopeName);
-        this.genericGamepadL10nScopeKeyBuilder = createScopedControllerL10nKeyBuilder('genericGamepad');
+        this.genericGamepadL10nScopeKeyBuilder = createScopedControllerL10nKeyBuilder('steamDeck');
     }
 
     public abstract controllerIdMatch(id: string): boolean;
