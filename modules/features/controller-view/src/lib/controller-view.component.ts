@@ -39,6 +39,8 @@ import { ControllerSettingsContainerComponent } from './controller-settings-cont
 export class ControllerViewComponent implements OnInit {
     public readonly viewModel$ = this.store.select(CONTROLLER_PAGE_SELECTORS.selectViewModel);
 
+    public gamepadsIds: string[] = [];
+
     public readonly isSmallScreen$ = this.screenSizeObserver.isSmallScreen$;
 
     constructor(
@@ -48,6 +50,11 @@ export class ControllerViewComponent implements OnInit {
         private readonly controllerProfilesFacadeService: ControllerProfilesFacadeService,
         private readonly translocoService: TranslocoService
     ) {
+        window.navigator.getGamepads().forEach((g) => {
+            if (g !== null) {
+                this.gamepadsIds.push(g.id);
+            }
+        });
     }
 
     public ngOnInit(): void {

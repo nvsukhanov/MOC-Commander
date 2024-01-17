@@ -8,6 +8,7 @@ export type GamepadControllerModel = {
     triggerButtonIndices: number[];
     profileUid: string;
     gamepadOfTypeIndex: number;
+    gamepadId: string;
 };
 
 export type KeyboardControllerModel = {

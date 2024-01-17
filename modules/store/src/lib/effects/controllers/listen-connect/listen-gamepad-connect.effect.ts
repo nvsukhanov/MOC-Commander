@@ -78,7 +78,8 @@ export const LISTEN_GAMEPAD_CONNECT = createEffect((
                         triggerButtonsIndices: [ ...gamepadDatum.profile.triggerButtonsIndices ],
                         gamepadApiIndex: gamepadDatum.gamepad.index,
                         gamepadOfTypeIndex: gamepadDatum.gamepadsApiProfileIndex,
-                        defaultSettings: gamepadDatum.profile.getDefaultSettings()
+                        defaultSettings: gamepadDatum.profile.getDefaultSettings(),
+                        gamepadId: gamepadDatum.gamepad.id,
                     });
                 }
                 return null;

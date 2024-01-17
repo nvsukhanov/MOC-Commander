@@ -3,7 +3,7 @@ import { EntityAdapter, EntityState, createEntityAdapter } from '@ngrx/entity';
 import { ControllerType } from '@app/shared-misc';
 
 import { CONTROLLERS_ACTIONS, HUBS_ACTIONS } from '../actions';
-import { ControllerModel, } from '../models';
+import { ControllerModel } from '../models';
 
 export const CONTROLLERS_ENTITY_ADAPTER: EntityAdapter<ControllerModel> = createEntityAdapter<ControllerModel>({
     selectId: (controller) => controller.id,
@@ -48,6 +48,7 @@ export const CONTROLLERS_FEATURE = createFeature({
                 triggerButtonIndices: action.triggerButtonsIndices,
                 profileUid: action.profileUid,
                 gamepadOfTypeIndex: action.gamepadOfTypeIndex,
+                gamepadId: action.gamepadId,
             }, state);
         }),
         on(CONTROLLERS_ACTIONS.hubDiscovered, (state, action): ControllersState => {

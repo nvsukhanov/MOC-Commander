@@ -29,6 +29,7 @@ export type GamepadSettingsViewModel = {
     axes: GamepadSettingsAxisSettingsViewModel[];
     buttons: GamepadSettingsButtonSettingsViewModel[];
     ignoreInputControl: FormControl<boolean>;
+    gamepadId$: Observable<string>;
 };
 
 export type GamepadSettingsForm = FormGroup<{

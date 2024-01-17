@@ -2,8 +2,15 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, animationFrameScheduler, filter, map, startWith, switchMap, throttleTime } from 'rxjs';
 import deepEqual from 'deep-equal';
-import { ControllerInputType, GamepadProfileFactoryService, GamepadSettings, IControllerProfile } from '@app/shared-misc';
-import { CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS, ControllerModel, GamepadSettingsModel, controllerInputIdFn } from '@app/store';
+import { ControllerInputType, ControllerType, GamepadProfileFactoryService, GamepadSettings, IControllerProfile } from '@app/shared-misc';
+import {
+    CONTROLLER_INPUT_SELECTORS,
+    CONTROLLER_SELECTORS,
+    ControllerModel,
+    GamepadControllerModel,
+    GamepadSettingsModel,
+    controllerInputIdFn
+} from '@app/store';
 
 import { GamepadSettingsAxisSettingsViewModel, GamepadSettingsButtonSettingsViewModel, GamepadSettingsForm, GamepadSettingsViewModel } from './types';
 
@@ -30,6 +37,10 @@ export class GamepadSettingsViewModelBuilderService {
             axes: this.buildAxisViewModel(settings, profile$, form),
             buttons: this.buildButtonViewModel(settings, profile$, form),
             ignoreInputControl: form.controls.ignoreInput,
+            gamepadId$: controllerState.pipe(
+                filter((cs): cs is GamepadControllerModel => !!cs && cs.controllerType === ControllerType.Gamepad),
+                map((gamepad) => gamepad.gamepadId),
+            ),
         };
     }
 

@@ -1,5 +1,8 @@
 <ng-container *ngIf="viewModel">
     <section class="settings-section">
+        {{ viewModel.gamepadId$ | ngrxPush }}
+    </section>
+    <section class="settings-section">
         <feat-controller-view-control-ignore-input [control]="viewModel.ignoreInputControl"></feat-controller-view-control-ignore-input>
     </section>
     <section class="settings-section">

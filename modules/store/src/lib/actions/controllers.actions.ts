@@ -16,6 +16,7 @@ export const CONTROLLERS_ACTIONS = createActionGroup({
             gamepadApiIndex: number;
             gamepadOfTypeIndex: number;
             defaultSettings: GamepadSettings;
+            gamepadId: string;
         }>(),
         'gamepadConnected': props<{ id: string; gamepadApiIndex: number; profileUid: string }>(),
         'gamepadDisconnected': props<{ id: string }>(),
