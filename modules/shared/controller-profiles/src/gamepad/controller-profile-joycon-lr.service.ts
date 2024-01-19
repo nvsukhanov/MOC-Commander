@@ -2,9 +2,9 @@ import { Inject, Injectable } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
 import { Observable } from 'rxjs';
 
-import { APP_CONFIG, IAppConfig } from '../../i-app-config';
 import { GamepadProfile } from '../gamepad-profile';
 import { createControllerL10nKey, createScopedControllerL10nKey } from '../create-controller-l10n-key';
+import { CONTROLLERS_CONFIG, IControllersConfig } from '../i-controllers-config';
 
 @Injectable()
 export class ControllerProfileJoyconLrService extends GamepadProfile {
@@ -59,9 +59,9 @@ export class ControllerProfileJoyconLrService extends GamepadProfile {
 
     constructor(
         translocoService: TranslocoService,
-        @Inject(APP_CONFIG) appConfig: IAppConfig
+        @Inject(CONTROLLERS_CONFIG) config: IControllersConfig
     ) {
-        super(translocoService, 'joycon', appConfig);
+        super(translocoService, 'joycon', config);
         this.name$ = translocoService.selectTranslate(createScopedControllerL10nKey(this.l10nScopeName, 'combined'));
     }
 

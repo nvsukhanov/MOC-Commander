@@ -1,5 +1,5 @@
 import { createSelector } from '@ngrx/store';
-import { ControllerType } from '@app/shared-misc';
+import { ControllerType } from '@app/controller-profiles';
 
 import { CONTROLLERS_ENTITY_ADAPTER, CONTROLLERS_FEATURE } from '../reducers';
 import { GamepadControllerModel } from '../models';

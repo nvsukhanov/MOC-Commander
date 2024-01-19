@@ -7,7 +7,7 @@ import { TranslocoPipe } from '@ngneat/transloco';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
-import { GamepadProfile, GamepadProfileFactoryService } from '@app/shared-misc';
+import { GamepadProfile, GamepadProfileFactoryService } from '@app/controller-profiles';
 import { HideOnSmallScreenDirective, InputActivityIndicatorComponent, RangeControlComponent, ToggleControlComponent } from '@app/shared-ui';
 import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_SELECTORS, GamepadSettingsModel } from '@app/store';
 

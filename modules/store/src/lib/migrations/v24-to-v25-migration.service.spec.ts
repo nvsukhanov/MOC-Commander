@@ -1,5 +1,6 @@
 import { anything, instance, mock, when } from 'ts-mockito';
-import { ControllerType, DeepPartial, GamepadProfile, GamepadProfileFactoryService, GamepadSettings } from '@app/shared-misc';
+import { ControllerType, GamepadProfile, GamepadProfileFactoryService, GamepadSettings } from '@app/controller-profiles';
+import { DeepPartial } from '@app/shared-misc';
 
 import { V21ToV22MigrationService } from './v21-to-v22-migration-service';
 import { V21_STORE_SAMPLE } from './v21-store-sample';

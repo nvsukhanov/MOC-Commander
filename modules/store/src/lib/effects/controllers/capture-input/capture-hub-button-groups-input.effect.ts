@@ -3,7 +3,7 @@ import { Action, Store, createSelector } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { NEVER, Observable, from, map, mergeMap, pairwise, startWith, switchMap } from 'rxjs';
 import { PortModeName } from 'rxpoweredup';
-import { ControllerInputType, ControllerType, MAX_INPUT_VALUE, NULL_INPUT_VALUE } from '@app/shared-misc';
+import { CONTROLLERS_CONFIG, ControllerInputType, ControllerType, IControllersConfig } from '@app/controller-profiles';
 
 import {
     ATTACHED_IO_MODES_SELECTORS,
@@ -84,8 +84,9 @@ const SELECT_ATTACHED_IOS_BUTTON_GROUPS_SELECTOR = createSelector(
 );
 
 function readButtonGroups(
-    store: Store = inject(Store),
-    hubStorage: HubStorageService = inject(HubStorageService)
+    store: Store,
+    hubStorage: HubStorageService,
+    controllersConfig: IControllersConfig
 ): Observable<Action> {
     return store.select(SELECT_ATTACHED_IOS_BUTTON_GROUPS_SELECTOR).pipe(
         switchMap((buttonGroups) => from(buttonGroups)),
@@ -97,7 +98,7 @@ function readButtonGroups(
                     const result: Action[] = [];
 
                     function composeInputReceivedAction(activeInput: boolean): Action {
-                        const value = activeInput ? MAX_INPUT_VALUE : NULL_INPUT_VALUE;
+                        const value = activeInput ? controllersConfig.maxInputValue : controllersConfig.nullInputValue;
                         const inputId = activeInput ? nextValue : prevValue;
                         return CONTROLLER_INPUT_ACTIONS.inputReceived({
                             nextState: {
@@ -133,11 +134,12 @@ function readButtonGroups(
 
 export const CAPTURE_HUB_BUTTON_GROUPS_INPUT = createEffect((
     store: Store = inject(Store),
-    hubStorage: HubStorageService = inject(HubStorageService)
+    hubStorage: HubStorageService = inject(HubStorageService),
+    controllersConfig: IControllersConfig = inject(CONTROLLERS_CONFIG)
 ) => {
     return store.select(CONTROLLER_INPUT_SELECTORS.isCapturing).pipe(
         switchMap((isCapturing) => isCapturing
-                                   ? readButtonGroups(store, hubStorage)
+                                   ? readButtonGroups(store, hubStorage, controllersConfig)
                                    : NEVER
         )
     );

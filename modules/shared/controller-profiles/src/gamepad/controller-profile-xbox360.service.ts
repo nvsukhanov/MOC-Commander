@@ -2,14 +2,13 @@ import { Inject, Injectable } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
 import { Observable } from 'rxjs';
 
-import { getGamepadVendorAndProduct } from '../../get-gamepad-vendor-and-product';
-import { APP_CONFIG, IAppConfig } from '../../i-app-config';
 import { GamepadProfile } from '../gamepad-profile';
 import { createControllerL10nKey, createScopedControllerL10nKey } from '../create-controller-l10n-key';
+import { CONTROLLERS_CONFIG, IControllersConfig } from '../i-controllers-config';
 
 @Injectable()
-export class ControllerProfileSteamDeckService extends GamepadProfile {
-    public readonly uid = 'steamDeck';
+export class ControllerProfileXbox360Service extends GamepadProfile {
+    public readonly uid = 'xbox360';
 
     public readonly name$: Observable<string>;
 
@@ -47,21 +46,20 @@ export class ControllerProfileSteamDeckService extends GamepadProfile {
         15: this.getTranslation('buttonDpadRight'),
     };
 
-    private readonly vendorId = 0x28de;
-
-    private readonly productId = 0x11ff;
+    private readonly ids: ReadonlySet<string> = new Set([
+        'Xbox 360 Controller (XInput STANDARD GAMEPAD)',
+        'HID-compliant game controller (STANDARD GAMEPAD Vendor: 045e Product: 0b13)'
+    ]);
 
     constructor(
         translocoService: TranslocoService,
-        @Inject(APP_CONFIG) appConfig: IAppConfig
+        @Inject(CONTROLLERS_CONFIG) config: IControllersConfig
     ) {
-        super(translocoService, 'steamDeck', appConfig);
+        super(translocoService, 'xbox360', config);
         this.name$ = translocoService.selectTranslate(createScopedControllerL10nKey(this.l10nScopeName, 'name'));
     }
 
     public controllerIdMatch(id: string): boolean {
-        const vendorAndProduct = getGamepadVendorAndProduct(id);
-        return vendorAndProduct?.vendorId === this.vendorId
-            && vendorAndProduct?.productId === this.productId;
+        return this.ids.has(id);
     }
 }

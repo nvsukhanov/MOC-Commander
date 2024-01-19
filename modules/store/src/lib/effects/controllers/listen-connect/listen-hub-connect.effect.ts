@@ -2,7 +2,7 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { inject } from '@angular/core';
 import { map } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { HubProfileFactoryService } from '@app/shared-misc';
+import { HubProfileFactoryService } from '@app/controller-profiles';
 
 import { CONTROLLERS_ACTIONS, HUBS_ACTIONS } from '../../../actions';
 import { CONTROLLER_SELECTORS } from '../../../selectors';

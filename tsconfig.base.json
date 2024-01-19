@@ -26,6 +26,7 @@
       "@app/shared-ui": ["modules/shared/ui/src/index.ts"],
       "@app/shared-control-schemes": ["modules/shared/control-schemes/src/index.ts"],
       "@app/shared-controller": ["modules/shared/controller/src/index.ts"],
+      "@app/controller-profiles": ["modules/shared/controller-profiles/src/index.ts"],
       "@app/store": ["modules/store/src/index.ts"],
       "@app/about": ["modules/features/about/src/index.ts"],
       "@app/bluetooth-unavailable": ["modules/features/bluetooth-unavailable/src/index.ts"],

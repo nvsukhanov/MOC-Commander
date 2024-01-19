@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, animationFrameScheduler, filter, map, startWith, switchMap, throttleTime } from 'rxjs';
 import deepEqual from 'deep-equal';
-import { ControllerInputType, GamepadProfileFactoryService, GamepadSettings, IControllerProfile } from '@app/shared-misc';
+import { ControllerInputType, GamepadProfileFactoryService, GamepadSettings, IControllerProfile } from '@app/controller-profiles';
 import { CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS, ControllerModel, GamepadSettingsModel, controllerInputIdFn } from '@app/store';
 
 import { GamepadSettingsAxisSettingsViewModel, GamepadSettingsButtonSettingsViewModel, GamepadSettingsForm, GamepadSettingsViewModel } from './types';

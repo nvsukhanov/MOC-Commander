@@ -1,15 +1,15 @@
 import { Inject, Injectable } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
 
-import { APP_CONFIG, IAppConfig } from '../../i-app-config';
 import { ControllerProfileGenericGamepad } from './controller-profile-generic-gamepad';
 import { ControllerProfileGenericGamepadUidBuilderService } from './controller-profile-generic-gamepad-uid-builder.service';
+import { CONTROLLERS_CONFIG, IControllersConfig } from '../i-controllers-config';
 
 @Injectable()
 export class ControllerProfileGenericGamepadFactoryService {
     constructor(
         private readonly transloco: TranslocoService,
-        @Inject(APP_CONFIG) private readonly appConfig: IAppConfig,
+        @Inject(CONTROLLERS_CONFIG) private readonly config: IControllersConfig,
         private readonly uidBuilder: ControllerProfileGenericGamepadUidBuilderService
     ) {
     }
@@ -22,7 +22,7 @@ export class ControllerProfileGenericGamepadFactoryService {
             gamepad.axes.length,
             gamepad.buttons.length,
             this.transloco,
-            this.appConfig
+            this.config
         );
     }
 
@@ -39,7 +39,7 @@ export class ControllerProfileGenericGamepadFactoryService {
             parsedUid.axesCount,
             parsedUid.buttonsCount,
             transloco,
-            this.appConfig
+            this.config
         );
     }
 }

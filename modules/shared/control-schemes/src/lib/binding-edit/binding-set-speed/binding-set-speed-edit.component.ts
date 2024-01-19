@@ -4,7 +4,8 @@ import { MOTOR_LIMITS } from 'rxpoweredup';
 import { merge } from 'rxjs';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatDividerModule } from '@angular/material/divider';
-import { ControlSchemeBindingType, ControllerInputType } from '@app/shared-misc';
+import { ControllerInputType } from '@app/controller-profiles';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
 import { ControlSchemeInputAction } from '@app/store';
 

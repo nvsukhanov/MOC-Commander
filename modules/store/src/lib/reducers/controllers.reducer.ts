@@ -1,9 +1,9 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { EntityAdapter, EntityState, createEntityAdapter } from '@ngrx/entity';
-import { ControllerType } from '@app/shared-misc';
+import { ControllerType } from '@app/controller-profiles';
 
 import { CONTROLLERS_ACTIONS, HUBS_ACTIONS } from '../actions';
-import { ControllerModel, } from '../models';
+import { ControllerModel } from '../models';
 
 export const CONTROLLERS_ENTITY_ADAPTER: EntityAdapter<ControllerModel> = createEntityAdapter<ControllerModel>({
     selectId: (controller) => controller.id,

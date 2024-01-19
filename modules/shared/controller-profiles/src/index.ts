@@ -12,3 +12,4 @@ export * from './unknown-controller';
 export * from './gamepad-profile-factory.service';
 export * from './keyboard-profile-factory.service';
 export * from './hub-profile-factory.service';
+export * from './i-controllers-config';

@@ -8,9 +8,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { ControllerNamePipe, ControllerViewHrefPipe } from '@app/shared-controller';
+import { ControllerNamePipe, ControllerTypeIconNamePipe, ControllerViewHrefPipe } from '@app/shared-controller';
 import { TitleService } from '@app/shared-misc';
-import { ConfirmationDialogModule, ConfirmationDialogService, ControllerTypeIconNamePipe, HintComponent } from '@app/shared-ui';
+import { ConfirmationDialogModule, ConfirmationDialogService, HintComponent } from '@app/shared-ui';
 import { CONTROLLERS_ACTIONS, ControllerModel } from '@app/store';
 import { ControlSchemeViewUrlPipe } from '@app/shared-control-schemes';
 

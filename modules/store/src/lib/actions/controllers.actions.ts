@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { GamepadSettings, HubControllerSettings, KeyboardSettings } from '@app/shared-misc';
+import { GamepadSettings, HubControllerSettings, KeyboardSettings } from '@app/controller-profiles';
 
 export const CONTROLLERS_ACTIONS = createActionGroup({
     source: 'Controllers',

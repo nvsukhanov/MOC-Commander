@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ControllerType } from '@app/shared-misc';
+import { ControllerType } from '@app/controller-profiles';
 
 @Pipe({
     standalone: true,

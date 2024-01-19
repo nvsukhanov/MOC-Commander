@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { EntityAdapter, EntityState, createEntityAdapter } from '@ngrx/entity';
-import { ControllerInputType } from '@app/shared-misc';
+import { ControllerInputType } from '@app/controller-profiles';
 
 import { CONTROLLER_INPUT_ACTIONS } from '../actions';
 import { ControllerInputModel } from '../models';

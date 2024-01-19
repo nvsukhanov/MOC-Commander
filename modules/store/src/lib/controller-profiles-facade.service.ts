@@ -8,7 +8,7 @@ import {
     IControllerProfile,
     KeyboardProfileFactoryService,
     UnknownControllerProfileFactoryService
-} from '@app/shared-misc';
+} from '@app/controller-profiles';
 
 import { ControllerModel } from './models';
 import { CONTROLLER_SELECTORS, HUBS_SELECTORS } from './selectors';
