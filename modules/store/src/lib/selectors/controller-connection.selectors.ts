@@ -1,5 +1,5 @@
 import { createSelector } from '@ngrx/store';
-import { ControllerType } from '@app/shared-misc';
+import { ControllerType } from '@app/controller-profiles';
 
 import { CONTROLLER_CONNECTION_ADAPTER, CONTROLLER_CONNECTION_FEATURE } from '../reducers';
 import { CONTROLLER_SELECTORS } from './controllers.selectors';

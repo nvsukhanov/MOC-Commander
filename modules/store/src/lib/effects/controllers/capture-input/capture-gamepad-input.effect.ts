@@ -2,7 +2,8 @@ import { concatLatestFrom, createEffect } from '@ngrx/effects';
 import { NEVER, Observable, distinctUntilChanged, filter, from, interval, map, merge, share, startWith, switchMap } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
-import { APP_CONFIG, ControllerInputType, ControllerType, GamepadValueTransformService, IAppConfig, WINDOW } from '@app/shared-misc';
+import { CONTROLLERS_CONFIG, ControllerInputType, ControllerType, GamepadValueTransformService, IControllersConfig } from '@app/controller-profiles';
+import { WINDOW } from '@app/shared-misc';
 
 import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_INPUT_SELECTORS } from '../../../selectors';
 import { CONTROLLER_INPUT_ACTIONS } from '../../../actions';
@@ -12,7 +13,7 @@ function readGamepads(
     store: Store,
     navigator: Navigator,
     valueTransformer: GamepadValueTransformService,
-    config: IAppConfig
+    config: IControllersConfig
 ): Observable<Action> {
     return store.select(CONTROLLER_CONNECTION_SELECTORS.selectGamepadConnections).pipe(
         switchMap((connectedGamepads) => from(connectedGamepads)),
@@ -103,7 +104,7 @@ export const CAPTURE_GAMEPAD_INPUT = createEffect((
     store: Store = inject(Store),
     window: Window = inject(WINDOW),
     valueTransformer: GamepadValueTransformService = inject(GamepadValueTransformService),
-    config: IAppConfig = inject(APP_CONFIG)
+    config: IControllersConfig = inject(CONTROLLERS_CONFIG)
 ) => {
     return store.select(CONTROLLER_INPUT_SELECTORS.isCapturing).pipe(
         switchMap((isCapturing) => isCapturing

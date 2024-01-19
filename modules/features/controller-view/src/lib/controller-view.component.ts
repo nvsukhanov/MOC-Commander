@@ -6,9 +6,9 @@ import { MatCardModule } from '@angular/material/card';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { MatIconModule } from '@angular/material/icon';
 import { filter, switchMap } from 'rxjs';
-import { ControllerNamePipe } from '@app/shared-controller';
+import { ControllerNamePipe, ControllerTypeIconNamePipe, ControllerTypeToL10nKeyPipe } from '@app/shared-controller';
 import { ScreenSizeObserverService, TitleService } from '@app/shared-misc';
-import { ControllerTypeIconNamePipe, ControllerTypeToL10nKeyPipe, HintComponent } from '@app/shared-ui';
+import { HintComponent } from '@app/shared-ui';
 import { ControllerProfilesFacadeService } from '@app/store';
 
 import { CONTROLLER_PAGE_SELECTORS } from './controller-page-selectors';

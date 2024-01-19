@@ -1,6 +1,7 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ButtonGroupButtonId, MotorServoEndState } from 'rxpoweredup';
-import { ControlSchemeBindingType, ControllerInputType } from '@app/shared-misc';
+import { ControlSchemeBindingType } from '@app/shared-misc';
+import { ControllerInputType } from '@app/controller-profiles';
 import { ControlSchemeInputAction, InputGain, LoopingMode } from '@app/store';
 
 export type InputFormGroup = FormGroup<{

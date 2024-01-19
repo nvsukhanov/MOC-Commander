@@ -2,12 +2,11 @@ import { TranslocoService } from '@ngneat/transloco';
 import { Observable } from 'rxjs';
 import { Memoize } from 'typescript-memoize';
 
-import { MAX_INPUT_VALUE } from '../../consts';
-import { IAppConfig } from '../../i-app-config';
 import { ControllerType } from '../controller-type';
 import { IControllerProfile } from '../i-controller-profile';
 import { createControllerL10nKey, createScopedControllerL10nKeyBuilder } from '../create-controller-l10n-key';
 import { GamepadAxisSettings, GamepadButtonSettings, GamepadSettings } from '../controller-settings';
+import { IControllersConfig } from '../i-controllers-config';
 
 export class ControllerProfileGenericGamepad implements IControllerProfile<GamepadSettings> {
     public readonly name$: Observable<string>;
@@ -25,7 +24,7 @@ export class ControllerProfileGenericGamepad implements IControllerProfile<Gamep
         private readonly axesCount: number,
         private readonly buttonsCount: number,
         private readonly translocoService: TranslocoService,
-        private readonly appConfig: IAppConfig
+        private readonly config: IControllersConfig
     ) {
         this.l10nScopeKeyBuilder = createScopedControllerL10nKeyBuilder('genericGamepad');
         this.name$ = this.translocoService.selectTranslate(this.l10nScopeKeyBuilder('name'));
@@ -49,23 +48,23 @@ export class ControllerProfileGenericGamepad implements IControllerProfile<Gamep
         const axisConfigs: { [k in string]: GamepadAxisSettings } = {};
         for (let i = 0; i < this.axesCount; i++) {
             axisConfigs[i] = {
-                activeZoneStart: this.appConfig.gamepad.defaultAxisActiveZoneStart,
-                activeZoneEnd: MAX_INPUT_VALUE,
+                activeZoneStart: this.config.gamepad.defaultAxisActiveZoneStart,
+                activeZoneEnd: this.config.maxInputValue,
                 invert: false,
                 ignoreInput: false,
                 trim: 0,
-                activationThreshold: this.appConfig.gamepad.defaultActivationThreshold,
+                activationThreshold: this.config.gamepad.defaultActivationThreshold,
                 negativeValueCanActivate: true
             };
         }
         const buttonConfigs: { [k in string]: GamepadButtonSettings } = {};
         for (let i = 0; i < this.buttonsCount; i++) {
             buttonConfigs[i] = {
-                activeZoneStart: this.appConfig.gamepad.defaultButtonActiveZoneStart,
-                activeZoneEnd: MAX_INPUT_VALUE,
+                activeZoneStart: this.config.gamepad.defaultButtonActiveZoneStart,
+                activeZoneEnd: this.config.maxInputValue,
                 ignoreInput: false,
                 trim: 0,
-                activationThreshold: this.appConfig.gamepad.defaultActivationThreshold,
+                activationThreshold: this.config.gamepad.defaultActivationThreshold,
                 negativeValueCanActivate: true,
                 invert: false
             };

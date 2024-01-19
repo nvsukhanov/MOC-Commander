@@ -6,8 +6,7 @@ import { createScopedControllerL10nKeyBuilder } from './create-controller-l10n-k
 import { IControllerProfile } from './i-controller-profile';
 import { GamepadSettings } from './controller-settings';
 import { ControllerType } from './controller-type';
-import { IAppConfig } from '../i-app-config';
-import { MAX_INPUT_VALUE } from '../consts';
+import { IControllersConfig } from './i-controllers-config';
 
 export abstract class GamepadProfile implements IControllerProfile<GamepadSettings> {
     public abstract readonly uid: string;
@@ -33,7 +32,7 @@ export abstract class GamepadProfile implements IControllerProfile<GamepadSettin
     protected constructor(
         protected readonly translocoService: TranslocoService,
         protected readonly l10nScopeName: string,
-        protected readonly config: IAppConfig
+        protected readonly config: IControllersConfig
     ) {
         this.l10nScopeKeyBuilder = createScopedControllerL10nKeyBuilder(l10nScopeName);
         this.genericGamepadL10nScopeKeyBuilder = createScopedControllerL10nKeyBuilder('steamDeck');
@@ -66,7 +65,7 @@ export abstract class GamepadProfile implements IControllerProfile<GamepadSettin
         Object.keys(this.axisNames).forEach((axisId) => {
             result.axisConfigs[axisId] = {
                 activeZoneStart: this.config.gamepad.defaultAxisActiveZoneStart,
-                activeZoneEnd: MAX_INPUT_VALUE,
+                activeZoneEnd: this.config.maxInputValue,
                 invert: this.invertedAxisIndices.includes(Number(axisId)),
                 ignoreInput: false,
                 trim: 0,
@@ -77,7 +76,7 @@ export abstract class GamepadProfile implements IControllerProfile<GamepadSettin
         Object.keys(this.buttonNames).forEach((buttonId) => {
             result.buttonConfigs[buttonId] = {
                 activeZoneStart: this.config.gamepad.defaultButtonActiveZoneStart,
-                activeZoneEnd: MAX_INPUT_VALUE,
+                activeZoneEnd: this.config.maxInputValue,
                 ignoreInput: false,
                 trim: 0,
                 activationThreshold: this.config.gamepad.defaultActivationThreshold,

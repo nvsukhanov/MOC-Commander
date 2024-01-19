@@ -201,15 +201,19 @@
               },
               {
                 "sourceTag": "scope:store",
-                "onlyDependOnLibsWithTags": ["type:shared-misc"]
+                "onlyDependOnLibsWithTags": ["scope:shared"]
               },
               {
                 "sourceTag": "type:shared-ui",
                 "onlyDependOnLibsWithTags": ["type:shared-misc"]
               },
               {
+                "sourceTag": "type:controller-profiles",
+                "onlyDependOnLibsWithTags": ["type:shared-misc"]
+              },
+              {
                 "sourceTag": "type:feature-shared",
-                "onlyDependOnLibsWithTags": ["type:shared-misc", "type:shared-ui", "scope:store"]
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:store"]
               },
               {
                 "sourceTag": "type:feature",

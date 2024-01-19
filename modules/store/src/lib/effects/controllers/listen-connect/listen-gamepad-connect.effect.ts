@@ -2,7 +2,15 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { inject } from '@angular/core';
 import { Action, Store } from '@ngrx/store';
 import { Observable, filter, interval, map, switchMap } from 'rxjs';
-import { APP_CONFIG, ControllerType, GamepadProfileFactoryService, GamepadSettings, IAppConfig, IControllerProfile, WINDOW } from '@app/shared-misc';
+import {
+    CONTROLLERS_CONFIG,
+    ControllerType,
+    GamepadProfileFactoryService,
+    GamepadSettings,
+    IControllerProfile,
+    IControllersConfig
+} from '@app/controller-profiles';
+import { WINDOW } from '@app/shared-misc';
 
 import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS } from '../../../selectors';
 import { CONTROLLERS_ACTIONS } from '../../../actions';
@@ -15,7 +23,7 @@ export const LISTEN_GAMEPAD_CONNECT = createEffect((
     store: Store = inject(Store),
     window: Window = inject(WINDOW),
     gamepadProfileFactoryService: GamepadProfileFactoryService = inject(GamepadProfileFactoryService),
-    config: IAppConfig = inject(APP_CONFIG),
+    config: IControllersConfig = inject(CONTROLLERS_CONFIG),
 ) => {
     return actions$.pipe(
         ofType(CONTROLLERS_ACTIONS.waitForConnect),

@@ -1,10 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
 import { GamepadAxisSettings, GamepadButtonSettings } from './controller-settings';
-import { MAX_INPUT_VALUE, MIN_INPUT_VALUE } from '../consts';
+import { CONTROLLERS_CONFIG, IControllersConfig } from './i-controllers-config';
 
 @Injectable({ providedIn: 'root' })
 export class GamepadValueTransformService {
+    constructor(
+        @Inject(CONTROLLERS_CONFIG) private readonly config: IControllersConfig
+    ) {
+    }
+
     public isAxisActivationThresholdReached(
         value: number,
         settings?: GamepadAxisSettings
@@ -83,9 +88,9 @@ export class GamepadValueTransformService {
         value: number,
     ): number {
         return Math.min(
-            MAX_INPUT_VALUE,
+            this.config.maxInputValue,
             Math.max(
-                MIN_INPUT_VALUE,
+                this.config.minInputValue,
                 Math.round((value + Number.EPSILON) * 100) / 100
             )
         );

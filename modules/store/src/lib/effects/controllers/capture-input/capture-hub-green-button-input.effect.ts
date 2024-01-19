@@ -2,7 +2,7 @@ import { createEffect } from '@ngrx/effects';
 import { Action, Store, createSelector } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { NEVER, Observable, distinctUntilChanged, map, mergeAll, mergeMap, pairwise, startWith, switchMap } from 'rxjs';
-import { ControllerInputType, ControllerType, GREEN_BUTTON_INPUT_ID, MAX_INPUT_VALUE, NULL_INPUT_VALUE } from '@app/shared-misc';
+import { CONTROLLERS_CONFIG, ControllerInputType, ControllerType, GREEN_BUTTON_INPUT_ID, IControllersConfig } from '@app/controller-profiles';
 
 import { CONTROLLER_INPUT_SELECTORS, CONTROLLER_SETTINGS_SELECTORS, HUBS_SELECTORS, HUB_RUNTIME_DATA_SELECTORS } from '../../../selectors';
 import { controllerIdFn } from '../../../reducers';
@@ -26,7 +26,8 @@ const HUB_INPUT_READ_SELECTOR = createSelector(
 
 function readHubsGreenButtons(
     store: Store,
-    hubStorage: HubStorageService
+    hubStorage: HubStorageService,
+    controllersConfig: IControllersConfig
 ): Observable<Action> {
     return store.select(HUB_INPUT_READ_SELECTOR).pipe(
         map((hubIds) => {
@@ -36,7 +37,7 @@ function readHubsGreenButtons(
                     distinctUntilChanged(),
                     pairwise(),
                     map(([ prev, next ]) => {
-                        const value = next ? MAX_INPUT_VALUE : NULL_INPUT_VALUE;
+                        const value = next ? controllersConfig.maxInputValue : controllersConfig.nullInputValue;
                         return CONTROLLER_INPUT_ACTIONS.inputReceived({
                             nextState: {
                                 controllerId: controllerIdFn({ hubId, controllerType: ControllerType.Hub }),
@@ -60,11 +61,12 @@ function readHubsGreenButtons(
 
 export const CAPTURE_HUB_GREEN_BUTTON_INPUT = createEffect((
     store: Store = inject(Store),
-    hubStorage: HubStorageService = inject(HubStorageService)
+    hubStorage: HubStorageService = inject(HubStorageService),
+    controllersConfig: IControllersConfig = inject(CONTROLLERS_CONFIG),
 ) => {
     return store.select(CONTROLLER_INPUT_SELECTORS.isCapturing).pipe(
         switchMap((isCapturing) => isCapturing
-                                   ? readHubsGreenButtons(store, hubStorage)
+                                   ? readHubsGreenButtons(store, hubStorage, controllersConfig)
                                    : NEVER
         )
     );

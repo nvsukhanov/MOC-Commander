@@ -3,7 +3,7 @@ import { Observable, combineLatestWith, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { TranslocoService } from '@ngneat/transloco';
 import { ButtonGroupButtonId } from 'rxpoweredup';
-import { ControllerInputType, IControllerProfile } from '@app/shared-misc';
+import { ControllerInputType, IControllerProfile } from '@app/controller-profiles';
 import { CONTROLLER_CONNECTION_SELECTORS, ControlSchemeInput, ControllerProfilesFacadeService } from '@app/store';
 
 export type FullControllerInputNameData = {
