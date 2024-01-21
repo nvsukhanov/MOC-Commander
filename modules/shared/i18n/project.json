@@ -1,0 +1,32 @@
+{
+  "name": "i18n",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "modules/shared/controller/src",
+  "prefix": "lib-controller-shared",
+  "tags": ["type:shared-i18n", "scope:shared"],
+  "projectType": "library",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "modules/shared/control-schemes/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "modules/shared/control-schemes/**/*.ts",
+          "modules/shared/control-schemes/**/*.html",
+          "modules/shared/control-schemes/package.json"
+        ]
+      }
+    }
+  }
+}

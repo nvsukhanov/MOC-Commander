@@ -1,4 +1,4 @@
-import { Language } from '@app/shared-misc';
+import { Language } from '@app/shared-i18n';
 
 import { AppStoreVersion } from '../app-store-version';
 import { V21_STORE_SAMPLE } from './v21-store-sample';

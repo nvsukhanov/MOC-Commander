@@ -2,10 +2,10 @@ import { EnvironmentProviders, isDevMode, makeEnvironmentProviders } from '@angu
 import { provideTransloco } from '@ngneat/transloco';
 import { provideHttpClient } from '@angular/common/http';
 import { provideTranslocoMessageformat } from '@ngneat/transloco-messageformat';
+import { getEnumValues } from '@app/shared-misc';
 
 import { I18nLoaderService } from './i18n-loader.service';
 import { Language } from './language';
-import { getEnumValues } from '../get-enum-values';
 
 export function provideI18n(): EnvironmentProviders {
     return makeEnvironmentProviders([

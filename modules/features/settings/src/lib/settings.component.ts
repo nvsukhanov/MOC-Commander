@@ -5,7 +5,8 @@ import { Store } from '@ngrx/store';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { Language, TitleService } from '@app/shared-misc';
+import { Language } from '@app/shared-i18n';
+import { TitleService } from '@app/shared-misc';
 import { IState, SETTINGS_ACTIONS, SETTINGS_FEATURE, UserSelectedTheme } from '@app/store';
 
 import { RestoreStateFromBackupDialogComponent } from './restore-state-from-backup-dialog';
