@@ -271,16 +271,17 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
         (scheme) => !!scheme && scheme.bindings.length > 0
     ),
     addableWidgetConfigFactoryBaseData: (controlSchemeName: string) => createSelector(
+        CONTROL_SCHEME_SELECTORS.selectRunningState,
         CONTROL_SCHEME_SELECTORS.selectScheme(controlSchemeName),
         ATTACHED_IO_SELECTORS.selectAll,
         ATTACHED_IO_MODES_SELECTORS.selectEntities,
         ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
-        (controlScheme, attachedIos, ioPortModes, portModesInfo): {
+        (schemeRunningState, controlScheme, attachedIos, ioPortModes, portModesInfo): {
             ios: AttachedIoModel[];
             portModes: Dictionary<AttachedIoModesModel>;
             portModesInfo: Dictionary<AttachedIoPortModeInfoModel>;
         } => {
-            if (!controlScheme) {
+            if (!controlScheme || schemeRunningState !== ControlSchemeRunState.Idle) {
                 return {
                     ios: [],
                     portModes: {},
