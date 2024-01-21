@@ -28,6 +28,8 @@ export class ControlSchemePageFullToolbarComponent {
 
     @Input() public canReorderWidgets = false;
 
+    @Input() public canDelete = false;
+
     @Output() public readonly run = new EventEmitter<void>();
 
     @Output() public readonly stop = new EventEmitter<void>();

@@ -51,6 +51,7 @@
 </button>
 <button mat-raised-button
         [color]="'warn'"
+        [disabled]="!canDelete"
         (click)="onDelete()">
     {{ 'controlScheme.delete' | transloco }}
 </button>

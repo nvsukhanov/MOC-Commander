@@ -57,6 +57,7 @@
         {{ 'controlScheme.export' | transloco }}
     </button>
     <button mat-menu-item
+            [disabled]="!canDelete"
             (click)="onDelete()">
         {{ 'controlScheme.delete' | transloco }}
     </button>
