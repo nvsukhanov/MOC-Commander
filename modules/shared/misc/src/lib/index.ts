@@ -9,7 +9,6 @@ export * from './validation-errors';
 export * from './lzma.service';
 export * from './get-enum-keys';
 export * from './get-enum-values';
-export * from './i18n';
 export * from './hash.service';
 export * from './id-generator.service';
 export * from './form-helpers';

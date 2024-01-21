@@ -7,7 +7,8 @@ import { PreloadAllModules, provideRouter, withPreloading } from '@angular/route
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideControllerProfiles } from '@app/controller-profiles';
 import { RootComponent } from '@app/root';
-import { ShowOnTouchedErrorStateMatcher, provideI18n } from '@app/shared-misc';
+import { ShowOnTouchedErrorStateMatcher } from '@app/shared-misc';
+import { provideI18n } from '@app/shared-i18n';
 import { AppStoreVersion, provideApplicationStore } from '@app/store';
 
 import { ROUTES } from './routes';

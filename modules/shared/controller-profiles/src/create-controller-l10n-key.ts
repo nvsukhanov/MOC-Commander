@@ -1,4 +1,4 @@
-import { L10nScopes, composeL10nKey } from '@app/shared-misc';
+import { L10nScopes, composeL10nKey } from '@app/shared-i18n';
 
 export function createScopedControllerL10nKey(
     scope: string,

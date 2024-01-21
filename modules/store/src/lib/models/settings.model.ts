@@ -1,4 +1,4 @@
-import { Language } from '@app/shared-misc';
+import { Language } from '@app/shared-i18n';
 
 export enum UserSelectedTheme {
     System,

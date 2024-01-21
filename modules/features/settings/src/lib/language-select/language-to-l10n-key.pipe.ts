@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Language } from '@app/shared-misc';
+import { Language } from '@app/shared-i18n';
 
 @Pipe({
     standalone: true,

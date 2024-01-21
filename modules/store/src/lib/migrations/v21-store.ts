@@ -1,4 +1,5 @@
-import { Language, Override } from '@app/shared-misc';
+import { Language } from '@app/shared-i18n';
+import { Override } from '@app/shared-misc';
 
 import { AppStoreVersion } from '../app-store-version';
 import { UserSelectedTheme } from '../models';

@@ -208,6 +208,10 @@
                 "onlyDependOnLibsWithTags": ["type:shared-misc"]
               },
               {
+                "sourceTag": "type:shared-i18n",
+                "onlyDependOnLibsWithTags": ["type:shared-misc"]
+              },
+              {
                 "sourceTag": "type:controller-profiles",
                 "onlyDependOnLibsWithTags": ["type:shared-misc"]
               },
