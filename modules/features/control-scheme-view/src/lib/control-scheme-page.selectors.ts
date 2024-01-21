@@ -270,6 +270,10 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
         SELECT_CURRENTLY_VIEWED_SCHEME,
         (scheme) => !!scheme && scheme.bindings.length > 0
     ),
+    canDeleteViewedScheme: createSelector(
+        CONTROL_SCHEME_SELECTORS.selectRunningState,
+        (runningState) => runningState === ControlSchemeRunState.Idle
+    ),
     addableWidgetConfigFactoryBaseData: (controlSchemeName: string) => createSelector(
         CONTROL_SCHEME_SELECTORS.selectRunningState,
         CONTROL_SCHEME_SELECTORS.selectScheme(controlSchemeName),

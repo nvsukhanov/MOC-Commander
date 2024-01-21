@@ -73,6 +73,8 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
         CONTROL_SCHEME_PAGE_SELECTORS.canRunViewedScheme(this.controlSchemeStartWidgetCheckService)
     );
 
+    public readonly canDeleteScheme$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canDeleteViewedScheme);
+
     public readonly isCurrentControlSchemeRunning$ = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.isCurrentControlSchemeRunning);
 
     public readonly schemeViewTree$: Observable<ControlSchemeViewTreeNode[]> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.schemeViewTree);
