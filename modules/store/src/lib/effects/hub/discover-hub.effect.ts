@@ -3,7 +3,7 @@ import { catchError, combineLatestWith, map, mergeMap, of, switchMap, takeUntil,
 import { IHub, MessageLoggingMiddleware, connectHub } from 'rxpoweredup';
 import { inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { APP_CONFIG, IAppConfig, NAVIGATOR, PrefixedConsoleLoggerFactoryService } from '@app/shared-misc';
+import { APP_CONFIG, IAppConfig, NAVIGATOR, PrefixedConsoleLoggerFactoryService, isOsLinux } from '@app/shared-misc';
 
 import { HUBS_ACTIONS, HUB_RUNTIME_DATA_ACTIONS } from '../../actions';
 import { HubStorageService } from '../../hub-storage.service';
@@ -24,6 +24,7 @@ export const DISCOVER_HUB_EFFECT = createEffect((
             const incomingLoggerMiddleware = new MessageLoggingMiddleware(prefixedConsoleLoggerFactory.create('<'), 'all');
             const outgoingLoggerMiddleware = new MessageLoggingMiddleware(prefixedConsoleLoggerFactory.create('>'), 'all');
             const communicationNotifierMiddleware = communicationNotifierMiddlewareFactory.create();
+            const useLinuxWorkaround = isOsLinux(navigator);
 
             return connectHub(
                 navigator.bluetooth,
@@ -33,7 +34,8 @@ export const DISCOVER_HUB_EFFECT = createEffect((
                     messageSendTimeout: config.messageSendTimeout,
                     maxMessageSendAttempts: config.maxMessageSendAttempts,
                     initialMessageSendRetryDelayMs: config.initialMessageSendRetryDelayMs,
-                    defaultBufferMode: config.defaultBufferingMode
+                    defaultBufferMode: config.defaultBufferingMode,
+                    useLinuxWorkaround
                 }
             ).pipe(
                 switchMap((hub: IHub) => {
