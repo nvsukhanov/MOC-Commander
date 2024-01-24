@@ -12,7 +12,7 @@
         "{workspaceRoot}/coverage/{projectRoot}"
       ],
       "options": {
-        "jestConfig": "modules/shared/control-schemes/jest.config.ts"
+        "jestConfig": "modules/shared/controller/jest.config.ts"
       }
     },
     "lint": {

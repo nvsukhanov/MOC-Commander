@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { GamepadProfile } from '../gamepad-profile';
 import { createControllerL10nKey, createScopedControllerL10nKey } from '../create-controller-l10n-key';
 import { CONTROLLERS_CONFIG, IControllersConfig } from '../i-controllers-config';
+import { getGamepadVendorAndProduct } from '../get-gamepad-vendor-and-product';
 
 @Injectable()
 export class ControllerProfileDualshockService extends GamepadProfile {
@@ -48,11 +49,10 @@ export class ControllerProfileDualshockService extends GamepadProfile {
         17: this.getTranslation('buttonTouchpadPress'),
     };
 
-    // chrome only, firefox has different ids
-    private readonly ids: ReadonlySet<string> = new Set([
-        'Wireless Controller (STANDARD GAMEPAD Vendor: 054c Product: 09cc)',
-        'Wireless Controller (STANDARD GAMEPAD Vendor: 054c Product: 054c)',
-    ]);
+    private readonly controllerIdentification: Array<{ vendorId: number; productId: number }> = [
+        { vendorId: 0x054c, productId: 0x09cc },
+        { vendorId: 0x054c, productId: 0x054c },
+    ];
 
     constructor(
         translocoService: TranslocoService,
@@ -63,6 +63,9 @@ export class ControllerProfileDualshockService extends GamepadProfile {
     }
 
     public controllerIdMatch(id: string): boolean {
-        return this.ids.has(id);
+        const vendorAndProduct = getGamepadVendorAndProduct(id);
+        return !!vendorAndProduct && this.controllerIdentification.some((identification) => {
+            return identification.vendorId === vendorAndProduct.vendorId && identification.productId === vendorAndProduct.productId;
+        });
     }
 }
