@@ -5,12 +5,13 @@ import { Observable } from 'rxjs';
 import { GamepadProfile } from '../gamepad-profile';
 import { createControllerL10nKey, createScopedControllerL10nKey } from '../create-controller-l10n-key';
 import { CONTROLLERS_CONFIG, IControllersConfig } from '../i-controllers-config';
+import { getGamepadVendorAndProduct } from '../get-gamepad-vendor-and-product';
 
 @Injectable()
-export class ControllerProfileXbox360Service extends GamepadProfile {
-    public readonly uid = 'xbox360';
+export class ControllerProfileJoyconLrService extends GamepadProfile {
+    public readonly uid = 'joycon-lr';
 
-    public readonly name$: Observable<string>;
+    public name$: Observable<string>;
 
     public readonly buttonStateL10nKey = createControllerL10nKey('buttonState');
 
@@ -24,42 +25,49 @@ export class ControllerProfileXbox360Service extends GamepadProfile {
         0: this.getTranslation('leftStickXAxis'),
         1: this.getTranslation('leftStickYAxis'),
         2: this.getTranslation('rightStickXAxis'),
-        3: this.getTranslation('rightStickYAxis')
+        3: this.getTranslation('rightStickYAxis'),
     };
 
     protected buttonNames: { readonly [k in number]: Observable<string> } = {
-        0: this.getTranslation('buttonA'),
-        1: this.getTranslation('buttonB'),
-        2: this.getTranslation('buttonX'),
-        3: this.getTranslation('buttonY'),
+        0: this.getTranslation('buttonB'),
+        1: this.getTranslation('buttonA'),
+        2: this.getTranslation('buttonY'),
+        3: this.getTranslation('buttonX'),
         4: this.getTranslation('lBumper'),
         5: this.getTranslation('rBumper'),
-        6: this.getTranslation('lTrigger'),
-        7: this.getTranslation('rTrigger'),
-        8: this.getTranslation('buttonShare'),
-        9: this.getTranslation('buttonMenu'),
-        10: this.getTranslation('leftStickPress'),
-        11: this.getTranslation('rightStickPress'),
+        6: this.getTranslation('zlTrigger'),
+        7: this.getTranslation('zrTrigger'),
+        8: this.getTranslation('buttonMinus'),
+        9: this.getTranslation('buttonPlus'),
+        10: this.getTranslation('buttonLStick'),
+        11: this.getTranslation('buttonRStick'),
         12: this.getTranslation('buttonDpadUp'),
         13: this.getTranslation('buttonDpadDown'),
         14: this.getTranslation('buttonDpadLeft'),
         15: this.getTranslation('buttonDpadRight'),
+        16: this.getTranslation('buttonHome'),
+        17: this.getTranslation('buttonCapture'),
+        18: this.getTranslation('buttonSLL'),
+        19: this.getTranslation('buttonSRL'),
+        20: this.getTranslation('buttonSLR'),
+        21: this.getTranslation('buttonSRR'),
     };
 
-    private readonly ids: ReadonlySet<string> = new Set([
-        'Xbox 360 Controller (XInput STANDARD GAMEPAD)',
-        'HID-compliant game controller (STANDARD GAMEPAD Vendor: 045e Product: 0b13)'
-    ]);
+    private readonly vendorId = 0x057e;
+
+    private readonly productId = 0x200e;
 
     constructor(
         translocoService: TranslocoService,
         @Inject(CONTROLLERS_CONFIG) config: IControllersConfig
     ) {
-        super(translocoService, 'xbox360', config);
-        this.name$ = translocoService.selectTranslate(createScopedControllerL10nKey(this.l10nScopeName, 'name'));
+        super(translocoService, 'joycon', config);
+        this.name$ = translocoService.selectTranslate(createScopedControllerL10nKey(this.l10nScopeName, 'combined'));
     }
 
     public controllerIdMatch(id: string): boolean {
-        return this.ids.has(id);
+        const vendorAndProduct = getGamepadVendorAndProduct(id);
+        return vendorAndProduct?.vendorId === this.vendorId
+            && vendorAndProduct?.productId === this.productId;
     }
 }

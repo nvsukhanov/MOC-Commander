@@ -499,8 +499,8 @@
       "buttonDpadRight": "DPad вправо"
     },
     "joycon": {
-      "r-name": "Joy-Con (Л)",
-      "l-name": "Joy-Con (П)",
+      "r-name": "Joy-Con (П)",
+      "l-name": "Joy-Con (Л)",
       "combined": "Joy-Con (Л+П)",
       "leftStickXAxis": "Ось X левого стика",
       "leftStickYAxis": "Ось Y левого стика",
