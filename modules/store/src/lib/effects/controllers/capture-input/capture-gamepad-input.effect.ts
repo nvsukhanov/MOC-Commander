@@ -10,6 +10,8 @@ import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_INPUT_SELECTORS } from '../
 import { CONTROLLER_INPUT_ACTIONS } from '../../../actions';
 import { controllerInputIdFn } from '../../../reducers';
 
+const MINIMUM_INPUT_CHANGE = 0.01;
+
 function createAxisChangesActions(
     gamepadRead$: Observable<Gamepad | null>,
     valueTransformer: GamepadValueTransformService,
@@ -30,7 +32,7 @@ function createAxisChangesActions(
         });
         result[axisIndex] = gamepadRead$.pipe(
             map((gamepad) => (gamepad?.axes[axisIndex] ?? 0) + (settings.axisConfigs[axisIndex]?.trim ?? 0)),
-            distinctUntilChanged(),
+            distinctUntilChanged((prev, curr) => Math.abs(prev - curr) < MINIMUM_INPUT_CHANGE),
             map((rawValue) => ({
                 rawValue,
                 value: valueTransformer.transformAxisValue(rawValue, settings.axisConfigs[axisIndex])
@@ -74,7 +76,7 @@ function createButtonChangesActions(
         });
         result[buttonIndex] = gamepadRead$.pipe(
             map((gamepad) => (gamepad?.buttons[buttonIndex]?.value ?? 0) + (settings.buttonConfigs[buttonIndex]?.trim ?? 0)),
-            distinctUntilChanged(),
+            distinctUntilChanged((prev, curr) => Math.abs(prev - curr) < MINIMUM_INPUT_CHANGE),
             map((rawValue) => ({
                 rawValue,
                 value: valueTransformer.transformButtonValue(rawValue, settings.buttonConfigs[buttonIndex])
