@@ -29,13 +29,12 @@ function createAxisChangesActions(
             inputType: ControllerInputType.Axis
         });
         result[axisIndex] = gamepadRead$.pipe(
-            map((gamepad) => gamepad?.axes[axisIndex] ?? 0),
+            map((gamepad) => (gamepad?.axes[axisIndex] ?? 0) + (settings.axisConfigs[axisIndex]?.trim ?? 0)),
             distinctUntilChanged(),
             map((rawValue) => ({
                 rawValue,
-                value: valueTransformer.transformAxisRawValue(rawValue, settings.axisConfigs[axisIndex])
+                value: valueTransformer.transformAxisValue(rawValue, settings.axisConfigs[axisIndex])
             })),
-            distinctUntilChanged((a, b) => a.value === b.value),
             concatLatestFrom(() => store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(inputId))),
             map(([ { rawValue, value }, prevValue ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
                 nextState: {
@@ -44,7 +43,7 @@ function createAxisChangesActions(
                     inputId: axisIndex.toString(),
                     value,
                     rawValue,
-                    isActivated: valueTransformer.isAxisActivationThresholdReached(rawValue, settings.axisConfigs[axisIndex]),
+                    isActivated: valueTransformer.isAxisActivationThresholdReached(value, settings.axisConfigs[axisIndex]),
                     timestamp: Date.now()
                 },
                 prevValue
@@ -74,13 +73,12 @@ function createButtonChangesActions(
             inputType
         });
         result[buttonIndex] = gamepadRead$.pipe(
-            map((gamepad) => gamepad?.buttons[buttonIndex]?.value ?? 0),
+            map((gamepad) => (gamepad?.buttons[buttonIndex]?.value ?? 0) + (settings.buttonConfigs[buttonIndex]?.trim ?? 0)),
             distinctUntilChanged(),
             map((rawValue) => ({
                 rawValue,
-                value: valueTransformer.transformButtonRawValue(rawValue, settings.buttonConfigs[buttonIndex])
+                value: valueTransformer.transformButtonValue(rawValue, settings.buttonConfigs[buttonIndex])
             })),
-            distinctUntilChanged((a, b) => a.value === b.value),
             concatLatestFrom(() => store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(inputId))),
             map(([ { rawValue, value }, prevValue ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
                 nextState: {
@@ -89,7 +87,7 @@ function createButtonChangesActions(
                     inputId: buttonIndex.toString(),
                     value,
                     rawValue,
-                    isActivated: valueTransformer.isButtonActivationThresholdReached(rawValue, settings.buttonConfigs[buttonIndex]),
+                    isActivated: valueTransformer.isButtonActivationThresholdReached(value, settings.buttonConfigs[buttonIndex]),
                     timestamp: Date.now()
                 },
                 prevValue
