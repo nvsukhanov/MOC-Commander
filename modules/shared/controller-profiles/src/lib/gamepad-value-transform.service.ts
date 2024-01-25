@@ -38,32 +38,6 @@ export class GamepadValueTransformService {
         return normalizedValue >= settings.activationThreshold;
     }
 
-    public transformAxisRawValue(
-        rawValue: number,
-        settings?: GamepadAxisSettings
-    ): number {
-        if (!settings) {
-            return this.truncateAndClamp(rawValue);
-        }
-        if (settings.ignoreInput) {
-            return 0;
-        }
-        return this.truncateAndClamp(rawValue * (settings.invert ? -1 : 1) + settings.trim);
-    }
-
-    public transformButtonRawValue(
-        rawValue: number,
-        settings?: GamepadButtonSettings
-    ): number {
-        if (!settings) {
-            return this.truncateAndClamp(rawValue);
-        }
-        if (settings.ignoreInput) {
-            return 0;
-        }
-        return this.truncateAndClamp(rawValue * (settings.invert ? -1 : 1) + settings.trim);
-    }
-
     public transformAxisValue(
         rawValue: number,
         settings?: GamepadAxisSettings
@@ -71,7 +45,10 @@ export class GamepadValueTransformService {
         if (!settings) {
             return this.truncateAndClamp(rawValue);
         }
-        return this.truncateAndClamp(this.applyActiveZone(rawValue, settings.activeZoneStart, settings.activeZoneEnd));
+        const preparedRawValue = rawValue * (settings.invert ? -1 : 1);
+        return this.truncateAndClamp(
+            this.applyActiveZone(preparedRawValue, settings.activeZoneStart, settings.activeZoneEnd)
+        );
     }
 
     public transformButtonValue(
@@ -81,10 +58,13 @@ export class GamepadValueTransformService {
         if (!settings) {
             return this.truncateAndClamp(rawValue);
         }
-        return this.truncateAndClamp(this.applyActiveZone(rawValue, settings.activeZoneStart, settings.activeZoneEnd));
+        const preparedRawValue = rawValue * (settings.invert ? -1 : 1);
+        return this.truncateAndClamp(
+            this.applyActiveZone(preparedRawValue, settings.activeZoneStart, settings.activeZoneEnd)
+        );
     }
 
-    public truncateAndClamp(
+    private truncateAndClamp(
         value: number,
     ): number {
         return Math.min(
