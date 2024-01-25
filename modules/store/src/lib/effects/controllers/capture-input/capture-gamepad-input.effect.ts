@@ -26,7 +26,7 @@ function readGamepads(
                 return [ NEVER ];
             }
             const browserGamepad = navigator.getGamepads()[connection.gamepadIndex] as Gamepad;
-            const gamepadRead$ = interval(config.gamepad.connectionReadInterval).pipe(
+            const gamepadRead$ = interval(config.gamepad.inputReadInterval).pipe(
                 map(() => navigator.getGamepads()[connection.gamepadIndex] as Gamepad),
                 share()
             );

@@ -2,7 +2,6 @@ import { InjectionToken } from '@angular/core';
 
 export interface IControllersConfig {
     readonly gamepad: {
-        readonly connectionReadInterval: number;
         readonly inputReadInterval: number;
         readonly defaultAxisActiveZoneStart: number;
         readonly defaultButtonActiveZoneStart: number;
@@ -16,7 +15,6 @@ export interface IControllersConfig {
 export const CONTROLLERS_CONFIG = new InjectionToken<IControllersConfig>('CONTROLLERS_CONFIG', {
     factory: (): IControllersConfig => ({
         gamepad: {
-            connectionReadInterval: 100,
             inputReadInterval: 1000 / 30,
             defaultAxisActiveZoneStart: 0.1,
             defaultButtonActiveZoneStart: 0.01,

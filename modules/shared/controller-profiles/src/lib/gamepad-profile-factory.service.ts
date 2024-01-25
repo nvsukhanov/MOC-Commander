@@ -1,5 +1,6 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
+import { Memoize } from 'typescript-memoize';
 
 import { ControllerProfileGenericGamepadFactoryService } from './gamepad';
 import { UnknownControllerProfileFactoryService } from './unknown-controller';
@@ -17,6 +18,7 @@ export class GamepadProfileFactoryService {
     ) {
     }
 
+    @Memoize()
     public getGamepadProfile(
         gamepad: Gamepad
     ): IControllerProfile<GamepadSettings> {
