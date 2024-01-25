@@ -1,116 +1,139 @@
 import { concatLatestFrom, createEffect } from '@ngrx/effects';
-import { NEVER, Observable, distinctUntilChanged, filter, from, interval, map, merge, share, startWith, switchMap } from 'rxjs';
+import { NEVER, Observable, animationFrames, distinctUntilChanged, from, map, merge, mergeMap, share, switchMap } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
-import { CONTROLLERS_CONFIG, ControllerInputType, ControllerType, GamepadValueTransformService, IControllersConfig } from '@app/controller-profiles';
+import { ControllerInputType, ControllerType, GamepadSettings, GamepadValueTransformService } from '@app/controller-profiles';
 import { WINDOW } from '@app/shared-misc';
 
+import { GamepadControllerModel } from '../../../models';
 import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_INPUT_SELECTORS } from '../../../selectors';
 import { CONTROLLER_INPUT_ACTIONS } from '../../../actions';
 import { controllerInputIdFn } from '../../../reducers';
+
+function createAxisChangesActions(
+    gamepadRead$: Observable<Gamepad | null>,
+    valueTransformer: GamepadValueTransformService,
+    settings: GamepadSettings,
+    store: Store,
+    gamepadStoreModel: GamepadControllerModel
+): Array<Observable<Action>> {
+    const result = new Array<Observable<Action>>(gamepadStoreModel.axesCount);
+    for(let axisIndex = 0; axisIndex <= gamepadStoreModel.axesCount; axisIndex++) {
+        const inputId = controllerInputIdFn({
+            controllerId: gamepadStoreModel.id,
+            inputId: axisIndex.toString(),
+            inputType: ControllerInputType.Axis
+        });
+        result[axisIndex] = gamepadRead$.pipe(
+            map((gamepad) => gamepad?.axes[axisIndex] ?? 0),
+            distinctUntilChanged(),
+            map((rawValue) => ({
+                rawValue,
+                value: valueTransformer.transformAxisRawValue(rawValue, settings.axisConfigs[axisIndex])
+            })),
+            distinctUntilChanged((a, b) => a.value === b.value),
+            concatLatestFrom(() => store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(inputId))),
+            map(([ { rawValue, value }, prevValue ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
+                nextState: {
+                    controllerId: gamepadStoreModel.id,
+                    inputType: ControllerInputType.Axis,
+                    inputId: axisIndex.toString(),
+                    value,
+                    rawValue,
+                    isActivated: valueTransformer.isAxisActivationThresholdReached(rawValue, settings.axisConfigs[axisIndex]),
+                    timestamp: Date.now()
+                },
+                prevValue
+            }))
+        );
+    }
+    return result;
+}
+
+function createButtonChangesActions(
+    gamepadRead$: Observable<Gamepad | null>,
+    valueTransformer: GamepadValueTransformService,
+    settings: GamepadSettings,
+    store: Store,
+    gamepadStoreModel: GamepadControllerModel,
+): Array<Observable<Action>> {
+    const result = new Array<Observable<Action>>(gamepadStoreModel.buttonsCount);
+    for(let buttonIndex = 0; buttonIndex <= gamepadStoreModel.buttonsCount; buttonIndex++) {
+        const inputType = gamepadStoreModel.triggerButtonIndices.includes(buttonIndex) ? ControllerInputType.Trigger : ControllerInputType.Button;
+        const inputId = controllerInputIdFn({
+            controllerId: gamepadStoreModel.id,
+            inputId: buttonIndex.toString(),
+            inputType
+        });
+        result[buttonIndex] = gamepadRead$.pipe(
+            map((gamepad) => gamepad?.buttons[buttonIndex]?.value ?? 0),
+            distinctUntilChanged(),
+            map((rawValue) => ({
+                rawValue,
+                value: valueTransformer.transformButtonRawValue(rawValue, settings.buttonConfigs[buttonIndex])
+            })),
+            distinctUntilChanged((a, b) => a.value === b.value),
+            concatLatestFrom(() => store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(inputId))),
+            map(([ { rawValue, value }, prevValue ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
+                nextState: {
+                    controllerId: gamepadStoreModel.id,
+                    inputType,
+                    inputId: buttonIndex.toString(),
+                    value,
+                    rawValue,
+                    isActivated: valueTransformer.isButtonActivationThresholdReached(rawValue, settings.buttonConfigs[buttonIndex]),
+                    timestamp: Date.now()
+                },
+                prevValue
+            }))
+        );
+    }
+    return result;
+}
 
 function readGamepads(
     store: Store,
     navigator: Navigator,
     valueTransformer: GamepadValueTransformService,
-    config: IControllersConfig
 ): Observable<Action> {
+    const gamepadsRead$ = animationFrames().pipe(
+        map(() => navigator.getGamepads()),
+        share()
+    );
+
     return store.select(CONTROLLER_CONNECTION_SELECTORS.selectGamepadConnections).pipe(
         switchMap((connectedGamepads) => from(connectedGamepads)),
-        map(({ connection, gamepad, settings }) => {
-            if (!gamepad
-                || gamepad.controllerType !== ControllerType.Gamepad
+        map(({ connection, storeGamepad, settings }) => {
+            if (!storeGamepad
+                || storeGamepad.controllerType !== ControllerType.Gamepad
                 || settings?.controllerType !== ControllerType.Gamepad
                 || settings.ignoreInput
             ) {
                 return [ NEVER ];
             }
-            const browserGamepad = navigator.getGamepads()[connection.gamepadIndex] as Gamepad;
-            const gamepadRead$ = interval(config.gamepad.inputReadInterval).pipe(
-                map(() => navigator.getGamepads()[connection.gamepadIndex] as Gamepad),
+            const gamepadRead$ = gamepadsRead$.pipe(
+                map((gamepads) => gamepads[connection.gamepadIndex]),
                 share()
             );
-            const axesChanges = browserGamepad.axes.map((axisValue, axisIndex) => {
-                const inputId = controllerInputIdFn({
-                    controllerId: connection.controllerId,
-                    inputId: axisIndex.toString(),
-                    inputType: ControllerInputType.Axis
-                });
 
-                return gamepadRead$.pipe(
-                    filter((data): data is Gamepad => !!data),
-                    map((data) => valueTransformer.transformAxisRawValue(data.axes[axisIndex], settings.axisConfigs[axisIndex])),
-                    startWith(valueTransformer.transformAxisRawValue(axisValue, settings.axisConfigs[axisIndex])),
-                    distinctUntilChanged(),
-                    map((rawValue) => ({
-                        rawValue,
-                        value: valueTransformer.transformAxisValue(rawValue, settings.axisConfigs[axisIndex])
-                    })),
-                    concatLatestFrom(() => store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(inputId))),
-                    map(([ current, prevValue ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
-                        nextState: {
-                            controllerId: connection.controllerId,
-                            inputType: ControllerInputType.Axis,
-                            inputId: axisIndex.toString(),
-                            value: current.value,
-                            rawValue: current.rawValue,
-                            isActivated: valueTransformer.isAxisActivationThresholdReached(current.rawValue, settings.axisConfigs[axisIndex]),
-                            timestamp: Date.now()
-                        },
-                        prevValue
-                    }))
-                );
-            });
-
-            const buttonChanges = browserGamepad.buttons.map((_, buttonIndex) => {
-                const inputType = gamepad.triggerButtonIndices.includes(buttonIndex) ? ControllerInputType.Trigger : ControllerInputType.Button;
-                const inputId = controllerInputIdFn({
-                    controllerId: connection.controllerId,
-                    inputId: buttonIndex.toString(),
-                    inputType
-                });
-                return gamepadRead$.pipe(
-                    filter((data): data is Gamepad => !!data && !!data.buttons[buttonIndex]),
-                    map((apiGamepad) => valueTransformer.transformButtonRawValue(apiGamepad.buttons[buttonIndex].value, settings.buttonConfigs[buttonIndex])),
-                    startWith(valueTransformer.transformButtonRawValue(browserGamepad.buttons[buttonIndex].value, settings.buttonConfigs[buttonIndex])),
-                    distinctUntilChanged(),
-                    map((rawValue) => ({
-                        rawValue,
-                        value: valueTransformer.transformButtonValue(rawValue, settings.buttonConfigs[buttonIndex])
-                    })),
-                    concatLatestFrom(() => store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(inputId))),
-                    map(([ current, prevValue ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
-                        nextState: {
-                            controllerId: connection.controllerId,
-                            inputType,
-                            inputId: buttonIndex.toString(),
-                            value: current.value,
-                            rawValue: current.rawValue,
-                            isActivated: valueTransformer.isButtonActivationThresholdReached(current.rawValue, settings.buttonConfigs[buttonIndex]),
-                            timestamp: Date.now()
-                        },
-                        prevValue
-                    }))
-                );
-            });
+            const axesChanges = createAxisChangesActions(gamepadRead$, valueTransformer, settings, store, storeGamepad);
+            const buttonChanges = createButtonChangesActions(gamepadRead$, valueTransformer, settings, store, storeGamepad);
 
             return [ ...axesChanges, ...buttonChanges ];
         }),
-        switchMap((changes) => merge(...changes))
+        mergeMap((actions) => merge(...actions))
     ) as Observable<Action>;
 }
 
 export const CAPTURE_GAMEPAD_INPUT = createEffect((
     store: Store = inject(Store),
     window: Window = inject(WINDOW),
-    valueTransformer: GamepadValueTransformService = inject(GamepadValueTransformService),
-    config: IControllersConfig = inject(CONTROLLERS_CONFIG)
+    valueTransformer: GamepadValueTransformService = inject(GamepadValueTransformService)
 ) => {
     return store.select(CONTROLLER_INPUT_SELECTORS.isCapturing).pipe(
         switchMap((isCapturing) => isCapturing
-                                   ? readGamepads(store, window.navigator, valueTransformer, config)
+                                   ? readGamepads(store, window.navigator, valueTransformer)
                                    : NEVER
         )
     );
 }, { functional: true });
-

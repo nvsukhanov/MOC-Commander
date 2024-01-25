@@ -47,7 +47,7 @@ export const CONTROLLER_CONNECTION_SELECTORS = {
             return allConnections.filter((connection) => controllerEntities[connection.controllerId]?.controllerType === ControllerType.Gamepad)
                                  .map((connection) => ({
                                      connection: connection as GamepadConnectionModel,
-                                     gamepad: controllerEntities[connection.controllerId],
+                                     storeGamepad: controllerEntities[connection.controllerId],
                                      settings: settings[connection.controllerId]
                                  }));
         }
