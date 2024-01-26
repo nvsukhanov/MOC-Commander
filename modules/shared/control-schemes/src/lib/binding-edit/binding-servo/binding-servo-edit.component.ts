@@ -145,7 +145,7 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
         ).subscribe((result: number) => {
             const aposCenter = this._form?.controls.aposCenter.value ?? 0;
             const { cw, ccw } = getTranslationArcs(aposCenter, result);
-            const nextValue = Math.min(Math.abs(cw), Math.abs(ccw));
+            const nextValue = Math.min(Math.abs(cw), Math.abs(ccw)) * 2;
             if (this._form && nextValue !== this._form.controls.range.value) {
                 this._form.controls.range.setValue(nextValue);
                 this._form.controls.range.markAsDirty();
