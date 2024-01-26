@@ -7,19 +7,20 @@ export function calculateNextLoopingIndex(
     isLooping: boolean,
     loopingMode: LoopingMode,
 ): { nextIndex: number; isLooping: boolean } {
-    if (levels[previousIndex + indexIncrement] !== undefined) {
+    const evaluatedIndexIncrement = isLooping ? -indexIncrement : indexIncrement;
+    if (levels[previousIndex + evaluatedIndexIncrement] !== undefined) {
         return {
-            nextIndex: previousIndex + indexIncrement,
+            nextIndex: previousIndex + evaluatedIndexIncrement,
             isLooping: loopingMode !== LoopingMode.None ? isLooping : false
         };
     } else if (loopingMode === LoopingMode.Wrap) {
         return {
-            nextIndex: indexIncrement === 1 ? 0 : levels.length - 1,
-            isLooping: isLooping
+            nextIndex: evaluatedIndexIncrement === 1 ? 0 : levels.length - 1,
+            isLooping: false
         };
     } else if (loopingMode === LoopingMode.Mirror) {
         return {
-            nextIndex: indexIncrement === 1 ? levels.length - 2 : 1,
+            nextIndex: evaluatedIndexIncrement === 1 ? levels.length - 2 : 1,
             isLooping: !isLooping
         };
     }
