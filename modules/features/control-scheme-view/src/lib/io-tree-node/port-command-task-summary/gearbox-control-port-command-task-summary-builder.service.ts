@@ -15,6 +15,7 @@ export class GearboxControlPortCommandTaskSummaryBuilderService {
     ): Observable<string> {
         const level = payload.initialLevelIndex - payload.angleIndex;
         const angle = payload.angle;
-        return this.translocoService.selectTranslate('controlScheme.gearboxControlBinding.taskSummary', { level, angle });
+        const isLooping = payload.isLooping;
+        return this.translocoService.selectTranslate('controlScheme.gearboxControlBinding.taskSummary', { level, angle, isLooping });
     }
 }
