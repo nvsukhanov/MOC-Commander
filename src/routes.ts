@@ -1,6 +1,10 @@
 import { Routes } from '@angular/router';
-import { NotFoundComponent } from '@app/not-found';
+import { inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { ROUTE_SECTIONS } from '@app/shared-misc';
+import { NotFoundComponent } from '@app/not-found';
+import { BLUETOOTH_AVAILABILITY_SELECTORS } from '@app/store';
 
 import packageJson from '../package.json';
 
@@ -22,6 +26,9 @@ export const ROUTES: Routes = [
         path: ROUTE_SECTIONS.bluetoothUnavailable,
         loadComponent: () => import('@app/bluetooth-unavailable').then(m => m.BluetoothUnavailableComponent),
         pathMatch: 'full',
+        canActivate: [
+            (): Observable<boolean> => inject(Store).select(BLUETOOTH_AVAILABILITY_SELECTORS.canViewBluetoothUnavailablePage)
+        ]
     },
     {
         path: ROUTE_SECTIONS.controllers,
