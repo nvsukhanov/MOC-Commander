@@ -11,7 +11,7 @@ import {
     LoopingMode,
     PortCommandTask,
     PortCommandTaskPayload,
-    TrainControlTaskPayload,
+    TrainControlTaskPayload
 } from '../../../../models';
 import { ITaskPayloadFactory } from './i-task-payload-factory';
 import { calculateNextLoopingIndex } from './calculate-next-looping-index';
@@ -55,16 +55,16 @@ export class TrainControlTaskPayloadFactoryService implements ITaskPayloadFactor
         const previousLevelIndexUnguarded = binding.levels.indexOf(prevSpeed);
         const previousLevelIndex = previousLevelIndexUnguarded === -1 ? binding.initialLevelIndex : previousLevelIndexUnguarded;
 
-        const expectedAngleChangeDirection = (+prevLevelInput.isActivated - +nextLevelInput.isActivated) as -1 | 1 | 0;
+        const expectedLevelChange = (+prevLevelInput.isActivated - +nextLevelInput.isActivated) as -1 | 1 | 0;
 
         const { nextIndex, isLooping } = calculateNextLoopingIndex(
             binding.levels,
             previousLevelIndex,
-            expectedAngleChangeDirection,
+            expectedLevelChange,
             isLoopingPrev,
             binding.loopingMode
         );
-
+        
         const payload: TrainControlTaskPayload = {
             bindingType: ControlSchemeBindingType.TrainControl,
             speedIndex: nextIndex,

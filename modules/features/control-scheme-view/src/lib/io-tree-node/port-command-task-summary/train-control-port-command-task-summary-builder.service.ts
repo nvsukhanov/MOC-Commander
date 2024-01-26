@@ -16,6 +16,7 @@ export class TrainControlPortCommandTaskSummaryBuilderService {
     ): Observable<string> {
         const level = payload.initialLevelIndex - payload.speedIndex;
         const speedPercent = Math.round((payload.speed / MOTOR_LIMITS.maxSpeed) * 100);
-        return this.translocoService.selectTranslate('controlScheme.trainControlBinding.taskSummary', { level, speedPercent });
+        const isLooping = payload.isLooping;
+        return this.translocoService.selectTranslate('controlScheme.trainControlBinding.taskSummary', { level, speedPercent, isLooping });
     }
 }
