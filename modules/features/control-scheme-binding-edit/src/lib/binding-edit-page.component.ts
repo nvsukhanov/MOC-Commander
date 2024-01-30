@@ -34,6 +34,8 @@ import { BINDING_EDIT_PAGE_SELECTORS } from './binding-edit-page.selectors';
 export class BindingEditPageComponent implements OnInit {
     public readonly binding$: Observable<ControlSchemeBinding | undefined>;
 
+    private changedBinding: ControlSchemeBinding | null = null;
+
     constructor(
         private readonly store: Store,
         private readonly routesBuilderService: RoutesBuilderService,
@@ -45,6 +47,10 @@ export class BindingEditPageComponent implements OnInit {
         this.binding$ = this.store.select(BINDING_EDIT_PAGE_SELECTORS.selectEditedBinding);
     }
 
+    public get canSave(): boolean {
+        return this.changedBinding !== null;
+    }
+
     public ngOnInit(): void {
         this.titleService.setTitle$(
             this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName).pipe(
@@ -53,16 +59,24 @@ export class BindingEditPageComponent implements OnInit {
         );
     }
 
-    public onSave(
-        binding: ControlSchemeBinding
-    ): void {
+    public onBindingChange(binding: ControlSchemeBinding | null): void {
+        this.changedBinding = binding;
+    }
+
+    public onSave(): void {
+        if (!this.canSave) {
+            throw new Error('Cannot save');
+        }
         this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName).pipe(
             take(1),
             filter((schemeName): schemeName is string => (schemeName) !== null)
         ).subscribe((schemeName) => {
+            if (this.changedBinding === null) {
+                return;
+            }
             this.store.dispatch(CONTROL_SCHEME_ACTIONS.saveBinding({
                 schemeName,
-                binding
+                binding: this.changedBinding
             }));
             this.router.navigate(
                 this.routesBuilderService.controlSchemeView(schemeName)

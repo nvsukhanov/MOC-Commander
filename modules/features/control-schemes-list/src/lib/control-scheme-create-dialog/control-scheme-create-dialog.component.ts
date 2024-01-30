@@ -5,7 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
-import { CONTROL_SCHEME_NAME_IS_NOT_UNIQUE, CommonFormControlsBuilderService } from '@app/shared-control-schemes';
+import { CONTROL_SCHEME_NAME_IS_NOT_UNIQUE, ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 @Component({
     standalone: true,
@@ -32,9 +32,9 @@ export class ControlSchemeCreateDialogComponent {
 
     constructor(
         private readonly dialogRef: MatDialogRef<ControlSchemeCreateDialogComponent, { name: string }>,
-        private readonly commonFormControlBuilder: CommonFormControlsBuilderService,
+        private readonly formBuilder: ControlSchemeFormBuilderService,
     ) {
-        this.nameFormControl = this.commonFormControlBuilder.controlSchemeNameControl();
+        this.nameFormControl = this.formBuilder.controlSchemeNameControl(true);
     }
 
     public canSubmit(): boolean {

@@ -1,13 +1,13 @@
 <ng-container *ngIf="initialBindingData$ | ngrxPush; let initialData; else unableToCreateBinding">
-    <lib-cs-binding-edit #binding="appBindingEdit"
-                      [binding]="initialData"
+    <lib-cs-binding-edit [binding]="initialData"
+                         (bindingChange)="onBindingChange($event)"
     ></lib-cs-binding-edit>
 
     <div *libFeatureToolbarControls>
         <button mat-raised-button
                 class="toolbar-button"
-                [disabled]="!(binding.canSave$ | ngrxPush)"
-                (click)="onSave(binding.getValue())">
+                [disabled]="!canSave"
+                (click)="onSave()">
             {{ 'controlScheme.saveCreated' | transloco }}
         </button>
         <button mat-raised-button

@@ -222,6 +222,10 @@
               {
                 "sourceTag": "type:feature",
                 "onlyDependOnLibsWithTags": ["scope:shared", "scope:store"]
+              },
+              {
+                "sourceTag": "type:binding-modules",
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:store"]
               }
             ]
           }

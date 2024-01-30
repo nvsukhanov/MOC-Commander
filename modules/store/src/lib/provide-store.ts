@@ -39,9 +39,7 @@ import {
     HubPortModeInfoEffects,
     NotificationsEffects,
     SETTINGS_EFFECTS,
-    TASK_PROCESSING_EFFECTS,
-    provideTaskFactories,
-    provideTaskFilter
+    TASK_PROCESSING_EFFECTS
 } from './effects';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { HubStorageService } from './hub-storage.service';
@@ -110,8 +108,6 @@ export function provideApplicationStore(): EnvironmentProviders {
             HubServoCalibrationFacadeService,
             ControllerProfilesFacadeService,
             provideRouterStore(),
-            provideTaskFactories(),
-            provideTaskFilter(),
             provideStoreMigrations(),
             provideControllerProfiles()
         ]

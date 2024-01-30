@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { ValidationErrors, ValidatorFn } from '@angular/forms';
 import { DeepPartial } from '@app/shared-misc';
 import { ControlSchemeBinding, ControlSchemeModel, attachedIosIdFn } from '@app/store';
 
-import { CommonFormControlsBuilderService, ControlSchemeFormBuilderService, PortConfigFormBuilderService } from '../forms';
 import { ControlSchemeDecompressorService } from './control-scheme-decompressor.service';
+import { BINDING_VALIDATOR, IBindingValidator } from '../i-binding-validator';
+import { PortConfigFormBuilderService } from '../port-config-form-builder.service';
+import { ControlSchemeFormBuilderService } from '../control-scheme-form-builder.service';
 
 export enum ControlSchemeImportValidationErrors {
     CorruptedData = 'CorruptedData',
@@ -16,10 +18,10 @@ export enum ControlSchemeImportValidationErrors {
 @Injectable()
 export class ControlSchemeImportValidationService {
     constructor(
-        private readonly commonFormBuilder: CommonFormControlsBuilderService,
+        private readonly commonFormBuilder: ControlSchemeFormBuilderService,
         private readonly portConfigFormBuilder: PortConfigFormBuilderService,
-        private readonly controlSchemeFormBuilder: ControlSchemeFormBuilderService,
-        private readonly decompressor: ControlSchemeDecompressorService
+        private readonly decompressor: ControlSchemeDecompressorService,
+        @Inject(BINDING_VALIDATOR) private readonly bindingValidator: IBindingValidator
     ) {
     }
 
@@ -53,13 +55,7 @@ export class ControlSchemeImportValidationService {
             return { [ControlSchemeImportValidationErrors.CorruptedBindings]: true };
         }
         for (const binding of controlScheme.bindings) {
-            if (!binding || binding.bindingType === undefined) {
-                return { [ControlSchemeImportValidationErrors.CorruptedBindings]: true };
-            }
-            const bindingFormGroup = this.controlSchemeFormBuilder.createBindingForm();
-            this.controlSchemeFormBuilder.patchForm(bindingFormGroup, binding);
-            const targetForm = bindingFormGroup.controls[binding.bindingType];
-            if (targetForm.invalid || bindingFormGroup.controls.bindingType.invalid) {
+            if (!binding || binding.bindingType === undefined || !this.bindingValidator.isValid(binding)) {
                 return { [ControlSchemeImportValidationErrors.CorruptedBindings]: true };
             }
         }

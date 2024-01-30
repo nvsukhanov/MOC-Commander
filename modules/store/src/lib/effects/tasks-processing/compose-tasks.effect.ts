@@ -4,11 +4,11 @@ import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
 
 import { attachedIosIdFn } from '../../reducers';
-import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, PORT_TASKS_ACTIONS, } from '../../actions';
+import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, PORT_TASKS_ACTIONS } from '../../actions';
 import { BindingTaskComposingData, CONTROL_SCHEME_SELECTORS, PORT_TASKS_SELECTORS } from '../../selectors';
-import { ControlSchemeBinding, ControlSchemeModel, PortCommandTask, } from '../../models';
-import { TaskFactoryService } from './task-factory';
+import { ControlSchemeBinding, ControlSchemeModel, PortCommandTask } from '../../models';
 import { ITaskFilter, TASK_FILTER } from './i-task-filter';
+import { ITaskFactory, TASK_FACTORY } from './i-task-factory';
 
 function groupBindingsByHubsPortId(
     bindings: ControlSchemeBinding[]
@@ -50,7 +50,7 @@ function getTaskComposingData$(
 
 function composeTasksForBindingGroup(
     composingData: BindingTaskComposingData,
-    taskBuilder: TaskFactoryService
+    taskBuilder: ITaskFactory
 ): PortCommandTask[] {
     const previousTask: PortCommandTask | null = composingData.runningTask
         || composingData.lastExecutedTask
@@ -66,7 +66,7 @@ export const COMPOSE_TASKS_EFFECT = createEffect((
     actions: Actions = inject(Actions),
     store: Store = inject(Store),
     taskFilter: ITaskFilter = inject(TASK_FILTER),
-    taskBuilder: TaskFactoryService = inject(TaskFactoryService)
+    taskBuilder: ITaskFactory = inject(TASK_FACTORY)
 ) => {
     return actions.pipe(
         ofType(CONTROL_SCHEME_ACTIONS.schemeStarted, CONTROL_SCHEME_ACTIONS.stopScheme),

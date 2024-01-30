@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
-import { SetSpeedTaskPayload, calculateSpeedPower } from '@app/store';
+import { SetSpeedTaskPayload } from '@app/store';
+import { calculateSpeedPower } from '@app/shared-misc';
 
 @Injectable({ providedIn: 'root' })
 export class SetSpeedPortCommandTaskSummaryBuilderService {

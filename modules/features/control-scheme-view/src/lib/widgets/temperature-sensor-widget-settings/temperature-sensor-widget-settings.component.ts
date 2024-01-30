@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ValidationMessagesDirective, WidgetType } from '@app/shared-misc';
 import { TemperatureWidgetConfigModel } from '@app/store';
-import { CommonFormControlsBuilderService } from '@app/shared-control-schemes';
+import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 @Component({
     standalone: true,
@@ -47,7 +47,7 @@ export class TemperatureSensorWidgetSettingsComponent implements OnDestroy {
 
     constructor(
         private readonly formBuilder: FormBuilder,
-        private readonly commonFormBuilder: CommonFormControlsBuilderService,
+        private readonly commonFormBuilder: ControlSchemeFormBuilderService,
         private readonly translocoService: TranslocoService,
     ) {
     }

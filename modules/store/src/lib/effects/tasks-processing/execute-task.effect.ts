@@ -4,11 +4,11 @@ import { inject } from '@angular/core';
 
 import { HubStorageService } from '../../hub-storage.service';
 import { PORT_TASKS_ACTIONS } from '../../actions';
-import { TaskRunnerService } from './task-runner';
+import { ITaskRunner, TASK_RUNNER } from './i-task-runner';
 
 export const EXECUTE_TASK_EFFECT = createEffect((
     actions: Actions = inject(Actions),
-    taskRunner: TaskRunnerService = inject(TaskRunnerService),
+    taskRunner: ITaskRunner = inject(TASK_RUNNER),
     hubStorage: HubStorageService = inject(HubStorageService)
 ) => {
     return actions.pipe(
