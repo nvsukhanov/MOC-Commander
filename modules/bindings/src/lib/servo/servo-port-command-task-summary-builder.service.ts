@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { AttachedIoPropsModel, ServoTaskPayload } from '@app/store';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ServoPortCommandTaskSummaryBuilderService {
     constructor(
         private readonly translocoService: TranslocoService

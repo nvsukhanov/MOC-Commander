@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { StepperTaskPayload } from '@app/store';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class StepperPortCommandTaskSummaryBuilderService {
     constructor(
         private readonly translocoService: TranslocoService

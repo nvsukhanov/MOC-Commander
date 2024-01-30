@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { GearboxControlTaskPayload } from '@app/store';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class GearboxControlPortCommandTaskSummaryBuilderService {
     constructor(
         private readonly translocoService: TranslocoService
