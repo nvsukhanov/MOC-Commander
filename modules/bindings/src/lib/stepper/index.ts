@@ -5,3 +5,4 @@ export * from './stepper-task-payload-builder.service';
 export * from './stepper-task-runner.service';
 export * from './stepper-payload-hash';
 export * from './stepper-binding-form';
+export * from './stepper-port-command-task-summary-builder.service';

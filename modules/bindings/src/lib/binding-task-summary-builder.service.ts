@@ -1,22 +1,19 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable, filter, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { ControlSchemeBindingType } from '@app/shared-misc';
+import { IPortCommandTaskSummaryBuilder } from '@app/control-scheme-view';
 import { ATTACHED_IO_PROPS_SELECTORS, AttachedIoPropsModel, PortCommandTask } from '@app/store';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 
-import { SetSpeedPortCommandTaskSummaryBuilderService } from './set-speed-port-command-task-summary-builder.service';
-import { ServoPortCommandTaskSummaryBuilderService } from './servo-port-command-task-summary-builder.service';
-import { SetAnglePortCommandTaskSummaryBuilderService } from './set-angle-port-command-task-summary-builder.service';
-import { StepperPortCommandTaskSummaryBuilderService } from './stepper-port-command-task-summary-builder.service';
-import { TrainControlPortCommandTaskSummaryBuilderService } from './train-control-port-command-task-summary-builder.service';
-import { GearboxControlPortCommandTaskSummaryBuilderService } from './gearbox-control-port-command-task-summary-builder.service';
+import { SetSpeedPortCommandTaskSummaryBuilderService } from './set-speed';
+import { SetAnglePortCommandTaskSummaryBuilderService } from './set-angle';
+import { ServoPortCommandTaskSummaryBuilderService } from './servo';
+import { StepperPortCommandTaskSummaryBuilderService } from './stepper';
+import { TrainControlPortCommandTaskSummaryBuilderService } from './train-control';
+import { GearboxControlPortCommandTaskSummaryBuilderService } from './gearbox';
 
-@Pipe({
-    standalone: true,
-    name: 'portCommandTaskSummary',
-    pure: true
-})
-export class PortCommandTaskSummaryPipe implements PipeTransform {
+@Injectable()
+export class BindingTaskSummaryBuilderService implements IPortCommandTaskSummaryBuilder {
     constructor(
         private readonly setSpeedPortCommandTaskSummaryBuilder: SetSpeedPortCommandTaskSummaryBuilderService,
         private readonly setAnglePortCommandTaskSummaryBuilder: SetAnglePortCommandTaskSummaryBuilderService,
@@ -28,7 +25,7 @@ export class PortCommandTaskSummaryPipe implements PipeTransform {
     ) {
     }
 
-    public transform(
+    public buildTaskSummary(
         portCommandTask: PortCommandTask
     ): Observable<string> {
         const payload = portCommandTask.payload;

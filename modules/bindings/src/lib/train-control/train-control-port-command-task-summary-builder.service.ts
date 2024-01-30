@@ -4,7 +4,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { MOTOR_LIMITS } from 'rxpoweredup';
 import { TrainControlTaskPayload } from '@app/store';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class TrainControlPortCommandTaskSummaryBuilderService {
     constructor(
         private readonly translocoService: TranslocoService

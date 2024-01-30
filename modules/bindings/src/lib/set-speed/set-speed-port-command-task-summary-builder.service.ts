@@ -4,7 +4,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { SetSpeedTaskPayload } from '@app/store';
 import { calculateSpeedPower } from '@app/shared-misc';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class SetSpeedPortCommandTaskSummaryBuilderService {
     constructor(
         private readonly translocoService: TranslocoService

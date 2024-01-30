@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { AttachedIoPropsModel, SetAngleTaskPayload } from '@app/store';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class SetAnglePortCommandTaskSummaryBuilderService {
     constructor(
         private readonly translocoService: TranslocoService

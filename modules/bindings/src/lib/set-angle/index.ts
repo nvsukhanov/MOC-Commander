@@ -5,3 +5,4 @@ export * from './set-angle-task-payload-builder.service';
 export * from './set-angle-task-runner.service';
 export * from './set-angle-payload-hash';
 export * from './set-angle-binding-form';
+export * from './set-angle-port-command-task-summary-builder.service';
