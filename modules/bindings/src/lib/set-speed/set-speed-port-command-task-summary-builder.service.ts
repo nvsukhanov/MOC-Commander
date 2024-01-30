@@ -1,20 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
-import { SetSpeedTaskPayload } from '@app/store';
-import { calculateSpeedPower } from '@app/shared-misc';
+import { PortCommandTask } from '@app/store';
+import { ControlSchemeBindingType, calculateSpeedPower } from '@app/shared-misc';
+
+import { IBindingTaskSummaryBuilder } from '../i-binding-task-summary-builder';
 
 @Injectable()
-export class SetSpeedPortCommandTaskSummaryBuilderService {
+export class SetSpeedPortCommandTaskSummaryBuilderService implements IBindingTaskSummaryBuilder<ControlSchemeBindingType.SetSpeed> {
     constructor(
         private readonly translocoService: TranslocoService
     ) {
     }
 
-    public build(
-        payload: SetSpeedTaskPayload
+    public buildTaskSummary(
+        task: PortCommandTask<ControlSchemeBindingType.SetSpeed>
     ): Observable<string> {
-        const { speed, power } = calculateSpeedPower(payload.speed, payload.brakeFactor, payload.power);
+        const { speed, power } = calculateSpeedPower(task.payload.speed, task.payload.brakeFactor, task.payload.power);
         if (power !== 0 && speed === 0) {
             return this.translocoService.selectTranslate('controlScheme.setSpeedBinding.brakeTaskSummary');
         }
