@@ -5,7 +5,7 @@ import { ControlSchemeBinding, ControlSchemeInputAction, ControlSchemeTrainContr
 import { CommonFormMapperService, InputFormGroup } from '../common';
 import { TrainControlBindingForm } from './train-control-binding-form';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class TrainControlBindingFormMapperService {
     constructor(
         private readonly commonFormMapperService: CommonFormMapperService
