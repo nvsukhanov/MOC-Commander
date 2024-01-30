@@ -1,4 +1,4 @@
-<mat-card *ngIf="form">
+<mat-card>
     <mat-card-header>
         <mat-card-title>
             <mat-form-field class="binding-type-select">
@@ -15,6 +15,9 @@
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <ng-container *libCsRenderBindingDetailsEdit="form"></ng-container>
+        <ng-container [libCsBindingEditDetailsRender]="binding"
+                      [libCsBindingEditDetailsRenderBindingType]="form.controls.bindingType.value"
+                      (libCsBindingEditDetailsRenderBindingChange)="onBindingChange($event)"
+        ></ng-container>
     </mat-card-content>
 </mat-card>

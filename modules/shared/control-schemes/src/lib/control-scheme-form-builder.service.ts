@@ -1,0 +1,60 @@
+import { Injectable } from '@angular/core';
+import { AsyncValidatorFn, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { TranslocoService } from '@ngneat/transloco';
+import { Store } from '@ngrx/store';
+import { AppValidators, ControlSchemeBindingType } from '@app/shared-misc';
+
+import { ControlSchemeValidators } from './validation';
+
+@Injectable({ providedIn: 'root' })
+export class ControlSchemeFormBuilderService {
+    constructor(
+        private readonly formBuilder: FormBuilder,
+        private readonly translocoService: TranslocoService,
+        private readonly store: Store
+    ) {
+    }
+
+    public bindingTypeControl(): FormControl<ControlSchemeBindingType> {
+        return this.formBuilder.control<ControlSchemeBindingType>(
+            ControlSchemeBindingType.SetSpeed,
+            {
+                nonNullable: true,
+                validators: [
+                    Validators.required,
+                    AppValidators.isInEnum(ControlSchemeBindingType)
+                ]
+            }
+        );
+    }
+
+    public controlSchemeNameControl(
+        requireUniqueName: boolean = true
+    ): FormControl<string> {
+        const asyncValidators: AsyncValidatorFn[] = [];
+        if (requireUniqueName) {
+            asyncValidators.push(ControlSchemeValidators.nameUniqueness(this.store));
+        }
+        return this.formBuilder.control<string>(this.translocoService.translate('controlScheme.newSchemeDialogDefaultName'), {
+            nonNullable: true,
+            validators: [
+                Validators.required,
+            ],
+            asyncValidators
+        });
+    }
+
+    public hubIdControl(): FormControl<string | null> {
+        return this.formBuilder.control<string | null>(null, {
+            nonNullable: false,
+            validators: [ Validators.required ]
+        });
+    }
+
+    public portIdControl(): FormControl<number | null> {
+        return this.formBuilder.control<number | null>(null, {
+            nonNullable: false,
+            validators: [ Validators.required, Validators.min(0), Validators.max(0xFF) ]
+        });
+    }
+}

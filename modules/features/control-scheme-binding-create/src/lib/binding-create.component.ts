@@ -35,6 +35,8 @@ import { BINDING_CREATE_PAGE_SELECTORS } from './binding-create-page.selectors';
 export class BindingCreateComponent implements OnInit {
     public readonly initialBindingData$: Observable<Partial<ControlSchemeBinding | null>>;
 
+    private binding: ControlSchemeBinding | null = null;
+
     constructor(
         private readonly store: Store,
         private readonly routesBuilderService: RoutesBuilderService,
@@ -45,6 +47,16 @@ export class BindingCreateComponent implements OnInit {
         this.initialBindingData$ = this.store.select(BINDING_CREATE_PAGE_SELECTORS.selectDataForNewBinding).pipe(
             take(1)
         );
+    }
+
+    public get canSave(): boolean {
+        return this.binding !== null;
+    }
+
+    public onBindingChange(
+        binding: ControlSchemeBinding | null
+    ): void {
+        this.binding = binding;
     }
 
     public ngOnInit(): void {
@@ -66,16 +78,20 @@ export class BindingCreateComponent implements OnInit {
         });
     }
 
-    public onSave(
-        binding: ControlSchemeBinding
-    ): void {
+    public onSave(): void {
+        if (!this.canSave) {
+            throw new Error('Cannot save');
+        }
         this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName).pipe(
             take(1),
             filter((schemeName): schemeName is string => (schemeName) !== null)
         ).subscribe((schemeName) => {
+            if (this.binding === null) {
+                return;
+            }
             this.store.dispatch(CONTROL_SCHEME_ACTIONS.createBinding({
                 schemeName: schemeName,
-                binding
+                binding: this.binding
             }));
             this.router.navigate(
                 this.routesBuilderService.controlSchemeView(schemeName)

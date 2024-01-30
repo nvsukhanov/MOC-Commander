@@ -1,12 +1,12 @@
 <lib-cs-binding-edit [binding]="binding$ | ngrxPush"
-                  #binding="appBindingEdit"
+                     (bindingChange)="onBindingChange($event)"
 ></lib-cs-binding-edit>
 
 <div *libFeatureToolbarControls>
     <button mat-raised-button
             class="toolbar-button"
-            [disabled]="!(binding.canSave$ | ngrxPush)"
-            (click)="onSave(binding.getValue())">
+            [disabled]="!(canSave)"
+            (click)="onSave()">
         {{ 'controlScheme.saveEdited' | transloco }}
     </button>
     <button mat-raised-button

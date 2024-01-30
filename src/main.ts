@@ -10,21 +10,23 @@ import { RootComponent } from '@app/root';
 import { ShowOnTouchedErrorStateMatcher } from '@app/shared-misc';
 import { provideI18n } from '@app/shared-i18n';
 import { provideApplicationStore } from '@app/store';
+import { provideBindings } from '@app/bindings';
 
 import { ROUTES } from './routes';
 
 bootstrapApplication(RootComponent, {
     providers: [
-    provideRouter(ROUTES, withPreloading(PreloadAllModules)),
-    provideI18n(),
-    provideAnimations(),
-    provideControllerProfiles(),
-    importProvidersFrom(MatSnackBarModule),
-    provideApplicationStore(),
-    { provide: ErrorStateMatcher, useClass: ShowOnTouchedErrorStateMatcher },
-    provideServiceWorker('ngsw-worker.js', {
-        enabled: !isDevMode(),
-        registrationStrategy: 'registerWhenStable:30000'
-    })
-]
+        provideRouter(ROUTES, withPreloading(PreloadAllModules)),
+        provideI18n(),
+        provideAnimations(),
+        provideControllerProfiles(),
+        importProvidersFrom(MatSnackBarModule),
+        provideApplicationStore(),
+        provideBindings(),
+        { provide: ErrorStateMatcher, useClass: ShowOnTouchedErrorStateMatcher },
+        provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+        })
+    ]
 });

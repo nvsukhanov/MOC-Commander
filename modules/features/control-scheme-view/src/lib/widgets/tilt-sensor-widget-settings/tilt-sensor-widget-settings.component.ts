@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ValidationMessagesDirective, WidgetType } from '@app/shared-misc';
 import { ToggleControlComponent } from '@app/shared-ui';
 import { TiltWidgetConfigModel } from '@app/store';
-import { CommonFormControlsBuilderService } from '@app/shared-control-schemes';
+import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 @Component({
     standalone: true,
@@ -53,7 +53,7 @@ export class TiltSensorWidgetSettingsComponent implements OnDestroy {
     constructor(
         private readonly formBuilder: FormBuilder,
         private readonly translocoService: TranslocoService,
-        private readonly commonFormBuilder: CommonFormControlsBuilderService,
+        private readonly commonFormBuilder: ControlSchemeFormBuilderService,
     ) {
     }
 

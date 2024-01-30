@@ -5,7 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { ValidationMessagesDirective, WidgetType } from '@app/shared-misc';
 import { VoltageWidgetConfigModel } from '@app/store';
-import { CommonFormControlsBuilderService } from '@app/shared-control-schemes';
+import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 @Component({
     standalone: true,
@@ -45,7 +45,7 @@ export class VoltageSensorWidgetSettingsComponent implements OnDestroy {
 
     constructor(
         private readonly formBuilder: FormBuilder,
-        private readonly commonFormBuilder: CommonFormControlsBuilderService,
+        private readonly commonFormBuilder: ControlSchemeFormBuilderService,
         private readonly translocoService: TranslocoService,
     ) {
     }

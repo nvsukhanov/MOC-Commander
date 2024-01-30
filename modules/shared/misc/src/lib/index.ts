@@ -16,3 +16,4 @@ export * from './title.service';
 export * from './math';
 export * from './routing';
 export * from './is-os-linux';
+export * from './calculate-speed-power';

@@ -1,20 +1,17 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { NgForOf, NgIf } from '@angular/common';
-import { Observable, map, of, startWith } from 'rxjs';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { MatDividerModule } from '@angular/material/divider';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatSelectModule } from '@angular/material/select';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ControlSchemeBindingType, getEnumValues } from '@app/shared-misc';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AppValidators, ControlSchemeBindingType, getEnumValues } from '@app/shared-misc';
 import { BindingTypeToL10nKeyPipe, HideOnSmallScreenDirective } from '@app/shared-ui';
 import { ControlSchemeBinding } from '@app/store';
 
-import { ControlSchemeBindingForm, ControlSchemeFormBuilderService, ControlSchemeFormMapperService } from '../forms';
-import { RenderBindingDetailsEditDirective } from './render-binding-details-edit.directive';
-import { BindingControlSelectHubComponent, BindingControlSelectIoComponent } from '../controls';
 import { BindingEditSectionComponent } from './section';
+import { BindingEditDetailsRenderDirective } from './binding-edit-details-render.directive';
 
 @Component({
     standalone: true,
@@ -24,10 +21,7 @@ import { BindingEditSectionComponent } from './section';
     imports: [
         MatCardModule,
         NgIf,
-        BindingControlSelectHubComponent,
         PushPipe,
-        BindingControlSelectIoComponent,
-        RenderBindingDetailsEditDirective,
         MatDividerModule,
         BindingEditSectionComponent,
         TranslocoPipe,
@@ -36,21 +30,34 @@ import { BindingEditSectionComponent } from './section';
         MatSelectModule,
         BindingTypeToL10nKeyPipe,
         NgForOf,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        BindingEditDetailsRenderDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    exportAs: 'appBindingEdit'
+    exportAs: 'lib-cs-binding-edit'
 })
 export class BindingEditComponent {
+    @Output() public readonly bindingChange = new EventEmitter<ControlSchemeBinding | null>();
+
     public readonly availableBindingTypes = getEnumValues(ControlSchemeBindingType);
 
-    private _canSave$: Observable<boolean> = of(false);
+    protected form = this.formBuilder.group({
+        bindingType: this.formBuilder.control<ControlSchemeBindingType>(
+            ControlSchemeBindingType.SetSpeed,
+            {
+                nonNullable: true,
+                validators: [
+                    Validators.required,
+                    AppValidators.isInEnum(ControlSchemeBindingType)
+                ]
+            }
+        )
+    });
 
-    private _form?: ControlSchemeBindingForm;
+    private _binding: Partial<ControlSchemeBinding> | undefined;
 
     constructor(
-        private readonly formBuilder: ControlSchemeFormBuilderService,
-        private readonly formMapper: ControlSchemeFormMapperService,
+        private readonly formBuilder: FormBuilder
     ) {
     }
 
@@ -58,40 +65,15 @@ export class BindingEditComponent {
     public set binding(
         binding: Partial<ControlSchemeBinding> | undefined
     ) {
-        if (binding) {
-            const form = this.formBuilder.createBindingForm();
-
-            this.formBuilder.patchForm(form, binding);
-
-            this._canSave$ = form.statusChanges.pipe(
-                startWith(null),
-                map(() => {
-                    const isOpModeDirty = form.controls.bindingType.dirty;
-                    const isOpModeValid = form.controls.bindingType.valid;
-                    const isBindingFormDirty = form.controls[form.controls.bindingType.value].dirty;
-                    const isBindingFormValid = form.controls[form.controls.bindingType.value].valid;
-                    return (isOpModeDirty || isBindingFormDirty) && isOpModeValid && isBindingFormValid;
-                })
-            );
-            this._form = form;
-        } else {
-            this._form = undefined;
-            this._canSave$ = of(false);
-        }
+        this._binding = binding;
+        this.form.controls.bindingType.patchValue(binding?.bindingType ?? ControlSchemeBindingType.SetSpeed);
     }
 
-    public get form(): ControlSchemeBindingForm | undefined {
-        return this._form;
+    public get binding(): Partial<ControlSchemeBinding> | undefined {
+        return this._binding;
     }
 
-    public get canSave$(): Observable<boolean> {
-        return this._canSave$;
-    }
-
-    public getValue(): ControlSchemeBinding {
-        if (!this._form) {
-            throw new Error('BindingEditComponent: form is not initialized');
-        }
-        return this.formMapper.mapToModel(this._form);
+    public onBindingChange(binding: ControlSchemeBinding | null): void {
+        this.bindingChange.emit(binding);
     }
 }
