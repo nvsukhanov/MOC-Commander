@@ -8,7 +8,7 @@ import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 import { CommonBindingsFormControlsBuilderService } from '../common';
 import { ServoBindingForm } from './servo-binding-form';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ServoBindingFormBuilderService {
     constructor(
         private readonly formBuilder: FormBuilder,

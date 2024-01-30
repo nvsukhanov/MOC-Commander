@@ -5,7 +5,7 @@ import { ControlSchemeBinding, ControlSchemeInputAction, ControlSchemeSetAngleBi
 import { CommonFormMapperService } from '../common';
 import { SetAngleBindingForm } from './set-angle-binding-form';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class SetAngleBindingFormMapperService {
     constructor(
         private readonly commonFormMapperService: CommonFormMapperService

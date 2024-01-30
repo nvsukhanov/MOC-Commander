@@ -10,3 +10,4 @@ export * from './common-bindings-form-controls-builder.service';
 export * from './common-form-mapper.service';
 export * from './binding-edit-common.selectors';
 export * from './input-form-group';
+export * from './provide-binding-common-services';

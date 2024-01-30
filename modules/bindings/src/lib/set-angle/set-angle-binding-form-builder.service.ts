@@ -8,7 +8,7 @@ import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 import { CommonBindingsFormControlsBuilderService } from '../common';
 import { SetAngleBindingForm } from './set-angle-binding-form';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class SetAngleBindingFormBuilderService {
     constructor(
         private readonly formBuilder: FormBuilder,

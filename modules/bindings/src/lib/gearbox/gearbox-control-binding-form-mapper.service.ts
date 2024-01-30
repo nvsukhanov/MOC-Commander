@@ -5,7 +5,7 @@ import { ControlSchemeBinding, ControlSchemeGearboxControlBinding, ControlScheme
 import { CommonFormMapperService, InputFormGroup } from '../common';
 import { GearboxControlBindingForm } from './gearbox-binding-form';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class GearboxControlBindingFormMapperService {
     constructor(
         private readonly commonFormMapperService: CommonFormMapperService

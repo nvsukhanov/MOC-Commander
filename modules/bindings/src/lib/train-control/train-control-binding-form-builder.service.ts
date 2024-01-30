@@ -7,7 +7,7 @@ import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 import { CommonBindingsFormControlsBuilderService } from '../common';
 import { TrainControlBindingForm } from './train-control-binding-form';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class TrainControlBindingFormBuilderService {
     constructor(
         private readonly formBuilder: FormBuilder,

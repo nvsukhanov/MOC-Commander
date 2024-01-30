@@ -5,7 +5,7 @@ import { ControlSchemeBinding, ControlSchemeInputAction, ControlSchemeServoBindi
 import { CommonFormMapperService } from '../common';
 import { ServoBindingForm } from './servo-binding-form';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ServoBindingFormMapperService {
     constructor(
         private readonly commonFormMapperService: CommonFormMapperService
