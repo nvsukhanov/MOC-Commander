@@ -1,5 +1,5 @@
 {
-  "name": "webpoweredapp",
+  "name": "moc-commander",
   "version": "1.0.2",
   "scripts": {
     "start": "nx serve",

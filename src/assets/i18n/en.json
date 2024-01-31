@@ -1,5 +1,5 @@
 {
-  "appName": "webPoweredApp",
+  "appName": "MOC Commander",
   "appTitleTemplate": "{ pageTitle } | { appName }",
   "pageNotFound": "Page not found",
   "hubListHubIsNotConnected": "disconnected",
@@ -339,7 +339,7 @@
     "licenseTitle": "License",
     "licenseText": "MIT License",
     "sourcesTitle": "Sources",
-    "githubTitle": "webPoweredApp GitHub",
+    "githubTitle": "MOC Commander GitHub",
     "githubApiTitle": "rxPoweredUp GitHub",
     "versionTitle": "Version"
   },
