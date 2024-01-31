@@ -1,12 +1,17 @@
 {
-  "name": "webPoweredApp",
-  "short_name": "webPoweredApp",
+  "name": "MOC Commander",
+  "short_name": "MOC Commander",
   "theme_color": "#f4f4f4",
   "background_color": "#f4f4f4",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
   "icons": [
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "purpose": "maskable any"
+    },
     {
       "src": "assets/android-chrome-192x192.png",
       "sizes": "192x192",

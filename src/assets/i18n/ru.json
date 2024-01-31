@@ -1,5 +1,5 @@
 {
-  "appName": "webPoweredApp",
+  "appName": "MOC Commander",
   "appTitleTemplate": "{ pageTitle } | { appName }",
   "pageNotFound": "Страница не найдена",
   "hubListHubIsNotConnected": "не подключен",
@@ -339,7 +339,7 @@
     "licenseTitle": "Лицензия",
     "licenseText": "Лицензия MIT",
     "sourcesTitle": "Исходный код",
-    "githubTitle": "webPoweredApp GitHub",
+    "githubTitle": "MOC Commander GitHub",
     "githubApiTitle": "rxPoweredUp GitHub",
     "versionTitle": "Версия"
   },

@@ -20,11 +20,11 @@ import { TitleService } from '@app/shared-misc';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AboutComponent implements OnInit {
-    public readonly webPoweredAppURL = 'https://github.com/nvsukhanov/webPoweredApp';
+    public readonly mocCommanderUrl = 'https://github.com/nvsukhanov/MOC-Commander';
 
     public readonly rxPoweredUpURL = 'https://github.com/nvsukhanov/rxPoweredUp';
 
-    public readonly licenseURL = 'https://github.com/nvsukhanov/webPoweredApp/blob/main/LICENSE.md';
+    public readonly licenseURL = 'https://github.com/nvsukhanov/MOC-Commander/blob/main/LICENSE.md';
 
     public readonly version$: Observable<string>;
 

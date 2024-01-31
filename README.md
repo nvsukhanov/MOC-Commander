@@ -1,12 +1,12 @@
-# webPoweredApp
+# MOC Commander
 
-[![GitHub license](https://img.shields.io/github/license/nvsukhanov/webPoweredApp)](https://github.com/nvsukhanov/webPoweredApp/blob/main/LICENSE.md)
-[![CI Status](https://github.com/nvsukhanov/webPoweredApp/actions/workflows/ci.yml/badge.svg)](https://github.com/nvsukhanov/webPoweredApp/actions)
+[![GitHub license](https://img.shields.io/github/license/nvsukhanov/MOC-Commander)](https://github.com/nvsukhanov/MOC-Commander/blob/main/LICENSE.md)
+[![CI Status](https://github.com/nvsukhanov/MOC-Commander/actions/workflows/ci.yml/badge.svg)](https://github.com/nvsukhanov/MOC-Commander/actions)
 
 An open-source client-side web application designed for controlling LEGO Powered Up MOCs using a variety of physical
 input devices.
 
-[Demo](https://webpoweredapp.pages.dev)
+[Demo](https://moc-commander.pages.dev)
 
 # Disclaimer
 
