@@ -21,7 +21,7 @@
 
 ![Controllers list](https://raw.github.com/nvsukhanov/nvsukhanov.github.io/main/moc-commander/sd-manual/enable-web-bluetooth.png?raw=True)
 
-3. Relaunch Google Chrome and open URL [https://moc-commander.pages.dev](https://moc-commander.pages.dev)
+3. Relaunch Google Chrome and open URL [https://moc-commander.com](https://moc-commander.com)
 
 Now you can use MOC Commander in desktop mode and use Steam Input in keyboard mode to control your MOCs.
 
@@ -41,7 +41,7 @@ flatpak --user override --filesystem=/run/udev:ro --filesystem=~/.local/share/ap
 ## Install MOC Commander as PWA and add it to Steam Client Library
 
 1. Open Google Chrome
-2. Open URL [https://moc-commander.pages.dev](https://moc-commander.pages.dev)
+2. Open URL [https://moc-commander.com](https://moc-commander.com)
 3. Press "Install" button in the top right corner
 
 ![Controllers list](https://raw.github.com/nvsukhanov/nvsukhanov.github.io/main/moc-commander/sd-manual/install-pwa.png?raw=True)
