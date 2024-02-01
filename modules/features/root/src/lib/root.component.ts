@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CdkScrollable } from '@angular/cdk/overlay';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgIf } from '@angular/common';
@@ -48,6 +48,11 @@ export class RootComponent implements OnInit, OnDestroy, IScrollContainer {
     @HostBinding('class.is-small-screen')
     public get isSmallScreen(): boolean {
         return this._isSmallScreen;
+    }
+
+    @HostListener('dragstart', [ '$event' ])
+    public onDragStart(event: DragEvent): void {
+        event.preventDefault();
     }
 
     public ngOnInit(): void {
