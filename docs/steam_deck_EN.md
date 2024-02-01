@@ -61,6 +61,6 @@ Also, it is worth to configure trackpad for mouse input in the Steam Controller 
 By default, Chrome launches PWA apps at a lower resolution than the screen resolution of the Steam Deck and the app looks blurry.
 Steps below will allow you to fix this.
 
-1. Find "MOC Commander" in the Steam Client Library and open its properties ("Gear icon" -> "Manage" -> "Properties")
-2. Find "Launch Options" and add a space at the end of the line and `--window-size=1200,800`
+1. Find "MOC Commander" in the Steam Client Library and open its properties ("Gear icon" -> "Properties")
+2. Find "Launch Options" and add a space at the end of the line and `--window-size=1280,800`
 3. Press "Close" and launch the app.
