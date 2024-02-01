@@ -21,7 +21,7 @@ export const APP_CONFIG = new InjectionToken<IAppConfig>('APP_CONFIG', {
         maxMessageSendAttempts: 5,
         initialMessageSendRetryDelayMs: 100,
         defaultBufferingMode: PortOperationStartupInformation.executeImmediately,
-        schemeStartStopTimeoutMs: 5000
+        schemeStartStopTimeoutMs: 10000
     }),
     providedIn: 'root'
 });
