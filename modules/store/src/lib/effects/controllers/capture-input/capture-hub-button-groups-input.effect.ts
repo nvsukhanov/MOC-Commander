@@ -111,8 +111,7 @@ function readButtonGroups(
                                 value,
                                 isActivated: activeInput,
                                 timestamp: Date.now(),
-                            },
-                            prevValue
+                            }
                         });
                     }
 

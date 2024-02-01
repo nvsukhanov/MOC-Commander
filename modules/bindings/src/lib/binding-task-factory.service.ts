@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Dictionary } from '@ngrx/entity';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { AttachedIoPropsModel, ControlSchemeBinding, ControllerInputModel, ITaskFactory, PortCommandTask, PortCommandTaskPayload } from '@app/store';
+import { AttachedIoPropsModel, ControlSchemeBinding, ITaskFactory, PortCommandTask, PortCommandTaskPayload } from '@app/store';
 
 import { ServoTaskPayloadBuilderService } from './servo';
 import { SetAngleTaskPayloadBuilderService } from './set-angle';
@@ -11,6 +10,7 @@ import { StepperTaskPayloadBuilderService } from './stepper';
 import { GearboxControlTaskPayloadBuilderService } from './gearbox';
 import { BindingTaskPayloadHashBuilderService } from './binding-task-payload-hash-builder.service';
 import { ITaskPayloadBuilder } from './i-task-payload-factory';
+import { BindingInputExtractionResult } from './i-binding-task-input-extractor';
 
 @Injectable()
 export class BindingTaskFactoryService implements ITaskFactory {
@@ -36,11 +36,12 @@ export class BindingTaskFactoryService implements ITaskFactory {
 
     public buildTask(
         binding: ControlSchemeBinding,
-        inputsState: Dictionary<ControllerInputModel>,
+        currentInput: BindingInputExtractionResult<ControlSchemeBindingType>,
+        prevInput: BindingInputExtractionResult<ControlSchemeBindingType>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         lastExecutedTask: PortCommandTask | null
     ): PortCommandTask | null {
-        const payload = this.buildPayload(binding, inputsState, ioProps, lastExecutedTask);
+        const payload = this.buildPayload(binding, currentInput, prevInput, ioProps, lastExecutedTask);
         if (payload) {
             return this.composeTask(binding, payload.payload, payload.inputTimestamp);
         }
@@ -63,14 +64,16 @@ export class BindingTaskFactoryService implements ITaskFactory {
 
     private buildPayload<T extends ControlSchemeBindingType>(
         binding: ControlSchemeBinding & { bindingType: T },
-        inputsState: Dictionary<ControllerInputModel>,
+        currentInput: BindingInputExtractionResult<T>,
+        prevInput: BindingInputExtractionResult<T>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTask: PortCommandTask | null
     ): { payload: PortCommandTaskPayload; inputTimestamp: number } | null {
-        const taskPayloadBuilder: ITaskPayloadBuilder<T> = this.taskPayloadBuilders[binding.bindingType];
+        const taskPayloadBuilder = this.taskPayloadBuilders[binding.bindingType] as ITaskPayloadBuilder<T>;
         return taskPayloadBuilder.buildPayload(
             binding,
-            inputsState,
+            currentInput,
+            prevInput,
             ioProps,
             previousTask
         );

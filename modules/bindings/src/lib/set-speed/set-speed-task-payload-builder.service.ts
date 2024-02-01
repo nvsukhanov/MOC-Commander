@@ -1,31 +1,19 @@
-import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import {
-    ControlSchemeInputAction,
-    ControlSchemeSetSpeedBinding,
-    ControllerInputModel,
-    InputGain,
-    PortCommandTask,
-    PortCommandTaskPayload,
-    SetSpeedTaskPayload,
-    controllerInputIdFn
-} from '@app/store';
+import { ControlSchemeInputAction, ControlSchemeSetSpeedBinding, InputGain, PortCommandTask, PortCommandTaskPayload, SetSpeedTaskPayload } from '@app/store';
 
 import { calcInputGain, snapSpeed } from '../common';
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
+import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 
 @Injectable()
 export class SetSpeedTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.SetSpeed> {
     public buildPayload(
         binding: ControlSchemeSetSpeedBinding,
-        inputsState: Dictionary<ControllerInputModel>
+        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.SetSpeed>
     ): { payload: SetSpeedTaskPayload; inputTimestamp: number } | null {
-        const accelerateInputModel = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Accelerate])];
-
-        const brakeInputModel = binding.inputs[ControlSchemeInputAction.Brake]
-                                ? inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Brake])]
-                                : undefined;
+        const accelerateInputModel = currentInput[ControlSchemeInputAction.Accelerate];
+        const brakeInputModel = currentInput[ControlSchemeInputAction.Brake];
 
         let inputTimestamp = 0;
         if (accelerateInputModel && brakeInputModel) {

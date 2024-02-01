@@ -10,6 +10,7 @@ import { EXECUTE_TASK_EFFECT } from './execute-task.effect';
 export * from './i-task-filter';
 export * from './i-task-runner';
 export * from './i-task-factory';
+export * from './i-task-input-extractor';
 
 export const TASK_PROCESSING_EFFECTS: Record<string, FunctionalEffect> = {
     preRunScheme: PRE_RUN_SCHEME_EFFECT,

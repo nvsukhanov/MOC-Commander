@@ -1,25 +1,24 @@
-import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 import {
     AttachedIoPropsModel,
     ControlSchemeGearboxControlBinding,
     ControlSchemeInputAction,
-    ControllerInputModel,
     GearboxControlTaskPayload,
     PortCommandTask,
-    PortCommandTaskPayload,
-    controllerInputIdFn
+    PortCommandTaskPayload
 } from '@app/store';
 
 import { calculateNextLoopingIndex } from '../common';
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
+import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 
 @Injectable()
 export class GearboxControlTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.GearboxControl> {
     public buildPayload(
         binding: ControlSchemeGearboxControlBinding,
-        inputsState: Dictionary<ControllerInputModel>,
+        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.GearboxControl>,
+        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.GearboxControl>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTask: PortCommandTask | null
     ): { payload: GearboxControlTaskPayload; inputTimestamp: number } | null {
@@ -28,7 +27,8 @@ export class GearboxControlTaskPayloadBuilderService implements ITaskPayloadBuil
                                        : null;
         return this.buildPayloadUsingPreviousTask(
             binding,
-            inputsState,
+            currentInput,
+            previousInput,
             ioProps?.motorEncoderOffset ?? 0,
             gearboxControlPrevTask
         );
@@ -52,13 +52,14 @@ export class GearboxControlTaskPayloadBuilderService implements ITaskPayloadBuil
 
     private buildPayloadUsingPreviousTask(
         binding: ControlSchemeGearboxControlBinding,
-        inputsState: Dictionary<ControllerInputModel>,
+        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.GearboxControl>,
+        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.GearboxControl>,
         motorEncoderOffset: number,
         previousTask: PortCommandTask<ControlSchemeBindingType.GearboxControl> | null
     ): { payload: GearboxControlTaskPayload; inputTimestamp: number } | null {
-        const nextLevelInput = this.getActiveInput(binding, inputsState, ControlSchemeInputAction.NextLevel);
-        const prevLevelInput = this.getActiveInput(binding, inputsState, ControlSchemeInputAction.PrevLevel);
-        const resetLevelInput = this.getActiveInput(binding, inputsState, ControlSchemeInputAction.Reset);
+        const nextLevelInput = this.getActiveInput(currentInput, previousInput, ControlSchemeInputAction.NextLevel);
+        const prevLevelInput = this.getActiveInput(currentInput, previousInput, ControlSchemeInputAction.PrevLevel);
+        const resetLevelInput = this.getActiveInput(currentInput, previousInput, ControlSchemeInputAction.Reset);
 
         if (!nextLevelInput.isActivated && !prevLevelInput.isActivated && !resetLevelInput.isActivated) {
             return null;
@@ -123,19 +124,16 @@ export class GearboxControlTaskPayloadBuilderService implements ITaskPayloadBuil
     }
 
     private getActiveInput(
-        binding: ControlSchemeGearboxControlBinding,
-        inputState: Dictionary<ControllerInputModel>,
-        inputAction: ControlSchemeInputAction,
+        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.GearboxControl>,
+        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.GearboxControl>,
+        inputAction: keyof ControlSchemeGearboxControlBinding['inputs'],
     ): { isActivated: boolean; timestamp: number } {
-        const bindingInputModel = binding.inputs[inputAction];
-        if (bindingInputModel) {
-            const input = inputState[controllerInputIdFn(bindingInputModel)];
-            if (input) {
-                return {
-                    isActivated: input.isActivated,
-                    timestamp: input.timestamp,
-                };
-            }
+        const currentInputForAction = currentInput[inputAction];
+        if (currentInputForAction) {
+            return {
+                isActivated: currentInputForAction.isActivated && !previousInput[inputAction]?.isActivated,
+                timestamp: currentInputForAction.timestamp,
+            };
         }
         return {
             isActivated: false,

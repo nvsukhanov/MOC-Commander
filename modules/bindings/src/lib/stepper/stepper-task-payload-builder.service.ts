@@ -1,41 +1,34 @@
-import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import {
-    ControlSchemeInputAction,
-    ControlSchemeStepperBinding,
-    ControllerInputModel,
-    PortCommandTask,
-    PortCommandTaskPayload,
-    StepperTaskPayload,
-    controllerInputIdFn
-} from '@app/store';
+import { ControlSchemeInputAction, ControlSchemeStepperBinding, PortCommandTask, PortCommandTaskPayload, StepperTaskPayload } from '@app/store';
 
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
+import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 
 @Injectable()
 export class StepperTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.Stepper> {
     public buildPayload(
         binding: ControlSchemeStepperBinding,
-        inputsState: Dictionary<ControllerInputModel>,
+        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Stepper>,
+        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.Stepper>,
     ): { payload: StepperTaskPayload; inputTimestamp: number } | null {
-        const stepInput = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Step])];
+        const currentStepInput = currentInput[ControlSchemeInputAction.Step];
+        const previousStepInput = previousInput[ControlSchemeInputAction.Step];
 
-        if (!stepInput?.isActivated) {
-            return null;
+        if (currentStepInput?.isActivated && !previousStepInput?.isActivated) {
+            const payload: StepperTaskPayload = {
+                bindingType: ControlSchemeBindingType.Stepper,
+                degree: binding.degree,
+                speed: binding.speed,
+                power: binding.power,
+                endState: binding.endState,
+                useAccelerationProfile: binding.useAccelerationProfile,
+                useDecelerationProfile: binding.useDecelerationProfile
+            };
+
+            return { payload, inputTimestamp: currentStepInput?.timestamp ?? Date.now() };
         }
-
-        const payload: StepperTaskPayload = {
-            bindingType: ControlSchemeBindingType.Stepper,
-            degree: binding.degree,
-            speed: binding.speed,
-            power: binding.power,
-            endState: binding.endState,
-            useAccelerationProfile: binding.useAccelerationProfile,
-            useDecelerationProfile: binding.useDecelerationProfile
-        };
-
-        return { payload, inputTimestamp: stepInput?.timestamp ?? Date.now() };
+        return null;
     }
 
     public buildCleanupPayload(

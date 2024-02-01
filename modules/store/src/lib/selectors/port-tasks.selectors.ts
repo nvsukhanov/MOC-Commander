@@ -1,20 +1,14 @@
 import { createSelector } from '@ngrx/store';
-import { Dictionary } from '@ngrx/entity';
 
 import { PORT_TASKS_ENTITY_ADAPTER, PORT_TASKS_FEATURE, hubPortTasksIdFn } from '../reducers';
-import { AttachedIoPropsModel, ControlSchemeBinding, ControllerInputModel, PortCommandTask } from '../models';
-import { CONTROLLER_INPUT_SELECTORS } from './controller-input.selectors';
+import { AttachedIoPropsModel, PortCommandTask } from '../models';
 import { ATTACHED_IO_PROPS_SELECTORS } from './attached-io-props.selectors';
 
-export type BindingTaskComposingData = {
-    hubId: string;
-    portId: number;
-    bindings: ControlSchemeBinding[];
-    inputState: Dictionary<ControllerInputModel>;
-    ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null;
+export type TaskExecutionData = {
     lastExecutedTask: PortCommandTask | null;
     runningTask: PortCommandTask | null;
     pendingTask: PortCommandTask | null;
+    ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null;
 };
 
 export const PORT_TASKS_SELECTORS = {
@@ -40,25 +34,20 @@ export const PORT_TASKS_SELECTORS = {
         PORT_TASKS_SELECTORS.selectEntities,
         (entities) => entities[hubPortTasksIdFn(q)]?.pendingTask ?? null
     ),
-    selectBindingTaskCreationModel: (
-        { hubId, portId, bindings }: { hubId: string; portId: number; bindings: ControlSchemeBinding[] }
+    selectTaskExecutionData: (
+        { hubId, portId }: { hubId: string; portId: number }
     ) => createSelector(
-        CONTROLLER_INPUT_SELECTORS.selectEntities,
         ATTACHED_IO_PROPS_SELECTORS.selectById({ hubId, portId }),
         PORT_TASKS_SELECTORS.selectRunningTask({ hubId, portId }),
         PORT_TASKS_SELECTORS.selectLastExecutedTask({ hubId, portId }),
         PORT_TASKS_SELECTORS.selectPendingTask({ hubId, portId }),
-        (inputState, ioProps, runningTask, lastExecutedTask, pendingTask): BindingTaskComposingData => {
+        (ioProps, runningTask, lastExecutedTask, pendingTask): TaskExecutionData => {
             return {
                 ioProps: ioProps ?? null,
                 runningTask,
                 lastExecutedTask,
-                hubId,
-                portId,
-                pendingTask,
-                bindings,
-                inputState
+                pendingTask
             };
         }
-    )
+    ),
 } as const;

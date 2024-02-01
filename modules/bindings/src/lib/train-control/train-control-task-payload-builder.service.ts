@@ -1,32 +1,31 @@
-import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 import {
     AttachedIoPropsModel,
     ControlSchemeInputAction,
     ControlSchemeTrainControlBinding,
-    ControllerInputModel,
     LoopingMode,
     PortCommandTask,
     PortCommandTaskPayload,
-    TrainControlTaskPayload,
-    controllerInputIdFn
+    TrainControlTaskPayload
 } from '@app/store';
 
 import { calculateNextLoopingIndex } from '../common';
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
+import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 
 @Injectable()
 export class TrainControlTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.TrainControl> {
     public buildPayload(
         binding: ControlSchemeTrainControlBinding,
-        inputsState: Dictionary<ControllerInputModel>,
+        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.TrainControl>,
+        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.TrainControl>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTask: PortCommandTask | null
     ): { payload: TrainControlTaskPayload; inputTimestamp: number } | null {
-        const nextLevelInput = this.getActiveInput(binding, inputsState, ControlSchemeInputAction.NextLevel);
-        const prevLevelInput = this.getActiveInput(binding, inputsState, ControlSchemeInputAction.PrevLevel);
-        const resetLevelInput = this.getActiveInput(binding, inputsState, ControlSchemeInputAction.Reset);
+        const nextLevelInput = this.getActiveInput(currentInput, previousInput, ControlSchemeInputAction.NextLevel);
+        const prevLevelInput = this.getActiveInput(currentInput, previousInput, ControlSchemeInputAction.PrevLevel);
+        const resetLevelInput = this.getActiveInput(currentInput, previousInput, ControlSchemeInputAction.Reset);
 
         if (resetLevelInput.isActivated) {
             return {
@@ -95,19 +94,16 @@ export class TrainControlTaskPayloadBuilderService implements ITaskPayloadBuilde
     }
 
     private getActiveInput(
-        binding: ControlSchemeTrainControlBinding,
-        inputState: Dictionary<ControllerInputModel>,
-        inputAction: ControlSchemeInputAction,
+        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.TrainControl>,
+        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.TrainControl>,
+        inputAction: keyof ControlSchemeTrainControlBinding['inputs'],
     ): { isActivated: boolean; timestamp: number } {
-        const bindingInputModel = binding.inputs[inputAction];
-        if (bindingInputModel) {
-            const input = inputState[controllerInputIdFn(bindingInputModel)];
-            if (input) {
-                return {
-                    isActivated: input.isActivated,
-                    timestamp: input.timestamp,
-                };
-            }
+        const currentInputForAction = currentInput[inputAction];
+        if (currentInputForAction) {
+            return {
+                isActivated: currentInputForAction.isActivated && !previousInput[inputAction]?.isActivated,
+                timestamp: currentInputForAction.timestamp,
+            };
         }
         return {
             isActivated: false,

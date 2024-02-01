@@ -1,44 +1,45 @@
-import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 import {
     AttachedIoPropsModel,
     ControlSchemeInputAction,
     ControlSchemeSetAngleBinding,
-    ControllerInputModel,
     PortCommandTask,
     PortCommandTaskPayload,
-    SetAngleTaskPayload,
-    controllerInputIdFn
+    SetAngleTaskPayload
 } from '@app/store';
 
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
+import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 
 @Injectable()
 export class SetAngleTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.SetAngle> {
     public buildPayload(
         binding: ControlSchemeSetAngleBinding,
-        inputsState: Dictionary<ControllerInputModel>,
+        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.SetAngle>,
+        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.SetAngle>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
     ): { payload: SetAngleTaskPayload; inputTimestamp: number } | null {
-        const setAngleInput = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.SetAngle])];
+        const currentSetAngleInput = currentInput[ControlSchemeInputAction.SetAngle];
+        const previousSetAngleInput = previousInput[ControlSchemeInputAction.SetAngle];
 
-        if (!setAngleInput?.isActivated) {
-            return null;
+        if (currentSetAngleInput?.isActivated && !previousSetAngleInput?.isActivated) {
+            const resultingAngle = binding.angle - (ioProps?.motorEncoderOffset ?? 0);
+
+            const payload: SetAngleTaskPayload = {
+                bindingType: ControlSchemeBindingType.SetAngle,
+                angle: resultingAngle,
+                speed: binding.speed,
+                power: binding.power,
+                endState: binding.endState,
+                useAccelerationProfile: binding.useAccelerationProfile,
+                useDecelerationProfile: binding.useDecelerationProfile
+            };
+
+            return { payload, inputTimestamp: currentSetAngleInput.timestamp ?? Date.now() };
         }
-        const resultingAngle = binding.angle - (ioProps?.motorEncoderOffset ?? 0);
 
-        const payload: SetAngleTaskPayload = {
-            bindingType: ControlSchemeBindingType.SetAngle,
-            angle: resultingAngle,
-            speed: binding.speed,
-            power: binding.power,
-            endState: binding.endState,
-            useAccelerationProfile: binding.useAccelerationProfile,
-            useDecelerationProfile: binding.useDecelerationProfile
-        };
-
-        return { payload, inputTimestamp: setAngleInput?.timestamp ?? Date.now() };
+        return null;
     }
 
     public buildCleanupPayload(

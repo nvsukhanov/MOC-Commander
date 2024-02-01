@@ -49,15 +49,13 @@ export enum ControlSchemeInputAction {
     Reset,
 }
 
-export type ControlSchemeInputsRecord = { [k in ControlSchemeInputAction]?: ControlSchemeInput };
-
 export type ControlSchemeSetSpeedBinding = {
     id: number;
     bindingType: ControlSchemeBindingType.SetSpeed;
     inputs: {
         [ControlSchemeInputAction.Accelerate]: ControlSchemeInput;
         [ControlSchemeInputAction.Brake]?: ControlSchemeInput;
-    } & ControlSchemeInputsRecord;
+    };
     hubId: string;
     portId: number;
     maxSpeed: number;
@@ -70,7 +68,7 @@ export type ControlSchemeServoBinding = {
     bindingType: ControlSchemeBindingType.Servo;
     inputs: {
         [ControlSchemeInputAction.Servo]: ControlSchemeInput;
-    } & ControlSchemeInputsRecord;
+    };
     hubId: string;
     portId: number;
     calibrateOnStart: boolean;
@@ -86,7 +84,7 @@ export type ControlSchemeSetAngleBinding = {
     bindingType: ControlSchemeBindingType.SetAngle;
     inputs: {
         [ControlSchemeInputAction.SetAngle]: ControlSchemeInput;
-    } & ControlSchemeInputsRecord;
+    };
     hubId: string;
     portId: number;
     angle: number;
@@ -100,7 +98,7 @@ export type ControlSchemeStepperBinding = {
     bindingType: ControlSchemeBindingType.Stepper;
     inputs: {
         [ControlSchemeInputAction.Step]: ControlSchemeInput;
-    } & ControlSchemeInputsRecord;
+    };
     hubId: string;
     portId: number;
     degree: number;
@@ -116,7 +114,7 @@ export type ControlSchemeTrainControlBinding = {
         [ControlSchemeInputAction.NextLevel]: ControlSchemeInput;
         [ControlSchemeInputAction.PrevLevel]?: ControlSchemeInput;
         [ControlSchemeInputAction.Reset]?: ControlSchemeInput;
-    } & ControlSchemeInputsRecord;
+    };
     hubId: string;
     portId: number;
     levels: number[];
@@ -130,8 +128,9 @@ export type ControlSchemeGearboxControlBinding = {
     bindingType: ControlSchemeBindingType.GearboxControl;
     inputs: {
         [ControlSchemeInputAction.NextLevel]: ControlSchemeInput;
+        [ControlSchemeInputAction.Reset]?: ControlSchemeInput;
         [ControlSchemeInputAction.PrevLevel]?: ControlSchemeInput;
-    } & ControlSchemeInputsRecord;
+    };
     hubId: string;
     portId: number;
     angles: number[];
@@ -141,6 +140,8 @@ export type ControlSchemeGearboxControlBinding = {
     endState: MotorServoEndState;
     initialLevelIndex: number;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
+
+export type ControlSchemeBindingInputs<T extends ControlSchemeBindingType = ControlSchemeBindingType> = (ControlSchemeBinding & { bindingType: T })['inputs'];
 
 export type ControlSchemeBinding = ControlSchemeSetSpeedBinding
     | ControlSchemeServoBinding

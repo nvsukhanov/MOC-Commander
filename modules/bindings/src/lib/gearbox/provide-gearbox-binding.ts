@@ -5,6 +5,7 @@ import { GearboxControlTaskRunnerService } from './gearbox-control-task-runner.s
 import { GearboxControlBindingFormBuilderService } from './gearbox-control-binding-form-builder.service';
 import { GearboxControlBindingFormMapperService } from './gearbox-control-binding-form-mapper.service';
 import { GearboxControlPortCommandTaskSummaryBuilderService } from './gearbox-control-port-command-task-summary-builder.service';
+import { GearboxInputExtractorService } from './gearbox-input-extractor.service';
 
 export function provideGearboxBinding(): Provider[] {
     return [
@@ -13,5 +14,6 @@ export function provideGearboxBinding(): Provider[] {
         GearboxControlBindingFormBuilderService,
         GearboxControlBindingFormMapperService,
         GearboxControlPortCommandTaskSummaryBuilderService,
+        GearboxInputExtractorService
     ];
 }
