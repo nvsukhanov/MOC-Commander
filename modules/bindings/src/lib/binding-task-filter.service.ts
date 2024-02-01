@@ -11,7 +11,7 @@ export class BindingTaskFilterService implements ITaskFilter {
     private readonly filters: { [k in ControlSchemeBindingType]: IBindingTaskFilter<k> } = {
         [ControlSchemeBindingType.SetSpeed]: this.setSpeedFilter,
         [ControlSchemeBindingType.Servo]: this.hashCompareFilter,
-        [ControlSchemeBindingType.SetAngle]: this.hashCompareFilter,
+        [ControlSchemeBindingType.SetAngle]: this.mostRecentTaskFilter,
         [ControlSchemeBindingType.Stepper]: this.mostRecentTaskFilter,
         [ControlSchemeBindingType.TrainControl]: this.hashCompareFilter,
         [ControlSchemeBindingType.GearboxControl]: this.hashCompareFilter,

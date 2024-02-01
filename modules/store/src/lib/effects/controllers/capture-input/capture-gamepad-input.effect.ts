@@ -1,5 +1,5 @@
-import { concatLatestFrom, createEffect } from '@ngrx/effects';
-import { NEVER, Observable, animationFrames, distinctUntilChanged, map, merge, share, switchMap } from 'rxjs';
+import { createEffect } from '@ngrx/effects';
+import { NEVER, Observable, animationFrames, distinctUntilChanged, map, merge, share, startWith, switchMap } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { ControllerInputType, ControllerType, GamepadSettings, GamepadValueTransformService } from '@app/controller-profiles';
@@ -8,7 +8,6 @@ import { WINDOW } from '@app/shared-misc';
 import { GamepadControllerModel } from '../../../models';
 import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_INPUT_SELECTORS } from '../../../selectors';
 import { CONTROLLER_INPUT_ACTIONS } from '../../../actions';
-import { controllerInputIdFn } from '../../../reducers';
 
 const MINIMUM_INPUT_CHANGE = 0.01;
 
@@ -25,20 +24,15 @@ function createAxisChangesActions(
             result[axisIndex] = NEVER;
             continue;
         }
-        const inputId = controllerInputIdFn({
-            controllerId: gamepadStoreModel.id,
-            inputId: axisIndex.toString(),
-            inputType: ControllerInputType.Axis
-        });
         result[axisIndex] = gamepadRead$.pipe(
             map((gamepad) => (gamepad?.axes[axisIndex] ?? 0) + (settings.axisConfigs[axisIndex]?.trim ?? 0)),
+            startWith(0),
             distinctUntilChanged((prev, curr) => Math.abs(prev - curr) < MINIMUM_INPUT_CHANGE),
             map((rawValue) => ({
                 rawValue,
                 value: valueTransformer.transformAxisValue(rawValue, settings.axisConfigs[axisIndex])
             })),
-            concatLatestFrom(() => store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(inputId))),
-            map(([ { rawValue, value }, prevValue ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
+            map(({ rawValue, value }) => CONTROLLER_INPUT_ACTIONS.inputReceived({
                 nextState: {
                     controllerId: gamepadStoreModel.id,
                     inputType: ControllerInputType.Axis,
@@ -47,8 +41,7 @@ function createAxisChangesActions(
                     rawValue,
                     isActivated: valueTransformer.isAxisActivationThresholdReached(value, settings.axisConfigs[axisIndex]),
                     timestamp: Date.now()
-                },
-                prevValue
+                }
             }))
         );
     }
@@ -69,11 +62,6 @@ function createButtonChangesActions(
             continue;
         }
         const inputType = gamepadStoreModel.triggerButtonIndices.includes(buttonIndex) ? ControllerInputType.Trigger : ControllerInputType.Button;
-        const inputId = controllerInputIdFn({
-            controllerId: gamepadStoreModel.id,
-            inputId: buttonIndex.toString(),
-            inputType
-        });
         result[buttonIndex] = gamepadRead$.pipe(
             map((gamepad) => (gamepad?.buttons[buttonIndex]?.value ?? 0) + (settings.buttonConfigs[buttonIndex]?.trim ?? 0)),
             distinctUntilChanged((prev, curr) => Math.abs(prev - curr) < MINIMUM_INPUT_CHANGE),
@@ -81,8 +69,7 @@ function createButtonChangesActions(
                 rawValue,
                 value: valueTransformer.transformButtonValue(rawValue, settings.buttonConfigs[buttonIndex])
             })),
-            concatLatestFrom(() => store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(inputId))),
-            map(([ { rawValue, value }, prevValue ]) => CONTROLLER_INPUT_ACTIONS.inputReceived({
+            map(({ rawValue, value }) => CONTROLLER_INPUT_ACTIONS.inputReceived({
                 nextState: {
                     controllerId: gamepadStoreModel.id,
                     inputType,
@@ -91,8 +78,7 @@ function createButtonChangesActions(
                     rawValue,
                     isActivated: valueTransformer.isButtonActivationThresholdReached(value, settings.buttonConfigs[buttonIndex]),
                     timestamp: Date.now()
-                },
-                prevValue
+                }
             }))
         );
     }

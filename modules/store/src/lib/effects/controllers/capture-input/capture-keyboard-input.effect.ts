@@ -48,7 +48,7 @@ function readKeyboard(
             };
         }),
         filter(({ prevValue, value }) => prevValue !== value),
-        map(({ inputId, prevValue, value }) => CONTROLLER_INPUT_ACTIONS.inputReceived({
+        map(({ inputId, value }) => CONTROLLER_INPUT_ACTIONS.inputReceived({
             nextState: {
                 controllerId,
                 inputId,
@@ -57,8 +57,7 @@ function readKeyboard(
                 value,
                 isActivated: !!value,
                 timestamp: Date.now()
-            },
-            prevValue
+            }
         }))
     );
 }

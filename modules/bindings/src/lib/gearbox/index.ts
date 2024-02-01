@@ -6,3 +6,4 @@ export * from './gearbox-control-task-runner.service';
 export * from './gearbox-control-payload-hash';
 export * from './gearbox-control-port-command-task-summary-builder.service';
 export * from './provide-gearbox-binding';
+export * from './gearbox-input-extractor.service';

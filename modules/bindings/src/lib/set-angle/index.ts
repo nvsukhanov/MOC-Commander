@@ -6,3 +6,4 @@ export * from './set-angle-task-runner.service';
 export * from './set-angle-payload-hash';
 export * from './set-angle-port-command-task-summary-builder.service';
 export * from './provide-set-angle-binding';
+export * from './set-angle-input-extractor.service';

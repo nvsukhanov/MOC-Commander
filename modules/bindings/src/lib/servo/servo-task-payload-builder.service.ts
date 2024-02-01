@@ -1,20 +1,18 @@
 import { MotorServoEndState } from 'rxpoweredup';
-import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType, getTranslationArcs } from '@app/shared-misc';
 import {
     AttachedIoPropsModel,
     ControlSchemeInputAction,
     ControlSchemeServoBinding,
-    ControllerInputModel,
     PortCommandTask,
     PortCommandTaskPayload,
-    ServoTaskPayload,
-    controllerInputIdFn
+    ServoTaskPayload
 } from '@app/store';
 
 import { calcInputGain } from '../common';
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
+import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 
 @Injectable()
 export class ServoTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.Servo> {
@@ -22,10 +20,11 @@ export class ServoTaskPayloadBuilderService implements ITaskPayloadBuilder<Contr
 
     public buildPayload(
         binding: ControlSchemeServoBinding,
-        inputsState: Dictionary<ControllerInputModel>,
+        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Servo>,
+        _: BindingInputExtractionResult<ControlSchemeBindingType.Servo>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
     ): { payload: ServoTaskPayload; inputTimestamp: number } | null {
-        const servoInput = inputsState[controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Servo])];
+        const servoInput = currentInput[ControlSchemeInputAction.Servo];
         if (!servoInput) {
             return null;
         }

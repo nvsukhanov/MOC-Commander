@@ -1,13 +1,13 @@
 import { createSelector } from '@ngrx/store';
 import { Dictionary } from '@ngrx/entity';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { CONTROLLER_CONNECTION_SELECTORS, ControlSchemeInputAction, ControlSchemeInputsRecord, ControllerConnectionModel } from '@app/store';
+import { CONTROLLER_CONNECTION_SELECTORS, ControlSchemeBinding, ControlSchemeInputAction, ControllerConnectionModel } from '@app/store';
 
 import { BindingTreeNodeRecord, BindingTreeNodeViewModel } from './binding-tree-node-view-model';
 
 export const INPUT_TREE_NODE_VIEW_MODEL_SELECTOR = (
     schemeName: string,
-    inputs: ControlSchemeInputsRecord,
+    inputs: ControlSchemeBinding['inputs'],
     operationMode: ControlSchemeBindingType,
     bindingId: number,
     ioHasNoRequiredCapabilities: boolean

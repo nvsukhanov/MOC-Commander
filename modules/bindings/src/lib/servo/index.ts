@@ -6,3 +6,4 @@ export * from './servo-binding-form-builder.service';
 export * from './servo-binding-form-mapper.service';
 export * from './servo-port-command-task-summary-builder.service';
 export * from './provide-servo-binding';
+export * from './servo-input-extractor.service';
