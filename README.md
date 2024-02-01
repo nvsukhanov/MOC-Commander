@@ -5,7 +5,7 @@
 
 An open-source Progressive Web Application for controlling LEGO® Powered Up devices with physical controllers.
 
-[Demo](https://moc-commander.pages.dev)
+Deployment of the latest stable version is available at [https://moc-commander.com](https://moc-commander.com)
 
 # Disclaimer
 
