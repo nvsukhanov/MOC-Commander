@@ -1,0 +1,80 @@
+<mat-toolbar color="primary"
+             class="toolbar"
+>
+    <h1 class="cdk-visually-hidden">
+        {{ 'appName' | transloco }}
+    </h1>
+    <nav class="nav">
+        <a mat-icon-button
+           [routerLink]="routesBuilderService.controllersList"
+           [routerLinkActive]="'active-link'"
+           [title]="'nav.controllersList' | transloco"
+           [matBadge]="connectedControllersCount"
+           [matBadgeColor]="'primary'"
+           [matBadgeHidden]="!connectedControllersCount"
+           [attr.aria-label]="'nav.controllersList' | transloco"
+        >
+            <mat-icon [fontIcon]="'gamepad'"></mat-icon>
+        </a>
+
+        <a mat-icon-button
+           [routerLink]="routesBuilderService.hubsList"
+           [routerLinkActive]="'active-link'"
+           [title]="'nav.hubsList' | transloco"
+           [matBadge]="connectedHubCount"
+           [matBadgeColor]="'primary'"
+           [matBadgeHidden]="!connectedHubCount"
+        >
+            <mat-icon [fontIcon]="'memory'"></mat-icon>
+        </a>
+
+        <a mat-icon-button
+           [routerLink]="routesBuilderService.controlSchemesList"
+           [routerLinkActive]="'active-link'"
+           [title]="'nav.controlSchemesList' | transloco"
+           [matBadge]="controlSchemesCount"
+           [matBadgeColor]="'primary'"
+           [matBadgeHidden]="!controlSchemesCount"
+        >
+            <mat-icon [fontIcon]="'display_settings'"></mat-icon>
+        </a>
+
+        <app-discover-hub-button [isBluetoothAvailable]="isBluetoothAvailable"
+                                 [isDiscoveryBusy]="isDiscoveryBusy"
+                                 (discoveryStart)="onDiscoveryStart()"
+        ></app-discover-hub-button>
+
+        <button mat-icon-button
+                [matMenuTriggerFor]="menu"
+                [attr.aria-label]="'nav.navMenuAriaLabel' | ngrxPush">
+            <mat-icon [fontIcon]="'more_vert'"></mat-icon>
+        </button>
+
+        <mat-menu #menu="matMenu">
+            <a mat-menu-item
+               [routerLink]="routesBuilderService.settings"
+               [routerLinkActive]="'active-link'"
+               [attr.aria-label]="'nav.settingsPageButton' | transloco"
+            >
+                <mat-icon [fontIcon]="'settings'"></mat-icon>
+                <span>{{ 'nav.settingsPageButton' | transloco }}</span>
+            </a>
+            <a mat-menu-item
+               [routerLink]="routesBuilderService.help"
+               [routerLinkActive]="'active-link'"
+               [attr.aria-label]="'nav.help' | transloco"
+            >
+                <mat-icon [fontIcon]="'help'"></mat-icon>
+                <span>{{ 'nav.help' | transloco }}</span>
+            </a>
+            <a mat-menu-item
+               [routerLink]="routesBuilderService.about"
+               [routerLinkActive]="'active-link'"
+               [attr.aria-label]="'nav.aboutPageButton' | transloco"
+            >
+                <mat-icon [fontIcon]="'info'"></mat-icon>
+                <span>{{ 'nav.aboutPageButton' | transloco }}</span>
+            </a>
+        </mat-menu>
+    </nav>
+</mat-toolbar>

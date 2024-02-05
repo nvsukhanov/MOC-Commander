@@ -1,0 +1,29 @@
+<ng-container *ngIf="selectedHub$ | ngrxPush; let hub; else hubNotFound">
+    <ng-container *ngIf="selectedHubRuntimeData$ | ngrxPush; else hubIsNotConnected">
+        <page-hub-view-hub-properties-view class="hub-properties-view"
+                                           [configuration]="hub"
+                                           [runtimeData]="selectedHubRuntimeData$ | ngrxPush"
+                                           (disconnect)="disconnectHub()"
+        ></page-hub-view-hub-properties-view>
+
+        <ng-container *ngrxLet="ioFullInfoList$ as iosFullInfoList">
+            <ul class="io-list"
+                *ngIf="iosFullInfoList.length"
+            >
+                <li *ngFor="let ioFullInfo of iosFullInfoList; trackBy: hubIoTrackByFn">
+                    <page-hub-view-hub-port-view class="io-list__item"
+                                                 [hubIoViewModel]="ioFullInfo"
+                    ></page-hub-view-hub-port-view>
+                </li>
+            </ul>
+        </ng-container>
+    </ng-container>
+</ng-container>
+
+<ng-template #hubIsNotConnected>
+    <lib-hint>{{ 'hub.isNotConnected' | transloco:(selectedHub$ | ngrxPush) }}</lib-hint>
+</ng-template>
+
+<ng-template #hubNotFound>
+    <lib-hint>{{ 'hub.isNotFound' | transloco }}</lib-hint>
+</ng-template>

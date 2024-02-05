@@ -197,35 +197,75 @@
             "depConstraints": [
               {
                 "sourceTag": "scope:app",
-                "onlyDependOnLibsWithTags": ["*"]
+                "onlyDependOnLibsWithTags": [
+                  "*"
+                ]
+              },
+              {
+                "sourceTag": "scope:modules",
+                "onlyDependOnLibsWithTags": [
+                  "scope:shared",
+                  "scope:store",
+                  "scope:page",
+                  "scope:shared-misc",
+                  "scope:shared-ui",
+                  "scope:shared-feature",
+                  "scope:i18n",
+                  "scope:controller-profiles"
+                ]
               },
               {
                 "sourceTag": "scope:store",
-                "onlyDependOnLibsWithTags": ["scope:shared"]
+                "onlyDependOnLibsWithTags": [
+                  "scope:shared-misc",
+                  "scope:i18n",
+                  "scope:controller-profiles"
+                ]
               },
               {
-                "sourceTag": "type:shared-ui",
-                "onlyDependOnLibsWithTags": ["type:shared-misc"]
+                "sourceTag": "scope:shared-ui",
+                "onlyDependOnLibsWithTags": [
+                  "scope:shared-misc",
+                  "scope:i18n"
+                ]
               },
               {
-                "sourceTag": "type:shared-i18n",
-                "onlyDependOnLibsWithTags": ["type:shared-misc"]
+                "sourceTag": "scope:shared-feature",
+                "onlyDependOnLibsWithTags": [
+                  "scope:store",
+                  "scope:shared-misc",
+                  "scope:i18n",
+                  "scope:shared-ui",
+                  "scope:controller-profiles"
+                ]
               },
               {
-                "sourceTag": "type:controller-profiles",
-                "onlyDependOnLibsWithTags": ["type:shared-misc"]
+                "sourceTag": "scope:i18n",
+                "onlyDependOnLibsWithTags": [
+                  "scope:shared-misc"
+                ]
               },
               {
-                "sourceTag": "type:feature-shared",
-                "onlyDependOnLibsWithTags": ["scope:shared", "scope:store"]
+                "sourceTag": "scope:controller-profiles",
+                "onlyDependOnLibsWithTags": [
+                  "scope:shared-misc",
+                  "scope:i18n"
+                ]
               },
               {
-                "sourceTag": "type:feature",
-                "onlyDependOnLibsWithTags": ["scope:shared", "scope:store"]
+                "sourceTag": "scope:page",
+                "onlyDependOnLibsWithTags": [
+                  "scope:store",
+                  "scope:shared-feature",
+                  "scope:shared-misc",
+                  "scope:i18n",
+                  "scope:shared-ui",
+                  "scope:controller-profiles"
+                ]
               },
               {
-                "sourceTag": "type:binding-modules",
-                "onlyDependOnLibsWithTags": ["scope:shared", "scope:store", "type:feature"]
+                "sourceTag": "scope:shared-misc",
+                "onlyDependOnLibsWithTags": []
               }
             ]
           }

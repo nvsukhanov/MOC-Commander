@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-    displayName: 'controller-profiles',
+    displayName: 'shared-controller-profiles',
     preset: '../../../jest.preset.js',
     setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
     coverageDirectory: '../../../coverage/modules/controller-profiles',

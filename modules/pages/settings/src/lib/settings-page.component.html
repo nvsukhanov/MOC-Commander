@@ -1,0 +1,42 @@
+<mat-card class="settings-card">
+    <mat-card-content>
+        <ul class="options__list">
+            <li class="option__container">
+                <page-settings-theme-select [theme]="currentTheme()"
+                                            (themeChange)="onThemeChange($event)"
+                ></page-settings-theme-select>
+            </li>
+            <li class="option">
+                <page-settings-language-select [language]="currentLanguage()"
+                                               (languageChange)="onLanguageChange($event)"
+                ></page-settings-language-select>
+            </li>
+        </ul>
+
+        <mat-divider></mat-divider>
+
+        <section class="debug-actions">
+            <button mat-raised-button
+                    class="debug-actions__button"
+                    (click)="onStateDump()"
+            >
+                {{ 'settings.createStateBackupButtonTitle' | transloco }}
+            </button>
+
+            <button mat-raised-button
+                    class="debug-actions__button"
+                    (click)="onStateRestore()"
+            >
+                {{ 'settings.restoreStateFromBackupButtonTitle' | transloco }}
+            </button>
+
+            <button mat-raised-button
+                    [color]="'warn'"
+                    class="debug-actions__button"
+                    (click)="onStateReset()"
+            >
+                {{ 'settings.resetStateButtonTitle' | transloco }}
+            </button>
+        </section>
+    </mat-card-content>
+</mat-card>

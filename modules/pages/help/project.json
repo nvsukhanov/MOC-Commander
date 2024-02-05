@@ -1,0 +1,32 @@
+{
+  "name": "page-help",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "modules/pages/main/src",
+  "prefix": "page-help",
+  "tags": ["scope:page"],
+  "projectType": "library",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "modules/pages/help/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "modules/pages/help/**/*.ts",
+          "modules/pages/help/**/*.html",
+          "modules/pages/help/package.json"
+        ]
+      }
+    }
+  }
+}

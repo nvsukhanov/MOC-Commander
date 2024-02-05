@@ -1,0 +1,32 @@
+{
+  "name": "page-controller-view",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "modules/pages/controller-view/src",
+  "prefix": "page-controller-view",
+  "tags": ["scope:page"],
+  "projectType": "library",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "modules/pages/controller-view/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "modules/pages/controller-view/**/*.ts",
+          "modules/pages/controller-view/**/*.html",
+          "modules/pages/controller-view/package.json"
+        ]
+      }
+    }
+  }
+}

@@ -1,9 +1,9 @@
 {
-  "name": "controller-profiles",
+  "name": "shared-controller-profiles",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "modules/shared/controller/src",
-  "prefix": "lib-controller-shared",
-  "tags": ["type:feature-shared", "scope:shared"],
+  "prefix": "lib-controller-profiles",
+  "tags": ["scope:controller-profiles"],
   "projectType": "library",
   "targets": {
     "test": {

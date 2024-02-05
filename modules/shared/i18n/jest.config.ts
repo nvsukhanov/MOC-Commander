@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-    displayName: 'i18n',
+    displayName: 'shared-i18n',
     preset: '../../../jest.preset.js',
     setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
     coverageDirectory: '../../../coverage/modules/i18n',
