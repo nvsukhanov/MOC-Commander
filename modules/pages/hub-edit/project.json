@@ -1,0 +1,32 @@
+{
+  "name": "page-hub-edit",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "modules/pages/hub-edit/src",
+  "prefix": "page-hub-edit",
+  "tags": ["scope:page"],
+  "projectType": "library",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "modules/pages/hub-edit/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "modules/pages/hub-edit/**/*.ts",
+          "modules/pages/hub-edit/**/*.html",
+          "modules/pages/hub-edit/package.json"
+        ]
+      }
+    }
+  }
+}

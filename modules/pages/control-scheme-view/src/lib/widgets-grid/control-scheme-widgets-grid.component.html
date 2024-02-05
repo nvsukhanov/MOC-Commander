@@ -1,0 +1,7 @@
+<page-control-scheme-view-widget-container *ngFor="let vm of viewModels; let idx = index; trackBy: trackByFn"
+                                           [config]="vm.config"
+                                           [canBeEdited]="editable && vm.hasSettings"
+                                           [canBeDeleted]="editable"
+                                           (edit)="onEditWidget(idx)"
+                                           (delete)="onDeleteWidget(idx)"
+></page-control-scheme-view-widget-container>

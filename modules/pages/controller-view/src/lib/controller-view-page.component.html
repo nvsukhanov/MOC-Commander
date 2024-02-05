@@ -1,0 +1,44 @@
+<ng-container *ngIf="viewModel$ | ngrxPush; let viewModel; else controllerIsNotFound">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title class="controller-title">
+                <mat-icon [fontIcon]="viewModel.controller.controllerType | controllerTypeIconName"></mat-icon>
+                {{ viewModel.controller | controllerName | ngrxPush }}
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <dl class="general-info">
+                <dt>{{ 'controller.controllerType' | transloco }}</dt>
+                <dd>
+                    {{ viewModel.controller.controllerType | controllerTypeToL10nKey | transloco }}
+                </dd>
+
+                <dt>{{ 'controller.controllerConnectionState' | transloco }}</dt>
+                <dd>
+                    <ng-container *ngIf="viewModel.isConnected; else isNotConnected">
+                        {{ 'controller.controllerConnectionStateConnected' | transloco }}
+                    </ng-container>
+                    <ng-template #isNotConnected>
+                        {{ 'controller.controllerConnectionStateDisconnected' | transloco }}
+                    </ng-template>
+                </dd>
+            </dl>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="settings-card">
+        <mat-card-header>
+            <mat-card-title>
+                <h2 class="title">{{ 'controller.controllerSettingsSection' | transloco }}</h2>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <page-controller-view-controller-settings-container [controllerSettings]="viewModel.settings"
+            ></page-controller-view-controller-settings-container>
+        </mat-card-content>
+    </mat-card>
+</ng-container>
+
+<ng-template #controllerIsNotFound>
+    <lib-hint>{{ 'controller.controllerNotFound' | transloco }}</lib-hint>
+</ng-template>

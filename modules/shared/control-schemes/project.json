@@ -3,7 +3,7 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "modules/shared/control-schemes/src",
   "prefix": "lib-cs",
-  "tags": ["type:feature-shared", "scope:shared"],
+  "tags": ["scope:shared-feature"],
   "projectType": "library",
   "targets": {
     "test": {

@@ -1,18 +1,18 @@
 import { Routes } from '@angular/router';
 import { ROUTE_SECTIONS } from '@app/shared-misc';
-import { NotFoundComponent } from '@app/not-found';
+import { NotFoundPageComponent } from '@app/not-found';
 
 import packageJson from '../package.json';
 
 export const ROUTES: Routes = [
     {
         path: ROUTE_SECTIONS.root,
-        loadComponent: () => import('@app/main').then(m => m.MainComponent),
+        loadComponent: () => import('@app/main').then(m => m.MainPageComponent),
         pathMatch: 'full',
     },
     {
         path: ROUTE_SECTIONS.about,
-        loadComponent: () => import('@app/about').then(m => m.AboutComponent),
+        loadComponent: () => import('@app/about').then(m => m.AboutPageComponent),
         pathMatch: 'full',
         data: {
             appVersion: packageJson.version
@@ -20,12 +20,12 @@ export const ROUTES: Routes = [
     },
     {
         path: ROUTE_SECTIONS.help,
-        loadComponent: () => import('@app/help').then(m => m.HelpComponent),
+        loadComponent: () => import('@app/help').then(m => m.HelpPageComponent),
         pathMatch: 'full'
     },
     {
         path: ROUTE_SECTIONS.steamDeckInstallationManual,
-        loadComponent: () => import('@app/help').then(m => m.SteamDeckHelpComponent),
+        loadComponent: () => import('@app/help').then(m => m.SteamDeckHelpPageComponent),
         pathMatch: 'full'
     },
     {
@@ -33,12 +33,12 @@ export const ROUTES: Routes = [
         children: [
             {
                 path: '',
-                loadComponent: () => import('@app/controllers-list').then(m => m.ControllersListComponent),
+                loadComponent: () => import('@app/controllers-list').then(m => m.ControllersListPageComponent),
                 pathMatch: 'full'
             },
             {
                 path: [ ':id' ].join('/'),
-                loadComponent: () => import('@app/controller-view').then(m => m.ControllerViewComponent),
+                loadComponent: () => import('@app/controller-view').then(m => m.ControllerViewPageComponent),
                 pathMatch: 'full'
             }
         ]
@@ -48,17 +48,17 @@ export const ROUTES: Routes = [
         children: [
             {
                 path: '',
-                loadComponent: () => import('@app/hubs-list').then(m => m.HubsListComponent),
+                loadComponent: () => import('@app/hubs-list').then(m => m.HubsListPageComponent),
                 pathMatch: 'full',
             },
             {
                 path: [ ':id' ].join('/'),
-                loadComponent: () => import('@app/hub-view').then(m => m.HubViewComponent),
+                loadComponent: () => import('@app/hub-view').then(m => m.HubViewPageComponent),
                 pathMatch: 'full'
             },
             {
                 path: [ ':id', ROUTE_SECTIONS.hubEdit ].join('/'),
-                loadComponent: () => import('@app/hub-edit').then(m => m.HubEditComponent),
+                loadComponent: () => import('@app/hub-edit').then(m => m.HubEditPageComponent),
                 pathMatch: 'full',
             }
         ]
@@ -68,7 +68,7 @@ export const ROUTES: Routes = [
         children: [
             {
                 path: '',
-                loadComponent: () => import('@app/control-schemes-list').then((m) => m.ControlSchemeListComponent),
+                loadComponent: () => import('@app/control-schemes-list').then((m) => m.ControlSchemeListPageComponent),
                 pathMatch: 'full',
             },
             {
@@ -83,23 +83,23 @@ export const ROUTES: Routes = [
             },
             {
                 path: [ ':schemeName', ROUTE_SECTIONS.bindingCreate ].join('/'),
-                loadComponent: () => import('@app/control-scheme-binding-create').then((m) => m.BindingCreateComponent),
+                loadComponent: () => import('@app/control-scheme-binding-create').then((m) => m.BindingCreatePageComponent),
                 pathMatch: 'full'
             },
             {
                 path: [ ':schemeName', ROUTE_SECTIONS.hubEdit, ':hubId', ROUTE_SECTIONS.portEdit, ':portId' ].join('/'),
-                loadComponent: () => import('@app/control-scheme-port-config-edit').then((m) => m.PortConfigEditComponent),
+                loadComponent: () => import('@app/control-scheme-port-config-edit').then((m) => m.PortConfigEditPageComponent),
                 pathMatch: 'full'
             }
         ]
     },
     {
         path: ROUTE_SECTIONS.settings,
-        loadComponent: () => import('@app/settings').then((m) => m.SettingsComponent),
+        loadComponent: () => import('@app/settings').then((m) => m.SettingsPageComponent),
         pathMatch: 'full'
     },
     {
         path: '**',
-        component: NotFoundComponent,
+        component: NotFoundPageComponent,
     }
 ];

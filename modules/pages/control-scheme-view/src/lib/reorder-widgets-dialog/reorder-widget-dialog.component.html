@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>
+    {{ 'controlScheme.widgets.reorderWidgetsDialog.title' | transloco }}
+</h1>
+
+<div mat-dialog-content
+     class="dialog-content"
+>
+    <mat-list>
+        <ol cdkDropList
+            (cdkDropListDropped)="onReorder($event)"
+        >
+            @for (widget of widgetsList; track trackByWidgetId) {
+                <div cdkDrag
+                     cdkDragLockAxis="y"
+                >
+                    <page-control-scheme-view-reorder-widget-dialog-list-item [widget]="widget"></page-control-scheme-view-reorder-widget-dialog-list-item>
+                    <page-control-scheme-view-reorder-widget-dialog-list-item *cdkDragPlaceholder></page-control-scheme-view-reorder-widget-dialog-list-item>
+                </div>
+
+            }
+        </ol>
+    </mat-list>
+</div>
+
+<div mat-dialog-actions
+     [align]="'end'"
+>
+    <button mat-raised-button
+            [color]="'primary'"
+            (click)="onSave()"
+    >
+        {{ 'controlScheme.widgets.addWidgetDialog.saveButton' | transloco }}
+    </button>
+    <button mat-button
+            type="button"
+            (click)="onCancel()"
+    >
+        {{ 'controlScheme.widgets.addWidgetDialog.cancelButton' | transloco }}
+    </button>
+</div>

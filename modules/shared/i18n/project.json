@@ -1,9 +1,9 @@
 {
-  "name": "i18n",
+  "name": "shared-i18n",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "modules/shared/controller/src",
   "prefix": "lib-controller-shared",
-  "tags": ["type:shared-i18n", "scope:shared"],
+  "tags": ["scope:i18n"],
   "projectType": "library",
   "targets": {
     "test": {

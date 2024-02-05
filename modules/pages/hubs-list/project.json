@@ -1,0 +1,32 @@
+{
+  "name": "page-hubs-list",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "modules/pages/hubs-list/src",
+  "prefix": "page-hubs-list",
+  "tags": ["scope:page"],
+  "projectType": "library",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "modules/pages/hubs-list/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "modules/pages/hubs-list/**/*.ts",
+          "modules/pages/hubs-list/**/*.html",
+          "modules/pages/hubs-list/package.json"
+        ]
+      }
+    }
+  }
+}
