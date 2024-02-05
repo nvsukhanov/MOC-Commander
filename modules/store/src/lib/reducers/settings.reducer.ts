@@ -1,12 +1,11 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { Language } from '@app/shared-i18n';
 
 import { SettingsModel, UserSelectedTheme } from '../models';
 import { SETTINGS_ACTIONS } from '../actions';
 
 const DEFAULT_STATE: SettingsState = {
     appTheme: UserSelectedTheme.System,
-    language: Language.English
+    language: null
 };
 
 export type SettingsState = SettingsModel;

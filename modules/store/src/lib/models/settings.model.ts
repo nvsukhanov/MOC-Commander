@@ -8,5 +8,5 @@ export enum UserSelectedTheme {
 
 export type SettingsModel = {
     appTheme: UserSelectedTheme;
-    language: Language;
+    language: Language | null; // null is set initially to trigger language detection effect, see DETECT_LANGUAGE_EFFECT
 };
