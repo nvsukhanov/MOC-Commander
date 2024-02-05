@@ -6,6 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
 import { NgIf } from '@angular/common';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { RoutesBuilderService } from '@app/shared-misc';
 import { EllipsisTitleDirective } from '@app/shared-ui';
 
@@ -26,7 +27,10 @@ import { DiscoverHubButtonComponent } from '../discover-hub-button';
         PushPipe,
         EllipsisTitleDirective,
         NgIf,
-        DiscoverHubButtonComponent
+        DiscoverHubButtonComponent,
+        MatMenuTrigger,
+        MatMenu,
+        MatMenuItem
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

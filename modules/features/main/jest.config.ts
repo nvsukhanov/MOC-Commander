@@ -1,9 +1,9 @@
 /* eslint-disable */
 export default {
-    displayName: 'feature:bluetooth-unavailable',
+    displayName: 'feature:main',
     preset: '../../../jest.preset.js',
     setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-    coverageDirectory: '../../../coverage/modules/bluetooth-unavailable',
+    coverageDirectory: '../../../coverage/modules/main',
     transform: {
         '^.+\\.(ts|mjs|js|html)$': [
             'jest-preset-angular',

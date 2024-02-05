@@ -14,7 +14,9 @@
   },
   "bluetoothUnavailable": {
     "message": "Ваш браузер не поддерживает Web Bluetooth API",
-    "link": "Для дополнительно информации о поддерживаемых браузерах и устройствах, посетите"
+    "manualsPre": "Воспользуйтесь",
+    "manualsLocalRef": "инструкциями по настройке",
+    "manualsCanIUsePre": "для вашей платформы или посетите"
   },
   "nav": {
     "controllersList": "Контроллеры",
@@ -22,12 +24,16 @@
     "controlSchemesList": "Схемы управления",
     "navMenuAriaLabel": "Меню",
     "aboutPageButton": "О программе",
-    "settingsPageButton": "Настройки"
+    "settingsPageButton": "Настройки",
+    "help": "Помощь"
+  },
+  "helpPage": {
+    "installationManuals": "Инструкции по установке"
   },
   "pageTitle": {
     "bindingCreate": "{ controlSchemeName } - Создание привязки",
     "bindingEdit": "{ controlSchemeName } - Редактирование привязки",
-    "controlSchemesList": "Control schemes",
+    "controlSchemesList": "Схемы управления",
     "controlSchemeView": "{ controlSchemeName }",
     "controlSchemePortEdit": "{ controlSchemeName } - {hubName}, порт {portId}",
     "controllerList": "Контроллеры",
@@ -36,9 +42,9 @@
     "hubList": "Хабы",
     "hubView": "{ hubName }",
     "notFound": "Страница не найдена",
-    "bluetoothUnavailable": "Bluetooth недоступен",
     "about": "О программе",
-    "settings": "Настройки"
+    "settings": "Настройки",
+    "help": "Помощь"
   },
   "settings": {
     "theme": "Тема оформления",
@@ -561,5 +567,101 @@
     "minLength": "Требуется минимум { requiredLength }",
     "valueShouldNotBeZero": "Значение не должно быть нулевым",
     "valueShouldBeInteger": "Значение должно быть целым числом"
+  },
+  "manuals": {
+    "steamDeckInstallation": {
+      "name": "Steam Deck",
+      "estTime": "Estimated time to complete: 5-10 minutes",
+      "general": "Это руководство поможет вам установить MOC Commander на ваш Steam Deck и использовать его в игровом режиме для управления вашими моделями LEGO® Powered UP с помощью Steam Deck без подключения к Интернету.",
+      "step1": {
+        "title": "Шаг 1. Установка Google Chrome",
+        "description": "Для использования приложения MOC Commander вам необходимо установить браузер Google Chrome (или любой другой браузер, поддерживающий API Web Bluetooth).",
+        "description2": "Список поддерживаемых браузеров можно найти здесь",
+        "description3": ", однако это руководство сосредоточено на Google Chrome.",
+        "switchToDesktop": "Нажмите кнопку Steam, чтобы открыть меню Steam Deck и выберите \"Power\" -> \"Switch to Desktop\"",
+        "openDiscover": "Откройте приложение Discover на панели задач",
+        "openWebBrowsers": "Выберите \"Internet\" -> \"Web browsers\"",
+        "installChrome": "Найдите \"Google Chrome\" и нажмите \"Install\"",
+        "closeDiscover": "После завершения установки закройте приложение Discover"
+      },
+      "step2": {
+        "title": "Шаг 2. Включение поддержки Bluetooth в Google Chrome",
+        "description": "По умолчанию Google Chrome не поддерживает Bluetooth-устройства в Linux. Чтобы включить поддержку Bluetooth, следуйте шагам ниже:",
+        "openChrome": "Откройте Application Launcher на панели задач, выберите \"Internet\" -> \"Google Chrome\"",
+        "pasteFlagsUrl": "Вставьте следующий URL в адресную строку",
+        "flagsUrl": "chrome://flags/#enable-experimental-web-platform-features",
+        "pressEnter": "и нажмите Enter",
+        "enableFeature": "Переключите \"Experimental Web Platform features\" в положение \"Enabled\"",
+        "restartChrome": "Нажмите кнопку \"Relaunch\", чтобы перезапустить Google Chrome",
+        "openMocCommander": "Откройте MOC Commander по адресу",
+        "result": "Теперь вы можете использовать MOC Commander в режиме рабочего стола и использовать Steam Input в режиме клавиатуры для управления вашими MOC."
+      },
+      "step3": {
+        "title": "Шаг 3. (Необязательно) Разрешить Google Chrome устанавливать PWA и получать доступ к геймпадам",
+        "openKonsole": "Закройте Google Chrome и откройте приложение Konsole (Application Launcher -> \"System\" -> \"Konsole\")",
+        "enterCommand": "Введите следующую команду и нажмите Enter:",
+        "enterCommandMotivation": "Эта команда позволит Google Chrome установить приложение MOC Commander и получить доступ к устройствам управления.",
+        "closeKonsole": "Закройте приложение Konsole"
+      },
+      "step4": {
+        "title": "Шаг 4. (Необязательно) Установить MOC Commander и добавить его в библиотеку клиента Steam",
+        "openChrome": "Откройте Google Chrome",
+        "openMocCommander": "Откройте MOC Commander по адресу",
+        "installPwa": "Нажмите кнопку \"Install\" в правом верхнем углу",
+        "confirmInstall": "Нажмите кнопку \"Install\" в всплывающем окне. Приложение запустится автоматически",
+        "closeAll": "Закройте Google Chrome и приложение MOC Commander",
+        "openAddNonSteamGame": "Откройте клиент Steam, выберите \"Library\" и нажмите \"Add a Game\" -> \"Add a Non-Steam Game\"",
+        "addMocCommander": "Найдите \"MOC Commander\" в списке, отметьте его и нажмите \"Add Selected Programs\"",
+        "returnToGamingMode": "Вернитесь в игровой режим, дважды нажав на иконку \"Return To Gaming Mode\" на рабочем столе",
+        "result": "Приложение должно появиться в библиотеке клиента Steam под категорией \"Non-Steam\".",
+        "following": "Теперь вы можете использовать MOC Commander в игровом режиме с полной поддержкой Steam Input."
+      },
+      "step5": {
+        "title": "Шаг 5. (Необязательно) Установить начальное разрешение для MOC Commander",
+        "description": "По умолчанию приложение запускается с разрешением ниже, чем разрешение экрана Steam Deck. Чтобы установить начальное разрешение максимально доступное, выполните следующие шаги:",
+        "openAppProperties": "Найдите \"MOC Commander\" в библиотеке клиента Steam и откройте его свойства (\"Иконка шестеренки\" -> \"Properties\")",
+        "addOption": "В \"Launch Options\" добавьте пробел в конце строки и следующую опцию:",
+        "closeProperties": "Закройте окно свойств",
+        "result": "Теперь приложение будет запускаться с максимально доступным разрешением."
+      }
+    },
+
+    "windowsInstallation": {
+      "name": "Windows",
+      "estTime": "Ожидаемое время выполнения: 3 минуты",
+      "general": "Это руководство поможет вам установить MOC Commander на ваш компьютер с Windows и использовать его для управления вашими моделями LEGO® Powered UP с помощью клавиатуры, мыши и геймпадов.",
+      "step1": {
+        "title": "Шаг 1. Установка Google Chrome",
+        "description": "Для использования приложения MOC Commander необходимо установить браузер Google Chrome (или любой другой браузер, поддерживающий API Web Bluetooth).",
+        "description2": "Список поддерживаемых браузеров можно найти на",
+        "description3": ", однако это руководство сосредоточено на Google Chrome."
+      },
+      "step2": {
+        "title": "Шаг 2. (Необязательно) Установите MOC Commander как приложение",
+        "description": "Чтобы использовать MOC Commander как самостоятельное приложение, выполните следующие действия:",
+        "openChrome": "Откройте Google Chrome",
+        "openMocCommander": "Откройте MOC Commander по адресу",
+        "installPwa": "Нажмите кнопку \"Install\" в правом верхнем углу",
+        "confirmInstall": "Нажмите кнопку \"Install\" во всплывающем окне. Приложение запустится автоматически",
+        "result": "Это установит MOC Commander как PWA-приложение и добавит его в меню \"Пуск\" и на рабочий стол."
+      }
+    },
+    "linuxInstallation": {
+      "name": "Linux",
+      "step1": {
+        "title": "Шаг 1. Установите Google Chrome с помощью вашего менеджера пакетов или скачайте его с официального сайта"
+      },
+      "step2": {
+        "title": "Шаг 2. Включите поддержку Bluetooth в Google Chrome",
+        "description": "По умолчанию Google Chrome не поддерживает Bluetooth-устройства в Linux. Чтобы включить поддержку Bluetooth, выполните следующие действия:",
+        "openChrome": "Откройте Google Chrome",
+        "pasteFlagsUrl": "Вставьте следующий URL в адресную строку",
+        "flagsUrl": "chrome://flags/#enable-experimental-web-platform-features",
+        "pressEnter": "и нажмите Enter",
+        "enableFeature": "Переключите \"Experimental Web Platform features\" в положение \"Enabled\"",
+        "restartChrome": "Нажмите кнопку \"Relaunch\", чтобы перезапустить Google Chrome",
+        "openMocCommander": "Откройте MOC Commander по адресу"
+      }
+    }
   }
 }

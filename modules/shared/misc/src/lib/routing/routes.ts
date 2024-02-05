@@ -1,4 +1,5 @@
 export const ROUTE_SECTIONS = {
+    root: '',
     controllers: 'controllers',
     hubs: 'hubs',
     controlSchemes: 'control-schemes',
@@ -8,6 +9,7 @@ export const ROUTE_SECTIONS = {
     hubEdit: 'edit',
     controlSchemeCreate: 'create',
     about: 'about',
-    bluetoothUnavailable: 'bluetooth-unavailable',
-    settings: 'settings'
+    settings: 'settings',
+    help: 'help',
+    steamDeckInstallationManual: 'steam-deck',
 } as const;

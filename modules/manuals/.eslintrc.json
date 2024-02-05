@@ -1,5 +1,5 @@
 {
-  "extends": ["../../../.eslintrc.json"],
+  "extends": ["../../.eslintrc.json"],
   "ignorePatterns": ["!**/*"],
   "overrides": [
     {
@@ -10,7 +10,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "feat-bluetooth-unavailable",
+            "prefix": "lib",
             "style": "camelCase"
           }
         ],
@@ -18,7 +18,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "feat-bluetooth-unavailable",
+            "prefix": "lib",
             "style": "kebab-case"
           }
         ]

@@ -1,0 +1,10 @@
+<h2>
+    {{ 'bluetoothUnavailable.message' | transloco }}
+</h2>
+
+<p>
+    {{ 'bluetoothUnavailable.manualsPre' | transloco }}
+    <a [routerLink]="installationManual">{{ 'bluetoothUnavailable.manualsLocalRef' | transloco }}</a>
+    {{ 'bluetoothUnavailable.manualsCanIUsePre' | transloco }}
+    <a [href]="canIUseBluetoothLink">{{ canIUseBluetoothLink }}</a>
+</p>

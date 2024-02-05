@@ -1,0 +1,43 @@
+.manual-item {
+    margin: 20px 0;
+}
+
+.general-info {
+    font-weight: 400;
+    margin: 12px 0;
+    font-size: 15px;
+}
+
+.est-time {
+    font-weight: 300;
+    margin: 12px 0;
+}
+
+ol {
+    margin-left: 40px;
+}
+
+li {
+    list-style: decimal;
+    margin: 5px 0;
+}
+
+h3 {
+    margin-left: 0;
+}
+
+p {
+    margin: 12px 0 12px 20px;
+    font-weight: 300;
+}
+
+h3 {
+    font-weight: 500;
+}
+
+code {
+    padding: 2px 5px;
+    background-color: var(--app-background-color);
+    border-radius: 3px;
+    display: inline-block;
+}
