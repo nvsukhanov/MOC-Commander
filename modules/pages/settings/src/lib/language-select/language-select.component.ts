@@ -21,7 +21,7 @@ import { LanguageToL10nKeyPipe } from './language-to-l10n-key.pipe';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LanguageSelectComponent {
-    @Input() public language: Language = Language.English;
+    @Input() public language: Language | null = Language.English;
 
     @Output() public readonly languageChange = new EventEmitter<Language>();
 

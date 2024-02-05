@@ -2,7 +2,8 @@ import { createEffect } from '@ngrx/effects';
 import { inject } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
-import { tap } from 'rxjs';
+import { filter, tap } from 'rxjs';
+import { Language } from '@app/shared-i18n';
 
 import { SETTINGS_FEATURE } from '../../reducers';
 
@@ -11,6 +12,7 @@ export const SET_LANGUAGE_EFFECT = createEffect((
     store: Store = inject(Store),
 ) => {
     return store.select(SETTINGS_FEATURE.selectLanguage).pipe(
+        filter((l): l is Language => l !== null),
         tap((language) => {
             translocoService.setActiveLang(language);
         })
