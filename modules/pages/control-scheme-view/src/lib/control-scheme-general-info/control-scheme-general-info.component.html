@@ -11,7 +11,7 @@
                 />
                 <button mat-icon-button
                         matSuffix
-                        [disabled]="!canSave()"
+                        [disabled]="!canSave() || !canEditControlSchemeName"
                         (click)="onSave($event)"
                         [attr.aria-label]="'controlScheme.editNameSaveButtonTitle' | transloco"
                 >
@@ -38,6 +38,7 @@
         </h2>
         <button mat-icon-button
                 (click)="onEditMode()"
+                [disabled]="!canEditControlSchemeName"
                 [attr.aria-label]="'controlScheme.editNameButtonTitle' | transloco"
         >
             <mat-icon [fontIcon]="'edit'"></mat-icon>

@@ -24,6 +24,8 @@ import { EllipsisTitleDirective } from '@app/shared-ui';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeGeneralInfoComponent {
+    @Input() public canEditControlSchemeName = false;
+
     @Output() public readonly nameChange = new EventEmitter<string>();
 
     protected readonly nameFormControl: FormControl<string>;

@@ -91,6 +91,8 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
 
     public readonly canDeleteOrEditWidgets$ = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canDeleteOrEditWidgets);
 
+    public readonly canRenameScheme$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canRenameScheme);
+
     private addableWidgetConfigs$: Observable<WidgetConfigModel[]> = this.selectedScheme$.pipe(
         take(1),
         filter((scheme): scheme is ControlSchemeModel => scheme !== undefined),

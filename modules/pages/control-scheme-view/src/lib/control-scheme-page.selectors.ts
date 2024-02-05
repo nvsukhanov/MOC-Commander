@@ -266,6 +266,10 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
         CONTROL_SCHEME_SELECTORS.selectRunningState,
         (runningState) => runningState === ControlSchemeRunState.Idle
     ),
+    canRenameScheme: createSelector(
+        CONTROL_SCHEME_SELECTORS.selectRunningState,
+        (runningState) => runningState === ControlSchemeRunState.Idle
+    ),
     canExportViewedScheme: createSelector(
         SELECT_CURRENTLY_VIEWED_SCHEME,
         (scheme) => !!scheme && scheme.bindings.length > 0
