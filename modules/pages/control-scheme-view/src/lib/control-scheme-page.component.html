@@ -10,6 +10,7 @@
         <mat-card-header>
             <mat-card-title>
                 <page-control-scheme-view-control-scheme-general-info [name]="scheme.name"
+                                                                      [canEditControlSchemeName]="!!(canRenameScheme$ | ngrxPush)"
                                                                       (nameChange)="onUpdateSchemeName($event)"
                 ></page-control-scheme-view-control-scheme-general-info>
             </mat-card-title>
