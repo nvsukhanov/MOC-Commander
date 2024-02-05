@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,7 +12,6 @@ import { RoutesBuilderService } from '@app/shared-misc';
     templateUrl: './discover-hub-button.component.html',
     styleUrls: [ './discover-hub-button.component.scss' ],
     imports: [
-        NgIf,
         MatButtonModule,
         TranslocoPipe,
         MatIconModule,

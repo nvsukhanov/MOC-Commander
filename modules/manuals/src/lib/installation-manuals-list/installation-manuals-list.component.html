@@ -1,0 +1,31 @@
+<mat-accordion>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{ 'manuals.steamDeckInstallation.name' | transloco }}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <lib-steam-deck-manual></lib-steam-deck-manual>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{ 'manuals.windowsInstallation.name' | transloco }}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <lib-windows-installation-manual></lib-windows-installation-manual>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{ 'manuals.linuxInstallation.name' | transloco }}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <lib-linux-installation-manual></lib-linux-installation-manual>
+    </mat-expansion-panel>
+</mat-accordion>

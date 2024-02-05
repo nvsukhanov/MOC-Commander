@@ -1,0 +1,152 @@
+<section class="manual-item"
+         *transloco="let t; read: 'manuals.steamDeckInstallation'"
+>
+    <p class="general-info">{{ t('general') }}</p>
+    <p class="est-time">{{ t('estTime') }}</p>
+</section>
+
+<mat-divider [vertical]="false"></mat-divider>
+
+<section class="manual-item"
+         *transloco="let t; read: 'manuals.steamDeckInstallation.step1'"
+>
+    <h3>{{ t('title') }}</h3>
+    <p>{{ t('description') }}</p>
+    <p>
+        {{ t('description2') }}
+        <a [href]="resources.canIUseBluetoothLink">{{ resources.canIUseBluetoothLink }}</a>
+        {{ t('description3') }}
+    </p>
+    <ol>
+        <li>{{ t('switchToDesktop') }}</li>
+        <li>
+            <div>
+                {{ t('openDiscover') }}
+            </div>
+            <div>
+                <img [alt]="t('openDiscover')"
+                     [ngSrc]="resources.discoverAppImage"
+                     [width]="230"
+                     [height]="55"
+                />
+            </div>
+        </li>
+        <li>{{ t('openWebBrowsers') }}</li>
+        <li>{{ t('installChrome') }}</li>
+        <li>{{ t('closeDiscover') }}</li>
+    </ol>
+</section>
+
+<mat-divider [vertical]="false"></mat-divider>
+
+<section class="manual-item"
+         *transloco="let t; read: 'manuals.steamDeckInstallation.step2'"
+>
+    <h3>{{ t('title') }}</h3>
+    <p>{{ t('description') }}</p>
+    <ol>
+        <li>
+            <div>
+                {{ t('openChrome') }}
+            </div>
+            <div>
+                <img [alt]="t('openChrome')"
+                     [ngSrc]="resources.appLauncherImage"
+                     [width]="230"
+                     [height]="55"
+                />
+            </div>
+        </li>
+        <li>
+            {{ t('pasteFlagsUrl')}}
+            <code>
+                {{ t('flagsUrl') }}
+            </code>
+            {{ t('pressEnter') }}
+        </li>
+        <li>{{ t('enableFeature') }}</li>
+        <li>{{ t('restartChrome') }}</li>
+        <li>
+            {{ t('openMocCommander') }}
+            <a [href]="resources.mocCommanderHref">{{ resources.mocCommanderHref }}</a>
+        </li>
+    </ol>
+
+    <p>{{ t('result') }}</p>
+</section>
+
+<mat-divider [vertical]="false"></mat-divider>
+
+<section class="manual-item"
+         *transloco="let t; read: 'manuals.steamDeckInstallation.step3'"
+>
+    <h3>{{ t('title') }}</h3>
+    <ol>
+        <li>{{ t('openKonsole') }}</li>
+        <li>
+            <div>{{ t('enterCommand') }}</div>
+            <div>
+                <code>
+                    flatpak --user override --filesystem=/run/udev:ro --filesystem=~/.local/share/applications --filesystem=~/.local/share/icons com.google.Chrome
+                </code>
+            </div>
+            <div>{{ t('enterCommandMotivation') }}</div>
+        </li>
+        <li>{{ t('closeKonsole') }}</li>
+    </ol>
+</section>
+
+<mat-divider [vertical]="false"></mat-divider>
+
+<section class="manual-item"
+         *transloco="let t; read: 'manuals.steamDeckInstallation.step4'"
+>
+    <h3>{{ t('title') }}</h3>
+    <ol>
+        <li>{{ t('openChrome')}}</li>
+        <li>
+            {{ t('openMocCommander') }}
+            <a [href]="resources.mocCommanderHref">{{ resources.mocCommanderHref }}</a>
+        </li>
+        <li>
+            <div>
+                {{ t('installPwa') }}
+            </div>
+            <img [alt]="t('installPwa')"
+                 [ngSrc]="resources.installPwaImage"
+                 [width]="230"
+                 [height]="130"
+            />
+        </li>
+        <li>{{ t('confirmInstall')}}</li>
+        <li>{{ t('closeAll') }}</li>
+        <li>{{ t('openAddNonSteamGame') }}</li>
+        <li>{{ t('addMocCommander') }}</li>
+        <li>{{ t('returnToGamingMode') }}</li>
+    </ol>
+
+    <p>{{ t('result') }}</p>
+    <p>{{ t('following') }}</p>
+</section>
+
+<mat-divider [vertical]="false"></mat-divider>
+
+<section class="manual-item"
+         *transloco="let t; read: 'manuals.steamDeckInstallation.step5'"
+>
+    <h3>{{ t('title') }}</h3>
+
+    <p>{{ t('description') }}</p>
+
+    <ol>
+        <li>{{ t('openAppProperties') }}</li>
+        <li>
+            {{ t('addOption') }}
+            <div>
+                <code>--kiosk</code>
+            </div>
+        </li>
+        <li>{{ t('closeProperties') }}</li>
+        <li>{{ t('result') }}</li>
+    </ol>
+</section>

@@ -47,7 +47,7 @@
         <button mat-icon-button
                 [matMenuTriggerFor]="menu"
                 [attr.aria-label]="'nav.navMenuAriaLabel' | ngrxPush">
-            <mat-icon>more_vert</mat-icon>
+            <mat-icon [fontIcon]="'more_vert'"></mat-icon>
         </button>
 
         <mat-menu #menu="matMenu">
@@ -58,6 +58,14 @@
             >
                 <mat-icon [fontIcon]="'settings'"></mat-icon>
                 <span>{{ 'nav.settingsPageButton' | transloco }}</span>
+            </a>
+            <a mat-menu-item
+               [routerLink]="routesBuilderService.help"
+               [routerLinkActive]="'active-link'"
+               [attr.aria-label]="'nav.help' | transloco"
+            >
+                <mat-icon [fontIcon]="'help'"></mat-icon>
+                <span>{{ 'nav.help' | transloco }}</span>
             </a>
             <a mat-menu-item
                [routerLink]="routesBuilderService.about"

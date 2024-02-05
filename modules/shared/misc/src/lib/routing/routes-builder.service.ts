@@ -15,22 +15,25 @@ export class RoutesBuilderService {
 
     public readonly about: string[];
 
-    public readonly bluetoothUnavailable: string[];
-
     public readonly settings: string[];
+
+    public readonly root: string[];
+
+    public readonly help: string[];
 
     private readonly baseHref = this.locationStrategy.getBaseHref();
 
     constructor(
         private locationStrategy: LocationStrategy,
     ) {
+        this.root = [ this.baseHref ];
         this.controlSchemesList = [ this.baseHref, ROUTE_SECTIONS.controlSchemes ];
         this.controlSchemesCreate = [ this.baseHref, ROUTE_SECTIONS.controlSchemes, ROUTE_SECTIONS.controlSchemeCreate ];
         this.hubsList = [ this.baseHref, ROUTE_SECTIONS.hubs ];
         this.controllersList = [ this.baseHref, ROUTE_SECTIONS.controllers ];
         this.about = [ this.baseHref, ROUTE_SECTIONS.about ];
-        this.bluetoothUnavailable = [ this.baseHref, ROUTE_SECTIONS.bluetoothUnavailable ];
         this.settings = [ this.baseHref, ROUTE_SECTIONS.settings ];
+        this.help = [ this.baseHref, ROUTE_SECTIONS.help ];
     }
 
     public hubView(hubId: string): string[] {

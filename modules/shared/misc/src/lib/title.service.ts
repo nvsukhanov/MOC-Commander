@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslocoService } from '@ngneat/transloco';
-import { Observable, Subscription, switchMap } from 'rxjs';
+import { Observable, Subscription, switchMap, take } from 'rxjs';
 
 @Injectable()
 export class TitleService implements OnDestroy {
@@ -35,6 +35,11 @@ export class TitleService implements OnDestroy {
     }
 
     public ngOnDestroy(): void {
+        this.transloco.selectTranslate('appName').pipe(
+            take(1)
+        ).subscribe((appName) => {
+            this.title.setTitle(appName);
+        });
         this.sub?.unsubscribe();
     }
 }

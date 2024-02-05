@@ -14,7 +14,9 @@
   },
   "bluetoothUnavailable": {
     "message": "It appears that your browser does not support the Web Bluetooth API",
-    "link": "For more information, please refer to"
+    "manualsPre": "Please check",
+    "manualsLocalRef": "installation manuals",
+    "manualsCanIUsePre": "for your platform or refer to"
   },
   "nav": {
     "controllersList": "Controllers",
@@ -22,7 +24,8 @@
     "controlSchemesList": "Control schemes",
     "navMenuAriaLabel": "Menu",
     "aboutPageButton": "About",
-    "settingsPageButton": "Settings"
+    "settingsPageButton": "Settings",
+    "help": "Help"
   },
   "pageTitle": {
     "bindingCreate": "{ controlSchemeName } - Create binding",
@@ -36,9 +39,12 @@
     "hubList": "Hubs",
     "hubView": "{ hubName }",
     "notFound": "Page not found",
-    "bluetoothUnavailable": "Bluetooth is not available",
     "about": "About",
-    "settings": "Settings"
+    "settings": "Settings",
+    "help": "Help"
+  },
+  "helpPage": {
+    "installationManuals": "Installation manuals"
   },
   "settings": {
     "theme": "Theme",
@@ -561,5 +567,100 @@
     "minLength": "At least { requiredLength } is required",
     "valueShouldNotBeZero": "Value should not be zero",
     "valueShouldBeInteger": "Value must be integer"
+  },
+  "manuals": {
+    "steamDeckInstallation": {
+      "name": "Steam Deck",
+      "estTime": "Estimated time to complete: 5-10 minutes",
+      "general": "This guide will help you install MOC Commander on your Steam Deck and use it in gaming mode to control your LEGO® Powered UP MOCs with your Steam Deck without Internet connection.",
+      "step1" : {
+        "title": "Step 1. Install Google Chrome",
+        "description": "To use MOC Commander application, you need to install Google Chrome browser (or any other browser that supports Web Bluetooth API).",
+        "description2": "The list of supported browsers can be found at",
+        "description3": ", however, this manual will focus on Google Chrome.",
+        "switchToDesktop": "Press the Steam button to bring up the Steam Deck menu and select \"Power\" -> \"Switch to Desktop\"",
+        "openDiscover": "Open the Discover app on taskbar",
+        "openWebBrowsers": "Select \"Internet\" -> \"Web browsers\"",
+        "installChrome": "Find \"Google Chrome\" and press \"Install\"",
+        "closeDiscover": "After the installation is complete, close the Discover app"
+      },
+      "step2": {
+        "title": "Step 2. Enable Bluetooth support in Google Chrome",
+        "description": "By default, Google Chrome does not support Bluetooth devices on Linux. To enable Bluetooth support, follow the steps below:",
+        "openChrome": "Open the Application Launcher on the taskbar, select \"Internet\" -> \"Google Chrome\"",
+        "pasteFlagsUrl": "Paste the following URL into the address bar",
+        "flagsUrl": "chrome://flags/#enable-experimental-web-platform-features",
+        "pressEnter": "and press Enter",
+        "enableFeature": "Toggle the \"Experimental Web Platform features\" to \"Enabled\"",
+        "restartChrome": "Press the \"Relaunch\" button to restart Google Chrome",
+        "openMocCommander": "Open MOC Commander at",
+        "result": "Now, you can use MOC Commander in desktop mode and use Steam Input in keyboard mode to control your MOCs."
+      },
+      "step3": {
+        "title": "Step 3. (Optional) Allow Google Chrome to install PWA & access gamepad devices",
+        "openKonsole": "Close Google Chrome and open the Konsole app (Application Launcher -> \"System\" -> \"Konsole\")",
+        "enterCommand": "Enter the following command and press Enter:",
+        "enterCommandMotivation": "This command will allow Google Chrome to install the MOC Commander app and access gamepad devices.",
+        "closeKonsole": "Close the Konsole app"
+      },
+      "step4": {
+        "title": "Step 4. (Optional) Install MOC Commander and add it to Steam Client Library",
+        "openChrome": "Open Google Chrome",
+        "openMocCommander": "Open MOC Commander at",
+        "installPwa": "Press \"Install\" button in the top right corner",
+        "confirmInstall": "Press the \"Install\" button in the popup window. The app will launch automatically",
+        "closeAll": "Close both Google Chrome and the MOC Commander app",
+        "openAddNonSteamGame": "Open the Steam Client, select \"Library,\" and press \"Add a Game\" -> \"Add a Non-Steam Game\"",
+        "addMocCommander": "Find \"MOC Commander\" in the list, toggle the checkbox, and click \"Add Selected Programs\"",
+        "returnToGamingMode": "Return to gaming mode by double-tapping the \"Return To Gaming Mode\" icon on the desktop",
+        "result": "The app should appear in the Steam Client Library under the \"Non-Steam\" category.",
+        "following": "Now you can use MOC Commander in game mode with full support of Steam Input."
+      },
+      "step5": {
+        "title": "Step 5. (Optional) Set starting resolution for MOC Commander",
+        "description": "By default, the application will launch at a lower resolution than the screen resolution of the Steam Deck. To set the starting resolution to the maximum available, follow the steps below:",
+        "openAppProperties": "Find \"MOC Commander\" in the Steam Client Library and open its properties (\"Gear Icon\" -> \"Properties\")",
+        "addOption": "In \"Launch Options,\" add a space at the end of the line and the folliwing option:",
+        "closeProperties": "Close the properties window",
+        "result": "Now, the application will launch at the maximum available resolution."
+      }
+    },
+    "windowsInstallation": {
+      "name": "Windows",
+      "estTime": "Estimated time to complete: 3 minutes",
+      "general": "This guide will help you install MOC Commander as a standalone app on your Windows PC and use it to control your LEGO® Powered UP MOCs with your keyboard, mouse and gamepads.",
+      "step1": {
+        "title": "Step 1. Install Google Chrome",
+        "description": "To use MOC Commander application, you need to install Google Chrome browser (or any other browser that supports Web Bluetooth API) from official website or Microsoft Store",
+        "description2": "The list of supported browsers can be found at",
+        "description3": ", however, this manual will focus on Google Chrome."
+      },
+      "step2": {
+        "title": "Step 2. (Optional) Install MOC Commander as a an app",
+        "description": "To use MOC Commander as a standalone app, follow the steps below:",
+        "openChrome": "Open Google Chrome",
+        "openMocCommander": "Open MOC Commander at",
+        "installPwa": "Press \"Install\" button in the top right corner",
+        "confirmInstall": "Press the \"Install\" button in the popup window. The app will launch automatically",
+        "result": "This will install MOC Commander as a PWA app and add it to the Start menu and the desktop."
+      }
+    },
+    "linuxInstallation": {
+      "name": "Linux",
+      "step1": {
+        "title": "Step 1. Install Google Chrome using your package manager or download it from the official website"
+      },
+      "step2": {
+        "title": "Step 2. Enable Bluetooth support in Google Chrome",
+        "description": "By default, Google Chrome does not support Bluetooth devices on Linux. To enable Bluetooth support, follow the steps below:",
+        "openChrome": "Open Google Chrome",
+        "pasteFlagsUrl": "Paste the following URL into the address bar",
+        "flagsUrl": "chrome://flags/#enable-experimental-web-platform-features",
+        "pressEnter": "and press Enter",
+        "enableFeature": "Toggle the \"Experimental Web Platform features\" to \"Enabled\"",
+        "restartChrome": "Press the \"Relaunch\" button to restart Google Chrome",
+        "openMocCommander": "Open MOC Commander at"
+      }
+    }
   }
 }

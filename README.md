@@ -18,7 +18,7 @@ LEGO® is a trademark of the LEGO Group of companies which does not sponsor, aut
         - Keyboard
         - Up to 4 gamepads
         - [LEGO 88010 Remote Control](https://www.lego.com/en-us/product/remote-control-88010)
-        - Steam Deck ([installation manual](https://github.com/nvsukhanov/MOC-Commander/blob/main/docs/steam_deck_EN.md))
+        - Steam Deck ([installation manual](https://moc-commander.com/steam-deck))
         - PoweredUP Hub green button (god knows why you would want to use it, but it's there)
     - Any number of input devices can be used to control any number of outputs
     - Input devices can be configured: gamepad axes active zones, input gain (liner/log/exp) etc

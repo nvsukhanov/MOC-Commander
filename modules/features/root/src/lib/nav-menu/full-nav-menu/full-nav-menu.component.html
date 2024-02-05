@@ -1,8 +1,12 @@
 <mat-toolbar color="primary"
              class="toolbar">
     <nav class="nav">
+
         <h1 class="title">
-            {{ 'appName' | transloco }}
+            <a class="root-link"
+               [routerLink]="routesBuilderService.root">
+                {{ 'appName' | transloco }}
+            </a>
         </h1>
 
         <span class="main-nav">
@@ -55,25 +59,38 @@
                                            (discoveryStart)="onDiscoveryStart()"
             ></feat-root-discover-hub-button>
 
-            <a mat-icon-button
-               class="about-button"
-               [routerLink]="routesBuilderService.settings"
-               [routerLinkActive]="'active-link'"
-               [title]="'nav.settingsPageButton' | transloco"
-               [attr.aria-label]="'nav.settingsPageButton' | transloco"
-            >
-                <mat-icon [fontIcon]="'settings'"></mat-icon>
-            </a>
+            <button mat-icon-button
+                    [matMenuTriggerFor]="menu"
+                    [attr.aria-label]="'nav.navMenuAriaLabel' | ngrxPush">
+                <mat-icon [fontIcon]="'more_vert'"></mat-icon>
+            </button>
 
-            <a mat-icon-button
-               class="about-button"
-               [routerLink]="routesBuilderService.about"
-               [routerLinkActive]="'active-link'"
-               [title]="'nav.aboutPageButton' | transloco"
-               [attr.aria-label]="'nav.aboutPageButton' | transloco"
-            >
-                <mat-icon [fontIcon]="'info'"></mat-icon>
-            </a>
+            <mat-menu #menu="matMenu">
+                <a mat-menu-item
+                   [routerLink]="routesBuilderService.settings"
+                   [routerLinkActive]="'active-link'"
+                   [attr.aria-label]="'nav.settingsPageButton' | transloco"
+                >
+                    <mat-icon [fontIcon]="'settings'"></mat-icon>
+                    <span>{{ 'nav.settingsPageButton' | transloco }}</span>
+                </a>
+                <a mat-menu-item
+                   [routerLink]="routesBuilderService.help"
+                   [routerLinkActive]="'active-link'"
+                   [attr.aria-label]="'nav.help' | transloco"
+                >
+                    <mat-icon [fontIcon]="'help'"></mat-icon>
+                    <span>{{ 'nav.help' | transloco }}</span>
+                </a>
+                <a mat-menu-item
+                   [routerLink]="routesBuilderService.about"
+                   [routerLinkActive]="'active-link'"
+                   [attr.aria-label]="'nav.aboutPageButton' | transloco"
+                >
+                    <mat-icon [fontIcon]="'info'"></mat-icon>
+                    <span>{{ 'nav.aboutPageButton' | transloco }}</span>
+                </a>
+            </mat-menu>
         </span>
     </nav>
 </mat-toolbar>
