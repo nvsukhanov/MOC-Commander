@@ -572,7 +572,7 @@
     "steamDeckInstallation": {
       "name": "Steam Deck",
       "estTime": "Estimated time to complete: 5-10 minutes",
-      "general": "Это руководство поможет вам установить MOC Commander на ваш Steam Deck и использовать его в игровом режиме для управления вашими моделями LEGO® Powered UP с помощью Steam Deck без подключения к Интернету.",
+      "general": "Это руководство поможет вам установить MOC Commander на ваш Steam Deck и использовать его в игровом режиме для управления вашими моделями LEGO® Powered UP.",
       "step1": {
         "title": "Шаг 1. Установка Google Chrome",
         "description": "Для использования приложения MOC Commander вам необходимо установить браузер Google Chrome (или любой другой браузер, поддерживающий API Web Bluetooth).",
