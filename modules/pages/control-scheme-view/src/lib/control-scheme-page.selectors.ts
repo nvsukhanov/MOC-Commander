@@ -31,7 +31,7 @@ import {
     ControlSchemeViewIoTreeNode,
     SchemeRunBlocker
 } from './types';
-import { ControlSchemeStartBlockerWidgetsService } from './control-scheme-start-blocker-widgets.service';
+import { IControlSchemeRunWidgetBlockersChecker } from './widgets/i-control-scheme-run-widget-blockers-checker';
 
 function createHubTreeNode(
     hubConfig: { hubId: string; name?: string; hubType?: HubType },
@@ -112,7 +112,7 @@ const SELECT_IO_MODES = createSelector(
 );
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const SELECT_SCHEME_RUN_BLOCKERS = (widgetChecks: ControlSchemeStartBlockerWidgetsService) => createSelector(
+const SELECT_SCHEME_RUN_BLOCKERS = (widgetChecks: IControlSchemeRunWidgetBlockersChecker) => createSelector(
     SELECT_CURRENTLY_VIEWED_SCHEME,
     CONTROL_SCHEME_SELECTORS.selectRunningState,
     HUB_RUNTIME_DATA_SELECTORS.selectIds,
@@ -239,7 +239,7 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
         }
     ),
     selectSchemeRunBlockers: SELECT_SCHEME_RUN_BLOCKERS,
-    canRunViewedScheme: (widgetChecks: ControlSchemeStartBlockerWidgetsService) => createSelector(
+    canRunViewedScheme: (widgetChecks: IControlSchemeRunWidgetBlockersChecker) => createSelector(
         SELECT_SCHEME_RUN_BLOCKERS(widgetChecks),
         (blockers): boolean => {
             return blockers.length === 0;

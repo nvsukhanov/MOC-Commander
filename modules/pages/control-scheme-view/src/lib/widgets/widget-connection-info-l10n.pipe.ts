@@ -1,8 +1,8 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Inject, Pipe, PipeTransform } from '@angular/core';
 import { Observable } from 'rxjs';
 import { WidgetConfigModel } from '@app/store';
 
-import { WidgetConnectionInfoL10nService } from './widget-connection-info-l10n.service';
+import { IWidgetConnectionInfoProvider, WIDGET_CONNECTION_INFO_PROVIDER } from './i-widget-connection-info-provider';
 
 @Pipe({
     standalone: true,
@@ -11,7 +11,7 @@ import { WidgetConnectionInfoL10nService } from './widget-connection-info-l10n.s
 })
 export class WidgetConnectionInfoL10nPipe implements PipeTransform {
     constructor(
-        private readonly connectionService: WidgetConnectionInfoL10nService
+        @Inject(WIDGET_CONNECTION_INFO_PROVIDER) private readonly connectionService: IWidgetConnectionInfoProvider
     ) {
     }
 

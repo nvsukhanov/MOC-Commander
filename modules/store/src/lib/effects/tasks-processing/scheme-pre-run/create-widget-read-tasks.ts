@@ -1,30 +1,34 @@
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { WidgetType } from '@app/shared-misc';
 
+import { CONTROL_SCHEME_WIDGETS_DATA_ACTIONS } from '../../../actions';
 import { ControlSchemeModel } from '../../../models';
-import { createTemperatureReaderTask, createTiltReaderTask, createVoltageReaderTask } from './widget-read-tasks';
 import { HubStorageService } from '../../../hub-storage.service';
+import { IWidgetReadTaskFactory } from './i-widget-read-task-factory';
 
 export function createWidgetReadTasks(
     scheme: ControlSchemeModel,
     hubStorage: HubStorageService,
     store: Store,
-    schemeStop$: Observable<unknown>
+    schemeStop$: Observable<unknown>,
+    widgetTaskFactory: IWidgetReadTaskFactory
 ): Array<Observable<unknown>> {
     const result: Array<Observable<unknown>> = [];
     for (const widgetConfig of scheme.widgets) {
-        switch (widgetConfig.widgetType) {
-            case WidgetType.Voltage:
-                result.push(createVoltageReaderTask(widgetConfig, store, hubStorage, schemeStop$));
-                break;
-            case WidgetType.Tilt:
-                result.push(createTiltReaderTask(widgetConfig, store, hubStorage, schemeStop$));
-                break;
-            case WidgetType.Temperature:
-                result.push(createTemperatureReaderTask(widgetConfig, store, hubStorage, schemeStop$));
-                break;
-        }
+        const readerTask = widgetTaskFactory.createReadTask(widgetConfig, store, hubStorage, schemeStop$);
+        const obs = new Observable((subscriber) => {
+            let initialValueReceived = false;
+            readerTask.subscribe((taskData) => {
+                if (!initialValueReceived) {
+                    initialValueReceived = true;
+                    subscriber.next(null);
+                    subscriber.complete();
+                }
+                store.dispatch(CONTROL_SCHEME_WIDGETS_DATA_ACTIONS.updateWidgetData(taskData));
+            });
+        });
+
+        result.push(obs);
     }
     return result;
 }

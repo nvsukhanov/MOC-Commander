@@ -5,6 +5,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
+import { provideWidgets } from '@app/widgets';
 import { provideControllerProfiles } from '@app/controller-profiles';
 import { ShowOnTouchedErrorStateMatcher } from '@app/shared-misc';
 import { provideI18n } from '@app/shared-i18n';
@@ -23,6 +24,7 @@ bootstrapApplication(RootComponent, {
         importProvidersFrom(MatSnackBarModule),
         provideApplicationStore(),
         provideBindings(),
+        provideWidgets(),
         { provide: ErrorStateMatcher, useClass: ShowOnTouchedErrorStateMatcher },
         provideServiceWorker('ngsw-worker.js', {
             enabled: !isDevMode(),
