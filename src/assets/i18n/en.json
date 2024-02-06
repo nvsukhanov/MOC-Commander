@@ -572,7 +572,7 @@
     "steamDeckInstallation": {
       "name": "Steam Deck",
       "estTime": "Estimated time to complete: 5-10 minutes",
-      "general": "This guide will help you install MOC Commander on your Steam Deck and use it in gaming mode to control your LEGO® Powered UP MOCs with your Steam Deck without Internet connection.",
+      "general": "This guide will help you install MOC Commander on your Steam Deck and use it in gaming mode to control your LEGO® Powered UP MOCs.",
       "step1" : {
         "title": "Step 1. Install Google Chrome",
         "description": "To use MOC Commander application, you need to install Google Chrome browser (or any other browser that supports Web Bluetooth API).",
@@ -620,7 +620,7 @@
         "title": "Step 5. (Optional) Set starting resolution for MOC Commander",
         "description": "By default, the application will launch at a lower resolution than the screen resolution of the Steam Deck. To set the starting resolution to the maximum available, follow the steps below:",
         "openAppProperties": "Find \"MOC Commander\" in the Steam Client Library and open its properties (\"Gear Icon\" -> \"Properties\")",
-        "addOption": "In \"Launch Options,\" add a space at the end of the line and the folliwing option:",
+        "addOption": "In \"Launch Options,\" add a space at the end of the line and the following option:",
         "closeProperties": "Close the properties window",
         "result": "Now, the application will launch at the maximum available resolution."
       }
