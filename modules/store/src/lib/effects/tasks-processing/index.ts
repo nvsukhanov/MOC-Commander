@@ -11,6 +11,7 @@ export * from './i-task-filter';
 export * from './i-task-runner';
 export * from './i-task-factory';
 export * from './i-task-input-extractor';
+export { IWidgetReadTaskFactory, WIDGET_READ_TASK_FACTORY } from './scheme-pre-run';
 
 export const TASK_PROCESSING_EFFECTS: Record<string, FunctionalEffect> = {
     preRunScheme: PRE_RUN_SCHEME_EFFECT,

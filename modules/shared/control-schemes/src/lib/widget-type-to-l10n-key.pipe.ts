@@ -1,5 +1,7 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Inject, Pipe, PipeTransform } from '@angular/core';
 import { WidgetType } from '@app/shared-misc';
+
+import { IWidgetTypeToL10nKeyMapper, WIDGET_TYPE_TO_L10N_KEY_MAPPER } from './i-widget-type-to-l10n-key-mapper';
 
 @Pipe({
     standalone: true,
@@ -7,15 +9,14 @@ import { WidgetType } from '@app/shared-misc';
     pure: true
 })
 export class WidgetTypeToL10nKeyPipe implements PipeTransform {
-    private readonly widgetTypeToL10n: { [k in WidgetType]: string } = {
-        [WidgetType.Voltage]: 'controlScheme.widgets.voltage.name',
-        [WidgetType.Tilt]: 'controlScheme.widgets.tilt.name',
-        [WidgetType.Temperature]: 'controlScheme.widgets.temperature.name'
-    };
+    constructor(
+        @Inject(WIDGET_TYPE_TO_L10N_KEY_MAPPER) private readonly widgetTypeToL10nKeyMapper: IWidgetTypeToL10nKeyMapper
+    ) {
+    }
 
     public transform(
         widgetType: WidgetType
     ): string {
-        return this.widgetTypeToL10n[widgetType];
+        return this.widgetTypeToL10nKeyMapper.map(widgetType);
     }
 }

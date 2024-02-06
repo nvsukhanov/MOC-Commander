@@ -13,13 +13,15 @@ import { createPreRunSetAccelerationProfileTasks } from './create-pre-run-set-ac
 import { createPreRunSetDecelerationProfileTasks } from './create-pre-run-set-deceleration-profile-tasks';
 import { createWidgetReadTasks } from './create-widget-read-tasks';
 import { HubServoCalibrationFacadeService } from '../../../hub-facades';
+import { IWidgetReadTaskFactory, WIDGET_READ_TASK_FACTORY } from './i-widget-read-task-factory';
 
 export const PRE_RUN_SCHEME_EFFECT = createEffect((
     actions: Actions = inject(Actions),
     hubStorage: HubStorageService = inject(HubStorageService),
     store: Store = inject(Store),
     hubCalibrationFacade: HubServoCalibrationFacadeService = inject(HubServoCalibrationFacadeService),
-    appConfig: IAppConfig = inject(APP_CONFIG)
+    appConfig: IAppConfig = inject(APP_CONFIG),
+    widgetReadTaskFactory: IWidgetReadTaskFactory = inject(WIDGET_READ_TASK_FACTORY)
 ) => {
     return actions.pipe(
         ofType(CONTROL_SCHEME_ACTIONS.startScheme),
@@ -33,7 +35,7 @@ export const PRE_RUN_SCHEME_EFFECT = createEffect((
             const combinedTasks = [
                 ...createPreRunSetAccelerationProfileTasks(scheme, hubStorage),
                 ...createPreRunSetDecelerationProfileTasks(scheme, hubStorage),
-                ...createWidgetReadTasks(scheme, hubStorage, store, controlSchemeStopEvent$)
+                ...createWidgetReadTasks(scheme, hubStorage, store, controlSchemeStopEvent$, widgetReadTaskFactory)
             ];
             const calibrationServoTasks = createPreRunServoCalibrationTasks(scheme, hubCalibrationFacade, store);
             if (calibrationServoTasks.length > 0) {

@@ -21,3 +21,4 @@ export {
     BindingEditComponent
 } from './binding-edit';
 export { IBindingValidator, BINDING_VALIDATOR } from './i-binding-validator';
+export * from './i-widget-type-to-l10n-key-mapper';

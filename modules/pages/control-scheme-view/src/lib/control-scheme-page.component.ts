@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Observable, Subscription, filter, map, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
@@ -16,19 +16,20 @@ import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData } fro
 
 import { ControlSchemeViewTreeNode, SchemeRunBlocker } from './types';
 import { ControlSchemeRunBlockersL10nPipe } from './control-scheme-run-blockers-l10n.pipe';
-import { ControlSchemeWidgetComponentFactoryService } from './control-scheme-widget-component-factory.service';
 import { CONTROL_SCHEME_PAGE_SELECTORS } from './control-scheme-page.selectors';
-import { ControlSchemeWidgetDefaultConfigFactoryService } from './control-scheme-widget-default-config-factory.service';
 import { ControlSchemeViewIoListComponent } from './control-scheme-view-io-list';
 import { ControlSchemeGeneralInfoComponent } from './control-scheme-general-info';
 import { ControlSchemePageCompactToolbarComponent } from './compact-toolbar';
 import { ControlSchemePageFullToolbarComponent } from './full-toolbar';
-import { ControlSchemeWidgetsGridComponent } from './widgets-grid';
-import { CONTROL_SCHEME_WIDGET_COMPONENT_FACTORY } from './widget-container';
-import { AddWidgetDialogComponent, AddWidgetDialogViewModel } from './add-widget-dialog';
-import { EditWidgetSettingsDialogComponent } from './edit-widget-settings-dialog';
-import { ControlSchemeStartBlockerWidgetsService } from './control-scheme-start-blocker-widgets.service';
-import { ReorderWidgetDialogComponent } from './reorder-widgets-dialog';
+import {
+    AddWidgetDialogComponent,
+    AddWidgetDialogViewModel,
+    ControlSchemeWidgetsGridComponent,
+    EditWidgetSettingsDialogComponent,
+    ReorderWidgetDialogComponent
+} from './widgets';
+import { CONTROL_SCHEME_WIDGET_CONFIG_FACTORY, IControlSchemeWidgetConfigFactory } from './widgets/i-control-scheme-widget-config-factory';
+import { CONTROL_SCHEME_RUN_WIDGET_BLOCKERS_CHECKER, IControlSchemeRunWidgetBlockersChecker } from './widgets/i-control-scheme-run-widget-blockers-checker';
 
 @Component({
     standalone: true,
@@ -55,8 +56,7 @@ import { ReorderWidgetDialogComponent } from './reorder-widgets-dialog';
         ControlSchemeWidgetsGridComponent,
     ],
     providers: [
-        TitleService,
-        { provide: CONTROL_SCHEME_WIDGET_COMPONENT_FACTORY, useClass: ControlSchemeWidgetComponentFactoryService },
+        TitleService
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -98,7 +98,7 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
         filter((scheme): scheme is ControlSchemeModel => scheme !== undefined),
         switchMap((scheme) => this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.addableWidgetConfigFactoryBaseData(scheme.name))),
         map((addableWidgetData) => {
-            return this.widgetDefaultConfigFactory.createAddableConfigs(
+            return this.widgetDefaultConfigFactory.createConfigs(
                 addableWidgetData.ios,
                 addableWidgetData.portModes,
                 addableWidgetData.portModesInfo
@@ -123,8 +123,8 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
         private readonly dialog: MatDialog,
         private readonly screenSizeObserverService: ScreenSizeObserverService,
         private readonly titleService: TitleService,
-        private readonly widgetDefaultConfigFactory: ControlSchemeWidgetDefaultConfigFactoryService,
-        private readonly controlSchemeStartWidgetCheckService: ControlSchemeStartBlockerWidgetsService,
+        @Inject(CONTROL_SCHEME_WIDGET_CONFIG_FACTORY) private readonly widgetDefaultConfigFactory: IControlSchemeWidgetConfigFactory,
+        @Inject(CONTROL_SCHEME_RUN_WIDGET_BLOCKERS_CHECKER) private readonly controlSchemeStartWidgetCheckService: IControlSchemeRunWidgetBlockersChecker
     ) {
         this.canAddWidgets$ = this.addableWidgetConfigs$.pipe(
             map((configs) => configs.length > 0)
