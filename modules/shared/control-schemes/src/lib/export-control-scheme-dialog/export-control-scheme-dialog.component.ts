@@ -5,7 +5,7 @@ import { TranslocoPipe } from '@ngneat/transloco';
 import { Observable, map, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { PushPipe } from '@ngrx/component';
-import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS } from '@app/store';
+import { COMMON_ACTIONS, CONTROL_SCHEME_SELECTORS } from '@app/store';
 
 import { ControlSchemeCompressorService } from './control-scheme-compressor.service';
 
@@ -47,7 +47,7 @@ export class ExportControlSchemeDialogComponent {
         this.exportString$.pipe(
             take(1)
         ).subscribe((exportString) => {
-            this.store.dispatch(CONTROL_SCHEME_ACTIONS.copyExportString({ exportString }));
+            this.store.dispatch(COMMON_ACTIONS.copyToClipboard({ content: exportString }));
         });
     }
 

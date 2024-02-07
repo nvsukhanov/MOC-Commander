@@ -32,8 +32,8 @@ import {
 import {
     AttachedIOsEffects,
     AttachedIoModesEffects,
+    COMMON_EFFECTS,
     CONTROLLER_EFFECTS,
-    CONTROL_SCHEME_EFFECTS,
     HUB_EFFECTS,
     HubAttachedIosStateEffects,
     HubPortModeInfoEffects,
@@ -88,9 +88,9 @@ export function provideApplicationStore(): EnvironmentProviders {
                 HubAttachedIosStateEffects,
                 CONTROLLER_EFFECTS,
                 SETTINGS_EFFECTS,
-                CONTROL_SCHEME_EFFECTS,
                 HUB_EFFECTS,
-                TASK_PROCESSING_EFFECTS
+                TASK_PROCESSING_EFFECTS,
+                COMMON_EFFECTS
             ),
             {
                 provide: APP_INITIALIZER,

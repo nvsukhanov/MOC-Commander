@@ -226,7 +226,8 @@
                 "sourceTag": "scope:shared-ui",
                 "onlyDependOnLibsWithTags": [
                   "scope:shared-misc",
-                  "scope:i18n"
+                  "scope:i18n",
+                  "scope:store"
                 ]
               },
               {
