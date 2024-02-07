@@ -7,6 +7,9 @@
   "bluetoothIsNotAvailable": "Bluetooth недоступен",
   "uploadFileButtonTitle": "Загрузить",
   "uploadFileDialogTitle": "Выберите файл",
+  "common": {
+    "copyToClipboard": "Копировать в буфер обмена"
+  },
   "confirmationDialog": {
     "defaultTitle": "Вы уверены?",
     "defaultConfirmButtonTitle": "Да",
@@ -589,7 +592,6 @@
         "description": "По умолчанию Google Chrome не поддерживает Bluetooth-устройства в Linux. Чтобы включить поддержку Bluetooth, следуйте шагам ниже:",
         "openChrome": "Откройте Application Launcher на панели задач, выберите \"Internet\" -> \"Google Chrome\"",
         "pasteFlagsUrl": "Вставьте следующий URL в адресную строку",
-        "flagsUrl": "chrome://flags/#enable-experimental-web-platform-features",
         "pressEnter": "и нажмите Enter",
         "enableFeature": "Переключите \"Experimental Web Platform features\" в положение \"Enabled\"",
         "restartChrome": "Нажмите кнопку \"Relaunch\", чтобы перезапустить Google Chrome",

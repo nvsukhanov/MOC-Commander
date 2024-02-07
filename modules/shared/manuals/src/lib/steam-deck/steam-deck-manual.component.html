@@ -59,9 +59,7 @@
         </li>
         <li>
             {{ t('pasteFlagsUrl')}}
-            <code>
-                {{ t('flagsUrl') }}
-            </code>
+            <lib-code-block [content]="resources.chromeFlagsUrl"></lib-code-block>
             {{ t('pressEnter') }}
         </li>
         <li>{{ t('enableFeature') }}</li>
@@ -86,9 +84,7 @@
         <li>
             <div>{{ t('enterCommand') }}</div>
             <div>
-                <code>
-                    flatpak --user override --filesystem=/run/udev:ro --filesystem=~/.local/share/applications --filesystem=~/.local/share/icons com.google.Chrome
-                </code>
+                <lib-code-block [content]="flatpakCode"></lib-code-block>
             </div>
             <div>{{ t('enterCommandMotivation') }}</div>
         </li>
@@ -143,7 +139,7 @@
         <li>
             {{ t('addOption') }}
             <div>
-                <code>--kiosk</code>
+                <lib-code-block [content]="kioskModeOption"></lib-code-block>
             </div>
         </li>
         <li>{{ t('closeProperties') }}</li>

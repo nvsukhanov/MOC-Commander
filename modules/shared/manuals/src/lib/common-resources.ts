@@ -4,4 +4,5 @@ export const COMMON_RESOURCES = {
     appLauncherImage: 'assets/manual/app-launcher.png',
     installPwaImage: 'assets/manual/install-pwa.png',
     mocCommanderHref: 'https://moc-commander.com',
+    chromeFlagsUrl: 'chrome://flags/#enable-experimental-web-platform-features'
 } as const;

@@ -17,9 +17,7 @@
         </li>
         <li>
             {{ t('pasteFlagsUrl')}}
-            <code>
-                {{ t('flagsUrl') }}
-            </code>
+            <lib-code-block [content]="resources.chromeFlagsUrl"></lib-code-block>
             {{ t('pressEnter') }}
         </li>
         <li>{{ t('enableFeature') }}</li>

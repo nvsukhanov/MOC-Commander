@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
 import { TranslocoDirective, TranslocoPipe } from '@ngneat/transloco';
+import { CodeBlockComponent } from '@app/shared-ui';
 
 import { COMMON_RESOURCES } from '../common-resources';
 
@@ -14,10 +15,16 @@ import { COMMON_RESOURCES } from '../common-resources';
         NgOptimizedImage,
         MatDivider,
         TranslocoPipe,
-        TranslocoDirective
+        TranslocoDirective,
+        CodeBlockComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SteamDeckManualComponent {
     public readonly resources = COMMON_RESOURCES;
+
+    public readonly flatpakCode =
+        'flatpak --user override --filesystem=/run/udev:ro --filesystem=~/.local/share/applications --filesystem=~/.local/share/icons com.google.Chrome';
+
+    public readonly kioskModeOption = '--kiosk';
 }
