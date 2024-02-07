@@ -7,7 +7,7 @@
     "serve:dist": "http-server dist -p 4200",
     "serve:intra": "nx serve --host 0.0.0.0",
     "build": "nx build",
-    "ci": "nx run-many -t lint test build",
+    "ci": "nx run-many -t lint test build --nxBail=true",
     "test": "nx run-many -t test",
     "lint": "nx run-many -t lint"
   },
