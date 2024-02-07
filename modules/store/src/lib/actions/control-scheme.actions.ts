@@ -8,7 +8,6 @@ export const CONTROL_SCHEME_ACTIONS = createActionGroup({
         'create control scheme': props<{ name: string }>(),
         'update control scheme name': props<{ previousName: string; name: string }>(),
         'delete control scheme': props<{ name: string }>(),
-        'copy export string': props<{ exportString: string }>(),
         'import control scheme': props<{ scheme: ControlSchemeModel }>(),
 
         'save binding': props<{ schemeName: string; binding: ControlSchemeBinding }>(),

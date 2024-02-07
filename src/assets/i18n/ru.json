@@ -8,7 +8,9 @@
   "uploadFileButtonTitle": "Загрузить",
   "uploadFileDialogTitle": "Выберите файл",
   "common": {
-    "copyToClipboard": "Копировать в буфер обмена"
+    "copyToClipboard": "Копировать в буфер обмена",
+    "copyToClipboardSuccessNotification": "Скопировано в буфер обмена",
+    "copyToClipboardErrorNotification": "Не удалось скопировать в буфер обмена"
   },
   "confirmationDialog": {
     "defaultTitle": "Вы уверены?",
@@ -153,7 +155,6 @@
     "exportDialogTitle": "Строка экспорта ''{ name }''",
     "exportDialogCopyButtonTitle": "Копировать",
     "exportDialogCloseButtonTitle": "Закрыть",
-    "exportStringCopiedNotification": "Строка экспорта скопирована в буфер обмена",
     "import": "Импорт",
     "importDialogTitle": "Импорт схемы управления",
     "importDialogDescription": "Введите строку экспорта схемы управления",

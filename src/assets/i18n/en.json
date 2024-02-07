@@ -8,7 +8,9 @@
   "uploadFileButtonTitle": "Upload",
   "uploadFileDialogTitle": "Select a file",
   "common": {
-    "copyToClipboard": "Copy to clipboard"
+    "copyToClipboard": "Copy to clipboard",
+    "copyToClipboardSuccessNotification": "Copied to clipboard",
+    "copyToClipboardErrorNotification": "Failed to copy to clipboard"
   },
   "confirmationDialog": {
     "defaultTitle": "Are you sure?",
@@ -153,7 +155,6 @@
     "exportDialogTitle": "''{ name }'' export string",
     "exportDialogCopyButtonTitle": "Copy",
     "exportDialogCloseButtonTitle": "Close",
-    "exportStringCopiedNotification": "Export string copied to clipboard",
     "import": "Import",
     "importDialogTitle": "Import control scheme",
     "importDialogDescription": "Paste control scheme export string",

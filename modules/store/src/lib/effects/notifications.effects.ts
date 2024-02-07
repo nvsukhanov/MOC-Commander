@@ -7,7 +7,7 @@ import { Action, Store } from '@ngrx/store';
 import { GamepadProfileFactoryService, KeyboardProfileFactoryService } from '@app/controller-profiles';
 import { ScreenSizeObserverService } from '@app/shared-misc';
 
-import { CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS } from '../actions';
+import { COMMON_ACTIONS, CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS } from '../actions';
 import { CONTROLLER_SELECTORS } from '../selectors';
 import { ControllerModel } from '../models';
 import { ControllerProfilesFacadeService } from '../controller-profiles-facade.service';
@@ -89,10 +89,17 @@ export class NotificationsEffects {
         );
     }, { dispatch: false });
 
-    public readonly controlSchemeExportStringCopied$ = createEffect(() => {
+    public readonly stringCopiedToClipboard$ = createEffect(() => {
         return this.actions$.pipe(
-            ofType(CONTROL_SCHEME_ACTIONS.copyExportString),
-            this.showMessage(() => this.translocoService.selectTranslate('controlScheme.exportStringCopiedNotification')),
+            ofType(COMMON_ACTIONS.copyToClipboardSuccess),
+            this.showMessage(() => this.translocoService.selectTranslate('common.copyToClipboardSuccessNotification')),
+        );
+    }, { dispatch: false });
+
+    public readonly stringCopyToClipboardFailed$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(COMMON_ACTIONS.copyToClipboardFailure),
+            this.showMessage(() => this.translocoService.selectTranslate('common.copyToClipboardErrorNotification')),
         );
     }, { dispatch: false });
 
