@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslocoDirective } from '@ngneat/transloco';
 import { MatDivider } from '@angular/material/divider';
 import { NgOptimizedImage } from '@angular/common';
+import { CodeBlockComponent } from '@app/shared-ui';
 
 import { COMMON_RESOURCES } from '../common-resources';
 
@@ -13,7 +14,8 @@ import { COMMON_RESOURCES } from '../common-resources';
     imports: [
         TranslocoDirective,
         MatDivider,
-        NgOptimizedImage
+        NgOptimizedImage,
+        CodeBlockComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

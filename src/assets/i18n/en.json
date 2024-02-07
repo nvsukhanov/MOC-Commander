@@ -7,6 +7,9 @@
   "bluetoothIsNotAvailable": "Bluetooth is not available",
   "uploadFileButtonTitle": "Upload",
   "uploadFileDialogTitle": "Select a file",
+  "common": {
+    "copyToClipboard": "Copy to clipboard"
+  },
   "confirmationDialog": {
     "defaultTitle": "Are you sure?",
     "defaultConfirmButtonTitle": "Confirm",
@@ -589,7 +592,6 @@
         "description": "By default, Google Chrome does not support Bluetooth devices on Linux. To enable Bluetooth support, follow the steps below:",
         "openChrome": "Open the Application Launcher on the taskbar, select \"Internet\" -> \"Google Chrome\"",
         "pasteFlagsUrl": "Paste the following URL into the address bar",
-        "flagsUrl": "chrome://flags/#enable-experimental-web-platform-features",
         "pressEnter": "and press Enter",
         "enableFeature": "Toggle the \"Experimental Web Platform features\" to \"Enabled\"",
         "restartChrome": "Press the \"Relaunch\" button to restart Google Chrome",
