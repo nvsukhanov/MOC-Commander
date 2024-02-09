@@ -17,3 +17,4 @@ export * from './math';
 export * from './routing';
 export * from './is-os-linux';
 export * from './calculate-speed-power';
+export * from './wake-lock.service';
