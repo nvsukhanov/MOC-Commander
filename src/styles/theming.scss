@@ -64,6 +64,7 @@ $theme-dark: mat.define-dark-theme((
 $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
 
 .theme-light {
+    color-scheme: light;
     --app-accent-color: #{mat.get-color-from-palette($light-accent-palette, 500)};
     --app-accent-contrast-color: #{mat.get-contrast-color-from-palette($light-accent-palette, 500)};;
     --app-primary-color: #{mat.get-color-from-palette($light-palette, 500)};
@@ -81,6 +82,7 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
 }
 
 .theme-dark {
+    color-scheme: dark;
     @include mat.core-color($theme-dark);
     @include mat.all-component-colors($theme-dark);
 
