@@ -14,7 +14,7 @@ export class SetSpeedTaskRunnerService implements IBindingTaskRunner<ControlSche
         task: PortCommandTask<ControlSchemeBindingType.SetSpeed>,
     ): Observable<PortCommandExecutionStatus> {
         const { speed, power } = calculateSpeedPower(task.payload.speed, task.payload.brakeFactor, task.payload.power);
-        return hub.motors.setSpeed(
+        return hub.motors.startSpeed(
             task.portId,
             speed,
             {

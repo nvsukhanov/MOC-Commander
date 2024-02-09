@@ -13,7 +13,7 @@ export class TrainControlTaskRunnerService implements IBindingTaskRunner<Control
         hub: IHub,
         task: PortCommandTask<ControlSchemeBindingType.TrainControl>,
     ): Observable<PortCommandExecutionStatus> {
-        return hub.motors.setSpeed(
+        return hub.motors.startSpeed(
             task.portId,
             task.payload.speed,
             {
