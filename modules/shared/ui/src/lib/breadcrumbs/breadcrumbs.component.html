@@ -1,9 +1,11 @@
 <nav>
 @for(def of breadcrumbsDef; track def; let last = $last) {
     @if (last) {
-        <h2 class="breadcrumb-current-location">
+        <span class="breadcrumb-current-location"
+              aria-current="page"
+        >
             {{ def.label$ | ngrxPush }}
-        </h2>
+        </span>
     } @else {
         <a [routerLink]="def.route"
            libEllipsisTitle
