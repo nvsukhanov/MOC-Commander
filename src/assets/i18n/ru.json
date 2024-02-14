@@ -17,6 +17,12 @@
     "defaultConfirmButtonTitle": "Да",
     "defaultCancelButtonTitle": "Нет"
   },
+  "unsavedChangesDialog": {
+    "title": "Не сохраненные изменения",
+    "content": "У вас есть несохраненные изменения. Вы уверены что хотите покинуть страницу?",
+    "confirmButtonTitle": "Покинуть",
+    "cancelButtonTitle": "Отмена"
+  },
   "bluetoothUnavailable": {
     "message": "Ваш браузер не поддерживает Web Bluetooth API",
     "manualsPre": "Воспользуйтесь",

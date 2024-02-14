@@ -1,6 +1,7 @@
 <ng-container *ngIf="initialBindingData$ | ngrxPush; let initialData; else unableToCreateBinding">
     <lib-cs-binding-edit [binding]="initialData"
                          (bindingChange)="onBindingChange($event)"
+                         (bindingFormDirtyChange)="onFormDirtyChange($event)"
     ></lib-cs-binding-edit>
 
     <div *libFeatureToolbarControls

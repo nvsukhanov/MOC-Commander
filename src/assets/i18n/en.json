@@ -17,6 +17,12 @@
     "defaultConfirmButtonTitle": "Confirm",
     "defaultCancelButtonTitle": "Cancel"
   },
+  "unsavedChangesDialog": {
+    "title": "Unsaved changes",
+    "content": "You have unsaved changes. Are you sure you want to leave this page?",
+    "confirmButtonTitle": "Leave",
+    "cancelButtonTitle": "Stay"
+  },
   "bluetoothUnavailable": {
     "message": "It appears that your browser does not support the Web Bluetooth API",
     "manualsPre": "Please check",

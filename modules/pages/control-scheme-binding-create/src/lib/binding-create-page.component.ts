@@ -6,7 +6,7 @@ import { PushPipe } from '@ngrx/component';
 import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { RoutesBuilderService, TitleService } from '@app/shared-misc';
+import { IUnsavedChangesComponent, RoutesBuilderService, TitleService } from '@app/shared-misc';
 import { FeatureToolbarBreadcrumbsDirective, FeatureToolbarControlsDirective, HintComponent, IBreadcrumbDefinition } from '@app/shared-ui';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeBinding, ROUTER_SELECTORS } from '@app/store';
 import { BindingEditComponent } from '@app/shared-control-schemes';
@@ -33,10 +33,12 @@ import { BINDING_CREATE_PAGE_SELECTORS } from './binding-create-page.selectors';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BindingCreatePageComponent implements OnInit {
+export class BindingCreatePageComponent implements OnInit, IUnsavedChangesComponent {
     public readonly initialBindingData$: Observable<Partial<ControlSchemeBinding | null>>;
 
     public readonly breadcrumbsDef$: Observable<ReadonlyArray<IBreadcrumbDefinition>>;
+
+    private _hasUnsavedChanges = false;
 
     private binding: ControlSchemeBinding | null = null;
 
@@ -69,6 +71,10 @@ export class BindingCreatePageComponent implements OnInit {
         );
     }
 
+    public get hasUnsavedChanges(): boolean {
+        return this._hasUnsavedChanges;
+    }
+
     public get canSave(): boolean {
         return this.binding !== null;
     }
@@ -77,6 +83,12 @@ export class BindingCreatePageComponent implements OnInit {
         binding: ControlSchemeBinding | null
     ): void {
         this.binding = binding;
+    }
+
+    public onFormDirtyChange(
+        isDirty: boolean
+    ): void {
+        this._hasUnsavedChanges = isDirty;
     }
 
     public ngOnInit(): void {
@@ -113,6 +125,7 @@ export class BindingCreatePageComponent implements OnInit {
                 schemeName: schemeName,
                 binding: this.binding
             }));
+            this._hasUnsavedChanges = false;
             this.router.navigate(
                 this.routesBuilderService.controlSchemeView(schemeName)
             );

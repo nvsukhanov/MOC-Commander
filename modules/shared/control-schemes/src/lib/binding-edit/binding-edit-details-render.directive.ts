@@ -13,6 +13,9 @@ import { BINDING_DETAILS_EDIT_FORM_RENDERER_FACTORY, IBindingDetailsEditFormRend
 export class BindingEditDetailsRenderDirective implements OnDestroy {
     @Output('libCsBindingEditDetailsRenderBindingChange') public readonly bindingChange: Observable<ControlSchemeBinding | null>;
 
+    // eslint-disable-next-line @angular-eslint/no-output-rename
+    @Output('libCsBindingEditDetailsRenderBindingFormDirtyChange') public readonly dirtyChange: Observable<boolean>;
+
     private rendererInstance: IBindingDetailsEditFormRenderer;
 
     constructor(
@@ -21,6 +24,7 @@ export class BindingEditDetailsRenderDirective implements OnDestroy {
     ) {
         this.rendererInstance = this.factory.create(this.viewContainer);
         this.bindingChange = this.rendererInstance.bindingChange;
+        this.dirtyChange = this.rendererInstance.bindingFormDirtyChange;
     }
 
     @Input('libCsBindingEditDetailsRender')

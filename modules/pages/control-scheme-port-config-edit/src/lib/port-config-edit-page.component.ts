@@ -4,12 +4,12 @@ import { JsonPipe, NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Observable, Subscription, filter, map, switchMap, take } from 'rxjs';
+import { Observable, Subscription, distinctUntilChanged, filter, map, startWith, switchMap, take } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
-import { RoutesBuilderService, TitleService, ValidationMessagesDirective } from '@app/shared-misc';
+import { IUnsavedChangesComponent, RoutesBuilderService, TitleService, ValidationMessagesDirective } from '@app/shared-misc';
 import {
     FeatureToolbarBreadcrumbsDirective,
     FeatureToolbarControlsDirective,
@@ -49,7 +49,7 @@ import { PortConfigEditViewModel } from './port-config-edit-view-model';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PortConfigEditPageComponent implements OnInit, OnDestroy {
+export class PortConfigEditPageComponent implements OnInit, OnDestroy, IUnsavedChangesComponent {
     public readonly portConfig$: Observable<PortConfigEditViewModel | null> = this.store.select(PORT_CONFIG_EDIT_PAGE_SELECTORS.selectPortConfig);
 
     public readonly minAccDecProfileTimeMs = PortConfigFormBuilderService.minAccDecProfileTimeMs;
@@ -59,6 +59,8 @@ export class PortConfigEditPageComponent implements OnInit, OnDestroy {
     public readonly formGroup = this.formBuilder.build();
 
     public readonly breadcrumbsDef$: Observable<ReadonlyArray<IBreadcrumbDefinition>>;
+
+    public readonly hasUnsavedChanges: Observable<boolean>;
 
     private readonly sub = new Subscription();
 
@@ -88,6 +90,12 @@ export class PortConfigEditPageComponent implements OnInit, OnDestroy {
                     route: this.routesBuilderService.portConfigEdit(portConfig.controlSchemeName, portConfig.hubId, portConfig.portId)
                 }
             ]))
+        );
+
+        this.hasUnsavedChanges = this.formGroup.statusChanges.pipe(
+            startWith(null),
+            map(() => this.formGroup.dirty),
+            distinctUntilChanged()
         );
     }
 
