@@ -4,11 +4,13 @@
          class="toolbar-panel"
     >
         <a mat-raised-button
+           class="toolbar-button"
            [routerLink]="hubEditRoute$ | ngrxPush"
         >
             {{ 'hub.edit' | transloco }}
         </a>
         <button mat-raised-button
+                class="toolbar-button"
                 (click)="disconnectHub()"
         >
             {{ 'hub.disconnect' | transloco }}
