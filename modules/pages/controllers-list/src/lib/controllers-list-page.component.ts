@@ -9,8 +9,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { ControllerNamePipe, ControllerTypeIconNamePipe, ControllerViewHrefPipe } from '@app/shared-controller';
-import { TitleService } from '@app/shared-misc';
-import { ConfirmationDialogModule, ConfirmationDialogService, HintComponent } from '@app/shared-ui';
+import { RoutesBuilderService, TitleService } from '@app/shared-misc';
+import {
+    ConfirmationDialogModule,
+    ConfirmationDialogService,
+    FeatureToolbarBreadcrumbsDirective,
+    FeatureToolbarControlsDirective,
+    HintComponent,
+    IBreadcrumbDefinition
+} from '@app/shared-ui';
 import { CONTROLLERS_ACTIONS, ControllerModel } from '@app/store';
 import { ControlSchemeViewUrlPipe } from '@app/shared-control-schemes';
 
@@ -36,7 +43,9 @@ import { CONTROLLERS_LIST_PAGE_SELECTORS, ControllerListViewModel } from './cont
         ControllerViewHrefPipe,
         ControllerTypeIconNamePipe,
         MatIconModule,
-        ConfirmationDialogModule
+        ConfirmationDialogModule,
+        FeatureToolbarControlsDirective,
+        FeatureToolbarBreadcrumbsDirective
     ],
     providers: [
         TitleService
@@ -46,11 +55,19 @@ import { CONTROLLERS_LIST_PAGE_SELECTORS, ControllerListViewModel } from './cont
 export class ControllersListPageComponent implements OnInit {
     public readonly controllerListViewModel$: Observable<ControllerListViewModel> = this.store.select(CONTROLLERS_LIST_PAGE_SELECTORS.viewModel);
 
+    public readonly breadcrumbsDef: ReadonlyArray<IBreadcrumbDefinition> = [
+        {
+            label$: this.translocoService.selectTranslate('pageTitle.controllerList'),
+            route: this.routesBuilder.controllersList
+        }
+    ];
+
     constructor(
         private readonly store: Store,
         private readonly confirmationService: ConfirmationDialogService,
         private readonly translocoService: TranslocoService,
-        private readonly titleService: TitleService
+        private readonly titleService: TitleService,
+        private readonly routesBuilder: RoutesBuilderService
     ) {
     }
 

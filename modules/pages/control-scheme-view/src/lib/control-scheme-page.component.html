@@ -36,40 +36,42 @@
         </mat-card-content>
 
         <ng-container *ngIf="isSmallScreen$ | ngrxPush; else largeScreen">
-            <page-control-scheme-view-control-scheme-page-compact-toolbar *libFeatureToolbarControls
-                                                                          [canRun]="!!(canRunScheme$ | ngrxPush)"
-                                                                          [canStop]="!!(isCurrentControlSchemeRunning$ | ngrxPush)"
-                                                                          [canAddBinding]="!!(canCreateBinding$ | ngrxPush)"
-                                                                          [canExport]="!!(canExportScheme$ | ngrxPush)"
-                                                                          [canDelete]="!!(canDeleteScheme$ | ngrxPush)"
-                                                                          [canAddWidgets]="!!(canAddWidgets$ | ngrxPush)"
-                                                                          [canReorderWidgets]="!!(canReorderWidgets$ | ngrxPush)"
-                                                                          (run)="runScheme(scheme.name)"
-                                                                          (stop)="stopRunningScheme()"
-                                                                          (addBinding)="addBinding()"
-                                                                          (export)="onExport(scheme.name)"
-                                                                          (delete)="onDelete()"
-                                                                          (addWidget)="onAddWidget()"
-                                                                          (reorderWidgets)="onReorderWidgets()"
-            ></page-control-scheme-view-control-scheme-page-compact-toolbar>
+            <page-control-scheme-view-control-scheme-page-compact-toolbar-controls *libFeatureToolbarControls
+                                                                                   [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | ngrxPush"
+                                                                                   [canRun]="!!(canRunScheme$ | ngrxPush)"
+                                                                                   [canStop]="!!(isCurrentControlSchemeRunning$ | ngrxPush)"
+                                                                                   [canAddBinding]="!!(canCreateBinding$ | ngrxPush)"
+                                                                                   [canExport]="!!(canExportScheme$ | ngrxPush)"
+                                                                                   [canDelete]="!!(canDeleteScheme$ | ngrxPush)"
+                                                                                   [canAddWidgets]="!!(canAddWidgets$ | ngrxPush)"
+                                                                                   [canReorderWidgets]="!!(canReorderWidgets$ | ngrxPush)"
+                                                                                   (run)="runScheme(scheme.name)"
+                                                                                   (stop)="stopRunningScheme()"
+                                                                                   (addBinding)="addBinding()"
+                                                                                   (export)="onExport(scheme.name)"
+                                                                                   (delete)="onDelete()"
+                                                                                   (addWidget)="onAddWidget()"
+                                                                                   (reorderWidgets)="onReorderWidgets()"
+            ></page-control-scheme-view-control-scheme-page-compact-toolbar-controls>
         </ng-container>
         <ng-template #largeScreen>
-            <page-control-scheme-view-control-scheme-page-full-toolbar *libFeatureToolbarControls
-                                                                       [canRun]="!!(canRunScheme$ | ngrxPush)"
-                                                                       [canStop]="!!(isCurrentControlSchemeRunning$ | ngrxPush)"
-                                                                       [canAddBinding]="!!(canCreateBinding$ | ngrxPush)"
-                                                                       [canExport]="!!(canExportScheme$ | ngrxPush)"
-                                                                       [canDelete]="!!(canDeleteScheme$ | ngrxPush)"
-                                                                       [canAddWidgets]="!!(canAddWidgets$ | ngrxPush)"
-                                                                       [canReorderWidgets]="!!(canReorderWidgets$ | ngrxPush)"
-                                                                       (run)="runScheme(scheme.name)"
-                                                                       (stop)="stopRunningScheme()"
-                                                                       (addBinding)="addBinding()"
-                                                                       (export)="onExport(scheme.name)"
-                                                                       (delete)="onDelete()"
-                                                                       (addWidget)="onAddWidget()"
-                                                                       (reorderWidgets)="onReorderWidgets()"
-            ></page-control-scheme-view-control-scheme-page-full-toolbar>
+            <page-control-scheme-view-control-scheme-page-full-toolbar-controls *libFeatureToolbarControls
+                                                                                [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | ngrxPush"
+                                                                                [canRun]="!!(canRunScheme$ | ngrxPush)"
+                                                                                [canStop]="!!(isCurrentControlSchemeRunning$ | ngrxPush)"
+                                                                                [canAddBinding]="!!(canCreateBinding$ | ngrxPush)"
+                                                                                [canExport]="!!(canExportScheme$ | ngrxPush)"
+                                                                                [canDelete]="!!(canDeleteScheme$ | ngrxPush)"
+                                                                                [canAddWidgets]="!!(canAddWidgets$ | ngrxPush)"
+                                                                                [canReorderWidgets]="!!(canReorderWidgets$ | ngrxPush)"
+                                                                                (run)="runScheme(scheme.name)"
+                                                                                (stop)="stopRunningScheme()"
+                                                                                (addBinding)="addBinding()"
+                                                                                (export)="onExport(scheme.name)"
+                                                                                (delete)="onDelete()"
+                                                                                (addWidget)="onAddWidget()"
+                                                                                (reorderWidgets)="onReorderWidgets()"
+            ></page-control-scheme-view-control-scheme-page-full-toolbar-controls>
         </ng-template>
     </mat-card>
 </ng-container>

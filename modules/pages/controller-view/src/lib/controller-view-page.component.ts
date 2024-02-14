@@ -5,10 +5,10 @@ import { PushPipe } from '@ngrx/component';
 import { MatCardModule } from '@angular/material/card';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { MatIconModule } from '@angular/material/icon';
-import { filter, switchMap } from 'rxjs';
+import { Observable, filter, map, switchMap } from 'rxjs';
 import { ControllerNamePipe, ControllerTypeIconNamePipe, ControllerTypeToL10nKeyPipe } from '@app/shared-controller';
-import { ScreenSizeObserverService, TitleService } from '@app/shared-misc';
-import { HintComponent } from '@app/shared-ui';
+import { RoutesBuilderService, ScreenSizeObserverService, TitleService } from '@app/shared-misc';
+import { FeatureToolbarBreadcrumbsDirective, FeatureToolbarControlsDirective, HintComponent, IBreadcrumbDefinition } from '@app/shared-ui';
 import { ControllerProfilesFacadeService } from '@app/store';
 
 import { CONTROLLER_VIEW_PAGE_SELECTORS } from './controller-view-page-selectors';
@@ -29,7 +29,9 @@ import { ControllerSettingsContainerComponent } from './controller-settings-cont
         ControllerSettingsContainerComponent,
         MatIconModule,
         ControllerTypeIconNamePipe,
-        ControllerTypeToL10nKeyPipe
+        ControllerTypeToL10nKeyPipe,
+        FeatureToolbarControlsDirective,
+        FeatureToolbarBreadcrumbsDirective
     ],
     providers: [
         TitleService
@@ -41,13 +43,33 @@ export class ControllerViewPageComponent implements OnInit {
 
     public readonly isSmallScreen$ = this.screenSizeObserver.isSmallScreen$;
 
+    public readonly breadcrumbsDef$: Observable<ReadonlyArray<IBreadcrumbDefinition>>;
+
     constructor(
         private readonly store: Store,
         private readonly screenSizeObserver: ScreenSizeObserverService,
         private readonly titleService: TitleService,
         private readonly controllerProfilesFacadeService: ControllerProfilesFacadeService,
-        private readonly translocoService: TranslocoService
+        private readonly translocoService: TranslocoService,
+        private readonly routesBuilderService: RoutesBuilderService
     ) {
+        this.breadcrumbsDef$ = this.store.select(CONTROLLER_VIEW_PAGE_SELECTORS.selectCurrentlyViewedControllerId).pipe(
+            filter((controllerId): controllerId is string => !!controllerId),
+            switchMap((controllerId) => {
+                return this.controllerProfilesFacadeService.getByControllerId(controllerId).pipe(
+                    map((controllerProfile) => ([
+                        {
+                            label$: this.translocoService.selectTranslate('pageTitle.controllerList'),
+                            route: this.routesBuilderService.controllersList
+                        },
+                        {
+                            label$: controllerProfile.name$,
+                            route: this.routesBuilderService.controllerView(controllerId)
+                        }
+                    ]))
+                );
+            })
+        );
     }
 
     public ngOnInit(): void {

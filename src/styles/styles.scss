@@ -26,3 +26,11 @@ ol {
 .card-list-item + .card-list-item {
     margin-top: 10px;
 }
+
+a {
+    color: var(--app-text-color);
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: normal;
+    font-size: 0.9rem;
+}

@@ -1,0 +1,17 @@
+<nav>
+@for(def of breadcrumbsDef; track def; let last = $last) {
+    @if (last) {
+        <h2 class="breadcrumb-current-location">
+            {{ def.label$ | ngrxPush }}
+        </h2>
+    } @else {
+        <a [routerLink]="def.route"
+           libEllipsisTitle
+        >{{ def.label$ | ngrxPush }}</a>
+        <mat-icon [fontIcon]="'chevron_right'"
+                  class="delimiter"
+                  [inline]="true"
+        ></mat-icon>
+    }
+}
+</nav>

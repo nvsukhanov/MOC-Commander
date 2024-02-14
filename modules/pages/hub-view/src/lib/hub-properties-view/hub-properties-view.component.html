@@ -25,18 +25,3 @@
         </ng-template>
     </mat-card-content>
 </mat-card>
-
-<div *libFeatureToolbarControls
-     class="toolbar-panel"
->
-    <a mat-raised-button
-       [routerLink]="hubEditRoute"
-    >
-        {{ 'hub.edit' | transloco }}
-    </a>
-    <button mat-raised-button
-            (click)="onDisconnect()"
-    >
-        {{ 'hub.disconnect' | transloco }}
-    </button>
-</div>

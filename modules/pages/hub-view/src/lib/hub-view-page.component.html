@@ -1,9 +1,24 @@
 <ng-container *ngIf="selectedHub$ | ngrxPush; let hub; else hubNotFound">
+    <div *libFeatureToolbarControls
+         [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | ngrxPush"
+         class="toolbar-panel"
+    >
+        <a mat-raised-button
+           [routerLink]="hubEditRoute$ | ngrxPush"
+        >
+            {{ 'hub.edit' | transloco }}
+        </a>
+        <button mat-raised-button
+                (click)="disconnectHub()"
+        >
+            {{ 'hub.disconnect' | transloco }}
+        </button>
+    </div>
+
     <ng-container *ngIf="selectedHubRuntimeData$ | ngrxPush; else hubIsNotConnected">
         <page-hub-view-hub-properties-view class="hub-properties-view"
                                            [configuration]="hub"
                                            [runtimeData]="selectedHubRuntimeData$ | ngrxPush"
-                                           (disconnect)="disconnectHub()"
         ></page-hub-view-hub-properties-view>
 
         <ng-container *ngrxLet="ioFullInfoList$ as iosFullInfoList">
@@ -18,11 +33,11 @@
             </ul>
         </ng-container>
     </ng-container>
-</ng-container>
 
-<ng-template #hubIsNotConnected>
-    <lib-hint>{{ 'hub.isNotConnected' | transloco:(selectedHub$ | ngrxPush) }}</lib-hint>
-</ng-template>
+    <ng-template #hubIsNotConnected>
+        <lib-hint>{{ 'hub.isNotConnected' | transloco:(selectedHub$ | ngrxPush) }}</lib-hint>
+    </ng-template>
+</ng-container>
 
 <ng-template #hubNotFound>
     <lib-hint>{{ 'hub.isNotFound' | transloco }}</lib-hint>

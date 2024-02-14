@@ -10,7 +10,15 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { filter, take } from 'rxjs';
 import { concatLatestFrom } from '@ngrx/effects';
 import { RoutesBuilderService, ScreenSizeObserverService, TitleService } from '@app/shared-misc';
-import { ConfirmationDialogModule, ConfirmationDialogService, EllipsisTitleDirective, FeatureToolbarControlsDirective, HintComponent } from '@app/shared-ui';
+import {
+    ConfirmationDialogModule,
+    ConfirmationDialogService,
+    EllipsisTitleDirective,
+    FeatureToolbarBreadcrumbsDirective,
+    FeatureToolbarControlsDirective,
+    HintComponent,
+    IBreadcrumbDefinition
+} from '@app/shared-ui';
 import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel } from '@app/store';
 import {
     ControlSchemeViewUrlPipe,
@@ -41,7 +49,8 @@ import { ControlSchemeCreateDialogComponent } from './control-scheme-create-dial
         HintComponent,
         FeatureToolbarControlsDirective,
         ConfirmationDialogModule,
-        EllipsisTitleDirective
+        EllipsisTitleDirective,
+        FeatureToolbarBreadcrumbsDirective
     ],
     providers: [
         TitleService
@@ -54,6 +63,13 @@ export class ControlSchemeListPageComponent implements OnInit {
     public readonly canCreateScheme$ = this.store.select(CONTROL_SCHEMES_LIST_PAGE_SELECTORS.canCreateScheme);
 
     public readonly isSmallScreen$ = this.screenSizeObserverService.isSmallScreen$;
+
+    public readonly breadcrumbsDef: ReadonlyArray<IBreadcrumbDefinition> = [
+        {
+            label$: this.transloco.selectTranslate('pageTitle.controlSchemesList'),
+            route: this.routesBuilderService.controlSchemesList
+        }
+    ];
 
     constructor(
         private readonly store: Store,

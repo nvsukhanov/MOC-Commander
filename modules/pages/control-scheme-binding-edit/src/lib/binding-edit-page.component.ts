@@ -7,7 +7,13 @@ import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Router } from '@angular/router';
 import { concatLatestFrom } from '@ngrx/effects';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
-import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective } from '@app/shared-ui';
+import {
+    ConfirmationDialogModule,
+    ConfirmationDialogService,
+    FeatureToolbarBreadcrumbsDirective,
+    FeatureToolbarControlsDirective,
+    IBreadcrumbDefinition
+} from '@app/shared-ui';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeBinding, ROUTER_SELECTORS } from '@app/store';
 import { BindingEditComponent } from '@app/shared-control-schemes';
 
@@ -24,7 +30,8 @@ import { BINDING_EDIT_PAGE_SELECTORS } from './binding-edit-page.selectors';
         MatButtonModule,
         TranslocoPipe,
         FeatureToolbarControlsDirective,
-        ConfirmationDialogModule
+        ConfirmationDialogModule,
+        FeatureToolbarBreadcrumbsDirective
     ],
     providers: [
         TitleService
@@ -33,6 +40,8 @@ import { BINDING_EDIT_PAGE_SELECTORS } from './binding-edit-page.selectors';
 })
 export class BindingEditPageComponent implements OnInit {
     public readonly binding$: Observable<ControlSchemeBinding | undefined>;
+
+    public readonly breadcrumbsDef$: Observable<ReadonlyArray<IBreadcrumbDefinition>>;
 
     private changedBinding: ControlSchemeBinding | null = null;
 
@@ -45,6 +54,24 @@ export class BindingEditPageComponent implements OnInit {
         private readonly titleService: TitleService
     ) {
         this.binding$ = this.store.select(BINDING_EDIT_PAGE_SELECTORS.selectEditedBinding);
+
+        this.breadcrumbsDef$ = this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName).pipe(
+            filter((schemeName): schemeName is string => (schemeName) !== null),
+            map((controlSchemeName) => ([
+                {
+                    label$: this.translocoService.selectTranslate('pageTitle.controlSchemesList'),
+                    route: this.routesBuilderService.controllersList
+                },
+                {
+                    label$: this.translocoService.selectTranslate('pageTitle.controlSchemeView', { controlSchemeName }),
+                    route: this.routesBuilderService.controlSchemeView(controlSchemeName)
+                },
+                {
+                    label$: this.translocoService.selectTranslate('pageTitle.bindingEdit'),
+                    route: this.routesBuilderService.bindingCreate(controlSchemeName)
+                }
+            ]))
+        );
     }
 
     public get canSave(): boolean {
@@ -54,7 +81,7 @@ export class BindingEditPageComponent implements OnInit {
     public ngOnInit(): void {
         this.titleService.setTitle$(
             this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName).pipe(
-                switchMap((controlSchemeName) => this.translocoService.selectTranslate('pageTitle.bindingEdit', { controlSchemeName }))
+                switchMap((controlSchemeName) => this.translocoService.selectTranslate('pageTitle.bindingEditForScheme', { controlSchemeName }))
             )
         );
     }

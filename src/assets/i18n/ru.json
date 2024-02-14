@@ -32,24 +32,28 @@
     "settingsPageButton": "Настройки",
     "help": "Помощь"
   },
-  "helpPage": {
-    "installationManuals": "Инструкции по установке"
-  },
   "pageTitle": {
-    "bindingCreate": "{ controlSchemeName } - Создание привязки",
-    "bindingEdit": "{ controlSchemeName } - Редактирование привязки",
+    "bindingCreateForScheme": "{ controlSchemeName } - Создание привязки",
+    "bindingCreate": "Новая привязка",
+    "bindingEditForScheme": "{ controlSchemeName } - Редактирование привязки",
+    "bindingEdit": "Редактирование привязки",
     "controlSchemesList": "Схемы управления",
     "controlSchemeView": "{ controlSchemeName }",
-    "controlSchemePortEdit": "{ controlSchemeName } - {hubName}, порт {portId}",
+    "controlSchemePortEditForScheme": "{ controlSchemeName } - {hubName}, порт {portId}",
+    "controlSchemePortEdit": "Конфигурация порта",
     "controllerList": "Контроллеры",
     "controllerView": "{ controllerName } - Настройки контроллера",
-    "hubEdit": "{ hubName } - настройки",
+    "hubEditWithHubName": "{ hubName } - настройки",
+    "hubEdit": "Настройки",
     "hubList": "Хабы",
     "hubView": "{ hubName }",
     "notFound": "Страница не найдена",
     "about": "О программе",
     "settings": "Настройки",
     "help": "Помощь"
+  },
+  "helpPage": {
+    "installationManuals": "Инструкции по установке"
   },
   "settings": {
     "theme": "Тема оформления",
@@ -628,7 +632,6 @@
         "result": "Теперь приложение будет запускаться с максимально доступным разрешением."
       }
     },
-
     "windowsInstallation": {
       "name": "Windows",
       "estTime": "Ожидаемое время выполнения: 3 минуты",

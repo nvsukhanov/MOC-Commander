@@ -1,3 +1,7 @@
+<div *libFeatureToolbarControls
+     [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | ngrxPush"
+></div>
+
 <ng-container *ngIf="viewModel$ | ngrxPush; let viewModel; else controllerIsNotFound">
     <mat-card>
         <mat-card-header>
