@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, filter, switchMap, take } from 'rxjs';
+import { Observable, filter, map, switchMap, take } from 'rxjs';
 import { Router } from '@angular/router';
 import { PushPipe } from '@ngrx/component';
 import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
-import { FeatureToolbarControlsDirective, HintComponent } from '@app/shared-ui';
+import { FeatureToolbarBreadcrumbsDirective, FeatureToolbarControlsDirective, HintComponent, IBreadcrumbDefinition } from '@app/shared-ui';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeBinding, ROUTER_SELECTORS } from '@app/store';
 import { BindingEditComponent } from '@app/shared-control-schemes';
 
@@ -25,7 +25,8 @@ import { BINDING_CREATE_PAGE_SELECTORS } from './binding-create-page.selectors';
         MatButtonModule,
         HintComponent,
         TranslocoPipe,
-        FeatureToolbarControlsDirective
+        FeatureToolbarControlsDirective,
+        FeatureToolbarBreadcrumbsDirective
     ],
     providers: [
         TitleService
@@ -34,6 +35,8 @@ import { BINDING_CREATE_PAGE_SELECTORS } from './binding-create-page.selectors';
 })
 export class BindingCreatePageComponent implements OnInit {
     public readonly initialBindingData$: Observable<Partial<ControlSchemeBinding | null>>;
+
+    public readonly breadcrumbsDef$: Observable<ReadonlyArray<IBreadcrumbDefinition>>;
 
     private binding: ControlSchemeBinding | null = null;
 
@@ -46,6 +49,23 @@ export class BindingCreatePageComponent implements OnInit {
     ) {
         this.initialBindingData$ = this.store.select(BINDING_CREATE_PAGE_SELECTORS.selectDataForNewBinding).pipe(
             take(1)
+        );
+        this.breadcrumbsDef$ = this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName).pipe(
+            filter((schemeName): schemeName is string => (schemeName) !== null),
+            map((controlSchemeName) => ([
+                {
+                    label$: this.translocoService.selectTranslate('pageTitle.controlSchemesList'),
+                    route: this.routesBuilderService.controllersList
+                },
+                {
+                    label$: this.translocoService.selectTranslate('pageTitle.controlSchemeView', { controlSchemeName }),
+                    route: this.routesBuilderService.controlSchemeView(controlSchemeName)
+                },
+                {
+                    label$: this.translocoService.selectTranslate('pageTitle.bindingCreate'),
+                    route: this.routesBuilderService.bindingCreate(controlSchemeName)
+                }
+            ]))
         );
     }
 
@@ -62,7 +82,7 @@ export class BindingCreatePageComponent implements OnInit {
     public ngOnInit(): void {
         this.titleService.setTitle$(
             this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName).pipe(
-                switchMap((controlSchemeName) => this.translocoService.selectTranslate('pageTitle.bindingCreate', { controlSchemeName }))
+                switchMap((controlSchemeName) => this.translocoService.selectTranslate('pageTitle.bindingCreateForScheme', { controlSchemeName }))
             )
         );
     }

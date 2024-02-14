@@ -1,3 +1,23 @@
+<div *libFeatureToolbarControls
+     [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | ngrxPush"
+>
+    <button type="button"
+            mat-raised-button
+            class="toolbar-button"
+            [disabled]="isSubmitDisabled"
+            (click)="onSubmit($event)"
+    >
+        {{ 'controlScheme.portConfigSaveButtonTitle' | transloco }}
+    </button>
+    <button type="button"
+            mat-raised-button
+            class="toolbar-button"
+            (click)="onCancel()"
+    >
+        {{ 'controlScheme.portConfigCancelButtonTitle' | transloco }}
+    </button>
+</div>
+
 <mat-card *ngIf="portConfig$ | ngrxPush; let portConfig; else notFound"
           class="port-configs"
 >
@@ -9,7 +29,9 @@
             {{ 'controlScheme.portConfigSubtitle' | transloco: { hubName: portConfig.hubName, portId: portConfig.portId | portIdToPortName } }}
         </mat-card-subtitle>
     </mat-card-header>
-    <form (submit)="onSubmit($event)">
+    <form (submit)="onSubmit($event)"
+          (keyup.enter)="onSubmit($event)"
+    >
         <mat-card-content class="port-configs__content">
             <mat-form-field>
                 <mat-label>{{ 'controlScheme.accelerationTimeMs' | transloco }}</mat-label>
@@ -34,20 +56,6 @@
                 <mat-error [libValidationMessages]="formGroup.controls.decelerationTimeMs"></mat-error>
             </mat-form-field>
         </mat-card-content>
-        <mat-card-actions [align]="'end'">
-            <button type="submit"
-                    mat-button
-                    [disabled]="isSubmitDisabled"
-            >
-                {{ 'controlScheme.portConfigSaveButtonTitle' | transloco }}
-            </button>
-            <button type="button"
-                    mat-button
-                    (click)="onCancel()"
-            >
-                {{ 'controlScheme.portConfigCancelButtonTitle' | transloco }}
-            </button>
-        </mat-card-actions>
     </form>
 </mat-card>
 

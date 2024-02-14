@@ -1,4 +1,22 @@
 <ng-container *ngIf="editedHubConfiguration$ | ngrxPush; let hubConfiguration; else hubIsNotFound">
+    <div *libFeatureToolbarControls
+         [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | ngrxPush"
+         class="toolbar-panel"
+    >
+        <button mat-raised-button
+                [disabled]="(isSaving$ | ngrxPush) || form.controls.name.invalid || !(isHubConnected$ | ngrxPush)"
+                (click)="onSave(hubConfiguration.hubId)"
+        >
+            {{ 'hub.save' | transloco }}
+        </button>
+        <a mat-raised-button
+           [routerLink]="cancelPath$ | ngrxPush"
+           [disabled]="!!(isSaving$ | ngrxPush)"
+        >
+            {{ 'hub.cancel' | transloco }}
+        </a>
+    </div>
+
     <section *ngIf="isHubConnected$ | ngrxPush; else hubIsNotConnected"
              class="edit-form-container"
     >
@@ -16,23 +34,6 @@
                 </mat-form-field>
             </mat-card-content>
         </mat-card>
-
-        <div *libFeatureToolbarControls
-             class="toolbar-panel"
-        >
-            <button mat-raised-button
-                    [disabled]="(isSaving$ | ngrxPush) || form.controls.name.invalid"
-                    (click)="onSave(hubConfiguration.hubId)"
-            >
-                {{ 'hub.save' | transloco }}
-            </button>
-            <a mat-raised-button
-               [routerLink]="cancelPath$ | ngrxPush"
-               [disabled]="!!(isSaving$ | ngrxPush)"
-            >
-                {{ 'hub.cancel' | transloco }}
-            </a>
-        </div>
     </section>
 
     <ng-template #hubIsNotConnected>

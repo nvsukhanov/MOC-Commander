@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
-import { Observable, Subscription, filter, map, switchMap, take } from 'rxjs';
+import { Observable, Subscription, filter, map, of, switchMap, take } from 'rxjs';
 import { NgIf } from '@angular/common';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -12,7 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { RoutesBuilderService, TitleService, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
-import { FeatureToolbarControlsDirective, HintComponent } from '@app/shared-ui';
+import { FeatureToolbarBreadcrumbsDirective, FeatureToolbarControlsDirective, HintComponent, IBreadcrumbDefinition } from '@app/shared-ui';
 import { HUBS_ACTIONS, HubModel, ROUTER_SELECTORS } from '@app/store';
 
 import { HUB_EDIT_PAGE_SELECTORS } from './hub-edit-page.selectors';
@@ -36,6 +36,7 @@ import { HUB_EDIT_PAGE_SELECTORS } from './hub-edit-page.selectors';
         RouterLink,
         LetDirective,
         FeatureToolbarControlsDirective,
+        FeatureToolbarBreadcrumbsDirective
     ],
     providers: [
         TitleService
@@ -63,6 +64,8 @@ export class HubEditPageComponent implements OnInit, OnDestroy {
         pattern: 'hub.hubNameErrorPattern'
     };
 
+    public readonly breadcrumbsDef$: Observable<ReadonlyArray<IBreadcrumbDefinition>>;
+
     private readonly maxHubNameLength = 14;
 
     private readonly subscriptions = new Subscription();
@@ -84,6 +87,24 @@ export class HubEditPageComponent implements OnInit, OnDestroy {
                 Validators.pattern(/^[a-zA-Z0-9_.\s-]+$/)
             ])
         });
+
+        this.breadcrumbsDef$ = this.editedHubConfiguration$.pipe(
+            filter((hub): hub is HubModel => hub !== undefined),
+            map((hub) => ([
+                {
+                    label$: this.translocoService.selectTranslate('pageTitle.hubsList'),
+                    route: this.routesBuilderService.hubsList
+                },
+                {
+                    label$: of(hub.name),
+                    route: this.routesBuilderService.hubView(hub.hubId)
+                },
+                {
+                    label$: this.translocoService.selectTranslate('pageTitle.hubEdit'),
+                    route: this.routesBuilderService.hubEdit(hub.hubId)
+                }
+            ]))
+        );
     }
 
     public ngOnInit(): void {
@@ -97,7 +118,7 @@ export class HubEditPageComponent implements OnInit, OnDestroy {
         );
         const title$ = this.editedHubConfiguration$.pipe(
             filter((hubModel): hubModel is HubModel => !!hubModel),
-            switchMap((hubModel) => this.translocoService.selectTranslate('pageTitle.hubEdit', { hubName: hubModel.name }))
+            switchMap((hubModel) => this.translocoService.selectTranslate('pageTitle.hubEditWithHubName', { hubName: hubModel.name }))
         );
         this.titleService.setTitle$(title$);
     }

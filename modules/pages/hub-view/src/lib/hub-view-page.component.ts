@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
-import { filter, switchMap, take } from 'rxjs';
+import { Observable, filter, map, of, switchMap, take } from 'rxjs';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { MatAnchor, MatButton } from '@angular/material/button';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
-import { HintComponent } from '@app/shared-ui';
+import { FeatureToolbarBreadcrumbsDirective, FeatureToolbarControlsDirective, HintComponent, IBreadcrumbDefinition } from '@app/shared-ui';
 import { HUBS_ACTIONS, HubModel, ROUTER_SELECTORS, attachedIosIdFn } from '@app/store';
 
 import { HubPropertiesViewComponent } from './hub-properties-view';
@@ -26,7 +27,12 @@ import { HUB_VIEW_PAGE_SELECTORS, HubIoViewModel } from './hub-view-page.selecto
         TranslocoPipe,
         HubPropertiesViewComponent,
         HubIoViewComponent,
-        HintComponent
+        HintComponent,
+        MatAnchor,
+        MatButton,
+        RouterLink,
+        FeatureToolbarControlsDirective,
+        FeatureToolbarBreadcrumbsDirective
     ],
     providers: [
         TitleService
@@ -40,6 +46,13 @@ export class HubViewPageComponent implements OnInit {
 
     public readonly ioFullInfoList$ = this.store.select(HUB_VIEW_PAGE_SELECTORS.selectCurrentlyViewedHubIoFullInfo);
 
+    public readonly breadcrumbsDef$: Observable<IBreadcrumbDefinition[]>;
+
+    public readonly hubEditRoute$ = this.selectedHub$.pipe(
+        filter((hub): hub is HubModel => !!hub),
+        map((hub) => this.routesBuilderService.hubEdit(hub.hubId))
+    );
+
     constructor(
         private readonly store: Store,
         private readonly router: Router,
@@ -47,6 +60,19 @@ export class HubViewPageComponent implements OnInit {
         private readonly titleService: TitleService,
         private readonly translocoService: TranslocoService
     ) {
+        this.breadcrumbsDef$ = this.selectedHub$.pipe(
+            filter((hub): hub is HubModel => !!hub),
+            map((hub) => ([
+                {
+                    label$: this.translocoService.selectTranslate('pageTitle.hubsList'),
+                    route: this.routesBuilderService.hubsList
+                },
+                {
+                    label$: of(hub.name),
+                    route: this.routesBuilderService.hubView(hub.hubId)
+                }
+            ]))
+        );
     }
 
     public ngOnInit(): void {

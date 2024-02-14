@@ -1,3 +1,7 @@
+<div *libFeatureToolbarControls
+     [libFeatureToolbarBreadcrumbs]="breadcrumbsDef"
+></div>
+
 <ng-container *ngrxLet="hubsList$; let hubsList">
     <ul *ngIf="hubsList.length; else noConnectedHubs">
         <li *ngFor="let hub of hubsList; trackBy: hubTrackByFn"

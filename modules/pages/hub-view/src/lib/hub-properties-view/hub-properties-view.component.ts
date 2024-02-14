@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { RouterLink } from '@angular/router';
 import { RoutesBuilderService } from '@app/shared-misc';
-import { EllipsisTitleDirective, FeatureToolbarControlsDirective, HubTypeToL10nKeyPipe } from '@app/shared-ui';
+import { EllipsisTitleDirective, HubTypeToL10nKeyPipe } from '@app/shared-ui';
 import { HubModel, HubRuntimeDataModel } from '@app/store';
 
 @Component({
@@ -18,16 +17,12 @@ import { HubModel, HubRuntimeDataModel } from '@app/store';
         MatCardModule,
         NgIf,
         TranslocoPipe,
-        RouterLink,
         EllipsisTitleDirective,
-        FeatureToolbarControlsDirective,
         HubTypeToL10nKeyPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HubPropertiesViewComponent {
-    @Output() public readonly disconnect = new EventEmitter<void>();
-
     @Input() public runtimeData?: HubRuntimeDataModel;
 
     private _hubEditRoute: string[] = [];
@@ -51,9 +46,5 @@ export class HubPropertiesViewComponent {
 
     public get hubEditRoute(): string[] {
         return this._hubEditRoute;
-    }
-
-    public onDisconnect(): void {
-        this.disconnect.emit();
     }
 }

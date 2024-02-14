@@ -54,7 +54,9 @@
     </ng-template>
 </ng-container>
 
-<div *libFeatureToolbarControls>
+<div *libFeatureToolbarControls
+     [libFeatureToolbarBreadcrumbs]="breadcrumbsDef"
+>
     <button mat-raised-button
             class="toolbar-button"
             (click)="onImport()"

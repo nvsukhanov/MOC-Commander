@@ -16,3 +16,4 @@ export * from './input-activity-indicator';
 export * from './upload-file-form-control';
 export * from './widget';
 export * from './code-block';
+export * from './breadcrumbs';

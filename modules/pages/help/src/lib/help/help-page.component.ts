@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { InstallationManualsListComponent } from '@app/manuals';
-import { TitleService } from '@app/shared-misc';
+import { RoutesBuilderService, TitleService } from '@app/shared-misc';
+import { FeatureToolbarBreadcrumbsDirective, FeatureToolbarControlsDirective, IBreadcrumbDefinition } from '@app/shared-ui';
 
 @Component({
     standalone: true,
@@ -10,7 +11,9 @@ import { TitleService } from '@app/shared-misc';
     styleUrls: [ './help-page.component.scss' ],
     imports: [
         InstallationManualsListComponent,
-        TranslocoPipe
+        TranslocoPipe,
+        FeatureToolbarControlsDirective,
+        FeatureToolbarBreadcrumbsDirective
     ],
     providers: [
         TitleService
@@ -18,9 +21,17 @@ import { TitleService } from '@app/shared-misc';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HelpPageComponent implements OnInit {
+    public readonly breadcrumbsDef: ReadonlyArray<IBreadcrumbDefinition> = [
+        {
+            label$: this.translocoService.selectTranslate('pageTitle.help'),
+            route: this.routeBuilderService.help
+        }
+    ];
+
     constructor(
         private readonly titleService: TitleService,
         private readonly translocoService: TranslocoService,
+        private readonly routeBuilderService: RoutesBuilderService
     ) {
     }
 

@@ -1,3 +1,7 @@
+<div *libFeatureToolbarControls
+     [libFeatureToolbarBreadcrumbs]="breadcrumbsDef"
+></div>
+
 <ng-container *ngrxLet="controllerListViewModel$ as controllerListViewModel">
     <ng-container *ngIf="controllerListViewModel.length; else noConnectedControllers">
         <ul>

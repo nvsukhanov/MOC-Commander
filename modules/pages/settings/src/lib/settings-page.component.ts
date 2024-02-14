@@ -6,8 +6,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Language } from '@app/shared-i18n';
-import { TitleService } from '@app/shared-misc';
+import { RoutesBuilderService, TitleService } from '@app/shared-misc';
 import { IState, SETTINGS_ACTIONS, SETTINGS_FEATURE, UserSelectedTheme } from '@app/store';
+import { FeatureToolbarBreadcrumbsDirective, FeatureToolbarControlsDirective, IBreadcrumbDefinition } from '@app/shared-ui';
 
 import { RestoreStateFromBackupDialogComponent } from './restore-state-from-backup-dialog';
 import { ResetStateDialogComponent } from './reset-state-dialog';
@@ -26,7 +27,9 @@ import { LanguageSelectComponent } from './language-select';
         MatButtonModule,
         MatDialogModule,
         ThemeSelectComponent,
-        LanguageSelectComponent
+        LanguageSelectComponent,
+        FeatureToolbarControlsDirective,
+        FeatureToolbarBreadcrumbsDirective
     ],
     providers: [
         TitleService
@@ -38,11 +41,19 @@ export class SettingsPageComponent implements OnInit {
 
     public readonly currentLanguage = this.store.selectSignal(SETTINGS_FEATURE.selectLanguage);
 
+    public readonly breadcrumbsDef: ReadonlyArray<IBreadcrumbDefinition> = [
+        {
+            label$: this.translocoService.selectTranslate('pageTitle.settings'),
+            route: this.routeBuilderService.settings
+        }
+    ];
+
     constructor(
         private readonly store: Store,
         private readonly matDialog: MatDialog,
         private readonly titleService: TitleService,
-        private readonly translocoService: TranslocoService
+        private readonly translocoService: TranslocoService,
+        private readonly routeBuilderService: RoutesBuilderService
     ) {
     }
 

@@ -5,8 +5,16 @@ import { LetDirective } from '@ngrx/component';
 import { NgForOf, NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { Observable } from 'rxjs';
-import { TitleService } from '@app/shared-misc';
-import { ConfirmationDialogModule, ConfirmationDialogService, HintComponent, HubInlineViewComponent } from '@app/shared-ui';
+import { RoutesBuilderService, TitleService } from '@app/shared-misc';
+import {
+    ConfirmationDialogModule,
+    ConfirmationDialogService,
+    FeatureToolbarBreadcrumbsDirective,
+    FeatureToolbarControlsDirective,
+    HintComponent,
+    HubInlineViewComponent,
+    IBreadcrumbDefinition
+} from '@app/shared-ui';
 import { HUBS_ACTIONS } from '@app/store';
 
 import { HUBS_LIST_PAGE_SELECTORS, HubListViewModel } from './hubs-list-page.selectors';
@@ -24,7 +32,9 @@ import { HUBS_LIST_PAGE_SELECTORS, HubListViewModel } from './hubs-list-page.sel
         NgForOf,
         MatCardModule,
         ConfirmationDialogModule,
-        HintComponent
+        HintComponent,
+        FeatureToolbarControlsDirective,
+        FeatureToolbarBreadcrumbsDirective
     ],
     providers: [
         TitleService
@@ -34,16 +44,24 @@ import { HUBS_LIST_PAGE_SELECTORS, HubListViewModel } from './hubs-list-page.sel
 export class HubsListPageComponent implements OnInit {
     public readonly hubsList$: Observable<HubListViewModel> = this.store.select(HUBS_LIST_PAGE_SELECTORS.selectHubListViewModel);
 
+    public readonly breadcrumbsDef: ReadonlyArray<IBreadcrumbDefinition> = [
+        {
+            label$: this.translocoService.selectTranslate('pageTitle.hubsList'),
+            route: this.routeBuilderService.hubsList
+        }
+    ];
+
     constructor(
         private readonly store: Store,
         private readonly confirmationService: ConfirmationDialogService,
         private readonly translocoService: TranslocoService,
-        private readonly titleService: TitleService
+        private readonly titleService: TitleService,
+        private readonly routeBuilderService: RoutesBuilderService
     ) {
     }
 
     public ngOnInit(): void {
-        this.titleService.setTitle$(this.translocoService.selectTranslate('pageTitle.hubList'));
+        this.titleService.setTitle$(this.translocoService.selectTranslate('pageTitle.hubsList'));
     }
 
     public hubTrackByFn(

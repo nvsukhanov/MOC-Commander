@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { Observable, Subscription, filter, map, switchMap, take } from 'rxjs';
+import { Observable, Subscription, filter, map, of, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgForOf, NgIf } from '@angular/common';
@@ -10,7 +10,14 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { concatLatestFrom } from '@ngrx/effects';
 import { RoutesBuilderService, ScreenSizeObserverService, TitleService } from '@app/shared-misc';
-import { ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared-ui';
+import {
+    ConfirmationDialogModule,
+    ConfirmationDialogService,
+    FeatureToolbarBreadcrumbsDirective,
+    FeatureToolbarControlsDirective,
+    HintComponent,
+    IBreadcrumbDefinition
+} from '@app/shared-ui';
 import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, ControlSchemeModel, ROUTER_SELECTORS, WidgetConfigModel } from '@app/store';
 import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData } from '@app/shared-control-schemes';
 
@@ -19,8 +26,8 @@ import { ControlSchemeRunBlockersL10nPipe } from './control-scheme-run-blockers-
 import { CONTROL_SCHEME_PAGE_SELECTORS } from './control-scheme-page.selectors';
 import { ControlSchemeViewIoListComponent } from './control-scheme-view-io-list';
 import { ControlSchemeGeneralInfoComponent } from './control-scheme-general-info';
-import { ControlSchemePageCompactToolbarComponent } from './compact-toolbar';
-import { ControlSchemePageFullToolbarComponent } from './full-toolbar';
+import { ControlSchemePageCompactToolbarControlsComponent } from './compact-toolbar-controls';
+import { ControlSchemePageFullToolbarControlsComponent } from './full-toolbar-controls';
 import {
     AddWidgetDialogComponent,
     AddWidgetDialogViewModel,
@@ -46,14 +53,15 @@ import { CONTROL_SCHEME_RUN_WIDGET_BLOCKERS_CHECKER, IControlSchemeRunWidgetBloc
         ConfirmationDialogModule,
         HintComponent,
         FeatureToolbarControlsDirective,
-        ControlSchemePageCompactToolbarComponent,
-        ControlSchemePageFullToolbarComponent,
+        ControlSchemePageCompactToolbarControlsComponent,
+        ControlSchemePageFullToolbarControlsComponent,
         MatDialogModule,
         NgForOf,
         MatIconModule,
         ControlSchemeRunBlockersL10nPipe,
         LetDirective,
         ControlSchemeWidgetsGridComponent,
+        FeatureToolbarBreadcrumbsDirective
     ],
     providers: [
         TitleService
@@ -93,6 +101,8 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
 
     public readonly canRenameScheme$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canRenameScheme);
 
+    public readonly breadcrumbsDef$: Observable<ReadonlyArray<IBreadcrumbDefinition>>;
+
     private addableWidgetConfigs$: Observable<WidgetConfigModel[]> = this.selectedScheme$.pipe(
         take(1),
         filter((scheme): scheme is ControlSchemeModel => scheme !== undefined),
@@ -128,6 +138,19 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
     ) {
         this.canAddWidgets$ = this.addableWidgetConfigs$.pipe(
             map((configs) => configs.length > 0)
+        );
+        this.breadcrumbsDef$ = this.selectedScheme$.pipe(
+            filter((r): r is ControlSchemeModel => r !== undefined),
+            map((scheme) => [
+                {
+                    label$: this.transloco.selectTranslate('pageTitle.controlSchemesList'),
+                    route: this.routesBuilderService.controlSchemesList
+                },
+                {
+                    label$: of(scheme.name),
+                    route: this.routesBuilderService.controlSchemeView(scheme.name)
+                }
+            ])
         );
     }
 

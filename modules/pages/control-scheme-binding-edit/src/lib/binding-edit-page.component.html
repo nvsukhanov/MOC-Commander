@@ -2,7 +2,9 @@
                      (bindingChange)="onBindingChange($event)"
 ></lib-cs-binding-edit>
 
-<div *libFeatureToolbarControls>
+<div *libFeatureToolbarControls
+     [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | ngrxPush"
+>
     <button mat-raised-button
             class="toolbar-button"
             [disabled]="!(canSave)"

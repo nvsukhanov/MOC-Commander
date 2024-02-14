@@ -4,13 +4,20 @@ import { JsonPipe, NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Observable, Subscription, switchMap, take } from 'rxjs';
+import { Observable, Subscription, filter, map, switchMap, take } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { RoutesBuilderService, TitleService, ValidationMessagesDirective } from '@app/shared-misc';
-import { HintComponent, PortIdToPortNamePipe, PortIdToPortNameService } from '@app/shared-ui';
+import {
+    FeatureToolbarBreadcrumbsDirective,
+    FeatureToolbarControlsDirective,
+    HintComponent,
+    IBreadcrumbDefinition,
+    PortIdToPortNamePipe,
+    PortIdToPortNameService
+} from '@app/shared-ui';
 import { CONTROL_SCHEME_ACTIONS } from '@app/store';
 import { PortConfigFormBuilderService } from '@app/shared-control-schemes';
 
@@ -33,7 +40,9 @@ import { PortConfigEditViewModel } from './port-config-edit-view-model';
         ReactiveFormsModule,
         MatButtonModule,
         PortIdToPortNamePipe,
-        ValidationMessagesDirective
+        ValidationMessagesDirective,
+        FeatureToolbarControlsDirective,
+        FeatureToolbarBreadcrumbsDirective
     ],
     providers: [
         TitleService
@@ -49,6 +58,8 @@ export class PortConfigEditPageComponent implements OnInit, OnDestroy {
 
     public readonly formGroup = this.formBuilder.build();
 
+    public readonly breadcrumbsDef$: Observable<ReadonlyArray<IBreadcrumbDefinition>>;
+
     private readonly sub = new Subscription();
 
     constructor(
@@ -58,8 +69,26 @@ export class PortConfigEditPageComponent implements OnInit, OnDestroy {
         private readonly router: Router,
         private readonly titleService: TitleService,
         private readonly translocoService: TranslocoService,
-        private readonly portIdToPortNameService: PortIdToPortNameService
+        private readonly portIdToPortNameService: PortIdToPortNameService,
+        private readonly routesBuilderService: RoutesBuilderService
     ) {
+        this.breadcrumbsDef$ = this.store.select(PORT_CONFIG_EDIT_PAGE_SELECTORS.selectPortConfig).pipe(
+            filter((portConfig): portConfig is PortConfigEditViewModel => !!portConfig),
+            map((portConfig) => ([
+                {
+                    label$: this.translocoService.selectTranslate('pageTitle.controlSchemesList'),
+                    route: this.routesBuilderService.controllersList
+                },
+                {
+                    label$: this.translocoService.selectTranslate('pageTitle.controlSchemeView', portConfig),
+                    route: this.routesBuilderService.controlSchemeView(portConfig.controlSchemeName)
+                },
+                {
+                    label$: this.translocoService.selectTranslate('pageTitle.controlSchemePortEdit'),
+                    route: this.routesBuilderService.portConfigEdit(portConfig.controlSchemeName, portConfig.hubId, portConfig.portId)
+                }
+            ]))
+        );
     }
 
     public get isSubmitDisabled(): boolean {
@@ -82,7 +111,7 @@ export class PortConfigEditPageComponent implements OnInit, OnDestroy {
             switchMap((portConfig) => {
                     const portId = this.portIdToPortNameService.mapPortId(portConfig?.portId ?? null);
                     return this.translocoService.selectTranslate(
-                        'pageTitle.controlSchemePortEdit',
+                        'pageTitle.controlSchemePortEditForScheme',
                         { portId, hubName: portConfig?.hubName, controlSchemeName: portConfig?.controlSchemeName }
                     );
                 }

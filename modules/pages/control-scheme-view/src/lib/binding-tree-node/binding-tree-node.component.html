@@ -3,7 +3,7 @@
      [class.binding__info-container_small-screen]="isSmallScreen$ | ngrxPush"
 >
     <div class="binding__general-info">
-        <a class="binding__operation-type mat-mdc-button"
+        <a class="binding__operation-type"
            [routerLink]="viewModel.schemeName | bindingViewUrl: viewModel.bindingId"
         >
             <ng-container *ngIf="!viewModel.ioHasNoRequiredCapabilities; else ioCapabilitiesMismatch">
