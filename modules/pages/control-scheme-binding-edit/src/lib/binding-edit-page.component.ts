@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Router } from '@angular/router';
 import { concatLatestFrom } from '@ngrx/effects';
-import { RoutesBuilderService, TitleService } from '@app/shared-misc';
+import { IUnsavedChangesComponent, RoutesBuilderService, TitleService } from '@app/shared-misc';
 import {
     ConfirmationDialogModule,
     ConfirmationDialogService,
@@ -38,12 +38,14 @@ import { BINDING_EDIT_PAGE_SELECTORS } from './binding-edit-page.selectors';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BindingEditPageComponent implements OnInit {
+export class BindingEditPageComponent implements OnInit, IUnsavedChangesComponent {
     public readonly binding$: Observable<ControlSchemeBinding | undefined>;
 
     public readonly breadcrumbsDef$: Observable<ReadonlyArray<IBreadcrumbDefinition>>;
 
     private changedBinding: ControlSchemeBinding | null = null;
+
+    private _hasUnsavedChanges = false;
 
     constructor(
         private readonly store: Store,
@@ -78,12 +80,20 @@ export class BindingEditPageComponent implements OnInit {
         return this.changedBinding !== null;
     }
 
+    public get hasUnsavedChanges(): boolean {
+        return this._hasUnsavedChanges;
+    }
+
     public ngOnInit(): void {
         this.titleService.setTitle$(
             this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName).pipe(
                 switchMap((controlSchemeName) => this.translocoService.selectTranslate('pageTitle.bindingEditForScheme', { controlSchemeName }))
             )
         );
+    }
+
+    public onBindingFormDirtyChange(dirty: boolean): void {
+        this._hasUnsavedChanges = dirty;
     }
 
     public onBindingChange(binding: ControlSchemeBinding | null): void {
@@ -105,6 +115,8 @@ export class BindingEditPageComponent implements OnInit {
                 schemeName,
                 binding: this.changedBinding
             }));
+
+            this._hasUnsavedChanges = false;
             this.router.navigate(
                 this.routesBuilderService.controlSchemeView(schemeName)
             );
@@ -141,6 +153,7 @@ export class BindingEditPageComponent implements OnInit {
             }
             this.store.dispatch(CONTROL_SCHEME_ACTIONS.deleteBinding({ schemeName, bindingId }));
 
+            this._hasUnsavedChanges = false;
             const route = this.routesBuilderService.controlSchemeView(schemeName);
             this.router.navigate(route);
         });

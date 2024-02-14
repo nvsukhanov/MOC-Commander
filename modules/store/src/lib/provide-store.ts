@@ -2,7 +2,7 @@ import { APP_INITIALIZER, EnvironmentProviders, Provider, isDevMode, makeEnviron
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { ActionReducerMap, Store, provideStore } from '@ngrx/store';
-import { provideRouterStore, routerReducer } from '@ngrx/router-store';
+import { NavigationActionTiming, provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { Router } from '@angular/router';
 import { provideControllerProfiles } from '@app/controller-profiles';
 import { NAVIGATOR, RoutesBuilderService } from '@app/shared-misc';
@@ -107,7 +107,9 @@ export function provideApplicationStore(): EnvironmentProviders {
             HubMotorPositionFacadeService,
             HubServoCalibrationFacadeService,
             ControllerProfilesFacadeService,
-            provideRouterStore(),
+            provideRouterStore({
+                navigationActionTiming: NavigationActionTiming.PostActivation
+            }),
             provideStoreMigrations(),
             provideControllerProfiles()
         ]

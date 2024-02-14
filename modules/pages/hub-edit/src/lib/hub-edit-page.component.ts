@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LetDirective, PushPipe } from '@ngrx/component';
-import { Observable, Subscription, filter, map, of, switchMap, take } from 'rxjs';
+import { Observable, Subscription, distinctUntilChanged, filter, map, of, startWith, switchMap, take } from 'rxjs';
 import { NgIf } from '@angular/common';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -11,7 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
-import { RoutesBuilderService, TitleService, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
+import { IUnsavedChangesComponent, RoutesBuilderService, TitleService, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
 import { FeatureToolbarBreadcrumbsDirective, FeatureToolbarControlsDirective, HintComponent, IBreadcrumbDefinition } from '@app/shared-ui';
 import { HUBS_ACTIONS, HubModel, ROUTER_SELECTORS } from '@app/store';
 
@@ -43,12 +43,14 @@ import { HUB_EDIT_PAGE_SELECTORS } from './hub-edit-page.selectors';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HubEditPageComponent implements OnInit, OnDestroy {
+export class HubEditPageComponent implements OnInit, OnDestroy, IUnsavedChangesComponent {
     public readonly isHubConnected$ = this.store.select(HUB_EDIT_PAGE_SELECTORS.selectIsEditedHubConnected);
 
     public readonly editedHubConfiguration$ = this.store.select(HUB_EDIT_PAGE_SELECTORS.selectEditedHubModel);
 
     public readonly isSaving$: Observable<boolean> = this.store.select(HUB_EDIT_PAGE_SELECTORS.selectIsEditedHubIsSaving);
+
+    public readonly hasUnsavedChanges: Observable<boolean>;
 
     public readonly cancelPath$: Observable<string[]> = this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedHubId).pipe(
         map((id) => id !== null ? this.routesBuilderService.hubView(id) : [])
@@ -105,6 +107,12 @@ export class HubEditPageComponent implements OnInit, OnDestroy {
                 }
             ]))
         );
+
+        this.hasUnsavedChanges = this.form.statusChanges.pipe(
+            startWith(null),
+            map(() => this.form.dirty),
+            distinctUntilChanged()
+        );
     }
 
     public ngOnInit(): void {
@@ -140,6 +148,7 @@ export class HubEditPageComponent implements OnInit, OnDestroy {
                     take(1)
                 ).subscribe((action) => {
                     if (action.type === HUBS_ACTIONS.hubNameSet.type) {
+                        this.form.markAsPristine();
                         this.router.navigate(this.routesBuilderService.hubView(hubId));
                     }
                 })

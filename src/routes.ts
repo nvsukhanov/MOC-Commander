@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { ROUTE_SECTIONS } from '@app/shared-misc';
+import { ROUTE_SECTIONS, hasUnsavedChangesGuardFn } from '@app/shared-misc';
 import { NotFoundPageComponent } from '@app/not-found';
 
 import packageJson from '../package.json';
@@ -60,6 +60,7 @@ export const ROUTES: Routes = [
                 path: [ ':id', ROUTE_SECTIONS.hubEdit ].join('/'),
                 loadComponent: () => import('@app/hub-edit').then(m => m.HubEditPageComponent),
                 pathMatch: 'full',
+                canDeactivate: [hasUnsavedChangesGuardFn]
             }
         ]
     },
@@ -79,17 +80,20 @@ export const ROUTES: Routes = [
             {
                 path: [ ':schemeName', ROUTE_SECTIONS.binding, ':bindingId' ].join('/'),
                 loadComponent: () => import('@app/control-scheme-binding-edit').then((m) => m.BindingEditPageComponent),
-                pathMatch: 'full'
+                pathMatch: 'full',
+                canDeactivate: [hasUnsavedChangesGuardFn]
             },
             {
                 path: [ ':schemeName', ROUTE_SECTIONS.bindingCreate ].join('/'),
                 loadComponent: () => import('@app/control-scheme-binding-create').then((m) => m.BindingCreatePageComponent),
-                pathMatch: 'full'
+                pathMatch: 'full',
+                canDeactivate: [hasUnsavedChangesGuardFn]
             },
             {
                 path: [ ':schemeName', ROUTE_SECTIONS.hubEdit, ':hubId', ROUTE_SECTIONS.portEdit, ':portId' ].join('/'),
                 loadComponent: () => import('@app/control-scheme-port-config-edit').then((m) => m.PortConfigEditPageComponent),
-                pathMatch: 'full'
+                pathMatch: 'full',
+                canDeactivate: [hasUnsavedChangesGuardFn]
             }
         ]
     },

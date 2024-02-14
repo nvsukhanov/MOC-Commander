@@ -1,5 +1,6 @@
 <lib-cs-binding-edit [binding]="binding$ | ngrxPush"
                      (bindingChange)="onBindingChange($event)"
+                     (bindingFormDirtyChange)="onBindingFormDirtyChange($event)"
 ></lib-cs-binding-edit>
 
 <div *libFeatureToolbarControls

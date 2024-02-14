@@ -16,6 +16,8 @@ import { BindingGearboxControlEditComponent, GearboxControlBindingFormBuilderSer
 export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRenderer {
     public readonly bindingChange: Observable<ControlSchemeBinding | null>;
 
+    public readonly bindingFormDirtyChange: Observable<boolean>;
+
     private readonly renderers: { [k in ControlSchemeBindingType]: Type<IBindingsDetailsEditComponent> | null } = {
         [ControlSchemeBindingType.SetSpeed]: BindingSetSpeedEditComponent,
         [ControlSchemeBindingType.Servo]: BindingServoEditComponent,
@@ -66,6 +68,12 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
                 const form = this._form.controls[this._bindingType];
                 return form.valid && form.dirty ? this.mapFormToModel() : null;
             }),
+            distinctUntilChanged()
+        );
+
+        this.bindingFormDirtyChange = this._form.valueChanges.pipe(
+            startWith(null),
+            map(() => this._form.dirty),
             distinctUntilChanged()
         );
     }

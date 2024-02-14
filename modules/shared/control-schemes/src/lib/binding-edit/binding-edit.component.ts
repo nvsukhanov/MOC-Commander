@@ -6,6 +6,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatSelectModule } from '@angular/material/select';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { BehaviorSubject, Observable, distinctUntilChanged, map, merge, startWith } from 'rxjs';
 import { AppValidators, ControlSchemeBindingType, getEnumValues } from '@app/shared-misc';
 import { BindingTypeToL10nKeyPipe, HideOnSmallScreenDirective } from '@app/shared-ui';
 import { ControlSchemeBinding } from '@app/store';
@@ -39,6 +40,8 @@ import { BindingEditDetailsRenderDirective } from './binding-edit-details-render
 export class BindingEditComponent {
     @Output() public readonly bindingChange = new EventEmitter<ControlSchemeBinding | null>();
 
+    @Output() public readonly bindingFormDirtyChange: Observable<boolean>;
+
     public readonly availableBindingTypes = getEnumValues(ControlSchemeBindingType);
 
     protected form = this.formBuilder.group({
@@ -54,11 +57,21 @@ export class BindingEditComponent {
         )
     });
 
+    private specificBindingDirty$ = new BehaviorSubject(false);
+
     private _binding: Partial<ControlSchemeBinding> | undefined;
 
     constructor(
         private readonly formBuilder: FormBuilder
     ) {
+        this.bindingFormDirtyChange = merge(
+            this.form.statusChanges,
+            this.specificBindingDirty$
+        ).pipe(
+            startWith(null),
+            map(() => this.form.dirty || this.specificBindingDirty$.value),
+            distinctUntilChanged()
+        );
     }
 
     @Input()
@@ -75,5 +88,10 @@ export class BindingEditComponent {
 
     public onBindingChange(binding: ControlSchemeBinding | null): void {
         this.bindingChange.emit(binding);
+        this.specificBindingDirty$.next(false);
+    }
+
+    public onBindingFormDirtyChange(dirty: boolean): void {
+        this.specificBindingDirty$.next(dirty);
     }
 }

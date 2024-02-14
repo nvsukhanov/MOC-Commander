@@ -5,6 +5,8 @@ import { ControlSchemeBinding } from '@app/store';
 export interface IBindingDetailsEditFormRenderer {
     readonly bindingChange: Observable<ControlSchemeBinding | null>;
 
+    readonly bindingFormDirtyChange: Observable<boolean>;
+
     setBindingType(
         bindingType: ControlSchemeBindingType
     ): void;

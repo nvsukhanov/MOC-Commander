@@ -18,6 +18,7 @@
         <ng-container [libCsBindingEditDetailsRender]="binding"
                       [libCsBindingEditDetailsRenderBindingType]="form.controls.bindingType.value"
                       (libCsBindingEditDetailsRenderBindingChange)="onBindingChange($event)"
+                      (libCsBindingEditDetailsRenderBindingFormDirtyChange)="onBindingFormDirtyChange($event)"
         ></ng-container>
     </mat-card-content>
 </mat-card>
