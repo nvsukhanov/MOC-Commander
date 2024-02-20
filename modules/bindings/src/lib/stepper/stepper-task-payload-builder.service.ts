@@ -16,9 +16,10 @@ export class StepperTaskPayloadBuilderService implements ITaskPayloadBuilder<Con
         const previousStepInput = previousInput[ControlSchemeInputAction.Step];
 
         if (currentStepInput?.isActivated && !previousStepInput?.isActivated) {
+            const direction = Math.sign(currentStepInput.value);
             const payload: StepperTaskPayload = {
                 bindingType: ControlSchemeBindingType.Stepper,
-                degree: binding.degree,
+                degree: binding.degree * direction,
                 speed: binding.speed,
                 power: binding.power,
                 endState: binding.endState,
