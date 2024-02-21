@@ -218,7 +218,7 @@
     "inputGainLogarithmic": "Логарифмическое",
     "inputGainExponential": "Экспоненциальное",
     "fullControllerInputName": "{controllerName} / {inputName}",
-    "fullControllerInputNameWithDirection": "{controllerName} / {inputName} ({inputDirection, select, 1 {+} other {-}})",
+    "fullControllerInputNameWithDirection": "{controllerName} / {inputName} ({inputDirection, select, 0 {+} other {-}})",
     "controllerInputNameWithPort": "Port {portId} / {inputName}",
     "loopingModeTitle": "Циклический режим",
     "loopingModeNone": "Отсутствует",
