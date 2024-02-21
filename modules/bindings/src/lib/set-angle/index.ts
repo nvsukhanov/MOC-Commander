@@ -8,3 +8,4 @@ export * from './set-angle-port-command-task-summary-builder.service';
 export * from './provide-set-angle-binding';
 export * from './set-angle-input-extractor.service';
 export * from './set-angle-controller-name-resolver.service';
+export * from './set-angle-input-summary-provider.service';

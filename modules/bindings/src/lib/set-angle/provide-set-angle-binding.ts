@@ -7,6 +7,7 @@ import { SetAngleBindingFormMapperService } from './set-angle-binding-form-mappe
 import { SetAnglePortCommandTaskSummaryBuilderService } from './set-angle-port-command-task-summary-builder.service';
 import { SetAngleInputExtractorService } from './set-angle-input-extractor.service';
 import { SetAngleControllerNameResolverService } from './set-angle-controller-name-resolver.service';
+import { SetAngleInputSummaryProviderService } from './set-angle-input-summary-provider.service';
 
 export function provideSetAngleBinding(): Provider[] {
     return [
@@ -16,6 +17,7 @@ export function provideSetAngleBinding(): Provider[] {
         SetAngleBindingFormMapperService,
         SetAnglePortCommandTaskSummaryBuilderService,
         SetAngleInputExtractorService,
-        SetAngleControllerNameResolverService
+        SetAngleControllerNameResolverService,
+        SetAngleInputSummaryProviderService
     ];
 }

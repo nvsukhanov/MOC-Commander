@@ -7,6 +7,7 @@ import { StepperBindingFormMapperService } from './stepper-binding-form-mapper.s
 import { StepperPortCommandTaskSummaryBuilderService } from './stepper-port-command-task-summary-builder.service';
 import { StepperInputExtractorService } from './stepper-input-extractor.service';
 import { StepperControllerNameResolverService } from './stepper-controller-name-resolver.service';
+import { StepperInputSummaryProviderService } from './stepper-input-summary-provider.service';
 
 export function provideStepperBinding(): Provider[] {
     return [
@@ -16,6 +17,7 @@ export function provideStepperBinding(): Provider[] {
         StepperBindingFormMapperService,
         StepperPortCommandTaskSummaryBuilderService,
         StepperInputExtractorService,
-        StepperControllerNameResolverService
+        StepperControllerNameResolverService,
+        StepperInputSummaryProviderService
     ];
 }

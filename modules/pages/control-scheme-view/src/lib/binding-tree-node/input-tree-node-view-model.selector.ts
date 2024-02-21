@@ -1,15 +1,12 @@
 import { createSelector } from '@ngrx/store';
 import { Dictionary } from '@ngrx/entity';
-import { ControlSchemeBindingType } from '@app/shared-misc';
-import { CONTROLLER_CONNECTION_SELECTORS, ControlSchemeBinding, ControlSchemeInputAction, ControllerConnectionModel } from '@app/store';
+import { CONTROLLER_CONNECTION_SELECTORS, ControlSchemeBinding, ControlSchemeInput, ControllerConnectionModel } from '@app/store';
 
-import { BindingTreeNodeRecord, BindingTreeNodeViewModel } from './binding-tree-node-view-model';
+import { BindingTreeNodeViewModel, InputActionTreeNodeRecord } from './binding-tree-node-view-model';
 
 export const INPUT_TREE_NODE_VIEW_MODEL_SELECTOR = (
     schemeName: string,
-    inputs: ControlSchemeBinding['inputs'],
-    operationMode: ControlSchemeBindingType,
-    bindingId: number,
+    binding: ControlSchemeBinding,
     ioHasNoRequiredCapabilities: boolean
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 ) => createSelector(
@@ -17,16 +14,14 @@ export const INPUT_TREE_NODE_VIEW_MODEL_SELECTOR = (
     (controllerConnectionEntities: Dictionary<ControllerConnectionModel>): BindingTreeNodeViewModel => {
         const result: BindingTreeNodeViewModel = {
             schemeName,
-            bindingId,
+            binding,
             ioHasNoRequiredCapabilities,
-            operationMode,
-            controlData: Object.entries(inputs).map(([ action, input ]): BindingTreeNodeRecord => {
+            controlData: Object.entries(binding.inputs).map(([ action, input ]): InputActionTreeNodeRecord => {
                 return {
-                    action: +action as ControlSchemeInputAction,
-                    input,
-                    isControllerConnected: !!controllerConnectionEntities[input.controllerId]
+                    action: +action as keyof ControlSchemeBinding['inputs'],
+                    isControllerConnected: !!controllerConnectionEntities[(input as ControlSchemeInput).controllerId]
                 };
-            }).filter((data) => !!data.input.controllerId),
+            }),
             areAllControllersConnected: true
         };
         result.areAllControllersConnected = result.controlData.every((data) => data.isControllerConnected);

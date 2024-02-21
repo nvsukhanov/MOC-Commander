@@ -263,13 +263,15 @@
     "stepperBinding": {
       "operationMode": "Stepper",
       "outputDegree": "Angle (°)",
-      "taskSummary": "Step: { degree }°"
+      "taskSummary": "Step: { degree }°",
+      "inputAction": "Step ({ degree }°)"
     },
     "setAngleBinding": {
       "operationMode": "Set angle",
       "outputAngle": "Target angle (°)",
       "readAngleFromPort": "Read angle from port",
-      "taskSummary": "Set angle: { angle }°"
+      "taskSummary": "Set angle: { angle }°",
+      "inputAction": "Set angle ({ angle }°)"
     },
     "trainControlBinding": {
       "operationMode": "Train control",

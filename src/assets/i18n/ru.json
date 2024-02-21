@@ -263,13 +263,15 @@
     "stepperBinding": {
       "operationMode": "Шаговый двигатель",
       "outputDegree": "Угол шага (°)",
-      "taskSummary": "Шаговый двигатель: { degree }°"
+      "taskSummary": "Шаговый двигатель: { degree }°",
+      "inputAction": "Шаг ({ degree }°)"
     },
     "setAngleBinding": {
       "operationMode": "Установка угла",
       "outputAngle": "Целевой угол (°)",
       "readAngleFromPort": "Прочитать угол из порта",
-      "taskSummary": "Установка угла: { angle }°"
+      "taskSummary": "Установка угла: { angle }°",
+      "inputAction": "Установка угла ({ angle }°)"
     },
     "trainControlBinding": {
       "operationMode": "Поезд",

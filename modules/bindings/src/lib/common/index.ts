@@ -14,3 +14,4 @@ export * from './provide-binding-common-services';
 export * from './controller-input-name.service';
 export * from './direction-aware-controller-input-name.service';
 export * from './is-directional-input-activated';
+export * from './generic-input-summary-provider.service';
