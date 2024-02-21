@@ -145,6 +145,7 @@ export class PortConfigEditPageComponent implements OnInit, OnDestroy, IUnsavedC
                     if (hubId === null || portId === null) {
                         throw new Error('Hub ID and port ID must be set');
                     }
+                    this.formGroup.markAsPristine();
                     this.store.dispatch(CONTROL_SCHEME_ACTIONS.savePortConfig({
                         schemeName: portConfig.controlSchemeName,
                         portConfig: {

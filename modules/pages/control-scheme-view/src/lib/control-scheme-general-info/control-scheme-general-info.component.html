@@ -7,6 +7,7 @@
                 <mat-label>{{ 'controlScheme.nameField' | transloco }}</mat-label>
                 <input matInput
                        type="text"
+                       autofocus
                        [formControl]="nameFormControl"
                 />
                 <button mat-icon-button
@@ -24,6 +25,9 @@
                 >
                     <mat-icon [fontIcon]="'cancel'"></mat-icon>
                 </button>
+                <mat-error [libValidationMessages]="nameFormControl"
+                           [l10nMap]="validationErrorsL10nMap"
+                ></mat-error>
             </mat-form-field>
         </form>
     </section>

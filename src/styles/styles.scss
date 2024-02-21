@@ -23,8 +23,10 @@ ol {
     width: 100%; // allow full-width sub-headers
 }
 
-.mdc-button.mat-mdc-button {
-    justify-content: flex-start;
+.mdc-button {
+    &.mdc-button__non-centered {
+        justify-content: flex-start;
+    }
 }
 
 .card-list-item + .card-list-item {
