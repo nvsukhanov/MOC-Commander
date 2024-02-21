@@ -4,8 +4,11 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe } from '@ngneat/transloco';
+import { Store } from '@ngrx/store';
+import { take } from 'rxjs';
 import { ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
 import { CONTROL_SCHEME_NAME_IS_NOT_UNIQUE, ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
+import { CONTROL_SCHEME_SELECTORS } from '@app/store';
 
 @Component({
     standalone: true,
@@ -33,8 +36,14 @@ export class ControlSchemeCreateDialogComponent {
     constructor(
         private readonly dialogRef: MatDialogRef<ControlSchemeCreateDialogComponent, { name: string }>,
         private readonly formBuilder: ControlSchemeFormBuilderService,
+        store: Store
     ) {
         this.nameFormControl = this.formBuilder.controlSchemeNameControl(true);
+        store.select(CONTROL_SCHEME_SELECTORS.selectNextSchemeName(this.nameFormControl.value)).pipe(
+            take(1)
+        ).subscribe((nextName) => {
+            this.nameFormControl.setValue(nextName);
+        });
     }
 
     public canSubmit(): boolean {
