@@ -417,7 +417,6 @@
     "rawInput": "ввод",
     "output": "вывод",
     "invert": "Инвертировать",
-    "negativeValuesCanActivate": "Отрицательные значения могут активировать привязку",
     "ignoreInputControlTitle": "Игнорировать ввод",
     "inputIsIgnored": "Ввод игнорируется",
     "connectedControllers": "Подключенные контроллеры:",

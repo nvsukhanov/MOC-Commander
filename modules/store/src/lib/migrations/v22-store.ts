@@ -10,6 +10,7 @@ export type V23KeyboardSettings = Extract<V23ControllerSettings, { controllerTyp
 export type V23HubSettings = Extract<V23ControllerSettings, { controllerType: ControllerType.Hub }>;
 export type V23GamepadSettings = Extract<V23ControllerSettings, { controllerType: ControllerType.Gamepad }>;
 export type V23GamepadAxisSettings = V23GamepadSettings['axisConfigs'][string];
+export type V23GamepadButtonSettings = V23GamepadSettings['buttonConfigs'][string];
 
 export type V22ControllerSettings = EntityState<V23KeyboardSettings | V23HubSettings | {
     controllerId: string;

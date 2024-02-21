@@ -54,7 +54,6 @@ export class ControllerProfileGenericGamepad implements IControllerProfile<Gamep
                 ignoreInput: false,
                 trim: 0,
                 activationThreshold: this.config.gamepad.defaultActivationThreshold,
-                negativeValueCanActivate: true
             };
         }
         const buttonConfigs: { [k in string]: GamepadButtonSettings } = {};
@@ -65,7 +64,6 @@ export class ControllerProfileGenericGamepad implements IControllerProfile<Gamep
                 ignoreInput: false,
                 trim: 0,
                 activationThreshold: this.config.gamepad.defaultActivationThreshold,
-                negativeValueCanActivate: true,
                 invert: false
             };
         }

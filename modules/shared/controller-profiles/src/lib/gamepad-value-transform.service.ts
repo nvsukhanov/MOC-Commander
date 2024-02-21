@@ -20,8 +20,7 @@ export class GamepadValueTransformService {
         if (settings.ignoreInput) {
             return false;
         }
-        const normalizedValue = settings.negativeValueCanActivate ? Math.abs(value) : value;
-        return normalizedValue >= settings.activationThreshold;
+        return Math.abs(value) >= settings.activationThreshold;
     }
 
     public isButtonActivationThresholdReached(
@@ -34,8 +33,7 @@ export class GamepadValueTransformService {
         if (settings.ignoreInput) {
             return false;
         }
-        const normalizedValue = settings.negativeValueCanActivate ? Math.abs(value) : value;
-        return normalizedValue >= settings.activationThreshold;
+        return Math.abs(value) >= settings.activationThreshold;
     }
 
     public transformAxisValue(
