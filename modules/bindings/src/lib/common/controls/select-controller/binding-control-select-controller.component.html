@@ -1,4 +1,4 @@
-<mat-form-field *ngIf="inputAction"
+<mat-form-field *ngIf="inputAction !== undefined"
                 class="control-select-form-field"
 >
     <mat-label>{{ inputAction | controlSchemeInputActionToL10nKey | transloco }}</mat-label>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ControlSchemeBindingType } from '@app/shared-misc';
+import { ControlSchemeBindingType, calculateSpeedPower } from '@app/shared-misc';
 import { PortCommandTask, SetSpeedTaskPayload } from '@app/store';
 
 import { setSpeedPayloadHash } from './set-speed-payload-hash';
@@ -83,10 +83,15 @@ export class SetSpeedFilterService implements IBindingTaskFilter<ControlSchemeBi
         });
 
         const inputTimestamp = tasks.reduce((acc, task) => Math.max(acc, task.inputTimestamp), 0);
-
+        const { speed, power } = calculateSpeedPower(payload.speed, payload.brakeFactor, payload.power);
         return {
             ...tasks[0],
-            payload,
+            payload: {
+                ...payload,
+                speed,
+                power,
+                brakeFactor: 0
+            },
             inputTimestamp,
             hash: setSpeedPayloadHash(payload)
         };
