@@ -70,7 +70,6 @@ export abstract class GamepadProfile implements IControllerProfile<GamepadSettin
                 ignoreInput: false,
                 trim: 0,
                 activationThreshold: this.config.gamepad.defaultActivationThreshold,
-                negativeValueCanActivate: true
             };
         });
         Object.keys(this.buttonNames).forEach((buttonId) => {
@@ -80,7 +79,6 @@ export abstract class GamepadProfile implements IControllerProfile<GamepadSettin
                 ignoreInput: false,
                 trim: 0,
                 activationThreshold: this.config.gamepad.defaultActivationThreshold,
-                negativeValueCanActivate: true,
                 invert: false
             };
         });

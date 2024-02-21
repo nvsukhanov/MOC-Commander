@@ -48,8 +48,7 @@ export class GamepadSettingsFormBuilderService {
                     activationThreshold: this.formBuilder.control<number>(axisSettings.activationThreshold, {
                         nonNullable: true,
                         validators: [ Validators.min(0), Validators.max(this.config.maxInputValue) ]
-                    }),
-                    negativeValueCanActivate: this.formBuilder.control<boolean>(axisSettings.negativeValueCanActivate, { nonNullable: true }),
+                    })
                 })
             );
         }
@@ -74,7 +73,6 @@ export class GamepadSettingsFormBuilderService {
                         nonNullable: true,
                         validators: [ Validators.min(0), Validators.max(this.config.maxInputValue) ]
                     }),
-                    negativeValueCanActivate: this.formBuilder.control<boolean>(buttonSettings.negativeValueCanActivate, { nonNullable: true }),
                     invert: this.formBuilder.control<boolean>(buttonSettings.invert, { nonNullable: true }),
                 })
             );

@@ -12,7 +12,6 @@ export type GamepadAxisSettings = {
     ignoreInput: boolean;
     trim: number;
     activationThreshold: number;
-    negativeValueCanActivate: boolean;
 };
 
 export type GamepadButtonSettings = {
@@ -21,7 +20,6 @@ export type GamepadButtonSettings = {
     ignoreInput: boolean;
     trim: number;
     activationThreshold: number;
-    negativeValueCanActivate: boolean;
     invert: boolean;
 };
 

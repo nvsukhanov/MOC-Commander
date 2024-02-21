@@ -417,7 +417,6 @@
     "rawInput": "input",
     "output": "output",
     "invert": "Invert input",
-    "negativeValuesCanActivate": "Negative values can activate",
     "ignoreInputControlTitle": "Ignore input",
     "inputIsIgnored": "Input is ignored",
     "connectedControllers": "Connected controllers:",

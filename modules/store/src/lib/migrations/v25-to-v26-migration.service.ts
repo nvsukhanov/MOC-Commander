@@ -8,7 +8,7 @@ import { V26Store } from './v26-store';
 import { InputDirection } from '../models';
 
 @Injectable()
-export class V25ToV65MigrationService implements IMigration<V25Store, V26Store> {
+export class V25ToV26MigrationService implements IMigration<V25Store, V26Store> {
     public readonly fromVersion = AppStoreVersion.v25;
 
     public readonly toVersion = AppStoreVersion.v26;
