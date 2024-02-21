@@ -4,12 +4,13 @@ import { FullControllerInputNameData } from '@app/shared-control-schemes';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { IBindingControllerNameResolver } from '../i-binding-controller-name-resolver';
-import { ControllerInputNameService } from '../common';
+import { ControllerInputNameService, DirectionAwareControllerInputNameService } from '../common';
 
 @Injectable()
 export class TrainControllerNameResolverService implements IBindingControllerNameResolver<ControlSchemeBindingType.TrainControl> {
     constructor(
         private readonly controllerNameProvider: ControllerInputNameService,
+        private readonly directionAwareControllerNameProvider: DirectionAwareControllerInputNameService
     ) {
     }
 
@@ -20,6 +21,7 @@ export class TrainControllerNameResolverService implements IBindingControllerNam
         switch (action) {
             case ControlSchemeInputAction.NextLevel:
             case ControlSchemeInputAction.PrevLevel:
+                return this.directionAwareControllerNameProvider.getFullControllerInputNameData(inputConfig);
             case ControlSchemeInputAction.Reset:
                 return this.controllerNameProvider.getFullControllerInputNameData(inputConfig);
         }

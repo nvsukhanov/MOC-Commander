@@ -128,7 +128,7 @@ export class GearboxControlTaskPayloadBuilderService implements ITaskPayloadBuil
         currentInput: BindingInputExtractionResult<ControlSchemeBindingType.GearboxControl>,
         previousInput: BindingInputExtractionResult<ControlSchemeBindingType.GearboxControl>,
         inputAction: keyof ControlSchemeGearboxControlBinding['inputs'],
-    ): { isActivated: boolean; timestamp: number; value: number } {
+    ): { isActivated: boolean; timestamp: number } {
         const currentInputForAction = currentInput[inputAction];
         const inputConfig = binding.inputs[inputAction];
         if (currentInputForAction && inputConfig) {
@@ -146,13 +146,11 @@ export class GearboxControlTaskPayloadBuilderService implements ITaskPayloadBuil
             return {
                 isActivated: isNextActivated && !isPrevActivated,
                 timestamp: currentInputForAction.timestamp,
-                value: currentInputForAction.value,
             };
         }
         return {
             isActivated: false,
             timestamp: -Infinity,
-            value: 0,
         };
     }
 }
