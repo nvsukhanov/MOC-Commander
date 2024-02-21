@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MOTOR_LIMITS, MotorServoEndState } from 'rxpoweredup';
+import { MotorServoEndState } from 'rxpoweredup';
 import { AppValidators, DeepPartial } from '@app/shared-misc';
 import { ControlSchemeInputAction, ControlSchemeStepperBinding } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
@@ -11,6 +11,8 @@ import { StepperBindingForm } from './stepper-binding-form';
 @Injectable()
 export class StepperBindingFormBuilderService {
     private readonly defaultStepDegree = 90;
+
+    private readonly maxStepDegree = 360 * 4;
 
     constructor(
         private readonly formBuilder: FormBuilder,
@@ -30,8 +32,8 @@ export class StepperBindingFormBuilderService {
                 nonNullable: true,
                 validators: [
                     Validators.required,
-                    Validators.min(-MOTOR_LIMITS.maxServoDegreesRange),
-                    Validators.max(MOTOR_LIMITS.maxServoDegreesRange),
+                    Validators.min(-this.maxStepDegree),
+                    Validators.max(this.maxStepDegree),
                     AppValidators.requireNonZero,
                     AppValidators.requireInteger
                 ]

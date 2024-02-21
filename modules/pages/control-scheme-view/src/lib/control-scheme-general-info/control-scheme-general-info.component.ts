@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { EllipsisTitleDirective } from '@app/shared-ui';
+import { ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
+import { CONTROL_SCHEME_NAME_IS_NOT_UNIQUE, ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 @Component({
     standalone: true,
@@ -19,7 +21,8 @@ import { EllipsisTitleDirective } from '@app/shared-ui';
         MatInputModule,
         ReactiveFormsModule,
         TranslocoPipe,
-        EllipsisTitleDirective
+        EllipsisTitleDirective,
+        ValidationMessagesDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -28,6 +31,11 @@ export class ControlSchemeGeneralInfoComponent {
 
     @Output() public readonly nameChange = new EventEmitter<string>();
 
+    protected readonly validationErrorsL10nMap: ValidationErrorsL10nMap = {
+        required: 'controlScheme.newSchemeDialogNameRequired',
+        [CONTROL_SCHEME_NAME_IS_NOT_UNIQUE]: 'controlScheme.newSchemeDialogNameUniqueness'
+    };
+
     protected readonly nameFormControl: FormControl<string>;
 
     private _name = '';
@@ -35,12 +43,9 @@ export class ControlSchemeGeneralInfoComponent {
     private _isEditing = false;
 
     constructor(
-        private readonly formBuilder: FormBuilder
+        private readonly formBuilder: ControlSchemeFormBuilderService,
     ) {
-        this.nameFormControl = this.formBuilder.control<string>(
-            '',
-            { nonNullable: true, validators: [ Validators.required ] }
-        );
+        this.nameFormControl = this.formBuilder.controlSchemeNameControl();
     }
 
     @Input()

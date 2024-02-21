@@ -51,7 +51,7 @@
     "controllerView": "{ controllerName } - Настройки контроллера",
     "hubEditWithHubName": "{ hubName } - настройки",
     "hubEdit": "Настройки",
-    "hubList": "Хабы",
+    "hubsList": "Хабы",
     "hubView": "{ hubName }",
     "notFound": "Страница не найдена",
     "about": "О программе",
