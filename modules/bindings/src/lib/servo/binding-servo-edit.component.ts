@@ -22,6 +22,7 @@ import {
     BINDING_EDIT_COMMON_SELECTORS,
     BindingControlPowerInputComponent,
     BindingControlSelectControllerComponent,
+    BindingControlSelectControllerComponentData,
     BindingControlSelectInputGainComponent,
     BindingControlSpeedInputComponent,
     BindingEditSectionComponent,
@@ -31,6 +32,8 @@ import {
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { BINDING_SERVO_EDIT_SELECTORS } from './binding-servo-edit.selectors';
 import { ServoBindingForm } from './servo-binding-form';
+import { BINDING_CONTROLLER_NAME_RESOLVER } from '../i-binding-controller-name-resolver';
+import { ServoControllerNameResolverService } from './servo-controller-name-resolver.service';
 
 @Component({
     standalone: true,
@@ -60,7 +63,10 @@ import { ServoBindingForm } from './servo-binding-form';
         BindingControlSpeedInputComponent,
         BindingControlPowerInputComponent
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        { provide: BINDING_CONTROLLER_NAME_RESOLVER, useClass: ServoControllerNameResolverService }
+    ]
 })
 export class BindingServoEditComponent implements IBindingsDetailsEditComponent<ServoBindingForm>, OnDestroy {
     public readonly motorLimits = MOTOR_LIMITS;
@@ -74,6 +80,8 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
     private _canCalibrate$: Observable<boolean> = of(false);
 
     private _canRequestPortValue$: Observable<boolean> = of(false);
+
+    private _servoControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Servo>;
 
     private readonly _isCalibrating$ = new BehaviorSubject(false);
 
@@ -89,6 +97,10 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
 
     public get form(): ServoBindingForm | undefined {
         return this._form;
+    }
+
+    public get servoControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Servo> | undefined {
+        return this._servoControlBindingComponentData;
     }
 
     public get isInputGainConfigurable(): boolean {
@@ -199,6 +211,13 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
     ): void {
         if (form !== this._form) {
             this._form = form;
+
+            this._servoControlBindingComponentData = {
+                bindingType: ControlSchemeBindingType.Servo,
+                inputFormGroup: form.controls.inputs.controls[ControlSchemeInputAction.Servo],
+                inputAction: ControlSchemeInputAction.Servo
+            };
+
             this.portRequestSubscription?.unsubscribe();
 
             this._canCalibrate$ = form.controls.hubId.valueChanges.pipe(

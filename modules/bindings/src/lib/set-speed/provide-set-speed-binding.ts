@@ -7,6 +7,7 @@ import { SetSpeedBindingFormBuilderService } from './set-speed-binding-form-buil
 import { SetSpeedBindingFormMapperService } from './set-speed-binding-form-mapper.service';
 import { SetSpeedPortCommandTaskSummaryBuilderService } from './set-speed-port-command-task-summary-builder.service';
 import { SetSpeedInputExtractorService } from './set-speed-input-extractor.service';
+import { SetSpeedControllerNameResolverService } from './set-speed-controller-name-resolver.service';
 
 export function provideSetSpeedBinding(): Provider[] {
     return [
@@ -16,6 +17,7 @@ export function provideSetSpeedBinding(): Provider[] {
         SetSpeedBindingFormBuilderService,
         SetSpeedBindingFormMapperService,
         SetSpeedPortCommandTaskSummaryBuilderService,
-        SetSpeedInputExtractorService
+        SetSpeedInputExtractorService,
+        SetSpeedControllerNameResolverService
     ];
 }

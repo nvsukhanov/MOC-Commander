@@ -1,2 +1,2 @@
 export * from './full-controller-input-name.pipe';
-export * from './full-controller-input-name.service';
+export * from './i-full-controller-input-name-provider';

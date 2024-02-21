@@ -1,7 +1,7 @@
 import { FormControl, FormGroup } from '@angular/forms';
 import { ButtonGroupButtonId } from 'rxpoweredup';
 import { ControllerInputType } from '@app/controller-profiles';
-import { InputGain } from '@app/store';
+import { InputDirection, InputGain } from '@app/store';
 
 export type InputFormGroup = FormGroup<{
     controllerId: FormControl<string>;
@@ -10,6 +10,7 @@ export type InputFormGroup = FormGroup<{
     gain: FormControl<InputGain>;
     buttonId: FormControl<ButtonGroupButtonId | null>;
     portId: FormControl<number | null>;
+    inputDirection: FormControl<InputDirection>;
 }>;
 
 export type OptionalInputFormGroup = FormGroup<{
@@ -19,4 +20,5 @@ export type OptionalInputFormGroup = FormGroup<{
     gain: FormControl<InputGain>;
     buttonId: FormControl<ButtonGroupButtonId | null>;
     portId: FormControl<number | null>;
+    inputDirection: FormControl<InputDirection>;
 }>;

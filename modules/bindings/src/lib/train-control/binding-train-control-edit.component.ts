@@ -15,6 +15,7 @@ import { BindingControlSelectHubComponent, BindingControlSelectIoComponent } fro
 import {
     BindingControlPowerInputComponent,
     BindingControlSelectControllerComponent,
+    BindingControlSelectControllerComponentData,
     BindingControlSelectLoopingModeComponent,
     BindingEditSectionComponent,
     BindingEditSectionsContainerComponent,
@@ -23,6 +24,8 @@ import {
 } from '../common';
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { TrainControlBindingForm } from './train-control-binding-form';
+import { BINDING_CONTROLLER_NAME_RESOLVER } from '../i-binding-controller-name-resolver';
+import { TrainControllerNameResolverService } from './train-controller-name-resolver.service';
 
 @Component({
     standalone: true,
@@ -50,12 +53,19 @@ import { TrainControlBindingForm } from './train-control-binding-form';
         ValidationMessagesDirective,
         BindingControlPowerInputComponent
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        { provide: BINDING_CONTROLLER_NAME_RESOLVER, useClass: TrainControllerNameResolverService }
+    ]
 })
 export class BindingTrainControlEditComponent implements IBindingsDetailsEditComponent<TrainControlBindingForm> {
     public readonly bindingType = ControlSchemeBindingType.TrainControl;
+    
+    private _nextLevelControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl>;
 
-    public readonly controlSchemeInputActions = ControlSchemeInputAction;
+    private _prevLevelControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl>;
+
+    private _resetControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl>;
 
     private _form?: TrainControlBindingForm;
 
@@ -69,10 +79,37 @@ export class BindingTrainControlEditComponent implements IBindingsDetailsEditCom
         return this._form;
     }
 
+    public get nextLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | undefined {
+        return this._nextLevelControlBindingComponentData;
+    }
+
+    public get prevLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | undefined {
+        return this._prevLevelControlBindingComponentData;
+    }
+
+    public get resetControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | undefined {
+        return this._resetControlBindingComponentData;
+    }
+
     public setForm(
         form: TrainControlBindingForm
     ): void {
         this._form = form;
+        this._nextLevelControlBindingComponentData = {
+            bindingType: ControlSchemeBindingType.GearboxControl,
+            inputFormGroup: this._form.controls.inputs.controls[ControlSchemeInputAction.NextLevel],
+            inputAction: ControlSchemeInputAction.NextLevel
+        };
+        this._prevLevelControlBindingComponentData = {
+            bindingType: ControlSchemeBindingType.GearboxControl,
+            inputFormGroup: this._form.controls.inputs.controls[ControlSchemeInputAction.PrevLevel],
+            inputAction: ControlSchemeInputAction.PrevLevel
+        };
+        this._resetControlBindingComponentData = {
+            bindingType: ControlSchemeBindingType.GearboxControl,
+            inputFormGroup: this._form.controls.inputs.controls[ControlSchemeInputAction.Reset],
+            inputAction: ControlSchemeInputAction.Reset
+        };
     }
 
     public addNextSpeedControl(): void {

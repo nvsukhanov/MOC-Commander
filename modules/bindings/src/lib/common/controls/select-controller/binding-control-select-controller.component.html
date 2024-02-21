@@ -1,7 +1,7 @@
-<mat-form-field *ngIf="inputFormGroup"
+<mat-form-field *ngIf="inputAction"
                 class="control-select-form-field"
 >
-    <mat-label>{{ title }}</mat-label>
+    <mat-label>{{ inputAction | controlSchemeInputActionToL10nKey | transloco }}</mat-label>
     <input *ngIf="syntheticInputControl"
            matInput
            readonly

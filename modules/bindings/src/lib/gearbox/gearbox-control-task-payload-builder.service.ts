@@ -9,7 +9,7 @@ import {
     PortCommandTaskPayload
 } from '@app/store';
 
-import { calculateNextLoopingIndex } from '../common';
+import { calculateNextLoopingIndex, isDirectionalInputActivated } from '../common';
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
 import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 
@@ -57,9 +57,9 @@ export class GearboxControlTaskPayloadBuilderService implements ITaskPayloadBuil
         motorEncoderOffset: number,
         previousTask: PortCommandTask<ControlSchemeBindingType.GearboxControl> | null
     ): { payload: GearboxControlTaskPayload; inputTimestamp: number } | null {
-        const nextLevelInput = this.getActiveInput(currentInput, previousInput, ControlSchemeInputAction.NextLevel);
-        const prevLevelInput = this.getActiveInput(currentInput, previousInput, ControlSchemeInputAction.PrevLevel);
-        const resetLevelInput = this.getActiveInput(currentInput, previousInput, ControlSchemeInputAction.Reset);
+        const nextLevelInput = this.getActiveInput(binding, currentInput, previousInput, ControlSchemeInputAction.NextLevel);
+        const prevLevelInput = this.getActiveInput(binding, currentInput, previousInput, ControlSchemeInputAction.PrevLevel);
+        const resetLevelInput = this.getActiveInput(binding, currentInput, previousInput, ControlSchemeInputAction.Reset);
 
         if (!nextLevelInput.isActivated && !prevLevelInput.isActivated && !resetLevelInput.isActivated) {
             return null;
@@ -124,20 +124,35 @@ export class GearboxControlTaskPayloadBuilderService implements ITaskPayloadBuil
     }
 
     private getActiveInput(
+        binding: ControlSchemeGearboxControlBinding,
         currentInput: BindingInputExtractionResult<ControlSchemeBindingType.GearboxControl>,
         previousInput: BindingInputExtractionResult<ControlSchemeBindingType.GearboxControl>,
         inputAction: keyof ControlSchemeGearboxControlBinding['inputs'],
-    ): { isActivated: boolean; timestamp: number } {
+    ): { isActivated: boolean; timestamp: number; value: number } {
         const currentInputForAction = currentInput[inputAction];
-        if (currentInputForAction) {
+        const inputConfig = binding.inputs[inputAction];
+        if (currentInputForAction && inputConfig) {
+            const isNextActivated = isDirectionalInputActivated(
+                inputConfig.inputDirection,
+                inputAction,
+                currentInput
+            );
+            const isPrevActivated = isDirectionalInputActivated(
+                inputConfig.inputDirection,
+                inputAction,
+                previousInput
+            );
+
             return {
-                isActivated: currentInputForAction.isActivated && !previousInput[inputAction]?.isActivated,
+                isActivated: isNextActivated && !isPrevActivated,
                 timestamp: currentInputForAction.timestamp,
+                value: currentInputForAction.value,
             };
         }
         return {
             isActivated: false,
             timestamp: -Infinity,
+            value: 0,
         };
     }
 }

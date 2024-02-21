@@ -218,6 +218,7 @@
     "inputGainLogarithmic": "Logarithmic",
     "inputGainExponential": "Exponential",
     "fullControllerInputName": "{controllerName} / {inputName}",
+    "fullControllerInputNameWithDirection": "{controllerName} / {inputName} ({inputDirection, select, 1 {Up} other {Down}})",
     "controllerInputNameWithPort": "Port {portId} / {inputName}",
     "loopingModeTitle": "Looping mode",
     "loopingModeNone": "None",

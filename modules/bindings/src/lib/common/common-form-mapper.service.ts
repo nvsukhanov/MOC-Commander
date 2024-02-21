@@ -14,6 +14,7 @@ export class CommonFormMapperService {
             inputId: formValue.inputId,
             inputType: formValue.inputType,
             gain: formValue.gain,
+            inputDirection: formValue.inputDirection
         };
         if (formValue.portId !== null) {
             result.portId = formValue.portId;

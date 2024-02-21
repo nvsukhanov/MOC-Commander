@@ -20,15 +20,17 @@ import {
     BindingControlOutputEndStateComponent,
     BindingControlPowerInputComponent,
     BindingControlSelectControllerComponent,
+    BindingControlSelectControllerComponentData,
     BindingControlSelectLoopingModeComponent,
     BindingControlSpeedInputComponent,
     BindingEditSectionComponent,
     BindingEditSectionsContainerComponent,
-    CommonBindingsFormControlsBuilderService,
-    ControlSchemeInputActionToL10nKeyPipe
+    CommonBindingsFormControlsBuilderService
 } from '../common';
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { GearboxControlBindingForm } from './gearbox-binding-form';
+import { BINDING_CONTROLLER_NAME_RESOLVER } from '../i-binding-controller-name-resolver';
+import { GearboxControllerNameResolverService } from './gearbox-controller-name-resolver.service';
 
 @Component({
     standalone: true,
@@ -45,7 +47,6 @@ import { GearboxControlBindingForm } from './gearbox-binding-form';
         TranslocoPipe,
         BindingControlOutputEndStateComponent,
         PushPipe,
-        ControlSchemeInputActionToL10nKeyPipe,
         BindingControlSelectLoopingModeComponent,
         BindingEditSectionComponent,
         BindingControlSelectHubComponent,
@@ -59,16 +60,23 @@ import { GearboxControlBindingForm } from './gearbox-binding-form';
         BindingControlSpeedInputComponent,
         BindingControlPowerInputComponent
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        { provide: BINDING_CONTROLLER_NAME_RESOLVER, useClass: GearboxControllerNameResolverService }
+    ]
 })
 export class BindingGearboxControlEditComponent implements IBindingsDetailsEditComponent<GearboxControlBindingForm>, OnDestroy {
-    public readonly controlSchemeInputActions = ControlSchemeInputAction;
-
     public readonly bindingType = ControlSchemeBindingType.GearboxControl;
 
     private _form?: GearboxControlBindingForm;
 
     private _canRequestPortValue$: Observable<boolean> = of(false);
+
+    private _nextLevelControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl>;
+
+    private _prevLevelControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl>;
+
+    private _resetControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl>;
 
     private portRequestSubscription?: Subscription;
 
@@ -88,6 +96,18 @@ export class BindingGearboxControlEditComponent implements IBindingsDetailsEditC
         return this._canRequestPortValue$;
     }
 
+    public get nextLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | undefined {
+        return this._nextLevelControlBindingComponentData;
+    }
+
+    public get prevLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | undefined {
+        return this._prevLevelControlBindingComponentData;
+    }
+
+    public get resetControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | undefined {
+        return this._resetControlBindingComponentData;
+    }
+
     public ngOnDestroy(): void {
         this.portRequestSubscription?.unsubscribe();
     }
@@ -96,6 +116,24 @@ export class BindingGearboxControlEditComponent implements IBindingsDetailsEditC
         form: GearboxControlBindingForm
     ): void {
         this._form = form;
+        this._nextLevelControlBindingComponentData = {
+            bindingType: ControlSchemeBindingType.GearboxControl,
+            inputFormGroup: form.controls.inputs.controls[ControlSchemeInputAction.NextLevel],
+            inputAction: ControlSchemeInputAction.NextLevel
+        };
+
+        this._prevLevelControlBindingComponentData = {
+            bindingType: ControlSchemeBindingType.GearboxControl,
+            inputFormGroup: form.controls.inputs.controls[ControlSchemeInputAction.PrevLevel],
+            inputAction: ControlSchemeInputAction.PrevLevel
+        };
+
+        this._resetControlBindingComponentData = {
+            bindingType: ControlSchemeBindingType.GearboxControl,
+            inputFormGroup: form.controls.inputs.controls[ControlSchemeInputAction.Reset],
+            inputAction: ControlSchemeInputAction.Reset
+        };
+
         this.portRequestSubscription?.unsubscribe();
         this._canRequestPortValue$ = form.controls.hubId.valueChanges.pipe(
             mergeWith(form.controls.portId.valueChanges),

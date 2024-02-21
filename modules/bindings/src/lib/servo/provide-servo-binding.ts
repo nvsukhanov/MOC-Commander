@@ -6,6 +6,7 @@ import { ServoBindingFormBuilderService } from './servo-binding-form-builder.ser
 import { ServoBindingFormMapperService } from './servo-binding-form-mapper.service';
 import { ServoPortCommandTaskSummaryBuilderService } from './servo-port-command-task-summary-builder.service';
 import { ServoInputExtractorService } from './servo-input-extractor.service';
+import { ServoControllerNameResolverService } from './servo-controller-name-resolver.service';
 
 export function provideServoBinding(): Provider[] {
     return [
@@ -14,6 +15,7 @@ export function provideServoBinding(): Provider[] {
         ServoBindingFormBuilderService,
         ServoBindingFormMapperService,
         ServoPortCommandTaskSummaryBuilderService,
-        ServoInputExtractorService
+        ServoInputExtractorService,
+        ServoControllerNameResolverService
     ];
 }
