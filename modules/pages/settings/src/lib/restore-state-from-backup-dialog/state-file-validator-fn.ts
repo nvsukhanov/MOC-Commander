@@ -1,4 +1,4 @@
-import { FormControl, ValidationErrors } from '@angular/forms';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { DeepPartial, getEnumValues } from '@app/shared-misc';
 import { AppStoreVersion, IState, MigrateStoreService } from '@app/store';
 
@@ -20,8 +20,8 @@ export const STATE_FILE_VALIDATION_ERRORS = {
 
 export function createStateFileValidatorFn(
     migrationService: MigrateStoreService
-): (control: FormControl<string>) => ValidationErrors | null {
-    return (control: FormControl<string>): ValidationErrors | null => {
+): (control: AbstractControl<string>) => ValidationErrors | null {
+    return (control: AbstractControl<string>): ValidationErrors | null => {
         const result: ValidationErrors = {};
         let parsedResult: unknown;
         try {
