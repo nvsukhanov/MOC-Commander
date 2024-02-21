@@ -1,12 +1,10 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { TranslocoService } from '@ngneat/transloco';
 import { ControlSchemeInputAction } from '@app/store';
 
-@Pipe({
-    standalone: true,
-    name: 'controlSchemeInputActionToL10nKey',
-    pure: true
-})
-export class ControlSchemeInputActionToL10nKeyPipe implements PipeTransform {
+@Injectable()
+export class GenericInputSummaryProviderService {
     private readonly inputActionsToL10nKeys: { [k in ControlSchemeInputAction]: string } = {
         [ControlSchemeInputAction.Servo]: 'controlScheme.inputActions.servo',
         [ControlSchemeInputAction.Brake]: 'controlScheme.inputActions.brake',
@@ -18,9 +16,14 @@ export class ControlSchemeInputActionToL10nKeyPipe implements PipeTransform {
         [ControlSchemeInputAction.Reset]: 'controlScheme.inputActions.reset'
     };
 
-    public transform(
+    constructor(
+        private readonly transloco: TranslocoService
+    ) {
+    }
+
+    public provideInputSummary(
         inputAction: ControlSchemeInputAction
-    ): string {
-        return this.inputActionsToL10nKeys[inputAction];
+    ): Observable<string> {
+        return this.transloco.selectTranslate(this.inputActionsToL10nKeys[inputAction]);
     }
 }

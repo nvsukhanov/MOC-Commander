@@ -1,17 +1,14 @@
-import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeInput, ControlSchemeInputAction } from '@app/store';
+import { ControlSchemeBinding } from '@app/store';
 
-export type BindingTreeNodeRecord = {
-    action: ControlSchemeInputAction;
-    input: ControlSchemeInput;
+export type InputActionTreeNodeRecord<T extends ControlSchemeBinding = ControlSchemeBinding> = {
+    action: keyof T['inputs'];
     isControllerConnected: boolean;
 };
 
-export type BindingTreeNodeViewModel = {
+export type BindingTreeNodeViewModel<T extends ControlSchemeBinding = ControlSchemeBinding> = {
     schemeName: string;
-    bindingId: number;
+    binding: T;
     ioHasNoRequiredCapabilities: boolean;
-    operationMode: ControlSchemeBindingType;
-    controlData: BindingTreeNodeRecord[];
+    controlData: Array<InputActionTreeNodeRecord<T>>;
     areAllControllersConnected: boolean;
 };

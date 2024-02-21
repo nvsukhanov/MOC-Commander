@@ -5,6 +5,7 @@ import { HashCompareFilterService } from './hash-compare-filter.service';
 import { BindingTaskPayloadHashBuilderService } from '../binding-task-payload-hash-builder.service';
 import { ControllerInputNameService } from './controller-input-name.service';
 import { DirectionAwareControllerInputNameService } from './direction-aware-controller-input-name.service';
+import { GenericInputSummaryProviderService } from './generic-input-summary-provider.service';
 
 export function provideBindingCommonServices(): Provider[] {
     return [
@@ -12,6 +13,7 @@ export function provideBindingCommonServices(): Provider[] {
         HashCompareFilterService,
         BindingTaskPayloadHashBuilderService,
         ControllerInputNameService,
-        DirectionAwareControllerInputNameService
+        DirectionAwareControllerInputNameService,
+        GenericInputSummaryProviderService
     ];
 }

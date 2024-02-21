@@ -4,21 +4,21 @@
 >
     <div class="binding__general-info">
         <a class="binding__operation-type"
-           [routerLink]="viewModel.schemeName | bindingViewUrl: viewModel.bindingId"
+           [routerLink]="viewModel.schemeName | bindingViewUrl: viewModel.binding.id"
         >
-            <ng-container *ngIf="!viewModel.ioHasNoRequiredCapabilities; else ioCapabilitiesMismatch">
-                {{ viewModel.operationMode | bindingTypeToL10nKey | transloco }}
-            </ng-container>
-            <ng-template #ioCapabilitiesMismatch>
+            @if (viewModel.ioHasNoRequiredCapabilities) {
                 <mat-error class="binding__operation-type"
                            [title]="'controlScheme.ioCapabilitiesMismatch' | transloco"
                 >
-                    {{ viewModel.operationMode | bindingTypeToL10nKey | transloco }}
+                    {{ viewModel.binding.bindingType | bindingTypeToL10nKey | transloco }}
                 </mat-error>
                 <span class="cdk-visually-hidden">
                     ({{ 'controlScheme.ioCapabilitiesMismatch' | transloco }})
                 </span>
-            </ng-template>
+            } @else {
+                {{ viewModel.binding.bindingType | bindingTypeToL10nKey | transloco }}
+            }
+
             <span *ngIf="!viewModel.areAllControllersConnected"
                   class="cdk-visually-hidden"
             >
@@ -26,19 +26,21 @@
             </span>
         </a>
     </div>
+
     <div class="binding__controls">
-        <div *ngFor="let controlData of viewModel.controlData">
-            <span class="binding__controls-action-name">{{ controlData.action | controlSchemeInputActionToL10nKey | transloco }}:</span>
-            <ng-container *ngIf="controlData.isControllerConnected; else controllerIsNotConnected">
-                {{ (viewModel.operationMode | fullControllerInputName: controlData.input : controlData.action) | ngrxPush }}
-            </ng-container>
-            <ng-template #controllerIsNotConnected>
-                <span [class.binding__controls_disconnected]="!controlData.isControllerConnected"
-                      [title]="'controller.isNotConnectedInlineNotification' | transloco"
-                >
-                    {{ (viewModel.operationMode | fullControllerInputName: controlData.input : controlData.action) | ngrxPush }}
-                </span>
-            </ng-template>
-        </div>
+        @for (controlData of viewModel.controlData; track controlData) {
+            <div>
+                <span class="binding__controls-action-name">{{ (viewModel.binding | bindingInputSummary: controlData.action) | ngrxPush }}:</span>
+                @if (controlData.isControllerConnected) {
+                    {{ (viewModel.binding.bindingType | fullControllerInputName: viewModel.binding.inputs[controlData.action] : controlData.action) | ngrxPush }}
+                } @else {
+                    <span [class.binding__controls_disconnected]="!controlData.isControllerConnected"
+                          [title]="'controller.isNotConnectedInlineNotification' | transloco"
+                    >
+                        {{ (viewModel.binding.bindingType | fullControllerInputName: viewModel.binding.inputs[controlData.action] : controlData.action) | ngrxPush }}
+                    </span>
+                }
+            </div>
+        }
     </div>
 </div>

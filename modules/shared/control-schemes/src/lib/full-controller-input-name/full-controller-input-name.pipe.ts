@@ -10,13 +10,13 @@ import { FULL_CONTROLLER_INPUT_NAME_PROVIDER, IFullControllerInputNameProvider }
     name: 'fullControllerInputName',
     pure: true
 })
-export class FullControllerInputNamePipe<T extends ControlSchemeBindingType> implements PipeTransform {
+export class FullControllerInputNamePipe implements PipeTransform {
     constructor(
         @Inject(FULL_CONTROLLER_INPUT_NAME_PROVIDER) private readonly fullControllerInputNameProvider: IFullControllerInputNameProvider
     ) {
     }
 
-    public transform(
+    public transform<T extends ControlSchemeBindingType>(
         bindingType: T,
         data: ControlSchemeInput | undefined,
         inputAction: keyof ControlSchemeBindingInputs<T>
