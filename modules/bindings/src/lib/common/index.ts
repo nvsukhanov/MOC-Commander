@@ -11,3 +11,6 @@ export * from './common-form-mapper.service';
 export * from './binding-edit-common.selectors';
 export * from './input-form-group';
 export * from './provide-binding-common-services';
+export * from './controller-input-name.service';
+export * from './direction-aware-controller-input-name.service';
+export * from './is-directional-input-activated';

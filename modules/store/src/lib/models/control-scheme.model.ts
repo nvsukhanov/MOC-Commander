@@ -29,6 +29,11 @@ export type DecelerationProfileMixin = {
     useDecelerationProfile: boolean;
 };
 
+export enum InputDirection {
+    Positive,
+    Negative,
+}
+
 export type ControlSchemeInput = {
     controllerId: string;
     inputId: string;
@@ -36,6 +41,7 @@ export type ControlSchemeInput = {
     gain: InputGain;
     buttonId?: ButtonGroupButtonId;
     portId?: number;
+    inputDirection: InputDirection;
 };
 
 export enum ControlSchemeInputAction {

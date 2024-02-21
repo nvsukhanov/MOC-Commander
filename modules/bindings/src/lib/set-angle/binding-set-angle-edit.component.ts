@@ -21,12 +21,15 @@ import {
     BindingControlOutputEndStateComponent,
     BindingControlPowerInputComponent,
     BindingControlSelectControllerComponent,
+    BindingControlSelectControllerComponentData,
     BindingControlSpeedInputComponent,
     BindingEditSectionComponent,
     BindingEditSectionsContainerComponent,
     ControlSchemeInputActionToL10nKeyPipe
 } from '../common';
 import { SetAngleBindingForm } from './set-angle-binding-form';
+import { BINDING_CONTROLLER_NAME_RESOLVER } from '../i-binding-controller-name-resolver';
+import { SetAngleControllerNameResolverService } from './set-angle-controller-name-resolver.service';
 
 @Component({
     standalone: true,
@@ -55,16 +58,19 @@ import { SetAngleBindingForm } from './set-angle-binding-form';
         BindingControlSpeedInputComponent,
         BindingControlPowerInputComponent
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        { provide: BINDING_CONTROLLER_NAME_RESOLVER, useClass: SetAngleControllerNameResolverService }
+    ]
 })
 export class BindingSetAngleEditComponent implements IBindingsDetailsEditComponent<SetAngleBindingForm>, OnDestroy {
-    public readonly controlSchemeInputActions = ControlSchemeInputAction;
-
     public readonly bindingType = ControlSchemeBindingType.SetAngle;
 
     private _form?: SetAngleBindingForm;
 
     private _canRequestPortValue$: Observable<boolean> = of(false);
+
+    private _setAngleControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.SetAngle>;
 
     private portRequestSubscription?: Subscription;
 
@@ -83,11 +89,22 @@ export class BindingSetAngleEditComponent implements IBindingsDetailsEditCompone
         return this._canRequestPortValue$;
     }
 
+    public get setAngleControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.SetAngle> | undefined {
+        return this._setAngleControlBindingComponentData;
+    }
+
     public setForm(
         form: SetAngleBindingForm
     ): void {
         if (form !== this._form) {
             this._form = form;
+
+            this._setAngleControlBindingComponentData = {
+                bindingType: ControlSchemeBindingType.SetAngle,
+                inputFormGroup: form.controls.inputs.controls[ControlSchemeInputAction.SetAngle],
+                inputAction: ControlSchemeInputAction.SetAngle
+            };
+
             this._canRequestPortValue$ = form.controls.hubId.valueChanges.pipe(
                 mergeWith(form.controls.portId.valueChanges),
                 startWith(null),

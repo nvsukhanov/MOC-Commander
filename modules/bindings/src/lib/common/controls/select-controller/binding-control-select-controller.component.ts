@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnChanges, OnDestroy } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,12 +8,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PushPipe } from '@ngrx/component';
 import { Observable, Subscription, of, startWith, switchMap } from 'rxjs';
-import { ValidationMessagesDirective } from '@app/shared-misc';
+import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective } from '@app/shared-ui';
-import { ControllerInputModel } from '@app/store';
-import { FullControllerInputNamePipe, FullControllerInputNameService, WaitForControllerInputDialogComponent } from '@app/shared-control-schemes';
+import { ControlSchemeBindingInputs, ControlSchemeInputAction, ControllerInputModel, InputDirection } from '@app/store';
+import { FullControllerInputNamePipe, WaitForControllerInputDialogComponent } from '@app/shared-control-schemes';
 
 import { InputFormGroup, OptionalInputFormGroup } from '../../input-form-group';
+import { BINDING_CONTROLLER_NAME_RESOLVER, IBindingControllerNameResolver } from '../../../i-binding-controller-name-resolver';
+import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
+
+export type BindingControlSelectControllerComponentData<T extends ControlSchemeBindingType> = {
+    bindingType: T;
+    inputFormGroup?: InputFormGroup | OptionalInputFormGroup;
+    inputAction?: keyof ControlSchemeBindingInputs<T>;
+};
 
 @Component({
     standalone: true,
@@ -31,16 +39,15 @@ import { InputFormGroup, OptionalInputFormGroup } from '../../input-form-group';
         FullControllerInputNamePipe,
         PushPipe,
         ValidationMessagesDirective,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        ControlSchemeInputActionToL10nKeyPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BindingControlSelectControllerComponent implements OnDestroy {
-    @Input() public title = '';
+export class BindingControlSelectControllerComponent<T extends ControlSchemeBindingType> implements OnDestroy, OnChanges {
+    @Input() public data?: BindingControlSelectControllerComponentData<T>;
 
     private _syntheticInputControl?: FormControl;
-
-    private _inputFormGroup?: InputFormGroup | OptionalInputFormGroup;
 
     private syntheticInputUpdateSubscription?: Subscription;
 
@@ -48,40 +55,52 @@ export class BindingControlSelectControllerComponent implements OnDestroy {
         private readonly dialog: MatDialog,
         private readonly cd: ChangeDetectorRef,
         private readonly formBuilder: FormBuilder,
-        private readonly fullControllerInputNameService: FullControllerInputNameService
+        @Inject(BINDING_CONTROLLER_NAME_RESOLVER) private readonly controllerInputNameResolver: IBindingControllerNameResolver<T>,
     ) {
     }
 
-    @Input()
-    public set inputFormGroup(
-        formGroup: InputFormGroup | OptionalInputFormGroup | undefined
-    ) {
-        this._inputFormGroup = formGroup;
-        if (!formGroup) {
+    public get inputAction(): ControlSchemeInputAction | undefined {
+        return this.data?.inputAction as ControlSchemeInputAction | undefined;
+    }
+
+    public get syntheticInputControl(): FormControl | undefined {
+        return this._syntheticInputControl;
+    }
+
+    public get isControllerAssigned(): boolean {
+        return !!this.data?.inputFormGroup?.controls.controllerId.value;
+    }
+
+    public ngOnChanges(): void {
+        if (!this.data?.inputFormGroup || this.data?.inputAction === undefined) {
             this._syntheticInputControl = undefined;
             this.syntheticInputUpdateSubscription?.unsubscribe();
             return;
         }
 
         // here goes dirty hack: we create a synthetic control to display the full controller input name and display validation errors
-        const isRequired = formGroup.controls.controllerId.hasValidator(Validators.required);
+        const isRequired = this.data.inputFormGroup.controls.controllerId.hasValidator(Validators.required);
         this._syntheticInputControl = this.formBuilder.control<string>('', {
             validators: isRequired ? [ Validators.required ] : [],
         });
-        this.syntheticInputUpdateSubscription = (formGroup.valueChanges as Observable<unknown>).pipe(
+        this.syntheticInputUpdateSubscription = (this.data.inputFormGroup.valueChanges as Observable<unknown>).pipe(
             startWith(null),
             switchMap(() => {
-                const data = this.inputFormGroup?.getRawValue();
-                if (!data || !data.inputId) {
+                const formData = this.data?.inputFormGroup?.getRawValue();
+                if (!formData || !formData.inputId || this.data?.inputAction === undefined) {
                     return of('');
                 }
-                return this.fullControllerInputNameService.getFullControllerInputNameData({
-                    inputId: data.inputId,
-                    buttonId: data.buttonId ?? undefined,
-                    portId: data.portId ?? undefined,
-                    inputType: data.inputType,
-                    controllerId: data.controllerId ?? ''
-                }).name$;
+                return this.controllerInputNameResolver.resolveControllerNameFor(
+                    this.data?.inputAction,
+                    {
+                        inputId: formData.inputId,
+                        buttonId: formData.buttonId ?? undefined,
+                        portId: formData.portId ?? undefined,
+                        inputType: formData.inputType,
+                        controllerId: formData.controllerId ?? '',
+                        inputDirection: formData.inputDirection ?? InputDirection.Positive,
+                    }
+                )?.name$ ?? of('');
             }),
         ).subscribe((controllerName) => {
             if (!this._syntheticInputControl) {
@@ -91,30 +110,18 @@ export class BindingControlSelectControllerComponent implements OnDestroy {
         });
     }
 
-    public get inputFormGroup(): InputFormGroup | OptionalInputFormGroup | undefined {
-        return this._inputFormGroup;
-    }
-
-    public get syntheticInputControl(): FormControl | undefined {
-        return this._syntheticInputControl;
-    }
-
-    public get isControllerAssigned(): boolean {
-        return !!this.inputFormGroup?.controls.controllerId.value;
-    }
-
     public ngOnDestroy(): void {
         this.syntheticInputUpdateSubscription?.unsubscribe();
     }
 
     public onUnbind(): void {
-        if (!this.inputFormGroup) {
+        if (!this.data?.inputFormGroup) {
             return;
         }
-        this.inputFormGroup.reset();
-        this.inputFormGroup.markAsDirty();
-        this.inputFormGroup.markAsTouched();
-        this.inputFormGroup.updateValueAndValidity();
+        this.data.inputFormGroup.reset();
+        this.data.inputFormGroup.markAsDirty();
+        this.data.inputFormGroup.markAsTouched();
+        this.data.inputFormGroup.updateValueAndValidity();
         this.cd.detectChanges();
     }
 
@@ -127,13 +134,16 @@ export class BindingControlSelectControllerComponent implements OnDestroy {
             }
         );
         dialog.afterClosed().subscribe((result) => {
-            if (!result || !this.inputFormGroup) {
+            if (!result || !this.data?.inputFormGroup) {
                 return;
             }
-            this.inputFormGroup.patchValue(result);
-            this.inputFormGroup.markAsDirty();
-            this.inputFormGroup.markAsTouched();
-            this.inputFormGroup.updateValueAndValidity();
+            this.data.inputFormGroup.controls.controllerId.setValue(result.controllerId);
+            this.data.inputFormGroup.controls.inputId.setValue(result.inputId);
+            this.data.inputFormGroup.controls.inputType.setValue(result.inputType);
+            this.data.inputFormGroup.controls.inputDirection.setValue(result.value < 0 ? InputDirection.Negative : InputDirection.Positive);
+            this.data.inputFormGroup.markAsDirty();
+            this.data.inputFormGroup.markAsTouched();
+            this.data.inputFormGroup.updateValueAndValidity();
             this.cd.detectChanges();
         });
     }

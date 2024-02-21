@@ -5,23 +5,19 @@ import { TranslocoService } from '@ngneat/transloco';
 import { ButtonGroupButtonId } from 'rxpoweredup';
 import { ControllerInputType, IControllerProfile } from '@app/controller-profiles';
 import { CONTROLLER_CONNECTION_SELECTORS, ControlSchemeInput, ControllerProfilesFacadeService } from '@app/store';
+import { FullControllerInputNameData } from '@app/shared-control-schemes';
 
-export type FullControllerInputNameData = {
-    readonly name$: Observable<string>;
-    readonly isConnected$: Observable<boolean>;
-};
-
-@Injectable({ providedIn: 'root' })
-export class FullControllerInputNameService {
+@Injectable()
+export class ControllerInputNameService {
     constructor(
-        private readonly store: Store,
-        private readonly translocoService: TranslocoService,
-        private readonly controllerProfilesFacadeService: ControllerProfilesFacadeService
+        protected readonly store: Store,
+        protected readonly translocoService: TranslocoService,
+        protected readonly controllerProfilesFacadeService: ControllerProfilesFacadeService
     ) {
     }
 
     public getFullControllerInputNameData(
-        data: Pick<ControlSchemeInput, 'inputId' | 'buttonId' | 'portId' | 'inputType' | 'controllerId'>
+        data: ControlSchemeInput,
     ): FullControllerInputNameData {
         const profile$ = this.controllerProfilesFacadeService.getByControllerId(data.controllerId);
 
@@ -40,7 +36,7 @@ export class FullControllerInputNameService {
         };
     }
 
-    private getButtonName$(
+    protected getButtonName$(
         profile$: Observable<IControllerProfile<unknown>>,
         inputData: Pick<ControlSchemeInput, 'inputId' | 'buttonId' | 'portId' | 'inputType'>
     ): Observable<string> {

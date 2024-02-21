@@ -1,26 +1,33 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Inject, Pipe, PipeTransform } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ControlSchemeInput } from '@app/store';
+import { ControlSchemeBindingInputs, ControlSchemeInput } from '@app/store';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 
-import { FullControllerInputNameService } from './full-controller-input-name.service';
+import { FULL_CONTROLLER_INPUT_NAME_PROVIDER, IFullControllerInputNameProvider } from './i-full-controller-input-name-provider';
 
 @Pipe({
     standalone: true,
     name: 'fullControllerInputName',
     pure: true
 })
-export class FullControllerInputNamePipe implements PipeTransform {
+export class FullControllerInputNamePipe<T extends ControlSchemeBindingType> implements PipeTransform {
     constructor(
-        private readonly fullControllerInputNameService: FullControllerInputNameService
+        @Inject(FULL_CONTROLLER_INPUT_NAME_PROVIDER) private readonly fullControllerInputNameProvider: IFullControllerInputNameProvider
     ) {
     }
 
     public transform(
-        data: ControlSchemeInput | undefined
+        bindingType: T,
+        data: ControlSchemeInput | undefined,
+        inputAction: keyof ControlSchemeBindingInputs<T>
     ): Observable<string> {
         if (!data) {
             return of('');
         }
-        return this.fullControllerInputNameService.getFullControllerInputNameData(data).name$;
+        return this.fullControllerInputNameProvider.getFullControllerInputNameData(
+            bindingType,
+            inputAction,
+            data,
+        ).name$;
     }
 }

@@ -7,3 +7,4 @@ export * from './stepper-payload-hash';
 export * from './stepper-port-command-task-summary-builder.service';
 export * from './provide-stepper-binding';
 export * from './stepper-input-extractor.service';
+export * from './stepper-controller-name-resolver.service';

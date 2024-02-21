@@ -13,6 +13,7 @@ import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-compon
 import {
     BindingControlPowerInputComponent,
     BindingControlSelectControllerComponent,
+    BindingControlSelectControllerComponentData,
     BindingControlSelectInputGainComponent,
     BindingControlSpeedInputComponent,
     BindingEditSectionComponent,
@@ -21,6 +22,8 @@ import {
     InputFormGroup
 } from '../common';
 import { SetSpeedBindingForm } from './set-speed-binding-form';
+import { BINDING_CONTROLLER_NAME_RESOLVER } from '../i-binding-controller-name-resolver';
+import { SetSpeedControllerNameResolverService } from './set-speed-controller-name-resolver.service';
 
 @Component({
     standalone: true,
@@ -43,7 +46,10 @@ import { SetSpeedBindingForm } from './set-speed-binding-form';
         BindingControlPowerInputComponent,
         BindingControlSpeedInputComponent
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        { provide: BINDING_CONTROLLER_NAME_RESOLVER, useClass: SetSpeedControllerNameResolverService }
+    ]
 })
 export class BindingSetSpeedEditComponent implements IBindingsDetailsEditComponent<SetSpeedBindingForm> {
     public readonly controlSchemeInputActions = ControlSchemeInputAction;
@@ -52,6 +58,10 @@ export class BindingSetSpeedEditComponent implements IBindingsDetailsEditCompone
 
     public form?: SetSpeedBindingForm;
 
+    private _accelerateControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.SetSpeed>;
+
+    private _brakeControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.SetSpeed>;
+
     constructor(
         private readonly cd: ChangeDetectorRef
     ) {
@@ -59,6 +69,14 @@ export class BindingSetSpeedEditComponent implements IBindingsDetailsEditCompone
 
     private get accelerationControl(): InputFormGroup | undefined {
         return this.form?.controls.inputs.controls[ControlSchemeInputAction.Accelerate];
+    }
+
+    public get accelerateControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.SetSpeed> | undefined {
+        return this._accelerateControlBindingComponentData;
+    }
+
+    public get brakeControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.SetSpeed> | undefined {
+        return this._brakeControlBindingComponentData;
     }
 
     public get isInputGainConfigurable(): boolean {
@@ -72,6 +90,18 @@ export class BindingSetSpeedEditComponent implements IBindingsDetailsEditCompone
         const accelerateControls = outputBinding.controls.inputs.controls[ControlSchemeInputAction.Accelerate].controls;
         if (outputBinding !== this.form) {
             this.form = outputBinding;
+
+            this._accelerateControlBindingComponentData = {
+                bindingType: ControlSchemeBindingType.SetSpeed,
+                inputFormGroup: outputBinding.controls.inputs.controls[ControlSchemeInputAction.Accelerate],
+                inputAction: ControlSchemeInputAction.Accelerate
+            };
+            this._brakeControlBindingComponentData = {
+                bindingType: ControlSchemeBindingType.SetSpeed,
+                inputFormGroup: outputBinding.controls.inputs.controls[ControlSchemeInputAction.Brake],
+                inputAction: ControlSchemeInputAction.Brake
+            };
+
             merge(
                 accelerateControls.controllerId.valueChanges,
                 accelerateControls.inputId.valueChanges,

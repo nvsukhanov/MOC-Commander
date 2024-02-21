@@ -6,6 +6,7 @@ import { TrainControlBindingFormBuilderService } from './train-control-binding-f
 import { TrainControlBindingFormMapperService } from './train-control-binding-form-mapper.service';
 import { TrainControlPortCommandTaskSummaryBuilderService } from './train-control-port-command-task-summary-builder.service';
 import { TrainControlTaskInputExtractorService } from './train-control-task-input-extractor.service';
+import { TrainControllerNameResolverService } from './train-controller-name-resolver.service';
 
 export function provideTrainControlBinding(): Provider[] {
     return [
@@ -14,6 +15,7 @@ export function provideTrainControlBinding(): Provider[] {
         TrainControlBindingFormBuilderService,
         TrainControlBindingFormMapperService,
         TrainControlPortCommandTaskSummaryBuilderService,
-        TrainControlTaskInputExtractorService
+        TrainControlTaskInputExtractorService,
+        TrainControllerNameResolverService
     ];
 }

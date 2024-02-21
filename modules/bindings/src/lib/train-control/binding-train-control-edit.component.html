@@ -1,39 +1,31 @@
 <lib-cs-binding-edit-sections-container *ngIf="form">
     <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
-                              [caption]="'controlScheme.bindingSectionOutputTitle' | transloco"
+                                 [caption]="'controlScheme.bindingSectionOutputTitle' | transloco"
     >
         <lib-cs-binding-control-select-hub [control]="form.controls.hubId"
-                                        [bindingType]="bindingType"
+                                           [bindingType]="bindingType"
         ></lib-cs-binding-control-select-hub>
 
         <lib-cs-binding-control-select-io [portIdControl]="form.controls.portId"
-                                       [hubIdControl]="form.controls.hubId"
-                                       [bindingType]="bindingType"
+                                          [hubIdControl]="form.controls.hubId"
+                                          [bindingType]="bindingType"
         ></lib-cs-binding-control-select-io>
     </lib-cs-binding-edit-section>
 
     <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
 
     <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
-                              [caption]="'controlScheme.bindingSectionInputTitle' | transloco"
+                                 [caption]="'controlScheme.bindingSectionInputTitle' | transloco"
     >
-        <lib-cs-binding-control-select-controller [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.NextLevel]"
-                                               [title]="controlSchemeInputActions.NextLevel | controlSchemeInputActionToL10nKey | transloco "
-        ></lib-cs-binding-control-select-controller>
-
-        <lib-cs-binding-control-select-controller [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.PrevLevel]"
-                                               [title]="controlSchemeInputActions.PrevLevel | controlSchemeInputActionToL10nKey | transloco "
-        ></lib-cs-binding-control-select-controller>
-
-        <lib-cs-binding-control-select-controller [inputFormGroup]="form.controls.inputs.controls[controlSchemeInputActions.Reset]"
-                                               [title]="controlSchemeInputActions.Reset | controlSchemeInputActionToL10nKey | transloco "
-        ></lib-cs-binding-control-select-controller>
+        <lib-cs-binding-control-select-controller [data]="nextLevelControlBindingComponentData"></lib-cs-binding-control-select-controller>
+        <lib-cs-binding-control-select-controller [data]="prevLevelControlBindingComponentData"></lib-cs-binding-control-select-controller>
+        <lib-cs-binding-control-select-controller [data]="resetControlBindingComponentData"></lib-cs-binding-control-select-controller>
     </lib-cs-binding-edit-section>
 
     <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
 
     <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
-                              [caption]="'controlScheme.bindingSectionConfigTitle' | transloco"
+                                 [caption]="'controlScheme.bindingSectionConfigTitle' | transloco"
     >
         <div class="add-level-button-container">
             <button class="add-level-button"

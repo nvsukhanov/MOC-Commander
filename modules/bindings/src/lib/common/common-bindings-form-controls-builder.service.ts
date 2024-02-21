@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ButtonGroupButtonId, MOTOR_LIMITS, MotorServoEndState } from 'rxpoweredup';
 import { ControllerInputType } from '@app/controller-profiles';
 import { AppValidators } from '@app/shared-misc';
-import { ControlSchemeInput, InputGain, LoopingMode } from '@app/store';
+import { ControlSchemeInput, InputDirection, InputGain, LoopingMode } from '@app/store';
 
 import { InputFormGroup, OptionalInputFormGroup } from './input-form-group';
 
@@ -116,7 +116,11 @@ export class CommonBindingsFormControlsBuilderService {
                 validators: [ Validators.required, AppValidators.isInEnum(InputGain) ]
             }),
             buttonId: this.formBuilder.control<ButtonGroupButtonId | null>(initialValue?.portId ?? null),
-            portId: this.formBuilder.control<number | null>(initialValue?.portId ?? null)
+            portId: this.formBuilder.control<number | null>(initialValue?.portId ?? null),
+            inputDirection: this.formBuilder.control<InputDirection>(initialValue?.inputDirection ?? InputDirection.Positive, {
+                nonNullable: true,
+                validators: [ Validators.required, AppValidators.isInEnum(InputDirection) ]
+            })
         });
     }
 
@@ -135,7 +139,11 @@ export class CommonBindingsFormControlsBuilderService {
                 nonNullable: true
             }),
             buttonId: this.formBuilder.control<ButtonGroupButtonId | null>(initialValue?.portId ?? null),
-            portId: this.formBuilder.control<number | null>(initialValue?.portId ?? null)
+            portId: this.formBuilder.control<number | null>(initialValue?.portId ?? null),
+            inputDirection: this.formBuilder.control<InputDirection>(initialValue?.inputDirection ?? InputDirection.Positive, {
+                nonNullable: true,
+                validators: [ Validators.required, AppValidators.isInEnum(InputDirection) ]
+            })
         });
     }
 }

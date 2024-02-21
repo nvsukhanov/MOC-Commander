@@ -13,6 +13,7 @@ import {
     BindingControlOutputEndStateComponent,
     BindingControlPowerInputComponent,
     BindingControlSelectControllerComponent,
+    BindingControlSelectControllerComponentData,
     BindingControlSpeedInputComponent,
     BindingEditSectionComponent,
     BindingEditSectionsContainerComponent,
@@ -20,6 +21,8 @@ import {
 } from '../common';
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { StepperBindingForm } from './stepper-binding-form';
+import { BINDING_CONTROLLER_NAME_RESOLVER } from '../i-binding-controller-name-resolver';
+import { StepperControllerNameResolverService } from './stepper-controller-name-resolver.service';
 
 @Component({
     standalone: true,
@@ -45,12 +48,15 @@ import { StepperBindingForm } from './stepper-binding-form';
         BindingControlSpeedInputComponent,
         BindingControlPowerInputComponent
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        { provide: BINDING_CONTROLLER_NAME_RESOLVER, useClass: StepperControllerNameResolverService }
+    ]
 })
 export class BindingStepperEditComponent implements IBindingsDetailsEditComponent<StepperBindingForm> {
     public readonly bindingType = ControlSchemeBindingType.Stepper;
 
-    public readonly controlSchemeInputActions = ControlSchemeInputAction;
+    private _stepControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Stepper>;
 
     private _form?: StepperBindingForm;
 
@@ -63,11 +69,21 @@ export class BindingStepperEditComponent implements IBindingsDetailsEditComponen
         return this._form;
     }
 
+    public get stepControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Stepper> | undefined {
+        return this._stepControlBindingComponentData;
+
+    }
+
     public setForm(
         form: StepperBindingForm
     ): void {
         if (form !== this._form) {
             this._form = form;
+            this._stepControlBindingComponentData = {
+                bindingType: ControlSchemeBindingType.Stepper,
+                inputFormGroup: this._form.controls.inputs.controls[ControlSchemeInputAction.Step],
+                inputAction: ControlSchemeInputAction.Step,
+            };
             this.cdRef.detectChanges();
         }
     }
