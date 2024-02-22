@@ -23,6 +23,12 @@
     "confirmButtonTitle": "Leave",
     "cancelButtonTitle": "Stay"
   },
+  "leavingRunningSchemeDialog": {
+    "title": "Control scheme is running",
+    "content": "Leaving this page will stop the control scheme. Are you sure you want to leave?",
+    "confirmButtonTitle": "Leave",
+    "cancelButtonTitle": "Stay"
+  },
   "bluetoothUnavailable": {
     "message": "It appears that your browser does not support the Web Bluetooth API",
     "manualsPre": "Please check",

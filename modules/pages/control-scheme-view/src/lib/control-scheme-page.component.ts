@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { concatLatestFrom } from '@ngrx/effects';
-import { RoutesBuilderService, ScreenSizeObserverService, TitleService } from '@app/shared-misc';
+import { ISchemeRunnerComponent, RoutesBuilderService, ScreenSizeObserverService, TitleService } from '@app/shared-misc';
 import {
     ConfirmationDialogModule,
     ConfirmationDialogService,
@@ -68,7 +68,7 @@ import { CONTROL_SCHEME_RUN_WIDGET_BLOCKERS_CHECKER, IControlSchemeRunWidgetBloc
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ControlSchemePageComponent implements OnInit, OnDestroy {
+export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRunnerComponent {
     public readonly selectedScheme$: Observable<ControlSchemeModel | undefined> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.selectCurrentlyViewedScheme);
 
     public readonly schemeRunBlockers$: Observable<SchemeRunBlocker[]> = this.store.select(
@@ -102,6 +102,8 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy {
     public readonly canRenameScheme$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canRenameScheme);
 
     public readonly breadcrumbsDef$: Observable<ReadonlyArray<IBreadcrumbDefinition>>;
+
+    public readonly isSchemeRunning: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.isCurrentControlSchemeRunning);
 
     private addableWidgetConfigs$: Observable<WidgetConfigModel[]> = this.selectedScheme$.pipe(
         take(1),
