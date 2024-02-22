@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { ROUTE_SECTIONS, hasUnsavedChangesGuardFn } from '@app/shared-misc';
+import { ROUTE_SECTIONS, hasUnsavedChangesGuardFn, leavingRunningSchemeGuardFn } from '@app/shared-misc';
 import { NotFoundPageComponent } from '@app/not-found';
 
 import packageJson from '../package.json';
@@ -76,6 +76,7 @@ export const ROUTES: Routes = [
                 path: [ ':schemeName' ].join('/'),
                 loadComponent: () => import('@app/control-scheme-view').then((m) => m.ControlSchemePageComponent),
                 pathMatch: 'full',
+                canDeactivate: [leavingRunningSchemeGuardFn]
             },
             {
                 path: [ ':schemeName', ROUTE_SECTIONS.binding, ':bindingId' ].join('/'),

@@ -23,6 +23,12 @@
     "confirmButtonTitle": "Покинуть",
     "cancelButtonTitle": "Отмена"
   },
+  "leavingRunningSchemeDialog": {
+    "title": "Схема управления запущена",
+    "content": "Переход на другую страницу приведет к остановке схемы. Вы уверены что хотите покинуть страницу?",
+    "confirmButtonTitle": "Покинуть",
+    "cancelButtonTitle": "Отмена"
+  },
   "bluetoothUnavailable": {
     "message": "Ваш браузер не поддерживает Web Bluetooth API",
     "manualsPre": "Воспользуйтесь",
