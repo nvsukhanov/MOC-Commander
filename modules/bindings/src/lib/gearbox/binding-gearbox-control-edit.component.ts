@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { PortModeName } from 'rxpoweredup';
-import { Observable, Subscription, mergeWith, of, startWith, switchMap, take } from 'rxjs';
+import { Observable, Subscription, map, mergeWith, of, startWith, switchMap, take } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
 import { MatDividerModule } from '@angular/material/divider';
 import { Store } from '@ngrx/store';
@@ -31,6 +31,7 @@ import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-compon
 import { GearboxControlBindingForm } from './gearbox-binding-form';
 import { BINDING_CONTROLLER_NAME_RESOLVER } from '../i-binding-controller-name-resolver';
 import { GearboxControllerNameResolverService } from './gearbox-controller-name-resolver.service';
+import { CanSetGearboxPortPositionPipe } from './can-set-gearbox-port-position.pipe';
 
 @Component({
     standalone: true,
@@ -58,7 +59,8 @@ import { GearboxControllerNameResolverService } from './gearbox-controller-name-
         BindingEditSectionsContainerComponent,
         ValidationMessagesDirective,
         BindingControlSpeedInputComponent,
-        BindingControlPowerInputComponent
+        BindingControlPowerInputComponent,
+        CanSetGearboxPortPositionPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
@@ -72,6 +74,8 @@ export class BindingGearboxControlEditComponent implements IBindingsDetailsEditC
 
     private _canRequestPortValue$: Observable<boolean> = of(false);
 
+    private _isHubPortIdValid$: Observable<boolean> = of(false);
+
     private _nextLevelControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl>;
 
     private _prevLevelControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl>;
@@ -79,6 +83,8 @@ export class BindingGearboxControlEditComponent implements IBindingsDetailsEditC
     private _resetControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl>;
 
     private portRequestSubscription?: Subscription;
+
+    private setMotorPositionSubscription?: Subscription;
 
     constructor(
         private readonly commonFormControlBuilder: CommonBindingsFormControlsBuilderService,
@@ -96,6 +102,10 @@ export class BindingGearboxControlEditComponent implements IBindingsDetailsEditC
         return this._canRequestPortValue$;
     }
 
+    public get isHubPortIdValid$(): Observable<boolean> {
+        return this._isHubPortIdValid$;
+    }
+
     public get nextLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | undefined {
         return this._nextLevelControlBindingComponentData;
     }
@@ -110,6 +120,7 @@ export class BindingGearboxControlEditComponent implements IBindingsDetailsEditC
 
     public ngOnDestroy(): void {
         this.portRequestSubscription?.unsubscribe();
+        this.setMotorPositionSubscription?.unsubscribe();
     }
 
     public setForm(
@@ -149,7 +160,31 @@ export class BindingGearboxControlEditComponent implements IBindingsDetailsEditC
                 }));
             })
         );
+
+        this._isHubPortIdValid$ = form.controls.hubId.valueChanges.pipe(
+            mergeWith(form.controls.portId.valueChanges),
+            startWith(null),
+            map(() => form.controls.hubId.valid && form.controls.portId.valid)
+        );
+
         this.changeDetectorRef.detectChanges();
+    }
+
+    public onSetMotorPosition(
+        levelIndex: number
+    ): void {
+        this.setMotorPositionSubscription?.unsubscribe();
+        const form = this._form;
+        if (!form) {
+            return;
+        }
+        const hubId = form.controls.hubId.value;
+        const portId = form.controls.portId.value;
+        const angle = form.controls.angles.controls[levelIndex].value;
+        if (hubId === null || portId === null || angle === null) {
+            return;
+        }
+        this.setMotorPositionSubscription = this.hubFacade.setMotorPosition(hubId, portId, angle).subscribe();
     }
 
     public onPortAbsolutePositionRequest(

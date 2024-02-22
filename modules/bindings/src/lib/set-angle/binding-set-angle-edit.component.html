@@ -42,6 +42,14 @@
             >
                 <mat-icon [fontIcon]="'gps_fixed'"></mat-icon>
             </button>
+            <button mat-icon-button
+                    matSuffix
+                    [disabled]="!(canSetPortValue$ | ngrxPush)"
+                    [title]="'controlScheme.setAngleBinding.setPortAngle' | transloco"
+                    (click)="onSetMotorPosition()"
+            >
+                <mat-icon [fontIcon]="'settings_remote'"></mat-icon>
+            </button>
             <mat-error [libValidationMessages]="form.controls.angle"></mat-error>
         </mat-form-field>
 

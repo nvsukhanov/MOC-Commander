@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, filter, of, switchMap, take, throwError, timeout } from 'rxjs';
+import { Observable, filter, map, of, switchMap, take, tap, throwError, timeout } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
 
-import { HUB_RUNTIME_DATA_SELECTORS } from '../selectors';
+import { ATTACHED_IO_PROPS_SELECTORS, HUB_RUNTIME_DATA_SELECTORS } from '../selectors';
 import { HUBS_ACTIONS } from '../actions';
 
 @Injectable()
@@ -12,6 +12,20 @@ export class HubMotorPositionFacadeService {
         private readonly store: Store,
         private readonly actions: Actions
     ) {
+    }
+
+    public setMotorPosition(
+        hubId: string,
+        portId: number,
+        position: number,
+    ): Observable<void> {
+        return this.store.select(ATTACHED_IO_PROPS_SELECTORS.selectMotorEncoderOffset({ hubId, portId })).pipe(
+            take(1),
+            tap((motorEncoderOffset) =>
+                this.store.dispatch(HUBS_ACTIONS.setPortPosition({ hubId, portId, position: position - motorEncoderOffset }))
+            ),
+            map(() => void 0),
+        );
     }
 
     public getMotorAbsolutePosition(
