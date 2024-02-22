@@ -22,5 +22,6 @@ export const HUBS_ACTIONS = createActionGroup({
         'request port absolute position': props<{ hubId: string; portId: number }>(),
         'port absolute position read': props<{ hubId: string; portId: number; position: number }>(),
         'port absolute position read failed': props<{ hubId: string; portId: number; error: Error }>(),
+        'set port position': props<{ hubId: string; portId: number; position: number }>(),
     }
 });

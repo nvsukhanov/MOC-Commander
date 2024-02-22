@@ -45,5 +45,25 @@ export const ATTACHED_IO_PORT_MODE_INFO_SELECTORS = {
             }
             return null;
         }
-    )
+    ),
+    selectHubPortOutputModeForPortModeName: (
+        { hubId, portId, portModeName }: { hubId: string; portId: number; portModeName: PortModeName }
+    ) => createSelector(
+        ATTACHED_IO_SELECTORS.selectIoAtPort({ hubId, portId }),
+        ATTACHED_IO_MODES_SELECTORS.selectEntities,
+        ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
+        (io, supportedModes, portModeData) => {
+            if (io) {
+                const supportedOutputModes = new Set(
+                    supportedModes[attachedIoModesIdFn(io)]?.portOutputModes ?? []
+                );
+                if (supportedOutputModes) {
+                    return Object.values(portModeData).find((portModeInfo) => {
+                        return portModeInfo?.name === portModeName && supportedOutputModes.has(portModeInfo?.modeId);
+                    }) ?? null;
+                }
+            }
+            return null;
+        }
+    ),
 } as const;

@@ -270,6 +270,7 @@
       "operationMode": "Установка угла",
       "outputAngle": "Целевой угол (°)",
       "readAngleFromPort": "Прочитать угол из порта",
+      "setPortAngle": "Установить угол на порту",
       "taskSummary": "Установка угла: { angle }°",
       "inputAction": "Установка угла ({ angle }°)"
     },
@@ -282,11 +283,12 @@
     },
     "gearboxControlBinding": {
       "operationMode": "Коробка передач",
-      "angleLevel": "Передача { level } (°)",
-      "readAngleFromPort": "Прочитать угол с порта",
-      "outputAngleLevelAdd": "Добавить передачу",
-      "outputAngleLevelRemove": "Удалить передачу",
-      "taskSummary": "Коробка передач, передача {level} ({angle}°){ isLooping, select, true { (инв.)} other {}}"
+      "angleLevel": "Позиция { level } (°)",
+      "readAngleFromPort": "Прочитать позиция с порта",
+      "setPortAngle": "Установить позицию на порту",
+      "outputAngleLevelAdd": "Добавить позицию",
+      "outputAngleLevelRemove": "Удалить позицию",
+      "taskSummary": "Коробка передач, позиция {level} ({angle}°){ isLooping, select, true { (инв.)} other {}}"
     },
     "widgets": {
       "addWidgetButtonTitle": "Добавить виджет",

@@ -55,6 +55,15 @@
                 </button>
                 <button mat-icon-button
                         matSuffix
+                        [disabled]="!((form | canSetGearboxPortPosition: idx) | ngrxPush)"
+                        [title]="'controlScheme.gearboxControlBinding.setPortAngle' | transloco"
+                        (click)="onSetMotorPosition(idx)"
+                >
+                    <mat-icon [fontIcon]="'settings_remote'"></mat-icon>
+                </button>
+                <button mat-icon-button
+                        matSuffix
+                        [color]="'warn'"
                         [disabled]="form.controls.initialLevelIndex.value === idx"
                         (click)="removeAngleLevel(idx)"
                 >

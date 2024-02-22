@@ -10,6 +10,7 @@ import { DISCONNECT_HUB_ON_USER_REQUEST } from './disconnect-hub-on-user-request
 import { REQUEST_SET_HUB_NAME_EFFECT } from './request-set-hub-name.effect';
 import { REQUEST_PORT_POSITION_EFFECT } from './request-port-position.effect';
 import { REQUEST_PORT_ABSOLUTE_POSITION_EFFECT } from './request-port-absolute-position.effect';
+import { SET_MOTOR_POSITION_EFFECT } from './set-motor-position.effect';
 
 export const HUB_EFFECTS: { [k in string]: FunctionalEffect } = {
     discoverHub: DISCOVER_HUB_EFFECT,
@@ -22,4 +23,5 @@ export const HUB_EFFECTS: { [k in string]: FunctionalEffect } = {
     requestSetHubName: REQUEST_SET_HUB_NAME_EFFECT,
     requestPortPosition: REQUEST_PORT_POSITION_EFFECT,
     requestPortAbsolutePosition: REQUEST_PORT_ABSOLUTE_POSITION_EFFECT,
+    setMotorPosition: SET_MOTOR_POSITION_EFFECT
 } as const;

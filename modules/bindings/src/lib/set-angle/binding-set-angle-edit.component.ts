@@ -70,9 +70,13 @@ export class BindingSetAngleEditComponent implements IBindingsDetailsEditCompone
 
     private _canRequestPortValue$: Observable<boolean> = of(false);
 
+    private _canSetPortValue$: Observable<boolean> = of(false);
+
     private _setAngleControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.SetAngle>;
 
     private portRequestSubscription?: Subscription;
+
+    private setMotorPositionSubscription?: Subscription;
 
     constructor(
         private readonly cdRef: ChangeDetectorRef,
@@ -87,6 +91,10 @@ export class BindingSetAngleEditComponent implements IBindingsDetailsEditCompone
 
     public get canRequestPortValue$(): Observable<boolean> {
         return this._canRequestPortValue$;
+    }
+
+    public get canSetPortValue$(): Observable<boolean> {
+        return this._canSetPortValue$;
     }
 
     public get setAngleControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.SetAngle> | undefined {
@@ -105,9 +113,12 @@ export class BindingSetAngleEditComponent implements IBindingsDetailsEditCompone
                 inputAction: ControlSchemeInputAction.SetAngle
             };
 
-            this._canRequestPortValue$ = form.controls.hubId.valueChanges.pipe(
+            const hubAndPortChanges = form.controls.hubId.valueChanges.pipe(
                 mergeWith(form.controls.portId.valueChanges),
                 startWith(null),
+            );
+
+            this._canRequestPortValue$ = hubAndPortChanges.pipe(
                 switchMap(() => {
                     if (form.controls.hubId.value === null || form.controls.portId.value === null) {
                         return of(false);
@@ -119,8 +130,43 @@ export class BindingSetAngleEditComponent implements IBindingsDetailsEditCompone
                     }));
                 })
             );
+
+            this._canSetPortValue$ = hubAndPortChanges.pipe(
+                mergeWith(form.controls.angle.valueChanges, form.controls.speed.valueChanges, form.controls.power.valueChanges),
+                startWith(null),
+                switchMap(() => {
+                    if (form.controls.hubId.value === null
+                        || form.controls.portId.value === null
+                        || form.controls.angle.invalid
+                        || form.controls.speed.invalid
+                        || form.controls.power.invalid
+                    ) {
+                        return of(false);
+                    }
+                    return this.store.select(BINDING_EDIT_SELECTORS.canSetPortValue({
+                        hubId: form.controls.hubId.value,
+                        portId: form.controls.portId.value,
+                        portModeName: PortModeName.position
+                    }));
+                })
+            );
             this.cdRef.detectChanges();
         }
+    }
+
+    public onSetMotorPosition(): void {
+        this.setMotorPositionSubscription?.unsubscribe();
+        const form = this._form;
+        if (!form) {
+            return;
+        }
+        const hubId = form.controls.hubId.value;
+        const portId = form.controls.portId.value;
+        const angle = form.controls.angle.value;
+        if (hubId === null || portId === null || angle === null) {
+            return;
+        }
+        this.setMotorPositionSubscription = this.hubFacade.setMotorPosition(hubId, portId, angle).subscribe();
     }
 
     public onMotorPositionRequest(): void {
@@ -146,5 +192,6 @@ export class BindingSetAngleEditComponent implements IBindingsDetailsEditCompone
 
     public ngOnDestroy(): void {
         this.portRequestSubscription?.unsubscribe();
+        this.setMotorPositionSubscription?.unsubscribe();
     }
 }

@@ -270,6 +270,7 @@
       "operationMode": "Set angle",
       "outputAngle": "Target angle (°)",
       "readAngleFromPort": "Read angle from port",
+      "setPortAngle": "Set angle to motor",
       "taskSummary": "Set angle: { angle }°",
       "inputAction": "Set angle ({ angle }°)"
     },
@@ -284,6 +285,7 @@
       "operationMode": "Gearbox control",
       "angleLevel": "Angle level { level } (°)",
       "readAngleFromPort": "Read angle from port",
+      "setPortAngle": "Set angle to motor",
       "outputAngleLevelAdd": "Add level",
       "outputAngleLevelRemove": "Remove level",
       "taskSummary": "Gearbox, level {level} ({angle}°){ isLooping, select, true { (mirror)} other {}}"
