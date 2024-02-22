@@ -6,7 +6,7 @@ import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
     standalone: true,
-    selector: 'lib-unsaved-changed-confirmation-dialog',
+    selector: 'lib-leaving-running-scheme-confirmation-dialog',
     templateUrl: './leaving-running-scheme-confirmation-dialog.component.html',
     styleUrls: [ './leaving-running-scheme-confirmation-dialog.component.scss' ],
     imports: [
