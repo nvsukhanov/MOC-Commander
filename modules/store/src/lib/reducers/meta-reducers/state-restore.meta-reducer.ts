@@ -8,7 +8,11 @@ export function stateRestoreMetaReducer(
 ): ActionReducer<IState> {
     return (state: IState | undefined, action: Action): IState => {
         if (action.type === SETTINGS_ACTIONS.restoreStateFromBackup.type) {
-            return (action as ReturnType<typeof SETTINGS_ACTIONS.restoreStateFromBackup>).state;
+            // The backup contains the whole state, including the app version, which we don't want to restore
+            return {
+                ...(action as ReturnType<typeof SETTINGS_ACTIONS.restoreStateFromBackup>).state,
+                appVersion: state?.appVersion ?? ''
+            };
         }
         return reducer(state, action);
     };

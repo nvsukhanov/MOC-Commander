@@ -5,6 +5,7 @@ export const COMMON_ACTIONS = createActionGroup({
     events: {
         copyToClipboard: props<{ content: string }>(),
         copyToClipboardSuccess: emptyProps(),
-        copyToClipboardFailure: emptyProps()
+        copyToClipboardFailure: emptyProps(),
+        appReady: emptyProps(),
     }
 });

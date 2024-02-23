@@ -10,7 +10,8 @@
   "common": {
     "copyToClipboard": "Копировать в буфер обмена",
     "copyToClipboardSuccessNotification": "Скопировано в буфер обмена",
-    "copyToClipboardErrorNotification": "Не удалось скопировать в буфер обмена"
+    "copyToClipboardErrorNotification": "Не удалось скопировать в буфер обмена",
+    "appUpdateNotificationContent": "Приложение было обновлено до версии { version }"
   },
   "confirmationDialog": {
     "defaultTitle": "Вы уверены?",

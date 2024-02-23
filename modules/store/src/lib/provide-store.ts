@@ -1,7 +1,7 @@
 import { APP_INITIALIZER, EnvironmentProviders, Provider, isDevMode, makeEnvironmentProviders } from '@angular/core';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { ActionReducerMap, Store, provideStore } from '@ngrx/store';
+import { Action, ActionReducerMap, Store, provideStore } from '@ngrx/store';
 import { NavigationActionTiming, provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { Router } from '@angular/router';
 import { provideControllerProfiles } from '@app/controller-profiles';
@@ -30,6 +30,7 @@ import {
     stateRestoreMetaReducer
 } from './reducers';
 import {
+    APP_UPDATE_EFFECTS,
     AttachedIOsEffects,
     AttachedIoModesEffects,
     COMMON_EFFECTS,
@@ -43,11 +44,13 @@ import {
 } from './effects';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { HubStorageService } from './hub-storage.service';
-import { HUB_RUNTIME_DATA_ACTIONS } from './actions';
+import { APP_UPDATE_ACTIONS, HUB_RUNTIME_DATA_ACTIONS } from './actions';
 import { HubMotorPositionFacadeService, HubServoCalibrationFacadeService } from './hub-facades';
-import { AppStoreVersion } from './app-store-version';
 import { provideStoreMigrations } from './migrations';
 import { ControllerProfilesFacadeService } from './controller-profiles-facade.service';
+import { AppStoreVersion } from './app-store-version';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import packageJson from '../../../../package.json';
 
 const REDUCERS: ActionReducerMap<IState> = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,
@@ -67,7 +70,13 @@ const REDUCERS: ActionReducerMap<IState> = {
     portTasks: PORT_TASKS_FEATURE.reducer,
     router: routerReducer,
     settings: SETTINGS_FEATURE.reducer,
-    storeVersion: (state?: AppStoreVersion) => state ?? AppStoreVersion.latest
+    storeVersion: (state?: AppStoreVersion) => state ?? AppStoreVersion.latest,
+    appVersion: (state: string | undefined, action: Action) => {
+        if (action.type === APP_UPDATE_ACTIONS.appUpdated.type) {
+            return (action as ReturnType<typeof APP_UPDATE_ACTIONS.appUpdated>).current;
+        }
+        return state ?? packageJson.version;
+    }
 };
 
 export function provideApplicationStore(): EnvironmentProviders {
@@ -90,7 +99,8 @@ export function provideApplicationStore(): EnvironmentProviders {
                 SETTINGS_EFFECTS,
                 HUB_EFFECTS,
                 TASK_PROCESSING_EFFECTS,
-                COMMON_EFFECTS
+                COMMON_EFFECTS,
+                APP_UPDATE_EFFECTS
             ),
             {
                 provide: APP_INITIALIZER,

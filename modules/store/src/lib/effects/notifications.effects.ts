@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Observable, OperatorFunction, filter, of, switchMap, tap } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';
 import { Action, Store } from '@ngrx/store';
 import { GamepadProfileFactoryService, KeyboardProfileFactoryService } from '@app/controller-profiles';
 import { ScreenSizeObserverService } from '@app/shared-misc';
 
-import { COMMON_ACTIONS, CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS } from '../actions';
+import { APP_UPDATE_ACTIONS, COMMON_ACTIONS, CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS } from '../actions';
 import { CONTROLLER_SELECTORS } from '../selectors';
 import { ControllerModel } from '../models';
 import { ControllerProfilesFacadeService } from '../controller-profiles-facade.service';
@@ -124,6 +124,15 @@ export class NotificationsEffects {
         );
     }, { dispatch: false });
 
+    public readonly displayAppUpdatedNotification$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(APP_UPDATE_ACTIONS.appUpdated),
+            this.showMessage(({ current }) => {
+                return this.translocoService.selectTranslate('common.appUpdateNotificationContent', { version: current });
+            }, { duration: Number.MAX_SAFE_INTEGER }),
+        );
+    }, { dispatch: false });
+
     constructor(
         private readonly actions$: Actions,
         private readonly snackBar: MatSnackBar,
@@ -137,7 +146,8 @@ export class NotificationsEffects {
     }
 
     private showMessage<T extends Action>(
-        fn: (action: T) => Observable<string>
+        fn: (action: T) => Observable<string>,
+        config: MatSnackBarConfig = {}
     ): OperatorFunction<T, unknown> {
         return (source: Observable<T>) => source.pipe(
             concatLatestFrom((action) => [
@@ -149,9 +159,10 @@ export class NotificationsEffects {
                     message,
                     'OK',
                     {
-                        duration: 5000,
                         horizontalPosition: 'end',
-                        verticalPosition: isSmallScreen ? 'top' : 'bottom'
+                        verticalPosition: isSmallScreen ? 'top' : 'bottom',
+                        duration: 5000,
+                        ...config,
                     }
                 );
             }),

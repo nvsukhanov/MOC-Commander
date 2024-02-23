@@ -1,14 +1,25 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    HostBinding,
+    HostListener,
+    NgZone,
+    OnDestroy,
+    OnInit,
+    ViewChild
+} from '@angular/core';
 import { CdkScrollable } from '@angular/cdk/overlay';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { RouterOutlet } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, animationFrameScheduler, interval, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { FeatureToolbarComponent } from '@app/shared-ui';
 import { IScrollContainer, ScreenSizeObserverService } from '@app/shared-misc';
-import { CONTROLLERS_ACTIONS } from '@app/store';
+import { COMMON_ACTIONS, CONTROLLERS_ACTIONS } from '@app/store';
 
 import { NavMenuComponent } from './nav-menu';
 import { ROOT_SELECTORS } from './root.selectors';
@@ -29,7 +40,7 @@ import { ROOT_SELECTORS } from './root.selectors';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RootComponent implements OnInit, OnDestroy, IScrollContainer {
+export class RootComponent implements OnInit, OnDestroy, IScrollContainer, AfterViewInit {
     @ViewChild(CdkScrollable, { static: true }) public scrollable!: CdkScrollable;
 
     public readonly shouldShowProgressBar$ = this.store.select(ROOT_SELECTORS.shouldShowProgressBar);
@@ -41,7 +52,8 @@ export class RootComponent implements OnInit, OnDestroy, IScrollContainer {
     constructor(
         private readonly store: Store,
         private readonly screenSizeObserverService: ScreenSizeObserverService,
-        private readonly cd: ChangeDetectorRef
+        private readonly cd: ChangeDetectorRef,
+        private readonly zone: NgZone
     ) {
     }
 
@@ -61,6 +73,17 @@ export class RootComponent implements OnInit, OnDestroy, IScrollContainer {
             this.cd.markForCheck();
         });
         this.store.dispatch(CONTROLLERS_ACTIONS.waitForConnect());
+    }
+
+    public ngAfterViewInit(): void {
+        // MatSnackBar cannot show notifications early in the app lifecycle, so have to we wait for the 'app to be ready'.
+        // This workaround IMO is just a bit better than using a setTimeout.
+        interval(40, animationFrameScheduler).pipe(
+            switchMap(() => this.zone.onMicrotaskEmpty),
+            take(1)
+        ).subscribe(() => {
+            this.store.dispatch(COMMON_ACTIONS.appReady());
+        });
     }
 
     public ngOnDestroy(): void {
