@@ -2,8 +2,6 @@ import { Routes } from '@angular/router';
 import { ROUTE_SECTIONS, hasUnsavedChangesGuardFn, leavingRunningSchemeGuardFn } from '@app/shared-misc';
 import { NotFoundPageComponent } from '@app/not-found';
 
-import packageJson from '../package.json';
-
 export const ROUTES: Routes = [
     {
         path: ROUTE_SECTIONS.root,
@@ -14,9 +12,6 @@ export const ROUTES: Routes = [
         path: ROUTE_SECTIONS.about,
         loadComponent: () => import('@app/about').then(m => m.AboutPageComponent),
         pathMatch: 'full',
-        data: {
-            appVersion: packageJson.version
-        }
     },
     {
         path: ROUTE_SECTIONS.help,

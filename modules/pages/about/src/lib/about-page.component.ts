@@ -1,9 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { Observable, map } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
 import { PushPipe } from '@ngrx/component';
-import { TitleService } from '@app/shared-misc';
+import { APP_VERSION, TitleService } from '@app/shared-misc';
 
 @Component({
     standalone: true,
@@ -26,16 +24,11 @@ export class AboutPageComponent implements OnInit {
 
     public readonly licenseURL = 'https://github.com/nvsukhanov/MOC-Commander/blob/main/LICENSE.md';
 
-    public readonly version$: Observable<string>;
-
     constructor(
         private readonly titleService: TitleService,
         private readonly translocoService: TranslocoService,
-        private readonly route: ActivatedRoute
+        @Inject(APP_VERSION) public readonly appVersion: string
     ) {
-        this.version$ = this.route.data.pipe(
-            map((data) => data['appVersion'])
-        );
     }
 
     public ngOnInit(): void {
