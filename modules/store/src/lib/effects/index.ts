@@ -8,3 +8,4 @@ export * from './notifications.effects';
 export * from './hub';
 export * from './settings';
 export * from './common.effects';
+export * from './app-update.effects';

@@ -20,4 +20,3 @@ export * from './calculate-speed-power';
 export * from './wake-lock.service';
 export * from './unsaved-changes-guard';
 export * from './leaving-running-scheme-guard';
-export * from './app-version';

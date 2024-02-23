@@ -39,6 +39,5 @@ export interface IState {
     router: RouterState;
     settings: SettingsState;
     storeVersion: AppStoreVersion;
+    appVersion: string;
 }
-
-

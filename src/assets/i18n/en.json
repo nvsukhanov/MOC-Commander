@@ -10,7 +10,8 @@
   "common": {
     "copyToClipboard": "Copy to clipboard",
     "copyToClipboardSuccessNotification": "Copied to clipboard",
-    "copyToClipboardErrorNotification": "Failed to copy to clipboard"
+    "copyToClipboardErrorNotification": "Failed to copy to clipboard",
+    "appUpdateNotificationContent": "App has been updated to v{ version }"
   },
   "confirmationDialog": {
     "defaultTitle": "Are you sure?",
