@@ -177,7 +177,7 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
                 ? formCenterPosition - currentPosition
                 : currentPosition - formCenterPosition;
             const arcLength = halfArcLength * 2;
-            const cappedArcLength = Math.min(MOTOR_LIMITS.maxServoDegreesRange, Math.max(-MOTOR_LIMITS.maxServoDegreesRange, arcLength * 2));
+            const cappedArcLength = Math.min(MOTOR_LIMITS.maxServoDegreesRange, Math.max(-MOTOR_LIMITS.maxServoDegreesRange, arcLength));
             if (this._form && halfArcLength !== this._form.controls.range.value) {
                 this._form.controls.range.setValue(cappedArcLength);
                 this._form.controls.range.markAsDirty();
