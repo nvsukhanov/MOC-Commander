@@ -11,10 +11,18 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
+import { concatLatestFrom } from '@ngrx/effects';
 import { ControllerInputType } from '@app/controller-profiles';
-import { ControlSchemeBindingType, ValidationMessagesDirective, getTranslationArcs } from '@app/shared-misc';
+import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
-import { CONTROL_SCHEME_ACTIONS, CalibrationResult, CalibrationResultType, ControlSchemeInputAction, HubMotorPositionFacadeService } from '@app/store';
+import {
+    ATTACHED_IO_PROPS_SELECTORS,
+    CONTROL_SCHEME_ACTIONS,
+    CalibrationResult,
+    CalibrationResultType,
+    ControlSchemeInputAction,
+    HubMotorPositionFacadeService
+} from '@app/store';
 import { BindingControlSelectHubComponent, BindingControlSelectIoComponent } from '@app/shared-control-schemes';
 
 import { ServoCalibrationDialogComponent } from './servo-calibration-dialog';
@@ -145,21 +153,33 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
     }
 
     public onServoRangeReadRequest(): void {
-        if (!this._form || this._form.controls.hubId.value === null || this._form.controls.portId.value === null) {
+        if (!this._form
+            || this._form.controls.hubId.value === null
+            || this._form.controls.portId.value === null
+            || this._form.controls.aposCenter.value == null
+        ) {
             return;
         }
+        const hubId = this._form.controls.hubId.value;
+        const portId = this._form.controls.portId.value;
+        const formAbsoluteCenterPosition = this._form.controls.aposCenter.value;
+
         this.portRequestSubscription?.unsubscribe();
-        this.portRequestSubscription = this.hubFacade.getMotorAbsolutePosition(
+        this.portRequestSubscription = this.hubFacade.getMotorPosition(
             this._form.controls.hubId.value,
             this._form.controls.portId.value
         ).pipe(
+            concatLatestFrom(() => this.store.select(ATTACHED_IO_PROPS_SELECTORS.selectMotorEncoderOffset({ hubId, portId }))),
             take(1)
-        ).subscribe((result: number) => {
-            const aposCenter = this._form?.controls.aposCenter.value ?? 0;
-            const { cw, ccw } = getTranslationArcs(aposCenter, result);
-            const nextValue = Math.min(Math.abs(cw), Math.abs(ccw)) * 2;
-            if (this._form && nextValue !== this._form.controls.range.value) {
-                this._form.controls.range.setValue(nextValue);
+        ).subscribe(([currentPosition, offset]) => {
+            const formCenterPosition = formAbsoluteCenterPosition - offset;
+            const halfArcLength = currentPosition < formCenterPosition
+                ? formCenterPosition - currentPosition
+                : currentPosition - formCenterPosition;
+            const arcLength = halfArcLength * 2;
+            const cappedArcLength = Math.min(MOTOR_LIMITS.maxServoDegreesRange, Math.max(-MOTOR_LIMITS.maxServoDegreesRange, arcLength * 2));
+            if (this._form && halfArcLength !== this._form.controls.range.value) {
+                this._form.controls.range.setValue(cappedArcLength);
                 this._form.controls.range.markAsDirty();
                 this._form.controls.range.markAsTouched();
                 this._form.updateValueAndValidity();
