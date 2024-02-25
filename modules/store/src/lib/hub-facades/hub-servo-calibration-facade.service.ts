@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, bufferCount, catchError, concatAll, concatWith, from, last, map, of, switchMap, take, takeUntil, timeout } from 'rxjs';
+import { Observable, Subject, bufferCount, catchError, concatAll, concatWith, delay, from, last, map, of, switchMap, take, takeUntil, timeout } from 'rxjs';
 import { IHub, MOTOR_LIMITS, MotorServoEndState } from 'rxpoweredup';
 import { transformRelativeDegToAbsoluteDeg } from '@app/shared-misc';
 
@@ -67,20 +67,22 @@ export class HubServoCalibrationFacadeService {
         return this.getPreCalibrationData(hubId, portId).pipe(
             switchMap(({ startAbsolutePosition, startRelativePosition, cwLimit, ccwLimit }) => {
                 return this.getServoRange(hubId, portId, speed, power, cwLimit, ccwLimit).pipe(
-                    map((result) => this.calculateServoCalibrationResults(
-                        result.ccwProbeResult,
-                        result.cwProbeResult,
-                        startRelativePosition,
-                        startAbsolutePosition
-                    )),
+                    map((result) => {
+                        return this.calculateServoCalibrationResults(
+                            result.ccwProbeResult,
+                            result.cwProbeResult,
+                            startRelativePosition,
+                            startAbsolutePosition
+                        );
+                    }),
                 );
             }),
-            switchMap((data) => this.finalizeCalibration(hubId, portId, speed, power, data.arcCenterFromStart).pipe(
+            switchMap((data) => this.finalizeCalibration(hubId, portId, speed, power, data.arcCenterPosition).pipe(
                 map(() => {
                     const result: CalibrationResultFinished = {
                         type: CalibrationResultType.finished,
-                        aposCenter: Math.round(data.arcAbsoluteCenter),
-                        range: Math.round(data.servoRange)
+                        aposCenter: data.arcCenterAbsolutePosition,
+                        range: data.servoRange
                     };
                     return result;
                 })
@@ -98,8 +100,8 @@ export class HubServoCalibrationFacadeService {
             map(([ startRelativePosition, startAbsolutePosition ]) => ({
                 startRelativePosition,
                 startAbsolutePosition,
-                ccwLimit: startRelativePosition - MOTOR_LIMITS.maxServoDegreesRange,
-                cwLimit: startRelativePosition + MOTOR_LIMITS.maxServoDegreesRange
+                ccwLimit: startRelativePosition - MOTOR_LIMITS.maxServoDegreesRange * 2,
+                cwLimit: startRelativePosition + MOTOR_LIMITS.maxServoDegreesRange * 2
             })),
             take(1)
         );
@@ -110,11 +112,14 @@ export class HubServoCalibrationFacadeService {
         portId: number,
         speed: number,
         power: number,
-        finalRelativePosition: number
+        finalPosition: number
     ): Observable<unknown> {
         const hub = this.getHub(hubId);
-        return hub.motors.goToPosition(portId, finalRelativePosition, { speed, power, endState: MotorServoEndState.hold }).pipe(
-            concatWith(hub.motors.goToPosition(portId, finalRelativePosition, { speed, power, endState: MotorServoEndState.float })),
+        return hub.motors.goToPosition(portId, finalPosition, { speed, power, endState: MotorServoEndState.hold }).pipe(
+            last(),
+            // delay is necessary to ensure the motor is stabilized before the next command is sent
+            delay(1000),
+            concatWith(hub.motors.goToPosition(portId, finalPosition, { speed, power, endState: MotorServoEndState.float })),
             last(),
         );
     }
@@ -167,25 +172,24 @@ export class HubServoCalibrationFacadeService {
         cwProbeResult: number,
         startRelativePosition: number,
         startAbsolutePosition: number
-    ): { servoRange: number; arcCenterFromStart: number; arcAbsoluteCenter: number } {
-        const ccwDistanceFromEncoderZero = ccwProbeResult - startRelativePosition;
-        const cwDistanceFromEncoderZero = cwProbeResult - startRelativePosition;
-        const arcCenterFromEncoderZero = (ccwDistanceFromEncoderZero + cwDistanceFromEncoderZero) / 2;
+    ): { servoRange: number; arcCenterPosition: number; arcCenterAbsolutePosition: number } {
+        const encoderOffset = startAbsolutePosition - startRelativePosition;
+        const ccwDistanceFromStartPosition = startRelativePosition - ccwProbeResult;
+        const cwDistanceFromStartPosition = cwProbeResult - startRelativePosition;
 
-        const servoRange = Math.min(
-            Math.abs(ccwDistanceFromEncoderZero) + Math.abs(cwDistanceFromEncoderZero),
-            MOTOR_LIMITS.maxServoDegreesRange
+        const arcCenterPosition = Math.round((ccwProbeResult + cwProbeResult) / 2);
+
+        const servoRange = Math.round(
+            Math.min(
+                Math.abs(cwDistanceFromStartPosition + ccwDistanceFromStartPosition), MOTOR_LIMITS.maxServoDegreesRange
+            )
         );
-        const arcAbsoluteCenter = servoRange === MOTOR_LIMITS.maxServoDegreesRange
-                                  ? 0
-                                  : transformRelativeDegToAbsoluteDeg(startAbsolutePosition + arcCenterFromEncoderZero);
-        const arcCenterFromStart = servoRange === MOTOR_LIMITS.maxServoDegreesRange
-                                   ? -startAbsolutePosition
-                                   : (ccwProbeResult + cwProbeResult) / 2;
+        const arcCenterAbsolutePosition = Math.round(transformRelativeDegToAbsoluteDeg(arcCenterPosition + encoderOffset));
+
         return {
             servoRange,
-            arcCenterFromStart,
-            arcAbsoluteCenter
+            arcCenterPosition,
+            arcCenterAbsolutePosition
         };
     }
 
