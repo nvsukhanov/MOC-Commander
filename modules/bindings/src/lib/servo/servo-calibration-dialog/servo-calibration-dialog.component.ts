@@ -29,6 +29,8 @@ export type ServoCalibrationDialogData = {
 export class ServoCalibrationDialogComponent implements OnInit, OnDestroy {
     private readonly sub = new Subscription();
 
+    private readonly calibrationRuns = 2;
+
     constructor(
         private readonly dialog: MatDialogRef<ServoCalibrationDialogComponent>,
         @Inject(MAT_DIALOG_DATA) private readonly data: ServoCalibrationDialogData,
@@ -38,7 +40,13 @@ export class ServoCalibrationDialogComponent implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         this.sub.add(
-            this.calibrationService.calibrateServo(this.data.hubId, this.data.portId, this.data.speed, this.data.power).subscribe((result) => {
+            this.calibrationService.calibrateServo(
+                this.data.hubId,
+                this.data.portId,
+                this.data.speed,
+                this.data.power,
+                this.calibrationRuns
+            ).subscribe((result) => {
                 this.dialog.close(result);
             })
         );

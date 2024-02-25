@@ -1,10 +1,30 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, bufferCount, catchError, concatAll, concatWith, delay, from, last, map, of, switchMap, take, takeUntil, timeout } from 'rxjs';
-import { IHub, MOTOR_LIMITS, MotorServoEndState } from 'rxpoweredup';
+import {
+    Observable,
+    Subject,
+    bufferCount,
+    catchError,
+    concatAll,
+    concatWith,
+    debounceTime,
+    delay,
+    from,
+    last,
+    map,
+    of,
+    startWith,
+    switchMap,
+    take,
+    takeUntil
+} from 'rxjs';
+import { IHub, MOTOR_LIMITS, MotorServoEndState, PortModeName, ValueTransformers } from 'rxpoweredup';
+import { concatLatestFrom } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { transformRelativeDegToAbsoluteDeg } from '@app/shared-misc';
 
 import { HubStorageService } from '../hub-storage.service';
 import { HubMotorPositionFacadeService } from './hub-motor-position-facade.service';
+import { ATTACHED_IO_PORT_MODE_INFO_SELECTORS } from '../selectors';
 
 export enum CalibrationResultType {
     finished,
@@ -26,9 +46,20 @@ export type CalibrationResult = CalibrationResultFinished | CalibrationResultErr
 
 @Injectable()
 export class HubServoCalibrationFacadeService {
+    private readonly singleProbeTimeoutMs = 500;
+
+    private readonly maxRange = MOTOR_LIMITS.maxServoDegreesRange * 2;
+
+    // used to compensate possible encoder jitter
+    private readonly calibrationPositionMinimumThreshold = ValueTransformers.position.toValueThreshold(2);
+
+    // used to compensate motor strain at the end of the range. Probably this should be configurable.
+    private readonly motorStrainMitigationMarginDegrees = 4;
+
     constructor(
         private readonly hubStorage: HubStorageService,
-        private readonly motorPositionFacade: HubMotorPositionFacadeService
+        private readonly motorPositionFacade: HubMotorPositionFacadeService,
+        private readonly store: Store
     ) {
     }
 
@@ -36,11 +67,12 @@ export class HubServoCalibrationFacadeService {
         hubId: string,
         portId: number,
         speed: number,
-        power: number
+        power: number,
+        calibrationRuns: number = 1
     ): Observable<CalibrationResult> {
         return new Observable<CalibrationResult>((subscriber) => {
             const cancel$ = new Subject<void>();
-            this.doCalibration(hubId, portId, speed, power).pipe(
+            this.doCalibration(hubId, portId, speed, power, calibrationRuns).pipe(
                 takeUntil(cancel$),
                 catchError((error) => {
                     console.warn('Calibration error', error);
@@ -63,10 +95,11 @@ export class HubServoCalibrationFacadeService {
         portId: number,
         speed: number,
         power: number,
+        calibrationRuns: number,
     ): Observable<CalibrationResultFinished> {
         return this.getPreCalibrationData(hubId, portId).pipe(
-            switchMap(({ startAbsolutePosition, startRelativePosition, cwLimit, ccwLimit }) => {
-                return this.getServoRange(hubId, portId, speed, power, cwLimit, ccwLimit).pipe(
+            switchMap(({ startAbsolutePosition, startRelativePosition, positionModeId }) => {
+                return this.getServoRange(hubId, portId, positionModeId, speed, power, calibrationRuns).pipe(
                     map((result) => {
                         return this.calculateServoCalibrationResults(
                             result.ccwProbeResult,
@@ -93,16 +126,21 @@ export class HubServoCalibrationFacadeService {
     private getPreCalibrationData(
         hubId: string,
         portId: number,
-    ): Observable<{ startRelativePosition: number; startAbsolutePosition: number; ccwLimit: number; cwLimit: number }> {
+    ): Observable<{ startRelativePosition: number; startAbsolutePosition: number; positionModeId: number }> {
         return this.motorPositionFacade.getMotorPosition(hubId, portId).pipe(
             concatWith(this.motorPositionFacade.getMotorAbsolutePosition(hubId, portId)),
             bufferCount(2),
-            map(([ startRelativePosition, startAbsolutePosition ]) => ({
-                startRelativePosition,
-                startAbsolutePosition,
-                ccwLimit: startRelativePosition - MOTOR_LIMITS.maxServoDegreesRange * 2,
-                cwLimit: startRelativePosition + MOTOR_LIMITS.maxServoDegreesRange * 2
-            })),
+            concatLatestFrom(() =>
+                this.store.select(ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectHubPortInputModeForPortModeName({
+                    hubId, portId, portModeName: PortModeName.position
+                }))
+            ),
+            map(([[ startRelativePosition, startAbsolutePosition ], positionModeInfo]) => {
+                if (positionModeInfo === null) {
+                    throw new Error('Position mode not found');
+                }
+                return { startRelativePosition, startAbsolutePosition, positionModeId: positionModeInfo.modeId };
+            }),
             take(1)
         );
     }
@@ -127,30 +165,17 @@ export class HubServoCalibrationFacadeService {
     private getServoRange(
         hubId: string,
         portId: number,
+        positionPortModeId: number,
         speed: number,
         power: number,
-        cwLimit: number,
-        ccwLimit: number,
-        calibrationRuns: number = 1,
-        singleProbeTimeout: number = 5000
+        calibrationRuns: number
     ): Observable<{ ccwProbeResult: number; cwProbeResult: number }> {
         const hub = this.hubStorage.get(hubId);
-        if (calibrationRuns < 1) {
-            throw new Error('Calibration runs must be greater than 0');
-        }
-
-        const probe = (degree: number): Observable<number> => {
-            return hub.motors.goToPosition(portId, degree, { speed, power, endState: MotorServoEndState.brake }).pipe(
-                concatWith(this.motorPositionFacade.getMotorPosition(hubId, portId)),
-                last(),
-                timeout(singleProbeTimeout),
-            ) as Observable<number>;
-        };
 
         const probes: Array<Observable<number>> = [];
         for (let i = 0; i < calibrationRuns; i++) {
-            probes.push(probe(ccwLimit));
-            probes.push(probe(cwLimit));
+            probes.push(this.probeDirectionLimit(hub, portId, -speed, power, i === 0 ? this.maxRange : this.maxRange * 2, positionPortModeId));
+            probes.push(this.probeDirectionLimit(hub, portId, speed, power, this.maxRange * 2, positionPortModeId));
         }
 
         return from(probes).pipe(
@@ -160,11 +185,54 @@ export class HubServoCalibrationFacadeService {
                 const ccwProbeResults = results.filter((_, i) => i % 2 === 0);
                 const cwProbeResults = results.filter((_, i) => i % 2 === 1);
                 return {
-                    ccwProbeResult: Math.min(...ccwProbeResults),
-                    cwProbeResult: Math.max(...cwProbeResults)
+                    ccwProbeResult: Math.max(...ccwProbeResults),
+                    cwProbeResult: Math.min(...cwProbeResults)
                 };
             })
         );
+    }
+
+    /**
+     * Probes the servo in a given direction until the motor reaches the limit or the maximum distance is reached.
+     * Approach with setSpeed is used instead of goToPosition since the former is much faster.
+     */
+    private probeDirectionLimit(
+        hub: IHub,
+        portId: number,
+        speed: number,
+        power: number,
+        maxDistance: number,
+        positionModeId: number
+    ): Observable<number> {
+        return new Observable((subscriber) => {
+            const speedSubscription = hub.motors.startSpeed(portId, speed, {power}).subscribe();
+
+            // TODO: use motorPositionFacade
+            const positionSubscription = hub.ports.getPortValue(portId, positionModeId).pipe(
+                map((value) => ValueTransformers.position.fromRawValue(value)),
+                switchMap((startPosition) => hub.ports.portValueChanges(portId, positionModeId, this.calibrationPositionMinimumThreshold).pipe(
+                    map((value) => ValueTransformers.position.fromRawValue(value)),
+                    startWith(startPosition),
+                    map((currentPosition) => ({ currentPosition, distance: Math.abs(currentPosition - startPosition)}))
+                )),
+                map(({ currentPosition, distance }) => {
+                    return distance < maxDistance
+                           ? currentPosition - Math.sign(speed) * this.motorStrainMitigationMarginDegrees
+                           : maxDistance;
+                }),
+                debounceTime(this.singleProbeTimeoutMs),
+                take(1),
+                switchMap((position) => hub.motors.startSpeed(portId, 0, {power: 0}).pipe(
+                    last(),
+                    map(() => position)
+                ))
+            ).subscribe(subscriber);
+
+            return () => {
+                speedSubscription.unsubscribe();
+                positionSubscription.unsubscribe();
+            };
+        });
     }
 
     private calculateServoCalibrationResults(
