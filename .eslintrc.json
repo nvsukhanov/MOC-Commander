@@ -219,15 +219,15 @@
                 "onlyDependOnLibsWithTags": [
                   "scope:shared-misc",
                   "scope:i18n",
-                  "scope:controller-profiles"
+                  "scope:controller-profiles",
+                  "scope:shared-ui"
                 ]
               },
               {
                 "sourceTag": "scope:shared-ui",
                 "onlyDependOnLibsWithTags": [
                   "scope:shared-misc",
-                  "scope:i18n",
-                  "scope:store"
+                  "scope:i18n"
                 ]
               },
               {

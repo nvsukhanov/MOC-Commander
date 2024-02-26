@@ -6,6 +6,7 @@ import { NavigationActionTiming, provideRouterStore, routerReducer } from '@ngrx
 import { Router } from '@angular/router';
 import { provideControllerProfiles } from '@app/controller-profiles';
 import { NAVIGATOR, RoutesBuilderService } from '@app/shared-misc';
+import { COPY_TO_CLIPBOARD_HANDLER } from '@app/shared-ui';
 
 import { IState } from './i-state';
 import {
@@ -51,6 +52,7 @@ import { ControllerProfilesFacadeService } from './controller-profiles-facade.se
 import { AppStoreVersion } from './app-store-version';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import packageJson from '../../../../package.json';
+import { CopyToClipboardHandlerService } from './copy-to-clipboard-handler.service';
 
 const REDUCERS: ActionReducerMap<IState> = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,
@@ -117,6 +119,7 @@ export function provideApplicationStore(): EnvironmentProviders {
             HubMotorPositionFacadeService,
             HubServoCalibrationFacadeService,
             ControllerProfilesFacadeService,
+            { provide: COPY_TO_CLIPBOARD_HANDLER, useClass: CopyToClipboardHandlerService },
             provideRouterStore({
                 navigationActionTiming: NavigationActionTiming.PostActivation
             }),

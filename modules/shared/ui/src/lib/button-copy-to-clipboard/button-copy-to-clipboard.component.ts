@@ -1,9 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
-import { Store } from '@ngrx/store';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { COMMON_ACTIONS } from '@app/store';
+
+import { COPY_TO_CLIPBOARD_HANDLER, ICopyToClipboardHandler } from './i-copy-to-clipboard-handler';
 
 @Component({
     standalone: true,
@@ -35,13 +35,13 @@ export class ButtonCopyToClipboardComponent {
     @Input() public content?: string;
 
     constructor(
-        private store: Store,
+        @Inject(COPY_TO_CLIPBOARD_HANDLER) private readonly copyToClipboardHandler: ICopyToClipboardHandler,
     ) {
     }
 
     public copyToClipboard(): void {
         if (this.content !== undefined) {
-            this.store.dispatch(COMMON_ACTIONS.copyToClipboard({ content: this.content }));
+            this.copyToClipboardHandler.copy(this.content);
         }
     }
 }
