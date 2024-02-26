@@ -265,7 +265,10 @@
       "calibrationCancel": "Отмена",
       "readServoCenterFromPort": "Прочитать центр из порта",
       "readServoRangeFromPort": "Прочитать диапазон из порта",
-      "taskSummary": "Сервопривод: { angle }°"
+      "taskSummary": "Сервопривод: { angle }°",
+      "cwAction": "По часовой",
+      "ccwAction": "Против часовой",
+      "missingInputs": "Нужно назначить хотя-бы один контроллер"
     },
     "stepperBinding": {
       "operationMode": "Шаговый двигатель",

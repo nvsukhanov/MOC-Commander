@@ -4,12 +4,12 @@ import { FullControllerInputNameData } from '@app/shared-control-schemes';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { IBindingControllerNameResolver } from '../i-binding-controller-name-resolver';
-import { ControllerInputNameService } from '../common';
+import { DirectionAwareControllerInputNameService } from '../common';
 
 @Injectable()
 export class ServoControllerNameResolverService implements IBindingControllerNameResolver<ControlSchemeBindingType.Servo> {
     constructor(
-        private readonly controllerNameProvider: ControllerInputNameService,
+        private readonly controllerNameProvider: DirectionAwareControllerInputNameService,
     ) {
     }
 
@@ -18,7 +18,8 @@ export class ServoControllerNameResolverService implements IBindingControllerNam
         inputConfig: ControlSchemeInput
     ): FullControllerInputNameData {
         switch (action) {
-            case ControlSchemeInputAction.Servo:
+            case ControlSchemeInputAction.ServoCw:
+            case ControlSchemeInputAction.ServoCcw:
                 return this.controllerNameProvider.getFullControllerInputNameData(inputConfig);
         }
     }

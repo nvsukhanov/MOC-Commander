@@ -13,7 +13,9 @@ export class GenericInputSummaryProviderService {
         [ControlSchemeInputAction.SetAngle]: 'controlScheme.inputActions.setAngle',
         [ControlSchemeInputAction.NextLevel]: 'controlScheme.inputActions.nextLevel',
         [ControlSchemeInputAction.PrevLevel]: 'controlScheme.inputActions.prevLevel',
-        [ControlSchemeInputAction.Reset]: 'controlScheme.inputActions.reset'
+        [ControlSchemeInputAction.Reset]: 'controlScheme.inputActions.reset',
+        [ControlSchemeInputAction.ServoCw]: 'controlScheme.servoBinding.cwAction',
+        [ControlSchemeInputAction.ServoCcw]: 'controlScheme.servoBinding.ccwAction'
     };
 
     constructor(

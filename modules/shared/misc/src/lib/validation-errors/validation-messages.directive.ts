@@ -13,6 +13,8 @@ import { COMMON_VALIDATION_ERRORS_L10N_MAP } from './common-validation-errors-l1
 export class ValidationMessagesDirective implements OnChanges, OnDestroy {
     @Input('libValidationMessages') public control?: AbstractControl;
 
+    @Input() public immediatelyShowMessages = false;
+
     private controlSubscription?: Subscription;
 
     private readonly commonValidationErrorsL10nMap: ValidationErrorsL10nMap = COMMON_VALIDATION_ERRORS_L10N_MAP;
@@ -68,7 +70,7 @@ export class ValidationMessagesDirective implements OnChanges, OnDestroy {
         if (!this.control) {
             return undefined;
         }
-        if (this.control && this.control.dirty && this.control.invalid) {
+        if (this.control && (this.control.dirty || this.immediatelyShowMessages) && this.control.invalid) {
             const error = Object.keys(this.control.errors ?? {})[0];
             if (error !== undefined) {
                 const payload = this.control.errors?.[error] instanceof Object ? this.control.errors?.[error] : { value: this.control.errors?.[error] };

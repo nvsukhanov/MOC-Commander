@@ -15,7 +15,7 @@ function slopeFn(
 
 export function calcInputGain(
     value: number,
-    gain: InputGain,
+    gain: InputGain = InputGain.None,
 ): number {
     switch (gain) {
         case InputGain.None:

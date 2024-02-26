@@ -5,6 +5,7 @@ import {
     AttachedIoPropsModel,
     ControlSchemeInputAction,
     ControlSchemeServoBinding,
+    InputDirection,
     PortCommandTask,
     PortCommandTaskPayload,
     ServoTaskPayload
@@ -24,11 +25,24 @@ export class ServoTaskPayloadBuilderService implements ITaskPayloadBuilder<Contr
         _: BindingInputExtractionResult<ControlSchemeBindingType.Servo>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
     ): { payload: ServoTaskPayload; inputTimestamp: number } | null {
-        const servoInput = currentInput[ControlSchemeInputAction.Servo];
-        if (!servoInput) {
+        const cwInput = currentInput[ControlSchemeInputAction.ServoCw];
+        const ccwInput = currentInput[ControlSchemeInputAction.ServoCcw];
+        if (!cwInput && !ccwInput) {
             return null;
         }
-        const servoInputValue = calcInputGain(servoInput?.value ?? 0, binding.inputs[ControlSchemeInputAction.Servo].gain);
+
+        const cwInputDirection = binding.inputs[ControlSchemeInputAction.ServoCw]?.inputDirection ?? InputDirection.Positive;
+        const ccwInputDirection = binding.inputs[ControlSchemeInputAction.ServoCcw]?.inputDirection ?? InputDirection.Positive;
+        const cwValue = this.extractDirectionAwareInputValue(cwInput?.value ?? 0, cwInputDirection);
+        const ccwValue = this.extractDirectionAwareInputValue(ccwInput?.value ?? 0, ccwInputDirection);
+
+        const servoCwInputValue = calcInputGain(cwValue, binding.inputs[ControlSchemeInputAction.ServoCw]?.gain);
+        const servoCcwInputValue = calcInputGain(ccwValue, binding.inputs[ControlSchemeInputAction.ServoCcw]?.gain);
+        const servoNonClampedInputValue = -Math.abs(servoCcwInputValue) + Math.abs(servoCwInputValue);
+
+        // TODO: create a function to clamp the value
+        const servoInputValue = Math.max(-1, Math.min(1, servoNonClampedInputValue));
+        const inputTimestamp = Math.max(cwInput?.timestamp ?? 0, ccwInput?.timestamp ?? 0);
 
         const translationPaths = getTranslationArcs(
             ioProps?.motorEncoderOffset ?? 0,
@@ -37,7 +51,7 @@ export class ServoTaskPayloadBuilderService implements ITaskPayloadBuilder<Contr
         const resultingCenter = translationPaths.cw < translationPaths.ccw ? translationPaths.cw : -translationPaths.ccw;
 
         const arcSize = this.getArcSize(binding, ioProps);
-        const arcPosition = servoInputValue * arcSize / 2 * (binding.invert ? -1 : 1);
+        const arcPosition = servoInputValue * arcSize / 2;
 
         const targetAngle = arcPosition + resultingCenter;
         const minAngle = resultingCenter - arcSize / 2;
@@ -54,7 +68,7 @@ export class ServoTaskPayloadBuilderService implements ITaskPayloadBuilder<Contr
             useAccelerationProfile: binding.useAccelerationProfile,
             useDecelerationProfile: binding.useDecelerationProfile,
         };
-        return { payload, inputTimestamp: servoInput.timestamp };
+        return { payload, inputTimestamp };
     }
 
     public buildCleanupPayload(
@@ -71,6 +85,18 @@ export class ServoTaskPayloadBuilderService implements ITaskPayloadBuilder<Contr
             useAccelerationProfile: previousTask.payload.useAccelerationProfile,
             useDecelerationProfile: previousTask.payload.useDecelerationProfile
         };
+    }
+
+    private extractDirectionAwareInputValue(
+        value: number,
+        direction: InputDirection
+    ): number {
+        switch (direction) {
+            case InputDirection.Positive:
+                return Math.max(0, value);
+            case InputDirection.Negative:
+                return Math.min(0, value);
+        }
     }
 
     private snapAngle(
