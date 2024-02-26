@@ -8,6 +8,8 @@ import {
     concatWith,
     debounceTime,
     delay,
+    distinctUntilChanged,
+    finalize,
     from,
     last,
     map,
@@ -25,6 +27,12 @@ import { transformRelativeDegToAbsoluteDeg } from '@app/shared-misc';
 import { HubStorageService } from '../hub-storage.service';
 import { HubMotorPositionFacadeService } from './hub-motor-position-facade.service';
 import { ATTACHED_IO_PORT_MODE_INFO_SELECTORS } from '../selectors';
+
+class MaxDistanceReachedError extends Error {
+    constructor(public readonly finalPosition: number) {
+        super('Max distance reached');
+    }
+}
 
 export enum CalibrationResultType {
     finished,
@@ -52,9 +60,6 @@ export class HubServoCalibrationFacadeService {
 
     // used to compensate possible encoder jitter
     private readonly calibrationPositionMinimumThreshold = ValueTransformers.position.toValueThreshold(2);
-
-    // used to compensate motor strain at the end of the range. Probably this should be configurable.
-    private readonly motorStrainMitigationMarginDegrees = 4;
 
     constructor(
         private readonly hubStorage: HubStorageService,
@@ -156,7 +161,7 @@ export class HubServoCalibrationFacadeService {
         return hub.motors.goToPosition(portId, finalPosition, { speed, power, endState: MotorServoEndState.hold }).pipe(
             last(),
             // delay is necessary to ensure the motor is stabilized before the next command is sent
-            delay(1000),
+            delay(500),
             concatWith(hub.motors.goToPosition(portId, finalPosition, { speed, power, endState: MotorServoEndState.float })),
             last(),
         );
@@ -216,17 +221,29 @@ export class HubServoCalibrationFacadeService {
                     map((currentPosition) => ({ currentPosition, distance: Math.abs(currentPosition - startPosition)}))
                 )),
                 map(({ currentPosition, distance }) => {
-                    return distance < maxDistance
-                           ? currentPosition - Math.sign(speed) * this.motorStrainMitigationMarginDegrees
-                           : maxDistance;
+                    if (distance >= maxDistance) {
+                        throw new MaxDistanceReachedError(currentPosition);
+                    }
+                    return currentPosition;
                 }),
+                distinctUntilChanged(),
                 debounceTime(this.singleProbeTimeoutMs),
                 take(1),
-                switchMap((position) => hub.motors.startSpeed(portId, 0, {power: 0}).pipe(
-                    last(),
-                    map(() => position)
-                ))
-            ).subscribe(subscriber);
+                finalize(() => hub.motors.startSpeed(portId, 0, {power: 0}).subscribe())
+            ).subscribe({
+                next: (result) => {
+                    subscriber.next(result);
+                    subscriber.complete();
+                },
+                error: (error) => {
+                    if (error instanceof MaxDistanceReachedError) {
+                        subscriber.next(error.finalPosition);
+                        subscriber.complete();
+                    } else {
+                        subscriber.error(error);
+                    }
+                }
+            });
 
             return () => {
                 speedSubscription.unsubscribe();
@@ -246,16 +263,11 @@ export class HubServoCalibrationFacadeService {
         const cwDistanceFromStartPosition = cwProbeResult - startRelativePosition;
 
         const arcCenterPosition = Math.round((ccwProbeResult + cwProbeResult) / 2);
-
-        const servoRange = Math.round(
-            Math.min(
-                Math.abs(cwDistanceFromStartPosition + ccwDistanceFromStartPosition), MOTOR_LIMITS.maxServoDegreesRange
-            )
-        );
+        const servoRange = Math.round(Math.abs(ccwDistanceFromStartPosition + cwDistanceFromStartPosition));
         const arcCenterAbsolutePosition = Math.round(transformRelativeDegToAbsoluteDeg(arcCenterPosition + encoderOffset));
 
         return {
-            servoRange,
+            servoRange: servoRange > MOTOR_LIMITS.maxServoDegreesRange ? MOTOR_LIMITS.maxServoDegreesRange : servoRange,
             arcCenterPosition,
             arcCenterAbsolutePosition
         };
