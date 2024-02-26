@@ -4,6 +4,7 @@ import { PushPipe } from '@ngrx/component';
 import { Store } from '@ngrx/store';
 import { TitleService } from '@app/shared-misc';
 import { IState } from '@app/store';
+import { ChangelogComponent } from '@app/shared-ui';
 
 @Component({
     standalone: true,
@@ -12,7 +13,8 @@ import { IState } from '@app/store';
     styleUrls: [ './about-page.component.scss' ],
     imports: [
         TranslocoPipe,
-        PushPipe
+        PushPipe,
+        ChangelogComponent
     ],
     providers: [
         TitleService

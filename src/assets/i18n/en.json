@@ -689,5 +689,37 @@
         "openMocCommander": "Open MOC Commander at"
       }
     }
+  },
+  "changelog": {
+    "title": "Changelog",
+    "bugfixesAndImprovements": "Bugfixes and improvements",
+    "1-0-0": {
+      "initialRelease": "Initial release"
+    },
+    "1-0-1": {
+      "featIncreaseGamepadReadFrequency": "Increase gamepad read frequency"
+    },
+    "1-1-0": {
+      "featAddInstallationInstructions": "Installation instructions for Steam Deck, Windows and Linux",
+      "featAddSteamDeckControllerProfile": "Add Steam Deck controller profile",
+      "featMakeAppInstallableAsPWA": "App is now installable as PWA",
+      "featWidgets": "Control scheme widgets"
+    },
+    "1-2-0": {
+      "featUnsavedChangesNotifications": "Unsaved changes notifications for pages with forms",
+      "featWakeLock": "Wake lock to prevent screen from turning off",
+      "featNavigationBreadcrumbs": "Navigation breadcrumbs",
+      "featControlSchemeNameAutoGeneration": "Control scheme name auto-generation",
+      "featAxialAwarenessForStepperTrainAndGearboxControls": "Axial input direction awareness for stepper, train and gearbox controls",
+      "featReadAndSetMotorPositionDuringControlSchemeEditing": "Read and set motor position during control scheme editing"
+    },
+    "1-2-1": {
+      "featFasterServoCalibration": "Faster servo calibration",
+      "featAppUpdatedNotification": "Display a notification when the app is updated"
+    },
+    "1-2-2": {
+      "featSeparateControlsForServoCwAndCcw": "Separate controls for servo clockwise and counter-clockwise inputs",
+      "featThisChangelog": "This changelog"
+    }
   }
 }
