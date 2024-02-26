@@ -24,11 +24,32 @@ export class ServoTaskPayloadBuilderService implements ITaskPayloadBuilder<Contr
         currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Servo>,
         _: BindingInputExtractionResult<ControlSchemeBindingType.Servo>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
+        previousTaskPayload: PortCommandTask | null
     ): { payload: ServoTaskPayload; inputTimestamp: number } | null {
         const cwInput = currentInput[ControlSchemeInputAction.ServoCw];
         const ccwInput = currentInput[ControlSchemeInputAction.ServoCcw];
-        if (!cwInput && !ccwInput) {
+
+        if (!cwInput && !ccwInput && !!previousTaskPayload) {
+            // If this is not the first task and there is no input - we do nothing
             return null;
+        }
+
+        const translationPaths = getTranslationArcs(
+            ioProps?.motorEncoderOffset ?? 0,
+            this.getArcCenter(binding, ioProps)
+        );
+        const resultingCenter = translationPaths.cw < translationPaths.ccw ? translationPaths.cw : -translationPaths.ccw;
+
+        if (!cwInput && !ccwInput) {
+            // If there were no inputs and no previous task, we should center the servo
+            return this.composeResult(
+                resultingCenter,
+                binding.speed,
+                binding.power,
+                binding.useAccelerationProfile,
+                binding.useDecelerationProfile,
+                0
+            );
         }
 
         const cwInputDirection = binding.inputs[ControlSchemeInputAction.ServoCw]?.inputDirection ?? InputDirection.Positive;
@@ -44,12 +65,6 @@ export class ServoTaskPayloadBuilderService implements ITaskPayloadBuilder<Contr
         const servoInputValue = Math.max(-1, Math.min(1, servoNonClampedInputValue));
         const inputTimestamp = Math.max(cwInput?.timestamp ?? 0, ccwInput?.timestamp ?? 0);
 
-        const translationPaths = getTranslationArcs(
-            ioProps?.motorEncoderOffset ?? 0,
-            this.getArcCenter(binding, ioProps)
-        );
-        const resultingCenter = translationPaths.cw < translationPaths.ccw ? translationPaths.cw : -translationPaths.ccw;
-
         const arcSize = this.getArcSize(binding, ioProps);
         const arcPosition = servoInputValue * arcSize / 2;
 
@@ -59,16 +74,14 @@ export class ServoTaskPayloadBuilderService implements ITaskPayloadBuilder<Contr
 
         const snappedAngle = this.snapAngle(targetAngle, resultingCenter, minAngle, maxAngle);
 
-        const payload: ServoTaskPayload = {
-            bindingType: ControlSchemeBindingType.Servo,
-            angle: Math.round(snappedAngle),
-            speed: Math.round(binding.speed),
-            power: binding.power,
-            endState: MotorServoEndState.hold,
-            useAccelerationProfile: binding.useAccelerationProfile,
-            useDecelerationProfile: binding.useDecelerationProfile,
-        };
-        return { payload, inputTimestamp };
+        return this.composeResult(
+            snappedAngle,
+            binding.speed,
+            binding.power,
+            binding.useAccelerationProfile,
+            binding.useDecelerationProfile,
+            inputTimestamp
+        );
     }
 
     public buildCleanupPayload(
@@ -84,6 +97,28 @@ export class ServoTaskPayloadBuilderService implements ITaskPayloadBuilder<Contr
             brakeFactor: 0,
             useAccelerationProfile: previousTask.payload.useAccelerationProfile,
             useDecelerationProfile: previousTask.payload.useDecelerationProfile
+        };
+    }
+
+    private composeResult(
+        angle: number,
+        speed: number,
+        power: number,
+        useAccelerationProfile: boolean,
+        useDecelerationProfile: boolean,
+        inputTimestamp: number
+    ): { payload: ServoTaskPayload; inputTimestamp: number } {
+        return {
+            payload: {
+                bindingType: ControlSchemeBindingType.Servo,
+                angle: Math.round(angle),
+                speed,
+                power,
+                endState: MotorServoEndState.hold,
+                useAccelerationProfile,
+                useDecelerationProfile,
+            },
+            inputTimestamp
         };
     }
 
