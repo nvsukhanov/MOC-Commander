@@ -689,5 +689,37 @@
         "openMocCommander": "Откройте MOC Commander по адресу"
       }
     }
+  },
+  "changelog": {
+    "title": "История изменений",
+    "bugfixesAndImprovements": "Исправления ошибок и улучшения",
+    "1-0-0": {
+      "initialRelease": "Первый релиз"
+    },
+    "1-0-1": {
+      "featIncreaseGamepadReadFrequency": "Увеличение частоты опроса геймпадов"
+    },
+    "1-1-0": {
+      "featAddInstallationInstructions": "Добавлены инструкции по установке для Windows, Linux и Steam Deck",
+      "featAddSteamDeckControllerProfile": "Добавлен профиль контроллера для Steam Deck",
+      "featMakeAppInstallableAsPWA": "Приложение теперь устанавливается как PWA",
+      "featWidgets": "Виджеты для отображения напряжения, температуры и наклона"
+    },
+    "1-2-0": {
+      "featUnsavedChangesNotifications": "Уведомления о несохраненных изменениях при попытке закрыть страницу",
+      "featWakeLock": "Wake Lock для предотвращения автоматического выключения экрана",
+      "featNavigationBreadcrumbs": "Навигационные хлебные крошки",
+      "featControlSchemeNameAutoGeneration": "Автоматическая генерация имени схемы управления",
+      "featAxialAwarenessForStepperTrainAndGearboxControls": "Учет направления оси для типов привязок 'Шаговый двигатель', 'Поезд' и 'Коробка передач'",
+      "featReadAndSetMotorPositionDuringControlSchemeEditing": "Чтение и установка позиции мотора во время редактирования схемы управления"
+    },
+    "1-2-1": {
+      "featFasterServoCalibration": "Оптимизирована калибровка сервопривода",
+      "featAppUpdatedNotification": "Отображение уведомления об обновлении приложения"
+    },
+    "1-2-2": {
+      "featSeparateControlsForServoCwAndCcw": "Возможность назначить разные контроллеры для направлений вращения сервопривода (по часовой и против часовой)",
+      "featThisChangelog": "История изменений в приложении"
+    }
   }
 }

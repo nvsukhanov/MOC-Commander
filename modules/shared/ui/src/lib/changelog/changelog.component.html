@@ -1,0 +1,20 @@
+<ol class="versions-list">
+    @for(versionRecord of log; track versionRecord; let last = $last; let first = $first) {
+    <li class="version-record"
+        [class.version-record__first]="first"
+    >
+        <h3 class="version-header">
+            {{ versionRecord.version }}
+        </h3>
+        <ul class="changes-list">
+            @for (changeL10nKey of versionRecord.changeL10nKeys; track changeL10nKey) {
+                <li>{{ changeL10nKey | transloco }}</li>
+            }
+        </ul>
+        @if(!last) {
+            <mat-divider></mat-divider>
+        }
+    </li>
+    }
+</ol>
+
