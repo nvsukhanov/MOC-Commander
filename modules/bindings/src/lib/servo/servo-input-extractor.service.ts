@@ -1,7 +1,7 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeInputAction, ControlSchemeServoBinding, ControllerInputModel, controllerInputIdFn } from '@app/store';
+import { ControlSchemeBindingInputs, ControlSchemeInputAction, ControlSchemeServoBinding, ControllerInputModel, controllerInputIdFn } from '@app/store';
 
 import { BindingInputExtractionResult, IBindingTaskInputExtractor } from '../i-binding-task-input-extractor';
 
@@ -11,10 +11,9 @@ export class ServoInputExtractorService implements IBindingTaskInputExtractor<Co
         binding: ControlSchemeServoBinding,
         globalInput: Dictionary<ControllerInputModel>
     ): BindingInputExtractionResult<ControlSchemeBindingType.Servo> {
-        const servoInputId = controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Servo]);
-        const servoInputResult = globalInput[servoInputId];
         return {
-            [ControlSchemeInputAction.Servo]: servoInputResult ?? null
+            [ControlSchemeInputAction.ServoCw]: this.getInputId(binding, ControlSchemeInputAction.ServoCw, globalInput) ?? null,
+            [ControlSchemeInputAction.ServoCcw]: this.getInputId(binding, ControlSchemeInputAction.ServoCcw, globalInput) ?? null,
         };
     }
 
@@ -22,6 +21,20 @@ export class ServoInputExtractorService implements IBindingTaskInputExtractor<Co
         prevInput: BindingInputExtractionResult<ControlSchemeBindingType.Servo>,
         nextInput: BindingInputExtractionResult<ControlSchemeBindingType.Servo>
     ): boolean {
-        return prevInput[ControlSchemeInputAction.Servo] !== nextInput[ControlSchemeInputAction.Servo];
+        return prevInput[ControlSchemeInputAction.ServoCw] !== nextInput[ControlSchemeInputAction.ServoCw]
+            || prevInput[ControlSchemeInputAction.ServoCcw] !== nextInput[ControlSchemeInputAction.ServoCcw];
+    }
+
+    private getInputId(
+        binding: ControlSchemeServoBinding,
+        action: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.Servo>,
+        globalInput: Dictionary<ControllerInputModel>
+    ): ControllerInputModel | undefined {
+        const inputConfig = binding.inputs[action];
+        if (!inputConfig) {
+            return;
+        }
+        const inputId = controllerInputIdFn(inputConfig);
+        return globalInput[inputId];
     }
 }

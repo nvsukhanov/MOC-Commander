@@ -265,7 +265,10 @@
       "calibrationCancel": "Cancel",
       "readServoCenterFromPort": "Read servo center from port",
       "readServoRangeFromPort": "Read servo range from port",
-      "taskSummary": "Servo: { angle }°"
+      "taskSummary": "Servo: { angle }°",
+      "cwAction": "Clockwise",
+      "ccwAction": "Counter-clockwise",
+      "missingInputs": "At least one of the inputs must be assigned"
     },
     "stepperBinding": {
       "operationMode": "Stepper",

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { JsonPipe, NgIf } from '@angular/common';
 import { MOTOR_LIMITS, PortModeName } from 'rxpoweredup';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,7 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { concatLatestFrom } from '@ngrx/effects';
 import { ControllerInputType } from '@app/controller-profiles';
-import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
+import { ControlSchemeBindingType, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
 import {
     ATTACHED_IO_PROPS_SELECTORS,
@@ -42,6 +42,7 @@ import { BINDING_SERVO_EDIT_SELECTORS } from './binding-servo-edit.selectors';
 import { ServoBindingForm } from './servo-binding-form';
 import { BINDING_CONTROLLER_NAME_RESOLVER } from '../i-binding-controller-name-resolver';
 import { ServoControllerNameResolverService } from './servo-controller-name-resolver.service';
+import { NO_INPUTS_ERROR } from './servo-binding-form-builder.service';
 
 @Component({
     standalone: true,
@@ -69,7 +70,8 @@ import { ServoControllerNameResolverService } from './servo-controller-name-reso
         BindingEditSectionsContainerComponent,
         ValidationMessagesDirective,
         BindingControlSpeedInputComponent,
-        BindingControlPowerInputComponent
+        BindingControlPowerInputComponent,
+        JsonPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
@@ -77,6 +79,10 @@ import { ServoControllerNameResolverService } from './servo-controller-name-reso
     ]
 })
 export class BindingServoEditComponent implements IBindingsDetailsEditComponent<ServoBindingForm>, OnDestroy {
+    public readonly validationErrorsMap: ValidationErrorsL10nMap = {
+        [NO_INPUTS_ERROR]: 'controlScheme.servoBinding.missingInputs'
+    };
+
     public readonly motorLimits = MOTOR_LIMITS;
 
     public readonly controlSchemeInputActions = ControlSchemeInputAction;
@@ -89,7 +95,9 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
 
     private _canRequestPortValue$: Observable<boolean> = of(false);
 
-    private _servoControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Servo>;
+    private _servoCwBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Servo>;
+
+    private _servoCcwBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Servo>;
 
     private readonly _isCalibrating$ = new BehaviorSubject(false);
 
@@ -107,12 +115,22 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
         return this._form;
     }
 
-    public get servoControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Servo> | undefined {
-        return this._servoControlBindingComponentData;
+    public get servoCwBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Servo> | undefined {
+        return this._servoCwBindingComponentData;
     }
 
-    public get isInputGainConfigurable(): boolean {
-        const servoInput = this.form?.controls.inputs.controls[ControlSchemeInputAction.Servo];
+    public get servoCcwBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Servo> | undefined {
+        return this._servoCcwBindingComponentData;
+    }
+
+    public get isCwInputGainConfigurable(): boolean {
+        const servoInput = this.form?.controls.inputs.controls[ControlSchemeInputAction.ServoCw];
+        return servoInput?.controls.inputType.value === ControllerInputType.Axis
+            || servoInput?.controls.inputType.value === ControllerInputType.Trigger;
+    }
+
+    public get isCcwInputGainConfigurable(): boolean {
+        const servoInput = this.form?.controls.inputs.controls[ControlSchemeInputAction.ServoCcw];
         return servoInput?.controls.inputType.value === ControllerInputType.Axis
             || servoInput?.controls.inputType.value === ControllerInputType.Trigger;
     }
@@ -232,10 +250,16 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
         if (form !== this._form) {
             this._form = form;
 
-            this._servoControlBindingComponentData = {
+            this._servoCwBindingComponentData = {
                 bindingType: ControlSchemeBindingType.Servo,
-                inputFormGroup: form.controls.inputs.controls[ControlSchemeInputAction.Servo],
-                inputAction: ControlSchemeInputAction.Servo
+                inputFormGroup: form.controls.inputs.controls[ControlSchemeInputAction.ServoCw],
+                inputAction: ControlSchemeInputAction.ServoCw
+            };
+
+            this._servoCcwBindingComponentData = {
+                bindingType: ControlSchemeBindingType.Servo,
+                inputFormGroup: form.controls.inputs.controls[ControlSchemeInputAction.ServoCcw],
+                inputAction: ControlSchemeInputAction.ServoCcw
             };
 
             this.portRequestSubscription?.unsubscribe();

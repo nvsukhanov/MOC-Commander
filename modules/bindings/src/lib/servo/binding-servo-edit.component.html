@@ -17,10 +17,19 @@
     <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
                                  [caption]="'controlScheme.bindingSectionInputTitle' | transloco"
     >
-        <lib-cs-binding-control-select-controller [data]="servoControlBindingComponentData"></lib-cs-binding-control-select-controller>
-        <lib-cs-binding-control-select-input-gain *ngIf="isInputGainConfigurable"
-                                                  [control]="form.controls.inputs.controls[controlSchemeInputActions.Servo].controls.gain"
+        <lib-cs-binding-control-select-controller [data]="servoCwBindingComponentData"></lib-cs-binding-control-select-controller>
+        <lib-cs-binding-control-select-input-gain *ngIf="isCwInputGainConfigurable"
+                                                  [control]="form.controls.inputs.controls[controlSchemeInputActions.ServoCw].controls.gain"
         ></lib-cs-binding-control-select-input-gain>
+
+        <lib-cs-binding-control-select-controller [data]="servoCcwBindingComponentData"></lib-cs-binding-control-select-controller>
+        <lib-cs-binding-control-select-input-gain *ngIf="isCcwInputGainConfigurable"
+                                                  [control]="form.controls.inputs.controls[controlSchemeInputActions.ServoCcw].controls.gain"
+        ></lib-cs-binding-control-select-input-gain>
+        <mat-error [libValidationMessages]="form.controls.inputs"
+                   [immediatelyShowMessages]="true"
+                   [l10nMap]="validationErrorsMap"
+        ></mat-error>
     </lib-cs-binding-edit-section>
 
     <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
