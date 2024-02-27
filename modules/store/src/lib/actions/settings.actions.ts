@@ -9,6 +9,7 @@ export const SETTINGS_ACTIONS = createActionGroup({
     events: {
         'set theme': props<{ appTheme: UserSelectedTheme }>(),
         'set language': props<{ language: Language }>(),
+        'set linux compat': props<{ useLinuxCompat: boolean }>(),
         'create state backup': emptyProps(),
         'restore state from backup': props<{ state: IState }>(),
         'reset state': emptyProps(),

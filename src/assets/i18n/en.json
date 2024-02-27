@@ -95,7 +95,11 @@
     "resetStateDialogTitle": "Reset app",
     "resetStateDialogDescription": "Resetting the app will erase all data and restart the application. This action cannot be undone.",
     "resetStateDialogConfirmButtonTitle": "Reset",
-    "resetStateDialogCancelButtonTitle": "Cancel"
+    "resetStateDialogCancelButtonTitle": "Cancel",
+    "useLinuxCompatibleBluetoothApi": "Use Linux-compatible connection mode",
+    "useLinuxCompatibleBluetoothApiEnabled": "Enabled",
+    "useLinuxCompatibleBluetoothApiDisabled": "Disabled",
+    "useLinuxCompatibleBluetoothApiDescription": "Enable this option if you are using a Linux-based system and having problems connecting to hubs. Enabling this option may increase connection latency. Changes will affect only new connections."
   },
   "language": {
     "en": "English",
@@ -730,6 +734,7 @@
     "1-2-2": {
       "featSeparateControlsForServoCwAndCcw": "Separate controls for servo clockwise and counter-clockwise inputs",
       "featMotorPositionAdjustment": "Fine-grained motor position adjustment during editing of 'Set angle', 'Servo', and 'Gearbox' bindings",
+      "featUseLinuxCompatSetting": "Linux-compatible connection mode setting is now available in the app settings",
       "featThisChangelog": "Addition of this changelog"
     }
   }

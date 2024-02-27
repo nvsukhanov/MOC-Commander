@@ -10,6 +10,7 @@ export const CHANGELOG: Changelog = [
             'changelog.1-2-2.featThisChangelog',
             'changelog.1-2-2.featSeparateControlsForServoCwAndCcw',
             'changelog.1-2-2.featMotorPositionAdjustment',
+            'changelog.1-2-2.featUseLinuxCompatSetting',
             'changelog.bugfixesAndImprovements',
         ]
     },

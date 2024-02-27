@@ -15,6 +15,11 @@
                                                (languageChange)="onLanguageChange($event)"
                 ></page-settings-language-select>
             </li>
+            <li class="option">
+                <page-settings-use-linux-compat-select [useLinuxCompat]="useLinuxCompat()"
+                                                      (useLinuxCompatChange)="onUseLinuxCompatChange($event)"
+                ></page-settings-use-linux-compat-select>
+            </li>
         </ul>
 
         <mat-divider></mat-divider>
