@@ -1,0 +1,5 @@
+<lib-motor-position-adjustment-controls [canExecuteStep]="!!(canExecuteStep$ | ngrxPush)"
+                                        [canGoToZero]="!!(canGoToZero$ | ngrxPush)"
+                                        (executeStep)="onExecuteStep($event)"
+                                        (goToZero)="onGoToZero()"
+></lib-motor-position-adjustment-controls>

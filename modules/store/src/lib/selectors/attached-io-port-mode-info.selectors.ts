@@ -4,6 +4,7 @@ import { IOType, PortModeName } from 'rxpoweredup';
 import { ATTACHED_IO_MODES_SELECTORS } from './attached-io-modes.selectors';
 import { ATTACHED_IO_SELECTORS } from './attached-ios.selectors';
 import { ATTACHED_IO_PORT_MODE_INFO_ENTITY_ADAPTER, ATTACHED_IO_PORT_MODE_INFO_FEATURE, attachedIoModesIdFn, attachedIoPortModeInfoIdFn } from '../reducers';
+import { HUB_RUNTIME_DATA_SELECTORS } from './hub-runtime-data.selectors';
 
 export const ATTACHED_IO_PORT_MODE_INFO_SELECTORS = {
     selectAll: createSelector(
@@ -65,5 +66,13 @@ export const ATTACHED_IO_PORT_MODE_INFO_SELECTORS = {
             }
             return null;
         }
+    ),
+    selectIoCanOperateOutputPortModeName: (
+        { hubId, portId, portModeName }: { hubId: string; portId: number; portModeName: PortModeName }
+    ) => createSelector(
+        HUB_RUNTIME_DATA_SELECTORS.selectIsHubConnected(hubId),
+        ATTACHED_IO_SELECTORS.selectIoAtPort({ hubId, portId }),
+        ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectHubPortOutputModeForPortModeName({ hubId, portId, portModeName }),
+        (hubIsConnected, io, outputMode) => hubIsConnected && !!io && outputMode !== null
     ),
 } as const;

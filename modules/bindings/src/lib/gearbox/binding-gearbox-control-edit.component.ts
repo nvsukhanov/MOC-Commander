@@ -13,7 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
 import { ControlSchemeInputAction, HubMotorPositionFacadeService } from '@app/store';
-import { BindingControlSelectHubComponent, BindingControlSelectIoComponent } from '@app/shared-control-schemes';
+import { BindingControlSelectHubComponent, BindingControlSelectIoComponent, MotorPositionAdjustmentComponent } from '@app/shared-control-schemes';
 
 import {
     BINDING_EDIT_COMMON_SELECTORS,
@@ -38,30 +38,31 @@ import { CanSetGearboxPortPositionPipe } from './can-set-gearbox-port-position.p
     selector: 'lib-cs-binding-gearbox-control-edit',
     templateUrl: './binding-gearbox-control-edit.component.html',
     styleUrls: [ './binding-gearbox-control-edit.component.scss' ],
-    imports: [
-        BindingControlSelectControllerComponent,
-        MatButtonModule,
-        MatIconModule,
-        NgForOf,
-        NgIf,
-        ToggleControlComponent,
-        TranslocoPipe,
-        BindingControlOutputEndStateComponent,
-        PushPipe,
-        BindingControlSelectLoopingModeComponent,
-        BindingEditSectionComponent,
-        BindingControlSelectHubComponent,
-        BindingControlSelectIoComponent,
-        MatDividerModule,
-        HideOnSmallScreenDirective,
-        MatInputModule,
-        ReactiveFormsModule,
-        BindingEditSectionsContainerComponent,
-        ValidationMessagesDirective,
-        BindingControlSpeedInputComponent,
-        BindingControlPowerInputComponent,
-        CanSetGearboxPortPositionPipe
-    ],
+  imports: [
+    BindingControlSelectControllerComponent,
+    MatButtonModule,
+    MatIconModule,
+    NgForOf,
+    NgIf,
+    ToggleControlComponent,
+    TranslocoPipe,
+    BindingControlOutputEndStateComponent,
+    PushPipe,
+    BindingControlSelectLoopingModeComponent,
+    BindingEditSectionComponent,
+    BindingControlSelectHubComponent,
+    BindingControlSelectIoComponent,
+    MatDividerModule,
+    HideOnSmallScreenDirective,
+    MatInputModule,
+    ReactiveFormsModule,
+    BindingEditSectionsContainerComponent,
+    ValidationMessagesDirective,
+    BindingControlSpeedInputComponent,
+    BindingControlPowerInputComponent,
+    CanSetGearboxPortPositionPipe,
+    MotorPositionAdjustmentComponent
+  ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         { provide: BINDING_CONTROLLER_NAME_RESOLVER, useClass: GearboxControllerNameResolverService }

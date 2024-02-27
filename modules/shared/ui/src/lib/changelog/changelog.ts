@@ -7,8 +7,9 @@ export const CHANGELOG: Changelog = [
     {
         version: '1.2.2',
         changeL10nKeys: [
-            'changelog.1-2-2.featSeparateControlsForServoCwAndCcw',
             'changelog.1-2-2.featThisChangelog',
+            'changelog.1-2-2.featSeparateControlsForServoCwAndCcw',
+            'changelog.1-2-2.featMotorPositionAdjustment',
             'changelog.bugfixesAndImprovements',
         ]
     },
