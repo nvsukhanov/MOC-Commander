@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Observable, OperatorFunction, filter, of, switchMap, tap } from 'rxjs';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';
 import { Action, Store } from '@ngrx/store';
 import { GamepadProfileFactoryService, KeyboardProfileFactoryService } from '@app/controller-profiles';
-import { ScreenSizeObserverService } from '@app/shared-misc';
+import { AppUpdatedNotificationComponent, ScreenSizeObserverService } from '@app/shared-misc';
 
 import { APP_UPDATE_ACTIONS, COMMON_ACTIONS, CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS } from '../actions';
 import { CONTROLLER_SELECTORS } from '../selectors';
@@ -127,9 +127,7 @@ export class NotificationsEffects {
     public readonly displayAppUpdatedNotification$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(APP_UPDATE_ACTIONS.appUpdated),
-            this.showMessage(({ current }) => {
-                return this.translocoService.selectTranslate('common.appUpdateNotificationContent', { version: current });
-            }, { duration: Number.MAX_SAFE_INTEGER }),
+            this.showAppUpdatedNotification(),
         );
     }, { dispatch: false });
 
@@ -146,8 +144,7 @@ export class NotificationsEffects {
     }
 
     private showMessage<T extends Action>(
-        fn: (action: T) => Observable<string>,
-        config: MatSnackBarConfig = {}
+        fn: (action: T) => Observable<string>
     ): OperatorFunction<T, unknown> {
         return (source: Observable<T>) => source.pipe(
             concatLatestFrom((action) => [
@@ -161,8 +158,22 @@ export class NotificationsEffects {
                     {
                         horizontalPosition: 'end',
                         verticalPosition: isSmallScreen ? 'top' : 'bottom',
-                        duration: 5000,
-                        ...config,
+                        duration: 5000
+                    }
+                );
+            }),
+        );
+    }
+
+    private showAppUpdatedNotification<T extends Action>(): OperatorFunction<T, unknown> {
+        return (source: Observable<T>) => source.pipe(
+            tap(() => {
+                this.snackBar.openFromComponent(
+                    AppUpdatedNotificationComponent,
+                    {
+                        horizontalPosition: 'center',
+                        verticalPosition: 'bottom',
+                        duration: Number.MAX_SAFE_INTEGER
                     }
                 );
             }),

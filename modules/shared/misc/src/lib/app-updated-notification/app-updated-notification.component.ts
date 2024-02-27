@@ -1,0 +1,32 @@
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { MatSnackBarAction, MatSnackBarActions, MatSnackBarLabel, MatSnackBarRef } from '@angular/material/snack-bar';
+import { MatButton } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
+import { TranslocoPipe } from '@ngneat/transloco';
+
+import { RoutesBuilderService } from '../routing';
+
+@Component({
+    standalone: true,
+    selector: 'lib-app-updated-notification',
+    templateUrl: './app-updated-notification.component.html',
+    styleUrls: [ './app-updated-notification.component.scss' ],
+    imports: [
+        MatSnackBarLabel,
+        MatSnackBarActions,
+        MatSnackBarAction,
+        MatButton,
+        RouterLink,
+        TranslocoPipe
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class AppUpdatedNotificationComponent {
+    public readonly snackBarRef = inject(MatSnackBarRef);
+
+    public readonly routeBuilder = inject(RoutesBuilderService);
+
+    public onDismiss(): void {
+        this.snackBarRef.dismiss();
+    }
+}
