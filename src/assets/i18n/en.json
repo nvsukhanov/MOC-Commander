@@ -10,8 +10,12 @@
   "common": {
     "copyToClipboard": "Copy to clipboard",
     "copyToClipboardSuccessNotification": "Copied to clipboard",
-    "copyToClipboardErrorNotification": "Failed to copy to clipboard",
-    "appUpdateNotificationContent": "App has been updated to v{ version }"
+    "copyToClipboardErrorNotification": "Failed to copy to clipboard"
+  },
+  "appUpdatedNotification": {
+    "prefixMessage": "App has been updated, for details see",
+    "linkText": "About page",
+    "dismissButton": "Dismiss"
   },
   "adjustMotorPosition": {
     "title": "Motor position adjustment",

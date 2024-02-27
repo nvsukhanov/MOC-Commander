@@ -10,8 +10,12 @@
   "common": {
     "copyToClipboard": "Копировать в буфер обмена",
     "copyToClipboardSuccessNotification": "Скопировано в буфер обмена",
-    "copyToClipboardErrorNotification": "Не удалось скопировать в буфер обмена",
-    "appUpdateNotificationContent": "Приложение было обновлено до версии { version }"
+    "copyToClipboardErrorNotification": "Не удалось скопировать в буфер обмена"
+  },
+  "appUpdatedNotification": {
+    "prefixMessage": "Приложение было обновлено, см. ",
+    "linkText": "'О программе'",
+    "dismissButton": "Закрыть"
   },
   "adjustMotorPosition": {
     "title": "Подстройка положения мотора",
