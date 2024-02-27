@@ -73,6 +73,7 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
     --app-warning-contrast-color: #{mat.get-contrast-color-from-palette($light-warn-palette, 500)};
     --app-disabled-color: rgba(0, 0, 0, 0.38);
     --app-text-color: #{$dark-primary-text};
+    --app-label-color: rgba(0, 0, 0, 0.6);
     --app-background-color: #f4f4f4;
 
     &.mat-app-background {
@@ -93,6 +94,7 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
     --app-warning-color: #{mat.get-color-from-palette($dark-warn-palette, 500)};
     --app-warning-contrast-color: #{mat.get-contrast-color-from-palette($dark-warn-palette, 500)};
     --app-disabled-color: rgba(255, 255, 255, 0.5);
+    --app-label-color: rgba(255, 255, 255, 0.6);
     --app-text-color: #{$light-primary-text};
     --app-background-color: #{mat.get-color-from-palette($dark-palette, 900)};
 

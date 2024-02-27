@@ -1,0 +1,24 @@
+:host {
+    display: block;
+    height: 56px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.motor-controls-container {
+    display: flex;
+    grid-gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    --mat-filled-button-icon-spacing: 0;
+    --mdc-filled-button-container-height: 26px;
+}
+
+.motor-control {
+    min-width: 50px;
+    max-width: 64px;
+    flex-grow: 1;
+}

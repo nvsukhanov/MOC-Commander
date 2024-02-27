@@ -13,6 +13,12 @@
     "copyToClipboardErrorNotification": "Не удалось скопировать в буфер обмена",
     "appUpdateNotificationContent": "Приложение было обновлено до версии { version }"
   },
+  "adjustMotorPosition": {
+    "title": "Подстройка положения мотора",
+    "stepCcw": "{ step }° по часовой",
+    "stepCw": "{ step }° против часовой",
+    "goToZero": "Перейти в нулевое положение"
+  },
   "confirmationDialog": {
     "defaultTitle": "Вы уверены?",
     "defaultConfirmButtonTitle": "Да",
@@ -711,7 +717,7 @@
       "featNavigationBreadcrumbs": "Навигационные хлебные крошки",
       "featControlSchemeNameAutoGeneration": "Автоматическая генерация имени схемы управления",
       "featAxialAwarenessForStepperTrainAndGearboxControls": "Учет направления оси для типов привязок 'Шаговый двигатель', 'Поезд' и 'Коробка передач'",
-      "featReadAndSetMotorPositionDuringControlSchemeEditing": "Чтение и установка позиции мотора во время редактирования схемы управления"
+      "featReadAndSetMotorPositionDuringControlSchemeEditing": "Чтение и установка позиции мотора во время редактирования привязок 'Установка угла' и 'Коробка передач'"
     },
     "1-2-1": {
       "featFasterServoCalibration": "Оптимизирована калибровка сервопривода",
@@ -719,6 +725,7 @@
     },
     "1-2-2": {
       "featSeparateControlsForServoCwAndCcw": "Возможность назначить разные контроллеры для направлений вращения сервопривода (по часовой и против часовой)",
+      "featMotorPositionAdjustment": "Подстройка положения мотора во время редактирования привязок 'Установка угла', 'Серво' и 'Коробка передач'",
       "featThisChangelog": "История изменений в приложении"
     }
   }

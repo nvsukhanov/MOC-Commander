@@ -13,6 +13,12 @@
     "copyToClipboardErrorNotification": "Failed to copy to clipboard",
     "appUpdateNotificationContent": "App has been updated to v{ version }"
   },
+  "adjustMotorPosition": {
+    "title": "Motor position adjustment",
+    "stepCcw": "Step { step }° counter-clockwise",
+    "stepCw": "Step { step }° clockwise",
+    "goToZero": "Go to zero"
+  },
   "confirmationDialog": {
     "defaultTitle": "Are you sure?",
     "defaultConfirmButtonTitle": "Confirm",
@@ -710,8 +716,8 @@
       "featWakeLock": "Wake lock to prevent screen from turning off",
       "featNavigationBreadcrumbs": "Navigation breadcrumbs",
       "featControlSchemeNameAutoGeneration": "Control scheme name auto-generation",
-      "featAxialAwarenessForStepperTrainAndGearboxControls": "Axial input direction awareness for stepper, train and gearbox controls",
-      "featReadAndSetMotorPositionDuringControlSchemeEditing": "Read and set motor position during control scheme editing"
+      "featAxialAwarenessForStepperTrainAndGearboxControls": "Axial input direction awareness for 'Stepper', 'Train' and 'Gearbox' bindings",
+      "featReadAndSetMotorPositionDuringControlSchemeEditing": "Read and set motor position during editing 'Set angle' and 'Gearbox' bindings"
     },
     "1-2-1": {
       "featFasterServoCalibration": "Faster servo calibration",
@@ -719,6 +725,7 @@
     },
     "1-2-2": {
       "featSeparateControlsForServoCwAndCcw": "Separate controls for servo clockwise and counter-clockwise inputs",
+      "featMotorPositionAdjustment": "Fine-grained motor position adjustment during editing 'Set angle', 'Servo' and 'Gearbox' bindings",
       "featThisChangelog": "This changelog"
     }
   }

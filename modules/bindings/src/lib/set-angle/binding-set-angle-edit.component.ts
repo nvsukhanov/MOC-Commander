@@ -13,7 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
 import { ControlSchemeInputAction, HubMotorPositionFacadeService } from '@app/store';
-import { BindingControlSelectHubComponent, BindingControlSelectIoComponent } from '@app/shared-control-schemes';
+import { BindingControlSelectHubComponent, BindingControlSelectIoComponent, MotorPositionAdjustmentComponent } from '@app/shared-control-schemes';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import {
@@ -56,7 +56,8 @@ import { SetAngleControllerNameResolverService } from './set-angle-controller-na
         BindingEditSectionsContainerComponent,
         ValidationMessagesDirective,
         BindingControlSpeedInputComponent,
-        BindingControlPowerInputComponent
+        BindingControlPowerInputComponent,
+        MotorPositionAdjustmentComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [

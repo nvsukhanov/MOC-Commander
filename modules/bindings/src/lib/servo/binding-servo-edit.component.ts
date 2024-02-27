@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
-import { JsonPipe, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { MOTOR_LIMITS, PortModeName } from 'rxpoweredup';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,7 +23,7 @@ import {
     ControlSchemeInputAction,
     HubMotorPositionFacadeService
 } from '@app/store';
-import { BindingControlSelectHubComponent, BindingControlSelectIoComponent } from '@app/shared-control-schemes';
+import { BindingControlSelectHubComponent, BindingControlSelectIoComponent, MotorPositionAdjustmentComponent } from '@app/shared-control-schemes';
 
 import { ServoCalibrationDialogComponent } from './servo-calibration-dialog';
 import {
@@ -71,7 +71,7 @@ import { NO_INPUTS_ERROR } from './servo-binding-form-builder.service';
         ValidationMessagesDirective,
         BindingControlSpeedInputComponent,
         BindingControlPowerInputComponent,
-        JsonPipe
+        MotorPositionAdjustmentComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
