@@ -1,10 +1,11 @@
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { catchError, combineLatestWith, map, mergeMap, of, switchMap, takeUntil, tap } from 'rxjs';
 import { IHub, MessageLoggingMiddleware, connectHub } from 'rxpoweredup';
 import { inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { APP_CONFIG, IAppConfig, NAVIGATOR, PrefixedConsoleLoggerFactoryService, isOsLinux } from '@app/shared-misc';
+import { APP_CONFIG, IAppConfig, NAVIGATOR, PrefixedConsoleLoggerFactoryService } from '@app/shared-misc';
 
+import { SETTINGS_FEATURE } from '../../reducers';
 import { HUBS_ACTIONS, HUB_RUNTIME_DATA_ACTIONS } from '../../actions';
 import { HubStorageService } from '../../hub-storage.service';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../../hub-communication-notifier-middleware-factory.service';
@@ -20,11 +21,11 @@ export const DISCOVER_HUB_EFFECT = createEffect((
 ) => {
     return actions$.pipe(
         ofType(HUBS_ACTIONS.startDiscovery),
-        mergeMap(() => {
+        concatLatestFrom(() => store.select(SETTINGS_FEATURE.selectUseLinuxCompat)),
+        mergeMap(([, useLinuxWorkaround]) => {
             const incomingLoggerMiddleware = new MessageLoggingMiddleware(prefixedConsoleLoggerFactory.create('<'), 'all');
             const outgoingLoggerMiddleware = new MessageLoggingMiddleware(prefixedConsoleLoggerFactory.create('>'), 'all');
             const communicationNotifierMiddleware = communicationNotifierMiddlewareFactory.create();
-            const useLinuxWorkaround = isOsLinux(navigator);
 
             return connectHub(
                 navigator.bluetooth,
@@ -35,7 +36,7 @@ export const DISCOVER_HUB_EFFECT = createEffect((
                     maxMessageSendAttempts: config.maxMessageSendAttempts,
                     initialMessageSendRetryDelayMs: config.initialMessageSendRetryDelayMs,
                     defaultBufferMode: config.defaultBufferingMode,
-                    useLinuxWorkaround
+                    useLinuxWorkaround: !!useLinuxWorkaround
                 }
             ).pipe(
                 switchMap((hub: IHub) => {

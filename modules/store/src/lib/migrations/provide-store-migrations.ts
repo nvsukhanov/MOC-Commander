@@ -9,6 +9,7 @@ import { V24ToV25MigrationService } from './v24-to-v25-migration.service';
 import { V25ToV26MigrationService } from './v25-to-v26-migration.service';
 import { V26ToV27MigrationService } from './v26-to-v27-migration.service';
 import { V27ToV28MigrationService } from './v27-to-v28-migration.service';
+import { V28ToV29MigrationService } from './v28-to-v29-migration.service';
 
 export function provideStoreMigrations(): Provider[] {
     return [
@@ -19,6 +20,7 @@ export function provideStoreMigrations(): Provider[] {
         { provide: STORE_MIGRATION, useClass: V25ToV26MigrationService, multi: true },
         { provide: STORE_MIGRATION, useClass: V26ToV27MigrationService, multi: true },
         { provide: STORE_MIGRATION, useClass: V27ToV28MigrationService, multi: true },
+        { provide: STORE_MIGRATION, useClass: V28ToV29MigrationService, multi: true },
         MigrateStoreService
     ];
 }

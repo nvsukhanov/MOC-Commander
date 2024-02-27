@@ -5,6 +5,9 @@ import { Store } from '@ngrx/store';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
 import { Language } from '@app/shared-i18n';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
 import { IState, SETTINGS_ACTIONS, SETTINGS_FEATURE, UserSelectedTheme } from '@app/store';
@@ -14,6 +17,7 @@ import { RestoreStateFromBackupDialogComponent } from './restore-state-from-back
 import { ResetStateDialogComponent } from './reset-state-dialog';
 import { ThemeSelectComponent } from './theme-select';
 import { LanguageSelectComponent } from './language-select';
+import { UseLinuxCompatSelectComponent } from './use-linux-compat-select';
 
 @Component({
     standalone: true,
@@ -29,7 +33,11 @@ import { LanguageSelectComponent } from './language-select';
         ThemeSelectComponent,
         LanguageSelectComponent,
         FeatureToolbarControlsDirective,
-        FeatureToolbarBreadcrumbsDirective
+        FeatureToolbarBreadcrumbsDirective,
+        MatSlideToggle,
+        MatIcon,
+        MatTooltip,
+        UseLinuxCompatSelectComponent
     ],
     providers: [
         TitleService
@@ -40,6 +48,8 @@ export class SettingsPageComponent implements OnInit {
     public readonly currentTheme = this.store.selectSignal(SETTINGS_FEATURE.selectAppTheme);
 
     public readonly currentLanguage = this.store.selectSignal(SETTINGS_FEATURE.selectLanguage);
+
+    public readonly useLinuxCompat = this.store.selectSignal(SETTINGS_FEATURE.selectUseLinuxCompat);
 
     public readonly breadcrumbsDef: ReadonlyArray<IBreadcrumbDefinition> = [
         {
@@ -71,6 +81,12 @@ export class SettingsPageComponent implements OnInit {
         nextLanguage: Language
     ): void {
         this.store.dispatch(SETTINGS_ACTIONS.setLanguage({ language: nextLanguage }));
+    }
+
+    public onUseLinuxCompatChange(
+        useLinuxCompat: boolean
+    ): void {
+        this.store.dispatch(SETTINGS_ACTIONS.setLinuxCompat({ useLinuxCompat }));
     }
 
     public onStateDump(): void {

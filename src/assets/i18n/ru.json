@@ -95,7 +95,12 @@
     "resetStateDialogTitle": "Сброс состояния приложения",
     "resetStateDialogDescription": "Сброс состояния приложения перезапишет текущие настройки. Приложение будет перезапущено. Это действие будет невозможно отменить.",
     "resetStateDialogConfirmButtonTitle": "Сброс",
-    "resetStateDialogCancelButtonTitle": "Отмена"
+    "resetStateDialogCancelButtonTitle": "Отмена",
+    "useLinuxCompatibleBluetoothApi": "Использовать режим совместимости с Linux",
+    "useLinuxCompatibleBluetoothApiEnabled": "Включено",
+    "useLinuxCompatibleBluetoothApiDisabled": "Выключено",
+    "useLinuxCompatibleBluetoothApiDescription": "Включение этой опции может помочь с подключением к некоторым типам хабов, но может увеличить задержку при передаче данных. Изменения настройки вступят в силу для следующего подключения к хабу."
+
   },
   "language": {
     "en": "English",
@@ -730,6 +735,7 @@
     "1-2-2": {
       "featSeparateControlsForServoCwAndCcw": "Возможность назначить разные контроллеры для направлений вращения сервопривода (по часовой и против часовой)",
       "featMotorPositionAdjustment": "Подстройка положения мотора во время редактирования привязок 'Установка угла', 'Серво' и 'Коробка передач'",
+      "featUseLinuxCompatSetting": "Настройка совместимости с Linux сделана доступной для изменения",
       "featThisChangelog": "История изменений в приложении"
     }
   }
