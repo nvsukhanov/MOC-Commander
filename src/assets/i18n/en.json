@@ -703,30 +703,30 @@
       "initialRelease": "Initial release"
     },
     "1-0-1": {
-      "featIncreaseGamepadReadFrequency": "Increase gamepad read frequency"
+      "featIncreaseGamepadReadFrequency": "Increased gamepad read frequency"
     },
     "1-1-0": {
-      "featAddInstallationInstructions": "Installation instructions for Steam Deck, Windows and Linux",
-      "featAddSteamDeckControllerProfile": "Add Steam Deck controller profile",
-      "featMakeAppInstallableAsPWA": "App is now installable as PWA",
+      "featAddInstallationInstructions": "Installation instructions for Steam Deck, Windows, and Linux",
+      "featAddSteamDeckControllerProfile": "Addition of a Steam Deck controller profile",
+      "featMakeAppInstallableAsPWA": "The app is now installable as a PWA (Progressive Web App)",
       "featWidgets": "Control scheme widgets"
     },
     "1-2-0": {
-      "featUnsavedChangesNotifications": "Unsaved changes notifications for pages with forms",
-      "featWakeLock": "Wake lock to prevent screen from turning off",
+      "featUnsavedChangesNotifications": "Notifications for unsaved changes on pages with forms",
+      "featWakeLock": "Wake lock to prevent the screen from turning off when a control scheme is running",
       "featNavigationBreadcrumbs": "Navigation breadcrumbs",
-      "featControlSchemeNameAutoGeneration": "Control scheme name auto-generation",
-      "featAxialAwarenessForStepperTrainAndGearboxControls": "Axial input direction awareness for 'Stepper', 'Train' and 'Gearbox' bindings",
-      "featReadAndSetMotorPositionDuringControlSchemeEditing": "Read and set motor position during editing 'Set angle' and 'Gearbox' bindings"
+      "featControlSchemeNameAutoGeneration": "Auto-generation of control scheme names",
+      "featAxialAwarenessForStepperTrainAndGearboxControls": "Axial input direction awareness for 'Stepper', 'Train', and 'Gearbox' bindings",
+      "featReadAndSetMotorPositionDuringControlSchemeEditing": "Ability to read and set motor position during editing of 'Set angle' and 'Gearbox' bindings"
     },
     "1-2-1": {
       "featFasterServoCalibration": "Faster servo calibration",
-      "featAppUpdatedNotification": "Display a notification when the app is updated"
+      "featAppUpdatedNotification": "Display of a notification when the app is updated"
     },
     "1-2-2": {
       "featSeparateControlsForServoCwAndCcw": "Separate controls for servo clockwise and counter-clockwise inputs",
-      "featMotorPositionAdjustment": "Fine-grained motor position adjustment during editing 'Set angle', 'Servo' and 'Gearbox' bindings",
-      "featThisChangelog": "This changelog"
+      "featMotorPositionAdjustment": "Fine-grained motor position adjustment during editing of 'Set angle', 'Servo', and 'Gearbox' bindings",
+      "featThisChangelog": "Addition of this changelog"
     }
   }
 }
