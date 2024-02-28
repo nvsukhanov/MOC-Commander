@@ -19,7 +19,7 @@ LEGO® is a trademark of the LEGO Group of companies which does not sponsor, aut
         - Up to 4 gamepads
         - [LEGO 88010 Remote Control](https://www.lego.com/en-us/product/remote-control-88010)
         - Steam Deck ([installation manual](https://moc-commander.com/steam-deck))
-        - PoweredUP Hub green button (god knows why you would want to use it, but it's there)
+        - PoweredUP Hub green button
     - Any number of input devices can be used to control any number of outputs
     - Input devices can be configured: gamepad axes active zones, input gain (liner/log/exp) etc
 
@@ -39,13 +39,21 @@ LEGO® is a trademark of the LEGO Group of companies which does not sponsor, aut
         - Gearbox
     - Allows fine-tuning of operation mode parameters such as speed limits, power output, angle limits, etc.
     - Supports acceleration and deceleration profiles (slow start and slow stop, especially useful for trains)
-    - Allow reading of motor position during the configuration of the control schemes
+    - Allows reading and adjusting of motor position during the configuration of control schemes
 
 - ## Misc
     - Supports reading of sensor data (voltage, tilt, etc) and displaying it during operation
-    - Import/export of control bindings configuration
+    - Import/export of control schemes
     - Backup/restore application state
     - Supports small screen devices
+    - Supports dark theme
+    - Installable as a PWA
+
+- ## Supported platforms
+    - Windows
+    - macOS
+    - Linux
+    - Android
 
 # Limitations
 
