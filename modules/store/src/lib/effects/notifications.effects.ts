@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Observable, OperatorFunction, filter, of, switchMap, tap } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';
 import { Action, Store } from '@ngrx/store';
 import { GamepadProfileFactoryService, KeyboardProfileFactoryService } from '@app/controller-profiles';
@@ -11,6 +11,7 @@ import { APP_UPDATE_ACTIONS, COMMON_ACTIONS, CONTROLLERS_ACTIONS, CONTROL_SCHEME
 import { CONTROLLER_SELECTORS } from '../selectors';
 import { ControllerModel } from '../models';
 import { ControllerProfilesFacadeService } from '../controller-profiles-facade.service';
+import { OutOfRangeCalibrationError } from '../hub-facades';
 
 @Injectable()
 export class NotificationsEffects {
@@ -38,7 +39,11 @@ export class NotificationsEffects {
     public readonly servoCalibrationErrorNotification$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(CONTROL_SCHEME_ACTIONS.servoCalibrationError),
-            this.showMessage(() => this.translocoService.selectTranslate('controlScheme.servoBinding.calibrationError')),
+            this.showMessage((action) => {
+                return action.error instanceof OutOfRangeCalibrationError
+                    ? this.translocoService.selectTranslate('controlScheme.servoBinding.calibrationOutOfRangeError')
+                    : this.translocoService.selectTranslate('controlScheme.servoBinding.calibrationError');
+            }, { duration: Number.MAX_SAFE_INTEGER })
         );
     }, { dispatch: false });
 
@@ -120,7 +125,12 @@ export class NotificationsEffects {
     public readonly startSchemeFailed$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(CONTROL_SCHEME_ACTIONS.schemeStartFailed),
-            this.showMessage(() => this.translocoService.selectTranslate('controlScheme.runFailed')),
+            this.showMessage((action) => {
+                return action.reason instanceof OutOfRangeCalibrationError
+                       ? this.translocoService.selectTranslate('controlScheme.runFailedCalibrationOutOfRange')
+                       : this.translocoService.selectTranslate('controlScheme.runFailed');
+                }, { duration: Number.MAX_SAFE_INTEGER }
+            ),
         );
     }, { dispatch: false });
 
@@ -144,7 +154,8 @@ export class NotificationsEffects {
     }
 
     private showMessage<T extends Action>(
-        fn: (action: T) => Observable<string>
+        fn: (action: T) => Observable<string>,
+        config: MatSnackBarConfig = {}
     ): OperatorFunction<T, unknown> {
         return (source: Observable<T>) => source.pipe(
             concatLatestFrom((action) => [
@@ -158,7 +169,8 @@ export class NotificationsEffects {
                     {
                         horizontalPosition: 'end',
                         verticalPosition: isSmallScreen ? 'top' : 'bottom',
-                        duration: 5000
+                        duration: 5000,
+                        ...config
                     }
                 );
             }),

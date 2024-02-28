@@ -47,7 +47,7 @@ export const PRE_RUN_SCHEME_EFFECT = createEffect((
             return forkJoin(combinedTasks).pipe(
                 timeout(appConfig.schemeStartStopTimeoutMs),
                 map(() => CONTROL_SCHEME_ACTIONS.schemeStarted({ name: scheme.name })),
-                catchError(() => of(CONTROL_SCHEME_ACTIONS.schemeStartFailed()))
+                catchError((e) => of(CONTROL_SCHEME_ACTIONS.schemeStartFailed({ reason: e })))
             );
         })
     );

@@ -34,6 +34,9 @@ class MaxDistanceReachedError extends Error {
     }
 }
 
+export class OutOfRangeCalibrationError extends Error {
+}
+
 export enum CalibrationResultType {
     finished,
     error
@@ -106,12 +109,16 @@ export class HubServoCalibrationFacadeService {
             switchMap(({ startAbsolutePosition, startRelativePosition, positionModeId }) => {
                 return this.getServoRange(hubId, portId, positionModeId, speed, power, calibrationRuns).pipe(
                     map((result) => {
-                        return this.calculateServoCalibrationResults(
+                        const calibrationResult = this.calculateServoCalibrationResults(
                             result.ccwProbeResult,
                             result.cwProbeResult,
                             startRelativePosition,
                             startAbsolutePosition
                         );
+                        if (calibrationResult.servoRange > MOTOR_LIMITS.maxServoDegreesRange) {
+                            throw new OutOfRangeCalibrationError();
+                        }
+                        return calibrationResult;
                     }),
                 );
             }),
@@ -267,7 +274,7 @@ export class HubServoCalibrationFacadeService {
         const arcCenterAbsolutePosition = Math.round(transformRelativeDegToAbsoluteDeg(arcCenterPosition + encoderOffset));
 
         return {
-            servoRange: servoRange > MOTOR_LIMITS.maxServoDegreesRange ? MOTOR_LIMITS.maxServoDegreesRange : servoRange,
+            servoRange: servoRange,
             arcCenterPosition,
             arcCenterAbsolutePosition
         };
