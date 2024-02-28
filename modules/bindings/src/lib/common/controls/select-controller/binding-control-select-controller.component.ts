@@ -12,6 +12,7 @@ import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shar
 import { HideOnSmallScreenDirective } from '@app/shared-ui';
 import { ControlSchemeBindingInputs, ControlSchemeInputAction, ControllerInputModel, InputDirection } from '@app/store';
 import { FullControllerInputNamePipe, WaitForControllerInputDialogComponent } from '@app/shared-control-schemes';
+import { ControllerInputType } from '@app/controller-profiles';
 
 import { InputFormGroup, OptionalInputFormGroup } from '../../input-form-group';
 import { BINDING_CONTROLLER_NAME_RESOLVER, IBindingControllerNameResolver } from '../../../i-binding-controller-name-resolver';
@@ -137,14 +138,25 @@ export class BindingControlSelectControllerComponent<T extends ControlSchemeBind
             if (!result || !this.data?.inputFormGroup) {
                 return;
             }
-            this.data.inputFormGroup.controls.controllerId.setValue(result.controllerId);
-            this.data.inputFormGroup.controls.inputId.setValue(result.inputId);
-            this.data.inputFormGroup.controls.inputType.setValue(result.inputType);
-            this.data.inputFormGroup.controls.inputDirection.setValue(result.value < 0 ? InputDirection.Negative : InputDirection.Positive);
-            this.data.inputFormGroup.markAsDirty();
-            this.data.inputFormGroup.markAsTouched();
-            this.data.inputFormGroup.updateValueAndValidity();
+            this.updateFormWithControllerInput(this.data.inputFormGroup, result);
             this.cd.detectChanges();
         });
+    }
+
+    private updateFormWithControllerInput(
+        formGroup: InputFormGroup | OptionalInputFormGroup,
+        result: ControllerInputModel
+    ): void {
+        formGroup.controls.controllerId.setValue(result.controllerId);
+        formGroup.controls.inputId.setValue(result.inputId);
+        formGroup.controls.inputType.setValue(result.inputType);
+        formGroup.controls.inputDirection.setValue(result.value < 0 ? InputDirection.Negative : InputDirection.Positive);
+        if (result.inputType === ControllerInputType.ButtonGroup) {
+            formGroup.controls.buttonId.setValue(result.buttonId ?? null);
+            formGroup.controls.portId.setValue(result.portId ?? null);
+        }
+        formGroup.markAsDirty();
+        formGroup.markAsTouched();
+        formGroup.updateValueAndValidity();
     }
 }

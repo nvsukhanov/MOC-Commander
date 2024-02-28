@@ -241,7 +241,7 @@
     "inputGainExponential": "Экспоненциальное",
     "fullControllerInputName": "{controllerName} / {inputName}",
     "fullControllerInputNameWithDirection": "{controllerName} / {inputName} ({inputDirection, select, 0 {+} other {-}})",
-    "controllerInputNameWithPort": "Port {portId} / {inputName}",
+    "controllerInputNameWithPort": "Порт {portId} / {inputName}",
     "loopingModeTitle": "Циклический режим",
     "loopingModeNone": "Отсутствует",
     "loopingModeWrap": "Перенос",
