@@ -6,13 +6,15 @@ import { ButtonGroupButtonId } from 'rxpoweredup';
 import { ControllerInputType, IControllerProfile } from '@app/controller-profiles';
 import { CONTROLLER_CONNECTION_SELECTORS, ControlSchemeInput, ControllerProfilesFacadeService } from '@app/store';
 import { FullControllerInputNameData } from '@app/shared-control-schemes';
+import { PortIdToPortNameService } from '@app/shared-ui';
 
 @Injectable()
 export class ControllerInputNameService {
     constructor(
         protected readonly store: Store,
         protected readonly translocoService: TranslocoService,
-        protected readonly controllerProfilesFacadeService: ControllerProfilesFacadeService
+        protected readonly controllerProfilesFacadeService: ControllerProfilesFacadeService,
+        private readonly portIdToPortNameService: PortIdToPortNameService
     ) {
     }
 
@@ -51,7 +53,12 @@ export class ControllerInputNameService {
                        ? profile$.pipe(
                         switchMap((p) => p.getButtonName$(inputData.buttonId as ButtonGroupButtonId)),
                         switchMap((inputName) =>
-                            this.translocoService.selectTranslate('controlScheme.controllerInputNameWithPort', { inputName, portId: inputData.portId })
+                            this.translocoService.selectTranslate('controlScheme.controllerInputNameWithPort', {
+                                inputName,
+                                portId: inputData.portId === undefined
+                                    ? inputData.portId
+                                    : this.portIdToPortNameService.mapPortId(inputData.portId)
+                            })
                         )
                     )
                        : this.translocoService.selectTranslate('controllerProfiles.hub.unknownButton');

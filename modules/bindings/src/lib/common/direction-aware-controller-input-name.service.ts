@@ -5,6 +5,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { CONTROLLER_CONNECTION_SELECTORS, ControlSchemeInput, ControllerProfilesFacadeService } from '@app/store';
 import { FullControllerInputNameData } from '@app/shared-control-schemes';
 import { ControllerInputType } from '@app/controller-profiles';
+import { PortIdToPortNameService } from '@app/shared-ui';
 
 import { ControllerInputNameService } from './controller-input-name.service';
 
@@ -14,9 +15,10 @@ export class DirectionAwareControllerInputNameService extends ControllerInputNam
     constructor(
         store: Store,
         translocoService: TranslocoService,
-        controllerProfilesFacadeService: ControllerProfilesFacadeService
+        controllerProfilesFacadeService: ControllerProfilesFacadeService,
+        portIdToPortNameService: PortIdToPortNameService
     ) {
-        super(store, translocoService, controllerProfilesFacadeService);
+        super(store, translocoService, controllerProfilesFacadeService, portIdToPortNameService);
     }
 
     public override getFullControllerInputNameData(
