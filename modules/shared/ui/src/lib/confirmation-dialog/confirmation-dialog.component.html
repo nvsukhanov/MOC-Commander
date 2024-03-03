@@ -2,11 +2,11 @@
     {{ title$ | ngrxPush }}
 </h1>
 
-<ng-container *ngrxLet="content$ as content">
+@if (content$ | ngrxPush; as content) {
     <div mat-dialog-content>
         {{ content }}
     </div>
-</ng-container>
+}
 
 <div mat-dialog-actions
      [align]="'end'"

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { LetDirective, PushPipe } from '@ngrx/component';
+import { PushPipe } from '@ngrx/component';
 import { MatDividerModule } from '@angular/material/divider';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatSelectModule } from '@angular/material/select';
@@ -24,7 +24,6 @@ import { BindingEditDetailsRenderDirective } from './binding-edit-details-render
         MatDividerModule,
         BindingEditSectionComponent,
         TranslocoPipe,
-        LetDirective,
         HideOnSmallScreenDirective,
         MatSelectModule,
         BindingTypeToL10nKeyPipe,

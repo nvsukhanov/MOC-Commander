@@ -2,23 +2,23 @@
     {{ 'controlScheme.createBindingWaitingForInputTitle' | transloco }}
 </h1>
 
-<div *ngrxLet="controllerNames$ as controllerNames"
-     mat-dialog-content
->
-    <p>
-        {{ 'controlScheme.createBindingWaitingForInputContent' | transloco }}
-    </p>
-    @if (controllerNames.length) {
+@if (controllerNames$ | ngrxPush; as controllerNames) {
+    <div mat-dialog-content>
         <p>
-            {{ 'controller.connectedControllers' | transloco }}
+            {{ 'controlScheme.createBindingWaitingForInputContent' | transloco }}
         </p>
-        @for (controllerName of controllerNames; track controllerName) {
-            <p class="controller-name">
-                {{ controllerName }}
+        @if (controllerNames.length) {
+            <p>
+                {{ 'controller.connectedControllers' | transloco }}
             </p>
+            @for (controllerName of controllerNames; track controllerName) {
+                <p class="controller-name">
+                    {{ controllerName }}
+                </p>
+            }
         }
-    }
-</div>
+    </div>
+}
 
 <div mat-dialog-actions
      [align]="'end'">

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Observable, Subscription } from 'rxjs';
 import { NgTemplateOutlet } from '@angular/common';
-import { LetDirective, PushPipe } from '@ngrx/component';
+import { PushPipe } from '@ngrx/component';
 
 import { FeatureToolbarService } from './feature-toolbar-service';
 import { BreadcrumbsComponent, IBreadcrumbDefinition } from '../breadcrumbs';
@@ -16,7 +16,6 @@ import { HideOnSmallScreenDirective } from '../hide-on-small-screen.directive';
     styleUrls: [ './feature-toolbar.component.scss' ],
     imports: [
         MatToolbarModule,
-        LetDirective,
         NgTemplateOutlet,
         PushPipe,
         BreadcrumbsComponent,

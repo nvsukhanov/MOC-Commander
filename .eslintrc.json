@@ -204,6 +204,11 @@
                 "name": "@angular/common",
                 "importNames": [ "NgForOf" ],
                 "message": "Use flow syntax instead of *ngFor"
+              },
+              {
+                "name": "@ngrx/component",
+                "importNames": [ "LetDirective" ],
+                "message": "Use @if flow syntax instead of *ngrxLet"
               }
             ]
           }
