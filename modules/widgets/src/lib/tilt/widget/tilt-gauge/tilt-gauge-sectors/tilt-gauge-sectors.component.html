@@ -3,19 +3,21 @@
      [attr.viewBox]="viewBox"
 >
     <defs>
-        <clipPath *ngFor="let sectorDef of sectors; trackBy: trackByFn"
-                  [attr.id]="sectorDef.id"
-        >
-            <path [attr.d]="sectorDef.cutoffPath"/>
-        </clipPath>
+        @for (sectorDef of sectors; track sectorDef.id) {
+            <clipPath [attr.id]="sectorDef.id">
+                <path [attr.d]="sectorDef.cutoffPath"/>
+            </clipPath>
+        }
     </defs>
-    <circle *ngFor="let sectorDef of sectors; trackBy: trackByFn"
-            [attr.cx]="0"
-            [attr.cy]="0"
-            [attr.r]="sectorDef.radius"
-            [attr.stroke-width]="sectorDef.width"
-            [attr.clip-path]="sectorDef.clipPathId"
-            class="gauge-sector"
-            [class.gauge-sector_active]="tiltDegrees | libTiltGaugeSectorHighlight: sectorDef"
-    />
+
+    @for (sectorDef of sectors; track sectorDef.id) {
+        <circle [attr.cx]="0"
+                [attr.cy]="0"
+                [attr.r]="sectorDef.radius"
+                [attr.stroke-width]="sectorDef.width"
+                [attr.clip-path]="sectorDef.clipPathId"
+                class="gauge-sector"
+                [class.gauge-sector_active]="tiltDegrees | libTiltGaugeSectorHighlight: sectorDef"
+        />
+    }
 </svg>

@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
@@ -19,7 +18,6 @@ import { IHubTreeNodeViewModel, IO_TREE_NODE_SELECTORS } from './io-tree-node.se
     templateUrl: './io-tree-node.component.html',
     styleUrls: [ './io-tree-node.component.scss' ],
     imports: [
-        NgIf,
         IoInlineViewComponent,
         MatIconModule,
         TranslocoPipe,

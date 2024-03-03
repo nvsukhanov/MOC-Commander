@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
-import { NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatInputModule } from '@angular/material/input';
 import { ValidationMessagesDirective } from '@app/shared-misc';
@@ -13,7 +12,6 @@ import { ValidationMessagesDirective } from '@app/shared-misc';
     styleUrls: [ './binding-control-power-input.component.scss' ],
     imports: [
         MatSliderModule,
-        NgIf,
         ReactiveFormsModule,
         TranslocoPipe,
         MatInputModule,

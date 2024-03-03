@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
-import { NgIf } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { MatDividerModule } from '@angular/material/divider';
-import { PushPipe } from '@ngrx/component';
 import { ScreenSizeObserverService } from '@app/shared-misc';
 
 @Component({
@@ -11,9 +9,7 @@ import { ScreenSizeObserverService } from '@app/shared-misc';
     templateUrl: './binding-edit-section.component.html',
     styleUrls: [ './binding-edit-section.component.scss' ],
     imports: [
-        NgIf,
         MatDividerModule,
-        PushPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

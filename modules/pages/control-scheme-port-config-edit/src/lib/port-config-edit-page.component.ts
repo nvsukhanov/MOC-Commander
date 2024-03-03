@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { JsonPipe, NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -30,9 +29,7 @@ import { PortConfigEditViewModel } from './port-config-edit-view-model';
     templateUrl: './port-config-edit-page.component.html',
     styleUrls: [ './port-config-edit-page.component.scss' ],
     imports: [
-        NgIf,
         PushPipe,
-        JsonPipe,
         HintComponent,
         MatCardModule,
         MatInputModule,

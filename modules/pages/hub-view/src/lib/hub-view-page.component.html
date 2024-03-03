@@ -1,4 +1,4 @@
-<ng-container *ngIf="selectedHub$ | ngrxPush; let hub; else hubNotFound">
+@if (selectedHub$ | ngrxPush; as hub) {
     <div *libFeatureToolbarControls
          [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | ngrxPush"
          class="toolbar-panel"
@@ -17,30 +17,28 @@
         </button>
     </div>
 
-    <ng-container *ngIf="selectedHubRuntimeData$ | ngrxPush; else hubIsNotConnected">
+    @if (selectedHubRuntimeData$ | ngrxPush) {
         <page-hub-view-hub-properties-view class="hub-properties-view"
                                            [configuration]="hub"
                                            [runtimeData]="selectedHubRuntimeData$ | ngrxPush"
         ></page-hub-view-hub-properties-view>
 
-        <ng-container *ngrxLet="ioFullInfoList$ as iosFullInfoList">
-            <ul class="io-list"
-                *ngIf="iosFullInfoList.length"
-            >
-                <li *ngFor="let ioFullInfo of iosFullInfoList; trackBy: hubIoTrackByFn">
-                    <page-hub-view-hub-port-view class="io-list__item"
-                                                 [hubIoViewModel]="ioFullInfo"
-                    ></page-hub-view-hub-port-view>
-                </li>
-            </ul>
-        </ng-container>
-    </ng-container>
-
-    <ng-template #hubIsNotConnected>
+        @if (ioFullInfoList$ | ngrxPush; as iosFullInfoList) {
+            @if (iosFullInfoList.length) {
+                <ul class="io-list">
+                    @for (ioFullInfo of iosFullInfoList; track hubIoTrackByFn) {
+                        <li>
+                            <page-hub-view-hub-port-view class="io-list__item"
+                                                         [hubIoViewModel]="ioFullInfo"
+                            ></page-hub-view-hub-port-view>
+                        </li>
+                    }
+                </ul>
+            }
+        }
+    } @else {
         <lib-hint>{{ 'hub.isNotConnected' | transloco:(selectedHub$ | ngrxPush) }}</lib-hint>
-    </ng-template>
-</ng-container>
-
-<ng-template #hubNotFound>
+    }
+} @else {
     <lib-hint>{{ 'hub.isNotFound' | transloco }}</lib-hint>
-</ng-template>
+}

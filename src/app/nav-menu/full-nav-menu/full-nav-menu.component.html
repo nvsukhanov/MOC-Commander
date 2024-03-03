@@ -18,11 +18,12 @@
                 >
                     <mat-icon [fontIcon]="'gamepad'"></mat-icon>
                     {{ 'nav.controllersList' | transloco }}
-                    <span *ngIf="connectedControllersCount"
-                          class="counter"
-                    >
-                        ({{ connectedControllersCount }})
-                    </span>
+
+                    @if (connectedControllersCount) {
+                        <span class="counter">
+                            ({{ connectedControllersCount }})
+                        </span>
+                    }
                 </a>
 
                 <a mat-button
@@ -31,11 +32,12 @@
                 >
                     <mat-icon [fontIcon]="'memory'"></mat-icon>
                     {{ 'nav.hubsList' | transloco }}
-                    <span *ngIf="connectedHubCount"
-                          class="counter"
-                    >
-                        ({{ connectedHubCount }})
-                    </span>
+
+                    @if (connectedHubCount) {
+                        <span class="counter">
+                            ({{ connectedHubCount }})
+                        </span>
+                    }
                 </a>
 
                 <a mat-button
@@ -44,11 +46,11 @@
                 >
                     <mat-icon [fontIcon]="'display_settings'"></mat-icon>
                     {{ 'nav.controlSchemesList' | transloco }}
-                    <span *ngIf="controlSchemesCount"
-                          class="counter"
-                    >
-                        ({{ controlSchemesCount }})
-                    </span>
+                    @if (controlSchemesCount) {
+                        <span class="counter">
+                            ({{ controlSchemesCount }})
+                        </span>
+                    }
                 </a>
             </span>
         </span>

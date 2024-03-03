@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Observable, Subscription, filter, map, of, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { LetDirective, PushPipe } from '@ngrx/component';
-import { NgForOf, NgIf } from '@angular/common';
+import { PushPipe } from '@ngrx/component';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
@@ -31,12 +30,14 @@ import { ControlSchemePageFullToolbarControlsComponent } from './full-toolbar-co
 import {
     AddWidgetDialogComponent,
     AddWidgetDialogViewModel,
+    CONTROL_SCHEME_RUN_WIDGET_BLOCKERS_CHECKER,
+    CONTROL_SCHEME_WIDGET_CONFIG_FACTORY,
     ControlSchemeWidgetsGridComponent,
     EditWidgetSettingsDialogComponent,
+    IControlSchemeRunWidgetBlockersChecker,
+    IControlSchemeWidgetConfigFactory,
     ReorderWidgetDialogComponent
 } from './widgets';
-import { CONTROL_SCHEME_WIDGET_CONFIG_FACTORY, IControlSchemeWidgetConfigFactory } from './widgets/i-control-scheme-widget-config-factory';
-import { CONTROL_SCHEME_RUN_WIDGET_BLOCKERS_CHECKER, IControlSchemeRunWidgetBlockersChecker } from './widgets/i-control-scheme-run-widget-blockers-checker';
 
 @Component({
     standalone: true,
@@ -46,7 +47,6 @@ import { CONTROL_SCHEME_RUN_WIDGET_BLOCKERS_CHECKER, IControlSchemeRunWidgetBloc
     imports: [
         PushPipe,
         TranslocoPipe,
-        NgIf,
         MatCardModule,
         ControlSchemeViewIoListComponent,
         ControlSchemeGeneralInfoComponent,
@@ -56,10 +56,8 @@ import { CONTROL_SCHEME_RUN_WIDGET_BLOCKERS_CHECKER, IControlSchemeRunWidgetBloc
         ControlSchemePageCompactToolbarControlsComponent,
         ControlSchemePageFullToolbarControlsComponent,
         MatDialogModule,
-        NgForOf,
         MatIconModule,
         ControlSchemeRunBlockersL10nPipe,
-        LetDirective,
         ControlSchemeWidgetsGridComponent,
         FeatureToolbarBreadcrumbsDirective
     ],

@@ -1,4 +1,4 @@
-<ng-container *ngIf="initialBindingData$ | ngrxPush; let initialData; else unableToCreateBinding">
+@if (initialBindingData$ | ngrxPush; as initialData) {
     <lib-cs-binding-edit [binding]="initialData"
                          (bindingChange)="onBindingChange($event)"
                          (bindingFormDirtyChange)="onFormDirtyChange($event)"
@@ -20,10 +20,8 @@
             {{ 'controlScheme.cancelCreate' | transloco }}
         </button>
     </div>
-</ng-container>
-
-<ng-template #unableToCreateBinding>
+} @else {
     <lib-hint>
         {{ 'controlScheme.cannotCreateBinding' | transloco }}
     </lib-hint>
-</ng-template>
+}

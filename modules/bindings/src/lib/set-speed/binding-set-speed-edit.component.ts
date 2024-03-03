@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { NgIf } from '@angular/common';
 import { merge } from 'rxjs';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatDividerModule } from '@angular/material/divider';
@@ -31,7 +30,6 @@ import { SetSpeedControllerNameResolverService } from './set-speed-controller-na
     templateUrl: './binding-set-speed-edit.component.html',
     styleUrls: [ './binding-set-speed-edit.component.scss' ],
     imports: [
-        NgIf,
         BindingEditSectionComponent,
         TranslocoPipe,
         BindingControlSelectHubComponent,

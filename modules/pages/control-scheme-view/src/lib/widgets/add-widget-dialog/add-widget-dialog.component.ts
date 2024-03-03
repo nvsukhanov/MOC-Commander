@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { LetDirective, PushPipe } from '@ngrx/component';
+import { PushPipe } from '@ngrx/component';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgForOf, NgIf } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { WidgetConfigModel } from '@app/store';
 import { WidgetTypeToL10nKeyPipe } from '@app/shared-control-schemes';
@@ -24,13 +23,10 @@ import { WidgetConnectionInfoL10nPipe } from '../widget-connection-info-l10n.pip
         PushPipe,
         TranslocoPipe,
         ReactiveFormsModule,
-        NgForOf,
         WidgetTypeToL10nKeyPipe,
         MatSelectModule,
         WidgetSettingsContainerComponent,
-        NgIf,
         WidgetConnectionInfoL10nPipe,
-        LetDirective,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

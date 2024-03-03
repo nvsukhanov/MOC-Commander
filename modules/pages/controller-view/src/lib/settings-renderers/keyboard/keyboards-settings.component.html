@@ -1,4 +1,4 @@
-<ng-container *ngIf="formGroup">
+@if (formGroup) {
     <section class="keyboard-settings-section">
         <page-controller-view-control-ignore-input [control]="formGroup.controls.ignoreInput"
         ></page-controller-view-control-ignore-input>
@@ -8,7 +8,7 @@
             {{ 'controllerProfiles.keyboard.captureNonAlphaNumerics' | transloco }}
         </mat-slide-toggle>
         <span class="capture-non-alpha-numerics-hint">
-        ({{ 'controllerProfiles.keyboard.captureNonAlphaNumericsHint' | transloco }})
-    </span>
+            ({{ 'controllerProfiles.keyboard.captureNonAlphaNumericsHint' | transloco }})
+        </span>
     </section>
-</ng-container>
+}

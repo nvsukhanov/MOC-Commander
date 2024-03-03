@@ -8,16 +8,16 @@
     <p>
         {{ 'controlScheme.createBindingWaitingForInputContent' | transloco }}
     </p>
-    <ng-container *ngIf="controllerNames.length">
+    @if (controllerNames.length) {
         <p>
             {{ 'controller.connectedControllers' | transloco }}
         </p>
-        <p *ngFor="let controllerName of controllerNames"
-           class="controller-name"
-        >
-            {{ controllerName }}
-        </p>
-    </ng-container>
+        @for (controllerName of controllerNames; track controllerName) {
+            <p class="controller-name">
+                {{ controllerName }}
+            </p>
+        }
+    }
 </div>
 
 <div mat-dialog-actions

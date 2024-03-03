@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
-import { NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { IdGeneratorService, getFormControlMaxValue, getFormControlMinValue } from '@app/shared-misc';
 
@@ -12,7 +11,6 @@ import { IdGeneratorService, getFormControlMaxValue, getFormControlMinValue } fr
     styleUrls: [ './range-control.component.scss' ],
     imports: [
         MatSliderModule,
-        NgIf,
         ReactiveFormsModule,
         TranslocoPipe
     ],

@@ -7,13 +7,15 @@
                 {{ title }}
             </span>
 
-            <button *ngIf="canBeEdited || canBeDeleted"
-                    mat-icon-button
-                    [matMenuTriggerFor]="widgetMenu"
-                    class="widget__title-menu-button"
-            >
-                <mat-icon [fontIcon]="'more_vert'"></mat-icon>
-            </button>
+            @if (canBeEdited || canBeDeleted) {
+                <button mat-icon-button
+                        [matMenuTriggerFor]="widgetMenu"
+                        class="widget__title-menu-button"
+                >
+                    <mat-icon [fontIcon]="'more_vert'"></mat-icon>
+                </button>
+            }
+
             <mat-menu #widgetMenu="matMenu">
                 <button [disabled]="!canBeEdited"
                         mat-menu-item

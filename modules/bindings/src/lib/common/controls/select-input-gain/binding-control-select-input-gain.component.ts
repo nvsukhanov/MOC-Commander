@@ -3,7 +3,6 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { getEnumValues } from '@app/shared-misc';
 import { MotorServoEndStateL10nKeyPipe } from '@app/shared-ui';
@@ -22,8 +21,6 @@ import { InputGainL10nKeyPipe } from './input-gain-l10n-key.pipe';
         MatOptionModule,
         MatSelectModule,
         MotorServoEndStateL10nKeyPipe,
-        NgForOf,
-        NgIf,
         TranslocoPipe,
         ReactiveFormsModule,
         InputGainL10nKeyPipe

@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { NgIf } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { LetDirective, PushPipe } from '@ngrx/component';
+import { PushPipe } from '@ngrx/component';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { HubInlineViewComponent } from '@app/shared-ui';
 
@@ -15,9 +14,7 @@ import { HUB_TREE_NODE_SELECTORS, IHubTreeNodeViewModel } from './hub-tree-node.
     templateUrl: './hub-tree-node.component.html',
     styleUrls: [ './hub-tree-node.component.scss' ],
     imports: [
-        NgIf,
         HubInlineViewComponent,
-        LetDirective,
         PushPipe,
         TranslocoPipe
     ],

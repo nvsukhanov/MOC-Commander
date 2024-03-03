@@ -1,19 +1,21 @@
-<div *ngIf="portId !== null"
-     class="port-name"
-     [class.port-name_not-connected]="!isConnected"
-     libEllipsisTitle
->
-    {{ 'hub.port' | transloco: { portId: portId | portIdToPortName } }}
-</div>
+@if (portId !== null) {
+    <div class="port-name"
+         [class.port-name_not-connected]="!isConnected"
+         libEllipsisTitle
+    >
+        {{ 'hub.port' | transloco: { portId: portId | portIdToPortName } }}
+    </div>
+}
 
-<div *ngIf="ioType"
-     class="io-type"
-     [class.io-type_not-connected]="!isConnected"
-     libEllipsisTitle
->
-    ({{ ioType | ioTypeToL10nKey | transloco }})
-</div>
+@if (ioType !== null) {
+    <div class="io-type"
+         [class.io-type_not-connected]="!isConnected"
+         libEllipsisTitle
+    >
+        ({{ ioType | ioTypeToL10nKey | transloco }})
+    </div>
+}
 
-<ng-container *ngIf="!isConnected">
+@if (!isConnected) {
     <span class="cdk-visually-hidden">{{ 'io.ioIsNotConnectedInlineNotification' | transloco }}</span>
-</ng-container>
+}

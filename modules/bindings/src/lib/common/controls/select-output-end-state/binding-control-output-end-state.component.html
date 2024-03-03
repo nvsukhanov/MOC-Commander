@@ -1,4 +1,4 @@
-<ng-container *ngIf="control">
+@if (control) {
     <mat-form-field>
         <mat-label>
             {{ translocoTitle | transloco }}
@@ -6,11 +6,11 @@
         <mat-select [formControl]="control"
                     required
         >
-            <mat-option *ngFor="let endState of motorServoEndStates"
-                        [value]="endState"
-            >
-                {{ endState | appMotorServoEndStateL10nKey | transloco }}
-            </mat-option>
+            @for (endState of motorServoEndStates; track endState) {
+                <mat-option [value]="endState">
+                    {{ endState | appMotorServoEndStateL10nKey | transloco }}
+                </mat-option>
+            }
         </mat-select>
     </mat-form-field>
-</ng-container>
+}

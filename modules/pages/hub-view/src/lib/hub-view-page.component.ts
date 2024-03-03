@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { LetDirective, PushPipe } from '@ngrx/component';
+import { PushPipe } from '@ngrx/component';
 import { Observable, filter, map, of, switchMap, take } from 'rxjs';
-import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Router, RouterLink } from '@angular/router';
 import { MatAnchor, MatButton } from '@angular/material/button';
@@ -21,9 +20,6 @@ import { HUB_VIEW_PAGE_SELECTORS, HubIoViewModel } from './hub-view-page.selecto
     styleUrls: [ './hub-view-page.component.scss' ],
     imports: [
         PushPipe,
-        LetDirective,
-        NgIf,
-        NgForOf,
         TranslocoPipe,
         HubPropertiesViewComponent,
         HubIoViewComponent,

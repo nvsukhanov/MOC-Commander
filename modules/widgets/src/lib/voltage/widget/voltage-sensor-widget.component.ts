@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { DecimalPipe, NgIf } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatIconModule } from '@angular/material/icon';
 import { WidgetComponent } from '@app/shared-ui';
@@ -11,7 +11,6 @@ import { WidgetComponent } from '@app/shared-ui';
     styleUrls: [ './voltage-sensor-widget.component.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
-        NgIf,
         WidgetComponent,
         TranslocoPipe,
         MatIconModule,

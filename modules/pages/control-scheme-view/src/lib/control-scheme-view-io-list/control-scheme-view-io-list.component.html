@@ -1,4 +1,4 @@
-<ng-container *ngIf="!isEmpty">
+@if (!isEmpty) {
     <mat-tree [dataSource]="dataSource"
               [treeControl]="treeControl"
               class="control-scheme-tree"
@@ -41,4 +41,4 @@
             </div>
         </mat-nested-tree-node>
     </mat-tree>
-</ng-container>
+}

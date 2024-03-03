@@ -4,7 +4,6 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MotorServoEndStateL10nKeyPipe } from '@app/shared-ui';
 
@@ -18,9 +17,7 @@ import { MotorServoEndStateL10nKeyPipe } from '@app/shared-ui';
         MatOptionModule,
         MatSelectModule,
         MotorServoEndStateL10nKeyPipe,
-        NgForOf,
         TranslocoPipe,
-        NgIf,
         ReactiveFormsModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush

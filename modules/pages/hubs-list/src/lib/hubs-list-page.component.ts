@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
-import { LetDirective } from '@ngrx/component';
-import { NgForOf, NgIf } from '@angular/common';
+import { PushPipe } from '@ngrx/component';
 import { MatCardModule } from '@angular/material/card';
 import { Observable } from 'rxjs';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
@@ -26,15 +25,13 @@ import { HUBS_LIST_PAGE_SELECTORS, HubListViewModel } from './hubs-list-page.sel
     styleUrls: [ './hubs-list-page.component.scss' ],
     imports: [
         TranslocoPipe,
-        LetDirective,
-        NgIf,
         HubInlineViewComponent,
-        NgForOf,
         MatCardModule,
         ConfirmationDialogModule,
         HintComponent,
         FeatureToolbarControlsDirective,
-        FeatureToolbarBreadcrumbsDirective
+        FeatureToolbarBreadcrumbsDirective,
+        PushPipe
     ],
     providers: [
         TitleService
@@ -62,13 +59,6 @@ export class HubsListPageComponent implements OnInit {
 
     public ngOnInit(): void {
         this.titleService.setTitle$(this.translocoService.selectTranslate('pageTitle.hubsList'));
-    }
-
-    public hubTrackByFn(
-        index: number,
-        hub: { hubId: string }
-    ): string {
-        return hub.hubId;
     }
 
     public disconnectHub(

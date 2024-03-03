@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Observable, Subscription } from 'rxjs';
-import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { LetDirective, PushPipe } from '@ngrx/component';
 
 import { FeatureToolbarService } from './feature-toolbar-service';
@@ -18,7 +18,6 @@ import { HideOnSmallScreenDirective } from '../hide-on-small-screen.directive';
         MatToolbarModule,
         LetDirective,
         NgTemplateOutlet,
-        NgIf,
         PushPipe,
         BreadcrumbsComponent,
         HideOnSmallScreenDirective

@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { NgIf } from '@angular/common';
 import { MatTreeModule, MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,7 +17,6 @@ import { ControlSchemeNodeTypes, ControlSchemeViewTreeNode } from '../types';
     templateUrl: './control-scheme-view-io-list.component.html',
     styleUrls: [ './control-scheme-view-io-list.component.scss' ],
     imports: [
-        NgIf,
         MatTreeModule,
         MatButtonModule,
         MatIconModule,

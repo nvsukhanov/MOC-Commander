@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -15,7 +14,6 @@ import { CONTROL_SCHEME_NAME_IS_NOT_UNIQUE, ControlSchemeFormBuilderService } fr
     templateUrl: './control-scheme-general-info.component.html',
     styleUrls: [ './control-scheme-general-info.component.scss' ],
     imports: [
-        NgIf,
         MatButtonModule,
         MatIconModule,
         MatInputModule,

@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
-import { NgIf } from '@angular/common';
 import { PortModeName } from 'rxpoweredup';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
@@ -37,7 +36,6 @@ import { SetAngleControllerNameResolverService } from './set-angle-controller-na
     templateUrl: './binding-set-angle-edit.component.html',
     styleUrls: [ './binding-set-angle-edit.component.scss' ],
     imports: [
-        NgIf,
         BindingControlOutputEndStateComponent,
         BindingControlSelectControllerComponent,
         BindingEditSectionComponent,

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef } from '@angular/core';
-import { NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 
 import { TiltGaugeSectorDefinition, TiltGaugeSectorsComponent } from './tilt-gauge-sectors';
 import { TiltGaugeTickLineDefinition, TiltGaugeTicksComponent } from './tilt-gauge-ticks';
@@ -14,10 +14,8 @@ import { TiltGaugeBracketsDefBuilderService } from './tilt-gauge-brackets-def-bu
     templateUrl: './tilt-gauge.component.html',
     styleUrls: [ './tilt-gauge.component.scss' ],
     imports: [
-        NgForOf,
         TiltGaugeSectorsComponent,
         TiltGaugeTicksComponent,
-        NgIf,
         NgTemplateOutlet
     ],
     changeDetection: ChangeDetectionStrategy.OnPush

@@ -1,6 +1,4 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { LetDirective } from '@ngrx/component';
-import { NgForOf } from '@angular/common';
 import { WidgetType } from '@app/shared-misc';
 import { WidgetConfigModel } from '@app/store';
 
@@ -19,8 +17,6 @@ type WidgetsGridWidgetViewModel = {
     templateUrl: './control-scheme-widgets-grid.component.html',
     styleUrls: [ './control-scheme-widgets-grid.component.scss' ],
     imports: [
-        LetDirective,
-        NgForOf,
         OrderWidgetsPipe,
         WidgetContainerComponent
     ],
@@ -54,13 +50,6 @@ export class ControlSchemeWidgetsGridComponent {
 
     public get viewModels(): WidgetsGridWidgetViewModel[] {
         return this._viewModels;
-    }
-
-    public trackByFn(
-        index: number,
-        item: WidgetsGridWidgetViewModel
-    ): number {
-        return item.config.id;
     }
 
     public onDeleteWidget(

@@ -3,7 +3,6 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subscription, from } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { ValidationMessagesDirective } from '@app/shared-misc';
 
@@ -19,7 +18,6 @@ import { EllipsisTitleDirective } from '../ellipsis-title.directive';
         MatInputModule,
         ValidationMessagesDirective,
         MatButtonModule,
-        NgIf,
         TranslocoPipe,
         EllipsisTitleDirective
     ],

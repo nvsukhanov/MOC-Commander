@@ -14,7 +14,7 @@ import { ChangelogComponent } from '@app/shared-ui';
     imports: [
         TranslocoPipe,
         PushPipe,
-        ChangelogComponent
+        ChangelogComponent,
     ],
     providers: [
         TitleService

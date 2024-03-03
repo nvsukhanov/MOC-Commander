@@ -2,64 +2,69 @@
      [libFeatureToolbarBreadcrumbs]="breadcrumbsDef"
 ></div>
 
-<ng-container *ngrxLet="controllerListViewModel$ as controllerListViewModel">
-    <ng-container *ngIf="controllerListViewModel.length; else noConnectedControllers">
+@if (controllerListViewModel$ | ngrxPush; as controllerListViewModel) {
+    @if (controllerListViewModel.length) {
         <ul>
-            <li *ngFor="let controller of controllerListViewModel; trackBy: controllerTrackById"
-                class="card-list-item"
-            >
-                <mat-card>
-                    <mat-card-header class="controller-name-container">
-                        <mat-card-title class="card-title">
-                            <mat-icon *ngIf="controller.controllerType !== undefined"
-                                      class="controller-icon"
-                                      [class.controller-icon_not-connected]="!controller.isConnected"
-                                      [fontIcon]="controller.controllerType | controllerTypeIconName"
-                                      [inline]="true"
-                            ></mat-icon>
-                            <a mat-button
-                               [routerLink]="controller.id | controllerViewHref"
-                            >
-                                {{ controller | controllerName | ngrxPush  }}
-                                <span *ngIf="!controller.isConnected"
-                                      class="cdk-visually-hidden"
-                                >
-                                    ({{ 'controller.isNotConnectedInlineNotification' | transloco }})
-                                </span>
-                                <span *ngIf="controller.isInputIgnored"
-                                      class="cdk-visually-hidden"
-                                >
-                                    ({{ 'controller.inputIsIgnored' | transloco }})
-                                </span>
-                            </a>
+            @for (controller of controllerListViewModel; track controller.id) {
+                <li class="card-list-item">
+                    <mat-card>
+                        <mat-card-header class="controller-name-container">
+                            <mat-card-title class="card-title">
+                                @if (controller.controllerType !== undefined) {
+                                    <mat-icon class="controller-icon"
+                                              [class.controller-icon_not-connected]="!controller.isConnected"
+                                              [fontIcon]="controller.controllerType | controllerTypeIconName"
+                                              [inline]="true"
+                                    ></mat-icon>
+                                }
 
-                            <mat-icon *ngIf="controller.isInputIgnored"
-                                      [fontIcon]="'do_not_disturb_on'"
-                                      [title]="'controller.inputIsIgnored' | transloco"
-                                      class="ignored-input-icon"
-                                      [inline]="true"
-                            ></mat-icon>
+                                <a mat-button
+                                   [routerLink]="controller.id | controllerViewHref"
+                                >
+                                    {{ controller | controllerName | ngrxPush  }}
 
-                            <span class="spacer"></span>
-                            <button *ngIf="controller.canForget"
-                                    mat-button
-                                    [color]="'warn'"
-                                    (click)="forgetController(controller.id)"
-                                    [attr.aria-label]="'controller.forgetButtonLabel' | transloco: { name: controller | controllerName | ngrxPush }"
-                            >
-                                {{ 'controller.forget' | transloco }}
-                            </button>
-                        </mat-card-title>
-                    </mat-card-header>
-                </mat-card>
-            </li>
+                                    @if (!controller.isConnected) {
+                                        <span class="cdk-visually-hidden">
+                                        ({{ 'controller.isNotConnectedInlineNotification' | transloco }})
+                                    </span>
+                                    }
+                                    @if (controller.isInputIgnored) {
+                                        <span class="cdk-visually-hidden">
+                                        ({{ 'controller.inputIsIgnored' | transloco }})
+                                    </span>
+                                    }
+                                </a>
+
+                                @if (controller.isInputIgnored) {
+                                    <mat-icon [fontIcon]="'do_not_disturb_on'"
+                                              [title]="'controller.inputIsIgnored' | transloco"
+                                              class="ignored-input-icon"
+                                              [inline]="true"
+                                    ></mat-icon>
+                                }
+
+                                <span class="spacer"></span>
+
+                                @if (controller.canForget) {
+                                    <button mat-button
+                                            [color]="'warn'"
+                                            (click)="forgetController(controller.id)"
+                                            [attr.aria-label]="'controller.forgetButtonLabel' | transloco: { name: controller | controllerName | ngrxPush }"
+                                    >
+                                        {{ 'controller.forget' | transloco }}
+                                    </button>
+                                }
+                            </mat-card-title>
+                        </mat-card-header>
+                    </mat-card>
+                </li>
+            }
         </ul>
-    </ng-container>
-
-    <ng-template #noConnectedControllers>
+    } @else {
         <h3 class="no-controller-connected-notification-header">{{ 'controller.noControllerConnected' | transloco }}</h3>
         <lib-hint>
             {{ 'controller.detectControllerTip' | transloco }}
         </lib-hint>
-    </ng-template>
-</ng-container>
+    }
+}
+

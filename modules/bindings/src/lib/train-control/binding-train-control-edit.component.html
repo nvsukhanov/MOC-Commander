@@ -1,83 +1,85 @@
-<lib-cs-binding-edit-sections-container *ngIf="form">
-    <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
-                                 [caption]="'controlScheme.bindingSectionOutputTitle' | transloco"
-    >
-        <lib-cs-binding-control-select-hub [control]="form.controls.hubId"
-                                           [bindingType]="bindingType"
-        ></lib-cs-binding-control-select-hub>
-
-        <lib-cs-binding-control-select-io [portIdControl]="form.controls.portId"
-                                          [hubIdControl]="form.controls.hubId"
-                                          [bindingType]="bindingType"
-        ></lib-cs-binding-control-select-io>
-    </lib-cs-binding-edit-section>
-
-    <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
-
-    <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
-                                 [caption]="'controlScheme.bindingSectionInputTitle' | transloco"
-    >
-        <lib-cs-binding-control-select-controller [data]="nextLevelControlBindingComponentData"></lib-cs-binding-control-select-controller>
-        <lib-cs-binding-control-select-controller [data]="prevLevelControlBindingComponentData"></lib-cs-binding-control-select-controller>
-        <lib-cs-binding-control-select-controller [data]="resetControlBindingComponentData"></lib-cs-binding-control-select-controller>
-    </lib-cs-binding-edit-section>
-
-    <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
-
-    <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
-                                 [caption]="'controlScheme.bindingSectionConfigTitle' | transloco"
-    >
-        <div class="add-level-button-container">
-            <button class="add-level-button"
-                    mat-raised-button
-                    (click)="addNextSpeedControl()">
-                {{ 'controlScheme.trainControlBinding.outputLevelAdd' | transloco }}
-            </button>
-        </div>
-
-        <mat-form-field *ngFor="let speedControl of form.controls.levels.controls; let idx = index"
-                        class="speed-level-form-field"
+@if (form) {
+    <lib-cs-binding-edit-sections-container>
+        <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
+                                     [caption]="'controlScheme.bindingSectionOutputTitle' | transloco"
         >
-            <mat-label>
-                {{ 'controlScheme.trainControlBinding.level' | transloco: { level: form.controls.initialLevelIndex.value - idx } }}
-            </mat-label>
-            <input type="number"
-                   matInput
-                   [formControl]="speedControl"
-            />
-            <button mat-icon-button
-                    matSuffix
-                    [disabled]="form.controls.initialLevelIndex.value === idx"
-                    (click)="removeSpeedControl(idx)"
-            >
-                <mat-icon [fontIcon]="'delete'"></mat-icon>
-                <span class="cdk-visually-hidden">{{ 'controlScheme.trainControlBinding.outputLevelRemove' | transloco }}</span>
-            </button>
-            <mat-error [libValidationMessages]="speedControl"></mat-error>
-        </mat-form-field>
+            <lib-cs-binding-control-select-hub [control]="form.controls.hubId"
+                                               [bindingType]="bindingType"
+            ></lib-cs-binding-control-select-hub>
 
-        <div class="add-level-button-container">
-            <button class="add-level-button"
-                    mat-raised-button
-                    (click)="addPrevSpeedControl()">
-                {{ 'controlScheme.trainControlBinding.outputLevelAdd' | transloco }}
-            </button>
-        </div>
+            <lib-cs-binding-control-select-io [portIdControl]="form.controls.portId"
+                                              [hubIdControl]="form.controls.hubId"
+                                              [bindingType]="bindingType"
+            ></lib-cs-binding-control-select-io>
+        </lib-cs-binding-edit-section>
 
-        <mat-error [libValidationMessages]="form.controls.levels"></mat-error>
+        <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
 
-        <mat-divider class="sections-divider"></mat-divider>
+        <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
+                                     [caption]="'controlScheme.bindingSectionInputTitle' | transloco"
+        >
+            <lib-cs-binding-control-select-controller [data]="nextLevelControlBindingComponentData"></lib-cs-binding-control-select-controller>
+            <lib-cs-binding-control-select-controller [data]="prevLevelControlBindingComponentData"></lib-cs-binding-control-select-controller>
+            <lib-cs-binding-control-select-controller [data]="resetControlBindingComponentData"></lib-cs-binding-control-select-controller>
+        </lib-cs-binding-edit-section>
 
-        <lib-cs-binding-control-power-input [control]="form.controls.power"></lib-cs-binding-control-power-input>
+        <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
 
-        <lib-cs-binding-control-select-looping-mode [control]="form.controls.loopingMode"></lib-cs-binding-control-select-looping-mode>
+        <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
+                                     [caption]="'controlScheme.bindingSectionConfigTitle' | transloco"
+        >
+            <div class="add-level-button-container">
+                <button class="add-level-button"
+                        mat-raised-button
+                        (click)="addNextSpeedControl()">
+                    {{ 'controlScheme.trainControlBinding.outputLevelAdd' | transloco }}
+                </button>
+            </div>
 
-        <lib-toggle-control [translocoTitle]="'controlScheme.useAccelerationProfile'"
-                            [control]="form.controls.useAccelerationProfile"
-        ></lib-toggle-control>
+            @for (speedControl of form.controls.levels.controls; track speedControl; let idx = $index) {
+                <mat-form-field class="speed-level-form-field">
+                    <mat-label>
+                        {{ 'controlScheme.trainControlBinding.level' | transloco: { level: form.controls.initialLevelIndex.value - idx } }}
+                    </mat-label>
+                    <input type="number"
+                           matInput
+                           [formControl]="speedControl"
+                    />
+                    <button mat-icon-button
+                            matSuffix
+                            [disabled]="form.controls.initialLevelIndex.value === idx"
+                            (click)="removeSpeedControl(idx)"
+                    >
+                        <mat-icon [fontIcon]="'delete'"></mat-icon>
+                        <span class="cdk-visually-hidden">{{ 'controlScheme.trainControlBinding.outputLevelRemove' | transloco }}</span>
+                    </button>
+                    <mat-error [libValidationMessages]="speedControl"></mat-error>
+                </mat-form-field>
+            }
 
-        <lib-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'"
-                            [control]="form.controls.useDecelerationProfile"
-        ></lib-toggle-control>
-    </lib-cs-binding-edit-section>
-</lib-cs-binding-edit-sections-container>
+            <div class="add-level-button-container">
+                <button class="add-level-button"
+                        mat-raised-button
+                        (click)="addPrevSpeedControl()">
+                    {{ 'controlScheme.trainControlBinding.outputLevelAdd' | transloco }}
+                </button>
+            </div>
+
+            <mat-error [libValidationMessages]="form.controls.levels"></mat-error>
+
+            <mat-divider class="sections-divider"></mat-divider>
+
+            <lib-cs-binding-control-power-input [control]="form.controls.power"></lib-cs-binding-control-power-input>
+
+            <lib-cs-binding-control-select-looping-mode [control]="form.controls.loopingMode"></lib-cs-binding-control-select-looping-mode>
+
+            <lib-toggle-control [translocoTitle]="'controlScheme.useAccelerationProfile'"
+                                [control]="form.controls.useAccelerationProfile"
+            ></lib-toggle-control>
+
+            <lib-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'"
+                                [control]="form.controls.useDecelerationProfile"
+            ></lib-toggle-control>
+        </lib-cs-binding-edit-section>
+    </lib-cs-binding-edit-sections-container>
+}

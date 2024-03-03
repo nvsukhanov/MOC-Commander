@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { NgForOf } from '@angular/common';
 
 import { TiltGaugeTickLineDefinition } from './tilt-gauge-tick-line-definition';
 
@@ -9,9 +8,6 @@ import { TiltGaugeTickLineDefinition } from './tilt-gauge-tick-line-definition';
     selector: 'g[appTiltGaugeTicks]',
     templateUrl: './tilt-gauge-ticks.component.html',
     styleUrls: [ './tilt-gauge-ticks.component.scss' ],
-    imports: [
-        NgForOf
-    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TiltGaugeTicksComponent {

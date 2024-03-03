@@ -4,10 +4,10 @@
                 (valueChange)="onLanguageChange($event)"
                 [attr.aria-label]="'settings.language' | transloco"
     >
-        <mat-option *ngFor="let language of languages"
-                    [value]="language"
-        >
-            {{ language | languageToL10nKey | transloco }}
-        </mat-option>
+        @for (language of languages; track language) {
+            <mat-option [value]="language">
+                {{ language | languageToL10nKey | transloco }}
+            </mat-option>
+        }
     </mat-select>
 </mat-form-field>

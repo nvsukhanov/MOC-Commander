@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,7 +12,6 @@ import { MatMenuModule } from '@angular/material/menu';
     styleUrls: [ './control-scheme-page-compact-toolbar-controls.component.scss' ],
     imports: [
         MatButtonModule,
-        NgIf,
         PushPipe,
         TranslocoPipe,
         MatIconModule,

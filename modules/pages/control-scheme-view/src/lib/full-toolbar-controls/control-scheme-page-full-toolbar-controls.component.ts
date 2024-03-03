@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
@@ -10,7 +9,6 @@ import { TranslocoPipe } from '@ngneat/transloco';
     styleUrls: [ './control-scheme-page-full-toolbar-controls.component.scss' ],
     imports: [
         MatButtonModule,
-        NgIf,
         TranslocoPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush

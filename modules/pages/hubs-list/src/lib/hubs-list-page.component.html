@@ -2,33 +2,33 @@
      [libFeatureToolbarBreadcrumbs]="breadcrumbsDef"
 ></div>
 
-<ng-container *ngrxLet="hubsList$; let hubsList">
-    <ul *ngIf="hubsList.length; else noConnectedHubs">
-        <li *ngFor="let hub of hubsList; trackBy: hubTrackByFn"
-            class="card-list-item"
-        >
-            <mat-card>
-                <mat-card-header class="hub-name-container">
-                    <mat-card-title>
-                        <lib-hub-inline-view [hubId]="hub.hubId"
-                                             [name]="hub.name"
-                                             [batteryLevel]="hub.batteryLevel"
-                                             [rssiLevel]="hub.rssi"
-                                             [isButtonPressed]="hub.isButtonPressed"
-                                             [hasCommunication]="hub.hasCommunication"
-                                             [isConnected]="hub.isConnected"
-                                             (disconnect)="disconnectHub(hub.hubId)"
-                                             (forget)="forgetHub(hub.hubId)"
-                        ></lib-hub-inline-view>
-                    </mat-card-title>
-                </mat-card-header>
-            </mat-card>
-        </li>
-    </ul>
-
-    <ng-template #noConnectedHubs>
+@if (hubsList$ | ngrxPush; as hubsList) {
+    @if (hubsList.length) {
+        <ul>
+            @for (hub of hubsList; track hub.hubId) {
+                <li class="card-list-item">
+                    <mat-card>
+                        <mat-card-header class="hub-name-container">
+                            <mat-card-title>
+                                <lib-hub-inline-view [hubId]="hub.hubId"
+                                                     [name]="hub.name"
+                                                     [batteryLevel]="hub.batteryLevel"
+                                                     [rssiLevel]="hub.rssi"
+                                                     [isButtonPressed]="hub.isButtonPressed"
+                                                     [hasCommunication]="hub.hasCommunication"
+                                                     [isConnected]="hub.isConnected"
+                                                     (disconnect)="disconnectHub(hub.hubId)"
+                                                     (forget)="forgetHub(hub.hubId)"
+                                ></lib-hub-inline-view>
+                            </mat-card-title>
+                        </mat-card-header>
+                    </mat-card>
+                </li>
+            }
+        </ul>
+    } @else {
         <lib-hint>
             {{ 'hub.noneConnected' | transloco }}
         </lib-hint>
-    </ng-template>
-</ng-container>
+    }
+}

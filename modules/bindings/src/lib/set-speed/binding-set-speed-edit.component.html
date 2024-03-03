@@ -1,52 +1,55 @@
-<lib-cs-binding-edit-sections-container *ngIf="form">
-    <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
-                                 [caption]="'controlScheme.bindingSectionOutputTitle' | transloco"
-    >
-        <lib-cs-binding-control-select-hub [control]="form.controls.hubId"
-                                           [bindingType]="bindingType"
-        ></lib-cs-binding-control-select-hub>
+@if (form) {
+    <lib-cs-binding-edit-sections-container>
+        <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
+                                     [caption]="'controlScheme.bindingSectionOutputTitle' | transloco"
+        >
+            <lib-cs-binding-control-select-hub [control]="form.controls.hubId"
+                                               [bindingType]="bindingType"
+            ></lib-cs-binding-control-select-hub>
 
-        <lib-cs-binding-control-select-io [portIdControl]="form.controls.portId"
-                                          [hubIdControl]="form.controls.hubId"
-                                          [bindingType]="bindingType"
-        ></lib-cs-binding-control-select-io>
-    </lib-cs-binding-edit-section>
+            <lib-cs-binding-control-select-io [portIdControl]="form.controls.portId"
+                                              [hubIdControl]="form.controls.hubId"
+                                              [bindingType]="bindingType"
+            ></lib-cs-binding-control-select-io>
+        </lib-cs-binding-edit-section>
 
-    <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
+        <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
 
-    <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
-                                 [caption]="'controlScheme.bindingSectionInputTitle' | transloco"
-    >
-        <lib-cs-binding-control-select-controller [data]="accelerateControlBindingComponentData"></lib-cs-binding-control-select-controller>
+        <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
+                                     [caption]="'controlScheme.bindingSectionInputTitle' | transloco"
+        >
+            <lib-cs-binding-control-select-controller [data]="accelerateControlBindingComponentData"></lib-cs-binding-control-select-controller>
 
-        <lib-cs-binding-control-select-input-gain *ngIf="isInputGainConfigurable"
-                                                  [translocoTitle]="'controlScheme.setSpeedBinding.accelerationInputGainTitle'"
-                                                  [control]="form.controls.inputs.controls[controlSchemeInputActions.Accelerate].controls.gain"
-        ></lib-cs-binding-control-select-input-gain>
+            @if (isInputGainConfigurable) {
+                <lib-cs-binding-control-select-input-gain [translocoTitle]="'controlScheme.setSpeedBinding.accelerationInputGainTitle'"
+                                                          [control]="form.controls.inputs.controls[controlSchemeInputActions.Accelerate].controls.gain"
+                ></lib-cs-binding-control-select-input-gain>
+            }
 
-        <lib-cs-binding-control-select-controller [data]="brakeControlBindingComponentData"></lib-cs-binding-control-select-controller>
-    </lib-cs-binding-edit-section>
+            <lib-cs-binding-control-select-controller [data]="brakeControlBindingComponentData"></lib-cs-binding-control-select-controller>
+        </lib-cs-binding-edit-section>
 
-    <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
+        <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
 
-    <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
-                                 [caption]="'controlScheme.bindingSectionConfigTitle' | transloco"
-    >
-        <lib-cs-binding-control-speed-input [control]="form.controls.maxSpeed"
-                                            [translocoTitle]="'controlScheme.setSpeedBinding.outputSpeed'"
-        ></lib-cs-binding-control-speed-input>
-        <lib-cs-binding-control-power-input [control]="form.controls.power"></lib-cs-binding-control-power-input>
+        <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
+                                     [caption]="'controlScheme.bindingSectionConfigTitle' | transloco"
+        >
+            <lib-cs-binding-control-speed-input [control]="form.controls.maxSpeed"
+                                                [translocoTitle]="'controlScheme.setSpeedBinding.outputSpeed'"
+            ></lib-cs-binding-control-speed-input>
+            <lib-cs-binding-control-power-input [control]="form.controls.power"></lib-cs-binding-control-power-input>
 
-        <lib-toggle-control [translocoTitle]="'controlScheme.outputInvertControlTitle'"
-                            [control]="form.controls.invert"
-        ></lib-toggle-control>
+            <lib-toggle-control [translocoTitle]="'controlScheme.outputInvertControlTitle'"
+                                [control]="form.controls.invert"
+            ></lib-toggle-control>
 
-        <lib-toggle-control [translocoTitle]="'controlScheme.useAccelerationProfile'"
-                            [control]="form.controls.useAccelerationProfile"
-        ></lib-toggle-control>
+            <lib-toggle-control [translocoTitle]="'controlScheme.useAccelerationProfile'"
+                                [control]="form.controls.useAccelerationProfile"
+            ></lib-toggle-control>
 
-        <lib-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'"
-                            [control]="form.controls.useDecelerationProfile"
-        ></lib-toggle-control>
-    </lib-cs-binding-edit-section>
-</lib-cs-binding-edit-sections-container>
+            <lib-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'"
+                                [control]="form.controls.useDecelerationProfile"
+            ></lib-toggle-control>
+        </lib-cs-binding-edit-section>
+    </lib-cs-binding-edit-sections-container>
+}

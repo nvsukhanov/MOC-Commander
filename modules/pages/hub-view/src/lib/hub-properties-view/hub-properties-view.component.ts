@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { RoutesBuilderService } from '@app/shared-misc';
 import { EllipsisTitleDirective, HubTypeToL10nKeyPipe } from '@app/shared-ui';
@@ -15,7 +14,6 @@ import { HubModel, HubRuntimeDataModel } from '@app/store';
     imports: [
         MatButtonModule,
         MatCardModule,
-        NgIf,
         TranslocoPipe,
         EllipsisTitleDirective,
         HubTypeToL10nKeyPipe

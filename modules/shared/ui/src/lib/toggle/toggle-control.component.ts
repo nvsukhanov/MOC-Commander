@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
@@ -12,7 +11,6 @@ import { TranslocoPipe } from '@ngneat/transloco';
     imports: [
         MatSlideToggleModule,
         ReactiveFormsModule,
-        NgIf,
         TranslocoPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush

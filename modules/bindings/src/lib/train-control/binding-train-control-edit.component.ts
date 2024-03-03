@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MOTOR_LIMITS } from 'rxpoweredup';
 import { MatButtonModule } from '@angular/material/button';
@@ -33,7 +32,6 @@ import { TrainControllerNameResolverService } from './train-controller-name-reso
     templateUrl: './binding-train-control-edit.component.html',
     styleUrls: [ './binding-train-control-edit.component.scss' ],
     imports: [
-        NgIf,
         BindingEditSectionComponent,
         BindingControlSelectHubComponent,
         BindingControlSelectIoComponent,
@@ -48,7 +46,6 @@ import { TrainControllerNameResolverService } from './train-controller-name-reso
         BindingControlSelectLoopingModeComponent,
         ToggleControlComponent,
         ControlSchemeInputActionToL10nKeyPipe,
-        NgForOf,
         BindingEditSectionsContainerComponent,
         ValidationMessagesDirective,
         BindingControlPowerInputComponent
@@ -60,7 +57,7 @@ import { TrainControllerNameResolverService } from './train-controller-name-reso
 })
 export class BindingTrainControlEditComponent implements IBindingsDetailsEditComponent<TrainControlBindingForm> {
     public readonly bindingType = ControlSchemeBindingType.TrainControl;
-    
+
     private _nextLevelControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl>;
 
     private _prevLevelControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl>;

@@ -1,4 +1,4 @@
-<ng-container *ngIf="isEditing; else view">
+@if (isEditing) {
     <section class="info">
         <form class="info__name-edit-form"
               (submit)="onSave($event)"
@@ -31,9 +31,7 @@
             </mat-form-field>
         </form>
     </section>
-</ng-container>
-
-<ng-template #view>
+} @else {
     <section class="info">
         <h2 class="info__name"
             libEllipsisTitle
@@ -48,4 +46,4 @@
             <mat-icon [fontIcon]="'edit'"></mat-icon>
         </button>
     </section>
-</ng-template>
+}

@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { WidgetConfigModel } from '@app/store';
 
@@ -16,7 +15,6 @@ import { WidgetSettingsContainerComponent } from '../widget-settings-container';
     imports: [
         MatButtonModule,
         MatDialogModule,
-        NgIf,
         TranslocoPipe,
         WidgetConnectionInfoL10nPipe,
         WidgetSettingsContainerComponent,
