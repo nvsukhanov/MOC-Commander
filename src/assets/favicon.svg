@@ -1,79 +1,98 @@
 <svg xmlns="http://www.w3.org/2000/svg"
-     viewBox="0 0 280 280"
+     viewBox="0 0 300 300"
      stroke-width="16"
      stroke-linecap="round"
      stroke-linejoin="round"
 >
     <style>
-        .a {
-            fill: #2d70ea;
+        .primary {
+            fill: #006AC6;
+        }
+        .secondary {
+            fill: #92C1E9;
         }
 
-        .b {
-            fill: #7ea5ff;
-        }
-
-        .c {
+        .background {
             fill: #67005a;
         }
     </style>
-    <rect class="c"
+    <rect class="background"
           x="0"
           y="0"
-          width="280"
-          height="280"
-          rx="90"
+          width="300"
+          height="300"
     />
-    <rect class="a"
-          x="30"
-          y="90"
-          width="60"
-          height="110"
-    />
-    <rect class="b"
-          x="30"
-          y="200"
-          width="60"
-          height="10"
-    />
-    <rect class="a"
-          x="190"
-          y="90"
-          width="60"
-          height="110"
-    />
-    <rect class="b"
-          x="190"
-          y="200"
-          width="60"
-          height="10"
-    />
-    <rect class="b"
+
+    <rect class="secondary"
           x="40"
-          y="80"
+          y="85"
           width="40"
-          height="10"
+          height="15"
     />
-    <rect class="b"
-          x="200"
-          y="80"
-          width="40"
-          height="10"
-    />
-    <rect class="b"
-          x="90"
-          y="90"
-          width="100"
+    <rect class="primary"
+          x="30"
+          y="100"
+          width="60"
           height="80"
+    />
+    <rect class="secondary"
+          x="30"
+          y="180"
+          width="60"
+          height="40"
     />
     <circle r="20"
             cx="60"
-            cy="130"
-            class="b"
+            cy="135"
+            class="secondary"
+    />
+
+    <rect class="secondary"
+          x="220"
+          y="85"
+          width="40"
+          height="15"
+    />
+    <rect class="primary"
+          x="210"
+          y="100"
+          width="60"
+          height="80"
+    />
+    <rect class="secondary"
+          x="210"
+          y="180"
+          width="60"
+          height="40"
     />
     <circle r="20"
-            cx="220"
-            cy="130"
-            class="b"
+            cx="240"
+            cy="135"
+            class="secondary"
+    />
+
+    <rect class="secondary"
+          x="90"
+          y="100"
+          width="60"
+          height="60"
+    />
+    <rect class="secondary"
+          x="150"
+          y="100"
+          width="60"
+          height="60"
+    />
+    <rect class="primary"
+          x="90"
+          y="160"
+          width="60"
+          height="20"
+    />
+    <rect class="primary"
+          x="150"
+          y="160"
+          width="60"
+          height="20"
     />
 </svg>
