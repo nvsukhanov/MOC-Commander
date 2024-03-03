@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { LetDirective, PushPipe } from '@ngrx/component';
+import { PushPipe } from '@ngrx/component';
 import { MatButton } from '@angular/material/button';
 import { MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { TranslocoPipe } from '@ngneat/transloco';
@@ -10,7 +10,6 @@ import { TranslocoPipe } from '@ngneat/transloco';
     templateUrl: './leaving-running-scheme-confirmation-dialog.component.html',
     styleUrls: [ './leaving-running-scheme-confirmation-dialog.component.scss' ],
     imports: [
-        LetDirective,
         MatButton,
         MatDialogActions,
         MatDialogContent,

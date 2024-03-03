@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoService } from '@ngneat/transloco';
 import { Observable, of } from 'rxjs';
-import { LetDirective, PushPipe } from '@ngrx/component';
+import { PushPipe } from '@ngrx/component';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 export type ConfirmDialogData = {
@@ -20,7 +20,6 @@ export type ConfirmDialogData = {
     imports: [
         MatButtonModule,
         PushPipe,
-        LetDirective,
         MatDialogModule
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
