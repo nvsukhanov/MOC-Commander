@@ -5,42 +5,43 @@
          [style.width.%]="activeZoneWidthPercent"
     ></div>
 
-    <div class="active-zone"
-         *ngIf="shouldShowLeftActiveZone"
-         [class.active-zone_highlight]="leftActiveZoneHighlight"
-         [style.left.%]="leftActiveZoneEndOffsetPercent"
-         [style.width.%]="activeZoneWidthPercent"
-    ></div>
+    @if (shouldShowLeftActiveZone) {
+        <div class="active-zone"
+             [class.active-zone_highlight]="leftActiveZoneHighlight"
+             [style.left.%]="leftActiveZoneEndOffsetPercent"
+             [style.width.%]="activeZoneWidthPercent"
+        ></div>
+    }
 </div>
 
-<div *ngIf="!compact"
-     class="input-label"
->
-    {{ 'controller.rawInput' | transloco }}
-</div>
-<div *ngIf="!compact"
-     class="output-label"
->
-    {{ 'controller.output' | transloco }}
-</div>
+@if (!compact) {
+    <div class="input-label">
+        {{ 'controller.rawInput' | transloco }}
+    </div>
+    <div class="output-label">
+        {{ 'controller.output' | transloco }}
+    </div>
+}
 
 <div class="container">
     <div class="indicator indicator_input"
          [style.left.%]="rawPositionPercent"
     >
-        <div *ngIf="!compact"
-             class="indicator__value indicator__value_input">
-            {{ humanReadableRawValue }}
-        </div>
+        @if (!compact) {
+            <div class="indicator__value indicator__value_input">
+                {{ humanReadableRawValue }}
+            </div>
+        }
         <div class="indicator__tick indicator__tick_input"></div>
     </div>
     <div class="indicator indicator_output"
          [style.left.%]="outputPositionPercent"
     >
-        <div *ngIf="!compact"
-             class="indicator__value indicator__value_output">
-            {{ humanReadableOutputValue }}
-        </div>
+        @if (!compact) {
+            <div class="indicator__value indicator__value_output">
+                {{ humanReadableOutputValue }}
+            </div>
+        }
         <div class="indicator__tick indicator__tick_output"></div>
     </div>
 </div>

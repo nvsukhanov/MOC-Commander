@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { NgForOf } from '@angular/common';
 
 import { TiltGaugeSectorDefinition } from './tilt-gauge-sector-definition';
 import { TiltGaugeSectorHighlightPipe } from './tilt-gauge-sector-highlight.pipe';
@@ -11,7 +10,6 @@ import { TiltGaugeSectorHighlightPipe } from './tilt-gauge-sector-highlight.pipe
     templateUrl: './tilt-gauge-sectors.component.html',
     styleUrls: [ './tilt-gauge-sectors.component.scss' ],
     imports: [
-        NgForOf,
         TiltGaugeSectorHighlightPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -22,11 +20,4 @@ export class TiltGaugeSectorsComponent {
     @Input() public tiltDegrees?: number;
 
     @Input('libTiltGaugeSectors') public sectors: TiltGaugeSectorDefinition[] = [];
-
-    public trackByFn(
-        index: number,
-        item: TiltGaugeSectorDefinition
-    ): string {
-        return item.id;
-    }
 }

@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnChanges, OnDestroy } from '@angular/core';
-import { NgIf } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe } from '@ngneat/transloco';
@@ -30,7 +29,6 @@ export type BindingControlSelectControllerComponentData<T extends ControlSchemeB
     templateUrl: './binding-control-select-controller.component.html',
     styleUrls: [ './binding-control-select-controller.component.scss' ],
     imports: [
-        NgIf,
         MatDialogModule,
         MatButtonModule,
         TranslocoPipe,

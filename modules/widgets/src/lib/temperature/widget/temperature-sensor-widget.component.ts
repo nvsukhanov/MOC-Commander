@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { DecimalPipe, NgIf } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { WidgetComponent } from '@app/shared-ui';
@@ -12,7 +12,6 @@ import { WidgetComponent } from '@app/shared-ui';
     imports: [
         DecimalPipe,
         MatIconModule,
-        NgIf,
         TranslocoPipe,
         WidgetComponent
     ],

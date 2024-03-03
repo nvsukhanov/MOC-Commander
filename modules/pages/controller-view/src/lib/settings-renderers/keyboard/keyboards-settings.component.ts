@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angu
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { Observable, map } from 'rxjs';
-import { NgIf } from '@angular/common';
 import { ControllerType } from '@app/controller-profiles';
 import { ToFormGroup } from '@app/shared-misc';
 import { KeyboardSettingsModel } from '@app/store';
@@ -20,7 +19,6 @@ import { ControlIgnoreInputComponent } from '../control-ignore-input';
         ReactiveFormsModule,
         MatSlideToggleModule,
         TranslocoPipe,
-        NgIf,
         ControlIgnoreInputComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush

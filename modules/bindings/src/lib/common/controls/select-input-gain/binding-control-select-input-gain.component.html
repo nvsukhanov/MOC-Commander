@@ -1,4 +1,4 @@
-<ng-container *ngIf="control">
+@if (control) {
     <mat-form-field>
         <mat-label>
             {{ translocoTitle | transloco }}
@@ -6,11 +6,11 @@
         <mat-select [formControl]="control"
                     required
         >
-            <mat-option *ngFor="let mode of gainOptions"
-                        [value]="mode"
-            >
-                {{ mode | inputGainL10nKey | transloco }}
-            </mat-option>
+            @for (mode of gainOptions; track mode) {
+                <mat-option [value]="mode">
+                    {{ mode | inputGainL10nKey | transloco }}
+                </mat-option>
+            }
         </mat-select>
     </mat-form-field>
-</ng-container>
+}

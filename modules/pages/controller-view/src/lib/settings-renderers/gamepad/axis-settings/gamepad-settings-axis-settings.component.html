@@ -1,43 +1,43 @@
-<div *ngIf="axisSettingsViewModel"
-     class="axis-configuration">
-    <div class="axis-configuration__info">
-        <div class="axis-configuration__input-output-diagram-container">
-            <lib-input-activity-indicator [isActive]="!!(axisSettingsViewModel.isActivated$ | ngrxPush)"
-                                          [activeTitle]="'controller.isActivatedValueTrue' | transloco"
-                                          [inactiveTitle]="'controller.isActivatedValueFalse' | transloco"
-            ></lib-input-activity-indicator>
-            <page-controller-view-input-output-diagram class="axis-configuration__input-output-diagram"
-                                                       [translocoTitle]="'controller.rawInput'"
-                                                       [rawValue]="axisSettingsViewModel.rawValue$ | ngrxPush"
-                                                       [outputValue]="axisSettingsViewModel.outputValue$ | ngrxPush"
-                                                       [activeZoneStart]="axisSettingsViewModel.form.controls.activeZoneStart.value"
-                                                       [activeZoneEnd]="axisSettingsViewModel.form.controls.activeZoneEnd.value"
-            ></page-controller-view-input-output-diagram>
+@if (axisSettingsViewModel) {
+    <div class="axis-configuration">
+        <div class="axis-configuration__info">
+            <div class="axis-configuration__input-output-diagram-container">
+                <lib-input-activity-indicator [isActive]="!!(axisSettingsViewModel.isActivated$ | ngrxPush)"
+                                              [activeTitle]="'controller.isActivatedValueTrue' | transloco"
+                                              [inactiveTitle]="'controller.isActivatedValueFalse' | transloco"
+                ></lib-input-activity-indicator>
+                <page-controller-view-input-output-diagram class="axis-configuration__input-output-diagram"
+                                                           [translocoTitle]="'controller.rawInput'"
+                                                           [rawValue]="axisSettingsViewModel.rawValue$ | ngrxPush"
+                                                           [outputValue]="axisSettingsViewModel.outputValue$ | ngrxPush"
+                                                           [activeZoneStart]="axisSettingsViewModel.form.controls.activeZoneStart.value"
+                                                           [activeZoneEnd]="axisSettingsViewModel.form.controls.activeZoneEnd.value"
+                ></page-controller-view-input-output-diagram>
+            </div>
         </div>
-    </div>
 
-    <mat-divider [vertical]="true"></mat-divider>
+        <mat-divider [vertical]="true"></mat-divider>
 
-    <div class="axis-configuration__content">
-        <div class="axis-configuration__items">
-            <lib-slider-control [control]="axisSettingsViewModel.form.controls.trim"
-                                [step]="0.01"
-            >
-                <span description>{{ 'controller.trim' | transloco }}</span>
-                <span value>{{ axisSettingsViewModel.form.controls.trim.value | inputValuePercentHumanReadableValue }}</span>
-            </lib-slider-control>
-            <lib-range-control class="axis-configuration__item"
-                               [startControl]="axisSettingsViewModel.form.controls.activeZoneStart"
-                               [endControl]="axisSettingsViewModel.form.controls.activeZoneEnd"
-                               [step]="0.01"
-            >
-                <span startLabel>{{ axisSettingsViewModel.form.controls.activeZoneStart.value | inputValuePercentHumanReadableValue }}</span>
-                <span endLabel>{{ axisSettingsViewModel.form.controls.activeZoneEnd.value | inputValuePercentHumanReadableValue }}</span>
-                <span description>{{ 'controller.activeZone' | transloco }}</span>
-            </lib-range-control>
-            <lib-slider-control [control]="axisSettingsViewModel.form.controls.activationThreshold"
-                                [step]="0.01"
-            >
+        <div class="axis-configuration__content">
+            <div class="axis-configuration__items">
+                <lib-slider-control [control]="axisSettingsViewModel.form.controls.trim"
+                                    [step]="0.01"
+                >
+                    <span description>{{ 'controller.trim' | transloco }}</span>
+                    <span value>{{ axisSettingsViewModel.form.controls.trim.value | inputValuePercentHumanReadableValue }}</span>
+                </lib-slider-control>
+                <lib-range-control class="axis-configuration__item"
+                                   [startControl]="axisSettingsViewModel.form.controls.activeZoneStart"
+                                   [endControl]="axisSettingsViewModel.form.controls.activeZoneEnd"
+                                   [step]="0.01"
+                >
+                    <span startLabel>{{ axisSettingsViewModel.form.controls.activeZoneStart.value | inputValuePercentHumanReadableValue }}</span>
+                    <span endLabel>{{ axisSettingsViewModel.form.controls.activeZoneEnd.value | inputValuePercentHumanReadableValue }}</span>
+                    <span description>{{ 'controller.activeZone' | transloco }}</span>
+                </lib-range-control>
+                <lib-slider-control [control]="axisSettingsViewModel.form.controls.activationThreshold"
+                                    [step]="0.01"
+                >
                 <span description>
                     {{ 'controller.activationThreshold' | transloco }}
                     <mat-icon [fontIcon]="'info'"
@@ -45,14 +45,15 @@
                               [inline]="true"
                     ></mat-icon>
                 </span>
-                <span value>{{ axisSettingsViewModel.form.controls.activationThreshold.value | inputValuePercentHumanReadableValue }}</span>
-            </lib-slider-control>
-            <lib-toggle-control [translocoTitle]="'controller.ignoreInputControlTitle'"
-                                [control]="axisSettingsViewModel.form.controls.ignoreInput"
-            ></lib-toggle-control>
-            <lib-toggle-control [translocoTitle]="'controller.invert'"
-                                [control]="axisSettingsViewModel.form.controls.invert"
-            ></lib-toggle-control>
+                    <span value>{{ axisSettingsViewModel.form.controls.activationThreshold.value | inputValuePercentHumanReadableValue }}</span>
+                </lib-slider-control>
+                <lib-toggle-control [translocoTitle]="'controller.ignoreInputControlTitle'"
+                                    [control]="axisSettingsViewModel.form.controls.ignoreInput"
+                ></lib-toggle-control>
+                <lib-toggle-control [translocoTitle]="'controller.invert'"
+                                    [control]="axisSettingsViewModel.form.controls.invert"
+                ></lib-toggle-control>
+            </div>
         </div>
     </div>
-</div>
+}

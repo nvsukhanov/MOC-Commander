@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { NgIf } from '@angular/common';
 import { CONTROLLERS_CONFIG, IControllersConfig } from '@app/controller-profiles';
 
 @Component({
@@ -10,7 +9,6 @@ import { CONTROLLERS_CONFIG, IControllersConfig } from '@app/controller-profiles
     styleUrls: [ './input-output-diagram.component.scss' ],
     imports: [
         TranslocoPipe,
-        NgIf
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

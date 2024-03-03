@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { NgForOf, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, Subscription, animationFrameScheduler, map, of, take, throttleTime } from 'rxjs';
 import { PushPipe } from '@ngrx/component';
@@ -16,7 +15,7 @@ import { InputOutputDiagramComponent } from './input-output-diagram';
 import { InputValuePercentHumanReadableValuePipe } from './active-zone-human-readable-value.pipe';
 import { ControlIgnoreInputComponent } from '../control-ignore-input';
 import { GamepadSettingsFormBuilderService } from './gamepad-settings-form-builder.service';
-import { GamepadSettingsAxisSettingsViewModel, GamepadSettingsButtonSettingsViewModel, GamepadSettingsForm, GamepadSettingsViewModel } from './types';
+import { GamepadSettingsForm, GamepadSettingsViewModel } from './types';
 import { GamepadSettingsViewModelBuilderService } from './gamepad-settings-view-model-builder.service';
 import { GamepadSettingsAxisSettingsComponent } from './axis-settings';
 import { GamepadSettingsButtonSettingsComponent } from './button-settings';
@@ -27,9 +26,7 @@ import { GamepadSettingsButtonSettingsComponent } from './button-settings';
     templateUrl: './gamepad-settings.component.html',
     styleUrls: [ './gamepad-settings.component.scss' ],
     imports: [
-        NgIf,
         ControlIgnoreInputComponent,
-        NgForOf,
         PushPipe,
         InputOutputDiagramComponent,
         ToggleControlComponent,
@@ -78,20 +75,6 @@ export class GamepadSettingsComponent implements IControllerSettingsRenderer<Gam
 
     public get viewModel(): GamepadSettingsViewModel | undefined {
         return this._viewModel;
-    }
-
-    public trackAxisByInputIdFn(
-        index: number,
-        axis: GamepadSettingsAxisSettingsViewModel
-    ): string {
-        return axis.inputId;
-    }
-
-    public trackButtonByInputIdFn(
-        index: number,
-        button: GamepadSettingsButtonSettingsViewModel
-    ): string {
-        return button.inputId;
     }
 
     public ngOnInit(): void {

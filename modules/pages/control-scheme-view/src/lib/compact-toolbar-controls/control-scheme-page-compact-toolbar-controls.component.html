@@ -12,13 +12,13 @@
     {{ 'controlScheme.stop' | transloco }}
 </button>
 
-<button *ngIf="canAddBinding; else cannotAddBinding"
-        mat-raised-button
-        (click)="onAddBinding()"
->
-    {{ 'controlScheme.addBinding' | transloco }}
-</button>
-<ng-template #cannotAddBinding>
+@if (canAddBinding) {
+    <button mat-raised-button
+            (click)="onAddBinding()"
+    >
+        {{ 'controlScheme.addBinding' | transloco }}
+    </button>
+} @else {
     <button mat-raised-button
             [disabled]="true"
             [title]="'controlScheme.cannotCreateBinding' | transloco"
@@ -26,7 +26,8 @@
         {{ 'controlScheme.addBinding' | transloco }}
         <span class="cdk-visually-hidden">{{ 'controlScheme.cannotCreateBinding' | transloco }}</span>
     </button>
-</ng-template>
+}
+>
 
 <button mat-icon-button
         [matMenuTriggerFor]="menu"
@@ -50,12 +51,14 @@
         {{ 'controlScheme.widgets.reorderWidgetsButtonTitle' | transloco }}
     </button>
 
-    <button mat-menu-item
-            *ngIf="canExport"
-            (click)="onExport()"
-    >
-        {{ 'controlScheme.export' | transloco }}
-    </button>
+    @if (canExport) {
+        <button mat-menu-item
+                (click)="onExport()"
+        >
+            {{ 'controlScheme.export' | transloco }}
+        </button>
+    }
+
     <button mat-menu-item
             [disabled]="!canDelete"
             (click)="onDelete()">

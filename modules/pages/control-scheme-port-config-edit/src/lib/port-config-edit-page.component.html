@@ -18,49 +18,47 @@
     </button>
 </div>
 
-<mat-card *ngIf="portConfig$ | ngrxPush; let portConfig; else notFound"
-          class="port-configs"
->
-    <mat-card-header>
-        <mat-card-title>
-            {{ 'controlScheme.portConfigTitle' | transloco }}
-        </mat-card-title>
-        <mat-card-subtitle>
-            {{ 'controlScheme.portConfigSubtitle' | transloco: { hubName: portConfig.hubName, portId: portConfig.portId | portIdToPortName } }}
-        </mat-card-subtitle>
-    </mat-card-header>
-    <form (submit)="onSubmit($event)"
-          (keyup.enter)="onSubmit($event)"
-    >
-        <mat-card-content class="port-configs__content">
-            <mat-form-field>
-                <mat-label>{{ 'controlScheme.accelerationTimeMs' | transloco }}</mat-label>
-                <input type="number"
-                       matInput
-                       [min]="minAccDecProfileTimeMs"
-                       [max]="maxAccDecProfileTimeMs"
-                       [formControl]="formGroup.controls.accelerationTimeMs"
-                />
-                <span matTextSuffix>{{ 'controlScheme.profileTimingPostfix' | transloco }}</span>
-                <mat-error [libValidationMessages]="formGroup.controls.accelerationTimeMs"></mat-error>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>{{ 'controlScheme.decelerationTimeMs' | transloco }}</mat-label>
-                <input type="number"
-                       matInput
-                       [min]="minAccDecProfileTimeMs"
-                       [max]="maxAccDecProfileTimeMs"
-                       [formControl]="formGroup.controls.decelerationTimeMs"
-                />
-                <span matTextSuffix>{{ 'controlScheme.profileTimingPostfix' | transloco }}</span>
-                <mat-error [libValidationMessages]="formGroup.controls.decelerationTimeMs"></mat-error>
-            </mat-form-field>
-        </mat-card-content>
-    </form>
-</mat-card>
-
-<ng-template #notFound>
+@if (portConfig$ | ngrxPush; as portConfig) {
+    <mat-card class="port-configs">
+        <mat-card-header>
+            <mat-card-title>
+                {{ 'controlScheme.portConfigTitle' | transloco }}
+            </mat-card-title>
+            <mat-card-subtitle>
+                {{ 'controlScheme.portConfigSubtitle' | transloco: { hubName: portConfig.hubName, portId: portConfig.portId | portIdToPortName } }}
+            </mat-card-subtitle>
+        </mat-card-header>
+        <form (submit)="onSubmit($event)"
+              (keyup.enter)="onSubmit($event)"
+        >
+            <mat-card-content class="port-configs__content">
+                <mat-form-field>
+                    <mat-label>{{ 'controlScheme.accelerationTimeMs' | transloco }}</mat-label>
+                    <input type="number"
+                           matInput
+                           [min]="minAccDecProfileTimeMs"
+                           [max]="maxAccDecProfileTimeMs"
+                           [formControl]="formGroup.controls.accelerationTimeMs"
+                    />
+                    <span matTextSuffix>{{ 'controlScheme.profileTimingPostfix' | transloco }}</span>
+                    <mat-error [libValidationMessages]="formGroup.controls.accelerationTimeMs"></mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>{{ 'controlScheme.decelerationTimeMs' | transloco }}</mat-label>
+                    <input type="number"
+                           matInput
+                           [min]="minAccDecProfileTimeMs"
+                           [max]="maxAccDecProfileTimeMs"
+                           [formControl]="formGroup.controls.decelerationTimeMs"
+                    />
+                    <span matTextSuffix>{{ 'controlScheme.profileTimingPostfix' | transloco }}</span>
+                    <mat-error [libValidationMessages]="formGroup.controls.decelerationTimeMs"></mat-error>
+                </mat-form-field>
+            </mat-card-content>
+        </form>
+    </mat-card>
+} @else {
     <lib-hint>
         {{ 'controlScheme.portConfigNotFound' | transloco }}
     </lib-hint>
-</ng-template>
+}

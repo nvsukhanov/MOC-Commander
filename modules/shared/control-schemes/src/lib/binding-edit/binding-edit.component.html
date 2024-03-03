@@ -4,12 +4,15 @@
             <mat-form-field class="binding-type-select">
                 <mat-label>{{ 'controlScheme.bindingOutputSectionOperationModeLabel' | transloco }}</mat-label>
                 <mat-select [formControl]="form.controls.bindingType">
-                    <mat-option *ngFor="let bindingType of availableBindingTypes"
-                                [value]="bindingType">
-                        {{ 'controlScheme.bindingOutputSectionOperationModeValue' | transloco: {
-                        name: bindingType | bindingTypeToL10nKey | transloco
-                    } }}
-                    </mat-option>
+                    @for (bindingType of availableBindingTypes; track bindingType) {
+                        <mat-option [value]="bindingType">
+                            {{
+                                'controlScheme.bindingOutputSectionOperationModeValue' | transloco: {
+                                    name: bindingType | bindingTypeToL10nKey | transloco
+                                }
+                            }}
+                        </mat-option>
+                    }
                 </mat-select>
             </mat-form-field>
         </mat-card-title>

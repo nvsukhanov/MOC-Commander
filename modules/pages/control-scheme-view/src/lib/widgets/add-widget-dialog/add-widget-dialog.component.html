@@ -9,23 +9,27 @@
         <mat-form-field>
             <mat-label>{{ 'controlScheme.widgets.addWidgetDialog.selectWidgetType' | transloco }}</mat-label>
             <mat-select [formControl]="form.controls.selectionIndex">
-                <mat-select-trigger *ngIf="selectedWidgetBaseConfig; let selectedBaseConfig">
-                    {{ selectedBaseConfig.widgetType | widgetTypeToL10nKey | transloco }}
-                    ({{ selectedBaseConfig | widgetConnectionInfoL10n | ngrxPush }})
-                </mat-select-trigger>
-                <mat-option *ngFor="let data of addableWidgetConfigs; let idx = index"
-                            [value]="idx"
-                >
-                    {{ data.widgetType | widgetTypeToL10nKey | transloco }}
-                    ({{ data | widgetConnectionInfoL10n | ngrxPush }})
-                </mat-option>
+                @if (selectedWidgetBaseConfig; as selectedBaseConfig) {
+                    <mat-select-trigger>
+                        {{ selectedBaseConfig.widgetType | widgetTypeToL10nKey | transloco }}
+                        ({{ selectedBaseConfig | widgetConnectionInfoL10n | ngrxPush }})
+                    </mat-select-trigger>
+                }
+
+                @for (data of addableWidgetConfigs; track data; let idx = $index) {
+                    <mat-option [value]="idx">
+                        {{ data.widgetType | widgetTypeToL10nKey | transloco }}
+                        ({{ data | widgetConnectionInfoL10n | ngrxPush }})
+                    </mat-option>
+                }
             </mat-select>
         </mat-form-field>
 
-        <page-control-scheme-view-widget-settings-container *ngIf="selectedWidgetBaseConfig"
-                                                            [config]="selectedWidgetBaseConfig"
-                                                            (configChanges)="onConfigChanges($event)"
-        ></page-control-scheme-view-widget-settings-container>
+        @if (selectedWidgetBaseConfig) {
+            <page-control-scheme-view-widget-settings-container [config]="selectedWidgetBaseConfig"
+                                                                (configChanges)="onConfigChanges($event)"
+            ></page-control-scheme-view-widget-settings-container>
+        }
     </div>
 
     <div mat-dialog-actions

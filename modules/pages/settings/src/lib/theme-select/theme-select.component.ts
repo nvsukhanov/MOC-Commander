@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatSelectModule } from '@angular/material/select';
-import { NgForOf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { getEnumValues } from '@app/shared-misc';
 import { UserSelectedTheme } from '@app/store';
@@ -14,7 +13,6 @@ import { ThemeToL10nKeyPipe } from './theme-to-l10n-key.pipe';
     styleUrls: [ './theme-select.component.scss' ],
     imports: [
         MatSelectModule,
-        NgForOf,
         ThemeToL10nKeyPipe,
         TranslocoPipe
     ],

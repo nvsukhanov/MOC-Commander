@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
-import { NgIf } from '@angular/common';
 import { MOTOR_LIMITS, PortModeName } from 'rxpoweredup';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
@@ -50,7 +49,6 @@ import { NO_INPUTS_ERROR } from './servo-binding-form-builder.service';
     templateUrl: './binding-servo-edit.component.html',
     styleUrls: [ './binding-servo-edit.component.scss' ],
     imports: [
-        NgIf,
         BindingEditSectionComponent,
         TranslocoPipe,
         MatButtonModule,

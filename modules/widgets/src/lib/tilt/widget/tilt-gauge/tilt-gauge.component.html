@@ -13,9 +13,9 @@
        class="brackets"
     ></g>
 
-    <g *ngIf="iconTemplate && tiltDegrees !== undefined"
-       [attr.transform]="iconTransform"
-    >
-        <ng-container [ngTemplateOutlet]="iconTemplate"></ng-container>
-    </g>
+    @if (iconTemplate && tiltDegrees !== undefined) {
+        <g [attr.transform]="iconTransform">
+            <ng-container [ngTemplateOutlet]="iconTemplate"></ng-container>
+        </g>
+    }
 </svg>

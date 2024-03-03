@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { LetDirective, PushPipe } from '@ngrx/component';
+import { PushPipe } from '@ngrx/component';
 import { Observable, Subscription, distinctUntilChanged, filter, map, of, startWith, switchMap, take } from 'rxjs';
-import { NgIf } from '@angular/common';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,7 +23,6 @@ import { HUB_EDIT_PAGE_SELECTORS } from './hub-edit-page.selectors';
     styleUrls: [ './hub-edit-page.component.scss' ],
     imports: [
         PushPipe,
-        NgIf,
         TranslocoPipe,
         HintComponent,
         MatButtonModule,
@@ -34,7 +32,6 @@ import { HUB_EDIT_PAGE_SELECTORS } from './hub-edit-page.selectors';
         ReactiveFormsModule,
         ValidationMessagesDirective,
         RouterLink,
-        LetDirective,
         FeatureToolbarControlsDirective,
         FeatureToolbarBreadcrumbsDirective
     ],

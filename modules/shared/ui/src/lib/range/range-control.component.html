@@ -1,4 +1,4 @@
-<ng-container *ngIf="startControl && endControl">
+@if (startControl && endControl) {
     <div class="slider-label">
         <label class="slider-label-value-left"
                [for]="startId"
@@ -28,4 +28,4 @@
                [id]="endId"
         />
     </mat-slider>
-</ng-container>
+}

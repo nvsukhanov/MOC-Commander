@@ -1,4 +1,4 @@
-<ng-container *ngIf="editedHubConfiguration$ | ngrxPush; let hubConfiguration; else hubIsNotFound">
+@if (editedHubConfiguration$ | ngrxPush; as hubConfiguration) {
     <div *libFeatureToolbarControls
          [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | ngrxPush"
          class="toolbar-panel"
@@ -17,31 +17,26 @@
         </a>
     </div>
 
-    <section *ngIf="isHubConnected$ | ngrxPush; else hubIsNotConnected"
-             class="edit-form-container"
-    >
-        <mat-card class="card">
-            <mat-card-header>
-                <mat-card-title>{{ hubConfiguration.name }}</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <mat-form-field>
-                    <mat-label>{{ 'hub.name' | transloco }}</mat-label>
-                    <input matInput [formControl]="form.controls.name"/>
-                    <mat-error [libValidationMessages]="form.controls.name"
-                               [l10nMap]="validationErrorsMap"
-                    ></mat-error>
-                </mat-form-field>
-            </mat-card-content>
-        </mat-card>
-    </section>
-
-    <ng-template #hubIsNotConnected>
+    @if (isHubConnected$ | ngrxPush) {
+        <section class="edit-form-container">
+            <mat-card class="card">
+                <mat-card-header>
+                    <mat-card-title>{{ hubConfiguration.name }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <mat-form-field>
+                        <mat-label>{{ 'hub.name' | transloco }}</mat-label>
+                        <input matInput [formControl]="form.controls.name"/>
+                        <mat-error [libValidationMessages]="form.controls.name"
+                                   [l10nMap]="validationErrorsMap"
+                        ></mat-error>
+                    </mat-form-field>
+                </mat-card-content>
+            </mat-card>
+        </section>
+    } @else {
         <lib-hint>{{ 'hub.isNotConnected' | transloco: hubConfiguration }}</lib-hint>
-    </ng-template>
-</ng-container>
-
-<ng-template #hubIsNotFound>
+    }
+} @else {
     <lib-hint>{{ 'hub.isNotFound' | transloco }}</lib-hint>
-</ng-template>
-
+}

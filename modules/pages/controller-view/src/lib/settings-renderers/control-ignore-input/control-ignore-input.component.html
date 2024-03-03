@@ -1,4 +1,5 @@
-<mat-slide-toggle *ngIf="control"
-                  [formControl]="control">
-    {{ 'controller.ignoreControllerTitle' | transloco }}
-</mat-slide-toggle>
+@if (control) {
+    <mat-slide-toggle [formControl]="control">
+        {{ 'controller.ignoreControllerTitle' | transloco }}
+    </mat-slide-toggle>
+}

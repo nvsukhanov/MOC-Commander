@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,7 +21,6 @@ import { BindingInputSummaryPipe } from './binding-input-summary.pipe';
     templateUrl: './binding-tree-node.component.html',
     styleUrls: [ './binding-tree-node.component.scss' ],
     imports: [
-        NgIf,
         BindingTypeToL10nKeyPipe,
         TranslocoPipe,
         PushPipe,

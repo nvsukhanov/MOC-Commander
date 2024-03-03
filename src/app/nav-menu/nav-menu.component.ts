@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
-import { LetDirective, PushPipe } from '@ngrx/component';
+import { PushPipe } from '@ngrx/component';
 import { ScreenSizeObserverService } from '@app/shared-misc';
 import { HUBS_ACTIONS } from '@app/store';
 
@@ -16,13 +15,9 @@ import { NAV_MENU_SELECTORS } from './nav-menu.selectors';
     templateUrl: './nav-menu.component.html',
     styleUrls: [ './nav-menu.component.scss' ],
     imports: [
-        NgSwitch,
         PushPipe,
         CompactNavMenuComponent,
-        NgSwitchCase,
         FullNavMenuComponent,
-        LetDirective,
-        NgIf
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

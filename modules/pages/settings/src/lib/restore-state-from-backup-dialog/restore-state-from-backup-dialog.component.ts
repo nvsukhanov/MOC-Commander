@@ -4,7 +4,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { NgIf } from '@angular/common';
 import { ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
 import { UploadFileFormControlComponent } from '@app/shared-ui';
 import { AppStoreVersion, IState, MigrateStoreService } from '@app/store';
@@ -25,7 +24,6 @@ import { STATE_FILE_VALIDATION_ERRORS, createStateFileValidatorFn } from './stat
         ValidationMessagesDirective,
         UploadFileFormControlComponent,
         ReactiveFormsModule,
-        NgIf,
     ]
 })
 export class RestoreStateFromBackupDialogComponent {

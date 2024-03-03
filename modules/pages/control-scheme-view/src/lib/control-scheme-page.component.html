@@ -1,10 +1,11 @@
-<ng-container *ngIf="selectedScheme$ | ngrxPush; let scheme; else schemeNotFound">
-    <page-control-scheme-view-control-scheme-widgets-grid *ngIf="scheme.widgets.length"
-                                                          [widgetConfigs]="scheme.widgets"
-                                                          [editable]="!!(canDeleteOrEditWidgets$ | ngrxPush)"
-                                                          (deleteWidget)="onDeleteWidget($event)"
-                                                          (editWidget)="onEditWidget($event)"
-    ></page-control-scheme-view-control-scheme-widgets-grid>
+@if (selectedScheme$ | ngrxPush; as scheme) {
+    @if (scheme.widgets.length) {
+        <page-control-scheme-view-control-scheme-widgets-grid [widgetConfigs]="scheme.widgets"
+                                                              [editable]="!!(canDeleteOrEditWidgets$ | ngrxPush)"
+                                                              (deleteWidget)="onDeleteWidget($event)"
+                                                              (editWidget)="onEditWidget($event)"
+        ></page-control-scheme-view-control-scheme-widgets-grid>
+    }
 
     <mat-card>
         <mat-card-header>
@@ -17,25 +18,30 @@
         </mat-card-header>
 
         <mat-card-content>
-            <section *ngIf="schemeRunBlockers$ | ngrxPush; let blockers"
-                     class="run-blockers"
-            >
-                <p *ngFor="let blocker of blockers"
-                   class="run-blockers__item"
-                >
-                    <mat-icon [fontIcon]="'highlight_off'"
-                              [color]="'warn'"
-                    ></mat-icon>
-                    {{ blocker | controlSchemeRunBlockersL10nPipe | transloco }}
-                </p>
-            </section>
-            <section *ngIf="scheme.bindings.length; else bindingsListEmpty">
+            @if (schemeRunBlockers$ | ngrxPush; as blockers) {
+                <section class="run-blockers">
+                    @for (blocker of blockers; track blocker) {
+                        <p class="run-blockers__item">
+                            <mat-icon [fontIcon]="'highlight_off'"
+                                      [color]="'warn'"
+                            ></mat-icon>
+                            {{ blocker | controlSchemeRunBlockersL10nPipe | transloco }}
+                        </p>
+                    }
+                </section>
+            }
+
+            @if (scheme.bindings.length) {
                 <page-control-scheme-view-control-scheme-view-io-list [tree]="schemeViewTree$ | ngrxPush"
                 ></page-control-scheme-view-control-scheme-view-io-list>
-            </section>
+            } @else {
+                <lib-hint>
+                    {{ 'controlScheme.bindingsListEmptyNotification' | transloco }}
+                </lib-hint>
+            }
         </mat-card-content>
 
-        <ng-container *ngIf="isSmallScreen$ | ngrxPush; else largeScreen">
+        @if (isSmallScreen$ | ngrxPush) {
             <page-control-scheme-view-control-scheme-page-compact-toolbar-controls *libFeatureToolbarControls
                                                                                    [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | ngrxPush"
                                                                                    [canRun]="!!(canRunScheme$ | ngrxPush)"
@@ -53,8 +59,7 @@
                                                                                    (addWidget)="onAddWidget()"
                                                                                    (reorderWidgets)="onReorderWidgets()"
             ></page-control-scheme-view-control-scheme-page-compact-toolbar-controls>
-        </ng-container>
-        <ng-template #largeScreen>
+        } @else {
             <page-control-scheme-view-control-scheme-page-full-toolbar-controls *libFeatureToolbarControls
                                                                                 [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | ngrxPush"
                                                                                 [canRun]="!!(canRunScheme$ | ngrxPush)"
@@ -72,18 +77,10 @@
                                                                                 (addWidget)="onAddWidget()"
                                                                                 (reorderWidgets)="onReorderWidgets()"
             ></page-control-scheme-view-control-scheme-page-full-toolbar-controls>
-        </ng-template>
+        }
     </mat-card>
-</ng-container>
-
-<ng-template #schemeNotFound>
+} @else {
     <lib-hint>
         {{ 'controlScheme.notFound' | transloco }}
     </lib-hint>
-</ng-template>
-
-<ng-template #bindingsListEmpty>
-    <lib-hint>
-        {{ 'controlScheme.bindingsListEmptyNotification' | transloco }}
-    </lib-hint>
-</ng-template>
+}

@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
@@ -30,7 +29,6 @@ import { StepperControllerNameResolverService } from './stepper-controller-name-
     templateUrl: './binding-stepper-edit.component.html',
     styleUrls: [ './binding-stepper-edit.component.scss' ],
     imports: [
-        NgIf,
         BindingEditSectionComponent,
         BindingControlSelectHubComponent,
         BindingControlSelectIoComponent,

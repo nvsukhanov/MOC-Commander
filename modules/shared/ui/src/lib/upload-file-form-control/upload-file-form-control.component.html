@@ -8,13 +8,11 @@
     <p class="filename"
        libEllipsisTitle
     >
-        <ng-container *ngIf="file; else placeholder">
+        @if (file) {
             {{ file.name }}
-        </ng-container>
-
-        <ng-template #placeholder>
+        } @else {
             {{ 'uploadFileDialogTitle' | transloco }}
-        </ng-template>
+        }
     </p>
 
     <button mat-raised-button

@@ -190,6 +190,24 @@
           "error",
           "single"
         ],
+        "no-restricted-imports": "off",
+        "@typescript-eslint/no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "@angular/common",
+                "importNames": [ "NgIf" ],
+                "message": "Use flow syntax instead of *ngIf"
+              },
+              {
+                "name": "@angular/common",
+                "importNames": [ "NgForOf" ],
+                "message": "Use flow syntax instead of *ngFor"
+              }
+            ]
+          }
+        ],
         "@nx/enforce-module-boundaries": [
           "error",
           {

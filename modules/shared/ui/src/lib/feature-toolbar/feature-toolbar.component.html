@@ -1,4 +1,4 @@
-<ng-container *ngIf="controlsTemplate$ | ngrxPush; let controlsTemplate">
+@if (controlsTemplate$ | ngrxPush; as controlsTemplate) {
     <mat-toolbar class="toolbar">
         <lib-breadcrumbs [breadcrumbsDef]="breadcrumbDef"
                          *libHideOnSmallScreen
@@ -7,4 +7,4 @@
         <span class="spacer"></span>
         <ng-container *ngTemplateOutlet="controlsTemplate"></ng-container>
     </mat-toolbar>
-</ng-container>
+}

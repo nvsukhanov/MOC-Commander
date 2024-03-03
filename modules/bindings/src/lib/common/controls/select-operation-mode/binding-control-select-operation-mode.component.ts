@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { NgForOf, NgIf } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { Observable, map, of, startWith } from 'rxjs';
@@ -14,11 +13,9 @@ import { BindingTypeToL10nKeyPipe } from '@app/shared-ui';
     templateUrl: './binding-control-select-operation-mode.component.html',
     styleUrls: [ './binding-control-select-operation-mode.component.scss' ],
     imports: [
-        NgIf,
         BindingTypeToL10nKeyPipe,
         PushPipe,
         MatSelectModule,
-        NgForOf,
         TranslocoPipe,
         ReactiveFormsModule
     ],

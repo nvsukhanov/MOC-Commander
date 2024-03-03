@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { NgIf } from '@angular/common';
 
 @Component({
     standalone: true,
@@ -10,7 +9,6 @@ import { NgIf } from '@angular/common';
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         MatIconModule,
-        NgIf
     ]
 })
 export class InputActivityIndicatorComponent {

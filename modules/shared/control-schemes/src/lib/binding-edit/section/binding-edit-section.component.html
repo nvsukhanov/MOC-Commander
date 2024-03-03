@@ -1,2 +1,4 @@
-<h2 class="title" *ngIf="caption">{{ caption }}</h2>
+@if (caption) {
+    <h2 class="title">{{ caption }}</h2>
+}
 <ng-content></ng-content>

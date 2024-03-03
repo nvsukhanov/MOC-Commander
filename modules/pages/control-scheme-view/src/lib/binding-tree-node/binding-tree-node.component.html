@@ -1,46 +1,47 @@
-<div *ngIf="viewModel$ | ngrxPush; let viewModel"
-     class="binding__info-container"
-     [class.binding__info-container_small-screen]="isSmallScreen$ | ngrxPush"
->
-    <div class="binding__general-info">
-        <a class="binding__operation-type"
-           [routerLink]="viewModel.schemeName | bindingViewUrl: viewModel.binding.id"
-        >
-            @if (viewModel.ioHasNoRequiredCapabilities) {
-                <mat-error class="binding__operation-type"
-                           [title]="'controlScheme.ioCapabilitiesMismatch' | transloco"
-                >
-                    {{ viewModel.binding.bindingType | bindingTypeToL10nKey | transloco }}
-                </mat-error>
-                <span class="cdk-visually-hidden">
+@if (viewModel$ | ngrxPush; as viewModel) {
+    <div class="binding__info-container"
+         [class.binding__info-container_small-screen]="isSmallScreen$ | ngrxPush"
+    >
+        <div class="binding__general-info">
+            <a class="binding__operation-type"
+               [routerLink]="viewModel.schemeName | bindingViewUrl: viewModel.binding.id"
+            >
+                @if (viewModel.ioHasNoRequiredCapabilities) {
+                    <mat-error class="binding__operation-type"
+                               [title]="'controlScheme.ioCapabilitiesMismatch' | transloco"
+                    >
+                        {{ viewModel.binding.bindingType | bindingTypeToL10nKey | transloco }}
+                    </mat-error>
+                    <span class="cdk-visually-hidden">
                     ({{ 'controlScheme.ioCapabilitiesMismatch' | transloco }})
                 </span>
-            } @else {
-                {{ viewModel.binding.bindingType | bindingTypeToL10nKey | transloco }}
-            }
-
-            <span *ngIf="!viewModel.areAllControllersConnected"
-                  class="cdk-visually-hidden"
-            >
-                ({{ 'controlScheme.controllerIsNotConnectedLabel' | transloco }})
-            </span>
-        </a>
-    </div>
-
-    <div class="binding__controls">
-        @for (controlData of viewModel.controlData; track controlData) {
-            <div>
-                <span class="binding__controls-action-name">{{ (viewModel.binding | bindingInputSummary: controlData.action) | ngrxPush }}:</span>
-                @if (controlData.isControllerConnected) {
-                    {{ (viewModel.binding.bindingType | fullControllerInputName: viewModel.binding.inputs[controlData.action] : controlData.action) | ngrxPush }}
                 } @else {
-                    <span [class.binding__controls_disconnected]="!controlData.isControllerConnected"
-                          [title]="'controller.isNotConnectedInlineNotification' | transloco"
-                    >
-                        {{ (viewModel.binding.bindingType | fullControllerInputName: viewModel.binding.inputs[controlData.action] : controlData.action) | ngrxPush }}
+                    {{ viewModel.binding.bindingType | bindingTypeToL10nKey | transloco }}
+                }
+
+                @if (!viewModel.areAllControllersConnected) {
+                    <span class="cdk-visually-hidden">
+                        ({{ 'controlScheme.controllerIsNotConnectedLabel' | transloco }})
                     </span>
                 }
-            </div>
-        }
+            </a>
+        </div>
+
+        <div class="binding__controls">
+            @for (controlData of viewModel.controlData; track controlData) {
+                <div>
+                    <span class="binding__controls-action-name">{{ (viewModel.binding | bindingInputSummary: controlData.action) | ngrxPush }}:</span>
+                    @if (controlData.isControllerConnected) {
+                        {{ (viewModel.binding.bindingType | fullControllerInputName: viewModel.binding.inputs[controlData.action] : controlData.action) | ngrxPush }}
+                    } @else {
+                        <span [class.binding__controls_disconnected]="!controlData.isControllerConnected"
+                              [title]="'controller.isNotConnectedInlineNotification' | transloco"
+                        >
+                        {{ (viewModel.binding.bindingType | fullControllerInputName: viewModel.binding.inputs[controlData.action] : controlData.action) | ngrxPush }}
+                    </span>
+                    }
+                </div>
+            }
+        </div>
     </div>
-</div>
+}

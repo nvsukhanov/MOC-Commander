@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { MatCardModule } from '@angular/material/card';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
@@ -20,7 +19,6 @@ import { ControllerSettingsContainerComponent } from './controller-settings-cont
     templateUrl: './controller-view-page.component.html',
     styleUrls: [ './controller-view-page.component.scss' ],
     imports: [
-        NgIf,
         PushPipe,
         MatCardModule,
         HintComponent,

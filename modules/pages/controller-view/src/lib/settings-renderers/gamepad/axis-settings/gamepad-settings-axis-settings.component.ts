@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { PushPipe } from '@ngrx/component';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { NgIf } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -26,7 +25,6 @@ import { InputValuePercentHumanReadableValuePipe } from '../active-zone-human-re
         RangeControlComponent,
         ToggleControlComponent,
         TranslocoPipe,
-        NgIf,
         MatInputModule,
         ReactiveFormsModule,
         SliderControlComponent,

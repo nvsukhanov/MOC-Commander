@@ -1,8 +1,9 @@
-<mat-progress-bar *ngIf="shouldShowProgressBar$ | ngrxPush"
-                  mode="indeterminate"
-                  class="progress-bar"
-                  color="accent"
-></mat-progress-bar>
+@if (shouldShowProgressBar$ | ngrxPush) {
+    <mat-progress-bar mode="indeterminate"
+                      class="progress-bar"
+                      color="accent"
+    ></mat-progress-bar>
+}
 
 <app-nav-menu></app-nav-menu>
 

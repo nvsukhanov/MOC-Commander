@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
-import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { PushPipe } from '@ngrx/component';
 import { Observable, Subscription, map, of, startWith, switchMap } from 'rxjs';
@@ -9,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { concatLatestFrom } from '@ngrx/effects';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 import { IoTypeToL10nKeyPipe, PortIdToPortNamePipe } from '@app/shared-ui';
-import { AttachedIoModel } from '@app/store';
+import { AttachedIoModel, attachedIosIdFn } from '@app/store';
 
 import { BINDING_CONTROL_SELECT_IO_SELECTORS } from './binding-control-select-io.selectors';
 
@@ -20,8 +19,6 @@ import { BINDING_CONTROL_SELECT_IO_SELECTORS } from './binding-control-select-io
     styleUrls: [ './binding-control-select-io.component.scss' ],
     imports: [
         MatSelectModule,
-        NgForOf,
-        NgIf,
         TranslocoPipe,
         ReactiveFormsModule,
         IoTypeToL10nKeyPipe,
@@ -54,6 +51,13 @@ export class BindingControlSelectIoComponent implements OnChanges, OnDestroy {
 
     public get isSelectedIoAttached$(): Observable<boolean> {
         return this._isSelectedIoAttached$;
+    }
+
+    public trackIo(
+        index: number,
+        item: AttachedIoModel
+    ): string {
+        return attachedIosIdFn(item);
     }
 
     public ngOnChanges(): void {

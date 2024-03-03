@@ -12,7 +12,6 @@ import {
 } from '@angular/core';
 import { CdkScrollable } from '@angular/cdk/overlay';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { NgIf } from '@angular/common';
 import { PushPipe } from '@ngrx/component';
 import { RouterOutlet } from '@angular/router';
 import { Subscription, animationFrameScheduler, interval, switchMap, take } from 'rxjs';
@@ -34,7 +33,6 @@ import { ROOT_SELECTORS } from './root.selectors';
         FeatureToolbarComponent,
         MatProgressBarModule,
         NavMenuComponent,
-        NgIf,
         PushPipe,
         RouterOutlet
     ],

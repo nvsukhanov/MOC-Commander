@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { NgForOf, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { LetDirective, PushPipe } from '@ngrx/component';
+import { PushPipe } from '@ngrx/component';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Observable } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
@@ -18,7 +17,7 @@ import {
     HintComponent,
     IBreadcrumbDefinition
 } from '@app/shared-ui';
-import { CONTROLLERS_ACTIONS, ControllerModel } from '@app/store';
+import { CONTROLLERS_ACTIONS } from '@app/store';
 import { ControlSchemeViewUrlPipe } from '@app/shared-control-schemes';
 
 import { CONTROLLERS_LIST_PAGE_SELECTORS, ControllerListViewModel } from './controllers-list-page.selectors';
@@ -29,9 +28,6 @@ import { CONTROLLERS_LIST_PAGE_SELECTORS, ControllerListViewModel } from './cont
     templateUrl: './controllers-list-page.component.html',
     styleUrls: [ './controllers-list-page.component.scss' ],
     imports: [
-        LetDirective,
-        NgIf,
-        NgForOf,
         HintComponent,
         TranslocoPipe,
         PushPipe,
@@ -73,13 +69,6 @@ export class ControllersListPageComponent implements OnInit {
 
     public ngOnInit(): void {
         this.titleService.setTitle$(this.translocoService.selectTranslate('pageTitle.controllerList'));
-    }
-
-    public controllerTrackById(
-        index: number,
-        controller: ControllerModel
-    ): string {
-        return controller.id;
     }
 
     public forgetController(

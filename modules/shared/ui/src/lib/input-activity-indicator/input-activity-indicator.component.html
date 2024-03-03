@@ -1,14 +1,11 @@
-<ng-container *ngIf="isActive; else inactive">
+@if (isActive) {
     <div class="indicator-container indicator-container_active"
          [title]="activeTitle"
     >
         <div class="indicator-center indicator-center_active"></div>
     </div>
-</ng-container>
-
-<ng-template #inactive>
+} @else {
     <div class="indicator-container"
          [title]="inactiveTitle"
-    >
-    </div>
-</ng-template>
+    ></div>
+}

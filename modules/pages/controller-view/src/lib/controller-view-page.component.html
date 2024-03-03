@@ -2,7 +2,7 @@
      [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | ngrxPush"
 ></div>
 
-<ng-container *ngIf="viewModel$ | ngrxPush; let viewModel; else controllerIsNotFound">
+@if (viewModel$ | ngrxPush; as viewModel) {
     <mat-card>
         <mat-card-header>
             <mat-card-title class="controller-title">
@@ -19,12 +19,11 @@
 
                 <dt>{{ 'controller.controllerConnectionState' | transloco }}</dt>
                 <dd>
-                    <ng-container *ngIf="viewModel.isConnected; else isNotConnected">
+                    @if (viewModel.isConnected) {
                         {{ 'controller.controllerConnectionStateConnected' | transloco }}
-                    </ng-container>
-                    <ng-template #isNotConnected>
+                    } @else {
                         {{ 'controller.controllerConnectionStateDisconnected' | transloco }}
-                    </ng-template>
+                    }
                 </dd>
             </dl>
         </mat-card-content>
@@ -41,8 +40,6 @@
             ></page-controller-view-controller-settings-container>
         </mat-card-content>
     </mat-card>
-</ng-container>
-
-<ng-template #controllerIsNotFound>
+} @else {
     <lib-hint>{{ 'controller.controllerNotFound' | transloco }}</lib-hint>
-</ng-template>
+}

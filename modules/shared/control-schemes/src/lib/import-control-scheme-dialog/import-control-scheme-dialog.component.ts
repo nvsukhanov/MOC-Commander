@@ -5,7 +5,6 @@ import { PushPipe } from '@ngrx/component';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { JsonPipe, NgIf } from '@angular/common';
 
 import { ControlSchemeDecompressorService } from './control-scheme-decompressor.service';
 import { ControlSchemeImportValidationService } from './control-scheme-import-validation.service';
@@ -22,8 +21,6 @@ import { ControlSchemeImportValidationService } from './control-scheme-import-va
         TranslocoPipe,
         MatInputModule,
         ReactiveFormsModule,
-        NgIf,
-        JsonPipe
     ],
     providers: [
         ControlSchemeDecompressorService,

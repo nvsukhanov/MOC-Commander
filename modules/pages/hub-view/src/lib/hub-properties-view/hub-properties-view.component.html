@@ -1,27 +1,33 @@
-<mat-card *ngIf="configuration && runtimeData">
-    <mat-card-header>
-        <mat-card-subtitle>
-            {{ configuration.hubType | hubTypeToL10nKey | transloco }}
-        </mat-card-subtitle>
-        <mat-card-title libEllipsisTitle>
-            <h2>{{ configuration.name }}</h2>
-        </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <p>
-            {{ 'hub.buttonState' | transloco: runtimeData }}
-        </p>
-        <p *ngIf="runtimeData.batteryLevel !== null; else batteryLevelUnknown">
-            {{ 'hub.batteryLevel' | transloco: runtimeData }}
-        </p>
-        <ng-template #batteryLevelUnknown>
-            <p>{{ 'hub.batteryLevelUnknown' | transloco }}</p>
-        </ng-template>
-        <p *ngIf="runtimeData.rssi !== null; else rssiLevelUnknown">
-            {{ 'hub.rssiLevel' | transloco: runtimeData }}
-        </p>
-        <ng-template #rssiLevelUnknown>
-            <p>{{ 'hub.rssiLevelUnknown' | transloco }}</p>
-        </ng-template>
-    </mat-card-content>
-</mat-card>
+@if (configuration && runtimeData) {
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>
+                {{ configuration.hubType | hubTypeToL10nKey | transloco }}
+            </mat-card-subtitle>
+            <mat-card-title libEllipsisTitle>
+                <h2>{{ configuration.name }}</h2>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p>
+                {{ 'hub.buttonState' | transloco: runtimeData }}
+            </p>
+
+            @if (runtimeData.batteryLevel !== null) {
+                <p>
+                    {{ 'hub.batteryLevel' | transloco: runtimeData }}
+                </p>
+            } @else {
+                <p>{{ 'hub.batteryLevelUnknown' | transloco }}</p>
+            }
+
+            @if (runtimeData.rssi !== null) {
+                <p>
+                    {{ 'hub.rssiLevel' | transloco: runtimeData }}
+                </p>
+            } @else {
+                <p>{{ 'hub.rssiLevelUnknown' | transloco }}</p>
+            }
+        </mat-card-content>
+    </mat-card>
+}

@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { LetDirective, PushPipe } from '@ngrx/component';
-import { NgForOf, NgIf } from '@angular/common';
+import { PushPipe } from '@ngrx/component';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { MatButtonModule } from '@angular/material/button';
@@ -36,9 +35,6 @@ import { ControlSchemeCreateDialogComponent } from './control-scheme-create-dial
     templateUrl: './control-scheme-list-page.component.html',
     styleUrls: [ './control-scheme-list-page.component.scss' ],
     imports: [
-        LetDirective,
-        NgForOf,
-        NgIf,
         PushPipe,
         TranslocoPipe,
         MatButtonModule,
@@ -86,11 +82,7 @@ export class ControlSchemeListPageComponent implements OnInit {
     public ngOnInit(): void {
         this.titleService.setTitle$(this.transloco.selectTranslate('pageTitle.controlSchemesList'));
     }
-
-    public trackSchemeById(index: number, scheme: ControlSchemeModel): string {
-        return scheme.name;
-    }
-
+    
     public onImport(): void {
         this.dialog.open<ImportControlSchemeDialogComponent, undefined, ControlSchemeModel | void>(ImportControlSchemeDialogComponent)
             .afterClosed()

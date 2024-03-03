@@ -3,7 +3,6 @@ import { Store } from '@ngrx/store';
 import { Observable, filter, map, switchMap, take } from 'rxjs';
 import { Router } from '@angular/router';
 import { PushPipe } from '@ngrx/component';
-import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { IUnsavedChangesComponent, RoutesBuilderService, TitleService } from '@app/shared-misc';
@@ -21,7 +20,6 @@ import { BINDING_CREATE_PAGE_SELECTORS } from './binding-create-page.selectors';
     imports: [
         BindingEditComponent,
         PushPipe,
-        NgIf,
         MatButtonModule,
         HintComponent,
         TranslocoPipe,

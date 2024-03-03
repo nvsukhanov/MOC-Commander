@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { NgForOf, NgIf } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { PortModeName } from 'rxpoweredup';
 import { Observable, Subscription, map, mergeWith, of, startWith, switchMap, take } from 'rxjs';
@@ -42,8 +41,6 @@ import { CanSetGearboxPortPositionPipe } from './can-set-gearbox-port-position.p
     BindingControlSelectControllerComponent,
     MatButtonModule,
     MatIconModule,
-    NgForOf,
-    NgIf,
     ToggleControlComponent,
     TranslocoPipe,
     BindingControlOutputEndStateComponent,

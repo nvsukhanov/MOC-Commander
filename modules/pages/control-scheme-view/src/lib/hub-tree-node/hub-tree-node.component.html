@@ -1,11 +1,12 @@
-<lib-hub-inline-view *ngIf="viewModel$ | ngrxPush; let viewModel"
-                     [isHubKnown]="viewModel.isHubKnown"
-                     [name]="viewModel.name"
-                     [hubId]="viewModel.hubId"
-                     [batteryLevel]="viewModel.batteryLevel"
-                     [rssiLevel]="viewModel.rssi"
-                     [isButtonPressed]="viewModel.isButtonPressed"
-                     [hasCommunication]="viewModel.hasCommunication"
-                     [isConnected]="viewModel.isConnected"
-                     [showControls]="false"
-></lib-hub-inline-view>
+@if (viewModel$ | ngrxPush; as viewModel) {
+    <lib-hub-inline-view [isHubKnown]="viewModel.isHubKnown"
+                         [name]="viewModel.name"
+                         [hubId]="viewModel.hubId"
+                         [batteryLevel]="viewModel.batteryLevel"
+                         [rssiLevel]="viewModel.rssi"
+                         [isButtonPressed]="viewModel.isButtonPressed"
+                         [hasCommunication]="viewModel.hasCommunication"
+                         [isConnected]="viewModel.isConnected"
+                         [showControls]="false"
+    ></lib-hub-inline-view>
+}

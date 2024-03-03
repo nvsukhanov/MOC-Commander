@@ -5,11 +5,10 @@
             (edit)="onEdit()"
             (delete)="onDelete()"
 >
-    <ng-container *ngIf="data !== undefined; else noData">
+    @if (data !== undefined) {
         {{ 'controlScheme.widgets.temperature.value' | transloco: { temperature: (data | number: '1.1-1') } }}
-    </ng-container>
-    <ng-template #noData>
+    } @else {
         <mat-icon [fontIcon]="'question_mark'"></mat-icon>
         <span class="cdk-visually-hidden">{{ 'controlScheme.widgets.temperature.noDataTitle' | transloco }}</span>
-    </ng-template>
+    }
 </lib-widget>

@@ -9,9 +9,11 @@
                   [placeholder]="'controlScheme.importDialogDescription' | transloco"
                   [rows]="10"
         ></textarea>
-        <mat-error *ngIf="compressedSchemeInput.dirty && !compressedSchemeInput.valid">
-            {{ 'controlScheme.importDataInvalid' | transloco }}
-        </mat-error>
+        @if (compressedSchemeInput.dirty && !compressedSchemeInput.valid) {
+            <mat-error>
+                {{ 'controlScheme.importDataInvalid' | transloco }}
+            </mat-error>
+        }
     </mat-form-field>
 </div>
 
