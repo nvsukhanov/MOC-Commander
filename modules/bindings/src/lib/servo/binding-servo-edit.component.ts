@@ -41,7 +41,7 @@ import { BINDING_SERVO_EDIT_SELECTORS } from './binding-servo-edit.selectors';
 import { ServoBindingForm } from './servo-binding-form';
 import { BINDING_CONTROLLER_NAME_RESOLVER } from '../i-binding-controller-name-resolver';
 import { ServoControllerNameResolverService } from './servo-controller-name-resolver.service';
-import { NO_INPUTS_ERROR } from './servo-binding-form-builder.service';
+import { NO_INPUTS_ERROR, ServoBindingFormBuilderService } from './servo-binding-form-builder.service';
 
 @Component({
     standalone: true,
@@ -105,7 +105,8 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
         private readonly cd: ChangeDetectorRef,
         private readonly store: Store,
         private readonly matDialog: MatDialog,
-        private readonly hubFacade: HubMotorPositionFacadeService
+        private readonly hubFacade: HubMotorPositionFacadeService,
+        protected readonly formBuilder: ServoBindingFormBuilderService
     ) {
     }
 

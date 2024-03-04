@@ -37,7 +37,8 @@ export const PRE_RUN_SCHEME_EFFECT = createEffect((
                 ...createPreRunSetDecelerationProfileTasks(scheme, hubStorage),
                 ...createWidgetReadTasks(scheme, hubStorage, store, controlSchemeStopEvent$, widgetReadTaskFactory)
             ];
-            const calibrationServoTasks = createPreRunServoCalibrationTasks(scheme, hubCalibrationFacade, store);
+            // TODO: move to Bindings module
+            const calibrationServoTasks = createPreRunServoCalibrationTasks(scheme, hubCalibrationFacade, store, appConfig);
             if (calibrationServoTasks.length > 0) {
                 combinedTasks.push(forkJoin(calibrationServoTasks));
             }

@@ -1,7 +1,7 @@
 import { MOTOR_LIMITS } from 'rxpoweredup';
 import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
-import { Injectable } from '@angular/core';
-import { AppValidators, DeepPartial } from '@app/shared-misc';
+import { Inject, Injectable } from '@angular/core';
+import { APP_CONFIG, AppValidators, DeepPartial, IAppConfig } from '@app/shared-misc';
 import { ControlSchemeInputAction, ControlSchemeServoBinding, ControllerInputModel } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
@@ -15,8 +15,25 @@ export class ServoBindingFormBuilderService {
     constructor(
         private readonly formBuilder: FormBuilder,
         private commonFormControlBuilder: CommonBindingsFormControlsBuilderService,
-        private readonly controlSchemeFormBuilder: ControlSchemeFormBuilderService
+        private readonly controlSchemeFormBuilder: ControlSchemeFormBuilderService,
+        @Inject(APP_CONFIG) private readonly appConfig: IAppConfig
     ) {
+    }
+
+    public get servoMinRange(): number {
+        return MOTOR_LIMITS.minServoDegreesRange;
+    }
+
+    public get servoMaxRange(): number {
+        return this.appConfig.servo.maxServoRange;
+    }
+
+    public get aposCenterMin(): number {
+        return -MOTOR_LIMITS.maxServoDegreesRange / 2;
+    }
+
+    public get aposCenterMax(): number {
+        return MOTOR_LIMITS.maxServoDegreesRange / 2;
     }
 
     public build(): ServoBindingForm {
@@ -30,12 +47,12 @@ export class ServoBindingFormBuilderService {
             hubId: this.controlSchemeFormBuilder.hubIdControl(),
             portId: this.controlSchemeFormBuilder.portIdControl(),
             calibrateOnStart: this.commonFormControlBuilder.toggleControl(true),
-            range: this.formBuilder.control<number>(MOTOR_LIMITS.maxServoDegreesRange, {
+            range: this.formBuilder.control<number>(this.appConfig.servo.defaultServoRange, {
                 nonNullable: true,
                 validators: [
                     Validators.required,
-                    Validators.min(MOTOR_LIMITS.minServoDegreesRange),
-                    Validators.max(MOTOR_LIMITS.maxServoDegreesRange),
+                    Validators.min(this.servoMinRange),
+                    Validators.max(this.servoMaxRange),
                     AppValidators.requireInteger,
                     AppValidators.requireNonZero
                 ]
@@ -44,8 +61,8 @@ export class ServoBindingFormBuilderService {
                 nonNullable: true,
                 validators: [
                     Validators.required,
-                    Validators.min(-MOTOR_LIMITS.maxServoDegreesRange / 2),
-                    Validators.max(MOTOR_LIMITS.maxServoDegreesRange / 2),
+                    Validators.min(this.aposCenterMin),
+                    Validators.max(this.aposCenterMax),
                     AppValidators.requireInteger,
                 ]
             }),

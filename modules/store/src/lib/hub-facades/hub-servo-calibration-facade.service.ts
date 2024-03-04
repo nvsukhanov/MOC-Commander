@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {
     Observable,
     Subject,
@@ -19,10 +19,10 @@ import {
     take,
     takeUntil
 } from 'rxjs';
-import { IHub, MOTOR_LIMITS, MotorServoEndState, PortModeName, ValueTransformers } from 'rxpoweredup';
+import { IHub, MotorServoEndState, PortModeName, ValueTransformers } from 'rxpoweredup';
 import { concatLatestFrom } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { transformRelativeDegToAbsoluteDeg } from '@app/shared-misc';
+import { APP_CONFIG, IAppConfig, transformRelativeDegToAbsoluteDeg } from '@app/shared-misc';
 
 import { HubStorageService } from '../hub-storage.service';
 import { HubMotorPositionFacadeService } from './hub-motor-position-facade.service';
@@ -59,15 +59,14 @@ export type CalibrationResult = CalibrationResultFinished | CalibrationResultErr
 export class HubServoCalibrationFacadeService {
     private readonly singleProbeTimeoutMs = 500;
 
-    private readonly maxRange = MOTOR_LIMITS.maxServoDegreesRange * 2;
-
     // used to compensate possible encoder jitter
     private readonly calibrationPositionMinimumThreshold = ValueTransformers.position.toValueThreshold(2);
 
     constructor(
         private readonly hubStorage: HubStorageService,
         private readonly motorPositionFacade: HubMotorPositionFacadeService,
-        private readonly store: Store
+        private readonly store: Store,
+        @Inject(APP_CONFIG) private readonly appConfig: IAppConfig
     ) {
     }
 
@@ -76,7 +75,7 @@ export class HubServoCalibrationFacadeService {
         portId: number,
         speed: number,
         power: number,
-        calibrationRuns: number = 1
+        calibrationRuns: number,
     ): Observable<CalibrationResult> {
         return new Observable<CalibrationResult>((subscriber) => {
             const cancel$ = new Subject<void>();
@@ -115,7 +114,11 @@ export class HubServoCalibrationFacadeService {
                             startRelativePosition,
                             startAbsolutePosition
                         );
-                        if (calibrationResult.servoRange > MOTOR_LIMITS.maxServoDegreesRange) {
+                        if (calibrationResult.servoRange > this.appConfig.servo.maxServoRange
+                            || calibrationResult.servoRange < this.appConfig.servo.minServoRange
+                            || calibrationResult.arcCenterAbsolutePosition < this.appConfig.servo.aposCenterMin
+                            || calibrationResult.arcCenterAbsolutePosition > this.appConfig.servo.aposCenterMax
+                        ) {
                             throw new OutOfRangeCalibrationError();
                         }
                         return calibrationResult;
@@ -180,14 +183,17 @@ export class HubServoCalibrationFacadeService {
         positionPortModeId: number,
         speed: number,
         power: number,
-        calibrationRuns: number
+        calibrationRuns: number,
     ): Observable<{ ccwProbeResult: number; cwProbeResult: number }> {
         const hub = this.hubStorage.get(hubId);
 
         const probes: Array<Observable<number>> = [];
+        const fullArcRange = this.appConfig.servo.maxServoRange * 2;
         for (let i = 0; i < calibrationRuns; i++) {
-            probes.push(this.probeDirectionLimit(hub, portId, -speed, power, i === 0 ? this.maxRange : this.maxRange * 2, positionPortModeId));
-            probes.push(this.probeDirectionLimit(hub, portId, speed, power, this.maxRange * 2, positionPortModeId));
+            probes.push(
+                this.probeDirectionLimit(hub, portId, -speed, power, i === 0 ? fullArcRange : fullArcRange * 2, positionPortModeId)
+            );
+            probes.push(this.probeDirectionLimit(hub, portId, speed, power, fullArcRange * 2, positionPortModeId));
         }
 
         return from(probes).pipe(
