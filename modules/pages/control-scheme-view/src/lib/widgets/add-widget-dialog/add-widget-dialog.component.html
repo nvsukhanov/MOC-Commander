@@ -12,14 +12,14 @@
                 @if (selectedWidgetBaseConfig; as selectedBaseConfig) {
                     <mat-select-trigger>
                         {{ selectedBaseConfig.widgetType | widgetTypeToL10nKey | transloco }}
-                        ({{ selectedBaseConfig | widgetConnectionInfoL10n | ngrxPush }})
+                        ({{ selectedBaseConfig | widgetConnectionInfoL10n | async }})
                     </mat-select-trigger>
                 }
 
                 @for (data of addableWidgetConfigs; track data; let idx = $index) {
                     <mat-option [value]="idx">
                         {{ data.widgetType | widgetTypeToL10nKey | transloco }}
-                        ({{ data | widgetConnectionInfoL10n | ngrxPush }})
+                        ({{ data | widgetConnectionInfoL10n | async }})
                     </mat-option>
                 }
             </mat-select>

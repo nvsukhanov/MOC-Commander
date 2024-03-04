@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { RouterLink } from '@angular/router';
-import { PushPipe } from '@ngrx/component';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { AsyncPipe } from '@angular/common';
 import { RoutesBuilderService, ScreenSizeObserverService } from '@app/shared-misc';
 
 import { IoInlineViewComponent } from '../io-inline-view';
@@ -23,7 +23,7 @@ import { IHubTreeNodeViewModel, IO_TREE_NODE_SELECTORS } from './io-tree-node.se
         TranslocoPipe,
         RouterLink,
         PortCommandTaskSummaryPipe,
-        PushPipe
+        AsyncPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

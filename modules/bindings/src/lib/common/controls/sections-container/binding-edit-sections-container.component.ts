@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PushPipe } from '@ngrx/component';
+import { AsyncPipe } from '@angular/common';
 import { ScreenSizeObserverService } from '@app/shared-misc';
 
 @Component({
@@ -9,7 +9,7 @@ import { ScreenSizeObserverService } from '@app/shared-misc';
     templateUrl: './binding-edit-sections-container.component.html',
     styleUrls: [ './binding-edit-sections-container.component.scss' ],
     imports: [
-        PushPipe
+        AsyncPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { PushPipe } from '@ngrx/component';
 import { TranslocoPipe } from '@ngneat/transloco';
+import { AsyncPipe } from '@angular/common';
 import { HubInlineViewComponent } from '@app/shared-ui';
 
 import { ControlSchemeViewHubTreeNode } from '../types';
@@ -15,8 +15,8 @@ import { HUB_TREE_NODE_SELECTORS, IHubTreeNodeViewModel } from './hub-tree-node.
     styleUrls: [ './hub-tree-node.component.scss' ],
     imports: [
         HubInlineViewComponent,
-        PushPipe,
-        TranslocoPipe
+        TranslocoPipe,
+        AsyncPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

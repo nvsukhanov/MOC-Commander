@@ -54,7 +54,7 @@
                     />
                     <button mat-icon-button
                             matSuffix
-                            [disabled]="!(canRequestPortValue$ | ngrxPush)"
+                            [disabled]="(canRequestPortValue$ | async) !== true"
                             [title]="'controlScheme.gearboxControlBinding.readAngleFromPort' | transloco"
                             (click)="onPortAbsolutePositionRequest(idx)"
                     >
@@ -62,7 +62,7 @@
                     </button>
                     <button mat-icon-button
                             matSuffix
-                            [disabled]="!((form | canSetGearboxPortPosition: idx) | ngrxPush)"
+                            [disabled]="((form | canSetGearboxPortPosition: idx) | async) !== true"
                             [title]="'controlScheme.gearboxControlBinding.setPortAngle' | transloco"
                             (click)="onSetMotorPosition(idx)"
                     >

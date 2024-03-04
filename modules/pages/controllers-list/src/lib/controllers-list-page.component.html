@@ -2,7 +2,7 @@
      [libFeatureToolbarBreadcrumbs]="breadcrumbsDef"
 ></div>
 
-@if (controllerListViewModel$ | ngrxPush; as controllerListViewModel) {
+@if (controllerListViewModel$ | async; as controllerListViewModel) {
     @if (controllerListViewModel.length) {
         <ul>
             @for (controller of controllerListViewModel; track controller.id) {
@@ -21,7 +21,7 @@
                                 <a mat-button
                                    [routerLink]="controller.id | controllerViewHref"
                                 >
-                                    {{ controller | controllerName | ngrxPush  }}
+                                    {{ controller | controllerName | async  }}
 
                                     @if (!controller.isConnected) {
                                         <span class="cdk-visually-hidden">
@@ -49,7 +49,7 @@
                                     <button mat-button
                                             [color]="'warn'"
                                             (click)="forgetController(controller.id)"
-                                            [attr.aria-label]="'controller.forgetButtonLabel' | transloco: { name: controller | controllerName | ngrxPush }"
+                                            [attr.aria-label]="'controller.forgetButtonLabel' | transloco: { name: controller | controllerName | async }"
                                     >
                                         {{ 'controller.forget' | transloco }}
                                     </button>

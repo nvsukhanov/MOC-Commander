@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { PushPipe } from '@ngrx/component';
 import { Store } from '@ngrx/store';
+import { AsyncPipe } from '@angular/common';
 import { TitleService } from '@app/shared-misc';
 import { IState } from '@app/store';
 import { ChangelogComponent } from '@app/shared-ui';
@@ -13,8 +13,8 @@ import { ChangelogComponent } from '@app/shared-ui';
     styleUrls: [ './about-page.component.scss' ],
     imports: [
         TranslocoPipe,
-        PushPipe,
         ChangelogComponent,
+        AsyncPipe
     ],
     providers: [
         TitleService

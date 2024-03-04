@@ -3,12 +3,12 @@ import { PortModeName } from 'rxpoweredup';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { PushPipe } from '@ngrx/component';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription, mergeWith, of, startWith, switchMap, take } from 'rxjs';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AsyncPipe } from '@angular/common';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
 import { ControlSchemeInputAction, HubMotorPositionFacadeService } from '@app/store';
@@ -49,13 +49,13 @@ import { SetAngleControllerNameResolverService } from './set-angle-controller-na
         MatButtonModule,
         ToggleControlComponent,
         HideOnSmallScreenDirective,
-        PushPipe,
         ControlSchemeInputActionToL10nKeyPipe,
         BindingEditSectionsContainerComponent,
         ValidationMessagesDirective,
         BindingControlSpeedInputComponent,
         BindingControlPowerInputComponent,
-        MotorPositionAdjustmentComponent
+        MotorPositionAdjustmentComponent,
+        AsyncPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [

@@ -1,5 +1,5 @@
 <div *libFeatureToolbarControls
-     [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | ngrxPush"
+     [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | async"
 >
     <button type="button"
             mat-raised-button
@@ -18,7 +18,7 @@
     </button>
 </div>
 
-@if (portConfig$ | ngrxPush; as portConfig) {
+@if (portConfig$ | async; as portConfig) {
     <mat-card class="port-configs">
         <mat-card-header>
             <mat-card-title>

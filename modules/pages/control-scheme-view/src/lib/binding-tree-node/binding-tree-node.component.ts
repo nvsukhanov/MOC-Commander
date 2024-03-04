@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { PushPipe } from '@ngrx/component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NEVER, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { RouterLink } from '@angular/router';
+import { AsyncPipe } from '@angular/common';
 import { ScreenSizeObserverService } from '@app/shared-misc';
 import { BindingTypeToL10nKeyPipe } from '@app/shared-ui';
 import { FullControllerInputNamePipe } from '@app/shared-control-schemes';
@@ -23,12 +23,12 @@ import { BindingInputSummaryPipe } from './binding-input-summary.pipe';
     imports: [
         BindingTypeToL10nKeyPipe,
         TranslocoPipe,
-        PushPipe,
         MatFormFieldModule,
         RouterLink,
         BindingViewUrlPipe,
         FullControllerInputNamePipe,
-        BindingInputSummaryPipe
+        BindingInputSummaryPipe,
+        AsyncPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

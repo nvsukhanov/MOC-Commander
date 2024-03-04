@@ -43,7 +43,7 @@
                 />
                 <button mat-icon-button
                         matSuffix
-                        [disabled]="!(canRequestPortValue$ | ngrxPush)"
+                        [disabled]="(canRequestPortValue$ | async) !== true"
                         [title]="'controlScheme.setAngleBinding.readAngleFromPort' | transloco"
                         (click)="onMotorPositionRequest()"
                 >
@@ -51,7 +51,7 @@
                 </button>
                 <button mat-icon-button
                         matSuffix
-                        [disabled]="!(canSetPortValue$ | ngrxPush)"
+                        [disabled]="(canSetPortValue$ | async) !== true"
                         [title]="'controlScheme.setAngleBinding.setPortAngle' | transloco"
                         (click)="onSetMotorPosition()"
                 >

@@ -1,23 +1,23 @@
-@if (editedHubConfiguration$ | ngrxPush; as hubConfiguration) {
+@if (editedHubConfiguration$ | async; as hubConfiguration) {
     <div *libFeatureToolbarControls
-         [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | ngrxPush"
+         [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | async"
          class="toolbar-panel"
     >
         <button mat-raised-button
-                [disabled]="(isSaving$ | ngrxPush) || form.controls.name.invalid || !(isHubConnected$ | ngrxPush)"
+                [disabled]="(isSaving$ | async) || form.controls.name.invalid || (isHubConnected$ | async) === false"
                 (click)="onSave(hubConfiguration.hubId)"
         >
             {{ 'hub.save' | transloco }}
         </button>
         <a mat-raised-button
-           [routerLink]="cancelPath$ | ngrxPush"
-           [disabled]="!!(isSaving$ | ngrxPush)"
+           [routerLink]="cancelPath$ | async"
+           [disabled]="!!(isSaving$ | async)"
         >
             {{ 'hub.cancel' | transloco }}
         </a>
     </div>
 
-    @if (isHubConnected$ | ngrxPush) {
+    @if (isHubConnected$ | async) {
         <section class="edit-form-container">
             <mat-card class="card">
                 <mat-card-header>

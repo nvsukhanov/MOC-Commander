@@ -2,7 +2,7 @@
      [libFeatureToolbarBreadcrumbs]="breadcrumbsDef"
 ></div>
 
-@if (hubsList$ | ngrxPush; as hubsList) {
+@if (hubsList$ | async; as hubsList) {
     @if (hubsList.length) {
         <ul>
             @for (hub of hubsList; track hub.hubId) {

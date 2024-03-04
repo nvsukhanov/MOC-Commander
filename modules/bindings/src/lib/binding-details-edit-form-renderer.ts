@@ -94,7 +94,7 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
      * @param binding
      */
     public setBinding(
-        binding: Partial<ControlSchemeBinding> | undefined
+        binding: Partial<ControlSchemeBinding> | null
     ): void {
         this._form.reset();
         if (binding) {

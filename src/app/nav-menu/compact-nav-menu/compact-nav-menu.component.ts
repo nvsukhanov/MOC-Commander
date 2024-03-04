@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { PushPipe } from '@ngrx/component';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatMenuModule } from '@angular/material/menu';
+import { AsyncPipe } from '@angular/common';
 import { RoutesBuilderService } from '@app/shared-misc';
 import { EllipsisTitleDirective } from '@app/shared-ui';
 
@@ -24,11 +24,11 @@ import { DiscoverHubButtonComponent } from '../discover-hub-button';
         MatIconModule,
         MatButtonModule,
         TranslocoPipe,
-        PushPipe,
         MatToolbarModule,
         EllipsisTitleDirective,
         MatMenuModule,
-        DiscoverHubButtonComponent
+        DiscoverHubButtonComponent,
+        AsyncPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy } from 
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { PushPipe } from '@ngrx/component';
 import { Observable, Subscription, map, of, startWith, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { concatLatestFrom } from '@ngrx/effects';
+import { AsyncPipe } from '@angular/common';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 import { IoTypeToL10nKeyPipe, PortIdToPortNamePipe } from '@app/shared-ui';
 import { AttachedIoModel, attachedIosIdFn } from '@app/store';
@@ -22,8 +22,8 @@ import { BINDING_CONTROL_SELECT_IO_SELECTORS } from './binding-control-select-io
         TranslocoPipe,
         ReactiveFormsModule,
         IoTypeToL10nKeyPipe,
-        PushPipe,
-        PortIdToPortNamePipe
+        PortIdToPortNamePipe,
+        AsyncPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

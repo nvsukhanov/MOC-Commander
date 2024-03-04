@@ -3,7 +3,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { Observable, map, of, startWith } from 'rxjs';
-import { PushPipe } from '@ngrx/component';
+import { AsyncPipe } from '@angular/common';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 import { BindingTypeToL10nKeyPipe } from '@app/shared-ui';
 
@@ -14,10 +14,10 @@ import { BindingTypeToL10nKeyPipe } from '@app/shared-ui';
     styleUrls: [ './binding-control-select-operation-mode.component.scss' ],
     imports: [
         BindingTypeToL10nKeyPipe,
-        PushPipe,
         MatSelectModule,
         TranslocoPipe,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        AsyncPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

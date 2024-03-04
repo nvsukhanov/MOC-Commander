@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy } from 
 import { Observable, Subscription, of, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MOTOR_LIMITS, PortModeName } from 'rxpoweredup';
-import { PushPipe } from '@ngrx/component';
+import { AsyncPipe } from '@angular/common';
 import { ATTACHED_IO_PORT_MODE_INFO_SELECTORS, ATTACHED_IO_PROPS_SELECTORS, HubStorageService } from '@app/store';
 import { MotorPositionAdjustmentControlsComponent } from '@app/shared-ui';
 
@@ -13,7 +13,7 @@ import { MotorPositionAdjustmentControlsComponent } from '@app/shared-ui';
     styleUrls: [ './motor-position-adjustment.component.scss' ],
     imports: [
         MotorPositionAdjustmentControlsComponent,
-        PushPipe
+        AsyncPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

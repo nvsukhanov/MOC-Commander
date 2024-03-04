@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { PushPipe } from '@ngrx/component';
 import { MatDividerModule } from '@angular/material/divider';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatSelectModule } from '@angular/material/select';
@@ -20,7 +19,6 @@ import { BindingEditDetailsRenderDirective } from './binding-edit-details-render
     styleUrls: [ './binding-edit.component.scss' ],
     imports: [
         MatCardModule,
-        PushPipe,
         MatDividerModule,
         BindingEditSectionComponent,
         TranslocoPipe,
@@ -55,7 +53,7 @@ export class BindingEditComponent {
 
     private specificBindingDirty$ = new BehaviorSubject(false);
 
-    private _binding: Partial<ControlSchemeBinding> | undefined;
+    private _binding: Partial<ControlSchemeBinding> | null = null;
 
     constructor(
         private readonly formBuilder: FormBuilder
@@ -72,13 +70,13 @@ export class BindingEditComponent {
 
     @Input()
     public set binding(
-        binding: Partial<ControlSchemeBinding> | undefined
+        binding: Partial<ControlSchemeBinding> | null
     ) {
         this._binding = binding;
         this.form.controls.bindingType.patchValue(binding?.bindingType ?? ControlSchemeBindingType.SetSpeed);
     }
 
-    public get binding(): Partial<ControlSchemeBinding> | undefined {
+    public get binding(): Partial<ControlSchemeBinding> | null {
         return this._binding;
     }
 

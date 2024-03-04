@@ -5,7 +5,6 @@ import { TranslocoPipe } from '@ngneat/transloco';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PushPipe } from '@ngrx/component';
 import { Observable, Subscription, of, startWith, switchMap } from 'rxjs';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective } from '@app/shared-ui';
@@ -36,7 +35,6 @@ export type BindingControlSelectControllerComponentData<T extends ControlSchemeB
         MatIconModule,
         HideOnSmallScreenDirective,
         FullControllerInputNamePipe,
-        PushPipe,
         ValidationMessagesDirective,
         ReactiveFormsModule,
         ControlSchemeInputActionToL10nKeyPipe

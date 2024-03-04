@@ -29,7 +29,7 @@ export class BindingEditDetailsRenderDirective implements OnDestroy {
 
     @Input('libCsBindingEditDetailsRender')
     public set binding(
-        b: Partial<ControlSchemeBinding> | undefined
+        b: Partial<ControlSchemeBinding> | null
     ) {
         this.rendererInstance.setBinding(b);
     }

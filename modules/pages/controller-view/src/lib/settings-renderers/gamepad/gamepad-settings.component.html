@@ -9,14 +9,14 @@
                 >
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            {{ axis.name$ | ngrxPush }}
+                            {{ axis.name$ | async }}
                         </mat-panel-title>
                         @if (!panel.expanded) {
                             <mat-panel-description *libHideOnSmallScreen>
-                                <lib-input-activity-indicator [isActive]="!!(axis.isActivated$ | ngrxPush)"></lib-input-activity-indicator>
+                                <lib-input-activity-indicator [isActive]="!!(axis.isActivated$ | async)"></lib-input-activity-indicator>
                                 <page-controller-view-input-output-diagram [compact]="true"
-                                                                           [rawValue]="axis.rawValue$ | ngrxPush"
-                                                                           [outputValue]="axis.outputValue$ | ngrxPush"
+                                                                           [rawValue]="axis.rawValue$ | async"
+                                                                           [outputValue]="axis.outputValue$ | async"
                                                                            [activeZoneStart]="axis.form.controls.activeZoneStart.value"
                                                                            [activeZoneEnd]="axis.form.controls.activeZoneEnd.value"
                                 ></page-controller-view-input-output-diagram>
@@ -31,7 +31,7 @@
 
                     <mat-action-row>
                         <button mat-button
-                                [disabled]="!!(axis.areSettingsDefault$ | ngrxPush)"
+                                [disabled]="!!(axis.areSettingsDefault$ | async)"
                                 (click)="resetAxisSettings(axis.inputId)"
                         >{{ 'controller.resetInputSettingsToDefault' | transloco }}</button>
                     </mat-action-row>
@@ -42,11 +42,11 @@
                 <mat-expansion-panel #panel="matExpansionPanel">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            {{ button.name$ | ngrxPush }}
+                            {{ button.name$ | async }}
                         </mat-panel-title>
                         @if (!panel.expanded) {
                             <mat-panel-description *libHideOnSmallScreen>
-                                <lib-input-activity-indicator [isActive]="!!(button.isActivated$ | ngrxPush)"
+                                <lib-input-activity-indicator [isActive]="!!(button.isActivated$ | async)"
                                 ></lib-input-activity-indicator>
                             </mat-panel-description>
                         }
@@ -59,7 +59,7 @@
 
                     <mat-action-row>
                         <button mat-button
-                                [disabled]="!!(button.areSettingsDefault$ | ngrxPush)"
+                                [disabled]="!!(button.areSettingsDefault$ | async)"
                                 (click)="resetButtonSettings(button.inputId)"
                         >{{ 'controller.resetInputSettingsToDefault' | transloco }}</button>
                     </mat-action-row>

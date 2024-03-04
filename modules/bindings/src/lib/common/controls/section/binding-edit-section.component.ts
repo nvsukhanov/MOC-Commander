@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { MatDividerModule } from '@angular/material/divider';
-import { PushPipe } from '@ngrx/component';
 import { ScreenSizeObserverService } from '@app/shared-misc';
 
 @Component({
@@ -9,10 +7,6 @@ import { ScreenSizeObserverService } from '@app/shared-misc';
     selector: 'lib-cs-binding-edit-section',
     templateUrl: './binding-edit-section.component.html',
     styleUrls: [ './binding-edit-section.component.scss' ],
-    imports: [
-        MatDividerModule,
-        PushPipe
-    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingEditSectionComponent implements OnInit, OnDestroy {

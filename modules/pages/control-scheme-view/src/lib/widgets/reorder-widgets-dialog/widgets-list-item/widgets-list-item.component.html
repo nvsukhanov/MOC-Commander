@@ -6,7 +6,7 @@
                       [fontIcon]="'drag_handle'"
                       cdkDragHandle
             ></mat-icon>
-            {{ widget.title }} ({{ widget | widgetConnectionInfoL10n | ngrxPush }})
+            {{ widget.title }} ({{ widget | widgetConnectionInfoL10n | async }})
         </li>
     }
 </mat-list-item>

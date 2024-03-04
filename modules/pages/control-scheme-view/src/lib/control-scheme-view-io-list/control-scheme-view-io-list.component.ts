@@ -42,7 +42,7 @@ export class ControlSchemeViewIoListComponent {
 
     @Input()
     public set tree(
-        v: ControlSchemeViewTreeNode[] | undefined
+        v: ControlSchemeViewTreeNode[] | null
     ) {
         this.dataSource.data = v ?? [];
         this.treeControl.dataNodes = this.dataSource.data;

@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Observable, Subscription, filter, map, of, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { PushPipe } from '@ngrx/component';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { concatLatestFrom } from '@ngrx/effects';
+import { AsyncPipe } from '@angular/common';
 import { ISchemeRunnerComponent, RoutesBuilderService, ScreenSizeObserverService, TitleService } from '@app/shared-misc';
 import {
     ConfirmationDialogModule,
@@ -45,7 +45,6 @@ import {
     templateUrl: './control-scheme-page.component.html',
     styleUrls: [ './control-scheme-page.component.scss' ],
     imports: [
-        PushPipe,
         TranslocoPipe,
         MatCardModule,
         ControlSchemeViewIoListComponent,
@@ -59,7 +58,8 @@ import {
         MatIconModule,
         ControlSchemeRunBlockersL10nPipe,
         ControlSchemeWidgetsGridComponent,
-        FeatureToolbarBreadcrumbsDirective
+        FeatureToolbarBreadcrumbsDirective,
+        AsyncPipe
     ],
     providers: [
         TitleService

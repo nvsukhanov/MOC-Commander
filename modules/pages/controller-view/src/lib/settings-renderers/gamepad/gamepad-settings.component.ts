@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, Subscription, animationFrameScheduler, map, of, take, throttleTime } from 'rxjs';
-import { PushPipe } from '@ngrx/component';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
+import { AsyncPipe } from '@angular/common';
 import { GamepadProfile, GamepadProfileFactoryService } from '@app/controller-profiles';
 import { HideOnSmallScreenDirective, InputActivityIndicatorComponent, RangeControlComponent, ToggleControlComponent } from '@app/shared-ui';
 import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_SELECTORS, GamepadSettingsModel } from '@app/store';
@@ -27,7 +27,6 @@ import { GamepadSettingsButtonSettingsComponent } from './button-settings';
     styleUrls: [ './gamepad-settings.component.scss' ],
     imports: [
         ControlIgnoreInputComponent,
-        PushPipe,
         InputOutputDiagramComponent,
         ToggleControlComponent,
         RangeControlComponent,
@@ -39,7 +38,8 @@ import { GamepadSettingsButtonSettingsComponent } from './button-settings';
         GamepadSettingsButtonSettingsComponent,
         InputActivityIndicatorComponent,
         HideOnSmallScreenDirective,
-        MatButtonModule
+        MatButtonModule,
+        AsyncPipe
     ],
     providers: [
         GamepadSettingsFormBuilderService,
