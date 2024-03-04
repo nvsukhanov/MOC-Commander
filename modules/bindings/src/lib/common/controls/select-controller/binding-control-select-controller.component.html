@@ -1,9 +1,14 @@
 @if (inputAction !== undefined) {
     <mat-form-field class="control-select-form-field">
-        <mat-label>{{ inputAction | controlSchemeInputActionToL10nKey | transloco }}</mat-label>
+        <mat-label (click)="$event.stopPropagation(); $event.preventDefault()"
+        >
+            {{ inputAction | controlSchemeInputActionToL10nKey | transloco }}
+        </mat-label>
         @if (syntheticInputControl) {
             <input matInput
                    readonly
+                   [tabIndex]="-1"
+                   class="control-select-input"
                    [formControl]="syntheticInputControl"
             />
         }
@@ -14,7 +19,7 @@
                     [attr.aria-label]="'controlScheme.bindToAnotherInputButtonTitle' | transloco"
                     (click)="onBind()"
             >
-                <mat-icon [fontIcon]="'refresh'"></mat-icon>
+                <mat-icon [fontIcon]="'edit'"></mat-icon>
             </button>
         }
         @if (isControllerAssigned) {
@@ -31,7 +36,7 @@
                     matSuffix
                     [attr.aria-label]="'controlScheme.bindingAssignControlButtonTitle' | transloco"
             >
-                <mat-icon [fontIcon]="'refresh'"></mat-icon>
+                <mat-icon [fontIcon]="'edit'"></mat-icon>
             </button>
         }
 
