@@ -7,13 +7,7 @@ import { Router } from '@angular/router';
 import { concatLatestFrom } from '@ngrx/effects';
 import { AsyncPipe } from '@angular/common';
 import { IUnsavedChangesComponent, RoutesBuilderService, TitleService } from '@app/shared-misc';
-import {
-    ConfirmationDialogModule,
-    ConfirmationDialogService,
-    FeatureToolbarBreadcrumbsDirective,
-    FeatureToolbarControlsDirective,
-    IBreadcrumbDefinition
-} from '@app/shared-ui';
+import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective } from '@app/shared-ui';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeBinding, ROUTER_SELECTORS } from '@app/store';
 import { BindingEditComponent } from '@app/shared-control-schemes';
 
@@ -30,18 +24,16 @@ import { BINDING_EDIT_PAGE_SELECTORS } from './binding-edit-page.selectors';
         TranslocoPipe,
         FeatureToolbarControlsDirective,
         ConfirmationDialogModule,
-        FeatureToolbarBreadcrumbsDirective,
         AsyncPipe
     ],
     providers: [
-        TitleService
+        TitleService,
+        BreadcrumbsService
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingEditPageComponent implements OnInit, IUnsavedChangesComponent {
     public readonly binding$: Observable<ControlSchemeBinding | null>;
-
-    public readonly breadcrumbsDef$: Observable<ReadonlyArray<IBreadcrumbDefinition>>;
 
     private changedBinding: ControlSchemeBinding | null = null;
 
@@ -53,26 +45,29 @@ export class BindingEditPageComponent implements OnInit, IUnsavedChangesComponen
         private readonly router: Router,
         private readonly confirmationDialogService: ConfirmationDialogService,
         private readonly translocoService: TranslocoService,
-        private readonly titleService: TitleService
+        private readonly titleService: TitleService,
+        private breadcrumbs: BreadcrumbsService
     ) {
         this.binding$ = this.store.select(BINDING_EDIT_PAGE_SELECTORS.selectEditedBinding);
 
-        this.breadcrumbsDef$ = this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName).pipe(
-            filter((schemeName): schemeName is string => (schemeName) !== null),
-            map((controlSchemeName) => ([
-                {
-                    label$: this.translocoService.selectTranslate('pageTitle.controlSchemesList'),
-                    route: this.routesBuilderService.controllersList
-                },
-                {
-                    label$: this.translocoService.selectTranslate('pageTitle.controlSchemeView', { controlSchemeName }),
-                    route: this.routesBuilderService.controlSchemeView(controlSchemeName)
-                },
-                {
-                    label$: this.translocoService.selectTranslate('pageTitle.bindingEdit'),
-                    route: this.routesBuilderService.bindingCreate(controlSchemeName)
-                }
-            ]))
+        this.breadcrumbs.setBreadcrumbsDef(
+            this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName).pipe(
+                filter((schemeName): schemeName is string => (schemeName) !== null),
+                map((controlSchemeName) => ([
+                    {
+                        label$: this.translocoService.selectTranslate('pageTitle.controlSchemesList'),
+                        route: this.routesBuilderService.controllersList
+                    },
+                    {
+                        label$: this.translocoService.selectTranslate('pageTitle.controlSchemeView', { controlSchemeName }),
+                        route: this.routesBuilderService.controlSchemeView(controlSchemeName)
+                    },
+                    {
+                        label$: this.translocoService.selectTranslate('pageTitle.bindingEdit'),
+                        route: this.routesBuilderService.bindingCreate(controlSchemeName)
+                    }
+                ]))
+            )
         );
     }
 
@@ -146,7 +141,7 @@ export class BindingEditPageComponent implements OnInit, IUnsavedChangesComponen
             concatLatestFrom(() => [
                 this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName),
                 this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedBindingId)
-            ]),
+            ])
         ).subscribe(([ isConfirmed, schemeName, bindingId ]) => {
             if (isConfirmed === false || schemeName === null || bindingId === null) {
                 return;

@@ -43,7 +43,6 @@
 
         @if (isSmallScreen$ | async) {
             <page-control-scheme-view-control-scheme-page-compact-toolbar-controls *libFeatureToolbarControls
-                                                                                   [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | async"
                                                                                    [canRun]="!!(canRunScheme$ | async)"
                                                                                    [canStop]="!!(isCurrentControlSchemeRunning$ | async)"
                                                                                    [canAddBinding]="!!(canCreateBinding$ | async)"
@@ -61,7 +60,6 @@
             ></page-control-scheme-view-control-scheme-page-compact-toolbar-controls>
         } @else {
             <page-control-scheme-view-control-scheme-page-full-toolbar-controls *libFeatureToolbarControls
-                                                                                [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | async"
                                                                                 [canRun]="!!(canRunScheme$ | async)"
                                                                                 [canStop]="!!(isCurrentControlSchemeRunning$ | async)"
                                                                                 [canAddBinding]="!!(canCreateBinding$ | async)"

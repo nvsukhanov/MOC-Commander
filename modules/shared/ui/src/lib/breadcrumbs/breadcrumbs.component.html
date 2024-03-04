@@ -1,19 +1,21 @@
-<nav>
-@for(def of breadcrumbsDef; track def; let last = $last) {
-    @if (last) {
-        <span class="breadcrumb-current-location"
-              aria-current="page"
-        >
-            {{ def.label$ | async }}
-        </span>
-    } @else {
-        <a [routerLink]="def.route"
-           libEllipsisTitle
-        >{{ def.label$ | async }}</a>
-        <mat-icon [fontIcon]="'chevron_right'"
-                  class="delimiter"
-                  [inline]="true"
-        ></mat-icon>
-    }
+@if (breadcrumbsStateService.breadcrumbsDef$ | async; as breadcrumbs) {
+    <nav>
+        @for (def of breadcrumbs; track def; let last = $last) {
+            @if (last) {
+                <span class="breadcrumb-current-location"
+                      aria-current="page"
+                >
+                {{ def.label$ | async }}
+            </span>
+            } @else {
+                <a [routerLink]="def.route"
+                   libEllipsisTitle
+                >{{ def.label$ | async }}</a>
+                <mat-icon [fontIcon]="'chevron_right'"
+                          class="delimiter"
+                          [inline]="true"
+                ></mat-icon>
+            }
+        }
+    </nav>
 }
-</nav>

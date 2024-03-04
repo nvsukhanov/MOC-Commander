@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, filter, map, of, switchMap, take } from 'rxjs';
+import { filter, map, of, switchMap, take } from 'rxjs';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Router, RouterLink } from '@angular/router';
 import { MatAnchor, MatButton } from '@angular/material/button';
 import { AsyncPipe } from '@angular/common';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
-import { FeatureToolbarBreadcrumbsDirective, FeatureToolbarControlsDirective, HintComponent, IBreadcrumbDefinition } from '@app/shared-ui';
+import { BreadcrumbsService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared-ui';
 import { HUBS_ACTIONS, HubModel, ROUTER_SELECTORS, attachedIosIdFn } from '@app/store';
 
 import { HubPropertiesViewComponent } from './hub-properties-view';
@@ -27,11 +27,11 @@ import { HUB_VIEW_PAGE_SELECTORS, HubIoViewModel } from './hub-view-page.selecto
         MatButton,
         RouterLink,
         FeatureToolbarControlsDirective,
-        FeatureToolbarBreadcrumbsDirective,
         AsyncPipe
     ],
     providers: [
-        TitleService
+        TitleService,
+        BreadcrumbsService
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -41,8 +41,6 @@ export class HubViewPageComponent implements OnInit {
     public readonly selectedHubRuntimeData$ = this.store.select(HUB_VIEW_PAGE_SELECTORS.selectCurrentlyViewedHubRuntimeData);
 
     public readonly ioFullInfoList$ = this.store.select(HUB_VIEW_PAGE_SELECTORS.selectCurrentlyViewedHubIoFullInfo);
-
-    public readonly breadcrumbsDef$: Observable<IBreadcrumbDefinition[]>;
 
     public readonly hubEditRoute$ = this.selectedHub$.pipe(
         filter((hub): hub is HubModel => !!hub),
@@ -54,20 +52,23 @@ export class HubViewPageComponent implements OnInit {
         private readonly router: Router,
         private readonly routesBuilderService: RoutesBuilderService,
         private readonly titleService: TitleService,
-        private readonly translocoService: TranslocoService
+        private readonly translocoService: TranslocoService,
+        private breadcrumbs: BreadcrumbsService
     ) {
-        this.breadcrumbsDef$ = this.selectedHub$.pipe(
-            filter((hub): hub is HubModel => !!hub),
-            map((hub) => ([
-                {
-                    label$: this.translocoService.selectTranslate('pageTitle.hubsList'),
-                    route: this.routesBuilderService.hubsList
-                },
-                {
-                    label$: of(hub.name),
-                    route: this.routesBuilderService.hubView(hub.hubId)
-                }
-            ]))
+        this.breadcrumbs.setBreadcrumbsDef(
+            this.selectedHub$.pipe(
+                filter((hub): hub is HubModel => !!hub),
+                map((hub) => ([
+                    {
+                        label$: this.translocoService.selectTranslate('pageTitle.hubsList'),
+                        route: this.routesBuilderService.hubsList
+                    },
+                    {
+                        label$: of(hub.name),
+                        route: this.routesBuilderService.hubView(hub.hubId)
+                    }
+                ]))
+            )
         );
     }
 

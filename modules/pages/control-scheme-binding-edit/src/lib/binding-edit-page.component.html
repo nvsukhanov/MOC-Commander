@@ -3,9 +3,7 @@
                      (bindingFormDirtyChange)="onBindingFormDirtyChange($event)"
 ></lib-cs-binding-edit>
 
-<div *libFeatureToolbarControls
-     [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | async"
->
+<div *libFeatureToolbarControls>
     <button mat-raised-button
             class="toolbar-button"
             [disabled]="!(canSave)"

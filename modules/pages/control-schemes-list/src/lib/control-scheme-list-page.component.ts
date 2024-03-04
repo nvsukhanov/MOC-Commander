@@ -5,18 +5,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { filter, take } from 'rxjs';
+import { filter, of, take } from 'rxjs';
 import { concatLatestFrom } from '@ngrx/effects';
 import { AsyncPipe } from '@angular/common';
 import { RoutesBuilderService, ScreenSizeObserverService, TitleService } from '@app/shared-misc';
 import {
+    BreadcrumbsService,
     ConfirmationDialogModule,
     ConfirmationDialogService,
     EllipsisTitleDirective,
-    FeatureToolbarBreadcrumbsDirective,
     FeatureToolbarControlsDirective,
-    HintComponent,
-    IBreadcrumbDefinition
+    HintComponent
 } from '@app/shared-ui';
 import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel } from '@app/store';
 import {
@@ -45,11 +44,11 @@ import { ControlSchemeCreateDialogComponent } from './control-scheme-create-dial
         FeatureToolbarControlsDirective,
         ConfirmationDialogModule,
         EllipsisTitleDirective,
-        FeatureToolbarBreadcrumbsDirective,
         AsyncPipe
     ],
     providers: [
-        TitleService
+        TitleService,
+        BreadcrumbsService
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -60,13 +59,6 @@ export class ControlSchemeListPageComponent implements OnInit {
 
     public readonly isSmallScreen$ = this.screenSizeObserverService.isSmallScreen$;
 
-    public readonly breadcrumbsDef: ReadonlyArray<IBreadcrumbDefinition> = [
-        {
-            label$: this.transloco.selectTranslate('pageTitle.controlSchemesList'),
-            route: this.routesBuilderService.controlSchemesList
-        }
-    ];
-
     constructor(
         private readonly store: Store,
         protected readonly routesBuilderService: RoutesBuilderService,
@@ -75,8 +67,15 @@ export class ControlSchemeListPageComponent implements OnInit {
         private readonly confirmationDialogService: ConfirmationDialogService,
         private readonly transloco: TranslocoService,
         private readonly screenSizeObserverService: ScreenSizeObserverService,
-        private readonly titleService: TitleService
+        private readonly titleService: TitleService,
+        private breadcrumbs: BreadcrumbsService
     ) {
+        this.breadcrumbs.setBreadcrumbsDef(of([
+            {
+                label$: this.transloco.selectTranslate('pageTitle.controlSchemesList'),
+                route: this.routesBuilderService.controlSchemesList
+            }
+        ]));
     }
 
     public ngOnInit(): void {
@@ -108,7 +107,7 @@ export class ControlSchemeListPageComponent implements OnInit {
 
     public onCreate(): void {
         const dialogRef = this.dialog.open<ControlSchemeCreateDialogComponent, null, { name: string }>(
-            ControlSchemeCreateDialogComponent,
+            ControlSchemeCreateDialogComponent
         );
 
         dialogRef.afterClosed().subscribe((result) => {

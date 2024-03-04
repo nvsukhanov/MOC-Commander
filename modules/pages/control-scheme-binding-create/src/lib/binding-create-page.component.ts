@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { AsyncPipe } from '@angular/common';
 import { IUnsavedChangesComponent, RoutesBuilderService, TitleService } from '@app/shared-misc';
-import { FeatureToolbarBreadcrumbsDirective, FeatureToolbarControlsDirective, HintComponent, IBreadcrumbDefinition } from '@app/shared-ui';
+import { BreadcrumbsService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared-ui';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeBinding, ROUTER_SELECTORS } from '@app/store';
 import { BindingEditComponent } from '@app/shared-control-schemes';
 
@@ -23,18 +23,16 @@ import { BINDING_CREATE_PAGE_SELECTORS } from './binding-create-page.selectors';
         HintComponent,
         TranslocoPipe,
         FeatureToolbarControlsDirective,
-        FeatureToolbarBreadcrumbsDirective,
         AsyncPipe
     ],
     providers: [
-        TitleService
+        TitleService,
+        BreadcrumbsService
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingCreatePageComponent implements OnInit, IUnsavedChangesComponent {
     public readonly initialBindingData$: Observable<Partial<ControlSchemeBinding | null>>;
-
-    public readonly breadcrumbsDef$: Observable<ReadonlyArray<IBreadcrumbDefinition>>;
 
     private _hasUnsavedChanges = false;
 
@@ -45,27 +43,30 @@ export class BindingCreatePageComponent implements OnInit, IUnsavedChangesCompon
         private readonly routesBuilderService: RoutesBuilderService,
         private readonly router: Router,
         private readonly titleService: TitleService,
-        private readonly translocoService: TranslocoService
+        private readonly translocoService: TranslocoService,
+        private breadcrumbs: BreadcrumbsService
     ) {
         this.initialBindingData$ = this.store.select(BINDING_CREATE_PAGE_SELECTORS.selectDataForNewBinding).pipe(
             take(1)
         );
-        this.breadcrumbsDef$ = this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName).pipe(
-            filter((schemeName): schemeName is string => (schemeName) !== null),
-            map((controlSchemeName) => ([
-                {
-                    label$: this.translocoService.selectTranslate('pageTitle.controlSchemesList'),
-                    route: this.routesBuilderService.controllersList
-                },
-                {
-                    label$: this.translocoService.selectTranslate('pageTitle.controlSchemeView', { controlSchemeName }),
-                    route: this.routesBuilderService.controlSchemeView(controlSchemeName)
-                },
-                {
-                    label$: this.translocoService.selectTranslate('pageTitle.bindingCreate'),
-                    route: this.routesBuilderService.bindingCreate(controlSchemeName)
-                }
-            ]))
+        this.breadcrumbs.setBreadcrumbsDef(
+            this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName).pipe(
+                filter((schemeName): schemeName is string => (schemeName) !== null),
+                map((controlSchemeName) => ([
+                    {
+                        label$: this.translocoService.selectTranslate('pageTitle.controlSchemesList'),
+                        route: this.routesBuilderService.controllersList
+                    },
+                    {
+                        label$: this.translocoService.selectTranslate('pageTitle.controlSchemeView', { controlSchemeName }),
+                        route: this.routesBuilderService.controlSchemeView(controlSchemeName)
+                    },
+                    {
+                        label$: this.translocoService.selectTranslate('pageTitle.bindingCreate'),
+                        route: this.routesBuilderService.bindingCreate(controlSchemeName)
+                    }
+                ]))
+            )
         );
     }
 

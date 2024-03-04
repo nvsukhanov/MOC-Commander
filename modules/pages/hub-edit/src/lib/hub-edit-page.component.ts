@@ -11,7 +11,7 @@ import { Router, RouterLink } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { AsyncPipe } from '@angular/common';
 import { IUnsavedChangesComponent, RoutesBuilderService, TitleService, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
-import { FeatureToolbarBreadcrumbsDirective, FeatureToolbarControlsDirective, HintComponent, IBreadcrumbDefinition } from '@app/shared-ui';
+import { BreadcrumbsService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared-ui';
 import { HUBS_ACTIONS, HubModel, ROUTER_SELECTORS } from '@app/store';
 
 import { HUB_EDIT_PAGE_SELECTORS } from './hub-edit-page.selectors';
@@ -32,11 +32,11 @@ import { HUB_EDIT_PAGE_SELECTORS } from './hub-edit-page.selectors';
         ValidationMessagesDirective,
         RouterLink,
         FeatureToolbarControlsDirective,
-        FeatureToolbarBreadcrumbsDirective,
         AsyncPipe
     ],
     providers: [
-        TitleService
+        TitleService,
+        BreadcrumbsService
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -63,8 +63,6 @@ export class HubEditPageComponent implements OnInit, OnDestroy, IUnsavedChangesC
         pattern: 'hub.hubNameErrorPattern'
     };
 
-    public readonly breadcrumbsDef$: Observable<ReadonlyArray<IBreadcrumbDefinition>>;
-
     private readonly maxHubNameLength = 14;
 
     private readonly subscriptions = new Subscription();
@@ -76,6 +74,7 @@ export class HubEditPageComponent implements OnInit, OnDestroy, IUnsavedChangesC
         private readonly router: Router,
         private readonly titleService: TitleService,
         private readonly translocoService: TranslocoService,
+        private breadcrumbs: BreadcrumbsService,
         formBuilder: FormBuilder
     ) {
         this.form = formBuilder.group({
@@ -87,22 +86,24 @@ export class HubEditPageComponent implements OnInit, OnDestroy, IUnsavedChangesC
             ])
         });
 
-        this.breadcrumbsDef$ = this.editedHubConfiguration$.pipe(
-            filter((hub): hub is HubModel => hub !== undefined),
-            map((hub) => ([
-                {
-                    label$: this.translocoService.selectTranslate('pageTitle.hubsList'),
-                    route: this.routesBuilderService.hubsList
-                },
-                {
-                    label$: of(hub.name),
-                    route: this.routesBuilderService.hubView(hub.hubId)
-                },
-                {
-                    label$: this.translocoService.selectTranslate('pageTitle.hubEdit'),
-                    route: this.routesBuilderService.hubEdit(hub.hubId)
-                }
-            ]))
+        this.breadcrumbs.setBreadcrumbsDef(
+            this.editedHubConfiguration$.pipe(
+                filter((hub): hub is HubModel => hub !== undefined),
+                map((hub) => ([
+                    {
+                        label$: this.translocoService.selectTranslate('pageTitle.hubsList'),
+                        route: this.routesBuilderService.hubsList
+                    },
+                    {
+                        label$: of(hub.name),
+                        route: this.routesBuilderService.hubView(hub.hubId)
+                    },
+                    {
+                        label$: this.translocoService.selectTranslate('pageTitle.hubEdit'),
+                        route: this.routesBuilderService.hubEdit(hub.hubId)
+                    }
+                ]))
+            )
         );
 
         this.hasUnsavedChanges = this.form.statusChanges.pipe(
