@@ -1,4 +1,4 @@
-@if (viewModel$ | ngrxPush; as viewModel) {
+@if (viewModel$ | async; as viewModel) {
     <lib-hub-inline-view [isHubKnown]="viewModel.isHubKnown"
                          [name]="viewModel.name"
                          [hubId]="viewModel.hubId"

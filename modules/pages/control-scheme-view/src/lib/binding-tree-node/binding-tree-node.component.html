@@ -1,6 +1,6 @@
-@if (viewModel$ | ngrxPush; as viewModel) {
+@if (viewModel$ | async; as viewModel) {
     <div class="binding__info-container"
-         [class.binding__info-container_small-screen]="isSmallScreen$ | ngrxPush"
+         [class.binding__info-container_small-screen]="isSmallScreen$ | async"
     >
         <div class="binding__general-info">
             <a class="binding__operation-type"
@@ -30,14 +30,14 @@
         <div class="binding__controls">
             @for (controlData of viewModel.controlData; track controlData) {
                 <div>
-                    <span class="binding__controls-action-name">{{ (viewModel.binding | bindingInputSummary: controlData.action) | ngrxPush }}:</span>
+                    <span class="binding__controls-action-name">{{ (viewModel.binding | bindingInputSummary: controlData.action) | async }}:</span>
                     @if (controlData.isControllerConnected) {
-                        {{ (viewModel.binding.bindingType | fullControllerInputName: viewModel.binding.inputs[controlData.action] : controlData.action) | ngrxPush }}
+                        {{ (viewModel.binding.bindingType | fullControllerInputName: viewModel.binding.inputs[controlData.action] : controlData.action) | async }}
                     } @else {
                         <span [class.binding__controls_disconnected]="!controlData.isControllerConnected"
                               [title]="'controller.isNotConnectedInlineNotification' | transloco"
                         >
-                        {{ (viewModel.binding.bindingType | fullControllerInputName: viewModel.binding.inputs[controlData.action] : controlData.action) | ngrxPush }}
+                        {{ (viewModel.binding.bindingType | fullControllerInputName: viewModel.binding.inputs[controlData.action] : controlData.action) | async }}
                     </span>
                     }
                 </div>

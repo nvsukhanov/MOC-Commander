@@ -1,7 +1,7 @@
-@if (selectedScheme$ | ngrxPush; as scheme) {
+@if (selectedScheme$ | async; as scheme) {
     @if (scheme.widgets.length) {
         <page-control-scheme-view-control-scheme-widgets-grid [widgetConfigs]="scheme.widgets"
-                                                              [editable]="!!(canDeleteOrEditWidgets$ | ngrxPush)"
+                                                              [editable]="!!(canDeleteOrEditWidgets$ | async)"
                                                               (deleteWidget)="onDeleteWidget($event)"
                                                               (editWidget)="onEditWidget($event)"
         ></page-control-scheme-view-control-scheme-widgets-grid>
@@ -11,14 +11,14 @@
         <mat-card-header>
             <mat-card-title>
                 <page-control-scheme-view-control-scheme-general-info [name]="scheme.name"
-                                                                      [canEditControlSchemeName]="!!(canRenameScheme$ | ngrxPush)"
+                                                                      [canEditControlSchemeName]="!!(canRenameScheme$ | async)"
                                                                       (nameChange)="onUpdateSchemeName($event)"
                 ></page-control-scheme-view-control-scheme-general-info>
             </mat-card-title>
         </mat-card-header>
 
         <mat-card-content>
-            @if (schemeRunBlockers$ | ngrxPush; as blockers) {
+            @if (schemeRunBlockers$ | async; as blockers) {
                 <section class="run-blockers">
                     @for (blocker of blockers; track blocker) {
                         <p class="run-blockers__item">
@@ -32,7 +32,7 @@
             }
 
             @if (scheme.bindings.length) {
-                <page-control-scheme-view-control-scheme-view-io-list [tree]="schemeViewTree$ | ngrxPush"
+                <page-control-scheme-view-control-scheme-view-io-list [tree]="schemeViewTree$ | async"
                 ></page-control-scheme-view-control-scheme-view-io-list>
             } @else {
                 <lib-hint>
@@ -41,16 +41,16 @@
             }
         </mat-card-content>
 
-        @if (isSmallScreen$ | ngrxPush) {
+        @if (isSmallScreen$ | async) {
             <page-control-scheme-view-control-scheme-page-compact-toolbar-controls *libFeatureToolbarControls
-                                                                                   [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | ngrxPush"
-                                                                                   [canRun]="!!(canRunScheme$ | ngrxPush)"
-                                                                                   [canStop]="!!(isCurrentControlSchemeRunning$ | ngrxPush)"
-                                                                                   [canAddBinding]="!!(canCreateBinding$ | ngrxPush)"
-                                                                                   [canExport]="!!(canExportScheme$ | ngrxPush)"
-                                                                                   [canDelete]="!!(canDeleteScheme$ | ngrxPush)"
-                                                                                   [canAddWidgets]="!!(canAddWidgets$ | ngrxPush)"
-                                                                                   [canReorderWidgets]="!!(canReorderWidgets$ | ngrxPush)"
+                                                                                   [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | async"
+                                                                                   [canRun]="!!(canRunScheme$ | async)"
+                                                                                   [canStop]="!!(isCurrentControlSchemeRunning$ | async)"
+                                                                                   [canAddBinding]="!!(canCreateBinding$ | async)"
+                                                                                   [canExport]="!!(canExportScheme$ | async)"
+                                                                                   [canDelete]="!!(canDeleteScheme$ | async)"
+                                                                                   [canAddWidgets]="!!(canAddWidgets$ | async)"
+                                                                                   [canReorderWidgets]="!!(canReorderWidgets$ | async)"
                                                                                    (run)="runScheme(scheme.name)"
                                                                                    (stop)="stopRunningScheme()"
                                                                                    (addBinding)="addBinding()"
@@ -61,14 +61,14 @@
             ></page-control-scheme-view-control-scheme-page-compact-toolbar-controls>
         } @else {
             <page-control-scheme-view-control-scheme-page-full-toolbar-controls *libFeatureToolbarControls
-                                                                                [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | ngrxPush"
-                                                                                [canRun]="!!(canRunScheme$ | ngrxPush)"
-                                                                                [canStop]="!!(isCurrentControlSchemeRunning$ | ngrxPush)"
-                                                                                [canAddBinding]="!!(canCreateBinding$ | ngrxPush)"
-                                                                                [canExport]="!!(canExportScheme$ | ngrxPush)"
-                                                                                [canDelete]="!!(canDeleteScheme$ | ngrxPush)"
-                                                                                [canAddWidgets]="!!(canAddWidgets$ | ngrxPush)"
-                                                                                [canReorderWidgets]="!!(canReorderWidgets$ | ngrxPush)"
+                                                                                [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | async"
+                                                                                [canRun]="!!(canRunScheme$ | async)"
+                                                                                [canStop]="!!(isCurrentControlSchemeRunning$ | async)"
+                                                                                [canAddBinding]="!!(canCreateBinding$ | async)"
+                                                                                [canExport]="!!(canExportScheme$ | async)"
+                                                                                [canDelete]="!!(canDeleteScheme$ | async)"
+                                                                                [canAddWidgets]="!!(canAddWidgets$ | async)"
+                                                                                [canReorderWidgets]="!!(canReorderWidgets$ | async)"
                                                                                 (run)="runScheme(scheme.name)"
                                                                                 (stop)="stopRunningScheme()"
                                                                                 (addBinding)="addBinding()"

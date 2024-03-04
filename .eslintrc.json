@@ -209,6 +209,11 @@
                 "name": "@ngrx/component",
                 "importNames": [ "LetDirective" ],
                 "message": "Use @if flow syntax instead of *ngrxLet"
+              },
+              {
+                "name": "@ngrx/component",
+                "importNames": [ "PushPipe" ],
+                "message": "Use async with the new flow syntax instead of *ngrxPush"
               }
             ]
           }

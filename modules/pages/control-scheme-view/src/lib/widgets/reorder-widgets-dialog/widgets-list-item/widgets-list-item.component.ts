@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { CdkDragHandle, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
 import { MatIconModule } from '@angular/material/icon';
-import { PushPipe } from '@ngrx/component';
+import { AsyncPipe } from '@angular/common';
 import { WidgetConfigModel } from '@app/store';
 
 import { WidgetConnectionInfoL10nPipe } from '../../widget-connection-info-l10n.pipe';
@@ -18,7 +18,7 @@ import { WidgetConnectionInfoL10nPipe } from '../../widget-connection-info-l10n.
         CdkDragPlaceholder,
         CdkDragHandle,
         WidgetConnectionInfoL10nPipe,
-        PushPipe
+        AsyncPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

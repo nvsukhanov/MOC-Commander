@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { PushPipe } from '@ngrx/component';
 import { Observable, Subscription, distinctUntilChanged, filter, map, of, startWith, switchMap, take } from 'rxjs';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -10,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
+import { AsyncPipe } from '@angular/common';
 import { IUnsavedChangesComponent, RoutesBuilderService, TitleService, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
 import { FeatureToolbarBreadcrumbsDirective, FeatureToolbarControlsDirective, HintComponent, IBreadcrumbDefinition } from '@app/shared-ui';
 import { HUBS_ACTIONS, HubModel, ROUTER_SELECTORS } from '@app/store';
@@ -22,7 +22,6 @@ import { HUB_EDIT_PAGE_SELECTORS } from './hub-edit-page.selectors';
     templateUrl: './hub-edit-page.component.html',
     styleUrls: [ './hub-edit-page.component.scss' ],
     imports: [
-        PushPipe,
         TranslocoPipe,
         HintComponent,
         MatButtonModule,
@@ -33,7 +32,8 @@ import { HUB_EDIT_PAGE_SELECTORS } from './hub-edit-page.selectors';
         ValidationMessagesDirective,
         RouterLink,
         FeatureToolbarControlsDirective,
-        FeatureToolbarBreadcrumbsDirective
+        FeatureToolbarBreadcrumbsDirective,
+        AsyncPipe
     ],
     providers: [
         TitleService

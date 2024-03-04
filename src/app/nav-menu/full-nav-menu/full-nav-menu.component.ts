@@ -4,7 +4,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { PushPipe } from '@ngrx/component';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { RoutesBuilderService } from '@app/shared-misc';
 import { EllipsisTitleDirective } from '@app/shared-ui';
@@ -23,7 +22,6 @@ import { DiscoverHubButtonComponent } from '../discover-hub-button';
         MatIconModule,
         MatToolbarModule,
         TranslocoPipe,
-        PushPipe,
         EllipsisTitleDirective,
         DiscoverHubButtonComponent,
         MatMenuTrigger,

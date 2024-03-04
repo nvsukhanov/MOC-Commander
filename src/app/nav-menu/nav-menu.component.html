@@ -1,5 +1,5 @@
-@if (navMenuViewModel$ | ngrxPush; as navMenuViewModel) {
-    @if (isSmallScreen$ | ngrxPush) {
+@if (navMenuViewModel$ | async; as navMenuViewModel) {
+    @if (isSmallScreen$ | async) {
         <app-compact-nav-menu [connectedControllersCount]="navMenuViewModel.connectedControllersCount"
                               [connectedHubCount]="navMenuViewModel.connectedHubCount"
                               [controlSchemesCount]="navMenuViewModel.controlSchemesCount"

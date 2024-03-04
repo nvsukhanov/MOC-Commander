@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
-import { PushPipe } from '@ngrx/component';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { AsyncPipe } from '@angular/common';
 import { InputActivityIndicatorComponent, RangeControlComponent, SliderControlComponent, ToggleControlComponent } from '@app/shared-ui';
 
 import { GamepadSettingsAxisSettingsViewModel } from '../types';
@@ -21,7 +21,6 @@ import { InputValuePercentHumanReadableValuePipe } from '../active-zone-human-re
         InputValuePercentHumanReadableValuePipe,
         InputOutputDiagramComponent,
         MatDividerModule,
-        PushPipe,
         RangeControlComponent,
         ToggleControlComponent,
         TranslocoPipe,
@@ -31,6 +30,7 @@ import { InputValuePercentHumanReadableValuePipe } from '../active-zone-human-re
         MatIconModule,
         MatTooltipModule,
         InputActivityIndicatorComponent,
+        AsyncPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

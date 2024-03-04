@@ -1,11 +1,11 @@
-@if (selectedHub$ | ngrxPush; as hub) {
+@if (selectedHub$ | async; as hub) {
     <div *libFeatureToolbarControls
-         [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | ngrxPush"
+         [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | async"
          class="toolbar-panel"
     >
         <a mat-raised-button
            class="toolbar-button"
-           [routerLink]="hubEditRoute$ | ngrxPush"
+           [routerLink]="hubEditRoute$ | async"
         >
             {{ 'hub.edit' | transloco }}
         </a>
@@ -17,13 +17,13 @@
         </button>
     </div>
 
-    @if (selectedHubRuntimeData$ | ngrxPush) {
+    @if (selectedHubRuntimeData$ | async; as runtimeData) {
         <page-hub-view-hub-properties-view class="hub-properties-view"
                                            [configuration]="hub"
-                                           [runtimeData]="selectedHubRuntimeData$ | ngrxPush"
+                                           [runtimeData]="runtimeData"
         ></page-hub-view-hub-properties-view>
 
-        @if (ioFullInfoList$ | ngrxPush; as iosFullInfoList) {
+        @if (ioFullInfoList$ | async; as iosFullInfoList) {
             @if (iosFullInfoList.length) {
                 <ul class="io-list">
                     @for (ioFullInfo of iosFullInfoList; track hubIoTrackByFn) {
@@ -37,7 +37,7 @@
             }
         }
     } @else {
-        <lib-hint>{{ 'hub.isNotConnected' | transloco:(selectedHub$ | ngrxPush) }}</lib-hint>
+        <lib-hint>{{ 'hub.isNotConnected' | transloco: (selectedHub$ | async) ?? undefined }}</lib-hint>
     }
 } @else {
     <lib-hint>{{ 'hub.isNotFound' | transloco }}</lib-hint>

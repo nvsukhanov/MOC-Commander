@@ -63,7 +63,7 @@
                             type="button"
                             color="primary"
                             class="calibrate-button"
-                            [disabled]="!(canCalibrate$ | ngrxPush)"
+                            [disabled]="(canCalibrate$ | async) !== true"
                             (click)="calibrate()"
                     >
                         {{ 'controlScheme.servoBinding.calibrate' | transloco }}
@@ -80,7 +80,7 @@
                     />
                     <button mat-icon-button
                             matSuffix
-                            [disabled]="!(canRequestPortValue$ | ngrxPush)"
+                            [disabled]="(canRequestPortValue$ | async) !== true"
                             [title]="'controlScheme.servoBinding.readServoCenterFromPort' | transloco"
                             (click)="onServoCenterReadRequest()"
                     >
@@ -99,7 +99,7 @@
                     />
                     <button mat-icon-button
                             matSuffix
-                            [disabled]="!(canRequestPortValue$ | ngrxPush)"
+                            [disabled]="(canRequestPortValue$ | async) !== true"
                             [title]="'controlScheme.servoBinding.readServoRangeFromPort' | transloco"
                             (click)="onServoRangeReadRequest()"
                     >

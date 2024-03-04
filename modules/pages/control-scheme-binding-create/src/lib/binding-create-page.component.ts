@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, filter, map, switchMap, take } from 'rxjs';
 import { Router } from '@angular/router';
-import { PushPipe } from '@ngrx/component';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { AsyncPipe } from '@angular/common';
 import { IUnsavedChangesComponent, RoutesBuilderService, TitleService } from '@app/shared-misc';
 import { FeatureToolbarBreadcrumbsDirective, FeatureToolbarControlsDirective, HintComponent, IBreadcrumbDefinition } from '@app/shared-ui';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeBinding, ROUTER_SELECTORS } from '@app/store';
@@ -19,12 +19,12 @@ import { BINDING_CREATE_PAGE_SELECTORS } from './binding-create-page.selectors';
     styleUrls: [ './binding-create-page.component.scss' ],
     imports: [
         BindingEditComponent,
-        PushPipe,
         MatButtonModule,
         HintComponent,
         TranslocoPipe,
         FeatureToolbarControlsDirective,
-        FeatureToolbarBreadcrumbsDirective
+        FeatureToolbarBreadcrumbsDirective,
+        AsyncPipe
     ],
     providers: [
         TitleService

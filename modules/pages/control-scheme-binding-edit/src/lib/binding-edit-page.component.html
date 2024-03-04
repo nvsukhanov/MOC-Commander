@@ -1,10 +1,10 @@
-<lib-cs-binding-edit [binding]="binding$ | ngrxPush"
+<lib-cs-binding-edit [binding]="binding$ | async"
                      (bindingChange)="onBindingChange($event)"
                      (bindingFormDirtyChange)="onBindingFormDirtyChange($event)"
 ></lib-cs-binding-edit>
 
 <div *libFeatureToolbarControls
-     [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | ngrxPush"
+     [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | async"
 >
     <button mat-raised-button
             class="toolbar-button"

@@ -1,4 +1,4 @@
-@if (controlsTemplate$ | ngrxPush; as controlsTemplate) {
+@if (controlsTemplate$ | async; as controlsTemplate) {
     <mat-toolbar class="toolbar">
         <lib-breadcrumbs [breadcrumbsDef]="breadcrumbDef"
                          *libHideOnSmallScreen

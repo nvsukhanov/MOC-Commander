@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { PushPipe } from '@ngrx/component';
 import { MatCardModule } from '@angular/material/card';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable, filter, map, switchMap } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 import { ControllerNamePipe, ControllerTypeIconNamePipe, ControllerTypeToL10nKeyPipe } from '@app/shared-controller';
 import { RoutesBuilderService, ScreenSizeObserverService, TitleService } from '@app/shared-misc';
 import { FeatureToolbarBreadcrumbsDirective, FeatureToolbarControlsDirective, HintComponent, IBreadcrumbDefinition } from '@app/shared-ui';
@@ -19,7 +19,6 @@ import { ControllerSettingsContainerComponent } from './controller-settings-cont
     templateUrl: './controller-view-page.component.html',
     styleUrls: [ './controller-view-page.component.scss' ],
     imports: [
-        PushPipe,
         MatCardModule,
         HintComponent,
         TranslocoPipe,
@@ -29,7 +28,8 @@ import { ControllerSettingsContainerComponent } from './controller-settings-cont
         ControllerTypeIconNamePipe,
         ControllerTypeToL10nKeyPipe,
         FeatureToolbarControlsDirective,
-        FeatureToolbarBreadcrumbsDirective
+        FeatureToolbarBreadcrumbsDirective,
+        AsyncPipe
     ],
     providers: [
         TitleService

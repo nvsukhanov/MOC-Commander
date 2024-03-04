@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, filter, map, switchMap, take } from 'rxjs';
-import { PushPipe } from '@ngrx/component';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Router } from '@angular/router';
 import { concatLatestFrom } from '@ngrx/effects';
+import { AsyncPipe } from '@angular/common';
 import { IUnsavedChangesComponent, RoutesBuilderService, TitleService } from '@app/shared-misc';
 import {
     ConfirmationDialogModule,
@@ -25,13 +25,13 @@ import { BINDING_EDIT_PAGE_SELECTORS } from './binding-edit-page.selectors';
     templateUrl: './binding-edit-page.component.html',
     styleUrls: [ './binding-edit-page.component.scss' ],
     imports: [
-        PushPipe,
         BindingEditComponent,
         MatButtonModule,
         TranslocoPipe,
         FeatureToolbarControlsDirective,
         ConfirmationDialogModule,
-        FeatureToolbarBreadcrumbsDirective
+        FeatureToolbarBreadcrumbsDirective,
+        AsyncPipe
     ],
     providers: [
         TitleService
@@ -39,7 +39,7 @@ import { BINDING_EDIT_PAGE_SELECTORS } from './binding-edit-page.selectors';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingEditPageComponent implements OnInit, IUnsavedChangesComponent {
-    public readonly binding$: Observable<ControlSchemeBinding | undefined>;
+    public readonly binding$: Observable<ControlSchemeBinding | null>;
 
     public readonly breadcrumbsDef$: Observable<ReadonlyArray<IBreadcrumbDefinition>>;
 

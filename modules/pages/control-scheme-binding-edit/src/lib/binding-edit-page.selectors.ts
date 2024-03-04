@@ -9,9 +9,9 @@ export const BINDING_EDIT_PAGE_SELECTORS = {
         CONTROL_SCHEME_SELECTORS.selectEntities,
         (schemeName: string | null, bindingId: number | null, controlSchemeEntities: Dictionary<ControlSchemeModel>) => {
             if (schemeName === null || bindingId === null) {
-                return undefined;
+                return null;
             }
-            return controlSchemeEntities[schemeName]?.bindings.find((b) => b.id === bindingId) ?? undefined;
+            return controlSchemeEntities[schemeName]?.bindings.find((b) => b.id === bindingId) ?? null;
         }
     )
 };

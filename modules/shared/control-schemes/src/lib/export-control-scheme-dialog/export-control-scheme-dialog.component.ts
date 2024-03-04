@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { Observable, map, take } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { PushPipe } from '@ngrx/component';
+import { AsyncPipe } from '@angular/common';
 import { COMMON_ACTIONS, CONTROL_SCHEME_SELECTORS } from '@app/store';
 
 import { ControlSchemeCompressorService } from './control-scheme-compressor.service';
@@ -22,7 +22,7 @@ export type ExportControlSchemeDialogData = {
         MatButtonModule,
         MatDialogModule,
         TranslocoPipe,
-        PushPipe
+        AsyncPipe
     ],
     providers: [
         ControlSchemeCompressorService

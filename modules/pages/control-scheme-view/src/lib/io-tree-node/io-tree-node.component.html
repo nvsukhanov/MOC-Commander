@@ -1,5 +1,5 @@
-@if (viewModel$ | ngrxPush; as viewModel) {
-    @if (isSmallScreen$ | ngrxPush) {
+@if (viewModel$ | async; as viewModel) {
+    @if (isSmallScreen$ | async) {
         <page-control-scheme-view-io-inline-view [portId]="viewModel.portId"
                                                  [isConnected]="viewModel.isConnected"
         ></page-control-scheme-view-io-inline-view>
@@ -37,11 +37,11 @@
 
     @if (viewModel.runningTask) {
         <mat-icon [fontIcon]="'sync'"></mat-icon>
-        {{ viewModel.runningTask | portCommandTaskSummary | ngrxPush }}
+        {{ viewModel.runningTask | portCommandTaskSummary | async }}
     }
 
     @if (viewModel.lastExecutedTask && !viewModel.runningTask) {
         <mat-icon [fontIcon]="'check_circle'"></mat-icon>
-        {{ viewModel.lastExecutedTask | portCommandTaskSummary | ngrxPush }}
+        {{ viewModel.lastExecutedTask | portCommandTaskSummary | async }}
     }
 }

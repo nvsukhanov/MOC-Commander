@@ -2,14 +2,14 @@
     <div class="axis-configuration">
         <div class="axis-configuration__info">
             <div class="axis-configuration__input-output-diagram-container">
-                <lib-input-activity-indicator [isActive]="!!(axisSettingsViewModel.isActivated$ | ngrxPush)"
+                <lib-input-activity-indicator [isActive]="!!(axisSettingsViewModel.isActivated$ | async)"
                                               [activeTitle]="'controller.isActivatedValueTrue' | transloco"
                                               [inactiveTitle]="'controller.isActivatedValueFalse' | transloco"
                 ></lib-input-activity-indicator>
                 <page-controller-view-input-output-diagram class="axis-configuration__input-output-diagram"
                                                            [translocoTitle]="'controller.rawInput'"
-                                                           [rawValue]="axisSettingsViewModel.rawValue$ | ngrxPush"
-                                                           [outputValue]="axisSettingsViewModel.outputValue$ | ngrxPush"
+                                                           [rawValue]="axisSettingsViewModel.rawValue$ | async"
+                                                           [outputValue]="axisSettingsViewModel.outputValue$ | async"
                                                            [activeZoneStart]="axisSettingsViewModel.form.controls.activeZoneStart.value"
                                                            [activeZoneEnd]="axisSettingsViewModel.form.controls.activeZoneEnd.value"
                 ></page-controller-view-input-output-diagram>

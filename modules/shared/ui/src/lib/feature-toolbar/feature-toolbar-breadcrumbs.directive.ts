@@ -15,7 +15,7 @@ export class FeatureToolbarBreadcrumbsDirective implements OnDestroy {
 
     @Input('libFeatureToolbarBreadcrumbs')
     public set breadcrumbsDef(
-        v: ReadonlyArray<IBreadcrumbDefinition> | undefined
+        v: ReadonlyArray<IBreadcrumbDefinition> | null
     ) {
         if (v) {
             this.featureToolbarService.setBreadcrumbsDef(v);

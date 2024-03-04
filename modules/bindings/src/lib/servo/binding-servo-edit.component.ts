@@ -5,12 +5,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, Subscription, combineLatestWith, map, mergeWith, of, startWith, switchMap, take } from 'rxjs';
-import { PushPipe } from '@ngrx/component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { concatLatestFrom } from '@ngrx/effects';
+import { AsyncPipe } from '@angular/common';
 import { ControllerInputType } from '@app/controller-profiles';
 import { ControlSchemeBindingType, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
@@ -53,7 +53,6 @@ import { NO_INPUTS_ERROR } from './servo-binding-form-builder.service';
         TranslocoPipe,
         MatButtonModule,
         MatIconModule,
-        PushPipe,
         MatDialogModule,
         ToggleControlComponent,
         BindingControlSelectControllerComponent,
@@ -69,7 +68,8 @@ import { NO_INPUTS_ERROR } from './servo-binding-form-builder.service';
         ValidationMessagesDirective,
         BindingControlSpeedInputComponent,
         BindingControlPowerInputComponent,
-        MotorPositionAdjustmentComponent
+        MotorPositionAdjustmentComponent,
+        AsyncPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [

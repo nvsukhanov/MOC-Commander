@@ -6,7 +6,7 @@ import { TranslocoPipe } from '@ngneat/transloco';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription, combineLatestWith, filter, map, of, switchMap } from 'rxjs';
-import { PushPipe } from '@ngrx/component';
+import { AsyncPipe } from '@angular/common';
 import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, ControllerInputModel, ControllerProfilesFacadeService } from '@app/store';
 
 import { WAIT_FOR_CONTROLLER_INPUT_DIALOG_SELECTORS } from './wait-for-controller-input-dialog.selectors';
@@ -22,7 +22,7 @@ import { WAIT_FOR_CONTROLLER_INPUT_DIALOG_SELECTORS } from './wait-for-controlle
         MatProgressBarModule,
         TranslocoPipe,
         MatDialogModule,
-        PushPipe
+        AsyncPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

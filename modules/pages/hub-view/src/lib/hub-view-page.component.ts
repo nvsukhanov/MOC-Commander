@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { PushPipe } from '@ngrx/component';
 import { Observable, filter, map, of, switchMap, take } from 'rxjs';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Router, RouterLink } from '@angular/router';
 import { MatAnchor, MatButton } from '@angular/material/button';
+import { AsyncPipe } from '@angular/common';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
 import { FeatureToolbarBreadcrumbsDirective, FeatureToolbarControlsDirective, HintComponent, IBreadcrumbDefinition } from '@app/shared-ui';
 import { HUBS_ACTIONS, HubModel, ROUTER_SELECTORS, attachedIosIdFn } from '@app/store';
@@ -19,7 +19,6 @@ import { HUB_VIEW_PAGE_SELECTORS, HubIoViewModel } from './hub-view-page.selecto
     templateUrl: './hub-view-page.component.html',
     styleUrls: [ './hub-view-page.component.scss' ],
     imports: [
-        PushPipe,
         TranslocoPipe,
         HubPropertiesViewComponent,
         HubIoViewComponent,
@@ -28,7 +27,8 @@ import { HUB_VIEW_PAGE_SELECTORS, HubIoViewModel } from './hub-view-page.selecto
         MatButton,
         RouterLink,
         FeatureToolbarControlsDirective,
-        FeatureToolbarBreadcrumbsDirective
+        FeatureToolbarBreadcrumbsDirective,
+        AsyncPipe
     ],
     providers: [
         TitleService

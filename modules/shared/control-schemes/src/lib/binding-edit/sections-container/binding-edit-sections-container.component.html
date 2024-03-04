@@ -1,5 +1,5 @@
 <div class="container"
-     [class.container_small-screen]="useColumn$ | ngrxPush"
+     [class.container_small-screen]="useColumn$ | async"
 >
     <ng-content></ng-content>
 </div>

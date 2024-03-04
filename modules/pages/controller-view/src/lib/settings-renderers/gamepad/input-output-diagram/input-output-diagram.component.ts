@@ -17,9 +17,9 @@ export class InputOutputDiagramComponent {
 
     @Input() public max = this.config.maxInputValue;
 
-    @Input() public rawValue? = this.config.nullInputValue;
+    @Input() public rawValue: number | null = this.config.nullInputValue;
 
-    @Input() public outputValue? = this.config.nullInputValue;
+    @Input() public outputValue: number | null = this.config.nullInputValue;
 
     @Input() public activeZoneStart? = 0;
 
@@ -75,7 +75,7 @@ export class InputOutputDiagramComponent {
     }
 
     private get normalizedRawValue(): number {
-        if (this.rawValue === undefined) {
+        if (this.rawValue === null) {
             return this.config.nullInputValue;
         }
         if (this.rawValue < this.min) {
@@ -88,7 +88,7 @@ export class InputOutputDiagramComponent {
     }
 
     private get normalizedOutputValue(): number {
-        if (this.outputValue === undefined) {
+        if (this.outputValue === null) {
             return 0;
         }
         if (this.outputValue < this.min) {

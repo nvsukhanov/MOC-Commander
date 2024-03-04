@@ -2,7 +2,7 @@
     {{ 'controlScheme.createBindingWaitingForInputTitle' | transloco }}
 </h1>
 
-@if (controllerNames$ | ngrxPush; as controllerNames) {
+@if (controllerNames$ | async; as controllerNames) {
     <div mat-dialog-content>
         <p>
             {{ 'controlScheme.createBindingWaitingForInputContent' | transloco }}

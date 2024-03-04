@@ -12,7 +12,7 @@ export interface IBindingDetailsEditFormRenderer {
     ): void;
 
     setBinding(
-        binding: Partial<ControlSchemeBinding> | undefined
+        binding: Partial<ControlSchemeBinding> | null
     ): void;
 
     dispose(): void;

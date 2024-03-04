@@ -4,7 +4,6 @@ import { NgTemplateOutlet } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { PushPipe } from '@ngrx/component';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 
 import { EllipsisTitleDirective } from '../ellipsis-title.directive';
@@ -20,7 +19,6 @@ import { ConfirmationDialogModule, ConfirmationDialogService } from '../confirma
         MatIconModule,
         MatButtonModule,
         MatMenuModule,
-        PushPipe,
         NgTemplateOutlet,
         EllipsisTitleDirective,
         TranslocoPipe,

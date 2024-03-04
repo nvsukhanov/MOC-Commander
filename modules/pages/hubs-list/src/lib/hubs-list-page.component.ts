@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
-import { PushPipe } from '@ngrx/component';
 import { MatCardModule } from '@angular/material/card';
 import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
 import {
     ConfirmationDialogModule,
@@ -31,7 +31,7 @@ import { HUBS_LIST_PAGE_SELECTORS, HubListViewModel } from './hubs-list-page.sel
         HintComponent,
         FeatureToolbarControlsDirective,
         FeatureToolbarBreadcrumbsDirective,
-        PushPipe
+        AsyncPipe
     ],
     providers: [
         TitleService

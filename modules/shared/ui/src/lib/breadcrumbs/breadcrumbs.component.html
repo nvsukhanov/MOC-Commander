@@ -4,12 +4,12 @@
         <span class="breadcrumb-current-location"
               aria-current="page"
         >
-            {{ def.label$ | ngrxPush }}
+            {{ def.label$ | async }}
         </span>
     } @else {
         <a [routerLink]="def.route"
            libEllipsisTitle
-        >{{ def.label$ | ngrxPush }}</a>
+        >{{ def.label$ | async }}</a>
         <mat-icon [fontIcon]="'chevron_right'"
                   class="delimiter"
                   [inline]="true"

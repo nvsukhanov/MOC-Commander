@@ -1,13 +1,13 @@
 <div *libFeatureToolbarControls
-     [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | ngrxPush"
+     [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | async"
 ></div>
 
-@if (viewModel$ | ngrxPush; as viewModel) {
+@if (viewModel$ | async; as viewModel) {
     <mat-card>
         <mat-card-header>
             <mat-card-title class="controller-title">
                 <mat-icon [fontIcon]="viewModel.controller.controllerType | controllerTypeIconName"></mat-icon>
-                {{ viewModel.controller | controllerName | ngrxPush }}
+                {{ viewModel.controller | controllerName | async }}
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>

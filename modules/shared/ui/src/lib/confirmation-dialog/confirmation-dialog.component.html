@@ -1,8 +1,8 @@
 <h1 mat-dialog-title>
-    {{ title$ | ngrxPush }}
+    {{ title$ | async }}
 </h1>
 
-@if (content$ | ngrxPush; as content) {
+@if (content$ | async; as content) {
     <div mat-dialog-content>
         {{ content }}
     </div>
@@ -15,11 +15,11 @@
             [color]="'warn'"
             (click)="onConfirm()"
     >
-        {{ confirmTitle$ | ngrxPush }}
+        {{ confirmTitle$ | async }}
     </button>
     <button mat-button
             (click)="onCancel()"
     >
-        {{ cancelTitle$ | ngrxPush }}
+        {{ cancelTitle$ | async }}
     </button>
 </div>

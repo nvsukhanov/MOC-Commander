@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { PushPipe } from '@ngrx/component';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,6 +7,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { filter, take } from 'rxjs';
 import { concatLatestFrom } from '@ngrx/effects';
+import { AsyncPipe } from '@angular/common';
 import { RoutesBuilderService, ScreenSizeObserverService, TitleService } from '@app/shared-misc';
 import {
     ConfirmationDialogModule,
@@ -35,7 +35,6 @@ import { ControlSchemeCreateDialogComponent } from './control-scheme-create-dial
     templateUrl: './control-scheme-list-page.component.html',
     styleUrls: [ './control-scheme-list-page.component.scss' ],
     imports: [
-        PushPipe,
         TranslocoPipe,
         MatButtonModule,
         RouterLink,
@@ -46,7 +45,8 @@ import { ControlSchemeCreateDialogComponent } from './control-scheme-create-dial
         FeatureToolbarControlsDirective,
         ConfirmationDialogModule,
         EllipsisTitleDirective,
-        FeatureToolbarBreadcrumbsDirective
+        FeatureToolbarBreadcrumbsDirective,
+        AsyncPipe
     ],
     providers: [
         TitleService
@@ -82,7 +82,7 @@ export class ControlSchemeListPageComponent implements OnInit {
     public ngOnInit(): void {
         this.titleService.setTitle$(this.transloco.selectTranslate('pageTitle.controlSchemesList'));
     }
-    
+
     public onImport(): void {
         this.dialog.open<ImportControlSchemeDialogComponent, undefined, ControlSchemeModel | void>(ImportControlSchemeDialogComponent)
             .afterClosed()

@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { PushPipe } from '@ngrx/component';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Observable } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { AsyncPipe } from '@angular/common';
 import { ControllerNamePipe, ControllerTypeIconNamePipe, ControllerViewHrefPipe } from '@app/shared-controller';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
 import {
@@ -30,7 +30,6 @@ import { CONTROLLERS_LIST_PAGE_SELECTORS, ControllerListViewModel } from './cont
     imports: [
         HintComponent,
         TranslocoPipe,
-        PushPipe,
         ControllerNamePipe,
         MatCardModule,
         ControlSchemeViewUrlPipe,
@@ -41,7 +40,8 @@ import { CONTROLLERS_LIST_PAGE_SELECTORS, ControllerListViewModel } from './cont
         MatIconModule,
         ConfirmationDialogModule,
         FeatureToolbarControlsDirective,
-        FeatureToolbarBreadcrumbsDirective
+        FeatureToolbarBreadcrumbsDirective,
+        AsyncPipe
     ],
     providers: [
         TitleService

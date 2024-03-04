@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MOTOR_LIMITS } from 'rxpoweredup';
 import { MatButtonModule } from '@angular/material/button';
@@ -67,8 +67,7 @@ export class BindingTrainControlEditComponent implements IBindingsDetailsEditCom
     private _form?: TrainControlBindingForm;
 
     constructor(
-        private readonly commonFormControlBuilder: CommonBindingsFormControlsBuilderService,
-        private readonly changeDetectorRef: ChangeDetectorRef
+        private readonly commonFormControlBuilder: CommonBindingsFormControlsBuilderService
     ) {
     }
 
@@ -122,7 +121,7 @@ export class BindingTrainControlEditComponent implements IBindingsDetailsEditCom
         );
         this._form.controls.initialLevelIndex.markAsDirty();
         this._form.controls.levels.markAsDirty();
-        this.changeDetectorRef.detectChanges(); // somehow this is needed to update the view
+        this._form.updateValueAndValidity();
     }
 
     public addPrevSpeedControl(): void {
@@ -134,7 +133,7 @@ export class BindingTrainControlEditComponent implements IBindingsDetailsEditCom
         );
         this._form.controls.initialLevelIndex.markAsDirty();
         this._form.controls.levels.markAsDirty();
-        this.changeDetectorRef.detectChanges(); // somehow this is needed to update the view
+        this._form.updateValueAndValidity();
     }
 
     public removeSpeedControl(
@@ -151,6 +150,6 @@ export class BindingTrainControlEditComponent implements IBindingsDetailsEditCom
         }
         this._form.controls.initialLevelIndex.markAsDirty();
         this._form.controls.levels.markAsDirty();
-        this.changeDetectorRef.detectChanges(); // somehow this is needed to update the view
+        this._form.updateValueAndValidity();
     }
 }

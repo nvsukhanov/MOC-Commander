@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { PushPipe } from '@ngrx/component';
 import { MatButton } from '@angular/material/button';
 import { MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { TranslocoPipe } from '@ngneat/transloco';
@@ -14,7 +13,6 @@ import { TranslocoPipe } from '@ngneat/transloco';
         MatDialogActions,
         MatDialogContent,
         MatDialogTitle,
-        PushPipe,
         TranslocoPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush

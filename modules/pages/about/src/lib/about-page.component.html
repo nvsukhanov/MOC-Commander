@@ -39,7 +39,7 @@
         {{ 'about.versionTitle' | transloco }}
     </h2>
     <p class="about-section-content">
-        {{ appVersion$ | ngrxPush }}
+        {{ appVersion$ | async }}
     </p>
 </section>
 

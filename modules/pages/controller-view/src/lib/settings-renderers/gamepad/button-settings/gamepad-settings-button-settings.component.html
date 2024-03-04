@@ -2,14 +2,14 @@
     <div class="button-configuration">
         <div class="button-configuration__info">
             <div class="button-configuration__input-output-diagram-container">
-                <lib-input-activity-indicator [isActive]="!!(buttonSettingsViewModel.isActivated$ | ngrxPush)"
+                <lib-input-activity-indicator [isActive]="!!(buttonSettingsViewModel.isActivated$ | async)"
                                               [activeTitle]="'controller.isActivatedValueTrue' | transloco"
                                               [inactiveTitle]="'controller.isActivatedValueFalse' | transloco"
                 ></lib-input-activity-indicator>
                 <page-controller-view-input-output-diagram class="button-configuration__input-output-diagram"
                                                            [translocoTitle]="'controller.rawInput'"
-                                                           [rawValue]="buttonSettingsViewModel.rawValue$ | ngrxPush"
-                                                           [outputValue]="buttonSettingsViewModel.outputValue$ | ngrxPush"
+                                                           [rawValue]="buttonSettingsViewModel.rawValue$ | async"
+                                                           [outputValue]="buttonSettingsViewModel.outputValue$ | async"
                                                            [activeZoneStart]="buttonSettingsViewModel.form.controls.activeZoneStart.value"
                                                            [activeZoneEnd]="buttonSettingsViewModel.form.controls.activeZoneEnd.value"
                 ></page-controller-view-input-output-diagram>

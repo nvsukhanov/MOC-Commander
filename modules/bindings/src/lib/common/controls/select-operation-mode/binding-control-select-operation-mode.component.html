@@ -10,7 +10,7 @@
                 }
             }
 
-            @if (isBindingTypeUnsupported$ | ngrxPush) {
+            @if (isBindingTypeUnsupported$ | async) {
                 <mat-option [value]="control.value">
                     {{ 'controlScheme.unsupportedBindingType' | transloco: { bindingType: control.value | bindingTypeToL10nKey | transloco } }}
                 </mat-option>

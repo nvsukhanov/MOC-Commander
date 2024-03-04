@@ -1,9 +1,9 @@
-@if (controlSchemes$ | ngrxPush; as controlSchemes) {
+@if (controlSchemes$ | async; as controlSchemes) {
     @if (controlSchemes?.length) {
         <ul>
             @for(scheme of controlSchemes; track scheme.name) {
                 <li class="card-list-item">
-                    @if (isSmallScreen$ | ngrxPush) {
+                    @if (isSmallScreen$ | async) {
                         <a class="small-screen-nav-button"
                            [routerLink]="scheme | controlSchemeViewUrl"
                         >
@@ -63,7 +63,7 @@
     </button>
     <button mat-raised-button
             class="toolbar-button"
-            [disabled]="!(canCreateScheme$ | ngrxPush)"
+            [disabled]="(canCreateScheme$ | async) !== true"
             (click)="onCreate()"
     >
         {{ 'controlScheme.create' | transloco }}

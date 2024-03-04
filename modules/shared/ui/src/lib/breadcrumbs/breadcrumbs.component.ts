@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { PushPipe } from '@ngrx/component';
 import { RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { AsyncPipe } from '@angular/common';
 
 import { EllipsisTitleDirective } from '../ellipsis-title.directive';
 import { IBreadcrumbDefinition } from './i-breadcrumb-definition';
@@ -12,10 +12,10 @@ import { IBreadcrumbDefinition } from './i-breadcrumb-definition';
     templateUrl: './breadcrumbs.component.html',
     styleUrls: [ './breadcrumbs.component.scss' ],
     imports: [
-        PushPipe,
         RouterLink,
         EllipsisTitleDirective,
-        MatIcon
+        MatIcon,
+        AsyncPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -23,7 +23,7 @@ export class BreadcrumbsComponent {
     private _breadcrumbsDef: ReadonlyArray<IBreadcrumbDefinition> = [];
 
     @Input() public set breadcrumbsDef(
-        v: ReadonlyArray<IBreadcrumbDefinition> | undefined
+        v: ReadonlyArray<IBreadcrumbDefinition> | null
     ) {
         this._breadcrumbsDef = v ?? [];
     }

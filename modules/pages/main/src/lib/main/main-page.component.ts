@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatAccordion, MatExpansionPanel, MatExpansionPanelDescription, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion';
 import { Store } from '@ngrx/store';
-import { PushPipe } from '@ngrx/component';
+import { AsyncPipe } from '@angular/common';
 import { SteamDeckManualComponent, WindowsInstallationManualComponent } from '@app/manuals';
 import { BLUETOOTH_AVAILABILITY_SELECTORS } from '@app/store';
 
@@ -20,8 +20,8 @@ import { BluetoothUnavailableNotificationComponent } from '../bluetooth-unavaila
         MatExpansionPanelHeader,
         MatExpansionPanelDescription,
         WindowsInstallationManualComponent,
-        PushPipe,
-        BluetoothUnavailableNotificationComponent
+        BluetoothUnavailableNotificationComponent,
+        AsyncPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

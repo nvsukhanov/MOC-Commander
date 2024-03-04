@@ -12,10 +12,10 @@ import {
 } from '@angular/core';
 import { CdkScrollable } from '@angular/cdk/overlay';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { PushPipe } from '@ngrx/component';
 import { RouterOutlet } from '@angular/router';
 import { Subscription, animationFrameScheduler, interval, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { AsyncPipe } from '@angular/common';
 import { FeatureToolbarComponent } from '@app/shared-ui';
 import { IScrollContainer, ScreenSizeObserverService } from '@app/shared-misc';
 import { COMMON_ACTIONS, CONTROLLERS_ACTIONS } from '@app/store';
@@ -33,8 +33,8 @@ import { ROOT_SELECTORS } from './root.selectors';
         FeatureToolbarComponent,
         MatProgressBarModule,
         NavMenuComponent,
-        PushPipe,
-        RouterOutlet
+        RouterOutlet,
+        AsyncPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

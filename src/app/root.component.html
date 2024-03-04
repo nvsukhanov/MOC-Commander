@@ -1,4 +1,4 @@
-@if (shouldShowProgressBar$ | ngrxPush) {
+@if (shouldShowProgressBar$ | async) {
     <mat-progress-bar mode="indeterminate"
                       class="progress-bar"
                       color="accent"

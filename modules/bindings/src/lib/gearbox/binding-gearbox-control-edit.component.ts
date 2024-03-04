@@ -1,14 +1,14 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { PortModeName } from 'rxpoweredup';
-import { Observable, Subscription, map, mergeWith, of, startWith, switchMap, take } from 'rxjs';
-import { PushPipe } from '@ngrx/component';
+import { Observable, Subscription, mergeWith, of, startWith, switchMap, take } from 'rxjs';
 import { MatDividerModule } from '@angular/material/divider';
 import { Store } from '@ngrx/store';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AsyncPipe } from '@angular/common';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
 import { ControlSchemeInputAction, HubMotorPositionFacadeService } from '@app/store';
@@ -37,29 +37,29 @@ import { CanSetGearboxPortPositionPipe } from './can-set-gearbox-port-position.p
     selector: 'lib-cs-binding-gearbox-control-edit',
     templateUrl: './binding-gearbox-control-edit.component.html',
     styleUrls: [ './binding-gearbox-control-edit.component.scss' ],
-  imports: [
-    BindingControlSelectControllerComponent,
-    MatButtonModule,
-    MatIconModule,
-    ToggleControlComponent,
-    TranslocoPipe,
-    BindingControlOutputEndStateComponent,
-    PushPipe,
-    BindingControlSelectLoopingModeComponent,
-    BindingEditSectionComponent,
-    BindingControlSelectHubComponent,
-    BindingControlSelectIoComponent,
-    MatDividerModule,
-    HideOnSmallScreenDirective,
-    MatInputModule,
-    ReactiveFormsModule,
-    BindingEditSectionsContainerComponent,
-    ValidationMessagesDirective,
-    BindingControlSpeedInputComponent,
-    BindingControlPowerInputComponent,
-    CanSetGearboxPortPositionPipe,
-    MotorPositionAdjustmentComponent
-  ],
+    imports: [
+        BindingControlSelectControllerComponent,
+        MatButtonModule,
+        MatIconModule,
+        ToggleControlComponent,
+        TranslocoPipe,
+        BindingControlOutputEndStateComponent,
+        BindingControlSelectLoopingModeComponent,
+        BindingEditSectionComponent,
+        BindingControlSelectHubComponent,
+        BindingControlSelectIoComponent,
+        MatDividerModule,
+        HideOnSmallScreenDirective,
+        MatInputModule,
+        ReactiveFormsModule,
+        BindingEditSectionsContainerComponent,
+        ValidationMessagesDirective,
+        BindingControlSpeedInputComponent,
+        BindingControlPowerInputComponent,
+        CanSetGearboxPortPositionPipe,
+        MotorPositionAdjustmentComponent,
+        AsyncPipe
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         { provide: BINDING_CONTROLLER_NAME_RESOLVER, useClass: GearboxControllerNameResolverService }
@@ -71,8 +71,6 @@ export class BindingGearboxControlEditComponent implements IBindingsDetailsEditC
     private _form?: GearboxControlBindingForm;
 
     private _canRequestPortValue$: Observable<boolean> = of(false);
-
-    private _isHubPortIdValid$: Observable<boolean> = of(false);
 
     private _nextLevelControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl>;
 
@@ -87,7 +85,6 @@ export class BindingGearboxControlEditComponent implements IBindingsDetailsEditC
     constructor(
         private readonly commonFormControlBuilder: CommonBindingsFormControlsBuilderService,
         private readonly store: Store,
-        private readonly changeDetectorRef: ChangeDetectorRef,
         private readonly hubFacade: HubMotorPositionFacadeService
     ) {
     }
@@ -98,10 +95,6 @@ export class BindingGearboxControlEditComponent implements IBindingsDetailsEditC
 
     public get canRequestPortValue$(): Observable<boolean> {
         return this._canRequestPortValue$;
-    }
-
-    public get isHubPortIdValid$(): Observable<boolean> {
-        return this._isHubPortIdValid$;
     }
 
     public get nextLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | undefined {
@@ -158,14 +151,6 @@ export class BindingGearboxControlEditComponent implements IBindingsDetailsEditC
                 }));
             })
         );
-
-        this._isHubPortIdValid$ = form.controls.hubId.valueChanges.pipe(
-            mergeWith(form.controls.portId.valueChanges),
-            startWith(null),
-            map(() => form.controls.hubId.valid && form.controls.portId.valid)
-        );
-
-        this.changeDetectorRef.detectChanges();
     }
 
     public onSetMotorPosition(
@@ -224,7 +209,7 @@ export class BindingGearboxControlEditComponent implements IBindingsDetailsEditC
         );
         this.form.controls.angles.markAsDirty();
         this.form.controls.initialLevelIndex.markAsDirty();
-        this.changeDetectorRef.detectChanges(); // somehow this is needed to update the view
+        this.form.updateValueAndValidity();
     }
 
     public addPrevAngleLevel(): void {
@@ -235,7 +220,7 @@ export class BindingGearboxControlEditComponent implements IBindingsDetailsEditC
             this.commonFormControlBuilder.angleControl(0)
         );
         this.form.controls.angles.markAsDirty();
-        this.changeDetectorRef.detectChanges(); // somehow this is needed to update the view
+        this.form.updateValueAndValidity();
     }
 
     public removeAngleLevel(
@@ -252,6 +237,6 @@ export class BindingGearboxControlEditComponent implements IBindingsDetailsEditC
         }
         this.form.controls.angles.markAsDirty();
         this.form.controls.initialLevelIndex.markAsDirty();
-        this.changeDetectorRef.detectChanges(); // somehow this is needed to update the view
+        this.form.updateValueAndValidity();
     }
 }

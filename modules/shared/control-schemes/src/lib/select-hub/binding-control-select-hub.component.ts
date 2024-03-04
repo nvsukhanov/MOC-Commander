@@ -3,8 +3,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { Observable, Subscription, map, of, startWith, switchMap } from 'rxjs';
-import { PushPipe } from '@ngrx/component';
 import { Store } from '@ngrx/store';
+import { AsyncPipe } from '@angular/common';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { BINDING_CONTROL_SELECT_HUB_SELECTORS, HubWithConnectionState } from './binding-control-select-hub.selectors';
@@ -15,10 +15,10 @@ import { BINDING_CONTROL_SELECT_HUB_SELECTORS, HubWithConnectionState } from './
     templateUrl: './binding-control-select-hub.component.html',
     styleUrls: [ './binding-control-select-hub.component.scss' ],
     imports: [
-        PushPipe,
         MatSelectModule,
         ReactiveFormsModule,
-        TranslocoPipe
+        TranslocoPipe,
+        AsyncPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
