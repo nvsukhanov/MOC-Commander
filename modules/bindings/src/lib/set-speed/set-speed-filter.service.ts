@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ControlSchemeBindingType, calculateSpeedPower } from '@app/shared-misc';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 import { PortCommandTask, SetSpeedTaskPayload } from '@app/store';
 
 import { setSpeedPayloadHash } from './set-speed-payload-hash';
 import { IBindingTaskFilter } from '../i-binding-task-filter';
+import { calculateTaskHash } from '../common';
 
 @Injectable()
 export class SetSpeedFilterService implements IBindingTaskFilter<ControlSchemeBindingType.SetSpeed> {
@@ -19,7 +20,8 @@ export class SetSpeedFilterService implements IBindingTaskFilter<ControlSchemeBi
         } else if (currentTaskReplacement) {
             return currentTaskReplacement;
         }
-        return this.shouldReplaceTask(pendingTask, combinedTask);
+        const result = this.shouldReplaceTask(pendingTask, combinedTask);
+        return result;
     }
 
     private shouldReplaceTask(
@@ -83,17 +85,11 @@ export class SetSpeedFilterService implements IBindingTaskFilter<ControlSchemeBi
         });
 
         const inputTimestamp = tasks.reduce((acc, task) => Math.max(acc, task.inputTimestamp), 0);
-        const { speed, power } = calculateSpeedPower(payload.speed, payload.brakeFactor, payload.power);
         return {
             ...tasks[0],
-            payload: {
-                ...payload,
-                speed,
-                power,
-                brakeFactor: 0
-            },
+            payload: payload,
             inputTimestamp,
-            hash: setSpeedPayloadHash(payload)
+            hash: calculateTaskHash(tasks[0].hubId, tasks[0].portId, setSpeedPayloadHash(payload))
         };
     }
 }

@@ -4,12 +4,12 @@ import { FullControllerInputNameData } from '@app/shared-control-schemes';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { IBindingControllerNameResolver } from '../i-binding-controller-name-resolver';
-import { ControllerInputNameService } from '../common';
+import { DirectionAwareControllerInputNameService } from '../common';
 
 @Injectable()
 export class SetSpeedControllerNameResolverService implements IBindingControllerNameResolver<ControlSchemeBindingType.SetSpeed> {
     constructor(
-        private readonly controllerNameProvider: ControllerInputNameService,
+        private readonly controllerNameProvider: DirectionAwareControllerInputNameService,
     ) {
     }
 
@@ -18,7 +18,8 @@ export class SetSpeedControllerNameResolverService implements IBindingController
         inputConfig: ControlSchemeInput
     ): FullControllerInputNameData {
         switch (action) {
-            case ControlSchemeInputAction.Accelerate:
+            case ControlSchemeInputAction.Forwards:
+            case ControlSchemeInputAction.Backwards:
             case ControlSchemeInputAction.Brake:
                 return this.controllerNameProvider.getFullControllerInputNameData(inputConfig);
         }

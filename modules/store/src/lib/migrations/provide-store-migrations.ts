@@ -1,15 +1,16 @@
 import { Provider } from '@angular/core';
 
 import { STORE_MIGRATION } from './i-migration';
-import { V21ToV22MigrationService } from './v21-to-v22-migration-service';
 import { MigrateStoreService } from './migrate-store.service';
-import { V22ToV23MigrationService } from './v22-to-v23-migration.service';
-import { V23ToV24MigrationService } from './v23-to-v24-migration.service';
-import { V24ToV25MigrationService } from './v24-to-v25-migration.service';
-import { V25ToV26MigrationService } from './v25-to-v26-migration.service';
-import { V26ToV27MigrationService } from './v26-to-v27-migration.service';
-import { V27ToV28MigrationService } from './v27-to-v28-migration.service';
-import { V28ToV29MigrationService } from './v28-to-v29-migration.service';
+import { V21ToV22MigrationService } from './v21-v22';
+import { V22ToV23MigrationService } from './v22-v23';
+import { V23ToV24MigrationService } from './v23-v24';
+import { V24ToV25MigrationService } from './v24-v25';
+import { V25ToV26MigrationService } from './v25-v26';
+import { V26ToV27MigrationService } from './v26-v27';
+import { V27ToV28MigrationService } from './v27-v28';
+import { V28ToV29MigrationService } from './v28-v29';
+import { V29ToV30MigrationService } from './v29-v30';
 
 export function provideStoreMigrations(): Provider[] {
     return [
@@ -21,6 +22,7 @@ export function provideStoreMigrations(): Provider[] {
         { provide: STORE_MIGRATION, useClass: V26ToV27MigrationService, multi: true },
         { provide: STORE_MIGRATION, useClass: V27ToV28MigrationService, multi: true },
         { provide: STORE_MIGRATION, useClass: V28ToV29MigrationService, multi: true },
+        { provide: STORE_MIGRATION, useClass: V29ToV30MigrationService, multi: true },
         MigrateStoreService
     ];
 }

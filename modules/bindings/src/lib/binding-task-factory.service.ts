@@ -11,6 +11,7 @@ import { GearboxControlTaskPayloadBuilderService } from './gearbox';
 import { BindingTaskPayloadHashBuilderService } from './binding-task-payload-hash-builder.service';
 import { ITaskPayloadBuilder } from './i-task-payload-factory';
 import { BindingInputExtractionResult } from './i-binding-task-input-extractor';
+import { calculateTaskHash } from './common';
 
 @Injectable()
 export class BindingTaskFactoryService implements ITaskFactory {
@@ -90,7 +91,7 @@ export class BindingTaskFactoryService implements ITaskFactory {
         portId: number,
         payload: PortCommandTaskPayload
     ): string {
-        return `${hubId}/${portId}/${this.hashBuilder.buildHash(payload)}`;
+        return calculateTaskHash(hubId, portId, this.hashBuilder.buildHash(payload));
     }
 
     private composeTask(

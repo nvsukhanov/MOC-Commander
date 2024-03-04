@@ -15,10 +15,10 @@ function slopeFn(
 
 export function calcInputGain(
     value: number,
-    gain: InputGain = InputGain.None,
+    gain: InputGain = InputGain.Linear,
 ): number {
     switch (gain) {
-        case InputGain.None:
+        case InputGain.Linear:
             return value;
         case InputGain.Exponential:
             return slopeFn(value, EXPONENTIAL_SLOPE_GAIN, EXPONENTIAL_SHARPNESS);

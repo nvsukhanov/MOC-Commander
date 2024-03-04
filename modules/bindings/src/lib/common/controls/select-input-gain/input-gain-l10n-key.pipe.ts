@@ -8,7 +8,7 @@ import { InputGain } from '@app/store';
 })
 export class InputGainL10nKeyPipe implements PipeTransform {
     private readonly inputGainL10nKeyMap: { [k in InputGain]: string } = {
-        [InputGain.None]: 'controlScheme.inputGainLinear',
+        [InputGain.Linear]: 'controlScheme.inputGainLinear',
         [InputGain.Exponential]: 'controlScheme.inputGainExponential',
         [InputGain.Logarithmic]: 'controlScheme.inputGainLogarithmic'
     };

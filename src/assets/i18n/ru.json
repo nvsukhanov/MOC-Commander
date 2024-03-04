@@ -255,8 +255,6 @@
     "outputPower": "Мощность",
     "inputActions": {
       "servo": "Серво",
-      "brake": "Тормоз",
-      "accelerate": "Ускорение",
       "step": "Шаг",
       "setAngle": "Установить угол",
       "nextLevel": "Следующий уровень",
@@ -265,6 +263,10 @@
     },
     "setSpeedBinding": {
       "operationMode": "Скорость",
+      "forwardsInput": "Вперед",
+      "backwardsInput": "Назад",
+      "brakeInput": "Тормоз",
+      "missingInputs": "Нужно назначить хотя-бы один контроллер",
       "accelerationInputGainTitle": "Усиление ввода ускорения",
       "outputSpeed": "Макс. скорость",
       "taskSummary": "Скорость: { speed }%",
@@ -742,7 +744,9 @@
     },
     "1-2-3": {
       "featImprovedUiPerformance": "Улучшена производительность пользовательского интерфейса",
-      "featRaiseServoMotorRangeLimit": "Увеличение максимального значения диапазона сервопривода до 4 полных оборотов (1440°)"
+      "featRaiseServoMotorRangeLimit": "Увеличение максимального значения диапазона сервопривода до 4 полных оборотов (1440°)",
+      "featSeparateControlsForForwardAndBackwardSpeed": "Возможность назначить разные контроллеры для ускорения вперед и назад для привязок 'Скорость'",
+      "featAxialAwarenessForSetSpeedBrakeControl": "Учет направления оси для контроля 'Тормоз' в типе привязки 'Скорость'"
     }
   }
 }

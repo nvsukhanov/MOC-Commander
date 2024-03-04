@@ -1,8 +1,16 @@
 import { Injectable } from '@angular/core';
-import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeInputAction, ControlSchemeSetSpeedBinding, InputGain, PortCommandTask, PortCommandTaskPayload, SetSpeedTaskPayload } from '@app/store';
+import { ControlSchemeBindingType, clampSpeed } from '@app/shared-misc';
+import {
+    ControlSchemeInputAction,
+    ControlSchemeSetSpeedBinding,
+    InputDirection,
+    InputGain,
+    PortCommandTask,
+    PortCommandTaskPayload,
+    SetSpeedTaskPayload
+} from '@app/store';
 
-import { calcInputGain, snapSpeed } from '../common';
+import { calcInputGain, extractDirectionAwareInputValue, snapSpeed } from '../common';
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
 import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 
@@ -10,35 +18,53 @@ import { BindingInputExtractionResult } from '../i-binding-task-input-extractor'
 export class SetSpeedTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.SetSpeed> {
     public buildPayload(
         binding: ControlSchemeSetSpeedBinding,
-        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.SetSpeed>
+        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.SetSpeed>,
     ): { payload: SetSpeedTaskPayload; inputTimestamp: number } | null {
-        const accelerateInputModel = currentInput[ControlSchemeInputAction.Accelerate];
+        const forwardsInputModel = currentInput[ControlSchemeInputAction.Forwards];
+        const backwardsInputModel = currentInput[ControlSchemeInputAction.Backwards];
         const brakeInputModel = currentInput[ControlSchemeInputAction.Brake];
 
         let inputTimestamp = 0;
-        if (accelerateInputModel && brakeInputModel) {
-            inputTimestamp = Math.max(accelerateInputModel.timestamp, brakeInputModel.timestamp);
-        } else if (accelerateInputModel) {
-            inputTimestamp = accelerateInputModel.timestamp;
-        } else if (brakeInputModel) {
-            inputTimestamp = brakeInputModel.timestamp;
+        if (forwardsInputModel || brakeInputModel || backwardsInputModel) {
+            inputTimestamp = Math.max(
+                forwardsInputModel?.timestamp ?? 0,
+                backwardsInputModel?.timestamp ?? 0,
+                brakeInputModel?.timestamp ?? 0,
+            );
         } else {
             return null;
         }
 
-        const speedInput = accelerateInputModel?.value ?? 0;
-        const brakeInput = brakeInputModel?.value ?? 0;
+        const forwardsInputValue = forwardsInputModel?.value ?? 0;
+        const forwardsInputDirection = binding.inputs[ControlSchemeInputAction.Forwards]?.inputDirection ?? InputDirection.Positive;
 
-        const speed = this.calculateSpeed(
-            speedInput,
+        const backwardsInputValue = backwardsInputModel?.value ?? 0;
+        const backwardsInputDirection = binding.inputs[ControlSchemeInputAction.Backwards]?.inputDirection ?? InputDirection.Positive;
+
+        const brakeInputValue = brakeInputModel?.value ?? 0;
+        const brakeInputDirection = binding.inputs[ControlSchemeInputAction.Brake]?.inputDirection ?? InputDirection.Positive;
+
+        const forwardsInput = extractDirectionAwareInputValue(forwardsInputValue, forwardsInputDirection);
+        const backwardsInput = extractDirectionAwareInputValue(backwardsInputValue, backwardsInputDirection);
+        const brakeInput = extractDirectionAwareInputValue(brakeInputValue, brakeInputDirection);
+
+        const forwardsSpeed = this.calculateSpeed(
+            forwardsInput,
             binding.maxSpeed,
             binding.invert,
-            binding.inputs[ControlSchemeInputAction.Accelerate].gain
+            binding.inputs[ControlSchemeInputAction.Forwards]?.gain ?? InputGain.Linear
+        );
+
+        const backwardsSpeed = this.calculateSpeed(
+            backwardsInput,
+            binding.maxSpeed,
+            binding.invert,
+            binding.inputs[ControlSchemeInputAction.Backwards]?.gain ?? InputGain.Linear
         );
 
         const payload: SetSpeedTaskPayload = {
             bindingType: ControlSchemeBindingType.SetSpeed,
-            speed: snapSpeed(speed),
+            speed: snapSpeed(clampSpeed(Math.abs(forwardsSpeed) - Math.abs(backwardsSpeed))),
             brakeFactor: Math.round(Math.abs(brakeInput) * binding.maxSpeed),
             power: binding.power,
             useAccelerationProfile: binding.useAccelerationProfile,

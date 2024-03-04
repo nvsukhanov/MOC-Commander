@@ -111,7 +111,7 @@ export class CommonBindingsFormControlsBuilderService {
                 nonNullable: true,
                 validators: [ Validators.required ]
             }),
-            gain: this.formBuilder.control<InputGain>(initialValue?.gain ?? InputGain.None, {
+            gain: this.formBuilder.control<InputGain>(initialValue?.gain ?? InputGain.Linear, {
                 nonNullable: true,
                 validators: [ Validators.required, AppValidators.isInEnum(InputGain) ]
             }),
@@ -135,7 +135,7 @@ export class CommonBindingsFormControlsBuilderService {
             inputId: this.formBuilder.control<string>(initialValue?.inputId ?? '', {
                 nonNullable: true
             }),
-            gain: this.formBuilder.control<InputGain>(initialValue?.gain ?? InputGain.None, {
+            gain: this.formBuilder.control<InputGain>(initialValue?.gain ?? InputGain.Linear, {
                 nonNullable: true
             }),
             buttonId: this.formBuilder.control<ButtonGroupButtonId | null>(initialValue?.portId ?? null),

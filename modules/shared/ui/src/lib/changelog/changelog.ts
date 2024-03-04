@@ -9,6 +9,8 @@ export const CHANGELOG: Changelog = [
         changeL10nKeys: [
             'changelog.1-2-3.featImprovedUiPerformance',
             'changelog.1-2-3.featRaiseServoMotorRangeLimit',
+            'changelog.1-2-3.featSeparateControlsForForwardAndBackwardSpeed',
+            'changelog.1-2-3.featAxialAwarenessForSetSpeedBrakeControl',
             'changelog.bugfixesAndImprovements',
         ]
     },
