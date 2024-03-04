@@ -4,4 +4,10 @@
 
 .control-select-form-field {
     width: 100%;
+    pointer-events: none;
+}
+
+.control-select-input {
+    cursor: default;
+    pointer-events: none;
 }
