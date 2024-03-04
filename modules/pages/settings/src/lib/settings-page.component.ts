@@ -8,10 +8,11 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
+import { of } from 'rxjs';
 import { Language } from '@app/shared-i18n';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
 import { IState, SETTINGS_ACTIONS, SETTINGS_FEATURE, UserSelectedTheme } from '@app/store';
-import { FeatureToolbarBreadcrumbsDirective, FeatureToolbarControlsDirective, IBreadcrumbDefinition } from '@app/shared-ui';
+import { BreadcrumbsService, FeatureToolbarControlsDirective } from '@app/shared-ui';
 
 import { RestoreStateFromBackupDialogComponent } from './restore-state-from-backup-dialog';
 import { ResetStateDialogComponent } from './reset-state-dialog';
@@ -33,14 +34,14 @@ import { UseLinuxCompatSelectComponent } from './use-linux-compat-select';
         ThemeSelectComponent,
         LanguageSelectComponent,
         FeatureToolbarControlsDirective,
-        FeatureToolbarBreadcrumbsDirective,
         MatSlideToggle,
         MatIcon,
         MatTooltip,
         UseLinuxCompatSelectComponent
     ],
     providers: [
-        TitleService
+        TitleService,
+        BreadcrumbsService
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -51,20 +52,20 @@ export class SettingsPageComponent implements OnInit {
 
     public readonly useLinuxCompat = this.store.selectSignal(SETTINGS_FEATURE.selectUseLinuxCompat);
 
-    public readonly breadcrumbsDef: ReadonlyArray<IBreadcrumbDefinition> = [
-        {
-            label$: this.translocoService.selectTranslate('pageTitle.settings'),
-            route: this.routeBuilderService.settings
-        }
-    ];
-
     constructor(
         private readonly store: Store,
         private readonly matDialog: MatDialog,
         private readonly titleService: TitleService,
         private readonly translocoService: TranslocoService,
-        private readonly routeBuilderService: RoutesBuilderService
+        private readonly routeBuilderService: RoutesBuilderService,
+        private breadcrumbs: BreadcrumbsService
     ) {
+        this.breadcrumbs.setBreadcrumbsDef(of([
+            {
+                label$: this.translocoService.selectTranslate('pageTitle.settings'),
+                route: this.routeBuilderService.settings
+            }
+        ]));
     }
 
     public ngOnInit(): void {

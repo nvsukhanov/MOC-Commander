@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { AsyncPipe } from '@angular/common';
 
 import { EllipsisTitleDirective } from '../ellipsis-title.directive';
-import { IBreadcrumbDefinition } from './i-breadcrumb-definition';
+import { BreadcrumbsStateService } from './breadcrumbs-state.service';
 
 @Component({
     standalone: true,
@@ -20,16 +20,9 @@ import { IBreadcrumbDefinition } from './i-breadcrumb-definition';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BreadcrumbsComponent {
-    private _breadcrumbsDef: ReadonlyArray<IBreadcrumbDefinition> = [];
-
-    @Input() public set breadcrumbsDef(
-        v: ReadonlyArray<IBreadcrumbDefinition> | null
+    constructor(
+        protected readonly breadcrumbsStateService: BreadcrumbsStateService,
     ) {
-        this._breadcrumbsDef = v ?? [];
-    }
-
-    public get breadcrumbsDef(): ReadonlyArray<IBreadcrumbDefinition> {
-        return this._breadcrumbsDef;
     }
 }
 

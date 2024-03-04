@@ -1,6 +1,5 @@
 @if (editedHubConfiguration$ | async; as hubConfiguration) {
     <div *libFeatureToolbarControls
-         [libFeatureToolbarBreadcrumbs]="breadcrumbsDef$ | async"
          class="toolbar-panel"
     >
         <button mat-raised-button

@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { of } from 'rxjs';
 import { InstallationManualsListComponent } from '@app/manuals';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
-import { FeatureToolbarBreadcrumbsDirective, FeatureToolbarControlsDirective, IBreadcrumbDefinition } from '@app/shared-ui';
+import { BreadcrumbsService, FeatureToolbarControlsDirective } from '@app/shared-ui';
 
 @Component({
     standalone: true,
@@ -13,26 +14,26 @@ import { FeatureToolbarBreadcrumbsDirective, FeatureToolbarControlsDirective, IB
         InstallationManualsListComponent,
         TranslocoPipe,
         FeatureToolbarControlsDirective,
-        FeatureToolbarBreadcrumbsDirective
     ],
     providers: [
-        TitleService
+        TitleService,
+        BreadcrumbsService
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HelpPageComponent implements OnInit {
-    public readonly breadcrumbsDef: ReadonlyArray<IBreadcrumbDefinition> = [
-        {
-            label$: this.translocoService.selectTranslate('pageTitle.help'),
-            route: this.routeBuilderService.help
-        }
-    ];
-
     constructor(
         private readonly titleService: TitleService,
         private readonly translocoService: TranslocoService,
-        private readonly routeBuilderService: RoutesBuilderService
+        private readonly routeBuilderService: RoutesBuilderService,
+        private breadcrumbs: BreadcrumbsService
     ) {
+        this.breadcrumbs.setBreadcrumbsDef(of([
+            {
+                label$: this.translocoService.selectTranslate('pageTitle.help'),
+                route: this.routeBuilderService.help
+            }
+        ]));
     }
 
     public ngOnInit(): void {

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
@@ -9,14 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AsyncPipe } from '@angular/common';
 import { ControllerNamePipe, ControllerTypeIconNamePipe, ControllerViewHrefPipe } from '@app/shared-controller';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
-import {
-    ConfirmationDialogModule,
-    ConfirmationDialogService,
-    FeatureToolbarBreadcrumbsDirective,
-    FeatureToolbarControlsDirective,
-    HintComponent,
-    IBreadcrumbDefinition
-} from '@app/shared-ui';
+import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared-ui';
 import { CONTROLLERS_ACTIONS } from '@app/store';
 import { ControlSchemeViewUrlPipe } from '@app/shared-control-schemes';
 
@@ -40,31 +33,31 @@ import { CONTROLLERS_LIST_PAGE_SELECTORS, ControllerListViewModel } from './cont
         MatIconModule,
         ConfirmationDialogModule,
         FeatureToolbarControlsDirective,
-        FeatureToolbarBreadcrumbsDirective,
-        AsyncPipe
+        AsyncPipe,
     ],
     providers: [
-        TitleService
+        TitleService,
+        BreadcrumbsService
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControllersListPageComponent implements OnInit {
     public readonly controllerListViewModel$: Observable<ControllerListViewModel> = this.store.select(CONTROLLERS_LIST_PAGE_SELECTORS.viewModel);
 
-    public readonly breadcrumbsDef: ReadonlyArray<IBreadcrumbDefinition> = [
-        {
-            label$: this.translocoService.selectTranslate('pageTitle.controllerList'),
-            route: this.routesBuilder.controllersList
-        }
-    ];
-
     constructor(
         private readonly store: Store,
         private readonly confirmationService: ConfirmationDialogService,
         private readonly translocoService: TranslocoService,
         private readonly titleService: TitleService,
-        private readonly routesBuilder: RoutesBuilderService
+        private readonly routesBuilder: RoutesBuilderService,
+        private breadcrumbs: BreadcrumbsService
     ) {
+        this.breadcrumbs.setBreadcrumbsDef(of([
+            {
+                label$: this.translocoService.selectTranslate('pageTitle.controllerList'),
+                route: this.routesBuilder.controllersList
+            }
+        ]));
     }
 
     public ngOnInit(): void {

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { IBreadcrumbDefinition } from '../breadcrumbs';
+import { IBreadcrumbDefinition } from './i-breadcrumb-definition';
 
 @Injectable({ providedIn: 'root' })
-export class FeatureToolbarBreadcrumbsService {
+export class BreadcrumbsStateService {
     public readonly breadcrumbsDef$: Observable<ReadonlyArray<IBreadcrumbDefinition>>;
 
     private _breadcrumbsDef = new BehaviorSubject<ReadonlyArray<IBreadcrumbDefinition>>([]);

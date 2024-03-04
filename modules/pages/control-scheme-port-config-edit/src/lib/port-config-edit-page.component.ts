@@ -9,14 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { IUnsavedChangesComponent, RoutesBuilderService, TitleService, ValidationMessagesDirective } from '@app/shared-misc';
-import {
-    FeatureToolbarBreadcrumbsDirective,
-    FeatureToolbarControlsDirective,
-    HintComponent,
-    IBreadcrumbDefinition,
-    PortIdToPortNamePipe,
-    PortIdToPortNameService
-} from '@app/shared-ui';
+import { BreadcrumbsService, FeatureToolbarControlsDirective, HintComponent, PortIdToPortNamePipe, PortIdToPortNameService } from '@app/shared-ui';
 import { CONTROL_SCHEME_ACTIONS } from '@app/store';
 import { PortConfigFormBuilderService } from '@app/shared-control-schemes';
 
@@ -38,11 +31,11 @@ import { PortConfigEditViewModel } from './port-config-edit-view-model';
         PortIdToPortNamePipe,
         ValidationMessagesDirective,
         FeatureToolbarControlsDirective,
-        FeatureToolbarBreadcrumbsDirective,
         AsyncPipe
     ],
     providers: [
-        TitleService
+        TitleService,
+        BreadcrumbsService
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -54,8 +47,6 @@ export class PortConfigEditPageComponent implements OnInit, OnDestroy, IUnsavedC
     public readonly maxAccDecProfileTimeMs = PortConfigFormBuilderService.maxAccDecProfileTimeMs;
 
     public readonly formGroup = this.formBuilder.build();
-
-    public readonly breadcrumbsDef$: Observable<ReadonlyArray<IBreadcrumbDefinition>>;
 
     public readonly hasUnsavedChanges: Observable<boolean>;
 
@@ -69,24 +60,27 @@ export class PortConfigEditPageComponent implements OnInit, OnDestroy, IUnsavedC
         private readonly titleService: TitleService,
         private readonly translocoService: TranslocoService,
         private readonly portIdToPortNameService: PortIdToPortNameService,
-        private readonly routesBuilderService: RoutesBuilderService
+        private readonly routesBuilderService: RoutesBuilderService,
+        private breadcrumbs: BreadcrumbsService
     ) {
-        this.breadcrumbsDef$ = this.store.select(PORT_CONFIG_EDIT_PAGE_SELECTORS.selectPortConfig).pipe(
-            filter((portConfig): portConfig is PortConfigEditViewModel => !!portConfig),
-            map((portConfig) => ([
-                {
-                    label$: this.translocoService.selectTranslate('pageTitle.controlSchemesList'),
-                    route: this.routesBuilderService.controllersList
-                },
-                {
-                    label$: this.translocoService.selectTranslate('pageTitle.controlSchemeView', portConfig),
-                    route: this.routesBuilderService.controlSchemeView(portConfig.controlSchemeName)
-                },
-                {
-                    label$: this.translocoService.selectTranslate('pageTitle.controlSchemePortEdit'),
-                    route: this.routesBuilderService.portConfigEdit(portConfig.controlSchemeName, portConfig.hubId, portConfig.portId)
-                }
-            ]))
+        this.breadcrumbs.setBreadcrumbsDef(
+            this.store.select(PORT_CONFIG_EDIT_PAGE_SELECTORS.selectPortConfig).pipe(
+                filter((portConfig): portConfig is PortConfigEditViewModel => !!portConfig),
+                map((portConfig) => ([
+                    {
+                        label$: this.translocoService.selectTranslate('pageTitle.controlSchemesList'),
+                        route: this.routesBuilderService.controllersList
+                    },
+                    {
+                        label$: this.translocoService.selectTranslate('pageTitle.controlSchemeView', portConfig),
+                        route: this.routesBuilderService.controlSchemeView(portConfig.controlSchemeName)
+                    },
+                    {
+                        label$: this.translocoService.selectTranslate('pageTitle.controlSchemePortEdit'),
+                        route: this.routesBuilderService.portConfigEdit(portConfig.controlSchemeName, portConfig.hubId, portConfig.portId)
+                    }
+                ]))
+            )
         );
 
         this.hasUnsavedChanges = this.formGroup.statusChanges.pipe(

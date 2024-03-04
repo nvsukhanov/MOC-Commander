@@ -1,7 +1,6 @@
 @if (controlsTemplate$ | async; as controlsTemplate) {
     <mat-toolbar class="toolbar">
-        <lib-breadcrumbs [breadcrumbsDef]="breadcrumbDef"
-                         *libHideOnSmallScreen
+        <lib-breadcrumbs *libHideOnSmallScreen
                          class="breadcrumbs"
         ></lib-breadcrumbs>
         <span class="spacer"></span>

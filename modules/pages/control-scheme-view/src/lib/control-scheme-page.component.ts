@@ -9,14 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { concatLatestFrom } from '@ngrx/effects';
 import { AsyncPipe } from '@angular/common';
 import { ISchemeRunnerComponent, RoutesBuilderService, ScreenSizeObserverService, TitleService } from '@app/shared-misc';
-import {
-    ConfirmationDialogModule,
-    ConfirmationDialogService,
-    FeatureToolbarBreadcrumbsDirective,
-    FeatureToolbarControlsDirective,
-    HintComponent,
-    IBreadcrumbDefinition
-} from '@app/shared-ui';
+import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared-ui';
 import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, ControlSchemeModel, ROUTER_SELECTORS, WidgetConfigModel } from '@app/store';
 import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData } from '@app/shared-control-schemes';
 
@@ -58,11 +51,11 @@ import {
         MatIconModule,
         ControlSchemeRunBlockersL10nPipe,
         ControlSchemeWidgetsGridComponent,
-        FeatureToolbarBreadcrumbsDirective,
         AsyncPipe
     ],
     providers: [
-        TitleService
+        TitleService,
+        BreadcrumbsService
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -99,8 +92,6 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRun
 
     public readonly canRenameScheme$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canRenameScheme);
 
-    public readonly breadcrumbsDef$: Observable<ReadonlyArray<IBreadcrumbDefinition>>;
-
     public readonly isSchemeRunning: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.isCurrentControlSchemeRunning);
 
     private addableWidgetConfigs$: Observable<WidgetConfigModel[]> = this.selectedScheme$.pipe(
@@ -121,7 +112,7 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRun
     private isCapturingInput = false;
 
     private readonly hiddenSchemeRunBlockers: ReadonlySet<SchemeRunBlocker> = new Set([
-        SchemeRunBlocker.AlreadyRunning,
+        SchemeRunBlocker.AlreadyRunning
     ]);
 
     constructor(
@@ -134,23 +125,26 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRun
         private readonly screenSizeObserverService: ScreenSizeObserverService,
         private readonly titleService: TitleService,
         @Inject(CONTROL_SCHEME_WIDGET_CONFIG_FACTORY) private readonly widgetDefaultConfigFactory: IControlSchemeWidgetConfigFactory,
-        @Inject(CONTROL_SCHEME_RUN_WIDGET_BLOCKERS_CHECKER) private readonly controlSchemeStartWidgetCheckService: IControlSchemeRunWidgetBlockersChecker
+        @Inject(CONTROL_SCHEME_RUN_WIDGET_BLOCKERS_CHECKER) private readonly controlSchemeStartWidgetCheckService: IControlSchemeRunWidgetBlockersChecker,
+        private breadcrumbs: BreadcrumbsService
     ) {
         this.canAddWidgets$ = this.addableWidgetConfigs$.pipe(
             map((configs) => configs.length > 0)
         );
-        this.breadcrumbsDef$ = this.selectedScheme$.pipe(
-            filter((r): r is ControlSchemeModel => r !== undefined),
-            map((scheme) => [
-                {
-                    label$: this.transloco.selectTranslate('pageTitle.controlSchemesList'),
-                    route: this.routesBuilderService.controlSchemesList
-                },
-                {
-                    label$: of(scheme.name),
-                    route: this.routesBuilderService.controlSchemeView(scheme.name)
-                }
-            ])
+        this.breadcrumbs.setBreadcrumbsDef(
+            this.selectedScheme$.pipe(
+                filter((r): r is ControlSchemeModel => r !== undefined),
+                map((scheme) => [
+                    {
+                        label$: this.transloco.selectTranslate('pageTitle.controlSchemesList'),
+                        route: this.routesBuilderService.controlSchemesList
+                    },
+                    {
+                        label$: of(scheme.name),
+                        route: this.routesBuilderService.controlSchemeView(scheme.name)
+                    }
+                ])
+            )
         );
     }
 
@@ -197,7 +191,7 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRun
     public addBinding(): void {
         this.selectedScheme$.pipe(
             take(1),
-            filter((scheme): scheme is ControlSchemeModel => scheme !== undefined),
+            filter((scheme): scheme is ControlSchemeModel => scheme !== undefined)
         ).subscribe((scheme) => {
             this.router.navigate(
                 this.routesBuilderService.bindingCreate(scheme.name)
@@ -210,7 +204,7 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRun
     ): void {
         this.selectedScheme$.pipe(
             take(1),
-            filter((scheme): scheme is ControlSchemeModel => scheme !== undefined),
+            filter((scheme): scheme is ControlSchemeModel => scheme !== undefined)
         ).subscribe((scheme) => {
             this.store.dispatch(CONTROL_SCHEME_ACTIONS.updateControlSchemeName({
                 previousName: scheme.name,
@@ -248,7 +242,7 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRun
             take(1),
             filter((scheme): scheme is ControlSchemeModel => scheme !== undefined),
             concatLatestFrom(() => this.addableWidgetConfigs$),
-            switchMap(([scheme, availableWidgetsConfig]) => {
+            switchMap(([ scheme, availableWidgetsConfig ]) => {
                 return this.dialog.open<AddWidgetDialogComponent, AddWidgetDialogViewModel, Omit<WidgetConfigModel, 'id'> | undefined>(
                     AddWidgetDialogComponent,
                     {
