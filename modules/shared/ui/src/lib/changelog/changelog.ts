@@ -5,6 +5,14 @@ export type Changelog = Array<{
 
 export const CHANGELOG: Changelog = [
     {
+        version: '1.2.3',
+        changeL10nKeys: [
+            'changelog.1-2-3.featImprovedUiPerformance',
+            'changelog.1-2-3.featRaiseServoMotorRangeLimit',
+            'changelog.bugfixesAndImprovements',
+        ]
+    },
+    {
         version: '1.2.2',
         changeL10nKeys: [
             'changelog.1-2-2.featThisChangelog',

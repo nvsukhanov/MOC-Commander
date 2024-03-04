@@ -75,8 +75,8 @@
                     <input type="number"
                            matInput
                            [formControl]="form.controls.aposCenter"
-                           [min]="-motorLimits.maxServoDegreesRange / 2"
-                           [max]="motorLimits.maxServoDegreesRange / 2"
+                           [min]="formBuilder.aposCenterMin"
+                           [max]="formBuilder.aposCenterMax"
                     />
                     <button mat-icon-button
                             matSuffix
@@ -94,8 +94,8 @@
                     <input type="number"
                            matInput
                            [formControl]="form.controls.range"
-                           [min]="motorLimits.minServoDegreesRange"
-                           [max]="motorLimits.maxServoDegreesRange"
+                           [min]="formBuilder.servoMinRange"
+                           [max]="formBuilder.servoMaxRange"
                     />
                     <button mat-icon-button
                             matSuffix

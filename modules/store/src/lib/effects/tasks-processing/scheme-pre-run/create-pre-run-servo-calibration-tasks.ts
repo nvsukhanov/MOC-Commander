@@ -1,6 +1,6 @@
 import { Store } from '@ngrx/store';
 import { Observable, map, tap } from 'rxjs';
-import { ControlSchemeBindingType } from '@app/shared-misc';
+import { ControlSchemeBindingType, IAppConfig } from '@app/shared-misc';
 
 import { ControlSchemeModel } from '../../../models';
 import { CalibrationResultType, HubServoCalibrationFacadeService } from '../../../hub-facades';
@@ -10,7 +10,8 @@ import { ATTACHED_IO_PROPS_ACTIONS } from '../../../actions';
 export function createPreRunServoCalibrationTasks(
     scheme: ControlSchemeModel,
     hubServoCalibrationFacade: HubServoCalibrationFacadeService,
-    store: Store
+    store: Store,
+    appConfig: IAppConfig
 ): Array<Observable<unknown>> {
     const calibrateIos: Map<string, { hubId: string; portId: number; speed: number; power: number }> = new Map();
     scheme.bindings.forEach((binding) => {
@@ -27,7 +28,9 @@ export function createPreRunServoCalibrationTasks(
     const tasks: Array<Observable<unknown>> = [];
 
     calibrateIos.forEach(({ hubId, portId, speed, power }) => {
-        const task = hubServoCalibrationFacade.calibrateServo(hubId, portId, speed, power).pipe(
+        const task = hubServoCalibrationFacade.calibrateServo(
+            hubId, portId, speed, power, appConfig.servo.autoCalibrationRuns
+        ).pipe(
             map((r) => {
                 if (r.type === CalibrationResultType.error) {
                     throw r.error;

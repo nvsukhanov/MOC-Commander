@@ -5,6 +5,7 @@ import { TranslocoPipe } from '@ngneat/transloco';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { HubServoCalibrationFacadeService } from '@app/store';
+import { APP_CONFIG, IAppConfig } from '@app/shared-misc';
 
 export type ServoCalibrationDialogData = {
     hubId: string;
@@ -29,12 +30,11 @@ export type ServoCalibrationDialogData = {
 export class ServoCalibrationDialogComponent implements OnInit, OnDestroy {
     private readonly sub = new Subscription();
 
-    private readonly calibrationRuns = 2;
-
     constructor(
         private readonly dialog: MatDialogRef<ServoCalibrationDialogComponent>,
         @Inject(MAT_DIALOG_DATA) private readonly data: ServoCalibrationDialogData,
-        private readonly calibrationService: HubServoCalibrationFacadeService
+        private readonly calibrationService: HubServoCalibrationFacadeService,
+        @Inject(APP_CONFIG) private readonly appConfig: IAppConfig
     ) {
     }
 
@@ -45,7 +45,7 @@ export class ServoCalibrationDialogComponent implements OnInit, OnDestroy {
                 this.data.portId,
                 this.data.speed,
                 this.data.power,
-                this.calibrationRuns
+                this.appConfig.servo.manualCalibrationRuns
             ).subscribe((result) => {
                 this.dialog.close(result);
             })

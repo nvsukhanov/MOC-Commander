@@ -738,6 +738,10 @@
       "featMotorPositionAdjustment": "Fine-grained motor position adjustment during editing of 'Set angle', 'Servo', and 'Gearbox' bindings",
       "featUseLinuxCompatSetting": "Linux-compatible connection mode setting is now available in the app settings",
       "featThisChangelog": "Addition of this changelog"
+    },
+    "1-2-3": {
+      "featImprovedUiPerformance": "Improved UI performance",
+      "featRaiseServoMotorRangeLimit": "Increased servo motor range limit to 4 full rotations (1440°)"
     }
   }
 }

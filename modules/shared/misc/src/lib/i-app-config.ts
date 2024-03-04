@@ -1,5 +1,5 @@
 import { InjectionToken, isDevMode } from '@angular/core';
-import { LogLevel, PortOperationStartupInformation } from 'rxpoweredup';
+import { LogLevel, MOTOR_LIMITS, PortOperationStartupInformation } from 'rxpoweredup';
 
 export interface IAppConfig {
     readonly hubBatteryPollInterval: number;
@@ -10,6 +10,15 @@ export interface IAppConfig {
     readonly initialMessageSendRetryDelayMs: number;
     readonly defaultBufferingMode: PortOperationStartupInformation;
     readonly schemeStartStopTimeoutMs: number;
+    readonly servo: {
+        readonly defaultServoRange: number;
+        readonly minServoRange: number;
+        readonly maxServoRange: number;
+        readonly manualCalibrationRuns: number;
+        readonly autoCalibrationRuns: number;
+        readonly aposCenterMin: number;
+        readonly aposCenterMax: number;
+    };
 }
 
 export const APP_CONFIG = new InjectionToken<IAppConfig>('APP_CONFIG', {
@@ -21,7 +30,16 @@ export const APP_CONFIG = new InjectionToken<IAppConfig>('APP_CONFIG', {
         maxMessageSendAttempts: 5,
         initialMessageSendRetryDelayMs: 100,
         defaultBufferingMode: PortOperationStartupInformation.executeImmediately,
-        schemeStartStopTimeoutMs: 10000
+        schemeStartStopTimeoutMs: 10000,
+        servo: {
+            defaultServoRange: MOTOR_LIMITS.maxServoDegreesRange,
+            minServoRange: MOTOR_LIMITS.minServoDegreesRange,
+            maxServoRange: MOTOR_LIMITS.maxServoDegreesRange * 4, // 2 full rotations in degrees in each direction
+            manualCalibrationRuns: 2,
+            autoCalibrationRuns: 1,
+            aposCenterMin: -MOTOR_LIMITS.maxServoDegreesRange / 2,
+            aposCenterMax: MOTOR_LIMITS.maxServoDegreesRange / 2
+        }
     }),
     providedIn: 'root'
 });
