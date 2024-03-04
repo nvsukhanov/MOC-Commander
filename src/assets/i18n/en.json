@@ -254,8 +254,6 @@
     "outputPower": "Power",
     "inputActions": {
       "servo": "Servo",
-      "brake": "Brake",
-      "accelerate": "Accelerate",
       "step": "Step",
       "setAngle": "Set angle",
       "nextLevel": "Next",
@@ -264,6 +262,10 @@
     },
     "setSpeedBinding": {
       "operationMode": "Set speed",
+      "forwardsInput": "Forwards",
+      "backwardsInput": "Backwards",
+      "brakeInput": "Brake",
+      "missingInputs": "At least one of the inputs must be assigned",
       "accelerationInputGainTitle": "Acceleration input gain",
       "outputSpeed": "Max speed",
       "taskSummary": "Speed: { speed }%",
@@ -741,7 +743,9 @@
     },
     "1-2-3": {
       "featImprovedUiPerformance": "Improved UI performance",
-      "featRaiseServoMotorRangeLimit": "Increased servo motor range limit to 4 full rotations (1440°)"
+      "featRaiseServoMotorRangeLimit": "Increased servo motor range limit to 4 full rotations (1440°)",
+      "featSeparateControlsForForwardAndBackwardSpeed": "Separate controls for forward and backward speed in 'Set speed' bindings",
+      "featAxialAwarenessForSetSpeedBrakeControl": "Axial input direction awareness for 'Set speed' brake control"
     }
   }
 }

@@ -41,7 +41,7 @@ import { BINDING_SERVO_EDIT_SELECTORS } from './binding-servo-edit.selectors';
 import { ServoBindingForm } from './servo-binding-form';
 import { BINDING_CONTROLLER_NAME_RESOLVER } from '../i-binding-controller-name-resolver';
 import { ServoControllerNameResolverService } from './servo-controller-name-resolver.service';
-import { NO_INPUTS_ERROR, ServoBindingFormBuilderService } from './servo-binding-form-builder.service';
+import { NO_INPUTS_SERVO_ERROR, ServoBindingFormBuilderService } from './servo-binding-form-builder.service';
 
 @Component({
     standalone: true,
@@ -78,7 +78,7 @@ import { NO_INPUTS_ERROR, ServoBindingFormBuilderService } from './servo-binding
 })
 export class BindingServoEditComponent implements IBindingsDetailsEditComponent<ServoBindingForm>, OnDestroy {
     public readonly validationErrorsMap: ValidationErrorsL10nMap = {
-        [NO_INPUTS_ERROR]: 'controlScheme.servoBinding.missingInputs'
+        [NO_INPUTS_SERVO_ERROR]: 'controlScheme.servoBinding.missingInputs'
     };
 
     public readonly motorLimits = MOTOR_LIMITS;

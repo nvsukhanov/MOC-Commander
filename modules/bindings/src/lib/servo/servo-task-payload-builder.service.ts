@@ -11,7 +11,7 @@ import {
     ServoTaskPayload
 } from '@app/store';
 
-import { calcInputGain } from '../common';
+import { calcInputGain, extractDirectionAwareInputValue } from '../common';
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
 import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 
@@ -54,8 +54,8 @@ export class ServoTaskPayloadBuilderService implements ITaskPayloadBuilder<Contr
 
         const cwInputDirection = binding.inputs[ControlSchemeInputAction.ServoCw]?.inputDirection ?? InputDirection.Positive;
         const ccwInputDirection = binding.inputs[ControlSchemeInputAction.ServoCcw]?.inputDirection ?? InputDirection.Positive;
-        const cwValue = this.extractDirectionAwareInputValue(cwInput?.value ?? 0, cwInputDirection);
-        const ccwValue = this.extractDirectionAwareInputValue(ccwInput?.value ?? 0, ccwInputDirection);
+        const cwValue = extractDirectionAwareInputValue(cwInput?.value ?? 0, cwInputDirection);
+        const ccwValue = extractDirectionAwareInputValue(ccwInput?.value ?? 0, ccwInputDirection);
 
         const servoCwInputValue = calcInputGain(cwValue, binding.inputs[ControlSchemeInputAction.ServoCw]?.gain);
         const servoCcwInputValue = calcInputGain(ccwValue, binding.inputs[ControlSchemeInputAction.ServoCcw]?.gain);
@@ -120,18 +120,6 @@ export class ServoTaskPayloadBuilderService implements ITaskPayloadBuilder<Contr
             },
             inputTimestamp
         };
-    }
-
-    private extractDirectionAwareInputValue(
-        value: number,
-        direction: InputDirection
-    ): number {
-        switch (direction) {
-            case InputDirection.Positive:
-                return Math.max(0, value);
-            case InputDirection.Negative:
-                return Math.min(0, value);
-        }
     }
 
     private snapAngle(

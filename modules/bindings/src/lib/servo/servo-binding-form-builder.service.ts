@@ -8,7 +8,7 @@ import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 import { CommonBindingsFormControlsBuilderService } from '../common';
 import { ServoBindingForm } from './servo-binding-form';
 
-export const NO_INPUTS_ERROR = 'NO_SERVO_INPUTS_ERROR';
+export const NO_INPUTS_SERVO_ERROR = 'NO_SERVO_INPUTS_ERROR';
 
 @Injectable()
 export class ServoBindingFormBuilderService {
@@ -89,7 +89,7 @@ export class ServoBindingFormBuilderService {
             const cwInput = inputsGroup.value[ControlSchemeInputAction.ServoCw];
             const ccwInput = inputsGroup.value[ControlSchemeInputAction.ServoCcw];
             if (cwInput?.controllerId === null && ccwInput?.controllerId === null) {
-                return { [NO_INPUTS_ERROR]: true };
+                return { [NO_INPUTS_SERVO_ERROR]: true };
             }
             return null;
         };

@@ -1,4 +1,4 @@
-import { MOTOR_LIMITS } from 'rxpoweredup';
+import { clampSpeed } from './clamp-speed';
 
 export function calculateSpeedPower(
     cumulativeSpeed: number,
@@ -7,7 +7,7 @@ export function calculateSpeedPower(
 ): { speed: number; power: number } {
     const resultingSpeed = Math.max(0, Math.abs(cumulativeSpeed) - brakeFactor) * Math.sign(cumulativeSpeed);
     const resultingPower = resultingSpeed !== 0 || brakeFactor !== 0 ? power : 0;
-    const clampedSpeed = Math.max(MOTOR_LIMITS.minSpeed, Math.min(MOTOR_LIMITS.maxSpeed, resultingSpeed));
+    const clampedSpeed = clampSpeed(resultingSpeed);
     return {
         speed: clampedSpeed,
         power: resultingPower

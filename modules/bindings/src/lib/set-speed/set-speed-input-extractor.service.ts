@@ -11,13 +11,10 @@ export class SetSpeedInputExtractorService implements IBindingTaskInputExtractor
         binding: ControlSchemeSetSpeedBinding,
         globalInput: Dictionary<ControllerInputModel>
     ): BindingInputExtractionResult<ControlSchemeBindingType.SetSpeed> {
-        const accelerationInputId = controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Accelerate]);
-        const accelerationInputResult = globalInput[accelerationInputId];
-        const brakeInputConfigModel = binding.inputs[ControlSchemeInputAction.Brake];
-        const brakeInputResult = brakeInputConfigModel ? globalInput[controllerInputIdFn(brakeInputConfigModel)] : null;
         return {
-            [ControlSchemeInputAction.Accelerate]: accelerationInputResult ?? null,
-            [ControlSchemeInputAction.Brake]: brakeInputResult ?? null
+            [ControlSchemeInputAction.Forwards]: this.extractInputResult(binding, globalInput, ControlSchemeInputAction.Forwards),
+            [ControlSchemeInputAction.Backwards]: this.extractInputResult(binding, globalInput, ControlSchemeInputAction.Backwards),
+            [ControlSchemeInputAction.Brake]: this.extractInputResult(binding, globalInput, ControlSchemeInputAction.Brake)
         };
     }
 
@@ -25,7 +22,21 @@ export class SetSpeedInputExtractorService implements IBindingTaskInputExtractor
         prevInput: BindingInputExtractionResult<ControlSchemeBindingType.SetSpeed>,
         nextInput: BindingInputExtractionResult<ControlSchemeBindingType.SetSpeed>
     ): boolean {
-        return prevInput[ControlSchemeInputAction.Accelerate] !== nextInput[ControlSchemeInputAction.Accelerate]
+        return prevInput[ControlSchemeInputAction.Forwards] !== nextInput[ControlSchemeInputAction.Forwards]
+            || prevInput[ControlSchemeInputAction.Backwards] !== nextInput[ControlSchemeInputAction.Backwards]
             || prevInput[ControlSchemeInputAction.Brake] !== nextInput[ControlSchemeInputAction.Brake];
+    }
+
+    private extractInputResult(
+        binding: ControlSchemeSetSpeedBinding,
+        globalInput: Dictionary<ControllerInputModel>,
+        inputKey: keyof ControlSchemeSetSpeedBinding['inputs'],
+    ): ControllerInputModel | null {
+        const inputConfigModel = binding.inputs[inputKey];
+        if (!inputConfigModel) {
+            return null;
+        }
+        const inputId = controllerInputIdFn(inputConfigModel);
+        return globalInput[inputId] ?? null;
     }
 }

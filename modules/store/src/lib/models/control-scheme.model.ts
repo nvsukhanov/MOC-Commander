@@ -9,7 +9,7 @@ export enum LoopingMode {
 }
 
 export enum InputGain {
-    None,
+    Linear,
     Exponential,
     Logarithmic,
 }
@@ -46,7 +46,8 @@ export type ControlSchemeInput = {
 
 export enum ControlSchemeInputAction {
     Accelerate,
-    Brake,
+    // @deprecated
+    OldSetSpeedBrake,
     // @deprecated
     Servo,
     SetAngle,
@@ -56,13 +57,17 @@ export enum ControlSchemeInputAction {
     Reset,
     ServoCw,
     ServoCcw,
+    Forwards,
+    Backwards,
+    Brake
 }
 
 export type ControlSchemeSetSpeedBinding = {
     id: number;
     bindingType: ControlSchemeBindingType.SetSpeed;
     inputs: {
-        [ControlSchemeInputAction.Accelerate]: ControlSchemeInput;
+        [ControlSchemeInputAction.Forwards]?: ControlSchemeInput;
+        [ControlSchemeInputAction.Backwards]?: ControlSchemeInput;
         [ControlSchemeInputAction.Brake]?: ControlSchemeInput;
     };
     hubId: string;

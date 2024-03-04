@@ -25,11 +25,7 @@ export class SetSpeedBindingFormMapperService implements IBindingFormMapper<SetS
         const result: ControlSchemeSetSpeedBinding = {
             id,
             bindingType: ControlSchemeBindingType.SetSpeed,
-            inputs: {
-                [ControlSchemeInputAction.Accelerate]: this.commonFormMapperService.mapInputFormToSchemeInput(
-                    form.controls.inputs.controls[ControlSchemeInputAction.Accelerate]
-                )
-            },
+            inputs: {},
             hubId,
             portId,
             maxSpeed: form.controls.maxSpeed.getRawValue(),
@@ -38,6 +34,14 @@ export class SetSpeedBindingFormMapperService implements IBindingFormMapper<SetS
             useAccelerationProfile: form.controls.useAccelerationProfile.getRawValue(),
             useDecelerationProfile: form.controls.useDecelerationProfile.getRawValue(),
         };
+        if (form.controls.inputs.controls[ControlSchemeInputAction.Forwards].controls.controllerId.value !== null) {
+            result.inputs[ControlSchemeInputAction.Forwards] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ControlSchemeInputAction.Forwards] as InputFormGroup);
+        }
+        if (form.controls.inputs.controls[ControlSchemeInputAction.Backwards].controls.controllerId.value !== null) {
+            result.inputs[ControlSchemeInputAction.Backwards] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ControlSchemeInputAction.Backwards] as InputFormGroup);
+        }
         if (form.controls.inputs.controls[ControlSchemeInputAction.Brake].controls.controllerId.value !== null) {
             result.inputs[ControlSchemeInputAction.Brake] =
                 this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ControlSchemeInputAction.Brake] as InputFormGroup);
