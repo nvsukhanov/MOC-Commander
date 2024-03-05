@@ -4,9 +4,8 @@ import { GearboxControlTaskPayloadBuilderService } from './gearbox-control-task-
 import { GearboxControlTaskRunnerService } from './gearbox-control-task-runner.service';
 import { GearboxControlBindingFormBuilderService } from './gearbox-control-binding-form-builder.service';
 import { GearboxControlBindingFormMapperService } from './gearbox-control-binding-form-mapper.service';
-import { GearboxControlPortCommandTaskSummaryBuilderService } from './gearbox-control-port-command-task-summary-builder.service';
 import { GearboxInputExtractorService } from './gearbox-input-extractor.service';
-import { GearboxControllerNameResolverService } from './gearbox-controller-name-resolver.service';
+import { GearboxL10nService } from './gearbox-l10n.service';
 
 export function provideGearboxBinding(): Provider[] {
     return [
@@ -14,8 +13,7 @@ export function provideGearboxBinding(): Provider[] {
         GearboxControlTaskRunnerService,
         GearboxControlBindingFormBuilderService,
         GearboxControlBindingFormMapperService,
-        GearboxControlPortCommandTaskSummaryBuilderService,
         GearboxInputExtractorService,
-        GearboxControllerNameResolverService
+        GearboxL10nService
     ];
 }

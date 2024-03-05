@@ -4,9 +4,8 @@ import { ServoTaskPayloadBuilderService } from './servo-task-payload-builder.ser
 import { ServoTaskRunnerService } from './servo-task-runner.service';
 import { ServoBindingFormBuilderService } from './servo-binding-form-builder.service';
 import { ServoBindingFormMapperService } from './servo-binding-form-mapper.service';
-import { ServoPortCommandTaskSummaryBuilderService } from './servo-port-command-task-summary-builder.service';
 import { ServoInputExtractorService } from './servo-input-extractor.service';
-import { ServoControllerNameResolverService } from './servo-controller-name-resolver.service';
+import { ServoL10nService } from './servo-l10n.service';
 
 export function provideServoBinding(): Provider[] {
     return [
@@ -14,8 +13,7 @@ export function provideServoBinding(): Provider[] {
         ServoTaskRunnerService,
         ServoBindingFormBuilderService,
         ServoBindingFormMapperService,
-        ServoPortCommandTaskSummaryBuilderService,
         ServoInputExtractorService,
-        ServoControllerNameResolverService
+        ServoL10nService
     ];
 }

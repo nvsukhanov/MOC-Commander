@@ -3,16 +3,16 @@ import { Observable, of } from 'rxjs';
 import { ControlSchemeBindingInputs, ControlSchemeInput } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
-import { FULL_CONTROLLER_INPUT_NAME_PROVIDER, IFullControllerInputNameProvider } from './i-full-controller-input-name-provider';
+import { BINDING_CONTROLLER_INPUT_NAME_RESOLVER, IBindingControllerInputNameResolver } from './i-binding-controller-input-name-resolver';
 
 @Pipe({
     standalone: true,
-    name: 'fullControllerInputName',
+    name: 'bindingControllerInputName',
     pure: true
 })
-export class FullControllerInputNamePipe implements PipeTransform {
+export class BindingControllerInputNamePipe implements PipeTransform {
     constructor(
-        @Inject(FULL_CONTROLLER_INPUT_NAME_PROVIDER) private readonly fullControllerInputNameProvider: IFullControllerInputNameProvider
+        @Inject(BINDING_CONTROLLER_INPUT_NAME_RESOLVER) private readonly bindingControllerInputNameProvider: IBindingControllerInputNameResolver
     ) {
     }
 
@@ -24,10 +24,10 @@ export class FullControllerInputNamePipe implements PipeTransform {
         if (!data) {
             return of('');
         }
-        return this.fullControllerInputNameProvider.getFullControllerInputNameData(
+        return this.bindingControllerInputNameProvider.getControllerInputName(
             bindingType,
             inputAction,
             data,
-        ).name$;
+        );
     }
 }

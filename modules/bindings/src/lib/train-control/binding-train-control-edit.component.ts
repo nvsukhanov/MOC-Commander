@@ -18,13 +18,11 @@ import {
     BindingControlSelectLoopingModeComponent,
     BindingEditSectionComponent,
     BindingEditSectionsContainerComponent,
-    CommonBindingsFormControlsBuilderService,
-    ControlSchemeInputActionToL10nKeyPipe
+    CommonBindingsFormControlsBuilderService
 } from '../common';
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { TrainControlBindingForm } from './train-control-binding-form';
-import { BINDING_CONTROLLER_NAME_RESOLVER } from '../i-binding-controller-name-resolver';
-import { TrainControllerNameResolverService } from './train-controller-name-resolver.service';
+import { TrainControlL10nService } from './train-control-l10n.service';
 
 @Component({
     standalone: true,
@@ -45,29 +43,26 @@ import { TrainControllerNameResolverService } from './train-controller-name-reso
         MatButtonModule,
         BindingControlSelectLoopingModeComponent,
         ToggleControlComponent,
-        ControlSchemeInputActionToL10nKeyPipe,
         BindingEditSectionsContainerComponent,
         ValidationMessagesDirective,
         BindingControlPowerInputComponent
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        { provide: BINDING_CONTROLLER_NAME_RESOLVER, useClass: TrainControllerNameResolverService }
-    ]
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingTrainControlEditComponent implements IBindingsDetailsEditComponent<TrainControlBindingForm> {
     public readonly bindingType = ControlSchemeBindingType.TrainControl;
 
-    private _nextLevelControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl>;
+    private _nextLevelControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | null = null;
 
-    private _prevLevelControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl>;
+    private _prevLevelControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | null = null;
 
-    private _resetControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl>;
+    private _resetControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | null = null;
 
     private _form?: TrainControlBindingForm;
 
     constructor(
-        private readonly commonFormControlBuilder: CommonBindingsFormControlsBuilderService
+        private readonly commonFormControlBuilder: CommonBindingsFormControlsBuilderService,
+        private readonly l10nService: TrainControlL10nService
     ) {
     }
 
@@ -75,15 +70,15 @@ export class BindingTrainControlEditComponent implements IBindingsDetailsEditCom
         return this._form;
     }
 
-    public get nextLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | undefined {
+    public get nextLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | null {
         return this._nextLevelControlBindingComponentData;
     }
 
-    public get prevLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | undefined {
+    public get prevLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | null {
         return this._prevLevelControlBindingComponentData;
     }
 
-    public get resetControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | undefined {
+    public get resetControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | null {
         return this._resetControlBindingComponentData;
     }
 
@@ -94,17 +89,20 @@ export class BindingTrainControlEditComponent implements IBindingsDetailsEditCom
         this._nextLevelControlBindingComponentData = {
             bindingType: ControlSchemeBindingType.GearboxControl,
             inputFormGroup: this._form.controls.inputs.controls[ControlSchemeInputAction.NextLevel],
-            inputAction: ControlSchemeInputAction.NextLevel
+            inputAction: ControlSchemeInputAction.NextLevel,
+            inputName$: this.l10nService.getBindingInputName(ControlSchemeInputAction.NextLevel)
         };
         this._prevLevelControlBindingComponentData = {
             bindingType: ControlSchemeBindingType.GearboxControl,
             inputFormGroup: this._form.controls.inputs.controls[ControlSchemeInputAction.PrevLevel],
-            inputAction: ControlSchemeInputAction.PrevLevel
+            inputAction: ControlSchemeInputAction.PrevLevel,
+            inputName$: this.l10nService.getBindingInputName(ControlSchemeInputAction.PrevLevel)
         };
         this._resetControlBindingComponentData = {
             bindingType: ControlSchemeBindingType.GearboxControl,
             inputFormGroup: this._form.controls.inputs.controls[ControlSchemeInputAction.Reset],
-            inputAction: ControlSchemeInputAction.Reset
+            inputAction: ControlSchemeInputAction.Reset,
+            inputName$: this.l10nService.getBindingInputName(ControlSchemeInputAction.Reset)
         };
     }
 

@@ -252,14 +252,6 @@
     "menu": "Menu",
     "outputSpeed": "Speed",
     "outputPower": "Power",
-    "inputActions": {
-      "servo": "Servo",
-      "step": "Step",
-      "setAngle": "Set angle",
-      "nextLevel": "Next",
-      "prevLevel": "Prev",
-      "reset": "Reset"
-    },
     "setSpeedBinding": {
       "operationMode": "Set speed",
       "forwardsInput": "Forwards",
@@ -292,7 +284,8 @@
       "operationMode": "Stepper",
       "outputDegree": "Angle (°)",
       "taskSummary": "Step: { degree }°",
-      "inputAction": "Step ({ degree }°)"
+      "inputAction": "Step ({ degree }°)",
+      "basicInputAction": "Step"
     },
     "setAngleBinding": {
       "operationMode": "Set angle",
@@ -300,23 +293,30 @@
       "readAngleFromPort": "Read angle from port",
       "setPortAngle": "Set angle to motor",
       "taskSummary": "Set angle: { angle }°",
-      "inputAction": "Set angle ({ angle }°)"
+      "inputAction": "Set angle ({ angle }°)",
+      "basicInputAction": "Set angle"
     },
     "trainControlBinding": {
       "operationMode": "Train control",
-      "level": "Speed level { level } (%)",
-      "outputLevelAdd": "Add speed level",
-      "outputLevelRemove": "Remove level",
-      "taskSummary": "Train, level {level} ({speedPercent}%){ isLooping, select, true { (mirror)} other {}}"
+      "level": "Speed { level } (%)",
+      "outputLevelAdd": "Add speed",
+      "outputLevelRemove": "Remove speed",
+      "taskSummary": "Train, speed #{level} ({speedPercent}%){ isLooping, select, true { (mirror)} other {}}",
+      "nextLevel": "Next speed",
+      "prevLevel": "Prev speed",
+      "reset": "Set speed #0"
     },
     "gearboxControlBinding": {
       "operationMode": "Gearbox control",
-      "angleLevel": "Angle level { level } (°)",
+      "angleLevel": "Gear { level } (°)",
       "readAngleFromPort": "Read angle from port",
       "setPortAngle": "Set angle to motor",
-      "outputAngleLevelAdd": "Add level",
-      "outputAngleLevelRemove": "Remove level",
-      "taskSummary": "Gearbox, level {level} ({angle}°){ isLooping, select, true { (mirror)} other {}}"
+      "outputAngleLevelAdd": "Add gear",
+      "outputAngleLevelRemove": "Remove gear",
+      "taskSummary": "Gearbox, gear #{level} ({angle}°){ isLooping, select, true { (mirror)} other {}}",
+      "nextLevel": "Next gear",
+      "prevLevel": "Prev gear",
+      "reset": "Set gear #0"
     },
     "widgets": {
       "addWidgetButtonTitle": "Add widget",
@@ -745,7 +745,8 @@
       "featImprovedUiPerformance": "Improved UI performance",
       "featRaiseServoMotorRangeLimit": "Increased servo motor range limit to 4 full rotations (1440°)",
       "featSeparateControlsForForwardAndBackwardSpeed": "Separate controls for forward and backward speed in 'Set speed' bindings",
-      "featAxialAwarenessForSetSpeedBrakeControl": "Axial input direction awareness for 'Set speed' brake control"
+      "featAxialAwarenessForSetSpeedBrakeControl": "Axial input direction awareness for 'Set speed' brake control",
+      "featBetterL10nForTrainAndGearbox": "Better localization for 'Train' and 'Gearbox' controls"
     }
   }
 }

@@ -23,12 +23,10 @@ import {
     BindingControlSelectControllerComponentData,
     BindingControlSpeedInputComponent,
     BindingEditSectionComponent,
-    BindingEditSectionsContainerComponent,
-    ControlSchemeInputActionToL10nKeyPipe
+    BindingEditSectionsContainerComponent
 } from '../common';
 import { SetAngleBindingForm } from './set-angle-binding-form';
-import { BINDING_CONTROLLER_NAME_RESOLVER } from '../i-binding-controller-name-resolver';
-import { SetAngleControllerNameResolverService } from './set-angle-controller-name-resolver.service';
+import { SetAngleL10nService } from './set-angle-l10n.service';
 
 @Component({
     standalone: true,
@@ -49,7 +47,6 @@ import { SetAngleControllerNameResolverService } from './set-angle-controller-na
         MatButtonModule,
         ToggleControlComponent,
         HideOnSmallScreenDirective,
-        ControlSchemeInputActionToL10nKeyPipe,
         BindingEditSectionsContainerComponent,
         ValidationMessagesDirective,
         BindingControlSpeedInputComponent,
@@ -57,10 +54,7 @@ import { SetAngleControllerNameResolverService } from './set-angle-controller-na
         MotorPositionAdjustmentComponent,
         AsyncPipe
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        { provide: BINDING_CONTROLLER_NAME_RESOLVER, useClass: SetAngleControllerNameResolverService }
-    ]
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingSetAngleEditComponent implements IBindingsDetailsEditComponent<SetAngleBindingForm>, OnDestroy {
     public readonly bindingType = ControlSchemeBindingType.SetAngle;
@@ -71,7 +65,7 @@ export class BindingSetAngleEditComponent implements IBindingsDetailsEditCompone
 
     private _canSetPortValue$: Observable<boolean> = of(false);
 
-    private _setAngleControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.SetAngle>;
+    private _setAngleControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.SetAngle> | null = null;
 
     private portRequestSubscription?: Subscription;
 
@@ -80,7 +74,8 @@ export class BindingSetAngleEditComponent implements IBindingsDetailsEditCompone
     constructor(
         private readonly cdRef: ChangeDetectorRef,
         private readonly store: Store,
-        private readonly hubFacade: HubMotorPositionFacadeService
+        private readonly hubFacade: HubMotorPositionFacadeService,
+        private readonly l10nService: SetAngleL10nService
     ) {
     }
 
@@ -96,7 +91,7 @@ export class BindingSetAngleEditComponent implements IBindingsDetailsEditCompone
         return this._canSetPortValue$;
     }
 
-    public get setAngleControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.SetAngle> | undefined {
+    public get setAngleControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.SetAngle> | null {
         return this._setAngleControlBindingComponentData;
     }
 
@@ -109,7 +104,8 @@ export class BindingSetAngleEditComponent implements IBindingsDetailsEditCompone
             this._setAngleControlBindingComponentData = {
                 bindingType: ControlSchemeBindingType.SetAngle,
                 inputFormGroup: form.controls.inputs.controls[ControlSchemeInputAction.SetAngle],
-                inputAction: ControlSchemeInputAction.SetAngle
+                inputAction: ControlSchemeInputAction.SetAngle,
+                inputName$: this.l10nService.getBasicInputName(ControlSchemeInputAction.SetAngle)
             };
 
             const hubAndPortChanges = form.controls.hubId.valueChanges.pipe(

@@ -15,13 +15,11 @@ import {
     BindingControlSelectControllerComponentData,
     BindingControlSpeedInputComponent,
     BindingEditSectionComponent,
-    BindingEditSectionsContainerComponent,
-    ControlSchemeInputActionToL10nKeyPipe
+    BindingEditSectionsContainerComponent
 } from '../common';
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { StepperBindingForm } from './stepper-binding-form';
-import { BINDING_CONTROLLER_NAME_RESOLVER } from '../i-binding-controller-name-resolver';
-import { StepperControllerNameResolverService } from './stepper-controller-name-resolver.service';
+import { StepperL10nService } from './stepper-l10n.service';
 
 @Component({
     standalone: true,
@@ -35,7 +33,6 @@ import { StepperControllerNameResolverService } from './stepper-controller-name-
         MatDividerModule,
         TranslocoPipe,
         BindingControlSelectControllerComponent,
-        ControlSchemeInputActionToL10nKeyPipe,
         HideOnSmallScreenDirective,
         MatInputModule,
         BindingControlOutputEndStateComponent,
@@ -46,20 +43,18 @@ import { StepperControllerNameResolverService } from './stepper-controller-name-
         BindingControlSpeedInputComponent,
         BindingControlPowerInputComponent
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        { provide: BINDING_CONTROLLER_NAME_RESOLVER, useClass: StepperControllerNameResolverService }
-    ]
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingStepperEditComponent implements IBindingsDetailsEditComponent<StepperBindingForm> {
     public readonly bindingType = ControlSchemeBindingType.Stepper;
 
-    private _stepControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Stepper>;
+    private _stepControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Stepper> | null = null;
 
     private _form?: StepperBindingForm;
 
     constructor(
-        private readonly cdRef: ChangeDetectorRef
+        private readonly cdRef: ChangeDetectorRef,
+        private readonly l10nService: StepperL10nService
     ) {
     }
 
@@ -67,7 +62,7 @@ export class BindingStepperEditComponent implements IBindingsDetailsEditComponen
         return this._form;
     }
 
-    public get stepControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Stepper> | undefined {
+    public get stepControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Stepper> | null {
         return this._stepControlBindingComponentData;
 
     }
@@ -81,6 +76,7 @@ export class BindingStepperEditComponent implements IBindingsDetailsEditComponen
                 bindingType: ControlSchemeBindingType.Stepper,
                 inputFormGroup: this._form.controls.inputs.controls[ControlSchemeInputAction.Step],
                 inputAction: ControlSchemeInputAction.Step,
+                inputName$: this.l10nService.getBasicInputName(ControlSchemeInputAction.Step)
             };
             this.cdRef.detectChanges();
         }

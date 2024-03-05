@@ -2,7 +2,7 @@ import { Inject, Pipe, PipeTransform } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ControlSchemeBinding } from '@app/store';
 
-import { BINDING_INPUT_SUMMARY_PROVIDER, IBindingInputSummaryProvider } from './i-binding-input-summary-provider';
+import { BINDING_INPUT_NAME_RESOLVER, IBindingInputNameResolver } from './i-binding-input-name-resolver';
 
 @Pipe({
     standalone: true,
@@ -11,7 +11,7 @@ import { BINDING_INPUT_SUMMARY_PROVIDER, IBindingInputSummaryProvider } from './
 })
 export class BindingInputSummaryPipe implements PipeTransform {
     constructor(
-        @Inject(BINDING_INPUT_SUMMARY_PROVIDER) private readonly bindingInputSummaryProvider: IBindingInputSummaryProvider
+        @Inject(BINDING_INPUT_NAME_RESOLVER) private readonly bindingInputSummaryProvider: IBindingInputNameResolver
     ) {
     }
 
@@ -19,6 +19,6 @@ export class BindingInputSummaryPipe implements PipeTransform {
         binding: T,
         action: keyof T['inputs']
     ): Observable<string> {
-        return this.bindingInputSummaryProvider.getBindingInputSummary(binding, action);
+        return this.bindingInputSummaryProvider.getBindingInputName(binding, action);
     }
 }

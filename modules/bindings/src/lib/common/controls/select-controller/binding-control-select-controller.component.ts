@@ -6,20 +6,25 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable, Subscription, of, startWith, switchMap } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective } from '@app/shared-ui';
-import { ControlSchemeBindingInputs, ControlSchemeInputAction, ControllerInputModel, InputDirection } from '@app/store';
-import { FullControllerInputNamePipe, WaitForControllerInputDialogComponent } from '@app/shared-control-schemes';
+import { ControlSchemeBindingInputs, ControlSchemeInputAction, ControllerInputModel, InputDirection, InputGain } from '@app/store';
+import {
+    BINDING_CONTROLLER_INPUT_NAME_RESOLVER,
+    BindingControllerInputNamePipe,
+    IBindingControllerInputNameResolver,
+    WaitForControllerInputDialogComponent
+} from '@app/shared-control-schemes';
 import { ControllerInputType } from '@app/controller-profiles';
 
 import { InputFormGroup, OptionalInputFormGroup } from '../../input-form-group';
-import { BINDING_CONTROLLER_NAME_RESOLVER, IBindingControllerNameResolver } from '../../../i-binding-controller-name-resolver';
-import { ControlSchemeInputActionToL10nKeyPipe } from '../../control-scheme-input-action-to-l10n-key.pipe';
 
 export type BindingControlSelectControllerComponentData<T extends ControlSchemeBindingType> = {
     bindingType: T;
     inputFormGroup?: InputFormGroup | OptionalInputFormGroup;
     inputAction?: keyof ControlSchemeBindingInputs<T>;
+    inputName$: Observable<string>;
 };
 
 @Component({
@@ -34,15 +39,15 @@ export type BindingControlSelectControllerComponentData<T extends ControlSchemeB
         MatInputModule,
         MatIconModule,
         HideOnSmallScreenDirective,
-        FullControllerInputNamePipe,
+        BindingControllerInputNamePipe,
         ValidationMessagesDirective,
         ReactiveFormsModule,
-        ControlSchemeInputActionToL10nKeyPipe
+        AsyncPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingControlSelectControllerComponent<T extends ControlSchemeBindingType> implements OnDestroy, OnChanges {
-    @Input() public data?: BindingControlSelectControllerComponentData<T>;
+    @Input() public data: BindingControlSelectControllerComponentData<T> | null = null;
 
     private _syntheticInputControl?: FormControl;
 
@@ -52,7 +57,7 @@ export class BindingControlSelectControllerComponent<T extends ControlSchemeBind
         private readonly dialog: MatDialog,
         private readonly cd: ChangeDetectorRef,
         private readonly formBuilder: FormBuilder,
-        @Inject(BINDING_CONTROLLER_NAME_RESOLVER) private readonly controllerInputNameResolver: IBindingControllerNameResolver<T>,
+        @Inject(BINDING_CONTROLLER_INPUT_NAME_RESOLVER) private readonly controllerInputNameResolver: IBindingControllerInputNameResolver,
     ) {
     }
 
@@ -87,7 +92,8 @@ export class BindingControlSelectControllerComponent<T extends ControlSchemeBind
                 if (!formData || !formData.inputId || this.data?.inputAction === undefined) {
                     return of('');
                 }
-                return this.controllerInputNameResolver.resolveControllerNameFor(
+                return this.controllerInputNameResolver.getControllerInputName(
+                    this.data.bindingType,
                     this.data?.inputAction,
                     {
                         inputId: formData.inputId,
@@ -96,8 +102,9 @@ export class BindingControlSelectControllerComponent<T extends ControlSchemeBind
                         inputType: formData.inputType,
                         controllerId: formData.controllerId ?? '',
                         inputDirection: formData.inputDirection ?? InputDirection.Positive,
+                        gain: formData.gain ?? InputGain.Linear
                     }
-                )?.name$ ?? of('');
+                );
             }),
         ).subscribe((controllerName) => {
             if (!this._syntheticInputControl) {

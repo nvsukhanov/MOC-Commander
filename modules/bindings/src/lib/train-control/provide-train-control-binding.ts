@@ -4,9 +4,8 @@ import { TrainControlTaskPayloadBuilderService } from './train-control-task-payl
 import { TrainControlTaskRunnerService } from './train-control-task-runner.service';
 import { TrainControlBindingFormBuilderService } from './train-control-binding-form-builder.service';
 import { TrainControlBindingFormMapperService } from './train-control-binding-form-mapper.service';
-import { TrainControlPortCommandTaskSummaryBuilderService } from './train-control-port-command-task-summary-builder.service';
 import { TrainControlTaskInputExtractorService } from './train-control-task-input-extractor.service';
-import { TrainControllerNameResolverService } from './train-controller-name-resolver.service';
+import { TrainControlL10nService } from './train-control-l10n.service';
 
 export function provideTrainControlBinding(): Provider[] {
     return [
@@ -14,8 +13,7 @@ export function provideTrainControlBinding(): Provider[] {
         TrainControlTaskRunnerService,
         TrainControlBindingFormBuilderService,
         TrainControlBindingFormMapperService,
-        TrainControlPortCommandTaskSummaryBuilderService,
         TrainControlTaskInputExtractorService,
-        TrainControllerNameResolverService
+        TrainControlL10nService
     ];
 }

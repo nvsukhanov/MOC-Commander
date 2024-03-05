@@ -4,10 +4,8 @@ import { SetAngleTaskPayloadBuilderService } from './set-angle-task-payload-buil
 import { SetAngleTaskRunnerService } from './set-angle-task-runner.service';
 import { SetAngleBindingFormBuilderService } from './set-angle-binding-form-builder.service';
 import { SetAngleBindingFormMapperService } from './set-angle-binding-form-mapper.service';
-import { SetAnglePortCommandTaskSummaryBuilderService } from './set-angle-port-command-task-summary-builder.service';
 import { SetAngleInputExtractorService } from './set-angle-input-extractor.service';
-import { SetAngleControllerNameResolverService } from './set-angle-controller-name-resolver.service';
-import { SetAngleInputSummaryProviderService } from './set-angle-input-summary-provider.service';
+import { SetAngleL10nService } from './set-angle-l10n.service';
 
 export function provideSetAngleBinding(): Provider[] {
     return [
@@ -15,9 +13,7 @@ export function provideSetAngleBinding(): Provider[] {
         SetAngleTaskRunnerService,
         SetAngleBindingFormBuilderService,
         SetAngleBindingFormMapperService,
-        SetAnglePortCommandTaskSummaryBuilderService,
         SetAngleInputExtractorService,
-        SetAngleControllerNameResolverService,
-        SetAngleInputSummaryProviderService
+        SetAngleL10nService
     ];
 }

@@ -32,12 +32,12 @@
                 <div>
                     <span class="binding__controls-action-name">{{ (viewModel.binding | bindingInputSummary: controlData.action) | async }}:</span>
                     @if (controlData.isControllerConnected) {
-                        {{ (viewModel.binding.bindingType | fullControllerInputName: viewModel.binding.inputs[controlData.action] : controlData.action) | async }}
+                        {{ (viewModel.binding.bindingType | bindingControllerInputName: viewModel.binding.inputs[controlData.action] : controlData.action) | async }}
                     } @else {
                         <span [class.binding__controls_disconnected]="!controlData.isControllerConnected"
                               [title]="'controller.isNotConnectedInlineNotification' | transloco"
                         >
-                        {{ (viewModel.binding.bindingType | fullControllerInputName: viewModel.binding.inputs[controlData.action] : controlData.action) | async }}
+                        {{ (viewModel.binding.bindingType | bindingControllerInputName: viewModel.binding.inputs[controlData.action] : controlData.action) | async }}
                     </span>
                     }
                 </div>

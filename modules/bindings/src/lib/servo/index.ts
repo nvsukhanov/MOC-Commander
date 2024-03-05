@@ -4,7 +4,6 @@ export * from './servo-task-payload-builder.service';
 export * from './servo-task-runner.service';
 export * from './servo-binding-form-builder.service';
 export * from './servo-binding-form-mapper.service';
-export * from './servo-port-command-task-summary-builder.service';
 export * from './provide-servo-binding';
 export * from './servo-input-extractor.service';
-export * from './servo-controller-name-resolver.service';
+export * from './servo-l10n.service';

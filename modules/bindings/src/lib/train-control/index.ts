@@ -4,7 +4,6 @@ export * from './train-control-binding-form-mapper.service';
 export * from './train-control-task-payload-builder.service';
 export * from './train-control-task-runner.service';
 export * from './train-control-payload-hash';
-export * from './train-control-port-command-task-summary-builder.service';
 export * from './provide-train-control-binding';
 export * from './train-control-task-input-extractor.service';
-export * from './train-controller-name-resolver.service';
+export * from './train-control-l10n.service';
