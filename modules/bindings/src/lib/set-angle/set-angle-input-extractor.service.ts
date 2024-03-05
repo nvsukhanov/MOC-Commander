@@ -1,7 +1,7 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeInputAction, ControlSchemeSetAngleBinding, ControllerInputModel, controllerInputIdFn } from '@app/store';
+import { ControlSchemeSetAngleBinding, ControllerInputModel, SetAngleInputAction, controllerInputIdFn } from '@app/store';
 
 import { BindingInputExtractionResult, IBindingTaskInputExtractor } from '../i-binding-task-input-extractor';
 
@@ -11,10 +11,10 @@ export class SetAngleInputExtractorService implements IBindingTaskInputExtractor
         binding: ControlSchemeSetAngleBinding,
         globalInput: Dictionary<ControllerInputModel>
     ): BindingInputExtractionResult<ControlSchemeBindingType.SetAngle> {
-        const setAngleInputId = controllerInputIdFn(binding.inputs[ControlSchemeInputAction.SetAngle]);
+        const setAngleInputId = controllerInputIdFn(binding.inputs[SetAngleInputAction.SetAngle]);
         const setAngleInputResult = globalInput[setAngleInputId];
         return {
-            [ControlSchemeInputAction.SetAngle]: setAngleInputResult ?? null
+            [SetAngleInputAction.SetAngle]: setAngleInputResult ?? null
         };
     }
 
@@ -22,7 +22,7 @@ export class SetAngleInputExtractorService implements IBindingTaskInputExtractor
         prevInput: BindingInputExtractionResult<ControlSchemeBindingType.SetAngle>,
         nextInput: BindingInputExtractionResult<ControlSchemeBindingType.SetAngle>
     ): boolean {
-        return prevInput[ControlSchemeInputAction.SetAngle] !== nextInput[ControlSchemeInputAction.SetAngle];
+        return prevInput[SetAngleInputAction.SetAngle] !== nextInput[SetAngleInputAction.SetAngle];
     }
 
 }

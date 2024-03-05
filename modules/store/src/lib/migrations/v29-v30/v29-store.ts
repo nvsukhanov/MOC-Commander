@@ -29,12 +29,18 @@ export type V29ServoBinding = Override<V30ServoBinding, {
     };
 }>;
 
+export type V29SetAngleBinding = Override<V30SetAngleBinding, {
+    inputs: {
+        [OldInputAction.SetAngle]: ControlSchemeInput;
+    };
+}>;
+
 export type V29Bindings = V29SetSpeedBinding
     | V29ServoBinding
     | V30StepperBinding
     | V30TrainControlBinding
     | V30GearboxControlBinding
-    | V30SetAngleBinding;
+    | V29SetAngleBinding;
 export type V29ControlSchemesEntitiesState = Omit<V30ControlSchemesEntitiesState, 'bindings'> & { bindings: V29Bindings[] };
 
 export type V29Store = Override<V30Store, {

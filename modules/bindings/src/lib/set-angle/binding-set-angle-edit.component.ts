@@ -11,7 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
-import { ControlSchemeInputAction, HubMotorPositionFacadeService } from '@app/store';
+import { HubMotorPositionFacadeService, SetAngleInputAction } from '@app/store';
 import { BindingControlSelectHubComponent, BindingControlSelectIoComponent, MotorPositionAdjustmentComponent } from '@app/shared-control-schemes';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
@@ -103,9 +103,9 @@ export class BindingSetAngleEditComponent implements IBindingsDetailsEditCompone
 
             this._setAngleControlBindingComponentData = {
                 bindingType: ControlSchemeBindingType.SetAngle,
-                inputFormGroup: form.controls.inputs.controls[ControlSchemeInputAction.SetAngle],
-                inputAction: ControlSchemeInputAction.SetAngle,
-                inputName$: this.l10nService.getBasicInputName(ControlSchemeInputAction.SetAngle)
+                inputFormGroup: form.controls.inputs.controls[SetAngleInputAction.SetAngle],
+                inputAction: SetAngleInputAction.SetAngle,
+                inputName$: this.l10nService.getBasicInputName(SetAngleInputAction.SetAngle)
             };
 
             const hubAndPortChanges = form.controls.hubId.valueChanges.pipe(

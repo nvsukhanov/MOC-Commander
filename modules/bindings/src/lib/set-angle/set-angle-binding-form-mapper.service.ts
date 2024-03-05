@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeBinding, ControlSchemeInputAction, ControlSchemeSetAngleBinding } from '@app/store';
+import { ControlSchemeBinding, ControlSchemeSetAngleBinding, SetAngleInputAction } from '@app/store';
 
 import { CommonFormMapperService } from '../common';
 import { SetAngleBindingForm } from './set-angle-binding-form';
@@ -28,8 +28,8 @@ export class SetAngleBindingFormMapperService {
             hubId,
             portId,
             inputs: {
-                [ControlSchemeInputAction.SetAngle]: this.commonFormMapperService.mapInputFormToSchemeInput(
-                    form.controls.inputs.controls[ControlSchemeInputAction.SetAngle]
+                [SetAngleInputAction.SetAngle]: this.commonFormMapperService.mapInputFormToSchemeInput(
+                    form.controls.inputs.controls[SetAngleInputAction.SetAngle]
                 )
             }
         };

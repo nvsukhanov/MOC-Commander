@@ -4,7 +4,7 @@ import { ControlSchemeBindingType, DeepPartial } from '@app/shared-misc';
 
 import { AppStoreVersion } from '../../app-store-version';
 import { IMigration } from '../i-migration';
-import { InputDirection, ServoInputAction, SetSpeedInputAction } from '../../models';
+import { InputDirection, ServoInputAction, SetAngleInputAction, SetSpeedInputAction } from '../../models';
 import { V29ControlSchemesEntitiesState, V29Store, V30Binding, V30ServoBinding, V30SetSpeedBinding } from './v29-store';
 import { V30Store } from '../v30';
 import { OldInputAction } from '../old-input-actions';
@@ -85,6 +85,16 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
                             ...b.inputs[OldInputAction.ServoCcw]
                         };
                     }
+                    return bindingResult;
+                } else if (b.bindingType === ControlSchemeBindingType.SetAngle) {
+                    const bindingResult: V30Binding = {
+                        ...b,
+                        inputs: {
+                            [SetAngleInputAction.SetAngle]: {
+                                ...b.inputs[OldInputAction.SetAngle]
+                            }
+                        }
+                    };
                     return bindingResult;
                 }
                 return b;
