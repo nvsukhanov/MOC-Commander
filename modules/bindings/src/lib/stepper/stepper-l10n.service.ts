@@ -5,7 +5,7 @@ import { ControlSchemeBindingType } from '@app/shared-misc';
 import { ControlSchemeBinding, ControlSchemeBindingInputs, ControlSchemeInput, PortCommandTask, StepperInputAction } from '@app/store';
 
 import { IBindingL10n } from '../i-binding-l10n';
-import { DirectionAwareControllerInputNameService } from '../common';
+import { ControllerInputNameService } from '../common';
 
 @Injectable()
 export class StepperL10nService implements IBindingL10n<ControlSchemeBindingType.Stepper> {
@@ -13,7 +13,7 @@ export class StepperL10nService implements IBindingL10n<ControlSchemeBindingType
 
     constructor(
         private readonly translocoService: TranslocoService,
-        private readonly directionAwareControllerNameProvider: DirectionAwareControllerInputNameService
+        private readonly directionAwareControllerNameProvider: ControllerInputNameService
     ) {
     }
 
