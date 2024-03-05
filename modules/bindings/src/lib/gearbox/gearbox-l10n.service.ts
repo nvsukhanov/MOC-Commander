@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeBindingInputs, ControlSchemeGearboxControlBinding, ControlSchemeInput, ControlSchemeInputAction, PortCommandTask } from '@app/store';
+import { ControlSchemeBindingInputs, ControlSchemeGearboxControlBinding, ControlSchemeInput, GearboxControlInputAction, PortCommandTask } from '@app/store';
 
 import { IBindingL10n } from '../i-binding-l10n';
 import { ControllerInputNameService, DirectionAwareControllerInputNameService } from '../common';
@@ -31,11 +31,11 @@ export class GearboxL10nService implements IBindingL10n<ControlSchemeBindingType
         actionType: keyof ControlSchemeGearboxControlBinding['inputs']
     ): Observable<string> {
         switch (actionType) {
-            case ControlSchemeInputAction.NextLevel:
+            case GearboxControlInputAction.NextGear:
                 return this.translocoService.selectTranslate('controlScheme.gearboxControlBinding.prevLevel');
-            case ControlSchemeInputAction.PrevLevel:
+            case GearboxControlInputAction.PrevGear:
                 return this.translocoService.selectTranslate('controlScheme.gearboxControlBinding.nextLevel');
-            case ControlSchemeInputAction.Reset:
+            case GearboxControlInputAction.Reset:
                 return this.translocoService.selectTranslate('controlScheme.gearboxControlBinding.reset');
         }
     }
@@ -45,10 +45,10 @@ export class GearboxL10nService implements IBindingL10n<ControlSchemeBindingType
         inputConfig: ControlSchemeInput
     ): Observable<string> {
         switch (actionType) {
-            case ControlSchemeInputAction.NextLevel:
-            case ControlSchemeInputAction.PrevLevel:
+            case GearboxControlInputAction.NextGear:
+            case GearboxControlInputAction.PrevGear:
                 return this.directionAwareControllerNameProvider.getFullControllerInputNameData(inputConfig);
-            case ControlSchemeInputAction.Reset:
+            case GearboxControlInputAction.Reset:
                 return this.controllerNameProvider.getFullControllerInputNameData(inputConfig);
         }
     }

@@ -4,11 +4,20 @@ import { ControlSchemeBindingType, DeepPartial } from '@app/shared-misc';
 
 import { AppStoreVersion } from '../../app-store-version';
 import { IMigration } from '../i-migration';
-import { InputDirection, ServoInputAction, SetAngleInputAction, SetSpeedInputAction, StepperInputAction, TrainControlInputAction } from '../../models';
+import {
+    GearboxControlInputAction,
+    InputDirection,
+    ServoInputAction,
+    SetAngleInputAction,
+    SetSpeedInputAction,
+    StepperInputAction,
+    TrainControlInputAction
+} from '../../models';
 import {
     V29ControlSchemesEntitiesState,
     V29Store,
     V30Binding,
+    V30GearboxControlBinding,
     V30ServoBinding,
     V30SetAngleBinding,
     V30SetSpeedBinding,
@@ -131,6 +140,26 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
                     }
                     if (b.inputs[OldInputAction.Reset]) {
                         bindingResult.inputs[TrainControlInputAction.Reset] = {
+                            ...b.inputs[OldInputAction.Reset]
+                        };
+                    }
+                    return bindingResult;
+                } else if (b.bindingType === ControlSchemeBindingType.GearboxControl) {
+                    const bindingResult: V30GearboxControlBinding = {
+                        ...b,
+                        inputs: {
+                            [GearboxControlInputAction.NextGear]: {
+                                ...b.inputs[OldInputAction.NextLevel]
+                            }
+                        }
+                    };
+                    if (b.inputs[OldInputAction.PrevLevel]) {
+                        bindingResult.inputs[GearboxControlInputAction.PrevGear] = {
+                            ...b.inputs[OldInputAction.PrevLevel]
+                        };
+                    }
+                    if (b.inputs[OldInputAction.Reset]) {
+                        bindingResult.inputs[GearboxControlInputAction.Reset] = {
                             ...b.inputs[OldInputAction.Reset]
                         };
                     }

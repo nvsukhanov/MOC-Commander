@@ -3,7 +3,7 @@ import { ControlSchemeBindingType } from '@app/shared-misc';
 import {
     AttachedIoPropsModel,
     ControlSchemeGearboxControlBinding,
-    ControlSchemeInputAction,
+    GearboxControlInputAction,
     GearboxControlTaskPayload,
     PortCommandTask,
     PortCommandTaskPayload
@@ -57,9 +57,9 @@ export class GearboxControlTaskPayloadBuilderService implements ITaskPayloadBuil
         motorEncoderOffset: number,
         previousTask: PortCommandTask<ControlSchemeBindingType.GearboxControl> | null
     ): { payload: GearboxControlTaskPayload; inputTimestamp: number } | null {
-        const nextLevelInput = this.getActiveInput(binding, currentInput, previousInput, ControlSchemeInputAction.NextLevel);
-        const prevLevelInput = this.getActiveInput(binding, currentInput, previousInput, ControlSchemeInputAction.PrevLevel);
-        const resetLevelInput = this.getActiveInput(binding, currentInput, previousInput, ControlSchemeInputAction.Reset);
+        const nextLevelInput = this.getActiveInput(binding, currentInput, previousInput, GearboxControlInputAction.NextGear);
+        const prevLevelInput = this.getActiveInput(binding, currentInput, previousInput, GearboxControlInputAction.PrevGear);
+        const resetLevelInput = this.getActiveInput(binding, currentInput, previousInput, GearboxControlInputAction.Reset);
 
         if (!nextLevelInput.isActivated && !prevLevelInput.isActivated && !resetLevelInput.isActivated) {
             return null;

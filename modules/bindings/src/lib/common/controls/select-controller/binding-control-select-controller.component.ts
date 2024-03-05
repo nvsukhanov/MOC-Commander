@@ -9,7 +9,7 @@ import { Observable, Subscription, of, startWith, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective } from '@app/shared-ui';
-import { ControlSchemeBindingInputs, ControlSchemeInputAction, ControllerInputModel, InputDirection, InputGain } from '@app/store';
+import { ControlSchemeBindingInputs, ControllerInputModel, InputDirection, InputGain } from '@app/store';
 import {
     BINDING_CONTROLLER_INPUT_NAME_RESOLVER,
     BindingControllerInputNamePipe,
@@ -60,11 +60,7 @@ export class BindingControlSelectControllerComponent<T extends ControlSchemeBind
         @Inject(BINDING_CONTROLLER_INPUT_NAME_RESOLVER) private readonly controllerInputNameResolver: IBindingControllerInputNameResolver,
     ) {
     }
-
-    public get inputAction(): ControlSchemeInputAction | undefined {
-        return this.data?.inputAction as ControlSchemeInputAction | undefined;
-    }
-
+    
     public get syntheticInputControl(): FormControl | undefined {
         return this._syntheticInputControl;
     }
