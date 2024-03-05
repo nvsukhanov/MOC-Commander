@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeBinding, ControlSchemeInputAction, ControlSchemeSetSpeedBinding } from '@app/store';
+import { ControlSchemeBinding, ControlSchemeSetSpeedBinding, SetSpeedInputAction } from '@app/store';
 
 import { CommonFormMapperService, InputFormGroup } from '../common';
 import { IBindingFormMapper } from '../i-binding-form-mapper';
@@ -34,17 +34,17 @@ export class SetSpeedBindingFormMapperService implements IBindingFormMapper<SetS
             useAccelerationProfile: form.controls.useAccelerationProfile.getRawValue(),
             useDecelerationProfile: form.controls.useDecelerationProfile.getRawValue(),
         };
-        if (form.controls.inputs.controls[ControlSchemeInputAction.Forwards].controls.controllerId.value !== null) {
-            result.inputs[ControlSchemeInputAction.Forwards] =
-                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ControlSchemeInputAction.Forwards] as InputFormGroup);
+        if (form.controls.inputs.controls[SetSpeedInputAction.Forwards].controls.controllerId.value !== null) {
+            result.inputs[SetSpeedInputAction.Forwards] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[SetSpeedInputAction.Forwards] as InputFormGroup);
         }
-        if (form.controls.inputs.controls[ControlSchemeInputAction.Backwards].controls.controllerId.value !== null) {
-            result.inputs[ControlSchemeInputAction.Backwards] =
-                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ControlSchemeInputAction.Backwards] as InputFormGroup);
+        if (form.controls.inputs.controls[SetSpeedInputAction.Backwards].controls.controllerId.value !== null) {
+            result.inputs[SetSpeedInputAction.Backwards] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[SetSpeedInputAction.Backwards] as InputFormGroup);
         }
-        if (form.controls.inputs.controls[ControlSchemeInputAction.Brake].controls.controllerId.value !== null) {
-            result.inputs[ControlSchemeInputAction.Brake] =
-                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ControlSchemeInputAction.Brake] as InputFormGroup);
+        if (form.controls.inputs.controls[SetSpeedInputAction.Brake].controls.controllerId.value !== null) {
+            result.inputs[SetSpeedInputAction.Brake] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[SetSpeedInputAction.Brake] as InputFormGroup);
         }
         return result;
     }

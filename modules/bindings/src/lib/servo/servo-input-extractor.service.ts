@@ -1,7 +1,7 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeBindingInputs, ControlSchemeInputAction, ControlSchemeServoBinding, ControllerInputModel, controllerInputIdFn } from '@app/store';
+import { ControlSchemeBindingInputs, ControlSchemeServoBinding, ControllerInputModel, ServoInputAction, controllerInputIdFn } from '@app/store';
 
 import { BindingInputExtractionResult, IBindingTaskInputExtractor } from '../i-binding-task-input-extractor';
 
@@ -12,8 +12,8 @@ export class ServoInputExtractorService implements IBindingTaskInputExtractor<Co
         globalInput: Dictionary<ControllerInputModel>
     ): BindingInputExtractionResult<ControlSchemeBindingType.Servo> {
         return {
-            [ControlSchemeInputAction.ServoCw]: this.getInputId(binding, ControlSchemeInputAction.ServoCw, globalInput) ?? null,
-            [ControlSchemeInputAction.ServoCcw]: this.getInputId(binding, ControlSchemeInputAction.ServoCcw, globalInput) ?? null,
+            [ServoInputAction.Cw]: this.getInputId(binding, ServoInputAction.Cw, globalInput) ?? null,
+            [ServoInputAction.Ccw]: this.getInputId(binding, ServoInputAction.Ccw, globalInput) ?? null,
         };
     }
 
@@ -21,8 +21,8 @@ export class ServoInputExtractorService implements IBindingTaskInputExtractor<Co
         prevInput: BindingInputExtractionResult<ControlSchemeBindingType.Servo>,
         nextInput: BindingInputExtractionResult<ControlSchemeBindingType.Servo>
     ): boolean {
-        return prevInput[ControlSchemeInputAction.ServoCw] !== nextInput[ControlSchemeInputAction.ServoCw]
-            || prevInput[ControlSchemeInputAction.ServoCcw] !== nextInput[ControlSchemeInputAction.ServoCcw];
+        return prevInput[ServoInputAction.Cw] !== nextInput[ServoInputAction.Cw]
+            || prevInput[ServoInputAction.Ccw] !== nextInput[ServoInputAction.Ccw];
     }
 
     private getInputId(

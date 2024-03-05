@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, FormBuilder, ValidatorFn } from '@angular/forms';
+import { FormBuilder, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { DeepPartial } from '@app/shared-misc';
-import { ControlSchemeInputAction, ControlSchemeSetSpeedBinding, ControllerInputModel } from '@app/store';
+import { ControlSchemeSetSpeedBinding, SetSpeedInputAction } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 import { CommonBindingsFormControlsBuilderService } from '../common';
@@ -22,9 +22,9 @@ export class SetSpeedBindingFormBuilderService implements IFormBuilder<SetSpeedB
     public build(): SetSpeedBindingForm {
         return this.formBuilder.group({
             inputs: this.formBuilder.group({
-                [ControlSchemeInputAction.Forwards]: this.commonFormControlBuilder.optionalInputFormGroup(),
-                [ControlSchemeInputAction.Backwards]: this.commonFormControlBuilder.optionalInputFormGroup(),
-                [ControlSchemeInputAction.Brake]: this.commonFormControlBuilder.optionalInputFormGroup(),
+                [SetSpeedInputAction.Forwards]: this.commonFormControlBuilder.optionalInputFormGroup(),
+                [SetSpeedInputAction.Backwards]: this.commonFormControlBuilder.optionalInputFormGroup(),
+                [SetSpeedInputAction.Brake]: this.commonFormControlBuilder.optionalInputFormGroup(),
             }, {
                 validators: this.createInputsValidators()
             }),
@@ -46,19 +46,18 @@ export class SetSpeedBindingFormBuilderService implements IFormBuilder<SetSpeedB
     }
 
     private createInputsValidators(): ValidatorFn {
-        return (inputsGroup: AbstractControl<{
-            [ControlSchemeInputAction.Forwards]: ControllerInputModel;
-            [ControlSchemeInputAction.Backwards]: ControllerInputModel;
-            [ControlSchemeInputAction.Brake]: ControllerInputModel;
-        }>) => {
-            const forwardsInput = inputsGroup.value[ControlSchemeInputAction.Forwards];
-            const backwardsInput = inputsGroup.value[ControlSchemeInputAction.Backwards];
-            const brakeInput = inputsGroup.value[ControlSchemeInputAction.Brake];
+        const VALIDATOR = (inputsGroup: SetSpeedBindingForm['controls']['inputs']): ValidationErrors | null => {
+            const forwards = inputsGroup.value[SetSpeedInputAction.Forwards];
+            const backwards = inputsGroup.value[SetSpeedInputAction.Backwards];
+            const brake = inputsGroup.value[SetSpeedInputAction.Brake];
 
-            if (forwardsInput?.controllerId === null && backwardsInput?.controllerId === null && brakeInput?.controllerId === null) {
+            if (forwards?.controllerId === null && backwards?.controllerId === null && brake?.controllerId === null) {
                 return { [NO_INPUTS_SET_SPEED_ERROR]: true };
             }
             return null;
         };
+        // ValidatorFn expects an AbstractControl as the first argument, which is not typed, but it is a subclass of FormGroup
+        // So we can safely cast it to ValidatorFn and keep the type safety
+        return VALIDATOR as ValidatorFn;
     }
 }

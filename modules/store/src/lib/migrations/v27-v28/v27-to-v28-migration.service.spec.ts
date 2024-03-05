@@ -2,7 +2,7 @@ import { anything, instance, mock, when } from 'ts-mockito';
 import { ControllerType, GamepadProfile, GamepadProfileFactoryService, GamepadSettings } from '@app/controller-profiles';
 import { DeepPartial } from '@app/shared-misc';
 
-import { ControlSchemeInputAction, InputDirection } from '../../models';
+import { InputDirection } from '../../models';
 import { V21ToV22MigrationService } from '../v21-v22';
 import { V21_STORE_SAMPLE } from '../v21';
 import { V23Store, V23ToV24MigrationService } from '../v23-v24';
@@ -14,6 +14,7 @@ import { V28Store } from '../v28-v29';
 import { ensureStorePropsNotChanged } from '../ensure-props-not-changed';
 import { V22ToV23MigrationService } from '../v22-v23';
 import { V26ToV27MigrationService } from '../v26-v27';
+import { OldInputAction } from '../old-input-actions';
 
 describe('v27 to v28 migration', () => {
     let v27Store: DeepPartial<V27Store>;
@@ -47,31 +48,31 @@ describe('v27 to v28 migration', () => {
 
     it('should update servo gamepad input settings', () => {
         const servoBindings = v28Store.controlSchemes?.entities?.['Servo']?.bindings as V28ServoBinding[];
-        expect(servoBindings[0].inputs[ControlSchemeInputAction.ServoCw]).toEqual({
+        expect(servoBindings[0].inputs[OldInputAction.ServoCw]).toEqual({
             controllerId: 'gamepad-xbox360/0',
             inputId: '0',
             inputType: 1,
             gain: 0,
             inputDirection: InputDirection.Positive
-        } satisfies V28ServoBinding['inputs'][ControlSchemeInputAction.ServoCw]);
-        expect(servoBindings[0].inputs[ControlSchemeInputAction.ServoCcw]).toEqual({
+        } satisfies V28ServoBinding['inputs'][OldInputAction.ServoCw]);
+        expect(servoBindings[0].inputs[OldInputAction.ServoCcw]).toEqual({
             controllerId: 'gamepad-xbox360/0',
             inputId: '0',
             inputType: 1,
             gain: 0,
             inputDirection: InputDirection.Negative
-        } satisfies V28ServoBinding['inputs'][ControlSchemeInputAction.ServoCw]);
+        } satisfies V28ServoBinding['inputs'][OldInputAction.ServoCw]);
     });
 
     it('should update servo keyboard input settings', () => {
         const servoBindings = v28Store.controlSchemes?.entities?.['Servo']?.bindings as V28ServoBinding[];
-        expect(servoBindings[1].inputs[ControlSchemeInputAction.ServoCw]).toEqual({
+        expect(servoBindings[1].inputs[OldInputAction.ServoCw]).toEqual({
             controllerId: 'keyboard',
             inputId: 'a',
             inputType: 0,
             gain: 0,
             inputDirection: InputDirection.Positive
-        } satisfies V28ServoBinding['inputs'][ControlSchemeInputAction.ServoCw]);
+        } satisfies V28ServoBinding['inputs'][OldInputAction.ServoCw]);
     });
 
 

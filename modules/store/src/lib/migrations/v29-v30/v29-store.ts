@@ -1,9 +1,10 @@
 import { EntityState } from '@ngrx/entity';
 import { ControlSchemeBindingType, ExtractArrayType, ExtractEntitiesType, Override } from '@app/shared-misc';
 
-import { ControlSchemeInput, ControlSchemeInputAction } from '../../models';
+import { ControlSchemeInput } from '../../models';
 import { AppStoreVersion } from '../../app-store-version';
 import { V30Store } from '../v30';
+import { OldInputAction } from '../old-input-actions';
 
 export type V30ControlSchemesEntitiesState = ExtractEntitiesType<V30Store['controlSchemes']>;
 export type V30Binding = ExtractArrayType<V30ControlSchemesEntitiesState['bindings']>;
@@ -16,14 +17,20 @@ export type V30SetAngleBinding = V30Binding & { bindingType: ControlSchemeBindin
 
 export type V29SetSpeedBinding = Override<V30SetSpeedBinding, {
     inputs: {
-        [ControlSchemeInputAction.Accelerate]: ControlSchemeInput;
-        [ControlSchemeInputAction.OldSetSpeedBrake]?: ControlSchemeInput;
+        [OldInputAction.Accelerate]: ControlSchemeInput;
+        [OldInputAction.Brake]?: ControlSchemeInput;
     };
-    invert: boolean;
+}>;
+
+export type V29ServoBinding = Override<V30ServoBinding, {
+    inputs: {
+        [OldInputAction.ServoCw]?: ControlSchemeInput;
+        [OldInputAction.ServoCcw]?: ControlSchemeInput;
+    };
 }>;
 
 export type V29Bindings = V29SetSpeedBinding
-    | V30ServoBinding
+    | V29ServoBinding
     | V30StepperBinding
     | V30TrainControlBinding
     | V30GearboxControlBinding

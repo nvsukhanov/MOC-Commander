@@ -1,8 +1,8 @@
 import { MOTOR_LIMITS } from 'rxpoweredup';
-import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Inject, Injectable } from '@angular/core';
 import { APP_CONFIG, AppValidators, DeepPartial, IAppConfig } from '@app/shared-misc';
-import { ControlSchemeInputAction, ControlSchemeServoBinding, ControllerInputModel } from '@app/store';
+import { ControlSchemeServoBinding, ControllerInputModel, ServoInputAction } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 import { CommonBindingsFormControlsBuilderService } from '../common';
@@ -39,8 +39,8 @@ export class ServoBindingFormBuilderService {
     public build(): ServoBindingForm {
         return this.formBuilder.group({
             inputs: this.formBuilder.group({
-                [ControlSchemeInputAction.ServoCw]: this.commonFormControlBuilder.optionalInputFormGroup(),
-                [ControlSchemeInputAction.ServoCcw]: this.commonFormControlBuilder.optionalInputFormGroup()
+                [ServoInputAction.Cw]: this.commonFormControlBuilder.optionalInputFormGroup(),
+                [ServoInputAction.Ccw]: this.commonFormControlBuilder.optionalInputFormGroup()
             }, {
                 validators: this.createInputsValidators()
             }),
@@ -82,16 +82,19 @@ export class ServoBindingFormBuilderService {
     }
 
     private createInputsValidators(): ValidatorFn {
-        return (inputsGroup: AbstractControl<{
-            [ControlSchemeInputAction.ServoCw]: ControllerInputModel;
-            [ControlSchemeInputAction.ServoCcw]: ControllerInputModel;
-        }>) => {
-            const cwInput = inputsGroup.value[ControlSchemeInputAction.ServoCw];
-            const ccwInput = inputsGroup.value[ControlSchemeInputAction.ServoCcw];
+        const VALIDATOR = (inputsGroup: AbstractControl<{
+            [ServoInputAction.Cw]: ControllerInputModel;
+            [ServoInputAction.Ccw]: ControllerInputModel;
+        }>): ValidationErrors | null => {
+            const cwInput = inputsGroup.value[ServoInputAction.Cw];
+            const ccwInput = inputsGroup.value[ServoInputAction.Ccw];
             if (cwInput?.controllerId === null && ccwInput?.controllerId === null) {
                 return { [NO_INPUTS_SERVO_ERROR]: true };
             }
             return null;
         };
+        // ValidatorFn expects an AbstractControl as the first argument, which is not typed, but it is a subclass of FormGroup
+        // So we can safely cast it to ValidatorFn and keep the type safety
+        return VALIDATOR as ValidatorFn;
     }
 }

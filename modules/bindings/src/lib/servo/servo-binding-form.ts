@@ -1,12 +1,12 @@
 import { FormControl, FormGroup } from '@angular/forms';
-import { ControlSchemeInputAction } from '@app/store';
+import { ServoInputAction } from '@app/store';
 
 import { OptionalInputFormGroup } from '../common';
 
 export type ServoBindingForm = FormGroup<{
     inputs: FormGroup<{
-        [ControlSchemeInputAction.ServoCw]: OptionalInputFormGroup;
-        [ControlSchemeInputAction.ServoCcw]: OptionalInputFormGroup;
+        [ServoInputAction.Cw]: OptionalInputFormGroup;
+        [ServoInputAction.Ccw]: OptionalInputFormGroup;
     }>;
     hubId: FormControl<string | null>;
     portId: FormControl<number | null>;

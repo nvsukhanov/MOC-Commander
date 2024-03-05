@@ -8,8 +8,8 @@ import {
     AttachedIoPropsModel,
     ControlSchemeBindingInputs,
     ControlSchemeInput,
-    ControlSchemeInputAction,
-    PortCommandTask
+    PortCommandTask,
+    ServoInputAction
 } from '@app/store';
 
 import { IBindingL10n } from '../i-binding-l10n';
@@ -42,9 +42,9 @@ export class ServoL10nService implements IBindingL10n<ControlSchemeBindingType.S
         actionType: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.Servo>,
     ): Observable<string> {
         switch (actionType) {
-            case ControlSchemeInputAction.ServoCw:
+            case ServoInputAction.Cw:
                 return this.translocoService.selectTranslate('controlScheme.servoBinding.cwAction');
-            case ControlSchemeInputAction.ServoCcw:
+            case ServoInputAction.Ccw:
                 return this.translocoService.selectTranslate('controlScheme.servoBinding.ccwAction');
         }
     }
@@ -54,8 +54,8 @@ export class ServoL10nService implements IBindingL10n<ControlSchemeBindingType.S
         inputConfig: ControlSchemeInput
     ): Observable<string> {
         switch (actionType) {
-            case ControlSchemeInputAction.ServoCw:
-            case ControlSchemeInputAction.ServoCcw:
+            case ServoInputAction.Cw:
+            case ServoInputAction.Ccw:
                 return this.controllerNameProvider.getFullControllerInputNameData(inputConfig);
         }
     }

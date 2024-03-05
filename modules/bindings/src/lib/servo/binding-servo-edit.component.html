@@ -27,14 +27,14 @@
             <lib-cs-binding-control-select-controller [data]="servoCwBindingComponentData"></lib-cs-binding-control-select-controller>
 
             @if (isCwInputGainConfigurable) {
-                <lib-cs-binding-control-select-input-gain [control]="form.controls.inputs.controls[controlSchemeInputActions.ServoCw].controls.gain"
+                <lib-cs-binding-control-select-input-gain [control]="form.controls.inputs.controls[inputActions.Cw].controls.gain"
                 ></lib-cs-binding-control-select-input-gain>
             }
 
             <lib-cs-binding-control-select-controller [data]="servoCcwBindingComponentData"></lib-cs-binding-control-select-controller>
 
             @if (isCcwInputGainConfigurable) {
-                <lib-cs-binding-control-select-input-gain [control]="form.controls.inputs.controls[controlSchemeInputActions.ServoCcw].controls.gain"
+                <lib-cs-binding-control-select-input-gain [control]="form.controls.inputs.controls[inputActions.Ccw].controls.gain"
                 ></lib-cs-binding-control-select-input-gain>
             }
 

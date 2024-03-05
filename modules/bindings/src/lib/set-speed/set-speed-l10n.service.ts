@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType, calculateSpeedPower } from '@app/shared-misc';
-import { ControlSchemeBindingInputs, ControlSchemeInput, ControlSchemeInputAction, PortCommandTask } from '@app/store';
+import { ControlSchemeBindingInputs, ControlSchemeInput, PortCommandTask, SetSpeedInputAction } from '@app/store';
 
 import { IBindingL10n } from '../i-binding-l10n';
 import { DirectionAwareControllerInputNameService } from '../common';
@@ -31,11 +31,11 @@ export class SetSpeedL10nService implements IBindingL10n<ControlSchemeBindingTyp
         actionType: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.SetSpeed>
     ): Observable<string> {
         switch (actionType) {
-            case ControlSchemeInputAction.Forwards:
+            case SetSpeedInputAction.Forwards:
                 return this.translocoService.selectTranslate('controlScheme.setSpeedBinding.forwardsInput');
-            case ControlSchemeInputAction.Backwards:
+            case SetSpeedInputAction.Backwards:
                 return this.translocoService.selectTranslate('controlScheme.setSpeedBinding.backwardsInput');
-            case ControlSchemeInputAction.Brake:
+            case SetSpeedInputAction.Brake:
                 return this.translocoService.selectTranslate('controlScheme.setSpeedBinding.brakeInput');
         }
     }
@@ -45,9 +45,9 @@ export class SetSpeedL10nService implements IBindingL10n<ControlSchemeBindingTyp
         inputConfig: ControlSchemeInput
     ): Observable<string> {
         switch (actionType) {
-            case ControlSchemeInputAction.Forwards:
-            case ControlSchemeInputAction.Backwards:
-            case ControlSchemeInputAction.Brake:
+            case SetSpeedInputAction.Forwards:
+            case SetSpeedInputAction.Backwards:
+            case SetSpeedInputAction.Brake:
                 return this.controllerNameProvider.getFullControllerInputNameData(inputConfig);
         }
     }

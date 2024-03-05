@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Dictionary } from '@ngrx/entity';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeInputAction, ControlSchemeSetSpeedBinding, ControllerInputModel, controllerInputIdFn } from '@app/store';
+import { ControlSchemeSetSpeedBinding, ControllerInputModel, SetSpeedInputAction, controllerInputIdFn } from '@app/store';
 
 import { BindingInputExtractionResult, IBindingTaskInputExtractor } from '../i-binding-task-input-extractor';
 
@@ -12,9 +12,9 @@ export class SetSpeedInputExtractorService implements IBindingTaskInputExtractor
         globalInput: Dictionary<ControllerInputModel>
     ): BindingInputExtractionResult<ControlSchemeBindingType.SetSpeed> {
         return {
-            [ControlSchemeInputAction.Forwards]: this.extractInputResult(binding, globalInput, ControlSchemeInputAction.Forwards),
-            [ControlSchemeInputAction.Backwards]: this.extractInputResult(binding, globalInput, ControlSchemeInputAction.Backwards),
-            [ControlSchemeInputAction.Brake]: this.extractInputResult(binding, globalInput, ControlSchemeInputAction.Brake)
+            [SetSpeedInputAction.Forwards]: this.extractInputResult(binding, globalInput, SetSpeedInputAction.Forwards),
+            [SetSpeedInputAction.Backwards]: this.extractInputResult(binding, globalInput, SetSpeedInputAction.Backwards),
+            [SetSpeedInputAction.Brake]: this.extractInputResult(binding, globalInput, SetSpeedInputAction.Brake)
         };
     }
 
@@ -22,9 +22,9 @@ export class SetSpeedInputExtractorService implements IBindingTaskInputExtractor
         prevInput: BindingInputExtractionResult<ControlSchemeBindingType.SetSpeed>,
         nextInput: BindingInputExtractionResult<ControlSchemeBindingType.SetSpeed>
     ): boolean {
-        return prevInput[ControlSchemeInputAction.Forwards] !== nextInput[ControlSchemeInputAction.Forwards]
-            || prevInput[ControlSchemeInputAction.Backwards] !== nextInput[ControlSchemeInputAction.Backwards]
-            || prevInput[ControlSchemeInputAction.Brake] !== nextInput[ControlSchemeInputAction.Brake];
+        return prevInput[SetSpeedInputAction.Forwards] !== nextInput[SetSpeedInputAction.Forwards]
+            || prevInput[SetSpeedInputAction.Backwards] !== nextInput[SetSpeedInputAction.Backwards]
+            || prevInput[SetSpeedInputAction.Brake] !== nextInput[SetSpeedInputAction.Brake];
     }
 
     private extractInputResult(

@@ -1,9 +1,10 @@
 import { EntityState } from '@ngrx/entity';
 import { ControlSchemeBindingType, ExtractArrayType, ExtractEntitiesType, Override } from '@app/shared-misc';
 
-import { ControlSchemeInput, ControlSchemeInputAction } from '../../models';
+import { ControlSchemeInput } from '../../models';
 import { AppStoreVersion } from '../../app-store-version';
 import { V26Store } from '../v26-v27/v26-store';
+import { OldInputAction } from '../old-input-actions';
 
 export type V26ControlSchemesEntitiesState = ExtractEntitiesType<V26Store['controlSchemes']>;
 export type V25ControlSchemeInput = Omit<ControlSchemeInput, 'inputDirection'>;
@@ -16,37 +17,37 @@ export type V26GearboxControlBinding = V26Bindings & { bindingType: ControlSchem
 export type V26SetAngleBinding = V26Bindings & { bindingType: ControlSchemeBindingType.SetAngle };
 export type V25SetSpeedBinding = Override<V26SetSpeedBinding, {
     inputs: {
-        [ControlSchemeInputAction.Accelerate]: V25ControlSchemeInput;
-        [ControlSchemeInputAction.OldSetSpeedBrake]?: V25ControlSchemeInput;
+        [OldInputAction.Accelerate]: V25ControlSchemeInput; // old ControlSchemeInputAction.Accelerate
+        [OldInputAction.Brake]?: V25ControlSchemeInput; // old ControlSchemeInputAction.Brake
     };
 }>;
 export type V25ServoBinding = Override<V26ServoBinding, {
     inputs: {
-        [ControlSchemeInputAction.Servo]: V25ControlSchemeInput;
+        [OldInputAction.Servo]: V25ControlSchemeInput;
     };
 }>;
 export type V25StepperBinding = Override<V26StepperBinding, {
     inputs: {
-        [ControlSchemeInputAction.Step]: V25ControlSchemeInput;
+        [OldInputAction.Step]: V25ControlSchemeInput;
     };
 }>;
 export type V25TrainControlBinding = Override<V26TrainControlBinding, {
     inputs: {
-        [ControlSchemeInputAction.NextLevel]: V25ControlSchemeInput;
-        [ControlSchemeInputAction.PrevLevel]?: V25ControlSchemeInput;
-        [ControlSchemeInputAction.Reset]?: V25ControlSchemeInput;
+        [OldInputAction.NextLevel]: V25ControlSchemeInput;
+        [OldInputAction.PrevLevel]?: V25ControlSchemeInput;
+        [OldInputAction.Reset]?: V25ControlSchemeInput;
     };
 }>;
 export type V25GearboxControlBinding = Override<V26GearboxControlBinding, {
     inputs: {
-        [ControlSchemeInputAction.NextLevel]: V25ControlSchemeInput;
-        [ControlSchemeInputAction.PrevLevel]?: V25ControlSchemeInput;
-        [ControlSchemeInputAction.Reset]?: V25ControlSchemeInput;
+        [OldInputAction.NextLevel]: V25ControlSchemeInput;
+        [OldInputAction.PrevLevel]?: V25ControlSchemeInput;
+        [OldInputAction.Reset]?: V25ControlSchemeInput;
     };
 }>;
 export type V25SetAngleBinding = Override<V26SetAngleBinding, {
     inputs: {
-        [ControlSchemeInputAction.SetAngle]: V25ControlSchemeInput;
+        [OldInputAction.SetAngle]: V25ControlSchemeInput;
     };
 }>;
 export type V25Bindings = V25SetSpeedBinding | V25ServoBinding | V25StepperBinding | V25TrainControlBinding | V25GearboxControlBinding | V25SetAngleBinding;

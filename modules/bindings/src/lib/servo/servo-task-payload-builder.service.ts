@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType, getTranslationArcs } from '@app/shared-misc';
 import {
     AttachedIoPropsModel,
-    ControlSchemeInputAction,
     ControlSchemeServoBinding,
     InputDirection,
     PortCommandTask,
     PortCommandTaskPayload,
+    ServoInputAction,
     ServoTaskPayload
 } from '@app/store';
 
@@ -26,8 +26,8 @@ export class ServoTaskPayloadBuilderService implements ITaskPayloadBuilder<Contr
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTaskPayload: PortCommandTask | null
     ): { payload: ServoTaskPayload; inputTimestamp: number } | null {
-        const cwInput = currentInput[ControlSchemeInputAction.ServoCw];
-        const ccwInput = currentInput[ControlSchemeInputAction.ServoCcw];
+        const cwInput = currentInput[ServoInputAction.Cw];
+        const ccwInput = currentInput[ServoInputAction.Ccw];
 
         if (!cwInput && !ccwInput && !!previousTaskPayload) {
             // If this is not the first task and there is no input - we do nothing
@@ -52,13 +52,13 @@ export class ServoTaskPayloadBuilderService implements ITaskPayloadBuilder<Contr
             );
         }
 
-        const cwInputDirection = binding.inputs[ControlSchemeInputAction.ServoCw]?.inputDirection ?? InputDirection.Positive;
-        const ccwInputDirection = binding.inputs[ControlSchemeInputAction.ServoCcw]?.inputDirection ?? InputDirection.Positive;
+        const cwInputDirection = binding.inputs[ServoInputAction.Cw]?.inputDirection ?? InputDirection.Positive;
+        const ccwInputDirection = binding.inputs[ServoInputAction.Ccw]?.inputDirection ?? InputDirection.Positive;
         const cwValue = extractDirectionAwareInputValue(cwInput?.value ?? 0, cwInputDirection);
         const ccwValue = extractDirectionAwareInputValue(ccwInput?.value ?? 0, ccwInputDirection);
 
-        const servoCwInputValue = calcInputGain(cwValue, binding.inputs[ControlSchemeInputAction.ServoCw]?.gain);
-        const servoCcwInputValue = calcInputGain(ccwValue, binding.inputs[ControlSchemeInputAction.ServoCcw]?.gain);
+        const servoCwInputValue = calcInputGain(cwValue, binding.inputs[ServoInputAction.Cw]?.gain);
+        const servoCcwInputValue = calcInputGain(ccwValue, binding.inputs[ServoInputAction.Ccw]?.gain);
         const servoNonClampedInputValue = -Math.abs(servoCcwInputValue) + Math.abs(servoCwInputValue);
 
         // TODO: create a function to clamp the value

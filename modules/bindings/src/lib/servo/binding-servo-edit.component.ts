@@ -19,8 +19,8 @@ import {
     CONTROL_SCHEME_ACTIONS,
     CalibrationResult,
     CalibrationResultType,
-    ControlSchemeInputAction,
-    HubMotorPositionFacadeService
+    HubMotorPositionFacadeService,
+    ServoInputAction
 } from '@app/store';
 import { BindingControlSelectHubComponent, BindingControlSelectIoComponent, MotorPositionAdjustmentComponent } from '@app/shared-control-schemes';
 
@@ -75,7 +75,7 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
         [NO_INPUTS_SERVO_ERROR]: 'controlScheme.servoBinding.missingInputs'
     };
 
-    public readonly controlSchemeInputActions = ControlSchemeInputAction;
+    public readonly inputActions = ServoInputAction;
 
     public readonly bindingType = ControlSchemeBindingType.Servo;
 
@@ -116,13 +116,13 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
     }
 
     public get isCwInputGainConfigurable(): boolean {
-        const servoInput = this.form?.controls.inputs.controls[ControlSchemeInputAction.ServoCw];
+        const servoInput = this.form?.controls.inputs.controls[ServoInputAction.Cw];
         return servoInput?.controls.inputType.value === ControllerInputType.Axis
             || servoInput?.controls.inputType.value === ControllerInputType.Trigger;
     }
 
     public get isCcwInputGainConfigurable(): boolean {
-        const servoInput = this.form?.controls.inputs.controls[ControlSchemeInputAction.ServoCcw];
+        const servoInput = this.form?.controls.inputs.controls[ServoInputAction.Ccw];
         return servoInput?.controls.inputType.value === ControllerInputType.Axis
             || servoInput?.controls.inputType.value === ControllerInputType.Trigger;
     }
@@ -244,16 +244,16 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
 
             this._servoCwBindingComponentData = {
                 bindingType: ControlSchemeBindingType.Servo,
-                inputFormGroup: form.controls.inputs.controls[ControlSchemeInputAction.ServoCw],
-                inputAction: ControlSchemeInputAction.ServoCw,
-                inputName$: this.l10nService.getBindingInputName(ControlSchemeInputAction.ServoCw)
+                inputFormGroup: form.controls.inputs.controls[ServoInputAction.Cw],
+                inputAction: ServoInputAction.Cw,
+                inputName$: this.l10nService.getBindingInputName(ServoInputAction.Cw)
             };
 
             this._servoCcwBindingComponentData = {
                 bindingType: ControlSchemeBindingType.Servo,
-                inputFormGroup: form.controls.inputs.controls[ControlSchemeInputAction.ServoCcw],
-                inputAction: ControlSchemeInputAction.ServoCcw,
-                inputName$: this.l10nService.getBindingInputName(ControlSchemeInputAction.ServoCcw)
+                inputFormGroup: form.controls.inputs.controls[ServoInputAction.Ccw],
+                inputAction: ServoInputAction.Ccw,
+                inputName$: this.l10nService.getBindingInputName(ServoInputAction.Ccw)
             };
 
             this.portRequestSubscription?.unsubscribe();
