@@ -1,8 +1,8 @@
-@if (inputAction !== undefined) {
+@if (data !== null) {
     <mat-form-field class="control-select-form-field">
         <mat-label (click)="$event.stopPropagation(); $event.preventDefault()"
         >
-            {{ inputAction | controlSchemeInputActionToL10nKey | transloco }}
+            {{ data.inputName$ | async }}
         </mat-label>
         @if (syntheticInputControl) {
             <input matInput

@@ -33,15 +33,13 @@ import {
     BindingControlSelectInputGainComponent,
     BindingControlSpeedInputComponent,
     BindingEditSectionComponent,
-    BindingEditSectionsContainerComponent,
-    ControlSchemeInputActionToL10nKeyPipe
+    BindingEditSectionsContainerComponent
 } from '../common';
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { BINDING_SERVO_EDIT_SELECTORS } from './binding-servo-edit.selectors';
 import { ServoBindingForm } from './servo-binding-form';
-import { BINDING_CONTROLLER_NAME_RESOLVER } from '../i-binding-controller-name-resolver';
-import { ServoControllerNameResolverService } from './servo-controller-name-resolver.service';
 import { NO_INPUTS_SERVO_ERROR, ServoBindingFormBuilderService } from './servo-binding-form-builder.service';
+import { ServoL10nService } from './servo-l10n.service';
 
 @Component({
     standalone: true,
@@ -57,7 +55,6 @@ import { NO_INPUTS_SERVO_ERROR, ServoBindingFormBuilderService } from './servo-b
         ToggleControlComponent,
         BindingControlSelectControllerComponent,
         BindingControlSelectInputGainComponent,
-        ControlSchemeInputActionToL10nKeyPipe,
         BindingControlSelectHubComponent,
         BindingControlSelectIoComponent,
         MatDividerModule,
@@ -71,17 +68,12 @@ import { NO_INPUTS_SERVO_ERROR, ServoBindingFormBuilderService } from './servo-b
         MotorPositionAdjustmentComponent,
         AsyncPipe
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        { provide: BINDING_CONTROLLER_NAME_RESOLVER, useClass: ServoControllerNameResolverService }
-    ]
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingServoEditComponent implements IBindingsDetailsEditComponent<ServoBindingForm>, OnDestroy {
     public readonly validationErrorsMap: ValidationErrorsL10nMap = {
         [NO_INPUTS_SERVO_ERROR]: 'controlScheme.servoBinding.missingInputs'
     };
-
-    public readonly motorLimits = MOTOR_LIMITS;
 
     public readonly controlSchemeInputActions = ControlSchemeInputAction;
 
@@ -93,9 +85,9 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
 
     private _canRequestPortValue$: Observable<boolean> = of(false);
 
-    private _servoCwBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Servo>;
+    private _servoCwBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Servo> | null = null;
 
-    private _servoCcwBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Servo>;
+    private _servoCcwBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Servo> | null = null;
 
     private readonly _isCalibrating$ = new BehaviorSubject(false);
 
@@ -106,7 +98,8 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
         private readonly store: Store,
         private readonly matDialog: MatDialog,
         private readonly hubFacade: HubMotorPositionFacadeService,
-        protected readonly formBuilder: ServoBindingFormBuilderService
+        protected readonly formBuilder: ServoBindingFormBuilderService,
+        private readonly l10nService: ServoL10nService
     ) {
     }
 
@@ -114,11 +107,11 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
         return this._form;
     }
 
-    public get servoCwBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Servo> | undefined {
+    public get servoCwBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Servo> | null {
         return this._servoCwBindingComponentData;
     }
 
-    public get servoCcwBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Servo> | undefined {
+    public get servoCcwBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Servo> | null {
         return this._servoCcwBindingComponentData;
     }
 
@@ -252,13 +245,15 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
             this._servoCwBindingComponentData = {
                 bindingType: ControlSchemeBindingType.Servo,
                 inputFormGroup: form.controls.inputs.controls[ControlSchemeInputAction.ServoCw],
-                inputAction: ControlSchemeInputAction.ServoCw
+                inputAction: ControlSchemeInputAction.ServoCw,
+                inputName$: this.l10nService.getBindingInputName(ControlSchemeInputAction.ServoCw)
             };
 
             this._servoCcwBindingComponentData = {
                 bindingType: ControlSchemeBindingType.Servo,
                 inputFormGroup: form.controls.inputs.controls[ControlSchemeInputAction.ServoCcw],
-                inputAction: ControlSchemeInputAction.ServoCcw
+                inputAction: ControlSchemeInputAction.ServoCcw,
+                inputName$: this.l10nService.getBindingInputName(ControlSchemeInputAction.ServoCcw)
             };
 
             this.portRequestSubscription?.unsubscribe();

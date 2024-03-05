@@ -11,6 +11,7 @@ export const CHANGELOG: Changelog = [
             'changelog.1-2-3.featRaiseServoMotorRangeLimit',
             'changelog.1-2-3.featSeparateControlsForForwardAndBackwardSpeed',
             'changelog.1-2-3.featAxialAwarenessForSetSpeedBrakeControl',
+            'changelog.1-2-3.featBetterL10nForTrainAndGearbox',
             'changelog.bugfixesAndImprovements',
         ]
     },

@@ -1,7 +1,7 @@
 import { Provider } from '@angular/core';
 import { TASKS_INPUT_EXTRACTOR, TASK_FACTORY, TASK_FILTER, TASK_RUNNER } from '@app/store';
-import { BINDING_DETAILS_EDIT_FORM_RENDERER_FACTORY, BINDING_VALIDATOR, FULL_CONTROLLER_INPUT_NAME_PROVIDER } from '@app/shared-control-schemes';
-import { BINDING_INPUT_SUMMARY_PROVIDER, PORT_COMMAND_TASK_SUMMARY_BUILDER } from '@app/control-scheme-view';
+import { BINDING_CONTROLLER_INPUT_NAME_RESOLVER, BINDING_DETAILS_EDIT_FORM_RENDERER_FACTORY, BINDING_VALIDATOR } from '@app/shared-control-schemes';
+import { BINDING_INPUT_NAME_RESOLVER, PORT_COMMAND_TASK_SUMMARY_BUILDER } from '@app/control-scheme-view';
 
 import { provideGearboxBinding } from './gearbox';
 import { provideSetSpeedBinding } from './set-speed';
@@ -14,11 +14,9 @@ import { provideBindingCommonServices } from './common';
 import { BindingTaskFilterService } from './binding-task-filter.service';
 import { BindingDetailsEditFormRendererFactoryService } from './binding-details-edit-form-renderer-factory.service';
 import { BindingValidatorService } from './binding-validator.service';
-import { BindingTaskSummaryBuilderService } from './binding-task-summary-builder.service';
 import { provideTrainControlBinding } from './train-control';
 import { TaskInputComposer } from './task-input-composer';
-import { BindingControllerNameProviderService } from './binding-controller-name-provider.service';
-import { BindingInputSummaryProviderService } from './binding-input-summary-provider.service';
+import { BindingL10nService } from './binding-l10n.service';
 
 export function provideBindings(): Provider[] {
     return [
@@ -34,9 +32,9 @@ export function provideBindings(): Provider[] {
         { provide: TASK_FILTER, useClass: BindingTaskFilterService },
         { provide: BINDING_DETAILS_EDIT_FORM_RENDERER_FACTORY, useClass: BindingDetailsEditFormRendererFactoryService },
         { provide: BINDING_VALIDATOR, useClass: BindingValidatorService },
-        { provide: PORT_COMMAND_TASK_SUMMARY_BUILDER, useClass: BindingTaskSummaryBuilderService },
+        { provide: PORT_COMMAND_TASK_SUMMARY_BUILDER, useClass: BindingL10nService },
         { provide: TASKS_INPUT_EXTRACTOR, useClass: TaskInputComposer },
-        { provide: FULL_CONTROLLER_INPUT_NAME_PROVIDER, useClass: BindingControllerNameProviderService },
-        { provide: BINDING_INPUT_SUMMARY_PROVIDER, useClass: BindingInputSummaryProviderService }
+        { provide: BINDING_CONTROLLER_INPUT_NAME_RESOLVER, useClass: BindingL10nService },
+        { provide: BINDING_INPUT_NAME_RESOLVER, useClass: BindingL10nService }
     ];
 }

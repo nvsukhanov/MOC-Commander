@@ -1,5 +1,5 @@
 export * from './export-control-scheme-dialog';
-export * from './full-controller-input-name';
+export * from './binding-controller-input-name';
 export * from './import-control-scheme-dialog';
 export * from './validation';
 export * from './are-controllable-ios-present';

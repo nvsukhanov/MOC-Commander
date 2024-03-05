@@ -4,10 +4,8 @@ import { StepperTaskPayloadBuilderService } from './stepper-task-payload-builder
 import { StepperTaskRunnerService } from './stepper-task-runner.service';
 import { StepperBindingFormBuilderService } from './stepper-binding-form-builder.service';
 import { StepperBindingFormMapperService } from './stepper-binding-form-mapper.service';
-import { StepperPortCommandTaskSummaryBuilderService } from './stepper-port-command-task-summary-builder.service';
 import { StepperInputExtractorService } from './stepper-input-extractor.service';
-import { StepperControllerNameResolverService } from './stepper-controller-name-resolver.service';
-import { StepperInputSummaryProviderService } from './stepper-input-summary-provider.service';
+import { StepperL10nService } from './stepper-l10n.service';
 
 export function provideStepperBinding(): Provider[] {
     return [
@@ -15,9 +13,7 @@ export function provideStepperBinding(): Provider[] {
         StepperTaskRunnerService,
         StepperBindingFormBuilderService,
         StepperBindingFormMapperService,
-        StepperPortCommandTaskSummaryBuilderService,
         StepperInputExtractorService,
-        StepperControllerNameResolverService,
-        StepperInputSummaryProviderService
+        StepperL10nService
     ];
 }

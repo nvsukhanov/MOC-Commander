@@ -4,7 +4,6 @@ export * from './gearbox-control-binding-form-mapper.service';
 export * from './gearbox-control-task-payload-builder.service';
 export * from './gearbox-control-task-runner.service';
 export * from './gearbox-control-payload-hash';
-export * from './gearbox-control-port-command-task-summary-builder.service';
 export * from './provide-gearbox-binding';
 export * from './gearbox-input-extractor.service';
-export * from './gearbox-controller-name-resolver.service';
+export * from './gearbox-l10n.service';

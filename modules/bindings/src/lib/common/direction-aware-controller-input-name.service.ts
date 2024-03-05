@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, combineLatestWith, switchMap } from 'rxjs';
-import { Store } from '@ngrx/store';
 import { TranslocoService } from '@ngneat/transloco';
-import { CONTROLLER_CONNECTION_SELECTORS, ControlSchemeInput, ControllerProfilesFacadeService } from '@app/store';
-import { FullControllerInputNameData } from '@app/shared-control-schemes';
+import { ControlSchemeInput, ControllerProfilesFacadeService } from '@app/store';
 import { ControllerInputType } from '@app/controller-profiles';
 import { PortIdToPortNameService } from '@app/shared-ui';
 
@@ -13,17 +11,16 @@ import { ControllerInputNameService } from './controller-input-name.service';
 // TODO: remove inheritance
 export class DirectionAwareControllerInputNameService extends ControllerInputNameService {
     constructor(
-        store: Store,
         translocoService: TranslocoService,
         controllerProfilesFacadeService: ControllerProfilesFacadeService,
-        portIdToPortNameService: PortIdToPortNameService
+        portIdToPortNameService: PortIdToPortNameService,
     ) {
-        super(store, translocoService, controllerProfilesFacadeService, portIdToPortNameService);
+        super(translocoService, controllerProfilesFacadeService, portIdToPortNameService);
     }
 
     public override getFullControllerInputNameData(
         data: ControlSchemeInput,
-    ): FullControllerInputNameData {
+    ): Observable<string> {
         const profile$ = this.controllerProfilesFacadeService.getByControllerId(data.controllerId);
         const l10nKey = data.inputType === ControllerInputType.Axis
                         ? 'controlScheme.fullControllerInputNameWithDirection'
@@ -31,16 +28,11 @@ export class DirectionAwareControllerInputNameService extends ControllerInputNam
 
         const controllerName$ = profile$.pipe(switchMap((profile) => profile.name$));
         const buttonName$ = this.getButtonName$(profile$, data);
-        const nameResult$: Observable<string> = controllerName$.pipe(
+        return controllerName$.pipe(
             combineLatestWith(buttonName$),
             switchMap(([ controllerName, inputName ]) =>
                 this.translocoService.selectTranslate(l10nKey, { controllerName, inputName, inputDirection: data.inputDirection })
             )
         );
-
-        return {
-            name$: nameResult$,
-            isConnected$: this.store.select(CONTROLLER_CONNECTION_SELECTORS.isConnected(data.controllerId))
-        };
     }
 }

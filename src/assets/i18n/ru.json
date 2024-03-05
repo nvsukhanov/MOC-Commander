@@ -100,7 +100,6 @@
     "useLinuxCompatibleBluetoothApiEnabled": "Включено",
     "useLinuxCompatibleBluetoothApiDisabled": "Выключено",
     "useLinuxCompatibleBluetoothApiDescription": "Включение этой опции может помочь с подключением к некоторым типам хабов, но может увеличить задержку при передаче данных. Изменения настройки вступят в силу для следующего подключения к хабу."
-
   },
   "language": {
     "en": "English",
@@ -253,14 +252,6 @@
     "menu": "Menu",
     "outputSpeed": "Скорость",
     "outputPower": "Мощность",
-    "inputActions": {
-      "servo": "Серво",
-      "step": "Шаг",
-      "setAngle": "Установить угол",
-      "nextLevel": "Следующий уровень",
-      "prevLevel": "Предыдущий уровень",
-      "reset": "Сброс"
-    },
     "setSpeedBinding": {
       "operationMode": "Скорость",
       "forwardsInput": "Вперед",
@@ -293,7 +284,8 @@
       "operationMode": "Шаговый двигатель",
       "outputDegree": "Угол шага (°)",
       "taskSummary": "Шаговый двигатель: { degree }°",
-      "inputAction": "Шаг ({ degree }°)"
+      "inputAction": "Шаг ({ degree }°)",
+      "basicInputAction": "Шаг"
     },
     "setAngleBinding": {
       "operationMode": "Установка угла",
@@ -301,23 +293,30 @@
       "readAngleFromPort": "Прочитать угол из порта",
       "setPortAngle": "Установить угол на порту",
       "taskSummary": "Установка угла: { angle }°",
-      "inputAction": "Установка угла ({ angle }°)"
+      "inputAction": "Установка угла ({ angle }°)",
+      "basicInputAction": "Установка угла"
     },
     "trainControlBinding": {
       "operationMode": "Поезд",
       "level": "Скорость { level } (%)",
       "outputLevelAdd": "Добавить скорость",
       "outputLevelRemove": "Удалить скорость",
-      "taskSummary": "Поезд, скорость {level} ({speedPercent}%){ isLooping, select, true { (инв.)} other {}}"
+      "taskSummary": "Поезд, скорость №{level} ({speedPercent}%){ isLooping, select, true { (инв.)} other {}}",
+      "nextLevel": "Следующая скорость",
+      "prevLevel": "Предыдущая скорость",
+      "reset": "Скорость №0"
     },
     "gearboxControlBinding": {
       "operationMode": "Коробка передач",
       "angleLevel": "Позиция { level } (°)",
       "readAngleFromPort": "Прочитать позиция с порта",
       "setPortAngle": "Установить позицию на порту",
-      "outputAngleLevelAdd": "Добавить позицию",
-      "outputAngleLevelRemove": "Удалить позицию",
-      "taskSummary": "Коробка передач, позиция {level} ({angle}°){ isLooping, select, true { (инв.)} other {}}"
+      "outputAngleLevelAdd": "Добавить передачу",
+      "outputAngleLevelRemove": "Удалить передачу",
+      "taskSummary": "Коробка передач, передача №{level} ({angle}°){ isLooping, select, true { (инв.)} other {}}",
+      "nextLevel": "Следующая передача",
+      "prevLevel": "Предыдущая передача",
+      "reset": "Передача №0"
     },
     "widgets": {
       "addWidgetButtonTitle": "Добавить виджет",
@@ -746,7 +745,8 @@
       "featImprovedUiPerformance": "Улучшена производительность пользовательского интерфейса",
       "featRaiseServoMotorRangeLimit": "Увеличение максимального значения диапазона сервопривода до 4 полных оборотов (1440°)",
       "featSeparateControlsForForwardAndBackwardSpeed": "Возможность назначить разные контроллеры для ускорения вперед и назад для привязок 'Скорость'",
-      "featAxialAwarenessForSetSpeedBrakeControl": "Учет направления оси для контроля 'Тормоз' в типе привязки 'Скорость'"
+      "featAxialAwarenessForSetSpeedBrakeControl": "Учет направления оси для контроля 'Тормоз' в типе привязки 'Скорость'",
+      "featBetterL10nForTrainAndGearbox": "Улучшена локализация для типов привязок 'Поезд' и 'Коробка передач'"
     }
   }
 }

@@ -28,9 +28,8 @@ import {
 } from '../common';
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { GearboxControlBindingForm } from './gearbox-binding-form';
-import { BINDING_CONTROLLER_NAME_RESOLVER } from '../i-binding-controller-name-resolver';
-import { GearboxControllerNameResolverService } from './gearbox-controller-name-resolver.service';
 import { CanSetGearboxPortPositionPipe } from './can-set-gearbox-port-position.pipe';
+import { GearboxL10nService } from './gearbox-l10n.service';
 
 @Component({
     standalone: true,
@@ -60,10 +59,7 @@ import { CanSetGearboxPortPositionPipe } from './can-set-gearbox-port-position.p
         MotorPositionAdjustmentComponent,
         AsyncPipe
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        { provide: BINDING_CONTROLLER_NAME_RESOLVER, useClass: GearboxControllerNameResolverService }
-    ]
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingGearboxControlEditComponent implements IBindingsDetailsEditComponent<GearboxControlBindingForm>, OnDestroy {
     public readonly bindingType = ControlSchemeBindingType.GearboxControl;
@@ -72,11 +68,11 @@ export class BindingGearboxControlEditComponent implements IBindingsDetailsEditC
 
     private _canRequestPortValue$: Observable<boolean> = of(false);
 
-    private _nextLevelControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl>;
+    private _nextLevelControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | null = null;
 
-    private _prevLevelControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl>;
+    private _prevLevelControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | null = null;
 
-    private _resetControlBindingComponentData?: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl>;
+    private _resetControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | null = null;
 
     private portRequestSubscription?: Subscription;
 
@@ -85,7 +81,8 @@ export class BindingGearboxControlEditComponent implements IBindingsDetailsEditC
     constructor(
         private readonly commonFormControlBuilder: CommonBindingsFormControlsBuilderService,
         private readonly store: Store,
-        private readonly hubFacade: HubMotorPositionFacadeService
+        private readonly hubFacade: HubMotorPositionFacadeService,
+        private readonly l10nService: GearboxL10nService
     ) {
     }
 
@@ -97,15 +94,15 @@ export class BindingGearboxControlEditComponent implements IBindingsDetailsEditC
         return this._canRequestPortValue$;
     }
 
-    public get nextLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | undefined {
+    public get nextLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | null {
         return this._nextLevelControlBindingComponentData;
     }
 
-    public get prevLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | undefined {
+    public get prevLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | null {
         return this._prevLevelControlBindingComponentData;
     }
 
-    public get resetControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | undefined {
+    public get resetControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.GearboxControl> | null {
         return this._resetControlBindingComponentData;
     }
 
@@ -121,19 +118,22 @@ export class BindingGearboxControlEditComponent implements IBindingsDetailsEditC
         this._nextLevelControlBindingComponentData = {
             bindingType: ControlSchemeBindingType.GearboxControl,
             inputFormGroup: form.controls.inputs.controls[ControlSchemeInputAction.NextLevel],
-            inputAction: ControlSchemeInputAction.NextLevel
+            inputAction: ControlSchemeInputAction.NextLevel,
+            inputName$: this.l10nService.getBindingInputName(ControlSchemeInputAction.NextLevel)
         };
 
         this._prevLevelControlBindingComponentData = {
             bindingType: ControlSchemeBindingType.GearboxControl,
             inputFormGroup: form.controls.inputs.controls[ControlSchemeInputAction.PrevLevel],
-            inputAction: ControlSchemeInputAction.PrevLevel
+            inputAction: ControlSchemeInputAction.PrevLevel,
+            inputName$: this.l10nService.getBindingInputName(ControlSchemeInputAction.PrevLevel)
         };
 
         this._resetControlBindingComponentData = {
             bindingType: ControlSchemeBindingType.GearboxControl,
             inputFormGroup: form.controls.inputs.controls[ControlSchemeInputAction.Reset],
-            inputAction: ControlSchemeInputAction.Reset
+            inputAction: ControlSchemeInputAction.Reset,
+            inputName$: this.l10nService.getBindingInputName(ControlSchemeInputAction.Reset)
         };
 
         this.portRequestSubscription?.unsubscribe();
