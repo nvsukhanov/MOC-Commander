@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IBindingControllerInputNameResolver } from '@app/shared-control-schemes';
+import { IBindingControllerInputNameResolver, IBindingTypeToL10nKeyMapper } from '@app/shared-control-schemes';
 import { IBindingInputNameResolver, IPortCommandTaskSummaryBuilder } from '@app/control-scheme-view';
 import { ControlSchemeBinding, ControlSchemeBindingInputs, ControlSchemeInput, PortCommandTask } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
@@ -14,7 +14,11 @@ import { StepperL10nService } from './stepper';
 import { TrainControlL10nService } from './train-control';
 
 @Injectable()
-export class BindingL10nService implements IBindingControllerInputNameResolver, IBindingInputNameResolver, IPortCommandTaskSummaryBuilder {
+export class BindingL10nService implements IBindingControllerInputNameResolver,
+    IBindingInputNameResolver,
+    IPortCommandTaskSummaryBuilder,
+    IBindingTypeToL10nKeyMapper
+{
     private readonly bindingL10nServices: { [k in ControlSchemeBindingType]: IBindingL10n<k> } = {
         [ControlSchemeBindingType.GearboxControl]: this.gearboxL10nService,
         [ControlSchemeBindingType.Servo]: this.servoL10nService,
@@ -54,6 +58,12 @@ export class BindingL10nService implements IBindingControllerInputNameResolver, 
         data: ControlSchemeInput
     ): Observable<string> {
         return this.getL10nService(bindingType).getControllerInputName(actionType, data);
+    }
+
+    public mapBindingTypeToL10nKey(
+        bindingType: ControlSchemeBindingType
+    ): string {
+        return this.getL10nService(bindingType).bindingTypeL10nKey;
     }
 
     private getL10nService<T extends ControlSchemeBindingType>(

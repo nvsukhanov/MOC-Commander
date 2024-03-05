@@ -6,11 +6,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, distinctUntilChanged, map, merge, startWith } from 'rxjs';
 import { AppValidators, ControlSchemeBindingType, getEnumValues } from '@app/shared-misc';
-import { BindingTypeToL10nKeyPipe, HideOnSmallScreenDirective } from '@app/shared-ui';
+import { HideOnSmallScreenDirective } from '@app/shared-ui';
 import { ControlSchemeBinding } from '@app/store';
 
 import { BindingEditSectionComponent } from './section';
 import { BindingEditDetailsRenderDirective } from './binding-edit-details-render.directive';
+import { BindingTypeToL10nKeyPipe } from '../binding-type-to-l10n-key.pipe';
 
 @Component({
     standalone: true,

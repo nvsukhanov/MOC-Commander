@@ -1,6 +1,11 @@
 import { Provider } from '@angular/core';
 import { TASKS_INPUT_EXTRACTOR, TASK_FACTORY, TASK_FILTER, TASK_RUNNER } from '@app/store';
-import { BINDING_CONTROLLER_INPUT_NAME_RESOLVER, BINDING_DETAILS_EDIT_FORM_RENDERER_FACTORY, BINDING_VALIDATOR } from '@app/shared-control-schemes';
+import {
+    BINDING_CONTROLLER_INPUT_NAME_RESOLVER,
+    BINDING_DETAILS_EDIT_FORM_RENDERER_FACTORY,
+    BINDING_TYPE_TO_L10N_KEY_MAPPER,
+    BINDING_VALIDATOR
+} from '@app/shared-control-schemes';
 import { BINDING_INPUT_NAME_RESOLVER, PORT_COMMAND_TASK_SUMMARY_BUILDER } from '@app/control-scheme-view';
 
 import { provideGearboxBinding } from './gearbox';
@@ -35,6 +40,7 @@ export function provideBindings(): Provider[] {
         { provide: PORT_COMMAND_TASK_SUMMARY_BUILDER, useClass: BindingL10nService },
         { provide: TASKS_INPUT_EXTRACTOR, useClass: TaskInputComposer },
         { provide: BINDING_CONTROLLER_INPUT_NAME_RESOLVER, useClass: BindingL10nService },
-        { provide: BINDING_INPUT_NAME_RESOLVER, useClass: BindingL10nService }
+        { provide: BINDING_INPUT_NAME_RESOLVER, useClass: BindingL10nService },
+        { provide: BINDING_TYPE_TO_L10N_KEY_MAPPER, useClass: BindingL10nService }
     ];
 }

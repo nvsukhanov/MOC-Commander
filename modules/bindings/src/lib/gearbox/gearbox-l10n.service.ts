@@ -9,6 +9,8 @@ import { ControllerInputNameService, DirectionAwareControllerInputNameService } 
 
 @Injectable()
 export class GearboxL10nService implements IBindingL10n<ControlSchemeBindingType.GearboxControl> {
+    public readonly bindingTypeL10nKey = 'controlScheme.gearboxControlBinding.operationMode';
+
     constructor(
         private readonly translocoService: TranslocoService,
         private readonly controllerNameProvider: ControllerInputNameService,

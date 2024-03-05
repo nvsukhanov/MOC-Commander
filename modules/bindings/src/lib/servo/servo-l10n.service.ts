@@ -17,6 +17,8 @@ import { DirectionAwareControllerInputNameService } from '../common';
 
 @Injectable()
 export class ServoL10nService implements IBindingL10n<ControlSchemeBindingType.Servo> {
+    public readonly bindingTypeL10nKey = 'controlScheme.servoBinding.operationMode';
+
     constructor(
         private readonly controllerNameProvider: DirectionAwareControllerInputNameService,
         private readonly translocoService: TranslocoService,

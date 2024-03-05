@@ -1,7 +1,6 @@
 export * from './select-controller';
 export * from './select-input-gain';
 export * from './select-looping-mode';
-export * from './select-operation-mode';
 export * from './select-output-end-state';
 export * from './speed-input';
 export * from './power-input';

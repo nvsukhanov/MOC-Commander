@@ -9,6 +9,8 @@ import { DirectionAwareControllerInputNameService } from '../common';
 
 @Injectable()
 export class StepperL10nService implements IBindingL10n<ControlSchemeBindingType.Stepper> {
+    public readonly bindingTypeL10nKey = 'controlScheme.stepperBinding.operationMode';
+
     constructor(
         private readonly translocoService: TranslocoService,
         private readonly directionAwareControllerNameProvider: DirectionAwareControllerInputNameService
