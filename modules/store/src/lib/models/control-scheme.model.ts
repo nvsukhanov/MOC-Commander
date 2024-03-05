@@ -44,25 +44,6 @@ export type ControlSchemeInput = {
     inputDirection: InputDirection;
 };
 
-export enum ControlSchemeInputAction {
-    // @deprecated
-    Accelerate,
-    // @deprecated
-    OldSetSpeedBrake,
-    // @deprecated
-    OldServo,
-    OldSetAngle,
-    OldStep,
-    NextLevel,
-    PrevLevel,
-    Reset,
-    // ServoCw,
-    // ServoCcw,
-    // Forwards,
-    // Backwards,
-    // Brake
-}
-
 export enum SetSpeedInputAction {
     Forwards = 'Forwards',
     Backwards = 'Backwards',
@@ -163,13 +144,19 @@ export type ControlSchemeTrainControlBinding = {
     initialLevelIndex: number;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
+export enum GearboxControlInputAction {
+    NextGear = 'NextGear',
+    PrevGear = 'PrevGear',
+    Reset = 'ResetGear'
+}
+
 export type ControlSchemeGearboxControlBinding = {
     id: number;
     bindingType: ControlSchemeBindingType.GearboxControl;
     inputs: {
-        [ControlSchemeInputAction.NextLevel]: ControlSchemeInput;
-        [ControlSchemeInputAction.Reset]?: ControlSchemeInput;
-        [ControlSchemeInputAction.PrevLevel]?: ControlSchemeInput;
+        [GearboxControlInputAction.NextGear]: ControlSchemeInput;
+        [GearboxControlInputAction.Reset]?: ControlSchemeInput;
+        [GearboxControlInputAction.PrevGear]?: ControlSchemeInput;
     };
     hubId: string;
     portId: number;

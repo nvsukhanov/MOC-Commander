@@ -3,7 +3,15 @@ import { ControllerType, GamepadProfile, GamepadProfileFactoryService, GamepadSe
 import { DeepPartial } from '@app/shared-misc';
 
 import { AppStoreVersion } from '../../app-store-version';
-import { InputDirection, ServoInputAction, SetAngleInputAction, SetSpeedInputAction, StepperInputAction, TrainControlInputAction } from '../../models';
+import {
+    GearboxControlInputAction,
+    InputDirection,
+    ServoInputAction,
+    SetAngleInputAction,
+    SetSpeedInputAction,
+    StepperInputAction,
+    TrainControlInputAction
+} from '../../models';
 import { V21ToV22MigrationService } from '../v21-v22';
 import { V21_STORE_SAMPLE } from '../v21';
 import { V23ToV24MigrationService } from '../v23-v24';
@@ -17,11 +25,13 @@ import { V22ToV23MigrationService } from '../v22-v23';
 import { V26ToV27MigrationService } from '../v26-v27';
 import { V30Store } from '../v30';
 import {
+    V29GearboxControlBinding,
     V29ServoBinding,
     V29SetAngleBinding,
     V29StepperBinding,
     V29Store,
     V29TrainControlBinding,
+    V30GearboxControlBinding,
     V30ServoBinding,
     V30SetAngleBinding,
     V30SetSpeedBinding,
@@ -133,6 +143,14 @@ describe('v29 to v30 migration', () => {
         expect(v30trainBinding.inputs[TrainControlInputAction.NextSpeed]).toEqual(v29trainBinding.inputs[OldInputAction.NextLevel]);
         expect(v30trainBinding.inputs[TrainControlInputAction.PrevSpeed]).toEqual(v29trainBinding.inputs[OldInputAction.PrevLevel]);
         expect(v30trainBinding.inputs[TrainControlInputAction.Reset]).toEqual(v29trainBinding.inputs[OldInputAction.Reset]);
+    });
+
+    it('should migrate gearbox binding input', () => {
+        const v30gearboxBinding = v30Store.controlSchemes?.entities?.['angle shift']?.bindings[0] as V30GearboxControlBinding;
+        const v29gearboxBinding = v29Store.controlSchemes?.entities?.['angle shift']?.bindings[0] as V29GearboxControlBinding;
+        expect(v30gearboxBinding.inputs[GearboxControlInputAction.NextGear]).toEqual(v29gearboxBinding.inputs[OldInputAction.NextLevel]);
+        expect(v30gearboxBinding.inputs[GearboxControlInputAction.PrevGear]).toEqual(v29gearboxBinding.inputs[OldInputAction.PrevLevel]);
+        expect(v30gearboxBinding.inputs[GearboxControlInputAction.Reset]).toEqual(v29gearboxBinding.inputs[OldInputAction.Reset]);
     });
 
     it('should update store version', () => {
