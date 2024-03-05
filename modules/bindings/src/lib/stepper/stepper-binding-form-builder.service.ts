@@ -7,9 +7,10 @@ import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 import { CommonBindingsFormControlsBuilderService } from '../common';
 import { StepperBindingForm } from './stepper-binding-form';
+import { IBindingFormBuilder } from '../i-binding-form-builder';
 
 @Injectable()
-export class StepperBindingFormBuilderService {
+export class StepperBindingFormBuilderService implements IBindingFormBuilder<StepperBindingForm> {
     private readonly defaultStepDegree = 90;
 
     private readonly maxStepDegree = 360 * 4;

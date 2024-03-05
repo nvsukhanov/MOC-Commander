@@ -7,11 +7,12 @@ import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 import { CommonBindingsFormControlsBuilderService } from '../common';
 import { ServoBindingForm } from './servo-binding-form';
+import { IBindingFormBuilder } from '../i-binding-form-builder';
 
 export const NO_INPUTS_SERVO_ERROR = 'NO_SERVO_INPUTS_ERROR';
 
 @Injectable()
-export class ServoBindingFormBuilderService {
+export class ServoBindingFormBuilderService implements IBindingFormBuilder<ServoBindingForm> {
     constructor(
         private readonly formBuilder: FormBuilder,
         private commonFormControlBuilder: CommonBindingsFormControlsBuilderService,

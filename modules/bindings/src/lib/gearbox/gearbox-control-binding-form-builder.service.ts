@@ -7,9 +7,10 @@ import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 import { CommonBindingsFormControlsBuilderService } from '../common';
 import { GearboxControlBindingForm } from './gearbox-binding-form';
+import { IBindingFormBuilder } from '../i-binding-form-builder';
 
 @Injectable()
-export class GearboxControlBindingFormBuilderService {
+export class GearboxControlBindingFormBuilderService implements IBindingFormBuilder<GearboxControlBindingForm> {
     constructor(
         private readonly formBuilder: FormBuilder,
         private readonly commonFormControlsBuilder: CommonBindingsFormControlsBuilderService,

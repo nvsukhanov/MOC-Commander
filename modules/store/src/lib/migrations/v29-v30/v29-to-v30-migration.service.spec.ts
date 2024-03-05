@@ -3,7 +3,7 @@ import { ControllerType, GamepadProfile, GamepadProfileFactoryService, GamepadSe
 import { DeepPartial } from '@app/shared-misc';
 
 import { AppStoreVersion } from '../../app-store-version';
-import { InputDirection, ServoInputAction, SetAngleInputAction, SetSpeedInputAction, StepperInputAction } from '../../models';
+import { InputDirection, ServoInputAction, SetAngleInputAction, SetSpeedInputAction, StepperInputAction, TrainControlInputAction } from '../../models';
 import { V21ToV22MigrationService } from '../v21-v22';
 import { V21_STORE_SAMPLE } from '../v21';
 import { V23ToV24MigrationService } from '../v23-v24';
@@ -21,10 +21,12 @@ import {
     V29SetAngleBinding,
     V29StepperBinding,
     V29Store,
+    V29TrainControlBinding,
     V30ServoBinding,
     V30SetAngleBinding,
     V30SetSpeedBinding,
-    V30StepperBinding
+    V30StepperBinding,
+    V30TrainControlBinding
 } from './v29-store';
 import { OldInputAction } from '../old-input-actions';
 
@@ -123,6 +125,14 @@ describe('v29 to v30 migration', () => {
         const v30stepperBinding = v30Store.controlSchemes?.entities?.['Stepper']?.bindings[0] as V30StepperBinding;
         const v29stepperBinding = v29Store.controlSchemes?.entities?.['Stepper']?.bindings[0] as V29StepperBinding;
         expect(v30stepperBinding.inputs[StepperInputAction.Step]).toEqual(v29stepperBinding.inputs[OldInputAction.Step]);
+    });
+
+    it('should migrate train binding input', () => {
+        const v30trainBinding = v30Store.controlSchemes?.entities?.['Speed shift']?.bindings[0] as V30TrainControlBinding;
+        const v29trainBinding = v29Store.controlSchemes?.entities?.['Speed shift']?.bindings[0] as V29TrainControlBinding;
+        expect(v30trainBinding.inputs[TrainControlInputAction.NextSpeed]).toEqual(v29trainBinding.inputs[OldInputAction.NextLevel]);
+        expect(v30trainBinding.inputs[TrainControlInputAction.PrevSpeed]).toEqual(v29trainBinding.inputs[OldInputAction.PrevLevel]);
+        expect(v30trainBinding.inputs[TrainControlInputAction.Reset]).toEqual(v29trainBinding.inputs[OldInputAction.Reset]);
     });
 
     it('should update store version', () => {

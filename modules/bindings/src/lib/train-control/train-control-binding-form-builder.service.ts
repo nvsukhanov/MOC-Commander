@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DeepPartial } from '@app/shared-misc';
-import { ControlSchemeInputAction, ControlSchemeTrainControlBinding } from '@app/store';
+import { ControlSchemeTrainControlBinding, TrainControlInputAction } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 import { CommonBindingsFormControlsBuilderService } from '../common';
 import { TrainControlBindingForm } from './train-control-binding-form';
+import { IBindingFormBuilder } from '../i-binding-form-builder';
 
 @Injectable()
-export class TrainControlBindingFormBuilderService {
+export class TrainControlBindingFormBuilderService implements IBindingFormBuilder<TrainControlBindingForm> {
     constructor(
         private readonly formBuilder: FormBuilder,
         private readonly commonFormControlsBuilder: CommonBindingsFormControlsBuilderService,
@@ -19,9 +20,9 @@ export class TrainControlBindingFormBuilderService {
     public build(): TrainControlBindingForm {
         return this.formBuilder.group({
             inputs: this.formBuilder.group({
-                [ControlSchemeInputAction.NextLevel]: this.commonFormControlsBuilder.inputFormGroup(),
-                [ControlSchemeInputAction.PrevLevel]: this.commonFormControlsBuilder.optionalInputFormGroup(),
-                [ControlSchemeInputAction.Reset]: this.commonFormControlsBuilder.optionalInputFormGroup()
+                [TrainControlInputAction.NextSpeed]: this.commonFormControlsBuilder.inputFormGroup(),
+                [TrainControlInputAction.PrevSpeed]: this.commonFormControlsBuilder.optionalInputFormGroup(),
+                [TrainControlInputAction.Reset]: this.commonFormControlsBuilder.optionalInputFormGroup()
             }),
             hubId: this.controlSchemeFormBuilder.hubIdControl(),
             portId: this.controlSchemeFormBuilder.portIdControl(),
