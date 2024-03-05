@@ -52,7 +52,7 @@ export enum ControlSchemeInputAction {
     // @deprecated
     OldServo,
     OldSetAngle,
-    Step,
+    OldStep,
     NextLevel,
     PrevLevel,
     Reset,
@@ -123,11 +123,15 @@ export type ControlSchemeSetAngleBinding = {
     endState: MotorServoEndState;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
+export enum StepperInputAction {
+    Step = 'Step'
+}
+
 export type ControlSchemeStepperBinding = {
     id: number;
     bindingType: ControlSchemeBindingType.Stepper;
     inputs: {
-        [ControlSchemeInputAction.Step]: ControlSchemeInput;
+        [StepperInputAction.Step]: ControlSchemeInput;
     };
     hubId: string;
     portId: number;

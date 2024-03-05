@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeBinding, ControlSchemeBindingInputs, ControlSchemeInput, ControlSchemeInputAction, PortCommandTask } from '@app/store';
+import { ControlSchemeBinding, ControlSchemeBindingInputs, ControlSchemeInput, PortCommandTask, StepperInputAction } from '@app/store';
 
 import { IBindingL10n } from '../i-binding-l10n';
 import { DirectionAwareControllerInputNameService } from '../common';
@@ -28,7 +28,7 @@ export class StepperL10nService implements IBindingL10n<ControlSchemeBindingType
         binding: ControlSchemeBinding & { bindingType: ControlSchemeBindingType.Stepper }
     ): Observable<string> {
         switch (actionType) {
-            case ControlSchemeInputAction.Step:
+            case StepperInputAction.Step:
                 return this.translocoService.selectTranslate('controlScheme.stepperBinding.inputAction', binding);
         }
     }
@@ -37,7 +37,7 @@ export class StepperL10nService implements IBindingL10n<ControlSchemeBindingType
         actionType: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.Stepper>
     ): Observable<string> {
         switch (actionType) {
-            case ControlSchemeInputAction.Step:
+            case StepperInputAction.Step:
                 return this.translocoService.selectTranslate('controlScheme.stepperBinding.basicInputAction');
         }
     }
@@ -47,7 +47,7 @@ export class StepperL10nService implements IBindingL10n<ControlSchemeBindingType
         inputConfig: ControlSchemeInput
     ): Observable<string> {
         switch (actionType) {
-            case ControlSchemeInputAction.Step:
+            case StepperInputAction.Step:
                 return this.directionAwareControllerNameProvider.getFullControllerInputNameData(inputConfig);
         }
     }

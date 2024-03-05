@@ -35,9 +35,15 @@ export type V29SetAngleBinding = Override<V30SetAngleBinding, {
     };
 }>;
 
+export type V29StepperBinding = Override<V30StepperBinding, {
+    inputs: {
+        [OldInputAction.Step]: ControlSchemeInput;
+    };
+}>;
+
 export type V29Bindings = V29SetSpeedBinding
     | V29ServoBinding
-    | V30StepperBinding
+    | V29StepperBinding
     | V30TrainControlBinding
     | V30GearboxControlBinding
     | V29SetAngleBinding;
