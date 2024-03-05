@@ -18,7 +18,7 @@ export const INPUT_TREE_NODE_VIEW_MODEL_SELECTOR = (
             ioHasNoRequiredCapabilities,
             controlData: Object.entries(binding.inputs).map(([ action, input ]): InputActionTreeNodeRecord => {
                 return {
-                    action: +action as keyof ControlSchemeBinding['inputs'],
+                    action: action as keyof ControlSchemeBinding['inputs'],
                     isControllerConnected: !!controllerConnectionEntities[(input as ControlSchemeInput).controllerId]
                 };
             }),

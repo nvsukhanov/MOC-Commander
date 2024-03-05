@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 import {
     AttachedIoPropsModel,
-    ControlSchemeInputAction,
     ControlSchemeSetAngleBinding,
     PortCommandTask,
     PortCommandTaskPayload,
+    SetAngleInputAction,
     SetAngleTaskPayload
 } from '@app/store';
 
@@ -20,8 +20,8 @@ export class SetAngleTaskPayloadBuilderService implements ITaskPayloadBuilder<Co
         previousInput: BindingInputExtractionResult<ControlSchemeBindingType.SetAngle>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
     ): { payload: SetAngleTaskPayload; inputTimestamp: number } | null {
-        const currentSetAngleInput = currentInput[ControlSchemeInputAction.SetAngle];
-        const previousSetAngleInput = previousInput[ControlSchemeInputAction.SetAngle];
+        const currentSetAngleInput = currentInput[SetAngleInputAction.SetAngle];
+        const previousSetAngleInput = previousInput[SetAngleInputAction.SetAngle];
 
         if (currentSetAngleInput?.isActivated && !previousSetAngleInput?.isActivated) {
             const resultingAngle = binding.angle - (ioProps?.motorEncoderOffset ?? 0);

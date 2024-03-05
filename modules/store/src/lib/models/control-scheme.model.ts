@@ -51,7 +51,7 @@ export enum ControlSchemeInputAction {
     OldSetSpeedBrake,
     // @deprecated
     OldServo,
-    SetAngle,
+    OldSetAngle,
     Step,
     NextLevel,
     PrevLevel,
@@ -64,9 +64,9 @@ export enum ControlSchemeInputAction {
 }
 
 export enum SetSpeedInputAction {
-    Forwards,
-    Backwards,
-    Brake
+    Forwards = 'Forwards',
+    Backwards = 'Backwards',
+    Brake = 'Brake'
 }
 
 export type ControlSchemeSetSpeedBinding = {
@@ -85,8 +85,8 @@ export type ControlSchemeSetSpeedBinding = {
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
 export enum ServoInputAction {
-    Cw,
-    Ccw
+    Cw = 'Cw',
+    Ccw = 'Ccw'
 }
 
 export type ControlSchemeServoBinding = {
@@ -105,11 +105,15 @@ export type ControlSchemeServoBinding = {
     power: number;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
+export enum SetAngleInputAction {
+    SetAngle = 'SetAngle'
+}
+
 export type ControlSchemeSetAngleBinding = {
     id: number;
     bindingType: ControlSchemeBindingType.SetAngle;
     inputs: {
-        [ControlSchemeInputAction.SetAngle]: ControlSchemeInput;
+        [SetAngleInputAction.SetAngle]: ControlSchemeInput;
     };
     hubId: string;
     portId: number;
