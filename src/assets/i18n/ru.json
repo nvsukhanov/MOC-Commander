@@ -283,9 +283,13 @@
     "stepperBinding": {
       "operationMode": "Шаговый двигатель",
       "outputDegree": "Угол шага (°)",
-      "taskSummary": "Шаговый двигатель: { degree }°",
-      "inputAction": "Шаг ({ degree }°)",
-      "basicInputAction": "Шаг"
+      "taskSummaryCw": "Шаг: { degree }° по часовой",
+      "taskSummaryCcw": "Шаг: { degree }° против часовой",
+      "inputActionCw": "Шаг { degree }° по часовой",
+      "inputActionCcw": "Шаг { degree }° против часовой",
+      "basicInputActionCw": "Шаг по часовой",
+      "basicInputActionCcw": "Шаг против часовой",
+      "missingInputs": "Нужно назначить хотя-бы один контроллер"
     },
     "setAngleBinding": {
       "operationMode": "Установка угла",
@@ -746,7 +750,9 @@
       "featRaiseServoMotorRangeLimit": "Увеличение максимального значения диапазона сервопривода до 4 полных оборотов (1440°)",
       "featSeparateControlsForForwardAndBackwardSpeed": "Возможность назначить разные контроллеры для ускорения вперед и назад для привязок 'Скорость'",
       "featAxialAwarenessForSetSpeedBrakeControl": "Учет направления оси для контроля 'Тормоз' в типе привязки 'Скорость'",
-      "featBetterL10nForTrainAndGearbox": "Улучшена локализация для типов привязок 'Поезд' и 'Коробка передач'"
+      "featBetterL10nForTrainAndGearbox": "Улучшена локализация для типов привязок 'Поезд' и 'Коробка передач'",
+      "featSeparateControlsForCwCcwStepper": "Возможность назначить разные контроллеры для шагов по- и против часовой для привязок 'Шаговый двигатель'",
+      "changeStepperNegativeValuesRemoved": "Запрещены отрицательные значения для величины шага в привязке 'Шаговый двигатель'. Для установки обратного направления используйте контроль 'Против часовой'"
     }
   }
 }

@@ -8,6 +8,7 @@ export function stepperPayloadHash(
         payload.degree,
         payload.speed,
         payload.power,
-        payload.endState
+        payload.endState,
+        payload.action
     ].join('_');
 }
