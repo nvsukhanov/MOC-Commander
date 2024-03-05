@@ -9,6 +9,8 @@ import { DirectionAwareControllerInputNameService } from '../common';
 
 @Injectable()
 export class SetSpeedL10nService implements IBindingL10n<ControlSchemeBindingType.SetSpeed> {
+    public readonly bindingTypeL10nKey = 'controlScheme.setSpeedBinding.operationMode';
+
     constructor(
         private readonly translocoService: TranslocoService,
         private readonly controllerNameProvider: DirectionAwareControllerInputNameService,

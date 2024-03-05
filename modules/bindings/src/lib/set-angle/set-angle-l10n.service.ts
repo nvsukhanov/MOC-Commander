@@ -18,6 +18,8 @@ import { ControllerInputNameService } from '../common';
 
 @Injectable()
 export class SetAngleL10nService implements IBindingL10n<ControlSchemeBindingType.SetAngle> {
+    public readonly bindingTypeL10nKey = 'controlScheme.setAngleBinding.operationMode';
+    
     constructor(
         private readonly translocoService: TranslocoService,
         private readonly store: Store,

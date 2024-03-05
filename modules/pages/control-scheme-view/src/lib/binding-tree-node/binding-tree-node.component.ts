@@ -6,8 +6,7 @@ import { Store } from '@ngrx/store';
 import { RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { ScreenSizeObserverService } from '@app/shared-misc';
-import { BindingTypeToL10nKeyPipe } from '@app/shared-ui';
-import { BindingControllerInputNamePipe } from '@app/shared-control-schemes';
+import { BindingControllerInputNamePipe, BindingTypeToL10nKeyPipe } from '@app/shared-control-schemes';
 
 import { BindingTreeNodeViewModel } from './binding-tree-node-view-model';
 import { INPUT_TREE_NODE_VIEW_MODEL_SELECTOR } from './input-tree-node-view-model.selector';

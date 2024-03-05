@@ -22,3 +22,5 @@ export {
 export { IBindingValidator, BINDING_VALIDATOR } from './i-binding-validator';
 export * from './i-widget-type-to-l10n-key-mapper';
 export * from './motor-position-adjustment';
+export * from './i-binding-type-to-l10n-key-mapper';
+export * from './binding-type-to-l10n-key.pipe';

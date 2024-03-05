@@ -3,7 +3,6 @@ export * from './range';
 export * from './confirmation-dialog';
 export * from './hub-inline-view';
 export * from './feature-toolbar';
-export * from './binding-type-to-l10n-key.pipe';
 export * from './ellipsis-title.directive';
 export * from './hide-on-small-screen.directive';
 export * from './io-type-to-l10n-key';

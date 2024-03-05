@@ -3,6 +3,8 @@ import { ControlSchemeBindingType } from '@app/shared-misc';
 import { ControlSchemeBinding, ControlSchemeBindingInputs, ControlSchemeInput, PortCommandTask } from '@app/store';
 
 export interface IBindingL10n<T extends ControlSchemeBindingType> {
+    readonly bindingTypeL10nKey: string;
+
     buildTaskSummary(
         task: PortCommandTask<T>
     ): Observable<string>;

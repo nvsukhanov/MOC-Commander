@@ -10,6 +10,8 @@ import { ControllerInputNameService, DirectionAwareControllerInputNameService } 
 
 @Injectable()
 export class TrainControlL10nService implements IBindingL10n<ControlSchemeBindingType.TrainControl> {
+    public readonly bindingTypeL10nKey = 'controlScheme.trainControlBinding.operationMode';
+
     constructor(
         private readonly translocoService: TranslocoService,
         private readonly controllerNameProvider: ControllerInputNameService,
