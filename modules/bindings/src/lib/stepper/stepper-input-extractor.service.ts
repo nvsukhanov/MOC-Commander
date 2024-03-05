@@ -1,7 +1,7 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeInputAction, ControlSchemeStepperBinding, ControllerInputModel, controllerInputIdFn } from '@app/store';
+import { ControlSchemeStepperBinding, ControllerInputModel, StepperInputAction, controllerInputIdFn } from '@app/store';
 
 import { BindingInputExtractionResult, IBindingTaskInputExtractor } from '../i-binding-task-input-extractor';
 
@@ -11,10 +11,10 @@ export class StepperInputExtractorService implements IBindingTaskInputExtractor<
         binding: ControlSchemeStepperBinding,
         globalInput: Dictionary<ControllerInputModel>
     ): BindingInputExtractionResult<ControlSchemeBindingType.Stepper> {
-        const steInputId = controllerInputIdFn(binding.inputs[ControlSchemeInputAction.Step]);
+        const steInputId = controllerInputIdFn(binding.inputs[StepperInputAction.Step]);
         const stepInputResult = globalInput[steInputId];
         return {
-            [ControlSchemeInputAction.Step]: stepInputResult ?? null
+            [StepperInputAction.Step]: stepInputResult ?? null
         };
     }
 
@@ -22,7 +22,7 @@ export class StepperInputExtractorService implements IBindingTaskInputExtractor<
         prevInput: BindingInputExtractionResult<ControlSchemeBindingType.Stepper>,
         nextInput: BindingInputExtractionResult<ControlSchemeBindingType.Stepper>
     ): boolean {
-        return prevInput[ControlSchemeInputAction.Step] !== nextInput[ControlSchemeInputAction.Step];
+        return prevInput[StepperInputAction.Step] !== nextInput[StepperInputAction.Step];
     }
 
 }

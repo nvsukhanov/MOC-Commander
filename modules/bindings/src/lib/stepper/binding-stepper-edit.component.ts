@@ -5,7 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
-import { ControlSchemeInputAction } from '@app/store';
+import { StepperInputAction } from '@app/store';
 import { BindingControlSelectHubComponent, BindingControlSelectIoComponent } from '@app/shared-control-schemes';
 
 import {
@@ -74,9 +74,9 @@ export class BindingStepperEditComponent implements IBindingsDetailsEditComponen
             this._form = form;
             this._stepControlBindingComponentData = {
                 bindingType: ControlSchemeBindingType.Stepper,
-                inputFormGroup: this._form.controls.inputs.controls[ControlSchemeInputAction.Step],
-                inputAction: ControlSchemeInputAction.Step,
-                inputName$: this.l10nService.getBasicInputName(ControlSchemeInputAction.Step)
+                inputFormGroup: this._form.controls.inputs.controls[StepperInputAction.Step],
+                inputAction: StepperInputAction.Step,
+                inputName$: this.l10nService.getBasicInputName(StepperInputAction.Step)
             };
             this.cdRef.detectChanges();
         }

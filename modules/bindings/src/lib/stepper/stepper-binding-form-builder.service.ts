@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MotorServoEndState } from 'rxpoweredup';
 import { AppValidators, DeepPartial } from '@app/shared-misc';
-import { ControlSchemeInputAction, ControlSchemeStepperBinding } from '@app/store';
+import { ControlSchemeStepperBinding, StepperInputAction } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 import { CommonBindingsFormControlsBuilderService } from '../common';
@@ -24,7 +24,7 @@ export class StepperBindingFormBuilderService {
     public build(): StepperBindingForm {
         return this.formBuilder.group({
             inputs: this.formBuilder.group({
-                [ControlSchemeInputAction.Step]: this.commonFormControlBuilder.inputFormGroup()
+                [StepperInputAction.Step]: this.commonFormControlBuilder.inputFormGroup()
             }),
             hubId: this.controlSchemeFormBuilder.hubIdControl(),
             portId: this.controlSchemeFormBuilder.portIdControl(),

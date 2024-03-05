@@ -3,7 +3,7 @@ import { ControllerType, GamepadProfile, GamepadProfileFactoryService, GamepadSe
 import { DeepPartial } from '@app/shared-misc';
 
 import { AppStoreVersion } from '../../app-store-version';
-import { InputDirection, ServoInputAction, SetAngleInputAction, SetSpeedInputAction } from '../../models';
+import { InputDirection, ServoInputAction, SetAngleInputAction, SetSpeedInputAction, StepperInputAction } from '../../models';
 import { V21ToV22MigrationService } from '../v21-v22';
 import { V21_STORE_SAMPLE } from '../v21';
 import { V23ToV24MigrationService } from '../v23-v24';
@@ -16,7 +16,16 @@ import { ensureStorePropsNotChanged } from '../ensure-props-not-changed';
 import { V22ToV23MigrationService } from '../v22-v23';
 import { V26ToV27MigrationService } from '../v26-v27';
 import { V30Store } from '../v30';
-import { V29ServoBinding, V29SetAngleBinding, V29Store, V30ServoBinding, V30SetAngleBinding, V30SetSpeedBinding } from './v29-store';
+import {
+    V29ServoBinding,
+    V29SetAngleBinding,
+    V29StepperBinding,
+    V29Store,
+    V30ServoBinding,
+    V30SetAngleBinding,
+    V30SetSpeedBinding,
+    V30StepperBinding
+} from './v29-store';
 import { OldInputAction } from '../old-input-actions';
 
 describe('v29 to v30 migration', () => {
@@ -108,6 +117,12 @@ describe('v29 to v30 migration', () => {
         const v30setAngleBinding = v30Store.controlSchemes?.entities?.['Set angle']?.bindings[0] as V30SetAngleBinding;
         const v29setAngleBinding = v29Store.controlSchemes?.entities?.['Set angle']?.bindings[0] as V29SetAngleBinding;
         expect(v30setAngleBinding.inputs[SetAngleInputAction.SetAngle]).toEqual(v29setAngleBinding.inputs[OldInputAction.SetAngle]);
+    });
+
+    it('should migrate stepper binding input', () => {
+        const v30stepperBinding = v30Store.controlSchemes?.entities?.['Stepper']?.bindings[0] as V30StepperBinding;
+        const v29stepperBinding = v29Store.controlSchemes?.entities?.['Stepper']?.bindings[0] as V29StepperBinding;
+        expect(v30stepperBinding.inputs[StepperInputAction.Step]).toEqual(v29stepperBinding.inputs[OldInputAction.Step]);
     });
 
     it('should update store version', () => {

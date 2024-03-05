@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeInputAction, ControlSchemeStepperBinding, PortCommandTask, PortCommandTaskPayload, StepperTaskPayload } from '@app/store';
+import { ControlSchemeStepperBinding, PortCommandTask, PortCommandTaskPayload, StepperInputAction, StepperTaskPayload } from '@app/store';
 
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
 import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
@@ -12,8 +12,8 @@ export class StepperTaskPayloadBuilderService implements ITaskPayloadBuilder<Con
         currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Stepper>,
         previousInput: BindingInputExtractionResult<ControlSchemeBindingType.Stepper>,
     ): { payload: StepperTaskPayload; inputTimestamp: number } | null {
-        const currentStepInput = currentInput[ControlSchemeInputAction.Step];
-        const previousStepInput = previousInput[ControlSchemeInputAction.Step];
+        const currentStepInput = currentInput[StepperInputAction.Step];
+        const previousStepInput = previousInput[StepperInputAction.Step];
 
         if (currentStepInput?.isActivated && !previousStepInput?.isActivated) {
             const direction = Math.sign(currentStepInput.value);

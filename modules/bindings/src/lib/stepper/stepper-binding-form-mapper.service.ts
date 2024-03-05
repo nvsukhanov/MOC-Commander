@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeBinding, ControlSchemeInputAction, ControlSchemeStepperBinding } from '@app/store';
+import { ControlSchemeBinding, ControlSchemeStepperBinding, StepperInputAction } from '@app/store';
 
 import { CommonFormMapperService } from '../common';
 import { StepperBindingForm } from './stepper-binding-form';
@@ -29,8 +29,8 @@ export class StepperBindingFormMapperService {
             hubId,
             portId,
             inputs: {
-                [ControlSchemeInputAction.Step]: this.commonFormMapperService.mapInputFormToSchemeInput(
-                    form.controls.inputs.controls[ControlSchemeInputAction.Step]
+                [StepperInputAction.Step]: this.commonFormMapperService.mapInputFormToSchemeInput(
+                    form.controls.inputs.controls[StepperInputAction.Step]
                 )
             }
         };
