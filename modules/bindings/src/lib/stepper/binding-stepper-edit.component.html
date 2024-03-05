@@ -18,7 +18,14 @@
         <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
                                      [caption]="'controlScheme.bindingSectionInputTitle' | transloco"
         >
-            <lib-cs-binding-control-select-controller [data]="stepControlBindingComponentData"></lib-cs-binding-control-select-controller>
+            <lib-cs-binding-control-select-controller [data]="stepCwControlBindingComponentData"></lib-cs-binding-control-select-controller>
+
+            <lib-cs-binding-control-select-controller [data]="stepCcwControlBindingComponentData"></lib-cs-binding-control-select-controller>
+
+            <mat-error [libValidationMessages]="form.controls.inputs"
+                       [immediatelyShowMessages]="true"
+                       [l10nMap]="validationErrorsMap"
+            ></mat-error>
         </lib-cs-binding-edit-section>
 
         <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>

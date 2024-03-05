@@ -1,4 +1,5 @@
 import { anything, instance, mock, when } from 'ts-mockito';
+import { MOTOR_LIMITS } from 'rxpoweredup';
 import { ControllerType, GamepadProfile, GamepadProfileFactoryService, GamepadSettings } from '@app/controller-profiles';
 import { DeepPartial } from '@app/shared-misc';
 
@@ -131,10 +132,25 @@ describe('v29 to v30 migration', () => {
         expect(v30setAngleBinding.inputs[SetAngleInputAction.SetAngle]).toEqual(v29setAngleBinding.inputs[OldInputAction.SetAngle]);
     });
 
-    it('should migrate stepper binding input', () => {
-        const v30stepperBinding = v30Store.controlSchemes?.entities?.['Stepper']?.bindings[0] as V30StepperBinding;
-        const v29stepperBinding = v29Store.controlSchemes?.entities?.['Stepper']?.bindings[0] as V29StepperBinding;
-        expect(v30stepperBinding.inputs[StepperInputAction.Step]).toEqual(v29stepperBinding.inputs[OldInputAction.Step]);
+    it('should migrate stepper button binding input', () => {
+        const v30stepperButtonBinding = v30Store.controlSchemes?.entities?.['Stepper']?.bindings[0] as V30StepperBinding;
+        const v29stepperButtonBinding = v29Store.controlSchemes?.entities?.['Stepper']?.bindings[0] as V29StepperBinding;
+        expect(v30stepperButtonBinding.inputs[StepperInputAction.Cw]).toEqual(v29stepperButtonBinding.inputs[OldInputAction.Step]);
+        expect(v30stepperButtonBinding.inputs[StepperInputAction.Ccw]).toBeUndefined();
+    });
+
+    it('should migrate stepper axial binding input w/ inversion', () => {
+        const v30stepperButtonBinding = v30Store.controlSchemes?.entities?.['Stepper']?.bindings[1] as V30StepperBinding;
+        const v29stepperButtonBinding = v29Store.controlSchemes?.entities?.['Stepper']?.bindings[1] as V29StepperBinding;
+        expect(v30stepperButtonBinding.inputs[StepperInputAction.Ccw]).toEqual({
+            ...v29stepperButtonBinding.inputs[OldInputAction.Step],
+            inputDirection: InputDirection.Positive
+        });
+        expect(v30stepperButtonBinding.inputs[StepperInputAction.Cw]).toEqual({
+            ...v29stepperButtonBinding.inputs[OldInputAction.Step],
+            inputDirection: InputDirection.Negative
+        });
+        expect(v30stepperButtonBinding.degree).toEqual(MOTOR_LIMITS.minServoDegreesRange);
     });
 
     it('should migrate train binding input', () => {

@@ -2,11 +2,12 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MotorServoEndState } from 'rxpoweredup';
 import { StepperInputAction } from '@app/store';
 
-import { InputFormGroup } from '../common';
+import { OptionalInputFormGroup } from '../common';
 
 export type StepperBindingForm = FormGroup<{
     inputs: FormGroup<{
-        [StepperInputAction.Step]: InputFormGroup;
+        [StepperInputAction.Cw]: OptionalInputFormGroup;
+        [StepperInputAction.Ccw]: OptionalInputFormGroup;
     }>;
     hubId: FormControl<string | null>;
     portId: FormControl<number | null>;

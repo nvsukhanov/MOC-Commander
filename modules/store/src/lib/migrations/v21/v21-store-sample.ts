@@ -911,7 +911,26 @@ export const V21_STORE_SAMPLE: DeepPartial<V21Store> = {
                         },
                         'hubId': '00:0f:b0:fa:ce:3d',
                         'portId': 1,
-                        'degree': -360,
+                        'degree': 360,
+                        'power': 100,
+                        'speed': 100,
+                        'endState': 126,
+                        'useAccelerationProfile': false,
+                        'useDecelerationProfile': false
+                    }, {
+                        'id': 2,
+                        'bindingType': 3,
+                        'inputs': {
+                            '4': {
+                                'controllerId': 'gamepad-xbox360/0',
+                                'inputId': '1',
+                                'inputType': 1,
+                                'gain': 0
+                            }
+                        },
+                        'hubId': '00:0f:b0:fa:ce:3d',
+                        'portId': 1,
+                        'degree': -1,
                         'power': 100,
                         'speed': 100,
                         'endState': 126,

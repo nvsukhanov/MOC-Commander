@@ -5,7 +5,7 @@ import { ControlSchemeBindingType } from '@app/shared-misc';
 import { ControlSchemeBinding, ControlSchemeBindingInputs, ControlSchemeInput, PortCommandTask, StepperInputAction } from '@app/store';
 
 import { IBindingL10n } from '../i-binding-l10n';
-import { ControllerInputNameService } from '../common';
+import { DirectionAwareControllerInputNameService } from '../common';
 
 @Injectable()
 export class StepperL10nService implements IBindingL10n<ControlSchemeBindingType.Stepper> {
@@ -13,14 +13,18 @@ export class StepperL10nService implements IBindingL10n<ControlSchemeBindingType
 
     constructor(
         private readonly translocoService: TranslocoService,
-        private readonly directionAwareControllerNameProvider: ControllerInputNameService
+        private readonly directionAwareControllerNameProvider: DirectionAwareControllerInputNameService
     ) {
     }
 
     public buildTaskSummary(
         task: PortCommandTask<ControlSchemeBindingType.Stepper>
     ): Observable<string> {
-        return this.translocoService.selectTranslate('controlScheme.stepperBinding.taskSummary', task.payload);
+        if (task.payload.action === StepperInputAction.Cw) {
+            return this.translocoService.selectTranslate('controlScheme.stepperBinding.taskSummaryCw', task.payload);
+        } else {
+            return this.translocoService.selectTranslate('controlScheme.stepperBinding.taskSummaryCcw', task.payload);
+        }
     }
 
     public getBindingInputName(
@@ -28,8 +32,10 @@ export class StepperL10nService implements IBindingL10n<ControlSchemeBindingType
         binding: ControlSchemeBinding & { bindingType: ControlSchemeBindingType.Stepper }
     ): Observable<string> {
         switch (actionType) {
-            case StepperInputAction.Step:
-                return this.translocoService.selectTranslate('controlScheme.stepperBinding.inputAction', binding);
+            case StepperInputAction.Cw:
+                return this.translocoService.selectTranslate('controlScheme.stepperBinding.inputActionCw', binding);
+            case StepperInputAction.Ccw:
+                return this.translocoService.selectTranslate('controlScheme.stepperBinding.inputActionCcw', binding);
         }
     }
 
@@ -37,8 +43,10 @@ export class StepperL10nService implements IBindingL10n<ControlSchemeBindingType
         actionType: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.Stepper>
     ): Observable<string> {
         switch (actionType) {
-            case StepperInputAction.Step:
-                return this.translocoService.selectTranslate('controlScheme.stepperBinding.basicInputAction');
+            case StepperInputAction.Cw:
+                return this.translocoService.selectTranslate('controlScheme.stepperBinding.basicInputActionCw');
+            case StepperInputAction.Ccw:
+                return this.translocoService.selectTranslate('controlScheme.stepperBinding.basicInputActionCcw');
         }
     }
 
@@ -47,7 +55,8 @@ export class StepperL10nService implements IBindingL10n<ControlSchemeBindingType
         inputConfig: ControlSchemeInput
     ): Observable<string> {
         switch (actionType) {
-            case StepperInputAction.Step:
+            case StepperInputAction.Cw:
+            case StepperInputAction.Ccw:
                 return this.directionAwareControllerNameProvider.getFullControllerInputNameData(inputConfig);
         }
     }

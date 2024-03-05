@@ -105,14 +105,16 @@ export type ControlSchemeSetAngleBinding = {
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
 export enum StepperInputAction {
-    Step = 'Step'
+    Cw = 'Cw',
+    Ccw = 'Ccw'
 }
 
 export type ControlSchemeStepperBinding = {
     id: number;
     bindingType: ControlSchemeBindingType.Stepper;
     inputs: {
-        [StepperInputAction.Step]: ControlSchemeInput;
+        [StepperInputAction.Cw]?: ControlSchemeInput;
+        [StepperInputAction.Ccw]?: ControlSchemeInput;
     };
     hubId: string;
     portId: number;

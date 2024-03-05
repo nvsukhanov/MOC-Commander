@@ -1,7 +1,7 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeStepperBinding, ControllerInputModel, StepperInputAction, controllerInputIdFn } from '@app/store';
+import { ControlSchemeBindingInputs, ControlSchemeStepperBinding, ControllerInputModel, StepperInputAction, controllerInputIdFn } from '@app/store';
 
 import { BindingInputExtractionResult, IBindingTaskInputExtractor } from '../i-binding-task-input-extractor';
 
@@ -11,10 +11,9 @@ export class StepperInputExtractorService implements IBindingTaskInputExtractor<
         binding: ControlSchemeStepperBinding,
         globalInput: Dictionary<ControllerInputModel>
     ): BindingInputExtractionResult<ControlSchemeBindingType.Stepper> {
-        const steInputId = controllerInputIdFn(binding.inputs[StepperInputAction.Step]);
-        const stepInputResult = globalInput[steInputId];
         return {
-            [StepperInputAction.Step]: stepInputResult ?? null
+            [StepperInputAction.Cw]: this.getInputId(binding, StepperInputAction.Cw, globalInput) ?? null,
+            [StepperInputAction.Ccw]: this.getInputId(binding, StepperInputAction.Ccw, globalInput) ?? null,
         };
     }
 
@@ -22,7 +21,20 @@ export class StepperInputExtractorService implements IBindingTaskInputExtractor<
         prevInput: BindingInputExtractionResult<ControlSchemeBindingType.Stepper>,
         nextInput: BindingInputExtractionResult<ControlSchemeBindingType.Stepper>
     ): boolean {
-        return prevInput[StepperInputAction.Step] !== nextInput[StepperInputAction.Step];
+        return prevInput[StepperInputAction.Cw] !== nextInput[StepperInputAction.Cw]
+            || prevInput[StepperInputAction.Ccw] !== nextInput[StepperInputAction.Ccw];
     }
 
+    private getInputId(
+        binding: ControlSchemeStepperBinding,
+        action: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.Stepper>,
+        globalInput: Dictionary<ControllerInputModel>
+    ): ControllerInputModel | undefined {
+        const inputConfig = binding.inputs[action];
+        if (!inputConfig) {
+            return;
+        }
+        const inputId = controllerInputIdFn(inputConfig);
+        return globalInput[inputId];
+    }
 }
