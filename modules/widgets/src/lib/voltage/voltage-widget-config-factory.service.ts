@@ -28,19 +28,18 @@ export class VoltageWidgetConfigFactoryService implements IControlSchemeWidgetCo
     ): VoltageWidgetConfigModel[] {
         const result: VoltageWidgetConfigModel[] = [];
         for (const io of attachedIos) {
-
             const portInputModeIds = (ioPortModes[attachedIoModesIdFn(io)]?.portInputModes ?? []);
-            const portModeNames = portInputModeIds.map((modeId) => {
+            const attacheIoPortModes = portInputModeIds.map((modeId) => {
                 const portModeInfo = portModesInfo[attachedIoPortModeInfoIdFn({ ...io, modeId })];
                 return portModeInfo ? { modeId, name: portModeInfo.name } : null;
-            }).filter((name): name is { modeId: number; name: PortModeName } => name !== undefined);
+            }).filter((modeInfo): modeInfo is { modeId: number; name: PortModeName } => modeInfo !== null);
 
-            if (this.blockerChecker.canBeUsedWithInputModes(portModeNames.map((name) => name.name))) {
-                const voltageLPortMode = portModeNames.find((name) => name.name === PortModeName.voltageL);
+            if (this.blockerChecker.canBeUsedWithInputModes(attacheIoPortModes.map((portMode) => portMode.name))) {
+                const voltageLPortMode = attacheIoPortModes.find((name) => name.name === PortModeName.voltageL);
                 if (voltageLPortMode) {
                     result.push(this.createConfig(io.hubId, io.portId, voltageLPortMode.modeId));
                 } else {
-                    const voltageSPortMode = portModeNames.find((name) => name.name === PortModeName.voltageS);
+                    const voltageSPortMode = attacheIoPortModes.find((name) => name.name === PortModeName.voltageS);
                     if (voltageSPortMode) {
                         result.push(this.createConfig(io.hubId, io.portId, voltageSPortMode.modeId));
                     }

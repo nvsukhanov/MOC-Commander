@@ -28,15 +28,14 @@ export class TiltWidgetConfigFactoryService implements IControlSchemeWidgetConfi
     ): TiltWidgetConfigModel[] {
         const result: TiltWidgetConfigModel[] = [];
         for (const io of attachedIos) {
-
             const portInputModeIds = (ioPortModes[attachedIoModesIdFn(io)]?.portInputModes ?? []);
-            const portModeNames = portInputModeIds.map((modeId) => {
+            const attacheIoPortModes = portInputModeIds.map((modeId) => {
                 const portModeInfo = portModesInfo[attachedIoPortModeInfoIdFn({ ...io, modeId })];
                 return portModeInfo ? { modeId, name: portModeInfo.name } : null;
-            }).filter((name): name is { modeId: number; name: PortModeName } => name !== undefined);
+            }).filter((modeInfo): modeInfo is { modeId: number; name: PortModeName } => modeInfo !== null);
 
-            if (this.blockerChecker.canBeUsedWithInputModes(portModeNames.map((name) => name.name))) {
-                const positionPortMode = portModeNames.find((name) => name.name === PortModeName.position);
+            if (this.blockerChecker.canBeUsedWithInputModes(attacheIoPortModes.map((portMode) => portMode.name))) {
+                const positionPortMode = attacheIoPortModes.find((name) => name.name === PortModeName.position);
                 if (positionPortMode) {
                     result.push(this.createConfig(io.hubId, io.portId, positionPortMode.modeId));
                 }
