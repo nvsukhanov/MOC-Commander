@@ -6,7 +6,8 @@ import { AppStoreVersion } from '../../app-store-version';
 import { IMigration } from '../i-migration';
 import { V27ControlSchemesEntitiesState, V27Store, V28Binding } from './v27-store';
 import { V28Store } from '../v28-v29/v28-store';
-import { ControlSchemeInputAction, InputDirection } from '../../models';
+import { InputDirection } from '../../models';
+import { OldInputAction } from '../old-input-actions';
 
 @Injectable()
 export class V27ToV28MigrationService implements IMigration<V27Store, V28Store> {
@@ -42,7 +43,7 @@ export class V27ToV28MigrationService implements IMigration<V27Store, V28Store> 
                 if (b.bindingType === ControlSchemeBindingType.Servo) {
                     // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     const { invert, ...remainingBindingData } = b ;
-                    switch (b.inputs[ControlSchemeInputAction.Servo].inputType) {
+                    switch (b.inputs[OldInputAction.Servo].inputType) {
 
                         case ControllerInputType.Button:
                         case ControllerInputType.ButtonGroup:
@@ -50,19 +51,19 @@ export class V27ToV28MigrationService implements IMigration<V27Store, V28Store> 
                             return {
                                 ...remainingBindingData,
                                 inputs: {
-                                    [ControlSchemeInputAction.ServoCw]: b.inputs[ControlSchemeInputAction.Servo],
+                                    [OldInputAction.ServoCw]: b.inputs[OldInputAction.Servo],
                                 }
                             };
                         case ControllerInputType.Axis:
                             return {
                                 ...remainingBindingData,
                                 inputs: {
-                                    [ControlSchemeInputAction.ServoCw]: {
-                                        ...b.inputs[ControlSchemeInputAction.Servo],
+                                    [OldInputAction.ServoCw]: {
+                                        ...b.inputs[OldInputAction.Servo],
                                         inputDirection: InputDirection.Positive
                                     },
-                                    [ControlSchemeInputAction.ServoCcw]: {
-                                        ...b.inputs[ControlSchemeInputAction.Servo],
+                                    [OldInputAction.ServoCcw]: {
+                                        ...b.inputs[OldInputAction.Servo],
                                         inputDirection: InputDirection.Negative
                                     }
                                 }

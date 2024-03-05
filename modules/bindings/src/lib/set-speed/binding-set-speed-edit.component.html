@@ -22,7 +22,7 @@
 
             @if (isForwardInputGainConfigurable) {
                 <lib-cs-binding-control-select-input-gain [translocoTitle]="'controlScheme.setSpeedBinding.accelerationInputGainTitle'"
-                                                          [control]="form.controls.inputs.controls[controlSchemeInputActions.Forwards].controls.gain"
+                                                          [control]="form.controls.inputs.controls[inputActions.Forwards].controls.gain"
                 ></lib-cs-binding-control-select-input-gain>
             }
 
@@ -30,7 +30,7 @@
 
             @if (isBackwardInputGainConfigurable) {
                 <lib-cs-binding-control-select-input-gain [translocoTitle]="'controlScheme.setSpeedBinding.accelerationInputGainTitle'"
-                                                          [control]="form.controls.inputs.controls[controlSchemeInputActions.Backwards].controls.gain"
+                                                          [control]="form.controls.inputs.controls[inputActions.Backwards].controls.gain"
                 ></lib-cs-binding-control-select-input-gain>
             }
 

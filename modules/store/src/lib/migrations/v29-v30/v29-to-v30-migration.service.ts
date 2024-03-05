@@ -4,9 +4,10 @@ import { ControlSchemeBindingType, DeepPartial } from '@app/shared-misc';
 
 import { AppStoreVersion } from '../../app-store-version';
 import { IMigration } from '../i-migration';
-import { ControlSchemeInputAction, InputDirection } from '../../models';
-import { V29ControlSchemesEntitiesState, V29Store, V30Binding, V30SetSpeedBinding } from './v29-store';
+import { InputDirection, ServoInputAction, SetSpeedInputAction } from '../../models';
+import { V29ControlSchemesEntitiesState, V29Store, V30Binding, V30ServoBinding, V30SetSpeedBinding } from './v29-store';
 import { V30Store } from '../v30';
+import { OldInputAction } from '../old-input-actions';
 
 @Injectable()
 export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> {
@@ -40,36 +41,51 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
             }
             const bindings: V30Binding[] = controlScheme.bindings.map((b) => {
                 if (b.bindingType === ControlSchemeBindingType.SetSpeed) {
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    const inputsResult: V30SetSpeedBinding = {
+                    const bindingResult: V30SetSpeedBinding = {
                         ...b,
                         inputs:{}
                     };
-                    if (b.inputs[ControlSchemeInputAction.OldSetSpeedBrake]) {
-                        inputsResult.inputs[ControlSchemeInputAction.Brake] = {
-                            ...b.inputs[ControlSchemeInputAction.OldSetSpeedBrake]
+                    if (b.inputs[OldInputAction.Brake]) {
+                        bindingResult.inputs[SetSpeedInputAction.Brake] = {
+                            ...b.inputs[OldInputAction.Brake]
                         };
                     }
-                    switch (b.inputs[ControlSchemeInputAction.Accelerate].inputType) {
+                    switch (b.inputs[OldInputAction.Accelerate].inputType) {
                         case ControllerInputType.Button:
                         case ControllerInputType.ButtonGroup:
                         case ControllerInputType.Trigger:
-                            inputsResult.inputs[ControlSchemeInputAction.Forwards] = {
-                                ...b.inputs[ControlSchemeInputAction.Accelerate]
+                            bindingResult.inputs[SetSpeedInputAction.Forwards] = {
+                                ...b.inputs[OldInputAction.Accelerate]
                             };
                             break;
                         case ControllerInputType.Axis:
-                            inputsResult.inputs[ControlSchemeInputAction.Forwards] = {
-                                ...b.inputs[ControlSchemeInputAction.Accelerate],
+                            bindingResult.inputs[SetSpeedInputAction.Forwards] = {
+                                ...b.inputs[OldInputAction.Accelerate],
                                 inputDirection: InputDirection.Positive
                             };
-                            inputsResult.inputs[ControlSchemeInputAction.Backwards] = {
-                                ...b.inputs[ControlSchemeInputAction.Accelerate],
+                            bindingResult.inputs[SetSpeedInputAction.Backwards] = {
+                                ...b.inputs[0], // old ControlSchemeInputAction.Accelerate
                                 inputDirection: InputDirection.Negative
                             };
                             break;
                     }
-                    return inputsResult;
+                    return bindingResult;
+                } else if (b.bindingType === ControlSchemeBindingType.Servo) {
+                    const bindingResult: V30ServoBinding = {
+                        ...b,
+                        inputs: {}
+                    };
+                    if (b.inputs[OldInputAction.ServoCw]) {
+                        bindingResult.inputs[ServoInputAction.Cw] = {
+                            ...b.inputs[OldInputAction.ServoCw]
+                        };
+                    }
+                    if (b.inputs[OldInputAction.ServoCcw]) {
+                        bindingResult.inputs[ServoInputAction.Ccw] = {
+                            ...b.inputs[OldInputAction.ServoCcw]
+                        };
+                    }
+                    return bindingResult;
                 }
                 return b;
             });

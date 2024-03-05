@@ -3,7 +3,7 @@ import { ControllerType, GamepadProfile, GamepadProfileFactoryService, GamepadSe
 import { DeepPartial } from '@app/shared-misc';
 
 import { AppStoreVersion } from '../../app-store-version';
-import { ControlSchemeInputAction, InputDirection } from '../../models';
+import { InputDirection, ServoInputAction, SetSpeedInputAction } from '../../models';
 import { V21ToV22MigrationService } from '../v21-v22';
 import { V21_STORE_SAMPLE } from '../v21';
 import { V23ToV24MigrationService } from '../v23-v24';
@@ -16,7 +16,8 @@ import { ensureStorePropsNotChanged } from '../ensure-props-not-changed';
 import { V22ToV23MigrationService } from '../v22-v23';
 import { V26ToV27MigrationService } from '../v26-v27';
 import { V30Store } from '../v30';
-import { V29Store, V30SetSpeedBinding } from './v29-store';
+import { V29ServoBinding, V29Store, V30ServoBinding, V30SetSpeedBinding } from './v29-store';
+import { OldInputAction } from '../old-input-actions';
 
 describe('v29 to v30 migration', () => {
     let v29Store: DeepPartial<V29Store>;
@@ -54,46 +55,53 @@ describe('v29 to v30 migration', () => {
 
     it('should update setSpeed keyboard input settings', () => {
         const setSpeedBindings = v30Store.controlSchemes?.entities?.['Speed control test']?.bindings as V30SetSpeedBinding[];
-        expect(setSpeedBindings[0].inputs[ControlSchemeInputAction.Forwards]).toEqual({
+        expect(setSpeedBindings[0].inputs[SetSpeedInputAction.Forwards]).toEqual({
             controllerId: 'keyboard',
             inputId: 'w',
             inputType: 0,
             gain: 0,
             inputDirection: InputDirection.Positive
-        } satisfies V30SetSpeedBinding['inputs'][ControlSchemeInputAction.Forwards]);
-        expect(setSpeedBindings[0].inputs[ControlSchemeInputAction.Brake]).toEqual({
+        } satisfies V30SetSpeedBinding['inputs'][SetSpeedInputAction.Forwards]);
+        expect(setSpeedBindings[0].inputs[SetSpeedInputAction.Brake]).toEqual({
             controllerId: 'keyboard',
             inputId: 's',
             inputType: 0,
             gain: 0,
             inputDirection: InputDirection.Positive
-        } satisfies V30SetSpeedBinding['inputs'][ControlSchemeInputAction.Brake]);
-        expect(setSpeedBindings[0].inputs[ControlSchemeInputAction.Backwards]).toBeUndefined();
+        } satisfies V30SetSpeedBinding['inputs'][SetSpeedInputAction.Brake]);
+        expect(setSpeedBindings[0].inputs[SetSpeedInputAction.Backwards]).toBeUndefined();
     });
 
     it('should update setSpeed gamepad input settings', () => {
         const setSpeedBindings = v30Store.controlSchemes?.entities?.['Speed control test']?.bindings as V30SetSpeedBinding[];
-        expect(setSpeedBindings[1].inputs[ControlSchemeInputAction.Forwards]).toEqual({
+        expect(setSpeedBindings[1].inputs[SetSpeedInputAction.Forwards]).toEqual({
             controllerId: 'gamepad-xbox360/0',
             inputId: '1',
             inputType: 1,
             gain: 0,
             inputDirection: InputDirection.Positive
-        } satisfies V30SetSpeedBinding['inputs'][ControlSchemeInputAction.Forwards]);
-        expect(setSpeedBindings[1].inputs[ControlSchemeInputAction.Backwards]).toEqual({
+        } satisfies V30SetSpeedBinding['inputs'][SetSpeedInputAction.Forwards]);
+        expect(setSpeedBindings[1].inputs[SetSpeedInputAction.Backwards]).toEqual({
             controllerId: 'gamepad-xbox360/0',
             inputId: '1',
             inputType: 1,
             gain: 0,
             inputDirection: InputDirection.Negative
-        } satisfies V30SetSpeedBinding['inputs'][ControlSchemeInputAction.Backwards]);
-        expect(setSpeedBindings[1].inputs[ControlSchemeInputAction.Brake]).toEqual({
+        } satisfies V30SetSpeedBinding['inputs'][SetSpeedInputAction.Backwards]);
+        expect(setSpeedBindings[1].inputs[SetSpeedInputAction.Brake]).toEqual({
             controllerId: 'gamepad-xbox360/0',
             inputId: '0',
             inputType: 0,
             gain: 0,
             inputDirection: InputDirection.Positive
-        } satisfies V30SetSpeedBinding['inputs'][ControlSchemeInputAction.Brake]);
+        } satisfies V30SetSpeedBinding['inputs'][SetSpeedInputAction.Brake]);
+    });
+
+    it('should migrate servo binding inputs', () => {
+        const v30servoBinding = v30Store.controlSchemes?.entities?.['Servo']?.bindings[0] as V30ServoBinding;
+        const v29ServoBinding = v29Store.controlSchemes?.entities?.['Servo']?.bindings[0] as V29ServoBinding;
+        expect(v30servoBinding.inputs[ServoInputAction.Cw]).toEqual(v29ServoBinding.inputs[OldInputAction.ServoCw]);
+        expect(v30servoBinding.inputs[ServoInputAction.Ccw]).toEqual(v29ServoBinding.inputs[OldInputAction.ServoCcw]);
     });
 
     it('should update store version', () => {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeBinding, ControlSchemeInputAction, ControlSchemeServoBinding } from '@app/store';
+import { ControlSchemeBinding, ControlSchemeServoBinding, ServoInputAction } from '@app/store';
 
 import { CommonFormMapperService, InputFormGroup } from '../common';
 import { ServoBindingForm } from './servo-binding-form';
@@ -30,13 +30,13 @@ export class ServoBindingFormMapperService {
             inputs: {
             }
         };
-        if (form.controls.inputs.controls[ControlSchemeInputAction.ServoCw].controls.controllerId.value !== null) {
-            result.inputs[ControlSchemeInputAction.ServoCw] =
-                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ControlSchemeInputAction.ServoCw] as InputFormGroup);
+        if (form.controls.inputs.controls[ServoInputAction.Cw].controls.controllerId.value !== null) {
+            result.inputs[ServoInputAction.Cw] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ServoInputAction.Cw] as InputFormGroup);
         }
-        if (form.controls.inputs.controls[ControlSchemeInputAction.ServoCcw].controls.controllerId.value !== null) {
-            result.inputs[ControlSchemeInputAction.ServoCcw] =
-                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ControlSchemeInputAction.ServoCcw] as InputFormGroup);
+        if (form.controls.inputs.controls[ServoInputAction.Ccw].controls.controllerId.value !== null) {
+            result.inputs[ServoInputAction.Ccw] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ServoInputAction.Ccw] as InputFormGroup);
         }
         return result;
     }
