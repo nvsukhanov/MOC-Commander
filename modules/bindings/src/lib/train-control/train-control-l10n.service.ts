@@ -6,7 +6,7 @@ import { ControlSchemeBindingInputs, ControlSchemeInput, PortCommandTask, TrainC
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { IBindingL10n } from '../i-binding-l10n';
-import { ControllerInputNameService, DirectionAwareControllerInputNameService } from '../common';
+import { DirectionAwareControllerInputNameService } from '../common';
 
 @Injectable()
 export class TrainControlL10nService implements IBindingL10n<ControlSchemeBindingType.TrainControl> {
@@ -14,7 +14,6 @@ export class TrainControlL10nService implements IBindingL10n<ControlSchemeBindin
 
     constructor(
         private readonly translocoService: TranslocoService,
-        private readonly controllerNameProvider: ControllerInputNameService,
         private readonly directionAwareControllerNameProvider: DirectionAwareControllerInputNameService
     ) {
     }
@@ -48,9 +47,8 @@ export class TrainControlL10nService implements IBindingL10n<ControlSchemeBindin
         switch (actionType) {
             case TrainControlInputAction.NextSpeed:
             case TrainControlInputAction.PrevSpeed:
-                return this.directionAwareControllerNameProvider.getFullControllerInputNameData(inputConfig);
             case TrainControlInputAction.Reset:
-                return this.controllerNameProvider.getFullControllerInputNameData(inputConfig);
+                return this.directionAwareControllerNameProvider.getFullControllerInputNameData(inputConfig);
         }
     }
 
