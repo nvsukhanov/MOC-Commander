@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeBinding, ControlSchemeInputAction, ControlSchemeTrainControlBinding } from '@app/store';
+import { ControlSchemeBinding, ControlSchemeTrainControlBinding, TrainControlInputAction } from '@app/store';
 
 import { CommonFormMapperService, InputFormGroup } from '../common';
 import { TrainControlBindingForm } from './train-control-binding-form';
@@ -25,8 +25,8 @@ export class TrainControlBindingFormMapperService {
             id,
             bindingType: ControlSchemeBindingType.TrainControl,
             inputs: {
-                [ControlSchemeInputAction.NextLevel]: this.commonFormMapperService.mapInputFormToSchemeInput(
-                    form.controls.inputs.controls[ControlSchemeInputAction.NextLevel]
+                [TrainControlInputAction.NextSpeed]: this.commonFormMapperService.mapInputFormToSchemeInput(
+                    form.controls.inputs.controls[TrainControlInputAction.NextSpeed]
                 )
             },
             hubId,
@@ -38,13 +38,13 @@ export class TrainControlBindingFormMapperService {
             useDecelerationProfile: form.controls.useDecelerationProfile.getRawValue(),
             initialLevelIndex: form.controls.initialLevelIndex.getRawValue()
         };
-        if (form.controls.inputs.controls[ControlSchemeInputAction.Reset].controls.controllerId.value !== null) {
-            result.inputs[ControlSchemeInputAction.Reset] =
-                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ControlSchemeInputAction.Reset] as InputFormGroup);
+        if (form.controls.inputs.controls[TrainControlInputAction.Reset].controls.controllerId.value !== null) {
+            result.inputs[TrainControlInputAction.Reset] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[TrainControlInputAction.Reset] as InputFormGroup);
         }
-        if (form.controls.inputs.controls[ControlSchemeInputAction.PrevLevel].controls.controllerId.value !== null) {
-            result.inputs[ControlSchemeInputAction.PrevLevel] =
-                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ControlSchemeInputAction.PrevLevel] as InputFormGroup);
+        if (form.controls.inputs.controls[TrainControlInputAction.PrevSpeed].controls.controllerId.value !== null) {
+            result.inputs[TrainControlInputAction.PrevSpeed] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[TrainControlInputAction.PrevSpeed] as InputFormGroup);
         }
         return result;
     }

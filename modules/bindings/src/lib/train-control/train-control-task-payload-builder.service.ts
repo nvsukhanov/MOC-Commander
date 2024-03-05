@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 import {
     AttachedIoPropsModel,
-    ControlSchemeInputAction,
     ControlSchemeTrainControlBinding,
     LoopingMode,
     PortCommandTask,
     PortCommandTaskPayload,
+    TrainControlInputAction,
     TrainControlTaskPayload
 } from '@app/store';
 
@@ -23,9 +23,9 @@ export class TrainControlTaskPayloadBuilderService implements ITaskPayloadBuilde
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTask: PortCommandTask | null
     ): { payload: TrainControlTaskPayload; inputTimestamp: number } | null {
-        const nextLevelInput = this.getActiveInput(binding, currentInput, previousInput, ControlSchemeInputAction.NextLevel);
-        const prevLevelInput = this.getActiveInput(binding, currentInput, previousInput, ControlSchemeInputAction.PrevLevel);
-        const resetLevelInput = this.getActiveInput(binding, currentInput, previousInput, ControlSchemeInputAction.Reset);
+        const nextLevelInput = this.getActiveInput(binding, currentInput, previousInput, TrainControlInputAction.NextSpeed);
+        const prevLevelInput = this.getActiveInput(binding, currentInput, previousInput, TrainControlInputAction.PrevSpeed);
+        const resetLevelInput = this.getActiveInput(binding, currentInput, previousInput, TrainControlInputAction.Reset);
 
         if (resetLevelInput.isActivated) {
             return {

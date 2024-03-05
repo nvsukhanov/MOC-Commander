@@ -5,13 +5,13 @@ import { ControlSchemeSetSpeedBinding, SetSpeedInputAction } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 import { CommonBindingsFormControlsBuilderService } from '../common';
-import { IFormBuilder } from '../i-form-builder';
+import { IBindingFormBuilder } from '../i-binding-form-builder';
 import { SetSpeedBindingForm } from './set-speed-binding-form';
 
 export const NO_INPUTS_SET_SPEED_ERROR = 'NO_SET_SPEED_INPUTS_ERROR';
 
 @Injectable()
-export class SetSpeedBindingFormBuilderService implements IFormBuilder<SetSpeedBindingForm> {
+export class SetSpeedBindingFormBuilderService implements IBindingFormBuilder<SetSpeedBindingForm> {
     constructor(
         private readonly formBuilder: FormBuilder,
         private commonFormControlBuilder: CommonBindingsFormControlsBuilderService,

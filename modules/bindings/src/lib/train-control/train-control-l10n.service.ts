@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { MOTOR_LIMITS } from 'rxpoweredup';
-import { ControlSchemeBindingInputs, ControlSchemeInput, ControlSchemeInputAction, PortCommandTask } from '@app/store';
+import { ControlSchemeBindingInputs, ControlSchemeInput, PortCommandTask, TrainControlInputAction } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { IBindingL10n } from '../i-binding-l10n';
@@ -32,11 +32,11 @@ export class TrainControlL10nService implements IBindingL10n<ControlSchemeBindin
         actionType: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.TrainControl>,
     ): Observable<string> {
         switch (actionType) {
-            case ControlSchemeInputAction.NextLevel:
+            case TrainControlInputAction.NextSpeed:
                 return this.translocoService.selectTranslate('controlScheme.trainControlBinding.prevLevel');
-            case ControlSchemeInputAction.PrevLevel:
+            case TrainControlInputAction.PrevSpeed:
                 return this.translocoService.selectTranslate('controlScheme.trainControlBinding.nextLevel');
-            case ControlSchemeInputAction.Reset:
+            case TrainControlInputAction.Reset:
                 return this.translocoService.selectTranslate('controlScheme.trainControlBinding.reset');
         }
     }
@@ -46,10 +46,10 @@ export class TrainControlL10nService implements IBindingL10n<ControlSchemeBindin
         inputConfig: ControlSchemeInput
     ): Observable<string> {
         switch (actionType) {
-            case ControlSchemeInputAction.NextLevel:
-            case ControlSchemeInputAction.PrevLevel:
+            case TrainControlInputAction.NextSpeed:
+            case TrainControlInputAction.PrevSpeed:
                 return this.directionAwareControllerNameProvider.getFullControllerInputNameData(inputConfig);
-            case ControlSchemeInputAction.Reset:
+            case TrainControlInputAction.Reset:
                 return this.controllerNameProvider.getFullControllerInputNameData(inputConfig);
         }
     }

@@ -4,8 +4,17 @@ import { ControlSchemeBindingType, DeepPartial } from '@app/shared-misc';
 
 import { AppStoreVersion } from '../../app-store-version';
 import { IMigration } from '../i-migration';
-import { InputDirection, ServoInputAction, SetAngleInputAction, SetSpeedInputAction, StepperInputAction } from '../../models';
-import { V29ControlSchemesEntitiesState, V29Store, V30Binding, V30ServoBinding, V30SetSpeedBinding } from './v29-store';
+import { InputDirection, ServoInputAction, SetAngleInputAction, SetSpeedInputAction, StepperInputAction, TrainControlInputAction } from '../../models';
+import {
+    V29ControlSchemesEntitiesState,
+    V29Store,
+    V30Binding,
+    V30ServoBinding,
+    V30SetAngleBinding,
+    V30SetSpeedBinding,
+    V30StepperBinding,
+    V30TrainControlBinding
+} from './v29-store';
 import { V30Store } from '../v30';
 import { OldInputAction } from '../old-input-actions';
 
@@ -87,7 +96,7 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
                     }
                     return bindingResult;
                 } else if (b.bindingType === ControlSchemeBindingType.SetAngle) {
-                    const bindingResult: V30Binding = {
+                    const bindingResult: V30SetAngleBinding = {
                         ...b,
                         inputs: {
                             [SetAngleInputAction.SetAngle]: {
@@ -97,7 +106,7 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
                     };
                     return bindingResult;
                 } else if (b.bindingType === ControlSchemeBindingType.Stepper) {
-                    const bindingResult: V30Binding = {
+                    const bindingResult: V30StepperBinding = {
                         ...b,
                         inputs: {
                             [StepperInputAction.Step]: {
@@ -105,6 +114,26 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
                             }
                         }
                     };
+                    return bindingResult;
+                } else if (b.bindingType === ControlSchemeBindingType.TrainControl) {
+                    const bindingResult: V30TrainControlBinding = {
+                        ...b,
+                        inputs: {
+                            [TrainControlInputAction.NextSpeed]: {
+                                ...b.inputs[OldInputAction.NextLevel]
+                            }
+                        }
+                    };
+                    if (b.inputs[OldInputAction.PrevLevel]) {
+                        bindingResult.inputs[TrainControlInputAction.PrevSpeed] = {
+                            ...b.inputs[OldInputAction.PrevLevel]
+                        };
+                    }
+                    if (b.inputs[OldInputAction.Reset]) {
+                        bindingResult.inputs[TrainControlInputAction.Reset] = {
+                            ...b.inputs[OldInputAction.Reset]
+                        };
+                    }
                     return bindingResult;
                 }
                 return b;

@@ -10,6 +10,7 @@ import { SetAngleBindingFormBuilderService } from './set-angle';
 import { StepperBindingFormBuilderService } from './stepper';
 import { TrainControlBindingFormBuilderService } from './train-control';
 import { GearboxControlBindingFormBuilderService } from './gearbox';
+import { IBindingFormBuilder } from './i-binding-form-builder';
 
 @Injectable()
 export class BindingValidatorService implements IBindingValidator {
@@ -29,29 +30,31 @@ export class BindingValidatorService implements IBindingValidator {
         if (binding.bindingType === undefined) {
             return false;
         }
-        const form = this.buildForm(binding.bindingType);
+        const formBuilder = this.getFormBuilder(binding.bindingType);
+        const form = formBuilder.build();
         // TODO: fix this - this is a bad way to validate - binding is DeepPartial, and we are patching the form with it,
         // while the form is initially valid. So we are not checking if 'binding' is complete.
-        form.patchValue(binding);
+        formBuilder.patchForm(form, binding);
+        form.updateValueAndValidity();
         return form.valid;
     }
 
-    private buildForm(
+    private getFormBuilder(
         bindingType: ControlSchemeBindingType
-    ): FormGroup {
+    ): IBindingFormBuilder<FormGroup> {
         switch (bindingType) {
             case ControlSchemeBindingType.SetSpeed:
-                return this.setSpeedBindingFormBuilder.build();
+                return this.setSpeedBindingFormBuilder;
             case ControlSchemeBindingType.Servo:
-                return this.servoBindingFormBuilder.build();
+                return this.servoBindingFormBuilder;
             case ControlSchemeBindingType.SetAngle:
-                return this.setAngleBindingFormBuilder.build();
+                return this.setAngleBindingFormBuilder;
             case ControlSchemeBindingType.Stepper:
-                return this.stepperBindingFormBuilder.build();
+                return this.stepperBindingFormBuilder;
             case ControlSchemeBindingType.TrainControl:
-                return this.trainControlBindingFormBuilder.build();
+                return this.trainControlBindingFormBuilder;
             case ControlSchemeBindingType.GearboxControl:
-                return this.gearboxControlBindingFormBuilder.build();
+                return this.gearboxControlBindingFormBuilder;
             default:
                 return bindingType satisfies void;
         }

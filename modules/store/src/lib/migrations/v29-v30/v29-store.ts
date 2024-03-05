@@ -41,10 +41,18 @@ export type V29StepperBinding = Override<V30StepperBinding, {
     };
 }>;
 
+export type V29TrainControlBinding = Override<V30TrainControlBinding, {
+    inputs: {
+        [OldInputAction.NextLevel]: ControlSchemeInput;
+        [OldInputAction.PrevLevel]?: ControlSchemeInput;
+        [OldInputAction.Reset]?: ControlSchemeInput;
+    };
+}>;
+
 export type V29Bindings = V29SetSpeedBinding
     | V29ServoBinding
     | V29StepperBinding
-    | V30TrainControlBinding
+    | V29TrainControlBinding
     | V30GearboxControlBinding
     | V29SetAngleBinding;
 export type V29ControlSchemesEntitiesState = Omit<V30ControlSchemesEntitiesState, 'bindings'> & { bindings: V29Bindings[] };

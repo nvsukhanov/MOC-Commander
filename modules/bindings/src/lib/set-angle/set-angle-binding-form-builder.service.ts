@@ -7,9 +7,10 @@ import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 import { CommonBindingsFormControlsBuilderService } from '../common';
 import { SetAngleBindingForm } from './set-angle-binding-form';
+import { IBindingFormBuilder } from '../i-binding-form-builder';
 
 @Injectable()
-export class SetAngleBindingFormBuilderService {
+export class SetAngleBindingFormBuilderService implements IBindingFormBuilder<SetAngleBindingForm> {
     constructor(
         private readonly formBuilder: FormBuilder,
         private commonFormControlBuilder: CommonBindingsFormControlsBuilderService,
