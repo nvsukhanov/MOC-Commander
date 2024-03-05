@@ -5,7 +5,7 @@ import { ControlSchemeBindingType } from '@app/shared-misc';
 import { ControlSchemeBindingInputs, ControlSchemeGearboxControlBinding, ControlSchemeInput, GearboxControlInputAction, PortCommandTask } from '@app/store';
 
 import { IBindingL10n } from '../i-binding-l10n';
-import { ControllerInputNameService, DirectionAwareControllerInputNameService } from '../common';
+import { DirectionAwareControllerInputNameService } from '../common';
 
 @Injectable()
 export class GearboxL10nService implements IBindingL10n<ControlSchemeBindingType.GearboxControl> {
@@ -13,7 +13,6 @@ export class GearboxL10nService implements IBindingL10n<ControlSchemeBindingType
 
     constructor(
         private readonly translocoService: TranslocoService,
-        private readonly controllerNameProvider: ControllerInputNameService,
         private readonly directionAwareControllerNameProvider: DirectionAwareControllerInputNameService,
     ) {
     }
@@ -47,9 +46,8 @@ export class GearboxL10nService implements IBindingL10n<ControlSchemeBindingType
         switch (actionType) {
             case GearboxControlInputAction.NextGear:
             case GearboxControlInputAction.PrevGear:
-                return this.directionAwareControllerNameProvider.getFullControllerInputNameData(inputConfig);
             case GearboxControlInputAction.Reset:
-                return this.controllerNameProvider.getFullControllerInputNameData(inputConfig);
+                return this.directionAwareControllerNameProvider.getFullControllerInputNameData(inputConfig);
         }
     }
 
