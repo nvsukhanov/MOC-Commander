@@ -1,9 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { Store } from '@ngrx/store';
 import { AsyncPipe } from '@angular/common';
 import { TitleService } from '@app/shared-misc';
-import { IState } from '@app/store';
 import { ChangelogComponent } from '@app/shared-ui';
 
 @Component({
@@ -28,14 +26,11 @@ export class AboutPageComponent implements OnInit {
 
     public readonly licenseURL = 'https://github.com/nvsukhanov/MOC-Commander/blob/main/LICENSE.md';
 
-    // eslint-disable-next-line @ngrx/prefer-selector-in-select
-    public readonly appVersion$ = this.store.select((state) => state.appVersion);
+    public readonly discordURL = 'https://discord.gg/N5wkG547';
 
     constructor(
         private readonly titleService: TitleService,
         private readonly translocoService: TranslocoService,
-        // eslint-disable-next-line @ngrx/no-typed-global-store
-        private readonly store: Store<IState>
     ) {
     }
 
