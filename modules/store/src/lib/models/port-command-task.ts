@@ -43,8 +43,8 @@ export type StepperTaskPayload = {
     action: StepperInputAction;
 };
 
-export type TrainControlTaskPayload = {
-    bindingType: ControlSchemeBindingType.TrainControl;
+export type TrainTaskPayload = {
+    bindingType: ControlSchemeBindingType.Train;
     speed: number;
     power: number;
     initialLevelIndex: number;
@@ -72,7 +72,7 @@ export type PortCommandTaskPayload = SpeedTaskPayload
     | ServoTaskPayload
     | SetAngleTaskPayload
     | StepperTaskPayload
-    | TrainControlTaskPayload
+    | TrainTaskPayload
     | GearboxTaskPayload;
 
 export type PortCommandTask<TPayloadType extends ControlSchemeBindingType = ControlSchemeBindingType> = {

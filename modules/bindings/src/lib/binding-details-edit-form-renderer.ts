@@ -10,7 +10,7 @@ import { BindingSpeedEditComponent, SpeedBindingFormBuilderService, SpeedBinding
 import { BindingServoEditComponent, ServoBindingFormBuilderService, ServoBindingFormMapperService } from './servo';
 import { BindingSetAngleEditComponent, SetAngleBindingFormBuilderService, SetAngleBindingFormMapperService } from './set-angle';
 import { BindingStepperEditComponent, StepperBindingFormBuilderService, StepperBindingFormMapperService } from './stepper';
-import { BindingTrainControlEditComponent, TrainControlBindingFormBuilderService, TrainControlBindingFormMapperService } from './train-control';
+import { TrainBindingEditComponent, TrainBindingFormBuilderService, TrainBindingFormMapperService } from './train';
 import { GearboxBindingEditComponent, GearboxBindingFormBuilderService, GearboxBindingFormMapperService } from './gearbox';
 
 export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRenderer {
@@ -23,7 +23,7 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
         [ControlSchemeBindingType.Servo]: BindingServoEditComponent,
         [ControlSchemeBindingType.SetAngle]: BindingSetAngleEditComponent,
         [ControlSchemeBindingType.Stepper]: BindingStepperEditComponent,
-        [ControlSchemeBindingType.TrainControl]: BindingTrainControlEditComponent,
+        [ControlSchemeBindingType.Train]: TrainBindingEditComponent,
         [ControlSchemeBindingType.Gearbox]: GearboxBindingEditComponent
     };
 
@@ -42,7 +42,7 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
         [ControlSchemeBindingType.Servo]: this.servoBindingFormBuilder.build(),
         [ControlSchemeBindingType.SetAngle]: this.setAngleBindingFormBuilder.build(),
         [ControlSchemeBindingType.Stepper]: this.stepperBindingFormBuilder.build(),
-        [ControlSchemeBindingType.TrainControl]: this.trainControlBindingFormBuilder.build(),
+        [ControlSchemeBindingType.Train]: this.trainBindingFormBuilder.build(),
         [ControlSchemeBindingType.Gearbox]: this.gearboxBindingFormBuilder.build()
     });
 
@@ -53,13 +53,13 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
         private readonly speedBindingFormBuilder: SpeedBindingFormBuilderService,
         private readonly setAngleBindingFormBuilder: SetAngleBindingFormBuilderService,
         private readonly stepperBindingFormBuilder: StepperBindingFormBuilderService,
-        private readonly trainControlBindingFormBuilder: TrainControlBindingFormBuilderService,
+        private readonly trainBindingFormBuilder: TrainBindingFormBuilderService,
         private readonly gearboxBindingFormBuilder: GearboxBindingFormBuilderService,
         private readonly speedBindingMapper: SpeedBindingFormMapperService,
         private readonly servoBindingMapper: ServoBindingFormMapperService,
         private readonly setAngleBindingMapper: SetAngleBindingFormMapperService,
         private readonly stepperBindingMapper: StepperBindingFormMapperService,
-        private readonly trainControlBindingMapper: TrainControlBindingFormMapperService,
+        private readonly trainBindingMapper: TrainBindingFormMapperService,
         private readonly gearboxBindingMapper: GearboxBindingFormMapperService
     ) {
         this.bindingChange = this._form.valueChanges.pipe(
@@ -148,8 +148,8 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
             case ControlSchemeBindingType.Stepper:
                 this.stepperBindingFormBuilder.patchForm(this._form.controls[ControlSchemeBindingType.Stepper], patch);
                 break;
-            case ControlSchemeBindingType.TrainControl:
-                this.trainControlBindingFormBuilder.patchForm(this._form.controls[ControlSchemeBindingType.TrainControl], patch);
+            case ControlSchemeBindingType.Train:
+                this.trainBindingFormBuilder.patchForm(this._form.controls[ControlSchemeBindingType.Train], patch);
                 break;
             case ControlSchemeBindingType.Gearbox:
                 this.gearboxBindingFormBuilder.patchForm(this._form.controls[ControlSchemeBindingType.Gearbox], patch);
@@ -170,8 +170,8 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
                 return this.setAngleBindingMapper.mapToModel(id, this._form.controls[ControlSchemeBindingType.SetAngle]);
             case ControlSchemeBindingType.Stepper:
                 return this.stepperBindingMapper.mapToModel(id, this._form.controls[ControlSchemeBindingType.Stepper]);
-            case ControlSchemeBindingType.TrainControl:
-                return this.trainControlBindingMapper.mapToModel(id, this._form.controls[ControlSchemeBindingType.TrainControl]);
+            case ControlSchemeBindingType.Train:
+                return this.trainBindingMapper.mapToModel(id, this._form.controls[ControlSchemeBindingType.Train]);
             case ControlSchemeBindingType.Gearbox:
                 return this.gearboxBindingMapper.mapToModel(id, this._form.controls[ControlSchemeBindingType.Gearbox]);
             case undefined:

@@ -11,7 +11,7 @@ import { ServoL10nService } from './servo';
 import { SetAngleL10nService } from './set-angle';
 import { SpeedL10nService } from './speed';
 import { StepperL10nService } from './stepper';
-import { TrainControlL10nService } from './train-control';
+import { TrainBindingL10nService } from './train';
 
 @Injectable()
 export class BindingL10nService implements IBindingControllerInputNameResolver,
@@ -25,7 +25,7 @@ export class BindingL10nService implements IBindingControllerInputNameResolver,
         [ControlSchemeBindingType.SetAngle]: this.setAngleL10nService,
         [ControlSchemeBindingType.Speed]: this.speedL10nService,
         [ControlSchemeBindingType.Stepper]: this.stepperL10nService,
-        [ControlSchemeBindingType.TrainControl]: this.trainL10nService
+        [ControlSchemeBindingType.Train]: this.trainL10nService
     };
 
     constructor(
@@ -34,7 +34,7 @@ export class BindingL10nService implements IBindingControllerInputNameResolver,
         private readonly setAngleL10nService: SetAngleL10nService,
         private readonly speedL10nService: SpeedL10nService,
         private readonly stepperL10nService: StepperL10nService,
-        private readonly trainL10nService: TrainControlL10nService
+        private readonly trainL10nService: TrainBindingL10nService
     ) {
     }
 

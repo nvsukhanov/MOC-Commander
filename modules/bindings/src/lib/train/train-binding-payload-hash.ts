@@ -1,7 +1,7 @@
-import { TrainControlTaskPayload } from '@app/store';
+import { TrainTaskPayload } from '@app/store';
 
-export function trainControlPayloadHash(
-    payload: TrainControlTaskPayload
+export function trainBindingPayloadHash(
+    payload: TrainTaskPayload
 ): string {
     return [
         payload.bindingType,

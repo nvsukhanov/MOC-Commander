@@ -8,8 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
-import { TrainControlInputAction } from '@app/store';
 import { BindingControlSelectHubComponent, BindingControlSelectIoComponent } from '@app/shared-control-schemes';
+import { TrainInputAction } from '@app/store';
 
 import {
     BindingControlPowerInputComponent,
@@ -21,14 +21,14 @@ import {
     CommonBindingsFormControlsBuilderService
 } from '../common';
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
-import { TrainControlBindingForm } from './train-control-binding-form';
-import { TrainControlL10nService } from './train-control-l10n.service';
+import { TrainBindingForm } from './train-binding-form';
+import { TrainBindingL10nService } from './train-binding-l10n.service';
 
 @Component({
     standalone: true,
-    selector: 'lib-cs-binding-train-control-edit',
-    templateUrl: './binding-train-control-edit.component.html',
-    styleUrls: [ './binding-train-control-edit.component.scss' ],
+    selector: 'lib-cs-binding-train-edit',
+    templateUrl: './train-binding-edit.component.html',
+    styleUrls: [ './train-binding-edit.component.scss' ],
     imports: [
         BindingEditSectionComponent,
         BindingControlSelectHubComponent,
@@ -49,60 +49,60 @@ import { TrainControlL10nService } from './train-control-l10n.service';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BindingTrainControlEditComponent implements IBindingsDetailsEditComponent<TrainControlBindingForm> {
-    public readonly bindingType = ControlSchemeBindingType.TrainControl;
+export class TrainBindingEditComponent implements IBindingsDetailsEditComponent<TrainBindingForm> {
+    public readonly bindingType = ControlSchemeBindingType.Train;
 
-    private _nextLevelControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.TrainControl> | null = null;
+    private _nextLevelControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null = null;
 
-    private _prevLevelControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.TrainControl> | null = null;
+    private _prevLevelControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null = null;
 
-    private _resetControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.TrainControl> | null = null;
+    private _resetControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null = null;
 
-    private _form?: TrainControlBindingForm;
+    private _form?: TrainBindingForm;
 
     constructor(
         private readonly commonFormControlBuilder: CommonBindingsFormControlsBuilderService,
-        private readonly l10nService: TrainControlL10nService
+        private readonly l10nService: TrainBindingL10nService
     ) {
     }
 
-    public get form(): TrainControlBindingForm | undefined {
+    public get form(): TrainBindingForm | undefined {
         return this._form;
     }
 
-    public get nextLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.TrainControl> | null {
+    public get nextLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null {
         return this._nextLevelControlBindingComponentData;
     }
 
-    public get prevLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.TrainControl> | null {
+    public get prevLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null {
         return this._prevLevelControlBindingComponentData;
     }
 
-    public get resetControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.TrainControl> | null {
+    public get resetControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null {
         return this._resetControlBindingComponentData;
     }
 
     public setForm(
-        form: TrainControlBindingForm
+        form: TrainBindingForm
     ): void {
         this._form = form;
         this._nextLevelControlBindingComponentData = {
-            bindingType: ControlSchemeBindingType.TrainControl,
-            inputFormGroup: this._form.controls.inputs.controls[TrainControlInputAction.NextSpeed],
-            inputAction: TrainControlInputAction.NextSpeed,
-            inputName$: this.l10nService.getBindingInputName(TrainControlInputAction.NextSpeed)
+            bindingType: ControlSchemeBindingType.Train,
+            inputFormGroup: this._form.controls.inputs.controls[TrainInputAction.NextSpeed],
+            inputAction: TrainInputAction.NextSpeed,
+            inputName$: this.l10nService.getBindingInputName(TrainInputAction.NextSpeed)
         };
         this._prevLevelControlBindingComponentData = {
-            bindingType: ControlSchemeBindingType.TrainControl,
-            inputFormGroup: this._form.controls.inputs.controls[TrainControlInputAction.PrevSpeed],
-            inputAction: TrainControlInputAction.PrevSpeed,
-            inputName$: this.l10nService.getBindingInputName(TrainControlInputAction.PrevSpeed)
+            bindingType: ControlSchemeBindingType.Train,
+            inputFormGroup: this._form.controls.inputs.controls[TrainInputAction.PrevSpeed],
+            inputAction: TrainInputAction.PrevSpeed,
+            inputName$: this.l10nService.getBindingInputName(TrainInputAction.PrevSpeed)
         };
         this._resetControlBindingComponentData = {
-            bindingType: ControlSchemeBindingType.TrainControl,
-            inputFormGroup: this._form.controls.inputs.controls[TrainControlInputAction.Reset],
-            inputAction: TrainControlInputAction.Reset,
-            inputName$: this.l10nService.getBindingInputName(TrainControlInputAction.Reset)
+            bindingType: ControlSchemeBindingType.Train,
+            inputFormGroup: this._form.controls.inputs.controls[TrainInputAction.Reset],
+            inputAction: TrainInputAction.Reset,
+            inputName$: this.l10nService.getBindingInputName(TrainInputAction.Reset)
         };
     }
 

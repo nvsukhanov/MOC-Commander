@@ -11,7 +11,7 @@ import {
     SetAngleInputAction,
     SpeedInputAction,
     StepperInputAction,
-    TrainControlInputAction
+    TrainInputAction
 } from '../../models';
 import { V21ToV22MigrationService } from '../v21-v22';
 import { V21_STORE_SAMPLE } from '../v21';
@@ -31,13 +31,13 @@ import {
     V29SetAngleBinding,
     V29StepperBinding,
     V29Store,
-    V29TrainControlBinding,
+    V29TrainBinding,
     V30GearboxBinding,
     V30ServoBinding,
     V30SetAngleBinding,
     V30SpeedBinding,
     V30StepperBinding,
-    V30TrainControlBinding
+    V30TrainBinding
 } from './v29-store';
 import { OldInputAction } from '../old-input-actions';
 
@@ -154,11 +154,11 @@ describe('v29 to v30 migration', () => {
     });
 
     it('should migrate train binding input', () => {
-        const v30trainBinding = v30Store.controlSchemes?.entities?.['Speed shift']?.bindings[0] as V30TrainControlBinding;
-        const v29trainBinding = v29Store.controlSchemes?.entities?.['Speed shift']?.bindings[0] as V29TrainControlBinding;
-        expect(v30trainBinding.inputs[TrainControlInputAction.NextSpeed]).toEqual(v29trainBinding.inputs[OldInputAction.NextLevel]);
-        expect(v30trainBinding.inputs[TrainControlInputAction.PrevSpeed]).toEqual(v29trainBinding.inputs[OldInputAction.PrevLevel]);
-        expect(v30trainBinding.inputs[TrainControlInputAction.Reset]).toEqual(v29trainBinding.inputs[OldInputAction.Reset]);
+        const v30trainBinding = v30Store.controlSchemes?.entities?.['Speed shift']?.bindings[0] as V30TrainBinding;
+        const v29trainBinding = v29Store.controlSchemes?.entities?.['Speed shift']?.bindings[0] as V29TrainBinding;
+        expect(v30trainBinding.inputs[TrainInputAction.NextSpeed]).toEqual(v29trainBinding.inputs[OldInputAction.NextLevel]);
+        expect(v30trainBinding.inputs[TrainInputAction.PrevSpeed]).toEqual(v29trainBinding.inputs[OldInputAction.PrevLevel]);
+        expect(v30trainBinding.inputs[TrainInputAction.Reset]).toEqual(v29trainBinding.inputs[OldInputAction.Reset]);
     });
 
     it('should migrate gearbox binding input', () => {

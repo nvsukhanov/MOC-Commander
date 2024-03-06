@@ -6,7 +6,7 @@ const REQUIRED_PORT_MODES_FOR_OPERATION_MODE: { [k in ControlSchemeBindingType]:
     [ControlSchemeBindingType.Servo]: [ PortModeName.absolutePosition, PortModeName.position, PortModeName.speed, PortModeName.power ],
     [ControlSchemeBindingType.SetAngle]: [ PortModeName.absolutePosition, PortModeName.position, PortModeName.speed, PortModeName.power ],
     [ControlSchemeBindingType.Stepper]: [ PortModeName.position, PortModeName.speed, PortModeName.power ],
-    [ControlSchemeBindingType.TrainControl]: [ PortModeName.speed, PortModeName.power ],
+    [ControlSchemeBindingType.Train]: [ PortModeName.speed, PortModeName.power ],
     [ControlSchemeBindingType.Gearbox]: [ PortModeName.absolutePosition, PortModeName.position, PortModeName.speed, PortModeName.power ]
 };
 

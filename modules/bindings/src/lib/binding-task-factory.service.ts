@@ -5,7 +5,7 @@ import { AttachedIoPropsModel, ControlSchemeBinding, ITaskFactory, PortCommandTa
 import { ServoTaskPayloadBuilderService } from './servo';
 import { SetAngleTaskPayloadBuilderService } from './set-angle';
 import { SpeedTaskPayloadBuilderService } from './speed';
-import { TrainControlTaskPayloadBuilderService } from './train-control';
+import { TrainBindingTaskPayloadBuilderService } from './train';
 import { StepperTaskPayloadBuilderService } from './stepper';
 import { GearboxBindingTaskPayloadBuilderService } from './gearbox';
 import { BindingTaskPayloadHashBuilderService } from './binding-task-payload-hash-builder.service';
@@ -19,7 +19,7 @@ export class BindingTaskFactoryService implements ITaskFactory {
         [ControlSchemeBindingType.Servo]: this.servoTaskPayloadBuilder,
         [ControlSchemeBindingType.SetAngle]: this.setAngleTaskPayloadBuilder,
         [ControlSchemeBindingType.Speed]: this.speedTaskPayloadBuilder,
-        [ControlSchemeBindingType.TrainControl]: this.trainControlTaskPayloadBuilder,
+        [ControlSchemeBindingType.Train]: this.trainTaskPayloadBuilder,
         [ControlSchemeBindingType.Stepper]: this.stepperTaskPayloadBuilder,
         [ControlSchemeBindingType.Gearbox]: this.gearboxTaskPayloadBuilder,
     };
@@ -28,7 +28,7 @@ export class BindingTaskFactoryService implements ITaskFactory {
         private readonly servoTaskPayloadBuilder: ServoTaskPayloadBuilderService,
         private readonly setAngleTaskPayloadBuilder: SetAngleTaskPayloadBuilderService,
         private readonly speedTaskPayloadBuilder: SpeedTaskPayloadBuilderService,
-        private readonly trainControlTaskPayloadBuilder: TrainControlTaskPayloadBuilderService,
+        private readonly trainTaskPayloadBuilder: TrainBindingTaskPayloadBuilderService,
         private readonly stepperTaskPayloadBuilder: StepperTaskPayloadBuilderService,
         private readonly gearboxTaskPayloadBuilder: GearboxBindingTaskPayloadBuilderService,
         private readonly hashBuilder: BindingTaskPayloadHashBuilderService

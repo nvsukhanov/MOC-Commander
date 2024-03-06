@@ -300,7 +300,7 @@
       "inputAction": "Установка угла ({ angle }°)",
       "basicInputAction": "Установка угла"
     },
-    "trainControlBinding": {
+    "trainBinding": {
       "operationMode": "Поезд",
       "level": "Скорость { level } (%)",
       "outputLevelAdd": "Добавить скорость",
