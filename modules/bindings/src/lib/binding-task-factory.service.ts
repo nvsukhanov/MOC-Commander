@@ -7,7 +7,7 @@ import { SetAngleTaskPayloadBuilderService } from './set-angle';
 import { SpeedTaskPayloadBuilderService } from './speed';
 import { TrainControlTaskPayloadBuilderService } from './train-control';
 import { StepperTaskPayloadBuilderService } from './stepper';
-import { GearboxControlTaskPayloadBuilderService } from './gearbox';
+import { GearboxBindingTaskPayloadBuilderService } from './gearbox';
 import { BindingTaskPayloadHashBuilderService } from './binding-task-payload-hash-builder.service';
 import { ITaskPayloadBuilder } from './i-task-payload-factory';
 import { BindingInputExtractionResult } from './i-binding-task-input-extractor';
@@ -21,7 +21,7 @@ export class BindingTaskFactoryService implements ITaskFactory {
         [ControlSchemeBindingType.Speed]: this.speedTaskPayloadBuilder,
         [ControlSchemeBindingType.TrainControl]: this.trainControlTaskPayloadBuilder,
         [ControlSchemeBindingType.Stepper]: this.stepperTaskPayloadBuilder,
-        [ControlSchemeBindingType.GearboxControl]: this.gearboxControlTaskPayloadBuilder,
+        [ControlSchemeBindingType.Gearbox]: this.gearboxTaskPayloadBuilder,
     };
 
     constructor(
@@ -30,7 +30,7 @@ export class BindingTaskFactoryService implements ITaskFactory {
         private readonly speedTaskPayloadBuilder: SpeedTaskPayloadBuilderService,
         private readonly trainControlTaskPayloadBuilder: TrainControlTaskPayloadBuilderService,
         private readonly stepperTaskPayloadBuilder: StepperTaskPayloadBuilderService,
-        private readonly gearboxControlTaskPayloadBuilder: GearboxControlTaskPayloadBuilderService,
+        private readonly gearboxTaskPayloadBuilder: GearboxBindingTaskPayloadBuilderService,
         private readonly hashBuilder: BindingTaskPayloadHashBuilderService
     ) {
     }

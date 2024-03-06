@@ -8,10 +8,10 @@ import { IBindingTaskRunner } from '../i-binding-task-runner';
 import { mapUseProfile } from '../common';
 
 @Injectable()
-export class GearboxControlTaskRunnerService implements IBindingTaskRunner<ControlSchemeBindingType.GearboxControl> {
+export class GearboxBindingTaskRunnerService implements IBindingTaskRunner<ControlSchemeBindingType.Gearbox> {
     public runTask(
         hub: IHub,
-        task: PortCommandTask<ControlSchemeBindingType.GearboxControl>
+        task: PortCommandTask<ControlSchemeBindingType.Gearbox>
     ): Observable<PortCommandExecutionStatus> {
         return hub.motors.goToPosition(
             task.portId,

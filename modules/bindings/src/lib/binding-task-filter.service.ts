@@ -14,7 +14,7 @@ export class BindingTaskFilterService implements ITaskFilter {
         [ControlSchemeBindingType.SetAngle]: this.mostRecentTaskFilter,
         [ControlSchemeBindingType.Stepper]: this.mostRecentTaskFilter,
         [ControlSchemeBindingType.TrainControl]: this.hashCompareFilter,
-        [ControlSchemeBindingType.GearboxControl]: this.hashCompareFilter,
+        [ControlSchemeBindingType.Gearbox]: this.hashCompareFilter,
     };
 
     constructor(

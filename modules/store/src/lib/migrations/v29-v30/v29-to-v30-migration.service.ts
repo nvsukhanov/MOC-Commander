@@ -6,7 +6,7 @@ import { ControlSchemeBindingType, DeepPartial } from '@app/shared-misc';
 import { AppStoreVersion } from '../../app-store-version';
 import { IMigration } from '../i-migration';
 import {
-    GearboxControlInputAction,
+    GearboxInputAction,
     InputDirection,
     ServoInputAction,
     SetAngleInputAction,
@@ -16,7 +16,7 @@ import {
 } from '../../models';
 import {
     V29ControlSchemesEntitiesState,
-    V29GearboxControlBinding,
+    V29GearboxBinding,
     V29ServoBinding,
     V29SetAngleBinding,
     V29SpeedBinding,
@@ -24,7 +24,7 @@ import {
     V29Store,
     V29TrainControlBinding,
     V30Binding,
-    V30GearboxControlBinding,
+    V30GearboxBinding,
     V30ServoBinding,
     V30SetAngleBinding,
     V30SpeedBinding,
@@ -76,7 +76,7 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
                         return this.migrateStepper(b);
                     case ControlSchemeBindingType.TrainControl:
                         return this.migrateTrain(b);
-                    case ControlSchemeBindingType.GearboxControl:
+                    case ControlSchemeBindingType.Gearbox:
                         return this.migrateGearbox(b);
                 }
             });
@@ -91,23 +91,23 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
     }
 
     private migrateGearbox(
-        b: V29GearboxControlBinding
-    ): V30GearboxControlBinding {
-        const bindingResult: V30GearboxControlBinding = {
+        b: V29GearboxBinding
+    ): V30GearboxBinding {
+        const bindingResult: V30GearboxBinding = {
             ...b,
             inputs: {
-                [GearboxControlInputAction.NextGear]: {
+                [GearboxInputAction.NextGear]: {
                     ...b.inputs[OldInputAction.NextLevel]
                 }
             }
         };
         if (b.inputs[OldInputAction.PrevLevel]) {
-            bindingResult.inputs[GearboxControlInputAction.PrevGear] = {
+            bindingResult.inputs[GearboxInputAction.PrevGear] = {
                 ...b.inputs[OldInputAction.PrevLevel]
             };
         }
         if (b.inputs[OldInputAction.Reset]) {
-            bindingResult.inputs[GearboxControlInputAction.Reset] = {
+            bindingResult.inputs[GearboxInputAction.Reset] = {
                 ...b.inputs[OldInputAction.Reset]
             };
         }

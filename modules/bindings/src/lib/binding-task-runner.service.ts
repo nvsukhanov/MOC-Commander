@@ -9,7 +9,7 @@ import { SetAngleTaskRunnerService } from './set-angle';
 import { SpeedTaskRunnerService } from './speed';
 import { TrainControlTaskRunnerService } from './train-control';
 import { StepperTaskRunnerService } from './stepper';
-import { GearboxControlTaskRunnerService } from './gearbox';
+import { GearboxBindingTaskRunnerService } from './gearbox';
 import { IBindingTaskRunner } from './i-binding-task-runner';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class BindingTaskRunnerService implements ITaskRunner {
         [ControlSchemeBindingType.Speed]: this.speedTaskRunnerService,
         [ControlSchemeBindingType.Stepper]: this.stepperTaskRunnerService,
         [ControlSchemeBindingType.TrainControl]: this.trainControlTaskRunnerService,
-        [ControlSchemeBindingType.GearboxControl]: this.gearboxControlTaskRunnerService,
+        [ControlSchemeBindingType.Gearbox]: this.gearboxTaskRunnerService,
     };
 
     constructor(
@@ -29,7 +29,7 @@ export class BindingTaskRunnerService implements ITaskRunner {
         private readonly speedTaskRunnerService: SpeedTaskRunnerService,
         private readonly trainControlTaskRunnerService: TrainControlTaskRunnerService,
         private readonly stepperTaskRunnerService: StepperTaskRunnerService,
-        private readonly gearboxControlTaskRunnerService: GearboxControlTaskRunnerService
+        private readonly gearboxTaskRunnerService: GearboxBindingTaskRunnerService
     ) {
     }
 

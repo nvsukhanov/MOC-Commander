@@ -4,5 +4,5 @@ export enum ControlSchemeBindingType {
     Servo,
     Stepper,
     TrainControl,
-    GearboxControl,
+    Gearbox,
 }

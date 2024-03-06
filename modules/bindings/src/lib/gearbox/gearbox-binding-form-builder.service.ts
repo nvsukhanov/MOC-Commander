@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MotorServoEndState } from 'rxpoweredup';
 import { DeepPartial } from '@app/shared-misc';
-import { ControlSchemeGearboxControlBinding, GearboxControlInputAction } from '@app/store';
+import { ControlSchemeGearboxBinding, GearboxInputAction } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 import { CommonBindingsFormControlsBuilderService } from '../common';
-import { GearboxControlBindingForm } from './gearbox-binding-form';
+import { GearboxBindingForm } from './gearbox-binding-form';
 import { IBindingFormBuilder } from '../i-binding-form-builder';
 
 @Injectable()
-export class GearboxControlBindingFormBuilderService implements IBindingFormBuilder<GearboxControlBindingForm> {
+export class GearboxBindingFormBuilderService implements IBindingFormBuilder<GearboxBindingForm> {
     constructor(
         private readonly formBuilder: FormBuilder,
         private readonly commonFormControlsBuilder: CommonBindingsFormControlsBuilderService,
@@ -18,12 +18,12 @@ export class GearboxControlBindingFormBuilderService implements IBindingFormBuil
     ) {
     }
 
-    public build(): GearboxControlBindingForm {
+    public build(): GearboxBindingForm {
         return this.formBuilder.group({
             inputs: this.formBuilder.group({
-                [GearboxControlInputAction.NextGear]: this.commonFormControlsBuilder.inputFormGroup(),
-                [GearboxControlInputAction.PrevGear]: this.commonFormControlsBuilder.optionalInputFormGroup(),
-                [GearboxControlInputAction.Reset]: this.commonFormControlsBuilder.optionalInputFormGroup()
+                [GearboxInputAction.NextGear]: this.commonFormControlsBuilder.inputFormGroup(),
+                [GearboxInputAction.PrevGear]: this.commonFormControlsBuilder.optionalInputFormGroup(),
+                [GearboxInputAction.Reset]: this.commonFormControlsBuilder.optionalInputFormGroup()
             }),
             hubId: this.controlSchemeFormBuilder.hubIdControl(),
             portId: this.controlSchemeFormBuilder.portIdControl(),
@@ -49,8 +49,8 @@ export class GearboxControlBindingFormBuilderService implements IBindingFormBuil
     }
 
     public patchForm(
-        form: GearboxControlBindingForm,
-        binding: DeepPartial<ControlSchemeGearboxControlBinding>
+        form: GearboxBindingForm,
+        binding: DeepPartial<ControlSchemeGearboxBinding>
     ): void {
         form.patchValue(binding);
         form.controls.angles.clear();

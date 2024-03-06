@@ -39,14 +39,14 @@
                         mat-raised-button
                         (click)="addNextAngleLevel()"
                 >
-                    {{ 'controlScheme.gearboxControlBinding.outputAngleLevelAdd' | transloco }}
+                    {{ 'controlScheme.gearboxBinding.outputAngleLevelAdd' | transloco }}
                 </button>
             </div>
 
             @for (angleControl of form.controls.angles.controls; track angleControl; let idx = $index) {
                 <mat-form-field>
                     <mat-label>
-                        {{ 'controlScheme.gearboxControlBinding.angleLevel' | transloco: { level: form.controls.initialLevelIndex.value - idx } }}
+                        {{ 'controlScheme.gearboxBinding.angleLevel' | transloco: { level: form.controls.initialLevelIndex.value - idx } }}
                     </mat-label>
                     <input type="number"
                            matInput
@@ -55,7 +55,7 @@
                     <button mat-icon-button
                             matSuffix
                             [disabled]="(canRequestPortValue$ | async) !== true"
-                            [title]="'controlScheme.gearboxControlBinding.readAngleFromPort' | transloco"
+                            [title]="'controlScheme.gearboxBinding.readAngleFromPort' | transloco"
                             (click)="onPortAbsolutePositionRequest(idx)"
                     >
                         <mat-icon [fontIcon]="'gps_fixed'"></mat-icon>
@@ -63,7 +63,7 @@
                     <button mat-icon-button
                             matSuffix
                             [disabled]="((form | canSetGearboxPortPosition: idx) | async) !== true"
-                            [title]="'controlScheme.gearboxControlBinding.setPortAngle' | transloco"
+                            [title]="'controlScheme.gearboxBinding.setPortAngle' | transloco"
                             (click)="onSetMotorPosition(idx)"
                     >
                         <mat-icon [fontIcon]="'settings_remote'"></mat-icon>
@@ -74,7 +74,7 @@
                             (click)="removeAngleLevel(idx)"
                     >
                         <mat-icon [fontIcon]="'delete'"></mat-icon>
-                        <span class="cdk-visually-hidden">{{ 'controlScheme.gearboxControlBinding.outputAngleLevelRemove' | transloco }}</span>
+                        <span class="cdk-visually-hidden">{{ 'controlScheme.gearboxBinding.outputAngleLevelRemove' | transloco }}</span>
                     </button>
                     <mat-error [libValidationMessages]="angleControl"></mat-error>
                 </mat-form-field>
@@ -85,7 +85,7 @@
                         mat-raised-button
                         (click)="addPrevAngleLevel()"
                 >
-                    {{ 'controlScheme.gearboxControlBinding.outputAngleLevelAdd' | transloco }}
+                    {{ 'controlScheme.gearboxBinding.outputAngleLevelAdd' | transloco }}
                 </button>
             </div>
 

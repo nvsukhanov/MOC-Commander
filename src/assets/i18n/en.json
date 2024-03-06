@@ -310,8 +310,8 @@
       "prevLevel": "Prev speed",
       "reset": "Set speed #0"
     },
-    "gearboxControlBinding": {
-      "operationMode": "Gearbox control",
+    "gearboxBinding": {
+      "operationMode": "Gearbox",
       "angleLevel": "Gear { level } (°)",
       "readAngleFromPort": "Read angle from port",
       "setPortAngle": "Set angle to motor",

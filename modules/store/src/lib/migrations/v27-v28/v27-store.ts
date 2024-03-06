@@ -12,7 +12,7 @@ export type V28SpeedBinding = V28Binding & { bindingType: ControlSchemeBindingTy
 export type V28ServoBinding = V28Binding & { bindingType: ControlSchemeBindingType.Servo };
 export type V28StepperBinding = V28Binding & { bindingType: ControlSchemeBindingType.Stepper };
 export type V28TrainControlBinding = V28Binding & { bindingType: ControlSchemeBindingType.TrainControl };
-export type V28GearboxControlBinding = V28Binding & { bindingType: ControlSchemeBindingType.GearboxControl };
+export type V28GearboxBinding = V28Binding & { bindingType: ControlSchemeBindingType.Gearbox };
 export type V28SetAngleBinding = V28Binding & { bindingType: ControlSchemeBindingType.SetAngle };
 
 export type V27ServoBinding = Override<V28ServoBinding, {
@@ -26,7 +26,7 @@ export type V27Bindings = V28SpeedBinding
     | V27ServoBinding
     | V28StepperBinding
     | V28TrainControlBinding
-    | V28GearboxControlBinding
+    | V28GearboxBinding
     | V28SetAngleBinding;
 export type V27ControlSchemesEntitiesState = Omit<V28ControlSchemesEntitiesState, 'bindings'> & { bindings: V27Bindings[] };
 

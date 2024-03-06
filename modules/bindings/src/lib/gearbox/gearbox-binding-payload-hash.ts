@@ -1,7 +1,7 @@
-import { GearboxControlTaskPayload } from '@app/store';
+import { GearboxTaskPayload } from '@app/store';
 
-export function gearboxControlPayloadHash(
-    payload: GearboxControlTaskPayload
+export function gearboxBindingPayloadHash(
+    payload: GearboxTaskPayload
 ): string {
     return [
         payload.bindingType,
