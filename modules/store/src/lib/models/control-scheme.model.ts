@@ -44,10 +44,11 @@ export type ControlSchemeInput = {
     inputDirection: InputDirection;
 };
 
+// Using string enum for input actions to avoid issues with object keys conversion to string
 export enum SpeedBindingInputAction {
-    Forwards = 'Forwards',
-    Backwards = 'Backwards',
-    Brake = 'Brake'
+    Forwards = '0',
+    Backwards = '1',
+    Brake = '2'
 }
 
 export type ControlSchemeSpeedBinding = {
@@ -66,8 +67,8 @@ export type ControlSchemeSpeedBinding = {
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
 export enum ServoBindingInputAction {
-    Cw = 'Cw',
-    Ccw = 'Ccw'
+    Cw = '0',
+    Ccw = '1'
 }
 
 export type ControlSchemeServoBinding = {
@@ -87,7 +88,7 @@ export type ControlSchemeServoBinding = {
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
 export enum SetAngleBindingInputAction {
-    SetAngle = 'SetAngle'
+    SetAngle = '0'
 }
 
 export type ControlSchemeSetAngleBinding = {
@@ -105,8 +106,8 @@ export type ControlSchemeSetAngleBinding = {
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
 export enum StepperBindingInputAction {
-    Cw = 'Cw',
-    Ccw = 'Ccw'
+    Cw = '0',
+    Ccw = '1'
 }
 
 export type ControlSchemeStepperBinding = {
@@ -125,9 +126,9 @@ export type ControlSchemeStepperBinding = {
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
 export enum TrainBindingInputAction {
-    NextSpeed = 'NextSpeed',
-    PrevSpeed = 'PrevSpeed',
-    Reset = 'ResetSpeed'
+    NextSpeed = '0',
+    PrevSpeed = '1',
+    Reset = '2'
 }
 
 export type ControlSchemeTrainBinding = {
@@ -147,9 +148,9 @@ export type ControlSchemeTrainBinding = {
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
 export enum GearboxBindingInputAction {
-    NextGear = 'NextGear',
-    PrevGear = 'PrevGear',
-    Reset = 'ResetGear'
+    NextGear = '0',
+    PrevGear = '1',
+    Reset = '2'
 }
 
 export type ControlSchemeGearboxBinding = {

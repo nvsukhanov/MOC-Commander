@@ -69,10 +69,14 @@ function getTaskComposingData$(
 
     const bindingWithInputsStreams: Array<Observable<BindingWithInputData>> = samePortBindings.map((binding) => {
         return inputComposer.composeInput(binding, inputStream).pipe(
-            distinctUntilChanged((a, b) => !inputComposer.isInputChanged(binding.bindingType, a, b)),
-            startWith(inputComposer.composeInput(binding, inputStream)),
-            pairwise(),
-            map(([prevInput, nextInput]) => ({ binding, prevInput, nextInput })),
+            switchMap((initialValue) => {
+                return of(initialValue).pipe(
+                    distinctUntilChanged((a, b) => !inputComposer.isInputChanged(binding.bindingType, a, b)),
+                    startWith(initialValue),
+                    pairwise(),
+                    map(([prevInput, nextInput]) => ({ binding, prevInput, nextInput })),
+                );
+            })
         );
     });
 
