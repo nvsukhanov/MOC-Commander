@@ -8,10 +8,10 @@ import { mapUseProfile } from '../common';
 import { IBindingTaskRunner } from '../i-binding-task-runner';
 
 @Injectable()
-export class TrainControlTaskRunnerService implements IBindingTaskRunner<ControlSchemeBindingType.TrainControl> {
+export class TrainBindingTaskRunnerService implements IBindingTaskRunner<ControlSchemeBindingType.Train> {
     public runTask(
         hub: IHub,
-        task: PortCommandTask<ControlSchemeBindingType.TrainControl>,
+        task: PortCommandTask<ControlSchemeBindingType.Train>,
     ): Observable<PortCommandExecutionStatus> {
         return hub.motors.startSpeed(
             task.portId,

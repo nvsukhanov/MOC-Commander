@@ -8,7 +8,7 @@ import { ServoBindingFormBuilderService } from './servo';
 import { SpeedBindingFormBuilderService } from './speed';
 import { SetAngleBindingFormBuilderService } from './set-angle';
 import { StepperBindingFormBuilderService } from './stepper';
-import { TrainControlBindingFormBuilderService } from './train-control';
+import { TrainBindingFormBuilderService } from './train';
 import { GearboxBindingFormBuilderService } from './gearbox';
 import { IBindingFormBuilder } from './i-binding-form-builder';
 
@@ -19,7 +19,7 @@ export class BindingValidatorService implements IBindingValidator {
         private readonly speedBindingFormBuilder: SpeedBindingFormBuilderService,
         private readonly setAngleBindingFormBuilder: SetAngleBindingFormBuilderService,
         private readonly stepperBindingFormBuilder: StepperBindingFormBuilderService,
-        private readonly trainControlBindingFormBuilder: TrainControlBindingFormBuilderService,
+        private readonly trainBindingFormBuilder: TrainBindingFormBuilderService,
         private readonly gearboxBindingFormBuilder: GearboxBindingFormBuilderService,
     ) {
     }
@@ -51,8 +51,8 @@ export class BindingValidatorService implements IBindingValidator {
                 return this.setAngleBindingFormBuilder;
             case ControlSchemeBindingType.Stepper:
                 return this.stepperBindingFormBuilder;
-            case ControlSchemeBindingType.TrainControl:
-                return this.trainControlBindingFormBuilder;
+            case ControlSchemeBindingType.Train:
+                return this.trainBindingFormBuilder;
             case ControlSchemeBindingType.Gearbox:
                 return this.gearboxBindingFormBuilder;
             default:

@@ -32,14 +32,14 @@
                 <button class="add-level-button"
                         mat-raised-button
                         (click)="addNextSpeedControl()">
-                    {{ 'controlScheme.trainControlBinding.outputLevelAdd' | transloco }}
+                    {{ 'controlScheme.trainBinding.outputLevelAdd' | transloco }}
                 </button>
             </div>
 
             @for (speedControl of form.controls.levels.controls; track speedControl; let idx = $index) {
                 <mat-form-field class="speed-level-form-field">
                     <mat-label>
-                        {{ 'controlScheme.trainControlBinding.level' | transloco: { level: form.controls.initialLevelIndex.value - idx } }}
+                        {{ 'controlScheme.trainBinding.level' | transloco: { level: form.controls.initialLevelIndex.value - idx } }}
                     </mat-label>
                     <input type="number"
                            matInput
@@ -51,7 +51,7 @@
                             (click)="removeSpeedControl(idx)"
                     >
                         <mat-icon [fontIcon]="'delete'"></mat-icon>
-                        <span class="cdk-visually-hidden">{{ 'controlScheme.trainControlBinding.outputLevelRemove' | transloco }}</span>
+                        <span class="cdk-visually-hidden">{{ 'controlScheme.trainBinding.outputLevelRemove' | transloco }}</span>
                     </button>
                     <mat-error [libValidationMessages]="speedControl"></mat-error>
                 </mat-form-field>
@@ -61,7 +61,7 @@
                 <button class="add-level-button"
                         mat-raised-button
                         (click)="addPrevSpeedControl()">
-                    {{ 'controlScheme.trainControlBinding.outputLevelAdd' | transloco }}
+                    {{ 'controlScheme.trainBinding.outputLevelAdd' | transloco }}
                 </button>
             </div>
 

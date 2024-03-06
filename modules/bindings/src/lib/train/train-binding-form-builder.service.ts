@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DeepPartial } from '@app/shared-misc';
-import { ControlSchemeTrainControlBinding, TrainControlInputAction } from '@app/store';
+import { ControlSchemeTrainBinding, TrainInputAction } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 import { CommonBindingsFormControlsBuilderService } from '../common';
-import { TrainControlBindingForm } from './train-control-binding-form';
+import { TrainBindingForm } from './train-binding-form';
 import { IBindingFormBuilder } from '../i-binding-form-builder';
 
 @Injectable()
-export class TrainControlBindingFormBuilderService implements IBindingFormBuilder<TrainControlBindingForm> {
+export class TrainBindingFormBuilderService implements IBindingFormBuilder<TrainBindingForm> {
     constructor(
         private readonly formBuilder: FormBuilder,
         private readonly commonFormControlsBuilder: CommonBindingsFormControlsBuilderService,
@@ -17,12 +17,12 @@ export class TrainControlBindingFormBuilderService implements IBindingFormBuilde
     ) {
     }
 
-    public build(): TrainControlBindingForm {
+    public build(): TrainBindingForm {
         return this.formBuilder.group({
             inputs: this.formBuilder.group({
-                [TrainControlInputAction.NextSpeed]: this.commonFormControlsBuilder.inputFormGroup(),
-                [TrainControlInputAction.PrevSpeed]: this.commonFormControlsBuilder.optionalInputFormGroup(),
-                [TrainControlInputAction.Reset]: this.commonFormControlsBuilder.optionalInputFormGroup()
+                [TrainInputAction.NextSpeed]: this.commonFormControlsBuilder.inputFormGroup(),
+                [TrainInputAction.PrevSpeed]: this.commonFormControlsBuilder.optionalInputFormGroup(),
+                [TrainInputAction.Reset]: this.commonFormControlsBuilder.optionalInputFormGroup()
             }),
             hubId: this.controlSchemeFormBuilder.hubIdControl(),
             portId: this.controlSchemeFormBuilder.portIdControl(),
@@ -49,8 +49,8 @@ export class TrainControlBindingFormBuilderService implements IBindingFormBuilde
     }
 
     public patchForm(
-        form: TrainControlBindingForm,
-        patch: DeepPartial<ControlSchemeTrainControlBinding>
+        form: TrainBindingForm,
+        patch: DeepPartial<ControlSchemeTrainBinding>
     ): void {
         form.patchValue(patch);
         form.controls.levels.clear();

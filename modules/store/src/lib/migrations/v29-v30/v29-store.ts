@@ -11,7 +11,7 @@ export type V30Binding = ExtractArrayType<V30ControlSchemesEntitiesState['bindin
 export type V30SpeedBinding = V30Binding & { bindingType: ControlSchemeBindingType.Speed };
 export type V30ServoBinding = V30Binding & { bindingType: ControlSchemeBindingType.Servo };
 export type V30StepperBinding = V30Binding & { bindingType: ControlSchemeBindingType.Stepper };
-export type V30TrainControlBinding = V30Binding & { bindingType: ControlSchemeBindingType.TrainControl };
+export type V30TrainBinding = V30Binding & { bindingType: ControlSchemeBindingType.Train };
 export type V30GearboxBinding = V30Binding & { bindingType: ControlSchemeBindingType.Gearbox };
 export type V30SetAngleBinding = V30Binding & { bindingType: ControlSchemeBindingType.SetAngle };
 
@@ -41,7 +41,7 @@ export type V29StepperBinding = Override<V30StepperBinding, {
     };
 }>;
 
-export type V29TrainControlBinding = Override<V30TrainControlBinding, {
+export type V29TrainBinding = Override<V30TrainBinding, {
     inputs: {
         [OldInputAction.NextLevel]: ControlSchemeInput;
         [OldInputAction.PrevLevel]?: ControlSchemeInput;
@@ -60,7 +60,7 @@ export type V29GearboxBinding = Override<V30GearboxBinding, {
 export type V29Bindings = V29SpeedBinding
     | V29ServoBinding
     | V29StepperBinding
-    | V29TrainControlBinding
+    | V29TrainBinding
     | V29GearboxBinding
     | V29SetAngleBinding;
 export type V29ControlSchemesEntitiesState = Omit<V30ControlSchemesEntitiesState, 'bindings'> & { bindings: V29Bindings[] };

@@ -12,7 +12,7 @@ import {
     SetAngleInputAction,
     SpeedInputAction,
     StepperInputAction,
-    TrainControlInputAction
+    TrainInputAction
 } from '../../models';
 import {
     V29ControlSchemesEntitiesState,
@@ -22,14 +22,14 @@ import {
     V29SpeedBinding,
     V29StepperBinding,
     V29Store,
-    V29TrainControlBinding,
+    V29TrainBinding,
     V30Binding,
     V30GearboxBinding,
     V30ServoBinding,
     V30SetAngleBinding,
     V30SpeedBinding,
     V30StepperBinding,
-    V30TrainControlBinding
+    V30TrainBinding
 } from './v29-store';
 import { V30Store } from '../v30';
 import { OldInputAction } from '../old-input-actions';
@@ -74,7 +74,7 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
                         return this.migrateSetAngle(b);
                     case ControlSchemeBindingType.Stepper:
                         return this.migrateStepper(b);
-                    case ControlSchemeBindingType.TrainControl:
+                    case ControlSchemeBindingType.Train:
                         return this.migrateTrain(b);
                     case ControlSchemeBindingType.Gearbox:
                         return this.migrateGearbox(b);
@@ -115,23 +115,23 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
     }
 
     private migrateTrain(
-        b: V29TrainControlBinding
-    ): V30TrainControlBinding {
-        const bindingResult: V30TrainControlBinding = {
+        b: V29TrainBinding
+    ): V30TrainBinding {
+        const bindingResult: V30TrainBinding = {
             ...b,
             inputs: {
-                [TrainControlInputAction.NextSpeed]: {
+                [TrainInputAction.NextSpeed]: {
                     ...b.inputs[OldInputAction.NextLevel]
                 }
             }
         };
         if (b.inputs[OldInputAction.PrevLevel]) {
-            bindingResult.inputs[TrainControlInputAction.PrevSpeed] = {
+            bindingResult.inputs[TrainInputAction.PrevSpeed] = {
                 ...b.inputs[OldInputAction.PrevLevel]
             };
         }
         if (b.inputs[OldInputAction.Reset]) {
-            bindingResult.inputs[TrainControlInputAction.Reset] = {
+            bindingResult.inputs[TrainInputAction.Reset] = {
                 ...b.inputs[OldInputAction.Reset]
             };
         }

@@ -19,7 +19,7 @@ import { provideBindingCommonServices } from './common';
 import { BindingTaskFilterService } from './binding-task-filter.service';
 import { BindingDetailsEditFormRendererFactoryService } from './binding-details-edit-form-renderer-factory.service';
 import { BindingValidatorService } from './binding-validator.service';
-import { provideTrainControlBinding } from './train-control';
+import { provideTrainBinding } from './train';
 import { TaskInputComposer } from './task-input-composer';
 import { BindingL10nService } from './binding-l10n.service';
 
@@ -30,7 +30,7 @@ export function provideBindings(): Provider[] {
         ...provideSetAngleBinding(),
         ...provideSpeedBinding(),
         ...provideStepperBinding(),
-        ...provideTrainControlBinding(),
+        ...provideTrainBinding(),
         ...provideBindingCommonServices(),
         { provide: TASK_FACTORY, useClass: BindingTaskFactoryService },
         { provide: TASK_RUNNER, useClass: BindingTaskRunnerService },

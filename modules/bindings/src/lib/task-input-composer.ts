@@ -10,7 +10,7 @@ import { GearboxBindingInputExtractorService } from './gearbox';
 import { ServoInputExtractorService } from './servo';
 import { SetAngleInputExtractorService } from './set-angle';
 import { StepperInputExtractorService } from './stepper';
-import { TrainControlTaskInputExtractorService } from './train-control';
+import { TrainBindingInputExtractorService } from './train';
 
 @Injectable()
 export class TaskInputComposer implements ITasksInputExtractor {
@@ -20,7 +20,7 @@ export class TaskInputComposer implements ITasksInputExtractor {
         [ControlSchemeBindingType.Servo]: this.servoInputExtractor,
         [ControlSchemeBindingType.SetAngle]: this.setAngleInputExtractor,
         [ControlSchemeBindingType.Stepper]: this.stepperInputExtractor,
-        [ControlSchemeBindingType.TrainControl]: this.trainControlInputExtractor
+        [ControlSchemeBindingType.Train]: this.trainInputExtractor
     };
 
     constructor(
@@ -29,7 +29,7 @@ export class TaskInputComposer implements ITasksInputExtractor {
         private readonly servoInputExtractor: ServoInputExtractorService,
         private readonly setAngleInputExtractor: SetAngleInputExtractorService,
         private readonly stepperInputExtractor: StepperInputExtractorService,
-        private readonly trainControlInputExtractor: TrainControlTaskInputExtractorService
+        private readonly trainInputExtractor: TrainBindingInputExtractorService
     ) {
     }
 

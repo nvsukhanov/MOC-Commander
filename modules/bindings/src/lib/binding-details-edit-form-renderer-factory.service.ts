@@ -6,7 +6,7 @@ import { ServoBindingFormBuilderService, ServoBindingFormMapperService } from '.
 import { SpeedBindingFormBuilderService, SpeedBindingFormMapperService } from './speed';
 import { SetAngleBindingFormBuilderService, SetAngleBindingFormMapperService } from './set-angle';
 import { StepperBindingFormBuilderService, StepperBindingFormMapperService } from './stepper';
-import { TrainControlBindingFormBuilderService, TrainControlBindingFormMapperService } from './train-control';
+import { TrainBindingFormBuilderService, TrainBindingFormMapperService } from './train';
 import { GearboxBindingFormBuilderService, GearboxBindingFormMapperService } from './gearbox';
 import { BindingDetailsEditFormRenderer } from './binding-details-edit-form-renderer';
 
@@ -18,13 +18,13 @@ export class BindingDetailsEditFormRendererFactoryService implements IBindingDet
         private readonly speedBindingFormBuilder: SpeedBindingFormBuilderService,
         private readonly setAngleBindingFormBuilder: SetAngleBindingFormBuilderService,
         private readonly stepperBindingFormBuilder: StepperBindingFormBuilderService,
-        private readonly trainControlBindingFormBuilder: TrainControlBindingFormBuilderService,
+        private readonly trainBindingFormBuilder: TrainBindingFormBuilderService,
         private readonly gearboxBindingFormBuilder: GearboxBindingFormBuilderService,
         private readonly speedBindingMapper: SpeedBindingFormMapperService,
         private readonly servoBindingMapper: ServoBindingFormMapperService,
         private readonly setAngleBindingMapper: SetAngleBindingFormMapperService,
         private readonly stepperBindingMapper: StepperBindingFormMapperService,
-        private readonly trainControlBindingMapper: TrainControlBindingFormMapperService,
+        private readonly trainBindingMapper: TrainBindingFormMapperService,
         private readonly gearboxBindingMapper: GearboxBindingFormMapperService
     ) {
     }
@@ -39,13 +39,13 @@ export class BindingDetailsEditFormRendererFactoryService implements IBindingDet
             this.speedBindingFormBuilder,
             this.setAngleBindingFormBuilder,
             this.stepperBindingFormBuilder,
-            this.trainControlBindingFormBuilder,
+            this.trainBindingFormBuilder,
             this.gearboxBindingFormBuilder,
             this.speedBindingMapper,
             this.servoBindingMapper,
             this.setAngleBindingMapper,
             this.stepperBindingMapper,
-            this.trainControlBindingMapper,
+            this.trainBindingMapper,
             this.gearboxBindingMapper
         );
     }

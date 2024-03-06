@@ -124,19 +124,19 @@ export type ControlSchemeStepperBinding = {
     endState: MotorServoEndState;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
-export enum TrainControlInputAction {
+export enum TrainInputAction {
     NextSpeed = 'NextSpeed',
     PrevSpeed = 'PrevSpeed',
     Reset = 'ResetSpeed'
 }
 
-export type ControlSchemeTrainControlBinding = {
+export type ControlSchemeTrainBinding = {
     id: number;
-    bindingType: ControlSchemeBindingType.TrainControl;
+    bindingType: ControlSchemeBindingType.Train;
     inputs: {
-        [TrainControlInputAction.NextSpeed]: ControlSchemeInput;
-        [TrainControlInputAction.PrevSpeed]?: ControlSchemeInput;
-        [TrainControlInputAction.Reset]?: ControlSchemeInput;
+        [TrainInputAction.NextSpeed]: ControlSchemeInput;
+        [TrainInputAction.PrevSpeed]?: ControlSchemeInput;
+        [TrainInputAction.Reset]?: ControlSchemeInput;
     };
     hubId: string;
     portId: number;
@@ -176,7 +176,7 @@ export type ControlSchemeBinding = ControlSchemeSpeedBinding
     | ControlSchemeServoBinding
     | ControlSchemeSetAngleBinding
     | ControlSchemeStepperBinding
-    | ControlSchemeTrainControlBinding
+    | ControlSchemeTrainBinding
     | ControlSchemeGearboxBinding;
 
 export type BaseWidgetConfigModel = {

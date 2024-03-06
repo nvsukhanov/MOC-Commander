@@ -13,7 +13,7 @@ export class BindingTaskFilterService implements ITaskFilter {
         [ControlSchemeBindingType.Servo]: this.hashCompareFilter,
         [ControlSchemeBindingType.SetAngle]: this.mostRecentTaskFilter,
         [ControlSchemeBindingType.Stepper]: this.mostRecentTaskFilter,
-        [ControlSchemeBindingType.TrainControl]: this.hashCompareFilter,
+        [ControlSchemeBindingType.Train]: this.hashCompareFilter,
         [ControlSchemeBindingType.Gearbox]: this.hashCompareFilter,
     };
 

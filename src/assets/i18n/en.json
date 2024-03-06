@@ -300,8 +300,8 @@
       "inputAction": "Set angle ({ angle }°)",
       "basicInputAction": "Set angle"
     },
-    "trainControlBinding": {
-      "operationMode": "Train control",
+    "trainBinding": {
+      "operationMode": "Train",
       "level": "Speed { level } (%)",
       "outputLevelAdd": "Add speed",
       "outputLevelRemove": "Remove speed",

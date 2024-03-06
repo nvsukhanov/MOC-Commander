@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 import {
     AttachedIoPropsModel,
-    ControlSchemeTrainControlBinding,
+    ControlSchemeTrainBinding,
     LoopingMode,
     PortCommandTask,
     PortCommandTaskPayload,
-    TrainControlInputAction,
-    TrainControlTaskPayload
+    TrainInputAction,
+    TrainTaskPayload
 } from '@app/store';
 
 import { calculateNextLoopingIndex, isDirectionalInputActivated } from '../common';
@@ -15,22 +15,22 @@ import { ITaskPayloadBuilder } from '../i-task-payload-factory';
 import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 
 @Injectable()
-export class TrainControlTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.TrainControl> {
+export class TrainBindingTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.Train> {
     public buildPayload(
-        binding: ControlSchemeTrainControlBinding,
-        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.TrainControl>,
-        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.TrainControl>,
+        binding: ControlSchemeTrainBinding,
+        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Train>,
+        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.Train>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTask: PortCommandTask | null
-    ): { payload: TrainControlTaskPayload; inputTimestamp: number } | null {
-        const nextLevelInput = this.getActiveInput(binding, currentInput, previousInput, TrainControlInputAction.NextSpeed);
-        const prevLevelInput = this.getActiveInput(binding, currentInput, previousInput, TrainControlInputAction.PrevSpeed);
-        const resetLevelInput = this.getActiveInput(binding, currentInput, previousInput, TrainControlInputAction.Reset);
+    ): { payload: TrainTaskPayload; inputTimestamp: number } | null {
+        const nextLevelInput = this.getActiveInput(binding, currentInput, previousInput, TrainInputAction.NextSpeed);
+        const prevLevelInput = this.getActiveInput(binding, currentInput, previousInput, TrainInputAction.PrevSpeed);
+        const resetLevelInput = this.getActiveInput(binding, currentInput, previousInput, TrainInputAction.Reset);
 
         if (resetLevelInput.isActivated) {
             return {
                 payload: {
-                    bindingType: ControlSchemeBindingType.TrainControl,
+                    bindingType: ControlSchemeBindingType.Train,
                     speed: 0,
                     power: 0,
                     isLooping: false,
@@ -47,7 +47,7 @@ export class TrainControlTaskPayloadBuilderService implements ITaskPayloadBuilde
             return null;
         }
         const prevSpeed = previousTask?.payload.speed ?? 0;
-        const isLoopingPrev = previousTask?.payload.bindingType === ControlSchemeBindingType.TrainControl && binding.loopingMode !== LoopingMode.None
+        const isLoopingPrev = previousTask?.payload.bindingType === ControlSchemeBindingType.Train && binding.loopingMode !== LoopingMode.None
                               ? previousTask.payload.isLooping
                               : false;
 
@@ -64,8 +64,8 @@ export class TrainControlTaskPayloadBuilderService implements ITaskPayloadBuilde
             binding.loopingMode
         );
 
-        const payload: TrainControlTaskPayload = {
-            bindingType: ControlSchemeBindingType.TrainControl,
+        const payload: TrainTaskPayload = {
+            bindingType: ControlSchemeBindingType.Train,
             speedIndex: nextIndex,
             speed: binding.levels[nextIndex],
             power: binding.levels[nextIndex] === 0 ? 0 : binding.power,
@@ -80,7 +80,7 @@ export class TrainControlTaskPayloadBuilderService implements ITaskPayloadBuilde
     public buildCleanupPayload(
         previousTask: PortCommandTask
     ): PortCommandTaskPayload | null {
-        if (previousTask.payload.bindingType !== ControlSchemeBindingType.TrainControl) {
+        if (previousTask.payload.bindingType !== ControlSchemeBindingType.Train) {
             return null;
         }
         return {
@@ -94,10 +94,10 @@ export class TrainControlTaskPayloadBuilderService implements ITaskPayloadBuilde
     }
 
     private getActiveInput(
-        binding: ControlSchemeTrainControlBinding,
-        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.TrainControl>,
-        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.TrainControl>,
-        inputAction: keyof ControlSchemeTrainControlBinding['inputs'],
+        binding: ControlSchemeTrainBinding,
+        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Train>,
+        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.Train>,
+        inputAction: keyof ControlSchemeTrainBinding['inputs'],
     ): { isActivated: boolean; timestamp: number } {
         const currentInputForAction = currentInput[inputAction];
         const inputConfig = binding.inputs[inputAction];

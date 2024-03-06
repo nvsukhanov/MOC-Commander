@@ -6,7 +6,7 @@ import { servoPayloadHash } from './servo';
 import { setAnglePayloadHash } from './set-angle';
 import { speedPayloadHash } from './speed';
 import { stepperPayloadHash } from './stepper';
-import { trainControlPayloadHash } from './train-control';
+import { trainBindingPayloadHash } from './train';
 import { gearboxBindingPayloadHash } from './gearbox';
 
 @Injectable()
@@ -23,8 +23,8 @@ export class BindingTaskPayloadHashBuilderService {
                 return speedPayloadHash(payload);
             case ControlSchemeBindingType.Stepper:
                 return stepperPayloadHash(payload);
-            case ControlSchemeBindingType.TrainControl:
-                return trainControlPayloadHash(payload);
+            case ControlSchemeBindingType.Train:
+                return trainBindingPayloadHash(payload);
             case ControlSchemeBindingType.Gearbox:
                 return gearboxBindingPayloadHash(payload);
         }
