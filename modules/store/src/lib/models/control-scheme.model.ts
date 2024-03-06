@@ -4,8 +4,8 @@ import { ControlSchemeBindingType, WidgetType } from '@app/shared-misc';
 
 export enum LoopingMode {
     None,
-    Wrap,
-    Mirror
+    Cycle,
+    PingPong
 }
 
 export enum InputGain {

@@ -9,8 +9,8 @@ import { LoopingMode } from '@app/store';
 export class LoopingModeToL10nKeyPipe implements PipeTransform {
     private readonly loopingModeToL10nKeyMap: { [k in LoopingMode]: string } = {
         [LoopingMode.None]: 'controlScheme.loopingModeNone',
-        [LoopingMode.Wrap]: 'controlScheme.loopingModeWrap',
-        [LoopingMode.Mirror]: 'controlScheme.loopingModeMirror'
+        [LoopingMode.Cycle]: 'controlScheme.loopingModeCycle',
+        [LoopingMode.PingPong]: 'controlScheme.loopingModePingPong'
     };
 
     public transform(

@@ -10,7 +10,7 @@ import {
     TrainTaskPayload
 } from '@app/store';
 
-import { calculateNextLoopingIndex, isDirectionalInputActivated } from '../common';
+import { calculateNextLoopingIndex, isTriggeredInputActivated } from '../common';
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
 import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 
@@ -99,28 +99,18 @@ export class TrainBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
         previousInput: BindingInputExtractionResult<ControlSchemeBindingType.Train>,
         inputAction: keyof ControlSchemeTrainBinding['inputs'],
     ): { isActivated: boolean; timestamp: number } {
-        const currentInputForAction = currentInput[inputAction];
         const inputConfig = binding.inputs[inputAction];
-        if (currentInputForAction && inputConfig) {
-            const isNextActivated = isDirectionalInputActivated(
-                inputConfig.inputDirection,
-                inputAction,
-                currentInput
-            );
-            const isPrevActivated = isDirectionalInputActivated(
-                inputConfig.inputDirection,
-                inputAction,
-                previousInput
-            );
-
+        if (!inputConfig) {
             return {
-                isActivated: isNextActivated && !isPrevActivated,
-                timestamp: currentInputForAction.timestamp,
+                isActivated: false,
+                timestamp: -Infinity,
             };
         }
+        const isActivated = isTriggeredInputActivated(inputConfig.inputDirection, inputAction, currentInput, previousInput);
+        const timestamp = isActivated ? currentInput[inputAction]?.timestamp : undefined;
         return {
-            isActivated: false,
-            timestamp: -Infinity,
+            isActivated,
+            timestamp: timestamp ?? -Infinity
         };
     }
 }

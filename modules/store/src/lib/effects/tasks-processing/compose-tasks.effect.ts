@@ -1,5 +1,5 @@
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { EMPTY, Observable, combineLatest, distinctUntilChanged, filter, from, map, mergeMap, of, pairwise, startWith, switchMap, takeUntil } from 'rxjs';
+import { EMPTY, Observable, combineLatest, distinctUntilChanged, filter, from, map, mergeMap, of, pairwise, startWith, switchMap, take, takeUntil } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
@@ -69,26 +69,25 @@ function getTaskComposingData$(
 
     const bindingWithInputsStreams: Array<Observable<BindingWithInputData>> = samePortBindings.map((binding) => {
         return inputComposer.composeInput(binding, inputStream).pipe(
-            switchMap((initialValue) => {
-                return of(initialValue).pipe(
-                    distinctUntilChanged((a, b) => !inputComposer.isInputChanged(binding.bindingType, a, b)),
-                    startWith(initialValue),
-                    pairwise(),
-                    map(([prevInput, nextInput]) => ({ binding, prevInput, nextInput })),
-                );
-            })
+            take(1),
+            switchMap((initialValue) => inputComposer.composeInput(binding, inputStream).pipe(
+                distinctUntilChanged((a, b) => !inputComposer.isInputChanged(binding.bindingType, a, b)),
+                startWith(initialValue),
+                pairwise(),
+                map(([ prevInput, nextInput ]) => ({ binding, prevInput, nextInput }))
+            ))
         );
     });
 
     return combineLatest(bindingWithInputsStreams).pipe(
         concatLatestFrom(() => store.select(PORT_TASKS_SELECTORS.selectTaskExecutionData({ hubId, portId }))),
-        map(([bindingInputs, taskExecutionData]) => ({
+        map(([ bindingInputs, taskExecutionData ]) => ({
             ...taskExecutionData,
             bindingInputs,
             hubId,
             portId
         })),
-        takeUntil(actions.pipe(ofType(CONTROL_SCHEME_ACTIONS.stopScheme))),
+        takeUntil(actions.pipe(ofType(CONTROL_SCHEME_ACTIONS.stopScheme)))
     );
 }
 
@@ -102,7 +101,11 @@ function composeTasksForBindingGroup(
         || null;
 
     return composingData.bindingInputs
-                        .map(({ binding, prevInput, nextInput }) => taskBuilder.buildTask(binding, nextInput, prevInput, composingData.ioProps, previousTask))
+                        .map(({
+                            binding,
+                            prevInput,
+                            nextInput
+                        }) => taskBuilder.buildTask(binding, nextInput, prevInput, composingData.ioProps, previousTask))
                         .filter((task): task is PortCommandTask => !!task)
                         .sort((a, b) => a.inputTimestamp - b.inputTimestamp);
 }
@@ -136,11 +139,12 @@ export const COMPOSE_TASKS_EFFECT = createEffect((
                 tasks
             );
             const shouldUpdateQueue = nextPendingTask !== pendingTask;
+            const isNextTaskMoreRecent = (nextPendingTask?.inputTimestamp ?? 0) > (currentTask?.inputTimestamp ?? 0);
             return {
                 hubId,
                 portId,
                 pendingTask: nextPendingTask,
-                shouldUpdateQueue
+                shouldUpdateQueue: shouldUpdateQueue && isNextTaskMoreRecent
             };
         }),
         filter(({ shouldUpdateQueue }) => shouldUpdateQueue),
