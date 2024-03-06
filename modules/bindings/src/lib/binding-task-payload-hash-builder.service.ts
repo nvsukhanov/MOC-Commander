@@ -4,7 +4,7 @@ import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { servoPayloadHash } from './servo';
 import { setAnglePayloadHash } from './set-angle';
-import { setSpeedPayloadHash } from './set-speed';
+import { speedPayloadHash } from './speed';
 import { stepperPayloadHash } from './stepper';
 import { trainControlPayloadHash } from './train-control';
 import { gearboxControlPayloadHash } from './gearbox';
@@ -19,8 +19,8 @@ export class BindingTaskPayloadHashBuilderService {
                 return servoPayloadHash(payload);
             case ControlSchemeBindingType.SetAngle:
                 return setAnglePayloadHash(payload);
-            case ControlSchemeBindingType.SetSpeed:
-                return setSpeedPayloadHash(payload);
+            case ControlSchemeBindingType.Speed:
+                return speedPayloadHash(payload);
             case ControlSchemeBindingType.Stepper:
                 return stepperPayloadHash(payload);
             case ControlSchemeBindingType.TrainControl:

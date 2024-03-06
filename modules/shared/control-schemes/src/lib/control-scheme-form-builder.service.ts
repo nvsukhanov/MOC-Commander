@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AsyncValidatorFn, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
-import { AppValidators, ControlSchemeBindingType } from '@app/shared-misc';
 
 import { ControlSchemeValidators } from './validation';
 
@@ -13,19 +12,6 @@ export class ControlSchemeFormBuilderService {
         private readonly translocoService: TranslocoService,
         private readonly store: Store
     ) {
-    }
-
-    public bindingTypeControl(): FormControl<ControlSchemeBindingType> {
-        return this.formBuilder.control<ControlSchemeBindingType>(
-            ControlSchemeBindingType.SetSpeed,
-            {
-                nonNullable: true,
-                validators: [
-                    Validators.required,
-                    AppValidators.isInEnum(ControlSchemeBindingType)
-                ]
-            }
-        );
     }
 
     public controlSchemeNameControl(

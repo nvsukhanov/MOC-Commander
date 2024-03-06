@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { DeepPartial } from '@app/shared-misc';
-import { ControlSchemeSetSpeedBinding, SetSpeedInputAction } from '@app/store';
+import { ControlSchemeSpeedBinding, SpeedInputAction } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 import { CommonBindingsFormControlsBuilderService } from '../common';
 import { IBindingFormBuilder } from '../i-binding-form-builder';
-import { SetSpeedBindingForm } from './set-speed-binding-form';
+import { SpeedBindingForm } from './speed-binding-form';
 
 export const NO_INPUTS_SET_SPEED_ERROR = 'NO_SET_SPEED_INPUTS_ERROR';
 
 @Injectable()
-export class SetSpeedBindingFormBuilderService implements IBindingFormBuilder<SetSpeedBindingForm> {
+export class SpeedBindingFormBuilderService implements IBindingFormBuilder<SpeedBindingForm> {
     constructor(
         private readonly formBuilder: FormBuilder,
         private commonFormControlBuilder: CommonBindingsFormControlsBuilderService,
@@ -19,12 +19,12 @@ export class SetSpeedBindingFormBuilderService implements IBindingFormBuilder<Se
     ) {
     }
 
-    public build(): SetSpeedBindingForm {
+    public build(): SpeedBindingForm {
         return this.formBuilder.group({
             inputs: this.formBuilder.group({
-                [SetSpeedInputAction.Forwards]: this.commonFormControlBuilder.optionalInputFormGroup(),
-                [SetSpeedInputAction.Backwards]: this.commonFormControlBuilder.optionalInputFormGroup(),
-                [SetSpeedInputAction.Brake]: this.commonFormControlBuilder.optionalInputFormGroup(),
+                [SpeedInputAction.Forwards]: this.commonFormControlBuilder.optionalInputFormGroup(),
+                [SpeedInputAction.Backwards]: this.commonFormControlBuilder.optionalInputFormGroup(),
+                [SpeedInputAction.Brake]: this.commonFormControlBuilder.optionalInputFormGroup(),
             }, {
                 validators: this.createInputsValidators()
             }),
@@ -39,17 +39,17 @@ export class SetSpeedBindingFormBuilderService implements IBindingFormBuilder<Se
     }
 
     public patchForm(
-        form: SetSpeedBindingForm,
-        patch: DeepPartial<ControlSchemeSetSpeedBinding>
+        form: SpeedBindingForm,
+        patch: DeepPartial<ControlSchemeSpeedBinding>
     ): void {
         form.patchValue(patch);
     }
 
     private createInputsValidators(): ValidatorFn {
-        const VALIDATOR = (inputsGroup: SetSpeedBindingForm['controls']['inputs']): ValidationErrors | null => {
-            const forwards = inputsGroup.value[SetSpeedInputAction.Forwards];
-            const backwards = inputsGroup.value[SetSpeedInputAction.Backwards];
-            const brake = inputsGroup.value[SetSpeedInputAction.Brake];
+        const VALIDATOR = (inputsGroup: SpeedBindingForm['controls']['inputs']): ValidationErrors | null => {
+            const forwards = inputsGroup.value[SpeedInputAction.Forwards];
+            const backwards = inputsGroup.value[SpeedInputAction.Backwards];
+            const brake = inputsGroup.value[SpeedInputAction.Brake];
 
             if (forwards?.controllerId === null && backwards?.controllerId === null && brake?.controllerId === null) {
                 return { [NO_INPUTS_SET_SPEED_ERROR]: true };

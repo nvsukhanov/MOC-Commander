@@ -9,7 +9,7 @@ import { IBindingL10n } from './i-binding-l10n';
 import { GearboxL10nService } from './gearbox';
 import { ServoL10nService } from './servo';
 import { SetAngleL10nService } from './set-angle';
-import { SetSpeedL10nService } from './set-speed';
+import { SpeedL10nService } from './speed';
 import { StepperL10nService } from './stepper';
 import { TrainControlL10nService } from './train-control';
 
@@ -23,7 +23,7 @@ export class BindingL10nService implements IBindingControllerInputNameResolver,
         [ControlSchemeBindingType.GearboxControl]: this.gearboxL10nService,
         [ControlSchemeBindingType.Servo]: this.servoL10nService,
         [ControlSchemeBindingType.SetAngle]: this.setAngleL10nService,
-        [ControlSchemeBindingType.SetSpeed]: this.setSpeedL10nService,
+        [ControlSchemeBindingType.Speed]: this.speedL10nService,
         [ControlSchemeBindingType.Stepper]: this.stepperL10nService,
         [ControlSchemeBindingType.TrainControl]: this.trainL10nService
     };
@@ -32,7 +32,7 @@ export class BindingL10nService implements IBindingControllerInputNameResolver,
         private readonly gearboxL10nService: GearboxL10nService,
         private readonly servoL10nService: ServoL10nService,
         private readonly setAngleL10nService: SetAngleL10nService,
-        private readonly setSpeedL10nService: SetSpeedL10nService,
+        private readonly speedL10nService: SpeedL10nService,
         private readonly stepperL10nService: StepperL10nService,
         private readonly trainL10nService: TrainControlL10nService
     ) {

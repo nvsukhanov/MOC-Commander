@@ -21,7 +21,7 @@
             <lib-cs-binding-control-select-controller [data]="forwardsControlBindingComponentData"></lib-cs-binding-control-select-controller>
 
             @if (isForwardInputGainConfigurable) {
-                <lib-cs-binding-control-select-input-gain [translocoTitle]="'controlScheme.setSpeedBinding.accelerationInputGainTitle'"
+                <lib-cs-binding-control-select-input-gain [translocoTitle]="'controlScheme.speedBinding.accelerationInputGainTitle'"
                                                           [control]="form.controls.inputs.controls[inputActions.Forwards].controls.gain"
                 ></lib-cs-binding-control-select-input-gain>
             }
@@ -29,7 +29,7 @@
             <lib-cs-binding-control-select-controller [data]="backwardsControlBindingComponentData"></lib-cs-binding-control-select-controller>
 
             @if (isBackwardInputGainConfigurable) {
-                <lib-cs-binding-control-select-input-gain [translocoTitle]="'controlScheme.setSpeedBinding.accelerationInputGainTitle'"
+                <lib-cs-binding-control-select-input-gain [translocoTitle]="'controlScheme.speedBinding.accelerationInputGainTitle'"
                                                           [control]="form.controls.inputs.controls[inputActions.Backwards].controls.gain"
                 ></lib-cs-binding-control-select-input-gain>
             }
@@ -48,7 +48,7 @@
                                      [caption]="'controlScheme.bindingSectionConfigTitle' | transloco"
         >
             <lib-cs-binding-control-speed-input [control]="form.controls.maxSpeed"
-                                                [translocoTitle]="'controlScheme.setSpeedBinding.outputSpeed'"
+                                                [translocoTitle]="'controlScheme.speedBinding.outputSpeed'"
             ></lib-cs-binding-control-speed-input>
             <lib-cs-binding-control-power-input [control]="form.controls.power"></lib-cs-binding-control-power-input>
 

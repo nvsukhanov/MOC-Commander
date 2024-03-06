@@ -2,7 +2,7 @@ import { PortModeName } from 'rxpoweredup';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
 const REQUIRED_PORT_MODES_FOR_OPERATION_MODE: { [k in ControlSchemeBindingType]: PortModeName[] } = {
-    [ControlSchemeBindingType.SetSpeed]: [ PortModeName.speed, PortModeName.power ],
+    [ControlSchemeBindingType.Speed]: [ PortModeName.speed, PortModeName.power ],
     [ControlSchemeBindingType.Servo]: [ PortModeName.absolutePosition, PortModeName.position, PortModeName.speed, PortModeName.power ],
     [ControlSchemeBindingType.SetAngle]: [ PortModeName.absolutePosition, PortModeName.position, PortModeName.speed, PortModeName.power ],
     [ControlSchemeBindingType.Stepper]: [ PortModeName.position, PortModeName.speed, PortModeName.power ],

@@ -4,7 +4,7 @@ import { Dictionary } from '@ngrx/entity';
 import { ControlSchemeBinding, ControllerInputModel, ITasksInputExtractor, TaskInputExtractionResult } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
-import { SetSpeedInputExtractorService } from './set-speed';
+import { SpeedInputExtractorService } from './speed';
 import { BindingInputExtractionResult, IBindingTaskInputExtractor } from './i-binding-task-input-extractor';
 import { GearboxInputExtractorService } from './gearbox';
 import { ServoInputExtractorService } from './servo';
@@ -15,7 +15,7 @@ import { TrainControlTaskInputExtractorService } from './train-control';
 @Injectable()
 export class TaskInputComposer implements ITasksInputExtractor {
     private extractors: { [k in ControlSchemeBindingType]: IBindingTaskInputExtractor<k> } = {
-        [ControlSchemeBindingType.SetSpeed]: this.setSpeedInputExtractor,
+        [ControlSchemeBindingType.Speed]: this.speedInputExtractor,
         [ControlSchemeBindingType.GearboxControl]: this.gearboxInputExtractor,
         [ControlSchemeBindingType.Servo]: this.servoInputExtractor,
         [ControlSchemeBindingType.SetAngle]: this.setAngleInputExtractor,
@@ -24,7 +24,7 @@ export class TaskInputComposer implements ITasksInputExtractor {
     };
 
     constructor(
-        private readonly setSpeedInputExtractor: SetSpeedInputExtractorService,
+        private readonly speedInputExtractor: SpeedInputExtractorService,
         private readonly gearboxInputExtractor: GearboxInputExtractorService,
         private readonly servoInputExtractor: ServoInputExtractorService,
         private readonly setAngleInputExtractor: SetAngleInputExtractorService,

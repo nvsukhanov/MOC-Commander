@@ -38,7 +38,7 @@ export class StepperTaskPayloadBuilderService implements ITaskPayloadBuilder<Con
             return null;
         }
         return {
-            bindingType: ControlSchemeBindingType.SetSpeed,
+            bindingType: ControlSchemeBindingType.Speed,
             speed: 0,
             power: 0,
             brakeFactor: 0,

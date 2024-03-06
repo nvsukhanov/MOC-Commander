@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { PortCommandTask, SetSpeedTaskPayload } from '@app/store';
+import { PortCommandTask, SpeedTaskPayload } from '@app/store';
 
-import { setSpeedPayloadHash } from './set-speed-payload-hash';
+import { speedPayloadHash } from './speed-payload-hash';
 import { IBindingTaskFilter } from '../i-binding-task-filter';
 import { calculateTaskHash } from '../common';
 
 @Injectable()
-export class SetSpeedFilterService implements IBindingTaskFilter<ControlSchemeBindingType.SetSpeed> {
+export class SpeedFilterService implements IBindingTaskFilter<ControlSchemeBindingType.Speed> {
     public calculateNextPendingTask(
         currentTask: PortCommandTask | null,
         pendingTask: PortCommandTask | null,
-        inputSliceTasks: Array<PortCommandTask<ControlSchemeBindingType.SetSpeed>>,
+        inputSliceTasks: Array<PortCommandTask<ControlSchemeBindingType.Speed>>,
     ): PortCommandTask | null {
         const combinedTask = this.buildCombinedTask(inputSliceTasks);
         const currentTaskReplacement = this.shouldReplaceTask(currentTask, combinedTask);
@@ -26,9 +26,9 @@ export class SetSpeedFilterService implements IBindingTaskFilter<ControlSchemeBi
 
     private shouldReplaceTask(
         previousTask: PortCommandTask | null,
-        newTask: PortCommandTask<ControlSchemeBindingType.SetSpeed>
+        newTask: PortCommandTask<ControlSchemeBindingType.Speed>
     ): PortCommandTask | null {
-        if (previousTask && !this.isSetSpeedTask(previousTask)) {
+        if (previousTask && !this.isSpeedTask(previousTask)) {
             return newTask;
         }
         if (this.isTaskActive(newTask)) {
@@ -46,21 +46,21 @@ export class SetSpeedFilterService implements IBindingTaskFilter<ControlSchemeBi
         return newTask;
     }
 
-    private isSetSpeedTask(
+    private isSpeedTask(
         task: PortCommandTask
-    ): task is PortCommandTask<ControlSchemeBindingType.SetSpeed> {
-        return task.payload.bindingType === ControlSchemeBindingType.SetSpeed;
+    ): task is PortCommandTask<ControlSchemeBindingType.Speed> {
+        return task.payload.bindingType === ControlSchemeBindingType.Speed;
     }
 
     private isTaskActive(
-        task: PortCommandTask<ControlSchemeBindingType.SetSpeed>
+        task: PortCommandTask<ControlSchemeBindingType.Speed>
     ): boolean {
         return task.payload.speed !== 0 || task.payload.brakeFactor !== 0;
     }
 
     private buildCombinedTask(
-        tasks: Array<PortCommandTask<ControlSchemeBindingType.SetSpeed>>
-    ): PortCommandTask<ControlSchemeBindingType.SetSpeed> {
+        tasks: Array<PortCommandTask<ControlSchemeBindingType.Speed>>
+    ): PortCommandTask<ControlSchemeBindingType.Speed> {
         if (!tasks.length) {
             throw new Error('Cannot build combined task from empty array');
         }
@@ -68,7 +68,7 @@ export class SetSpeedFilterService implements IBindingTaskFilter<ControlSchemeBi
         if (tasks.length === 1) {
             return tasks[0];
         }
-        const payload = tasks.reduce((acc: SetSpeedTaskPayload, task) => {
+        const payload = tasks.reduce((acc: SpeedTaskPayload, task) => {
             acc.speed += task.payload.speed;
             acc.brakeFactor += task.payload.brakeFactor;
             acc.useAccelerationProfile = acc.useAccelerationProfile || task.payload.useAccelerationProfile;
@@ -76,7 +76,7 @@ export class SetSpeedFilterService implements IBindingTaskFilter<ControlSchemeBi
             acc.power = Math.max(acc.power, task.payload.power);
             return acc;
         }, {
-            bindingType: ControlSchemeBindingType.SetSpeed,
+            bindingType: ControlSchemeBindingType.Speed,
             speed: 0,
             brakeFactor: 0,
             useAccelerationProfile: false as boolean,
@@ -89,7 +89,7 @@ export class SetSpeedFilterService implements IBindingTaskFilter<ControlSchemeBi
             ...tasks[0],
             payload: payload,
             inputTimestamp,
-            hash: calculateTaskHash(tasks[0].hubId, tasks[0].portId, setSpeedPayloadHash(payload))
+            hash: calculateTaskHash(tasks[0].hubId, tasks[0].portId, speedPayloadHash(payload))
         };
     }
 }

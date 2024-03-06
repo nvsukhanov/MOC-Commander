@@ -6,7 +6,7 @@ import { ITaskRunner, PortCommandTask } from '@app/store';
 
 import { ServoTaskRunnerService } from './servo';
 import { SetAngleTaskRunnerService } from './set-angle';
-import { SetSpeedTaskRunnerService } from './set-speed';
+import { SpeedTaskRunnerService } from './speed';
 import { TrainControlTaskRunnerService } from './train-control';
 import { StepperTaskRunnerService } from './stepper';
 import { GearboxControlTaskRunnerService } from './gearbox';
@@ -17,7 +17,7 @@ export class BindingTaskRunnerService implements ITaskRunner {
     private readonly runnersMap: { [k in ControlSchemeBindingType]: IBindingTaskRunner<k> } = {
         [ControlSchemeBindingType.Servo]: this.servoTaskRunnerService,
         [ControlSchemeBindingType.SetAngle]: this.setAngleTaskRunnerService,
-        [ControlSchemeBindingType.SetSpeed]: this.setSpeedTaskRunnerService,
+        [ControlSchemeBindingType.Speed]: this.speedTaskRunnerService,
         [ControlSchemeBindingType.Stepper]: this.stepperTaskRunnerService,
         [ControlSchemeBindingType.TrainControl]: this.trainControlTaskRunnerService,
         [ControlSchemeBindingType.GearboxControl]: this.gearboxControlTaskRunnerService,
@@ -26,7 +26,7 @@ export class BindingTaskRunnerService implements ITaskRunner {
     constructor(
         private readonly servoTaskRunnerService: ServoTaskRunnerService,
         private readonly setAngleTaskRunnerService: SetAngleTaskRunnerService,
-        private readonly setSpeedTaskRunnerService: SetSpeedTaskRunnerService,
+        private readonly speedTaskRunnerService: SpeedTaskRunnerService,
         private readonly trainControlTaskRunnerService: TrainControlTaskRunnerService,
         private readonly stepperTaskRunnerService: StepperTaskRunnerService,
         private readonly gearboxControlTaskRunnerService: GearboxControlTaskRunnerService

@@ -10,7 +10,7 @@ export const CHANGELOG: Changelog = [
             'changelog.1-2-3.featImprovedUiPerformance',
             'changelog.1-2-3.featRaiseServoMotorRangeLimit',
             'changelog.1-2-3.featSeparateControlsForForwardAndBackwardSpeed',
-            'changelog.1-2-3.featAxialAwarenessForSetSpeedBrakeControl',
+            'changelog.1-2-3.featAxialAwarenessForSpeedBrakeControl',
             'changelog.1-2-3.featBetterL10nForTrainAndGearbox',
             'changelog.1-2-3.changeStepperNegativeValuesRemoved',
             'changelog.bugfixesAndImprovements',

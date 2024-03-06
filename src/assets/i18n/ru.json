@@ -252,7 +252,7 @@
     "menu": "Menu",
     "outputSpeed": "Скорость",
     "outputPower": "Мощность",
-    "setSpeedBinding": {
+    "speedBinding": {
       "operationMode": "Скорость",
       "forwardsInput": "Вперед",
       "backwardsInput": "Назад",
@@ -749,7 +749,7 @@
       "featImprovedUiPerformance": "Улучшена производительность пользовательского интерфейса",
       "featRaiseServoMotorRangeLimit": "Увеличение максимального значения диапазона сервопривода до 4 полных оборотов (1440°)",
       "featSeparateControlsForForwardAndBackwardSpeed": "Возможность назначить разные контроллеры для ускорения вперед и назад для привязок 'Скорость'",
-      "featAxialAwarenessForSetSpeedBrakeControl": "Учет направления оси для контроля 'Тормоз' в типе привязки 'Скорость'",
+      "featAxialAwarenessForSpeedBrakeControl": "Учет направления оси для контроля 'Тормоз' в типе привязки 'Скорость'",
       "featBetterL10nForTrainAndGearbox": "Улучшена локализация для типов привязок 'Поезд' и 'Коробка передач'",
       "featSeparateControlsForCwCcwStepper": "Возможность назначить разные контроллеры для шагов по- и против часовой для привязок 'Шаговый двигатель'",
       "changeStepperNegativeValuesRemoved": "Запрещены отрицательные значения для величины шага в привязке 'Шаговый двигатель'. Для установки обратного направления используйте контроль 'Против часовой'"

@@ -6,7 +6,7 @@ import { ControlSchemeBindingType, DeepPartial } from '@app/shared-misc';
 import { IBindingDetailsEditFormRenderer } from '@app/shared-control-schemes';
 
 import { IBindingsDetailsEditComponent } from './i-bindings-details-edit-component';
-import { BindingSetSpeedEditComponent, SetSpeedBindingFormBuilderService, SetSpeedBindingFormMapperService } from './set-speed';
+import { BindingSpeedEditComponent, SpeedBindingFormBuilderService, SpeedBindingFormMapperService } from './speed';
 import { BindingServoEditComponent, ServoBindingFormBuilderService, ServoBindingFormMapperService } from './servo';
 import { BindingSetAngleEditComponent, SetAngleBindingFormBuilderService, SetAngleBindingFormMapperService } from './set-angle';
 import { BindingStepperEditComponent, StepperBindingFormBuilderService, StepperBindingFormMapperService } from './stepper';
@@ -19,7 +19,7 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
     public readonly bindingFormDirtyChange: Observable<boolean>;
 
     private readonly renderers: { [k in ControlSchemeBindingType]: Type<IBindingsDetailsEditComponent> | null } = {
-        [ControlSchemeBindingType.SetSpeed]: BindingSetSpeedEditComponent,
+        [ControlSchemeBindingType.Speed]: BindingSpeedEditComponent,
         [ControlSchemeBindingType.Servo]: BindingServoEditComponent,
         [ControlSchemeBindingType.SetAngle]: BindingSetAngleEditComponent,
         [ControlSchemeBindingType.Stepper]: BindingStepperEditComponent,
@@ -27,7 +27,7 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
         [ControlSchemeBindingType.GearboxControl]: BindingGearboxControlEditComponent
     };
 
-    private _bindingType =  ControlSchemeBindingType.SetSpeed;
+    private _bindingType =  ControlSchemeBindingType.Speed;
 
     private renderer?: ComponentRef<IBindingsDetailsEditComponent>;
 
@@ -38,7 +38,7 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
                 Validators.required
             ]
         }),
-        [ControlSchemeBindingType.SetSpeed]: this.setSpeedBindingFormBuilder.build(),
+        [ControlSchemeBindingType.Speed]: this.speedBindingFormBuilder.build(),
         [ControlSchemeBindingType.Servo]: this.servoBindingFormBuilder.build(),
         [ControlSchemeBindingType.SetAngle]: this.setAngleBindingFormBuilder.build(),
         [ControlSchemeBindingType.Stepper]: this.stepperBindingFormBuilder.build(),
@@ -50,12 +50,12 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
         private readonly container: ViewContainerRef,
         private readonly formBuilder: FormBuilder,
         private readonly servoBindingFormBuilder: ServoBindingFormBuilderService,
-        private readonly setSpeedBindingFormBuilder: SetSpeedBindingFormBuilderService,
+        private readonly speedBindingFormBuilder: SpeedBindingFormBuilderService,
         private readonly setAngleBindingFormBuilder: SetAngleBindingFormBuilderService,
         private readonly stepperBindingFormBuilder: StepperBindingFormBuilderService,
         private readonly trainControlBindingFormBuilder: TrainControlBindingFormBuilderService,
         private readonly gearboxControlBindingFormBuilder: GearboxControlBindingFormBuilderService,
-        private readonly setSpeedBindingMapper: SetSpeedBindingFormMapperService,
+        private readonly speedBindingMapper: SpeedBindingFormMapperService,
         private readonly servoBindingMapper: ServoBindingFormMapperService,
         private readonly setAngleBindingMapper: SetAngleBindingFormMapperService,
         private readonly stepperBindingMapper: StepperBindingFormMapperService,
@@ -136,8 +136,8 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
             this._form.controls.id.setValue(patch.id);
         }
         switch (patch.bindingType) {
-            case ControlSchemeBindingType.SetSpeed:
-                this.setSpeedBindingFormBuilder.patchForm(this._form.controls[ControlSchemeBindingType.SetSpeed], patch);
+            case ControlSchemeBindingType.Speed:
+                this.speedBindingFormBuilder.patchForm(this._form.controls[ControlSchemeBindingType.Speed], patch);
                 break;
             case ControlSchemeBindingType.Servo:
                 this.servoBindingFormBuilder.patchForm(this._form.controls[ControlSchemeBindingType.Servo], patch);
@@ -162,8 +162,8 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
     private mapFormToModel(): ControlSchemeBinding {
         const id = this._form.controls.id.value;
         switch (this._bindingType) {
-            case ControlSchemeBindingType.SetSpeed:
-                return this.setSpeedBindingMapper.mapToModel(id, this._form.controls[ControlSchemeBindingType.SetSpeed]);
+            case ControlSchemeBindingType.Speed:
+                return this.speedBindingMapper.mapToModel(id, this._form.controls[ControlSchemeBindingType.Speed]);
             case ControlSchemeBindingType.Servo:
                 return this.servoBindingMapper.mapToModel(id, this._form.controls[ControlSchemeBindingType.Servo]);
             case ControlSchemeBindingType.SetAngle:

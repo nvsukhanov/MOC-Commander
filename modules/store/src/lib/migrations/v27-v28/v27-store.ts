@@ -8,7 +8,7 @@ import { OldInputAction } from '../old-input-actions';
 
 export type V28ControlSchemesEntitiesState = ExtractEntitiesType<V28Store['controlSchemes']>;
 export type V28Binding = ExtractArrayType<V28ControlSchemesEntitiesState['bindings']>;
-export type V28SetSpeedBinding = V28Binding & { bindingType: ControlSchemeBindingType.SetSpeed };
+export type V28SpeedBinding = V28Binding & { bindingType: ControlSchemeBindingType.Speed };
 export type V28ServoBinding = V28Binding & { bindingType: ControlSchemeBindingType.Servo };
 export type V28StepperBinding = V28Binding & { bindingType: ControlSchemeBindingType.Stepper };
 export type V28TrainControlBinding = V28Binding & { bindingType: ControlSchemeBindingType.TrainControl };
@@ -22,7 +22,7 @@ export type V27ServoBinding = Override<V28ServoBinding, {
     invert: boolean;
 }>;
 
-export type V27Bindings = V28SetSpeedBinding
+export type V27Bindings = V28SpeedBinding
     | V27ServoBinding
     | V28StepperBinding
     | V28TrainControlBinding

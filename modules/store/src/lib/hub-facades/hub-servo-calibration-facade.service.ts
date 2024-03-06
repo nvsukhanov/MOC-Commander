@@ -212,7 +212,7 @@ export class HubServoCalibrationFacadeService {
 
     /**
      * Probes the servo in a given direction until the motor reaches the limit or the maximum distance is reached.
-     * Approach with setSpeed is used instead of goToPosition since the former is much faster.
+     * Approach with startSpeed is used instead of goToPosition since the former is much faster.
      */
     private probeDirectionLimit(
         hub: IHub,

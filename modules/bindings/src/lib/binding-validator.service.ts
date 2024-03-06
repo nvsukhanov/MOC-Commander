@@ -5,7 +5,7 @@ import { ControlSchemeBinding } from '@app/store';
 import { ControlSchemeBindingType, DeepPartial } from '@app/shared-misc';
 
 import { ServoBindingFormBuilderService } from './servo';
-import { SetSpeedBindingFormBuilderService } from './set-speed';
+import { SpeedBindingFormBuilderService } from './speed';
 import { SetAngleBindingFormBuilderService } from './set-angle';
 import { StepperBindingFormBuilderService } from './stepper';
 import { TrainControlBindingFormBuilderService } from './train-control';
@@ -16,7 +16,7 @@ import { IBindingFormBuilder } from './i-binding-form-builder';
 export class BindingValidatorService implements IBindingValidator {
     constructor(
         private readonly servoBindingFormBuilder: ServoBindingFormBuilderService,
-        private readonly setSpeedBindingFormBuilder: SetSpeedBindingFormBuilderService,
+        private readonly speedBindingFormBuilder: SpeedBindingFormBuilderService,
         private readonly setAngleBindingFormBuilder: SetAngleBindingFormBuilderService,
         private readonly stepperBindingFormBuilder: StepperBindingFormBuilderService,
         private readonly trainControlBindingFormBuilder: TrainControlBindingFormBuilderService,
@@ -43,8 +43,8 @@ export class BindingValidatorService implements IBindingValidator {
         bindingType: ControlSchemeBindingType
     ): IBindingFormBuilder<FormGroup> {
         switch (bindingType) {
-            case ControlSchemeBindingType.SetSpeed:
-                return this.setSpeedBindingFormBuilder;
+            case ControlSchemeBindingType.Speed:
+                return this.speedBindingFormBuilder;
             case ControlSchemeBindingType.Servo:
                 return this.servoBindingFormBuilder;
             case ControlSchemeBindingType.SetAngle:

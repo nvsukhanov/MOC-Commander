@@ -3,10 +3,10 @@ import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { StepperInputAction } from './control-scheme.model';
 
-export type SetSpeedTaskPayload = {
-    bindingType: ControlSchemeBindingType.SetSpeed;
+export type SpeedTaskPayload = {
+    bindingType: ControlSchemeBindingType.Speed;
     speed: number;
-    brakeFactor: number; // 0 - MOTOR_LIMITS.MAX_SPEED
+    brakeFactor: number; // [0 to MOTOR_LIMITS.MAX_SPEED]
     power: number;
     useAccelerationProfile: boolean;
     useDecelerationProfile: boolean;
@@ -68,7 +68,7 @@ export type GearboxControlTaskPayload = {
     useDecelerationProfile: boolean;
 };
 
-export type PortCommandTaskPayload = SetSpeedTaskPayload
+export type PortCommandTaskPayload = SpeedTaskPayload
     | ServoTaskPayload
     | SetAngleTaskPayload
     | StepperTaskPayload

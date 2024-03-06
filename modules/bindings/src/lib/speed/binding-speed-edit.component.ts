@@ -6,7 +6,7 @@ import { MatError } from '@angular/material/form-field';
 import { ControllerInputType } from '@app/controller-profiles';
 import { ControlSchemeBindingType, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
-import { SetSpeedInputAction } from '@app/store';
+import { SpeedInputAction } from '@app/store';
 import { BindingControlSelectHubComponent, BindingControlSelectIoComponent } from '@app/shared-control-schemes';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
@@ -20,15 +20,15 @@ import {
     BindingEditSectionsContainerComponent,
     OptionalInputFormGroup
 } from '../common';
-import { SetSpeedBindingForm } from './set-speed-binding-form';
-import { NO_INPUTS_SET_SPEED_ERROR } from './set-speed-binding-form-builder.service';
-import { SetSpeedL10nService } from './set-speed-l10n.service';
+import { SpeedBindingForm } from './speed-binding-form';
+import { NO_INPUTS_SET_SPEED_ERROR } from './speed-binding-form-builder.service';
+import { SpeedL10nService } from './speed-l10n.service';
 
 @Component({
     standalone: true,
-    selector: 'lib-cs-binding-set-speed-edit',
-    templateUrl: './binding-set-speed-edit.component.html',
-    styleUrls: [ './binding-set-speed-edit.component.scss' ],
+    selector: 'lib-cs-binding-speed-edit',
+    templateUrl: './binding-speed-edit.component.html',
+    styleUrls: [ './binding-speed-edit.component.scss' ],
     imports: [
         BindingEditSectionComponent,
         TranslocoPipe,
@@ -47,46 +47,46 @@ import { SetSpeedL10nService } from './set-speed-l10n.service';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BindingSetSpeedEditComponent implements IBindingsDetailsEditComponent<SetSpeedBindingForm> {
+export class BindingSpeedEditComponent implements IBindingsDetailsEditComponent<SpeedBindingForm> {
     public readonly validationErrorsMap: ValidationErrorsL10nMap = {
-        [NO_INPUTS_SET_SPEED_ERROR]: 'controlScheme.setSpeedBinding.missingInputs'
+        [NO_INPUTS_SET_SPEED_ERROR]: 'controlScheme.speedBinding.missingInputs'
     };
 
-    public readonly inputActions = SetSpeedInputAction;
+    public readonly inputActions = SpeedInputAction;
 
-    public readonly bindingType = ControlSchemeBindingType.SetSpeed;
+    public readonly bindingType = ControlSchemeBindingType.Speed;
 
-    public form?: SetSpeedBindingForm;
+    public form?: SpeedBindingForm;
 
-    private _forwardsControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.SetSpeed> | null = null;
+    private _forwardsControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Speed> | null = null;
 
-    private _backwardsControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.SetSpeed> | null = null;
+    private _backwardsControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Speed> | null = null;
 
-    private _brakeControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.SetSpeed> | null = null;
+    private _brakeControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Speed> | null = null;
 
     constructor(
         private readonly cd: ChangeDetectorRef,
-        private readonly l10nService: SetSpeedL10nService
+        private readonly l10nService: SpeedL10nService
     ) {
     }
 
     private get forwardsControl(): OptionalInputFormGroup | undefined {
-        return this.form?.controls.inputs.controls[SetSpeedInputAction.Forwards];
+        return this.form?.controls.inputs.controls[SpeedInputAction.Forwards];
     }
 
     private get backwardsControl(): OptionalInputFormGroup | undefined {
-        return this.form?.controls.inputs.controls[SetSpeedInputAction.Backwards];
+        return this.form?.controls.inputs.controls[SpeedInputAction.Backwards];
     }
 
-    public get forwardsControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.SetSpeed> | null {
+    public get forwardsControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Speed> | null {
         return this._forwardsControlBindingComponentData;
     }
 
-    public get backwardsControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.SetSpeed> | null {
+    public get backwardsControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Speed> | null {
         return this._backwardsControlBindingComponentData;
     }
 
-    public get brakeControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.SetSpeed> | null {
+    public get brakeControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Speed> | null {
         return this._brakeControlBindingComponentData;
     }
 
@@ -101,31 +101,31 @@ export class BindingSetSpeedEditComponent implements IBindingsDetailsEditCompone
     }
 
     public setForm(
-        outputBinding: SetSpeedBindingForm
+        outputBinding: SpeedBindingForm
     ): void {
-        const forwardsControls = outputBinding.controls.inputs.controls[SetSpeedInputAction.Forwards].controls;
-        const backwardsControls = outputBinding.controls.inputs.controls[SetSpeedInputAction.Backwards].controls;
-        const brakeControls = outputBinding.controls.inputs.controls[SetSpeedInputAction.Brake].controls;
+        const forwardsControls = outputBinding.controls.inputs.controls[SpeedInputAction.Forwards].controls;
+        const backwardsControls = outputBinding.controls.inputs.controls[SpeedInputAction.Backwards].controls;
+        const brakeControls = outputBinding.controls.inputs.controls[SpeedInputAction.Brake].controls;
         if (outputBinding !== this.form) {
             this.form = outputBinding;
 
             this._forwardsControlBindingComponentData = {
-                bindingType: ControlSchemeBindingType.SetSpeed,
-                inputFormGroup: outputBinding.controls.inputs.controls[SetSpeedInputAction.Forwards],
-                inputAction: SetSpeedInputAction.Forwards,
-                inputName$: this.l10nService.getBindingInputName(SetSpeedInputAction.Forwards)
+                bindingType: ControlSchemeBindingType.Speed,
+                inputFormGroup: outputBinding.controls.inputs.controls[SpeedInputAction.Forwards],
+                inputAction: SpeedInputAction.Forwards,
+                inputName$: this.l10nService.getBindingInputName(SpeedInputAction.Forwards)
             };
             this._backwardsControlBindingComponentData = {
-                bindingType: ControlSchemeBindingType.SetSpeed,
-                inputFormGroup: outputBinding.controls.inputs.controls[SetSpeedInputAction.Backwards],
-                inputAction: SetSpeedInputAction.Backwards,
-                inputName$: this.l10nService.getBindingInputName(SetSpeedInputAction.Backwards)
+                bindingType: ControlSchemeBindingType.Speed,
+                inputFormGroup: outputBinding.controls.inputs.controls[SpeedInputAction.Backwards],
+                inputAction: SpeedInputAction.Backwards,
+                inputName$: this.l10nService.getBindingInputName(SpeedInputAction.Backwards)
             };
             this._brakeControlBindingComponentData = {
-                bindingType: ControlSchemeBindingType.SetSpeed,
-                inputFormGroup: outputBinding.controls.inputs.controls[SetSpeedInputAction.Brake],
-                inputAction: SetSpeedInputAction.Brake,
-                inputName$: this.l10nService.getBindingInputName(SetSpeedInputAction.Brake)
+                bindingType: ControlSchemeBindingType.Speed,
+                inputFormGroup: outputBinding.controls.inputs.controls[SpeedInputAction.Brake],
+                inputAction: SpeedInputAction.Brake,
+                inputName$: this.l10nService.getBindingInputName(SpeedInputAction.Brake)
             };
 
             merge(
