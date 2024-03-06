@@ -13,12 +13,12 @@ export function calculateNextLoopingIndex(
             nextIndex: previousIndex + evaluatedIndexIncrement,
             isLooping: loopingMode !== LoopingMode.None ? isLooping : false
         };
-    } else if (loopingMode === LoopingMode.Wrap) {
+    } else if (loopingMode === LoopingMode.Cycle) {
         return {
             nextIndex: evaluatedIndexIncrement === 1 ? 0 : levels.length - 1,
             isLooping: false
         };
-    } else if (loopingMode === LoopingMode.Mirror) {
+    } else if (loopingMode === LoopingMode.PingPong) {
         return {
             nextIndex: evaluatedIndexIncrement === 1 ? levels.length - 2 : 1,
             isLooping: !isLooping

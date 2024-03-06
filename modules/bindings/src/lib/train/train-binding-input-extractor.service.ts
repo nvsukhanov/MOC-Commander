@@ -11,16 +11,10 @@ export class TrainBindingInputExtractorService implements IBindingTaskInputExtra
         binding: ControlSchemeTrainBinding,
         globalInput: Dictionary<ControllerInputModel>
     ): BindingInputExtractionResult<ControlSchemeBindingType.Train> {
-        const nextLevelInputId = controllerInputIdFn(binding.inputs[TrainBindingInputAction.NextSpeed]);
-        const nextLevelInputResult = globalInput[nextLevelInputId];
-        const prevLevelInputId = binding.inputs[TrainBindingInputAction.PrevSpeed];
-        const prevLevelInputResult = prevLevelInputId ? globalInput[controllerInputIdFn(prevLevelInputId)] : null;
-        const resetInputId = binding.inputs[TrainBindingInputAction.Reset];
-        const resetInputResult = resetInputId ? globalInput[controllerInputIdFn(resetInputId)] : null;
         return {
-            [TrainBindingInputAction.NextSpeed]: nextLevelInputResult ?? null,
-            [TrainBindingInputAction.PrevSpeed]: prevLevelInputResult ?? null,
-            [TrainBindingInputAction.Reset]: resetInputResult ?? null
+            [TrainBindingInputAction.NextSpeed]: this.getInputId(binding, TrainBindingInputAction.NextSpeed, globalInput) ?? null,
+            [TrainBindingInputAction.PrevSpeed]: this.getInputId(binding, TrainBindingInputAction.PrevSpeed, globalInput) ?? null,
+            [TrainBindingInputAction.Reset]: this.getInputId(binding, TrainBindingInputAction.Reset, globalInput) ?? null
         };
     }
 
@@ -31,5 +25,18 @@ export class TrainBindingInputExtractorService implements IBindingTaskInputExtra
         return prevInput[TrainBindingInputAction.NextSpeed] !== nextInput[TrainBindingInputAction.NextSpeed]
             || prevInput[TrainBindingInputAction.PrevSpeed] !== nextInput[TrainBindingInputAction.PrevSpeed]
             || prevInput[TrainBindingInputAction.Reset] !== nextInput[TrainBindingInputAction.Reset];
+    }
+
+    private getInputId(
+        binding: ControlSchemeTrainBinding,
+        action: keyof ControlSchemeTrainBinding['inputs'],
+        globalInput: Dictionary<ControllerInputModel>
+    ): ControllerInputModel | undefined {
+        const inputConfig = binding.inputs[action];
+        if (!inputConfig) {
+            return;
+        }
+        const inputId = controllerInputIdFn(inputConfig);
+        return globalInput[inputId];
     }
 }

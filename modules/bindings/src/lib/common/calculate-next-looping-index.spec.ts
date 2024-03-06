@@ -33,7 +33,7 @@ describe('calculateNextLoopingIndex', () => {
             const previousIndex = 4;
             const indexIncrement = 1;
             const isLooping = false;
-            const loopingMode = LoopingMode.Wrap;
+            const loopingMode = LoopingMode.Cycle;
             const result = calculateNextLoopingIndex(levels, previousIndex, indexIncrement, isLooping, loopingMode);
             expect(result.nextIndex).toBe(0);
             expect(result.isLooping).toBe(false);
@@ -44,7 +44,7 @@ describe('calculateNextLoopingIndex', () => {
             const previousIndex = 0;
             const indexIncrement = -1;
             const isLooping = false;
-            const loopingMode = LoopingMode.Wrap;
+            const loopingMode = LoopingMode.Cycle;
             const result = calculateNextLoopingIndex(levels, previousIndex, indexIncrement, isLooping, loopingMode);
             expect(result.nextIndex).toBe(4);
             expect(result.isLooping).toBe(false);
@@ -57,7 +57,7 @@ describe('calculateNextLoopingIndex', () => {
             const previousIndex = 4;
             const indexIncrement = 1;
             const isLooping = false;
-            const loopingMode = LoopingMode.Mirror;
+            const loopingMode = LoopingMode.PingPong;
             const result = calculateNextLoopingIndex(levels, previousIndex, indexIncrement, isLooping, loopingMode);
             expect(result.nextIndex).toBe(3);
             expect(result.isLooping).toBe(true);
@@ -68,7 +68,7 @@ describe('calculateNextLoopingIndex', () => {
             const previousIndex = 0;
             const indexIncrement = -1;
             const isLooping = false;
-            const loopingMode = LoopingMode.Mirror;
+            const loopingMode = LoopingMode.PingPong;
             const result = calculateNextLoopingIndex(levels, previousIndex, indexIncrement, isLooping, loopingMode);
             expect(result.nextIndex).toBe(1);
             expect(result.isLooping).toBe(true);
@@ -81,7 +81,7 @@ describe('calculateNextLoopingIndex', () => {
             const previousIndex = 4;
             const indexIncrement = 1;
             const isLooping = true;
-            const loopingMode = LoopingMode.Mirror;
+            const loopingMode = LoopingMode.PingPong;
             const result = calculateNextLoopingIndex(levels, previousIndex, indexIncrement, isLooping, loopingMode);
             expect(result.nextIndex).toBe(3);
             expect(result.isLooping).toBe(true);
@@ -92,7 +92,7 @@ describe('calculateNextLoopingIndex', () => {
             const previousIndex = 0;
             const indexIncrement = -1;
             const isLooping = true;
-            const loopingMode = LoopingMode.Mirror;
+            const loopingMode = LoopingMode.PingPong;
             const result = calculateNextLoopingIndex(levels, previousIndex, indexIncrement, isLooping, loopingMode);
             expect(result.nextIndex).toBe(1);
             expect(result.isLooping).toBe(true);
