@@ -7,7 +7,7 @@ import { SpeedBindingFormBuilderService, SpeedBindingFormMapperService } from '.
 import { SetAngleBindingFormBuilderService, SetAngleBindingFormMapperService } from './set-angle';
 import { StepperBindingFormBuilderService, StepperBindingFormMapperService } from './stepper';
 import { TrainControlBindingFormBuilderService, TrainControlBindingFormMapperService } from './train-control';
-import { GearboxControlBindingFormBuilderService, GearboxControlBindingFormMapperService } from './gearbox';
+import { GearboxBindingFormBuilderService, GearboxBindingFormMapperService } from './gearbox';
 import { BindingDetailsEditFormRenderer } from './binding-details-edit-form-renderer';
 
 @Injectable()
@@ -19,13 +19,13 @@ export class BindingDetailsEditFormRendererFactoryService implements IBindingDet
         private readonly setAngleBindingFormBuilder: SetAngleBindingFormBuilderService,
         private readonly stepperBindingFormBuilder: StepperBindingFormBuilderService,
         private readonly trainControlBindingFormBuilder: TrainControlBindingFormBuilderService,
-        private readonly gearboxControlBindingFormBuilder: GearboxControlBindingFormBuilderService,
+        private readonly gearboxBindingFormBuilder: GearboxBindingFormBuilderService,
         private readonly speedBindingMapper: SpeedBindingFormMapperService,
         private readonly servoBindingMapper: ServoBindingFormMapperService,
         private readonly setAngleBindingMapper: SetAngleBindingFormMapperService,
         private readonly stepperBindingMapper: StepperBindingFormMapperService,
         private readonly trainControlBindingMapper: TrainControlBindingFormMapperService,
-        private readonly gearboxControlBindingMapper: GearboxControlBindingFormMapperService
+        private readonly gearboxBindingMapper: GearboxBindingFormMapperService
     ) {
     }
 
@@ -40,13 +40,13 @@ export class BindingDetailsEditFormRendererFactoryService implements IBindingDet
             this.setAngleBindingFormBuilder,
             this.stepperBindingFormBuilder,
             this.trainControlBindingFormBuilder,
-            this.gearboxControlBindingFormBuilder,
+            this.gearboxBindingFormBuilder,
             this.speedBindingMapper,
             this.servoBindingMapper,
             this.setAngleBindingMapper,
             this.stepperBindingMapper,
             this.trainControlBindingMapper,
-            this.gearboxControlBindingMapper
+            this.gearboxBindingMapper
         );
     }
 }

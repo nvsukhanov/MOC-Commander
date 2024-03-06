@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { PortModeName } from 'rxpoweredup';
 
 import { BINDING_EDIT_COMMON_SELECTORS as BINDING_EDIT_SELECTORS } from '../common';
-import { GearboxControlBindingForm } from './gearbox-binding-form';
+import { GearboxBindingForm } from './gearbox-binding-form';
 
 @Pipe({
     standalone: true,
@@ -18,7 +18,7 @@ export class CanSetGearboxPortPositionPipe implements PipeTransform {
     }
 
     public transform(
-        form: GearboxControlBindingForm,
+        form: GearboxBindingForm,
         levelIndex: number,
     ): Observable<boolean> {
         const angleControl = form.controls.angles.controls[levelIndex];

@@ -6,7 +6,7 @@ import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { SpeedInputExtractorService } from './speed';
 import { BindingInputExtractionResult, IBindingTaskInputExtractor } from './i-binding-task-input-extractor';
-import { GearboxInputExtractorService } from './gearbox';
+import { GearboxBindingInputExtractorService } from './gearbox';
 import { ServoInputExtractorService } from './servo';
 import { SetAngleInputExtractorService } from './set-angle';
 import { StepperInputExtractorService } from './stepper';
@@ -16,7 +16,7 @@ import { TrainControlTaskInputExtractorService } from './train-control';
 export class TaskInputComposer implements ITasksInputExtractor {
     private extractors: { [k in ControlSchemeBindingType]: IBindingTaskInputExtractor<k> } = {
         [ControlSchemeBindingType.Speed]: this.speedInputExtractor,
-        [ControlSchemeBindingType.GearboxControl]: this.gearboxInputExtractor,
+        [ControlSchemeBindingType.Gearbox]: this.gearboxInputExtractor,
         [ControlSchemeBindingType.Servo]: this.servoInputExtractor,
         [ControlSchemeBindingType.SetAngle]: this.setAngleInputExtractor,
         [ControlSchemeBindingType.Stepper]: this.stepperInputExtractor,
@@ -25,7 +25,7 @@ export class TaskInputComposer implements ITasksInputExtractor {
 
     constructor(
         private readonly speedInputExtractor: SpeedInputExtractorService,
-        private readonly gearboxInputExtractor: GearboxInputExtractorService,
+        private readonly gearboxInputExtractor: GearboxBindingInputExtractorService,
         private readonly servoInputExtractor: ServoInputExtractorService,
         private readonly setAngleInputExtractor: SetAngleInputExtractorService,
         private readonly stepperInputExtractor: StepperInputExtractorService,

@@ -6,7 +6,7 @@ import { ControlSchemeBinding, ControlSchemeBindingInputs, ControlSchemeInput, P
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { IBindingL10n } from './i-binding-l10n';
-import { GearboxL10nService } from './gearbox';
+import { GearboxBindingL10nService } from './gearbox';
 import { ServoL10nService } from './servo';
 import { SetAngleL10nService } from './set-angle';
 import { SpeedL10nService } from './speed';
@@ -20,7 +20,7 @@ export class BindingL10nService implements IBindingControllerInputNameResolver,
     IBindingTypeToL10nKeyMapper
 {
     private readonly bindingL10nServices: { [k in ControlSchemeBindingType]: IBindingL10n<k> } = {
-        [ControlSchemeBindingType.GearboxControl]: this.gearboxL10nService,
+        [ControlSchemeBindingType.Gearbox]: this.gearboxL10nService,
         [ControlSchemeBindingType.Servo]: this.servoL10nService,
         [ControlSchemeBindingType.SetAngle]: this.setAngleL10nService,
         [ControlSchemeBindingType.Speed]: this.speedL10nService,
@@ -29,7 +29,7 @@ export class BindingL10nService implements IBindingControllerInputNameResolver,
     };
 
     constructor(
-        private readonly gearboxL10nService: GearboxL10nService,
+        private readonly gearboxL10nService: GearboxBindingL10nService,
         private readonly servoL10nService: ServoL10nService,
         private readonly setAngleL10nService: SetAngleL10nService,
         private readonly speedL10nService: SpeedL10nService,

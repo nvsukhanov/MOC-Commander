@@ -54,8 +54,8 @@ export type TrainControlTaskPayload = {
     useDecelerationProfile: boolean;
 };
 
-export type GearboxControlTaskPayload = {
-    bindingType: ControlSchemeBindingType.GearboxControl;
+export type GearboxTaskPayload = {
+    bindingType: ControlSchemeBindingType.Gearbox;
     offset: number;
     angle: number;
     initialLevelIndex: number;
@@ -73,7 +73,7 @@ export type PortCommandTaskPayload = SpeedTaskPayload
     | SetAngleTaskPayload
     | StepperTaskPayload
     | TrainControlTaskPayload
-    | GearboxControlTaskPayload;
+    | GearboxTaskPayload;
 
 export type PortCommandTask<TPayloadType extends ControlSchemeBindingType = ControlSchemeBindingType> = {
     hubId: string;

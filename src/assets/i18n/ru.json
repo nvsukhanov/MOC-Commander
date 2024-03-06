@@ -310,7 +310,7 @@
       "prevLevel": "Предыдущая скорость",
       "reset": "Скорость №0"
     },
-    "gearboxControlBinding": {
+    "gearboxBinding": {
       "operationMode": "Коробка передач",
       "angleLevel": "Позиция { level } (°)",
       "readAngleFromPort": "Прочитать позиция с порта",

@@ -7,7 +7,7 @@ const REQUIRED_PORT_MODES_FOR_OPERATION_MODE: { [k in ControlSchemeBindingType]:
     [ControlSchemeBindingType.SetAngle]: [ PortModeName.absolutePosition, PortModeName.position, PortModeName.speed, PortModeName.power ],
     [ControlSchemeBindingType.Stepper]: [ PortModeName.position, PortModeName.speed, PortModeName.power ],
     [ControlSchemeBindingType.TrainControl]: [ PortModeName.speed, PortModeName.power ],
-    [ControlSchemeBindingType.GearboxControl]: [ PortModeName.absolutePosition, PortModeName.position, PortModeName.speed, PortModeName.power ]
+    [ControlSchemeBindingType.Gearbox]: [ PortModeName.absolutePosition, PortModeName.position, PortModeName.speed, PortModeName.power ]
 };
 
 export function getMatchingBindingTypes(

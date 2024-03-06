@@ -5,7 +5,7 @@ import { DeepPartial } from '@app/shared-misc';
 
 import { AppStoreVersion } from '../../app-store-version';
 import {
-    GearboxControlInputAction,
+    GearboxInputAction,
     InputDirection,
     ServoInputAction,
     SetAngleInputAction,
@@ -26,13 +26,13 @@ import { V22ToV23MigrationService } from '../v22-v23';
 import { V26ToV27MigrationService } from '../v26-v27';
 import { V30Store } from '../v30';
 import {
-    V29GearboxControlBinding,
+    V29GearboxBinding,
     V29ServoBinding,
     V29SetAngleBinding,
     V29StepperBinding,
     V29Store,
     V29TrainControlBinding,
-    V30GearboxControlBinding,
+    V30GearboxBinding,
     V30ServoBinding,
     V30SetAngleBinding,
     V30SpeedBinding,
@@ -162,11 +162,11 @@ describe('v29 to v30 migration', () => {
     });
 
     it('should migrate gearbox binding input', () => {
-        const v30gearboxBinding = v30Store.controlSchemes?.entities?.['angle shift']?.bindings[0] as V30GearboxControlBinding;
-        const v29gearboxBinding = v29Store.controlSchemes?.entities?.['angle shift']?.bindings[0] as V29GearboxControlBinding;
-        expect(v30gearboxBinding.inputs[GearboxControlInputAction.NextGear]).toEqual(v29gearboxBinding.inputs[OldInputAction.NextLevel]);
-        expect(v30gearboxBinding.inputs[GearboxControlInputAction.PrevGear]).toEqual(v29gearboxBinding.inputs[OldInputAction.PrevLevel]);
-        expect(v30gearboxBinding.inputs[GearboxControlInputAction.Reset]).toEqual(v29gearboxBinding.inputs[OldInputAction.Reset]);
+        const v30gearboxBinding = v30Store.controlSchemes?.entities?.['angle shift']?.bindings[0] as V30GearboxBinding;
+        const v29gearboxBinding = v29Store.controlSchemes?.entities?.['angle shift']?.bindings[0] as V29GearboxBinding;
+        expect(v30gearboxBinding.inputs[GearboxInputAction.NextGear]).toEqual(v29gearboxBinding.inputs[OldInputAction.NextLevel]);
+        expect(v30gearboxBinding.inputs[GearboxInputAction.PrevGear]).toEqual(v29gearboxBinding.inputs[OldInputAction.PrevLevel]);
+        expect(v30gearboxBinding.inputs[GearboxInputAction.Reset]).toEqual(v29gearboxBinding.inputs[OldInputAction.Reset]);
     });
 
     it('should update store version', () => {

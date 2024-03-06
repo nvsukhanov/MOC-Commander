@@ -1,43 +1,36 @@
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import {
-    AttachedIoPropsModel,
-    ControlSchemeGearboxControlBinding,
-    GearboxControlInputAction,
-    GearboxControlTaskPayload,
-    PortCommandTask,
-    PortCommandTaskPayload
-} from '@app/store';
+import { AttachedIoPropsModel, ControlSchemeGearboxBinding, GearboxInputAction, GearboxTaskPayload, PortCommandTask, PortCommandTaskPayload } from '@app/store';
 
 import { calculateNextLoopingIndex, isDirectionalInputActivated } from '../common';
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
 import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 
 @Injectable()
-export class GearboxControlTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.GearboxControl> {
+export class GearboxBindingTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.Gearbox> {
     public buildPayload(
-        binding: ControlSchemeGearboxControlBinding,
-        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.GearboxControl>,
-        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.GearboxControl>,
+        binding: ControlSchemeGearboxBinding,
+        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Gearbox>,
+        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.Gearbox>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTask: PortCommandTask | null
-    ): { payload: GearboxControlTaskPayload; inputTimestamp: number } | null {
-        const gearboxControlPrevTask = previousTask && previousTask.payload.bindingType === ControlSchemeBindingType.GearboxControl
-                                       ? previousTask as PortCommandTask<ControlSchemeBindingType.GearboxControl>
+    ): { payload: GearboxTaskPayload; inputTimestamp: number } | null {
+        const gearboxPrevTask = previousTask && previousTask.payload.bindingType === ControlSchemeBindingType.Gearbox
+                                       ? previousTask as PortCommandTask<ControlSchemeBindingType.Gearbox>
                                        : null;
         return this.buildPayloadUsingPreviousTask(
             binding,
             currentInput,
             previousInput,
             ioProps?.motorEncoderOffset ?? 0,
-            gearboxControlPrevTask
+            gearboxPrevTask
         );
     }
 
     public buildCleanupPayload(
         previousTask: PortCommandTask
     ): PortCommandTaskPayload | null {
-        if (previousTask.payload.bindingType !== ControlSchemeBindingType.GearboxControl) {
+        if (previousTask.payload.bindingType !== ControlSchemeBindingType.Gearbox) {
             return null;
         }
         return {
@@ -51,15 +44,15 @@ export class GearboxControlTaskPayloadBuilderService implements ITaskPayloadBuil
     }
 
     private buildPayloadUsingPreviousTask(
-        binding: ControlSchemeGearboxControlBinding,
-        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.GearboxControl>,
-        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.GearboxControl>,
+        binding: ControlSchemeGearboxBinding,
+        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Gearbox>,
+        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.Gearbox>,
         motorEncoderOffset: number,
-        previousTask: PortCommandTask<ControlSchemeBindingType.GearboxControl> | null
-    ): { payload: GearboxControlTaskPayload; inputTimestamp: number } | null {
-        const nextLevelInput = this.getActiveInput(binding, currentInput, previousInput, GearboxControlInputAction.NextGear);
-        const prevLevelInput = this.getActiveInput(binding, currentInput, previousInput, GearboxControlInputAction.PrevGear);
-        const resetLevelInput = this.getActiveInput(binding, currentInput, previousInput, GearboxControlInputAction.Reset);
+        previousTask: PortCommandTask<ControlSchemeBindingType.Gearbox> | null
+    ): { payload: GearboxTaskPayload; inputTimestamp: number } | null {
+        const nextLevelInput = this.getActiveInput(binding, currentInput, previousInput, GearboxInputAction.NextGear);
+        const prevLevelInput = this.getActiveInput(binding, currentInput, previousInput, GearboxInputAction.PrevGear);
+        const resetLevelInput = this.getActiveInput(binding, currentInput, previousInput, GearboxInputAction.Reset);
 
         if (!nextLevelInput.isActivated && !prevLevelInput.isActivated && !resetLevelInput.isActivated) {
             return null;
@@ -88,7 +81,7 @@ export class GearboxControlTaskPayloadBuilderService implements ITaskPayloadBuil
 
         return {
             payload: {
-                bindingType: ControlSchemeBindingType.GearboxControl,
+                bindingType: ControlSchemeBindingType.Gearbox,
                 initialLevelIndex: binding.initialLevelIndex,
                 angleIndex: nextIndex,
                 offset: motorEncoderOffset,
@@ -105,11 +98,11 @@ export class GearboxControlTaskPayloadBuilderService implements ITaskPayloadBuil
     }
 
     private buildResetPayload(
-        binding: ControlSchemeGearboxControlBinding,
+        binding: ControlSchemeGearboxBinding,
         motorEncoderOffset: number
-    ): GearboxControlTaskPayload {
+    ): GearboxTaskPayload {
         return {
-            bindingType: ControlSchemeBindingType.GearboxControl,
+            bindingType: ControlSchemeBindingType.Gearbox,
             initialLevelIndex: binding.initialLevelIndex,
             angleIndex: binding.initialLevelIndex,
             offset: motorEncoderOffset,
@@ -124,10 +117,10 @@ export class GearboxControlTaskPayloadBuilderService implements ITaskPayloadBuil
     }
 
     private getActiveInput(
-        binding: ControlSchemeGearboxControlBinding,
-        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.GearboxControl>,
-        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.GearboxControl>,
-        inputAction: keyof ControlSchemeGearboxControlBinding['inputs'],
+        binding: ControlSchemeGearboxBinding,
+        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Gearbox>,
+        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.Gearbox>,
+        inputAction: keyof ControlSchemeGearboxBinding['inputs'],
     ): { isActivated: boolean; timestamp: number } {
         const currentInputForAction = currentInput[inputAction];
         const inputConfig = binding.inputs[inputAction];

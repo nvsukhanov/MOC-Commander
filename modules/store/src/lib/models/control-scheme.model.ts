@@ -146,19 +146,19 @@ export type ControlSchemeTrainControlBinding = {
     initialLevelIndex: number;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
-export enum GearboxControlInputAction {
+export enum GearboxInputAction {
     NextGear = 'NextGear',
     PrevGear = 'PrevGear',
     Reset = 'ResetGear'
 }
 
-export type ControlSchemeGearboxControlBinding = {
+export type ControlSchemeGearboxBinding = {
     id: number;
-    bindingType: ControlSchemeBindingType.GearboxControl;
+    bindingType: ControlSchemeBindingType.Gearbox;
     inputs: {
-        [GearboxControlInputAction.NextGear]: ControlSchemeInput;
-        [GearboxControlInputAction.Reset]?: ControlSchemeInput;
-        [GearboxControlInputAction.PrevGear]?: ControlSchemeInput;
+        [GearboxInputAction.NextGear]: ControlSchemeInput;
+        [GearboxInputAction.Reset]?: ControlSchemeInput;
+        [GearboxInputAction.PrevGear]?: ControlSchemeInput;
     };
     hubId: string;
     portId: number;
@@ -177,7 +177,7 @@ export type ControlSchemeBinding = ControlSchemeSpeedBinding
     | ControlSchemeSetAngleBinding
     | ControlSchemeStepperBinding
     | ControlSchemeTrainControlBinding
-    | ControlSchemeGearboxControlBinding;
+    | ControlSchemeGearboxBinding;
 
 export type BaseWidgetConfigModel = {
     id: number;

@@ -1,19 +1,19 @@
 import { Provider } from '@angular/core';
 
-import { GearboxControlTaskPayloadBuilderService } from './gearbox-control-task-payload-builder.service';
-import { GearboxControlTaskRunnerService } from './gearbox-control-task-runner.service';
-import { GearboxControlBindingFormBuilderService } from './gearbox-control-binding-form-builder.service';
-import { GearboxControlBindingFormMapperService } from './gearbox-control-binding-form-mapper.service';
-import { GearboxInputExtractorService } from './gearbox-input-extractor.service';
-import { GearboxL10nService } from './gearbox-l10n.service';
+import { GearboxBindingTaskPayloadBuilderService } from './gearbox-binding-task-payload-builder.service';
+import { GearboxBindingTaskRunnerService } from './gearbox-binding-task-runner.service';
+import { GearboxBindingFormBuilderService } from './gearbox-binding-form-builder.service';
+import { GearboxBindingFormMapperService } from './gearbox-binding-form-mapper.service';
+import { GearboxBindingInputExtractorService } from './gearbox-binding-input-extractor.service';
+import { GearboxBindingL10nService } from './gearbox-binding-l10n.service';
 
 export function provideGearboxBinding(): Provider[] {
     return [
-        GearboxControlTaskPayloadBuilderService,
-        GearboxControlTaskRunnerService,
-        GearboxControlBindingFormBuilderService,
-        GearboxControlBindingFormMapperService,
-        GearboxInputExtractorService,
-        GearboxL10nService
+        GearboxBindingTaskPayloadBuilderService,
+        GearboxBindingTaskRunnerService,
+        GearboxBindingFormBuilderService,
+        GearboxBindingFormMapperService,
+        GearboxBindingInputExtractorService,
+        GearboxBindingL10nService
     ];
 }
