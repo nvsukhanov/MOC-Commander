@@ -11,7 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
-import { HubMotorPositionFacadeService, SetAngleInputAction } from '@app/store';
+import { HubMotorPositionFacadeService, SetAngleBindingInputAction } from '@app/store';
 import { BindingControlSelectHubComponent, BindingControlSelectIoComponent, MotorPositionAdjustmentComponent } from '@app/shared-control-schemes';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
@@ -26,13 +26,13 @@ import {
     BindingEditSectionsContainerComponent
 } from '../common';
 import { SetAngleBindingForm } from './set-angle-binding-form';
-import { SetAngleL10nService } from './set-angle-l10n.service';
+import { SetAngleBindingL10nService } from './set-angle-binding-l10n.service';
 
 @Component({
     standalone: true,
-    selector: 'lib-cs-binding-set-angle-edit',
-    templateUrl: './binding-set-angle-edit.component.html',
-    styleUrls: [ './binding-set-angle-edit.component.scss' ],
+    selector: 'lib-cs-set-angle-binding-edit',
+    templateUrl: './set-angle-binding-edit.component.html',
+    styleUrls: [ './set-angle-binding-edit.component.scss' ],
     imports: [
         BindingControlOutputEndStateComponent,
         BindingControlSelectControllerComponent,
@@ -56,7 +56,7 @@ import { SetAngleL10nService } from './set-angle-l10n.service';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BindingSetAngleEditComponent implements IBindingsDetailsEditComponent<SetAngleBindingForm>, OnDestroy {
+export class SetAngleBindingEditComponent implements IBindingsDetailsEditComponent<SetAngleBindingForm>, OnDestroy {
     public readonly bindingType = ControlSchemeBindingType.SetAngle;
 
     private _form?: SetAngleBindingForm;
@@ -75,7 +75,7 @@ export class BindingSetAngleEditComponent implements IBindingsDetailsEditCompone
         private readonly cdRef: ChangeDetectorRef,
         private readonly store: Store,
         private readonly hubFacade: HubMotorPositionFacadeService,
-        private readonly l10nService: SetAngleL10nService
+        private readonly l10nService: SetAngleBindingL10nService
     ) {
     }
 
@@ -103,9 +103,9 @@ export class BindingSetAngleEditComponent implements IBindingsDetailsEditCompone
 
             this._setAngleControlBindingComponentData = {
                 bindingType: ControlSchemeBindingType.SetAngle,
-                inputFormGroup: form.controls.inputs.controls[SetAngleInputAction.SetAngle],
-                inputAction: SetAngleInputAction.SetAngle,
-                inputName$: this.l10nService.getBasicInputName(SetAngleInputAction.SetAngle)
+                inputFormGroup: form.controls.inputs.controls[SetAngleBindingInputAction.SetAngle],
+                inputAction: SetAngleBindingInputAction.SetAngle,
+                inputName$: this.l10nService.getBasicInputName(SetAngleBindingInputAction.SetAngle)
             };
 
             const hubAndPortChanges = form.controls.hubId.valueChanges.pipe(

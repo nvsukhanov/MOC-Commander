@@ -1,7 +1,7 @@
 import { MotorServoEndState } from 'rxpoweredup';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
-import { StepperInputAction } from './control-scheme.model';
+import { StepperBindingInputAction } from './control-scheme.model';
 
 export type SpeedTaskPayload = {
     bindingType: ControlSchemeBindingType.Speed;
@@ -40,7 +40,7 @@ export type StepperTaskPayload = {
     endState: MotorServoEndState;
     useAccelerationProfile: boolean;
     useDecelerationProfile: boolean;
-    action: StepperInputAction;
+    action: StepperBindingInputAction;
 };
 
 export type TrainTaskPayload = {

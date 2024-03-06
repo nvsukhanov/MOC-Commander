@@ -1,6 +1,6 @@
 import { ServoTaskPayload } from '@app/store';
 
-export function servoPayloadHash(
+export function servoBindingPayloadHash(
     payload: ServoTaskPayload
 ): string {
     return [

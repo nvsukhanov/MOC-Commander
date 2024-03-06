@@ -1,13 +1,13 @@
 import { FormControl, FormGroup } from '@angular/forms';
-import { SpeedInputAction } from '@app/store';
+import { SpeedBindingInputAction } from '@app/store';
 
 import { OptionalInputFormGroup } from '../common';
 
 export type SpeedBindingForm = FormGroup<{
     inputs: FormGroup<{
-        [SpeedInputAction.Forwards]: OptionalInputFormGroup;
-        [SpeedInputAction.Backwards]: OptionalInputFormGroup;
-        [SpeedInputAction.Brake]: OptionalInputFormGroup;
+        [SpeedBindingInputAction.Forwards]: OptionalInputFormGroup;
+        [SpeedBindingInputAction.Backwards]: OptionalInputFormGroup;
+        [SpeedBindingInputAction.Brake]: OptionalInputFormGroup;
     }>;
     hubId: FormControl<string | null>;
     portId: FormControl<number | null>;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeBinding, ControlSchemeStepperBinding, StepperInputAction } from '@app/store';
+import { ControlSchemeBinding, ControlSchemeStepperBinding, StepperBindingInputAction } from '@app/store';
 
 import { CommonFormMapperService, InputFormGroup } from '../common';
 import { StepperBindingForm } from './stepper-binding-form';
@@ -31,13 +31,13 @@ export class StepperBindingFormMapperService {
             inputs: {}
         };
 
-        if (form.controls.inputs.controls[StepperInputAction.Cw].controls.controllerId.value !== null) {
-            result.inputs[StepperInputAction.Cw] =
-                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[StepperInputAction.Cw] as InputFormGroup);
+        if (form.controls.inputs.controls[StepperBindingInputAction.Cw].controls.controllerId.value !== null) {
+            result.inputs[StepperBindingInputAction.Cw] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[StepperBindingInputAction.Cw] as InputFormGroup);
         }
-        if (form.controls.inputs.controls[StepperInputAction.Ccw].controls.controllerId.value !== null) {
-            result.inputs[StepperInputAction.Ccw] =
-                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[StepperInputAction.Ccw] as InputFormGroup);
+        if (form.controls.inputs.controls[StepperBindingInputAction.Ccw].controls.controllerId.value !== null) {
+            result.inputs[StepperBindingInputAction.Ccw] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[StepperBindingInputAction.Ccw] as InputFormGroup);
         }
         return result;
     }

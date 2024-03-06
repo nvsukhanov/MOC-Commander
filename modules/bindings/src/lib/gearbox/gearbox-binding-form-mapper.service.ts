@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeBinding, ControlSchemeGearboxBinding, GearboxInputAction } from '@app/store';
+import { ControlSchemeBinding, ControlSchemeGearboxBinding, GearboxBindingInputAction } from '@app/store';
 
 import { CommonFormMapperService, InputFormGroup } from '../common';
 import { GearboxBindingForm } from './gearbox-binding-form';
@@ -25,8 +25,8 @@ export class GearboxBindingFormMapperService {
             id,
             bindingType: ControlSchemeBindingType.Gearbox,
             inputs: {
-                [GearboxInputAction.NextGear]: this.commonFormMapperService.mapInputFormToSchemeInput(
-                    form.controls.inputs.controls[GearboxInputAction.NextGear]
+                [GearboxBindingInputAction.NextGear]: this.commonFormMapperService.mapInputFormToSchemeInput(
+                    form.controls.inputs.controls[GearboxBindingInputAction.NextGear]
                 )
             },
             hubId,
@@ -40,13 +40,13 @@ export class GearboxBindingFormMapperService {
             useDecelerationProfile: form.controls.useDecelerationProfile.getRawValue(),
             initialLevelIndex: form.controls.initialLevelIndex.getRawValue()
         };
-        if (form.controls.inputs.controls[GearboxInputAction.PrevGear].controls.controllerId.value !== null) {
-            result.inputs[GearboxInputAction.PrevGear] =
-                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[GearboxInputAction.PrevGear] as InputFormGroup);
+        if (form.controls.inputs.controls[GearboxBindingInputAction.PrevGear].controls.controllerId.value !== null) {
+            result.inputs[GearboxBindingInputAction.PrevGear] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[GearboxBindingInputAction.PrevGear] as InputFormGroup);
         }
-        if (form.controls.inputs.controls[GearboxInputAction.Reset].controls.controllerId.value !== null) {
-            result.inputs[GearboxInputAction.Reset] =
-                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[GearboxInputAction.Reset] as InputFormGroup);
+        if (form.controls.inputs.controls[GearboxBindingInputAction.Reset].controls.controllerId.value !== null) {
+            result.inputs[GearboxBindingInputAction.Reset] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[GearboxBindingInputAction.Reset] as InputFormGroup);
         }
         return result;
     }

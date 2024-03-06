@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AbstractControl, FormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MOTOR_LIMITS, MotorServoEndState } from 'rxpoweredup';
 import { AppValidators, DeepPartial } from '@app/shared-misc';
-import { ControlSchemeStepperBinding, ControllerInputModel, StepperInputAction } from '@app/store';
+import { ControlSchemeStepperBinding, ControllerInputModel, StepperBindingInputAction } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 import { CommonBindingsFormControlsBuilderService } from '../common';
@@ -27,8 +27,8 @@ export class StepperBindingFormBuilderService implements IBindingFormBuilder<Ste
     public build(): StepperBindingForm {
         return this.formBuilder.group({
             inputs: this.formBuilder.group({
-                [StepperInputAction.Cw]: this.commonFormControlBuilder.optionalInputFormGroup(),
-                [StepperInputAction.Ccw]: this.commonFormControlBuilder.optionalInputFormGroup(),
+                [StepperBindingInputAction.Cw]: this.commonFormControlBuilder.optionalInputFormGroup(),
+                [StepperBindingInputAction.Ccw]: this.commonFormControlBuilder.optionalInputFormGroup(),
             }, {
                 validators: this.createInputsValidators()
             }),
@@ -60,11 +60,11 @@ export class StepperBindingFormBuilderService implements IBindingFormBuilder<Ste
 
     private createInputsValidators(): ValidatorFn {
         const VALIDATOR = (inputsGroup: AbstractControl<{
-            [StepperInputAction.Cw]: ControllerInputModel;
-            [StepperInputAction.Ccw]: ControllerInputModel;
+            [StepperBindingInputAction.Cw]: ControllerInputModel;
+            [StepperBindingInputAction.Ccw]: ControllerInputModel;
         }>): ValidationErrors | null => {
-            const cwInput = inputsGroup.value[StepperInputAction.Cw];
-            const ccwInput = inputsGroup.value[StepperInputAction.Ccw];
+            const cwInput = inputsGroup.value[StepperBindingInputAction.Cw];
+            const ccwInput = inputsGroup.value[StepperBindingInputAction.Ccw];
             if (cwInput?.controllerId === null && ccwInput?.controllerId === null) {
                 return { [NO_INPUTS_STEPPER_ERROR]: true };
             }

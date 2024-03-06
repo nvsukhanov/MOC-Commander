@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 import { AttachedIoPropsModel, ControlSchemeBinding, ITaskFactory, PortCommandTask, PortCommandTaskPayload } from '@app/store';
 
-import { ServoTaskPayloadBuilderService } from './servo';
-import { SetAngleTaskPayloadBuilderService } from './set-angle';
-import { SpeedTaskPayloadBuilderService } from './speed';
+import { ServoBindingTaskPayloadBuilderService } from './servo';
+import { SetAngleBindingTaskPayloadBuilderService } from './set-angle';
+import { SpeedBindingTaskPayloadBuilderService } from './speed';
 import { TrainBindingTaskPayloadBuilderService } from './train';
-import { StepperTaskPayloadBuilderService } from './stepper';
+import { StepperBindingTaskPayloadBuilderService } from './stepper';
 import { GearboxBindingTaskPayloadBuilderService } from './gearbox';
 import { BindingTaskPayloadHashBuilderService } from './binding-task-payload-hash-builder.service';
 import { ITaskPayloadBuilder } from './i-task-payload-factory';
@@ -25,11 +25,11 @@ export class BindingTaskFactoryService implements ITaskFactory {
     };
 
     constructor(
-        private readonly servoTaskPayloadBuilder: ServoTaskPayloadBuilderService,
-        private readonly setAngleTaskPayloadBuilder: SetAngleTaskPayloadBuilderService,
-        private readonly speedTaskPayloadBuilder: SpeedTaskPayloadBuilderService,
+        private readonly servoTaskPayloadBuilder: ServoBindingTaskPayloadBuilderService,
+        private readonly setAngleTaskPayloadBuilder: SetAngleBindingTaskPayloadBuilderService,
+        private readonly speedTaskPayloadBuilder: SpeedBindingTaskPayloadBuilderService,
         private readonly trainTaskPayloadBuilder: TrainBindingTaskPayloadBuilderService,
-        private readonly stepperTaskPayloadBuilder: StepperTaskPayloadBuilderService,
+        private readonly stepperTaskPayloadBuilder: StepperBindingTaskPayloadBuilderService,
         private readonly gearboxTaskPayloadBuilder: GearboxBindingTaskPayloadBuilderService,
         private readonly hashBuilder: BindingTaskPayloadHashBuilderService
     ) {

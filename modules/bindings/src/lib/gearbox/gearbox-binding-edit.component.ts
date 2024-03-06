@@ -11,7 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
-import { GearboxInputAction, HubMotorPositionFacadeService } from '@app/store';
+import { GearboxBindingInputAction, HubMotorPositionFacadeService } from '@app/store';
 import { BindingControlSelectHubComponent, BindingControlSelectIoComponent, MotorPositionAdjustmentComponent } from '@app/shared-control-schemes';
 
 import {
@@ -117,23 +117,23 @@ export class GearboxBindingEditComponent implements IBindingsDetailsEditComponen
         this._form = form;
         this._nextLevelControlBindingComponentData = {
             bindingType: ControlSchemeBindingType.Gearbox,
-            inputFormGroup: form.controls.inputs.controls[GearboxInputAction.NextGear],
-            inputAction: GearboxInputAction.NextGear,
-            inputName$: this.l10nService.getBindingInputName(GearboxInputAction.NextGear)
+            inputFormGroup: form.controls.inputs.controls[GearboxBindingInputAction.NextGear],
+            inputAction: GearboxBindingInputAction.NextGear,
+            inputName$: this.l10nService.getBindingInputName(GearboxBindingInputAction.NextGear)
         };
 
         this._prevLevelControlBindingComponentData = {
             bindingType: ControlSchemeBindingType.Gearbox,
-            inputFormGroup: form.controls.inputs.controls[GearboxInputAction.PrevGear],
-            inputAction: GearboxInputAction.PrevGear,
-            inputName$: this.l10nService.getBindingInputName(GearboxInputAction.PrevGear)
+            inputFormGroup: form.controls.inputs.controls[GearboxBindingInputAction.PrevGear],
+            inputAction: GearboxBindingInputAction.PrevGear,
+            inputName$: this.l10nService.getBindingInputName(GearboxBindingInputAction.PrevGear)
         };
 
         this._resetControlBindingComponentData = {
             bindingType: ControlSchemeBindingType.Gearbox,
-            inputFormGroup: form.controls.inputs.controls[GearboxInputAction.Reset],
-            inputAction: GearboxInputAction.Reset,
-            inputName$: this.l10nService.getBindingInputName(GearboxInputAction.Reset)
+            inputFormGroup: form.controls.inputs.controls[GearboxBindingInputAction.Reset],
+            inputAction: GearboxBindingInputAction.Reset,
+            inputName$: this.l10nService.getBindingInputName(GearboxBindingInputAction.Reset)
         };
 
         this.portRequestSubscription?.unsubscribe();

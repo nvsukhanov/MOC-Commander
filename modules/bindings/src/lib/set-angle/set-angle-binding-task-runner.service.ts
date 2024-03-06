@@ -1,17 +1,17 @@
-import { IHub, PortCommandExecutionStatus } from 'rxpoweredup';
 import { Observable } from 'rxjs';
+import { IHub, PortCommandExecutionStatus } from 'rxpoweredup';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 import { PortCommandTask } from '@app/store';
 
-import { IBindingTaskRunner } from '../i-binding-task-runner';
 import { mapUseProfile } from '../common';
+import { IBindingTaskRunner } from '../i-binding-task-runner';
 
 @Injectable()
-export class ServoTaskRunnerService implements IBindingTaskRunner<ControlSchemeBindingType.Servo> {
+export class SetAngleBindingTaskRunnerService implements IBindingTaskRunner<ControlSchemeBindingType.SetAngle> {
     public runTask(
         hub: IHub,
-        task: PortCommandTask<ControlSchemeBindingType.Servo>,
+        task: PortCommandTask<ControlSchemeBindingType.SetAngle>,
     ): Observable<PortCommandExecutionStatus> {
         return hub.motors.goToPosition(
             task.portId,
@@ -19,6 +19,7 @@ export class ServoTaskRunnerService implements IBindingTaskRunner<ControlSchemeB
             {
                 speed: task.payload.speed,
                 power: task.payload.power,
+                endState: task.payload.endState,
                 useProfile: mapUseProfile(task.payload)
             }
         );

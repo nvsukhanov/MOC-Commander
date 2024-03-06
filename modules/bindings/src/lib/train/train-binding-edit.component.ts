@@ -9,7 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
 import { BindingControlSelectHubComponent, BindingControlSelectIoComponent } from '@app/shared-control-schemes';
-import { TrainInputAction } from '@app/store';
+import { TrainBindingInputAction } from '@app/store';
 
 import {
     BindingControlPowerInputComponent,
@@ -88,21 +88,21 @@ export class TrainBindingEditComponent implements IBindingsDetailsEditComponent<
         this._form = form;
         this._nextLevelControlBindingComponentData = {
             bindingType: ControlSchemeBindingType.Train,
-            inputFormGroup: this._form.controls.inputs.controls[TrainInputAction.NextSpeed],
-            inputAction: TrainInputAction.NextSpeed,
-            inputName$: this.l10nService.getBindingInputName(TrainInputAction.NextSpeed)
+            inputFormGroup: this._form.controls.inputs.controls[TrainBindingInputAction.NextSpeed],
+            inputAction: TrainBindingInputAction.NextSpeed,
+            inputName$: this.l10nService.getBindingInputName(TrainBindingInputAction.NextSpeed)
         };
         this._prevLevelControlBindingComponentData = {
             bindingType: ControlSchemeBindingType.Train,
-            inputFormGroup: this._form.controls.inputs.controls[TrainInputAction.PrevSpeed],
-            inputAction: TrainInputAction.PrevSpeed,
-            inputName$: this.l10nService.getBindingInputName(TrainInputAction.PrevSpeed)
+            inputFormGroup: this._form.controls.inputs.controls[TrainBindingInputAction.PrevSpeed],
+            inputAction: TrainBindingInputAction.PrevSpeed,
+            inputName$: this.l10nService.getBindingInputName(TrainBindingInputAction.PrevSpeed)
         };
         this._resetControlBindingComponentData = {
             bindingType: ControlSchemeBindingType.Train,
-            inputFormGroup: this._form.controls.inputs.controls[TrainInputAction.Reset],
-            inputAction: TrainInputAction.Reset,
-            inputName$: this.l10nService.getBindingInputName(TrainInputAction.Reset)
+            inputFormGroup: this._form.controls.inputs.controls[TrainBindingInputAction.Reset],
+            inputAction: TrainBindingInputAction.Reset,
+            inputName$: this.l10nService.getBindingInputName(TrainBindingInputAction.Reset)
         };
     }
 

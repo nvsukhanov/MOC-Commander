@@ -1,6 +1,6 @@
 import { StepperTaskPayload } from '@app/store';
 
-export function stepperPayloadHash(
+export function stepperBindingPayloadHash(
     payload: StepperTaskPayload
 ): string {
     return [

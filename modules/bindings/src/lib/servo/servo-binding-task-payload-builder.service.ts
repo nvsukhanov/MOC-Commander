@@ -7,7 +7,7 @@ import {
     InputDirection,
     PortCommandTask,
     PortCommandTaskPayload,
-    ServoInputAction,
+    ServoBindingInputAction,
     ServoTaskPayload
 } from '@app/store';
 
@@ -16,7 +16,7 @@ import { ITaskPayloadBuilder } from '../i-task-payload-factory';
 import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 
 @Injectable()
-export class ServoTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.Servo> {
+export class ServoBindingTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.Servo> {
     private readonly snappingThreshold = 10;
 
     public buildPayload(
@@ -26,8 +26,8 @@ export class ServoTaskPayloadBuilderService implements ITaskPayloadBuilder<Contr
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTaskPayload: PortCommandTask | null
     ): { payload: ServoTaskPayload; inputTimestamp: number } | null {
-        const cwInput = currentInput[ServoInputAction.Cw];
-        const ccwInput = currentInput[ServoInputAction.Ccw];
+        const cwInput = currentInput[ServoBindingInputAction.Cw];
+        const ccwInput = currentInput[ServoBindingInputAction.Ccw];
 
         if (!cwInput && !ccwInput && !!previousTaskPayload) {
             // If this is not the first task and there is no input - we do nothing
@@ -52,13 +52,13 @@ export class ServoTaskPayloadBuilderService implements ITaskPayloadBuilder<Contr
             );
         }
 
-        const cwInputDirection = binding.inputs[ServoInputAction.Cw]?.inputDirection ?? InputDirection.Positive;
-        const ccwInputDirection = binding.inputs[ServoInputAction.Ccw]?.inputDirection ?? InputDirection.Positive;
+        const cwInputDirection = binding.inputs[ServoBindingInputAction.Cw]?.inputDirection ?? InputDirection.Positive;
+        const ccwInputDirection = binding.inputs[ServoBindingInputAction.Ccw]?.inputDirection ?? InputDirection.Positive;
         const cwValue = extractDirectionAwareInputValue(cwInput?.value ?? 0, cwInputDirection);
         const ccwValue = extractDirectionAwareInputValue(ccwInput?.value ?? 0, ccwInputDirection);
 
-        const servoCwInputValue = calcInputGain(cwValue, binding.inputs[ServoInputAction.Cw]?.gain);
-        const servoCcwInputValue = calcInputGain(ccwValue, binding.inputs[ServoInputAction.Ccw]?.gain);
+        const servoCwInputValue = calcInputGain(cwValue, binding.inputs[ServoBindingInputAction.Cw]?.gain);
+        const servoCcwInputValue = calcInputGain(ccwValue, binding.inputs[ServoBindingInputAction.Ccw]?.gain);
         const servoNonClampedInputValue = -Math.abs(servoCcwInputValue) + Math.abs(servoCwInputValue);
 
         // TODO: create a function to clamp the value

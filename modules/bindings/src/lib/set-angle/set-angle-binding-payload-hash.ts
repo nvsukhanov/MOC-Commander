@@ -1,6 +1,6 @@
 import { SetAngleTaskPayload } from '@app/store';
 
-export function setAnglePayloadHash(
+export function setAngleBindingPayloadHash(
     payload: SetAngleTaskPayload
 ): string {
     return [

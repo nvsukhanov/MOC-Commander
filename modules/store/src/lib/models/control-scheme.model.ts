@@ -44,7 +44,7 @@ export type ControlSchemeInput = {
     inputDirection: InputDirection;
 };
 
-export enum SpeedInputAction {
+export enum SpeedBindingInputAction {
     Forwards = 'Forwards',
     Backwards = 'Backwards',
     Brake = 'Brake'
@@ -54,9 +54,9 @@ export type ControlSchemeSpeedBinding = {
     id: number;
     bindingType: ControlSchemeBindingType.Speed;
     inputs: {
-        [SpeedInputAction.Forwards]?: ControlSchemeInput;
-        [SpeedInputAction.Backwards]?: ControlSchemeInput;
-        [SpeedInputAction.Brake]?: ControlSchemeInput;
+        [SpeedBindingInputAction.Forwards]?: ControlSchemeInput;
+        [SpeedBindingInputAction.Backwards]?: ControlSchemeInput;
+        [SpeedBindingInputAction.Brake]?: ControlSchemeInput;
     };
     hubId: string;
     portId: number;
@@ -65,7 +65,7 @@ export type ControlSchemeSpeedBinding = {
     power: number;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
-export enum ServoInputAction {
+export enum ServoBindingInputAction {
     Cw = 'Cw',
     Ccw = 'Ccw'
 }
@@ -74,8 +74,8 @@ export type ControlSchemeServoBinding = {
     id: number;
     bindingType: ControlSchemeBindingType.Servo;
     inputs: {
-        [ServoInputAction.Cw]?: ControlSchemeInput;
-        [ServoInputAction.Ccw]?: ControlSchemeInput;
+        [ServoBindingInputAction.Cw]?: ControlSchemeInput;
+        [ServoBindingInputAction.Ccw]?: ControlSchemeInput;
     };
     hubId: string;
     portId: number;
@@ -86,7 +86,7 @@ export type ControlSchemeServoBinding = {
     power: number;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
-export enum SetAngleInputAction {
+export enum SetAngleBindingInputAction {
     SetAngle = 'SetAngle'
 }
 
@@ -94,7 +94,7 @@ export type ControlSchemeSetAngleBinding = {
     id: number;
     bindingType: ControlSchemeBindingType.SetAngle;
     inputs: {
-        [SetAngleInputAction.SetAngle]: ControlSchemeInput;
+        [SetAngleBindingInputAction.SetAngle]: ControlSchemeInput;
     };
     hubId: string;
     portId: number;
@@ -104,7 +104,7 @@ export type ControlSchemeSetAngleBinding = {
     endState: MotorServoEndState;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
-export enum StepperInputAction {
+export enum StepperBindingInputAction {
     Cw = 'Cw',
     Ccw = 'Ccw'
 }
@@ -113,8 +113,8 @@ export type ControlSchemeStepperBinding = {
     id: number;
     bindingType: ControlSchemeBindingType.Stepper;
     inputs: {
-        [StepperInputAction.Cw]?: ControlSchemeInput;
-        [StepperInputAction.Ccw]?: ControlSchemeInput;
+        [StepperBindingInputAction.Cw]?: ControlSchemeInput;
+        [StepperBindingInputAction.Ccw]?: ControlSchemeInput;
     };
     hubId: string;
     portId: number;
@@ -124,7 +124,7 @@ export type ControlSchemeStepperBinding = {
     endState: MotorServoEndState;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
-export enum TrainInputAction {
+export enum TrainBindingInputAction {
     NextSpeed = 'NextSpeed',
     PrevSpeed = 'PrevSpeed',
     Reset = 'ResetSpeed'
@@ -134,9 +134,9 @@ export type ControlSchemeTrainBinding = {
     id: number;
     bindingType: ControlSchemeBindingType.Train;
     inputs: {
-        [TrainInputAction.NextSpeed]: ControlSchemeInput;
-        [TrainInputAction.PrevSpeed]?: ControlSchemeInput;
-        [TrainInputAction.Reset]?: ControlSchemeInput;
+        [TrainBindingInputAction.NextSpeed]: ControlSchemeInput;
+        [TrainBindingInputAction.PrevSpeed]?: ControlSchemeInput;
+        [TrainBindingInputAction.Reset]?: ControlSchemeInput;
     };
     hubId: string;
     portId: number;
@@ -146,7 +146,7 @@ export type ControlSchemeTrainBinding = {
     initialLevelIndex: number;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
-export enum GearboxInputAction {
+export enum GearboxBindingInputAction {
     NextGear = 'NextGear',
     PrevGear = 'PrevGear',
     Reset = 'ResetGear'
@@ -156,9 +156,9 @@ export type ControlSchemeGearboxBinding = {
     id: number;
     bindingType: ControlSchemeBindingType.Gearbox;
     inputs: {
-        [GearboxInputAction.NextGear]: ControlSchemeInput;
-        [GearboxInputAction.Reset]?: ControlSchemeInput;
-        [GearboxInputAction.PrevGear]?: ControlSchemeInput;
+        [GearboxBindingInputAction.NextGear]: ControlSchemeInput;
+        [GearboxBindingInputAction.Reset]?: ControlSchemeInput;
+        [GearboxBindingInputAction.PrevGear]?: ControlSchemeInput;
     };
     hubId: string;
     portId: number;

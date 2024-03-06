@@ -9,7 +9,7 @@ import {
     ControlSchemeInput,
     ControlSchemeSetAngleBinding,
     PortCommandTask,
-    SetAngleInputAction
+    SetAngleBindingInputAction
 } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
@@ -17,7 +17,7 @@ import { IBindingL10n } from '../i-binding-l10n';
 import { ControllerInputNameService } from '../common';
 
 @Injectable()
-export class SetAngleL10nService implements IBindingL10n<ControlSchemeBindingType.SetAngle> {
+export class SetAngleBindingL10nService implements IBindingL10n<ControlSchemeBindingType.SetAngle> {
     public readonly bindingTypeL10nKey = 'controlScheme.setAngleBinding.operationMode';
 
     constructor(
@@ -51,7 +51,7 @@ export class SetAngleL10nService implements IBindingL10n<ControlSchemeBindingTyp
         actionType: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.SetAngle>
     ): Observable<string> {
         switch (actionType) {
-            case SetAngleInputAction.SetAngle:
+            case SetAngleBindingInputAction.SetAngle:
                 return this.transloco.selectTranslate('controlScheme.setAngleBinding.basicInputAction');
         }
     }
@@ -61,7 +61,7 @@ export class SetAngleL10nService implements IBindingL10n<ControlSchemeBindingTyp
         inputConfig: ControlSchemeInput
     ): Observable<string> {
         switch (actionType) {
-            case SetAngleInputAction.SetAngle:
+            case SetAngleBindingInputAction.SetAngle:
                 return this.controllerNameProvider.getFullControllerInputNameData(inputConfig);
         }
     }

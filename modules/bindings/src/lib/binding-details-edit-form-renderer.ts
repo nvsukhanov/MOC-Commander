@@ -6,10 +6,10 @@ import { ControlSchemeBindingType, DeepPartial } from '@app/shared-misc';
 import { IBindingDetailsEditFormRenderer } from '@app/shared-control-schemes';
 
 import { IBindingsDetailsEditComponent } from './i-bindings-details-edit-component';
-import { BindingSpeedEditComponent, SpeedBindingFormBuilderService, SpeedBindingFormMapperService } from './speed';
-import { BindingServoEditComponent, ServoBindingFormBuilderService, ServoBindingFormMapperService } from './servo';
-import { BindingSetAngleEditComponent, SetAngleBindingFormBuilderService, SetAngleBindingFormMapperService } from './set-angle';
-import { BindingStepperEditComponent, StepperBindingFormBuilderService, StepperBindingFormMapperService } from './stepper';
+import { SpeedBindingEditComponent, SpeedBindingFormBuilderService, SpeedBindingFormMapperService } from './speed';
+import { ServoBindingEditComponent, ServoBindingFormBuilderService, ServoBindingFormMapperService } from './servo';
+import { SetAngleBindingEditComponent, SetAngleBindingFormBuilderService, SetAngleBindingFormMapperService } from './set-angle';
+import { StepperBindingEditComponent, StepperBindingFormBuilderService, StepperBindingFormMapperService } from './stepper';
 import { TrainBindingEditComponent, TrainBindingFormBuilderService, TrainBindingFormMapperService } from './train';
 import { GearboxBindingEditComponent, GearboxBindingFormBuilderService, GearboxBindingFormMapperService } from './gearbox';
 
@@ -19,10 +19,10 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
     public readonly bindingFormDirtyChange: Observable<boolean>;
 
     private readonly renderers: { [k in ControlSchemeBindingType]: Type<IBindingsDetailsEditComponent> | null } = {
-        [ControlSchemeBindingType.Speed]: BindingSpeedEditComponent,
-        [ControlSchemeBindingType.Servo]: BindingServoEditComponent,
-        [ControlSchemeBindingType.SetAngle]: BindingSetAngleEditComponent,
-        [ControlSchemeBindingType.Stepper]: BindingStepperEditComponent,
+        [ControlSchemeBindingType.Speed]: SpeedBindingEditComponent,
+        [ControlSchemeBindingType.Servo]: ServoBindingEditComponent,
+        [ControlSchemeBindingType.SetAngle]: SetAngleBindingEditComponent,
+        [ControlSchemeBindingType.Stepper]: StepperBindingEditComponent,
         [ControlSchemeBindingType.Train]: TrainBindingEditComponent,
         [ControlSchemeBindingType.Gearbox]: GearboxBindingEditComponent
     };

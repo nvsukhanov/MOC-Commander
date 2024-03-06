@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MotorServoEndState } from 'rxpoweredup';
 import { DeepPartial } from '@app/shared-misc';
-import { ControlSchemeSetAngleBinding, SetAngleInputAction } from '@app/store';
+import { ControlSchemeSetAngleBinding, SetAngleBindingInputAction } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 import { CommonBindingsFormControlsBuilderService } from '../common';
@@ -21,7 +21,7 @@ export class SetAngleBindingFormBuilderService implements IBindingFormBuilder<Se
     public build(): SetAngleBindingForm {
         return this.formBuilder.group({
             inputs: this.formBuilder.group({
-                [SetAngleInputAction.SetAngle]: this.commonFormControlBuilder.inputFormGroup()
+                [SetAngleBindingInputAction.SetAngle]: this.commonFormControlBuilder.inputFormGroup()
             }),
             hubId: this.controlSchemeFormBuilder.hubIdControl(),
             portId: this.controlSchemeFormBuilder.portIdControl(),

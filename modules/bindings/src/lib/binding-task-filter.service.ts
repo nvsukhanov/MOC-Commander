@@ -4,12 +4,12 @@ import { ITaskFilter, PortCommandTask } from '@app/store';
 
 import { IBindingTaskFilter } from './i-binding-task-filter';
 import { HashCompareFilterService, MostRecentTaskFilterService } from './common';
-import { SpeedFilterService } from './speed';
+import { SpeedBindingTaskFilterService } from './speed';
 
 @Injectable()
 export class BindingTaskFilterService implements ITaskFilter {
     private readonly filters: { [k in ControlSchemeBindingType]: IBindingTaskFilter<k> } = {
-        [ControlSchemeBindingType.Speed]: this.speedFilter,
+        [ControlSchemeBindingType.Speed]: this.speedBindingTaskFilter,
         [ControlSchemeBindingType.Servo]: this.hashCompareFilter,
         [ControlSchemeBindingType.SetAngle]: this.mostRecentTaskFilter,
         [ControlSchemeBindingType.Stepper]: this.mostRecentTaskFilter,
@@ -19,7 +19,7 @@ export class BindingTaskFilterService implements ITaskFilter {
 
     constructor(
         private readonly mostRecentTaskFilter: MostRecentTaskFilterService,
-        private readonly speedFilter: SpeedFilterService,
+        private readonly speedBindingTaskFilter: SpeedBindingTaskFilterService,
         private readonly hashCompareFilter: HashCompareFilterService
     ) {
     }

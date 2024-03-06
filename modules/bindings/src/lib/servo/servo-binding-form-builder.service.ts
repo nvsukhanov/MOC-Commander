@@ -2,7 +2,7 @@ import { MOTOR_LIMITS } from 'rxpoweredup';
 import { AbstractControl, FormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Inject, Injectable } from '@angular/core';
 import { APP_CONFIG, AppValidators, DeepPartial, IAppConfig } from '@app/shared-misc';
-import { ControlSchemeServoBinding, ControllerInputModel, ServoInputAction } from '@app/store';
+import { ControlSchemeServoBinding, ControllerInputModel, ServoBindingInputAction } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 import { CommonBindingsFormControlsBuilderService } from '../common';
@@ -40,8 +40,8 @@ export class ServoBindingFormBuilderService implements IBindingFormBuilder<Servo
     public build(): ServoBindingForm {
         return this.formBuilder.group({
             inputs: this.formBuilder.group({
-                [ServoInputAction.Cw]: this.commonFormControlBuilder.optionalInputFormGroup(),
-                [ServoInputAction.Ccw]: this.commonFormControlBuilder.optionalInputFormGroup()
+                [ServoBindingInputAction.Cw]: this.commonFormControlBuilder.optionalInputFormGroup(),
+                [ServoBindingInputAction.Ccw]: this.commonFormControlBuilder.optionalInputFormGroup()
             }, {
                 validators: this.createInputsValidators()
             }),
@@ -84,11 +84,11 @@ export class ServoBindingFormBuilderService implements IBindingFormBuilder<Servo
 
     private createInputsValidators(): ValidatorFn {
         const VALIDATOR = (inputsGroup: AbstractControl<{
-            [ServoInputAction.Cw]: ControllerInputModel;
-            [ServoInputAction.Ccw]: ControllerInputModel;
+            [ServoBindingInputAction.Cw]: ControllerInputModel;
+            [ServoBindingInputAction.Ccw]: ControllerInputModel;
         }>): ValidationErrors | null => {
-            const cwInput = inputsGroup.value[ServoInputAction.Cw];
-            const ccwInput = inputsGroup.value[ServoInputAction.Ccw];
+            const cwInput = inputsGroup.value[ServoBindingInputAction.Cw];
+            const ccwInput = inputsGroup.value[ServoBindingInputAction.Ccw];
             if (cwInput?.controllerId === null && ccwInput?.controllerId === null) {
                 return { [NO_INPUTS_SERVO_ERROR]: true };
             }

@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeBindingInputs, ControlSchemeGearboxBinding, ControlSchemeInput, GearboxInputAction, PortCommandTask } from '@app/store';
+import { ControlSchemeBindingInputs, ControlSchemeGearboxBinding, ControlSchemeInput, GearboxBindingInputAction, PortCommandTask } from '@app/store';
 
 import { IBindingL10n } from '../i-binding-l10n';
 import { DirectionAwareControllerInputNameService } from '../common';
@@ -30,11 +30,11 @@ export class GearboxBindingL10nService implements IBindingL10n<ControlSchemeBind
         actionType: keyof ControlSchemeGearboxBinding['inputs']
     ): Observable<string> {
         switch (actionType) {
-            case GearboxInputAction.NextGear:
+            case GearboxBindingInputAction.NextGear:
                 return this.translocoService.selectTranslate('controlScheme.gearboxBinding.prevLevel');
-            case GearboxInputAction.PrevGear:
+            case GearboxBindingInputAction.PrevGear:
                 return this.translocoService.selectTranslate('controlScheme.gearboxBinding.nextLevel');
-            case GearboxInputAction.Reset:
+            case GearboxBindingInputAction.Reset:
                 return this.translocoService.selectTranslate('controlScheme.gearboxBinding.reset');
         }
     }
@@ -44,9 +44,9 @@ export class GearboxBindingL10nService implements IBindingL10n<ControlSchemeBind
         inputConfig: ControlSchemeInput
     ): Observable<string> {
         switch (actionType) {
-            case GearboxInputAction.NextGear:
-            case GearboxInputAction.PrevGear:
-            case GearboxInputAction.Reset:
+            case GearboxBindingInputAction.NextGear:
+            case GearboxBindingInputAction.PrevGear:
+            case GearboxBindingInputAction.Reset:
                 return this.directionAwareControllerNameProvider.getFullControllerInputNameData(inputConfig);
         }
     }

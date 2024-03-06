@@ -1,19 +1,19 @@
 import { Provider } from '@angular/core';
 
-import { ServoTaskPayloadBuilderService } from './servo-task-payload-builder.service';
-import { ServoTaskRunnerService } from './servo-task-runner.service';
+import { ServoBindingTaskPayloadBuilderService } from './servo-binding-task-payload-builder.service';
+import { ServoBindingTaskRunnerService } from './servo-binding-task-runner.service';
 import { ServoBindingFormBuilderService } from './servo-binding-form-builder.service';
 import { ServoBindingFormMapperService } from './servo-binding-form-mapper.service';
-import { ServoInputExtractorService } from './servo-input-extractor.service';
-import { ServoL10nService } from './servo-l10n.service';
+import { ServoBindingInputExtractorService } from './servo-binding-input-extractor.service';
+import { ServoBindingL10nService } from './servo-binding-l10n.service';
 
 export function provideServoBinding(): Provider[] {
     return [
-        ServoTaskPayloadBuilderService,
-        ServoTaskRunnerService,
+        ServoBindingTaskPayloadBuilderService,
+        ServoBindingTaskRunnerService,
         ServoBindingFormBuilderService,
         ServoBindingFormMapperService,
-        ServoInputExtractorService,
-        ServoL10nService
+        ServoBindingInputExtractorService,
+        ServoBindingL10nService
     ];
 }
