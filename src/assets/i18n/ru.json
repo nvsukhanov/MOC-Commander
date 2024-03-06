@@ -398,7 +398,8 @@
     "sourcesTitle": "Исходный код",
     "githubTitle": "MOC Commander GitHub",
     "githubApiTitle": "rxPoweredUp GitHub",
-    "versionTitle": "Версия"
+    "feedbackTitle": "Обратная связь",
+    "feedbackDiscord": "Discord"
   },
   "io": {
     "hardwareRevision": "Аппаратная версия",

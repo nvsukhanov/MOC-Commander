@@ -36,10 +36,12 @@
 
 <section class="about-section">
     <h2 class="about-section-title">
-        {{ 'about.versionTitle' | transloco }}
+        {{ 'about.feedbackTitle' | transloco }}
     </h2>
     <p class="about-section-content">
-        {{ appVersion$ | async }}
+        <a [href]="discordURL">
+            {{ 'about.feedbackDiscord' | transloco }}
+        </a>
     </p>
 </section>
 

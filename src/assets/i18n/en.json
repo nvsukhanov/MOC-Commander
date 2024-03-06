@@ -398,7 +398,8 @@
     "sourcesTitle": "Sources",
     "githubTitle": "MOC Commander GitHub",
     "githubApiTitle": "rxPoweredUp GitHub",
-    "versionTitle": "Version"
+    "feedbackTitle": "Feedback",
+    "feedbackDiscord": "Discord"
   },
   "io": {
     "hardwareRevision": "Hardware Revision",
