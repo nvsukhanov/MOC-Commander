@@ -8,10 +8,10 @@ import { mapUseProfile } from '../common';
 import { IBindingTaskRunner } from '../i-binding-task-runner';
 
 @Injectable()
-export class SetSpeedTaskRunnerService implements IBindingTaskRunner<ControlSchemeBindingType.SetSpeed> {
+export class SpeedTaskRunnerService implements IBindingTaskRunner<ControlSchemeBindingType.Speed> {
     public runTask(
         hub: IHub,
-        task: PortCommandTask<ControlSchemeBindingType.SetSpeed>,
+        task: PortCommandTask<ControlSchemeBindingType.Speed>,
     ): Observable<PortCommandExecutionStatus> {
         const { speed, power } = calculateSpeedPower(task.payload.speed, task.payload.brakeFactor, task.payload.power);
         return hub.motors.startSpeed(

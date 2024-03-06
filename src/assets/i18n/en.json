@@ -252,8 +252,8 @@
     "menu": "Menu",
     "outputSpeed": "Speed",
     "outputPower": "Power",
-    "setSpeedBinding": {
-      "operationMode": "Set speed",
+    "speedBinding": {
+      "operationMode": "Speed",
       "forwardsInput": "Forwards",
       "backwardsInput": "Backwards",
       "brakeInput": "Brake",
@@ -749,7 +749,7 @@
       "featImprovedUiPerformance": "Improved UI performance",
       "featRaiseServoMotorRangeLimit": "Increased servo motor range limit to 4 full rotations (1440°)",
       "featSeparateControlsForForwardAndBackwardSpeed": "Separate controls for forward and backward speed in 'Set speed' bindings",
-      "featAxialAwarenessForSetSpeedBrakeControl": "Axial input direction awareness for 'Set speed' brake control",
+      "featAxialAwarenessForSpeedBrakeControl": "Axial input direction awareness for 'Set speed' brake control",
       "featBetterL10nForTrainAndGearbox": "Better localization for 'Train' and 'Gearbox' controls",
       "featSeparateControlsForCwCcwStepper": "Separate controls for clockwise and counter-clockwise stepper inputs",
       "changeStepperNegativeValuesRemoved": "Only positive values are allowed for stepper inputs. For negative values, use the 'Counter-clockwise' input"

@@ -41,7 +41,7 @@ export class GearboxControlTaskPayloadBuilderService implements ITaskPayloadBuil
             return null;
         }
         return {
-            bindingType: ControlSchemeBindingType.SetSpeed,
+            bindingType: ControlSchemeBindingType.Speed,
             speed: 0,
             power: 0,
             brakeFactor: 0,

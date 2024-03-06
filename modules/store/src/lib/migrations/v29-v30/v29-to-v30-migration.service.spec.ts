@@ -9,7 +9,7 @@ import {
     InputDirection,
     ServoInputAction,
     SetAngleInputAction,
-    SetSpeedInputAction,
+    SpeedInputAction,
     StepperInputAction,
     TrainControlInputAction
 } from '../../models';
@@ -35,7 +35,7 @@ import {
     V30GearboxControlBinding,
     V30ServoBinding,
     V30SetAngleBinding,
-    V30SetSpeedBinding,
+    V30SpeedBinding,
     V30StepperBinding,
     V30TrainControlBinding
 } from './v29-store';
@@ -75,48 +75,48 @@ describe('v29 to v30 migration', () => {
         v30Store = v29Tov30Migration.migrate(v29Store);
     });
 
-    it('should update setSpeed keyboard input settings', () => {
-        const setSpeedBindings = v30Store.controlSchemes?.entities?.['Speed control test']?.bindings as V30SetSpeedBinding[];
-        expect(setSpeedBindings[0].inputs[SetSpeedInputAction.Forwards]).toEqual({
+    it('should update speed keyboard input settings', () => {
+        const speedBindings = v30Store.controlSchemes?.entities?.['Speed control test']?.bindings as V30SpeedBinding[];
+        expect(speedBindings[0].inputs[SpeedInputAction.Forwards]).toEqual({
             controllerId: 'keyboard',
             inputId: 'w',
             inputType: 0,
             gain: 0,
             inputDirection: InputDirection.Positive
-        } satisfies V30SetSpeedBinding['inputs'][SetSpeedInputAction.Forwards]);
-        expect(setSpeedBindings[0].inputs[SetSpeedInputAction.Brake]).toEqual({
+        } satisfies V30SpeedBinding['inputs'][SpeedInputAction.Forwards]);
+        expect(speedBindings[0].inputs[SpeedInputAction.Brake]).toEqual({
             controllerId: 'keyboard',
             inputId: 's',
             inputType: 0,
             gain: 0,
             inputDirection: InputDirection.Positive
-        } satisfies V30SetSpeedBinding['inputs'][SetSpeedInputAction.Brake]);
-        expect(setSpeedBindings[0].inputs[SetSpeedInputAction.Backwards]).toBeUndefined();
+        } satisfies V30SpeedBinding['inputs'][SpeedInputAction.Brake]);
+        expect(speedBindings[0].inputs[SpeedInputAction.Backwards]).toBeUndefined();
     });
 
-    it('should update setSpeed gamepad input settings', () => {
-        const setSpeedBindings = v30Store.controlSchemes?.entities?.['Speed control test']?.bindings as V30SetSpeedBinding[];
-        expect(setSpeedBindings[1].inputs[SetSpeedInputAction.Forwards]).toEqual({
+    it('should update speed gamepad input settings', () => {
+        const speedBindings = v30Store.controlSchemes?.entities?.['Speed control test']?.bindings as V30SpeedBinding[];
+        expect(speedBindings[1].inputs[SpeedInputAction.Forwards]).toEqual({
             controllerId: 'gamepad-xbox360/0',
             inputId: '1',
             inputType: 1,
             gain: 0,
             inputDirection: InputDirection.Positive
-        } satisfies V30SetSpeedBinding['inputs'][SetSpeedInputAction.Forwards]);
-        expect(setSpeedBindings[1].inputs[SetSpeedInputAction.Backwards]).toEqual({
+        } satisfies V30SpeedBinding['inputs'][SpeedInputAction.Forwards]);
+        expect(speedBindings[1].inputs[SpeedInputAction.Backwards]).toEqual({
             controllerId: 'gamepad-xbox360/0',
             inputId: '1',
             inputType: 1,
             gain: 0,
             inputDirection: InputDirection.Negative
-        } satisfies V30SetSpeedBinding['inputs'][SetSpeedInputAction.Backwards]);
-        expect(setSpeedBindings[1].inputs[SetSpeedInputAction.Brake]).toEqual({
+        } satisfies V30SpeedBinding['inputs'][SpeedInputAction.Backwards]);
+        expect(speedBindings[1].inputs[SpeedInputAction.Brake]).toEqual({
             controllerId: 'gamepad-xbox360/0',
             inputId: '0',
             inputType: 0,
             gain: 0,
             inputDirection: InputDirection.Positive
-        } satisfies V30SetSpeedBinding['inputs'][SetSpeedInputAction.Brake]);
+        } satisfies V30SpeedBinding['inputs'][SpeedInputAction.Brake]);
     });
 
     it('should migrate servo binding inputs', () => {

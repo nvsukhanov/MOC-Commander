@@ -9,7 +9,7 @@ import {
 import { BINDING_INPUT_NAME_RESOLVER, PORT_COMMAND_TASK_SUMMARY_BUILDER } from '@app/control-scheme-view';
 
 import { provideGearboxBinding } from './gearbox';
-import { provideSetSpeedBinding } from './set-speed';
+import { provideSpeedBinding } from './speed';
 import { provideSetAngleBinding } from './set-angle';
 import { provideStepperBinding } from './stepper';
 import { BindingTaskFactoryService } from './binding-task-factory.service';
@@ -28,7 +28,7 @@ export function provideBindings(): Provider[] {
         ...provideGearboxBinding(),
         ...provideServoBinding(),
         ...provideSetAngleBinding(),
-        ...provideSetSpeedBinding(),
+        ...provideSpeedBinding(),
         ...provideStepperBinding(),
         ...provideTrainControlBinding(),
         ...provideBindingCommonServices(),

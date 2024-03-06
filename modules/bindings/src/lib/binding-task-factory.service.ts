@@ -4,7 +4,7 @@ import { AttachedIoPropsModel, ControlSchemeBinding, ITaskFactory, PortCommandTa
 
 import { ServoTaskPayloadBuilderService } from './servo';
 import { SetAngleTaskPayloadBuilderService } from './set-angle';
-import { SetSpeedTaskPayloadBuilderService } from './set-speed';
+import { SpeedTaskPayloadBuilderService } from './speed';
 import { TrainControlTaskPayloadBuilderService } from './train-control';
 import { StepperTaskPayloadBuilderService } from './stepper';
 import { GearboxControlTaskPayloadBuilderService } from './gearbox';
@@ -18,7 +18,7 @@ export class BindingTaskFactoryService implements ITaskFactory {
     private readonly taskPayloadBuilders: { [k in ControlSchemeBindingType]: ITaskPayloadBuilder<k> } = {
         [ControlSchemeBindingType.Servo]: this.servoTaskPayloadBuilder,
         [ControlSchemeBindingType.SetAngle]: this.setAngleTaskPayloadBuilder,
-        [ControlSchemeBindingType.SetSpeed]: this.setSpeedTaskPayloadBuilder,
+        [ControlSchemeBindingType.Speed]: this.speedTaskPayloadBuilder,
         [ControlSchemeBindingType.TrainControl]: this.trainControlTaskPayloadBuilder,
         [ControlSchemeBindingType.Stepper]: this.stepperTaskPayloadBuilder,
         [ControlSchemeBindingType.GearboxControl]: this.gearboxControlTaskPayloadBuilder,
@@ -27,7 +27,7 @@ export class BindingTaskFactoryService implements ITaskFactory {
     constructor(
         private readonly servoTaskPayloadBuilder: ServoTaskPayloadBuilderService,
         private readonly setAngleTaskPayloadBuilder: SetAngleTaskPayloadBuilderService,
-        private readonly setSpeedTaskPayloadBuilder: SetSpeedTaskPayloadBuilderService,
+        private readonly speedTaskPayloadBuilder: SpeedTaskPayloadBuilderService,
         private readonly trainControlTaskPayloadBuilder: TrainControlTaskPayloadBuilderService,
         private readonly stepperTaskPayloadBuilder: StepperTaskPayloadBuilderService,
         private readonly gearboxControlTaskPayloadBuilder: GearboxControlTaskPayloadBuilderService,

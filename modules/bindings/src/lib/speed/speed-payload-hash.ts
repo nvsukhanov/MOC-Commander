@@ -1,8 +1,8 @@
-import { SetSpeedTaskPayload } from '@app/store';
+import { SpeedTaskPayload } from '@app/store';
 import { calculateSpeedPower } from '@app/shared-misc';
 
-export function setSpeedPayloadHash(
-    payload: SetSpeedTaskPayload
+export function speedPayloadHash(
+    payload: SpeedTaskPayload
 ): string {
     const { speed, power } = calculateSpeedPower(payload.speed, payload.brakeFactor, payload.power);
     return [

@@ -1,5 +1,5 @@
 export enum ControlSchemeBindingType {
-    SetSpeed,
+    Speed,
     SetAngle,
     Servo,
     Stepper,

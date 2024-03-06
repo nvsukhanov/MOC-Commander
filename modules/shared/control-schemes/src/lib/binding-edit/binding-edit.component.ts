@@ -41,7 +41,7 @@ export class BindingEditComponent {
 
     protected form = this.formBuilder.group({
         bindingType: this.formBuilder.control<ControlSchemeBindingType>(
-            ControlSchemeBindingType.SetSpeed,
+            ControlSchemeBindingType.Speed,
             {
                 nonNullable: true,
                 validators: [
@@ -74,7 +74,7 @@ export class BindingEditComponent {
         binding: Partial<ControlSchemeBinding> | null
     ) {
         this._binding = binding;
-        this.form.controls.bindingType.patchValue(binding?.bindingType ?? ControlSchemeBindingType.SetSpeed);
+        this.form.controls.bindingType.patchValue(binding?.bindingType ?? ControlSchemeBindingType.Speed);
     }
 
     public get binding(): Partial<ControlSchemeBinding> | null {

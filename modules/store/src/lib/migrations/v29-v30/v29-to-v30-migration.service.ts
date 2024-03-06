@@ -10,7 +10,7 @@ import {
     InputDirection,
     ServoInputAction,
     SetAngleInputAction,
-    SetSpeedInputAction,
+    SpeedInputAction,
     StepperInputAction,
     TrainControlInputAction
 } from '../../models';
@@ -19,7 +19,7 @@ import {
     V29GearboxControlBinding,
     V29ServoBinding,
     V29SetAngleBinding,
-    V29SetSpeedBinding,
+    V29SpeedBinding,
     V29StepperBinding,
     V29Store,
     V29TrainControlBinding,
@@ -27,7 +27,7 @@ import {
     V30GearboxControlBinding,
     V30ServoBinding,
     V30SetAngleBinding,
-    V30SetSpeedBinding,
+    V30SpeedBinding,
     V30StepperBinding,
     V30TrainControlBinding
 } from './v29-store';
@@ -66,8 +66,8 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
             }
             const bindings: V30Binding[] = controlScheme.bindings.map((b) => {
                 switch (b.bindingType) {
-                    case ControlSchemeBindingType.SetSpeed:
-                        return this.migrateSetSpeed(b);
+                    case ControlSchemeBindingType.Speed:
+                        return this.migrateSpeed(b);
                     case ControlSchemeBindingType.Servo:
                         return this.migrateServo(b);
                     case ControlSchemeBindingType.SetAngle:
@@ -171,15 +171,15 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
         return bindingResult;
     }
 
-    private migrateSetSpeed(
-        v29binding: V29SetSpeedBinding
-    ): V30SetSpeedBinding {
-        const bindingResult: V30SetSpeedBinding = {
+    private migrateSpeed(
+        v29binding: V29SpeedBinding
+    ): V30SpeedBinding {
+        const bindingResult: V30SpeedBinding = {
             ...v29binding,
             inputs:{}
         };
         if (v29binding.inputs[OldInputAction.Brake]) {
-            bindingResult.inputs[SetSpeedInputAction.Brake] = {
+            bindingResult.inputs[SpeedInputAction.Brake] = {
                 ...v29binding.inputs[OldInputAction.Brake]
             };
         }
@@ -187,16 +187,16 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
             case ControllerInputType.Button:
             case ControllerInputType.ButtonGroup:
             case ControllerInputType.Trigger:
-                bindingResult.inputs[SetSpeedInputAction.Forwards] = {
+                bindingResult.inputs[SpeedInputAction.Forwards] = {
                     ...v29binding.inputs[OldInputAction.Accelerate]
                 };
                 break;
             case ControllerInputType.Axis:
-                bindingResult.inputs[SetSpeedInputAction.Forwards] = {
+                bindingResult.inputs[SpeedInputAction.Forwards] = {
                     ...v29binding.inputs[OldInputAction.Accelerate],
                     inputDirection: InputDirection.Positive
                 };
-                bindingResult.inputs[SetSpeedInputAction.Backwards] = {
+                bindingResult.inputs[SpeedInputAction.Backwards] = {
                     ...v29binding.inputs[0], // old ControlSchemeInputAction.Accelerate
                     inputDirection: InputDirection.Negative
                 };

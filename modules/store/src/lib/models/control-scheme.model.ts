@@ -44,19 +44,19 @@ export type ControlSchemeInput = {
     inputDirection: InputDirection;
 };
 
-export enum SetSpeedInputAction {
+export enum SpeedInputAction {
     Forwards = 'Forwards',
     Backwards = 'Backwards',
     Brake = 'Brake'
 }
 
-export type ControlSchemeSetSpeedBinding = {
+export type ControlSchemeSpeedBinding = {
     id: number;
-    bindingType: ControlSchemeBindingType.SetSpeed;
+    bindingType: ControlSchemeBindingType.Speed;
     inputs: {
-        [SetSpeedInputAction.Forwards]?: ControlSchemeInput;
-        [SetSpeedInputAction.Backwards]?: ControlSchemeInput;
-        [SetSpeedInputAction.Brake]?: ControlSchemeInput;
+        [SpeedInputAction.Forwards]?: ControlSchemeInput;
+        [SpeedInputAction.Backwards]?: ControlSchemeInput;
+        [SpeedInputAction.Brake]?: ControlSchemeInput;
     };
     hubId: string;
     portId: number;
@@ -172,7 +172,7 @@ export type ControlSchemeGearboxControlBinding = {
 
 export type ControlSchemeBindingInputs<T extends ControlSchemeBindingType = ControlSchemeBindingType> = (ControlSchemeBinding & { bindingType: T })['inputs'];
 
-export type ControlSchemeBinding = ControlSchemeSetSpeedBinding
+export type ControlSchemeBinding = ControlSchemeSpeedBinding
     | ControlSchemeServoBinding
     | ControlSchemeSetAngleBinding
     | ControlSchemeStepperBinding
