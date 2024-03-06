@@ -20,7 +20,7 @@ import {
     CalibrationResult,
     CalibrationResultType,
     HubMotorPositionFacadeService,
-    ServoInputAction
+    ServoBindingInputAction
 } from '@app/store';
 import { BindingControlSelectHubComponent, BindingControlSelectIoComponent, MotorPositionAdjustmentComponent } from '@app/shared-control-schemes';
 
@@ -39,13 +39,13 @@ import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-compon
 import { BINDING_SERVO_EDIT_SELECTORS } from './binding-servo-edit.selectors';
 import { ServoBindingForm } from './servo-binding-form';
 import { NO_INPUTS_SERVO_ERROR, ServoBindingFormBuilderService } from './servo-binding-form-builder.service';
-import { ServoL10nService } from './servo-l10n.service';
+import { ServoBindingL10nService } from './servo-binding-l10n.service';
 
 @Component({
     standalone: true,
-    selector: 'lib-cs-binding-servo-edit',
-    templateUrl: './binding-servo-edit.component.html',
-    styleUrls: [ './binding-servo-edit.component.scss' ],
+    selector: 'lib-cs-servo-binding-edit',
+    templateUrl: './servo-binding-edit.component.html',
+    styleUrls: [ './servo-binding-edit.component.scss' ],
     imports: [
         BindingEditSectionComponent,
         TranslocoPipe,
@@ -70,12 +70,12 @@ import { ServoL10nService } from './servo-l10n.service';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BindingServoEditComponent implements IBindingsDetailsEditComponent<ServoBindingForm>, OnDestroy {
+export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<ServoBindingForm>, OnDestroy {
     public readonly validationErrorsMap: ValidationErrorsL10nMap = {
         [NO_INPUTS_SERVO_ERROR]: 'controlScheme.servoBinding.missingInputs'
     };
 
-    public readonly inputActions = ServoInputAction;
+    public readonly inputActions = ServoBindingInputAction;
 
     public readonly bindingType = ControlSchemeBindingType.Servo;
 
@@ -99,7 +99,7 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
         private readonly matDialog: MatDialog,
         private readonly hubFacade: HubMotorPositionFacadeService,
         protected readonly formBuilder: ServoBindingFormBuilderService,
-        private readonly l10nService: ServoL10nService
+        private readonly l10nService: ServoBindingL10nService
     ) {
     }
 
@@ -116,13 +116,13 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
     }
 
     public get isCwInputGainConfigurable(): boolean {
-        const servoInput = this.form?.controls.inputs.controls[ServoInputAction.Cw];
+        const servoInput = this.form?.controls.inputs.controls[ServoBindingInputAction.Cw];
         return servoInput?.controls.inputType.value === ControllerInputType.Axis
             || servoInput?.controls.inputType.value === ControllerInputType.Trigger;
     }
 
     public get isCcwInputGainConfigurable(): boolean {
-        const servoInput = this.form?.controls.inputs.controls[ServoInputAction.Ccw];
+        const servoInput = this.form?.controls.inputs.controls[ServoBindingInputAction.Ccw];
         return servoInput?.controls.inputType.value === ControllerInputType.Axis
             || servoInput?.controls.inputType.value === ControllerInputType.Trigger;
     }
@@ -244,16 +244,16 @@ export class BindingServoEditComponent implements IBindingsDetailsEditComponent<
 
             this._servoCwBindingComponentData = {
                 bindingType: ControlSchemeBindingType.Servo,
-                inputFormGroup: form.controls.inputs.controls[ServoInputAction.Cw],
-                inputAction: ServoInputAction.Cw,
-                inputName$: this.l10nService.getBindingInputName(ServoInputAction.Cw)
+                inputFormGroup: form.controls.inputs.controls[ServoBindingInputAction.Cw],
+                inputAction: ServoBindingInputAction.Cw,
+                inputName$: this.l10nService.getBindingInputName(ServoBindingInputAction.Cw)
             };
 
             this._servoCcwBindingComponentData = {
                 bindingType: ControlSchemeBindingType.Servo,
-                inputFormGroup: form.controls.inputs.controls[ServoInputAction.Ccw],
-                inputAction: ServoInputAction.Ccw,
-                inputName$: this.l10nService.getBindingInputName(ServoInputAction.Ccw)
+                inputFormGroup: form.controls.inputs.controls[ServoBindingInputAction.Ccw],
+                inputAction: ServoBindingInputAction.Ccw,
+                inputName$: this.l10nService.getBindingInputName(ServoBindingInputAction.Ccw)
             };
 
             this.portRequestSubscription?.unsubscribe();

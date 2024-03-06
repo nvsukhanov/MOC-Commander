@@ -1,20 +1,28 @@
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType, clampSpeed } from '@app/shared-misc';
-import { ControlSchemeSpeedBinding, InputDirection, InputGain, PortCommandTask, PortCommandTaskPayload, SpeedInputAction, SpeedTaskPayload } from '@app/store';
+import {
+    ControlSchemeSpeedBinding,
+    InputDirection,
+    InputGain,
+    PortCommandTask,
+    PortCommandTaskPayload,
+    SpeedBindingInputAction,
+    SpeedTaskPayload
+} from '@app/store';
 
 import { calcInputGain, extractDirectionAwareInputValue, snapSpeed } from '../common';
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
 import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 
 @Injectable()
-export class SpeedTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.Speed> {
+export class SpeedBindingTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.Speed> {
     public buildPayload(
         binding: ControlSchemeSpeedBinding,
         currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Speed>,
     ): { payload: SpeedTaskPayload; inputTimestamp: number } | null {
-        const forwardsInputModel = currentInput[SpeedInputAction.Forwards];
-        const backwardsInputModel = currentInput[SpeedInputAction.Backwards];
-        const brakeInputModel = currentInput[SpeedInputAction.Brake];
+        const forwardsInputModel = currentInput[SpeedBindingInputAction.Forwards];
+        const backwardsInputModel = currentInput[SpeedBindingInputAction.Backwards];
+        const brakeInputModel = currentInput[SpeedBindingInputAction.Brake];
 
         let inputTimestamp = 0;
         if (forwardsInputModel || brakeInputModel || backwardsInputModel) {
@@ -28,13 +36,13 @@ export class SpeedTaskPayloadBuilderService implements ITaskPayloadBuilder<Contr
         }
 
         const forwardsInputValue = forwardsInputModel?.value ?? 0;
-        const forwardsInputDirection = binding.inputs[SpeedInputAction.Forwards]?.inputDirection ?? InputDirection.Positive;
+        const forwardsInputDirection = binding.inputs[SpeedBindingInputAction.Forwards]?.inputDirection ?? InputDirection.Positive;
 
         const backwardsInputValue = backwardsInputModel?.value ?? 0;
-        const backwardsInputDirection = binding.inputs[SpeedInputAction.Backwards]?.inputDirection ?? InputDirection.Positive;
+        const backwardsInputDirection = binding.inputs[SpeedBindingInputAction.Backwards]?.inputDirection ?? InputDirection.Positive;
 
         const brakeInputValue = brakeInputModel?.value ?? 0;
-        const brakeInputDirection = binding.inputs[SpeedInputAction.Brake]?.inputDirection ?? InputDirection.Positive;
+        const brakeInputDirection = binding.inputs[SpeedBindingInputAction.Brake]?.inputDirection ?? InputDirection.Positive;
 
         const forwardsInput = extractDirectionAwareInputValue(forwardsInputValue, forwardsInputDirection);
         const backwardsInput = extractDirectionAwareInputValue(backwardsInputValue, backwardsInputDirection);
@@ -44,14 +52,14 @@ export class SpeedTaskPayloadBuilderService implements ITaskPayloadBuilder<Contr
             forwardsInput,
             binding.maxSpeed,
             binding.invert,
-            binding.inputs[SpeedInputAction.Forwards]?.gain ?? InputGain.Linear
+            binding.inputs[SpeedBindingInputAction.Forwards]?.gain ?? InputGain.Linear
         );
 
         const backwardsSpeed = this.calculateSpeed(
             backwardsInput,
             binding.maxSpeed,
             binding.invert,
-            binding.inputs[SpeedInputAction.Backwards]?.gain ?? InputGain.Linear
+            binding.inputs[SpeedBindingInputAction.Backwards]?.gain ?? InputGain.Linear
         );
 
         const payload: SpeedTaskPayload = {

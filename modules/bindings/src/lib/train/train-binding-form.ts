@@ -1,13 +1,13 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { LoopingMode, TrainInputAction } from '@app/store';
+import { LoopingMode, TrainBindingInputAction } from '@app/store';
 
 import { InputFormGroup, OptionalInputFormGroup } from '../common';
 
 export type TrainBindingForm = FormGroup<{
     inputs: FormGroup<{
-        [TrainInputAction.NextSpeed]: InputFormGroup;
-        [TrainInputAction.PrevSpeed]: OptionalInputFormGroup;
-        [TrainInputAction.Reset]: OptionalInputFormGroup;
+        [TrainBindingInputAction.NextSpeed]: InputFormGroup;
+        [TrainBindingInputAction.PrevSpeed]: OptionalInputFormGroup;
+        [TrainBindingInputAction.Reset]: OptionalInputFormGroup;
     }>;
     hubId: FormControl<string | null>;
     portId: FormControl<number | null>;

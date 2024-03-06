@@ -5,13 +5,13 @@ import { DeepPartial } from '@app/shared-misc';
 
 import { AppStoreVersion } from '../../app-store-version';
 import {
-    GearboxInputAction,
+    GearboxBindingInputAction,
     InputDirection,
-    ServoInputAction,
-    SetAngleInputAction,
-    SpeedInputAction,
-    StepperInputAction,
-    TrainInputAction
+    ServoBindingInputAction,
+    SetAngleBindingInputAction,
+    SpeedBindingInputAction,
+    StepperBindingInputAction,
+    TrainBindingInputAction
 } from '../../models';
 import { V21ToV22MigrationService } from '../v21-v22';
 import { V21_STORE_SAMPLE } from '../v21';
@@ -77,76 +77,76 @@ describe('v29 to v30 migration', () => {
 
     it('should update speed keyboard input settings', () => {
         const speedBindings = v30Store.controlSchemes?.entities?.['Speed control test']?.bindings as V30SpeedBinding[];
-        expect(speedBindings[0].inputs[SpeedInputAction.Forwards]).toEqual({
+        expect(speedBindings[0].inputs[SpeedBindingInputAction.Forwards]).toEqual({
             controllerId: 'keyboard',
             inputId: 'w',
             inputType: 0,
             gain: 0,
             inputDirection: InputDirection.Positive
-        } satisfies V30SpeedBinding['inputs'][SpeedInputAction.Forwards]);
-        expect(speedBindings[0].inputs[SpeedInputAction.Brake]).toEqual({
+        } satisfies V30SpeedBinding['inputs'][SpeedBindingInputAction.Forwards]);
+        expect(speedBindings[0].inputs[SpeedBindingInputAction.Brake]).toEqual({
             controllerId: 'keyboard',
             inputId: 's',
             inputType: 0,
             gain: 0,
             inputDirection: InputDirection.Positive
-        } satisfies V30SpeedBinding['inputs'][SpeedInputAction.Brake]);
-        expect(speedBindings[0].inputs[SpeedInputAction.Backwards]).toBeUndefined();
+        } satisfies V30SpeedBinding['inputs'][SpeedBindingInputAction.Brake]);
+        expect(speedBindings[0].inputs[SpeedBindingInputAction.Backwards]).toBeUndefined();
     });
 
     it('should update speed gamepad input settings', () => {
         const speedBindings = v30Store.controlSchemes?.entities?.['Speed control test']?.bindings as V30SpeedBinding[];
-        expect(speedBindings[1].inputs[SpeedInputAction.Forwards]).toEqual({
+        expect(speedBindings[1].inputs[SpeedBindingInputAction.Forwards]).toEqual({
             controllerId: 'gamepad-xbox360/0',
             inputId: '1',
             inputType: 1,
             gain: 0,
             inputDirection: InputDirection.Positive
-        } satisfies V30SpeedBinding['inputs'][SpeedInputAction.Forwards]);
-        expect(speedBindings[1].inputs[SpeedInputAction.Backwards]).toEqual({
+        } satisfies V30SpeedBinding['inputs'][SpeedBindingInputAction.Forwards]);
+        expect(speedBindings[1].inputs[SpeedBindingInputAction.Backwards]).toEqual({
             controllerId: 'gamepad-xbox360/0',
             inputId: '1',
             inputType: 1,
             gain: 0,
             inputDirection: InputDirection.Negative
-        } satisfies V30SpeedBinding['inputs'][SpeedInputAction.Backwards]);
-        expect(speedBindings[1].inputs[SpeedInputAction.Brake]).toEqual({
+        } satisfies V30SpeedBinding['inputs'][SpeedBindingInputAction.Backwards]);
+        expect(speedBindings[1].inputs[SpeedBindingInputAction.Brake]).toEqual({
             controllerId: 'gamepad-xbox360/0',
             inputId: '0',
             inputType: 0,
             gain: 0,
             inputDirection: InputDirection.Positive
-        } satisfies V30SpeedBinding['inputs'][SpeedInputAction.Brake]);
+        } satisfies V30SpeedBinding['inputs'][SpeedBindingInputAction.Brake]);
     });
 
     it('should migrate servo binding inputs', () => {
         const v30servoBinding = v30Store.controlSchemes?.entities?.['Servo']?.bindings[0] as V30ServoBinding;
         const v29ServoBinding = v29Store.controlSchemes?.entities?.['Servo']?.bindings[0] as V29ServoBinding;
-        expect(v30servoBinding.inputs[ServoInputAction.Cw]).toEqual(v29ServoBinding.inputs[OldInputAction.ServoCw]);
-        expect(v30servoBinding.inputs[ServoInputAction.Ccw]).toEqual(v29ServoBinding.inputs[OldInputAction.ServoCcw]);
+        expect(v30servoBinding.inputs[ServoBindingInputAction.Cw]).toEqual(v29ServoBinding.inputs[OldInputAction.ServoCw]);
+        expect(v30servoBinding.inputs[ServoBindingInputAction.Ccw]).toEqual(v29ServoBinding.inputs[OldInputAction.ServoCcw]);
     });
 
     it('should migrate set angle binding input', () => {
         const v30setAngleBinding = v30Store.controlSchemes?.entities?.['Set angle']?.bindings[0] as V30SetAngleBinding;
         const v29setAngleBinding = v29Store.controlSchemes?.entities?.['Set angle']?.bindings[0] as V29SetAngleBinding;
-        expect(v30setAngleBinding.inputs[SetAngleInputAction.SetAngle]).toEqual(v29setAngleBinding.inputs[OldInputAction.SetAngle]);
+        expect(v30setAngleBinding.inputs[SetAngleBindingInputAction.SetAngle]).toEqual(v29setAngleBinding.inputs[OldInputAction.SetAngle]);
     });
 
     it('should migrate stepper button binding input', () => {
         const v30stepperButtonBinding = v30Store.controlSchemes?.entities?.['Stepper']?.bindings[0] as V30StepperBinding;
         const v29stepperButtonBinding = v29Store.controlSchemes?.entities?.['Stepper']?.bindings[0] as V29StepperBinding;
-        expect(v30stepperButtonBinding.inputs[StepperInputAction.Cw]).toEqual(v29stepperButtonBinding.inputs[OldInputAction.Step]);
-        expect(v30stepperButtonBinding.inputs[StepperInputAction.Ccw]).toBeUndefined();
+        expect(v30stepperButtonBinding.inputs[StepperBindingInputAction.Cw]).toEqual(v29stepperButtonBinding.inputs[OldInputAction.Step]);
+        expect(v30stepperButtonBinding.inputs[StepperBindingInputAction.Ccw]).toBeUndefined();
     });
 
     it('should migrate stepper axial binding input w/ inversion', () => {
         const v30stepperButtonBinding = v30Store.controlSchemes?.entities?.['Stepper']?.bindings[1] as V30StepperBinding;
         const v29stepperButtonBinding = v29Store.controlSchemes?.entities?.['Stepper']?.bindings[1] as V29StepperBinding;
-        expect(v30stepperButtonBinding.inputs[StepperInputAction.Ccw]).toEqual({
+        expect(v30stepperButtonBinding.inputs[StepperBindingInputAction.Ccw]).toEqual({
             ...v29stepperButtonBinding.inputs[OldInputAction.Step],
             inputDirection: InputDirection.Positive
         });
-        expect(v30stepperButtonBinding.inputs[StepperInputAction.Cw]).toEqual({
+        expect(v30stepperButtonBinding.inputs[StepperBindingInputAction.Cw]).toEqual({
             ...v29stepperButtonBinding.inputs[OldInputAction.Step],
             inputDirection: InputDirection.Negative
         });
@@ -156,17 +156,17 @@ describe('v29 to v30 migration', () => {
     it('should migrate train binding input', () => {
         const v30trainBinding = v30Store.controlSchemes?.entities?.['Speed shift']?.bindings[0] as V30TrainBinding;
         const v29trainBinding = v29Store.controlSchemes?.entities?.['Speed shift']?.bindings[0] as V29TrainBinding;
-        expect(v30trainBinding.inputs[TrainInputAction.NextSpeed]).toEqual(v29trainBinding.inputs[OldInputAction.NextLevel]);
-        expect(v30trainBinding.inputs[TrainInputAction.PrevSpeed]).toEqual(v29trainBinding.inputs[OldInputAction.PrevLevel]);
-        expect(v30trainBinding.inputs[TrainInputAction.Reset]).toEqual(v29trainBinding.inputs[OldInputAction.Reset]);
+        expect(v30trainBinding.inputs[TrainBindingInputAction.NextSpeed]).toEqual(v29trainBinding.inputs[OldInputAction.NextLevel]);
+        expect(v30trainBinding.inputs[TrainBindingInputAction.PrevSpeed]).toEqual(v29trainBinding.inputs[OldInputAction.PrevLevel]);
+        expect(v30trainBinding.inputs[TrainBindingInputAction.Reset]).toEqual(v29trainBinding.inputs[OldInputAction.Reset]);
     });
 
     it('should migrate gearbox binding input', () => {
         const v30gearboxBinding = v30Store.controlSchemes?.entities?.['angle shift']?.bindings[0] as V30GearboxBinding;
         const v29gearboxBinding = v29Store.controlSchemes?.entities?.['angle shift']?.bindings[0] as V29GearboxBinding;
-        expect(v30gearboxBinding.inputs[GearboxInputAction.NextGear]).toEqual(v29gearboxBinding.inputs[OldInputAction.NextLevel]);
-        expect(v30gearboxBinding.inputs[GearboxInputAction.PrevGear]).toEqual(v29gearboxBinding.inputs[OldInputAction.PrevLevel]);
-        expect(v30gearboxBinding.inputs[GearboxInputAction.Reset]).toEqual(v29gearboxBinding.inputs[OldInputAction.Reset]);
+        expect(v30gearboxBinding.inputs[GearboxBindingInputAction.NextGear]).toEqual(v29gearboxBinding.inputs[OldInputAction.NextLevel]);
+        expect(v30gearboxBinding.inputs[GearboxBindingInputAction.PrevGear]).toEqual(v29gearboxBinding.inputs[OldInputAction.PrevLevel]);
+        expect(v30gearboxBinding.inputs[GearboxBindingInputAction.Reset]).toEqual(v29gearboxBinding.inputs[OldInputAction.Reset]);
     });
 
     it('should update store version', () => {

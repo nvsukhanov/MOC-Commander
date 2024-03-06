@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Dictionary } from '@ngrx/entity';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeGearboxBinding, ControllerInputModel, GearboxInputAction, controllerInputIdFn } from '@app/store';
+import { ControlSchemeGearboxBinding, ControllerInputModel, GearboxBindingInputAction, controllerInputIdFn } from '@app/store';
 
 import { BindingInputExtractionResult, IBindingTaskInputExtractor } from '../i-binding-task-input-extractor';
 
@@ -11,16 +11,16 @@ export class GearboxBindingInputExtractorService implements IBindingTaskInputExt
         binding: ControlSchemeGearboxBinding,
         globalInput: Dictionary<ControllerInputModel>
     ): BindingInputExtractionResult<ControlSchemeBindingType.Gearbox> {
-        const nextLevelInputId = controllerInputIdFn(binding.inputs[GearboxInputAction.NextGear]);
+        const nextLevelInputId = controllerInputIdFn(binding.inputs[GearboxBindingInputAction.NextGear]);
         const nextLevelInputResult = globalInput[nextLevelInputId];
-        const prevLevelInputId = binding.inputs[GearboxInputAction.PrevGear];
+        const prevLevelInputId = binding.inputs[GearboxBindingInputAction.PrevGear];
         const prevLevelInputResult = prevLevelInputId ? globalInput[controllerInputIdFn(prevLevelInputId)] : null;
-        const resetInputId = binding.inputs[GearboxInputAction.Reset];
+        const resetInputId = binding.inputs[GearboxBindingInputAction.Reset];
         const resetInputResult = resetInputId ? globalInput[controllerInputIdFn(resetInputId)] : null;
         return {
-            [GearboxInputAction.NextGear]: nextLevelInputResult ?? null,
-            [GearboxInputAction.PrevGear]: prevLevelInputResult ?? null,
-            [GearboxInputAction.Reset]: resetInputResult ?? null
+            [GearboxBindingInputAction.NextGear]: nextLevelInputResult ?? null,
+            [GearboxBindingInputAction.PrevGear]: prevLevelInputResult ?? null,
+            [GearboxBindingInputAction.Reset]: resetInputResult ?? null
         };
     }
 
@@ -28,9 +28,9 @@ export class GearboxBindingInputExtractorService implements IBindingTaskInputExt
         prevInput: BindingInputExtractionResult<ControlSchemeBindingType.Gearbox>,
         nextInput: BindingInputExtractionResult<ControlSchemeBindingType.Gearbox>
     ): boolean {
-        return prevInput[GearboxInputAction.NextGear] !== nextInput[GearboxInputAction.NextGear]
-            || prevInput[GearboxInputAction.PrevGear] !== nextInput[GearboxInputAction.PrevGear]
-            || prevInput[GearboxInputAction.Reset] !== nextInput[GearboxInputAction.Reset];
+        return prevInput[GearboxBindingInputAction.NextGear] !== nextInput[GearboxBindingInputAction.NextGear]
+            || prevInput[GearboxBindingInputAction.PrevGear] !== nextInput[GearboxBindingInputAction.PrevGear]
+            || prevInput[GearboxBindingInputAction.Reset] !== nextInput[GearboxBindingInputAction.Reset];
     }
 
 }

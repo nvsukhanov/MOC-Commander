@@ -1,12 +1,12 @@
 import { FormControl, FormGroup } from '@angular/forms';
 import { MotorServoEndState } from 'rxpoweredup';
-import { SetAngleInputAction } from '@app/store';
+import { SetAngleBindingInputAction } from '@app/store';
 
 import { InputFormGroup } from '../common';
 
 export type SetAngleBindingForm = FormGroup<{
     inputs: FormGroup<{
-        [SetAngleInputAction.SetAngle]: InputFormGroup;
+        [SetAngleBindingInputAction.SetAngle]: InputFormGroup;
     }>;
     hubId: FormControl<string | null>;
     portId: FormControl<number | null>;

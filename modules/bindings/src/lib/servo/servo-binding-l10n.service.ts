@@ -9,14 +9,14 @@ import {
     ControlSchemeBindingInputs,
     ControlSchemeInput,
     PortCommandTask,
-    ServoInputAction
+    ServoBindingInputAction
 } from '@app/store';
 
 import { IBindingL10n } from '../i-binding-l10n';
 import { DirectionAwareControllerInputNameService } from '../common';
 
 @Injectable()
-export class ServoL10nService implements IBindingL10n<ControlSchemeBindingType.Servo> {
+export class ServoBindingL10nService implements IBindingL10n<ControlSchemeBindingType.Servo> {
     public readonly bindingTypeL10nKey = 'controlScheme.servoBinding.operationMode';
 
     constructor(
@@ -42,9 +42,9 @@ export class ServoL10nService implements IBindingL10n<ControlSchemeBindingType.S
         actionType: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.Servo>,
     ): Observable<string> {
         switch (actionType) {
-            case ServoInputAction.Cw:
+            case ServoBindingInputAction.Cw:
                 return this.translocoService.selectTranslate('controlScheme.servoBinding.cwAction');
-            case ServoInputAction.Ccw:
+            case ServoBindingInputAction.Ccw:
                 return this.translocoService.selectTranslate('controlScheme.servoBinding.ccwAction');
         }
     }
@@ -54,8 +54,8 @@ export class ServoL10nService implements IBindingL10n<ControlSchemeBindingType.S
         inputConfig: ControlSchemeInput
     ): Observable<string> {
         switch (actionType) {
-            case ServoInputAction.Cw:
-            case ServoInputAction.Ccw:
+            case ServoBindingInputAction.Cw:
+            case ServoBindingInputAction.Ccw:
                 return this.controllerNameProvider.getFullControllerInputNameData(inputConfig);
         }
     }

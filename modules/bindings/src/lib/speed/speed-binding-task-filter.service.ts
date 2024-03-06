@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 import { PortCommandTask, SpeedTaskPayload } from '@app/store';
 
-import { speedPayloadHash } from './speed-payload-hash';
+import { speedBindingPayloadHash } from './speed-binding-payload-hash';
 import { IBindingTaskFilter } from '../i-binding-task-filter';
 import { calculateTaskHash } from '../common';
 
 @Injectable()
-export class SpeedFilterService implements IBindingTaskFilter<ControlSchemeBindingType.Speed> {
+export class SpeedBindingTaskFilterService implements IBindingTaskFilter<ControlSchemeBindingType.Speed> {
     public calculateNextPendingTask(
         currentTask: PortCommandTask | null,
         pendingTask: PortCommandTask | null,
@@ -89,7 +89,7 @@ export class SpeedFilterService implements IBindingTaskFilter<ControlSchemeBindi
             ...tasks[0],
             payload: payload,
             inputTimestamp,
-            hash: calculateTaskHash(tasks[0].hubId, tasks[0].portId, speedPayloadHash(payload))
+            hash: calculateTaskHash(tasks[0].hubId, tasks[0].portId, speedBindingPayloadHash(payload))
         };
     }
 }

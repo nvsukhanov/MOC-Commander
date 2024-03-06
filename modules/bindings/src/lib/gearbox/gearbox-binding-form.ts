@@ -1,14 +1,14 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MotorServoEndState } from 'rxpoweredup';
-import { GearboxInputAction, LoopingMode } from '@app/store';
+import { GearboxBindingInputAction, LoopingMode } from '@app/store';
 
 import { InputFormGroup, OptionalInputFormGroup } from '../common';
 
 export type GearboxBindingForm = FormGroup<{
     inputs: FormGroup<{
-        [GearboxInputAction.NextGear]: InputFormGroup;
-        [GearboxInputAction.PrevGear]: OptionalInputFormGroup;
-        [GearboxInputAction.Reset]: OptionalInputFormGroup;
+        [GearboxBindingInputAction.NextGear]: InputFormGroup;
+        [GearboxBindingInputAction.PrevGear]: OptionalInputFormGroup;
+        [GearboxBindingInputAction.Reset]: OptionalInputFormGroup;
     }>;
     hubId: FormControl<string | null>;
     portId: FormControl<number | null>;

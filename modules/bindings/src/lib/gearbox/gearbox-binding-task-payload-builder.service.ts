@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { AttachedIoPropsModel, ControlSchemeGearboxBinding, GearboxInputAction, GearboxTaskPayload, PortCommandTask, PortCommandTaskPayload } from '@app/store';
+import {
+    AttachedIoPropsModel,
+    ControlSchemeGearboxBinding,
+    GearboxBindingInputAction,
+    GearboxTaskPayload,
+    PortCommandTask,
+    PortCommandTaskPayload
+} from '@app/store';
 
 import { calculateNextLoopingIndex, isDirectionalInputActivated } from '../common';
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
@@ -50,9 +57,9 @@ export class GearboxBindingTaskPayloadBuilderService implements ITaskPayloadBuil
         motorEncoderOffset: number,
         previousTask: PortCommandTask<ControlSchemeBindingType.Gearbox> | null
     ): { payload: GearboxTaskPayload; inputTimestamp: number } | null {
-        const nextLevelInput = this.getActiveInput(binding, currentInput, previousInput, GearboxInputAction.NextGear);
-        const prevLevelInput = this.getActiveInput(binding, currentInput, previousInput, GearboxInputAction.PrevGear);
-        const resetLevelInput = this.getActiveInput(binding, currentInput, previousInput, GearboxInputAction.Reset);
+        const nextLevelInput = this.getActiveInput(binding, currentInput, previousInput, GearboxBindingInputAction.NextGear);
+        const prevLevelInput = this.getActiveInput(binding, currentInput, previousInput, GearboxBindingInputAction.PrevGear);
+        const resetLevelInput = this.getActiveInput(binding, currentInput, previousInput, GearboxBindingInputAction.Reset);
 
         if (!nextLevelInput.isActivated && !prevLevelInput.isActivated && !resetLevelInput.isActivated) {
             return null;

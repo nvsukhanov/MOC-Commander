@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MotorServoEndState } from 'rxpoweredup';
 import { DeepPartial } from '@app/shared-misc';
-import { ControlSchemeGearboxBinding, GearboxInputAction } from '@app/store';
+import { ControlSchemeGearboxBinding, GearboxBindingInputAction } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 import { CommonBindingsFormControlsBuilderService } from '../common';
@@ -21,9 +21,9 @@ export class GearboxBindingFormBuilderService implements IBindingFormBuilder<Gea
     public build(): GearboxBindingForm {
         return this.formBuilder.group({
             inputs: this.formBuilder.group({
-                [GearboxInputAction.NextGear]: this.commonFormControlsBuilder.inputFormGroup(),
-                [GearboxInputAction.PrevGear]: this.commonFormControlsBuilder.optionalInputFormGroup(),
-                [GearboxInputAction.Reset]: this.commonFormControlsBuilder.optionalInputFormGroup()
+                [GearboxBindingInputAction.NextGear]: this.commonFormControlsBuilder.inputFormGroup(),
+                [GearboxBindingInputAction.PrevGear]: this.commonFormControlsBuilder.optionalInputFormGroup(),
+                [GearboxBindingInputAction.Reset]: this.commonFormControlsBuilder.optionalInputFormGroup()
             }),
             hubId: this.controlSchemeFormBuilder.hubIdControl(),
             portId: this.controlSchemeFormBuilder.portIdControl(),

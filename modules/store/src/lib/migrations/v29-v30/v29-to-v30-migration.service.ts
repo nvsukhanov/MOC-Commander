@@ -6,13 +6,13 @@ import { ControlSchemeBindingType, DeepPartial } from '@app/shared-misc';
 import { AppStoreVersion } from '../../app-store-version';
 import { IMigration } from '../i-migration';
 import {
-    GearboxInputAction,
+    GearboxBindingInputAction,
     InputDirection,
-    ServoInputAction,
-    SetAngleInputAction,
-    SpeedInputAction,
-    StepperInputAction,
-    TrainInputAction
+    ServoBindingInputAction,
+    SetAngleBindingInputAction,
+    SpeedBindingInputAction,
+    StepperBindingInputAction,
+    TrainBindingInputAction
 } from '../../models';
 import {
     V29ControlSchemesEntitiesState,
@@ -96,18 +96,18 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
         const bindingResult: V30GearboxBinding = {
             ...b,
             inputs: {
-                [GearboxInputAction.NextGear]: {
+                [GearboxBindingInputAction.NextGear]: {
                     ...b.inputs[OldInputAction.NextLevel]
                 }
             }
         };
         if (b.inputs[OldInputAction.PrevLevel]) {
-            bindingResult.inputs[GearboxInputAction.PrevGear] = {
+            bindingResult.inputs[GearboxBindingInputAction.PrevGear] = {
                 ...b.inputs[OldInputAction.PrevLevel]
             };
         }
         if (b.inputs[OldInputAction.Reset]) {
-            bindingResult.inputs[GearboxInputAction.Reset] = {
+            bindingResult.inputs[GearboxBindingInputAction.Reset] = {
                 ...b.inputs[OldInputAction.Reset]
             };
         }
@@ -120,18 +120,18 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
         const bindingResult: V30TrainBinding = {
             ...b,
             inputs: {
-                [TrainInputAction.NextSpeed]: {
+                [TrainBindingInputAction.NextSpeed]: {
                     ...b.inputs[OldInputAction.NextLevel]
                 }
             }
         };
         if (b.inputs[OldInputAction.PrevLevel]) {
-            bindingResult.inputs[TrainInputAction.PrevSpeed] = {
+            bindingResult.inputs[TrainBindingInputAction.PrevSpeed] = {
                 ...b.inputs[OldInputAction.PrevLevel]
             };
         }
         if (b.inputs[OldInputAction.Reset]) {
-            bindingResult.inputs[TrainInputAction.Reset] = {
+            bindingResult.inputs[TrainBindingInputAction.Reset] = {
                 ...b.inputs[OldInputAction.Reset]
             };
         }
@@ -144,7 +144,7 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
         return {
             ...b,
             inputs: {
-                [SetAngleInputAction.SetAngle]: {
+                [SetAngleBindingInputAction.SetAngle]: {
                     ...b.inputs[OldInputAction.SetAngle]
                 }
             }
@@ -159,12 +159,12 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
             inputs: {}
         };
         if (b.inputs[OldInputAction.ServoCw]) {
-            bindingResult.inputs[ServoInputAction.Cw] = {
+            bindingResult.inputs[ServoBindingInputAction.Cw] = {
                 ...b.inputs[OldInputAction.ServoCw]
             };
         }
         if (b.inputs[OldInputAction.ServoCcw]) {
-            bindingResult.inputs[ServoInputAction.Ccw] = {
+            bindingResult.inputs[ServoBindingInputAction.Ccw] = {
                 ...b.inputs[OldInputAction.ServoCcw]
             };
         }
@@ -179,7 +179,7 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
             inputs:{}
         };
         if (v29binding.inputs[OldInputAction.Brake]) {
-            bindingResult.inputs[SpeedInputAction.Brake] = {
+            bindingResult.inputs[SpeedBindingInputAction.Brake] = {
                 ...v29binding.inputs[OldInputAction.Brake]
             };
         }
@@ -187,16 +187,16 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
             case ControllerInputType.Button:
             case ControllerInputType.ButtonGroup:
             case ControllerInputType.Trigger:
-                bindingResult.inputs[SpeedInputAction.Forwards] = {
+                bindingResult.inputs[SpeedBindingInputAction.Forwards] = {
                     ...v29binding.inputs[OldInputAction.Accelerate]
                 };
                 break;
             case ControllerInputType.Axis:
-                bindingResult.inputs[SpeedInputAction.Forwards] = {
+                bindingResult.inputs[SpeedBindingInputAction.Forwards] = {
                     ...v29binding.inputs[OldInputAction.Accelerate],
                     inputDirection: InputDirection.Positive
                 };
-                bindingResult.inputs[SpeedInputAction.Backwards] = {
+                bindingResult.inputs[SpeedBindingInputAction.Backwards] = {
                     ...v29binding.inputs[0], // old ControlSchemeInputAction.Accelerate
                     inputDirection: InputDirection.Negative
                 };
@@ -215,31 +215,31 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
         const prevInputs = v29Binding.inputs[OldInputAction.Step];
         if (prevInputs.inputType === ControllerInputType.Axis) {
             if (v29Binding.degree >= 0) {
-                bindingResult.inputs[StepperInputAction.Cw] = {
+                bindingResult.inputs[StepperBindingInputAction.Cw] = {
                     ...prevInputs,
                     inputDirection: InputDirection.Positive
                 };
-                bindingResult.inputs[StepperInputAction.Ccw] = {
+                bindingResult.inputs[StepperBindingInputAction.Ccw] = {
                     ...prevInputs,
                     inputDirection: InputDirection.Negative
                 };
             } else {
-                bindingResult.inputs[StepperInputAction.Cw] = {
+                bindingResult.inputs[StepperBindingInputAction.Cw] = {
                     ...prevInputs,
                     inputDirection: InputDirection.Negative
                 };
-                bindingResult.inputs[StepperInputAction.Ccw] = {
+                bindingResult.inputs[StepperBindingInputAction.Ccw] = {
                     ...prevInputs,
                     inputDirection: InputDirection.Positive
                 };
             }
         } else {
             if (v29Binding.degree >= 0) {
-                bindingResult.inputs[StepperInputAction.Cw] = {
+                bindingResult.inputs[StepperBindingInputAction.Cw] = {
                     ...prevInputs
                 };
             } else {
-                bindingResult.inputs[StepperInputAction.Ccw] = {
+                bindingResult.inputs[StepperBindingInputAction.Ccw] = {
                     ...prevInputs
                 };
 

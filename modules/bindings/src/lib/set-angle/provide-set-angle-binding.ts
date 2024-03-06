@@ -1,19 +1,19 @@
 import { Provider } from '@angular/core';
 
-import { SetAngleTaskPayloadBuilderService } from './set-angle-task-payload-builder.service';
-import { SetAngleTaskRunnerService } from './set-angle-task-runner.service';
+import { SetAngleBindingTaskPayloadBuilderService } from './set-angle-binding-task-payload-builder.service';
+import { SetAngleBindingTaskRunnerService } from './set-angle-binding-task-runner.service';
 import { SetAngleBindingFormBuilderService } from './set-angle-binding-form-builder.service';
 import { SetAngleBindingFormMapperService } from './set-angle-binding-form-mapper.service';
-import { SetAngleInputExtractorService } from './set-angle-input-extractor.service';
-import { SetAngleL10nService } from './set-angle-l10n.service';
+import { SetAngleBindingInputExtractorService } from './set-angle-binding-input-extractor.service';
+import { SetAngleBindingL10nService } from './set-angle-binding-l10n.service';
 
 export function provideSetAngleBinding(): Provider[] {
     return [
-        SetAngleTaskPayloadBuilderService,
-        SetAngleTaskRunnerService,
+        SetAngleBindingTaskPayloadBuilderService,
+        SetAngleBindingTaskRunnerService,
         SetAngleBindingFormBuilderService,
         SetAngleBindingFormMapperService,
-        SetAngleInputExtractorService,
-        SetAngleL10nService
+        SetAngleBindingInputExtractorService,
+        SetAngleBindingL10nService
     ];
 }

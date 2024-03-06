@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { PortCommandTaskPayload } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
-import { servoPayloadHash } from './servo';
-import { setAnglePayloadHash } from './set-angle';
-import { speedPayloadHash } from './speed';
-import { stepperPayloadHash } from './stepper';
+import { servoBindingPayloadHash } from './servo';
+import { setAngleBindingPayloadHash } from './set-angle';
+import { speedBindingPayloadHash } from './speed';
+import { stepperBindingPayloadHash } from './stepper';
 import { trainBindingPayloadHash } from './train';
 import { gearboxBindingPayloadHash } from './gearbox';
 
@@ -16,13 +16,13 @@ export class BindingTaskPayloadHashBuilderService {
     ): string {
         switch (payload.bindingType) {
             case ControlSchemeBindingType.Servo:
-                return servoPayloadHash(payload);
+                return servoBindingPayloadHash(payload);
             case ControlSchemeBindingType.SetAngle:
-                return setAnglePayloadHash(payload);
+                return setAngleBindingPayloadHash(payload);
             case ControlSchemeBindingType.Speed:
-                return speedPayloadHash(payload);
+                return speedBindingPayloadHash(payload);
             case ControlSchemeBindingType.Stepper:
-                return stepperPayloadHash(payload);
+                return stepperBindingPayloadHash(payload);
             case ControlSchemeBindingType.Train:
                 return trainBindingPayloadHash(payload);
             case ControlSchemeBindingType.Gearbox:

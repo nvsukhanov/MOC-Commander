@@ -6,7 +6,7 @@ import {
     LoopingMode,
     PortCommandTask,
     PortCommandTaskPayload,
-    TrainInputAction,
+    TrainBindingInputAction,
     TrainTaskPayload
 } from '@app/store';
 
@@ -23,9 +23,9 @@ export class TrainBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTask: PortCommandTask | null
     ): { payload: TrainTaskPayload; inputTimestamp: number } | null {
-        const nextLevelInput = this.getActiveInput(binding, currentInput, previousInput, TrainInputAction.NextSpeed);
-        const prevLevelInput = this.getActiveInput(binding, currentInput, previousInput, TrainInputAction.PrevSpeed);
-        const resetLevelInput = this.getActiveInput(binding, currentInput, previousInput, TrainInputAction.Reset);
+        const nextLevelInput = this.getActiveInput(binding, currentInput, previousInput, TrainBindingInputAction.NextSpeed);
+        const prevLevelInput = this.getActiveInput(binding, currentInput, previousInput, TrainBindingInputAction.PrevSpeed);
+        const resetLevelInput = this.getActiveInput(binding, currentInput, previousInput, TrainBindingInputAction.Reset);
 
         if (resetLevelInput.isActivated) {
             return {

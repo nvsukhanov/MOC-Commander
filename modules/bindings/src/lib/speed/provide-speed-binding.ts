@@ -1,21 +1,21 @@
 import { Provider } from '@angular/core';
 
-import { SpeedTaskPayloadBuilderService } from './speed-task-payload-builder.service';
-import { SpeedTaskRunnerService } from './speed-task-runner.service';
-import { SpeedFilterService } from './speed-filter.service';
+import { SpeedBindingTaskPayloadBuilderService } from './speed-binding-task-payload-builder.service';
+import { SpeedBindingTaskRunnerService } from './speed-binding-task-runner.service';
+import { SpeedBindingTaskFilterService } from './speed-binding-task-filter.service';
 import { SpeedBindingFormBuilderService } from './speed-binding-form-builder.service';
 import { SpeedBindingFormMapperService } from './speed-binding-form-mapper.service';
-import { SpeedInputExtractorService } from './speed-input-extractor.service';
-import { SpeedL10nService } from './speed-l10n.service';
+import { SpeedBindingInputExtractorService } from './speed-binding-input-extractor.service';
+import { SpeedBindingL10nService } from './speed-binding-l10n.service';
 
 export function provideSpeedBinding(): Provider[] {
     return [
-        SpeedTaskPayloadBuilderService,
-        SpeedTaskRunnerService,
-        SpeedFilterService,
+        SpeedBindingTaskPayloadBuilderService,
+        SpeedBindingTaskRunnerService,
+        SpeedBindingTaskFilterService,
         SpeedBindingFormBuilderService,
         SpeedBindingFormMapperService,
-        SpeedInputExtractorService,
-        SpeedL10nService
+        SpeedBindingInputExtractorService,
+        SpeedBindingL10nService
     ];
 }

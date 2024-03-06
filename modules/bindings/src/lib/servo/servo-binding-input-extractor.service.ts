@@ -1,19 +1,19 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeBindingInputs, ControlSchemeServoBinding, ControllerInputModel, ServoInputAction, controllerInputIdFn } from '@app/store';
+import { ControlSchemeBindingInputs, ControlSchemeServoBinding, ControllerInputModel, ServoBindingInputAction, controllerInputIdFn } from '@app/store';
 
 import { BindingInputExtractionResult, IBindingTaskInputExtractor } from '../i-binding-task-input-extractor';
 
 @Injectable()
-export class ServoInputExtractorService implements IBindingTaskInputExtractor<ControlSchemeBindingType.Servo> {
+export class ServoBindingInputExtractorService implements IBindingTaskInputExtractor<ControlSchemeBindingType.Servo> {
     public extractInput(
         binding: ControlSchemeServoBinding,
         globalInput: Dictionary<ControllerInputModel>
     ): BindingInputExtractionResult<ControlSchemeBindingType.Servo> {
         return {
-            [ServoInputAction.Cw]: this.getInputId(binding, ServoInputAction.Cw, globalInput) ?? null,
-            [ServoInputAction.Ccw]: this.getInputId(binding, ServoInputAction.Ccw, globalInput) ?? null,
+            [ServoBindingInputAction.Cw]: this.getInputId(binding, ServoBindingInputAction.Cw, globalInput) ?? null,
+            [ServoBindingInputAction.Ccw]: this.getInputId(binding, ServoBindingInputAction.Ccw, globalInput) ?? null,
         };
     }
 
@@ -21,8 +21,8 @@ export class ServoInputExtractorService implements IBindingTaskInputExtractor<Co
         prevInput: BindingInputExtractionResult<ControlSchemeBindingType.Servo>,
         nextInput: BindingInputExtractionResult<ControlSchemeBindingType.Servo>
     ): boolean {
-        return prevInput[ServoInputAction.Cw] !== nextInput[ServoInputAction.Cw]
-            || prevInput[ServoInputAction.Ccw] !== nextInput[ServoInputAction.Ccw];
+        return prevInput[ServoBindingInputAction.Cw] !== nextInput[ServoBindingInputAction.Cw]
+            || prevInput[ServoBindingInputAction.Ccw] !== nextInput[ServoBindingInputAction.Ccw];
     }
 
     private getInputId(

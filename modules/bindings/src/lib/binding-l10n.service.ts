@@ -7,10 +7,10 @@ import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { IBindingL10n } from './i-binding-l10n';
 import { GearboxBindingL10nService } from './gearbox';
-import { ServoL10nService } from './servo';
-import { SetAngleL10nService } from './set-angle';
-import { SpeedL10nService } from './speed';
-import { StepperL10nService } from './stepper';
+import { ServoBindingL10nService } from './servo';
+import { SetAngleBindingL10nService } from './set-angle';
+import { SpeedBindingL10nService } from './speed';
+import { StepperBindingL10nService } from './stepper';
 import { TrainBindingL10nService } from './train';
 
 @Injectable()
@@ -20,21 +20,21 @@ export class BindingL10nService implements IBindingControllerInputNameResolver,
     IBindingTypeToL10nKeyMapper
 {
     private readonly bindingL10nServices: { [k in ControlSchemeBindingType]: IBindingL10n<k> } = {
-        [ControlSchemeBindingType.Gearbox]: this.gearboxL10nService,
-        [ControlSchemeBindingType.Servo]: this.servoL10nService,
-        [ControlSchemeBindingType.SetAngle]: this.setAngleL10nService,
-        [ControlSchemeBindingType.Speed]: this.speedL10nService,
-        [ControlSchemeBindingType.Stepper]: this.stepperL10nService,
-        [ControlSchemeBindingType.Train]: this.trainL10nService
+        [ControlSchemeBindingType.Gearbox]: this.gearboxBindingL10nService,
+        [ControlSchemeBindingType.Servo]: this.servoBindingL10nService,
+        [ControlSchemeBindingType.SetAngle]: this.setAngleBindingL10nService,
+        [ControlSchemeBindingType.Speed]: this.speedBindingL10nService,
+        [ControlSchemeBindingType.Stepper]: this.stepperBindingL10nService,
+        [ControlSchemeBindingType.Train]: this.trainBindingL10nService
     };
 
     constructor(
-        private readonly gearboxL10nService: GearboxBindingL10nService,
-        private readonly servoL10nService: ServoL10nService,
-        private readonly setAngleL10nService: SetAngleL10nService,
-        private readonly speedL10nService: SpeedL10nService,
-        private readonly stepperL10nService: StepperL10nService,
-        private readonly trainL10nService: TrainBindingL10nService
+        private readonly gearboxBindingL10nService: GearboxBindingL10nService,
+        private readonly servoBindingL10nService: ServoBindingL10nService,
+        private readonly setAngleBindingL10nService: SetAngleBindingL10nService,
+        private readonly speedBindingL10nService: SpeedBindingL10nService,
+        private readonly stepperBindingL10nService: StepperBindingL10nService,
+        private readonly trainBindingL10nService: TrainBindingL10nService
     ) {
     }
 

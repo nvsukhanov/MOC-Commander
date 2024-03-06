@@ -4,32 +4,32 @@ import { Dictionary } from '@ngrx/entity';
 import { ControlSchemeBinding, ControllerInputModel, ITasksInputExtractor, TaskInputExtractionResult } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
-import { SpeedInputExtractorService } from './speed';
+import { SpeedBindingInputExtractorService } from './speed';
 import { BindingInputExtractionResult, IBindingTaskInputExtractor } from './i-binding-task-input-extractor';
 import { GearboxBindingInputExtractorService } from './gearbox';
-import { ServoInputExtractorService } from './servo';
-import { SetAngleInputExtractorService } from './set-angle';
-import { StepperInputExtractorService } from './stepper';
+import { ServoBindingInputExtractorService } from './servo';
+import { SetAngleBindingInputExtractorService } from './set-angle';
+import { StepperBindingInputExtractorService } from './stepper';
 import { TrainBindingInputExtractorService } from './train';
 
 @Injectable()
 export class TaskInputComposer implements ITasksInputExtractor {
     private extractors: { [k in ControlSchemeBindingType]: IBindingTaskInputExtractor<k> } = {
-        [ControlSchemeBindingType.Speed]: this.speedInputExtractor,
-        [ControlSchemeBindingType.Gearbox]: this.gearboxInputExtractor,
-        [ControlSchemeBindingType.Servo]: this.servoInputExtractor,
-        [ControlSchemeBindingType.SetAngle]: this.setAngleInputExtractor,
-        [ControlSchemeBindingType.Stepper]: this.stepperInputExtractor,
-        [ControlSchemeBindingType.Train]: this.trainInputExtractor
+        [ControlSchemeBindingType.Speed]: this.speedBindingInputExtractor,
+        [ControlSchemeBindingType.Gearbox]: this.gearboxBindingInputExtractor,
+        [ControlSchemeBindingType.Servo]: this.servoBindingInputExtractor,
+        [ControlSchemeBindingType.SetAngle]: this.setAngleBindingInputExtractor,
+        [ControlSchemeBindingType.Stepper]: this.stepperBindingInputExtractor,
+        [ControlSchemeBindingType.Train]: this.trainBindingInputExtractor
     };
 
     constructor(
-        private readonly speedInputExtractor: SpeedInputExtractorService,
-        private readonly gearboxInputExtractor: GearboxBindingInputExtractorService,
-        private readonly servoInputExtractor: ServoInputExtractorService,
-        private readonly setAngleInputExtractor: SetAngleInputExtractorService,
-        private readonly stepperInputExtractor: StepperInputExtractorService,
-        private readonly trainInputExtractor: TrainBindingInputExtractorService
+        private readonly speedBindingInputExtractor: SpeedBindingInputExtractorService,
+        private readonly gearboxBindingInputExtractor: GearboxBindingInputExtractorService,
+        private readonly servoBindingInputExtractor: ServoBindingInputExtractorService,
+        private readonly setAngleBindingInputExtractor: SetAngleBindingInputExtractorService,
+        private readonly stepperBindingInputExtractor: StepperBindingInputExtractorService,
+        private readonly trainBindingInputExtractor: TrainBindingInputExtractorService
     ) {
     }
 

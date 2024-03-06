@@ -1,7 +1,7 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeTrainBinding, ControllerInputModel, TrainInputAction, controllerInputIdFn } from '@app/store';
+import { ControlSchemeTrainBinding, ControllerInputModel, TrainBindingInputAction, controllerInputIdFn } from '@app/store';
 
 import { BindingInputExtractionResult, IBindingTaskInputExtractor } from '../i-binding-task-input-extractor';
 
@@ -11,16 +11,16 @@ export class TrainBindingInputExtractorService implements IBindingTaskInputExtra
         binding: ControlSchemeTrainBinding,
         globalInput: Dictionary<ControllerInputModel>
     ): BindingInputExtractionResult<ControlSchemeBindingType.Train> {
-        const nextLevelInputId = controllerInputIdFn(binding.inputs[TrainInputAction.NextSpeed]);
+        const nextLevelInputId = controllerInputIdFn(binding.inputs[TrainBindingInputAction.NextSpeed]);
         const nextLevelInputResult = globalInput[nextLevelInputId];
-        const prevLevelInputId = binding.inputs[TrainInputAction.PrevSpeed];
+        const prevLevelInputId = binding.inputs[TrainBindingInputAction.PrevSpeed];
         const prevLevelInputResult = prevLevelInputId ? globalInput[controllerInputIdFn(prevLevelInputId)] : null;
-        const resetInputId = binding.inputs[TrainInputAction.Reset];
+        const resetInputId = binding.inputs[TrainBindingInputAction.Reset];
         const resetInputResult = resetInputId ? globalInput[controllerInputIdFn(resetInputId)] : null;
         return {
-            [TrainInputAction.NextSpeed]: nextLevelInputResult ?? null,
-            [TrainInputAction.PrevSpeed]: prevLevelInputResult ?? null,
-            [TrainInputAction.Reset]: resetInputResult ?? null
+            [TrainBindingInputAction.NextSpeed]: nextLevelInputResult ?? null,
+            [TrainBindingInputAction.PrevSpeed]: prevLevelInputResult ?? null,
+            [TrainBindingInputAction.Reset]: resetInputResult ?? null
         };
     }
 
@@ -28,8 +28,8 @@ export class TrainBindingInputExtractorService implements IBindingTaskInputExtra
         prevInput: BindingInputExtractionResult<ControlSchemeBindingType.Train>,
         nextInput: BindingInputExtractionResult<ControlSchemeBindingType.Train>
     ): boolean {
-        return prevInput[TrainInputAction.NextSpeed] !== nextInput[TrainInputAction.NextSpeed]
-            || prevInput[TrainInputAction.PrevSpeed] !== nextInput[TrainInputAction.PrevSpeed]
-            || prevInput[TrainInputAction.Reset] !== nextInput[TrainInputAction.Reset];
+        return prevInput[TrainBindingInputAction.NextSpeed] !== nextInput[TrainBindingInputAction.NextSpeed]
+            || prevInput[TrainBindingInputAction.PrevSpeed] !== nextInput[TrainBindingInputAction.PrevSpeed]
+            || prevInput[TrainBindingInputAction.Reset] !== nextInput[TrainBindingInputAction.Reset];
     }
 }

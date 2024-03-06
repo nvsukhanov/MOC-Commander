@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { DeepPartial } from '@app/shared-misc';
-import { ControlSchemeSpeedBinding, SpeedInputAction } from '@app/store';
+import { ControlSchemeSpeedBinding, SpeedBindingInputAction } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 import { CommonBindingsFormControlsBuilderService } from '../common';
@@ -22,9 +22,9 @@ export class SpeedBindingFormBuilderService implements IBindingFormBuilder<Speed
     public build(): SpeedBindingForm {
         return this.formBuilder.group({
             inputs: this.formBuilder.group({
-                [SpeedInputAction.Forwards]: this.commonFormControlBuilder.optionalInputFormGroup(),
-                [SpeedInputAction.Backwards]: this.commonFormControlBuilder.optionalInputFormGroup(),
-                [SpeedInputAction.Brake]: this.commonFormControlBuilder.optionalInputFormGroup(),
+                [SpeedBindingInputAction.Forwards]: this.commonFormControlBuilder.optionalInputFormGroup(),
+                [SpeedBindingInputAction.Backwards]: this.commonFormControlBuilder.optionalInputFormGroup(),
+                [SpeedBindingInputAction.Brake]: this.commonFormControlBuilder.optionalInputFormGroup(),
             }, {
                 validators: this.createInputsValidators()
             }),
@@ -47,9 +47,9 @@ export class SpeedBindingFormBuilderService implements IBindingFormBuilder<Speed
 
     private createInputsValidators(): ValidatorFn {
         const VALIDATOR = (inputsGroup: SpeedBindingForm['controls']['inputs']): ValidationErrors | null => {
-            const forwards = inputsGroup.value[SpeedInputAction.Forwards];
-            const backwards = inputsGroup.value[SpeedInputAction.Backwards];
-            const brake = inputsGroup.value[SpeedInputAction.Brake];
+            const forwards = inputsGroup.value[SpeedBindingInputAction.Forwards];
+            const backwards = inputsGroup.value[SpeedBindingInputAction.Backwards];
+            const brake = inputsGroup.value[SpeedBindingInputAction.Brake];
 
             if (forwards?.controllerId === null && backwards?.controllerId === null && brake?.controllerId === null) {
                 return { [NO_INPUTS_SET_SPEED_ERROR]: true };

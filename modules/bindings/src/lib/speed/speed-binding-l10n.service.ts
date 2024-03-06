@@ -2,13 +2,13 @@ import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType, calculateSpeedPower } from '@app/shared-misc';
-import { ControlSchemeBindingInputs, ControlSchemeInput, PortCommandTask, SpeedInputAction } from '@app/store';
+import { ControlSchemeBindingInputs, ControlSchemeInput, PortCommandTask, SpeedBindingInputAction } from '@app/store';
 
 import { IBindingL10n } from '../i-binding-l10n';
 import { DirectionAwareControllerInputNameService } from '../common';
 
 @Injectable()
-export class SpeedL10nService implements IBindingL10n<ControlSchemeBindingType.Speed> {
+export class SpeedBindingL10nService implements IBindingL10n<ControlSchemeBindingType.Speed> {
     public readonly bindingTypeL10nKey = 'controlScheme.speedBinding.operationMode';
 
     constructor(
@@ -31,11 +31,11 @@ export class SpeedL10nService implements IBindingL10n<ControlSchemeBindingType.S
         actionType: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.Speed>
     ): Observable<string> {
         switch (actionType) {
-            case SpeedInputAction.Forwards:
+            case SpeedBindingInputAction.Forwards:
                 return this.translocoService.selectTranslate('controlScheme.speedBinding.forwardsInput');
-            case SpeedInputAction.Backwards:
+            case SpeedBindingInputAction.Backwards:
                 return this.translocoService.selectTranslate('controlScheme.speedBinding.backwardsInput');
-            case SpeedInputAction.Brake:
+            case SpeedBindingInputAction.Brake:
                 return this.translocoService.selectTranslate('controlScheme.speedBinding.brakeInput');
         }
     }
@@ -45,9 +45,9 @@ export class SpeedL10nService implements IBindingL10n<ControlSchemeBindingType.S
         inputConfig: ControlSchemeInput
     ): Observable<string> {
         switch (actionType) {
-            case SpeedInputAction.Forwards:
-            case SpeedInputAction.Backwards:
-            case SpeedInputAction.Brake:
+            case SpeedBindingInputAction.Forwards:
+            case SpeedBindingInputAction.Backwards:
+            case SpeedBindingInputAction.Brake:
                 return this.controllerNameProvider.getFullControllerInputNameData(inputConfig);
         }
     }

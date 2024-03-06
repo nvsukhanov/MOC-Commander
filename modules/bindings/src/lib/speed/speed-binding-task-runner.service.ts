@@ -1,25 +1,24 @@
-import { Observable } from 'rxjs';
 import { IHub, PortCommandExecutionStatus } from 'rxpoweredup';
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { ControlSchemeBindingType } from '@app/shared-misc';
+import { ControlSchemeBindingType, calculateSpeedPower } from '@app/shared-misc';
 import { PortCommandTask } from '@app/store';
 
 import { mapUseProfile } from '../common';
 import { IBindingTaskRunner } from '../i-binding-task-runner';
 
 @Injectable()
-export class SetAngleTaskRunnerService implements IBindingTaskRunner<ControlSchemeBindingType.SetAngle> {
+export class SpeedBindingTaskRunnerService implements IBindingTaskRunner<ControlSchemeBindingType.Speed> {
     public runTask(
         hub: IHub,
-        task: PortCommandTask<ControlSchemeBindingType.SetAngle>,
+        task: PortCommandTask<ControlSchemeBindingType.Speed>,
     ): Observable<PortCommandExecutionStatus> {
-        return hub.motors.goToPosition(
+        const { speed, power } = calculateSpeedPower(task.payload.speed, task.payload.brakeFactor, task.payload.power);
+        return hub.motors.startSpeed(
             task.portId,
-            task.payload.angle,
+            speed,
             {
-                speed: task.payload.speed,
-                power: task.payload.power,
-                endState: task.payload.endState,
+                power,
                 useProfile: mapUseProfile(task.payload)
             }
         );

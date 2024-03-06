@@ -1,13 +1,20 @@
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeStepperBinding, ControllerInputModel, PortCommandTask, PortCommandTaskPayload, StepperInputAction, StepperTaskPayload } from '@app/store';
+import {
+    ControlSchemeStepperBinding,
+    ControllerInputModel,
+    PortCommandTask,
+    PortCommandTaskPayload,
+    StepperBindingInputAction,
+    StepperTaskPayload
+} from '@app/store';
 
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
 import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 import { isDirectionalInputActivated } from '../common';
 
 @Injectable()
-export class StepperTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.Stepper> {
+export class StepperBindingTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.Stepper> {
     public buildPayload(
         binding: ControlSchemeStepperBinding,
         currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Stepper>,
@@ -51,11 +58,11 @@ export class StepperTaskPayloadBuilderService implements ITaskPayloadBuilder<Con
         binding: ControlSchemeStepperBinding,
         currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Stepper>,
         previousInput: BindingInputExtractionResult<ControlSchemeBindingType.Stepper>
-    ): { input: ControllerInputModel; action: StepperInputAction } | null {
-        const currentCwInput = this.isActivated(binding, currentInput, StepperInputAction.Cw);
-        const currentCcwInput = this.isActivated(binding, currentInput, StepperInputAction.Ccw);
-        const previousCwInput = this.isActivated(binding, previousInput, StepperInputAction.Cw);
-        const previousCcwInput = this.isActivated(binding, previousInput, StepperInputAction.Ccw);
+    ): { input: ControllerInputModel; action: StepperBindingInputAction } | null {
+        const currentCwInput = this.isActivated(binding, currentInput, StepperBindingInputAction.Cw);
+        const currentCcwInput = this.isActivated(binding, currentInput, StepperBindingInputAction.Ccw);
+        const previousCwInput = this.isActivated(binding, previousInput, StepperBindingInputAction.Cw);
+        const previousCcwInput = this.isActivated(binding, previousInput, StepperBindingInputAction.Ccw);
 
         const cwTriggered = currentCwInput?.isActivated && !previousCwInput?.isActivated;
         const ccwTriggered = currentCcwInput?.isActivated && !previousCcwInput?.isActivated;
@@ -64,14 +71,14 @@ export class StepperTaskPayloadBuilderService implements ITaskPayloadBuilder<Con
             return null;
         } else if (cwTriggered && ccwTriggered) {
             if (currentCwInput.input.timestamp > currentCcwInput.input.timestamp) {
-                return { input: currentCwInput.input, action: StepperInputAction.Cw };
+                return { input: currentCwInput.input, action: StepperBindingInputAction.Cw };
             } else {
-                return { input: currentCcwInput.input, action: StepperInputAction.Ccw };
+                return { input: currentCcwInput.input, action: StepperBindingInputAction.Ccw };
             }
         } else if (cwTriggered) {
-            return { input: currentCwInput.input, action: StepperInputAction.Cw };
+            return { input: currentCwInput.input, action: StepperBindingInputAction.Cw };
         } else if (ccwTriggered) {
-            return { input: currentCcwInput.input, action: StepperInputAction.Ccw };
+            return { input: currentCcwInput.input, action: StepperBindingInputAction.Ccw };
         }
 
         return null;
@@ -80,7 +87,7 @@ export class StepperTaskPayloadBuilderService implements ITaskPayloadBuilder<Con
     private isActivated(
         binding: ControlSchemeStepperBinding,
         currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Stepper>,
-        action: StepperInputAction
+        action: StepperBindingInputAction
     ): { isActivated: boolean; input: ControllerInputModel } | null {
         const inputConfigModel = binding.inputs[action];
         if (!inputConfigModel) {

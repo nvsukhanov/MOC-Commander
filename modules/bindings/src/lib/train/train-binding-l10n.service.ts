@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { MOTOR_LIMITS } from 'rxpoweredup';
-import { ControlSchemeBindingInputs, ControlSchemeInput, PortCommandTask, TrainInputAction } from '@app/store';
+import { ControlSchemeBindingInputs, ControlSchemeInput, PortCommandTask, TrainBindingInputAction } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { IBindingL10n } from '../i-binding-l10n';
@@ -31,11 +31,11 @@ export class TrainBindingL10nService implements IBindingL10n<ControlSchemeBindin
         actionType: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.Train>,
     ): Observable<string> {
         switch (actionType) {
-            case TrainInputAction.NextSpeed:
+            case TrainBindingInputAction.NextSpeed:
                 return this.translocoService.selectTranslate('controlScheme.trainBinding.prevLevel');
-            case TrainInputAction.PrevSpeed:
+            case TrainBindingInputAction.PrevSpeed:
                 return this.translocoService.selectTranslate('controlScheme.trainBinding.nextLevel');
-            case TrainInputAction.Reset:
+            case TrainBindingInputAction.Reset:
                 return this.translocoService.selectTranslate('controlScheme.trainBinding.reset');
         }
     }
@@ -45,9 +45,9 @@ export class TrainBindingL10nService implements IBindingL10n<ControlSchemeBindin
         inputConfig: ControlSchemeInput
     ): Observable<string> {
         switch (actionType) {
-            case TrainInputAction.NextSpeed:
-            case TrainInputAction.PrevSpeed:
-            case TrainInputAction.Reset:
+            case TrainBindingInputAction.NextSpeed:
+            case TrainBindingInputAction.PrevSpeed:
+            case TrainBindingInputAction.Reset:
                 return this.directionAwareControllerNameProvider.getFullControllerInputNameData(inputConfig);
         }
     }

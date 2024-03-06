@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DeepPartial } from '@app/shared-misc';
-import { ControlSchemeTrainBinding, TrainInputAction } from '@app/store';
+import { ControlSchemeTrainBinding, TrainBindingInputAction } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
 import { CommonBindingsFormControlsBuilderService } from '../common';
@@ -20,9 +20,9 @@ export class TrainBindingFormBuilderService implements IBindingFormBuilder<Train
     public build(): TrainBindingForm {
         return this.formBuilder.group({
             inputs: this.formBuilder.group({
-                [TrainInputAction.NextSpeed]: this.commonFormControlsBuilder.inputFormGroup(),
-                [TrainInputAction.PrevSpeed]: this.commonFormControlsBuilder.optionalInputFormGroup(),
-                [TrainInputAction.Reset]: this.commonFormControlsBuilder.optionalInputFormGroup()
+                [TrainBindingInputAction.NextSpeed]: this.commonFormControlsBuilder.inputFormGroup(),
+                [TrainBindingInputAction.PrevSpeed]: this.commonFormControlsBuilder.optionalInputFormGroup(),
+                [TrainBindingInputAction.Reset]: this.commonFormControlsBuilder.optionalInputFormGroup()
             }),
             hubId: this.controlSchemeFormBuilder.hubIdControl(),
             portId: this.controlSchemeFormBuilder.portIdControl(),

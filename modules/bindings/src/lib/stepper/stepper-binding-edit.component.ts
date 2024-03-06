@@ -5,7 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ControlSchemeBindingType, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
-import { StepperInputAction } from '@app/store';
+import { StepperBindingInputAction } from '@app/store';
 import { BindingControlSelectHubComponent, BindingControlSelectIoComponent } from '@app/shared-control-schemes';
 
 import {
@@ -19,14 +19,14 @@ import {
 } from '../common';
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { StepperBindingForm } from './stepper-binding-form';
-import { StepperL10nService } from './stepper-l10n.service';
+import { StepperBindingL10nService } from './stepper-binding-l10n.service';
 import { NO_INPUTS_STEPPER_ERROR } from './stepper-binding-form-builder.service';
 
 @Component({
     standalone: true,
-    selector: 'lib-cs-binding-stepper-edit',
-    templateUrl: './binding-stepper-edit.component.html',
-    styleUrls: [ './binding-stepper-edit.component.scss' ],
+    selector: 'lib-cs-stepper-binding-edit',
+    templateUrl: './stepper-binding-edit.component.html',
+    styleUrls: [ './stepper-binding-edit.component.scss' ],
     imports: [
         BindingEditSectionComponent,
         BindingControlSelectHubComponent,
@@ -46,7 +46,7 @@ import { NO_INPUTS_STEPPER_ERROR } from './stepper-binding-form-builder.service'
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BindingStepperEditComponent implements IBindingsDetailsEditComponent<StepperBindingForm> {
+export class StepperBindingEditComponent implements IBindingsDetailsEditComponent<StepperBindingForm> {
     public readonly bindingType = ControlSchemeBindingType.Stepper;
 
     public readonly validationErrorsMap: ValidationErrorsL10nMap = {
@@ -61,7 +61,7 @@ export class BindingStepperEditComponent implements IBindingsDetailsEditComponen
 
     constructor(
         private readonly cdRef: ChangeDetectorRef,
-        private readonly l10nService: StepperL10nService
+        private readonly l10nService: StepperBindingL10nService
     ) {
     }
 
@@ -84,15 +84,15 @@ export class BindingStepperEditComponent implements IBindingsDetailsEditComponen
             this._form = form;
             this._stepCwControlBindingComponentData = {
                 bindingType: ControlSchemeBindingType.Stepper,
-                inputFormGroup: this._form.controls.inputs.controls[StepperInputAction.Cw],
-                inputAction: StepperInputAction.Cw,
-                inputName$: this.l10nService.getBasicInputName(StepperInputAction.Cw)
+                inputFormGroup: this._form.controls.inputs.controls[StepperBindingInputAction.Cw],
+                inputAction: StepperBindingInputAction.Cw,
+                inputName$: this.l10nService.getBasicInputName(StepperBindingInputAction.Cw)
             };
             this._stepCcwControlBindingComponentData = {
                 bindingType: ControlSchemeBindingType.Stepper,
-                inputFormGroup: this._form.controls.inputs.controls[StepperInputAction.Ccw],
-                inputAction: StepperInputAction.Ccw,
-                inputName$: this.l10nService.getBasicInputName(StepperInputAction.Ccw)
+                inputFormGroup: this._form.controls.inputs.controls[StepperBindingInputAction.Ccw],
+                inputAction: StepperBindingInputAction.Ccw,
+                inputName$: this.l10nService.getBasicInputName(StepperBindingInputAction.Ccw)
             };
             this.cdRef.detectChanges();
         }
