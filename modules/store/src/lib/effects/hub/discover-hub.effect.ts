@@ -10,6 +10,28 @@ import { HUBS_ACTIONS, HUB_RUNTIME_DATA_ACTIONS } from '../../actions';
 import { HubStorageService } from '../../hub-storage.service';
 import { HubCommunicationNotifierMiddlewareFactoryService } from '../../hub-communication-notifier-middleware-factory.service';
 
+const USER_CANCELLED_DISCOVERY_ERROR_CODE = 8;
+
+class UserCancelledDiscoveryError extends Error {
+    public readonly code: number = USER_CANCELLED_DISCOVERY_ERROR_CODE;
+
+    public override name = 'NotFoundError';
+
+    constructor() {
+        super('User cancelled the requestDevice() chooser.');
+    }
+}
+
+function isUserCancelledDiscoveryError(
+    error: unknown
+): error is UserCancelledDiscoveryError {
+    if (error instanceof DOMException) {
+        return (error as unknown as { code: unknown }).code === USER_CANCELLED_DISCOVERY_ERROR_CODE;
+    }
+    return false;
+}
+
+
 export const DISCOVER_HUB_EFFECT = createEffect((
     actions$: Actions = inject(Actions),
     navigator: Navigator = inject(NAVIGATOR),
@@ -57,6 +79,9 @@ export const DISCOVER_HUB_EFFECT = createEffect((
                 }),
                 map(([ , macAddressReply, name ]) => HUBS_ACTIONS.connected({ hubId: macAddressReply, name })),
                 catchError((error: Error) => {
+                    if (isUserCancelledDiscoveryError(error)) {
+                        return of(HUBS_ACTIONS.discoveryCancelled());
+                    }
                     return of(HUBS_ACTIONS.deviceConnectFailed({ error }));
                 })
             );

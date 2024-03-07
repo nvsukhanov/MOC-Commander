@@ -37,6 +37,7 @@ export const HUBS_FEATURE = createFeature({
         ),
         on(HUBS_ACTIONS.connected,
             HUBS_ACTIONS.deviceConnectFailed,
+            HUBS_ACTIONS.discoveryCancelled,
             (state): HubsState => ({
                 ...state,
                 discoveryState: HubDiscoveryState.Idle
