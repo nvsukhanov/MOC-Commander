@@ -125,6 +125,7 @@
     "isNotFound": "Хаб не найден",
     "connected": "Хаб {name} подключен",
     "disconnected": "Хаб {name} отключен",
+    "connectFailed": "Произошла ошибка при попытке подключения к хабу",
     "batteryLevel": "Заряд батареи: {batteryLevel}%",
     "batteryLevelUnknown": "Заряд батареи неизвестен",
     "rssiLevel": "RSSI: {rssi}",

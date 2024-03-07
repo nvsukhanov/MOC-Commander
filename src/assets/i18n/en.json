@@ -125,6 +125,7 @@
     "isNotFound": "Hub is not found",
     "connected": "Hub {name} connected",
     "disconnected": "Hub {name} disconnected",
+    "connectFailed": "Failed to connect to hub",
     "batteryLevel": "Battery: {batteryLevel}%",
     "batteryLevelUnknown": "Battery level unknown",
     "rssiLevel": "RSSI: {rssi}",

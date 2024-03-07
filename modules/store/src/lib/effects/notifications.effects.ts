@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { Observable, OperatorFunction, filter, of, switchMap, tap } from 'rxjs';
+import { Observable, OperatorFunction, filter, switchMap, tap } from 'rxjs';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';
 import { Action, Store } from '@ngrx/store';
@@ -18,7 +18,10 @@ export class NotificationsEffects {
     public readonly deviceConnectFailedNotification$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HUBS_ACTIONS.deviceConnectFailed),
-            this.showMessage((error) => of(error.error.message))
+            tap((action) => {
+                console.error(action.error);
+            }),
+            this.showMessage((action) => this.translocoService.selectTranslate('hub.connectFailed', action))
         );
     }, { dispatch: false });
 
