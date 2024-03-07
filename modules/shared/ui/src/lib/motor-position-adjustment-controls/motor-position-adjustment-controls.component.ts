@@ -3,6 +3,7 @@ import { MatButton, MatIconButton, MatMiniFabButton } from '@angular/material/bu
 import { MatIcon } from '@angular/material/icon';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatLabel } from '@angular/material/form-field';
+import { MOTOR_LIMITS } from 'rxpoweredup';
 
 import { LabelComponent } from '../label';
 
@@ -27,7 +28,7 @@ export class MotorPositionAdjustmentControlsComponent {
 
     @Input() public canGoToZero = false;
 
-    @Input() public smallStepDegrees = 5;
+    @Input() public smallStepDegrees = MOTOR_LIMITS.minServoDegreesRange;
 
     @Input() public largeStepDegrees = 90;
 

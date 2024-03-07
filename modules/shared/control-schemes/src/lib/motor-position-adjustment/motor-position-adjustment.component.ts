@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy } from '@angular/core';
-import { Observable, Subscription, of, switchMap, take } from 'rxjs';
+import { Observable, Subscription, concatWith, delay, last, of, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { MOTOR_LIMITS, PortModeName } from 'rxpoweredup';
+import { MOTOR_LIMITS, MotorServoEndState, PortModeName } from 'rxpoweredup';
 import { AsyncPipe } from '@angular/common';
 import { ATTACHED_IO_PORT_MODE_INFO_SELECTORS, ATTACHED_IO_PROPS_SELECTORS, HubStorageService } from '@app/store';
 import { MotorPositionAdjustmentControlsComponent } from '@app/shared-ui';
@@ -75,13 +75,19 @@ export class MotorPositionAdjustmentComponent implements OnChanges, OnDestroy {
             return;
         }
         this.subscription?.unsubscribe();
-        this.subscription = this.hubStorageService.get(this.hubId).motors.rotateByDegree(
+        const hub = this.hubStorageService.get(this.hubId);
+        this.subscription = hub.motors.rotateByDegree(
             this.portId,
             stepDegrees,
             {
                 speed: this.speed,
-                power: this.power
+                power: this.power,
+                endState: MotorServoEndState.hold
             }
+        ).pipe(
+            last(),
+            delay(500),
+            concatWith(hub.motors.startSpeed(this.portId, 0, { power: 0 })),
         ).subscribe();
     }
 
@@ -96,10 +102,16 @@ export class MotorPositionAdjustmentComponent implements OnChanges, OnDestroy {
                 if (this.hubId === null || this.portId === null) {
                     return of();
                 }
-                return this.hubStorageService.get(this.hubId).motors.goToPosition(this.portId, -motorEncoderOffset, {
+                const hub = this.hubStorageService.get(this.hubId);
+                return hub.motors.goToPosition(this.portId, -motorEncoderOffset, {
                     speed: this.speed,
-                    power: this.power
-                });
+                    power: this.power,
+                    endState: MotorServoEndState.hold
+                }).pipe(
+                    last(),
+                    delay(500),
+                    concatWith(hub.motors.startSpeed(this.portId, 0, { power: 0 }))
+                );
             })
         ).subscribe();
     }
