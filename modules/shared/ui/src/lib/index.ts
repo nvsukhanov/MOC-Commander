@@ -20,3 +20,4 @@ export * from './changelog';
 export * from './button-copy-to-clipboard';
 export * from './label';
 export * from './motor-position-adjustment-controls';
+export * from './battery-indicator';

@@ -29,13 +29,9 @@
                                   *libHideOnSmallScreen
     ></lib-input-activity-indicator>
 
-    @if (batteryLevel !== null) {
-        <mat-icon class="battery-level"
-                  [title]="'hub.batteryLevel' | transloco: { batteryLevel }"
-                  [fontIcon]="batteryLevelIcon"
-        ></mat-icon>
-        <span class="cdk-visually-hidden">{{ 'hub.batteryLevel' | transloco: { batteryLevel } }}</span>
-    }
+    <lib-battery-indicator [batteryLevel]="batteryLevel"
+                           class="battery-level"
+    ></lib-battery-indicator>
 
     @if (rssiLevel !== null) {
         <mat-icon class="rssi-level"
