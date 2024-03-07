@@ -8,6 +8,7 @@ import { RoutesBuilderService } from '@app/shared-misc';
 import { EllipsisTitleDirective } from '../ellipsis-title.directive';
 import { HideOnSmallScreenDirective } from '../hide-on-small-screen.directive';
 import { InputActivityIndicatorComponent } from '../input-activity-indicator';
+import { BatteryIndicatorComponent } from '../battery-indicator';
 
 @Component({
     standalone: true,
@@ -22,6 +23,7 @@ import { InputActivityIndicatorComponent } from '../input-activity-indicator';
         EllipsisTitleDirective,
         HideOnSmallScreenDirective,
         InputActivityIndicatorComponent,
+        BatteryIndicatorComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -53,32 +55,6 @@ export class HubInlineViewComponent {
     constructor(
         private routesBuilderService: RoutesBuilderService,
     ) {
-    }
-
-    public get batteryLevelIcon(): string {
-        if (this.batteryLevel === null) {
-            return 'battery_unknown';
-        }
-
-        if (this.batteryLevel >= 90) {
-            return 'battery_full';
-        }
-        if (this.batteryLevel >= 75) {
-            return 'battery_6_bar';
-        }
-        if (this.batteryLevel >= 60) {
-            return 'battery_5_bar';
-        }
-        if (this.batteryLevel >= 45) {
-            return 'battery_4_bar';
-        }
-        if (this.batteryLevel >= 30) {
-            return 'battery_3_bar';
-        }
-        if (this.batteryLevel >= 15) {
-            return 'battery_2_bar';
-        }
-        return 'battery_0_bar';
     }
 
     public get rssiLevelIcon(): string {
