@@ -730,7 +730,7 @@
     },
     "1-2-0": {
       "featUnsavedChangesNotifications": "Notifications for unsaved changes on pages with forms",
-      "featWakeLock": "Wake lock to prevent the screen from turning off when a control scheme is running",
+      "featWakeLock": "Wake Lock to prevent the screen from turning off when a control scheme is running",
       "featNavigationBreadcrumbs": "Navigation breadcrumbs",
       "featControlSchemeNameAutoGeneration": "Auto-generation of control scheme names",
       "featAxialAwarenessForStepperTrainAndGearboxControls": "Axial input direction awareness for 'Stepper', 'Train', and 'Gearbox' bindings",
@@ -753,7 +753,8 @@
       "featAxialAwarenessForSpeedBrakeControl": "Axial input direction awareness for 'Set speed' brake control",
       "featBetterL10nForTrainAndGearbox": "Better localization for 'Train' and 'Gearbox' controls",
       "featSeparateControlsForCwCcwStepper": "Separate controls for clockwise and counter-clockwise stepper inputs",
-      "changeStepperNegativeValuesRemoved": "Only positive values are allowed for stepper inputs. For negative values, use the 'Counter-clockwise' input"
+      "changeStepperNegativeValuesRemoved": "Only positive values are allowed for stepper inputs. For negative values, use the 'Counter-clockwise' input",
+      "featAcquireWakeLockWhenAtLeastOneHubIsConnected": "Acquire Wake Lock when at least one hub is connected"
     }
   }
 }

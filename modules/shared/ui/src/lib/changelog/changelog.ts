@@ -13,6 +13,7 @@ export const CHANGELOG: Changelog = [
             'changelog.1-2-3.featAxialAwarenessForSpeedBrakeControl',
             'changelog.1-2-3.featBetterL10nForTrainAndGearbox',
             'changelog.1-2-3.changeStepperNegativeValuesRemoved',
+            'changelog.1-2-3.featAcquireWakeLockWhenAtLeastOneHubIsConnected',
             'changelog.bugfixesAndImprovements',
         ]
     },
