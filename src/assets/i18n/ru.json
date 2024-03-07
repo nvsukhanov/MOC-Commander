@@ -306,8 +306,8 @@
       "outputLevelAdd": "Добавить скорость",
       "outputLevelRemove": "Удалить скорость",
       "taskSummary": "Поезд, скорость №{level} ({speedPercent}%){ isLooping, select, true { (инв.)} other {}}",
-      "nextLevel": "Следующая скорость",
-      "prevLevel": "Предыдущая скорость",
+      "nextSpeed": "Следующая скорость",
+      "prevSpeed": "Предыдущая скорость",
       "reset": "Скорость №0"
     },
     "gearboxBinding": {

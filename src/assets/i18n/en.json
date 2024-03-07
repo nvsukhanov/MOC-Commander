@@ -306,8 +306,8 @@
       "outputLevelAdd": "Add speed",
       "outputLevelRemove": "Remove speed",
       "taskSummary": "Train, speed #{level} ({speedPercent}%){ isLooping, select, true { (mirror)} other {}}",
-      "nextLevel": "Next speed",
-      "prevLevel": "Prev speed",
+      "nextSpeed": "Next speed",
+      "prevSpeed": "Prev speed",
       "reset": "Set speed #0"
     },
     "gearboxBinding": {

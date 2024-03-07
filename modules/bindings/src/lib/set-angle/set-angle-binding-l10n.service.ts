@@ -5,7 +5,6 @@ import { Store } from '@ngrx/store';
 import {
     ATTACHED_IO_PROPS_SELECTORS,
     AttachedIoPropsModel,
-    ControlSchemeBindingInputs,
     ControlSchemeInput,
     ControlSchemeSetAngleBinding,
     PortCommandTask,
@@ -41,14 +40,14 @@ export class SetAngleBindingL10nService implements IBindingL10n<ControlSchemeBin
     }
 
     public getBindingInputName(
-        actionType: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.SetAngle>,
+        actionType: SetAngleBindingInputAction,
         binding: ControlSchemeSetAngleBinding
     ): Observable<string> {
         return this.transloco.selectTranslate('controlScheme.setAngleBinding.inputAction', binding);
     }
 
     public getBasicInputName(
-        actionType: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.SetAngle>
+        actionType: SetAngleBindingInputAction
     ): Observable<string> {
         switch (actionType) {
             case SetAngleBindingInputAction.SetAngle:
@@ -57,7 +56,7 @@ export class SetAngleBindingL10nService implements IBindingL10n<ControlSchemeBin
     }
 
     public getControllerInputName(
-        actionType: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.SetAngle>,
+        actionType: SetAngleBindingInputAction,
         inputConfig: ControlSchemeInput
     ): Observable<string> {
         switch (actionType) {
