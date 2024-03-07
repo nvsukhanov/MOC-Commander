@@ -44,13 +44,13 @@ export class BatteryIndicatorComponent {
         return 'battery_0_bar';
     }
 
-    public get batteryLevelColor(): 'primary' | 'accent' | 'warn' {
+    public get batteryLevelColor(): 'warn' | undefined {
         if (this.batteryLevel === null) {
             return 'warn';
         }
 
         if (this.batteryLevel >= this.batteryLevelWarningThreshold) {
-            return 'primary';
+            return undefined;
         }
         return 'warn';
     }
