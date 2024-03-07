@@ -40,5 +40,5 @@ export const HUB_RUNTIME_DATA_SELECTORS = {
     isPortValueRequested: ({ hubId, portId }: { hubId: string; portId: number }) => createSelector(
         HUB_RUNTIME_DATA_SELECTORS.selectByHubId(hubId),
         (hubRuntimeData) => !!hubRuntimeData?.valueRequestPortIds.includes(portId)
-    ),
+    )
 } as const;

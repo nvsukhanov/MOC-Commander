@@ -1,9 +1,11 @@
 import { Actions, FunctionalEffect, createEffect, ofType } from '@ngrx/effects';
 import { inject } from '@angular/core';
-import { switchMap } from 'rxjs';
+import { filter, pairwise, switchMap } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { NAVIGATOR, WakeLockService } from '@app/shared-misc';
 
-import { COMMON_ACTIONS, CONTROL_SCHEME_ACTIONS } from '../actions';
+import { COMMON_ACTIONS } from '../actions';
+import { HUB_RUNTIME_DATA_SELECTORS } from '../selectors';
 
 const COPY_TO_CLIPBOARD_EFFECT = createEffect((
     actions: Actions = inject(Actions),
@@ -23,21 +25,23 @@ const COPY_TO_CLIPBOARD_EFFECT = createEffect((
 }, { functional: true });
 
 const ACQUIRE_WAKE_LOCK_EFFECT = createEffect((
-    actions: Actions = inject(Actions),
-    wakeLockService: WakeLockService = inject(WakeLockService)
+    wakeLockService: WakeLockService = inject(WakeLockService),
+    store: Store = inject(Store)
 ) => {
-    return actions.pipe(
-        ofType(CONTROL_SCHEME_ACTIONS.schemeStarted),
+    return store.select(HUB_RUNTIME_DATA_SELECTORS.selectTotal).pipe(
+        pairwise(),
+        filter(([a, b]) => a === 0 && b > 0),
         switchMap(() => wakeLockService.requestWakeLock())
     );
 }, { functional: true, dispatch: false });
 
 const RELEASE_WAKE_LOCK_EFFECT = createEffect((
-    actions: Actions = inject(Actions),
-    wakeLockService: WakeLockService = inject(WakeLockService)
+    wakeLockService: WakeLockService = inject(WakeLockService),
+    store: Store = inject(Store),
 ) => {
-    return actions.pipe(
-        ofType(CONTROL_SCHEME_ACTIONS.schemeStopped),
+    return store.select(HUB_RUNTIME_DATA_SELECTORS.selectTotal).pipe(
+        pairwise(),
+        filter(([a, b]) => a > 0 && b === 0),
         switchMap(() => wakeLockService.releaseWakeLock())
     );
 }, { functional: true, dispatch: false });
