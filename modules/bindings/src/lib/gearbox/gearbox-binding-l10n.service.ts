@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeBindingInputs, ControlSchemeGearboxBinding, ControlSchemeInput, GearboxBindingInputAction, PortCommandTask } from '@app/store';
+import { ControlSchemeInput, GearboxBindingInputAction, PortCommandTask } from '@app/store';
 
 import { IBindingL10n } from '../i-binding-l10n';
 import { DirectionAwareControllerInputNameService } from '../common';
@@ -27,7 +27,7 @@ export class GearboxBindingL10nService implements IBindingL10n<ControlSchemeBind
     }
 
     public getBindingInputName(
-        actionType: keyof ControlSchemeGearboxBinding['inputs']
+        actionType: GearboxBindingInputAction
     ): Observable<string> {
         switch (actionType) {
             case GearboxBindingInputAction.NextGear:
@@ -40,7 +40,7 @@ export class GearboxBindingL10nService implements IBindingL10n<ControlSchemeBind
     }
 
     public getControllerInputName(
-        actionType: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.Gearbox>,
+        actionType: GearboxBindingInputAction,
         inputConfig: ControlSchemeInput
     ): Observable<string> {
         switch (actionType) {

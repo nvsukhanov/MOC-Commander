@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType, calculateSpeedPower } from '@app/shared-misc';
-import { ControlSchemeBindingInputs, ControlSchemeInput, PortCommandTask, SpeedBindingInputAction } from '@app/store';
+import { ControlSchemeInput, PortCommandTask, SpeedBindingInputAction } from '@app/store';
 
 import { IBindingL10n } from '../i-binding-l10n';
 import { DirectionAwareControllerInputNameService } from '../common';
@@ -28,7 +28,7 @@ export class SpeedBindingL10nService implements IBindingL10n<ControlSchemeBindin
     }
 
     public getBindingInputName(
-        actionType: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.Speed>
+        actionType: SpeedBindingInputAction
     ): Observable<string> {
         switch (actionType) {
             case SpeedBindingInputAction.Forwards:
@@ -41,7 +41,7 @@ export class SpeedBindingL10nService implements IBindingL10n<ControlSchemeBindin
     }
 
     public getControllerInputName(
-        actionType: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.Speed>,
+        actionType: SpeedBindingInputAction,
         inputConfig: ControlSchemeInput
     ): Observable<string> {
         switch (actionType) {

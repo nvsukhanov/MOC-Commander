@@ -3,14 +3,7 @@ import { Observable, filter, switchMap } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import {
-    ATTACHED_IO_PROPS_SELECTORS,
-    AttachedIoPropsModel,
-    ControlSchemeBindingInputs,
-    ControlSchemeInput,
-    PortCommandTask,
-    ServoBindingInputAction
-} from '@app/store';
+import { ATTACHED_IO_PROPS_SELECTORS, AttachedIoPropsModel, ControlSchemeInput, PortCommandTask, ServoBindingInputAction } from '@app/store';
 
 import { IBindingL10n } from '../i-binding-l10n';
 import { DirectionAwareControllerInputNameService } from '../common';
@@ -39,7 +32,7 @@ export class ServoBindingL10nService implements IBindingL10n<ControlSchemeBindin
     }
 
     public getBindingInputName(
-        actionType: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.Servo>,
+        actionType: ServoBindingInputAction,
     ): Observable<string> {
         switch (actionType) {
             case ServoBindingInputAction.Cw:
@@ -50,7 +43,7 @@ export class ServoBindingL10nService implements IBindingL10n<ControlSchemeBindin
     }
 
     public getControllerInputName(
-        actionType: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.Servo>,
+        actionType: ServoBindingInputAction,
         inputConfig: ControlSchemeInput
     ): Observable<string> {
         switch (actionType) {

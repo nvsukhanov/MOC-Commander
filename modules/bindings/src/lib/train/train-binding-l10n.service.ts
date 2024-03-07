@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { MOTOR_LIMITS } from 'rxpoweredup';
-import { ControlSchemeBindingInputs, ControlSchemeInput, PortCommandTask, TrainBindingInputAction } from '@app/store';
+import { ControlSchemeInput, PortCommandTask, TrainBindingInputAction } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { IBindingL10n } from '../i-binding-l10n';
@@ -28,20 +28,20 @@ export class TrainBindingL10nService implements IBindingL10n<ControlSchemeBindin
     }
 
     public getBindingInputName(
-        actionType: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.Train>,
+        actionType: TrainBindingInputAction,
     ): Observable<string> {
         switch (actionType) {
             case TrainBindingInputAction.NextSpeed:
-                return this.translocoService.selectTranslate('controlScheme.trainBinding.prevLevel');
+                return this.translocoService.selectTranslate('controlScheme.trainBinding.nextSpeed');
             case TrainBindingInputAction.PrevSpeed:
-                return this.translocoService.selectTranslate('controlScheme.trainBinding.nextLevel');
+                return this.translocoService.selectTranslate('controlScheme.trainBinding.prevSpeed');
             case TrainBindingInputAction.Reset:
                 return this.translocoService.selectTranslate('controlScheme.trainBinding.reset');
         }
     }
 
     public getControllerInputName(
-        actionType: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.Train>,
+        actionType: TrainBindingInputAction,
         inputConfig: ControlSchemeInput
     ): Observable<string> {
         switch (actionType) {
