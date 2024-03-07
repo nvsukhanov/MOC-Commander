@@ -1,7 +1,8 @@
 $height: 24px;
 $width: 24px;
 $internal-padding: 2px;
-$border-width: 3px;
+$border-width: 2px;
+$border-radius: 3px;
 
 :host {
     display: inline-block;
@@ -15,7 +16,7 @@ $border-width: 3px;
     &-container {
         border-width: $border-width;
         border-style: solid;
-        border-radius: 5px;
+        border-radius: $border-radius;
         border-color: var(--app-text-color);
         display: flex;
         align-items: center;
