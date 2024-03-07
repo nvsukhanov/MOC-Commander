@@ -164,6 +164,10 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
         --mat-option-label-text-color: #{$light-primary-text};
     }
 
+    .mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked::after {
+        color: #{$light-primary-text};
+    }
+
     .mat-mdc-dialog-container .mdc-dialog__surface {
         --mdc-dialog-container-color: #{$elevated-dark-color};
     }

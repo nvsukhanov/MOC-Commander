@@ -9,6 +9,10 @@ html, body {
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+
+    .mdc-text-field {
+        padding: 0 8px;
+    }
 }
 
 ul,
