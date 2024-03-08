@@ -259,7 +259,9 @@
       "backwardsInput": "Backwards",
       "brakeInput": "Brake",
       "missingInputs": "At least one of the inputs must be assigned",
-      "accelerationInputGainTitle": "Acceleration input gain",
+      "forwardsInputGainTitle": "'Forwards' input gain",
+      "backwardsInputGainTitle": "'Backwards' input gain",
+      "brakeInputGainTitle": "'Brake' input gain",
       "outputSpeed": "Max speed",
       "taskSummary": "Speed: { speed }%",
       "brakeTaskSummary": "Brake"
@@ -279,6 +281,8 @@
       "taskSummary": "Servo: { angle }°",
       "cwAction": "Clockwise",
       "ccwAction": "Counter-clockwise",
+      "cwActionInputGainTitle": "'Clockwise' input gain",
+      "ccwActionInputGainTitle": "'Counter-clockwise' input gain",
       "missingInputs": "At least one of the inputs must be assigned"
     },
     "stepperBinding": {
@@ -755,7 +759,8 @@
       "featBetterL10nForTrainAndGearbox": "Better localization for 'Train' and 'Gearbox' controls",
       "featSeparateControlsForCwCcwStepper": "Separate controls for clockwise and counter-clockwise stepper inputs",
       "changeStepperNegativeValuesRemoved": "Only positive values are allowed for step angle in 'Stepper' binding. Use counter-clockwise controller input for negative values",
-      "featAcquireWakeLockWhenAtLeastOneHubIsConnected": "Acquire Wake Lock when at least one hub is connected"
+      "featAcquireWakeLockWhenAtLeastOneHubIsConnected": "Acquire Wake Lock when at least one hub is connected",
+      "featInputGainForBrakeInputOfSpeedBinding": "Input gain for 'Brake' input of 'Speed' binding"
     }
   }
 }

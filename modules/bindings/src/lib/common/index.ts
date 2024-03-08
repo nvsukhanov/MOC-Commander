@@ -16,3 +16,4 @@ export * from './is-directional-input-activated';
 export * from './extract-direction-aware-input-value';
 export * from './calculate-task-hash';
 export * from './is-triggered-input-activated';
+export * from './is-input-gain-applicable';

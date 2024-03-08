@@ -259,7 +259,9 @@
       "backwardsInput": "Назад",
       "brakeInput": "Тормоз",
       "missingInputs": "Нужно назначить хотя-бы один контроллер",
-      "accelerationInputGainTitle": "Усиление ввода ускорения",
+      "forwardsInputGainTitle": "Усиление ввода 'Вперед'",
+      "backwardsInputGainTitle": "Усиление ввода 'Назад'",
+      "brakeInputGainTitle": "Усиление ввода 'Тормоз'",
       "outputSpeed": "Макс. скорость",
       "taskSummary": "Скорость: { speed }%",
       "brakeTaskSummary": "Тормоз"
@@ -279,6 +281,8 @@
       "taskSummary": "Сервопривод: { angle }°",
       "cwAction": "По часовой",
       "ccwAction": "Против часовой",
+      "cwActionInputGainTitle": "Усиление ввода 'По часовой'",
+      "ccwActionInputGainTitle": "Усиление ввода 'Против часовой'",
       "missingInputs": "Нужно назначить хотя-бы один контроллер"
     },
     "stepperBinding": {
@@ -755,7 +759,8 @@
       "featBetterL10nForTrainAndGearbox": "Улучшена локализация для типов привязок 'Поезд' и 'Коробка передач'",
       "featSeparateControlsForCwCcwStepper": "Возможность назначить разные контроллеры для шагов по- и против часовой для привязок 'Шаговый двигатель'",
       "changeStepperNegativeValuesRemoved": "Запрещены отрицательные значения для величины шага в привязке 'Шаговый двигатель'. Для установки обратного направления используйте контроль 'Против часовой'",
-      "featAcquireWakeLockWhenAtLeastOneHubIsConnected": "Получение Wake Lock, когда подключен хотя бы один хаб"
+      "featAcquireWakeLockWhenAtLeastOneHubIsConnected": "Получение Wake Lock, когда подключен хотя бы один хаб",
+      "featInputGainForBrakeInputOfSpeedBinding": "Управление коэффициентом усиления ввода для контроля 'Тормоз' в типе привязки 'Скорость'"
     }
   }
 }

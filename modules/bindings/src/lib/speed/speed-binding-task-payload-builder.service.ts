@@ -62,10 +62,12 @@ export class SpeedBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
             binding.inputs[SpeedBindingInputAction.Backwards]?.gain ?? InputGain.Linear
         );
 
+        const brakeInputWithGain = calcInputGain(brakeInput, binding.inputs[SpeedBindingInputAction.Brake]?.gain ?? InputGain.Linear);
+
         const payload: SpeedTaskPayload = {
             bindingType: ControlSchemeBindingType.Speed,
             speed: snapSpeed(clampSpeed(Math.abs(forwardsSpeed) - Math.abs(backwardsSpeed))),
-            brakeFactor: Math.round(Math.abs(brakeInput) * binding.maxSpeed),
+            brakeFactor: Math.round(Math.abs(brakeInputWithGain) * binding.maxSpeed),
             power: binding.power,
             useAccelerationProfile: binding.useAccelerationProfile,
             useDecelerationProfile: binding.useDecelerationProfile
