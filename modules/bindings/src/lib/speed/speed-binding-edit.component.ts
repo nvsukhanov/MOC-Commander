@@ -3,7 +3,6 @@ import { merge } from 'rxjs';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatError } from '@angular/material/form-field';
-import { ControllerInputType } from '@app/controller-profiles';
 import { ControlSchemeBindingType, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
 import { SpeedBindingInputAction } from '@app/store';
@@ -18,7 +17,8 @@ import {
     BindingControlSpeedInputComponent,
     BindingEditSectionComponent,
     BindingEditSectionsContainerComponent,
-    OptionalInputFormGroup
+    OptionalInputFormGroup,
+    isInputGainApplicable
 } from '../common';
 import { SpeedBindingForm } from './speed-binding-form';
 import { NO_INPUTS_SET_SPEED_ERROR } from './speed-binding-form-builder.service';
@@ -78,6 +78,10 @@ export class SpeedBindingEditComponent implements IBindingsDetailsEditComponent<
         return this.form?.controls.inputs.controls[SpeedBindingInputAction.Backwards];
     }
 
+    private get brakeControl(): OptionalInputFormGroup | undefined {
+        return this.form?.controls.inputs.controls[SpeedBindingInputAction.Brake];
+    }
+
     public get forwardsControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Speed> | null {
         return this._forwardsControlBindingComponentData;
     }
@@ -90,14 +94,16 @@ export class SpeedBindingEditComponent implements IBindingsDetailsEditComponent<
         return this._brakeControlBindingComponentData;
     }
 
-    public get isForwardInputGainConfigurable(): boolean {
-        return this.forwardsControl?.controls.inputType.value === ControllerInputType.Axis
-            || this.forwardsControl?.controls.inputType.value === ControllerInputType.Trigger;
+    public get isForwardsInputGainConfigurable(): boolean {
+        return this.forwardsControl ? isInputGainApplicable(this.forwardsControl.controls.inputType.value) : false;
     }
 
-    public get isBackwardInputGainConfigurable(): boolean {
-        return this.backwardsControl?.controls.inputType.value === ControllerInputType.Axis
-            || this.backwardsControl?.controls.inputType.value === ControllerInputType.Trigger;
+    public get isBackwardsInputGainConfigurable(): boolean {
+        return this.backwardsControl ? isInputGainApplicable(this.backwardsControl.controls.inputType.value) : false;
+    }
+
+    public get isBrakeInputGainConfigurable(): boolean {
+        return this.brakeControl ? isInputGainApplicable(this.brakeControl.controls.inputType.value) : false;
     }
 
     public setForm(

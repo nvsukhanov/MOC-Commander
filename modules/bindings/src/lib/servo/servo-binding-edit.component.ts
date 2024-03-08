@@ -11,7 +11,6 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { concatLatestFrom } from '@ngrx/effects';
 import { AsyncPipe } from '@angular/common';
-import { ControllerInputType } from '@app/controller-profiles';
 import { ControlSchemeBindingType, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
 import {
@@ -33,7 +32,8 @@ import {
     BindingControlSelectInputGainComponent,
     BindingControlSpeedInputComponent,
     BindingEditSectionComponent,
-    BindingEditSectionsContainerComponent
+    BindingEditSectionsContainerComponent,
+    isInputGainApplicable
 } from '../common';
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { BINDING_SERVO_EDIT_SELECTORS } from './binding-servo-edit.selectors';
@@ -116,15 +116,13 @@ export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<
     }
 
     public get isCwInputGainConfigurable(): boolean {
-        const servoInput = this.form?.controls.inputs.controls[ServoBindingInputAction.Cw];
-        return servoInput?.controls.inputType.value === ControllerInputType.Axis
-            || servoInput?.controls.inputType.value === ControllerInputType.Trigger;
+        const cwInput = this.form?.controls.inputs.controls[ServoBindingInputAction.Cw];
+        return cwInput ? isInputGainApplicable(cwInput.controls.inputType.value) : false;
     }
 
     public get isCcwInputGainConfigurable(): boolean {
-        const servoInput = this.form?.controls.inputs.controls[ServoBindingInputAction.Ccw];
-        return servoInput?.controls.inputType.value === ControllerInputType.Axis
-            || servoInput?.controls.inputType.value === ControllerInputType.Trigger;
+        const ccwInput = this.form?.controls.inputs.controls[ServoBindingInputAction.Ccw];
+        return ccwInput ? isInputGainApplicable(ccwInput.controls.inputType.value) : false;
     }
 
     public get canCalibrate$(): Observable<boolean> {
