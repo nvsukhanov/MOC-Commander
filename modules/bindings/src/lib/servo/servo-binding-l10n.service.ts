@@ -6,14 +6,14 @@ import { ControlSchemeBindingType } from '@app/shared-misc';
 import { ATTACHED_IO_PROPS_SELECTORS, AttachedIoPropsModel, ControlSchemeInput, PortCommandTask, ServoBindingInputAction } from '@app/store';
 
 import { IBindingL10n } from '../i-binding-l10n';
-import { DirectionAwareControllerInputNameService } from '../common';
+import { ControllerInputNameService } from '../common';
 
 @Injectable()
 export class ServoBindingL10nService implements IBindingL10n<ControlSchemeBindingType.Servo> {
     public readonly bindingTypeL10nKey = 'controlScheme.servoBinding.operationMode';
 
     constructor(
-        private readonly controllerNameProvider: DirectionAwareControllerInputNameService,
+        private readonly controllerInputNameService: ControllerInputNameService,
         private readonly translocoService: TranslocoService,
         private readonly store: Store,
     ) {
@@ -49,7 +49,7 @@ export class ServoBindingL10nService implements IBindingL10n<ControlSchemeBindin
         switch (actionType) {
             case ServoBindingInputAction.Cw:
             case ServoBindingInputAction.Ccw:
-                return this.controllerNameProvider.getFullControllerInputNameData(inputConfig);
+                return this.controllerInputNameService.getFullControllerInputNameData(inputConfig);
         }
     }
 

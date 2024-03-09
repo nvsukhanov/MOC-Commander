@@ -5,7 +5,7 @@ import { ControlSchemeBindingType, calculateSpeedPower } from '@app/shared-misc'
 import { ControlSchemeInput, PortCommandTask, SpeedBindingInputAction } from '@app/store';
 
 import { IBindingL10n } from '../i-binding-l10n';
-import { DirectionAwareControllerInputNameService } from '../common';
+import { ControllerInputNameService } from '../common';
 
 @Injectable()
 export class SpeedBindingL10nService implements IBindingL10n<ControlSchemeBindingType.Speed> {
@@ -13,7 +13,7 @@ export class SpeedBindingL10nService implements IBindingL10n<ControlSchemeBindin
 
     constructor(
         private readonly translocoService: TranslocoService,
-        private readonly controllerNameProvider: DirectionAwareControllerInputNameService,
+        private readonly controllerInputNameService: ControllerInputNameService,
     ) {
     }
 
@@ -48,7 +48,7 @@ export class SpeedBindingL10nService implements IBindingL10n<ControlSchemeBindin
             case SpeedBindingInputAction.Forwards:
             case SpeedBindingInputAction.Backwards:
             case SpeedBindingInputAction.Brake:
-                return this.controllerNameProvider.getFullControllerInputNameData(inputConfig);
+                return this.controllerInputNameService.getFullControllerInputNameData(inputConfig);
         }
     }
 }

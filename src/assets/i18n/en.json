@@ -760,7 +760,7 @@
       "featImprovedUiPerformance": "Improved UI performance",
       "featRaiseServoMotorRangeLimit": "Increased servo motor range limit to 4 full rotations (1440°)",
       "featSeparateControlsForForwardAndBackwardSpeed": "Separate controls for forward and backward speed in 'Speed' bindings",
-      "featAxialAwarenessForSpeedBrakeControl": "Axial input direction awareness for 'Speed' brake control",
+      "featDirectionAwareControls": "All binding input controls now adhere to the input direction of gamepad axes",
       "featBetterL10nForTrainAndGearbox": "Better localization for 'Train' and 'Gearbox' controls",
       "featSeparateControlsForCwCcwStepper": "Separate controls for clockwise and counter-clockwise stepper inputs",
       "changeStepperNegativeValuesRemoved": "Only positive values are allowed for step angle in 'Stepper' binding. Use counter-clockwise controller input for negative values",

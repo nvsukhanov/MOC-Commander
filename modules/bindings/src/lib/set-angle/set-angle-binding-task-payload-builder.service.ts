@@ -3,6 +3,7 @@ import { ControlSchemeBindingType } from '@app/shared-misc';
 import {
     AttachedIoPropsModel,
     ControlSchemeSetAngleBinding,
+    ControllerInputModel,
     PortCommandTask,
     PortCommandTaskPayload,
     SetAngleBindingInputAction,
@@ -11,6 +12,7 @@ import {
 
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
 import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
+import { isDirectionalInputActivated } from '../common';
 
 @Injectable()
 export class SetAngleBindingTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.SetAngle> {
@@ -20,8 +22,8 @@ export class SetAngleBindingTaskPayloadBuilderService implements ITaskPayloadBui
         previousInput: BindingInputExtractionResult<ControlSchemeBindingType.SetAngle>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
     ): { payload: SetAngleTaskPayload; inputTimestamp: number } | null {
-        const currentSetAngleInput = currentInput[SetAngleBindingInputAction.SetAngle];
-        const previousSetAngleInput = previousInput[SetAngleBindingInputAction.SetAngle];
+        const currentSetAngleInput = this.isActivated(binding, currentInput, SetAngleBindingInputAction.SetAngle);
+        const previousSetAngleInput = this.isActivated(binding, previousInput, SetAngleBindingInputAction.SetAngle);
 
         if (currentSetAngleInput?.isActivated && !previousSetAngleInput?.isActivated) {
             const resultingAngle = binding.angle - (ioProps?.motorEncoderOffset ?? 0);
@@ -36,7 +38,7 @@ export class SetAngleBindingTaskPayloadBuilderService implements ITaskPayloadBui
                 useDecelerationProfile: binding.useDecelerationProfile
             };
 
-            return { payload, inputTimestamp: currentSetAngleInput.timestamp ?? Date.now() };
+            return { payload, inputTimestamp: currentInput[SetAngleBindingInputAction.SetAngle]?.timestamp ?? 0 };
         }
 
         return null;
@@ -56,5 +58,23 @@ export class SetAngleBindingTaskPayloadBuilderService implements ITaskPayloadBui
             useAccelerationProfile: previousTask.payload.useAccelerationProfile,
             useDecelerationProfile: previousTask.payload.useDecelerationProfile
         };
+    }
+
+    // TODO: same pattern as in StepperBindingTaskPayloadBuilderService. Refactor to avoid duplication
+    private isActivated(
+        binding: ControlSchemeSetAngleBinding,
+        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.SetAngle>,
+        action: SetAngleBindingInputAction
+    ): { isActivated: boolean; input: ControllerInputModel } | null {
+        const inputConfigModel = binding.inputs[action];
+        if (!inputConfigModel) {
+            return null;
+        }
+        const input = currentInput[action];
+        if (!input) {
+            return null;
+        }
+        const isActivated = isDirectionalInputActivated(inputConfigModel.inputDirection, action, currentInput);
+        return { isActivated, input };
     }
 }
