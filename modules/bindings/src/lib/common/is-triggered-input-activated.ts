@@ -9,11 +9,12 @@ export function isTriggeredInputActivated<T extends ControlSchemeBindingType>(
     currentInput: BindingInputExtractionResult<T>,
     prevInput: BindingInputExtractionResult<T>
 ): boolean {
-    if (!currentInput[inputAction]?.isActivated) {
+    const isCurrentInputActivated = !!currentInput[inputAction]?.isActivated;
+    if (!isCurrentInputActivated) {
         return false;
     }
+    const isPrevInputActivated = !!prevInput[inputAction]?.isActivated;
     const expectedActivationSign = activationDirection === InputDirection.Positive ? 1 : -1;
-    const isCurrentInputActivated =  Math.sign(currentInput[inputAction]?.value ?? 0) === expectedActivationSign;
-    const isPrevInputActivated = Math.sign(prevInput[inputAction]?.value ?? 0) === expectedActivationSign;
-    return isCurrentInputActivated && !isPrevInputActivated;
+    const isCurrentInputDirectionMatches =  Math.sign(currentInput[inputAction]?.value ?? 0) === expectedActivationSign;
+    return isCurrentInputDirectionMatches && !isPrevInputActivated;
 }
