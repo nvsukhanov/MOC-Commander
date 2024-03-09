@@ -42,6 +42,8 @@ export class HubViewPageComponent implements OnInit {
 
     public readonly ioFullInfoList$ = this.store.select(HUB_VIEW_PAGE_SELECTORS.selectCurrentlyViewedHubIoFullInfo);
 
+    public readonly isHubConnected$ = this.store.select(HUB_VIEW_PAGE_SELECTORS.selectIsCurrentlyViewedHubConnected);
+
     public readonly hubEditRoute$ = this.selectedHub$.pipe(
         filter((hub): hub is HubModel => !!hub),
         map((hub) => this.routesBuilderService.hubEdit(hub.hubId))

@@ -127,17 +127,22 @@
     "disconnected": "Hub {name} disconnected",
     "connectFailed": "Failed to connect to hub",
     "batteryLevel": "Battery: {batteryLevel}%",
-    "batteryLevelUnknown": "Battery level unknown",
-    "rssiLevel": "RSSI: {rssi}",
-    "rssiLevelUnknown": "RSSI unknown",
-    "buttonStateTitle": "Button state",
+    "rssiLevel": "Signal level: {rssi}",
     "buttonState": "Hub button state: {isButtonPressed, select, true {pressed} other {released}}",
     "port": "Port {portId}",
     "unknownHub": "Unknown hub ''{ hubId }''",
     "hubNameErrorMinLength": "Hub name must be at least { requiredLength } character long",
     "hubNameErrorMaxLength": "Hub name must be no more than { requiredLength } characters long",
     "hubNameErrorPattern": "Hub name can only contain letters, numbers, spaces and the following characters: ''-'' ''_'' ''.''",
-    "hubNameSetError": "An error occurred while setting hub name"
+    "hubNameSetError": "An error occurred while setting hub name",
+    "batteryLevelTitle": "Battery level",
+    "batteryLevelValue": "{ batteryLevel }%",
+    "rssiLevelTitle": "Signal level",
+    "buttonStateTitle": "Button state",
+    "buttonStateValue": "{ isButtonPressed, select, true {Pressed} other {Released} }",
+    "firmwareVersionTitle": "Software version",
+    "hardwareVersionTitle": "Hardware version",
+    "hubPropertyValueIsUnknown": "Unknown"
   },
   "hubTypes": {
     "boost": "Boost Hub",
@@ -407,10 +412,10 @@
     "feedbackDiscord": "Discord"
   },
   "io": {
-    "hardwareRevision": "Hardware Revision",
-    "softwareRevision": "Software Revision",
-    "ioInputCapabilities": "Input Capabilities",
-    "ioOutputCapabilities": "Output Capabilities",
+    "hardwareRevision": "Hardware version",
+    "softwareRevision": "Software version",
+    "ioInputCapabilities": "Input capabilities",
+    "ioOutputCapabilities": "Output capabilities",
     "ioCapabilitiesEmpty": "None",
     "ioTypeMotor": "Motor",
     "ioTypeSystemTrainMotor": "System Train Motor",
@@ -629,7 +634,7 @@
       "name": "Steam Deck",
       "estTime": "Estimated time to complete: 5-10 minutes",
       "general": "This guide will help you install MOC Commander on your Steam Deck and use it in gaming mode to control your LEGO® Powered UP MOCs.",
-      "step1" : {
+      "step1": {
         "title": "Step 1. Install Google Chrome",
         "description": "To use MOC Commander application, you need to install Google Chrome browser (or any other browser that supports Web Bluetooth API).",
         "description2": "The list of supported browsers can be found at",
@@ -760,7 +765,8 @@
       "featSeparateControlsForCwCcwStepper": "Separate controls for clockwise and counter-clockwise stepper inputs",
       "changeStepperNegativeValuesRemoved": "Only positive values are allowed for step angle in 'Stepper' binding. Use counter-clockwise controller input for negative values",
       "featAcquireWakeLockWhenAtLeastOneHubIsConnected": "Acquire Wake Lock when at least one hub is connected",
-      "featInputGainForBrakeInputOfSpeedBinding": "Input gain for 'Brake' input of 'Speed' binding"
+      "featInputGainForBrakeInputOfSpeedBinding": "Input gain for 'Brake' input of 'Speed' binding",
+      "featHubHWAndSWVersionInHubInfo": "Display of hub hardware and software versions in the hub info panel"
     }
   }
 }

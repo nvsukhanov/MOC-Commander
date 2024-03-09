@@ -7,3 +7,29 @@
     align-items: center;
     gap: 10px;
 }
+
+.hub-properties {
+    &__grid {
+        display: grid;
+        grid-template-columns: min-content auto;
+        grid-gap: 0 40px;
+        margin: 10px;
+        line-height: 1.8rem;
+    }
+
+    &__title {
+        font-size: 15px;
+        font-weight: 400;
+        margin: 0;
+        white-space: nowrap;
+    }
+
+    &__value {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        font-size: 15px;
+        font-weight: 300;
+    }
+}

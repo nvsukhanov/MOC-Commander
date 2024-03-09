@@ -127,17 +127,22 @@
     "disconnected": "Хаб {name} отключен",
     "connectFailed": "Произошла ошибка при попытке подключения к хабу",
     "batteryLevel": "Заряд батареи: {batteryLevel}%",
-    "batteryLevelUnknown": "Заряд батареи неизвестен",
     "rssiLevel": "RSSI: {rssi}",
-    "rssiLevelUnknown": "RSSI неизвестно",
-    "buttonStateTitle": "Кнопка",
     "buttonState": "Кнопка хаба: {isButtonPressed, select, true {нажата} other {не нажата}}",
     "port": "Порт {portId}",
     "unknownHub": "Неизвестный хаб ''{ hubId }''",
     "hubNameErrorMinLength": "Имя хаба должно быть не менее { requiredLength } символов",
     "hubNameErrorMaxLength": "Имя хаба должно быть не более { requiredLength } символов",
     "hubNameErrorPattern": "Имя хаба может содержать только латинские буквы, цифры, пробелы и символы ''-'' ''_'' ''.''",
-    "hubNameSetError": "Произошла ошибка при попытке изменить имя хаба"
+    "hubNameSetError": "Произошла ошибка при попытке изменить имя хаба",
+    "batteryLevelTitle": "Уровень заряда",
+    "batteryLevelValue": "{ batteryLevel }%",
+    "rssiLevelTitle": "Уровень сигнала",
+    "buttonStateTitle": "Состояние кнопки",
+    "buttonStateValue": "{ isButtonPressed, select, true {Нажата} other {Не нажата} }",
+    "firmwareVersionTitle": "Программная версия",
+    "hardwareVersionTitle": "Аппаратная версия",
+    "hubPropertyValueIsUnknown": "Unknown"
   },
   "hubTypes": {
     "boost": "Хаб Boost",
@@ -416,7 +421,7 @@
     "ioTypeSystemTrainMotor": "Мотор System Train",
     "ioTypeButton": "Кнопка",
     "ioTypeLedLight": "Светодиод",
-    "ioTypeVoltage": "Датчик напряжение",
+    "ioTypeVoltage": "Датчик напряжения",
     "ioTypeCurrent": "Датчик силы тока",
     "ioTypePiezoTone": "Piezo Tone",
     "ioTypeRgbLight": "RGB-светодиод",
@@ -760,7 +765,8 @@
       "featSeparateControlsForCwCcwStepper": "Возможность назначить разные контроллеры для шагов по- и против часовой для привязок 'Шаговый двигатель'",
       "changeStepperNegativeValuesRemoved": "Запрещены отрицательные значения для величины шага в привязке 'Шаговый двигатель'. Для установки обратного направления используйте контроль 'Против часовой'",
       "featAcquireWakeLockWhenAtLeastOneHubIsConnected": "Получение Wake Lock, когда подключен хотя бы один хаб",
-      "featInputGainForBrakeInputOfSpeedBinding": "Управление коэффициентом усиления ввода для контроля 'Тормоз' в типе привязки 'Скорость'"
+      "featInputGainForBrakeInputOfSpeedBinding": "Управление коэффициентом усиления ввода для контроля 'Тормоз' в типе привязки 'Скорость'",
+      "featHubHWAndSWVersionInHubInfo": "Версия аппаратного и программного обеспечения хаба в информации о хабе"
     }
   }
 }

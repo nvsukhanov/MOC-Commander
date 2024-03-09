@@ -32,9 +32,9 @@
 
             <dt class="io-properties__title">{{ 'io.ioInputCapabilities' | transloco }}</dt>
             <dd class="io-properties__value">
-                @if (hubIoViewModel.portInputModes.length) {
+                @if (hubIoViewModel.portOutputModes.length) {
                     <ul class="io-properties__list">
-                        @for (portModeInfo of hubIoViewModel.portInputModes; track portModeInfo.id) {
+                        @for (portModeInfo of hubIoViewModel.portOutputModes; track portModeInfo.id) {
                             <li class="io-properties__mode">
                                 {{ portModeInfo.name }}
                             </li>
@@ -49,9 +49,9 @@
 
             <dt class="io-properties__title">{{ 'io.ioOutputCapabilities' | transloco }}</dt>
             <dd class="io-properties__value">
-                @if (hubIoViewModel.portOutputModes.length) {
+                @if (hubIoViewModel.portInputModes.length) {
                     <ul class="io-properties__list">
-                        @for (portModeInfo of hubIoViewModel.portOutputModes; track portModeInfo.id) {
+                        @for (portModeInfo of hubIoViewModel.portInputModes; track portModeInfo.id) {
                             <li class="io-properties__mode">
                                 {{ portModeInfo.name }}
                             </li>

@@ -4,12 +4,14 @@
     >
         <a mat-raised-button
            class="toolbar-button"
+           [disabled]="(isHubConnected$ | async) !== true"
            [routerLink]="hubEditRoute$ | async"
         >
             {{ 'hub.edit' | transloco }}
         </a>
         <button mat-raised-button
                 class="toolbar-button"
+                [disabled]="(isHubConnected$ | async) !== true"
                 (click)="disconnectHub()"
         >
             {{ 'hub.disconnect' | transloco }}
