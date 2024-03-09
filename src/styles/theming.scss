@@ -75,6 +75,7 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
     --app-text-color: #{$dark-primary-text};
     --app-label-color: rgba(0, 0, 0, 0.6);
     --app-background-color: #f4f4f4;
+    --snackbar-text-color: #{$light-primary-text};
 
     &.mat-app-background {
         background-color: var(--app-background-color);
@@ -97,6 +98,7 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
     --app-label-color: rgba(255, 255, 255, 0.6);
     --app-text-color: #{$light-primary-text};
     --app-background-color: #{mat.get-color-from-palette($dark-palette, 900)};
+    --snackbar-text-color: #{$light-primary-text};
 
     &.mat-app-background {
         background-color: var(--app-background-color);
