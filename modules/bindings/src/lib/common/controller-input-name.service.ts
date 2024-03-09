@@ -2,16 +2,16 @@ import { Injectable } from '@angular/core';
 import { Observable, combineLatestWith, switchMap } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { ButtonGroupButtonId } from 'rxpoweredup';
-import { ControllerInputType, IControllerProfile } from '@app/controller-profiles';
 import { ControlSchemeInput, ControllerProfilesFacadeService } from '@app/store';
+import { ControllerInputType, IControllerProfile } from '@app/controller-profiles';
 import { PortIdToPortNameService } from '@app/shared-ui';
 
 @Injectable()
 export class ControllerInputNameService {
     constructor(
-        protected readonly translocoService: TranslocoService,
-        protected readonly controllerProfilesFacadeService: ControllerProfilesFacadeService,
-        private readonly portIdToPortNameService: PortIdToPortNameService
+        private readonly translocoService: TranslocoService,
+        private readonly controllerProfilesFacadeService: ControllerProfilesFacadeService,
+        private readonly portIdToPortNameService: PortIdToPortNameService,
     ) {
     }
 
@@ -19,18 +19,21 @@ export class ControllerInputNameService {
         data: ControlSchemeInput,
     ): Observable<string> {
         const profile$ = this.controllerProfilesFacadeService.getByControllerId(data.controllerId);
+        const l10nKey = data.inputType === ControllerInputType.Axis
+                        ? 'controlScheme.fullControllerInputNameWithDirection'
+                        : 'controlScheme.fullControllerInputName';
 
         const controllerName$ = profile$.pipe(switchMap((profile) => profile.name$));
         const buttonName$ = this.getButtonName$(profile$, data);
         return controllerName$.pipe(
             combineLatestWith(buttonName$),
             switchMap(([ controllerName, inputName ]) =>
-                this.translocoService.selectTranslate('controlScheme.fullControllerInputName', { controllerName, inputName })
+                this.translocoService.selectTranslate(l10nKey, { controllerName, inputName, inputDirection: data.inputDirection })
             )
         );
     }
 
-    protected getButtonName$(
+    private getButtonName$(
         profile$: Observable<IControllerProfile<unknown>>,
         inputData: Pick<ControlSchemeInput, 'inputId' | 'buttonId' | 'portId' | 'inputType'>
     ): Observable<string> {
@@ -48,8 +51,8 @@ export class ControllerInputNameService {
                             this.translocoService.selectTranslate('controlScheme.controllerInputNameWithPort', {
                                 inputName,
                                 portId: inputData.portId === undefined
-                                    ? inputData.portId
-                                    : this.portIdToPortNameService.mapPortId(inputData.portId)
+                                        ? inputData.portId
+                                        : this.portIdToPortNameService.mapPortId(inputData.portId)
                             })
                         )
                     )
