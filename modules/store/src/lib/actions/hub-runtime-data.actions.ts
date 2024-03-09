@@ -13,5 +13,7 @@ export const HUB_RUNTIME_DATA_ACTIONS = createActionGroup({
         'button state received': props<{ hubId: string; isButtonPressed: boolean }>(),
         'button state unsubscribe': props<{ hubId: string }>(),
         'set has communication': props<{ hubId: string; hasCommunication: boolean }>(),
+        'set hardware version': props<{ hubId: string; hardwareVersion: string }>(),
+        'set firmware version': props<{ hubId: string; firmwareVersion: string }>(),
     }
 });

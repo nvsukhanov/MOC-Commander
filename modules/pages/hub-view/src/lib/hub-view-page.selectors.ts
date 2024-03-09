@@ -76,4 +76,11 @@ export const HUB_VIEW_PAGE_SELECTORS = {
             return combineFullIoInfo(ios, supportedModesEntities, portModeDataEntities);
         }
     ),
+    selectIsCurrentlyViewedHubConnected: createSelector(
+        ROUTER_SELECTORS.selectCurrentlyViewedHubId,
+        HUB_RUNTIME_DATA_SELECTORS.selectEntities,
+        (hubId, hubRuntimeDataEntities) => {
+            return hubId !== null && !!hubRuntimeDataEntities[hubId];
+        }
+    )
 } as const;

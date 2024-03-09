@@ -11,10 +11,14 @@ import { REQUEST_SET_HUB_NAME_EFFECT } from './request-set-hub-name.effect';
 import { REQUEST_PORT_POSITION_EFFECT } from './request-port-position.effect';
 import { REQUEST_PORT_ABSOLUTE_POSITION_EFFECT } from './request-port-absolute-position.effect';
 import { SET_MOTOR_POSITION_EFFECT } from './set-motor-position.effect';
+import { REQUEST_HUB_FIRMWARE_VERSION_ON_CONNECT } from './request-hub-firmware-version-on-connect';
+import { REQUEST_HUB_HARDWARE_VERSION_ON_CONNECT } from './request-hub-hardware-version-on-connect';
 
 export const HUB_EFFECTS: { [k in string]: FunctionalEffect } = {
     discoverHub: DISCOVER_HUB_EFFECT,
     requestHubTypeOnConnect: REQUEST_HUB_TYPE_ON_CONNECT,
+    requestHubFirmwareVersionOnConnect: REQUEST_HUB_FIRMWARE_VERSION_ON_CONNECT,
+    requestHubHardwareVersionOnConnect: REQUEST_HUB_HARDWARE_VERSION_ON_CONNECT,
     pollBatteryLevelOnConnect: POLL_BATTERY_LEVEL_ON_CONNECT,
     pollRssiLevelOnConnect: POLL_RSSI_LEVEL_ON_CONNECT,
     subscribeToButtonStateOnConnect: SUBSCRIBE_TO_BUTTON_STATE_ON_CONNECT,
@@ -23,5 +27,5 @@ export const HUB_EFFECTS: { [k in string]: FunctionalEffect } = {
     requestSetHubName: REQUEST_SET_HUB_NAME_EFFECT,
     requestPortPosition: REQUEST_PORT_POSITION_EFFECT,
     requestPortAbsolutePosition: REQUEST_PORT_ABSOLUTE_POSITION_EFFECT,
-    setMotorPosition: SET_MOTOR_POSITION_EFFECT
+    setMotorPosition: SET_MOTOR_POSITION_EFFECT,
 } as const;

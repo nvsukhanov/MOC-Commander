@@ -33,6 +33,14 @@ export const HUB_RUNTIME_DATA_SELECTORS = {
         HUB_RUNTIME_DATA_SELECTORS.selectByHubId(hubId),
         (hubRuntimeData): boolean => !!hubRuntimeData
     ),
+    selectHubFirmwareVersion: (hubId: string) => createSelector(
+        HUB_RUNTIME_DATA_SELECTORS.selectByHubId(hubId),
+        (hubRuntimeData) => hubRuntimeData?.firmwareVersion
+    ),
+    selectHubHardwareVersion: (hubId: string) => createSelector(
+        HUB_RUNTIME_DATA_SELECTORS.selectByHubId(hubId),
+        (hubRuntimeData) => hubRuntimeData?.hardwareVersion
+    ),
     canRequestPortValue: ({ hubId, portId }: { hubId: string; portId: number }) => createSelector(
         HUB_RUNTIME_DATA_SELECTORS.selectByHubId(hubId),
         (hubRuntimeData) => !hubRuntimeData?.valueRequestPortIds.includes(portId)

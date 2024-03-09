@@ -23,7 +23,9 @@ export const HUB_RUNTIME_DATA_FEATURE = createFeature({
                 isButtonPressed: false,
                 batteryLevel: null,
                 hasCommunication: false,
-                valueRequestPortIds: []
+                valueRequestPortIds: [],
+                hardwareVersion: null,
+                firmwareVersion: null
             }, state)
         ),
         on(HUBS_ACTIONS.disconnected, (state, { hubId }): HubRuntimeDataState => HUB_RUNTIME_DATA_ENTITY_ADAPTER.removeOne(hubId, state)),
@@ -59,6 +61,24 @@ export const HUB_RUNTIME_DATA_FEATURE = createFeature({
                     id: hubId,
                     changes: {
                         isButtonPressed
+                    }
+                }, state
+            )
+        ),
+        on(HUB_RUNTIME_DATA_ACTIONS.setHardwareVersion,
+            (state, { hubId, hardwareVersion }): HubRuntimeDataState => HUB_RUNTIME_DATA_ENTITY_ADAPTER.updateOne({
+                    id: hubId,
+                    changes: {
+                        hardwareVersion
+                    }
+                }, state
+            )
+        ),
+        on(HUB_RUNTIME_DATA_ACTIONS.setFirmwareVersion,
+            (state, { hubId, firmwareVersion }): HubRuntimeDataState => HUB_RUNTIME_DATA_ENTITY_ADAPTER.updateOne({
+                    id: hubId,
+                    changes: {
+                        firmwareVersion
                     }
                 }, state
             )

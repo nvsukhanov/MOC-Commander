@@ -22,17 +22,17 @@
 .io-properties {
     &__grid {
         display: grid;
-        grid-template-columns: 1fr 4fr;
-        grid-gap: 10px;
+        grid-template-columns: min-content auto;
+        grid-gap: 0 10px;
         margin: 10px;
-        align-items: center;
-        line-height: 24px;
+        line-height: 1.8rem;
     }
 
     &__title {
         font-size: 15px;
         font-weight: 400;
         margin: 0;
+        white-space: nowrap;
     }
 
     &__value {

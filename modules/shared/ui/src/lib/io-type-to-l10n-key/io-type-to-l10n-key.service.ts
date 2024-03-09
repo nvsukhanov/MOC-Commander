@@ -36,7 +36,7 @@ export class IoTypeToL10nKeyService {
     public getL10nKey(
         ioType?: IOType
     ): string {
-        if (ioType === undefined) {
+        if (!ioType || !this.mapping[ioType]) {
             return this.unknownDeviceType;
         }
         return this.mapping[ioType];

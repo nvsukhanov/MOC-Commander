@@ -9,25 +9,52 @@
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <p>
-                {{ 'hub.buttonState' | transloco: runtimeData }}
-            </p>
+            <dl class="hub-properties__grid">
+                <dd class="hub-properties__title">{{ 'hub.hardwareVersionTitle' | transloco }}</dd>
+                <dt class="hub-properties__value">
+                    @if (runtimeData.hardwareVersion !== null) {
+                        {{ runtimeData.hardwareVersion }}
+                    } @else {
+                        {{ 'hub.hubPropertyValueIsUnknown' | transloco }}
+                    }
+                </dt>
 
-            @if (runtimeData.batteryLevel !== null) {
-                <p>
-                    {{ 'hub.batteryLevel' | transloco: runtimeData }}
-                </p>
-            } @else {
-                <p>{{ 'hub.batteryLevelUnknown' | transloco }}</p>
-            }
+                <dd class="hub-properties__title">{{ 'hub.firmwareVersionTitle' | transloco }}</dd>
+                <dt class="hub-properties__value">
+                    @if (runtimeData.firmwareVersion !== null) {
+                        {{ runtimeData.firmwareVersion }}
+                    } @else {
+                        {{ 'hub.hubPropertyValueIsUnknown' | transloco }}
+                    }
+                </dt>
 
-            @if (runtimeData.rssi !== null) {
-                <p>
-                    {{ 'hub.rssiLevel' | transloco: runtimeData }}
-                </p>
-            } @else {
-                <p>{{ 'hub.rssiLevelUnknown' | transloco }}</p>
-            }
+                <dd class="hub-properties__title">{{ 'hub.batteryLevelTitle' | transloco }}</dd>
+                <dt class="hub-properties__value">
+                    @if (runtimeData.batteryLevel !== null) {
+                        {{ 'hub.batteryLevelValue' | transloco: runtimeData }}
+                    } @else {
+                        {{ 'hub.hubPropertyValueIsUnknown' | transloco }}
+                    }
+                </dt>
+
+                <dd class="hub-properties__title">{{ 'hub.rssiLevelTitle' | transloco }}</dd>
+                <dt class="hub-properties__value">
+                    @if (runtimeData.rssi !== null) {
+                        {{ runtimeData.rssi }}
+                    } @else {
+                        {{ 'hub.hubPropertyValueIsUnknown' | transloco }}
+                    }
+                </dt>
+
+                <dd class="hub-properties__title">{{ 'hub.buttonStateTitle' | transloco }}</dd>
+                <dt class="hub-properties__value">
+                    @if (runtimeData.isButtonPressed !== null) {
+                        {{ 'hub.buttonStateValue' | transloco: runtimeData }}
+                    } @else {
+                        {{ 'hub.hubPropertyValueIsUnknown' | transloco }}
+                    }
+                </dt>
+            </dl>
         </mat-card-content>
     </mat-card>
 }
