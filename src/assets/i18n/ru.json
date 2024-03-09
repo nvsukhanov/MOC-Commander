@@ -328,8 +328,8 @@
       "outputAngleLevelAdd": "Добавить передачу",
       "outputAngleLevelRemove": "Удалить передачу",
       "taskSummary": "Коробка передач, передача №{level} ({angle}°){ isLooping, select, true { (инв.)} other {}}",
-      "nextLevel": "Следующая передача",
-      "prevLevel": "Предыдущая передача",
+      "nextGear": "Следующая передача",
+      "prevGear": "Предыдущая передача",
       "reset": "Передача №0"
     },
     "widgets": {

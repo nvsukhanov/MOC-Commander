@@ -328,8 +328,8 @@
       "outputAngleLevelAdd": "Add gear",
       "outputAngleLevelRemove": "Remove gear",
       "taskSummary": "Gearbox, gear #{level} ({angle}°){ isLooping, select, true { (mirror)} other {}}",
-      "nextLevel": "Next gear",
-      "prevLevel": "Prev gear",
+      "nextGear": "Next gear",
+      "prevGear": "Prev gear",
       "reset": "Set gear #0"
     },
     "widgets": {
