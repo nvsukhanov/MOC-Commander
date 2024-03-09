@@ -49,14 +49,14 @@ export class SpeedBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
         const brakeInput = extractDirectionAwareInputValue(brakeInputValue, brakeInputDirection);
 
         const forwardsSpeed = this.calculateSpeed(
-            forwardsInput,
+            Math.abs(forwardsInput),
             binding.maxSpeed,
             binding.invert,
             binding.inputs[SpeedBindingInputAction.Forwards]?.gain ?? InputGain.Linear
         );
 
         const backwardsSpeed = this.calculateSpeed(
-            backwardsInput,
+            Math.abs(backwardsInput),
             binding.maxSpeed,
             binding.invert,
             binding.inputs[SpeedBindingInputAction.Backwards]?.gain ?? InputGain.Linear
@@ -66,7 +66,7 @@ export class SpeedBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
 
         const payload: SpeedTaskPayload = {
             bindingType: ControlSchemeBindingType.Speed,
-            speed: snapSpeed(clampSpeed(Math.abs(forwardsSpeed) - Math.abs(backwardsSpeed))),
+            speed: snapSpeed(clampSpeed(forwardsSpeed - backwardsSpeed)),
             brakeFactor: Math.round(Math.abs(brakeInputWithGain) * binding.maxSpeed),
             power: binding.power,
             useAccelerationProfile: binding.useAccelerationProfile,
