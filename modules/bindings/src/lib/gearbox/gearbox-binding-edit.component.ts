@@ -68,9 +68,9 @@ export class GearboxBindingEditComponent implements IBindingsDetailsEditComponen
 
     private _canRequestPortValue$: Observable<boolean> = of(false);
 
-    private _nextLevelControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Gearbox> | null = null;
+    private _nextGearControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Gearbox> | null = null;
 
-    private _prevLevelControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Gearbox> | null = null;
+    private _prevGearControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Gearbox> | null = null;
 
     private _resetControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Gearbox> | null = null;
 
@@ -94,12 +94,12 @@ export class GearboxBindingEditComponent implements IBindingsDetailsEditComponen
         return this._canRequestPortValue$;
     }
 
-    public get nextLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Gearbox> | null {
-        return this._nextLevelControlBindingComponentData;
+    public get nextGearControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Gearbox> | null {
+        return this._nextGearControlBindingComponentData;
     }
 
-    public get prevLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Gearbox> | null {
-        return this._prevLevelControlBindingComponentData;
+    public get prevGearControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Gearbox> | null {
+        return this._prevGearControlBindingComponentData;
     }
 
     public get resetControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Gearbox> | null {
@@ -115,14 +115,14 @@ export class GearboxBindingEditComponent implements IBindingsDetailsEditComponen
         form: GearboxBindingForm
     ): void {
         this._form = form;
-        this._nextLevelControlBindingComponentData = {
+        this._nextGearControlBindingComponentData = {
             bindingType: ControlSchemeBindingType.Gearbox,
             inputFormGroup: form.controls.inputs.controls[GearboxBindingInputAction.NextGear],
             inputAction: GearboxBindingInputAction.NextGear,
             inputName$: this.l10nService.getBindingInputName(GearboxBindingInputAction.NextGear)
         };
 
-        this._prevLevelControlBindingComponentData = {
+        this._prevGearControlBindingComponentData = {
             bindingType: ControlSchemeBindingType.Gearbox,
             inputFormGroup: form.controls.inputs.controls[GearboxBindingInputAction.PrevGear],
             inputAction: GearboxBindingInputAction.PrevGear,

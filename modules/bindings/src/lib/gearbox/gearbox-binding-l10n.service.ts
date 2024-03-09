@@ -31,9 +31,9 @@ export class GearboxBindingL10nService implements IBindingL10n<ControlSchemeBind
     ): Observable<string> {
         switch (actionType) {
             case GearboxBindingInputAction.NextGear:
-                return this.translocoService.selectTranslate('controlScheme.gearboxBinding.prevLevel');
+                return this.translocoService.selectTranslate('controlScheme.gearboxBinding.nextGear');
             case GearboxBindingInputAction.PrevGear:
-                return this.translocoService.selectTranslate('controlScheme.gearboxBinding.nextLevel');
+                return this.translocoService.selectTranslate('controlScheme.gearboxBinding.prevGear');
             case GearboxBindingInputAction.Reset:
                 return this.translocoService.selectTranslate('controlScheme.gearboxBinding.reset');
         }
