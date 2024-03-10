@@ -1,6 +1,6 @@
 import { Inject, Pipe, PipeTransform } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ControlSchemeBindingInputs, ControlSchemeInput } from '@app/store';
+import { ControlSchemeBindingInputs, ControlSchemeInputConfig } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { BINDING_CONTROLLER_INPUT_NAME_RESOLVER, IBindingControllerInputNameResolver } from './i-binding-controller-input-name-resolver';
@@ -18,7 +18,7 @@ export class BindingControllerInputNamePipe implements PipeTransform {
 
     public transform<T extends ControlSchemeBindingType>(
         bindingType: T,
-        data: ControlSchemeInput | undefined,
+        data: ControlSchemeInputConfig | undefined,
         inputAction: keyof ControlSchemeBindingInputs<T>
     ): Observable<string> {
         if (!data) {

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { DeepPartial } from '@app/shared-misc';
 import { ControlSchemeTrainBinding, TrainBindingInputAction } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
@@ -50,17 +49,20 @@ export class TrainBindingFormBuilderService implements IBindingFormBuilder<Train
 
     public patchForm(
         form: TrainBindingForm,
-        patch: DeepPartial<ControlSchemeTrainBinding>
+        patch: ControlSchemeTrainBinding
     ): void {
         form.patchValue(patch);
         form.controls.levels.clear();
-        if (patch.levels) {
-            patch.levels.forEach((speed) =>
-                form.controls.levels.push(this.commonFormControlsBuilder.speedLevelControl(speed))
-            );
-        } else {
-            form.controls.levels.push(this.commonFormControlsBuilder.speedLevelControl(0));
-            form.controls.initialLevelIndex.setValue(0);
-        }
+        patch.levels.forEach((speed) =>
+            form.controls.levels.push(this.commonFormControlsBuilder.speedLevelControl(speed))
+        );
+        this.commonFormControlsBuilder.patchInputPipes(
+            form.controls.inputs.controls[TrainBindingInputAction.NextSpeed].controls.inputPipes,
+            patch.inputs[TrainBindingInputAction.NextSpeed]?.inputPipes ?? []
+        );
+        this.commonFormControlsBuilder.patchInputPipes(
+            form.controls.inputs.controls[TrainBindingInputAction.PrevSpeed].controls.inputPipes,
+            patch.inputs[TrainBindingInputAction.PrevSpeed]?.inputPipes ?? []
+        );
     }
 }

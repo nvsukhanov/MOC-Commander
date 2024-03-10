@@ -796,7 +796,7 @@ export const V21_STORE_SAMPLE: DeepPartial<V21Store> = {
                                 'controllerId': 'gamepad-xbox360/0',
                                 'inputId': '0',
                                 'inputType': 1,
-                                'gain': 0
+                                'gain': 1
                             }
                         },
                         'hubId': '00:0f:b0:fa:ce:3d',
@@ -817,7 +817,7 @@ export const V21_STORE_SAMPLE: DeepPartial<V21Store> = {
                                 'controllerId': 'keyboard',
                                 'inputId': 'a',
                                 'inputType': 0,
-                                'gain': 0
+                                'gain': 2
                             }
                         },
                         'hubId': '00:0f:b0:fa:ce:3d',

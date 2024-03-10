@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, combineLatestWith, switchMap } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { ButtonGroupButtonId } from 'rxpoweredup';
-import { ControlSchemeInput, ControllerProfilesFacadeService } from '@app/store';
+import { ControlSchemeInputConfig, ControllerProfilesFacadeService } from '@app/store';
 import { ControllerInputType, IControllerProfile } from '@app/controller-profiles';
 import { PortIdToPortNameService } from '@app/shared-ui';
 
@@ -16,7 +16,7 @@ export class ControllerInputNameService {
     }
 
     public getFullControllerInputNameData(
-        data: ControlSchemeInput,
+        data: ControlSchemeInputConfig,
     ): Observable<string> {
         const profile$ = this.controllerProfilesFacadeService.getByControllerId(data.controllerId);
         const l10nKey = data.inputType === ControllerInputType.Axis
@@ -35,7 +35,7 @@ export class ControllerInputNameService {
 
     private getButtonName$(
         profile$: Observable<IControllerProfile<unknown>>,
-        inputData: Pick<ControlSchemeInput, 'inputId' | 'buttonId' | 'portId' | 'inputType'>
+        inputData: Pick<ControlSchemeInputConfig, 'inputId' | 'buttonId' | 'portId' | 'inputType'>
     ): Observable<string> {
         switch (inputData.inputType) {
             case ControllerInputType.Axis:

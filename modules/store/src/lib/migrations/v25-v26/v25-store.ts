@@ -1,13 +1,13 @@
 import { EntityState } from '@ngrx/entity';
 import { ControlSchemeBindingType, ExtractArrayType, ExtractEntitiesType, Override } from '@app/shared-misc';
 
-import { ControlSchemeInput } from '../../models';
 import { AppStoreVersion } from '../../app-store-version';
 import { V26Store } from '../v26-v27/v26-store';
 import { OldInputAction } from '../old-input-actions';
+import { V30InputConfig } from '../v30-v31';
 
 export type V26ControlSchemesEntitiesState = ExtractEntitiesType<V26Store['controlSchemes']>;
-export type V25ControlSchemeInput = Omit<ControlSchemeInput, 'inputDirection'>;
+export type V25ControlSchemeInput = Omit<V30InputConfig, 'inputDirection'>;
 export type V26Bindings = ExtractArrayType<V26ControlSchemesEntitiesState['bindings']>;
 export type V26SpeedBinding = V26Bindings & { bindingType: ControlSchemeBindingType.Speed };
 export type V26ServoBinding = V26Bindings & { bindingType: ControlSchemeBindingType.Servo };

@@ -2,7 +2,7 @@ import { ComponentRef, Type, ViewContainerRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable, distinctUntilChanged, map, startWith } from 'rxjs';
 import { ControlSchemeBinding } from '@app/store';
-import { ControlSchemeBindingType, DeepPartial } from '@app/shared-misc';
+import { ControlSchemeBindingType } from '@app/shared-misc';
 import { IBindingDetailsEditFormRenderer } from '@app/shared-control-schemes';
 
 import { IBindingsDetailsEditComponent } from './i-bindings-details-edit-component';
@@ -94,7 +94,7 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
      * @param binding
      */
     public setBinding(
-        binding: Partial<ControlSchemeBinding> | null
+        binding: ControlSchemeBinding
     ): void {
         this._form.reset();
         if (binding) {
@@ -130,7 +130,7 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
     }
 
     private patchForm(
-        patch: DeepPartial<ControlSchemeBinding>
+        patch: ControlSchemeBinding
     ): void {
         if (patch.id !== undefined) {
             this._form.controls.id.setValue(patch.id);
@@ -155,7 +155,7 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
                 this.gearboxBindingFormBuilder.patchForm(this._form.controls[ControlSchemeBindingType.Gearbox], patch);
                 break;
             default:
-                return patch.bindingType satisfies void;
+                return patch satisfies never;
         }
     }
 

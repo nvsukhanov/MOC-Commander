@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MotorServoEndState } from 'rxpoweredup';
-import { DeepPartial } from '@app/shared-misc';
 import { ControlSchemeGearboxBinding, GearboxBindingInputAction } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
@@ -50,17 +49,24 @@ export class GearboxBindingFormBuilderService implements IBindingFormBuilder<Gea
 
     public patchForm(
         form: GearboxBindingForm,
-        binding: DeepPartial<ControlSchemeGearboxBinding>
+        binding: ControlSchemeGearboxBinding
     ): void {
         form.patchValue(binding);
         form.controls.angles.clear();
-        if (binding.angles) {
-            binding.angles.forEach((angle) =>
-                form.controls.angles.push(this.commonFormControlsBuilder.angleControl(angle))
-            );
-        } else {
-            form.controls.angles.push(this.commonFormControlsBuilder.angleControl(0));
-            form.controls.initialLevelIndex.setValue(0);
-        }
+        binding.angles.forEach((angle) =>
+            form.controls.angles.push(this.commonFormControlsBuilder.angleControl(angle))
+        );
+        this.commonFormControlsBuilder.patchInputPipes(
+            form.controls.inputs.controls[GearboxBindingInputAction.NextGear].controls.inputPipes,
+            binding.inputs[GearboxBindingInputAction.NextGear]?.inputPipes ?? []
+        );
+        this.commonFormControlsBuilder.patchInputPipes(
+            form.controls.inputs.controls[GearboxBindingInputAction.PrevGear].controls.inputPipes,
+            binding.inputs[GearboxBindingInputAction.PrevGear]?.inputPipes ?? []
+        );
+        this.commonFormControlsBuilder.patchInputPipes(
+            form.controls.inputs.controls[GearboxBindingInputAction.Reset].controls.inputPipes,
+            binding.inputs[GearboxBindingInputAction.Reset]?.inputPipes ?? []
+        );
     }
 }

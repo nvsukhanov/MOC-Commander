@@ -24,7 +24,7 @@ import { V28ToV29MigrationService } from '../v28-v29';
 import { ensureStorePropsNotChanged } from '../ensure-props-not-changed';
 import { V22ToV23MigrationService } from '../v22-v23';
 import { V26ToV27MigrationService } from '../v26-v27';
-import { V30Store } from '../v30';
+import { V30Store } from '../v30-v31';
 import {
     V29GearboxBinding,
     V29ServoBinding,

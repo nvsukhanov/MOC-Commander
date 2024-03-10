@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ButtonGroupButtonId, MOTOR_LIMITS, MotorServoEndState } from 'rxpoweredup';
 import { ControllerInputType } from '@app/controller-profiles';
 import { AppValidators } from '@app/shared-misc';
-import { ControlSchemeInput, InputDirection, InputGain, LoopingMode } from '@app/store';
+import { ControlSchemeInputConfig, InputDirection, InputPipeConfig, LoopingMode } from '@app/store';
 
 import { InputFormGroup, OptionalInputFormGroup } from './input-form-group';
 
@@ -96,7 +96,7 @@ export class CommonBindingsFormControlsBuilderService {
     }
 
     public inputFormGroup(
-        initialValue?: Partial<ControlSchemeInput>
+        initialValue?: Partial<ControlSchemeInputConfig>
     ): InputFormGroup {
         return this.formBuilder.group({
             controllerId: this.formBuilder.control<string>(initialValue?.controllerId ?? '', {
@@ -111,21 +111,18 @@ export class CommonBindingsFormControlsBuilderService {
                 nonNullable: true,
                 validators: [ Validators.required ]
             }),
-            gain: this.formBuilder.control<InputGain>(initialValue?.gain ?? InputGain.Linear, {
-                nonNullable: true,
-                validators: [ Validators.required, AppValidators.isInEnum(InputGain) ]
-            }),
             buttonId: this.formBuilder.control<ButtonGroupButtonId | null>(initialValue?.portId ?? null),
             portId: this.formBuilder.control<number | null>(initialValue?.portId ?? null),
             inputDirection: this.formBuilder.control<InputDirection>(initialValue?.inputDirection ?? InputDirection.Positive, {
                 nonNullable: true,
                 validators: [ Validators.required, AppValidators.isInEnum(InputDirection) ]
-            })
+            }),
+            inputPipes: this.createInputPipesArrayControl(initialValue?.inputPipes ?? [])
         });
     }
 
     public optionalInputFormGroup(
-        initialValue?: Partial<ControlSchemeInput>
+        initialValue?: Partial<ControlSchemeInputConfig>
     ): OptionalInputFormGroup {
         return this.formBuilder.group({
             controllerId: this.formBuilder.control<string | null>(initialValue?.controllerId ?? null),
@@ -135,15 +132,35 @@ export class CommonBindingsFormControlsBuilderService {
             inputId: this.formBuilder.control<string>(initialValue?.inputId ?? '', {
                 nonNullable: true
             }),
-            gain: this.formBuilder.control<InputGain>(initialValue?.gain ?? InputGain.Linear, {
-                nonNullable: true
-            }),
             buttonId: this.formBuilder.control<ButtonGroupButtonId | null>(initialValue?.portId ?? null),
             portId: this.formBuilder.control<number | null>(initialValue?.portId ?? null),
             inputDirection: this.formBuilder.control<InputDirection>(initialValue?.inputDirection ?? InputDirection.Positive, {
                 nonNullable: true,
                 validators: [ Validators.required, AppValidators.isInEnum(InputDirection) ]
-            })
+            }),
+            inputPipes: this.createInputPipesArrayControl(initialValue?.inputPipes ?? [])
         });
+    }
+
+    public patchInputPipes(
+        form: InputFormGroup['controls']['inputPipes'],
+        patch: Array<InputPipeConfig>,
+    ): void {
+        form.clear();
+        patch.forEach((pipe) => form.push(this.createInputPipeControl(pipe)));
+    }
+
+    private createInputPipesArrayControl(
+        initialValue: InputPipeConfig[]
+    ): InputFormGroup['controls']['inputPipes'] {
+        return this.formBuilder.array<FormControl<InputPipeConfig>>(
+            initialValue.map((pipe) => this.createInputPipeControl(pipe))
+        );
+    }
+
+    private createInputPipeControl(
+        initialValue: InputPipeConfig
+    ): FormControl<InputPipeConfig> {
+        return this.formBuilder.control<InputPipeConfig>(initialValue, { nonNullable: true });
     }
 }

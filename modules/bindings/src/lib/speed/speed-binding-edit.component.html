@@ -19,28 +19,8 @@
                                      [caption]="'controlScheme.bindingSectionInputTitle' | transloco"
         >
             <lib-cs-binding-control-select-controller [data]="forwardsControlBindingComponentData"></lib-cs-binding-control-select-controller>
-
-            @if (isForwardsInputGainConfigurable) {
-                <lib-cs-binding-control-select-input-gain [translocoTitle]="'controlScheme.speedBinding.forwardsInputGainTitle'"
-                                                          [control]="form.controls.inputs.controls[inputActions.Forwards].controls.gain"
-                ></lib-cs-binding-control-select-input-gain>
-            }
-
             <lib-cs-binding-control-select-controller [data]="backwardsControlBindingComponentData"></lib-cs-binding-control-select-controller>
-
-            @if (isBackwardsInputGainConfigurable) {
-                <lib-cs-binding-control-select-input-gain [translocoTitle]="'controlScheme.speedBinding.backwardsInputGainTitle'"
-                                                          [control]="form.controls.inputs.controls[inputActions.Backwards].controls.gain"
-                ></lib-cs-binding-control-select-input-gain>
-            }
-
             <lib-cs-binding-control-select-controller [data]="brakeControlBindingComponentData"></lib-cs-binding-control-select-controller>
-
-            @if (isBrakeInputGainConfigurable) {
-                <lib-cs-binding-control-select-input-gain [translocoTitle]="'controlScheme.speedBinding.brakeInputGainTitle'"
-                                                          [control]="form.controls.inputs.controls[inputActions.Brake].controls.gain"
-                ></lib-cs-binding-control-select-input-gain>
-            }
 
             <mat-error [libValidationMessages]="form.controls.inputs"
                        [immediatelyShowMessages]="true"

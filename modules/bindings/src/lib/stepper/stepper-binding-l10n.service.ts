@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeInput, ControlSchemeStepperBinding, PortCommandTask, StepperBindingInputAction } from '@app/store';
+import { ControlSchemeInputConfig, ControlSchemeStepperBinding, PortCommandTask, StepperBindingInputAction } from '@app/store';
 
 import { IBindingL10n } from '../i-binding-l10n';
 import { ControllerInputNameService } from '../common';
@@ -52,7 +52,7 @@ export class StepperBindingL10nService implements IBindingL10n<ControlSchemeBind
 
     public getControllerInputName(
         actionType: StepperBindingInputAction,
-        inputConfig: ControlSchemeInput
+        inputConfig: ControlSchemeInputConfig
     ): Observable<string> {
         switch (actionType) {
             case StepperBindingInputAction.Cw:
