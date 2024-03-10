@@ -1,5 +1,5 @@
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { EMPTY, Observable, combineLatest, distinctUntilChanged, filter, from, map, mergeMap, of, pairwise, startWith, switchMap, take, takeUntil } from 'rxjs';
+import { EMPTY, Observable, combineLatest, filter, from, map, mergeMap, of, pairwise, startWith, switchMap, take, takeUntil } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
@@ -68,10 +68,9 @@ function getTaskComposingData$(
     const portId = samePortBindings[0].portId;
 
     const bindingWithInputsStreams: Array<Observable<BindingWithInputData>> = samePortBindings.map((binding) => {
-        return inputComposer.composeInput(binding, inputStream).pipe(
+        return inputComposer.extractInputs(binding, inputStream).pipe(
             take(1),
-            switchMap((initialValue) => inputComposer.composeInput(binding, inputStream).pipe(
-                distinctUntilChanged((a, b) => !inputComposer.isInputChanged(binding.bindingType, a, b)),
+            switchMap((initialValue) => inputComposer.extractInputs(binding, inputStream).pipe(
                 startWith(initialValue),
                 pairwise(),
                 map(([ prevInput, nextInput ]) => ({ binding, prevInput, nextInput }))

@@ -1,4 +1,5 @@
 import { Dictionary } from '@ngrx/entity';
+import { Observable } from 'rxjs';
 import { ControlSchemeBinding, ControlSchemeBindingInputs, ControllerInputModel } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
@@ -7,13 +8,8 @@ export type BindingInputExtractionResult<T extends ControlSchemeBindingType> = {
 };
 
 export interface IBindingTaskInputExtractor<T extends ControlSchemeBindingType> {
-    extractInput(
+    extractInputs(
         binding: ControlSchemeBinding & { bindingType: T },
-        globalInput: Dictionary<ControllerInputModel>
-    ): BindingInputExtractionResult<T>;
-
-    isInputChanged(
-        prevInput: BindingInputExtractionResult<T>,
-        nextInput: BindingInputExtractionResult<T>
-    ): boolean;
+        globalInput: Observable<Dictionary<ControllerInputModel>>
+    ): Observable<BindingInputExtractionResult<T>>;
 }

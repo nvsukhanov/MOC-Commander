@@ -20,7 +20,7 @@ import { BindingTaskFilterService } from './binding-task-filter.service';
 import { BindingDetailsEditFormRendererFactoryService } from './binding-details-edit-form-renderer-factory.service';
 import { BindingValidatorService } from './binding-validator.service';
 import { provideTrainBinding } from './train';
-import { TaskInputComposer } from './task-input-composer';
+import { BindingInputExtractorService } from './binding-input-extractor.service';
 import { BindingL10nService } from './binding-l10n.service';
 
 export function provideBindings(): Provider[] {
@@ -38,7 +38,7 @@ export function provideBindings(): Provider[] {
         { provide: BINDING_DETAILS_EDIT_FORM_RENDERER_FACTORY, useClass: BindingDetailsEditFormRendererFactoryService },
         { provide: BINDING_VALIDATOR, useClass: BindingValidatorService },
         { provide: PORT_COMMAND_TASK_SUMMARY_BUILDER, useClass: BindingL10nService },
-        { provide: TASKS_INPUT_EXTRACTOR, useClass: TaskInputComposer },
+        { provide: TASKS_INPUT_EXTRACTOR, useClass: BindingInputExtractorService },
         { provide: BINDING_CONTROLLER_INPUT_NAME_RESOLVER, useClass: BindingL10nService },
         { provide: BINDING_INPUT_NAME_RESOLVER, useClass: BindingL10nService },
         { provide: BINDING_TYPE_TO_L10N_KEY_MAPPER, useClass: BindingL10nService }

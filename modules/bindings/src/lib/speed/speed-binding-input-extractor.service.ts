@@ -1,42 +1,39 @@
 import { Injectable } from '@angular/core';
 import { Dictionary } from '@ngrx/entity';
+import { Observable, combineLatest, map } from 'rxjs';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeSpeedBinding, ControllerInputModel, SpeedBindingInputAction, controllerInputIdFn } from '@app/store';
+import { ControlSchemeSpeedBinding, ControllerInputModel, SpeedBindingInputAction } from '@app/store';
 
 import { BindingInputExtractionResult, IBindingTaskInputExtractor } from '../i-binding-task-input-extractor';
+import { InputExtractorService, distinctUntilValueChanged } from '../common';
 
 @Injectable()
 export class SpeedBindingInputExtractorService implements IBindingTaskInputExtractor<ControlSchemeBindingType.Speed> {
-    public extractInput(
-        binding: ControlSchemeSpeedBinding,
-        globalInput: Dictionary<ControllerInputModel>
-    ): BindingInputExtractionResult<ControlSchemeBindingType.Speed> {
-        return {
-            [SpeedBindingInputAction.Forwards]: this.extractInputResult(binding, globalInput, SpeedBindingInputAction.Forwards),
-            [SpeedBindingInputAction.Backwards]: this.extractInputResult(binding, globalInput, SpeedBindingInputAction.Backwards),
-            [SpeedBindingInputAction.Brake]: this.extractInputResult(binding, globalInput, SpeedBindingInputAction.Brake)
-        };
+    constructor(
+        private readonly inputExtractorService: InputExtractorService
+    ) {
     }
 
-    public isInputChanged(
-        prevInput: BindingInputExtractionResult<ControlSchemeBindingType.Speed>,
-        nextInput: BindingInputExtractionResult<ControlSchemeBindingType.Speed>
-    ): boolean {
-        return prevInput[SpeedBindingInputAction.Forwards] !== nextInput[SpeedBindingInputAction.Forwards]
-            || prevInput[SpeedBindingInputAction.Backwards] !== nextInput[SpeedBindingInputAction.Backwards]
-            || prevInput[SpeedBindingInputAction.Brake] !== nextInput[SpeedBindingInputAction.Brake];
-    }
-
-    private extractInputResult(
+    public extractInputs(
         binding: ControlSchemeSpeedBinding,
-        globalInput: Dictionary<ControllerInputModel>,
-        inputKey: keyof ControlSchemeSpeedBinding['inputs'],
-    ): ControllerInputModel | null {
-        const inputConfigModel = binding.inputs[inputKey];
-        if (!inputConfigModel) {
-            return null;
-        }
-        const inputId = controllerInputIdFn(inputConfigModel);
-        return globalInput[inputId] ?? null;
+        globalInput$: Observable<Dictionary<ControllerInputModel>>
+    ): Observable<BindingInputExtractionResult<ControlSchemeBindingType.Speed>> {
+        const forwards$ = this.inputExtractorService.extractInputResult(binding, globalInput$, binding.inputs[SpeedBindingInputAction.Forwards]).pipe(
+            distinctUntilValueChanged()
+        );
+        const backwards$ = this.inputExtractorService.extractInputResult(binding, globalInput$, binding.inputs[SpeedBindingInputAction.Backwards]).pipe(
+            distinctUntilValueChanged()
+        );
+        const brake$ = this.inputExtractorService.extractInputResult(binding, globalInput$, binding.inputs[SpeedBindingInputAction.Brake]).pipe(
+            distinctUntilValueChanged()
+        );
+
+        return combineLatest([forwards$, backwards$, brake$]).pipe(
+            map(([forwards, backwards, brake]) => ({
+                [SpeedBindingInputAction.Forwards]: forwards,
+                [SpeedBindingInputAction.Backwards]: backwards,
+                [SpeedBindingInputAction.Brake]: brake
+            }))
+        );
     }
 }

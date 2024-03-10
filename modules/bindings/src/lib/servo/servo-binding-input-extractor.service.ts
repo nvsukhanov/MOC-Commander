@@ -1,40 +1,34 @@
 import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
+import { Observable, combineLatest, map } from 'rxjs';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeBindingInputs, ControlSchemeServoBinding, ControllerInputModel, ServoBindingInputAction, controllerInputIdFn } from '@app/store';
+import { ControlSchemeServoBinding, ControllerInputModel, ServoBindingInputAction } from '@app/store';
 
 import { BindingInputExtractionResult, IBindingTaskInputExtractor } from '../i-binding-task-input-extractor';
+import { InputExtractorService, distinctUntilValueChanged } from '../common';
 
 @Injectable()
 export class ServoBindingInputExtractorService implements IBindingTaskInputExtractor<ControlSchemeBindingType.Servo> {
-    public extractInput(
-        binding: ControlSchemeServoBinding,
-        globalInput: Dictionary<ControllerInputModel>
-    ): BindingInputExtractionResult<ControlSchemeBindingType.Servo> {
-        return {
-            [ServoBindingInputAction.Cw]: this.getInputId(binding, ServoBindingInputAction.Cw, globalInput) ?? null,
-            [ServoBindingInputAction.Ccw]: this.getInputId(binding, ServoBindingInputAction.Ccw, globalInput) ?? null,
-        };
+    constructor(
+        private readonly inputExtractorService: InputExtractorService
+    ) {
     }
 
-    public isInputChanged(
-        prevInput: BindingInputExtractionResult<ControlSchemeBindingType.Servo>,
-        nextInput: BindingInputExtractionResult<ControlSchemeBindingType.Servo>
-    ): boolean {
-        return prevInput[ServoBindingInputAction.Cw] !== nextInput[ServoBindingInputAction.Cw]
-            || prevInput[ServoBindingInputAction.Ccw] !== nextInput[ServoBindingInputAction.Ccw];
-    }
-
-    private getInputId(
+    public extractInputs(
         binding: ControlSchemeServoBinding,
-        action: keyof ControlSchemeBindingInputs<ControlSchemeBindingType.Servo>,
-        globalInput: Dictionary<ControllerInputModel>
-    ): ControllerInputModel | undefined {
-        const inputConfig = binding.inputs[action];
-        if (!inputConfig) {
-            return;
-        }
-        const inputId = controllerInputIdFn(inputConfig);
-        return globalInput[inputId];
+        globalInput$: Observable<Dictionary<ControllerInputModel>>
+    ): Observable<BindingInputExtractionResult<ControlSchemeBindingType.Servo>> {
+        const cw$ = this.inputExtractorService.extractInputResult(binding, globalInput$, binding.inputs[ServoBindingInputAction.Cw]).pipe(
+            distinctUntilValueChanged()
+        );
+        const ccw$ = this.inputExtractorService.extractInputResult(binding, globalInput$, binding.inputs[ServoBindingInputAction.Ccw]).pipe(
+            distinctUntilValueChanged()
+        );
+        return combineLatest([cw$, ccw$]).pipe(
+            map(([cw, ccw]) => ({
+                [ServoBindingInputAction.Cw]: cw,
+                [ServoBindingInputAction.Ccw]: ccw
+            }))
+        );
     }
 }
