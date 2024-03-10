@@ -1,7 +1,7 @@
 import { MOTOR_LIMITS } from 'rxpoweredup';
 import { AbstractControl, FormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Inject, Injectable } from '@angular/core';
-import { APP_CONFIG, AppValidators, DeepPartial, IAppConfig } from '@app/shared-misc';
+import { APP_CONFIG, AppValidators, IAppConfig } from '@app/shared-misc';
 import { ControlSchemeServoBinding, ControllerInputModel, ServoBindingInputAction } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
@@ -77,9 +77,17 @@ export class ServoBindingFormBuilderService implements IBindingFormBuilder<Servo
 
     public patchForm(
         form: ServoBindingForm,
-        patch: DeepPartial<ControlSchemeServoBinding>
+        patch: ControlSchemeServoBinding
     ): void {
         form.patchValue(patch);
+        this.commonFormControlBuilder.patchInputPipes(
+            form.controls.inputs.controls[ServoBindingInputAction.Cw].controls.inputPipes,
+            patch.inputs[ServoBindingInputAction.Cw]?.inputPipes ?? []
+        );
+        this.commonFormControlBuilder.patchInputPipes(
+            form.controls.inputs.controls[ServoBindingInputAction.Ccw].controls.inputPipes,
+            patch.inputs[ServoBindingInputAction.Ccw]?.inputPipes ?? []
+        );
     }
 
     private createInputsValidators(): ValidatorFn {

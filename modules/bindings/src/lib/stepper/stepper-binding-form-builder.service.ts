@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MOTOR_LIMITS, MotorServoEndState } from 'rxpoweredup';
-import { AppValidators, DeepPartial } from '@app/shared-misc';
+import { AppValidators } from '@app/shared-misc';
 import { ControlSchemeStepperBinding, ControllerInputModel, StepperBindingInputAction } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
@@ -53,9 +53,17 @@ export class StepperBindingFormBuilderService implements IBindingFormBuilder<Ste
 
     public patchForm(
         form: StepperBindingForm,
-        patch: DeepPartial<ControlSchemeStepperBinding>
+        patch: ControlSchemeStepperBinding
     ): void {
         form.patchValue(patch);
+        this.commonFormControlBuilder.patchInputPipes(
+            form.controls.inputs.controls[StepperBindingInputAction.Cw].controls.inputPipes,
+            patch.inputs[StepperBindingInputAction.Cw]?.inputPipes ?? []
+        );
+        this.commonFormControlBuilder.patchInputPipes(
+            form.controls.inputs.controls[StepperBindingInputAction.Ccw].controls.inputPipes,
+            patch.inputs[StepperBindingInputAction.Ccw]?.inputPipes ?? []
+        );
     }
 
     private createInputsValidators(): ValidatorFn {

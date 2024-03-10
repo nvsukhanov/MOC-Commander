@@ -3,7 +3,7 @@ import { Observable, filter, switchMap } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ATTACHED_IO_PROPS_SELECTORS, AttachedIoPropsModel, ControlSchemeInput, PortCommandTask, ServoBindingInputAction } from '@app/store';
+import { ATTACHED_IO_PROPS_SELECTORS, AttachedIoPropsModel, ControlSchemeInputConfig, PortCommandTask, ServoBindingInputAction } from '@app/store';
 
 import { IBindingL10n } from '../i-binding-l10n';
 import { ControllerInputNameService } from '../common';
@@ -44,7 +44,7 @@ export class ServoBindingL10nService implements IBindingL10n<ControlSchemeBindin
 
     public getControllerInputName(
         actionType: ServoBindingInputAction,
-        inputConfig: ControlSchemeInput
+        inputConfig: ControlSchemeInputConfig
     ): Observable<string> {
         switch (actionType) {
             case ServoBindingInputAction.Cw:

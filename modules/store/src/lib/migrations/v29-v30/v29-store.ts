@@ -1,9 +1,8 @@
 import { EntityState } from '@ngrx/entity';
 import { ControlSchemeBindingType, ExtractArrayType, ExtractEntitiesType, Override } from '@app/shared-misc';
 
-import { ControlSchemeInput } from '../../models';
 import { AppStoreVersion } from '../../app-store-version';
-import { V30Store } from '../v30';
+import { V30InputConfig, V30Store } from '../v30-v31';
 import { OldInputAction } from '../old-input-actions';
 
 export type V30ControlSchemesEntitiesState = ExtractEntitiesType<V30Store['controlSchemes']>;
@@ -17,43 +16,43 @@ export type V30SetAngleBinding = V30Binding & { bindingType: ControlSchemeBindin
 
 export type V29SpeedBinding = Override<V30SpeedBinding, {
     inputs: {
-        [OldInputAction.Accelerate]: ControlSchemeInput;
-        [OldInputAction.Brake]?: ControlSchemeInput;
+        [OldInputAction.Accelerate]: V30InputConfig;
+        [OldInputAction.Brake]?: V30InputConfig;
     };
 }>;
 
 export type V29ServoBinding = Override<V30ServoBinding, {
     inputs: {
-        [OldInputAction.ServoCw]?: ControlSchemeInput;
-        [OldInputAction.ServoCcw]?: ControlSchemeInput;
+        [OldInputAction.ServoCw]?: V30InputConfig;
+        [OldInputAction.ServoCcw]?: V30InputConfig;
     };
 }>;
 
 export type V29SetAngleBinding = Override<V30SetAngleBinding, {
     inputs: {
-        [OldInputAction.SetAngle]: ControlSchemeInput;
+        [OldInputAction.SetAngle]: V30InputConfig;
     };
 }>;
 
 export type V29StepperBinding = Override<V30StepperBinding, {
     inputs: {
-        [OldInputAction.Step]: ControlSchemeInput;
+        [OldInputAction.Step]: V30InputConfig;
     };
 }>;
 
 export type V29TrainBinding = Override<V30TrainBinding, {
     inputs: {
-        [OldInputAction.NextLevel]: ControlSchemeInput;
-        [OldInputAction.PrevLevel]?: ControlSchemeInput;
-        [OldInputAction.Reset]?: ControlSchemeInput;
+        [OldInputAction.NextLevel]: V30InputConfig;
+        [OldInputAction.PrevLevel]?: V30InputConfig;
+        [OldInputAction.Reset]?: V30InputConfig;
     };
 }>;
 
 export type V29GearboxBinding = Override<V30GearboxBinding, {
     inputs: {
-        [OldInputAction.NextLevel]: ControlSchemeInput;
-        [OldInputAction.PrevLevel]?: ControlSchemeInput;
-        [OldInputAction.Reset]?: ControlSchemeInput;
+        [OldInputAction.NextLevel]: V30InputConfig;
+        [OldInputAction.PrevLevel]?: V30InputConfig;
+        [OldInputAction.Reset]?: V30InputConfig;
     };
 }>;
 

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { DeepPartial } from '@app/shared-misc';
 import { ControlSchemeSpeedBinding, SpeedBindingInputAction } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
@@ -40,9 +39,21 @@ export class SpeedBindingFormBuilderService implements IBindingFormBuilder<Speed
 
     public patchForm(
         form: SpeedBindingForm,
-        patch: DeepPartial<ControlSchemeSpeedBinding>
+        patch: ControlSchemeSpeedBinding
     ): void {
         form.patchValue(patch);
+        this.commonFormControlBuilder.patchInputPipes(
+            form.controls.inputs.controls[SpeedBindingInputAction.Forwards].controls.inputPipes,
+            patch.inputs[SpeedBindingInputAction.Forwards]?.inputPipes ?? []
+        );
+        this.commonFormControlBuilder.patchInputPipes(
+            form.controls.inputs.controls[SpeedBindingInputAction.Backwards].controls.inputPipes,
+            patch.inputs[SpeedBindingInputAction.Backwards]?.inputPipes ?? []
+        );
+        this.commonFormControlBuilder.patchInputPipes(
+            form.controls.inputs.controls[SpeedBindingInputAction.Brake].controls.inputPipes,
+            patch.inputs[SpeedBindingInputAction.Brake]?.inputPipes ?? []
+        );
     }
 
     private createInputsValidators(): ValidatorFn {

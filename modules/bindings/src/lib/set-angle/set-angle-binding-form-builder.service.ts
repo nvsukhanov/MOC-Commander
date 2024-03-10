@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MotorServoEndState } from 'rxpoweredup';
-import { DeepPartial } from '@app/shared-misc';
 import { ControlSchemeSetAngleBinding, SetAngleBindingInputAction } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
 
@@ -36,8 +35,12 @@ export class SetAngleBindingFormBuilderService implements IBindingFormBuilder<Se
 
     public patchForm(
         form: SetAngleBindingForm,
-        patch: DeepPartial<ControlSchemeSetAngleBinding>
+        patch: ControlSchemeSetAngleBinding
     ): void {
         form.patchValue(patch);
+        this.commonFormControlBuilder.patchInputPipes(
+            form.controls.inputs.controls[SetAngleBindingInputAction.SetAngle].controls.inputPipes,
+            patch.inputs[SetAngleBindingInputAction.SetAngle]?.inputPipes ?? []
+        );
     }
 }

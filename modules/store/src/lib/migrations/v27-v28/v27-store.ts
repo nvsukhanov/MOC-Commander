@@ -2,9 +2,9 @@ import { EntityState } from '@ngrx/entity';
 import { ControlSchemeBindingType, ExtractArrayType, ExtractEntitiesType, Override } from '@app/shared-misc';
 
 import { V28Store } from '../v28-v29/v28-store';
-import { ControlSchemeInput } from '../../models';
 import { AppStoreVersion } from '../../app-store-version';
 import { OldInputAction } from '../old-input-actions';
+import { V30InputConfig } from '../v30-v31';
 
 export type V28ControlSchemesEntitiesState = ExtractEntitiesType<V28Store['controlSchemes']>;
 export type V28Binding = ExtractArrayType<V28ControlSchemesEntitiesState['bindings']>;
@@ -17,7 +17,7 @@ export type V28SetAngleBinding = V28Binding & { bindingType: ControlSchemeBindin
 
 export type V27ServoBinding = Override<V28ServoBinding, {
     inputs: {
-        [OldInputAction.Servo]: ControlSchemeInput;
+        [OldInputAction.Servo]: V30InputConfig;
     };
     invert: boolean;
 }>;

@@ -13,12 +13,9 @@ import {
     BindingControlPowerInputComponent,
     BindingControlSelectControllerComponent,
     BindingControlSelectControllerComponentData,
-    BindingControlSelectInputGainComponent,
     BindingControlSpeedInputComponent,
     BindingEditSectionComponent,
-    BindingEditSectionsContainerComponent,
-    OptionalInputFormGroup,
-    isInputGainApplicable
+    BindingEditSectionsContainerComponent
 } from '../common';
 import { SpeedBindingForm } from './speed-binding-form';
 import { NO_INPUTS_SET_SPEED_ERROR } from './speed-binding-form-builder.service';
@@ -36,7 +33,6 @@ import { SpeedBindingL10nService } from './speed-binding-l10n.service';
         BindingControlSelectIoComponent,
         MatDividerModule,
         BindingControlSelectControllerComponent,
-        BindingControlSelectInputGainComponent,
         HideOnSmallScreenDirective,
         ToggleControlComponent,
         BindingEditSectionsContainerComponent,
@@ -70,18 +66,6 @@ export class SpeedBindingEditComponent implements IBindingsDetailsEditComponent<
     ) {
     }
 
-    private get forwardsControl(): OptionalInputFormGroup | undefined {
-        return this.form?.controls.inputs.controls[SpeedBindingInputAction.Forwards];
-    }
-
-    private get backwardsControl(): OptionalInputFormGroup | undefined {
-        return this.form?.controls.inputs.controls[SpeedBindingInputAction.Backwards];
-    }
-
-    private get brakeControl(): OptionalInputFormGroup | undefined {
-        return this.form?.controls.inputs.controls[SpeedBindingInputAction.Brake];
-    }
-
     public get forwardsControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Speed> | null {
         return this._forwardsControlBindingComponentData;
     }
@@ -92,18 +76,6 @@ export class SpeedBindingEditComponent implements IBindingsDetailsEditComponent<
 
     public get brakeControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Speed> | null {
         return this._brakeControlBindingComponentData;
-    }
-
-    public get isForwardsInputGainConfigurable(): boolean {
-        return this.forwardsControl ? isInputGainApplicable(this.forwardsControl.controls.inputType.value) : false;
-    }
-
-    public get isBackwardsInputGainConfigurable(): boolean {
-        return this.backwardsControl ? isInputGainApplicable(this.backwardsControl.controls.inputType.value) : false;
-    }
-
-    public get isBrakeInputGainConfigurable(): boolean {
-        return this.brakeControl ? isInputGainApplicable(this.brakeControl.controls.inputType.value) : false;
     }
 
     public setForm(

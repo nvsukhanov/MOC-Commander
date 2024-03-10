@@ -29,11 +29,9 @@ import {
     BindingControlPowerInputComponent,
     BindingControlSelectControllerComponent,
     BindingControlSelectControllerComponentData,
-    BindingControlSelectInputGainComponent,
     BindingControlSpeedInputComponent,
     BindingEditSectionComponent,
-    BindingEditSectionsContainerComponent,
-    isInputGainApplicable
+    BindingEditSectionsContainerComponent
 } from '../common';
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { BINDING_SERVO_EDIT_SELECTORS } from './binding-servo-edit.selectors';
@@ -54,7 +52,6 @@ import { ServoBindingL10nService } from './servo-binding-l10n.service';
         MatDialogModule,
         ToggleControlComponent,
         BindingControlSelectControllerComponent,
-        BindingControlSelectInputGainComponent,
         BindingControlSelectHubComponent,
         BindingControlSelectIoComponent,
         MatDividerModule,
@@ -74,8 +71,6 @@ export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<
     public readonly validationErrorsMap: ValidationErrorsL10nMap = {
         [NO_INPUTS_SERVO_ERROR]: 'controlScheme.servoBinding.missingInputs'
     };
-
-    public readonly inputActions = ServoBindingInputAction;
 
     public readonly bindingType = ControlSchemeBindingType.Servo;
 
@@ -113,16 +108,6 @@ export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<
 
     public get servoCcwBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Servo> | null {
         return this._servoCcwBindingComponentData;
-    }
-
-    public get isCwInputGainConfigurable(): boolean {
-        const cwInput = this.form?.controls.inputs.controls[ServoBindingInputAction.Cw];
-        return cwInput ? isInputGainApplicable(cwInput.controls.inputType.value) : false;
-    }
-
-    public get isCcwInputGainConfigurable(): boolean {
-        const ccwInput = this.form?.controls.inputs.controls[ServoBindingInputAction.Ccw];
-        return ccwInput ? isInputGainApplicable(ccwInput.controls.inputType.value) : false;
     }
 
     public get canCalibrate$(): Observable<boolean> {

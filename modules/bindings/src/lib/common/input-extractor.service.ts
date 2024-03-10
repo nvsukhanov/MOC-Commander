@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MonoTypeOperatorFunction, Observable, map, of, startWith } from 'rxjs';
 import { Dictionary } from '@ngrx/entity';
-import { ControlSchemeBinding, ControlSchemeInput, ControllerInputModel, InputGain, controllerInputIdFn } from '@app/store';
+import { ControlSchemeBinding, ControlSchemeInputConfig, ControllerInputModel, InputPipeType, controllerInputIdFn } from '@app/store';
 
 import { applyGainInputPipe } from './input-pipes';
 
@@ -10,7 +10,7 @@ export class InputExtractorService {
     public extractInputResult<T extends ControlSchemeBinding>(
         binding: T,
         globalInput$: Observable<Dictionary<ControllerInputModel>>,
-        inputConfigModel: ControlSchemeInput | undefined,
+        inputConfigModel: ControlSchemeInputConfig | undefined,
     ): Observable<ControllerInputModel | null> {
         if (!inputConfigModel) {
             return of(null);
@@ -29,12 +29,13 @@ export class InputExtractorService {
     }
 
     private composeInputPipeOperators(
-        inputConfigModel: ControlSchemeInput
+        inputConfigModel: ControlSchemeInputConfig
     ): Array<MonoTypeOperatorFunction<ControllerInputModel | null>> {
-        const pipeOperators: Array<MonoTypeOperatorFunction<ControllerInputModel | null>> = [];
-        if (inputConfigModel.gain !== InputGain.Linear) {
-            pipeOperators.push(applyGainInputPipe(inputConfigModel.gain));
-        }
-        return pipeOperators;
+        return inputConfigModel.inputPipes.map((pipeConfig) => {
+            switch (pipeConfig.type) {
+                case InputPipeType.Gain:
+                    return applyGainInputPipe(pipeConfig.gain);
+            }
+        });
     }
 }

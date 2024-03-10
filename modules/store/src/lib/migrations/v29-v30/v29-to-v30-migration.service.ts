@@ -31,7 +31,7 @@ import {
     V30StepperBinding,
     V30TrainBinding
 } from './v29-store';
-import { V30Store } from '../v30';
+import { V30Store } from '../v30-v31';
 import { OldInputAction } from '../old-input-actions';
 
 @Injectable()
@@ -214,7 +214,7 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
         };
         const prevInputs = v29Binding.inputs[OldInputAction.Step];
         if (prevInputs.inputType === ControllerInputType.Axis) {
-            if (v29Binding.degree >= 0) {
+            if (v29Binding['degree'] >= 0) {
                 bindingResult.inputs[StepperBindingInputAction.Cw] = {
                     ...prevInputs,
                     inputDirection: InputDirection.Positive

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IBindingControllerInputNameResolver, IBindingTypeToL10nKeyMapper } from '@app/shared-control-schemes';
 import { IBindingInputNameResolver, IPortCommandTaskSummaryBuilder } from '@app/control-scheme-view';
-import { ControlSchemeBinding, ControlSchemeBindingInputs, ControlSchemeInput, PortCommandTask } from '@app/store';
+import { ControlSchemeBinding, ControlSchemeBindingInputs, ControlSchemeInputConfig, PortCommandTask } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { IBindingL10n } from './i-binding-l10n';
@@ -55,7 +55,7 @@ export class BindingL10nService implements IBindingControllerInputNameResolver,
     public getControllerInputName<T extends ControlSchemeBindingType>(
         bindingType: T,
         actionType: keyof ControlSchemeBindingInputs<T>,
-        data: ControlSchemeInput
+        data: ControlSchemeInputConfig
     ): Observable<string> {
         return this.getL10nService(bindingType).getControllerInputName(actionType, data);
     }

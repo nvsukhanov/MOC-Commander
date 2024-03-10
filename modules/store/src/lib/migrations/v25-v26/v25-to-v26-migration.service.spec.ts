@@ -11,6 +11,7 @@ import { V24ToV25MigrationService, V25Store } from '../v24-v25';
 import { V26Store } from '../v26-v27';
 import { V25ToV26MigrationService } from './v25-to-v26-migration.service';
 import { InputDirection } from '../../models';
+import { V30InputConfig } from '../v30-v31';
 
 describe('V25ToV26MigrationService', () => {
     let v25Store: DeepPartial<V25Store>;
@@ -41,7 +42,7 @@ describe('V25ToV26MigrationService', () => {
     it('should add inputDirection property', () => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        const servoInput = v26Store.controlSchemes?.entities?.['Servo']?.bindings[0].inputs['2'] as ControlSchemeInput;
+        const servoInput = v26Store.controlSchemes?.entities?.['Servo']?.bindings[0].inputs['2'] as V30InputConfig;
         expect(servoInput.inputDirection).toEqual(InputDirection.Positive);
         expect(v26Store.storeVersion).toBe(AppStoreVersion.v26);
     });

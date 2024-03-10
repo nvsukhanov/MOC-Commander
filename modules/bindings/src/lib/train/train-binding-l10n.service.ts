@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { MOTOR_LIMITS } from 'rxpoweredup';
-import { ControlSchemeInput, PortCommandTask, TrainBindingInputAction } from '@app/store';
+import { ControlSchemeInputConfig, PortCommandTask, TrainBindingInputAction } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { IBindingL10n } from '../i-binding-l10n';
@@ -42,7 +42,7 @@ export class TrainBindingL10nService implements IBindingL10n<ControlSchemeBindin
 
     public getControllerInputName(
         actionType: TrainBindingInputAction,
-        inputConfig: ControlSchemeInput
+        inputConfig: ControlSchemeInputConfig
     ): Observable<string> {
         switch (actionType) {
             case TrainBindingInputAction.NextSpeed:

@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import {
     ATTACHED_IO_PROPS_SELECTORS,
     AttachedIoPropsModel,
-    ControlSchemeInput,
+    ControlSchemeInputConfig,
     ControlSchemeSetAngleBinding,
     PortCommandTask,
     SetAngleBindingInputAction
@@ -57,7 +57,7 @@ export class SetAngleBindingL10nService implements IBindingL10n<ControlSchemeBin
 
     public getControllerInputName(
         actionType: SetAngleBindingInputAction,
-        inputConfig: ControlSchemeInput
+        inputConfig: ControlSchemeInputConfig
     ): Observable<string> {
         switch (actionType) {
             case SetAngleBindingInputAction.SetAngle:

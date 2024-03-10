@@ -52,14 +52,14 @@ describe('v27 to v28 migration', () => {
             controllerId: 'gamepad-xbox360/0',
             inputId: '0',
             inputType: 1,
-            gain: 0,
+            gain: 1,
             inputDirection: InputDirection.Positive
         } satisfies V28ServoBinding['inputs'][OldInputAction.ServoCw]);
         expect(servoBindings[0].inputs[OldInputAction.ServoCcw]).toEqual({
             controllerId: 'gamepad-xbox360/0',
             inputId: '0',
             inputType: 1,
-            gain: 0,
+            gain: 1,
             inputDirection: InputDirection.Negative
         } satisfies V28ServoBinding['inputs'][OldInputAction.ServoCw]);
     });
@@ -70,7 +70,7 @@ describe('v27 to v28 migration', () => {
             controllerId: 'keyboard',
             inputId: 'a',
             inputType: 0,
-            gain: 0,
+            gain: 2,
             inputDirection: InputDirection.Positive
         } satisfies V28ServoBinding['inputs'][OldInputAction.ServoCw]);
     });

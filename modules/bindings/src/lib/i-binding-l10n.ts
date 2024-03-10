@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeBinding, ControlSchemeBindingInputs, ControlSchemeInput, PortCommandTask } from '@app/store';
+import { ControlSchemeBinding, ControlSchemeBindingInputs, ControlSchemeInputConfig, PortCommandTask } from '@app/store';
 
 export interface IBindingL10n<T extends ControlSchemeBindingType> {
     readonly bindingTypeL10nKey: string;
@@ -16,6 +16,6 @@ export interface IBindingL10n<T extends ControlSchemeBindingType> {
 
     getControllerInputName(
         actionType: keyof ControlSchemeBindingInputs<T>,
-        inputConfig: ControlSchemeInput
+        inputConfig: ControlSchemeInputConfig
     ): Observable<string>;
 }

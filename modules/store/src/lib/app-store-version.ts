@@ -10,5 +10,6 @@ export enum AppStoreVersion {
     v28 = '28',
     v29 = '29',
     v30 = '30',
-    latest = AppStoreVersion.v30
+    v31 = '31',
+    latest = AppStoreVersion.v31
 }

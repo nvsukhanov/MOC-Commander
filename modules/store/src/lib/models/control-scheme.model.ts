@@ -34,14 +34,25 @@ export enum InputDirection {
     Negative,
 }
 
-export type ControlSchemeInput = {
+export enum InputPipeType {
+    Gain
+}
+
+export type InputPipeGainConfig = {
+    type: InputPipeType.Gain;
+    gain: InputGain;
+};
+
+export type InputPipeConfig = InputPipeGainConfig;
+
+export type ControlSchemeInputConfig = {
     controllerId: string;
     inputId: string;
     inputType: ControllerInputType;
-    gain: InputGain;
     buttonId?: ButtonGroupButtonId;
     portId?: number;
     inputDirection: InputDirection;
+    inputPipes: InputPipeConfig[];
 };
 
 // Using string enum for input actions to avoid issues with object keys conversion to string
@@ -55,9 +66,9 @@ export type ControlSchemeSpeedBinding = {
     id: number;
     bindingType: ControlSchemeBindingType.Speed;
     inputs: {
-        [SpeedBindingInputAction.Forwards]?: ControlSchemeInput;
-        [SpeedBindingInputAction.Backwards]?: ControlSchemeInput;
-        [SpeedBindingInputAction.Brake]?: ControlSchemeInput;
+        [SpeedBindingInputAction.Forwards]?: ControlSchemeInputConfig;
+        [SpeedBindingInputAction.Backwards]?: ControlSchemeInputConfig;
+        [SpeedBindingInputAction.Brake]?: ControlSchemeInputConfig;
     };
     hubId: string;
     portId: number;
@@ -75,8 +86,8 @@ export type ControlSchemeServoBinding = {
     id: number;
     bindingType: ControlSchemeBindingType.Servo;
     inputs: {
-        [ServoBindingInputAction.Cw]?: ControlSchemeInput;
-        [ServoBindingInputAction.Ccw]?: ControlSchemeInput;
+        [ServoBindingInputAction.Cw]?: ControlSchemeInputConfig;
+        [ServoBindingInputAction.Ccw]?: ControlSchemeInputConfig;
     };
     hubId: string;
     portId: number;
@@ -95,7 +106,7 @@ export type ControlSchemeSetAngleBinding = {
     id: number;
     bindingType: ControlSchemeBindingType.SetAngle;
     inputs: {
-        [SetAngleBindingInputAction.SetAngle]: ControlSchemeInput;
+        [SetAngleBindingInputAction.SetAngle]: ControlSchemeInputConfig;
     };
     hubId: string;
     portId: number;
@@ -114,8 +125,8 @@ export type ControlSchemeStepperBinding = {
     id: number;
     bindingType: ControlSchemeBindingType.Stepper;
     inputs: {
-        [StepperBindingInputAction.Cw]?: ControlSchemeInput;
-        [StepperBindingInputAction.Ccw]?: ControlSchemeInput;
+        [StepperBindingInputAction.Cw]?: ControlSchemeInputConfig;
+        [StepperBindingInputAction.Ccw]?: ControlSchemeInputConfig;
     };
     hubId: string;
     portId: number;
@@ -135,9 +146,9 @@ export type ControlSchemeTrainBinding = {
     id: number;
     bindingType: ControlSchemeBindingType.Train;
     inputs: {
-        [TrainBindingInputAction.NextSpeed]: ControlSchemeInput;
-        [TrainBindingInputAction.PrevSpeed]?: ControlSchemeInput;
-        [TrainBindingInputAction.Reset]?: ControlSchemeInput;
+        [TrainBindingInputAction.NextSpeed]: ControlSchemeInputConfig;
+        [TrainBindingInputAction.PrevSpeed]?: ControlSchemeInputConfig;
+        [TrainBindingInputAction.Reset]?: ControlSchemeInputConfig;
     };
     hubId: string;
     portId: number;
@@ -157,9 +168,9 @@ export type ControlSchemeGearboxBinding = {
     id: number;
     bindingType: ControlSchemeBindingType.Gearbox;
     inputs: {
-        [GearboxBindingInputAction.NextGear]: ControlSchemeInput;
-        [GearboxBindingInputAction.Reset]?: ControlSchemeInput;
-        [GearboxBindingInputAction.PrevGear]?: ControlSchemeInput;
+        [GearboxBindingInputAction.NextGear]: ControlSchemeInputConfig;
+        [GearboxBindingInputAction.Reset]?: ControlSchemeInputConfig;
+        [GearboxBindingInputAction.PrevGear]?: ControlSchemeInputConfig;
     };
     hubId: string;
     portId: number;
