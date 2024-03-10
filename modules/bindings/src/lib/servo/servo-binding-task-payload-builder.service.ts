@@ -11,7 +11,7 @@ import {
     ServoTaskPayload
 } from '@app/store';
 
-import { calcInputGain, extractDirectionAwareInputValue } from '../common';
+import { extractDirectionAwareInputValue } from '../common';
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
 import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 
@@ -57,9 +57,7 @@ export class ServoBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
         const cwValue = extractDirectionAwareInputValue(cwInput?.value ?? 0, cwInputDirection);
         const ccwValue = extractDirectionAwareInputValue(ccwInput?.value ?? 0, ccwInputDirection);
 
-        const servoCwInputValue = calcInputGain(cwValue, binding.inputs[ServoBindingInputAction.Cw]?.gain);
-        const servoCcwInputValue = calcInputGain(ccwValue, binding.inputs[ServoBindingInputAction.Ccw]?.gain);
-        const servoNonClampedInputValue = -Math.abs(servoCcwInputValue) + Math.abs(servoCwInputValue);
+        const servoNonClampedInputValue = Math.abs(cwValue) - Math.abs(ccwValue);
 
         // TODO: create a function to clamp the value
         const servoInputValue = Math.max(-1, Math.min(1, servoNonClampedInputValue));

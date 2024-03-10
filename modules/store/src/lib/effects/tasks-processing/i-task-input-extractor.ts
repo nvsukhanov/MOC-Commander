@@ -10,16 +10,10 @@ export type TaskInputExtractionResult<T extends ControlSchemeBindingType = Contr
 };
 
 export interface ITasksInputExtractor<T extends ControlSchemeBindingType = ControlSchemeBindingType> {
-    composeInput(
+    extractInputs(
         binding: ControlSchemeBinding & { bindingType: T },
         input: Observable<Dictionary<ControllerInputModel>>
     ): Observable<TaskInputExtractionResult<T>>;
-
-    isInputChanged(
-        bindingType: T,
-        prevInput: TaskInputExtractionResult<T>,
-        input: TaskInputExtractionResult<T>
-    ): boolean;
 }
 
 export const TASKS_INPUT_EXTRACTOR = new InjectionToken<ITasksInputExtractor>('TASKS_INPUT_EXTRACTOR');
