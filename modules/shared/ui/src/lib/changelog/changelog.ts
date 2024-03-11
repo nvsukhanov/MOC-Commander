@@ -5,7 +5,7 @@ export type Changelog = Array<{
 
 export const CHANGELOG: Changelog = [
     {
-        version: '1.3.0',
+        version: '1.2.4',
         changeL10nKeys: [
             'changelog.1-3-0.featOnOffToggleInputPreset',
             'changelog.1-3-0.featSeparatePitchYawRollTiltSensorWidgets',
