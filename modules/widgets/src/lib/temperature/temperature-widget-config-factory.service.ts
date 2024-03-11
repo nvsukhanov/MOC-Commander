@@ -6,6 +6,7 @@ import {
     AttachedIoModesModel,
     AttachedIoPortModeInfoModel,
     TemperatureWidgetConfigModel,
+    WidgetConfigModel,
     attachedIoModesIdFn,
     attachedIoPortModeInfoIdFn
 } from '@app/store';
@@ -23,13 +24,13 @@ export class TemperatureWidgetConfigFactoryService implements IControlSchemeWidg
     public createConfigs(
         attachedIos: AttachedIoModel[],
         ioPortModes: Dictionary<AttachedIoModesModel>,
-        portModesInfo: Dictionary<AttachedIoPortModeInfoModel>
+        portModesInfo: Dictionary<AttachedIoPortModeInfoModel>,
+        existingWidgets: WidgetConfigModel[]
     ): TemperatureWidgetConfigModel[] {
         const result: TemperatureWidgetConfigModel[] = [];
-        for (const io of attachedIos) {
-
+        const freeIos = attachedIos.filter((io) => !existingWidgets.some((widget) => widget.hubId === io.hubId && widget.portId === io.portId));
+        for (const io of freeIos) {
             const portInputModeIds = (ioPortModes[attachedIoModesIdFn(io)]?.portInputModes ?? []);
-
             for (const modeId of portInputModeIds) {
                 const modeName = portModesInfo[attachedIoPortModeInfoIdFn({ ...io, modeId })]?.name;
                 if (modeName !== undefined && this.blockerChecker.canBeUsedWithInputModes([modeName])) {

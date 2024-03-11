@@ -50,32 +50,70 @@ export const ATTACHED_IO_PROPS_FEATURE = createFeature({
                 state
             )
         ),
-        on(ATTACHED_IO_PROPS_ACTIONS.compensateTilt, (state, data): AttacheIoPropsState => {
-            const initialCompensationData = state.entities[hubAttachedIoPropsIdFn(data)]?.runtimeTiltCompensation ?? { yaw: 0, pitch: 0, roll: 0 };
+        on(ATTACHED_IO_PROPS_ACTIONS.compensatePitch, (state, data): AttacheIoPropsState => {
+            const currentCompensation = state.entities[hubAttachedIoPropsIdFn(data)]?.runtimeTiltCompensation ?? { yaw: 0, pitch: 0, roll: 0 };
             return ATTACHED_IO_PROPS_ENTITY_ADAPTER.upsertOne({
                     hubId: data.hubId,
                     portId: data.portId,
                     motorEncoderOffset: state.entities[hubAttachedIoPropsIdFn(data)]?.motorEncoderOffset ?? 0,
                     startupServoCalibrationData: state.entities[hubAttachedIoPropsIdFn(data)]?.startupServoCalibrationData ?? null,
                     runtimeTiltCompensation: {
-                        yaw: initialCompensationData.yaw + data.compensationData.yaw,
-                        pitch: initialCompensationData.pitch + data.compensationData.pitch,
-                        roll: initialCompensationData.roll + data.compensationData.roll,
+                        yaw: currentCompensation.yaw,
+                        pitch: currentCompensation.pitch + data.currentPitch,
+                        roll: currentCompensation.roll,
                     },
                 },
                 state
             );
         }),
-        on(ATTACHED_IO_PROPS_ACTIONS.resetTiltCompensation, (state, data): AttacheIoPropsState =>
-            ATTACHED_IO_PROPS_ENTITY_ADAPTER.upsertOne({
+        on(ATTACHED_IO_PROPS_ACTIONS.resetPitchCompensation, (state, data): AttacheIoPropsState => {
+            const currentCompensation = state.entities[hubAttachedIoPropsIdFn(data)]?.runtimeTiltCompensation ?? { yaw: 0, pitch: 0, roll: 0 };
+            return ATTACHED_IO_PROPS_ENTITY_ADAPTER.upsertOne({
                     hubId: data.hubId,
                     portId: data.portId,
                     motorEncoderOffset: state.entities[hubAttachedIoPropsIdFn(data)]?.motorEncoderOffset ?? 0,
                     startupServoCalibrationData: state.entities[hubAttachedIoPropsIdFn(data)]?.startupServoCalibrationData ?? null,
-                    runtimeTiltCompensation: null,
+                    runtimeTiltCompensation: {
+                        yaw: currentCompensation.yaw,
+                        pitch: 0,
+                        roll: currentCompensation.roll,
+                    },
                 },
                 state
-            )),
+            );
+        }),
+        on(ATTACHED_IO_PROPS_ACTIONS.compensateYaw, (state, data): AttacheIoPropsState => {
+            const currentCompensation = state.entities[hubAttachedIoPropsIdFn(data)]?.runtimeTiltCompensation ?? { yaw: 0, pitch: 0, roll: 0 };
+            return ATTACHED_IO_PROPS_ENTITY_ADAPTER.upsertOne({
+                    hubId: data.hubId,
+                    portId: data.portId,
+                    motorEncoderOffset: state.entities[hubAttachedIoPropsIdFn(data)]?.motorEncoderOffset ?? 0,
+                    startupServoCalibrationData: state.entities[hubAttachedIoPropsIdFn(data)]?.startupServoCalibrationData ?? null,
+                    runtimeTiltCompensation: {
+                        yaw: currentCompensation.yaw + data.currentYaw,
+                        pitch: currentCompensation.pitch,
+                        roll: currentCompensation.roll,
+                    },
+                },
+                state
+            );
+        }),
+        on(ATTACHED_IO_PROPS_ACTIONS.resetYawCompensation, (state, data): AttacheIoPropsState => {
+            const currentCompensation = state.entities[hubAttachedIoPropsIdFn(data)]?.runtimeTiltCompensation ?? { yaw: 0, pitch: 0, roll: 0 };
+            return ATTACHED_IO_PROPS_ENTITY_ADAPTER.upsertOne({
+                    hubId: data.hubId,
+                    portId: data.portId,
+                    motorEncoderOffset: state.entities[hubAttachedIoPropsIdFn(data)]?.motorEncoderOffset ?? 0,
+                    startupServoCalibrationData: state.entities[hubAttachedIoPropsIdFn(data)]?.startupServoCalibrationData ?? null,
+                    runtimeTiltCompensation: {
+                        yaw: 0,
+                        pitch: currentCompensation.pitch,
+                        roll: currentCompensation.roll,
+                    },
+                },
+                state
+            );
+        }),
         on(HUBS_ACTIONS.forgetHub, HUBS_ACTIONS.disconnected, (state, { hubId }): AttacheIoPropsState =>
             ATTACHED_IO_PROPS_ENTITY_ADAPTER.removeMany((io) => io.hubId === hubId, state)
         )

@@ -1,0 +1,22 @@
+<mat-form-field class="form-field">
+    <mat-label>{{ 'controlScheme.widgets.nameField' | transloco }}</mat-label>
+    <input matInput
+           type="text"
+           [formControl]="form.controls.title"
+    />
+    <mat-error [libValidationMessages]="form.controls.title"></mat-error>
+</mat-form-field>
+
+<mat-form-field class="form-field">
+    <mat-label>{{ 'controlScheme.widgets.pitch.valueChangeThresholdTitle' | transloco }}</mat-label>
+    <input matInput
+           type="number"
+           [formControl]="form.controls.valueChangeThreshold"
+    />
+    <mat-error [libValidationMessages]="form.controls.valueChangeThreshold"></mat-error>
+</mat-form-field>
+
+<lib-toggle-control [translocoTitle]="'controlScheme.widgets.pitch.invertOptionTitle'"
+                    [control]="form.controls.invert"
+></lib-toggle-control>
+

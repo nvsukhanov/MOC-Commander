@@ -17,7 +17,7 @@ import { TiltGaugeSectorHighlightPipe } from './tilt-gauge-sector-highlight.pipe
 export class TiltGaugeSectorsComponent {
     @Input() public viewBox = '0 0 0 0';
 
-    @Input() public tiltDegrees?: number;
+    @Input() public tiltDegrees: number | null = null;
 
     @Input('libTiltGaugeSectors') public sectors: TiltGaugeSectorDefinition[] = [];
 }

@@ -10,8 +10,10 @@ import { ATTACHED_IO_SELECTORS, HUBS_SELECTORS } from '@app/store';
 export class WidgetConnectionInfoL10nService {
     private readonly widgetTypeToWidgetConnectionL10nKeyMap: { [k in WidgetType]?: string } = {
         [WidgetType.Voltage]: 'controlScheme.widgets.voltage.connectionInfo',
-        [WidgetType.Tilt]: 'controlScheme.widgets.tilt.connectionInfo',
         [WidgetType.Temperature]: 'controlScheme.widgets.temperature.connectionInfo',
+        [WidgetType.Pitch]: 'controlScheme.widgets.pitch.connectionInfo',
+        [WidgetType.Yaw]: 'controlScheme.widgets.yaw.connectionInfo',
+        [WidgetType.Roll]: 'controlScheme.widgets.roll.connectionInfo',
     };
 
     constructor(

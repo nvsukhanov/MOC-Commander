@@ -4,23 +4,25 @@ import { ControlSchemeWidgetSettingsDescriptor, IControlSchemeWidgetSettingsComp
 import { WidgetConfigModel } from '@app/store';
 
 import { TemperatureWidgetSettingsComponentFactoryService } from './temperature';
-import { TiltWidgetSettingsComponentFactoryService } from './tilt';
 import { VoltageWidgetSettingsComponentFactoryService } from './voltage';
+import { CommonTiltWidgetsSettingsComponentFactoryService } from './common';
 
 @Injectable()
 export class WidgetSettingsComponentFactoryService implements IControlSchemeWidgetSettingsComponentFactory<WidgetType> {
     constructor(
         private readonly temperatureWidgetSettingsComponentFactoryService: TemperatureWidgetSettingsComponentFactoryService,
-        private readonly tiltWidgetSettingsComponentFactoryService: TiltWidgetSettingsComponentFactoryService,
-        private readonly voltageWidgetSettingsComponentFactoryService: VoltageWidgetSettingsComponentFactoryService
+        private readonly voltageWidgetSettingsComponentFactoryService: VoltageWidgetSettingsComponentFactoryService,
+        private readonly commonTiltWidgetSettingsComponentFactoryService: CommonTiltWidgetsSettingsComponentFactoryService
     ) {
     }
 
     public hasSettings(widgetType: WidgetType): boolean {
         switch (widgetType) {
             case WidgetType.Temperature:
-            case WidgetType.Tilt:
             case WidgetType.Voltage:
+            case WidgetType.Pitch:
+            case WidgetType.Yaw:
+            case WidgetType.Roll:
                 return true;
         }
     }
@@ -32,10 +34,14 @@ export class WidgetSettingsComponentFactoryService implements IControlSchemeWidg
         switch (config.widgetType) {
             case WidgetType.Temperature:
                 return this.temperatureWidgetSettingsComponentFactoryService.createWidgetSettings(container, config);
-            case WidgetType.Tilt:
-                return this.tiltWidgetSettingsComponentFactoryService.createWidgetSettings(container, config);
             case WidgetType.Voltage:
                 return this.voltageWidgetSettingsComponentFactoryService.createWidgetSettings(container, config);
+            case WidgetType.Pitch:
+                return this.commonTiltWidgetSettingsComponentFactoryService.createWidgetSettings(container, config);
+            case WidgetType.Yaw:
+                return this.commonTiltWidgetSettingsComponentFactoryService.createWidgetSettings(container, config);
+            case WidgetType.Roll:
+                return this.commonTiltWidgetSettingsComponentFactoryService.createWidgetSettings(container, config);
         }
     }
 }

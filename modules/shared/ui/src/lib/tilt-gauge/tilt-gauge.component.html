@@ -13,7 +13,7 @@
        class="brackets"
     ></g>
 
-    @if (iconTemplate && tiltDegrees !== undefined) {
+    @if (iconTemplate && tiltDegrees !== null) {
         <g [attr.transform]="iconTransform">
             <ng-container [ngTemplateOutlet]="iconTemplate"></ng-container>
         </g>

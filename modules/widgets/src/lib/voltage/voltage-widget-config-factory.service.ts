@@ -7,6 +7,7 @@ import {
     AttachedIoModesModel,
     AttachedIoPortModeInfoModel,
     VoltageWidgetConfigModel,
+    WidgetConfigModel,
     attachedIoModesIdFn,
     attachedIoPortModeInfoIdFn
 } from '@app/store';
@@ -24,10 +25,12 @@ export class VoltageWidgetConfigFactoryService implements IControlSchemeWidgetCo
     public createConfigs(
         attachedIos: AttachedIoModel[],
         ioPortModes: Dictionary<AttachedIoModesModel>,
-        portModesInfo: Dictionary<AttachedIoPortModeInfoModel>
+        portModesInfo: Dictionary<AttachedIoPortModeInfoModel>,
+        existingWidgets: WidgetConfigModel[]
     ): VoltageWidgetConfigModel[] {
         const result: VoltageWidgetConfigModel[] = [];
-        for (const io of attachedIos) {
+        const freeIos = attachedIos.filter((io) => !existingWidgets.some((widget) => widget.hubId === io.hubId && widget.portId === io.portId));
+        for (const io of freeIos) {
             const portInputModeIds = (ioPortModes[attachedIoModesIdFn(io)]?.portInputModes ?? []);
             const attacheIoPortModes = portInputModeIds.map((modeId) => {
                 const portModeInfo = portModesInfo[attachedIoPortModeInfoIdFn({ ...io, modeId })];

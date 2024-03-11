@@ -48,7 +48,7 @@ export class TiltGaugeComponent implements OnInit {
 
     private _viewBox: string;
 
-    private _tiltDegrees?: number;
+    private _tiltDegrees: number | null = null;
 
     private _iconTransform = 'rotate(0)';
 
@@ -64,13 +64,13 @@ export class TiltGaugeComponent implements OnInit {
 
     @Input()
     public set tiltDegrees(
-        v: number | undefined
+        v: number | null
     ) {
         this._tiltDegrees = v;
         this.updateIconTransform();
     }
 
-    public get tiltDegrees(): number | undefined {
+    public get tiltDegrees(): number | null {
         return this._tiltDegrees;
     }
 

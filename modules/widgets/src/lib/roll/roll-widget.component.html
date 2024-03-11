@@ -1,0 +1,49 @@
+<lib-widget [title]="title"
+            [canBeEdited]="canBeEdited"
+            [canBeDeleted]="canBeDeleted"
+            (edit)="onEdit()"
+            (delete)="onDelete()"
+>
+    <div class="roll-content">
+        <lib-tilt-gauge [tiltDegrees]="roll ?? null"
+                        [iconTemplate]="rollIconTemplate"
+                        class="roll-gauge"
+        ></lib-tilt-gauge>
+
+        <ng-template #rollIconTemplate>
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 100 100"
+
+            >
+                <g class="roll-icon">
+                    <path d="M 30 50 L 70 50 L 50 35 z"></path>
+                </g>
+            </svg>
+        </ng-template>
+
+        <span class="pitch-value">
+            @if (roll !== null) {
+                {{ roll }}°
+            } @else {
+                &nbsp;
+            }
+        </span>
+
+        <button mat-button
+                [disabled]="roll === null"
+                (click)="onCompensate()"
+                class="pitch-control-button"
+                [title]="'controlScheme.widgets.roll.compensateButtonTitle' | transloco"
+        >
+            <mat-icon [fontIcon]="'gps_not_fixed'"></mat-icon>
+        </button>
+        <button mat-button
+                [disabled]="roll === null"
+                class="pitch-control-button"
+                (click)="onResetCompensation()"
+                [title]="'controlScheme.widgets.roll.resetCompensationButtonTitle' | transloco"
+        >
+            <mat-icon [fontIcon]="'gps_off'"></mat-icon>
+        </button>
+    </div>
+</lib-widget>

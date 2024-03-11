@@ -7,7 +7,7 @@ export type ControlSchemeVoltageWidgetDataModel = {
 };
 
 export type ControlSchemeTiltWidgetDataModel = {
-    widgetType: WidgetType.Tilt;
+    widgetType: WidgetType.Yaw | WidgetType.Roll | WidgetType.Pitch;
     tilt: TiltData;
 };
 

@@ -10,10 +10,10 @@ import { TiltGaugeSectorDefinition } from './tilt-gauge-sector-definition';
 })
 export class TiltGaugeSectorHighlightPipe implements PipeTransform {
     public transform(
-        tiltDegrees?: number,
-        gaugeSector?: TiltGaugeSectorDefinition
+        tiltDegrees: number | null,
+        gaugeSector: TiltGaugeSectorDefinition
     ): boolean {
-        if (gaugeSector === undefined || tiltDegrees === undefined) {
+        if (tiltDegrees === null) {
             return false;
         }
 

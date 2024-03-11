@@ -1,0 +1,49 @@
+<lib-widget [title]="title"
+            [canBeEdited]="canBeEdited"
+            [canBeDeleted]="canBeDeleted"
+            (edit)="onEdit()"
+            (delete)="onDelete()"
+>
+    <div class="pitch-content">
+        <lib-tilt-gauge [tiltDegrees]="pitch"
+                        class="pitch-gauge"
+                        [iconTemplate]="pitchIconTemplate"
+        ></lib-tilt-gauge>
+
+        <span class="pitch-value">
+            @if (pitch !== null) {
+                {{ pitch }}°
+            } @else {
+                &nbsp;
+            }
+        </span>
+
+        <button mat-button
+                [disabled]="pitch === null"
+                (click)="onCompensate()"
+                class="pitch-control-button"
+                [title]="'controlScheme.widgets.pitch.compensateButtonTitle' | transloco"
+        >
+            <mat-icon [fontIcon]="'gps_not_fixed'"></mat-icon>
+        </button>
+        <button mat-button
+                [disabled]="pitch === null"
+                class="pitch-control-button"
+                (click)="onResetCompensation()"
+                [title]="'controlScheme.widgets.pitch.resetCompensationButtonTitle' | transloco"
+        >
+            <mat-icon [fontIcon]="'gps_off'"></mat-icon>
+        </button>
+
+        <ng-template #pitchIconTemplate>
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 100 100"
+            >
+                <g class="pitch-icon">
+                    <path d="M 25 50 L 75 50 L 60 35 z" class="pitch-icon__outline"></path>
+                    <path d="M 60 35 L 65 50" class="pitch-icon__inline"></path>
+                </g>
+            </svg>
+        </ng-template>
+    </div>
+</lib-widget>
