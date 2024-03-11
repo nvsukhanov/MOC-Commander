@@ -3,7 +3,7 @@ import { MonoTypeOperatorFunction, Observable, map, of, startWith } from 'rxjs';
 import { Dictionary } from '@ngrx/entity';
 import { ControlSchemeBinding, ControlSchemeInputConfig, ControllerInputModel, InputPipeType, controllerInputIdFn } from '@app/store';
 
-import { applyGainInputPipe } from './input-pipes';
+import { applyGainInputPipe, onOffInputPipe } from './input-pipes';
 
 @Injectable()
 export class InputExtractorService {
@@ -33,8 +33,11 @@ export class InputExtractorService {
     ): Array<MonoTypeOperatorFunction<ControllerInputModel | null>> {
         return inputConfigModel.inputPipes.map((pipeConfig) => {
             switch (pipeConfig.type) {
-                case InputPipeType.Gain:
-                    return applyGainInputPipe(pipeConfig.gain);
+                case InputPipeType.LogarithmicGain:
+                case InputPipeType.ExponentialGain:
+                    return applyGainInputPipe(pipeConfig.type);
+                case InputPipeType.OnOffToggle:
+                    return onOffInputPipe();
             }
         });
     }

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { MatFormField, MatLabel, MatOption, MatSelect } from '@angular/material/select';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { InputGain, InputPipeConfig, InputPipeType } from '@app/store';
+import { InputPipeConfig, InputPipeType } from '@app/store';
 
 import { InputPipesPreset } from './input-pipes-preset';
 import { InputPipePresetToL10nKeyPipe } from './input-pipe-preset-to-l10n-key.pipe';
@@ -33,10 +33,13 @@ export class SelectInputPipePresetComponent {
     private readonly pipePresets: {[ k in InputPipesPreset ]: () => InputPipeConfig[] } = {
         [InputPipesPreset.None]: () => [],
         [InputPipesPreset.ExponentialGain]: () => [
-            { type: InputPipeType.Gain, gain: InputGain.Exponential }
+            { type: InputPipeType.ExponentialGain }
         ],
         [InputPipesPreset.LogarithmicGain]: () => [
-            { type: InputPipeType.Gain, gain: InputGain.Logarithmic }
+            { type: InputPipeType.LogarithmicGain }
+        ],
+        [InputPipesPreset.OnOffToggle]: () => [
+            { type: InputPipeType.OnOffToggle }
         ]
     };
 
@@ -51,11 +54,12 @@ export class SelectInputPipePresetComponent {
     ) {
         const presets = (pipeTypes ?? []).map((inputPipeType) => {
             switch (inputPipeType) {
-                case InputPipeType.Gain:
-                    return [
-                        InputPipesPreset.LogarithmicGain,
-                        InputPipesPreset.ExponentialGain
-                    ];
+                case InputPipeType.ExponentialGain:
+                    return [ InputPipesPreset.ExponentialGain ];
+                case InputPipeType.LogarithmicGain:
+                    return [ InputPipesPreset.LogarithmicGain ];
+                case InputPipeType.OnOffToggle:
+                    return [ InputPipesPreset.OnOffToggle ];
             }
         }).flat();
         this._availablePresets = [ ...new Set([InputPipesPreset.None, ...presets]) ];
@@ -69,18 +73,18 @@ export class SelectInputPipePresetComponent {
             return;
         }
         switch (firstPipe.type) {
-            case InputPipeType.Gain:
-                switch (firstPipe.gain) {
-                    case InputGain.Linear:
-                        this.formControl.setValue(InputPipesPreset.None);
-                        break;
-                    case InputGain.Exponential:
-                        this.formControl.setValue(InputPipesPreset.ExponentialGain);
-                        break;
-                    case InputGain.Logarithmic:
-                        this.formControl.setValue(InputPipesPreset.LogarithmicGain);
-                        break;
-                }
+            case InputPipeType.LogarithmicGain:
+                this.formControl.setValue(InputPipesPreset.ExponentialGain);
+                break;
+            case InputPipeType.ExponentialGain:
+                this.formControl.setValue(InputPipesPreset.LogarithmicGain);
+                break;
+            case InputPipeType.OnOffToggle:
+                this.formControl.setValue(InputPipesPreset.OnOffToggle);
+                break;
+            default:
+                // exhaustiveness check
+                this.formControl.setValue(firstPipe satisfies void);
         }
     }
 

@@ -12,6 +12,7 @@ export class InputPipePresetToL10nKeyPipe implements PipeTransform {
         [InputPipesPreset.None]: 'controlScheme.inputSettings.inputPipesPresetNone',
         [InputPipesPreset.LogarithmicGain]: 'controlScheme.inputSettings.inputPipesPresetExponentialGain',
         [InputPipesPreset.ExponentialGain]: 'controlScheme.inputSettings.inputPipesPresetLogarithmicGain',
+        [InputPipesPreset.OnOffToggle]: 'controlScheme.inputSettings.inputPipesPresetOnOffToggle'
     };
 
     public transform(

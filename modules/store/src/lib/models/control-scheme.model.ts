@@ -8,12 +8,6 @@ export enum LoopingMode {
     PingPong
 }
 
-export enum InputGain {
-    Linear,
-    Exponential,
-    Logarithmic,
-}
-
 export type ControlSchemePortConfig = {
     hubId: string;
     portId: number;
@@ -35,15 +29,24 @@ export enum InputDirection {
 }
 
 export enum InputPipeType {
-    Gain
+    LogarithmicGain,
+    ExponentialGain,
+    OnOffToggle
 }
 
-export type InputPipeGainConfig = {
-    type: InputPipeType.Gain;
-    gain: InputGain;
+export type InputPipeLogarithmicGain = {
+    type: InputPipeType.LogarithmicGain;
 };
 
-export type InputPipeConfig = InputPipeGainConfig;
+export type InputPipeExponentialGain = {
+    type: InputPipeType.ExponentialGain;
+};
+
+export type InputPipeOnOffToggleConfig = {
+    type: InputPipeType.OnOffToggle;
+};
+
+export type InputPipeConfig = InputPipeLogarithmicGain | InputPipeExponentialGain | InputPipeOnOffToggleConfig;
 
 export type ControlSchemeInputConfig = {
     controllerId: string;

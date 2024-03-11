@@ -82,11 +82,11 @@ export class ServoBindingFormBuilderService implements IBindingFormBuilder<Servo
         form.patchValue(patch);
         this.commonFormControlBuilder.patchInputPipes(
             form.controls.inputs.controls[ServoBindingInputAction.Cw].controls.inputPipes,
-            patch.inputs[ServoBindingInputAction.Cw]?.inputPipes ?? []
+            patch.inputs?.[ServoBindingInputAction.Cw]?.inputPipes ?? []
         );
         this.commonFormControlBuilder.patchInputPipes(
             form.controls.inputs.controls[ServoBindingInputAction.Ccw].controls.inputPipes,
-            patch.inputs[ServoBindingInputAction.Ccw]?.inputPipes ?? []
+            patch.inputs?.[ServoBindingInputAction.Ccw]?.inputPipes ?? []
         );
     }
 

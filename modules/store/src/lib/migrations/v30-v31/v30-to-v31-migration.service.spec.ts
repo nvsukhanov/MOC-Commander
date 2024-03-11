@@ -3,7 +3,7 @@ import { ControllerType, GamepadProfile, GamepadProfileFactoryService, GamepadSe
 import { ControlSchemeBindingType, DeepPartial } from '@app/shared-misc';
 
 import { AppStoreVersion } from '../../app-store-version';
-import { InputGain, InputPipeType } from '../../models';
+import { InputPipeType } from '../../models';
 import { V21ToV22MigrationService } from '../v21-v22';
 import { V21_STORE_SAMPLE } from '../v21';
 import { V23ToV24MigrationService } from '../v23-v24';
@@ -17,7 +17,7 @@ import { V22ToV23MigrationService } from '../v22-v23';
 import { V26ToV27MigrationService } from '../v26-v27';
 import { V29ToV30MigrationService } from '../v29-v30';
 import { V31Store } from '../v31';
-import { V30Store } from './v30-store';
+import { OldInputGain, V30Store } from './v30-store';
 
 describe('v30 to v31 migration', () => {
     let v30Store: DeepPartial<V30Store>;
@@ -69,12 +69,19 @@ describe('v30 to v31 migration', () => {
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                    expect((inputConfig as any)['gain']).toBeUndefined();
                    if ([ControlSchemeBindingType.Servo, ControlSchemeBindingType.Speed].includes(binding.bindingType)) {
-                       expect(inputConfig.inputPipes.length).toBe(1);
                        // eslint-disable-next-line @typescript-eslint/no-explicit-any,max-len
-                       const originalGain = (v30Store.controlSchemes?.entities?.[controlSchemeId]?.bindings[bindingIndex]?.['inputs'] as any)[inputAction]?.gain as InputGain;
-                       expect(inputConfig.inputPipes).toEqual([
-                           { type: InputPipeType.Gain, gain: originalGain }
-                       ]);
+                       const originalGain = (v30Store.controlSchemes?.entities?.[controlSchemeId]?.bindings[bindingIndex]?.['inputs'] as any)[inputAction]?.gain as OldInputGain;
+                       switch (originalGain) {
+                           case OldInputGain.Exponential:
+                               expect(inputConfig.inputPipes).toEqual([ { type: InputPipeType.ExponentialGain } ]);
+                               break;
+                            case OldInputGain.Logarithmic:
+                                expect(inputConfig.inputPipes).toEqual([ { type: InputPipeType.LogarithmicGain } ]);
+                                break;
+                            default:
+                                expect(inputConfig.inputPipes).toEqual([]);
+                                break;
+                       }
                    } else {
                        expect(inputConfig.inputPipes.length).toBe(0);
                    }

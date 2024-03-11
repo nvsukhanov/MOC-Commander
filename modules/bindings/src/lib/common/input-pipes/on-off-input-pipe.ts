@@ -1,13 +1,7 @@
-import { MonoTypeOperatorFunction, distinctUntilChanged, of, pairwise, scan } from 'rxjs';
-import { ControlSchemeInputConfig, ControllerInputModel } from '@app/store';
+import { MonoTypeOperatorFunction, distinctUntilChanged, pairwise, scan } from 'rxjs';
+import { ControllerInputModel } from '@app/store';
 
-// Unused currently, but will be used in the future when input pipes are implemented
-export function onOffInputPipe(
-    inputConfig?: ControlSchemeInputConfig
-): MonoTypeOperatorFunction<ControllerInputModel | null> {
-    if (!inputConfig) {
-        return () => of(null);
-    }
+export function onOffInputPipe(): MonoTypeOperatorFunction<ControllerInputModel | null> {
     return (source) => source.pipe(
         pairwise(),
         scan((acc: ControllerInputModel | null, [prev, curr]: [ControllerInputModel | null, ControllerInputModel | null]) => {
