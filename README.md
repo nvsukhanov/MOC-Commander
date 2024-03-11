@@ -35,7 +35,7 @@ LEGO® is a trademark of the LEGO Group of companies which does not sponsor, aut
 
 ### Operation Modes
 - Supports the following device operation modes:
-    - Set speed
+    - Speed
     - Set angle
     - Servo w/ auto-calibration on start
     - Stepper
