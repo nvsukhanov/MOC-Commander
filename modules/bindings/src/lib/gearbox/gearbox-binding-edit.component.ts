@@ -119,21 +119,24 @@ export class GearboxBindingEditComponent implements IBindingsDetailsEditComponen
             bindingType: ControlSchemeBindingType.Gearbox,
             inputFormGroup: form.controls.inputs.controls[GearboxBindingInputAction.NextGear],
             inputAction: GearboxBindingInputAction.NextGear,
-            inputName$: this.l10nService.getBindingInputName(GearboxBindingInputAction.NextGear)
+            inputName$: this.l10nService.getBindingInputName(GearboxBindingInputAction.NextGear),
+            supportedInputPipes: []
         };
 
         this._prevGearControlBindingComponentData = {
             bindingType: ControlSchemeBindingType.Gearbox,
             inputFormGroup: form.controls.inputs.controls[GearboxBindingInputAction.PrevGear],
             inputAction: GearboxBindingInputAction.PrevGear,
-            inputName$: this.l10nService.getBindingInputName(GearboxBindingInputAction.PrevGear)
+            inputName$: this.l10nService.getBindingInputName(GearboxBindingInputAction.PrevGear),
+            supportedInputPipes: []
         };
 
         this._resetControlBindingComponentData = {
             bindingType: ControlSchemeBindingType.Gearbox,
             inputFormGroup: form.controls.inputs.controls[GearboxBindingInputAction.Reset],
             inputAction: GearboxBindingInputAction.Reset,
-            inputName$: this.l10nService.getBindingInputName(GearboxBindingInputAction.Reset)
+            inputName$: this.l10nService.getBindingInputName(GearboxBindingInputAction.Reset),
+            supportedInputPipes: []
         };
 
         this.portRequestSubscription?.unsubscribe();

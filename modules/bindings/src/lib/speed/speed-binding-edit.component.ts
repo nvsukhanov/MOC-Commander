@@ -5,7 +5,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatError } from '@angular/material/form-field';
 import { ControlSchemeBindingType, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
-import { SpeedBindingInputAction } from '@app/store';
+import { InputPipeType, SpeedBindingInputAction } from '@app/store';
 import { BindingControlSelectHubComponent, BindingControlSelectIoComponent } from '@app/shared-control-schemes';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
@@ -91,19 +91,22 @@ export class SpeedBindingEditComponent implements IBindingsDetailsEditComponent<
                 bindingType: ControlSchemeBindingType.Speed,
                 inputFormGroup: outputBinding.controls.inputs.controls[SpeedBindingInputAction.Forwards],
                 inputAction: SpeedBindingInputAction.Forwards,
-                inputName$: this.l10nService.getBindingInputName(SpeedBindingInputAction.Forwards)
+                inputName$: this.l10nService.getBindingInputName(SpeedBindingInputAction.Forwards),
+                supportedInputPipes: [ InputPipeType.Gain ]
             };
             this._backwardsControlBindingComponentData = {
                 bindingType: ControlSchemeBindingType.Speed,
                 inputFormGroup: outputBinding.controls.inputs.controls[SpeedBindingInputAction.Backwards],
                 inputAction: SpeedBindingInputAction.Backwards,
-                inputName$: this.l10nService.getBindingInputName(SpeedBindingInputAction.Backwards)
+                inputName$: this.l10nService.getBindingInputName(SpeedBindingInputAction.Backwards),
+                supportedInputPipes: [ InputPipeType.Gain ]
             };
             this._brakeControlBindingComponentData = {
                 bindingType: ControlSchemeBindingType.Speed,
                 inputFormGroup: outputBinding.controls.inputs.controls[SpeedBindingInputAction.Brake],
                 inputAction: SpeedBindingInputAction.Brake,
-                inputName$: this.l10nService.getBindingInputName(SpeedBindingInputAction.Brake)
+                inputName$: this.l10nService.getBindingInputName(SpeedBindingInputAction.Brake),
+                supportedInputPipes: [ InputPipeType.Gain ]
             };
 
             merge(

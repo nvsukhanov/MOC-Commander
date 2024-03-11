@@ -19,6 +19,7 @@ import {
     CalibrationResult,
     CalibrationResultType,
     HubMotorPositionFacadeService,
+    InputPipeType,
     ServoBindingInputAction
 } from '@app/store';
 import { BindingControlSelectHubComponent, BindingControlSelectIoComponent, MotorPositionAdjustmentComponent } from '@app/shared-control-schemes';
@@ -229,14 +230,16 @@ export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<
                 bindingType: ControlSchemeBindingType.Servo,
                 inputFormGroup: form.controls.inputs.controls[ServoBindingInputAction.Cw],
                 inputAction: ServoBindingInputAction.Cw,
-                inputName$: this.l10nService.getBindingInputName(ServoBindingInputAction.Cw)
+                inputName$: this.l10nService.getBindingInputName(ServoBindingInputAction.Cw),
+                supportedInputPipes: [ InputPipeType.Gain ]
             };
 
             this._servoCcwBindingComponentData = {
                 bindingType: ControlSchemeBindingType.Servo,
                 inputFormGroup: form.controls.inputs.controls[ServoBindingInputAction.Ccw],
                 inputAction: ServoBindingInputAction.Ccw,
-                inputName$: this.l10nService.getBindingInputName(ServoBindingInputAction.Ccw)
+                inputName$: this.l10nService.getBindingInputName(ServoBindingInputAction.Ccw),
+                supportedInputPipes: [ InputPipeType.Gain ]
             };
 
             this.portRequestSubscription?.unsubscribe();

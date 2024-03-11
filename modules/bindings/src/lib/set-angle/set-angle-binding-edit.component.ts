@@ -105,7 +105,8 @@ export class SetAngleBindingEditComponent implements IBindingsDetailsEditCompone
                 bindingType: ControlSchemeBindingType.SetAngle,
                 inputFormGroup: form.controls.inputs.controls[SetAngleBindingInputAction.SetAngle],
                 inputAction: SetAngleBindingInputAction.SetAngle,
-                inputName$: this.l10nService.getBasicInputName(SetAngleBindingInputAction.SetAngle)
+                inputName$: this.l10nService.getBasicInputName(SetAngleBindingInputAction.SetAngle),
+                supportedInputPipes: []
             };
 
             const hubAndPortChanges = form.controls.hubId.valueChanges.pipe(
