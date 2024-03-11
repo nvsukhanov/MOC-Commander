@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-
-import { TiltGaugeComponent } from '../tilt-gauge';
+import { TiltGaugeComponent } from '@app/shared-ui';
 
 @Component({
     standalone: true,
