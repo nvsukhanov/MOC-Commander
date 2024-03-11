@@ -40,7 +40,7 @@ export class SetAngleBindingFormBuilderService implements IBindingFormBuilder<Se
         form.patchValue(patch);
         this.commonFormControlBuilder.patchInputPipes(
             form.controls.inputs.controls[SetAngleBindingInputAction.SetAngle].controls.inputPipes,
-            patch.inputs[SetAngleBindingInputAction.SetAngle]?.inputPipes ?? []
+            patch.inputs?.[SetAngleBindingInputAction.SetAngle]?.inputPipes ?? []
         );
     }
 }

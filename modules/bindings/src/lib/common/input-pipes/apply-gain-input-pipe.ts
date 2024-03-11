@@ -1,10 +1,10 @@
 import { MonoTypeOperatorFunction, map } from 'rxjs';
-import { ControllerInputModel, InputGain } from '@app/store';
+import { ControllerInputModel, InputPipeType } from '@app/store';
 
-import { calcInputGain } from '../calc-input-gain';
+import { exponentialInputGain, logarithmicInputGain } from '../calc-input-gain';
 
 export function applyGainInputPipe(
-    gain: InputGain
+    gain: InputPipeType.LogarithmicGain | InputPipeType.ExponentialGain
 ): MonoTypeOperatorFunction<ControllerInputModel | null> {
     return (source) => source.pipe(
         map((input) => {
@@ -13,7 +13,9 @@ export function applyGainInputPipe(
             }
             return {
                 ...input,
-                value: calcInputGain(input.value, gain)
+                value: gain === InputPipeType.LogarithmicGain
+                    ? logarithmicInputGain(input.value)
+                    : exponentialInputGain(input.value)
             };
         }),
     );

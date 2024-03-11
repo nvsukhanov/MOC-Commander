@@ -7,8 +7,11 @@ export function filterInputPipeTypesByInputType(
 ): InputPipeType[] {
     return inputPipeTypes.filter((pipe) => {
         switch (pipe) {
-            case InputPipeType.Gain:
+            case InputPipeType.ExponentialGain:
+            case InputPipeType.LogarithmicGain:
                 return inputType === ControllerInputType.Axis || inputType === ControllerInputType.Trigger;
+            case InputPipeType.OnOffToggle:
+                return true;
         }
     });
 }

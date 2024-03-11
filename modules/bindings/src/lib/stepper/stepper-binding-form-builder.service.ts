@@ -58,11 +58,11 @@ export class StepperBindingFormBuilderService implements IBindingFormBuilder<Ste
         form.patchValue(patch);
         this.commonFormControlBuilder.patchInputPipes(
             form.controls.inputs.controls[StepperBindingInputAction.Cw].controls.inputPipes,
-            patch.inputs[StepperBindingInputAction.Cw]?.inputPipes ?? []
+            patch.inputs?.[StepperBindingInputAction.Cw]?.inputPipes ?? []
         );
         this.commonFormControlBuilder.patchInputPipes(
             form.controls.inputs.controls[StepperBindingInputAction.Ccw].controls.inputPipes,
-            patch.inputs[StepperBindingInputAction.Ccw]?.inputPipes ?? []
+            patch.inputs?.[StepperBindingInputAction.Ccw]?.inputPipes ?? []
         );
     }
 

@@ -241,10 +241,6 @@
     "portConfigCancelButtonTitle": "Cancel",
     "newSchemeDialogNameRequired": "Scheme name is required",
     "newSchemeDialogNameUniqueness": "Scheme with this name already exists",
-    "inputGain": "Input gain",
-    "inputGainLinear": "None",
-    "inputGainLogarithmic": "Logarithmic",
-    "inputGainExponential": "Exponential",
     "fullControllerInputName": "{controllerName} / {inputName}",
     "fullControllerInputNameWithDirection": "{controllerName} / {inputName} ({inputDirection, select, 0 {+} other {-}})",
     "controllerInputNameWithPort": "Port {portId} / {inputName}",
@@ -264,6 +260,7 @@
       "inputPipesPresetNone": "None",
       "inputPipesPresetExponentialGain": "Exponential gain",
       "inputPipesPresetLogarithmicGain": "Logarithmic gain",
+      "inputPipesPresetOnOffToggle": "On/off toggle",
       "confirmButtonTitle": "Save",
       "cancelButtonTitle": "Cancel"
     },
@@ -776,6 +773,9 @@
       "featAcquireWakeLockWhenAtLeastOneHubIsConnected": "Acquire Wake Lock when at least one hub is connected",
       "featInputGainForBrakeInputOfSpeedBinding": "Input gain for 'Brake' input of 'Speed' binding",
       "featHubHWAndSWVersionInHubInfo": "Display of hub hardware and software versions in the hub info panel"
+    },
+    "1-3-0": {
+      "featOnOffToggleInputPreset": "On/off toggle mode for 'Speed' and 'Servo' binding inputs"
     }
   }
 }

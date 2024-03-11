@@ -231,7 +231,7 @@ export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<
                 inputFormGroup: form.controls.inputs.controls[ServoBindingInputAction.Cw],
                 inputAction: ServoBindingInputAction.Cw,
                 inputName$: this.l10nService.getBindingInputName(ServoBindingInputAction.Cw),
-                supportedInputPipes: [ InputPipeType.Gain ]
+                supportedInputPipes: [ InputPipeType.ExponentialGain, InputPipeType.LogarithmicGain, InputPipeType.OnOffToggle ]
             };
 
             this._servoCcwBindingComponentData = {
@@ -239,7 +239,7 @@ export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<
                 inputFormGroup: form.controls.inputs.controls[ServoBindingInputAction.Ccw],
                 inputAction: ServoBindingInputAction.Ccw,
                 inputName$: this.l10nService.getBindingInputName(ServoBindingInputAction.Ccw),
-                supportedInputPipes: [ InputPipeType.Gain ]
+                supportedInputPipes: [ InputPipeType.ExponentialGain, InputPipeType.LogarithmicGain, InputPipeType.OnOffToggle ]
             };
 
             this.portRequestSubscription?.unsubscribe();
