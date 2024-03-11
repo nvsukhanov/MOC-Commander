@@ -86,13 +86,15 @@ export class StepperBindingEditComponent implements IBindingsDetailsEditComponen
                 bindingType: ControlSchemeBindingType.Stepper,
                 inputFormGroup: this._form.controls.inputs.controls[StepperBindingInputAction.Cw],
                 inputAction: StepperBindingInputAction.Cw,
-                inputName$: this.l10nService.getBasicInputName(StepperBindingInputAction.Cw)
+                inputName$: this.l10nService.getBasicInputName(StepperBindingInputAction.Cw),
+                supportedInputPipes: []
             };
             this._stepCcwControlBindingComponentData = {
                 bindingType: ControlSchemeBindingType.Stepper,
                 inputFormGroup: this._form.controls.inputs.controls[StepperBindingInputAction.Ccw],
                 inputAction: StepperBindingInputAction.Ccw,
-                inputName$: this.l10nService.getBasicInputName(StepperBindingInputAction.Ccw)
+                inputName$: this.l10nService.getBasicInputName(StepperBindingInputAction.Ccw),
+                supportedInputPipes: []
             };
             this.cdRef.detectChanges();
         }

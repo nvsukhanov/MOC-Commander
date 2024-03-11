@@ -212,7 +212,7 @@
     "bindingAssignControlButtonTitle": "Assign control",
     "bindingInputIsNotAssigned": "Not assigned",
     "bindingInputControlUnassignButtonTitle": "Unassign control",
-    "bindToAnotherInputButtonTitle": "Rebind",
+    "showBindingInputSettings": "Settings",
     "bindingOutputSectionPortLabel": "Port",
     "bindingOutputSectionOperationModeLabel": "Operation mode",
     "bindingOutputSectionOperationModeValue": "{ name }",
@@ -258,6 +258,15 @@
     "menu": "Menu",
     "outputSpeed": "Speed",
     "outputPower": "Power",
+    "inputSettings": {
+      "title": "Input settings",
+      "inputPipesPresetTitle": "Configuration",
+      "inputPipesPresetNone": "None",
+      "inputPipesPresetExponentialGain": "Exponential gain",
+      "inputPipesPresetLogarithmicGain": "Logarithmic gain",
+      "confirmButtonTitle": "Save",
+      "cancelButtonTitle": "Cancel"
+    },
     "speedBinding": {
       "operationMode": "Speed",
       "forwardsInput": "Forwards",

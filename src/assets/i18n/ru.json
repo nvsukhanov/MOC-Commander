@@ -212,7 +212,7 @@
     "bindingAssignControlButtonTitle": "Назначить управление",
     "bindingInputIsNotAssigned": "Управление не назначено",
     "bindingInputControlUnassignButtonTitle": "Отвязать управление",
-    "bindToAnotherInputButtonTitle": "Перепривязать",
+    "showBindingInputSettings": "Настройки ввода",
     "bindingOutputSectionPortLabel": "Порт",
     "bindingOutputSectionOperationModeLabel": "Режим",
     "bindingOutputSectionOperationModeValue": "{ name }",
@@ -258,6 +258,15 @@
     "menu": "Menu",
     "outputSpeed": "Скорость",
     "outputPower": "Мощность",
+    "inputSettings": {
+      "title": "Настройки ввода",
+      "inputPipesPresetTitle": "Конфигурация",
+      "inputPipesPresetNone": "Отсутствует",
+      "inputPipesPresetExponentialGain": "Экспоненциальное усиление",
+      "inputPipesPresetLogarithmicGain": "Логарифмическое усиление",
+      "confirmButtonTitle": "Сохранить",
+      "cancelButtonTitle": "Отмена"
+    },
     "speedBinding": {
       "operationMode": "Скорость",
       "forwardsInput": "Вперед",

@@ -90,19 +90,22 @@ export class TrainBindingEditComponent implements IBindingsDetailsEditComponent<
             bindingType: ControlSchemeBindingType.Train,
             inputFormGroup: this._form.controls.inputs.controls[TrainBindingInputAction.NextSpeed],
             inputAction: TrainBindingInputAction.NextSpeed,
-            inputName$: this.l10nService.getBindingInputName(TrainBindingInputAction.NextSpeed)
+            inputName$: this.l10nService.getBindingInputName(TrainBindingInputAction.NextSpeed),
+            supportedInputPipes: []
         };
         this._prevLevelControlBindingComponentData = {
             bindingType: ControlSchemeBindingType.Train,
             inputFormGroup: this._form.controls.inputs.controls[TrainBindingInputAction.PrevSpeed],
             inputAction: TrainBindingInputAction.PrevSpeed,
-            inputName$: this.l10nService.getBindingInputName(TrainBindingInputAction.PrevSpeed)
+            inputName$: this.l10nService.getBindingInputName(TrainBindingInputAction.PrevSpeed),
+            supportedInputPipes: []
         };
         this._resetControlBindingComponentData = {
             bindingType: ControlSchemeBindingType.Train,
             inputFormGroup: this._form.controls.inputs.controls[TrainBindingInputAction.Reset],
             inputAction: TrainBindingInputAction.Reset,
-            inputName$: this.l10nService.getBindingInputName(TrainBindingInputAction.Reset)
+            inputName$: this.l10nService.getBindingInputName(TrainBindingInputAction.Reset),
+            supportedInputPipes: []
         };
     }
 

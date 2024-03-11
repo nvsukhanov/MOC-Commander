@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>
+    {{ 'controlScheme.inputSettings.title' | transloco }}
+</h1>
+
+<div mat-dialog-content>
+    <lib-cs-select-input-pipe-preset [availableInputPipes]="availablePipes"
+                                     [currentPipeConfig]="currentPipeConfigs"
+                                     (pipeConfigChange)="onPipeConfigsChange($event)"
+    ></lib-cs-select-input-pipe-preset>
+</div>
+
+<div mat-dialog-actions
+     [align]="'end'"
+>
+    <button mat-button
+            [disabled]="!canSave"
+            (click)="onConfirm()"
+    >
+        {{ 'controlScheme.inputSettings.confirmButtonTitle' | transloco }}
+    </button>
+    <button mat-button
+            (click)="onCancel()"
+    >
+        {{ 'controlScheme.inputSettings.cancelButtonTitle' | transloco }}
+    </button>
+</div>
+
