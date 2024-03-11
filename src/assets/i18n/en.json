@@ -367,16 +367,34 @@
         "valueChangeThresholdTitle": "Value change threshold (volts)",
         "noDataTitle": "No data"
       },
-      "tilt": {
-        "name": "Tilt",
-        "defaultName": "Tilt",
+      "pitch": {
+        "name": "Pitch",
+        "defaultName": "Pitch",
         "connectionInfo": "{hubName}:{portName} - {ioName}",
         "valueChangeThresholdTitle": "Value change threshold (°)",
-        "invertYawOptionTitle": "Invert yaw",
-        "invertPitchOptionTitle": "Invert pitch",
-        "invertRollOptionTitle": "Invert roll",
-        "compensateTiltButtonTitle": "Compensate",
-        "resetTiltCompensationButtonTitle": "Reset",
+        "invertOptionTitle": "Invert",
+        "compensateButtonTitle": "Trim",
+        "resetCompensationButtonTitle": "Reset trim",
+        "noDataTitle": "No data"
+      },
+      "yaw": {
+        "name": "Yaw",
+        "defaultName": "Yaw",
+        "connectionInfo": "{hubName}:{portName} - {ioName}",
+        "valueChangeThresholdTitle": "Value change threshold (°)",
+        "invertOptionTitle": "Invert",
+        "compensateButtonTitle": "Trim",
+        "resetCompensationButtonTitle": "Reset trim",
+        "noDataTitle": "No data"
+      },
+      "roll": {
+        "name": "Roll",
+        "defaultName": "Roll",
+        "connectionInfo": "{hubName}:{portName} - {ioName}",
+        "valueChangeThresholdTitle": "Value change threshold (°)",
+        "invertOptionTitle": "Invert",
+        "compensateButtonTitle": "Trim",
+        "resetCompensationButtonTitle": "Reset trim",
         "noDataTitle": "No data"
       },
       "temperature": {
@@ -775,7 +793,8 @@
       "featHubHWAndSWVersionInHubInfo": "Display of hub hardware and software versions in the hub info panel"
     },
     "1-3-0": {
-      "featOnOffToggleInputPreset": "On/off toggle mode for 'Speed' and 'Servo' binding inputs"
+      "featOnOffToggleInputPreset": "On/off toggle mode for 'Speed' and 'Servo' binding inputs",
+      "featSeparatePitchYawRollTiltSensorWidgets": "Separate pitch, yaw, and roll tilt sensor widgets"
     }
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ControlSchemeBindingType, DeepPartial } from '@app/shared-misc';
+import { ControlSchemeBindingType, DeepPartial, WidgetType } from '@app/shared-misc';
 
 import { AppStoreVersion } from '../../app-store-version';
 import { IMigration } from '../i-migration';
@@ -14,7 +14,9 @@ import {
 } from '../../models';
 import { V31Store } from '../v31';
 import {
+    OLD_TITLE_WIDGET_TYPE,
     OldInputGain,
+    OldTiltWidgetConfigModel,
     V30ControlSchemesEntitiesState,
     V30GearboxBinding,
     V30InputConfig,
@@ -24,6 +26,7 @@ import {
     V30StepperBinding,
     V30Store,
     V30TrainBinding,
+    V30WidgetConfigModel,
     V31Binding,
     V31GearboxBinding,
     V31InputConfig,
@@ -31,7 +34,8 @@ import {
     V31SetAngleBinding,
     V31SpeedBinding,
     V31StepperBinding,
-    V31TrainBinding
+    V31TrainBinding,
+    V31WidgetConfigModel
 } from './v30-store';
 
 @Injectable()
@@ -84,7 +88,8 @@ export class V30ToV31MigrationService implements IMigration<V30Store, V31Store> 
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             result.controlSchemes!.entities![k] = {
                 ...controlScheme,
-                bindings
+                bindings,
+                widgets: this.migrateWidgets(controlScheme.widgets)
             };
         });
         return result;
@@ -221,5 +226,64 @@ export class V30ToV31MigrationService implements IMigration<V30Store, V31Store> 
             ...rest,
             inputPipes: []
         };
+    }
+
+    private migrateWidgets(
+        widgets: V30WidgetConfigModel[]
+    ): V31WidgetConfigModel[] {
+        const result: V31WidgetConfigModel[] = [];
+        let id = 1;
+        widgets.forEach((w) => {
+            if (this.isOldTiltWidget(w)) {
+                result.push({
+                    widgetType: WidgetType.Pitch,
+                    hubId: w.hubId,
+                    portId: w.portId,
+                    modeId: w.modeId,
+                    valueChangeThreshold: w.valueChangeThreshold,
+                    title: 'Pitch',
+                    id: id++,
+                    width: 1,
+                    height: 1,
+                    invert: w.invertPitch
+                });
+                result.push({
+                    widgetType: WidgetType.Roll,
+                    hubId: w.hubId,
+                    portId: w.portId,
+                    modeId: w.modeId,
+                    valueChangeThreshold: w.valueChangeThreshold,
+                    title: 'Roll',
+                    id: id++,
+                    width: 1,
+                    height: 1,
+                    invert: w.invertRoll
+                });
+                result.push({
+                    widgetType: WidgetType.Yaw,
+                    hubId: w.hubId,
+                    portId: w.portId,
+                    modeId: w.modeId,
+                    valueChangeThreshold: w.valueChangeThreshold,
+                    title: 'Yaw',
+                    id: id++,
+                    width: 1,
+                    height: 1,
+                    invert: w.invertYaw
+                });
+            } else {
+                result.push({
+                    ...w,
+                    id: id++
+                });
+            }
+        });
+        return result;
+    }
+
+    private isOldTiltWidget(
+        w: V30WidgetConfigModel
+    ): w is OldTiltWidgetConfigModel {
+        return w.widgetType === OLD_TITLE_WIDGET_TYPE;
     }
 }

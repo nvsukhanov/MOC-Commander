@@ -6,22 +6,24 @@ import { AttachedIoModel, WidgetConfigModel, attachedIosIdFn } from '@app/store'
 import { IControlSchemeRunWidgetBlockersChecker, SchemeRunBlocker } from '@app/control-scheme-view';
 
 import { VoltageWidgetBlockerCheckerService } from './voltage';
-import { TiltWidgetBlockerCheckerService } from './tilt';
 import { TemperatureWidgetBlockerCheckerService } from './temperature';
 import { IWidgetBlockerChecker } from './i-widget-blocker-checker';
+import { CommonTiltWidgetsBlockerCheckerService } from './common';
 
 @Injectable()
 export class ControlSchemeStartWidgetBlockerCheckerService implements IControlSchemeRunWidgetBlockersChecker {
     private readonly blockerCheckers: { [k in WidgetType]: IWidgetBlockerChecker } = {
         [WidgetType.Temperature]: this.temperatureBlockerChecker,
-        [WidgetType.Tilt]: this.tiltBlockerChecker,
         [WidgetType.Voltage]: this.voltageBlockerChecker,
+        [WidgetType.Pitch]: this.commonTiltWidgetBlockerCheckerService,
+        [WidgetType.Yaw]: this.commonTiltWidgetBlockerCheckerService,
+        [WidgetType.Roll]: this.commonTiltWidgetBlockerCheckerService,
     };
 
     constructor(
         private readonly voltageBlockerChecker: VoltageWidgetBlockerCheckerService,
-        private readonly tiltBlockerChecker: TiltWidgetBlockerCheckerService,
         private readonly temperatureBlockerChecker: TemperatureWidgetBlockerCheckerService,
+        private readonly commonTiltWidgetBlockerCheckerService: CommonTiltWidgetsBlockerCheckerService,
     ) {
     }
 

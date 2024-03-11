@@ -3,22 +3,19 @@ import { Store } from '@ngrx/store';
 
 import { CONTROL_SCHEME_WIDGETS_DATA_ACTIONS } from '../../../actions';
 import { ControlSchemeModel } from '../../../models';
-import { HubStorageService } from '../../../hub-storage.service';
-import { IWidgetReadTaskFactory } from './i-widget-read-task-factory';
+import { IWidgetsReadTasksFactory } from './i-widgets-read-tasks-factory';
 
 export function createWidgetReadTasks(
     scheme: ControlSchemeModel,
-    hubStorage: HubStorageService,
     store: Store,
-    schemeStop$: Observable<unknown>,
-    widgetTaskFactory: IWidgetReadTaskFactory
+    widgetTaskFactory: IWidgetsReadTasksFactory
 ): Array<Observable<unknown>> {
     const result: Array<Observable<unknown>> = [];
-    for (const widgetConfig of scheme.widgets) {
-        const readerTask = widgetTaskFactory.createReadTask(widgetConfig, store, hubStorage, schemeStop$);
+    const readerTasks = widgetTaskFactory.createReadTasks(scheme.widgets);
+    for (const task of readerTasks) {
         const obs = new Observable((subscriber) => {
             let initialValueReceived = false;
-            readerTask.subscribe((taskData) => {
+            task.subscribe((taskData) => {
                 if (!initialValueReceived) {
                     initialValueReceived = true;
                     subscriber.next(null);

@@ -1,5 +1,7 @@
 export enum WidgetType {
     Voltage,
-    Tilt,
-    Temperature
+    Pitch,
+    Temperature,
+    Yaw,
+    Roll
 }

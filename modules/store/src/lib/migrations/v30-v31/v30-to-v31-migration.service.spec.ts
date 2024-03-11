@@ -1,6 +1,6 @@
 import { anything, instance, mock, when } from 'ts-mockito';
 import { ControllerType, GamepadProfile, GamepadProfileFactoryService, GamepadSettings } from '@app/controller-profiles';
-import { ControlSchemeBindingType, DeepPartial } from '@app/shared-misc';
+import { ControlSchemeBindingType, DeepPartial, WidgetType } from '@app/shared-misc';
 
 import { AppStoreVersion } from '../../app-store-version';
 import { InputPipeType } from '../../models';
@@ -17,7 +17,7 @@ import { V22ToV23MigrationService } from '../v22-v23';
 import { V26ToV27MigrationService } from '../v26-v27';
 import { V29ToV30MigrationService } from '../v29-v30';
 import { V31Store } from '../v31';
-import { OldInputGain, V30Store } from './v30-store';
+import { OLD_TITLE_WIDGET_TYPE, OldInputGain, V30Store } from './v30-store';
 
 describe('v30 to v31 migration', () => {
     let v30Store: DeepPartial<V30Store>;
@@ -52,7 +52,86 @@ describe('v30 to v31 migration', () => {
         const v28Store = v27Tov28Migration.migrate(v27Store);
         const v29Store = v28Tov29Migration.migrate(v28Store);
         v30Store = v29Tov30Migration.migrate(v29Store);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        v30Store.controlSchemes!.entities!['Speed control test']!.widgets = [
+            {
+                widgetType: OLD_TITLE_WIDGET_TYPE,
+                id: 1,
+                title: 'Tilt',
+                hubId: '90:84:2b:4f:93:20',
+                portId: 99,
+                modeId: 0,
+                valueChangeThreshold: 5,
+                width: 2,
+                height: 2,
+                invertRoll: false,
+                invertPitch: true,
+                invertYaw: false
+            },
+            {
+                widgetType: 0,
+                id: 2,
+                title: 'Voltage',
+                hubId: '90:84:2b:4f:93:20',
+                portId: 60,
+                modeId: 0,
+                valueChangeThreshold: 0.05,
+                width: 1,
+                height: 1
+            }
+        ];
         v31Store = v30Tov31Migration.migrate(v30Store);
+    });
+
+    it('should migrate widgets', () => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const widgets = v31Store.controlSchemes!.entities!['Speed control test']!.widgets;
+        expect(widgets).toEqual([
+            {
+                widgetType: WidgetType.Pitch,
+                id: 1,
+                title: 'Pitch',
+                hubId: '90:84:2b:4f:93:20',
+                portId: 99,
+                modeId: 0,
+                valueChangeThreshold: 5,
+                width: 1,
+                height: 1,
+                invert: true
+            }, {
+                widgetType: WidgetType.Roll,
+                id: 2,
+                title: 'Roll',
+                hubId: '90:84:2b:4f:93:20',
+                portId: 99,
+                modeId: 0,
+                valueChangeThreshold: 5,
+                width: 1,
+                height: 1,
+                invert: false
+            }, {
+                widgetType: WidgetType.Yaw,
+                id: 3,
+                title: 'Yaw',
+                hubId: '90:84:2b:4f:93:20',
+                portId: 99,
+                modeId: 0,
+                valueChangeThreshold: 5,
+                width: 1,
+                height: 1,
+                invert: false
+            }, {
+                widgetType: 0,
+                id: 4,
+                title: 'Voltage',
+                hubId: '90:84:2b:4f:93:20',
+                portId: 60,
+                modeId: 0,
+                valueChangeThreshold: 0.05,
+                width: 1,
+                height: 1
+            }
+        ]);
     });
 
     it('should migrate input gain to input pipes', () => {

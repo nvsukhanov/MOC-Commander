@@ -6,7 +6,8 @@ export interface IControlSchemeWidgetConfigFactory<T extends WidgetConfigModel =
     createConfigs(
         attachedIos: AttachedIoModel[],
         ioPortModes: Dictionary<AttachedIoModesModel>,
-        portModesInfo: Dictionary<AttachedIoPortModeInfoModel>
+        portModesInfo: Dictionary<AttachedIoPortModeInfoModel>,
+        existingWidgets: WidgetConfigModel[]
     ): T[];
 }
 

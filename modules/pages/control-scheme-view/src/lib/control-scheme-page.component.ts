@@ -102,7 +102,8 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRun
             return this.widgetDefaultConfigFactory.createConfigs(
                 addableWidgetData.ios,
                 addableWidgetData.portModes,
-                addableWidgetData.portModesInfo
+                addableWidgetData.portModesInfo,
+                addableWidgetData.existingWidgets
             );
         })
     );

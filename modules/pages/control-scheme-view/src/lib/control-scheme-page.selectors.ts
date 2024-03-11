@@ -18,6 +18,7 @@ import {
     HUB_RUNTIME_DATA_SELECTORS,
     HubModel,
     ROUTER_SELECTORS,
+    WidgetConfigModel,
     attachedIoModesIdFn,
     attachedIoPortModeInfoIdFn,
     attachedIosIdFn
@@ -288,28 +289,22 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
             ios: AttachedIoModel[];
             portModes: Dictionary<AttachedIoModesModel>;
             portModesInfo: Dictionary<AttachedIoPortModeInfoModel>;
+            existingWidgets: WidgetConfigModel[];
         } => {
             if (!controlScheme || schemeRunningState !== ControlSchemeRunState.Idle) {
                 return {
                     ios: [],
                     portModes: {},
-                    portModesInfo: {}
+                    portModesInfo: {},
+                    existingWidgets: []
                 };
             }
-            // There are certain limitations on IO value reading: only one IO mode can be used at a time.
-            // This means that if an IO is used for a widget, it cannot be re-used for another widget.
-            // And if an IO is used for a binding, it also cannot be used for a widget due to output mode not strictly matching to input mode.
-
-            const existingIoWidgetIds = new Set(controlScheme.widgets.map((widget) => attachedIosIdFn(widget)));
-            const iosWithoutWidgets = attachedIos.filter((attachedIo) => !existingIoWidgetIds.has(attachedIosIdFn(attachedIo)));
-
-            const controlledIosIds = new Set(controlScheme.bindings.map((binding) => attachedIosIdFn(binding)));
-            const remainingIos = iosWithoutWidgets.filter((attachedIo) => !controlledIosIds.has(attachedIosIdFn(attachedIo)));
 
             return {
-                ios: remainingIos,
+                ios: attachedIos,
                 portModes: ioPortModes,
-                portModesInfo: portModesInfo
+                portModesInfo: portModesInfo,
+                existingWidgets: controlScheme.widgets
             };
         }
     ),

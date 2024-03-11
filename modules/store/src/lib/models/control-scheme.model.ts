@@ -209,15 +209,31 @@ export type VoltageWidgetConfigModel = {
     valueChangeThreshold: number;
 } & BaseWidgetConfigModel;
 
-export type TiltWidgetConfigModel = {
-    widgetType: WidgetType.Tilt;
+export type YawWidgetConfigModel = {
+    widgetType: WidgetType.Yaw;
     hubId: string;
     portId: number;
     modeId: number;
     valueChangeThreshold: number;
-    invertYaw: boolean;
-    invertPitch: boolean;
-    invertRoll: boolean;
+    invert: boolean;
+} & BaseWidgetConfigModel;
+
+export type PitchWidgetConfigModel = {
+    widgetType: WidgetType.Pitch;
+    hubId: string;
+    portId: number;
+    modeId: number;
+    valueChangeThreshold: number;
+    invert: boolean;
+} & BaseWidgetConfigModel;
+
+export type RollWidgetConfigModel = {
+    widgetType: WidgetType.Roll;
+    hubId: string;
+    portId: number;
+    modeId: number;
+    valueChangeThreshold: number;
+    invert: boolean;
 } & BaseWidgetConfigModel;
 
 export type TemperatureWidgetConfigModel = {
@@ -228,7 +244,12 @@ export type TemperatureWidgetConfigModel = {
     valueChangeThreshold: number;
 } & BaseWidgetConfigModel;
 
-export type WidgetConfigModel = VoltageWidgetConfigModel | TiltWidgetConfigModel | TemperatureWidgetConfigModel;
+export type WidgetConfigModel =
+    VoltageWidgetConfigModel
+    | TemperatureWidgetConfigModel
+    | PitchWidgetConfigModel
+    | YawWidgetConfigModel
+    | RollWidgetConfigModel;
 
 export type ControlSchemeModel = {
     name: string;

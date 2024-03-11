@@ -13,7 +13,7 @@ import { createPreRunSetAccelerationProfileTasks } from './create-pre-run-set-ac
 import { createPreRunSetDecelerationProfileTasks } from './create-pre-run-set-deceleration-profile-tasks';
 import { createWidgetReadTasks } from './create-widget-read-tasks';
 import { HubServoCalibrationFacadeService } from '../../../hub-facades';
-import { IWidgetReadTaskFactory, WIDGET_READ_TASK_FACTORY } from './i-widget-read-task-factory';
+import { IWidgetsReadTasksFactory, WIDGET_READ_TASKS_FACTORY } from './i-widgets-read-tasks-factory';
 
 export const PRE_RUN_SCHEME_EFFECT = createEffect((
     actions: Actions = inject(Actions),
@@ -21,7 +21,7 @@ export const PRE_RUN_SCHEME_EFFECT = createEffect((
     store: Store = inject(Store),
     hubCalibrationFacade: HubServoCalibrationFacadeService = inject(HubServoCalibrationFacadeService),
     appConfig: IAppConfig = inject(APP_CONFIG),
-    widgetReadTaskFactory: IWidgetReadTaskFactory = inject(WIDGET_READ_TASK_FACTORY)
+    widgetReadTaskFactory: IWidgetsReadTasksFactory = inject(WIDGET_READ_TASKS_FACTORY)
 ) => {
     return actions.pipe(
         ofType(CONTROL_SCHEME_ACTIONS.startScheme),
@@ -29,13 +29,10 @@ export const PRE_RUN_SCHEME_EFFECT = createEffect((
         map(([ , scheme ]) => scheme),
         filter((scheme): scheme is ControlSchemeModel => !!scheme),
         switchMap((scheme) => {
-            const controlSchemeStopEvent$ = actions.pipe(
-                ofType(CONTROL_SCHEME_ACTIONS.stopScheme),
-            );
             const combinedTasks = [
                 ...createPreRunSetAccelerationProfileTasks(scheme, hubStorage),
                 ...createPreRunSetDecelerationProfileTasks(scheme, hubStorage),
-                ...createWidgetReadTasks(scheme, hubStorage, store, controlSchemeStopEvent$, widgetReadTaskFactory)
+                ...createWidgetReadTasks(scheme, store, widgetReadTaskFactory)
             ];
             // TODO: move to Bindings module
             const calibrationServoTasks = createPreRunServoCalibrationTasks(scheme, hubCalibrationFacade, store, appConfig);

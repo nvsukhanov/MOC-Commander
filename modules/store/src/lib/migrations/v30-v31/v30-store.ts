@@ -16,6 +16,26 @@ export type V31SetAngleBinding = V31Binding & { bindingType: ControlSchemeBindin
 
 export type V31InputConfig = V31SetAngleBinding['inputs'][SetAngleBindingInputAction.SetAngle];
 
+export const OLD_TITLE_WIDGET_TYPE = 1;
+
+export type OldTiltWidgetConfigModel = {
+    widgetType: number;
+    hubId: string;
+    portId: number;
+    modeId: number;
+    valueChangeThreshold: number;
+    invertYaw: boolean;
+    invertPitch: boolean;
+    invertRoll: boolean;
+    id: number;
+    title: string;
+    width: number;
+    height: number;
+};
+
+export type V31WidgetConfigModel = ExtractArrayType<V31ControlSchemesEntitiesState['widgets']>;
+export type V30WidgetConfigModel = V31WidgetConfigModel | OldTiltWidgetConfigModel;
+
 export enum OldInputGain {
     Linear,
     Exponential,
@@ -60,7 +80,11 @@ export type V30Bindings = V30SpeedBinding
     | V30TrainBinding
     | V30GearboxBinding
     | V30SetAngleBinding;
-export type V30ControlSchemesEntitiesState = Omit<V31ControlSchemesEntitiesState, 'bindings'> & { bindings: V30Bindings[] };
+
+export type V30ControlSchemesEntitiesState = Omit<V31ControlSchemesEntitiesState, 'bindings' | 'widgets'> & {
+    bindings: V30Bindings[];
+    widgets: V30WidgetConfigModel[];
+};
 
 export type V30Store = Override<V31Store, {
     controlSchemes: Omit<V31Store['controlSchemes'], 'entities'> & EntityState<V30ControlSchemesEntitiesState>;

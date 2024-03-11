@@ -7,7 +7,9 @@ export const CHANGELOG: Changelog = [
     {
         version: '1.3.0',
         changeL10nKeys: [
-            'changelog.1-3-0.featOnOffToggleInputPreset'
+            'changelog.1-3-0.featOnOffToggleInputPreset',
+            'changelog.1-3-0.featSeparatePitchYawRollTiltSensorWidgets',
+            'changelog.bugfixesAndImprovements'
         ]
     },
     {

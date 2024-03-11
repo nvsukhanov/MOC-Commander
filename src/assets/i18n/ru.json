@@ -367,16 +367,34 @@
         "valueChangeThresholdTitle": "Порог изменения значения (вольт)",
         "noDataTitle": "Нет данных"
       },
-      "tilt": {
-        "name": "Наклон",
-        "defaultName": "Наклон",
+      "pitch": {
+        "name": "Тангаж",
+        "defaultName": "Тангаж",
         "connectionInfo": "{hubName}:{portName} - {ioName}",
         "valueChangeThresholdTitle": "Порог изменения значения (°)",
-        "invertYawOptionTitle": "Инвертировать рыскание",
-        "invertPitchOptionTitle": "Инвертировать тангаж",
-        "invertRollOptionTitle": "Инвертировать крен",
-        "compensateTiltButtonTitle": "Компенсация",
-        "resetTiltCompensationButtonTitle": "Сброс",
+        "invertOptionTitle": "Инвертировать",
+        "compensateButtonTitle": "Компенсация",
+        "resetCompensationButtonTitle": "Сброс компенсации",
+        "noDataTitle": "Нет данных"
+      },
+      "yaw": {
+        "name": "Рыскание",
+        "defaultName": "Рыскание",
+        "connectionInfo": "{hubName}:{portName} - {ioName}",
+        "valueChangeThresholdTitle": "Порог изменения значения (°)",
+        "invertOptionTitle": "Инвертировать",
+        "compensateButtonTitle": "Компенсация",
+        "resetCompensationButtonTitle": "Сброс компенсации",
+        "noDataTitle": "Нет данных"
+      },
+      "roll": {
+        "name": "Крен",
+        "defaultName": "Крен",
+        "connectionInfo": "{hubName}:{portName} - {ioName}",
+        "valueChangeThresholdTitle": "Порог изменения значения (°)",
+        "invertOptionTitle": "Инвертировать",
+        "compensateButtonTitle": "Компенсация",
+        "resetCompensationButtonTitle": "Сброс компенсации",
         "noDataTitle": "Нет данных"
       },
       "temperature": {
@@ -775,7 +793,8 @@
       "featHubHWAndSWVersionInHubInfo": "Версия аппаратного и программного обеспечения хаба в информации о хабе"
     },
     "1-3-0": {
-      "featOnOffToggleInputPreset": "Режим 'Вкл/Выкл' для управления привязками 'Скорость' и 'Серво'"
+      "featOnOffToggleInputPreset": "Режим 'Вкл/Выкл' для управления привязками 'Скорость' и 'Серво'",
+      "featSeparatePitchYawRollTiltSensorWidgets": "Отдельные виджеты для отображения тангажа, рыскания и крена"
     }
   }
 }
