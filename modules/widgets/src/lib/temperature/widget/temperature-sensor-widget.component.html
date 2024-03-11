@@ -6,7 +6,9 @@
             (delete)="onDelete()"
 >
     @if (data !== undefined) {
-        {{ 'controlScheme.widgets.temperature.value' | transloco: { temperature: (data | number: '1.1-1') } }}
+        <span class="temperature-value">
+            {{ 'controlScheme.widgets.temperature.value' | transloco: { temperature: (data | number: '1.1-1') } }}
+        </span>
     } @else {
         <mat-icon [fontIcon]="'question_mark'"></mat-icon>
         <span class="cdk-visually-hidden">{{ 'controlScheme.widgets.temperature.noDataTitle' | transloco }}</span>
