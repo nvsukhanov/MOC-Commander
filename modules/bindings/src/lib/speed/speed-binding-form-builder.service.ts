@@ -44,15 +44,15 @@ export class SpeedBindingFormBuilderService implements IBindingFormBuilder<Speed
         form.patchValue(patch);
         this.commonFormControlBuilder.patchInputPipes(
             form.controls.inputs.controls[SpeedBindingInputAction.Forwards].controls.inputPipes,
-            patch.inputs[SpeedBindingInputAction.Forwards]?.inputPipes ?? []
+            patch.inputs?.[SpeedBindingInputAction.Forwards]?.inputPipes ?? []
         );
         this.commonFormControlBuilder.patchInputPipes(
             form.controls.inputs.controls[SpeedBindingInputAction.Backwards].controls.inputPipes,
-            patch.inputs[SpeedBindingInputAction.Backwards]?.inputPipes ?? []
+            patch.inputs?.[SpeedBindingInputAction.Backwards]?.inputPipes ?? []
         );
         this.commonFormControlBuilder.patchInputPipes(
             form.controls.inputs.controls[SpeedBindingInputAction.Brake].controls.inputPipes,
-            patch.inputs[SpeedBindingInputAction.Brake]?.inputPipes ?? []
+            patch.inputs?.[SpeedBindingInputAction.Brake]?.inputPipes ?? []
         );
     }
 

@@ -5,6 +5,12 @@ export type Changelog = Array<{
 
 export const CHANGELOG: Changelog = [
     {
+        version: '1.3.0',
+        changeL10nKeys: [
+            'changelog.1-3-0.featOnOffToggleInputPreset'
+        ]
+    },
+    {
         version: '1.2.3',
         changeL10nKeys: [
             'changelog.1-2-3.featImprovedUiPerformance',

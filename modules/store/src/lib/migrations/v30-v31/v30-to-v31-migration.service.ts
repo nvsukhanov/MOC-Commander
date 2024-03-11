@@ -14,6 +14,7 @@ import {
 } from '../../models';
 import { V31Store } from '../v31';
 import {
+    OldInputGain,
     V30ControlSchemesEntitiesState,
     V30GearboxBinding,
     V30InputConfig,
@@ -188,13 +189,27 @@ export class V30ToV31MigrationService implements IMigration<V30Store, V31Store> 
         input: V30InputConfig
     ): V31InputConfig {
         const { gain, ...rest } = input;
-        return {
-            ...rest,
-            inputPipes: [{
-                type: InputPipeType.Gain,
-                gain
-            }]
-        };
+        switch (gain) {
+            case OldInputGain.Exponential:
+                return {
+                    ...rest,
+                    inputPipes: [{
+                        type: InputPipeType.ExponentialGain,
+                    }]
+                };
+            case OldInputGain.Logarithmic:
+                return {
+                    ...rest,
+                    inputPipes: [{
+                        type: InputPipeType.LogarithmicGain,
+                    }]
+                };
+            case OldInputGain.Linear:
+                return {
+                    ...rest,
+                    inputPipes: []
+                };
+        }
     }
 
     private trimGain(

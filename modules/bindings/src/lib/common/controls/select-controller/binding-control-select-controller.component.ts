@@ -157,7 +157,7 @@ export class BindingControlSelectControllerComponent<T extends ControlSchemeBind
             InputSettingsDialogComponent,
             {
                 data: {
-                    supportedInputPipes: this.data?.supportedInputPipes ?? [],
+                    supportedInputPipes: this.supportedInputPipes,
                     currentInputPipeConfigs: this.data?.inputFormGroup?.controls.inputPipes.value ?? []
                 }
             }

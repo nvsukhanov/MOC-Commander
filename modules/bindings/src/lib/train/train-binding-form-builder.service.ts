@@ -58,11 +58,11 @@ export class TrainBindingFormBuilderService implements IBindingFormBuilder<Train
         );
         this.commonFormControlsBuilder.patchInputPipes(
             form.controls.inputs.controls[TrainBindingInputAction.NextSpeed].controls.inputPipes,
-            patch.inputs[TrainBindingInputAction.NextSpeed]?.inputPipes ?? []
+            patch.inputs?.[TrainBindingInputAction.NextSpeed]?.inputPipes ?? []
         );
         this.commonFormControlsBuilder.patchInputPipes(
             form.controls.inputs.controls[TrainBindingInputAction.PrevSpeed].controls.inputPipes,
-            patch.inputs[TrainBindingInputAction.PrevSpeed]?.inputPipes ?? []
+            patch.inputs?.[TrainBindingInputAction.PrevSpeed]?.inputPipes ?? []
         );
     }
 }

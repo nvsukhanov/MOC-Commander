@@ -1,7 +1,7 @@
 import { EntityState } from '@ngrx/entity';
 import { ControlSchemeBindingType, ExtractArrayType, ExtractEntitiesType, Override } from '@app/shared-misc';
 
-import { InputGain, SetAngleBindingInputAction } from '../../models';
+import { SetAngleBindingInputAction } from '../../models';
 import { AppStoreVersion } from '../../app-store-version';
 import { V31Store } from '../v31';
 
@@ -15,8 +15,15 @@ export type V31GearboxBinding = V31Binding & { bindingType: ControlSchemeBinding
 export type V31SetAngleBinding = V31Binding & { bindingType: ControlSchemeBindingType.SetAngle };
 
 export type V31InputConfig = V31SetAngleBinding['inputs'][SetAngleBindingInputAction.SetAngle];
+
+export enum OldInputGain {
+    Linear,
+    Exponential,
+    Logarithmic
+}
+
 export type V30InputConfig = Override<Omit<V31InputConfig, 'inputPipes'>, {
-    gain: InputGain;
+    gain: OldInputGain;
 }>;
 
 export type V30BindingInputs<T> = {

@@ -58,15 +58,15 @@ export class GearboxBindingFormBuilderService implements IBindingFormBuilder<Gea
         );
         this.commonFormControlsBuilder.patchInputPipes(
             form.controls.inputs.controls[GearboxBindingInputAction.NextGear].controls.inputPipes,
-            binding.inputs[GearboxBindingInputAction.NextGear]?.inputPipes ?? []
+            binding.inputs?.[GearboxBindingInputAction.NextGear]?.inputPipes ?? []
         );
         this.commonFormControlsBuilder.patchInputPipes(
             form.controls.inputs.controls[GearboxBindingInputAction.PrevGear].controls.inputPipes,
-            binding.inputs[GearboxBindingInputAction.PrevGear]?.inputPipes ?? []
+            binding.inputs?.[GearboxBindingInputAction.PrevGear]?.inputPipes ?? []
         );
         this.commonFormControlsBuilder.patchInputPipes(
             form.controls.inputs.controls[GearboxBindingInputAction.Reset].controls.inputPipes,
-            binding.inputs[GearboxBindingInputAction.Reset]?.inputPipes ?? []
+            binding.inputs?.[GearboxBindingInputAction.Reset]?.inputPipes ?? []
         );
     }
 }
