@@ -792,7 +792,7 @@
       "featInputGainForBrakeInputOfSpeedBinding": "Управление коэффициентом усиления ввода для контроля 'Тормоз' в типе привязки 'Скорость'",
       "featHubHWAndSWVersionInHubInfo": "Версия аппаратного и программного обеспечения хаба в информации о хабе"
     },
-    "1-3-0": {
+    "1-2-4": {
       "featOnOffToggleInputPreset": "Режим 'Вкл/Выкл' для управления привязками 'Скорость' и 'Серво'",
       "featSeparatePitchYawRollTiltSensorWidgets": "Отдельные виджеты для отображения тангажа, рыскания и крена"
     }
