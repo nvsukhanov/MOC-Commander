@@ -5,6 +5,14 @@ export type Changelog = Array<{
 
 export const CHANGELOG: Changelog = [
     {
+        version: '1.2.5',
+        changeL10nKeys: [
+            'changelog.1-2-5.appIconUpdated',
+            'changelog.1-2-5.servoManualRangeReadFix',
+            'changelog.1-2-5.servoCenterOnStartForKeyInputsFix',
+        ]
+    },
+    {
         version: '1.2.4',
         changeL10nKeys: [
             'changelog.1-2-4.featOnOffToggleInputPreset',

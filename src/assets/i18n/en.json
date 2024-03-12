@@ -795,6 +795,11 @@
     "1-2-4": {
       "featOnOffToggleInputPreset": "On/off toggle mode for 'Speed' and 'Servo' binding inputs",
       "featSeparatePitchYawRollTiltSensorWidgets": "Separate pitch, yaw, and roll tilt sensor widgets"
+    },
+    "1-2-5": {
+      "appIconUpdated": "Updated app icon (now it displays correctly during the process of adding the app to the Steam Client Library)",
+      "servoManualRangeReadFix": "Fixed manual servo range read from port during binding editing",
+      "servoCenterOnStartForKeyInputsFix": "Fixed servo not centering on start when using key or button inputs"
     }
   }
 }
