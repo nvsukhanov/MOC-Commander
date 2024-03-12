@@ -31,6 +31,7 @@ export const ATTACHED_IO_PROPS_FEATURE = createFeature({
                     portId: data.portId,
                     motorEncoderOffset: data.offset,
                     startupServoCalibrationData: state.entities[hubAttachedIoPropsIdFn(data)]?.startupServoCalibrationData ?? null,
+                    startupMotorPositionData: state.entities[hubAttachedIoPropsIdFn(data)]?.startupMotorPositionData ?? null,
                     runtimeTiltCompensation: state.entities[hubAttachedIoPropsIdFn(data)]?.runtimeTiltCompensation ?? null,
                 },
                 state
@@ -41,6 +42,7 @@ export const ATTACHED_IO_PROPS_FEATURE = createFeature({
                     hubId: data.hubId,
                     portId: data.portId,
                     motorEncoderOffset: state.entities[hubAttachedIoPropsIdFn(data)]?.motorEncoderOffset ?? 0,
+                    startupMotorPositionData: state.entities[hubAttachedIoPropsIdFn(data)]?.startupMotorPositionData ?? null,
                     startupServoCalibrationData: {
                         aposCenter: data.aposCenter,
                         range: data.range,
@@ -57,6 +59,7 @@ export const ATTACHED_IO_PROPS_FEATURE = createFeature({
                     portId: data.portId,
                     motorEncoderOffset: state.entities[hubAttachedIoPropsIdFn(data)]?.motorEncoderOffset ?? 0,
                     startupServoCalibrationData: state.entities[hubAttachedIoPropsIdFn(data)]?.startupServoCalibrationData ?? null,
+                    startupMotorPositionData: state.entities[hubAttachedIoPropsIdFn(data)]?.startupMotorPositionData ?? null,
                     runtimeTiltCompensation: {
                         yaw: currentCompensation.yaw,
                         pitch: currentCompensation.pitch + data.currentPitch,
@@ -73,6 +76,7 @@ export const ATTACHED_IO_PROPS_FEATURE = createFeature({
                     portId: data.portId,
                     motorEncoderOffset: state.entities[hubAttachedIoPropsIdFn(data)]?.motorEncoderOffset ?? 0,
                     startupServoCalibrationData: state.entities[hubAttachedIoPropsIdFn(data)]?.startupServoCalibrationData ?? null,
+                    startupMotorPositionData: state.entities[hubAttachedIoPropsIdFn(data)]?.startupMotorPositionData ?? null,
                     runtimeTiltCompensation: {
                         yaw: currentCompensation.yaw,
                         pitch: 0,
@@ -89,6 +93,7 @@ export const ATTACHED_IO_PROPS_FEATURE = createFeature({
                     portId: data.portId,
                     motorEncoderOffset: state.entities[hubAttachedIoPropsIdFn(data)]?.motorEncoderOffset ?? 0,
                     startupServoCalibrationData: state.entities[hubAttachedIoPropsIdFn(data)]?.startupServoCalibrationData ?? null,
+                    startupMotorPositionData: state.entities[hubAttachedIoPropsIdFn(data)]?.startupMotorPositionData ?? null,
                     runtimeTiltCompensation: {
                         yaw: currentCompensation.yaw + data.currentYaw,
                         pitch: currentCompensation.pitch,
@@ -105,11 +110,26 @@ export const ATTACHED_IO_PROPS_FEATURE = createFeature({
                     portId: data.portId,
                     motorEncoderOffset: state.entities[hubAttachedIoPropsIdFn(data)]?.motorEncoderOffset ?? 0,
                     startupServoCalibrationData: state.entities[hubAttachedIoPropsIdFn(data)]?.startupServoCalibrationData ?? null,
+                    startupMotorPositionData: state.entities[hubAttachedIoPropsIdFn(data)]?.startupMotorPositionData ?? null,
                     runtimeTiltCompensation: {
                         yaw: 0,
                         pitch: currentCompensation.pitch,
                         roll: currentCompensation.roll,
                     },
+                },
+                state
+            );
+        }),
+        on(ATTACHED_IO_PROPS_ACTIONS.startupMotorPositionReceived, (state, data): AttacheIoPropsState => {
+            return ATTACHED_IO_PROPS_ENTITY_ADAPTER.upsertOne({
+                    hubId: data.hubId,
+                    portId: data.portId,
+                    motorEncoderOffset: state.entities[hubAttachedIoPropsIdFn(data)]?.motorEncoderOffset ?? 0,
+                    startupServoCalibrationData: state.entities[hubAttachedIoPropsIdFn(data)]?.startupServoCalibrationData ?? null,
+                    startupMotorPositionData: {
+                        position: data.position,
+                    },
+                    runtimeTiltCompensation: state.entities[hubAttachedIoPropsIdFn(data)]?.runtimeTiltCompensation ?? null,
                 },
                 state
             );

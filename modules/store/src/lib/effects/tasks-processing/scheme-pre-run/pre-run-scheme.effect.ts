@@ -1,5 +1,5 @@
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { catchError, filter, forkJoin, map, of, switchMap, timeout } from 'rxjs';
+import { catchError, concatWith, filter, forkJoin, last, map, of, switchMap, tap, timeout } from 'rxjs';
 import { inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { APP_CONFIG, IAppConfig } from '@app/shared-misc';
@@ -14,6 +14,7 @@ import { createPreRunSetDecelerationProfileTasks } from './create-pre-run-set-de
 import { createWidgetReadTasks } from './create-widget-read-tasks';
 import { HubServoCalibrationFacadeService } from '../../../hub-facades';
 import { IWidgetsReadTasksFactory, WIDGET_READ_TASKS_FACTORY } from './i-widgets-read-tasks-factory';
+import { createPreRunMotorPositionQueryTasks } from './create-pre-run-motor-position-query-tasks';
 
 export const PRE_RUN_SCHEME_EFFECT = createEffect((
     actions: Actions = inject(Actions),
@@ -32,17 +33,21 @@ export const PRE_RUN_SCHEME_EFFECT = createEffect((
             const combinedTasks = [
                 ...createPreRunSetAccelerationProfileTasks(scheme, hubStorage),
                 ...createPreRunSetDecelerationProfileTasks(scheme, hubStorage),
-                ...createWidgetReadTasks(scheme, store, widgetReadTaskFactory)
+                ...createWidgetReadTasks(scheme, store, widgetReadTaskFactory),
+                ...createPreRunMotorPositionQueryTasks(scheme, hubStorage, store)
             ];
             // TODO: move to Bindings module
             const calibrationServoTasks = createPreRunServoCalibrationTasks(scheme, hubCalibrationFacade, store, appConfig);
-            if (calibrationServoTasks.length > 0) {
-                combinedTasks.push(forkJoin(calibrationServoTasks));
-            }
-            if (combinedTasks.length === 0) {
+            if (combinedTasks.length + calibrationServoTasks.length === 0) {
                 return of(CONTROL_SCHEME_ACTIONS.schemeStarted({ name: scheme.name }));
             }
+
             return forkJoin(combinedTasks).pipe(
+                // We have to start calibration tasks after all other tasks are done to avoid race conditions with position queries.
+                // Also, somehow running calibration tasks in parallel causes issues with receiving port values.
+                // For now, we run them sequentially. TODO: investigate and fix the root cause.
+                calibrationServoTasks.length > 0 ? concatWith(...calibrationServoTasks) : tap(() => void 0),
+                last(),
                 timeout(appConfig.schemeStartStopTimeoutMs),
                 map(() => CONTROL_SCHEME_ACTIONS.schemeStarted({ name: scheme.name })),
                 catchError((e) => of(CONTROL_SCHEME_ACTIONS.schemeStartFailed({ reason: e })))

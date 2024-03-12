@@ -1,6 +1,6 @@
 import { MotorServoEndState } from 'rxpoweredup';
 import { Injectable } from '@angular/core';
-import { ControlSchemeBindingType, getTranslationArcs } from '@app/shared-misc';
+import { ControlSchemeBindingType, getTranslationArcs, transformRelativeDegToAbsoluteDeg } from '@app/shared-misc';
 import {
     AttachedIoPropsModel,
     ControlSchemeServoBinding,
@@ -17,8 +17,6 @@ import { BindingInputExtractionResult } from '../i-binding-task-input-extractor'
 
 @Injectable()
 export class ServoBindingTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.Servo> {
-    private readonly snappingThreshold = 10;
-
     public buildPayload(
         binding: ControlSchemeServoBinding,
         currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Servo>,
@@ -29,26 +27,37 @@ export class ServoBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
         const cwInput = currentInput[ServoBindingInputAction.Cw];
         const ccwInput = currentInput[ServoBindingInputAction.Ccw];
 
+        // If this is not the first task and there is no input - we do nothing
         if (!cwInput && !ccwInput && !!previousTaskPayload) {
-            // If this is not the first task and there is no input - we do nothing
             return null;
         }
 
+        // without necessary data we can't do anything
+        if (!ioProps?.startupMotorPositionData || ioProps.motorEncoderOffset === null) {
+            // TODO: log an error
+            return null;
+        }
+
+        const startingAbsolutePosition = transformRelativeDegToAbsoluteDeg(ioProps.startupMotorPositionData.position + ioProps.motorEncoderOffset);
+
         const translationPaths = getTranslationArcs(
-            ioProps?.motorEncoderOffset ?? 0,
-            this.getArcCenter(binding, ioProps)
+            startingAbsolutePosition,
+            this.getAposCenter(binding, ioProps)
         );
-        const resultingCenter = translationPaths.cw < translationPaths.ccw ? translationPaths.cw : -translationPaths.ccw;
+
+        const resultingCenterPosition = translationPaths.cw < translationPaths.ccw
+                                        ? ioProps.startupMotorPositionData.position + translationPaths.cw
+                                        : ioProps.startupMotorPositionData.position - translationPaths.ccw;
 
         if (!cwInput && !ccwInput) {
             // If there were no inputs and no previous task, we should center the servo
             return this.composeResult(
-                resultingCenter,
+                resultingCenterPosition,
                 binding.speed,
                 binding.power,
                 binding.useAccelerationProfile,
                 binding.useDecelerationProfile,
-                Date.now()
+                0
             );
         }
 
@@ -57,26 +66,22 @@ export class ServoBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
         const cwValue = extractDirectionAwareInputValue(cwInput?.value ?? 0, cwInputDirection);
         const ccwValue = extractDirectionAwareInputValue(ccwInput?.value ?? 0, ccwInputDirection);
 
-        const servoNonClampedInputValue = Math.abs(cwValue) - Math.abs(ccwValue);
+        const cumulativeInputValue = Math.abs(cwValue) - Math.abs(ccwValue);
 
         // TODO: create a function to clamp the value
-        const servoInputValue = Math.max(-1, Math.min(1, servoNonClampedInputValue));
-        
+        const clampedCumulativeInputValue = Math.max(-1, Math.min(1, cumulativeInputValue));
+
         // Math.max will never return 0 here because there is at least one input.
         // Null coalescing operator is used to avoid errors in case if any of the inputs being null
         const inputTimestamp = Math.max(cwInput?.timestamp ?? 0, ccwInput?.timestamp ?? 0);
 
-        const arcSize = this.getArcSize(binding, ioProps);
-        const arcPosition = servoInputValue * arcSize / 2;
+        const servoRange = this.getServoRange(binding, ioProps);
+        const rangePosition = clampedCumulativeInputValue * servoRange / 2;
 
-        const targetAngle = arcPosition + resultingCenter;
-        const minAngle = resultingCenter - arcSize / 2;
-        const maxAngle = resultingCenter + arcSize / 2;
-
-        const snappedAngle = this.snapAngle(targetAngle, resultingCenter, minAngle, maxAngle);
+        const targetAngle = rangePosition + resultingCenterPosition;
 
         return this.composeResult(
-            snappedAngle,
+            targetAngle,
             binding.speed,
             binding.power,
             binding.useAccelerationProfile,
@@ -117,26 +122,15 @@ export class ServoBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
                 power,
                 endState: MotorServoEndState.hold,
                 useAccelerationProfile,
-                useDecelerationProfile,
+                useDecelerationProfile
             },
             inputTimestamp
         };
     }
 
-    private snapAngle(
-        targetAngle: number,
-        arcCenter: number,
-        maxAngle: number,
-        minAngle: number
-    ): number {
-        const snappedToZeroAngle = Math.abs(targetAngle - arcCenter) < this.snappingThreshold ? arcCenter : targetAngle;
-        const snappedToMaxAngle = Math.abs(snappedToZeroAngle - maxAngle) < this.snappingThreshold ? maxAngle : snappedToZeroAngle;
-        return Math.abs(snappedToMaxAngle - minAngle) < this.snappingThreshold ? minAngle : snappedToMaxAngle;
-    }
-
-    private getArcSize(
+    private getServoRange(
         binding: ControlSchemeServoBinding,
-        ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
+        ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null
     ): number {
         if (binding.calibrateOnStart) {
             const range = ioProps?.startupServoCalibrationData?.range;
@@ -148,9 +142,9 @@ export class ServoBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
         return binding.range;
     }
 
-    private getArcCenter(
+    private getAposCenter(
         binding: ControlSchemeServoBinding,
-        ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
+        ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null
     ): number {
         if (binding.calibrateOnStart) {
             const center = ioProps?.startupServoCalibrationData?.aposCenter;
