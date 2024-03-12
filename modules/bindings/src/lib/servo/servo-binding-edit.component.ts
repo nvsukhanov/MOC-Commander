@@ -150,7 +150,7 @@ export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<
         ).subscribe(([position, offset]) => {
             // we temporarily store the result to use it later in the range read request
             this.centerReadPositionResult = position;
-            const absolutePosition = transformRelativeDegToAbsoluteDeg(position - offset);
+            const absolutePosition = transformRelativeDegToAbsoluteDeg(position + offset);
             if (this._form && this._form.controls.aposCenter.value !== absolutePosition) {
                 this._form.controls.aposCenter.setValue(absolutePosition);
                 this._form.controls.aposCenter.markAsDirty();

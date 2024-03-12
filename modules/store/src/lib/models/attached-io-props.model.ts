@@ -8,5 +8,8 @@ export type AttachedIoPropsModel = {
         range: number;
         aposCenter: number;
     } | null;
+    startupMotorPositionData: {
+        position: number;
+    } | null;
     runtimeTiltCompensation: TiltData | null;
 };

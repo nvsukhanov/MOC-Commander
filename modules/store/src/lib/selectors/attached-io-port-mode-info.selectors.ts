@@ -67,7 +67,7 @@ export const ATTACHED_IO_PORT_MODE_INFO_SELECTORS = {
             return null;
         }
     ),
-    selectIoCanOperateOutputPortModeName: (
+    selectIsIoSupportInputMode: (
         { hubId, portId, portModeName }: { hubId: string; portId: number; portModeName: PortModeName }
     ) => createSelector(
         HUB_RUNTIME_DATA_SELECTORS.selectIsHubConnected(hubId),

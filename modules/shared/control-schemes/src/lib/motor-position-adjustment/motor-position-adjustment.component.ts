@@ -52,12 +52,12 @@ export class MotorPositionAdjustmentComponent implements OnChanges, OnDestroy {
             this._canGoToZero$ = of(false);
             return;
         }
-        this._canExecuteStep$ = this.store.select(ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectIoCanOperateOutputPortModeName({
+        this._canExecuteStep$ = this.store.select(ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectIsIoSupportInputMode({
             hubId: this.hubId,
             portId: this.portId,
             portModeName: PortModeName.position
         }));
-        this._canGoToZero$ = this.store.select(ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectIoCanOperateOutputPortModeName({
+        this._canGoToZero$ = this.store.select(ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectIsIoSupportInputMode({
             hubId: this.hubId,
             portId: this.portId,
             portModeName: PortModeName.absolutePosition

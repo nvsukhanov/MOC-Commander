@@ -138,7 +138,7 @@ export const COMPOSE_TASKS_EFFECT = createEffect((
                 tasks
             );
             const shouldUpdateQueue = nextPendingTask !== pendingTask;
-            const isNextTaskMoreRecent = (nextPendingTask?.inputTimestamp ?? 0) > (currentTask?.inputTimestamp ?? 0);
+            const isNextTaskMoreRecent = (nextPendingTask?.inputTimestamp ?? -Infinity) > (currentTask?.inputTimestamp ?? -Infinity);
             return {
                 hubId,
                 portId,
