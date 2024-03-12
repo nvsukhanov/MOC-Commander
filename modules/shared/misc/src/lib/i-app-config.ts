@@ -18,6 +18,8 @@ export interface IAppConfig {
         readonly autoCalibrationRuns: number;
         readonly aposCenterMin: number;
         readonly aposCenterMax: number;
+        // 0.05 means 5% reduction. Used to reduce straining on the servo motor at the ends of the range.
+        readonly calibrationRangeResultReductionFactor: number;
     };
 }
 
@@ -38,7 +40,8 @@ export const APP_CONFIG = new InjectionToken<IAppConfig>('APP_CONFIG', {
             manualCalibrationRuns: 2,
             autoCalibrationRuns: 1,
             aposCenterMin: -MOTOR_LIMITS.maxServoDegreesRange / 2,
-            aposCenterMax: MOTOR_LIMITS.maxServoDegreesRange / 2
+            aposCenterMax: MOTOR_LIMITS.maxServoDegreesRange / 2,
+            calibrationRangeResultReductionFactor: 0.05
         }
     }),
     providedIn: 'root'
