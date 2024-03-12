@@ -48,7 +48,7 @@ export class ServoBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
                 binding.power,
                 binding.useAccelerationProfile,
                 binding.useDecelerationProfile,
-                0
+                Date.now()
             );
         }
 
@@ -61,6 +61,9 @@ export class ServoBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
 
         // TODO: create a function to clamp the value
         const servoInputValue = Math.max(-1, Math.min(1, servoNonClampedInputValue));
+        
+        // Math.max will never return 0 here because there is at least one input.
+        // Null coalescing operator is used to avoid errors in case if any of the inputs being null
         const inputTimestamp = Math.max(cwInput?.timestamp ?? 0, ccwInput?.timestamp ?? 0);
 
         const arcSize = this.getArcSize(binding, ioProps);
