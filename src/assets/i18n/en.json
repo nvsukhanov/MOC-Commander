@@ -792,7 +792,7 @@
       "featInputGainForBrakeInputOfSpeedBinding": "Input gain for 'Brake' input of 'Speed' binding",
       "featHubHWAndSWVersionInHubInfo": "Display of hub hardware and software versions in the hub info panel"
     },
-    "1-3-0": {
+    "1-2-4": {
       "featOnOffToggleInputPreset": "On/off toggle mode for 'Speed' and 'Servo' binding inputs",
       "featSeparatePitchYawRollTiltSensorWidgets": "Separate pitch, yaw, and roll tilt sensor widgets"
     }
