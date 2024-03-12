@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
-import { MOTOR_LIMITS, PortModeName } from 'rxpoweredup';
+import { PortModeName } from 'rxpoweredup';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,7 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { concatLatestFrom } from '@ngrx/effects';
 import { AsyncPipe } from '@angular/common';
-import { ControlSchemeBindingType, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
+import { ControlSchemeBindingType, ValidationErrorsL10nMap, ValidationMessagesDirective, transformRelativeDegToAbsoluteDeg } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
 import {
     ATTACHED_IO_PROPS_SELECTORS,
@@ -89,6 +89,8 @@ export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<
 
     private portRequestSubscription?: Subscription;
 
+    private centerReadPositionResult: number | null = null;
+
     constructor(
         private readonly cd: ChangeDetectorRef,
         private readonly store: Store,
@@ -111,6 +113,10 @@ export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<
         return this._servoCcwBindingComponentData;
     }
 
+    public get isCenterPositionReceived(): boolean {
+        return this.centerReadPositionResult !== null;
+    }
+
     public get canCalibrate$(): Observable<boolean> {
         return this._canCalibrate$.pipe(
             combineLatestWith(this._isCalibrating$),
@@ -130,15 +136,23 @@ export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<
         if (!this._form || this._form.controls.hubId.value === null || this._form.controls.portId.value === null) {
             return;
         }
+        const hubId = this._form.controls.hubId.value;
+        const portId = this._form.controls.portId.value;
+        this.centerReadPositionResult = null;
+
         this.portRequestSubscription?.unsubscribe();
-        this.portRequestSubscription = this.hubFacade.getMotorAbsolutePosition(
+        this.portRequestSubscription = this.hubFacade.getMotorPosition(
             this._form.controls.hubId.value,
             this._form.controls.portId.value
         ).pipe(
+            concatLatestFrom(() => this.store.select(ATTACHED_IO_PROPS_SELECTORS.selectMotorEncoderOffset({ hubId, portId }))),
             take(1)
-        ).subscribe((result: number) => {
-            if (this._form && this._form.controls.aposCenter.value !== result) {
-                this._form.controls.aposCenter.setValue(result);
+        ).subscribe(([position, offset]) => {
+            // we temporarily store the result to use it later in the range read request
+            this.centerReadPositionResult = position;
+            const absolutePosition = transformRelativeDegToAbsoluteDeg(position - offset);
+            if (this._form && this._form.controls.aposCenter.value !== absolutePosition) {
+                this._form.controls.aposCenter.setValue(absolutePosition);
                 this._form.controls.aposCenter.markAsDirty();
                 this._form.controls.aposCenter.markAsTouched();
                 this._form.updateValueAndValidity();
@@ -154,25 +168,20 @@ export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<
         ) {
             return;
         }
-        const hubId = this._form.controls.hubId.value;
-        const portId = this._form.controls.portId.value;
-        const formAbsoluteCenterPosition = this._form.controls.aposCenter.value;
 
         this.portRequestSubscription?.unsubscribe();
         this.portRequestSubscription = this.hubFacade.getMotorPosition(
             this._form.controls.hubId.value,
             this._form.controls.portId.value
         ).pipe(
-            concatLatestFrom(() => this.store.select(ATTACHED_IO_PROPS_SELECTORS.selectMotorEncoderOffset({ hubId, portId }))),
             take(1)
-        ).subscribe(([currentPosition, offset]) => {
-            const formCenterPosition = formAbsoluteCenterPosition - offset;
-            const halfArcLength = currentPosition < formCenterPosition
-                ? formCenterPosition - currentPosition
-                : currentPosition - formCenterPosition;
-            const arcLength = halfArcLength * 2;
-            const cappedArcLength = Math.min(MOTOR_LIMITS.maxServoDegreesRange, Math.max(-MOTOR_LIMITS.maxServoDegreesRange, arcLength));
-            if (this._form && halfArcLength !== this._form.controls.range.value) {
+        ).subscribe((currentPosition) => {
+            if (this.centerReadPositionResult === null) {
+                return;
+            }
+            const arcLength = Math.abs(currentPosition - this.centerReadPositionResult) * 2;
+            const cappedArcLength = Math.min(this.formBuilder.servoMaxRange, Math.max(this.formBuilder.servoMinRange, arcLength));
+            if (this._form && cappedArcLength !== this._form.controls.range.value) {
                 this._form.controls.range.setValue(cappedArcLength);
                 this._form.controls.range.markAsDirty();
                 this._form.controls.range.markAsTouched();
@@ -272,7 +281,7 @@ export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<
                     return this.store.select(BINDING_EDIT_COMMON_SELECTORS.canRequestPortValue({
                         hubId: form.controls.hubId.value,
                         portId: form.controls.portId.value,
-                        portModeName: PortModeName.absolutePosition
+                        portModeName: PortModeName.position
                     }));
                 })
             );

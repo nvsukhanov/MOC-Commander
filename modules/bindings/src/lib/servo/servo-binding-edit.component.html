@@ -88,7 +88,7 @@
                     />
                     <button mat-icon-button
                             matSuffix
-                            [disabled]="(canRequestPortValue$ | async) !== true"
+                            [disabled]="(canRequestPortValue$ | async) !== true || !isCenterPositionReceived"
                             [title]="'controlScheme.servoBinding.readServoRangeFromPort' | transloco"
                             (click)="onServoRangeReadRequest()"
                     >
