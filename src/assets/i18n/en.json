@@ -706,7 +706,9 @@
         "openAppProperties": "Find \"MOC Commander\" in the Steam Client Library and open its properties (\"Gear Icon\" -> \"Properties\")",
         "addOption": "In \"Launch Options,\" add a space at the end of the line and the following option:",
         "closeProperties": "Close the properties window",
-        "result": "Now, the application will launch at the maximum available resolution."
+        "result": "Now, the application will launch at the maximum available resolution.",
+        "toExitDesktop": "To exit the application while in desktop mode, press L5 + R5 and then - 'Stop' in the Steam Client",
+        "toExitGameMode": "To exit the application in game mode, press the Steam button and select \"Exit game\"."
       }
     },
     "windowsInstallation": {

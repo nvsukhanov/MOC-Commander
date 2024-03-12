@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
 import { TranslocoDirective, TranslocoPipe } from '@ngneat/transloco';
+import { MatIcon } from '@angular/material/icon';
 import { CodeBlockComponent } from '@app/shared-ui';
 
 import { COMMON_RESOURCES } from '../common-resources';
@@ -16,7 +17,8 @@ import { COMMON_RESOURCES } from '../common-resources';
         MatDivider,
         TranslocoPipe,
         TranslocoDirective,
-        CodeBlockComponent
+        CodeBlockComponent,
+        MatIcon
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
