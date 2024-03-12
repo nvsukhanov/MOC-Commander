@@ -276,11 +276,12 @@ export class HubServoCalibrationFacadeService {
         const cwDistanceFromStartPosition = cwProbeResult - startRelativePosition;
 
         const arcCenterPosition = Math.round((ccwProbeResult + cwProbeResult) / 2);
-        const servoRange = Math.round(Math.abs(ccwDistanceFromStartPosition + cwDistanceFromStartPosition));
+        const rawServoRange = Math.round(Math.abs(ccwDistanceFromStartPosition + cwDistanceFromStartPosition));
+        const servoRange = rawServoRange * Math.max(0, 1 - this.appConfig.servo.calibrationRangeResultReductionFactor);
         const arcCenterAbsolutePosition = Math.round(transformRelativeDegToAbsoluteDeg(arcCenterPosition + encoderOffset));
 
         return {
-            servoRange: servoRange,
+            servoRange,
             arcCenterPosition,
             arcCenterAbsolutePosition
         };
