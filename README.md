@@ -1,4 +1,7 @@
-<h1 align="center">MOC Commander: PWA for controlling LEGO® Powered Up devices</h1>
+<h1 align="center">
+<img src="https://raw.githubusercontent.com/nvsukhanov/MOC-Commander/main/src/assets/favicon.svg" width="24" height="24"/>
+MOC Commander: PWA for controlling LEGO® Powered Up devices
+</h1>
 
 <img src="https://raw.github.com/nvsukhanov/nvsukhanov.github.io/main/moc-commander/header.png?raw=True"/>
 
