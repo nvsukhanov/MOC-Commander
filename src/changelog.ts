@@ -1,18 +1,6 @@
-export type Changelog = Array<{
-    version: string;
-    changeL10nKeys: Array<string>;
-}>;
+import { IChangelog } from '@app/shared-ui';
 
-export const CHANGELOG: Changelog = [
-    {
-        version: '1.2.6',
-        changeL10nKeys: [
-            'changelog.1-2-6.fixServoCalibrationForRangesGraterThan360',
-            'changelog.1-2-6.fixServoCalibrationResultsNotBeingRound',
-            'changelog.1-2-6.fixMultipleServoCalibrationOnStartup',
-            'changelog.1-2-6.featMotorStrainingReduction',
-        ]
-    },
+export const CHANGELOG: IChangelog = [
     {
         version: '1.2.5',
         changeL10nKeys: [

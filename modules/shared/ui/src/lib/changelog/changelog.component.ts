@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatDivider } from '@angular/material/divider';
 
-import { CHANGELOG } from './changelog';
+import { CHANGELOG_TOKEN, IChangelog } from './i-changelog';
 
 @Component({
     standalone: true,
@@ -16,5 +16,8 @@ import { CHANGELOG } from './changelog';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChangelogComponent {
-    public readonly log = CHANGELOG;
+    constructor(
+        @Inject(CHANGELOG_TOKEN) public readonly changelog: IChangelog
+    ) {
+    }
 }

@@ -1,5 +1,5 @@
 <ol class="versions-list">
-    @for(versionRecord of log; track versionRecord; let last = $last; let first = $first) {
+    @for(versionRecord of changelog; track versionRecord; let last = $last; let first = $first) {
     <li class="version-record"
         [class.version-record__first]="first"
     >
