@@ -802,6 +802,12 @@
       "appIconUpdated": "Updated app icon (now it displays correctly during the process of adding the app to the Steam Client Library)",
       "servoManualRangeReadFix": "Fixed manual servo range read from port during binding editing",
       "servoCenterOnStartForKeyInputsFix": "Fixed servo not centering on start when using key or button inputs"
+    },
+    "1-2-6": {
+      "fixServoCalibrationForRangesGraterThan360": "Fixed servo calibration for ranges greater than 360°",
+      "fixServoCalibrationResultsNotBeingRound": "Fixed servo calibration results not being rounded to the nearest degree",
+      "fixMultipleServoCalibrationOnStartup": "Fixed issue with incorrect results of multiple servo calibration on startup",
+      "featMotorStrainingReduction": "Reduced motor straining at the ends of the servo range received during calibration"
     }
   }
 }
