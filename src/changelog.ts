@@ -2,11 +2,20 @@ import { IChangelog } from '@app/shared-ui';
 
 export const CHANGELOG: IChangelog = [
     {
+        version: '1.2.6',
+        changeL10nKeys: [
+            'changelog.1-2-6.fixServoCalibrationForRangesGraterThan360',
+            'changelog.1-2-6.fixServoCalibrationResultsNotBeingRound',
+            'changelog.1-2-6.fixMultipleServoCalibrationOnStartup',
+            'changelog.1-2-6.featMotorStrainingReduction'
+        ]
+    },
+    {
         version: '1.2.5',
         changeL10nKeys: [
             'changelog.1-2-5.appIconUpdated',
             'changelog.1-2-5.servoManualRangeReadFix',
-            'changelog.1-2-5.servoCenterOnStartForKeyInputsFix',
+            'changelog.1-2-5.servoCenterOnStartForKeyInputsFix'
         ]
     },
     {
