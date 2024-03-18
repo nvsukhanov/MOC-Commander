@@ -20,6 +20,8 @@ LEGO® is a trademark of the LEGO Group of companies which does not sponsor, aut
 
 ## Features
 
+<img src="https://github.com/nvsukhanov/nvsukhanov.github.io/blob/main/moc-commander/sd-tracks.gif?raw=True"/>
+
 ### Input
 - Supported input devices:
     - Keyboard
