@@ -1,4 +1,8 @@
 :host {
+    width: 100%;
+}
+
+.toolbar-container {
     display: block;
     width: 100%;
     z-index: 1;
@@ -16,4 +20,5 @@
 .controls {
     display: flex;
     gap: 10px;
+    align-items: center;
 }

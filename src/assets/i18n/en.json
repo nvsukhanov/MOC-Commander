@@ -816,7 +816,9 @@
       "featMotorStrainingReduction": "Reduced motor straining at the ends of the servo range received during calibration"
     },
     "1-2-7": {
-      "compactWidgets": "Control scheme widgets are now more compact"
+      "compactRedesignControlSchemes": "Compact redesign of the control schemes list for better usability on smaller screens",
+      "runningControlSchemePerformanceImprovements": "Performance improvements for running control schemes",
+      "fixPwaBackgroundColor": "Fixed background color of the PWA app"
     }
   }
 }

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, TemplateRef } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Observable } from 'rxjs';
 import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
+import { ScreenSizeObserverService } from '@app/shared-misc';
 
 import { FeatureToolbarService } from './feature-toolbar-service';
 import { HideOnSmallScreenDirective } from '../hide-on-small-screen.directive';
@@ -26,6 +27,7 @@ export class FeatureToolbarComponent {
 
     constructor(
         protected readonly featureToolbarService: FeatureToolbarService,
+        protected readonly screenSizeObserverService: ScreenSizeObserverService
     ) {
     }
 }
