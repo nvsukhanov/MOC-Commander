@@ -75,4 +75,19 @@ export const ATTACHED_IO_PORT_MODE_INFO_SELECTORS = {
         ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectHubPortOutputModeForPortModeName({ hubId, portId, portModeName }),
         (hubIsConnected, io, outputMode) => hubIsConnected && !!io && outputMode !== null
     ),
+    selectIoOutputPortModeNames: (
+        { hubId, portId }: { hubId: string; portId: number }
+    ) => createSelector(
+        ATTACHED_IO_SELECTORS.selectIoAtPort({ hubId, portId }),
+        ATTACHED_IO_MODES_SELECTORS.selectEntities,
+        ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
+        (io, supportedModes, portModeData) => {
+            if (!io) {
+                return [];
+            }
+            const ioOutputModeIds = supportedModes[attachedIoModesIdFn(io)]?.portOutputModes ?? [];
+            return ioOutputModeIds.map((modeId) => portModeData[attachedIoPortModeInfoIdFn({ ...io, modeId })]?.name)
+                                  .filter((modeName): modeName is PortModeName => modeName !== undefined);
+        }
+    ),
 } as const;

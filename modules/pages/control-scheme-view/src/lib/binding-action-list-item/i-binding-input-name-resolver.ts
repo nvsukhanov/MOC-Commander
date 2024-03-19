@@ -3,7 +3,7 @@ import { InjectionToken } from '@angular/core';
 import { ControlSchemeBinding } from '@app/store';
 
 export interface IBindingInputNameResolver {
-    getBindingInputName<T extends ControlSchemeBinding>(
+    getBindingActionName<T extends ControlSchemeBinding>(
         binding: T,
         action: keyof T['inputs']
     ): Observable<string>;

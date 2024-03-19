@@ -1,0 +1,10 @@
+<span class="action-name">
+    {{ actionName() | async }}:
+</span>
+
+<span class="controller-name"
+      [class.controller-name_disconnected]="!isControllerConnected()"
+>
+    {{ controllerInputName() | async }}
+</span>
+

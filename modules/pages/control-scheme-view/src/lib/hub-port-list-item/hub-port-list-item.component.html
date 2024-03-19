@@ -1,0 +1,86 @@
+<div class="port">
+    <div class="port-name"
+         [class.port-name_not-connected]="!isIoConnected()"
+         libEllipsisTitle
+    >
+        {{ 'hub.port' | transloco: { portId: portId() | portIdToPortName } }}
+    </div>
+
+    <div class="io-type"
+         [class.io-type_not-connected]="!isIoConnected()"
+         libEllipsisTitle
+    >
+        ({{ ioType() | ioTypeToL10nKey | transloco }})
+    </div>
+
+    @if (!isIoConnected()) {
+        <span class="cdk-visually-hidden">{{ 'io.ioIsNotConnectedInlineNotification' | transloco }}</span>
+    }
+
+    @if (!ioHasRequiredCapabilities()) {
+        <mat-icon [fontIcon]="'settings_input_component'"
+                  [inline]="true"
+                  [color]="'warn'"
+                  [matTooltip]="'controlScheme.ioCapabilitiesMismatch' | transloco"
+        ></mat-icon>
+
+        <span class="cdk-visually-hidden">
+            ({{ 'controlScheme.ioCapabilitiesMismatch' | transloco }})
+        </span>
+    }
+
+    @if (portConfigRoute()?.length) {
+        <a class="port-config"
+           [routerLink]="portConfigRoute()"
+        >
+            @if (hasAccelerationProfileEnabled()) {
+                <span class="port-profile"
+                      [title]="'controlScheme.accelerationTimeMs' | transloco"
+                >
+                <mat-icon [fontIcon]="'north_east'"
+                          [inline]="true"
+                ></mat-icon>
+                    {{ accelerationTimeMs() }}{{ 'controlScheme.profileTimingPostfix' | transloco }}
+                </span>
+            }
+
+            @if (hasDecelerationProfileEnabled()) {
+                <span class="port-profile"
+                      [title]="'controlScheme.decelerationTimeMs' | transloco"
+                >
+                    <mat-icon [fontIcon]="'south_east'"
+                              [inline]="true"
+                    ></mat-icon>
+                    {{ decelerationTimeMs() }}{{ 'controlScheme.profileTimingPostfix' | transloco }}
+                </span>
+            }
+        </a>
+    }
+
+    @if (runningTask(); as runningTask) {
+        <span class="task-info">
+            <mat-icon [fontIcon]="'sync'"
+                      [inline]="true"
+            ></mat-icon>
+            {{ runningTask | portCommandTaskSummary | async }}
+        </span>
+    } @else {
+        @if (lastExecutedTask(); as lastExecutedTask) {
+            <span class="task-info">
+                <mat-icon [fontIcon]="'check_circle'"
+                          [inline]="true"
+                ></mat-icon>
+                {{ lastExecutedTask | portCommandTaskSummary | async }}
+            </span>
+        }
+    }
+</div>
+
+<div class="bindings">
+    @for (binding of bindings(); track binding.id) {
+        <page-control-scheme-view-hub-port-binding-list-item [binding]="binding"
+                                                             [controlSchemeName]="controlSchemeName()"
+        ></page-control-scheme-view-hub-port-binding-list-item>
+    }
+</div>
+

@@ -5,6 +5,7 @@
 
 .binding {
     &__info-container {
+        margin-top: 10px;
         display: flex;
         flex-direction: row;
         align-items: flex-start;
@@ -28,6 +29,7 @@
     &__controls {
         display: flex;
         flex-direction: column;
+        padding-left: 10px;
 
         &-action-name {
             font-weight: 500;

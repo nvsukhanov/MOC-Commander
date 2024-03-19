@@ -1,0 +1,19 @@
+<lib-hub-inline-view [isHubKnown]="isHubKnown()"
+                     [name]="hubName()"
+                     [hubId]="hubId()"
+                     [batteryLevel]="batteryLevel()"
+                     [rssiLevel]="rssi()"
+                     [isButtonPressed]="buttonState()"
+                     [hasCommunication]="hasCommunication()"
+                     [isConnected]="isConnected()"
+                     [showControls]="false"
+></lib-hub-inline-view>
+
+<section class="hub-ports">
+    @for (portId of portIds(); track portId) {
+        <page-control-scheme-view-hub-port-list-item [portId]="portId"
+                                                     [hubId]="hubId()"
+                                                     [controlSchemeName]="controlSchemeName()"
+        ></page-control-scheme-view-hub-port-list-item>
+    }
+</section>

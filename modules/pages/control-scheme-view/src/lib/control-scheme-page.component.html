@@ -24,10 +24,11 @@
 
     <mat-card>
         <mat-card-content>
-            @if (scheme.bindings.length) {
-                <page-control-scheme-view-control-scheme-view-io-list [tree]="schemeViewTree$ | async"
-                ></page-control-scheme-view-control-scheme-view-io-list>
-            } @else {
+            @for (hubId of hubIds(); track hubId) {
+                <page-control-scheme-view-hub-list-item [hubId]="hubId"
+                                                        [controlSchemeName]="scheme.name"
+                ></page-control-scheme-view-hub-list-item>
+            } @empty {
                 <lib-hint>
                     {{ 'controlScheme.bindingsListEmptyNotification' | transloco }}
                 </lib-hint>
@@ -36,8 +37,7 @@
     </mat-card>
 
     @if (isSmallScreen$ | async) {
-        <page-control-scheme-view-control-scheme-page-compact-toolbar-controls *libFeatureToolbarControls
-                                                                               [canRun]="!!(canRunScheme$ | async)"
+        <page-control-scheme-view-control-scheme-page-compact-toolbar-controls [canRun]="!!(canRunScheme$ | async)"
                                                                                [canStop]="!!(isSchemeRunning | async)"
                                                                                [canAddBinding]="!!(canCreateBinding$ | async)"
                                                                                [canExport]="!!(canExportScheme$ | async)"

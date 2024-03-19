@@ -1,5 +1,5 @@
 import { Dictionary } from '@ngrx/entity';
-import { HubType, PortModeName } from 'rxpoweredup';
+import { PortModeName } from 'rxpoweredup';
 import { createSelector } from '@ngrx/store';
 import {
     ATTACHED_IO_MODES_SELECTORS,
@@ -10,13 +10,10 @@ import {
     AttachedIoPortModeInfoModel,
     CONTROLLER_CONNECTION_SELECTORS,
     CONTROL_SCHEME_SELECTORS,
-    ControlSchemeBinding,
     ControlSchemeModel,
     ControlSchemeRunState,
     ControllerConnectionModel,
-    HUBS_SELECTORS,
     HUB_RUNTIME_DATA_SELECTORS,
-    HubModel,
     ROUTER_SELECTORS,
     WidgetConfigModel,
     attachedIoModesIdFn,
@@ -25,64 +22,8 @@ import {
 } from '@app/store';
 import { areControllableIosPresent, ioHasMatchingModeForOpMode } from '@app/shared-control-schemes';
 
-import {
-    ControlSchemeNodeTypes,
-    ControlSchemeViewBindingTreeNodeData,
-    ControlSchemeViewHubTreeNode,
-    ControlSchemeViewIoTreeNode,
-    SchemeRunBlocker
-} from './types';
-import { IControlSchemeRunWidgetBlockersChecker } from './widgets/i-control-scheme-run-widget-blockers-checker';
-
-function createHubTreeNode(
-    hubConfig: { hubId: string; name?: string; hubType?: HubType },
-): ControlSchemeViewHubTreeNode {
-    return {
-        path: hubConfig.hubId,
-        hubId: hubConfig.hubId,
-        nodeType: ControlSchemeNodeTypes.Hub,
-        name: hubConfig.name ?? '',
-        children: []
-    };
-}
-
-function createIoTreeNode(
-    parentPath: string,
-    hubId: string,
-    portId: number,
-    bindings: ControlSchemeBinding[],
-    schemeName: string,
-): ControlSchemeViewIoTreeNode {
-    return {
-        path: `${parentPath}.${portId}`,
-        nodeType: ControlSchemeNodeTypes.Io,
-        portId: portId,
-        hubId,
-        schemeName,
-        bindings,
-        children: []
-    };
-}
-
-function createBindingTreeNode(
-    ioPath: string,
-    binding: ControlSchemeBinding,
-    schemeName: string,
-    portOutputModeNames: PortModeName[],
-    io?: AttachedIoModel,
-): ControlSchemeViewBindingTreeNodeData {
-    const ioHasNoRequiredCapabilities = io ?
-                                        !ioHasMatchingModeForOpMode(binding.bindingType, portOutputModeNames)
-                                           : true;
-    return {
-        path: `${ioPath}.${binding.id}`,
-        nodeType: ControlSchemeNodeTypes.Binding,
-        binding,
-        schemeName,
-        ioHasNoRequiredCapabilities,
-        children: []
-    };
-}
+import { SchemeRunBlocker } from './types';
+import { IControlSchemeRunWidgetBlockersChecker } from './widgets';
 
 const SELECT_CURRENTLY_VIEWED_SCHEME = createSelector(
     ROUTER_SELECTORS.selectCurrentlyViewedSchemeName,
@@ -176,67 +117,18 @@ const SELECT_SCHEME_RUN_BLOCKERS = (widgetChecks: IControlSchemeRunWidgetBlocker
 export const CONTROL_SCHEME_PAGE_SELECTORS = {
     selectCurrentlyViewedScheme: SELECT_CURRENTLY_VIEWED_SCHEME,
     selectIoOutputModes: SELECT_IO_MODES,
-    schemeViewTree: createSelector(
+    selectSchemeHubsIds: createSelector(
         SELECT_CURRENTLY_VIEWED_SCHEME,
-        HUBS_SELECTORS.selectEntities,
-        ATTACHED_IO_SELECTORS.selectEntities,
-        SELECT_IO_MODES,
         (
             scheme: ControlSchemeModel | undefined,
-            hubEntities: Dictionary<HubModel>,
-            iosEntities: Dictionary<AttachedIoModel>,
-            ioModes: { input: Record<string, PortModeName[]>; output: Record<string, PortModeName[]> }
-        ): ControlSchemeViewHubTreeNode[] => {
-            if (!scheme) {
-                return [];
-            }
-            const hubsViewMap = new Map<string, ControlSchemeViewHubTreeNode>();
-
-            function ensureHubNodeCreated(
-                hubConfiguration: { hubId: string; name?: string; hubType?: HubType }
-            ): ControlSchemeViewHubTreeNode {
-                let hubTreeNode = hubsViewMap.get(hubConfiguration.hubId);
-                if (!hubTreeNode) {
-                    hubTreeNode = createHubTreeNode(
-                        hubConfiguration
-                    );
-                    hubsViewMap.set(hubConfiguration.hubId, hubTreeNode);
+        ): string[] => {
+            const hubIds = new Set<string>;
+            if (scheme) {
+                for (const binding of scheme.bindings) {
+                    hubIds.add(binding.hubId);
                 }
-                return hubTreeNode;
             }
-
-            const hubIosViewMap = new Map<string, ControlSchemeViewIoTreeNode>();
-            [ ...scheme.bindings ].sort((a, b) => a.portId - b.portId).forEach((binding) => {
-                const hubConfig = hubEntities[binding.hubId];
-                const hubTreeNode = ensureHubNodeCreated(hubConfig ?? { hubId: binding.hubId });
-                const ioId = attachedIosIdFn(binding);
-
-                let ioViewModel = hubIosViewMap.get(ioId);
-                if (!ioViewModel) {
-                    ioViewModel = createIoTreeNode(
-                        hubTreeNode.path,
-                        binding.hubId,
-                        binding.portId,
-                        scheme.bindings,
-                        scheme.name
-                    );
-                    hubIosViewMap.set(ioId, ioViewModel);
-
-                    hubTreeNode.children.push(ioViewModel);
-                }
-
-                const io = iosEntities[ioId];
-                const bindingTreeNode = createBindingTreeNode(
-                    ioViewModel.path,
-                    binding,
-                    scheme.name,
-                    ioModes.output[ioId] ?? [],
-                    io
-                );
-
-                ioViewModel.children.push(bindingTreeNode);
-            });
-            return [ ...hubsViewMap.values() ];
+            return [ ...hubIds ];
         }
     ),
     selectSchemeRunBlockers: SELECT_SCHEME_RUN_BLOCKERS,

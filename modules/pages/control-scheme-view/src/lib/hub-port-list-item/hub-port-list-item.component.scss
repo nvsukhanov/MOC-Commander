@@ -1,0 +1,52 @@
+:host {
+    display: block;
+}
+
+.port {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+
+    &-name {
+        flex-shrink: 0;
+        margin: 0;
+        font-weight: 500;
+
+        &_not-connected {
+            color: var(--app-disabled-color)
+        }
+    }
+
+    &-config {
+        display: flex;
+        align-items: baseline;
+        gap: 0 10px;
+        flex-flow: wrap;
+    }
+
+    &-profile {
+        display: flex;
+        align-items: baseline;
+    }
+}
+
+.io-type {
+    font-weight: 300;
+    font-size: 14px;
+    flex-shrink: 1;
+    flex-grow: 0;
+
+    &_not-connected {
+        color: var(--app-disabled-color)
+    }
+}
+
+.task-info {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.bindings {
+    margin-left: 15px;
+}

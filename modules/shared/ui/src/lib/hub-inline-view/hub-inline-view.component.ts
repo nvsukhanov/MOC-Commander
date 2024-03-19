@@ -50,7 +50,7 @@ export class HubInlineViewComponent {
 
     private _hubViewHref: string[] = [];
 
-    private _hubId: string | undefined;
+    private _hubId: string | null = null;
 
     constructor(
         private routesBuilderService: RoutesBuilderService,
@@ -78,9 +78,9 @@ export class HubInlineViewComponent {
 
     @Input()
     public set hubId(
-        hubId: string | undefined
+        hubId: string | null
     ) {
-        if (hubId === undefined) {
+        if (hubId === null) {
             this._hubViewHref = [];
         } else {
             this._hubViewHref = this.routesBuilderService.hubView(hubId);
@@ -88,7 +88,7 @@ export class HubInlineViewComponent {
         this._hubId = hubId;
     }
 
-    public get hubId(): string | undefined {
+    public get hubId(): string | null {
         return this._hubId;
     }
 

@@ -41,6 +41,22 @@ export const HUB_RUNTIME_DATA_SELECTORS = {
         HUB_RUNTIME_DATA_SELECTORS.selectByHubId(hubId),
         (hubRuntimeData) => hubRuntimeData?.hardwareVersion
     ),
+    selectHubBatteryLevel: (hubId: string) => createSelector(
+        HUB_RUNTIME_DATA_SELECTORS.selectByHubId(hubId),
+        (hubRuntimeData) => hubRuntimeData?.batteryLevel ?? null
+    ),
+    selectHubRssi: (hubId: string) => createSelector(
+        HUB_RUNTIME_DATA_SELECTORS.selectByHubId(hubId),
+        (hubRuntimeData) => hubRuntimeData?.rssi ?? null
+    ),
+    selectButtonState: (hubId: string) => createSelector(
+        HUB_RUNTIME_DATA_SELECTORS.selectByHubId(hubId),
+        (hubRuntimeData) => hubRuntimeData?.isButtonPressed ?? false
+    ),
+    selectHasCommunication: (hubId: string) => createSelector(
+        HUB_RUNTIME_DATA_SELECTORS.selectByHubId(hubId),
+        (hubRuntimeData) => hubRuntimeData?.hasCommunication ?? false
+    ),
     canRequestPortValue: ({ hubId, portId }: { hubId: string; portId: number }) => createSelector(
         HUB_RUNTIME_DATA_SELECTORS.selectByHubId(hubId),
         (hubRuntimeData) => !hubRuntimeData?.valueRequestPortIds.includes(portId)
