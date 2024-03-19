@@ -1,11 +1,25 @@
-<mat-toolbar class="toolbar">
-    <lib-breadcrumbs *libHideOnSmallScreen
-                     class="breadcrumbs"
-    ></lib-breadcrumbs>
-    <span class="spacer"></span>
+@if (screenSizeObserverService.isSmallScreen$ | async) {
     @if (controlsTemplate$ | async; as controlsTemplate) {
-        <span class="controls">
-            <ng-container *ngTemplateOutlet="controlsTemplate"></ng-container>
-        </span>
+        <div class="toolbar-container">
+            <mat-toolbar class="toolbar">
+                <span class="spacer"></span>
+                <span class="controls">
+                    <ng-container *ngTemplateOutlet="controlsTemplate"></ng-container>
+                </span>
+            </mat-toolbar>
+        </div>
     }
-</mat-toolbar>
+} @else {
+    <div class="toolbar-container">
+        <mat-toolbar class="toolbar">
+            <lib-breadcrumbs class="breadcrumbs"></lib-breadcrumbs>
+            <span class="spacer"></span>
+            @if (controlsTemplate$ | async; as controlsTemplate) {
+                <span class="controls">
+                <ng-container *ngTemplateOutlet="controlsTemplate"></ng-container>
+            </span>
+            }
+        </mat-toolbar>
+    </div>
+}
+

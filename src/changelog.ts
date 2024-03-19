@@ -4,7 +4,9 @@ export const CHANGELOG: IChangelog = [
     {
         version: '1.2.7',
         changeL10nKeys: [
-            'changelog.1-2-7.compactWidgets',
+            'changelog.1-2-7.compactRedesignControlSchemes',
+            'changelog.1-2-7.runningControlSchemePerformanceImprovements',
+            'changelog.1-2-7.fixPwaBackgroundColor',
         ]
     },
     {
