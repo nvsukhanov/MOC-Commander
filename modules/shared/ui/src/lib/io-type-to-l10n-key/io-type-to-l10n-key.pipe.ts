@@ -14,7 +14,9 @@ export class IoTypeToL10nKeyPipe implements PipeTransform {
     ) {
     }
 
-    public transform(ioType: IOType): string {
-        return this.mappingService.getL10nKey(ioType);
+    public transform(
+        ioType: IOType | null
+    ): string {
+        return this.mappingService.getL10nKey(ioType ?? undefined);
     }
 }

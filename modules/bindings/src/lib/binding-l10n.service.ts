@@ -44,7 +44,7 @@ export class BindingL10nService implements IBindingControllerInputNameResolver,
         return this.getL10nService(portCommandTask.payload.bindingType).buildTaskSummary(portCommandTask);
     }
 
-    public getBindingInputName<T extends ControlSchemeBinding>(
+    public getBindingActionName<T extends ControlSchemeBinding>(
         binding: T,
         action: keyof T['inputs']
     ): Observable<string> {

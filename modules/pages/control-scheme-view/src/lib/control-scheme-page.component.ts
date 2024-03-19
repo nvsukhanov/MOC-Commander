@@ -13,10 +13,9 @@ import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService
 import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, ControlSchemeModel, ROUTER_SELECTORS, WidgetConfigModel } from '@app/store';
 import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData } from '@app/shared-control-schemes';
 
-import { ControlSchemeViewTreeNode, SchemeRunBlocker } from './types';
+import { SchemeRunBlocker } from './types';
 import { ControlSchemeRunBlockersL10nPipe } from './control-scheme-run-blockers-l10n.pipe';
 import { CONTROL_SCHEME_PAGE_SELECTORS } from './control-scheme-page.selectors';
-import { ControlSchemeViewIoListComponent } from './control-scheme-view-io-list';
 import { ControlSchemePageCompactToolbarControlsComponent } from './compact-toolbar-controls';
 import { ControlSchemePageFullToolbarControlsComponent } from './full-toolbar-controls';
 import {
@@ -30,6 +29,7 @@ import {
     IControlSchemeWidgetConfigFactory,
     ReorderWidgetDialogComponent
 } from './widgets';
+import { HubListItemComponent } from './hub-list-item';
 
 @Component({
     standalone: true,
@@ -39,7 +39,6 @@ import {
     imports: [
         TranslocoPipe,
         MatCardModule,
-        ControlSchemeViewIoListComponent,
         ConfirmationDialogModule,
         HintComponent,
         ControlSchemePageCompactToolbarControlsComponent,
@@ -48,7 +47,8 @@ import {
         MatIconModule,
         ControlSchemeRunBlockersL10nPipe,
         ControlSchemeWidgetsGridComponent,
-        AsyncPipe
+        AsyncPipe,
+        HubListItemComponent
     ],
     providers: [
         TitleService,
@@ -71,7 +71,9 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRun
 
     public readonly canDeleteScheme$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canDeleteViewedScheme);
 
-    public readonly schemeViewTree$: Observable<ControlSchemeViewTreeNode[]> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.schemeViewTree);
+    // public readonly schemeViewTree$: Observable<ControlSchemeViewTreeNode[]> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.schemeViewTree);
+
+    public readonly hubIds = this.store.selectSignal(CONTROL_SCHEME_PAGE_SELECTORS.selectSchemeHubsIds);
 
     public readonly canExportScheme$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canExportViewedScheme);
 
@@ -84,8 +86,6 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRun
     public readonly canReorderWidgets$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canReorderWidgets);
 
     public readonly canDeleteOrEditWidgets$ = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canDeleteOrEditWidgets);
-
-    public readonly canRenameScheme$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canRenameScheme);
 
     public readonly isSchemeRunning: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.isCurrentControlSchemeRunning);
 
@@ -199,22 +199,7 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRun
             );
         });
     }
-
-    public onUpdateSchemeName(
-        name: string
-    ): void {
-        this.selectedScheme$.pipe(
-            take(1),
-            filter((scheme): scheme is ControlSchemeModel => scheme !== undefined)
-        ).subscribe((scheme) => {
-            this.store.dispatch(CONTROL_SCHEME_ACTIONS.updateControlSchemeName({
-                previousName: scheme.name,
-                name
-            }));
-            this.router.navigate(this.routesBuilderService.controlSchemeView(name));
-        });
-    }
-
+    
     public onDelete(): void {
         this.selectedScheme$.pipe(
             take(1),
