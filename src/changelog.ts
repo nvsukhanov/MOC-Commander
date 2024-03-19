@@ -7,6 +7,7 @@ export const CHANGELOG: IChangelog = [
             'changelog.1-2-7.compactRedesignControlSchemes',
             'changelog.1-2-7.runningControlSchemePerformanceImprovements',
             'changelog.1-2-7.fixPwaBackgroundColor',
+            'changelog.1-2-7.fixHighFrequencyTaskStalling',
         ]
     },
     {

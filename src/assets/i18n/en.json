@@ -818,7 +818,8 @@
     "1-2-7": {
       "compactRedesignControlSchemes": "Compact redesign of the control schemes list for better usability on smaller screens",
       "runningControlSchemePerformanceImprovements": "Performance improvements for running control schemes",
-      "fixPwaBackgroundColor": "Fixed background color of the PWA app"
+      "fixPwaBackgroundColor": "Fixed background color of the PWA app",
+      "fixHighFrequencyTaskStalling": "Fixed task stalling when processing high-frequency inputs"
     }
   }
 }
