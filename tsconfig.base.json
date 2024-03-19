@@ -40,6 +40,7 @@
       "@app/control-scheme-binding-create": ["modules/pages/control-scheme-binding-create/src/index.ts"],
       "@app/control-scheme-binding-edit": ["modules/pages/control-scheme-binding-edit/src/index.ts"],
       "@app/control-scheme-view": ["modules/pages/control-scheme-view/src/index.ts"],
+      "@app/control-scheme-rename": ["modules/pages/control-scheme-rename/src/index.ts"],
       "@app/control-schemes-list": ["modules/pages/control-schemes-list/src/index.ts"],
       "@app/control-scheme-port-config-edit": ["modules/pages/control-scheme-port-config-edit/src/index.ts"],
       "@app/controller-view": ["modules/pages/controller-view/src/index.ts"],

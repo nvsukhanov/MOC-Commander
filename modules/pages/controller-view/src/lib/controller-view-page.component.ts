@@ -7,7 +7,7 @@ import { filter, map, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { ControllerNamePipe, ControllerTypeIconNamePipe, ControllerTypeToL10nKeyPipe } from '@app/shared-controller';
 import { RoutesBuilderService, ScreenSizeObserverService, TitleService } from '@app/shared-misc';
-import { BreadcrumbsService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared-ui';
+import { BreadcrumbsService, HintComponent } from '@app/shared-ui';
 import { ControllerProfilesFacadeService } from '@app/store';
 
 import { CONTROLLER_VIEW_PAGE_SELECTORS } from './controller-view-page-selectors';
@@ -27,7 +27,6 @@ import { ControllerSettingsContainerComponent } from './controller-settings-cont
         MatIconModule,
         ControllerTypeIconNamePipe,
         ControllerTypeToL10nKeyPipe,
-        FeatureToolbarControlsDirective,
         AsyncPipe
     ],
     providers: [

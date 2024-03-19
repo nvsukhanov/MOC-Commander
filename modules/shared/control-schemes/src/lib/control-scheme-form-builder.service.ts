@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AsyncValidatorFn, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
+import { AppValidators } from '@app/shared-misc';
 
 import { ControlSchemeValidators } from './validation';
 
@@ -24,7 +25,8 @@ export class ControlSchemeFormBuilderService {
         return this.formBuilder.control<string>(this.translocoService.translate('controlScheme.newSchemeDialogDefaultName'), {
             nonNullable: true,
             validators: [
-                Validators.required,
+                AppValidators.requireNonEmptyString,
+                AppValidators.requireNoLeadingOrTrailingSpaces
             ],
             asyncValidators
         });

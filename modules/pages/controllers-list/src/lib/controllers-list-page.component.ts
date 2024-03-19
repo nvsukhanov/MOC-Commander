@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AsyncPipe } from '@angular/common';
 import { ControllerNamePipe, ControllerTypeIconNamePipe, ControllerViewHrefPipe } from '@app/shared-controller';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
-import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared-ui';
+import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService, HintComponent } from '@app/shared-ui';
 import { CONTROLLERS_ACTIONS } from '@app/store';
 import { ControlSchemeViewUrlPipe } from '@app/shared-control-schemes';
 
@@ -32,7 +32,6 @@ import { CONTROLLERS_LIST_PAGE_SELECTORS, ControllerListViewModel } from './cont
         ControllerTypeIconNamePipe,
         MatIconModule,
         ConfirmationDialogModule,
-        FeatureToolbarControlsDirective,
         AsyncPipe,
     ],
     providers: [

@@ -5,14 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { Observable, of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
-import {
-    BreadcrumbsService,
-    ConfirmationDialogModule,
-    ConfirmationDialogService,
-    FeatureToolbarControlsDirective,
-    HintComponent,
-    HubInlineViewComponent
-} from '@app/shared-ui';
+import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService, HintComponent, HubInlineViewComponent } from '@app/shared-ui';
 import { HUBS_ACTIONS } from '@app/store';
 
 import { HUBS_LIST_PAGE_SELECTORS, HubListViewModel } from './hubs-list-page.selectors';
@@ -28,7 +21,6 @@ import { HUBS_LIST_PAGE_SELECTORS, HubListViewModel } from './hubs-list-page.sel
         MatCardModule,
         ConfirmationDialogModule,
         HintComponent,
-        FeatureToolbarControlsDirective,
         AsyncPipe
     ],
     providers: [

@@ -16,6 +16,16 @@ export const ROUTER_SELECTORS = {
             return decodeURI(schemeName);
         }
     ),
+    selectCurrentlyRenamedSchemeName: createSelector(
+        BASE_ROUTER_SELECTORS.selectCurrentRoute,
+        (route: ActivatedRouteSnapshot | undefined): string | null => {
+            const schemeName = route?.params?.['schemeName'] ?? null;
+            if (schemeName === null) {
+                return null;
+            }
+            return decodeURI(schemeName);
+        }
+    ),
     selectCurrentlyEditedHubId: createSelector(
         BASE_ROUTER_SELECTORS.selectCurrentRoute,
         (route: ActivatedRouteSnapshot | undefined): string | null => {

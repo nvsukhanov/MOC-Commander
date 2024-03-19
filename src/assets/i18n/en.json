@@ -62,6 +62,7 @@
     "bindingEdit": "Edit binding",
     "controlSchemesList": "Control schemes",
     "controlSchemeView": "{ controlSchemeName }",
+    "controlSchemeRename": "Rename control scheme ''{ previousName }''",
     "controlSchemePortEditForScheme": "{ controlSchemeName } - {hubName}, port {portId}",
     "controlSchemePortEdit": "Port configuration",
     "controllerList": "Controllers",
@@ -153,6 +154,12 @@
     "unknown": "Unknown hub type",
     "fourPortHub": "Four-port Hub"
   },
+  "controlSchemeRename": {
+    "title": "Rename control scheme ''{previousName}''",
+    "nameField": "New control scheme name",
+    "saveButton": "Save",
+    "cancelButton": "Cancel"
+  },
   "controlScheme": {
     "newSchemeDialogTitle": "Create new control scheme",
     "newSchemeDialogSubmitButtonTitle": "Create",
@@ -189,6 +196,7 @@
     "runBlockerSomeIosHaveNoRequiredCapabilities": "Some IOs do not have required capabilities",
     "stop": "Stop",
     "delete": "Delete",
+    "renameSchemeToolbarButton": "Rename",
     "export": "Export",
     "exportDialogTitle": "''{ name }'' export string",
     "exportDialogCopyButtonTitle": "Copy",
@@ -208,7 +216,6 @@
     "deleteBindingConfirmationContent": "This action cannot be undone",
     "deleteBindingConfirmationConfirmButtonTitle": "Delete",
     "deleteBindingConfirmationCancelButtonTitle": "Cancel",
-    "nameField": "Control scheme name",
     "bindingAssignControlButtonTitle": "Assign control",
     "bindingInputIsNotAssigned": "Not assigned",
     "bindingInputControlUnassignButtonTitle": "Unassign control",
@@ -648,7 +655,9 @@
     "min": "Min value is { min }",
     "minLength": "At least { requiredLength } is required",
     "valueShouldNotBeZero": "Value should not be zero",
-    "valueShouldBeInteger": "Value must be integer"
+    "valueShouldBeInteger": "Value must be integer",
+    "valueShouldNotBeEmpty": "Value should not be empty",
+    "valueShouldNotStartOrEndWithSpace": "Value should not start or end with space"
   },
   "manuals": {
     "steamDeckInstallation": {

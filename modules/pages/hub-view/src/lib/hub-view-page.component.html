@@ -1,22 +1,18 @@
 @if (selectedHub$ | async; as hub) {
-    <div *libFeatureToolbarControls
-         class="toolbar-panel"
-    >
+    <ng-container *libFeatureToolbarControls>
         <a mat-raised-button
-           class="toolbar-button"
            [disabled]="(isHubConnected$ | async) !== true"
            [routerLink]="hubEditRoute$ | async"
         >
             {{ 'hub.edit' | transloco }}
         </a>
         <button mat-raised-button
-                class="toolbar-button"
                 [disabled]="(isHubConnected$ | async) !== true"
                 (click)="disconnectHub()"
         >
             {{ 'hub.disconnect' | transloco }}
         </button>
-    </div>
+    </ng-container>
 
     @if (selectedHubRuntimeData$ | async; as runtimeData) {
         <page-hub-view-hub-properties-view class="hub-properties-view"

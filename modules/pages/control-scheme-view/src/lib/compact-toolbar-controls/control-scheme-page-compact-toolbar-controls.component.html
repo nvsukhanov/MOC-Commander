@@ -1,66 +1,67 @@
-<button mat-raised-button
-        [disabled]="!canRun"
-        (click)="onRun()"
->
-    {{ 'controlScheme.run' | transloco }}
-</button>
-
-<button mat-raised-button
-        [disabled]="!canStop"
-        (click)="onStop()"
->
-    {{ 'controlScheme.stop' | transloco }}
-</button>
-
-@if (canAddBinding) {
+<ng-container *libFeatureToolbarControls>
     <button mat-raised-button
-            (click)="onAddBinding()"
+            [disabled]="!canRun"
+            (click)="onRun()"
     >
-        {{ 'controlScheme.addBinding' | transloco }}
+        {{ 'controlScheme.run' | transloco }}
     </button>
-} @else {
+
     <button mat-raised-button
-            [disabled]="true"
-            [title]="'controlScheme.cannotCreateBinding' | transloco"
+            [disabled]="!canStop"
+            (click)="onStop()"
     >
-        {{ 'controlScheme.addBinding' | transloco }}
-        <span class="cdk-visually-hidden">{{ 'controlScheme.cannotCreateBinding' | transloco }}</span>
-    </button>
-}
-
-<button mat-icon-button
-        [matMenuTriggerFor]="menu"
-        [attr.aria-label]="'controlScheme.menu' | transloco"
-        class="toolbar-button"
->
-    <mat-icon [fontIcon]="'more_vert'"></mat-icon>
-</button>
-
-<mat-menu #menu="matMenu">
-    <button mat-menu-item
-            [disabled]="!canAddWidgets"
-            (click)="onAddWidget()"
-    >
-        {{ 'controlScheme.widgets.addWidgetButtonTitle' | transloco }}
-    </button>
-    <button mat-menu-item
-            [disabled]="!canReorderWidgets"
-            (click)="onReorderWidgets()"
-    >
-        {{ 'controlScheme.widgets.reorderWidgetsButtonTitle' | transloco }}
+        {{ 'controlScheme.stop' | transloco }}
     </button>
 
-    @if (canExport) {
-        <button mat-menu-item
-                (click)="onExport()"
+    <button mat-icon-button
+            [matMenuTriggerFor]="menu"
+            [attr.aria-label]="'controlScheme.menu' | transloco"
+            class="toolbar-button"
+    >
+        <mat-icon [fontIcon]="'more_vert'"></mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+        <a mat-menu-item
+           [disabled]="!renameSchemePath"
+           [routerLink]="renameSchemePath"
         >
-            {{ 'controlScheme.export' | transloco }}
-        </button>
-    }
+            {{ 'controlScheme.renameSchemeToolbarButton' | transloco }}
+        </a>
 
-    <button mat-menu-item
-            [disabled]="!canDelete"
-            (click)="onDelete()">
-        {{ 'controlScheme.delete' | transloco }}
-    </button>
-</mat-menu>
+        @if (canAddBinding) {
+            <button mat-menu-item
+                    (click)="onAddBinding()"
+            >
+                {{ 'controlScheme.addBinding' | transloco }}
+            </button>
+        }
+
+        <button mat-menu-item
+                [disabled]="!canAddWidgets"
+                (click)="onAddWidget()"
+        >
+            {{ 'controlScheme.widgets.addWidgetButtonTitle' | transloco }}
+        </button>
+        <button mat-menu-item
+                [disabled]="!canReorderWidgets"
+                (click)="onReorderWidgets()"
+        >
+            {{ 'controlScheme.widgets.reorderWidgetsButtonTitle' | transloco }}
+        </button>
+
+        @if (canExport) {
+            <button mat-menu-item
+                    (click)="onExport()"
+            >
+                {{ 'controlScheme.export' | transloco }}
+            </button>
+        }
+
+        <button mat-menu-item
+                [disabled]="!canDelete"
+                (click)="onDelete()">
+            {{ 'controlScheme.delete' | transloco }}
+        </button>
+    </mat-menu>
+</ng-container>

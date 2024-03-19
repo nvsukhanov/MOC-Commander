@@ -32,4 +32,16 @@ export class AppValidators {
         // noinspection PointlessBooleanExpressionJS (it's not pointless, it's a type guard)
         return control.value === true || control.value === false ? null : { [GlobalValidationErrors.valueIsNotBoolean]: true };
     }
+
+    public static requireNonEmptyString(
+        control: AbstractControl<string>
+    ): ValidationErrors | null {
+        return control.value.trim().length > 0 ? null : { [GlobalValidationErrors.valueShouldNotBeEmpty]: true };
+    }
+
+    public static requireNoLeadingOrTrailingSpaces(
+        control: AbstractControl<string>
+    ): ValidationErrors | null {
+        return control.value.trim() === control.value ? null : { [GlobalValidationErrors.valueShouldNotStartOrEndWithSpace]: true };
+    }
 }

@@ -97,4 +97,15 @@ export class RoutesBuilderService {
             encodeURI(controllerId)
         ];
     }
+
+    public controlSchemeRename(
+        schemeName: string
+    ): string[] {
+        return [
+            this.baseHref,
+            ROUTE_SECTIONS.controlSchemes,
+            encodeURI(schemeName),
+            ROUTE_SECTIONS.controlSchemeRename
+        ];
+    }
 }
