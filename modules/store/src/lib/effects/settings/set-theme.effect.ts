@@ -40,6 +40,10 @@ export const SET_THEME_EFFECT = createEffect((
             body.classList.remove(THEME_CLASS_NAMES[AppTheme.Light]);
             body.classList.remove(THEME_CLASS_NAMES[AppTheme.Dark]);
             body.classList.add(themeName);
+            const themeMeta = document.querySelector('meta[name="theme-color"]');
+            if (themeMeta) {
+                themeMeta.setAttribute('content', window.getComputedStyle(body).backgroundColor);
+            }
         })
     );
 }, { functional: true, dispatch: false });
