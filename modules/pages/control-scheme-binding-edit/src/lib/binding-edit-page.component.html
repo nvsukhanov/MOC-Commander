@@ -3,24 +3,21 @@
                      (bindingFormDirtyChange)="onBindingFormDirtyChange($event)"
 ></lib-cs-binding-edit>
 
-<div *libFeatureToolbarControls>
+<ng-container *libFeatureToolbarControls>
     <button mat-raised-button
-            class="toolbar-button"
             [disabled]="!(canSave)"
             (click)="onSave()">
         {{ 'controlScheme.saveEdited' | transloco }}
     </button>
     <button mat-raised-button
-            class="toolbar-button"
             [color]="'warn'"
             (click)="onDelete()"
     >
         {{ 'controlScheme.deleteBinding' | transloco }}
     </button>
     <button mat-raised-button
-            class="toolbar-button"
             (click)="onCancel()"
     >
         {{ 'controlScheme.cancelEdit' | transloco }}
     </button>
-</div>
+</ng-container>

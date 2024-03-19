@@ -8,6 +8,7 @@ export const ROUTE_SECTIONS = {
     portEdit: 'port',
     hubEdit: 'edit',
     controlSchemeCreate: 'create',
+    controlSchemeRename: 'rename',
     about: 'about',
     settings: 'settings',
     help: 'help',

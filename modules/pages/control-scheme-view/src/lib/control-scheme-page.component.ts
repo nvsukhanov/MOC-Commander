@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { concatLatestFrom } from '@ngrx/effects';
 import { AsyncPipe } from '@angular/common';
 import { ISchemeRunnerComponent, RoutesBuilderService, ScreenSizeObserverService, TitleService } from '@app/shared-misc';
-import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared-ui';
+import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService, HintComponent } from '@app/shared-ui';
 import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, ControlSchemeModel, ROUTER_SELECTORS, WidgetConfigModel } from '@app/store';
 import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData } from '@app/shared-control-schemes';
 
@@ -17,7 +17,6 @@ import { ControlSchemeViewTreeNode, SchemeRunBlocker } from './types';
 import { ControlSchemeRunBlockersL10nPipe } from './control-scheme-run-blockers-l10n.pipe';
 import { CONTROL_SCHEME_PAGE_SELECTORS } from './control-scheme-page.selectors';
 import { ControlSchemeViewIoListComponent } from './control-scheme-view-io-list';
-import { ControlSchemeGeneralInfoComponent } from './control-scheme-general-info';
 import { ControlSchemePageCompactToolbarControlsComponent } from './compact-toolbar-controls';
 import { ControlSchemePageFullToolbarControlsComponent } from './full-toolbar-controls';
 import {
@@ -41,10 +40,8 @@ import {
         TranslocoPipe,
         MatCardModule,
         ControlSchemeViewIoListComponent,
-        ControlSchemeGeneralInfoComponent,
         ConfirmationDialogModule,
         HintComponent,
-        FeatureToolbarControlsDirective,
         ControlSchemePageCompactToolbarControlsComponent,
         ControlSchemePageFullToolbarControlsComponent,
         MatDialogModule,
@@ -74,8 +71,6 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRun
 
     public readonly canDeleteScheme$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canDeleteViewedScheme);
 
-    public readonly isCurrentControlSchemeRunning$ = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.isCurrentControlSchemeRunning);
-
     public readonly schemeViewTree$: Observable<ControlSchemeViewTreeNode[]> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.schemeViewTree);
 
     public readonly canExportScheme$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canExportViewedScheme);
@@ -93,6 +88,11 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRun
     public readonly canRenameScheme$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canRenameScheme);
 
     public readonly isSchemeRunning: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.isCurrentControlSchemeRunning);
+
+    public readonly renameSchemePath$: Observable<string[] | null> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canRenameScheme).pipe(
+        concatLatestFrom(() => this.selectedScheme$),
+        map(([ canRename, scheme ]) => (canRename && scheme) ? this.routesBuilderService.controlSchemeRename(scheme.name) : null)
+    );
 
     private addableWidgetConfigs$: Observable<WidgetConfigModel[]> = this.selectedScheme$.pipe(
         take(1),

@@ -62,6 +62,7 @@
     "bindingEdit": "Редактирование привязки",
     "controlSchemesList": "Схемы управления",
     "controlSchemeView": "{ controlSchemeName }",
+    "controlSchemeRename": "Переименование схемы ''{ previousName }''",
     "controlSchemePortEditForScheme": "{ controlSchemeName } - {hubName}, порт {portId}",
     "controlSchemePortEdit": "Конфигурация порта",
     "controllerList": "Контроллеры",
@@ -153,6 +154,12 @@
     "unknown": "Неизвестный тип хаба",
     "fourPortHub": "Четырехпортовый хаб"
   },
+  "controlSchemeRename": {
+    "title": "Переименование схемы ''{previousName}''",
+    "nameField": "Новое имя",
+    "saveButton": "Сохранить",
+    "cancelButton": "Отмена"
+  },
   "controlScheme": {
     "newSchemeDialogTitle": "Создание новой схемы управления",
     "newSchemeDialogSubmitButtonTitle": "Создать",
@@ -189,6 +196,7 @@
     "runBlockerSomeIosHaveNoRequiredCapabilities": "Некоторые устройства не имеют требуемых возможностей",
     "stop": "Стоп",
     "delete": "Удалить",
+    "renameSchemeToolbarButton": "Rename",
     "export": "Экспорт",
     "exportDialogTitle": "Строка экспорта ''{ name }''",
     "exportDialogCopyButtonTitle": "Копировать",
@@ -208,7 +216,6 @@
     "deleteBindingConfirmationContent": "Это действие не может быть отменено",
     "deleteBindingConfirmationConfirmButtonTitle": "Удалить",
     "deleteBindingConfirmationCancelButtonTitle": "Отмена",
-    "nameField": "Имя схемы управления",
     "bindingAssignControlButtonTitle": "Назначить управление",
     "bindingInputIsNotAssigned": "Управление не назначено",
     "bindingInputControlUnassignButtonTitle": "Отвязать управление",
@@ -648,7 +655,9 @@
     "min": "Минимальное значение { min }",
     "minLength": "Требуется минимум { requiredLength }",
     "valueShouldNotBeZero": "Значение не должно быть нулевым",
-    "valueShouldBeInteger": "Значение должно быть целым числом"
+    "valueShouldBeInteger": "Значение должно быть целым числом",
+    "valueShouldNotBeEmpty": "Значение не должно быть пустым",
+    "valueShouldNotStartOrEndWithSpace": "Значение не должно начинаться или заканчиваться пробелом"
   },
   "manuals": {
     "steamDeckInstallation": {

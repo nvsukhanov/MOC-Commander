@@ -7,5 +7,7 @@ export const COMMON_VALIDATION_ERRORS_L10N_MAP: ValidationErrorsL10nMap = {
     [GlobalValidationErrors.min]: 'validation.min',
     [GlobalValidationErrors.minlength]: 'validation.minLength',
     [GlobalValidationErrors.valueShouldNotBeZero]: 'validation.valueShouldNotBeZero',
-    [GlobalValidationErrors.valueShouldBeInteger]: 'validation.valueShouldBeInteger'
+    [GlobalValidationErrors.valueShouldBeInteger]: 'validation.valueShouldBeInteger',
+    [GlobalValidationErrors.valueShouldNotBeEmpty]: 'validation.valueShouldNotBeEmpty',
+    [GlobalValidationErrors.valueShouldNotStartOrEndWithSpace]: 'validation.valueShouldNotStartOrEndWithSpace'
 } as const;

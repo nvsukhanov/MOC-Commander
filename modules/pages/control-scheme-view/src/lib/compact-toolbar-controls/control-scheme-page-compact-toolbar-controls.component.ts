@@ -3,6 +3,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { RouterLink } from '@angular/router';
+import { FeatureToolbarControlsDirective } from '@app/shared-ui';
 
 @Component({
     standalone: true,
@@ -14,6 +16,8 @@ import { MatMenuModule } from '@angular/material/menu';
         TranslocoPipe,
         MatIconModule,
         MatMenuModule,
+        RouterLink,
+        FeatureToolbarControlsDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -31,6 +35,8 @@ export class ControlSchemePageCompactToolbarControlsComponent {
     @Input() public canReorderWidgets = false;
 
     @Input() public canDelete = false;
+
+    @Input() public renameSchemePath: string[] | null = null;
 
     @Output() public readonly run = new EventEmitter<void>();
 

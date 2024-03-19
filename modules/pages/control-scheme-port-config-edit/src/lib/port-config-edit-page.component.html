@@ -1,7 +1,6 @@
-<div *libFeatureToolbarControls>
+<ng-container *libFeatureToolbarControls>
     <button type="button"
             mat-raised-button
-            class="toolbar-button"
             [disabled]="isSubmitDisabled"
             (click)="onSubmit($event)"
     >
@@ -9,12 +8,11 @@
     </button>
     <button type="button"
             mat-raised-button
-            class="toolbar-button"
             (click)="onCancel()"
     >
         {{ 'controlScheme.portConfigCancelButtonTitle' | transloco }}
     </button>
-</div>
+</ng-container>
 
 @if (portConfig$ | async; as portConfig) {
     <mat-card class="port-configs">

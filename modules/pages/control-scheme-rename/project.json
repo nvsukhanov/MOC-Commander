@@ -1,0 +1,32 @@
+{
+  "name": "page-control-scheme-rename",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "modules/pages/control-scheme-rename/src",
+  "prefix": "page-control-scheme-rename",
+  "tags": ["scope:page"],
+  "projectType": "library",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "modules/pages/control-scheme-rename/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "modules/pages/control-scheme-rename/**/*.ts",
+          "modules/pages/control-scheme-rename/**/*.html",
+          "modules/pages/control-scheme-rename/package.json"
+        ]
+      }
+    }
+  }
+}

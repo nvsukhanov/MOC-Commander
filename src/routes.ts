@@ -90,7 +90,13 @@ export const ROUTES: Routes = [
                 loadComponent: () => import('@app/control-scheme-port-config-edit').then((m) => m.PortConfigEditPageComponent),
                 pathMatch: 'full',
                 canDeactivate: [hasUnsavedChangesGuardFn]
-            }
+            },
+            {
+                path: [ ':schemeName', ROUTE_SECTIONS.controlSchemeRename ].join('/'),
+                loadComponent: () => import('@app/control-scheme-rename').then((m) => m.ControlSchemeRenamePageComponent),
+                pathMatch: 'full',
+                canDeactivate: [hasUnsavedChangesGuardFn]
+            },
         ]
     },
     {

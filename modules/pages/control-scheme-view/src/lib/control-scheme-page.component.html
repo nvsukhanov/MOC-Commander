@@ -1,4 +1,19 @@
 @if (selectedScheme$ | async; as scheme) {
+    @if (schemeRunBlockers$ | async; as blockers) {
+        @if (blockers.length) {
+            <section class="run-blockers">
+                @for (blocker of blockers; track blocker) {
+                    <p class="run-blockers__item">
+                        <mat-icon [fontIcon]="'highlight_off'"
+                                  [color]="'warn'"
+                        ></mat-icon>
+                        {{ blocker | controlSchemeRunBlockersL10nPipe | transloco }}
+                    </p>
+                }
+            </section>
+        }
+    }
+
     @if (scheme.widgets.length) {
         <page-control-scheme-view-control-scheme-widgets-grid [widgetConfigs]="scheme.widgets"
                                                               [editable]="!!(canDeleteOrEditWidgets$ | async)"
@@ -8,29 +23,7 @@
     }
 
     <mat-card>
-        <mat-card-header>
-            <mat-card-title>
-                <page-control-scheme-view-control-scheme-general-info [name]="scheme.name"
-                                                                      [canEditControlSchemeName]="!!(canRenameScheme$ | async)"
-                                                                      (nameChange)="onUpdateSchemeName($event)"
-                ></page-control-scheme-view-control-scheme-general-info>
-            </mat-card-title>
-        </mat-card-header>
-
         <mat-card-content>
-            @if (schemeRunBlockers$ | async; as blockers) {
-                <section class="run-blockers">
-                    @for (blocker of blockers; track blocker) {
-                        <p class="run-blockers__item">
-                            <mat-icon [fontIcon]="'highlight_off'"
-                                      [color]="'warn'"
-                            ></mat-icon>
-                            {{ blocker | controlSchemeRunBlockersL10nPipe | transloco }}
-                        </p>
-                    }
-                </section>
-            }
-
             @if (scheme.bindings.length) {
                 <page-control-scheme-view-control-scheme-view-io-list [tree]="schemeViewTree$ | async"
                 ></page-control-scheme-view-control-scheme-view-io-list>
@@ -40,43 +33,44 @@
                 </lib-hint>
             }
         </mat-card-content>
-
-        @if (isSmallScreen$ | async) {
-            <page-control-scheme-view-control-scheme-page-compact-toolbar-controls *libFeatureToolbarControls
-                                                                                   [canRun]="!!(canRunScheme$ | async)"
-                                                                                   [canStop]="!!(isCurrentControlSchemeRunning$ | async)"
-                                                                                   [canAddBinding]="!!(canCreateBinding$ | async)"
-                                                                                   [canExport]="!!(canExportScheme$ | async)"
-                                                                                   [canDelete]="!!(canDeleteScheme$ | async)"
-                                                                                   [canAddWidgets]="!!(canAddWidgets$ | async)"
-                                                                                   [canReorderWidgets]="!!(canReorderWidgets$ | async)"
-                                                                                   (run)="runScheme(scheme.name)"
-                                                                                   (stop)="stopRunningScheme()"
-                                                                                   (addBinding)="addBinding()"
-                                                                                   (export)="onExport(scheme.name)"
-                                                                                   (delete)="onDelete()"
-                                                                                   (addWidget)="onAddWidget()"
-                                                                                   (reorderWidgets)="onReorderWidgets()"
-            ></page-control-scheme-view-control-scheme-page-compact-toolbar-controls>
-        } @else {
-            <page-control-scheme-view-control-scheme-page-full-toolbar-controls *libFeatureToolbarControls
-                                                                                [canRun]="!!(canRunScheme$ | async)"
-                                                                                [canStop]="!!(isCurrentControlSchemeRunning$ | async)"
-                                                                                [canAddBinding]="!!(canCreateBinding$ | async)"
-                                                                                [canExport]="!!(canExportScheme$ | async)"
-                                                                                [canDelete]="!!(canDeleteScheme$ | async)"
-                                                                                [canAddWidgets]="!!(canAddWidgets$ | async)"
-                                                                                [canReorderWidgets]="!!(canReorderWidgets$ | async)"
-                                                                                (run)="runScheme(scheme.name)"
-                                                                                (stop)="stopRunningScheme()"
-                                                                                (addBinding)="addBinding()"
-                                                                                (export)="onExport(scheme.name)"
-                                                                                (delete)="onDelete()"
-                                                                                (addWidget)="onAddWidget()"
-                                                                                (reorderWidgets)="onReorderWidgets()"
-            ></page-control-scheme-view-control-scheme-page-full-toolbar-controls>
-        }
     </mat-card>
+
+    @if (isSmallScreen$ | async) {
+        <page-control-scheme-view-control-scheme-page-compact-toolbar-controls *libFeatureToolbarControls
+                                                                               [canRun]="!!(canRunScheme$ | async)"
+                                                                               [canStop]="!!(isSchemeRunning | async)"
+                                                                               [canAddBinding]="!!(canCreateBinding$ | async)"
+                                                                               [canExport]="!!(canExportScheme$ | async)"
+                                                                               [canDelete]="!!(canDeleteScheme$ | async)"
+                                                                               [canAddWidgets]="!!(canAddWidgets$ | async)"
+                                                                               [canReorderWidgets]="!!(canReorderWidgets$ | async)"
+                                                                               [renameSchemePath]="renameSchemePath$ | async"
+                                                                               (run)="runScheme(scheme.name)"
+                                                                               (stop)="stopRunningScheme()"
+                                                                               (addBinding)="addBinding()"
+                                                                               (export)="onExport(scheme.name)"
+                                                                               (delete)="onDelete()"
+                                                                               (addWidget)="onAddWidget()"
+                                                                               (reorderWidgets)="onReorderWidgets()"
+        ></page-control-scheme-view-control-scheme-page-compact-toolbar-controls>
+    } @else {
+        <page-control-scheme-view-control-scheme-page-full-toolbar-controls [canRun]="!!(canRunScheme$ | async)"
+                                                                            [canStop]="!!(isSchemeRunning | async)"
+                                                                            [canAddBinding]="!!(canCreateBinding$ | async)"
+                                                                            [canExport]="!!(canExportScheme$ | async)"
+                                                                            [canDelete]="!!(canDeleteScheme$ | async)"
+                                                                            [canAddWidgets]="!!(canAddWidgets$ | async)"
+                                                                            [canReorderWidgets]="!!(canReorderWidgets$ | async)"
+                                                                            [renameSchemePath]="renameSchemePath$ | async"
+                                                                            (run)="runScheme(scheme.name)"
+                                                                            (stop)="stopRunningScheme()"
+                                                                            (addBinding)="addBinding()"
+                                                                            (export)="onExport(scheme.name)"
+                                                                            (delete)="onDelete()"
+                                                                            (addWidget)="onAddWidget()"
+                                                                            (reorderWidgets)="onReorderWidgets()"
+        ></page-control-scheme-view-control-scheme-page-full-toolbar-controls>
+    }
 } @else {
     <lib-hint>
         {{ 'controlScheme.notFound' | transloco }}

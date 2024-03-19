@@ -1,9 +1,11 @@
-@if (controlsTemplate$ | async; as controlsTemplate) {
-    <mat-toolbar class="toolbar">
-        <lib-breadcrumbs *libHideOnSmallScreen
-                         class="breadcrumbs"
-        ></lib-breadcrumbs>
-        <span class="spacer"></span>
-        <ng-container *ngTemplateOutlet="controlsTemplate"></ng-container>
-    </mat-toolbar>
-}
+<mat-toolbar class="toolbar">
+    <lib-breadcrumbs *libHideOnSmallScreen
+                     class="breadcrumbs"
+    ></lib-breadcrumbs>
+    <span class="spacer"></span>
+    @if (controlsTemplate$ | async; as controlsTemplate) {
+        <span class="controls">
+            <ng-container *ngTemplateOutlet="controlsTemplate"></ng-container>
+        </span>
+    }
+</mat-toolbar>

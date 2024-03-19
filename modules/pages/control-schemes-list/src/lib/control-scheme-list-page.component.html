@@ -52,18 +52,16 @@
     }
 }
 
-<div *libFeatureToolbarControls>
+<ng-container *libFeatureToolbarControls>
     <button mat-raised-button
-            class="toolbar-button"
             (click)="onImport()"
     >
         {{ 'controlScheme.import' | transloco }}
     </button>
     <button mat-raised-button
-            class="toolbar-button"
             [disabled]="(canCreateScheme$ | async) !== true"
             (click)="onCreate()"
     >
         {{ 'controlScheme.create' | transloco }}
     </button>
-</div>
+</ng-container>

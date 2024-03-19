@@ -6,5 +6,7 @@ export enum GlobalValidationErrors {
     valueShouldNotBeZero = 'valueShouldNotBeZero',
     valueShouldBeInteger = 'valueShouldBeInteger',
     valueIsNotInEnum = 'VALUE_IS_NOT_IN_ENUM',
-    valueIsNotBoolean = 'VALUE_IS_NOT_BOOLEAN'
+    valueIsNotBoolean = 'VALUE_IS_NOT_BOOLEAN',
+    valueShouldNotBeEmpty = 'valueShouldNotBeEmpty',
+    valueShouldNotStartOrEndWithSpace = 'valueShouldNotStartOrEndWithSpace',
 }
