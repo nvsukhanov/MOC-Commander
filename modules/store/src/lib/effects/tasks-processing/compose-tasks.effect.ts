@@ -137,18 +137,21 @@ export const COMPOSE_TASKS_EFFECT = createEffect((
                 pendingTask,
                 tasks
             );
+
+            if (nextPendingTask === null) {
+                if (pendingTask === null) {
+                    return null;
+                }
+                return PORT_TASKS_ACTIONS.clearPendingTask({ hubId, portId });
+            }
+
             const shouldUpdateQueue = nextPendingTask !== pendingTask;
-            const isNextTaskMoreRecent = (nextPendingTask?.inputTimestamp ?? -Infinity) > (currentTask?.inputTimestamp ?? -Infinity);
-            return {
-                hubId,
-                portId,
-                pendingTask: nextPendingTask,
-                shouldUpdateQueue: shouldUpdateQueue && isNextTaskMoreRecent
-            };
+            const isNextTaskMoreRecent = nextPendingTask.inputTimestamp > (currentTask?.inputTimestamp ?? -Infinity);
+            if (shouldUpdateQueue && isNextTaskMoreRecent) {
+                return PORT_TASKS_ACTIONS.setPendingTask({ hubId, portId, pendingTask: nextPendingTask });
+            }
+            return null;
         }),
-        filter(({ shouldUpdateQueue }) => shouldUpdateQueue),
-        map(({ hubId, portId, pendingTask }: { hubId: string; portId: number; pendingTask: PortCommandTask | null }) =>
-            PORT_TASKS_ACTIONS.updateQueue({ hubId, portId, pendingTask })
-        )
+        filter((action) => action !== null),
     ) as Observable<Action>;
 }, { functional: true });

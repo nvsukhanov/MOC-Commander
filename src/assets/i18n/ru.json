@@ -818,7 +818,8 @@
     "1-2-7": {
       "compactRedesignControlSchemes": "Переработка дизайна схем управления для удобства использования на экранах с низким разрешением",
       "runningControlSchemePerformanceImprovements": "Улучшение производительности при работе схем управления",
-      "fixPwaBackgroundColor": "Исправлена ошибка цвета фона при установке приложения как PWA"
+      "fixPwaBackgroundColor": "Исправлена ошибка цвета фона при установке приложения как PWA",
+      "fixHighFrequencyTaskStalling": "Исправлено зависание задач при обработке интенсивого ввода"
     }
   }
 }

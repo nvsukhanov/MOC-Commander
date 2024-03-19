@@ -12,10 +12,10 @@ export const CONSUME_QUEUE_EFFECT = createEffect((
     store: Store = inject(Store)
 ) => {
     return actions.pipe(
-        ofType(PORT_TASKS_ACTIONS.updateQueue, PORT_TASKS_ACTIONS.taskExecuted, PORT_TASKS_ACTIONS.taskExecutionFailed),
+        ofType(PORT_TASKS_ACTIONS.setPendingTask, PORT_TASKS_ACTIONS.taskExecuted, PORT_TASKS_ACTIONS.taskExecutionFailed),
         map((action) => {
             switch (action.type) {
-                case PORT_TASKS_ACTIONS.updateQueue.type:
+                case PORT_TASKS_ACTIONS.setPendingTask.type:
                     return { hubId: action.hubId, portId: action.portId };
                 case PORT_TASKS_ACTIONS.taskExecuted.type:
                 case PORT_TASKS_ACTIONS.taskExecutionFailed.type:

@@ -20,13 +20,21 @@ export const PORT_TASKS_FEATURE = createFeature({
     name: 'portTasks',
     reducer: createReducer(
         PORT_TASKS_ENTITY_ADAPTER.getInitialState(),
-        on(PORT_TASKS_ACTIONS.updateQueue, (state, { hubId, portId, pendingTask }): PortTasksState => {
+        on(PORT_TASKS_ACTIONS.setPendingTask, (state, { hubId, portId, pendingTask }): PortTasksState => {
             return PORT_TASKS_ENTITY_ADAPTER.upsertOne({
                 hubId,
                 portId,
                 pendingTask,
                 runningTask: state.entities[hubPortTasksIdFn({ hubId, portId })]?.runningTask ?? null,
                 lastExecutedTask: state.entities[hubPortTasksIdFn({ hubId, portId })]?.lastExecutedTask ?? null,
+            }, state);
+        }),
+        on(PORT_TASKS_ACTIONS.clearPendingTask, (state, { hubId, portId }): PortTasksState => {
+            return PORT_TASKS_ENTITY_ADAPTER.updateOne({
+                id: hubPortTasksIdFn({ hubId, portId }),
+                changes: {
+                    pendingTask: null,
+                },
             }, state);
         }),
         on(PORT_TASKS_ACTIONS.runTask, (state, { task }): PortTasksState => {
