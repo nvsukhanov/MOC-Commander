@@ -9,13 +9,10 @@ import { GamepadControllerModel } from '../../../models';
 import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_INPUT_SELECTORS } from '../../../selectors';
 import { CONTROLLER_INPUT_ACTIONS } from '../../../actions';
 
-const MINIMUM_INPUT_CHANGE = 0.01;
-
 function createAxisChangesActions(
     gamepadRead$: Observable<Gamepad | null>,
     valueTransformer: GamepadValueTransformService,
     settings: GamepadSettings,
-    store: Store,
     gamepadStoreModel: GamepadControllerModel
 ): Array<Observable<Action>> {
     const result = new Array<Observable<Action>>(gamepadStoreModel.axesCount);
@@ -27,11 +24,11 @@ function createAxisChangesActions(
         result[axisIndex] = gamepadRead$.pipe(
             map((gamepad) => (gamepad?.axes[axisIndex] ?? 0) + (settings.axisConfigs[axisIndex]?.trim ?? 0)),
             startWith(0),
-            distinctUntilChanged((prev, curr) => Math.abs(prev - curr) < MINIMUM_INPUT_CHANGE),
             map((rawValue) => ({
                 rawValue,
                 value: valueTransformer.transformAxisValue(rawValue, settings.axisConfigs[axisIndex])
             })),
+            distinctUntilChanged((prev, curr) => prev.value === curr.value),
             map(({ rawValue, value }) => CONTROLLER_INPUT_ACTIONS.inputReceived({
                 nextState: {
                     controllerId: gamepadStoreModel.id,
@@ -52,7 +49,6 @@ function createButtonChangesActions(
     gamepadRead$: Observable<Gamepad | null>,
     valueTransformer: GamepadValueTransformService,
     settings: GamepadSettings,
-    store: Store,
     gamepadStoreModel: GamepadControllerModel
 ): Array<Observable<Action>> {
     const result = new Array<Observable<Action>>(gamepadStoreModel.buttonsCount);
@@ -64,11 +60,11 @@ function createButtonChangesActions(
         const inputType = gamepadStoreModel.triggerButtonIndices.includes(buttonIndex) ? ControllerInputType.Trigger : ControllerInputType.Button;
         result[buttonIndex] = gamepadRead$.pipe(
             map((gamepad) => (gamepad?.buttons[buttonIndex]?.value ?? 0) + (settings.buttonConfigs[buttonIndex]?.trim ?? 0)),
-            distinctUntilChanged((prev, curr) => Math.abs(prev - curr) < MINIMUM_INPUT_CHANGE),
             map((rawValue) => ({
                 rawValue,
                 value: valueTransformer.transformButtonValue(rawValue, settings.buttonConfigs[buttonIndex])
             })),
+            distinctUntilChanged((prev, curr) => prev.value === curr.value),
             map(({ rawValue, value }) => CONTROLLER_INPUT_ACTIONS.inputReceived({
                 nextState: {
                     controllerId: gamepadStoreModel.id,
@@ -114,8 +110,8 @@ function readGamepads(
                         share()
                     );
 
-                    const axesChanges = createAxisChangesActions(gamepadRead$, valueTransformer, settings, store, storeGamepad);
-                    const buttonChanges = createButtonChangesActions(gamepadRead$, valueTransformer, settings, store, storeGamepad);
+                    const axesChanges = createAxisChangesActions(gamepadRead$, valueTransformer, settings, storeGamepad);
+                    const buttonChanges = createButtonChangesActions(gamepadRead$, valueTransformer, settings, storeGamepad);
 
                     return merge(...axesChanges, ...buttonChanges);
                 })
