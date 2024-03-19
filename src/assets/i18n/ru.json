@@ -367,14 +367,15 @@
         "valueChangeThresholdTitle": "Порог изменения значения (вольт)",
         "noDataTitle": "Нет данных"
       },
+      "tiltCommon": {
+        "compensateButtonTitle": "Нажмите для переключения компенсации"
+      },
       "pitch": {
         "name": "Тангаж",
         "defaultName": "Тангаж",
         "connectionInfo": "{hubName}:{portName} - {ioName}",
         "valueChangeThresholdTitle": "Порог изменения значения (°)",
         "invertOptionTitle": "Инвертировать",
-        "compensateButtonTitle": "Компенсация",
-        "resetCompensationButtonTitle": "Сброс компенсации",
         "noDataTitle": "Нет данных"
       },
       "yaw": {
@@ -383,8 +384,6 @@
         "connectionInfo": "{hubName}:{portName} - {ioName}",
         "valueChangeThresholdTitle": "Порог изменения значения (°)",
         "invertOptionTitle": "Инвертировать",
-        "compensateButtonTitle": "Компенсация",
-        "resetCompensationButtonTitle": "Сброс компенсации",
         "noDataTitle": "Нет данных"
       },
       "roll": {
@@ -393,8 +392,6 @@
         "connectionInfo": "{hubName}:{portName} - {ioName}",
         "valueChangeThresholdTitle": "Порог изменения значения (°)",
         "invertOptionTitle": "Инвертировать",
-        "compensateButtonTitle": "Компенсация",
-        "resetCompensationButtonTitle": "Сброс компенсации",
         "noDataTitle": "Нет данных"
       },
       "temperature": {
@@ -808,6 +805,9 @@
       "fixServoCalibrationResultsNotBeingRound": "Исправлена ошибка округления результатов калибровки сервопривода",
       "fixMultipleServoCalibrationOnStartup": "Исправлена ошибка, возникающая при калибровке нескольких сервоприводов при старте схемы",
       "featMotorStrainingReduction": "Уменьшение нагрузки на моторы на границах диапазона сервопривода, полученного в результате калибровки"
+    },
+    "1-2-7": {
+      "compactWidgets": "Виджеты схем управления стали компактнее"
     }
   }
 }

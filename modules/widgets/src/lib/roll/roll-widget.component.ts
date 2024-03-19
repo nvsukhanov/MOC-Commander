@@ -9,7 +9,7 @@ import { TiltGaugeComponent, TiltGaugeIconDirective, WidgetComponent } from '@ap
     standalone: true,
     selector: 'lib-roll-sensor-widget',
     templateUrl: './roll-widget.component.html',
-    styleUrls: [ './roll-widget.component.scss' ],
+    styleUrls: [ '../common/common-tilt-widgets-styles.scss' ],
     imports: [
         WidgetComponent,
         TiltGaugeIconDirective,
@@ -38,14 +38,16 @@ export class RollWidgetComponent {
 
     @Output() public readonly resetCompensation = new EventEmitter<void>();
 
-    public onCompensate(): void {
-        if (this.roll !== null) {
-            this.compensate.emit(this.roll);
-        }
-    }
+    private isCompensating = false;
 
-    public onResetCompensation(): void {
-        this.resetCompensation.emit();
+    public toggleCompensation(): void {
+        if (this.isCompensating) {
+            this.resetCompensation.emit();
+            this.isCompensating = false;
+        } else if (this.roll !== null) {
+            this.compensate.emit(this.roll);
+            this.isCompensating = true;
+        }
     }
 
     public onEdit(): void {

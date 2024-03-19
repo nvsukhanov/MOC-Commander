@@ -1,6 +1,6 @@
 {
   "name": "moc-commander",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "scripts": {
     "start": "nx serve",
     "serve:prod": "nx serve -c production",
