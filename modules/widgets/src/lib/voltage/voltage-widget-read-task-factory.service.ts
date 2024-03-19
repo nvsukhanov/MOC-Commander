@@ -44,5 +44,4 @@ export class VoltageWidgetReadTaskFactoryService implements IWidgetReadTaskFacto
             }))
         );
     }
-
 }

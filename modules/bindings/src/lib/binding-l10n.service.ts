@@ -14,11 +14,11 @@ import { StepperBindingL10nService } from './stepper';
 import { TrainBindingL10nService } from './train';
 
 @Injectable()
-export class BindingL10nService implements IBindingControllerInputNameResolver,
+export class BindingL10nService implements
+    IBindingControllerInputNameResolver,
     IBindingInputNameResolver,
     IPortCommandTaskSummaryBuilder,
-    IBindingTypeToL10nKeyMapper
-{
+    IBindingTypeToL10nKeyMapper {
     private readonly bindingL10nServices: { [k in ControlSchemeBindingType]: IBindingL10n<k> } = {
         [ControlSchemeBindingType.Gearbox]: this.gearboxBindingL10nService,
         [ControlSchemeBindingType.Servo]: this.servoBindingL10nService,

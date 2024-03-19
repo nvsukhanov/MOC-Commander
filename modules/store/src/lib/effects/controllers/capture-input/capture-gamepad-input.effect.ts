@@ -126,9 +126,9 @@ export const CAPTURE_GAMEPAD_INPUT = createEffect((
     valueTransformer: GamepadValueTransformService = inject(GamepadValueTransformService)
 ) => {
     return store.select(CONTROLLER_INPUT_SELECTORS.isCapturing).pipe(
-        switchMap((isCapturing) => isCapturing
+        switchMap((isCapturing) => (isCapturing
                                    ? readGamepads(store, window.navigator, valueTransformer)
-                                   : NEVER
+                                   : NEVER)
         )
     );
 }, { functional: true });

@@ -52,7 +52,7 @@ export class ValidationMessagesDirective implements OnChanges, OnDestroy {
                 startWith(null),
                 combineLatestWith(this.l10nSubject),
                 map(([ , l10n ]) => this.extractFirstErrorData(l10n)),
-                switchMap((errorData) => errorData ? this.translocoService.selectTranslate(errorData.l10nKey, errorData.payload) : of(null)),
+                switchMap((errorData) => (errorData ? this.translocoService.selectTranslate(errorData.l10nKey, errorData.payload) : of(null))),
                 distinctUntilChanged()
             ).subscribe((result: string | null) => {
                 this.renderer.setProperty(this.elementRef.nativeElement, 'innerText', result ?? '');

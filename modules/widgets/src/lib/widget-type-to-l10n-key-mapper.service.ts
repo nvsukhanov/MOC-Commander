@@ -17,5 +17,4 @@ export class WidgetTypeToL10nKeyMapperService implements IWidgetTypeToL10nKeyMap
     ): string {
         return this.widgetTypeToL10n[widgetType];
     }
-
 }

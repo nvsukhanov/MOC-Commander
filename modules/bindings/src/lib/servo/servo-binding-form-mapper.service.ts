@@ -31,12 +31,12 @@ export class ServoBindingFormMapperService {
             }
         };
         if (form.controls.inputs.controls[ServoBindingInputAction.Cw].controls.controllerId.value !== null) {
-            result.inputs[ServoBindingInputAction.Cw] =
-                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ServoBindingInputAction.Cw] as InputFormGroup);
+            result.inputs[ServoBindingInputAction.Cw]
+                = this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ServoBindingInputAction.Cw] as InputFormGroup);
         }
         if (form.controls.inputs.controls[ServoBindingInputAction.Ccw].controls.controllerId.value !== null) {
-            result.inputs[ServoBindingInputAction.Ccw] =
-                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ServoBindingInputAction.Ccw] as InputFormGroup);
+            result.inputs[ServoBindingInputAction.Ccw]
+                = this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[ServoBindingInputAction.Ccw] as InputFormGroup);
         }
         return result;
     }

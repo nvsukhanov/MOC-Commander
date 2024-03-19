@@ -7,12 +7,12 @@ import { DeepReadonly } from '@app/shared-misc';
 
 import { SelectInputPipePresetComponent } from '../../select-input-pipes-preset';
 
-export interface InputSettingsDialogData {
+export interface IInputSettingsDialogData {
     readonly supportedInputPipes: ReadonlyArray<InputPipeType>;
     readonly currentInputPipeConfigs: ReadonlyArray<DeepReadonly<InputPipeConfig>>;
 }
 
-export interface InputSettingsDialogResult {
+export interface IInputSettingsDialogResult {
     readonly inputPipes: InputPipeConfig[];
 }
 
@@ -37,8 +37,8 @@ export class InputSettingsDialogComponent {
     private _canSave = false;
 
     constructor(
-        private readonly dialog: MatDialogRef<InputSettingsDialogComponent, InputSettingsDialogResult>,
-        @Inject(MAT_DIALOG_DATA) private readonly data: InputSettingsDialogData
+        private readonly dialog: MatDialogRef<InputSettingsDialogComponent, IInputSettingsDialogResult>,
+        @Inject(MAT_DIALOG_DATA) private readonly data: IInputSettingsDialogData
     ) {
     }
 

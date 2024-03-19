@@ -176,7 +176,7 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
     ): V30SpeedBinding {
         const bindingResult: V30SpeedBinding = {
             ...v29binding,
-            inputs:{}
+            inputs: {}
         };
         if (v29binding.inputs[OldInputAction.Brake]) {
             bindingResult.inputs[SpeedBindingInputAction.Brake] = {
@@ -242,7 +242,6 @@ export class V29ToV30MigrationService implements IMigration<V29Store, V30Store> 
                 bindingResult.inputs[StepperBindingInputAction.Ccw] = {
                     ...prevInputs
                 };
-
             }
         }
         bindingResult.degree = Math.max(Math.abs(v29Binding.degree), MOTOR_LIMITS.minServoDegreesRange);

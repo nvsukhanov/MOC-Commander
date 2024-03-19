@@ -148,7 +148,7 @@ describe('v30 to v31 migration', () => {
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                    expect((inputConfig as any)['gain']).toBeUndefined();
                    if ([ControlSchemeBindingType.Servo, ControlSchemeBindingType.Speed].includes(binding.bindingType)) {
-                       // eslint-disable-next-line @typescript-eslint/no-explicit-any,max-len
+                       // eslint-disable-next-line @typescript-eslint/no-explicit-any,@stylistic/max-len
                        const originalGain = (v30Store.controlSchemes?.entities?.[controlSchemeId]?.bindings[bindingIndex]?.['inputs'] as any)[inputAction]?.gain as OldInputGain;
                        switch (originalGain) {
                            case OldInputGain.Exponential:

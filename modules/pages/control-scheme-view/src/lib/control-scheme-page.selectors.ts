@@ -28,7 +28,7 @@ import { IControlSchemeRunWidgetBlockersChecker } from './widgets';
 const SELECT_CURRENTLY_VIEWED_SCHEME = createSelector(
     ROUTER_SELECTORS.selectCurrentlyViewedSchemeName,
     CONTROL_SCHEME_SELECTORS.selectEntities,
-    (schemeName, schemes) => schemeName === null ? undefined : schemes[schemeName]
+    (schemeName, schemes) => (schemeName === null ? undefined : schemes[schemeName])
 );
 
 const SELECT_IO_MODES = createSelector(
@@ -122,7 +122,7 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
         (
             scheme: ControlSchemeModel | undefined,
         ): string[] => {
-            const hubIds = new Set<string>;
+            const hubIds = new Set<string>();
             if (scheme) {
                 for (const binding of scheme.bindings) {
                     hubIds.add(binding.hubId);

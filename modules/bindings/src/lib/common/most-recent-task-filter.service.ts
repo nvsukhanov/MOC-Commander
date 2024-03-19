@@ -18,5 +18,4 @@ export class MostRecentTaskFilterService implements IBindingTaskFilter {
         }, null as PortCommandTask | null);
         return mostRecentInputSliceTask ?? pendingTask;
     }
-
 }

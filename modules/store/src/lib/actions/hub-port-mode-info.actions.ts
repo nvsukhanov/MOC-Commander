@@ -6,7 +6,7 @@ import { AttachedIoPortModeInfoModel } from '../models';
 export const HUB_PORT_MODE_INFO_ACTIONS = createActionGroup({
     source: 'HUB_PORT_MODE_INFO_ACTIONS',
     events: {
-        'port mode data request': props<{
+        portModeDataRequest: props<{
             hubId: string;
             portId: number;
             modeId: number;
@@ -14,7 +14,7 @@ export const HUB_PORT_MODE_INFO_ACTIONS = createActionGroup({
             hardwareRevision: string;
             softwareRevision: string;
         }>(),
-        'add port mode data': props<{
+        addPortModeData: props<{
             dataSets: AttachedIoPortModeInfoModel[];
         }>()
     }

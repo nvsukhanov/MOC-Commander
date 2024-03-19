@@ -20,7 +20,7 @@ import {
 import { ControllerInputType } from '@app/controller-profiles';
 
 import { InputFormGroup, OptionalInputFormGroup } from '../../input-form-group';
-import { InputSettingsDialogComponent, InputSettingsDialogData, InputSettingsDialogResult } from './input-settings-dialog';
+import { IInputSettingsDialogData, IInputSettingsDialogResult, InputSettingsDialogComponent } from './input-settings-dialog';
 import { CommonBindingsFormControlsBuilderService } from '../../common-bindings-form-controls-builder.service';
 import { filterInputPipeTypesByInputType } from '../../filter-input-pipe-types-by-input-type';
 
@@ -153,7 +153,7 @@ export class BindingControlSelectControllerComponent<T extends ControlSchemeBind
     }
 
     public onShowSettings(): void {
-        this.dialog.open<InputSettingsDialogComponent, InputSettingsDialogData, InputSettingsDialogResult>(
+        this.dialog.open<InputSettingsDialogComponent, IInputSettingsDialogData, IInputSettingsDialogResult>(
             InputSettingsDialogComponent,
             {
                 data: {

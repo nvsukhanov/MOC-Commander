@@ -24,7 +24,7 @@ export const HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE = createFeature({
         }),
         on(HUBS_ACTIONS.hubNameSet, HUBS_ACTIONS.hubNameSetError, (state, data): HubEditFormActiveSavesState => {
             return {
-                hubIds: state.hubIds.filter(id => id !== data.hubId)
+                hubIds: state.hubIds.filter((id) => id !== data.hubId)
             };
         })
     )

@@ -7,11 +7,11 @@ import { IState } from '../i-state';
 export const SETTINGS_ACTIONS = createActionGroup({
     source: 'Settings',
     events: {
-        'set theme': props<{ appTheme: UserSelectedTheme }>(),
-        'set language': props<{ language: Language }>(),
-        'set linux compat': props<{ useLinuxCompat: boolean }>(),
-        'create state backup': emptyProps(),
-        'restore state from backup': props<{ state: IState }>(),
-        'reset state': emptyProps(),
+        setTheme: props<{ appTheme: UserSelectedTheme }>(),
+        setLanguage: props<{ language: Language }>(),
+        setLinuxCompat: props<{ useLinuxCompat: boolean }>(),
+        createStateBackup: emptyProps(),
+        restoreStateFromBackup: props<{ state: IState }>(),
+        resetState: emptyProps(),
     }
 });

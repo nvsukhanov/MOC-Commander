@@ -5,7 +5,7 @@ import { ControllerInputType } from '@app/controller-profiles';
 import { CONTROLLER_INPUT_ACTIONS } from '../actions';
 import { ControllerInputModel } from '../models';
 
-export interface ControllerInputState extends EntityState<ControllerInputModel> {
+export interface IControllerInputState extends EntityState<ControllerInputModel> {
     listenersCount: number;
 }
 
@@ -36,7 +36,7 @@ export const CONTROLLER_INPUT_FEATURE = createFeature({
     name: 'controllerInput',
     reducer: createReducer(
         CONTROLLER_INPUT_INITIAL_STATE,
-        on(CONTROLLER_INPUT_ACTIONS.inputReceived, (state, { nextState }): ControllerInputState => {
+        on(CONTROLLER_INPUT_ACTIONS.inputReceived, (state, { nextState }): IControllerInputState => {
             if (nextState.inputType === ControllerInputType.ButtonGroup) {
                 return CONTROLLER_INPUT_ENTITY_ADAPTER.upsertOne({
                     controllerId: nextState.controllerId,
@@ -61,14 +61,14 @@ export const CONTROLLER_INPUT_FEATURE = createFeature({
             }, state);
         }),
         on(CONTROLLER_INPUT_ACTIONS.requestInputCapture,
-            (state): ControllerInputState => {
+            (state): IControllerInputState => {
                 return {
                     ...state,
                     listenersCount: state.listenersCount + 1
                 };
             }),
         on(CONTROLLER_INPUT_ACTIONS.releaseInputCapture,
-            (state): ControllerInputState => {
+            (state): IControllerInputState => {
                 const nextListenersCount = state.listenersCount - 1;
                 if (nextListenersCount < 0) {
                     throw new Error('Cannot release input capture when no listeners are registered');

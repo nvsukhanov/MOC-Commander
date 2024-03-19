@@ -18,6 +18,5 @@ import { COMMON_RESOURCES } from '../common-resources';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WindowsInstallationManualComponent {
-
     protected readonly resources = COMMON_RESOURCES;
 }

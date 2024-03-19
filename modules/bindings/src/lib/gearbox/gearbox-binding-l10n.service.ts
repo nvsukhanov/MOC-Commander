@@ -50,5 +50,4 @@ export class GearboxBindingL10nService implements IBindingL10n<ControlSchemeBind
                 return this.controllerNameProvider.getFullControllerInputNameData(inputConfig);
         }
     }
-
 }

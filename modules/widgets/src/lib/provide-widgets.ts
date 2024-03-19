@@ -38,6 +38,6 @@ export function provideWidgets(): Provider[] {
         { provide: WIDGET_TYPE_TO_L10N_KEY_MAPPER, useClass: WidgetTypeToL10nKeyMapperService },
         { provide: CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY, useClass: WidgetSettingsComponentFactoryService },
         { provide: WIDGET_READ_TASKS_FACTORY, useClass: WidgetsReadTaskFactoryService },
-        { provide: WIDGET_CONNECTION_INFO_PROVIDER, useClass: WidgetConnectionInfoL10nService  }
+        { provide: WIDGET_CONNECTION_INFO_PROVIDER, useClass: WidgetConnectionInfoL10nService }
     ];
 }

@@ -50,7 +50,7 @@ export class HubEditPageComponent implements OnInit, OnDestroy, IUnsavedChangesC
     public readonly hasUnsavedChanges: Observable<boolean>;
 
     public readonly cancelPath$: Observable<string[]> = this.store.select(ROUTER_SELECTORS.selectCurrentlyEditedHubId).pipe(
-        map((id) => id !== null ? this.routesBuilderService.hubView(id) : [])
+        map((id) => (id !== null ? this.routesBuilderService.hubView(id) : []))
     );
 
     public readonly form: FormGroup<{

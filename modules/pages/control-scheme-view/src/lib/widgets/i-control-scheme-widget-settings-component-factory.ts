@@ -18,5 +18,5 @@ export interface IControlSchemeWidgetSettingsComponentFactory<T extends WidgetTy
     hasSettings(widgetType: WidgetType): boolean;
 }
 
-export const CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY =
-    new InjectionToken<IControlSchemeWidgetSettingsComponentFactory<WidgetType>>('CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY');
+export const CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY
+    = new InjectionToken<IControlSchemeWidgetSettingsComponentFactory<WidgetType>>('CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY');

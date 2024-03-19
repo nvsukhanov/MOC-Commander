@@ -6,7 +6,8 @@
   "overrides": [
     {
       "plugins": [
-        "@nx"
+        "@nx",
+        "@stylistic"
       ],
       "files": [
         "*.ts"
@@ -52,25 +53,42 @@
             "style": "kebab-case"
           }
         ],
-        "@typescript-eslint/explicit-function-return-type": [
-          "error"
-        ],
-        "semi": "off",
-        "@typescript-eslint/semi": "error",
-        "@typescript-eslint/member-delimiter-style": "error",
-        "lines-between-class-members": "off",
-        "@typescript-eslint/lines-between-class-members": [
-          "error"
-        ],
-        "no-console": [
-          "error",
-          {
-            "allow": [
-              "warn",
-              "error"
-            ]
-          }
-        ],
+        "no-console": [ "error", { "allow": [ "warn", "error" ] }],
+
+        "@stylistic/arrow-spacing": "error",
+        "@stylistic/arrow-parens": "error",
+        "@stylistic/brace-style": "error",
+        "@stylistic/computed-property-spacing": "error",
+        "@stylistic/key-spacing": ["error", { "beforeColon": false, "afterColon": true }],
+        "@stylistic/keyword-spacing": "error",
+        "@stylistic/lines-between-class-members": "error",
+        "@stylistic/max-len": [ "error", { "code": 160, "ignoreComments": true }],
+        "@stylistic/max-statements-per-line": ["error", { "max": 1 }],
+        "@stylistic/member-delimiter-style": "error",
+        "@stylistic/new-parens": "error",
+        "@stylistic/no-confusing-arrow": "error",
+        "@stylistic/no-floating-decimal": "error",
+        "@stylistic/no-multi-spaces": "error",
+        "@stylistic/no-multiple-empty-lines": "error",
+        "@stylistic/no-whitespace-before-property": "error",
+        "@stylistic/one-var-declaration-per-line": "error",
+        "@stylistic/operator-linebreak": ["error", "before"],
+        "@stylistic/padded-blocks": ["error", "never"],
+        "@stylistic/semi": "error",
+        "@stylistic/quotes": [ "error", "single"],
+        "@stylistic/quote-props": ["error", "as-needed"],
+        "@stylistic/space-before-blocks": "error",
+        "@stylistic/space-before-function-paren": ["error", {"anonymous": "always", "named": "never", "asyncArrow": "always"}],
+        "@stylistic/space-in-parens": "error",
+        "@stylistic/space-infix-ops": "error",
+        "@stylistic/spaced-comment": "error",
+        "@stylistic/switch-colon-spacing": "error",
+        "@stylistic/template-curly-spacing": "error",
+        "@stylistic/type-annotation-spacing": "error",
+        "@stylistic/type-generic-spacing": "error",
+        "@stylistic/type-named-tuple-spacing": "error",
+
+        "@typescript-eslint/explicit-function-return-type": "error",
         "@typescript-eslint/member-ordering": [
           "error",
           {
@@ -99,19 +117,12 @@
             ]
           }
         ],
-        "max-len": [
-          "error",
-          {
-            "code": 160
-          }
-        ],
         "@typescript-eslint/no-inferrable-types": [
           "error",
           {
             "ignoreParameters": true
           }
         ],
-        "@ngrx/prefix-selectors-with-select": "off",
         "@typescript-eslint/naming-convention": [
           "error",
           {
@@ -123,8 +134,55 @@
             "format": [
               "UPPER_CASE"
             ]
+          },
+          {
+            "selector": "parameter",
+            "format": ["camelCase"],
+            "leadingUnderscore": "allow"
+          },
+          {
+            "selector": "typeLike",
+            "format": ["PascalCase"]
+          },
+          {
+            "selector": "interface",
+            "format": ["PascalCase"],
+            "custom": {
+              "regex": "^I[A-Z]",
+              "match": true
+            }
           }
         ],
+        "@typescript-eslint/no-shadow": "error",
+        "@typescript-eslint/no-non-null-assertion": "error",
+        "@typescript-eslint/no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "@angular/common",
+                "importNames": [ "NgIf" ],
+                "message": "Use flow syntax instead of *ngIf"
+              },
+              {
+                "name": "@angular/common",
+                "importNames": [ "NgForOf" ],
+                "message": "Use flow syntax instead of *ngFor"
+              },
+              {
+                "name": "@ngrx/component",
+                "importNames": [ "LetDirective" ],
+                "message": "Use @if flow syntax instead of *ngrxLet"
+              },
+              {
+                "name": "@ngrx/component",
+                "importNames": [ "PushPipe" ],
+                "message": "Use async with the new flow syntax instead of *ngrxPush"
+              }
+            ]
+          }
+        ],
+        "@ngrx/prefix-selectors-with-select": "off",
         "import/no-cycle": [
           "error",
           {
@@ -181,42 +239,6 @@
         ],
         "import/no-mutable-exports": [
           "error"
-        ],
-        "no-shadow": "off",
-        "@typescript-eslint/no-shadow": "error",
-        "@typescript-eslint/no-non-null-assertion": "error",
-        "quotes": "off",
-        "@typescript-eslint/quotes": [
-          "error",
-          "single"
-        ],
-        "no-restricted-imports": "off",
-        "@typescript-eslint/no-restricted-imports": [
-          "error",
-          {
-            "paths": [
-              {
-                "name": "@angular/common",
-                "importNames": [ "NgIf" ],
-                "message": "Use flow syntax instead of *ngIf"
-              },
-              {
-                "name": "@angular/common",
-                "importNames": [ "NgForOf" ],
-                "message": "Use flow syntax instead of *ngFor"
-              },
-              {
-                "name": "@ngrx/component",
-                "importNames": [ "LetDirective" ],
-                "message": "Use @if flow syntax instead of *ngrxLet"
-              },
-              {
-                "name": "@ngrx/component",
-                "importNames": [ "PushPipe" ],
-                "message": "Use async with the new flow syntax instead of *ngrxPush"
-              }
-            ]
-          }
         ],
         "@nx/enforce-module-boundaries": [
           "error",

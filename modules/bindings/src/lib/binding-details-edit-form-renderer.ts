@@ -27,7 +27,7 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
         [ControlSchemeBindingType.Gearbox]: GearboxBindingEditComponent
     };
 
-    private _bindingType =  ControlSchemeBindingType.Speed;
+    private _bindingType = ControlSchemeBindingType.Speed;
 
     private renderer?: ComponentRef<IBindingsDetailsEditComponent>;
 

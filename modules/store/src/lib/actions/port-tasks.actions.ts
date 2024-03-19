@@ -5,10 +5,10 @@ import { PortCommandTask } from '../models';
 export const PORT_TASKS_ACTIONS = createActionGroup({
     source: 'PortTasks',
     events: {
-        'set pending task': props<{ hubId: string; portId: number; pendingTask: PortCommandTask }>(),
-        'clear pending task': props<{ hubId: string; portId: number }>(),
-        'run task': props<{ task: PortCommandTask }>(),
-        'task executed': props<{ task: PortCommandTask }>(),
-        'task execution failed': props<{ task: PortCommandTask }>(),
+        setPendingTask: props<{ hubId: string; portId: number; pendingTask: PortCommandTask }>(),
+        clearPendingTask: props<{ hubId: string; portId: number }>(),
+        runTask: props<{ task: PortCommandTask }>(),
+        taskExecuted: props<{ task: PortCommandTask }>(),
+        taskExecutionFailed: props<{ task: PortCommandTask }>(),
     }
 });

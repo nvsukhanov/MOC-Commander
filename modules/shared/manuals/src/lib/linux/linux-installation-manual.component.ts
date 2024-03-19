@@ -20,6 +20,5 @@ import { COMMON_RESOURCES } from '../common-resources';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LinuxInstallationManualComponent {
-
     protected readonly resources = COMMON_RESOURCES;
 }
