@@ -2,6 +2,12 @@ import { IChangelog } from '@app/shared-ui';
 
 export const CHANGELOG: IChangelog = [
     {
+        version: '1.2.7',
+        changeL10nKeys: [
+            'changelog.1-2-7.compactWidgets',
+        ]
+    },
+    {
         version: '1.2.6',
         changeL10nKeys: [
             'changelog.1-2-6.fixServoCalibrationForRangesGraterThan360',

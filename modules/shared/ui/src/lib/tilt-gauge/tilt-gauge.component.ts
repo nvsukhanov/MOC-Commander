@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 
 import { TiltGaugeSectorDefinition, TiltGaugeSectorsComponent } from './tilt-gauge-sectors';
@@ -7,6 +7,7 @@ import { TiltGaugeTicksDefBuilderService } from './tilt-gauge-ticks-def-builder.
 import { TiltGaugeSectorDefBuilderService } from './tilt-gauge-sector-def-builder.service';
 import { TiltGaugeOptions } from './tilt-gauge-options';
 import { TiltGaugeBracketsDefBuilderService } from './tilt-gauge-brackets-def-builder.service';
+import { TiltGaugeValueComponent } from './tilt-gauge-value';
 
 @Component({
     standalone: true,
@@ -16,12 +17,17 @@ import { TiltGaugeBracketsDefBuilderService } from './tilt-gauge-brackets-def-bu
     imports: [
         TiltGaugeSectorsComponent,
         TiltGaugeTicksComponent,
-        NgTemplateOutlet
+        NgTemplateOutlet,
+        TiltGaugeValueComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TiltGaugeComponent implements OnInit {
     @Input() public iconTemplate?: TemplateRef<unknown>;
+
+    @Input() public valueClickable = false;
+
+    @Output() public readonly valueClicked = new EventEmitter<Event>();
 
     private readonly baseOptions: TiltGaugeOptions = {
         chartRotation: 0,
@@ -116,6 +122,14 @@ export class TiltGaugeComponent implements OnInit {
 
     public ngOnInit(): void {
         this.updateChart();
+    }
+
+    public onValueClicked(
+        event: Event
+    ): void {
+        if (this.valueClickable) {
+            this.valueClicked.emit(event);
+        }
     }
 
     private updateIconTransform(): void {

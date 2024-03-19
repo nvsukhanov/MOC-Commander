@@ -9,7 +9,7 @@ import { TiltGaugeComponent, TiltGaugeIconDirective, TiltGaugeOptions, WidgetCom
     standalone: true,
     selector: 'lib-yaw-sensor-widget',
     templateUrl: './yaw-widget.component.html',
-    styleUrls: [ './yaw-widget.component.scss' ],
+    styleUrls: [ '../common/common-tilt-widgets-styles.scss' ],
     imports: [
         WidgetComponent,
         TiltGaugeIconDirective,
@@ -44,14 +44,16 @@ export class YawWidgetComponent {
         bracketAngleSizeDegrees: 181
     };
 
-    public onCompensate(): void {
-        if (this.yaw !== null) {
-            this.compensate.emit(this.yaw);
-        }
-    }
+    private isCompensating = false;
 
-    public onResetCompensation(): void {
-        this.resetCompensation.emit();
+    public toggleCompensation(): void {
+        if (this.isCompensating) {
+            this.resetCompensation.emit();
+            this.isCompensating = false;
+        } else if (this.yaw !== null) {
+            this.compensate.emit(this.yaw);
+            this.isCompensating = true;
+        }
     }
 
     public onEdit(): void {

@@ -7,9 +7,9 @@ import { TiltGaugeComponent, TiltGaugeIconDirective, WidgetComponent } from '@ap
 
 @Component({
     standalone: true,
-    selector: 'lib-tilt-sensor-widget',
+    selector: 'lib-pitch-sensor-widget',
     templateUrl: './pitch-sensor-widget.component.html',
-    styleUrls: [ './pitch-sensor-widget.component.scss' ],
+    styleUrls: [ '../common/common-tilt-widgets-styles.scss' ],
     imports: [
         WidgetComponent,
         TiltGaugeIconDirective,
@@ -17,7 +17,7 @@ import { TiltGaugeComponent, TiltGaugeIconDirective, WidgetComponent } from '@ap
         TranslocoPipe,
         TiltGaugeComponent,
         MatMenuItem,
-        MatIcon
+        MatIcon,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -38,14 +38,16 @@ export class PitchSensorWidgetComponent {
 
     @Output() public readonly resetCompensation = new EventEmitter<void>();
 
-    public onCompensate(): void {
-        if (this.pitch !== null) {
-            this.compensate.emit(this.pitch);
-        }
-    }
+    private isCompensating = false;
 
-    public onResetCompensation(): void {
-        this.resetCompensation.emit();
+    public toggleCompensation(): void {
+        if (this.isCompensating) {
+            this.resetCompensation.emit();
+            this.isCompensating = false;
+        } else if (this.pitch !== null) {
+            this.compensate.emit(this.pitch);
+            this.isCompensating = true;
+        }
     }
 
     public onEdit(): void {

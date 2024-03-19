@@ -367,14 +367,15 @@
         "valueChangeThresholdTitle": "Value change threshold (volts)",
         "noDataTitle": "No data"
       },
+      "tiltCommon": {
+        "compensateButtonTitle": "Click to toggle value trimming"
+      },
       "pitch": {
         "name": "Pitch",
         "defaultName": "Pitch",
         "connectionInfo": "{hubName}:{portName} - {ioName}",
         "valueChangeThresholdTitle": "Value change threshold (°)",
         "invertOptionTitle": "Invert",
-        "compensateButtonTitle": "Trim",
-        "resetCompensationButtonTitle": "Reset trim",
         "noDataTitle": "No data"
       },
       "yaw": {
@@ -383,8 +384,6 @@
         "connectionInfo": "{hubName}:{portName} - {ioName}",
         "valueChangeThresholdTitle": "Value change threshold (°)",
         "invertOptionTitle": "Invert",
-        "compensateButtonTitle": "Trim",
-        "resetCompensationButtonTitle": "Reset trim",
         "noDataTitle": "No data"
       },
       "roll": {
@@ -393,8 +392,6 @@
         "connectionInfo": "{hubName}:{portName} - {ioName}",
         "valueChangeThresholdTitle": "Value change threshold (°)",
         "invertOptionTitle": "Invert",
-        "compensateButtonTitle": "Trim",
-        "resetCompensationButtonTitle": "Reset trim",
         "noDataTitle": "No data"
       },
       "temperature": {
@@ -808,6 +805,9 @@
       "fixServoCalibrationResultsNotBeingRound": "Fixed servo calibration results not being rounded to the nearest degree",
       "fixMultipleServoCalibrationOnStartup": "Fixed issue with incorrect results of multiple servo calibration on startup",
       "featMotorStrainingReduction": "Reduced motor straining at the ends of the servo range received during calibration"
+    },
+    "1-2-7": {
+      "compactWidgets": "Control scheme widgets are now more compact"
     }
   }
 }

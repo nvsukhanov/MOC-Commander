@@ -1,0 +1,21 @@
+.value {
+    dominant-baseline: middle;
+    font-size: 0.9em;
+    text-anchor: middle;
+    fill: var(--app-text-color);
+
+    &_clickable {
+        pointer-events: none;
+    }
+}
+
+.box {
+    fill: var(--widget-background-color, var(--app-background-color));
+    stroke: var(--app-primary-color);
+    stroke-width: 2;
+
+    &_clickable {
+        cursor: pointer;
+        user-select: none;
+    }
+}

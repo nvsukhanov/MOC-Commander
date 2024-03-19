@@ -18,4 +18,10 @@
             <ng-container [ngTemplateOutlet]="iconTemplate"></ng-container>
         </g>
     }
+
+    <g [appTiltGaugeValue]="tiltDegrees"
+       [clickable]="valueClickable"
+       (clicked)="onValueClicked($event)"
+       [viewBox]="viewBox"
+    ></g>
 </svg>

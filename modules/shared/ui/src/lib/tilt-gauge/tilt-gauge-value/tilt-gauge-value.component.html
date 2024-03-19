@@ -1,0 +1,44 @@
+@if (value !== null) {
+    <svg xmlns="http://www.w3.org/2000/svg"
+         preserveAspectRatio="xMidYMid meet"
+         [attr.viewBox]="viewBox"
+    >
+        @if (clickable) {
+            <rect x="34%"
+                  y="80%"
+                  width="32%"
+                  height="19%"
+                  class="box box_clickable"
+                  (click)="onClick($event)"
+                  (keydown.enter)="onClick($event)"
+                  (keydown.space)="onClick($event)"
+                  [matTooltip]="'controlScheme.widgets.tiltCommon.compensateButtonTitle' | transloco"
+                  role="button"
+                  focusable="true"
+                  tabindex="0"
+                  rx="3"
+            ></rect>
+            <text x="50%"
+                  y="91%"
+                  class="value value_clickable"
+            >
+                {{ value }}
+            </text>
+        } @else {
+            <rect x="34%"
+                  y="80%"
+                  width="32%"
+                  height="19%"
+                  class="box"
+                  rx="3"
+            ></rect>
+            <text x="50%"
+                  y="91%"
+                  class="value"
+            >
+                {{ value }}
+            </text>
+        }
+
+    </svg>
+}
