@@ -25,8 +25,8 @@ import { COMMON_RESOURCES } from '../common-resources';
 export class SteamDeckManualComponent {
     public readonly resources = COMMON_RESOURCES;
 
-    public readonly flatpakCode =
-        'flatpak --user override --filesystem=/run/udev:ro --filesystem=~/.local/share/applications --filesystem=~/.local/share/icons com.google.Chrome';
+    public readonly flatpakCode
+        = 'flatpak --user override --filesystem=/run/udev:ro --filesystem=~/.local/share/applications --filesystem=~/.local/share/icons com.google.Chrome';
 
     public readonly kioskModeOption = '--kiosk';
 }

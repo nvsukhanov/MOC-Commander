@@ -6,15 +6,15 @@ import {
     AttachedIoModesState,
     AttachedIoPortModeInfoState,
     BluetoothAvailabilityState,
-    ControlSchemeState,
     ControlSchemeWidgetsDataState,
     ControllerConnectionState,
-    ControllerInputState,
     ControllerSettingsState,
     ControllersState,
     HubEditFormActiveSavesState,
     HubRuntimeDataState,
-    HubsState,
+    IControlSchemeState,
+    IControllerInputState,
+    IHubsState,
     PortTasksState,
     SettingsState
 } from './reducers';
@@ -23,12 +23,12 @@ import { AppStoreVersion } from './app-store-version';
 export interface IState {
     bluetoothAvailability: BluetoothAvailabilityState;
     controllers: ControllersState;
-    controllerInput: ControllerInputState;
+    controllerInput: IControllerInputState;
     controllerSettings: ControllerSettingsState;
     controllerConnections: ControllerConnectionState;
-    controlSchemes: ControlSchemeState;
+    controlSchemes: IControlSchemeState;
     controlSchemeWidgetsData: ControlSchemeWidgetsDataState;
-    hubs: HubsState;
+    hubs: IHubsState;
     hubRuntimeData: HubRuntimeDataState;
     attachedIos: AttachedIOState;
     attachedIoProps: AttacheIoPropsState;

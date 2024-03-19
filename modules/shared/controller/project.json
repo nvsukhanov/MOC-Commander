@@ -22,9 +22,9 @@
       ],
       "options": {
         "lintFilePatterns": [
-          "modules/shared/control-schemes/**/*.ts",
-          "modules/shared/control-schemes/**/*.html",
-          "modules/shared/control-schemes/package.json"
+          "modules/shared/controller/**/*.ts",
+          "modules/shared/controller/**/*.html",
+          "modules/shared/controller/package.json"
         ]
       }
     }

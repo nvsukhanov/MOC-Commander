@@ -16,8 +16,8 @@ export type V26ControllerSettings = EntityState<V27KeyboardSettings | V27HubSett
     controllerId: string;
     ignoreInput: boolean;
     controllerType: ControllerType.Gamepad;
-    axisConfigs: { [k in string]: V27GamepadAxisSettings & { 'negativeValueCanActivate' : boolean } };
-    buttonConfigs: { [k in string]: V27GamepadButtonSettings & { 'negativeValueCanActivate': boolean } };
+    axisConfigs: { [k in string]: V27GamepadAxisSettings & { negativeValueCanActivate: boolean } };
+    buttonConfigs: { [k in string]: V27GamepadButtonSettings & { negativeValueCanActivate: boolean } };
 }>;
 
 export type V26Store = Override<V27Store, {

@@ -28,8 +28,8 @@ export function getTranslationArcs(
     sourcePOS: number,
     targetPOS: number
 ): { cw: number; ccw: number } {
-    const normalizedSourcePOS = sourcePOS >= 0 ? sourcePOS % 360 : 360 + sourcePOS % 360;
-    const normalizedTargetPOS = targetPOS >= 0 ? targetPOS % 360 : 360 + targetPOS % 360;
+    const normalizedSourcePOS = sourcePOS >= 0 ? sourcePOS % 360 : 360 + (sourcePOS % 360);
+    const normalizedTargetPOS = targetPOS >= 0 ? targetPOS % 360 : 360 + (targetPOS % 360);
 
     if (normalizedSourcePOS === normalizedTargetPOS) {
         return { cw: 0, ccw: 0 };

@@ -37,7 +37,7 @@ export const CONTROL_SCHEME_SELECTORS = {
     selectRunningScheme: createSelector(
         SELECT_ENTITIES,
         CONTROL_SCHEME_FEATURE.selectRunningSchemeName,
-        (entities, runningSchemeName): ControlSchemeModel | null => runningSchemeName !== null ? entities[runningSchemeName] ?? null : null
+        (entities, runningSchemeName): ControlSchemeModel | null => (runningSchemeName !== null ? entities[runningSchemeName] ?? null : null)
     ),
     selectIsAnySchemeRunning: createSelector(
         CONTROL_SCHEME_FEATURE.selectRunningState,

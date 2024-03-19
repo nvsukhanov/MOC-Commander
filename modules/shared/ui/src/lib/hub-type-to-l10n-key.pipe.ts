@@ -22,5 +22,4 @@ export class HubTypeToL10nKeyPipe implements PipeTransform {
     ): string {
         return this.hubTypeToL10nKeyMap[hubType];
     }
-
 }

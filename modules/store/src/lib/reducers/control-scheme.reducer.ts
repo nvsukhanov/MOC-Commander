@@ -51,7 +51,7 @@ export enum ControlSchemeRunState {
     Stopping
 }
 
-export interface ControlSchemeState extends EntityState<ControlSchemeModel> {
+export interface IControlSchemeState extends EntityState<ControlSchemeModel> {
     runningState: ControlSchemeRunState;
     runningSchemeName: string | null;
 }
@@ -67,7 +67,7 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
             runningState: ControlSchemeRunState.Idle,
             runningSchemeName: null as string | null
         }),
-        on(CONTROL_SCHEME_ACTIONS.createControlScheme, (state, action): ControlSchemeState => {
+        on(CONTROL_SCHEME_ACTIONS.createControlScheme, (state, action): IControlSchemeState => {
             return CONTROL_SCHEME_ENTITY_ADAPTER.addOne({
                 name: action.name,
                 portConfigs: [],
@@ -75,16 +75,16 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
                 widgets: []
             }, state);
         }),
-        on(CONTROL_SCHEME_ACTIONS.startScheme, (state): ControlSchemeState => ({
+        on(CONTROL_SCHEME_ACTIONS.startScheme, (state): IControlSchemeState => ({
             ...state,
             runningState: ControlSchemeRunState.Starting
         })),
-        on(CONTROL_SCHEME_ACTIONS.schemeStarted, (state, { name }): ControlSchemeState => ({
+        on(CONTROL_SCHEME_ACTIONS.schemeStarted, (state, { name }): IControlSchemeState => ({
             ...state,
             runningState: ControlSchemeRunState.Running,
             runningSchemeName: name
         })),
-        on(CONTROL_SCHEME_ACTIONS.stopScheme, (state): ControlSchemeState => {
+        on(CONTROL_SCHEME_ACTIONS.stopScheme, (state): IControlSchemeState => {
             if (state.runningState === ControlSchemeRunState.Running || state.runningState === ControlSchemeRunState.Starting) {
                 return {
                     ...state,
@@ -93,13 +93,13 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
             }
             return state;
         }),
-        on(CONTROL_SCHEME_ACTIONS.schemeStopped, CONTROL_SCHEME_ACTIONS.schemeStartFailed, (state): ControlSchemeState => ({
+        on(CONTROL_SCHEME_ACTIONS.schemeStopped, CONTROL_SCHEME_ACTIONS.schemeStartFailed, (state): IControlSchemeState => ({
             ...state,
             runningSchemeName: null,
             runningState: ControlSchemeRunState.Idle
         })),
-        on(CONTROL_SCHEME_ACTIONS.deleteControlScheme, (state, { name }): ControlSchemeState => CONTROL_SCHEME_ENTITY_ADAPTER.removeOne(name, state)),
-        on(CONTROL_SCHEME_ACTIONS.saveBinding, (state, { binding, schemeName }): ControlSchemeState => {
+        on(CONTROL_SCHEME_ACTIONS.deleteControlScheme, (state, { name }): IControlSchemeState => CONTROL_SCHEME_ENTITY_ADAPTER.removeOne(name, state)),
+        on(CONTROL_SCHEME_ACTIONS.saveBinding, (state, { binding, schemeName }): IControlSchemeState => {
             const scheme = state.entities[schemeName];
             if (!scheme) {
                 return state;
@@ -123,7 +123,7 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
             }
             return CONTROL_SCHEME_ENTITY_ADAPTER.updateOne(update, state);
         }),
-        on(CONTROL_SCHEME_ACTIONS.createBinding, (state, { binding, schemeName }): ControlSchemeState => {
+        on(CONTROL_SCHEME_ACTIONS.createBinding, (state, { binding, schemeName }): IControlSchemeState => {
             const scheme = state.entities[schemeName];
             if (!scheme) {
                 return state;
@@ -146,7 +146,7 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
             }
             return CONTROL_SCHEME_ENTITY_ADAPTER.updateOne(update, state);
         }),
-        on(CONTROL_SCHEME_ACTIONS.deleteBinding, (state, { schemeName, bindingId }): ControlSchemeState => {
+        on(CONTROL_SCHEME_ACTIONS.deleteBinding, (state, { schemeName, bindingId }): IControlSchemeState => {
             const scheme = state.entities[schemeName];
             if (!scheme) {
                 return state;
@@ -171,7 +171,7 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
                 }
             }, state);
         }),
-        on(CONTROL_SCHEME_ACTIONS.savePortConfig, (state, { portConfig, schemeName }): ControlSchemeState => {
+        on(CONTROL_SCHEME_ACTIONS.savePortConfig, (state, { portConfig, schemeName }): IControlSchemeState => {
             const scheme = state.entities[schemeName];
             if (!scheme) {
                 return state;
@@ -189,10 +189,10 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
                 }
             }, state);
         }),
-        on(CONTROL_SCHEME_ACTIONS.importControlScheme, (state, { scheme }): ControlSchemeState => {
+        on(CONTROL_SCHEME_ACTIONS.importControlScheme, (state, { scheme }): IControlSchemeState => {
             return CONTROL_SCHEME_ENTITY_ADAPTER.addOne(scheme, state);
         }),
-        on(CONTROL_SCHEME_ACTIONS.addWidget, (state, { schemeName, widgetConfig }): ControlSchemeState => {
+        on(CONTROL_SCHEME_ACTIONS.addWidget, (state, { schemeName, widgetConfig }): IControlSchemeState => {
             const scheme = state.entities[schemeName];
             if (!scheme) {
                 return state;
@@ -206,7 +206,7 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
                 }
             }, state);
         }),
-        on(CONTROL_SCHEME_ACTIONS.deleteWidget, (state, { schemeName, widgetId }): ControlSchemeState => {
+        on(CONTROL_SCHEME_ACTIONS.deleteWidget, (state, { schemeName, widgetId }): IControlSchemeState => {
             const scheme = state.entities[schemeName];
             if (!scheme) {
                 return state;
@@ -218,7 +218,7 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
                 }
             }, state);
         }),
-        on(CONTROL_SCHEME_ACTIONS.updateWidget, (state, { schemeName, widgetConfig }): ControlSchemeState => {
+        on(CONTROL_SCHEME_ACTIONS.updateWidget, (state, { schemeName, widgetConfig }): IControlSchemeState => {
             const scheme = state.entities[schemeName];
             if (!scheme) {
                 return state;
@@ -236,7 +236,7 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
                 }
             }, state);
         }),
-        on(CONTROL_SCHEME_ACTIONS.reorderWidgets, (state, { schemeName, widgets }): ControlSchemeState => {
+        on(CONTROL_SCHEME_ACTIONS.reorderWidgets, (state, { schemeName, widgets }): IControlSchemeState => {
             const scheme = state.entities[schemeName];
             if (!scheme) {
                 return state;

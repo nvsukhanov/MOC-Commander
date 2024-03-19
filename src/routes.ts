@@ -5,22 +5,22 @@ import { NotFoundPageComponent } from '@app/not-found';
 export const ROUTES: Routes = [
     {
         path: ROUTE_SECTIONS.root,
-        loadComponent: () => import('@app/main').then(m => m.MainPageComponent),
+        loadComponent: () => import('@app/main').then((m) => m.MainPageComponent),
         pathMatch: 'full',
     },
     {
         path: ROUTE_SECTIONS.about,
-        loadComponent: () => import('@app/about').then(m => m.AboutPageComponent),
+        loadComponent: () => import('@app/about').then((m) => m.AboutPageComponent),
         pathMatch: 'full',
     },
     {
         path: ROUTE_SECTIONS.help,
-        loadComponent: () => import('@app/help').then(m => m.HelpPageComponent),
+        loadComponent: () => import('@app/help').then((m) => m.HelpPageComponent),
         pathMatch: 'full'
     },
     {
         path: ROUTE_SECTIONS.steamDeckInstallationManual,
-        loadComponent: () => import('@app/help').then(m => m.SteamDeckHelpPageComponent),
+        loadComponent: () => import('@app/help').then((m) => m.SteamDeckHelpPageComponent),
         pathMatch: 'full'
     },
     {
@@ -28,12 +28,12 @@ export const ROUTES: Routes = [
         children: [
             {
                 path: '',
-                loadComponent: () => import('@app/controllers-list').then(m => m.ControllersListPageComponent),
+                loadComponent: () => import('@app/controllers-list').then((m) => m.ControllersListPageComponent),
                 pathMatch: 'full'
             },
             {
                 path: [ ':id' ].join('/'),
-                loadComponent: () => import('@app/controller-view').then(m => m.ControllerViewPageComponent),
+                loadComponent: () => import('@app/controller-view').then((m) => m.ControllerViewPageComponent),
                 pathMatch: 'full'
             }
         ]
@@ -43,17 +43,17 @@ export const ROUTES: Routes = [
         children: [
             {
                 path: '',
-                loadComponent: () => import('@app/hubs-list').then(m => m.HubsListPageComponent),
+                loadComponent: () => import('@app/hubs-list').then((m) => m.HubsListPageComponent),
                 pathMatch: 'full',
             },
             {
                 path: [ ':id' ].join('/'),
-                loadComponent: () => import('@app/hub-view').then(m => m.HubViewPageComponent),
+                loadComponent: () => import('@app/hub-view').then((m) => m.HubViewPageComponent),
                 pathMatch: 'full'
             },
             {
                 path: [ ':id', ROUTE_SECTIONS.hubEdit ].join('/'),
-                loadComponent: () => import('@app/hub-edit').then(m => m.HubEditPageComponent),
+                loadComponent: () => import('@app/hub-edit').then((m) => m.HubEditPageComponent),
                 pathMatch: 'full',
                 canDeactivate: [hasUnsavedChangesGuardFn]
             }

@@ -91,7 +91,9 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRun
 
     public readonly renameSchemePath$: Observable<string[] | null> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canRenameScheme).pipe(
         concatLatestFrom(() => this.selectedScheme$),
-        map(([ canRename, scheme ]) => (canRename && scheme) ? this.routesBuilderService.controlSchemeRename(scheme.name) : null)
+        map(([ canRename, scheme ]) => (
+            (canRename && scheme) ? this.routesBuilderService.controlSchemeRename(scheme.name) : null)
+        )
     );
 
     private addableWidgetConfigs$: Observable<WidgetConfigModel[]> = this.selectedScheme$.pipe(
@@ -199,7 +201,7 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRun
             );
         });
     }
-    
+
     public onDelete(): void {
         this.selectedScheme$.pipe(
             take(1),

@@ -22,5 +22,4 @@ export class HubCommunicationNotifierMiddleware implements IMessageMiddleware {
         this.internalCommunicationNotifierSubject.next();
         return message;
     }
-
 }

@@ -118,10 +118,11 @@ export const COMPOSE_TASKS_EFFECT = createEffect((
 ) => {
     return actions.pipe(
         ofType(CONTROL_SCHEME_ACTIONS.schemeStarted, CONTROL_SCHEME_ACTIONS.stopScheme),
-        switchMap((action) => action.type === CONTROL_SCHEME_ACTIONS.schemeStarted.type
-                              ? store.select(CONTROL_SCHEME_SELECTORS.selectRunningScheme)
-                              : of(null)
-        ),
+        switchMap((action) => (
+            action.type === CONTROL_SCHEME_ACTIONS.schemeStarted.type
+            ? store.select(CONTROL_SCHEME_SELECTORS.selectRunningScheme)
+            : of(null)
+        )),
         filter((scheme): scheme is ControlSchemeModel => !!scheme),
         switchMap((scheme) => from(groupBindingsByHubsPortId(scheme.bindings))),
         mergeMap((groupedBindings) => getTaskComposingData$(store, actions, groupedBindings, inputComposer)),
@@ -152,6 +153,6 @@ export const COMPOSE_TASKS_EFFECT = createEffect((
             }
             return null;
         }),
-        filter((action) => action !== null),
+        filter((action) => action !== null)
     ) as Observable<Action>;
 }, { functional: true });

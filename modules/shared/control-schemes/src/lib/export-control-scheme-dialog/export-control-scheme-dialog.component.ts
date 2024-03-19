@@ -39,7 +39,7 @@ export class ExportControlSchemeDialogComponent {
         private readonly store: Store
     ) {
         this.exportString$ = this.store.select(CONTROL_SCHEME_SELECTORS.selectScheme(this.data.name)).pipe(
-            map((scheme) => scheme ? this.compressor.compress(scheme) : '')
+            map((scheme) => (scheme ? this.compressor.compress(scheme) : ''))
         );
     }
 

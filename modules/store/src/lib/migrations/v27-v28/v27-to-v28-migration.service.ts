@@ -44,7 +44,6 @@ export class V27ToV28MigrationService implements IMigration<V27Store, V28Store> 
                     // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     const { invert, ...remainingBindingData } = b ;
                     switch (b.inputs[OldInputAction.Servo].inputType) {
-
                         case ControllerInputType.Button:
                         case ControllerInputType.ButtonGroup:
                         case ControllerInputType.Trigger:

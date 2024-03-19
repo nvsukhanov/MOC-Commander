@@ -15,6 +15,6 @@ export function isTriggeredInputActivated<T extends ControlSchemeBindingType>(
     }
     const isPrevInputActivated = !!prevInput[inputAction]?.isActivated;
     const expectedActivationSign = activationDirection === InputDirection.Positive ? 1 : -1;
-    const isCurrentInputDirectionMatches =  Math.sign(currentInput[inputAction]?.value ?? 0) === expectedActivationSign;
+    const isCurrentInputDirectionMatches = Math.sign(currentInput[inputAction]?.value ?? 0) === expectedActivationSign;
     return isCurrentInputDirectionMatches && !isPrevInputActivated;
 }

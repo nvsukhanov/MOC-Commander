@@ -109,10 +109,10 @@ export class GamepadSettingsComponent implements IControllerSettingsRenderer<Gam
         });
 
         this.profile$ = this.store.select(CONTROLLER_SELECTORS.selectById(settingsForm.controls.controllerId.value)).pipe(
-            map((controllerModel) => controllerModel
+            map((controllerModel) => (controllerModel
                                      ? this.profileFactoryService.getByProfileUid(controllerModel.profileUid) as GamepadProfile
                                      : null
-            )
+            ))
         );
 
         this._viewModel = viewModel;

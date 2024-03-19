@@ -163,7 +163,7 @@ export class V30ToV31MigrationService implements IMigration<V30Store, V31Store> 
     ): V31SpeedBinding {
         const bindingResult: V31SpeedBinding = {
             ...b,
-            inputs:{}
+            inputs: {}
         };
         if (b.inputs[SpeedBindingInputAction.Brake]) {
             bindingResult.inputs[SpeedBindingInputAction.Brake] = this.migrateInput(b.inputs[SpeedBindingInputAction.Brake]);

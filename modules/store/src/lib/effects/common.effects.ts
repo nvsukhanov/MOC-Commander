@@ -46,7 +46,7 @@ const RELEASE_WAKE_LOCK_EFFECT = createEffect((
     );
 }, { functional: true, dispatch: false });
 
-export const COMMON_EFFECTS: { [name: string]: FunctionalEffect }  = {
+export const COMMON_EFFECTS: { [name: string]: FunctionalEffect } = {
     copyToClipboard: COPY_TO_CLIPBOARD_EFFECT,
     acquireWakeLock: ACQUIRE_WAKE_LOCK_EFFECT,
     releaseWakeLock: RELEASE_WAKE_LOCK_EFFECT

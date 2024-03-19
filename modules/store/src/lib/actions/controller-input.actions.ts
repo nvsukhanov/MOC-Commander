@@ -5,8 +5,8 @@ import { ControllerInputModel } from '../models';
 export const CONTROLLER_INPUT_ACTIONS = createActionGroup({
     source: 'Controller Input',
     events: {
-        'request input capture': emptyProps(),
-        'release input capture': emptyProps(),
-        'input received': props<{ nextState: ControllerInputModel }>()
+        requestInputCapture: emptyProps(),
+        releaseInputCapture: emptyProps(),
+        inputReceived: props<{ nextState: ControllerInputModel }>()
     }
 });

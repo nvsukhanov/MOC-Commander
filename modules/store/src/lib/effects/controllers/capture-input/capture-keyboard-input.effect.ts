@@ -68,9 +68,9 @@ export const CAPTURE_KEYBOARD_INPUT = createEffect((
 ) => {
     return store.select(CONTROLLER_INPUT_SELECTORS.isKeyboardBeingCaptured).pipe(
         concatLatestFrom(() => store.select(CONTROLLER_CONNECTION_SELECTORS.selectKeyboardConnection)),
-        switchMap(([ isCapturing, connection ]) => isCapturing && connection
+        switchMap(([ isCapturing, connection ]) => (isCapturing && connection
                                                    ? readKeyboard(store, window, connection.controllerId)
-                                                   : NEVER
+                                                   : NEVER)
         )
     ) as Observable<Action>;
 }, { functional: true });

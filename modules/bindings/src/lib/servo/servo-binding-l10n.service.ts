@@ -52,5 +52,4 @@ export class ServoBindingL10nService implements IBindingL10n<ControlSchemeBindin
                 return this.controllerInputNameService.getFullControllerInputNameData(inputConfig);
         }
     }
-
 }
