@@ -1,35 +1,20 @@
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { Observable, Subscription, filter, map, of, switchMap, take } from 'rxjs';
+import { Observable, Subscription, of, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { MatCardModule } from '@angular/material/card';
+import { TranslocoService } from '@ngneat/transloco';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { concatLatestFrom } from '@ngrx/effects';
-import { AsyncPipe } from '@angular/common';
+import { MatCard, MatCardContent } from '@angular/material/card';
 import { ISchemeRunnerComponent, RoutesBuilderService, ScreenSizeObserverService, TitleService } from '@app/shared-misc';
-import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService, HintComponent } from '@app/shared-ui';
-import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, ControlSchemeModel, ROUTER_SELECTORS, WidgetConfigModel } from '@app/store';
+import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService } from '@app/shared-ui';
+import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, ROUTER_SELECTORS } from '@app/store';
 import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData } from '@app/shared-control-schemes';
 
-import { SchemeRunBlocker } from './types';
-import { ControlSchemeRunBlockersL10nPipe } from './control-scheme-run-blockers-l10n.pipe';
 import { CONTROL_SCHEME_PAGE_SELECTORS } from './control-scheme-page.selectors';
-import { ControlSchemePageCompactToolbarControlsComponent } from './compact-toolbar-controls';
-import { ControlSchemePageFullToolbarControlsComponent } from './full-toolbar-controls';
-import {
-    AddWidgetDialogComponent,
-    AddWidgetDialogViewModel,
-    CONTROL_SCHEME_RUN_WIDGET_BLOCKERS_CHECKER,
-    CONTROL_SCHEME_WIDGET_CONFIG_FACTORY,
-    ControlSchemeWidgetsGridComponent,
-    EditWidgetSettingsDialogComponent,
-    IControlSchemeRunWidgetBlockersChecker,
-    IControlSchemeWidgetConfigFactory,
-    ReorderWidgetDialogComponent
-} from './widgets';
-import { HubListItemComponent } from './hub-list-item';
+import { ToolbarControlsComponent } from './toolbar-controls';
+import { CONTROL_SCHEME_RUN_WIDGET_BLOCKERS_CHECKER, IControlSchemeRunWidgetBlockersChecker, WidgetsSectionComponent } from './widgets';
+import { IssuesSectionComponent } from './issues-section';
+import { BindingsSectionComponent } from './bindings-section';
 
 @Component({
     standalone: true,
@@ -37,18 +22,14 @@ import { HubListItemComponent } from './hub-list-item';
     templateUrl: './control-scheme-page.component.html',
     styleUrls: [ './control-scheme-page.component.scss' ],
     imports: [
-        TranslocoPipe,
-        MatCardModule,
         ConfirmationDialogModule,
-        HintComponent,
-        ControlSchemePageCompactToolbarControlsComponent,
-        ControlSchemePageFullToolbarControlsComponent,
+        ToolbarControlsComponent,
         MatDialogModule,
-        MatIconModule,
-        ControlSchemeRunBlockersL10nPipe,
-        ControlSchemeWidgetsGridComponent,
-        AsyncPipe,
-        HubListItemComponent
+        WidgetsSectionComponent,
+        IssuesSectionComponent,
+        BindingsSectionComponent,
+        MatCard,
+        MatCardContent,
     ],
     providers: [
         TitleService,
@@ -57,66 +38,19 @@ import { HubListItemComponent } from './hub-list-item';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRunnerComponent {
-    public readonly selectedScheme$: Observable<ControlSchemeModel | undefined> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.selectCurrentlyViewedScheme);
+    public readonly selectedScheme = this.store.selectSignal(CONTROL_SCHEME_PAGE_SELECTORS.selectCurrentlyViewedScheme);
 
-    public readonly schemeRunBlockers$: Observable<SchemeRunBlocker[]> = this.store.select(
-        CONTROL_SCHEME_PAGE_SELECTORS.selectSchemeRunBlockers(this.controlSchemeStartWidgetCheckService)
-    ).pipe(
-        map((blockers) => blockers.filter((blocker) => !this.hiddenSchemeRunBlockers.has(blocker)))
-    );
-
-    public readonly canRunScheme$: Observable<boolean> = this.store.select(
+    public readonly canRunScheme = this.store.selectSignal(
         CONTROL_SCHEME_PAGE_SELECTORS.canRunViewedScheme(this.controlSchemeStartWidgetCheckService)
     );
 
-    public readonly canDeleteScheme$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canDeleteViewedScheme);
-
-    // public readonly schemeViewTree$: Observable<ControlSchemeViewTreeNode[]> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.schemeViewTree);
-
-    public readonly hubIds = this.store.selectSignal(CONTROL_SCHEME_PAGE_SELECTORS.selectSchemeHubsIds);
-
-    public readonly canExportScheme$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canExportViewedScheme);
-
-    public readonly canCreateBinding$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canCreateBinding);
-
     public readonly isSmallScreen$: Observable<boolean> = this.screenSizeObserverService.isSmallScreen$;
 
-    public readonly canAddWidgets$: Observable<boolean>;
-
-    public readonly canReorderWidgets$: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canReorderWidgets);
-
-    public readonly canDeleteOrEditWidgets$ = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canDeleteOrEditWidgets);
-
-    public readonly isSchemeRunning: Observable<boolean> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.isCurrentControlSchemeRunning);
-
-    public readonly renameSchemePath$: Observable<string[] | null> = this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.canRenameScheme).pipe(
-        concatLatestFrom(() => this.selectedScheme$),
-        map(([ canRename, scheme ]) => (
-            (canRename && scheme) ? this.routesBuilderService.controlSchemeRename(scheme.name) : null)
-        )
-    );
-
-    private addableWidgetConfigs$: Observable<WidgetConfigModel[]> = this.selectedScheme$.pipe(
-        take(1),
-        filter((scheme): scheme is ControlSchemeModel => scheme !== undefined),
-        switchMap((scheme) => this.store.select(CONTROL_SCHEME_PAGE_SELECTORS.addableWidgetConfigFactoryBaseData(scheme.name))),
-        map((addableWidgetData) => {
-            return this.widgetDefaultConfigFactory.createConfigs(
-                addableWidgetData.ios,
-                addableWidgetData.portModes,
-                addableWidgetData.portModesInfo,
-                addableWidgetData.existingWidgets
-            );
-        })
-    );
+    public readonly isSchemeRunning = this.store.selectSignal(CONTROL_SCHEME_PAGE_SELECTORS.isCurrentControlSchemeRunning);
 
     private sub?: Subscription;
 
     private isCapturingInput = false;
-
-    private readonly hiddenSchemeRunBlockers: ReadonlySet<SchemeRunBlocker> = new Set([
-        SchemeRunBlocker.AlreadyRunning
-    ]);
 
     constructor(
         private readonly store: Store,
@@ -127,28 +61,9 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRun
         private readonly dialog: MatDialog,
         private readonly screenSizeObserverService: ScreenSizeObserverService,
         private readonly titleService: TitleService,
-        @Inject(CONTROL_SCHEME_WIDGET_CONFIG_FACTORY) private readonly widgetDefaultConfigFactory: IControlSchemeWidgetConfigFactory,
         @Inject(CONTROL_SCHEME_RUN_WIDGET_BLOCKERS_CHECKER) private readonly controlSchemeStartWidgetCheckService: IControlSchemeRunWidgetBlockersChecker,
         private breadcrumbs: BreadcrumbsService
     ) {
-        this.canAddWidgets$ = this.addableWidgetConfigs$.pipe(
-            map((configs) => configs.length > 0)
-        );
-        this.breadcrumbs.setBreadcrumbsDef(
-            this.selectedScheme$.pipe(
-                filter((r): r is ControlSchemeModel => r !== undefined),
-                map((scheme) => [
-                    {
-                        label$: this.transloco.selectTranslate('pageTitle.controlSchemesList'),
-                        route: this.routesBuilderService.controlSchemesList
-                    },
-                    {
-                        label$: of(scheme.name),
-                        route: this.routesBuilderService.controlSchemeView(scheme.name)
-                    }
-                ])
-            )
-        );
     }
 
     @ViewChild('controlsTemplate', { static: false, read: TemplateRef })
@@ -165,6 +80,22 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRun
                 switchMap((controlSchemeName) => this.transloco.selectTranslate('pageTitle.controlSchemeView', { controlSchemeName }))
             )
         );
+
+        const scheme = this.selectedScheme();
+        if (scheme) {
+            this.breadcrumbs.setBreadcrumbsDef(
+                of([
+                    {
+                        label$: this.transloco.selectTranslate('pageTitle.controlSchemesList'),
+                        route: this.routesBuilderService.controlSchemesList
+                    },
+                    {
+                        label$: of(scheme.name),
+                        route: this.routesBuilderService.controlSchemeView(scheme.name)
+                    }
+                ])
+            );
+        }
     }
 
     public ngOnDestroy(): void {
@@ -172,18 +103,24 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRun
         this.sub?.unsubscribe();
     }
 
-    public onExport(
-        name: string
-    ): void {
+    public onExport(): void {
+        const scheme = this.selectedScheme();
+        if (!scheme) {
+            return;
+        }
         this.dialog.open<ExportControlSchemeDialogComponent, ExportControlSchemeDialogData>(
             ExportControlSchemeDialogComponent,
-            { data: { name } }
+            { data: scheme }
         );
     }
 
-    public runScheme(name: string): void {
+    public runScheme(): void {
+        const scheme = this.selectedScheme();
+        if (!scheme) {
+            return;
+        }
         this.startControllerInputCapture();
-        this.store.dispatch(CONTROL_SCHEME_ACTIONS.startScheme({ name }));
+        this.store.dispatch(CONTROL_SCHEME_ACTIONS.startScheme(scheme));
     }
 
     public stopRunningScheme(): void {
@@ -191,109 +128,22 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRun
         this.store.dispatch(CONTROL_SCHEME_ACTIONS.stopScheme());
     }
 
-    public addBinding(): void {
-        this.selectedScheme$.pipe(
-            take(1),
-            filter((scheme): scheme is ControlSchemeModel => scheme !== undefined)
-        ).subscribe((scheme) => {
-            this.router.navigate(
-                this.routesBuilderService.bindingCreate(scheme.name)
-            );
-        });
-    }
-
     public onDelete(): void {
-        this.selectedScheme$.pipe(
-            take(1),
-            filter((scheme): scheme is ControlSchemeModel => scheme !== undefined),
-            switchMap((scheme) => this.confirmationDialogService.confirm(
-                    this.transloco.selectTranslate('controlScheme.deleteSchemeConfirmationTitle', scheme),
-                    {
-                        content$: this.transloco.selectTranslate('controlScheme.deleteSchemeConfirmationContent'),
-                        confirmTitle$: this.transloco.selectTranslate('controlScheme.deleteSchemeConfirmationConfirmButtonTitle'),
-                        cancelTitle$: this.transloco.selectTranslate('controlScheme.deleteSchemeConfirmationCancelButtonTitle')
-                    }
-                ).pipe(
-                    map((isConfirmed) => [ scheme, isConfirmed ] as const)
-                )
-            )
-        ).subscribe(([ { name }, isConfirmed ]) => {
+        const scheme = this.selectedScheme();
+        if (!scheme) {
+            return;
+        }
+        this.confirmationDialogService.confirm(
+            this.transloco.selectTranslate('controlScheme.deleteSchemeConfirmationTitle', scheme),
+            {
+                content$: this.transloco.selectTranslate('controlScheme.deleteSchemeConfirmationContent'),
+                confirmTitle$: this.transloco.selectTranslate('controlScheme.deleteSchemeConfirmationConfirmButtonTitle'),
+                cancelTitle$: this.transloco.selectTranslate('controlScheme.deleteSchemeConfirmationCancelButtonTitle')
+            }
+        ).subscribe((isConfirmed) => {
             if (isConfirmed) {
                 this.router.navigate(this.routesBuilderService.controlSchemesList);
-                this.store.dispatch(CONTROL_SCHEME_ACTIONS.deleteControlScheme({ name }));
-            }
-        });
-    }
-
-    public onAddWidget(): void {
-        this.selectedScheme$.pipe(
-            take(1),
-            filter((scheme): scheme is ControlSchemeModel => scheme !== undefined),
-            concatLatestFrom(() => this.addableWidgetConfigs$),
-            switchMap(([ scheme, availableWidgetsConfig ]) => {
-                return this.dialog.open<AddWidgetDialogComponent, AddWidgetDialogViewModel, Omit<WidgetConfigModel, 'id'> | undefined>(
-                    AddWidgetDialogComponent,
-                    {
-                        data: {
-                            controlSchemeName: scheme.name,
-                            addableWidgetConfigs: availableWidgetsConfig
-                        }
-                    }
-                ).afterClosed().pipe(
-                    map((widgetConfig) => ({ schemeName: scheme.name, widgetConfig }))
-                );
-            })
-        ).subscribe(({ schemeName, widgetConfig }) => {
-            if (widgetConfig) {
-                this.store.dispatch(CONTROL_SCHEME_ACTIONS.addWidget({ schemeName, widgetConfig }));
-            }
-        });
-    }
-
-    public onEditWidget(
-        widgetIndex: number
-    ): void {
-        this.selectedScheme$.pipe(
-            take(1),
-            filter((scheme): scheme is ControlSchemeModel => scheme !== undefined),
-            switchMap((data) => this.dialog.open<EditWidgetSettingsDialogComponent, WidgetConfigModel, WidgetConfigModel | undefined>(
-                EditWidgetSettingsDialogComponent,
-                { data: data.widgets[widgetIndex] }
-            ).afterClosed().pipe(
-                map((widgetConfig) => ({ schemeName: data.name, widgetConfig }))
-            ))
-        ).subscribe(({ schemeName, widgetConfig }) => {
-            if (widgetConfig) {
-                this.store.dispatch(CONTROL_SCHEME_ACTIONS.updateWidget({ schemeName, widgetConfig }));
-            }
-        });
-    }
-
-    public onDeleteWidget(
-        widgetIndex: number
-    ): void {
-        this.selectedScheme$.pipe(
-            take(1),
-            filter((scheme): scheme is ControlSchemeModel => scheme !== undefined)
-        ).subscribe((scheme) => {
-            const widgetId = scheme.widgets[widgetIndex].id;
-            this.store.dispatch(CONTROL_SCHEME_ACTIONS.deleteWidget({ schemeName: scheme.name, widgetId }));
-        });
-    }
-
-    public onReorderWidgets(): void {
-        this.selectedScheme$.pipe(
-            take(1),
-            filter((scheme): scheme is ControlSchemeModel => scheme !== undefined),
-            switchMap((scheme) => this.dialog.open<ReorderWidgetDialogComponent, WidgetConfigModel[], WidgetConfigModel[]>(
-                ReorderWidgetDialogComponent,
-                { data: scheme.widgets }
-            ).afterClosed().pipe(
-                map((result) => ({ schemeName: scheme.name, result }))
-            ))
-        ).subscribe(({ schemeName, result }) => {
-            if (result) {
-                this.store.dispatch(CONTROL_SCHEME_ACTIONS.reorderWidgets({ schemeName, widgets: result }));
+                this.store.dispatch(CONTROL_SCHEME_ACTIONS.deleteControlScheme({ name: scheme.name }));
             }
         });
     }

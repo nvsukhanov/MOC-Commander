@@ -1,0 +1,14 @@
+@if (runBlockers?.length) {
+    <section class="run-blockers">
+        @for (blocker of runBlockers; track blocker) {
+            <mat-card>
+                <mat-card-content class="issue">
+                    <mat-icon [fontIcon]="'highlight_off'"
+                              [color]="'warn'"
+                    ></mat-icon>
+                    {{ blocker | runBlockerL10n | transloco }}
+                </mat-card-content>
+            </mat-card>
+        }
+    </section>
+}

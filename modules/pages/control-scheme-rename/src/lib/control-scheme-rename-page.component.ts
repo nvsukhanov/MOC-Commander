@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit, Signal } from '@angular/cor
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
-import { map, of } from 'rxjs';
+import { of } from 'rxjs';
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -47,7 +47,7 @@ import { CURRENT_SCHEME_NAME } from './control-scheme-rename-page.selectors';
 export class ControlSchemeRenamePageComponent implements IUnsavedChangesComponent, OnInit {
     public readonly currentSchemeName: Signal<string | null>;
 
-    public cancelPath: string[] = [];
+    public readonly cancelPath = this.routesBuilderService.controlSchemesList;
 
     protected readonly validationErrorsL10nMap: ValidationErrorsL10nMap = {
         [CONTROL_SCHEME_NAME_IS_NOT_UNIQUE]: 'controlScheme.newSchemeDialogNameUniqueness'
@@ -87,7 +87,7 @@ export class ControlSchemeRenamePageComponent implements IUnsavedChangesComponen
                 name: this.nameFormControl.value.trim()
             }));
             this.nameFormControl.markAsPristine();
-            this.router.navigate(this.routesBuilderService.controlSchemeView(this.nameFormControl.value));
+            this.router.navigate(this.routesBuilderService.controlSchemesList);
         }
     }
 
@@ -95,25 +95,21 @@ export class ControlSchemeRenamePageComponent implements IUnsavedChangesComponen
         const previousName = this.currentSchemeName();
         if (previousName !== null) {
             this.nameFormControl.setValue(previousName);
-            this.cancelPath = previousName !== null ? this.routesBuilderService.controlSchemeView(previousName) : [];
-
             this.breadcrumbs.setBreadcrumbsDef(
-                of(previousName).pipe(
-                    map((scheme) => [
-                        {
-                            label$: this.translocoService.selectTranslate('pageTitle.controlSchemesList'),
-                            route: this.routesBuilderService.controlSchemesList
-                        },
-                        {
-                            label$: of(previousName),
-                            route: this.routesBuilderService.controlSchemeView(previousName)
-                        },
-                        {
-                            label$: this.translocoService.selectTranslate('pageTitle.controlSchemeRename', { previousName }),
-                            route: this.routesBuilderService.controlSchemeRename(scheme)
-                        }
-                    ])
-                )
+                of([
+                    {
+                        label$: this.translocoService.selectTranslate('pageTitle.controlSchemesList'),
+                        route: this.routesBuilderService.controlSchemesList
+                    },
+                    {
+                        label$: of(previousName),
+                        route: this.routesBuilderService.controlSchemeView(previousName)
+                    },
+                    {
+                        label$: this.translocoService.selectTranslate('pageTitle.controlSchemeRename', { previousName }),
+                        route: this.routesBuilderService.controlSchemeRename(previousName)
+                    }
+                ])
             );
             this.titleService.setTitle$(this.translocoService.selectTranslate('pageTitle.controlSchemeRename', { previousName }));
         }

@@ -1,13 +1,13 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { SchemeRunBlocker } from './types';
+import { SchemeRunBlocker } from './scheme-run-blocker';
 
 @Pipe({
     standalone: true,
-    name: 'controlSchemeRunBlockersL10nPipe',
+    name: 'runBlockerL10n',
     pure: true
 })
-export class ControlSchemeRunBlockersL10nPipe implements PipeTransform {
+export class RunBlockerL10nPipe implements PipeTransform {
     private readonly l10nKeysMap: { [k in SchemeRunBlocker]: string } = {
         [SchemeRunBlocker.SchemeDoesNotExist]: 'controlScheme.runBlockerSchemeDoesNotExist',
         [SchemeRunBlocker.AlreadyRunning]: 'controlScheme.runBlockerAlreadyRunning',

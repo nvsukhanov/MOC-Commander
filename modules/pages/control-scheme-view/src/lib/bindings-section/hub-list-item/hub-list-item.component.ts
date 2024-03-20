@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, Signal, WritableSignal, computed, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { MatCard, MatCardContent } from '@angular/material/card';
 import { HubInlineViewComponent } from '@app/shared-ui';
 
 import { HUB_LIST_ITEM_SELECTORS } from './hub-list-item.selectors';
@@ -12,7 +13,9 @@ import { HubPortListItemComponent } from '../hub-port-list-item';
     styleUrls: [ './hub-list-item.component.scss' ],
     imports: [
         HubInlineViewComponent,
-        HubPortListItemComponent
+        HubPortListItemComponent,
+        MatCard,
+        MatCardContent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -6,8 +6,6 @@ import {
     ATTACHED_IO_PORT_MODE_INFO_SELECTORS,
     ATTACHED_IO_SELECTORS,
     AttachedIoModel,
-    AttachedIoModesModel,
-    AttachedIoPortModeInfoModel,
     CONTROLLER_CONNECTION_SELECTORS,
     CONTROL_SCHEME_SELECTORS,
     ControlSchemeModel,
@@ -15,14 +13,13 @@ import {
     ControllerConnectionModel,
     HUB_RUNTIME_DATA_SELECTORS,
     ROUTER_SELECTORS,
-    WidgetConfigModel,
     attachedIoModesIdFn,
     attachedIoPortModeInfoIdFn,
     attachedIosIdFn
 } from '@app/store';
-import { areControllableIosPresent, ioHasMatchingModeForOpMode } from '@app/shared-control-schemes';
+import { ioHasMatchingModeForOpMode } from '@app/shared-control-schemes';
 
-import { SchemeRunBlocker } from './types';
+import { SchemeRunBlocker } from './issues-section/run-blockers';
 import { IControlSchemeRunWidgetBlockersChecker } from './widgets';
 
 const SELECT_CURRENTLY_VIEWED_SCHEME = createSelector(
@@ -117,20 +114,6 @@ const SELECT_SCHEME_RUN_BLOCKERS = (widgetChecks: IControlSchemeRunWidgetBlocker
 export const CONTROL_SCHEME_PAGE_SELECTORS = {
     selectCurrentlyViewedScheme: SELECT_CURRENTLY_VIEWED_SCHEME,
     selectIoOutputModes: SELECT_IO_MODES,
-    selectSchemeHubsIds: createSelector(
-        SELECT_CURRENTLY_VIEWED_SCHEME,
-        (
-            scheme: ControlSchemeModel | undefined,
-        ): string[] => {
-            const hubIds = new Set<string>();
-            if (scheme) {
-                for (const binding of scheme.bindings) {
-                    hubIds.add(binding.hubId);
-                }
-            }
-            return [ ...hubIds ];
-        }
-    ),
     selectSchemeRunBlockers: SELECT_SCHEME_RUN_BLOCKERS,
     canRunViewedScheme: (widgetChecks: IControlSchemeRunWidgetBlockersChecker) => createSelector(
         SELECT_SCHEME_RUN_BLOCKERS(widgetChecks),
@@ -146,15 +129,6 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
             routerSchemeName
         ) => runningSchemeName !== null && runningSchemeName === routerSchemeName
     ),
-    canCreateBinding: createSelector(
-        ATTACHED_IO_SELECTORS.selectAll,
-        ATTACHED_IO_MODES_SELECTORS.selectEntities,
-        ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
-        CONTROL_SCHEME_SELECTORS.selectIsAnySchemeRunning,
-        (ios, ioSupportedModesEntities, portModeInfoEntities, isAnySchemeRunning) => {
-            return !isAnySchemeRunning && areControllableIosPresent(ios, ioSupportedModesEntities, portModeInfoEntities);
-        }
-    ),
     canDeleteOrEditWidgets: createSelector(
         CONTROL_SCHEME_SELECTORS.selectRunningState,
         (runningState) => runningState === ControlSchemeRunState.Idle
@@ -162,46 +136,5 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
     canRenameScheme: createSelector(
         CONTROL_SCHEME_SELECTORS.selectRunningState,
         (runningState) => runningState === ControlSchemeRunState.Idle
-    ),
-    canExportViewedScheme: createSelector(
-        SELECT_CURRENTLY_VIEWED_SCHEME,
-        (scheme) => !!scheme && scheme.bindings.length > 0
-    ),
-    canDeleteViewedScheme: createSelector(
-        CONTROL_SCHEME_SELECTORS.selectRunningState,
-        (runningState) => runningState === ControlSchemeRunState.Idle
-    ),
-    addableWidgetConfigFactoryBaseData: (controlSchemeName: string) => createSelector(
-        CONTROL_SCHEME_SELECTORS.selectRunningState,
-        CONTROL_SCHEME_SELECTORS.selectScheme(controlSchemeName),
-        ATTACHED_IO_SELECTORS.selectAll,
-        ATTACHED_IO_MODES_SELECTORS.selectEntities,
-        ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
-        (schemeRunningState, controlScheme, attachedIos, ioPortModes, portModesInfo): {
-            ios: AttachedIoModel[];
-            portModes: Dictionary<AttachedIoModesModel>;
-            portModesInfo: Dictionary<AttachedIoPortModeInfoModel>;
-            existingWidgets: WidgetConfigModel[];
-        } => {
-            if (!controlScheme || schemeRunningState !== ControlSchemeRunState.Idle) {
-                return {
-                    ios: [],
-                    portModes: {},
-                    portModesInfo: {},
-                    existingWidgets: []
-                };
-            }
-
-            return {
-                ios: attachedIos,
-                portModes: ioPortModes,
-                portModesInfo: portModesInfo,
-                existingWidgets: controlScheme.widgets
-            };
-        }
-    ),
-    canReorderWidgets: createSelector(
-        SELECT_CURRENTLY_VIEWED_SCHEME,
-        (scheme) => !!scheme && scheme.widgets.length > 1
-    ),
+    )
 } as const;

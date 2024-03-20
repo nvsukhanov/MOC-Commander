@@ -1,0 +1,15 @@
+<ng-container *libFeatureToolbarControls>
+    <button mat-raised-button
+            [disabled]="!canRun"
+            (click)="onRun()"
+    >
+        {{ 'controlScheme.run' | transloco }}
+    </button>
+
+    <button mat-raised-button
+            [disabled]="!canStop"
+            (click)="onStop()"
+    >
+        {{ 'controlScheme.stop' | transloco }}
+    </button>
+</ng-container>

@@ -171,7 +171,6 @@
     "bindingsListEmptyNotification": "В этой схеме пока нет привязок",
     "create": "Создать",
     "cancelEdit": "Отмена",
-    "addBinding": "Добавить привязку",
     "deleteBinding": "Удалить",
     "saveEdited": "Сохранить",
     "saveCreated": "Сохранить",
@@ -261,6 +260,11 @@
     "menu": "Menu",
     "outputSpeed": "Скорость",
     "outputPower": "Мощность",
+    "issuesSectionTitle": "Проблемы",
+    "widgetsSectionTitle": "Виджеты",
+    "bindingsSectionTitle": "Привязки",
+    "addBindingButtonTitle": "Добавить привязку",
+    "addWidgetButtonTitle": "Добавить виджет",
     "inputSettings": {
       "title": "Настройки ввода",
       "inputPipesPresetTitle": "Конфигурация",
@@ -346,7 +350,6 @@
       "reset": "Передача №0"
     },
     "widgets": {
-      "addWidgetButtonTitle": "Добавить виджет",
       "reorderWidgetsButtonTitle": "Изменить порядок виджетов",
       "addWidgetDialog": {
         "title": "Добавление виджета",

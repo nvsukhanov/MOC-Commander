@@ -1,0 +1,27 @@
+<section class="section"
+         [class.section_running]="isSchemeRunning()"
+>
+    <h3 class="section-title">
+        {{ 'controlScheme.widgetsSectionTitle' | transloco }}
+    </h3>
+    <button mat-icon-button
+            [disabled]="!canReorderWidgets()"
+            (click)="onReorderWidgets()"
+    >
+        <mat-icon [fontIcon]="'unfold_more'"></mat-icon>
+    </button>
+</section>
+
+@if (widgets().length || canAddWidgets()) {
+    <section class="widgets-content"
+             [class.widgets-content_editable]="!isSchemeRunning()"
+    >
+        <page-control-scheme-view-control-scheme-widgets-grid [widgetConfigs]="widgets()"
+                                                              [editable]="canDeleteOrEditWidgets()"
+                                                              [canAddWidget]="canAddWidgets()"
+                                                              (deleteWidget)="onDeleteWidget($event)"
+                                                              (editWidget)="onEditWidget($event)"
+                                                              (addWidget)="onAddWidget()"
+        ></page-control-scheme-view-control-scheme-widgets-grid>
+    </section>
+}

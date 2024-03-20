@@ -43,8 +43,9 @@
 
 .task-info {
     display: inline-flex;
-    align-items: center;
+    align-items: baseline;
     gap: 5px;
+    white-space: nowrap;
 }
 
 .bindings {

@@ -171,7 +171,6 @@
     "bindingsListEmptyNotification": "There are no bindings in this scheme yet",
     "create": "Create",
     "cancelEdit": "Cancel",
-    "addBinding": "Add binding",
     "deleteBinding": "Delete",
     "saveEdited": "Save",
     "saveCreated": "Save",
@@ -261,6 +260,11 @@
     "menu": "Menu",
     "outputSpeed": "Speed",
     "outputPower": "Power",
+    "issuesSectionTitle": "Issues",
+    "widgetsSectionTitle": "Widgets",
+    "bindingsSectionTitle": "Bindings",
+    "addBindingButtonTitle": "Add binding",
+    "addWidgetButtonTitle": "Add widget",
     "inputSettings": {
       "title": "Input settings",
       "inputPipesPresetTitle": "Configuration",
@@ -346,7 +350,6 @@
       "reset": "Set gear #0"
     },
     "widgets": {
-      "addWidgetButtonTitle": "Add widget",
       "reorderWidgetsButtonTitle": "Reorder widgets",
       "addWidgetDialog": {
         "title": "Add Widget",
