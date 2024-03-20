@@ -7,3 +7,4 @@ export * from './i-control-scheme-widget-settings-component-factory';
 export * from './i-control-scheme-widget-component-factory';
 export * from './i-control-scheme-widget-config-factory';
 export * from './i-control-scheme-run-widget-blockers-checker';
+export * from './widgets-section.component';

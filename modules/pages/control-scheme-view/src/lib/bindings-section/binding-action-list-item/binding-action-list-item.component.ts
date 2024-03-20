@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { CONTROLLER_CONNECTION_SELECTORS, ControlSchemeBinding, ControlSchemeBindingInputs, ControlSchemeInputConfig } from '@app/store';
 import { BINDING_CONTROLLER_INPUT_NAME_RESOLVER, IBindingControllerInputNameResolver } from '@app/shared-control-schemes';
 import { ControlSchemeBindingType } from '@app/shared-misc';
+import { EllipsisTitleDirective } from '@app/shared-ui';
 
 import { BINDING_INPUT_NAME_RESOLVER, IBindingInputNameResolver } from './i-binding-input-name-resolver';
 
@@ -16,7 +17,8 @@ import { BINDING_INPUT_NAME_RESOLVER, IBindingInputNameResolver } from './i-bind
     styleUrls: [ './binding-action-list-item.component.scss' ],
     imports: [
         AsyncPipe,
-        TranslocoPipe
+        TranslocoPipe,
+        EllipsisTitleDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

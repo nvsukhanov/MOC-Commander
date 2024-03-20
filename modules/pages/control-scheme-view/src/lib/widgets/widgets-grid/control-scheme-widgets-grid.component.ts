@@ -1,4 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { MatFabButton } from '@angular/material/button';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { WidgetType } from '@app/shared-misc';
 import { WidgetConfigModel } from '@app/store';
 
@@ -18,16 +22,24 @@ type WidgetsGridWidgetViewModel = {
     styleUrls: [ './control-scheme-widgets-grid.component.scss' ],
     imports: [
         OrderWidgetsPipe,
-        WidgetContainerComponent
+        WidgetContainerComponent,
+        AsyncPipe,
+        MatIcon,
+        TranslocoPipe,
+        MatFabButton
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlSchemeWidgetsGridComponent {
     @Input() public editable = false;
 
-    @Output() public deleteWidget = new EventEmitter<number>();
+    @Input() public canAddWidget = false;
 
-    @Output() public editWidget = new EventEmitter<number>();
+    @Output() public readonly deleteWidget = new EventEmitter<number>();
+
+    @Output() public readonly editWidget = new EventEmitter<number>();
+
+    @Output() public readonly addWidget = new EventEmitter<void>();
 
     private _viewModels: WidgetsGridWidgetViewModel[] = [];
 
@@ -50,6 +62,10 @@ export class ControlSchemeWidgetsGridComponent {
 
     public get viewModels(): WidgetsGridWidgetViewModel[] {
         return this._viewModels;
+    }
+
+    public onAddWidget(): void {
+        this.addWidget.emit();
     }
 
     public onDeleteWidget(

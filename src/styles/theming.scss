@@ -17,7 +17,7 @@ $dark-palette: (
     500: #555,
     600: #444,
     700: #333,
-    800: #222,
+    800: #1E1E1E,
     900: #111,
     contrast: (
         50: $dark-primary-text,
@@ -71,11 +71,14 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
     --app-primary-contrast-color: #{mat.get-contrast-color-from-palette($light-palette, 500)};
     --app-warning-color: #{mat.get-color-from-palette($light-warn-palette, 500)};
     --app-warning-contrast-color: #{mat.get-contrast-color-from-palette($light-warn-palette, 500)};
-    --app-disabled-color: rgba(0, 0, 0, 0.38);
+    --app-disabled-color: rgba(0, 0, 0, 0.5);
     --app-text-color: #{$dark-primary-text};
     --app-label-color: rgba(0, 0, 0, 0.6);
     --app-background-color: #f4f4f4;
+    --app-well-color: rgba(0, 0, 0, 0.22);
     --snackbar-text-color: #{$light-primary-text};
+
+    --mdc-text-button-disabled-label-text-color: var(--app-disabled-color);
 
     &.mat-app-background {
         background-color: var(--app-background-color);
@@ -98,6 +101,7 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
     --app-label-color: rgba(255, 255, 255, 0.6);
     --app-text-color: #{$light-primary-text};
     --app-background-color: #{mat.get-color-from-palette($dark-palette, 900)};
+    --app-well-color: rgba(255, 255, 255, 0.22);
     --snackbar-text-color: #{$light-primary-text};
 
     &.mat-app-background {
@@ -107,6 +111,7 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
 
     --mdc-theme-primary: #{$light-primary-text};
     --mdc-theme-text-primary-on-background: #{$light-primary-text};
+    --mdc-text-button-disabled-label-text-color: var(--app-disabled-color);
 
     .mat-mdc-slider.mat-primary {
         --mdc-slider-active-track-color: #{mat.get-color-from-palette($dark-palette, 200)};

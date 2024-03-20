@@ -1,0 +1,12 @@
+@if (schemeRunBlockers(); as blockers) {
+    @if (blockers.length) {
+        <section class="issues-content">
+            <h3 class="section-title">
+                {{ 'controlScheme.issuesSectionTitle' | transloco }}
+            </h3>
+
+            <page-control-scheme-view-run-blockers-list [runBlockers]="blockers"
+            ></page-control-scheme-view-run-blockers-list>
+        </section>
+    }
+}

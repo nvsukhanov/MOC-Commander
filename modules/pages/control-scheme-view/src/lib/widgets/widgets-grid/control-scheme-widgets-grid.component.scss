@@ -1,7 +1,34 @@
 :host {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     grid-auto-rows: 180px;
-    gap: 15px;
+    gap: 5px;
     justify-items: stretch;
+}
+
+.add-widget-button-container {
+    border: 3px dashed var(--app-well-color);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+
+    transition: width 0.5s, border 0.5s;
+    overflow: hidden;
+
+    &_running {
+        width: 0;
+        border: none;
+    }
+}
+
+.add-widget-button {
+    transition: opacity 0.5s;
+
+    &_running {
+        opacity: 0;
+    }
 }

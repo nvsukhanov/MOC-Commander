@@ -3,7 +3,7 @@ import { PortModeName } from 'rxpoweredup';
 import { InjectionToken } from '@angular/core';
 import { AttachedIoModel, WidgetConfigModel } from '@app/store';
 
-import { SchemeRunBlocker } from '../types';
+import { SchemeRunBlocker } from '../issues-section/run-blockers';
 
 export interface IControlSchemeRunWidgetBlockersChecker<TConfig extends WidgetConfigModel = WidgetConfigModel> {
     getBlockers(

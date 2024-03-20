@@ -1,0 +1,13 @@
+.run-blockers {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    .issue {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+}

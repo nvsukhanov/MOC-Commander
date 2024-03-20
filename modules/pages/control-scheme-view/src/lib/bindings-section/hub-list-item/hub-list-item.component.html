@@ -1,0 +1,30 @@
+<mat-card class="hub__card">
+    <mat-card-content class="hub__card-content">
+        <lib-hub-inline-view [isHubKnown]="isHubKnown()"
+                             [name]="hubName()"
+                             [hubId]="hubId()"
+                             [batteryLevel]="batteryLevel()"
+                             [rssiLevel]="rssi()"
+                             [isButtonPressed]="buttonState()"
+                             [hasCommunication]="hasCommunication()"
+                             [isConnected]="isConnected()"
+                             [showControls]="false"
+        ></lib-hub-inline-view>
+    </mat-card-content>
+</mat-card>
+
+@if (portIds().length) {
+    <section class="hub-ports">
+        @for (portId of portIds(); track portId) {
+            <mat-card class="hub-ports__card">
+                <mat-card-content class="hub-ports__card-content">
+
+                    <page-control-scheme-view-hub-port-list-item [portId]="portId"
+                                                                 [hubId]="hubId()"
+                                                                 [controlSchemeName]="controlSchemeName()"
+                    ></page-control-scheme-view-hub-port-list-item>
+                </mat-card-content>
+            </mat-card>
+        }
+    </section>
+}

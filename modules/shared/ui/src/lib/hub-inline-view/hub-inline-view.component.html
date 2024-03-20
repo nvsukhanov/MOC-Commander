@@ -3,6 +3,7 @@
        libEllipsisTitle
        [routerLink]="hubViewHref"
     >
+        <mat-icon [fontIcon]="'memory'"></mat-icon>
         {{ name }}
     </a>
 } @else {
@@ -10,6 +11,7 @@
             [disabled]="true"
             [title]="'hub.notConnected' | transloco"
     >
+        <mat-icon [fontIcon]="'memory'"></mat-icon>
         @if (isHubKnown) {
             {{ name }}
         } @else {

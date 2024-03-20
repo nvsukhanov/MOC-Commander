@@ -136,4 +136,12 @@ export class ControlSchemeListPageComponent implements OnInit {
             }
         });
     }
+
+    public onRename(
+        name: string
+    ): void {
+        this.router.navigate(
+            this.routesBuilderService.controlSchemeRename(name)
+        );
+    }
 }
