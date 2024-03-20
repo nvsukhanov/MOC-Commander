@@ -7,7 +7,9 @@
 }
 
 .add-widget-button-container {
-    border: 3px dashed var(--app-well-color);
+    border-width: 3px;
+    border-style: dashed;
+    border-color: var(--app-well-color);
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -16,12 +18,12 @@
     height: 100%;
     box-sizing: border-box;
 
-    transition: width 0.5s, border 0.5s;
+    transition: width 0.5s, border-color 0.5s;
     overflow: hidden;
 
     &_running {
         width: 0;
-        border: none;
+        border-color: rgba(0,0,0,0);
     }
 }
 
