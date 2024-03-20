@@ -12,16 +12,14 @@
     </button>
 </section>
 
-@if (widgets().length || canAddWidgets()) {
-    <section class="widgets-content"
-             [class.widgets-content_editable]="!isSchemeRunning()"
-    >
-        <page-control-scheme-view-control-scheme-widgets-grid [widgetConfigs]="widgets()"
-                                                              [editable]="canDeleteOrEditWidgets()"
-                                                              [canAddWidget]="canAddWidgets()"
-                                                              (deleteWidget)="onDeleteWidget($event)"
-                                                              (editWidget)="onEditWidget($event)"
-                                                              (addWidget)="onAddWidget()"
-        ></page-control-scheme-view-control-scheme-widgets-grid>
-    </section>
-}
+<section class="widgets-content"
+         [class.widgets-content_editable]="!isSchemeRunning()"
+>
+    <page-control-scheme-view-control-scheme-widgets-grid [widgetConfigs]="widgets()"
+                                                          [editable]="canDeleteOrEditWidgets()"
+                                                          [canAddWidget]="canAddWidgets()"
+                                                          (deleteWidget)="onDeleteWidget($event)"
+                                                          (editWidget)="onEditWidget($event)"
+                                                          (addWidget)="onAddWidget()"
+    ></page-control-scheme-view-control-scheme-widgets-grid>
+</section>
