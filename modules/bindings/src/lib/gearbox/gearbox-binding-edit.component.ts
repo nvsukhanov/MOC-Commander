@@ -10,7 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
-import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
+import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-components';
 import { GearboxBindingInputAction, HubMotorPositionFacadeService } from '@app/store';
 import { BindingControlSelectHubComponent, BindingControlSelectIoComponent, MotorPositionAdjustmentComponent } from '@app/shared-control-schemes';
 

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslocoDirective } from '@ngneat/transloco';
 import { MatDivider } from '@angular/material/divider';
 import { NgOptimizedImage } from '@angular/common';
-import { CodeBlockComponent } from '@app/shared-ui';
+import { CodeBlockComponent } from '@app/shared-components';
 
 import { COMMON_RESOURCES } from '../common-resources';
 

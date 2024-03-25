@@ -4,7 +4,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ControlSchemeBindingType, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
-import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
+import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-components';
 import { StepperBindingInputAction } from '@app/store';
 import { BindingControlSelectHubComponent, BindingControlSelectIoComponent } from '@app/shared-control-schemes';
 

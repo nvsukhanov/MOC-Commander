@@ -25,7 +25,7 @@
       "@app/shared-misc": ["modules/shared/misc/src/index.ts"],
       "@app/bindings": ["modules/bindings/src/index.ts"],
       "@app/widgets": ["modules/widgets/src/index.ts"],
-      "@app/shared-ui": ["modules/shared/ui/src/index.ts"],
+      "@app/shared-components": ["modules/shared/components/src/index.ts"],
       "@app/shared-i18n": ["modules/shared/i18n/src/index.ts"],
       "@app/shared-control-schemes": ["modules/shared/control-schemes/src/index.ts"],
       "@app/shared-controller": ["modules/shared/controller/src/index.ts"],

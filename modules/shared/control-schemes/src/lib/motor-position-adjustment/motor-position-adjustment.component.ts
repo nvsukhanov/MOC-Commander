@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { MOTOR_LIMITS, MotorServoEndState, PortModeName } from 'rxpoweredup';
 import { AsyncPipe } from '@angular/common';
 import { ATTACHED_IO_PORT_MODE_INFO_SELECTORS, ATTACHED_IO_PROPS_SELECTORS, HubStorageService } from '@app/store';
-import { MotorPositionAdjustmentControlsComponent } from '@app/shared-ui';
+import { MotorPositionAdjustmentControlsComponent } from '@app/shared-components';
 
 @Component({
     standalone: true,

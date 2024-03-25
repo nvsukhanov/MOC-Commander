@@ -6,7 +6,7 @@ import { NavigationActionTiming, provideRouterStore, routerReducer } from '@ngrx
 import { Router } from '@angular/router';
 import { provideControllerProfiles } from '@app/controller-profiles';
 import { NAVIGATOR, RoutesBuilderService } from '@app/shared-misc';
-import { COPY_TO_CLIPBOARD_HANDLER } from '@app/shared-ui';
+import { COPY_TO_CLIPBOARD_HANDLER } from '@app/shared-components';
 
 import { IState } from './i-state';
 import {

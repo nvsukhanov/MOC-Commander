@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatMenuItem } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
-import { TiltGaugeComponent, TiltGaugeIconDirective, WidgetComponent } from '@app/shared-ui';
+import { TiltGaugeComponent, TiltGaugeIconDirective, WidgetComponent } from '@app/shared-components';
 
 @Component({
     standalone: true,

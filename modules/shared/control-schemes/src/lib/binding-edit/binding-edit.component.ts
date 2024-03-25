@@ -6,7 +6,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, distinctUntilChanged, map, merge, startWith } from 'rxjs';
 import { AppValidators, ControlSchemeBindingType, getEnumValues } from '@app/shared-misc';
-import { HideOnSmallScreenDirective } from '@app/shared-ui';
+import { HideOnSmallScreenDirective } from '@app/shared-components';
 import { ControlSchemeBinding } from '@app/store';
 
 import { BindingEditSectionComponent } from './section';

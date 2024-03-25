@@ -1,4 +1,4 @@
-import { IChangelog } from '@app/shared-ui';
+import { IChangelog } from '@app/shared-components';
 
 export const CHANGELOG: IChangelog = [
     {

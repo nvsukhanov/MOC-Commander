@@ -6,7 +6,7 @@ import { Router, RouterLink } from '@angular/router';
 import { MatAnchor, MatButton } from '@angular/material/button';
 import { AsyncPipe } from '@angular/common';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
-import { BreadcrumbsService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared-ui';
+import { BreadcrumbsService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared-components';
 import { HUBS_ACTIONS, HubModel, ROUTER_SELECTORS, attachedIosIdFn } from '@app/store';
 
 import { HubPropertiesViewComponent } from './hub-properties-view';

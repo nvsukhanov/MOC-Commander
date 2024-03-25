@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { AsyncPipe } from '@angular/common';
 import { TitleService } from '@app/shared-misc';
-import { ChangelogComponent } from '@app/shared-ui';
+import { ChangelogComponent } from '@app/shared-components';
 
 @Component({
     standalone: true,

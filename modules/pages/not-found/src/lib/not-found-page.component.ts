@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { TitleService } from '@app/shared-misc';
-import { HintComponent } from '@app/shared-ui';
+import { HintComponent } from '@app/shared-components';
 
 @Component({
     standalone: true,

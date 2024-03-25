@@ -258,7 +258,7 @@
                   "scope:store",
                   "scope:page",
                   "scope:shared-misc",
-                  "scope:shared-ui",
+                  "scope:shared-components",
                   "scope:shared-feature",
                   "scope:i18n",
                   "scope:controller-profiles"
@@ -268,13 +268,13 @@
                 "sourceTag": "scope:store",
                 "onlyDependOnLibsWithTags": [
                   "scope:shared-misc",
+                  "scope:shared-components",
                   "scope:i18n",
-                  "scope:controller-profiles",
-                  "scope:shared-ui"
+                  "scope:controller-profiles"
                 ]
               },
               {
-                "sourceTag": "scope:shared-ui",
+                "sourceTag": "scope:shared-components",
                 "onlyDependOnLibsWithTags": [
                   "scope:shared-misc",
                   "scope:i18n"
@@ -286,7 +286,7 @@
                   "scope:store",
                   "scope:shared-misc",
                   "scope:i18n",
-                  "scope:shared-ui",
+                  "scope:shared-components",
                   "scope:controller-profiles"
                 ]
               },
@@ -310,7 +310,7 @@
                   "scope:shared-feature",
                   "scope:shared-misc",
                   "scope:i18n",
-                  "scope:shared-ui",
+                  "scope:shared-components",
                   "scope:controller-profiles"
                 ]
               },

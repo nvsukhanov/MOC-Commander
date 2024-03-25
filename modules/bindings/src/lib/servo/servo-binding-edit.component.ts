@@ -12,7 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { concatLatestFrom } from '@ngrx/effects';
 import { AsyncPipe } from '@angular/common';
 import { ControlSchemeBindingType, ValidationErrorsL10nMap, ValidationMessagesDirective, transformRelativeDegToAbsoluteDeg } from '@app/shared-misc';
-import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
+import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-components';
 import {
     ATTACHED_IO_PROPS_SELECTORS,
     CONTROL_SCHEME_ACTIONS,

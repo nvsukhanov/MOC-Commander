@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { RoutesBuilderService } from '@app/shared-misc';
-import { EllipsisTitleDirective, HubTypeToL10nKeyPipe } from '@app/shared-ui';
+import { EllipsisTitleDirective, HubTypeToL10nKeyPipe } from '@app/shared-components';
 import { HubModel, HubRuntimeDataModel } from '@app/store';
 
 @Component({
