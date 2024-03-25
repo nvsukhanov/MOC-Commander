@@ -34,7 +34,7 @@
     "deep-equal": "^2.2.2",
     "lzma": "^2.3.2",
     "murmurhash-js": "^1.0.0",
-    "ngrx-store-localstorage": "^16.1.0",
+    "ngrx-store-localstorage": "17.0.0",
     "rxjs": "^7.8.1",
     "rxpoweredup": "^0.4.5",
     "tslib": "^2.5.2",
@@ -81,7 +81,6 @@
     "typescript": "~5.2.2"
   },
   "overrides": {
-    "axios": "1.6.0",
-    "vite": "5.0.12"
+    "webpack-dev-middleware": "6.1.2"
   }
 }
