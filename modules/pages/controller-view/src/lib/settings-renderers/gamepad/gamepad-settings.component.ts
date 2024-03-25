@@ -7,7 +7,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { AsyncPipe } from '@angular/common';
 import { GamepadProfile, GamepadProfileFactoryService } from '@app/controller-profiles';
-import { HideOnSmallScreenDirective, InputActivityIndicatorComponent, RangeControlComponent, ToggleControlComponent } from '@app/shared-ui';
+import { HideOnSmallScreenDirective, InputActivityIndicatorComponent, RangeControlComponent, ToggleControlComponent } from '@app/shared-components';
 import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_SELECTORS, GamepadSettingsModel } from '@app/store';
 
 import { IControllerSettingsRenderer } from '../i-controller-settings-renderer';

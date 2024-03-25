@@ -3,7 +3,7 @@ import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { of } from 'rxjs';
 import { InstallationManualsListComponent } from '@app/manuals';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
-import { BreadcrumbsService } from '@app/shared-ui';
+import { BreadcrumbsService } from '@app/shared-components';
 
 @Component({
     standalone: true,

@@ -5,7 +5,7 @@ import { TranslocoPipe } from '@ngneat/transloco';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
-import { UploadFileFormControlComponent } from '@app/shared-ui';
+import { UploadFileFormControlComponent } from '@app/shared-components';
 import { AppStoreVersion, IState, MigrateStoreService } from '@app/store';
 
 import { STATE_FILE_VALIDATION_ERRORS, createStateFileValidatorFn } from './state-file-validator-fn';

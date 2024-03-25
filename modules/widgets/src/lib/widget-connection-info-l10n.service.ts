@@ -3,7 +3,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { Observable, combineLatestWith, map, of, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { WidgetType } from '@app/shared-misc';
-import { IoTypeToL10nKeyService, PortIdToPortNameService } from '@app/shared-ui';
+import { IoTypeToL10nKeyService, PortIdToPortNameService } from '@app/shared-components';
 import { ATTACHED_IO_SELECTORS, HUBS_SELECTORS } from '@app/store';
 
 @Injectable()

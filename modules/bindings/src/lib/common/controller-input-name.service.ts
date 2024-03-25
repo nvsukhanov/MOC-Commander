@@ -4,7 +4,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { ButtonGroupButtonId } from 'rxpoweredup';
 import { ControlSchemeInputConfig, ControllerProfilesFacadeService } from '@app/store';
 import { ControllerInputType, IControllerProfile } from '@app/controller-profiles';
-import { PortIdToPortNameService } from '@app/shared-ui';
+import { PortIdToPortNameService } from '@app/shared-components';
 
 @Injectable()
 export class ControllerInputNameService {

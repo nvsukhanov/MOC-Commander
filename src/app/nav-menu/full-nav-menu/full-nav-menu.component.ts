@@ -6,7 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { RoutesBuilderService } from '@app/shared-misc';
-import { EllipsisTitleDirective } from '@app/shared-ui';
+import { EllipsisTitleDirective } from '@app/shared-components';
 
 import { DiscoverHubButtonComponent } from '../discover-hub-button';
 

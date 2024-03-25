@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { IUnsavedChangesComponent, RoutesBuilderService, TitleService, ValidationMessagesDirective } from '@app/shared-misc';
-import { BreadcrumbsService, FeatureToolbarControlsDirective, HintComponent, PortIdToPortNamePipe, PortIdToPortNameService } from '@app/shared-ui';
+import { BreadcrumbsService, FeatureToolbarControlsDirective, HintComponent, PortIdToPortNamePipe, PortIdToPortNameService } from '@app/shared-components';
 import { CONTROL_SCHEME_ACTIONS } from '@app/store';
 import { PortConfigFormBuilderService } from '@app/shared-control-schemes';
 

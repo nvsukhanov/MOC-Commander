@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { ISchemeRunnerComponent, RoutesBuilderService, ScreenSizeObserverService, TitleService } from '@app/shared-misc';
-import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService } from '@app/shared-ui';
+import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService } from '@app/shared-components';
 import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, ROUTER_SELECTORS } from '@app/store';
 import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData } from '@app/shared-control-schemes';
 

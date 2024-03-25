@@ -9,7 +9,7 @@ import { Observable, Subscription, of, startWith, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { MatBadge } from '@angular/material/badge';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
-import { HideOnSmallScreenDirective } from '@app/shared-ui';
+import { HideOnSmallScreenDirective } from '@app/shared-components';
 import { ControlSchemeBindingInputs, ControllerInputModel, InputDirection, InputPipeType } from '@app/store';
 import {
     BINDING_CONTROLLER_INPUT_NAME_RESOLVER,

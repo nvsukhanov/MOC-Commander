@@ -5,7 +5,7 @@ import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ValidationMessagesDirective, WidgetType } from '@app/shared-misc';
-import { ToggleControlComponent } from '@app/shared-ui';
+import { ToggleControlComponent } from '@app/shared-components';
 
 import { UnifiedTiltWidgetConfig } from '../unified-tilt-widget-config';
 import { CommonTiltWidgetsFormBuilderService } from '../common-tilt-widgets-form-builder.service';

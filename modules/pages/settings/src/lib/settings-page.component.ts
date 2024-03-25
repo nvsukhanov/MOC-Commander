@@ -12,7 +12,7 @@ import { of } from 'rxjs';
 import { Language } from '@app/shared-i18n';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
 import { IState, SETTINGS_ACTIONS, SETTINGS_FEATURE, UserSelectedTheme } from '@app/store';
-import { BreadcrumbsService } from '@app/shared-ui';
+import { BreadcrumbsService } from '@app/shared-components';
 
 import { RestoreStateFromBackupDialogComponent } from './restore-state-from-backup-dialog';
 import { ResetStateDialogComponent } from './reset-state-dialog';

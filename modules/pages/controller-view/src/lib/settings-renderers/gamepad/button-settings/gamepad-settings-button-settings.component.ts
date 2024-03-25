@@ -3,7 +3,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { MatIconModule } from '@angular/material/icon';
 import { AsyncPipe } from '@angular/common';
-import { InputActivityIndicatorComponent, RangeControlComponent, SliderControlComponent, ToggleControlComponent } from '@app/shared-ui';
+import { InputActivityIndicatorComponent, RangeControlComponent, SliderControlComponent, ToggleControlComponent } from '@app/shared-components';
 
 import { GamepadSettingsButtonSettingsViewModel } from '../types';
 import { InputOutputDiagramComponent } from '../input-output-diagram';

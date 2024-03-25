@@ -1,9 +1,9 @@
 {
-  "name": "shared-ui",
+  "name": "shared-components",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "modules/shared/ui/src",
-  "prefix": "shared-ui",
-  "tags": ["scope:shared-ui"],
+  "sourceRoot": "modules/shared/components/src",
+  "prefix": "shared-components",
+  "tags": ["scope:shared-components"],
   "projectType": "library",
   "targets": {
     "test": {
@@ -12,7 +12,7 @@
         "{workspaceRoot}/coverage/{projectRoot}"
       ],
       "options": {
-        "jestConfig": "modules/shared/ui/jest.config.ts"
+        "jestConfig": "modules/shared/components/jest.config.ts"
       }
     },
     "lint": {
@@ -22,9 +22,9 @@
       ],
       "options": {
         "lintFilePatterns": [
-          "modules/shared/ui/**/*.ts",
-          "modules/shared/ui/**/*.html",
-          "modules/shared/ui/package.json"
+          "modules/shared/components/**/*.ts",
+          "modules/shared/components/**/*.html",
+          "modules/shared/components/package.json"
         ]
       }
     }

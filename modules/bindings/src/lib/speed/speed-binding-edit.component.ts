@@ -4,7 +4,7 @@ import { TranslocoPipe } from '@ngneat/transloco';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatError } from '@angular/material/form-field';
 import { ControlSchemeBindingType, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
-import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-ui';
+import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-components';
 import { InputPipeType, SpeedBindingInputAction } from '@app/store';
 import { BindingControlSelectHubComponent, BindingControlSelectIoComponent } from '@app/shared-control-schemes';
 

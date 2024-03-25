@@ -7,7 +7,7 @@ import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { MatError } from '@angular/material/form-field';
 import { MatTooltip } from '@angular/material/tooltip';
-import { EllipsisTitleDirective, IoTypeToL10nKeyPipe, PortIdToPortNamePipe } from '@app/shared-ui';
+import { EllipsisTitleDirective, IoTypeToL10nKeyPipe, PortIdToPortNamePipe } from '@app/shared-components';
 import { ControlSchemeBinding, PORT_TASKS_SELECTORS, PortCommandTask } from '@app/store';
 import { RoutesBuilderService } from '@app/shared-misc';
 import { BindingTypeToL10nKeyPipe } from '@app/shared-control-schemes';

@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { concatLatestFrom } from '@ngrx/effects';
 import { AsyncPipe } from '@angular/common';
 import { IUnsavedChangesComponent, RoutesBuilderService, TitleService } from '@app/shared-misc';
-import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective } from '@app/shared-ui';
+import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective } from '@app/shared-components';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeBinding, ROUTER_SELECTORS } from '@app/store';
 import { BindingEditComponent } from '@app/shared-control-schemes';
 

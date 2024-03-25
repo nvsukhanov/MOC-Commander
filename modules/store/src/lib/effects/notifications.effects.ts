@@ -6,7 +6,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { Action, Store } from '@ngrx/store';
 import { GamepadProfileFactoryService, KeyboardProfileFactoryService } from '@app/controller-profiles';
 import { ScreenSizeObserverService } from '@app/shared-misc';
-import { AppUpdatedNotificationComponent } from '@app/shared-ui';
+import { AppUpdatedNotificationComponent } from '@app/shared-components';
 
 import { APP_UPDATE_ACTIONS, COMMON_ACTIONS, CONTROLLERS_ACTIONS, CONTROL_SCHEME_ACTIONS, HUBS_ACTIONS } from '../actions';
 import { CONTROLLER_SELECTORS } from '../selectors';

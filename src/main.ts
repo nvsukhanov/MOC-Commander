@@ -11,7 +11,7 @@ import { ShowOnTouchedErrorStateMatcher } from '@app/shared-misc';
 import { provideI18n } from '@app/shared-i18n';
 import { provideApplicationStore } from '@app/store';
 import { provideBindings } from '@app/bindings';
-import { CHANGELOG_TOKEN } from '@app/shared-ui';
+import { CHANGELOG_TOKEN } from '@app/shared-components';
 
 import { RootComponent } from './app';
 import { ROUTES } from './routes';

@@ -8,7 +8,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatMenuModule } from '@angular/material/menu';
 import { AsyncPipe } from '@angular/common';
 import { RoutesBuilderService } from '@app/shared-misc';
-import { EllipsisTitleDirective } from '@app/shared-ui';
+import { EllipsisTitleDirective } from '@app/shared-components';
 
 import { DiscoverHubButtonComponent } from '../discover-hub-button';
 

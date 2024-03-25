@@ -16,7 +16,7 @@ import {
     EllipsisTitleDirective,
     FeatureToolbarControlsDirective,
     HintComponent
-} from '@app/shared-ui';
+} from '@app/shared-components';
 import { CONTROL_SCHEME_ACTIONS, CONTROL_SCHEME_SELECTORS, ControlSchemeModel } from '@app/store';
 import {
     ControlSchemeViewUrlPipe,

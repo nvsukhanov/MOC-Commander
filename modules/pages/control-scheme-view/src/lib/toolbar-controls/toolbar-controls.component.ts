@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { FeatureToolbarControlsDirective } from '@app/shared-ui';
+import { FeatureToolbarControlsDirective } from '@app/shared-components';
 
 @Component({
     standalone: true,

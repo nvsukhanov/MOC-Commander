@@ -1,6 +1,6 @@
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
-import { ICopyToClipboardHandler } from '@app/shared-ui';
+import { ICopyToClipboardHandler } from '@app/shared-components';
 
 import { COMMON_ACTIONS } from './actions';
 
