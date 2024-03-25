@@ -14,6 +14,7 @@
 
 <section class="widgets-content"
          [class.widgets-content_editable]="!isSchemeRunning()"
+         [class.widgets-content_empty]="isSchemeRunning() && !widgets().length"
 >
     <page-control-scheme-view-control-scheme-widgets-grid [widgetConfigs]="widgets()"
                                                           [editable]="canDeleteOrEditWidgets()"

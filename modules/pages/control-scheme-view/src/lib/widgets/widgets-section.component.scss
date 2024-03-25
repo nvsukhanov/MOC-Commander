@@ -27,10 +27,18 @@
     border-color: rgba(0,0,0,0);
     padding: 5px;
     border-radius: 5px;
+    max-height: 100vh;
 
-    transition: border-color 0.5s;
+    transition: border-color 0.5s, max-height 0.5s, padding 0.5s, margin-bottom 0.5s;
 
     &_editable {
         border-color: var(--app-well-color);
+    }
+
+    &_empty {
+        max-height: 0;
+        padding: 0;
+        margin-bottom: 0;
+        overflow: hidden;
     }
 }
