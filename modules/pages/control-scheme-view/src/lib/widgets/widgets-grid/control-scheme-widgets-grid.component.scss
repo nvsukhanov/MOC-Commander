@@ -18,11 +18,11 @@
     height: 100%;
     box-sizing: border-box;
 
-    transition: width 0.5s, border-color 0.5s;
+    transition: opacity 0.5s, border-color 0.5s;
     overflow: hidden;
 
     &_running {
-        width: 0;
+        opacity: 0;
         border-color: rgba(0,0,0,0);
     }
 }
