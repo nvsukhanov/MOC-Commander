@@ -3,8 +3,7 @@ import { MatSnackBarAction, MatSnackBarActions, MatSnackBarLabel, MatSnackBarRef
 import { MatButton } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@ngneat/transloco';
-
-import { RoutesBuilderService } from '../routing';
+import { RoutesBuilderService } from '@app/shared-misc';
 
 @Component({
     standalone: true,
