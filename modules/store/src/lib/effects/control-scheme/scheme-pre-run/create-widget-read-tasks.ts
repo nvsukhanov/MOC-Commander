@@ -8,14 +8,14 @@ import { IWidgetsReadTasksFactory } from './i-widgets-read-tasks-factory';
 export function createWidgetReadTasks(
     scheme: ControlSchemeModel,
     store: Store,
-    widgetTaskFactory: IWidgetsReadTasksFactory
+    widgetTaskFactory: IWidgetsReadTasksFactory,
 ): Array<Observable<unknown>> {
     const result: Array<Observable<unknown>> = [];
     const readerTasks = widgetTaskFactory.createReadTasks(scheme.widgets);
     for (const task of readerTasks) {
         const obs = new Observable((subscriber) => {
             let initialValueReceived = false;
-            task.subscribe((taskData) => {
+            const sub = task.subscribe((taskData) => {
                 if (!initialValueReceived) {
                     initialValueReceived = true;
                     subscriber.next(null);
@@ -23,6 +23,9 @@ export function createWidgetReadTasks(
                 }
                 store.dispatch(CONTROL_SCHEME_WIDGETS_DATA_ACTIONS.updateWidgetData(taskData));
             });
+            return () => {
+                sub.unsubscribe();
+            };
         });
 
         result.push(obs);

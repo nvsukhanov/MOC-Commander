@@ -7,6 +7,7 @@ export const CHANGELOG: IChangelog = [
             'changelog.1-2-8.minorNotificationImprovements',
             'changelog.1-2-8.addGamepadPollingRateSettings',
             'changelog.1-2-8.increaseGamepadPollingRate',
+            'changelog.1-2-8.fixWidgetUpdatesAfterSchemeStartFailure',
         ]
     },
     {
