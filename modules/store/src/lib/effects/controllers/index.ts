@@ -1,17 +1,11 @@
 import { FunctionalEffect } from '@ngrx/effects';
 
-import { CAPTURE_GAMEPAD_INPUT, CAPTURE_HUB_BUTTON_GROUPS_INPUT, CAPTURE_HUB_GREEN_BUTTON_INPUT, CAPTURE_KEYBOARD_INPUT } from './capture-input';
-import { LISTEN_GAMEPAD_CONNECT, LISTEN_HUB_CONNECT, LISTEN_KEYBOARD_CONNECT } from './listen-connect';
-import { LISTEN_GAMEPAD_DISCONNECT, LISTEN_HUB_DISCONNECT } from './listen-disconnect';
+import { CONTROLLER_LISTEN_CONNECT_EFFECTS } from './listen-connect';
+import { CONTROLLER_LISTEN_DISCONNECT_EFFECTS } from './listen-disconnect';
+import { CONTROLLER_CAPTURE_INPUT_EFFECTS } from './capture-input';
 
 export const CONTROLLER_EFFECTS: { [name: string]: FunctionalEffect } = {
-    gamepadInput: CAPTURE_GAMEPAD_INPUT,
-    gamepadConnect: LISTEN_GAMEPAD_CONNECT,
-    gamepadDisconnect: LISTEN_GAMEPAD_DISCONNECT,
-    keyboardConnect: LISTEN_KEYBOARD_CONNECT,
-    keyboardInput: CAPTURE_KEYBOARD_INPUT,
-    hubConnect: LISTEN_HUB_CONNECT,
-    hubDisconnect: LISTEN_HUB_DISCONNECT,
-    hubGreenButtonInput: CAPTURE_HUB_GREEN_BUTTON_INPUT,
-    hubButtonGroupsInput: CAPTURE_HUB_BUTTON_GROUPS_INPUT
-};
+    ...CONTROLLER_CAPTURE_INPUT_EFFECTS,
+    ...CONTROLLER_LISTEN_CONNECT_EFFECTS,
+    ...CONTROLLER_LISTEN_DISCONNECT_EFFECTS
+} as const;

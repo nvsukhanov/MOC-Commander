@@ -15,11 +15,12 @@ import { ControlSchemeBindingType, ValidationErrorsL10nMap, ValidationMessagesDi
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-components';
 import {
     ATTACHED_IO_PROPS_SELECTORS,
-    CONTROL_SCHEME_ACTIONS,
     CalibrationResult,
     CalibrationResultType,
     HubMotorPositionFacadeService,
     InputPipeType,
+    OutOfRangeCalibrationError,
+    SHOW_NOTIFICATION_ACTIONS,
     ServoBindingInputAction
 } from '@app/store';
 import { BindingControlSelectHubComponent, BindingControlSelectIoComponent, MotorPositionAdjustmentComponent } from '@app/shared-control-schemes';
@@ -224,7 +225,10 @@ export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<
                 this._form.updateValueAndValidity();
             }
             if (result.type === CalibrationResultType.error) {
-                this.store.dispatch(CONTROL_SCHEME_ACTIONS.servoCalibrationError({ error: result.error }));
+                const errorL10nKey = result.error instanceof OutOfRangeCalibrationError
+                    ? 'controlScheme.servoBinding.calibrationOutOfRangeError'
+                    : 'controlScheme.servoBinding.calibrationError';
+                this.store.dispatch(SHOW_NOTIFICATION_ACTIONS.error({ l10nKey: errorL10nKey }));
             }
         });
     }

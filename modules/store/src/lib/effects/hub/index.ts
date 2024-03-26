@@ -13,6 +13,10 @@ import { REQUEST_PORT_ABSOLUTE_POSITION_EFFECT } from './request-port-absolute-p
 import { SET_MOTOR_POSITION_EFFECT } from './set-motor-position.effect';
 import { REQUEST_HUB_FIRMWARE_VERSION_ON_CONNECT } from './request-hub-firmware-version-on-connect';
 import { REQUEST_HUB_HARDWARE_VERSION_ON_CONNECT } from './request-hub-hardware-version-on-connect';
+import { NOTIFY_ON_HUB_CONNECT_FAILED_EFFECT } from './notify-on-hub-connect-failed.effect';
+import { NOTIFY_ON_HUB_CONNECTED_EFFECT } from './notify-on-hub-connected.effect';
+import { NOTIFY_ON_HUB_DISCONNECTED_EFFECT } from './notify-on-hub-disconnected.effect';
+import { NOTIFY_ON_HUB_SET_NAME_ERROR_EFFECT } from './notify-on-hub-name-set-error.effect';
 
 export const HUB_EFFECTS: { [k in string]: FunctionalEffect } = {
     discoverHub: DISCOVER_HUB_EFFECT,
@@ -28,4 +32,8 @@ export const HUB_EFFECTS: { [k in string]: FunctionalEffect } = {
     requestPortPosition: REQUEST_PORT_POSITION_EFFECT,
     requestPortAbsolutePosition: REQUEST_PORT_ABSOLUTE_POSITION_EFFECT,
     setMotorPosition: SET_MOTOR_POSITION_EFFECT,
+    notifyOnHubConnectFailed: NOTIFY_ON_HUB_CONNECT_FAILED_EFFECT,
+    notifyOnHubConnected: NOTIFY_ON_HUB_CONNECTED_EFFECT,
+    notifyOnHubDisconnected: NOTIFY_ON_HUB_DISCONNECTED_EFFECT,
+    notifyOnHubSetNameError: NOTIFY_ON_HUB_SET_NAME_ERROR_EFFECT
 } as const;

@@ -6,7 +6,7 @@ import { filter, map, switchMap } from 'rxjs';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import packageJson from '../../../../../package.json';
 import { IState } from '../i-state';
-import { APP_UPDATE_ACTIONS, COMMON_ACTIONS } from '../actions';
+import { APP_UPDATE_ACTIONS, COMMON_ACTIONS, SHOW_NOTIFICATION_ACTIONS } from '../actions';
 
 export const APP_UPDATE_EFFECTS: {[k in string]: FunctionalEffect} = {
     detectAppUpdate: createEffect((
@@ -23,6 +23,14 @@ export const APP_UPDATE_EFFECTS: {[k in string]: FunctionalEffect} = {
             })),
             filter(({ prev, current }) => prev !== current),
             map(({prev, current}) => APP_UPDATE_ACTIONS.appUpdated({prev, current}))
+        );
+    }, { functional: true }),
+    notifyOnAppUpdate: createEffect((
+        actions$: Actions = inject(Actions)
+    ) => {
+        return actions$.pipe(
+            ofType(APP_UPDATE_ACTIONS.appUpdated),
+            map(() => SHOW_NOTIFICATION_ACTIONS.appUpdated())
         );
     }, { functional: true })
 };

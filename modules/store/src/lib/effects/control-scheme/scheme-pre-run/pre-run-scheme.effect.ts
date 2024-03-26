@@ -65,7 +65,7 @@ export const PRE_RUN_SCHEME_EFFECT = createEffect((
                     ...createPreRunMotorPositionQueryTasks(scheme, hubStorage, store),
                     ...createPreRunSetAccelerationProfileTasks(scheme, hubStorage),
                     ...createPreRunSetDecelerationProfileTasks(scheme, hubStorage),
-                    ...createWidgetReadTasks(scheme, store, widgetReadTaskFactory),
+                    ...createWidgetReadTasks(scheme, store, widgetReadTaskFactory)
                 ]),
                 timeout(appConfig.schemeStartStopTimeoutMs),
                 map(() => CONTROL_SCHEME_ACTIONS.schemeStarted({ name: scheme.name })),

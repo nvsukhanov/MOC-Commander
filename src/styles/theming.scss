@@ -126,7 +126,7 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
     }
 
     .mat-mdc-snack-bar-container {
-        --mdc-snackbar-container-color: #{mat.get-color-from-palette($dark-palette, 500)};
+        --mdc-snackbar-container-color: #{mat.get-color-from-palette($dark-palette, 700)};
         --mdc-snackbar-supporting-text-color: #{$light-primary-text};
         --mat-snack-bar-button-color: #{rgba($light-primary-text, 0.87)};
     }

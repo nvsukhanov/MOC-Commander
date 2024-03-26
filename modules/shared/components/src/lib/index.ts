@@ -23,3 +23,5 @@ export * from './motor-position-adjustment-controls';
 export * from './battery-indicator';
 export * from './tilt-gauge';
 export * from './app-updated-notification';
+export * from './info-notification';
+export * from './error-notification';
