@@ -13,7 +13,12 @@ export const CONTROL_SCHEME_WIDGET_DATA_FEATURE = createFeature({
         {
             widgetsData: {}
         } as ControlSchemeWidgetsDataState,
-        on(CONTROL_SCHEME_ACTIONS.startScheme, CONTROL_SCHEME_ACTIONS.schemeStopped, (): ControlSchemeWidgetsDataState => ({ widgetsData: {} })),
+        on(
+            CONTROL_SCHEME_ACTIONS.startScheme,
+            CONTROL_SCHEME_ACTIONS.schemeStopped,
+            CONTROL_SCHEME_ACTIONS.schemeStartFailed,
+            (): ControlSchemeWidgetsDataState => ({ widgetsData: {} })
+        ),
         on(CONTROL_SCHEME_WIDGETS_DATA_ACTIONS.updateWidgetData, (state, { widgetId, data }): ControlSchemeWidgetsDataState => {
             return {
                 ...state,

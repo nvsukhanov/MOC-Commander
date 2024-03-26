@@ -831,7 +831,8 @@
     "1-2-8": {
       "minorNotificationImprovements": "Minor improvements to notifications",
       "addGamepadPollingRateSettings": "Gamepad polling rate option added to the settings",
-      "increaseGamepadPollingRate": "Increased default gamepad poll rate. Previous value is now considered 'Low' in the settings"
+      "increaseGamepadPollingRate": "Increased default gamepad poll rate. Previous value is now considered 'Low' in the settings",
+      "fixWidgetUpdatesAfterSchemeStartFailure": "Fixed widgets continuing to update after a control scheme start failure"
     }
   }
 }
