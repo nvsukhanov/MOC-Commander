@@ -14,3 +14,4 @@ export * from './control-scheme-widgets-data.actions';
 export * from './settings.actions';
 export * from './common.actions';
 export * from './app-update.actions';
+export * from './show-notification.actions';

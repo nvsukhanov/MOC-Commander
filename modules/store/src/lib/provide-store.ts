@@ -36,12 +36,12 @@ import {
     AttachedIoModesEffects,
     COMMON_EFFECTS,
     CONTROLLER_EFFECTS,
+    CONTROL_SCHEME_EFFECTS,
     HUB_EFFECTS,
     HubAttachedIosStateEffects,
     HubPortModeInfoEffects,
-    NotificationsEffects,
-    SETTINGS_EFFECTS,
-    TASK_PROCESSING_EFFECTS
+    NOTIFICATION_EFFECTS,
+    SETTINGS_EFFECTS
 } from './effects';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { HubStorageService } from './hub-storage.service';
@@ -53,6 +53,7 @@ import { AppStoreVersion } from './app-store-version';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import packageJson from '../../../../package.json';
 import { CopyToClipboardHandlerService } from './copy-to-clipboard-handler.service';
+import { NotificationFacadeService } from './notification-facade.service';
 
 const REDUCERS: ActionReducerMap<IState> = {
     bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,
@@ -95,14 +96,14 @@ export function provideApplicationStore(): EnvironmentProviders {
                 AttachedIOsEffects,
                 HubPortModeInfoEffects,
                 AttachedIoModesEffects,
-                NotificationsEffects,
                 HubAttachedIosStateEffects,
                 CONTROLLER_EFFECTS,
                 SETTINGS_EFFECTS,
                 HUB_EFFECTS,
-                TASK_PROCESSING_EFFECTS,
+                CONTROL_SCHEME_EFFECTS,
                 COMMON_EFFECTS,
-                APP_UPDATE_EFFECTS
+                APP_UPDATE_EFFECTS,
+                NOTIFICATION_EFFECTS
             ),
             {
                 provide: APP_INITIALIZER,
@@ -119,6 +120,7 @@ export function provideApplicationStore(): EnvironmentProviders {
             HubMotorPositionFacadeService,
             HubServoCalibrationFacadeService,
             ControllerProfilesFacadeService,
+            NotificationFacadeService,
             { provide: COPY_TO_CLIPBOARD_HANDLER, useClass: CopyToClipboardHandlerService },
             provideRouterStore({
                 navigationActionTiming: NavigationActionTiming.PostActivation

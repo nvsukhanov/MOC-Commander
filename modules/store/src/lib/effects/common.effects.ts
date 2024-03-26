@@ -4,7 +4,7 @@ import { filter, pairwise, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { NAVIGATOR, WakeLockService } from '@app/shared-misc';
 
-import { COMMON_ACTIONS } from '../actions';
+import { COMMON_ACTIONS, SHOW_NOTIFICATION_ACTIONS } from '../actions';
 import { HUB_RUNTIME_DATA_SELECTORS } from '../selectors';
 
 const COPY_TO_CLIPBOARD_EFFECT = createEffect((
@@ -16,9 +16,13 @@ const COPY_TO_CLIPBOARD_EFFECT = createEffect((
         switchMap(async (action) => {
             try {
                 await navigator.clipboard.writeText(action.content);
-                return COMMON_ACTIONS.copyToClipboardSuccess();
+                return SHOW_NOTIFICATION_ACTIONS.info({
+                    l10nKey: 'common.copyToClipboardSuccessNotification'
+                });
             } catch (e) {
-                return COMMON_ACTIONS.copyToClipboardFailure();
+                return SHOW_NOTIFICATION_ACTIONS.error({
+                    l10nKey: 'common.copyToClipboardErrorNotification'
+                });
             }
         })
     );

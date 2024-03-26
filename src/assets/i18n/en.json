@@ -10,12 +10,12 @@
   "common": {
     "copyToClipboard": "Copy to clipboard",
     "copyToClipboardSuccessNotification": "Copied to clipboard",
-    "copyToClipboardErrorNotification": "Failed to copy to clipboard"
+    "copyToClipboardErrorNotification": "Failed to copy to clipboard",
+    "dismissNotification": "Dismiss"
   },
   "appUpdatedNotification": {
     "prefixMessage": "App has been updated, for details see",
-    "linkText": "About page",
-    "dismissButton": "Dismiss"
+    "linkText": "About page"
   },
   "adjustMotorPosition": {
     "title": "Motor position adjustment",
@@ -823,6 +823,9 @@
       "runningControlSchemePerformanceImprovements": "Performance improvements for running control schemes",
       "fixPwaBackgroundColor": "Fixed background color of the PWA app",
       "fixHighFrequencyTaskStalling": "Fixed task stalling when processing high-frequency inputs"
+    },
+    "1-2-8": {
+      "minorNotificationImprovements": "Minor improvements to notifications"
     }
   }
 }

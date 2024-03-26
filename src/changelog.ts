@@ -2,6 +2,12 @@ import { IChangelog } from '@app/shared-components';
 
 export const CHANGELOG: IChangelog = [
     {
+        version: '1.2.8',
+        changeL10nKeys: [
+            'changelog.1-2-8.minorNotificationImprovements'
+        ]
+    },
+    {
         version: '1.2.7',
         changeL10nKeys: [
             'changelog.1-2-7.compactRedesignControlSchemes',

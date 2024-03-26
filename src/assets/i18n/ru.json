@@ -10,12 +10,12 @@
   "common": {
     "copyToClipboard": "Копировать в буфер обмена",
     "copyToClipboardSuccessNotification": "Скопировано в буфер обмена",
-    "copyToClipboardErrorNotification": "Не удалось скопировать в буфер обмена"
+    "copyToClipboardErrorNotification": "Не удалось скопировать в буфер обмена",
+    "dismissNotification": "Закрыть"
   },
   "appUpdatedNotification": {
     "prefixMessage": "Приложение было обновлено, см. ",
-    "linkText": "'О программе'",
-    "dismissButton": "Закрыть"
+    "linkText": "'О программе'"
   },
   "adjustMotorPosition": {
     "title": "Подстройка положения мотора",
@@ -823,6 +823,9 @@
       "runningControlSchemePerformanceImprovements": "Улучшение производительности при работе схем управления",
       "fixPwaBackgroundColor": "Исправлена ошибка цвета фона при установке приложения как PWA",
       "fixHighFrequencyTaskStalling": "Исправлено зависание задач при обработке интенсивого ввода"
+    },
+    "1-2-8": {
+      "minorNotificationImprovements": "Небольшие улучшения уведомлений"
     }
   }
 }
