@@ -16,6 +16,11 @@
                                                       (useLinuxCompatChange)="onUseLinuxCompatChange($event)"
                 ></page-settings-use-linux-compat-select>
             </li>
+            <li class="option">
+                <page-settings-gamepad-polling-rate [gamepadPollingRate]="gamepadPollingRate()"
+                                                    (gamepadPollingRateChange)="onGamepadPollingRateChange($event)"
+                ></page-settings-gamepad-polling-rate>
+            </li>
         </ul>
 
         <mat-divider></mat-divider>

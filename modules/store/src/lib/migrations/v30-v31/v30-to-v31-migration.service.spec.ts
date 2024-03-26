@@ -16,7 +16,7 @@ import { ensureStorePropsNotChanged } from '../ensure-props-not-changed';
 import { V22ToV23MigrationService } from '../v22-v23';
 import { V26ToV27MigrationService } from '../v26-v27';
 import { V29ToV30MigrationService } from '../v29-v30';
-import { V31Store } from '../v31';
+import { V31Store } from '../v31-v32';
 import { OLD_TITLE_WIDGET_TYPE, OldInputGain, V30Store } from './v30-store';
 
 describe('v30 to v31 migration', () => {

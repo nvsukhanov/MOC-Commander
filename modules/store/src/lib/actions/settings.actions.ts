@@ -1,7 +1,7 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Language } from '@app/shared-i18n';
 
-import { UserSelectedTheme } from '../models';
+import { GamepadPollingRate, UserSelectedTheme } from '../models';
 import { IState } from '../i-state';
 
 export const SETTINGS_ACTIONS = createActionGroup({
@@ -10,6 +10,7 @@ export const SETTINGS_ACTIONS = createActionGroup({
         setTheme: props<{ appTheme: UserSelectedTheme }>(),
         setLanguage: props<{ language: Language }>(),
         setLinuxCompat: props<{ useLinuxCompat: boolean }>(),
+        setGamepadPollingRate: props<{ gamepadPollingRate: GamepadPollingRate }>(),
         createStateBackup: emptyProps(),
         restoreStateFromBackup: props<{ state: IState }>(),
         resetState: emptyProps(),

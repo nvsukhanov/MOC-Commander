@@ -100,7 +100,11 @@
     "useLinuxCompatibleBluetoothApi": "Use Linux-compatible connection mode",
     "useLinuxCompatibleBluetoothApiEnabled": "Enabled",
     "useLinuxCompatibleBluetoothApiDisabled": "Disabled",
-    "useLinuxCompatibleBluetoothApiDescription": "Enable this option if you are using a Linux-based system and having problems connecting to hubs. Enabling this option may increase connection latency. Changes will affect only new connections."
+    "useLinuxCompatibleBluetoothApiDescription": "Enable this option if you are using a Linux-based system and having problems connecting to hubs. Enabling this option may increase connection latency. Changes will affect only new connections.",
+    "gamepadPollRate": "Gamepad poll rate",
+    "gamepadPollRateDescription": "Low poll rate may reduce CPU usage, but will also increase input lag.",
+    "gamepadPollRateLow": "Low",
+    "gamepadPollRateDefault": "Default"
   },
   "language": {
     "en": "English",
@@ -765,7 +769,7 @@
       "initialRelease": "Initial release"
     },
     "1-0-1": {
-      "featIncreaseGamepadReadFrequency": "Increased gamepad read frequency"
+      "featIncreaseGamepadReadFrequency": "Increased gamepad poll rate"
     },
     "1-1-0": {
       "featAddInstallationInstructions": "Installation instructions for Steam Deck, Windows, and Linux",
@@ -825,7 +829,9 @@
       "fixHighFrequencyTaskStalling": "Fixed task stalling when processing high-frequency inputs"
     },
     "1-2-8": {
-      "minorNotificationImprovements": "Minor improvements to notifications"
+      "minorNotificationImprovements": "Minor improvements to notifications",
+      "addGamepadPollingRateSettings": "Gamepad polling rate option added to the settings",
+      "increaseGamepadPollingRate": "Increased default gamepad poll rate. Previous value is now considered 'Low' in the settings"
     }
   }
 }
