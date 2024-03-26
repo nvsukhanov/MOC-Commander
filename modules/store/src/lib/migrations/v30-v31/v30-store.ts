@@ -3,7 +3,7 @@ import { ControlSchemeBindingType, ExtractArrayType, ExtractEntitiesType, Overri
 
 import { SetAngleBindingInputAction } from '../../models';
 import { AppStoreVersion } from '../../app-store-version';
-import { V31Store } from '../v31';
+import { V31Store } from '../v31-v32';
 
 export type V31ControlSchemesEntitiesState = ExtractEntitiesType<V31Store['controlSchemes']>;
 export type V31Binding = ExtractArrayType<V31ControlSchemesEntitiesState['bindings']>;

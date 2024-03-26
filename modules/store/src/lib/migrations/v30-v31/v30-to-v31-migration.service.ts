@@ -12,7 +12,7 @@ import {
     StepperBindingInputAction,
     TrainBindingInputAction
 } from '../../models';
-import { V31Store } from '../v31';
+import { V31Store } from '../v31-v32';
 import {
     OLD_TITLE_WIDGET_TYPE,
     OldInputGain,

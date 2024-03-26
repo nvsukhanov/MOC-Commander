@@ -1,11 +1,12 @@
 import { createEffect } from '@ngrx/effects';
-import { NEVER, Observable, animationFrames, distinctUntilChanged, map, merge, share, startWith, switchMap } from 'rxjs';
+import { NEVER, Observable, animationFrames, distinctUntilChanged, interval, map, merge, share, startWith, switchMap } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { ControllerInputType, ControllerType, GamepadSettings, GamepadValueTransformService } from '@app/controller-profiles';
 import { WINDOW } from '@app/shared-misc';
 
-import { GamepadControllerModel } from '../../../models';
+import { SETTINGS_FEATURE } from '../../../reducers';
+import { GamepadControllerModel, GamepadPollingRate } from '../../../models';
 import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_INPUT_SELECTORS } from '../../../selectors';
 import { CONTROLLER_INPUT_ACTIONS } from '../../../actions';
 
@@ -81,12 +82,18 @@ function createButtonChangesActions(
     return result;
 }
 
+const GAMEPAD_POLL_SCHEDULERS: {[ k in GamepadPollingRate ]: Observable<unknown> } = {
+    [GamepadPollingRate.Low]: animationFrames(),
+    [GamepadPollingRate.Default]: interval()
+};
+
 function readGamepads(
     store: Store,
     navigator: Navigator,
     valueTransformer: GamepadValueTransformService
 ): Observable<Action> {
-    const gamepadsRead$ = animationFrames().pipe(
+    const gamepadsRead$ = store.select(SETTINGS_FEATURE.selectGamepadPollingRate).pipe(
+        switchMap((pollingRate) => GAMEPAD_POLL_SCHEDULERS[pollingRate]),
         map(() => navigator.getGamepads()),
         share()
     );

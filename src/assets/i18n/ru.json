@@ -100,7 +100,11 @@
     "useLinuxCompatibleBluetoothApi": "Использовать режим совместимости с Linux",
     "useLinuxCompatibleBluetoothApiEnabled": "Включено",
     "useLinuxCompatibleBluetoothApiDisabled": "Выключено",
-    "useLinuxCompatibleBluetoothApiDescription": "Включение этой опции может помочь с подключением к некоторым типам хабов, но может увеличить задержку при передаче данных. Изменения настройки вступят в силу для следующего подключения к хабу."
+    "useLinuxCompatibleBluetoothApiDescription": "Включение этой опции может помочь с подключением к некоторым типам хабов, но может увеличить задержку при передаче данных. Изменения настройки вступят в силу для следующего подключения к хабу.",
+    "gamepadPollRate": "Частота опроса геймпада",
+    "gamepadPollRateDescription": "Низкая частота опроса может уменьшить нагрузку на процессор, но при этом увеличит задержку ввода",
+    "gamepadPollRateLow": "Низкая",
+    "gamepadPollRateDefault": "Стандартная"
   },
   "language": {
     "en": "English",
@@ -825,7 +829,9 @@
       "fixHighFrequencyTaskStalling": "Исправлено зависание задач при обработке интенсивого ввода"
     },
     "1-2-8": {
-      "minorNotificationImprovements": "Небольшие улучшения уведомлений"
+      "minorNotificationImprovements": "Небольшие улучшения уведомлений",
+      "addGamepadPollingRateSettings": "Добавлены настройки частоты опроса геймпада",
+      "increaseGamepadPollingRate": "Увеличена частота опроса геймпада. Предыдущая частота доступна в настройках как 'Низкая'"
     }
   }
 }

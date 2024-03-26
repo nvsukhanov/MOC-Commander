@@ -12,6 +12,7 @@ import { V27ToV28MigrationService } from './v27-v28';
 import { V28ToV29MigrationService } from './v28-v29';
 import { V29ToV30MigrationService } from './v29-v30';
 import { V30ToV31MigrationService } from './v30-v31';
+import { V31ToV32MigrationService } from './v31-v32/v31-to-v32-migration.service';
 
 export function provideStoreMigrations(): Provider[] {
     return [
@@ -25,6 +26,7 @@ export function provideStoreMigrations(): Provider[] {
         { provide: STORE_MIGRATION, useClass: V28ToV29MigrationService, multi: true },
         { provide: STORE_MIGRATION, useClass: V29ToV30MigrationService, multi: true },
         { provide: STORE_MIGRATION, useClass: V30ToV31MigrationService, multi: true },
+        { provide: STORE_MIGRATION, useClass: V31ToV32MigrationService, multi: true },
         MigrateStoreService
     ];
 }

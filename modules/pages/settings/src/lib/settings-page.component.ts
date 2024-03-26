@@ -11,7 +11,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { of } from 'rxjs';
 import { Language } from '@app/shared-i18n';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
-import { IState, SETTINGS_ACTIONS, SETTINGS_FEATURE, UserSelectedTheme } from '@app/store';
+import { GamepadPollingRate, IState, SETTINGS_ACTIONS, SETTINGS_FEATURE, UserSelectedTheme } from '@app/store';
 import { BreadcrumbsService } from '@app/shared-components';
 
 import { RestoreStateFromBackupDialogComponent } from './restore-state-from-backup-dialog';
@@ -19,6 +19,7 @@ import { ResetStateDialogComponent } from './reset-state-dialog';
 import { ThemeSelectComponent } from './theme-select';
 import { LanguageSelectComponent } from './language-select';
 import { UseLinuxCompatSelectComponent } from './use-linux-compat-select';
+import { GamepadPollingRateComponent } from './gamepad-polling-rate';
 
 @Component({
     standalone: true,
@@ -36,7 +37,8 @@ import { UseLinuxCompatSelectComponent } from './use-linux-compat-select';
         MatSlideToggle,
         MatIcon,
         MatTooltip,
-        UseLinuxCompatSelectComponent
+        UseLinuxCompatSelectComponent,
+        GamepadPollingRateComponent
     ],
     providers: [
         TitleService,
@@ -50,6 +52,8 @@ export class SettingsPageComponent implements OnInit {
     public readonly currentLanguage = this.store.selectSignal(SETTINGS_FEATURE.selectLanguage);
 
     public readonly useLinuxCompat = this.store.selectSignal(SETTINGS_FEATURE.selectUseLinuxCompat);
+
+    public readonly gamepadPollingRate = this.store.selectSignal(SETTINGS_FEATURE.selectGamepadPollingRate);
 
     constructor(
         private readonly store: Store,
@@ -87,6 +91,12 @@ export class SettingsPageComponent implements OnInit {
         useLinuxCompat: boolean
     ): void {
         this.store.dispatch(SETTINGS_ACTIONS.setLinuxCompat({ useLinuxCompat }));
+    }
+
+    public onGamepadPollingRateChange(
+        value: GamepadPollingRate
+    ): void {
+        this.store.dispatch(SETTINGS_ACTIONS.setGamepadPollingRate({ gamepadPollingRate: value }));
     }
 
     public onStateDump(): void {

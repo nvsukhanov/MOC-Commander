@@ -4,7 +4,9 @@ export const CHANGELOG: IChangelog = [
     {
         version: '1.2.8',
         changeL10nKeys: [
-            'changelog.1-2-8.minorNotificationImprovements'
+            'changelog.1-2-8.minorNotificationImprovements',
+            'changelog.1-2-8.addGamepadPollingRateSettings',
+            'changelog.1-2-8.increaseGamepadPollingRate',
         ]
     },
     {
