@@ -2,11 +2,13 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { CdkDrag, CdkDragDrop, CdkDragPlaceholder, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatListModule } from '@angular/material/list';
+import { AsyncPipe } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 import { WidgetConfigModel } from '@app/store';
+import { EllipsisTitleDirective } from '@app/shared-components';
 
-import { WidgetsListItemComponent } from './widgets-list-item';
+import { WidgetConnectionInfoL10nPipe } from '../widget-connection-info-l10n.pipe';
 
 @Component({
     standalone: true,
@@ -17,11 +19,11 @@ import { WidgetsListItemComponent } from './widgets-list-item';
         MatButtonModule,
         MatDialogModule,
         TranslocoPipe,
-        WidgetsListItemComponent,
-        CdkDropList,
         MatListModule,
-        CdkDrag,
-        CdkDragPlaceholder
+        WidgetConnectionInfoL10nPipe,
+        AsyncPipe,
+        EllipsisTitleDirective,
+        MatIcon
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -34,10 +36,26 @@ export class ReorderWidgetDialogComponent {
     ) {
     }
 
-    public onReorder(
-        event: CdkDragDrop<WidgetConfigModel[]>
+    public onMoveUp(
+        index: number
     ): void {
-        moveItemInArray(this.widgetsList, event.previousIndex, event.currentIndex);
+        if (index === 0) {
+            return;
+        }
+        const widget = this.widgetsList[index];
+        this.widgetsList[index] = this.widgetsList[index - 1];
+        this.widgetsList[index - 1] = widget;
+    }
+
+    public onMoveDown(
+        index: number
+    ): void {
+        if (index === this.widgetsList.length - 1) {
+            return;
+        }
+        const widget = this.widgetsList[index];
+        this.widgetsList[index] = this.widgetsList[index + 1];
+        this.widgetsList[index + 1] = widget;
     }
 
     public onSave(): void {

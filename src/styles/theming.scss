@@ -54,7 +54,7 @@ $theme-dark: mat.define-dark-theme((
     color: (
         primary: mat.define-palette($dark-palette, 700, 600, 900),
         accent: mat.define-palette($dark-accent-palette, 800, 700, 900),
-        warn: mat.define-palette($dark-warn-palette),
+        warn: mat.define-palette($dark-warn-palette, 800, 700, 900),
     ),
 ));
 

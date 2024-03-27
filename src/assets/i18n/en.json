@@ -355,6 +355,9 @@
     },
     "widgets": {
       "reorderWidgetsButtonTitle": "Reorder widgets",
+      "widgetMenuButtonTitle": "Widget menu",
+      "moveWidgetUp": "Move up",
+      "moveWidgetDown": "Move down",
       "addWidgetDialog": {
         "title": "Add Widget",
         "selectWidgetType": "Widget type",
@@ -833,6 +836,10 @@
       "addGamepadPollingRateSettings": "Gamepad polling rate option added to the settings",
       "increaseGamepadPollingRate": "Increased default gamepad poll rate. Previous value is now considered 'Low' in the settings",
       "fixWidgetUpdatesAfterSchemeStartFailure": "Fixed widgets continuing to update after a control scheme start failure"
+    },
+    "1-2-9": {
+      "accessibilityImprovements": "Minor accessibility improvements",
+      "layoutFixesForSmallScreens": "Layout fixes for small screens"
     }
   }
 }

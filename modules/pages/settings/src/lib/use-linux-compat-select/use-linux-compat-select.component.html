@@ -1,13 +1,6 @@
 <mat-form-field class="option">
     <mat-label>
         {{ 'settings.useLinuxCompatibleBluetoothApi' | transloco }}
-        <mat-icon [fontIcon]="'help_outline'"
-                  [inline]="true"
-                  [matTooltip]="'settings.useLinuxCompatibleBluetoothApiDescription' | transloco"
-        ></mat-icon>
-        <span class="cdk-visually-hidden">
-            {{ 'settings.useLinuxCompatibleBluetoothApiDescription' | transloco }}
-        </span>
     </mat-label>
     <mat-select [value]="useLinuxCompat"
                 (valueChange)="onUseLinuxCompatChange($event)"
@@ -20,4 +13,12 @@
             {{ 'settings.useLinuxCompatibleBluetoothApiDisabled' | transloco }}
         </mat-option>
     </mat-select>
+
+    <mat-icon [fontIcon]="'help_outline'"
+              matSuffix
+              [matTooltip]="'settings.useLinuxCompatibleBluetoothApiDescription' | transloco"
+              (click)="$event.preventDefault(); $event.stopPropagation();"
+    >
+    </mat-icon>
+    <span class="cdk-visually-hidden">{{ 'settings.useLinuxCompatibleBluetoothApiDescription' | transloco }}</span>
 </mat-form-field>
