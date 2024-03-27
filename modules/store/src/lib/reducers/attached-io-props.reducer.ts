@@ -120,6 +120,40 @@ export const ATTACHED_IO_PROPS_FEATURE = createFeature({
                 state
             );
         }),
+        on(ATTACHED_IO_PROPS_ACTIONS.compensateRoll, (state, data): AttacheIoPropsState => {
+            const currentCompensation = state.entities[hubAttachedIoPropsIdFn(data)]?.runtimeTiltCompensation ?? { yaw: 0, pitch: 0, roll: 0 };
+            return ATTACHED_IO_PROPS_ENTITY_ADAPTER.upsertOne({
+                    hubId: data.hubId,
+                    portId: data.portId,
+                    motorEncoderOffset: state.entities[hubAttachedIoPropsIdFn(data)]?.motorEncoderOffset ?? 0,
+                    startupServoCalibrationData: state.entities[hubAttachedIoPropsIdFn(data)]?.startupServoCalibrationData ?? null,
+                    startupMotorPositionData: state.entities[hubAttachedIoPropsIdFn(data)]?.startupMotorPositionData ?? null,
+                    runtimeTiltCompensation: {
+                        yaw: currentCompensation.yaw,
+                        pitch: currentCompensation.pitch,
+                        roll: currentCompensation.roll + data.currentRoll,
+                    },
+                },
+                state
+            );
+        }),
+        on(ATTACHED_IO_PROPS_ACTIONS.resetRollCompensation, (state, data): AttacheIoPropsState => {
+            const currentCompensation = state.entities[hubAttachedIoPropsIdFn(data)]?.runtimeTiltCompensation ?? { yaw: 0, pitch: 0, roll: 0 };
+            return ATTACHED_IO_PROPS_ENTITY_ADAPTER.upsertOne({
+                    hubId: data.hubId,
+                    portId: data.portId,
+                    motorEncoderOffset: state.entities[hubAttachedIoPropsIdFn(data)]?.motorEncoderOffset ?? 0,
+                    startupServoCalibrationData: state.entities[hubAttachedIoPropsIdFn(data)]?.startupServoCalibrationData ?? null,
+                    startupMotorPositionData: state.entities[hubAttachedIoPropsIdFn(data)]?.startupMotorPositionData ?? null,
+                    runtimeTiltCompensation: {
+                        yaw: currentCompensation.yaw,
+                        pitch: currentCompensation.pitch,
+                        roll: 0,
+                    },
+                },
+                state
+            );
+        }),
         on(ATTACHED_IO_PROPS_ACTIONS.startupMotorPositionReceived, (state, data): AttacheIoPropsState => {
             return ATTACHED_IO_PROPS_ENTITY_ADAPTER.upsertOne({
                     hubId: data.hubId,
