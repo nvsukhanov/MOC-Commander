@@ -1,12 +1,13 @@
 <section class="section"
          [class.section_running]="isSchemeRunning()"
 >
-    <h3 class="section-title">
+    <h2 class="section-title">
         {{ 'controlScheme.widgetsSectionTitle' | transloco }}
-    </h3>
+    </h2>
     <button mat-icon-button
             [disabled]="!canReorderWidgets()"
             (click)="onReorderWidgets()"
+            [title]="'controlScheme.widgets.reorderWidgetsButtonTitle' | transloco"
     >
         <mat-icon [fontIcon]="'unfold_more'"></mat-icon>
     </button>

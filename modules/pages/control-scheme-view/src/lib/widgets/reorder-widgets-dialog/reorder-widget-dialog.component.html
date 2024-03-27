@@ -6,17 +6,39 @@
      class="dialog-content"
 >
     <mat-list>
-        <ol cdkDropList
-            (cdkDropListDropped)="onReorder($event)"
-        >
-            @for (widget of widgetsList; track trackByWidgetId) {
-                <div cdkDrag
-                     cdkDragLockAxis="y"
-                >
-                    <page-control-scheme-view-reorder-widget-dialog-list-item [widget]="widget"></page-control-scheme-view-reorder-widget-dialog-list-item>
-                    <page-control-scheme-view-reorder-widget-dialog-list-item *cdkDragPlaceholder></page-control-scheme-view-reorder-widget-dialog-list-item>
-                </div>
-
+        <ol>
+            @for (widget of widgetsList; track trackByWidgetId; let first = $first; let last = $last; let index = $index) {
+                <mat-list-item>
+                    <li class="widgets-list-item">
+                        <button mat-icon-button
+                                class="reorder-button"
+                                [disabled]="first"
+                                (click)="onMoveUp(index)"
+                        >
+                            <mat-icon [fontIcon]="'keyboard_arrow_up'"
+                                      [inline]="true"
+                            ></mat-icon>
+                            <span class="cdk-visually-hidden">
+                                {{ 'controlScheme.widgets.moveWidgetUp' | transloco }}
+                            </span>
+                        </button>
+                        <button mat-icon-button
+                                class="reorder-button"
+                                [disabled]="last"
+                                (click)="onMoveDown(index)"
+                        >
+                            <mat-icon [fontIcon]="'keyboard_arrow_down'"
+                                      [inline]="true"
+                            ></mat-icon>
+                            <span class="cdk-visually-hidden">
+                                {{ 'controlScheme.widgets.moveWidgetDown' | transloco }}
+                            </span>
+                        </button>
+                        <div libEllipsisTitle>
+                            {{ widget.title }} ({{ widget | widgetConnectionInfoL10n | async }})
+                        </div>
+                    </li>
+                </mat-list-item>
             }
         </ol>
     </mat-list>

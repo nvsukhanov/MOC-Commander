@@ -355,6 +355,9 @@
     },
     "widgets": {
       "reorderWidgetsButtonTitle": "Изменить порядок виджетов",
+      "widgetMenuButtonTitle": "Меню виджета",
+      "moveWidgetUp": "Переместить вверх",
+      "moveWidgetDown": "Переместить вниз",
       "addWidgetDialog": {
         "title": "Добавление виджета",
         "selectWidgetType": "Тип виджета",
@@ -833,6 +836,10 @@
       "addGamepadPollingRateSettings": "Добавлены настройки частоты опроса геймпада",
       "increaseGamepadPollingRate": "Увеличена частота опроса геймпада. Предыдущая частота доступна в настройках как 'Низкая'",
       "fixWidgetUpdatesAfterSchemeStartFailure": "Исправлены обновления виджетов после неудачного запуска схемы управления"
+    },
+    "1-2-9": {
+      "accessibilityImprovements": "Небольшие улучшения в части доступности",
+      "layoutFixesForSmallScreens": "Исправления верстки для маленьких экранов"
     }
   }
 }

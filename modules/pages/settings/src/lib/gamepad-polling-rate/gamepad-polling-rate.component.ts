@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatIcon } from '@angular/material/icon';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
 import { MatOption } from '@angular/material/autocomplete';
 import { MatSelect } from '@angular/material/select';
 import { TranslocoPipe } from '@ngneat/transloco';
+import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { GamepadPollingRate } from '@app/store';
 
@@ -14,12 +14,13 @@ import { GamepadPollingRate } from '@app/store';
     styleUrls: [ './gamepad-polling-rate.component.scss' ],
     imports: [
         MatFormField,
-        MatIcon,
         MatLabel,
         MatOption,
         MatSelect,
         TranslocoPipe,
-        MatTooltip
+        MatIcon,
+        MatTooltip,
+        MatSuffix
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
