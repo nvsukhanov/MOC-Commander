@@ -50,7 +50,7 @@
     "controllersList": "Controllers",
     "hubsList": "Hubs",
     "controlSchemesList": "Control schemes",
-    "navMenuAriaLabel": "Menu",
+    "navMenuAriaLabel": "App menu",
     "aboutPageButton": "About",
     "settingsPageButton": "Settings",
     "help": "Help"
@@ -188,6 +188,8 @@
     "editNameSaveButtonTitle": "Save",
     "editNameCancelButtonTitle": "Cancel",
     "run": "Start",
+    "runSuccessNotification": "Control scheme ''{ name }'' started",
+    "stopNotification": "Control scheme stopped",
     "runFailed": "Failed to start",
     "runFailedCalibrationOutOfRange": "Failed to start due to servo calibration failure: range is out of bounds",
     "runBlockerSchemeDoesNotExist": "Control scheme does not exist",

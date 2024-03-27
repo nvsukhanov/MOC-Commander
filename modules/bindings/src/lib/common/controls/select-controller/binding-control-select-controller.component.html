@@ -7,7 +7,6 @@
         @if (syntheticInputControl) {
             <input matInput
                    readonly
-                   [tabIndex]="-1"
                    class="control-select-input"
                    [formControl]="syntheticInputControl"
             />
@@ -16,7 +15,6 @@
         @if (areSettingsVisible) {
             <button mat-icon-button
                     matSuffix
-                    [attr.aria-label]="'controlScheme.showBindingInputSettings' | transloco"
                     (click)="onShowSettings()"
             >
                 @if (arePipesConfigured) {
@@ -30,23 +28,33 @@
                 } @else {
                     <mat-icon [fontIcon]="'settings'"></mat-icon>
                 }
+                <span class="cdk-visually-hidden">
+                    {{ data.inputName$ | async }},
+                    {{ 'controlScheme.showBindingInputSettings' | transloco }}
+                </span>
             </button>
         }
         @if (isControllerAssigned) {
             <button mat-icon-button
                     matSuffix
-                    [attr.aria-label]="'controlScheme.bindingInputControlUnassignButtonTitle' | transloco"
                     (click)="onUnbind()"
             >
                 <mat-icon [fontIcon]="'delete'"></mat-icon>
+                <span class="cdk-visually-hidden">
+                    {{ data.inputName$ | async }},
+                    {{ 'controlScheme.bindingInputControlUnassignButtonTitle' | transloco }}
+                </span>
             </button>
         } @else {
             <button mat-icon-button
                     (click)="onBind()"
                     matSuffix
-                    [attr.aria-label]="'controlScheme.bindingAssignControlButtonTitle' | transloco"
             >
                 <mat-icon [fontIcon]="'edit'"></mat-icon>
+                <span class="cdk-visually-hidden">
+                    {{ data.inputName$ | async }},
+                    {{ 'controlScheme.bindingAssignControlButtonTitle' | transloco }}
+                </span>
             </button>
         }
 
