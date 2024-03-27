@@ -13,6 +13,8 @@ An open-source Progressive Web Application for controlling LEGO® Powered Up dev
 
 Deployment of the latest stable version is available at [https://moc-commander.com](https://moc-commander.com)
 
+<img src="https://github.com/nvsukhanov/nvsukhanov.github.io/blob/main/moc-commander/sd-tracks.gif?raw=True"/>
+
 ## Features
 
 ### Input
@@ -22,10 +24,7 @@ Deployment of the latest stable version is available at [https://moc-commander.c
     - Up to 4 gamepads
     - [LEGO 88010 Remote Control](https://www.lego.com/en-us/product/remote-control-88010)
     - PoweredUP Hub green button
-    - Steam Deck ([installation manual](https://moc-commander.com/steam-deck))
- 
-      <img src="https://github.com/nvsukhanov/nvsukhanov.github.io/blob/main/moc-commander/sd-tracks.gif?raw=True"/>
-    
+    - Steam Deck ([installation manual](https://moc-commander.com/steam-deck))    
 - Any number of input devices can be used to control any number of outputs
 - Input devices can be configured: gamepad axes active zones, input gain (liner/log/exp) etc
 
