@@ -41,7 +41,6 @@ export class NotificationFacadeService {
                 {
                     horizontalPosition: 'end',
                     verticalPosition: isSmallScreen ? 'top' : 'bottom',
-                    duration: 10000,
                     data: message$
                 }
             );
@@ -53,8 +52,7 @@ export class NotificationFacadeService {
             AppUpdatedNotificationComponent,
             {
                 horizontalPosition: 'center',
-                verticalPosition: 'bottom',
-                duration: Number.MAX_SAFE_INTEGER
+                verticalPosition: 'bottom'
             }
         );
     }
