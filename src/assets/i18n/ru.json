@@ -50,7 +50,7 @@
     "controllersList": "Контроллеры",
     "hubsList": "Хабы",
     "controlSchemesList": "Схемы управления",
-    "navMenuAriaLabel": "Меню",
+    "navMenuAriaLabel": "Меню приложения",
     "aboutPageButton": "О программе",
     "settingsPageButton": "Настройки",
     "help": "Помощь"
@@ -188,6 +188,8 @@
     "editNameSaveButtonTitle": "Сохранить",
     "editNameCancelButtonTitle": "Отмена",
     "run": "Старт",
+    "runSuccessNotification": "Схема управления ''{ name }'' запущена",
+    "stopNotification": "Схема управления остановлена",
     "runFailed": "Не удалось запустить схему управления",
     "runFailedCalibrationOutOfRange": "Не удалось запустить схему управления из-за ошибки калибровки: диапазон больше допустимого",
     "runBlockerSchemeDoesNotExist": "Схема управления не существует",

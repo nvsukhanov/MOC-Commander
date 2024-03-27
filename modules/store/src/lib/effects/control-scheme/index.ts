@@ -8,6 +8,8 @@ import { CONSUME_QUEUE_EFFECT } from './consume-queue.effect';
 import { EXECUTE_TASK_EFFECT } from './execute-task.effect';
 import { NOTIFY_ON_CONTROL_SCHEME_IMPORTED_EFFECT } from './notify-on-control-scheme-imported.effect';
 import { NOTIFY_ON_CONTROL_SCHEME_START_FAILURE_EFFECT } from './notify-on-control-scheme-start-failure.effect';
+import { NOTIFY_ON_CONTROL_SCHEME_STARTED_EFFECT } from './notify-on-control-scheme-started.effect';
+import { NOTIFY_ON_CONTROL_SCHEME_STOPPED_EFFECT } from './notify-on-control-scheme-stopped.effect';
 
 export * from './i-task-filter';
 export * from './i-task-runner';
@@ -24,4 +26,6 @@ export const CONTROL_SCHEME_EFFECTS: {[name in string]: FunctionalEffect} = {
     executeTask: EXECUTE_TASK_EFFECT,
     notifyOnControlSchemeImported: NOTIFY_ON_CONTROL_SCHEME_IMPORTED_EFFECT,
     notifyOnControlSchemeStartFailure: NOTIFY_ON_CONTROL_SCHEME_START_FAILURE_EFFECT,
+    notifyOnControlSchemeStarted: NOTIFY_ON_CONTROL_SCHEME_STARTED_EFFECT,
+    notifyOnControlSchemeStopped: NOTIFY_ON_CONTROL_SCHEME_STOPPED_EFFECT,
 } as const;

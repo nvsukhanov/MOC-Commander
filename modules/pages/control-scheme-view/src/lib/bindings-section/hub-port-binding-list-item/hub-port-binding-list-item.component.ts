@@ -4,9 +4,11 @@ import { MatError } from '@angular/material/form-field';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { Observable } from 'rxjs';
 import { RouterLink } from '@angular/router';
-import { ControlSchemeBinding } from '@app/store';
+import { Store } from '@ngrx/store';
+import { ControlSchemeBinding, HUBS_SELECTORS } from '@app/store';
 import { BindingControllerInputNamePipe, BindingTypeToL10nKeyPipe } from '@app/shared-control-schemes';
 import { RoutesBuilderService, ScreenSizeObserverService } from '@app/shared-misc';
+import { PortIdToPortNamePipe } from '@app/shared-components';
 
 import { BindingActionListItemComponent } from '../binding-action-list-item';
 
@@ -22,7 +24,8 @@ import { BindingActionListItemComponent } from '../binding-action-list-item';
         MatError,
         TranslocoPipe,
         RouterLink,
-        BindingActionListItemComponent
+        BindingActionListItemComponent,
+        PortIdToPortNamePipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -44,13 +47,22 @@ export class HubPortBindingListItemComponent {
         return Object.keys(binding.inputs) as (keyof ControlSchemeBinding['inputs'])[];
     });
 
+    public readonly hubName = computed(() => {
+        const binding = this._binding();
+        if (binding === null) {
+            return '';
+        }
+        return this.store.selectSignal(HUBS_SELECTORS.selectHubName(binding.hubId))();
+    });
+
     private _binding: WritableSignal<ControlSchemeBinding | null> = signal(null);
 
     private _controlSchemeName: WritableSignal<string | null> = signal(null);
 
     constructor(
         private readonly screenSizeObserverService: ScreenSizeObserverService,
-        private readonly routesBuilderService: RoutesBuilderService
+        private readonly routesBuilderService: RoutesBuilderService,
+        private readonly store: Store
     ) {
     }
 

@@ -6,6 +6,10 @@
             <a class="binding__operation-type"
                [routerLink]="bindingEditPath()"
             >
+                <span class="cdk-visually-hidden">
+                    {{ hubName() }},
+                    {{ 'hub.port' | transloco: { portId: unwrappedBinding.portId | portIdToPortName } }},
+                </span>
                 {{ unwrappedBinding.bindingType | bindingTypeToL10nKey | transloco }}
             </a>
         </div>
