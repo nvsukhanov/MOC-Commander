@@ -1,5 +1,5 @@
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { Observable, catchError, forkJoin, map, mergeMap, of, switchMap, take, timeout } from 'rxjs';
+import { Observable, catchError, filter, forkJoin, map, mergeMap, of, switchMap, take, timeout } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { Dictionary } from '@ngrx/entity';
@@ -32,16 +32,13 @@ function getUniqueConnectedHubPorts(
 }
 
 function terminateScheme(
-    schemeModel: ControlSchemeModel | null,
+    schemeModel: ControlSchemeModel,
     store: Store,
     taskBuilder: ITaskFactory,
     hubStorage: HubStorageService,
     taskRunner: ITaskRunner,
     timeoutMs: number,
 ): Observable<Action> {
-    if (!schemeModel) {
-        return of(CONTROL_SCHEME_ACTIONS.schemeStopped());
-    }
     return of(schemeModel).pipe(
         concatLatestFrom(() => [
             store.select(HUB_RUNTIME_DATA_SELECTORS.selectIds),
@@ -87,6 +84,8 @@ export const STOP_SCHEME_EFFECT = createEffect((
     return actions.pipe(
         ofType(CONTROL_SCHEME_ACTIONS.stopScheme),
         concatLatestFrom(() => store.select(CONTROL_SCHEME_SELECTORS.selectRunningScheme)),
-        mergeMap(([ , runningScheme ]) => terminateScheme(runningScheme, store, taskFactory, hubStorage, taskRunner, appConfig.schemeStartStopTimeoutMs))
+        map(([, runningScheme]) => runningScheme),
+        filter((runningScheme): runningScheme is ControlSchemeModel => !!runningScheme),
+        mergeMap((runningScheme) => terminateScheme(runningScheme, store, taskFactory, hubStorage, taskRunner, appConfig.schemeStartStopTimeoutMs))
     ) as Observable<Action>;
 }, { functional: true });
