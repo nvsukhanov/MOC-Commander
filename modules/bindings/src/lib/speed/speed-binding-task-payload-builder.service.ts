@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType, clampSpeed } from '@app/shared-misc';
-import { ControlSchemeSpeedBinding, InputDirection, PortCommandTask, PortCommandTaskPayload, SpeedBindingInputAction, SpeedTaskPayload } from '@app/store';
+import {
+    ControlSchemeSpeedBinding,
+    InputDirection,
+    PortCommandTask,
+    PortCommandTaskPayload,
+    SpeedBindingInputAction,
+    SpeedTaskPayload,
+    TaskType
+} from '@app/store';
 
 import { extractDirectionAwareInputValue, snapSpeed } from '../common';
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
@@ -44,7 +52,7 @@ export class SpeedBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
         const backwardsSpeed = Math.abs(backwardsInput) * binding.maxSpeed * (binding.invert ? -1 : 1);
 
         const payload: SpeedTaskPayload = {
-            bindingType: ControlSchemeBindingType.Speed,
+            type: TaskType.Speed,
             speed: snapSpeed(clampSpeed(forwardsSpeed - backwardsSpeed)),
             brakeFactor: Math.round(Math.abs(brakeInput) * binding.maxSpeed),
             power: binding.power,
@@ -58,11 +66,11 @@ export class SpeedBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
     public buildCleanupPayload(
         previousTask: PortCommandTask
     ): PortCommandTaskPayload | null {
-        if (previousTask.payload.bindingType !== ControlSchemeBindingType.Speed) {
+        if (previousTask.payload.type !== TaskType.Speed) {
             return null;
         }
         return {
-            bindingType: ControlSchemeBindingType.Speed,
+            type: TaskType.Speed,
             speed: 0,
             brakeFactor: 0,
             power: 0,

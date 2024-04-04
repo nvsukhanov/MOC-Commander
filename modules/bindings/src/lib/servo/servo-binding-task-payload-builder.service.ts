@@ -8,7 +8,8 @@ import {
     PortCommandTask,
     PortCommandTaskPayload,
     ServoBindingInputAction,
-    ServoTaskPayload
+    ServoTaskPayload,
+    TaskType
 } from '@app/store';
 
 import { extractDirectionAwareInputValue } from '../common';
@@ -93,11 +94,11 @@ export class ServoBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
     public buildCleanupPayload(
         previousTask: PortCommandTask
     ): PortCommandTaskPayload | null {
-        if (previousTask.payload.bindingType !== ControlSchemeBindingType.Servo) {
+        if (previousTask.payload.type !== TaskType.SetAngle) {
             return null;
         }
         return {
-            bindingType: ControlSchemeBindingType.Speed,
+            type: TaskType.Speed,
             speed: 0,
             power: 0,
             brakeFactor: 0,
@@ -116,7 +117,7 @@ export class ServoBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
     ): { payload: ServoTaskPayload; inputTimestamp: number } {
         return {
             payload: {
-                bindingType: ControlSchemeBindingType.Servo,
+                type: TaskType.SetAngle,
                 angle: Math.round(angle),
                 speed,
                 power,

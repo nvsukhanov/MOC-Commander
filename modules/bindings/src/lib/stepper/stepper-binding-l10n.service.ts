@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeInputConfig, ControlSchemeStepperBinding, PortCommandTask, StepperBindingInputAction } from '@app/store';
+import { ControlSchemeInputConfig, ControlSchemeStepperBinding, StepperBindingInputAction } from '@app/store';
 
 import { IBindingL10n } from '../i-binding-l10n';
 import { ControllerInputNameService } from '../common';
@@ -15,16 +15,6 @@ export class StepperBindingL10nService implements IBindingL10n<ControlSchemeBind
         private readonly translocoService: TranslocoService,
         private readonly controllerInputNameService: ControllerInputNameService
     ) {
-    }
-
-    public buildTaskSummary(
-        task: PortCommandTask<ControlSchemeBindingType.Stepper>
-    ): Observable<string> {
-        if (task.payload.action === StepperBindingInputAction.Cw) {
-            return this.translocoService.selectTranslate('controlScheme.stepperBinding.taskSummaryCw', task.payload);
-        } else {
-            return this.translocoService.selectTranslate('controlScheme.stepperBinding.taskSummaryCcw', task.payload);
-        }
     }
 
     public getBindingInputName(

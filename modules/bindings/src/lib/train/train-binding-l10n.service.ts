@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
-import { MOTOR_LIMITS } from 'rxpoweredup';
-import { ControlSchemeInputConfig, PortCommandTask, TrainBindingInputAction } from '@app/store';
+import { ControlSchemeInputConfig, TrainBindingInputAction } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { IBindingL10n } from '../i-binding-l10n';
@@ -16,15 +15,6 @@ export class TrainBindingL10nService implements IBindingL10n<ControlSchemeBindin
         private readonly translocoService: TranslocoService,
         private readonly controllerInputNameService: ControllerInputNameService
     ) {
-    }
-
-    public buildTaskSummary(
-        task: PortCommandTask<ControlSchemeBindingType.Train>
-    ): Observable<string> {
-        const level = task.payload.initialLevelIndex - task.payload.speedIndex;
-        const speedPercent = Math.round((task.payload.speed / MOTOR_LIMITS.maxSpeed) * 100);
-        const isLooping = task.payload.isLooping;
-        return this.translocoService.selectTranslate('controlScheme.trainBinding.taskSummary', { level, speedPercent, isLooping });
     }
 
     public getBindingInputName(

@@ -6,7 +6,8 @@ import {
     PortCommandTask,
     PortCommandTaskPayload,
     StepperBindingInputAction,
-    StepperTaskPayload
+    StepperTaskPayload,
+    TaskType
 } from '@app/store';
 
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
@@ -25,7 +26,7 @@ export class StepperBindingTaskPayloadBuilderService implements ITaskPayloadBuil
             return null;
         }
         const payload: StepperTaskPayload = {
-            bindingType: ControlSchemeBindingType.Stepper,
+            type: TaskType.Stepper,
             degree: binding.degree,
             speed: binding.speed,
             power: binding.power,
@@ -41,11 +42,11 @@ export class StepperBindingTaskPayloadBuilderService implements ITaskPayloadBuil
     public buildCleanupPayload(
         previousTask: PortCommandTask
     ): PortCommandTaskPayload | null {
-        if (previousTask.payload.bindingType !== ControlSchemeBindingType.Stepper) {
+        if (previousTask.payload.type !== TaskType.Stepper) {
             return null;
         }
         return {
-            bindingType: ControlSchemeBindingType.Speed,
+            type: TaskType.Speed,
             speed: 0,
             power: 0,
             brakeFactor: 0,
