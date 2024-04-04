@@ -6,7 +6,8 @@ import {
     GearboxBindingInputAction,
     GearboxTaskPayload,
     PortCommandTask,
-    PortCommandTaskPayload
+    PortCommandTaskPayload,
+    TaskType
 } from '@app/store';
 
 import { calculateNextLoopingIndex, isTriggeredInputActivated } from '../common';
@@ -22,8 +23,8 @@ export class GearboxBindingTaskPayloadBuilderService implements ITaskPayloadBuil
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTask: PortCommandTask | null
     ): { payload: GearboxTaskPayload; inputTimestamp: number } | null {
-        const gearboxPrevTask = previousTask && previousTask.payload.bindingType === ControlSchemeBindingType.Gearbox
-                                       ? previousTask as PortCommandTask<ControlSchemeBindingType.Gearbox>
+        const gearboxPrevTask = previousTask && previousTask.payload.type === TaskType.Gearbox
+                                       ? previousTask as PortCommandTask<TaskType.Gearbox>
                                        : null;
         return this.buildPayloadUsingPreviousTask(
             binding,
@@ -37,11 +38,11 @@ export class GearboxBindingTaskPayloadBuilderService implements ITaskPayloadBuil
     public buildCleanupPayload(
         previousTask: PortCommandTask
     ): PortCommandTaskPayload | null {
-        if (previousTask.payload.bindingType !== ControlSchemeBindingType.Gearbox) {
+        if (previousTask.payload.type !== TaskType.Gearbox) {
             return null;
         }
         return {
-            bindingType: ControlSchemeBindingType.Speed,
+            type: TaskType.Speed,
             speed: 0,
             power: 0,
             brakeFactor: 0,
@@ -55,7 +56,7 @@ export class GearboxBindingTaskPayloadBuilderService implements ITaskPayloadBuil
         currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Gearbox>,
         previousInput: BindingInputExtractionResult<ControlSchemeBindingType.Gearbox>,
         motorEncoderOffset: number,
-        previousTask: PortCommandTask<ControlSchemeBindingType.Gearbox> | null
+        previousTask: PortCommandTask<TaskType.Gearbox> | null
     ): { payload: GearboxTaskPayload; inputTimestamp: number } | null {
         const nextLevelInput = this.getActiveInput(binding, currentInput, previousInput, GearboxBindingInputAction.NextGear);
         const prevLevelInput = this.getActiveInput(binding, currentInput, previousInput, GearboxBindingInputAction.PrevGear);
@@ -88,7 +89,7 @@ export class GearboxBindingTaskPayloadBuilderService implements ITaskPayloadBuil
 
         return {
             payload: {
-                bindingType: ControlSchemeBindingType.Gearbox,
+                type: TaskType.Gearbox,
                 initialLevelIndex: binding.initialLevelIndex,
                 angleIndex: nextIndex,
                 offset: motorEncoderOffset,
@@ -109,7 +110,7 @@ export class GearboxBindingTaskPayloadBuilderService implements ITaskPayloadBuil
         motorEncoderOffset: number
     ): GearboxTaskPayload {
         return {
-            bindingType: ControlSchemeBindingType.Gearbox,
+            type: TaskType.Gearbox,
             initialLevelIndex: binding.initialLevelIndex,
             angleIndex: binding.initialLevelIndex,
             offset: motorEncoderOffset,

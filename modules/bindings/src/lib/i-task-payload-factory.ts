@@ -10,7 +10,7 @@ export interface ITaskPayloadBuilder<TBindingType extends ControlSchemeBindingTy
         previousInput: BindingInputExtractionResult<TBindingType>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTaskPayload: PortCommandTask | null
-    ): { payload: PortCommandTaskPayload & { bindingType: TBindingType }; inputTimestamp: number } | null;
+    ): { payload: PortCommandTaskPayload; inputTimestamp: number } | null;
 
     buildCleanupPayload(
         previousTask: PortCommandTask

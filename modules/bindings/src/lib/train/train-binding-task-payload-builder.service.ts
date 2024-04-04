@@ -6,6 +6,7 @@ import {
     LoopingMode,
     PortCommandTask,
     PortCommandTaskPayload,
+    TaskType,
     TrainBindingInputAction,
     TrainTaskPayload
 } from '@app/store';
@@ -30,7 +31,7 @@ export class TrainBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
         if (resetLevelInput.isActivated) {
             return {
                 payload: {
-                    bindingType: ControlSchemeBindingType.Train,
+                    type: TaskType.Train,
                     speed: 0,
                     power: 0,
                     isLooping: false,
@@ -47,7 +48,7 @@ export class TrainBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
             return null;
         }
         const prevSpeed = previousTask?.payload.speed ?? 0;
-        const isLoopingPrev = previousTask?.payload.bindingType === ControlSchemeBindingType.Train && binding.loopingMode !== LoopingMode.None
+        const isLoopingPrev = previousTask?.payload.type === TaskType.Train && binding.loopingMode !== LoopingMode.None
                               ? previousTask.payload.isLooping
                               : false;
 
@@ -65,7 +66,7 @@ export class TrainBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
         );
 
         const payload: TrainTaskPayload = {
-            bindingType: ControlSchemeBindingType.Train,
+            type: TaskType.Train,
             speedIndex: nextIndex,
             speed: binding.levels[nextIndex],
             power: binding.levels[nextIndex] === 0 ? 0 : binding.power,
@@ -80,11 +81,11 @@ export class TrainBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
     public buildCleanupPayload(
         previousTask: PortCommandTask
     ): PortCommandTaskPayload | null {
-        if (previousTask.payload.bindingType !== ControlSchemeBindingType.Train) {
+        if (previousTask.payload.type !== TaskType.Train) {
             return null;
         }
         return {
-            bindingType: ControlSchemeBindingType.Speed,
+            type: TaskType.Speed,
             speed: 0,
             power: 0,
             brakeFactor: 0,

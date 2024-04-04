@@ -8,10 +8,8 @@ import { SpeedBindingTaskPayloadBuilderService } from './speed';
 import { TrainBindingTaskPayloadBuilderService } from './train';
 import { StepperBindingTaskPayloadBuilderService } from './stepper';
 import { GearboxBindingTaskPayloadBuilderService } from './gearbox';
-import { BindingTaskPayloadHashBuilderService } from './binding-task-payload-hash-builder.service';
 import { ITaskPayloadBuilder } from './i-task-payload-factory';
 import { BindingInputExtractionResult } from './i-binding-task-input-extractor';
-import { calculateTaskHash } from './common';
 
 @Injectable()
 export class BindingTaskFactoryService implements ITaskFactory {
@@ -31,7 +29,6 @@ export class BindingTaskFactoryService implements ITaskFactory {
         private readonly trainTaskPayloadBuilder: TrainBindingTaskPayloadBuilderService,
         private readonly stepperTaskPayloadBuilder: StepperBindingTaskPayloadBuilderService,
         private readonly gearboxTaskPayloadBuilder: GearboxBindingTaskPayloadBuilderService,
-        private readonly hashBuilder: BindingTaskPayloadHashBuilderService
     ) {
     }
 
@@ -56,8 +53,7 @@ export class BindingTaskFactoryService implements ITaskFactory {
         if (payload) {
             return {
                 ...previousTask,
-                payload,
-                hash: this.calculateHash(previousTask.hubId, previousTask.portId, payload)
+                payload
             };
         }
         return null;
@@ -83,15 +79,7 @@ export class BindingTaskFactoryService implements ITaskFactory {
     private buildCleanupPayload(
         previousTask: PortCommandTask
     ): PortCommandTaskPayload | null {
-        return this.taskPayloadBuilders[previousTask.payload.bindingType].buildCleanupPayload(previousTask);
-    }
-
-    private calculateHash(
-        hubId: string,
-        portId: number,
-        payload: PortCommandTaskPayload
-    ): string {
-        return calculateTaskHash(hubId, portId, this.hashBuilder.buildHash(payload));
+        return this.taskPayloadBuilders[previousTask.payload.type].buildCleanupPayload(previousTask);
     }
 
     private composeTask(
@@ -103,7 +91,6 @@ export class BindingTaskFactoryService implements ITaskFactory {
             hubId: binding.hubId,
             portId: binding.portId,
             payload,
-            hash: this.calculateHash(binding.hubId, binding.portId, payload),
             inputTimestamp
         };
     }

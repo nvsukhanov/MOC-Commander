@@ -10,11 +10,10 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { EllipsisTitleDirective, IoTypeToL10nKeyPipe, PortIdToPortNamePipe } from '@app/shared-components';
 import { ControlSchemeBinding, PORT_TASKS_SELECTORS, PortCommandTask } from '@app/store';
 import { RoutesBuilderService } from '@app/shared-misc';
-import { BindingTypeToL10nKeyPipe } from '@app/shared-control-schemes';
+import { BindingTypeToL10nKeyPipe, PortCommandTaskSummaryPipe } from '@app/shared-control-schemes';
 
 import { HUB_PORT_LIST_ITEM_SELECTORS } from './hub-port-list-item.selectors';
 import { HubPortBindingListItemComponent } from '../hub-port-binding-list-item';
-import { PortCommandTaskSummaryPipe } from './port-command-task-summary.pipe';
 
 @Component({
     standalone: true,

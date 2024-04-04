@@ -1,13 +1,12 @@
 import { InjectionToken } from '@angular/core';
-import { ControlSchemeBindingType } from '@app/shared-misc';
 
-import { PortCommandTask } from '../../models';
+import { PortCommandTask, TaskType } from '../../models';
 
-export interface ITaskFilter<TBindingType extends ControlSchemeBindingType = ControlSchemeBindingType> {
+export interface ITaskFilter<TTaskType extends TaskType = TaskType> {
     calculateNextPendingTask(
         currentTask: PortCommandTask | null,
         pendingTask: PortCommandTask | null,
-        inputSliceTasks: Array<PortCommandTask<TBindingType>>,
+        inputSliceTasks: Array<PortCommandTask<TTaskType>>,
     ): PortCommandTask | null;
 }
 

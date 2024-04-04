@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IBindingControllerInputNameResolver, IBindingTypeToL10nKeyMapper } from '@app/shared-control-schemes';
-import { IBindingInputNameResolver, IPortCommandTaskSummaryBuilder } from '@app/control-scheme-view';
-import { ControlSchemeBinding, ControlSchemeBindingInputs, ControlSchemeInputConfig, PortCommandTask } from '@app/store';
+import { IBindingInputNameResolver } from '@app/control-scheme-view';
+import { ControlSchemeBinding, ControlSchemeBindingInputs, ControlSchemeInputConfig } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { IBindingL10n } from './i-binding-l10n';
@@ -17,7 +17,6 @@ import { TrainBindingL10nService } from './train';
 export class BindingL10nService implements
     IBindingControllerInputNameResolver,
     IBindingInputNameResolver,
-    IPortCommandTaskSummaryBuilder,
     IBindingTypeToL10nKeyMapper {
     private readonly bindingL10nServices: { [k in ControlSchemeBindingType]: IBindingL10n<k> } = {
         [ControlSchemeBindingType.Gearbox]: this.gearboxBindingL10nService,
@@ -36,12 +35,6 @@ export class BindingL10nService implements
         private readonly stepperBindingL10nService: StepperBindingL10nService,
         private readonly trainBindingL10nService: TrainBindingL10nService
     ) {
-    }
-
-    public buildTaskSummary<T extends ControlSchemeBindingType>(
-        portCommandTask: PortCommandTask<T>
-    ): Observable<string> {
-        return this.getL10nService(portCommandTask.payload.bindingType).buildTaskSummary(portCommandTask);
     }
 
     public getBindingActionName<T extends ControlSchemeBinding>(

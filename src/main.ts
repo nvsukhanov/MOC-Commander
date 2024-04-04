@@ -12,6 +12,7 @@ import { provideI18n } from '@app/shared-i18n';
 import { provideApplicationStore } from '@app/store';
 import { provideBindings } from '@app/bindings';
 import { CHANGELOG_TOKEN } from '@app/shared-components';
+import { provideTasks } from '@app/tasks';
 
 import { RootComponent } from './app';
 import { ROUTES } from './routes';
@@ -27,6 +28,7 @@ bootstrapApplication(RootComponent, {
         provideApplicationStore(),
         provideBindings(),
         provideWidgets(),
+        provideTasks(),
         { provide: ErrorStateMatcher, useClass: ShowOnTouchedErrorStateMatcher },
         provideServiceWorker('ngsw-worker.js', {
             enabled: !isDevMode(),

@@ -7,7 +7,8 @@ import {
     PortCommandTask,
     PortCommandTaskPayload,
     SetAngleBindingInputAction,
-    SetAngleTaskPayload
+    SetAngleTaskPayload,
+    TaskType
 } from '@app/store';
 
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
@@ -29,7 +30,7 @@ export class SetAngleBindingTaskPayloadBuilderService implements ITaskPayloadBui
             const resultingAngle = binding.angle - (ioProps?.motorEncoderOffset ?? 0);
 
             const payload: SetAngleTaskPayload = {
-                bindingType: ControlSchemeBindingType.SetAngle,
+                type: TaskType.SetAngle,
                 angle: resultingAngle,
                 speed: binding.speed,
                 power: binding.power,
@@ -47,11 +48,11 @@ export class SetAngleBindingTaskPayloadBuilderService implements ITaskPayloadBui
     public buildCleanupPayload(
         previousTask: PortCommandTask
     ): PortCommandTaskPayload | null {
-        if (previousTask.payload.bindingType !== ControlSchemeBindingType.SetAngle) {
+        if (previousTask.payload.type !== TaskType.SetAngle) {
             return null;
         }
         return {
-            bindingType: ControlSchemeBindingType.Speed,
+            type: TaskType.Speed,
             speed: 0,
             power: 0,
             brakeFactor: 0,

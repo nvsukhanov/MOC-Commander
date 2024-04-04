@@ -1,10 +1,17 @@
 import { MotorServoEndState } from 'rxpoweredup';
-import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { StepperBindingInputAction } from './control-scheme.model';
 
+export enum TaskType {
+    Speed,
+    SetAngle,
+    Stepper,
+    Train,
+    Gearbox
+}
+
 export type SpeedTaskPayload = {
-    bindingType: ControlSchemeBindingType.Speed;
+    type: TaskType.Speed;
     speed: number;
     brakeFactor: number; // [0 to MOTOR_LIMITS.MAX_SPEED]
     power: number;
@@ -13,7 +20,7 @@ export type SpeedTaskPayload = {
 };
 
 export type ServoTaskPayload = {
-    bindingType: ControlSchemeBindingType.Servo;
+    type: TaskType.SetAngle;
     angle: number;
     speed: number;
     power: number;
@@ -23,7 +30,7 @@ export type ServoTaskPayload = {
 };
 
 export type SetAngleTaskPayload = {
-    bindingType: ControlSchemeBindingType.SetAngle;
+    type: TaskType.SetAngle;
     angle: number;
     speed: number;
     power: number;
@@ -33,7 +40,7 @@ export type SetAngleTaskPayload = {
 };
 
 export type StepperTaskPayload = {
-    bindingType: ControlSchemeBindingType.Stepper;
+    type: TaskType.Stepper;
     degree: number;
     speed: number;
     power: number;
@@ -44,7 +51,7 @@ export type StepperTaskPayload = {
 };
 
 export type TrainTaskPayload = {
-    bindingType: ControlSchemeBindingType.Train;
+    type: TaskType.Train;
     speed: number;
     power: number;
     initialLevelIndex: number;
@@ -55,7 +62,7 @@ export type TrainTaskPayload = {
 };
 
 export type GearboxTaskPayload = {
-    bindingType: ControlSchemeBindingType.Gearbox;
+    type: TaskType.Gearbox;
     offset: number;
     angle: number;
     initialLevelIndex: number;
@@ -75,10 +82,9 @@ export type PortCommandTaskPayload = SpeedTaskPayload
     | TrainTaskPayload
     | GearboxTaskPayload;
 
-export type PortCommandTask<TPayloadType extends ControlSchemeBindingType = ControlSchemeBindingType> = {
+export type PortCommandTask<TTaskType extends TaskType = TaskType> = {
     hubId: string;
     portId: number;
-    payload: PortCommandTaskPayload & { bindingType: TPayloadType };
-    hash: string;
+    payload: PortCommandTaskPayload & { type: TTaskType };
     inputTimestamp: number;
 };

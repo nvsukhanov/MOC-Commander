@@ -2,12 +2,12 @@ import { IHub, PortCommandExecutionStatus } from 'rxpoweredup';
 import { Observable } from 'rxjs';
 import { InjectionToken } from '@angular/core';
 
-import { PortCommandTask } from '../../models';
+import { PortCommandTask, TaskType } from '../../models';
 
-export interface ITaskRunner {
+export interface ITaskRunner<TTaskType extends TaskType = TaskType> {
     runTask(
         hub: IHub,
-        task: PortCommandTask,
+        task: PortCommandTask<TTaskType>,
     ): Observable<PortCommandExecutionStatus>;
 }
 
