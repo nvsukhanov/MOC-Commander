@@ -81,6 +81,7 @@
     "typescript": "~5.2.2"
   },
   "overrides": {
-    "webpack-dev-middleware": "6.1.2"
+    "webpack-dev-middleware": "6.1.2",
+    "vite": "5.1.7"
   }
 }
