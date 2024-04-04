@@ -21,7 +21,7 @@ export class SetAngleTaskL10nService implements ITaskSummaryBuilder<TaskType.Set
             filter((ioProps): ioProps is AttachedIoPropsModel => !!ioProps),
             switchMap((ioProps: AttachedIoPropsModel) => {
                 const angle = (ioProps.motorEncoderOffset ?? 0) + task.payload.angle;
-                return this.translocoService.selectTranslate('controlScheme.setAngleBinding.taskSummary', { angle });
+                return this.translocoService.selectTranslate('controlScheme.tasks.setAngleSummary', { angle });
             })
         );
     }

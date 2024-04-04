@@ -18,8 +18,8 @@ export class SpeedTaskL10nService implements ITaskSummaryBuilder<TaskType.Speed>
     ): Observable<string> {
         const { speed, power } = calculateSpeedPower(task.payload.speed, task.payload.brakeFactor, task.payload.power);
         if (power !== 0 && speed === 0) {
-            return this.translocoService.selectTranslate('controlScheme.speedBinding.brakeTaskSummary');
+            return this.translocoService.selectTranslate('controlScheme.tasks.brakeSummary');
         }
-        return this.translocoService.selectTranslate('controlScheme.speedBinding.taskSummary', { speed });
+        return this.translocoService.selectTranslate('controlScheme.tasks.speedSummary', { speed });
     }
 }

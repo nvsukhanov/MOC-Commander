@@ -18,6 +18,6 @@ export class GearboxTaskL10nService implements ITaskSummaryBuilder<TaskType.Gear
         const level = task.payload.initialLevelIndex - task.payload.angleIndex;
         const angle = task.payload.angle;
         const isLooping = task.payload.isLooping;
-        return this.translocoService.selectTranslate('controlScheme.gearboxBinding.taskSummary', { level, angle, isLooping });
+        return this.translocoService.selectTranslate('controlScheme.tasks.gearboxSummary', { level, angle, isLooping });
     }
 }

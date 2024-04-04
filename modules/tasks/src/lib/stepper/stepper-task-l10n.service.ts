@@ -16,9 +16,9 @@ export class StepperTaskL10nService implements ITaskSummaryBuilder<TaskType.Step
         task: PortCommandTask<TaskType.Stepper>
     ): Observable<string> {
         if (task.payload.action === StepperBindingInputAction.Cw) {
-            return this.translocoService.selectTranslate('controlScheme.stepperBinding.taskSummaryCw', task.payload);
+            return this.translocoService.selectTranslate('controlScheme.tasks.stepperCwSummary', task.payload);
         } else {
-            return this.translocoService.selectTranslate('controlScheme.stepperBinding.taskSummaryCcw', task.payload);
+            return this.translocoService.selectTranslate('controlScheme.tasks.stepperCcwSummary', task.payload);
         }
     }
 }
