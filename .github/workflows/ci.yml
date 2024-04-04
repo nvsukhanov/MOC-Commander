@@ -2,7 +2,6 @@ name: CI
 on: push
 jobs:
   build:
-
     timeout-minutes: 5
     runs-on: ${{ fromJSON('["ubuntu-latest", "self-hosted"]')[github.repository == 'github/docs-internal'] }}
     steps:
@@ -14,4 +13,6 @@ jobs:
       - name: Install modules
         run: npm install
       - name: Run CI
+        env:
+          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
         run: npm run ci
