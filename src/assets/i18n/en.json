@@ -281,6 +281,15 @@
       "confirmButtonTitle": "Save",
       "cancelButtonTitle": "Cancel"
     },
+    "tasks": {
+      "speedSummary": "Speed: { speed }%",
+      "brakeSummary": "Brake",
+      "setAngleSummary": "Angle: { angle }°",
+      "stepperCwSummary": "Step: { degree }° clockwise",
+      "stepperCcwSummary": "Step: { degree }° counter-clockwise",
+      "trainSummary": "Train, speed #{level} ({speedPercent}%){ isLooping, select, true { (mirror)} other {}}",
+      "gearboxSummary": "Gearbox, gear #{level} ({angle}°){ isLooping, select, true { (mirror)} other {}}"
+    },
     "speedBinding": {
       "operationMode": "Speed",
       "forwardsInput": "Forwards",
@@ -290,9 +299,7 @@
       "forwardsInputGainTitle": "'Forwards' input gain",
       "backwardsInputGainTitle": "'Backwards' input gain",
       "brakeInputGainTitle": "'Brake' input gain",
-      "outputSpeed": "Max speed",
-      "taskSummary": "Speed: { speed }%",
-      "brakeTaskSummary": "Brake"
+      "outputSpeed": "Max speed"
     },
     "servoBinding": {
       "operationMode": "Servo",
@@ -306,7 +313,6 @@
       "calibrationCancel": "Cancel",
       "readServoCenterFromPort": "Read servo center from port",
       "readServoRangeFromPort": "Read servo range from port",
-      "taskSummary": "Servo: { angle }°",
       "cwAction": "Clockwise",
       "ccwAction": "Counter-clockwise",
       "cwActionInputGainTitle": "'Clockwise' input gain",
@@ -316,8 +322,6 @@
     "stepperBinding": {
       "operationMode": "Stepper",
       "outputDegree": "Angle (°)",
-      "taskSummaryCw": "Step: { degree }° clockwise",
-      "taskSummaryCcw": "Step: { degree }° counter-clockwise",
       "inputActionCw": "Step { degree }° clockwise",
       "inputActionCcw": "Step { degree }° counter-clockwise",
       "basicInputActionCw": "Step clockwise",
@@ -329,7 +333,6 @@
       "outputAngle": "Target angle (°)",
       "readAngleFromPort": "Read angle from port",
       "setPortAngle": "Set angle to motor",
-      "taskSummary": "Set angle: { angle }°",
       "inputAction": "Set angle ({ angle }°)",
       "basicInputAction": "Set angle"
     },
@@ -338,7 +341,6 @@
       "level": "Speed { level } (%)",
       "outputLevelAdd": "Add speed",
       "outputLevelRemove": "Remove speed",
-      "taskSummary": "Train, speed #{level} ({speedPercent}%){ isLooping, select, true { (mirror)} other {}}",
       "nextSpeed": "Next speed",
       "prevSpeed": "Prev speed",
       "reset": "Set speed #0"
@@ -350,7 +352,6 @@
       "setPortAngle": "Set angle to motor",
       "outputAngleLevelAdd": "Add gear",
       "outputAngleLevelRemove": "Remove gear",
-      "taskSummary": "Gearbox, gear #{level} ({angle}°){ isLooping, select, true { (mirror)} other {}}",
       "nextGear": "Next gear",
       "prevGear": "Prev gear",
       "reset": "Set gear #0"

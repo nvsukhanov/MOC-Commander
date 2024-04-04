@@ -19,6 +19,6 @@ export class TrainTaskL10nService implements ITaskSummaryBuilder<TaskType.Train>
         const level = task.payload.initialLevelIndex - task.payload.speedIndex;
         const speedPercent = Math.round((task.payload.speed / MOTOR_LIMITS.maxSpeed) * 100);
         const isLooping = task.payload.isLooping;
-        return this.translocoService.selectTranslate('controlScheme.trainBinding.taskSummary', { level, speedPercent, isLooping });
+        return this.translocoService.selectTranslate('controlScheme.tasks.trainSummary', { level, speedPercent, isLooping });
     }
 }

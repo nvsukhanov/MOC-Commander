@@ -281,6 +281,15 @@
       "confirmButtonTitle": "Сохранить",
       "cancelButtonTitle": "Отмена"
     },
+    "tasks": {
+      "speedSummary": "Скорость: { speed }%",
+      "brakeSummary": "Тормоз",
+      "setAngleSummary": "Угол: { angle }°",
+      "stepperCwSummary": "Шаг: { degree }° по часовой",
+      "stepperCcwSummary": "Шаг: { degree }° против часовой",
+      "trainSummary": "Поезд, скорость №{level} ({speedPercent}%){ isLooping, select, true { (инв.)} other {}}",
+      "gearboxSummary": "Коробка передач, передача №{level} ({angle}°){ isLooping, select, true { (инв.)} other {}}"
+    },
     "speedBinding": {
       "operationMode": "Скорость",
       "forwardsInput": "Вперед",
@@ -290,9 +299,7 @@
       "forwardsInputGainTitle": "Усиление ввода 'Вперед'",
       "backwardsInputGainTitle": "Усиление ввода 'Назад'",
       "brakeInputGainTitle": "Усиление ввода 'Тормоз'",
-      "outputSpeed": "Макс. скорость",
-      "taskSummary": "Скорость: { speed }%",
-      "brakeTaskSummary": "Тормоз"
+      "outputSpeed": "Макс. скорость"
     },
     "servoBinding": {
       "operationMode": "Сервопривод",
@@ -306,7 +313,6 @@
       "calibrationCancel": "Отмена",
       "readServoCenterFromPort": "Прочитать центр из порта",
       "readServoRangeFromPort": "Прочитать диапазон из порта",
-      "taskSummary": "Сервопривод: { angle }°",
       "cwAction": "По часовой",
       "ccwAction": "Против часовой",
       "cwActionInputGainTitle": "Усиление ввода 'По часовой'",
@@ -316,8 +322,6 @@
     "stepperBinding": {
       "operationMode": "Шаговый двигатель",
       "outputDegree": "Угол шага (°)",
-      "taskSummaryCw": "Шаг: { degree }° по часовой",
-      "taskSummaryCcw": "Шаг: { degree }° против часовой",
       "inputActionCw": "Шаг { degree }° по часовой",
       "inputActionCcw": "Шаг { degree }° против часовой",
       "basicInputActionCw": "Шаг по часовой",
@@ -329,7 +333,6 @@
       "outputAngle": "Целевой угол (°)",
       "readAngleFromPort": "Прочитать угол из порта",
       "setPortAngle": "Установить угол на порту",
-      "taskSummary": "Установка угла: { angle }°",
       "inputAction": "Установка угла ({ angle }°)",
       "basicInputAction": "Установка угла"
     },
@@ -338,7 +341,6 @@
       "level": "Скорость { level } (%)",
       "outputLevelAdd": "Добавить скорость",
       "outputLevelRemove": "Удалить скорость",
-      "taskSummary": "Поезд, скорость №{level} ({speedPercent}%){ isLooping, select, true { (инв.)} other {}}",
       "nextSpeed": "Следующая скорость",
       "prevSpeed": "Предыдущая скорость",
       "reset": "Скорость №0"
@@ -350,7 +352,6 @@
       "setPortAngle": "Установить позицию на порту",
       "outputAngleLevelAdd": "Добавить передачу",
       "outputAngleLevelRemove": "Удалить передачу",
-      "taskSummary": "Коробка передач, передача №{level} ({angle}°){ isLooping, select, true { (инв.)} other {}}",
       "nextGear": "Следующая передача",
       "prevGear": "Предыдущая передача",
       "reset": "Передача №0"
