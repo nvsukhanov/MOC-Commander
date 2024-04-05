@@ -296,9 +296,6 @@
       "backwardsInput": "Назад",
       "brakeInput": "Тормоз",
       "missingInputs": "Нужно назначить хотя-бы один контроллер",
-      "forwardsInputGainTitle": "Усиление ввода 'Вперед'",
-      "backwardsInputGainTitle": "Усиление ввода 'Назад'",
-      "brakeInputGainTitle": "Усиление ввода 'Тормоз'",
       "outputSpeed": "Макс. скорость"
     },
     "servoBinding": {
@@ -355,6 +352,17 @@
       "nextGear": "Следующая передача",
       "prevGear": "Предыдущая передача",
       "reset": "Передача №0"
+    },
+    "accelerateBinding": {
+      "operationMode": "Ускорение",
+      "forwardsInput": "Вперед",
+      "backwardsInput": "Назад",
+      "slowdownInput": "Замедление",
+      "missingInputs": "Нужно назначить хотя-бы один контроллер",
+      "outputSpeed": "Макс. скорость",
+      "forwardsSpeedIncrement": "Шаг ускорения вперед",
+      "backwardsSpeedIncrement": "Шаг ускорения назад",
+      "slowdownSpeedDecrement": "Шаг замедления"
     },
     "widgets": {
       "reorderWidgetsButtonTitle": "Изменить порядок виджетов",
@@ -843,6 +851,9 @@
     "1-2-9": {
       "accessibilityImprovements": "Небольшие улучшения в части доступности",
       "layoutFixesForSmallScreens": "Исправления верстки для маленьких экранов"
+    },
+    "1-3-0": {
+      "accelerationBindingTypeAdded": "Добавлен тип привязки 'Ускорение'"
     }
   }
 }

@@ -10,6 +10,7 @@ import { StepperBindingTaskPayloadBuilderService } from './stepper';
 import { GearboxBindingTaskPayloadBuilderService } from './gearbox';
 import { ITaskPayloadBuilder } from './i-task-payload-factory';
 import { BindingInputExtractionResult } from './i-binding-task-input-extractor';
+import { AccelerateBindingTaskPayloadBuilderService } from './accelerate';
 
 @Injectable()
 export class BindingTaskFactoryService implements ITaskFactory {
@@ -20,6 +21,7 @@ export class BindingTaskFactoryService implements ITaskFactory {
         [ControlSchemeBindingType.Train]: this.trainTaskPayloadBuilder,
         [ControlSchemeBindingType.Stepper]: this.stepperTaskPayloadBuilder,
         [ControlSchemeBindingType.Gearbox]: this.gearboxTaskPayloadBuilder,
+        [ControlSchemeBindingType.Accelerate]: this.accelerateTaskPayloadBuilder
     };
 
     constructor(
@@ -29,6 +31,7 @@ export class BindingTaskFactoryService implements ITaskFactory {
         private readonly trainTaskPayloadBuilder: TrainBindingTaskPayloadBuilderService,
         private readonly stepperTaskPayloadBuilder: StepperBindingTaskPayloadBuilderService,
         private readonly gearboxTaskPayloadBuilder: GearboxBindingTaskPayloadBuilderService,
+        private readonly accelerateTaskPayloadBuilder: AccelerateBindingTaskPayloadBuilderService
     ) {
     }
 

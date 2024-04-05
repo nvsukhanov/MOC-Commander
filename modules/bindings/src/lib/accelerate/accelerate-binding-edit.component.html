@@ -1,0 +1,65 @@
+@if (form) {
+    <lib-cs-binding-edit-sections-container>
+        <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
+                                     [caption]="'controlScheme.bindingSectionOutputTitle' | transloco"
+        >
+            <lib-cs-binding-control-select-hub [control]="form.controls.hubId"
+                                               [bindingType]="bindingType"
+            ></lib-cs-binding-control-select-hub>
+
+            <lib-cs-binding-control-select-io [portIdControl]="form.controls.portId"
+                                              [hubIdControl]="form.controls.hubId"
+                                              [bindingType]="bindingType"
+            ></lib-cs-binding-control-select-io>
+        </lib-cs-binding-edit-section>
+
+        <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
+
+        <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
+                                     [caption]="'controlScheme.bindingSectionInputTitle' | transloco"
+        >
+            <lib-cs-binding-control-select-controller [data]="forwardsControlBindingComponentData"></lib-cs-binding-control-select-controller>
+            <lib-cs-binding-control-select-controller [data]="backwardsControlBindingComponentData"></lib-cs-binding-control-select-controller>
+            <lib-cs-binding-control-select-controller [data]="slowdownControlBindingComponentData"></lib-cs-binding-control-select-controller>
+
+            <mat-error [libValidationMessages]="form.controls.inputs"
+                       [immediatelyShowMessages]="true"
+                       [l10nMap]="validationErrorsMap"
+            ></mat-error>
+        </lib-cs-binding-edit-section>
+
+        <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
+
+        <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
+                                     [caption]="'controlScheme.bindingSectionConfigTitle' | transloco"
+        >
+            <lib-cs-binding-control-speed-input [control]="form.controls.maxSpeed"
+                                                [translocoTitle]="'controlScheme.speedBinding.outputSpeed'"
+            ></lib-cs-binding-control-speed-input>
+
+            @if (isForwardsControlAssigned) {
+                <lib-cs-binding-control-speed-input [control]="form.controls.forwardsSpeedIncrement"
+                                                    [translocoTitle]="'controlScheme.accelerateBinding.forwardsSpeedIncrement'"
+                ></lib-cs-binding-control-speed-input>
+            }
+
+            @if (isBackwardsControlAssigned) {
+                <lib-cs-binding-control-speed-input [control]="form.controls.backwardsSpeedIncrement"
+                                                    [translocoTitle]="'controlScheme.accelerateBinding.backwardsSpeedIncrement'"
+                ></lib-cs-binding-control-speed-input>
+            }
+
+            @if (isSlowDownControlAssigned) {
+                <lib-cs-binding-control-speed-input [control]="form.controls.slowdownSpeedDecrement"
+                                                    [translocoTitle]="'controlScheme.accelerateBinding.slowdownSpeedDecrement'"
+                ></lib-cs-binding-control-speed-input>
+            }
+
+            <lib-cs-binding-control-power-input [control]="form.controls.power"></lib-cs-binding-control-power-input>
+
+            <lib-toggle-control [translocoTitle]="'controlScheme.outputInvertControlTitle'"
+                                [control]="form.controls.invert"
+            ></lib-toggle-control>
+        </lib-cs-binding-edit-section>
+    </lib-cs-binding-edit-sections-container>
+}

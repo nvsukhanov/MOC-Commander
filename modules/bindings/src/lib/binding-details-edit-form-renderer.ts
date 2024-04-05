@@ -12,6 +12,7 @@ import { SetAngleBindingEditComponent, SetAngleBindingFormBuilderService, SetAng
 import { StepperBindingEditComponent, StepperBindingFormBuilderService, StepperBindingFormMapperService } from './stepper';
 import { TrainBindingEditComponent, TrainBindingFormBuilderService, TrainBindingFormMapperService } from './train';
 import { GearboxBindingEditComponent, GearboxBindingFormBuilderService, GearboxBindingFormMapperService } from './gearbox';
+import { AccelerateBindingEditComponent, AccelerateBindingFormBuilderService, AccelerateBindingFormMapperService } from './accelerate';
 
 export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRenderer {
     public readonly bindingChange: Observable<ControlSchemeBinding | null>;
@@ -24,7 +25,8 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
         [ControlSchemeBindingType.SetAngle]: SetAngleBindingEditComponent,
         [ControlSchemeBindingType.Stepper]: StepperBindingEditComponent,
         [ControlSchemeBindingType.Train]: TrainBindingEditComponent,
-        [ControlSchemeBindingType.Gearbox]: GearboxBindingEditComponent
+        [ControlSchemeBindingType.Gearbox]: GearboxBindingEditComponent,
+        [ControlSchemeBindingType.Accelerate]: AccelerateBindingEditComponent
     };
 
     private _bindingType = ControlSchemeBindingType.Speed;
@@ -43,7 +45,8 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
         [ControlSchemeBindingType.SetAngle]: this.setAngleBindingFormBuilder.build(),
         [ControlSchemeBindingType.Stepper]: this.stepperBindingFormBuilder.build(),
         [ControlSchemeBindingType.Train]: this.trainBindingFormBuilder.build(),
-        [ControlSchemeBindingType.Gearbox]: this.gearboxBindingFormBuilder.build()
+        [ControlSchemeBindingType.Gearbox]: this.gearboxBindingFormBuilder.build(),
+        [ControlSchemeBindingType.Accelerate]: this.accelerateBindingFormBuilder.build()
     });
 
     constructor(
@@ -55,12 +58,14 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
         private readonly stepperBindingFormBuilder: StepperBindingFormBuilderService,
         private readonly trainBindingFormBuilder: TrainBindingFormBuilderService,
         private readonly gearboxBindingFormBuilder: GearboxBindingFormBuilderService,
+        private readonly accelerateBindingFormBuilder: AccelerateBindingFormBuilderService,
         private readonly speedBindingMapper: SpeedBindingFormMapperService,
         private readonly servoBindingMapper: ServoBindingFormMapperService,
         private readonly setAngleBindingMapper: SetAngleBindingFormMapperService,
         private readonly stepperBindingMapper: StepperBindingFormMapperService,
         private readonly trainBindingMapper: TrainBindingFormMapperService,
-        private readonly gearboxBindingMapper: GearboxBindingFormMapperService
+        private readonly gearboxBindingMapper: GearboxBindingFormMapperService,
+        private readonly accelerateBindingMapper: AccelerateBindingFormMapperService
     ) {
         this.bindingChange = this._form.valueChanges.pipe(
             startWith(null),
@@ -154,6 +159,9 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
             case ControlSchemeBindingType.Gearbox:
                 this.gearboxBindingFormBuilder.patchForm(this._form.controls[ControlSchemeBindingType.Gearbox], patch);
                 break;
+            case ControlSchemeBindingType.Accelerate:
+                this.accelerateBindingFormBuilder.patchForm(this._form.controls[ControlSchemeBindingType.Accelerate], patch);
+                break;
             default:
                 return patch satisfies never;
         }
@@ -174,8 +182,8 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
                 return this.trainBindingMapper.mapToModel(id, this._form.controls[ControlSchemeBindingType.Train]);
             case ControlSchemeBindingType.Gearbox:
                 return this.gearboxBindingMapper.mapToModel(id, this._form.controls[ControlSchemeBindingType.Gearbox]);
-            case undefined:
-                throw new Error('Binding type is undefined');
+            case ControlSchemeBindingType.Accelerate:
+                return this.accelerateBindingMapper.mapToModel(id, this._form.controls[ControlSchemeBindingType.Accelerate]);
             default:
                 return this._bindingType satisfies void;
         }

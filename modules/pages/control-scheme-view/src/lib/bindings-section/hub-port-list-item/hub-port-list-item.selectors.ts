@@ -5,7 +5,9 @@ import {
     ATTACHED_IO_SELECTORS,
     CONTROL_SCHEME_SELECTORS,
     HUB_RUNTIME_DATA_SELECTORS,
-    PORT_TASKS_SELECTORS
+    PORT_TASKS_SELECTORS,
+    isUsingAccelerationProfile,
+    isUsingDecelerationProfile
 } from '@app/store';
 import { ioHasMatchingModeForOpMode } from '@app/shared-control-schemes';
 
@@ -36,7 +38,7 @@ export const HUB_PORT_LIST_ITEM_SELECTORS = {
             if (!scheme) {
                 return false;
             }
-            return scheme.bindings.some((binding) => binding.hubId === hubId && binding.portId === portId && binding.useAccelerationProfile);
+            return scheme.bindings.some((binding) => binding.hubId === hubId && binding.portId === portId && isUsingAccelerationProfile(binding));
         }
     ),
     selectPortDecelerationProfileEnabled: (
@@ -47,7 +49,7 @@ export const HUB_PORT_LIST_ITEM_SELECTORS = {
             if (!scheme) {
                 return false;
             }
-            return scheme.bindings.some((binding) => binding.hubId === hubId && binding.portId === portId && binding.useDecelerationProfile);
+            return scheme.bindings.some((binding) => binding.hubId === hubId && binding.portId === portId && isUsingDecelerationProfile(binding));
         }
     ),
     selectAccelerationTimeMs: (

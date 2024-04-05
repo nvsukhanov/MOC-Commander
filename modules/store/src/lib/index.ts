@@ -11,3 +11,4 @@ export * from './controller-profiles-facade.service';
 export { AppStoreVersion } from './app-store-version';
 export * from './migrations';
 export * from './hub-facades';
+export * from './helpers';

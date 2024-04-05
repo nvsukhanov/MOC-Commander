@@ -296,9 +296,6 @@
       "backwardsInput": "Backwards",
       "brakeInput": "Brake",
       "missingInputs": "At least one of the inputs must be assigned",
-      "forwardsInputGainTitle": "'Forwards' input gain",
-      "backwardsInputGainTitle": "'Backwards' input gain",
-      "brakeInputGainTitle": "'Brake' input gain",
       "outputSpeed": "Max speed"
     },
     "servoBinding": {
@@ -355,6 +352,17 @@
       "nextGear": "Next gear",
       "prevGear": "Prev gear",
       "reset": "Set gear #0"
+    },
+    "accelerateBinding": {
+      "operationMode": "Accelerate",
+      "forwardsInput": "Forwards",
+      "backwardsInput": "Backwards",
+      "slowdownInput": "Slowdown",
+      "missingInputs": "At least one of the inputs must be assigned",
+      "outputSpeed": "Max speed",
+      "forwardsSpeedIncrement": "Forwards speed increment",
+      "backwardsSpeedIncrement": "Backwards speed increment",
+      "slowdownSpeedDecrement": "Slowdown increment"
     },
     "widgets": {
       "reorderWidgetsButtonTitle": "Reorder widgets",
@@ -843,6 +851,9 @@
     "1-2-9": {
       "accessibilityImprovements": "Minor accessibility improvements",
       "layoutFixesForSmallScreens": "Layout fixes for small screens"
+    },
+    "1-3-0": {
+      "accelerationBindingTypeAdded": "Added 'Accelerate' binding type"
     }
   }
 }

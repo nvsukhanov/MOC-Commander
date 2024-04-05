@@ -2,10 +2,9 @@ import { IChangelog } from '@app/shared-components';
 
 export const CHANGELOG: IChangelog = [
     {
-        version: '1.2.9',
+        version: '1.3.0',
         changeL10nKeys: [
-            'changelog.1-2-9.accessibilityImprovements',
-            'changelog.1-2-9.layoutFixesForSmallScreens',
+            'changelog.1-3.0.accelerationBindingTypeAdded'
         ]
     },
     {

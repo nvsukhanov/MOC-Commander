@@ -185,14 +185,40 @@ export type ControlSchemeGearboxBinding = {
     initialLevelIndex: number;
 } & AccelerationProfileMixin & DecelerationProfileMixin;
 
-export type ControlSchemeBindingInputs<T extends ControlSchemeBindingType = ControlSchemeBindingType> = (ControlSchemeBinding & { bindingType: T })['inputs'];
+// Using string enum for input actions to avoid issues with object keys conversion to string
+export enum AccelerateBindingInputAction {
+    Forwards = '0',
+    Backwards = '1',
+    Slowdown = '2'
+}
+
+export type ControlSchemeAccelerateBinding = {
+    id: number;
+    bindingType: ControlSchemeBindingType.Accelerate;
+    inputs: {
+        [AccelerateBindingInputAction.Forwards]?: ControlSchemeInputConfig;
+        [AccelerateBindingInputAction.Backwards]?: ControlSchemeInputConfig;
+        [AccelerateBindingInputAction.Slowdown]?: ControlSchemeInputConfig;
+    };
+    forwardsSpeedIncrement: number;
+    backwardsSpeedIncrement: number;
+    slowdownSpeedDecrement: number;
+    hubId: string;
+    portId: number;
+    maxSpeed: number;
+    invert: boolean;
+    power: number;
+};
 
 export type ControlSchemeBinding = ControlSchemeSpeedBinding
     | ControlSchemeServoBinding
     | ControlSchemeSetAngleBinding
     | ControlSchemeStepperBinding
     | ControlSchemeTrainBinding
-    | ControlSchemeGearboxBinding;
+    | ControlSchemeGearboxBinding
+    | ControlSchemeAccelerateBinding;
+
+export type ControlSchemeBindingInputs<T extends ControlSchemeBindingType = ControlSchemeBindingType> = (ControlSchemeBinding & { bindingType: T })['inputs'];
 
 export type BaseWidgetConfigModel = {
     id: number;
