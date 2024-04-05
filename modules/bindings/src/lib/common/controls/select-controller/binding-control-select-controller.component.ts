@@ -5,12 +5,22 @@ import { TranslocoPipe } from '@ngneat/transloco';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Observable, Subscription, of, startWith, switchMap } from 'rxjs';
+import { Observable, Subscription, filter, of, startWith, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { MatBadge } from '@angular/material/badge';
+import { concatLatestFrom } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective } from '@app/shared-components';
-import { ControlSchemeBindingInputs, ControllerInputModel, InputDirection, InputPipeType } from '@app/store';
+import {
+    CONTROLLER_SETTINGS_SELECTORS,
+    ControlSchemeBindingInputs,
+    ControllerInputModel,
+    ControllerSettingsModel,
+    InputDirection,
+    InputPipeType,
+    transformControllerInputValue
+} from '@app/store';
 import {
     BINDING_CONTROLLER_INPUT_NAME_RESOLVER,
     BindingControllerInputNamePipe,
@@ -64,7 +74,8 @@ export class BindingControlSelectControllerComponent<T extends ControlSchemeBind
         private readonly cd: ChangeDetectorRef,
         private readonly formBuilder: FormBuilder,
         @Inject(BINDING_CONTROLLER_INPUT_NAME_RESOLVER) private readonly controllerInputNameResolver: IBindingControllerInputNameResolver,
-        private readonly commonFormBuilder: CommonBindingsFormControlsBuilderService
+        private readonly commonFormBuilder: CommonBindingsFormControlsBuilderService,
+        private readonly store: Store
     ) {
     }
 
@@ -181,26 +192,31 @@ export class BindingControlSelectControllerComponent<T extends ControlSchemeBind
                 hasBackdrop: true
             }
         );
-        dialog.afterClosed().subscribe((result) => {
-            if (!result || !this.data?.inputFormGroup) {
+        dialog.afterClosed().pipe(
+            filter((r): r is ControllerInputModel => !!r),
+            concatLatestFrom((input) => this.store.select(CONTROLLER_SETTINGS_SELECTORS.selectByControllerId(input.controllerId)))
+        ).subscribe(([input, settings]) => {
+            if (!input || !settings || !this.data?.inputFormGroup) {
                 return;
             }
-            this.updateFormWithControllerInput(this.data.inputFormGroup, result);
+            this.updateFormWithControllerInput(this.data.inputFormGroup, input, settings);
             this.cd.detectChanges();
         });
     }
 
     private updateFormWithControllerInput(
         formGroup: InputFormGroup | OptionalInputFormGroup,
-        result: ControllerInputModel
+        input: ControllerInputModel,
+        settings: ControllerSettingsModel
     ): void {
-        formGroup.controls.controllerId.setValue(result.controllerId);
-        formGroup.controls.inputId.setValue(result.inputId);
-        formGroup.controls.inputType.setValue(result.inputType);
-        formGroup.controls.inputDirection.setValue(result.value < 0 ? InputDirection.Negative : InputDirection.Positive);
-        if (result.inputType === ControllerInputType.ButtonGroup) {
-            formGroup.controls.buttonId.setValue(result.buttonId ?? null);
-            formGroup.controls.portId.setValue(result.portId ?? null);
+        const value = transformControllerInputValue(input, settings);
+        formGroup.controls.controllerId.setValue(input.controllerId);
+        formGroup.controls.inputId.setValue(input.inputId);
+        formGroup.controls.inputType.setValue(input.inputType);
+        formGroup.controls.inputDirection.setValue(value < 0 ? InputDirection.Negative : InputDirection.Positive);
+        if (input.inputType === ControllerInputType.ButtonGroup) {
+            formGroup.controls.buttonId.setValue(input.buttonId ?? null);
+            formGroup.controls.portId.setValue(input.portId ?? null);
         }
         formGroup.markAsDirty();
         formGroup.markAsTouched();

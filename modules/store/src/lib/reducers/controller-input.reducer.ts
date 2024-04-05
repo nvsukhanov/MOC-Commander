@@ -40,24 +40,20 @@ export const CONTROLLER_INPUT_FEATURE = createFeature({
             if (nextState.inputType === ControllerInputType.ButtonGroup) {
                 return CONTROLLER_INPUT_ENTITY_ADAPTER.upsertOne({
                     controllerId: nextState.controllerId,
-                    value: nextState.value,
                     rawValue: nextState.rawValue,
                     inputId: nextState.inputId,
                     inputType: nextState.inputType,
                     portId: nextState.portId,
                     buttonId: nextState.buttonId,
-                    isActivated: nextState.isActivated,
                     timestamp: nextState.timestamp
                 }, state);
             }
             return CONTROLLER_INPUT_ENTITY_ADAPTER.upsertOne({
                 controllerId: nextState.controllerId,
-                value: nextState.value,
                 rawValue: nextState.rawValue,
                 inputId: nextState.inputId,
                 inputType: nextState.inputType,
                 timestamp: nextState.timestamp,
-                isActivated: nextState.isActivated
             }, state);
         }),
         on(CONTROLLER_INPUT_ACTIONS.requestInputCapture,

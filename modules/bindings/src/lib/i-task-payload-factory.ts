@@ -1,13 +1,11 @@
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { AttachedIoPropsModel, ControlSchemeBinding, PortCommandTask, PortCommandTaskPayload } from '@app/store';
-
-import { BindingInputExtractionResult } from './i-binding-task-input-extractor';
+import { AttachedIoPropsModel, ControlSchemeBinding, PortCommandTask, PortCommandTaskPayload, TaskInputs } from '@app/store';
 
 export interface ITaskPayloadBuilder<TBindingType extends ControlSchemeBindingType> {
     buildPayload(
         binding: ControlSchemeBinding & { bindingType: TBindingType },
-        currentInput: BindingInputExtractionResult<TBindingType>,
-        previousInput: BindingInputExtractionResult<TBindingType>,
+        currentInput: TaskInputs<TBindingType>,
+        previousInput: TaskInputs<TBindingType>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTaskPayload: PortCommandTask | null
     ): { payload: PortCommandTaskPayload; inputTimestamp: number } | null;

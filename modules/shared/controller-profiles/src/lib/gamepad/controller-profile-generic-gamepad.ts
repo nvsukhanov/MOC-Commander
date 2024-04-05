@@ -6,7 +6,7 @@ import { ControllerType } from '../controller-type';
 import { IControllerProfile } from '../i-controller-profile';
 import { createControllerL10nKey, createScopedControllerL10nKeyBuilder } from '../create-controller-l10n-key';
 import { GamepadAxisSettings, GamepadButtonSettings, GamepadSettings } from '../controller-settings';
-import { IControllersConfig } from '../i-controllers-config';
+import { CONTROLLER_MAX_INPUT_VALUE, IControllersConfig } from '../i-controllers-config';
 
 export class ControllerProfileGenericGamepad implements IControllerProfile<GamepadSettings> {
     public readonly name$: Observable<string>;
@@ -49,7 +49,7 @@ export class ControllerProfileGenericGamepad implements IControllerProfile<Gamep
         for (let i = 0; i < this.axesCount; i++) {
             axisConfigs[i] = {
                 activeZoneStart: this.config.gamepad.defaultAxisActiveZoneStart,
-                activeZoneEnd: this.config.maxInputValue,
+                activeZoneEnd: CONTROLLER_MAX_INPUT_VALUE,
                 invert: false,
                 ignoreInput: false,
                 trim: 0,
@@ -60,7 +60,7 @@ export class ControllerProfileGenericGamepad implements IControllerProfile<Gamep
         for (let i = 0; i < this.buttonsCount; i++) {
             buttonConfigs[i] = {
                 activeZoneStart: this.config.gamepad.defaultButtonActiveZoneStart,
-                activeZoneEnd: this.config.maxInputValue,
+                activeZoneEnd: CONTROLLER_MAX_INPUT_VALUE,
                 ignoreInput: false,
                 trim: 0,
                 activationThreshold: this.config.gamepad.defaultActivationThreshold,

@@ -57,7 +57,7 @@ export class WaitForControllerInputDialogComponent implements OnInit, OnDestroy 
     public ngOnInit(): void {
         this.startInputCapture();
         this.subscriptions.add(
-            this.store.select(CONTROLLER_INPUT_SELECTORS.selectFirst).pipe(
+            this.store.select(CONTROLLER_INPUT_SELECTORS.selectFirstActivated).pipe(
                 filter((input): input is ControllerInputModel => !!input),
             ).subscribe((input) => {
                 this.dialogRef.close(input);

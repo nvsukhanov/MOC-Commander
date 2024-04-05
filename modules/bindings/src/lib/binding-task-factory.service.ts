@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { AttachedIoPropsModel, ControlSchemeBinding, ITaskFactory, PortCommandTask, PortCommandTaskPayload } from '@app/store';
+import { AttachedIoPropsModel, ControlSchemeBinding, ITaskFactory, PortCommandTask, PortCommandTaskPayload, TaskInputs } from '@app/store';
 
 import { ServoBindingTaskPayloadBuilderService } from './servo';
 import { SetAngleBindingTaskPayloadBuilderService } from './set-angle';
@@ -9,7 +9,6 @@ import { TrainBindingTaskPayloadBuilderService } from './train';
 import { StepperBindingTaskPayloadBuilderService } from './stepper';
 import { GearboxBindingTaskPayloadBuilderService } from './gearbox';
 import { ITaskPayloadBuilder } from './i-task-payload-factory';
-import { BindingInputExtractionResult } from './i-binding-task-input-extractor';
 import { AccelerateBindingTaskPayloadBuilderService } from './accelerate';
 
 @Injectable()
@@ -37,8 +36,8 @@ export class BindingTaskFactoryService implements ITaskFactory {
 
     public buildTask(
         binding: ControlSchemeBinding,
-        currentInput: BindingInputExtractionResult<ControlSchemeBindingType>,
-        prevInput: BindingInputExtractionResult<ControlSchemeBindingType>,
+        currentInput: TaskInputs,
+        prevInput: TaskInputs,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         lastExecutedTask: PortCommandTask | null
     ): PortCommandTask | null {
@@ -64,8 +63,8 @@ export class BindingTaskFactoryService implements ITaskFactory {
 
     private buildPayload<T extends ControlSchemeBindingType>(
         binding: ControlSchemeBinding & { bindingType: T },
-        currentInput: BindingInputExtractionResult<T>,
-        prevInput: BindingInputExtractionResult<T>,
+        currentInput: TaskInputs<T>,
+        prevInput: TaskInputs<T>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTask: PortCommandTask | null
     ): { payload: PortCommandTaskPayload; inputTimestamp: number } | null {

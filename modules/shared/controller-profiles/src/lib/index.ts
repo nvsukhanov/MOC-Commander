@@ -1,7 +1,6 @@
 export * from './provide-controller-profiles';
 export * from './i-controller-profile';
 export * from './controller-settings';
-export * from './gamepad-value-transform.service';
 export * from './controller-input-type';
 export * from './controller-type';
 export * from './gamepad';
@@ -13,3 +12,7 @@ export * from './gamepad-profile-factory.service';
 export * from './keyboard-profile-factory.service';
 export * from './hub-profile-factory.service';
 export * from './i-controllers-config';
+export * from './apply-active-zone-to-input-value';
+export * from './is-axial-activation-threshold-reached';
+export * from './is-button-activation-threshold-reached';
+export * from './transform-raw-input-value';

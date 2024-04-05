@@ -7,19 +7,19 @@ import {
     GearboxTaskPayload,
     PortCommandTask,
     PortCommandTaskPayload,
+    TaskInputs,
     TaskType
 } from '@app/store';
 
 import { calculateNextLoopingIndex, isTriggeredInputActivated } from '../common';
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
-import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 
 @Injectable()
 export class GearboxBindingTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.Gearbox> {
     public buildPayload(
         binding: ControlSchemeGearboxBinding,
-        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Gearbox>,
-        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.Gearbox>,
+        currentInput: TaskInputs<ControlSchemeBindingType.Gearbox>,
+        previousInput: TaskInputs<ControlSchemeBindingType.Gearbox>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTask: PortCommandTask | null
     ): { payload: GearboxTaskPayload; inputTimestamp: number } | null {
@@ -53,8 +53,8 @@ export class GearboxBindingTaskPayloadBuilderService implements ITaskPayloadBuil
 
     private buildPayloadUsingPreviousTask(
         binding: ControlSchemeGearboxBinding,
-        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Gearbox>,
-        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.Gearbox>,
+        currentInput: TaskInputs<ControlSchemeBindingType.Gearbox>,
+        previousInput: TaskInputs<ControlSchemeBindingType.Gearbox>,
         motorEncoderOffset: number,
         previousTask: PortCommandTask<TaskType.Gearbox> | null
     ): { payload: GearboxTaskPayload; inputTimestamp: number } | null {
@@ -126,8 +126,8 @@ export class GearboxBindingTaskPayloadBuilderService implements ITaskPayloadBuil
 
     private getActiveInput(
         binding: ControlSchemeGearboxBinding,
-        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Gearbox>,
-        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.Gearbox>,
+        currentInput: TaskInputs<ControlSchemeBindingType.Gearbox>,
+        previousInput: TaskInputs<ControlSchemeBindingType.Gearbox>,
         inputAction: keyof ControlSchemeGearboxBinding['inputs'],
     ): { isActivated: boolean; timestamp: number } {
         const inputConfig = binding.inputs[inputAction];

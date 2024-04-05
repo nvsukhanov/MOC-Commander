@@ -1,7 +1,7 @@
 import { MonoTypeOperatorFunction, distinctUntilChanged } from 'rxjs';
-import { ControllerInputModel } from '@app/store';
+import { TaskInput } from '@app/store';
 
-export function distinctUntilIsActivatedChanged(): MonoTypeOperatorFunction<ControllerInputModel | null> {
+export function distinctUntilIsActivatedChanged(): MonoTypeOperatorFunction<TaskInput | undefined> {
     return (source) => source.pipe(
         distinctUntilChanged((prev, next) => {
             return prev?.isActivated === next?.isActivated;

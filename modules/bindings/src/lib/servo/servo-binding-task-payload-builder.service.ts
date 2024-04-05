@@ -9,19 +9,19 @@ import {
     PortCommandTaskPayload,
     ServoBindingInputAction,
     ServoTaskPayload,
+    TaskInputs,
     TaskType
 } from '@app/store';
 
 import { extractDirectionAwareInputValue } from '../common';
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
-import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 
 @Injectable()
 export class ServoBindingTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.Servo> {
     public buildPayload(
         binding: ControlSchemeServoBinding,
-        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Servo>,
-        _: BindingInputExtractionResult<ControlSchemeBindingType.Servo>,
+        currentInput: TaskInputs<ControlSchemeBindingType.Servo>,
+        prevInput: TaskInputs<ControlSchemeBindingType.Servo>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTaskPayload: PortCommandTask | null
     ): { payload: ServoTaskPayload; inputTimestamp: number } | null {

@@ -6,7 +6,7 @@ import { createScopedControllerL10nKeyBuilder } from './create-controller-l10n-k
 import { IControllerProfile } from './i-controller-profile';
 import { GamepadSettings } from './controller-settings';
 import { ControllerType } from './controller-type';
-import { IControllersConfig } from './i-controllers-config';
+import { CONTROLLER_MAX_INPUT_VALUE, IControllersConfig } from './i-controllers-config';
 
 export abstract class GamepadProfile implements IControllerProfile<GamepadSettings> {
     public abstract readonly uid: string;
@@ -65,7 +65,7 @@ export abstract class GamepadProfile implements IControllerProfile<GamepadSettin
         Object.keys(this.axisNames).forEach((axisId) => {
             result.axisConfigs[axisId] = {
                 activeZoneStart: this.config.gamepad.defaultAxisActiveZoneStart,
-                activeZoneEnd: this.config.maxInputValue,
+                activeZoneEnd: CONTROLLER_MAX_INPUT_VALUE,
                 invert: this.invertedAxisIndices.includes(Number(axisId)),
                 ignoreInput: false,
                 trim: 0,
@@ -75,7 +75,7 @@ export abstract class GamepadProfile implements IControllerProfile<GamepadSettin
         Object.keys(this.buttonNames).forEach((buttonId) => {
             result.buttonConfigs[buttonId] = {
                 activeZoneStart: this.config.gamepad.defaultButtonActiveZoneStart,
-                activeZoneEnd: this.config.maxInputValue,
+                activeZoneEnd: CONTROLLER_MAX_INPUT_VALUE,
                 ignoreInput: false,
                 trim: 0,
                 activationThreshold: this.config.gamepad.defaultActivationThreshold,

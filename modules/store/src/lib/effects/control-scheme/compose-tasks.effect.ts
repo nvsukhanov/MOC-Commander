@@ -6,18 +6,11 @@ import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { attachedIosIdFn } from '../../reducers';
 import { CONTROL_SCHEME_ACTIONS, PORT_TASKS_ACTIONS } from '../../actions';
-import { CONTROLLER_INPUT_SELECTORS, CONTROL_SCHEME_SELECTORS, PORT_TASKS_SELECTORS } from '../../selectors';
-import {
-    AttachedIoPropsModel,
-    ControlSchemeBinding,
-    ControlSchemeBindingInputs,
-    ControlSchemeModel,
-    ControllerInputModel,
-    PortCommandTask
-} from '../../models';
+import { CONTROLLER_INPUT_SELECTORS, CONTROLLER_SETTINGS_SELECTORS, CONTROL_SCHEME_SELECTORS, PORT_TASKS_SELECTORS } from '../../selectors';
+import { AttachedIoPropsModel, ControlSchemeBinding, ControlSchemeBindingInputs, ControlSchemeModel, PortCommandTask } from '../../models';
 import { ITaskFilter, TASK_FILTER } from './i-task-filter';
 import { ITaskFactory, TASK_FACTORY } from './i-task-factory';
-import { ITasksInputExtractor, TASKS_INPUT_EXTRACTOR } from './i-task-input-extractor';
+import { ITasksInputExtractor, TASKS_INPUT_EXTRACTOR, TaskInput } from './i-task-input-extractor';
 
 function groupBindingsByHubsPortId(
     bindings: ControlSchemeBinding[]
@@ -38,8 +31,8 @@ function groupBindingsByHubsPortId(
 
 type BindingWithInputData<T extends ControlSchemeBindingType = ControlSchemeBindingType> = {
     binding: ControlSchemeBinding & { bindingType: T };
-    prevInput: { [k in keyof ControlSchemeBindingInputs<T>]: ControllerInputModel | null };
-    nextInput: { [k in keyof ControlSchemeBindingInputs<T>]: ControllerInputModel | null };
+    prevInput: { [k in keyof ControlSchemeBindingInputs<T>]?: TaskInput };
+    nextInput: { [k in keyof ControlSchemeBindingInputs<T>]?: TaskInput };
 };
 
 type TaskComposingData = {
@@ -63,14 +56,15 @@ function getTaskComposingData$(
     }
 
     const inputStream = store.select(CONTROLLER_INPUT_SELECTORS.selectEntities);
+    const controllerSettings = store.select(CONTROLLER_SETTINGS_SELECTORS.selectEntities);
 
     const hubId = samePortBindings[0].hubId;
     const portId = samePortBindings[0].portId;
 
     const bindingWithInputsStreams: Array<Observable<BindingWithInputData>> = samePortBindings.map((binding) => {
-        return inputComposer.extractInputs(binding, inputStream).pipe(
+        return inputComposer.extractInputs(binding, inputStream, controllerSettings).pipe(
             take(1),
-            switchMap((initialValue) => inputComposer.extractInputs(binding, inputStream).pipe(
+            switchMap((initialValue) => inputComposer.extractInputs(binding, inputStream, controllerSettings).pipe(
                 startWith(initialValue),
                 pairwise(),
                 map(([ prevInput, nextInput ]) => ({ binding, prevInput, nextInput }))
