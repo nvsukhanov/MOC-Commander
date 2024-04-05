@@ -92,21 +92,21 @@ export class SpeedBindingEditComponent implements IBindingsDetailsEditComponent<
                 inputFormGroup: outputBinding.controls.inputs.controls[SpeedBindingInputAction.Forwards],
                 inputAction: SpeedBindingInputAction.Forwards,
                 inputName$: this.l10nService.getBindingInputName(SpeedBindingInputAction.Forwards),
-                supportedInputPipes: [ InputPipeType.ExponentialGain, InputPipeType.LogarithmicGain, InputPipeType.OnOffToggle ]
+                supportedInputPipes: [ InputPipeType.ExponentialGain, InputPipeType.LogarithmicGain, InputPipeType.OnOffToggle, InputPipeType.Pulse ]
             };
             this._backwardsControlBindingComponentData = {
                 bindingType: ControlSchemeBindingType.Speed,
                 inputFormGroup: outputBinding.controls.inputs.controls[SpeedBindingInputAction.Backwards],
                 inputAction: SpeedBindingInputAction.Backwards,
                 inputName$: this.l10nService.getBindingInputName(SpeedBindingInputAction.Backwards),
-                supportedInputPipes: [ InputPipeType.ExponentialGain, InputPipeType.LogarithmicGain, InputPipeType.OnOffToggle ]
+                supportedInputPipes: [ InputPipeType.ExponentialGain, InputPipeType.LogarithmicGain, InputPipeType.OnOffToggle, InputPipeType.Pulse ]
             };
             this._brakeControlBindingComponentData = {
                 bindingType: ControlSchemeBindingType.Speed,
                 inputFormGroup: outputBinding.controls.inputs.controls[SpeedBindingInputAction.Brake],
                 inputAction: SpeedBindingInputAction.Brake,
                 inputName$: this.l10nService.getBindingInputName(SpeedBindingInputAction.Brake),
-                supportedInputPipes: [ InputPipeType.ExponentialGain, InputPipeType.LogarithmicGain, InputPipeType.OnOffToggle ]
+                supportedInputPipes: [ InputPipeType.ExponentialGain, InputPipeType.LogarithmicGain, InputPipeType.OnOffToggle, InputPipeType.Pulse ]
             };
 
             merge(

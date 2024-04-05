@@ -278,6 +278,9 @@
       "inputPipesPresetExponentialGain": "Exponential gain",
       "inputPipesPresetLogarithmicGain": "Logarithmic gain",
       "inputPipesPresetOnOffToggle": "On/off toggle",
+      "inputPipesPresetPulse1Hz": "Pulse 1 Hz",
+      "inputPipesPresetPulse2Hz": "Pulse 2 Hz",
+      "inputPipesPresetPulse5Hz": "Pulse 5 Hz",
       "confirmButtonTitle": "Save",
       "cancelButtonTitle": "Cancel"
     },
@@ -853,7 +856,8 @@
       "layoutFixesForSmallScreens": "Layout fixes for small screens"
     },
     "1-3-0": {
-      "accelerationBindingTypeAdded": "Added 'Accelerate' binding type"
+      "accelerationBindingTypeAdded": "Added 'Accelerate' binding type",
+      "addedPulseInputPreset": "Added 'Pulse' binding input configuration preset (1, 2, and 5 Hz)"
     }
   }
 }

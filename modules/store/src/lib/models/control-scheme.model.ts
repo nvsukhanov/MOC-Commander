@@ -31,7 +31,8 @@ export enum InputDirection {
 export enum InputPipeType {
     LogarithmicGain,
     ExponentialGain,
-    OnOffToggle
+    OnOffToggle,
+    Pulse
 }
 
 export type InputPipeLogarithmicGain = {
@@ -46,7 +47,13 @@ export type InputPipeOnOffToggleConfig = {
     type: InputPipeType.OnOffToggle;
 };
 
-export type InputPipeConfig = InputPipeLogarithmicGain | InputPipeExponentialGain | InputPipeOnOffToggleConfig;
+export type InputPipePulseConfig = {
+    type: InputPipeType.Pulse;
+    periodMs: number;
+    dutyCycle: number; // 0.25 = 25%
+};
+
+export type InputPipeConfig = InputPipeLogarithmicGain | InputPipeExponentialGain | InputPipeOnOffToggleConfig | InputPipePulseConfig;
 
 export type ControlSchemeInputConfig = {
     controllerId: string;

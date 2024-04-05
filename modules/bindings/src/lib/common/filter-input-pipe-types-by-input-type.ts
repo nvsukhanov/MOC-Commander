@@ -11,6 +11,7 @@ export function filterInputPipeTypesByInputType(
             case InputPipeType.LogarithmicGain:
                 return inputType === ControllerInputType.Axis || inputType === ControllerInputType.Trigger;
             case InputPipeType.OnOffToggle:
+            case InputPipeType.Pulse:
                 return true;
         }
     });

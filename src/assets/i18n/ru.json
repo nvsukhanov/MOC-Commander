@@ -278,6 +278,9 @@
       "inputPipesPresetExponentialGain": "Экспоненциальное усиление",
       "inputPipesPresetLogarithmicGain": "Логарифмическое усиление",
       "inputPipesPresetOnOffToggle": "Вкл/выкл",
+      "inputPipesPresetPulse1Hz": "Импульс 1Гц",
+      "inputPipesPresetPulse2Hz": "Импульс 2Гц",
+      "inputPipesPresetPulse5Hz": "Импульс 5Гц",
       "confirmButtonTitle": "Сохранить",
       "cancelButtonTitle": "Отмена"
     },
@@ -853,7 +856,8 @@
       "layoutFixesForSmallScreens": "Исправления верстки для маленьких экранов"
     },
     "1-3-0": {
-      "accelerationBindingTypeAdded": "Добавлен тип привязки 'Ускорение'"
+      "accelerationBindingTypeAdded": "Добавлен тип привязки 'Ускорение'",
+      "addedPulseInputPreset": "Добавлен режим 'Импульс' (1, 2 и 5Гц) для управления привязками"
     }
   }
 }

@@ -11,7 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-components';
-import { GearboxBindingInputAction, HubMotorPositionFacadeService } from '@app/store';
+import { GearboxBindingInputAction, HubMotorPositionFacadeService, InputPipeType } from '@app/store';
 import { BindingControlSelectHubComponent, BindingControlSelectIoComponent, MotorPositionAdjustmentComponent } from '@app/shared-control-schemes';
 
 import {
@@ -120,7 +120,7 @@ export class GearboxBindingEditComponent implements IBindingsDetailsEditComponen
             inputFormGroup: form.controls.inputs.controls[GearboxBindingInputAction.NextGear],
             inputAction: GearboxBindingInputAction.NextGear,
             inputName$: this.l10nService.getBindingInputName(GearboxBindingInputAction.NextGear),
-            supportedInputPipes: []
+            supportedInputPipes: [ InputPipeType.Pulse ]
         };
 
         this._prevGearControlBindingComponentData = {
@@ -128,7 +128,7 @@ export class GearboxBindingEditComponent implements IBindingsDetailsEditComponen
             inputFormGroup: form.controls.inputs.controls[GearboxBindingInputAction.PrevGear],
             inputAction: GearboxBindingInputAction.PrevGear,
             inputName$: this.l10nService.getBindingInputName(GearboxBindingInputAction.PrevGear),
-            supportedInputPipes: []
+            supportedInputPipes: [ InputPipeType.Pulse ]
         };
 
         this._resetControlBindingComponentData = {
@@ -136,7 +136,7 @@ export class GearboxBindingEditComponent implements IBindingsDetailsEditComponen
             inputFormGroup: form.controls.inputs.controls[GearboxBindingInputAction.Reset],
             inputAction: GearboxBindingInputAction.Reset,
             inputName$: this.l10nService.getBindingInputName(GearboxBindingInputAction.Reset),
-            supportedInputPipes: []
+            supportedInputPipes: [ InputPipeType.Pulse ]
         };
 
         this.portRequestSubscription?.unsubscribe();

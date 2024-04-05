@@ -157,6 +157,7 @@ export class BindingControlSelectControllerComponent<T extends ControlSchemeBind
             return;
         }
         this.data.inputFormGroup.reset();
+        this.data.inputFormGroup.controls.inputPipes.clear();
         this.data.inputFormGroup.markAsDirty();
         this.data.inputFormGroup.markAsTouched();
         this.data.inputFormGroup.updateValueAndValidity();

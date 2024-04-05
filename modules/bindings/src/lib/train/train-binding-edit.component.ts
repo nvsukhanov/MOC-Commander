@@ -9,7 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-components';
 import { BindingControlSelectHubComponent, BindingControlSelectIoComponent } from '@app/shared-control-schemes';
-import { TrainBindingInputAction } from '@app/store';
+import { InputPipeType, TrainBindingInputAction } from '@app/store';
 
 import {
     BindingControlPowerInputComponent,
@@ -91,21 +91,21 @@ export class TrainBindingEditComponent implements IBindingsDetailsEditComponent<
             inputFormGroup: this._form.controls.inputs.controls[TrainBindingInputAction.NextSpeed],
             inputAction: TrainBindingInputAction.NextSpeed,
             inputName$: this.l10nService.getBindingInputName(TrainBindingInputAction.NextSpeed),
-            supportedInputPipes: []
+            supportedInputPipes: [ InputPipeType.Pulse ]
         };
         this._prevLevelControlBindingComponentData = {
             bindingType: ControlSchemeBindingType.Train,
             inputFormGroup: this._form.controls.inputs.controls[TrainBindingInputAction.PrevSpeed],
             inputAction: TrainBindingInputAction.PrevSpeed,
             inputName$: this.l10nService.getBindingInputName(TrainBindingInputAction.PrevSpeed),
-            supportedInputPipes: []
+            supportedInputPipes: [ InputPipeType.Pulse ]
         };
         this._resetControlBindingComponentData = {
             bindingType: ControlSchemeBindingType.Train,
             inputFormGroup: this._form.controls.inputs.controls[TrainBindingInputAction.Reset],
             inputAction: TrainBindingInputAction.Reset,
             inputName$: this.l10nService.getBindingInputName(TrainBindingInputAction.Reset),
-            supportedInputPipes: []
+            supportedInputPipes: [ InputPipeType.Pulse ]
         };
     }
 
