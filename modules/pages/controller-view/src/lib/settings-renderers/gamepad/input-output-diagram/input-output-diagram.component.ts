@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { CONTROLLERS_CONFIG, IControllersConfig } from '@app/controller-profiles';
+import { CONTROLLER_MAX_INPUT_VALUE, CONTROLLER_MIN_INPUT_VALUE, CONTROLLER_NULL_INPUT_VALUE } from '@app/controller-profiles';
 
 @Component({
     standalone: true,
@@ -13,13 +13,13 @@ import { CONTROLLERS_CONFIG, IControllersConfig } from '@app/controller-profiles
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputOutputDiagramComponent {
-    @Input() public min = this.config.minInputValue;
+    @Input() public min = CONTROLLER_MIN_INPUT_VALUE;
 
-    @Input() public max = this.config.maxInputValue;
+    @Input() public max = CONTROLLER_MAX_INPUT_VALUE;
 
-    @Input() public rawValue: number | null = this.config.nullInputValue;
+    @Input() public rawValue: number | null = CONTROLLER_NULL_INPUT_VALUE;
 
-    @Input() public outputValue: number | null = this.config.nullInputValue;
+    @Input() public outputValue: number | null = CONTROLLER_NULL_INPUT_VALUE;
 
     @Input() public activeZoneStart? = 0;
 
@@ -28,11 +28,6 @@ export class InputOutputDiagramComponent {
     @Input() public translocoTitle = '';
 
     @Input() public compact = false;
-
-    constructor(
-        @Inject(CONTROLLERS_CONFIG) private readonly config: IControllersConfig
-    ) {
-    }
 
     public get shouldShowLeftActiveZone(): boolean {
         return this.min < 0;
@@ -76,7 +71,7 @@ export class InputOutputDiagramComponent {
 
     private get normalizedRawValue(): number {
         if (this.rawValue === null) {
-            return this.config.nullInputValue;
+            return CONTROLLER_NULL_INPUT_VALUE;
         }
         if (this.rawValue < this.min) {
             return this.min;

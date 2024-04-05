@@ -2,13 +2,19 @@ import { Dictionary } from '@ngrx/entity';
 import { Injectable } from '@angular/core';
 import { Observable, combineLatest, map } from 'rxjs';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeServoBinding, ControllerInputModel, ServoBindingInputAction } from '@app/store';
+import {
+    ControlSchemeServoBinding,
+    ControllerInputModel,
+    ControllerSettingsModel,
+    ITasksInputExtractor,
+    ServoBindingInputAction,
+    TaskInputs
+} from '@app/store';
 
-import { BindingInputExtractionResult, IBindingTaskInputExtractor } from '../i-binding-task-input-extractor';
 import { InputExtractorService, distinctUntilValueChanged } from '../common';
 
 @Injectable()
-export class ServoBindingInputExtractorService implements IBindingTaskInputExtractor<ControlSchemeBindingType.Servo> {
+export class ServoBindingInputExtractorService implements ITasksInputExtractor<ControlSchemeBindingType.Servo> {
     constructor(
         private readonly inputExtractorService: InputExtractorService
     ) {
@@ -16,12 +22,23 @@ export class ServoBindingInputExtractorService implements IBindingTaskInputExtra
 
     public extractInputs(
         binding: ControlSchemeServoBinding,
-        globalInput$: Observable<Dictionary<ControllerInputModel>>
-    ): Observable<BindingInputExtractionResult<ControlSchemeBindingType.Servo>> {
-        const cw$ = this.inputExtractorService.extractInputResult(binding, globalInput$, binding.inputs[ServoBindingInputAction.Cw]).pipe(
+        globalInput$: Observable<Dictionary<ControllerInputModel>>,
+        controllersSettings$: Observable<Dictionary<ControllerSettingsModel>>,
+    ): Observable<TaskInputs<ControlSchemeBindingType.Servo>> {
+        const cw$ = this.inputExtractorService.extractInputResult(
+            binding,
+            globalInput$,
+            controllersSettings$,
+            binding.inputs[ServoBindingInputAction.Cw]
+        ).pipe(
             distinctUntilValueChanged()
         );
-        const ccw$ = this.inputExtractorService.extractInputResult(binding, globalInput$, binding.inputs[ServoBindingInputAction.Ccw]).pipe(
+        const ccw$ = this.inputExtractorService.extractInputResult(
+            binding,
+            globalInput$,
+            controllersSettings$,
+            binding.inputs[ServoBindingInputAction.Ccw]
+        ).pipe(
             distinctUntilValueChanged()
         );
         return combineLatest([cw$, ccw$]).pipe(

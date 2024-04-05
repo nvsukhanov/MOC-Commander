@@ -6,6 +6,7 @@ import {
     LoopingMode,
     PortCommandTask,
     PortCommandTaskPayload,
+    TaskInputs,
     TaskType,
     TrainBindingInputAction,
     TrainTaskPayload
@@ -13,14 +14,13 @@ import {
 
 import { calculateNextLoopingIndex, isTriggeredInputActivated } from '../common';
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
-import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 
 @Injectable()
 export class TrainBindingTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.Train> {
     public buildPayload(
         binding: ControlSchemeTrainBinding,
-        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Train>,
-        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.Train>,
+        currentInput: TaskInputs<ControlSchemeBindingType.Train>,
+        previousInput: TaskInputs<ControlSchemeBindingType.Train>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTask: PortCommandTask | null
     ): { payload: TrainTaskPayload; inputTimestamp: number } | null {
@@ -96,8 +96,8 @@ export class TrainBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
 
     private getActiveInput(
         binding: ControlSchemeTrainBinding,
-        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Train>,
-        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.Train>,
+        currentInput: TaskInputs<ControlSchemeBindingType.Train>,
+        previousInput: TaskInputs<ControlSchemeBindingType.Train>,
         inputAction: keyof ControlSchemeTrainBinding['inputs'],
     ): { isActivated: boolean; timestamp: number } {
         const inputConfig = binding.inputs[inputAction];

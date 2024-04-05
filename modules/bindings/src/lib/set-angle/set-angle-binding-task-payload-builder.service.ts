@@ -3,24 +3,24 @@ import { ControlSchemeBindingType } from '@app/shared-misc';
 import {
     AttachedIoPropsModel,
     ControlSchemeSetAngleBinding,
-    ControllerInputModel,
     PortCommandTask,
     PortCommandTaskPayload,
     SetAngleBindingInputAction,
     SetAngleTaskPayload,
+    TaskInput,
+    TaskInputs,
     TaskType
 } from '@app/store';
 
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
-import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 import { isDirectionalInputActivated } from '../common';
 
 @Injectable()
 export class SetAngleBindingTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.SetAngle> {
     public buildPayload(
         binding: ControlSchemeSetAngleBinding,
-        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.SetAngle>,
-        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.SetAngle>,
+        currentInput: TaskInputs<ControlSchemeBindingType.SetAngle>,
+        previousInput: TaskInputs<ControlSchemeBindingType.SetAngle>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
     ): { payload: SetAngleTaskPayload; inputTimestamp: number } | null {
         const currentSetAngleInput = this.isActivated(binding, currentInput, SetAngleBindingInputAction.SetAngle);
@@ -64,9 +64,9 @@ export class SetAngleBindingTaskPayloadBuilderService implements ITaskPayloadBui
     // TODO: same pattern as in StepperBindingTaskPayloadBuilderService. Refactor to avoid duplication
     private isActivated(
         binding: ControlSchemeSetAngleBinding,
-        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.SetAngle>,
+        currentInput: TaskInputs<ControlSchemeBindingType.SetAngle>,
         action: SetAngleBindingInputAction
-    ): { isActivated: boolean; input: ControllerInputModel } | null {
+    ): { isActivated: boolean; input: TaskInput } | null {
         const inputConfigModel = binding.inputs[action];
         if (!inputConfigModel) {
             return null;

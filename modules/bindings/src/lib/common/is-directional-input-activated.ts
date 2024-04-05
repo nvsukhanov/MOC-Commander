@@ -1,12 +1,10 @@
-import { ControlSchemeBinding, InputDirection } from '@app/store';
+import { ControlSchemeBinding, InputDirection, TaskInputs } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-
-import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 
 export function isDirectionalInputActivated<T extends ControlSchemeBindingType>(
     activationDirection: InputDirection,
     inputAction: keyof (ControlSchemeBinding & { bindingType: T })['inputs'],
-    currentInput: BindingInputExtractionResult<T>
+    currentInput: TaskInputs<T>
 ): boolean {
     if (!currentInput[inputAction]?.isActivated) {
         return false;

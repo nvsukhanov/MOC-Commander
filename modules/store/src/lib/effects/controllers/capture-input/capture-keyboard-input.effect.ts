@@ -43,7 +43,7 @@ function readKeyboard(
             })];
             return {
                 inputId,
-                prevValue: prevState?.value ?? 0,
+                prevValue: prevState?.rawValue ?? 0,
                 value: +eventData.isPressed
             };
         }),
@@ -54,8 +54,6 @@ function readKeyboard(
                 inputId,
                 inputType: ControllerInputType.Button,
                 rawValue: value,
-                value,
-                isActivated: !!value,
                 timestamp: Date.now()
             }
         }))

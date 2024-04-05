@@ -1,13 +1,11 @@
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { ControlSchemeBinding, InputDirection } from '@app/store';
-
-import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
+import { ControlSchemeBinding, InputDirection, TaskInputs } from '@app/store';
 
 export function isTriggeredInputActivated<T extends ControlSchemeBindingType>(
     activationDirection: InputDirection,
     inputAction: keyof (ControlSchemeBinding & { bindingType: T })['inputs'],
-    currentInput: BindingInputExtractionResult<T>,
-    prevInput: BindingInputExtractionResult<T>
+    currentInput: TaskInputs<T>,
+    prevInput: TaskInputs<T>
 ): boolean {
     const isCurrentInputActivated = !!currentInput[inputAction]?.isActivated;
     if (!isCurrentInputActivated) {

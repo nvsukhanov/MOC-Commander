@@ -1,10 +1,11 @@
 import { MonoTypeOperatorFunction, distinctUntilChanged, pairwise, scan } from 'rxjs';
-import { ControllerInputModel } from '@app/store';
+import { TaskInput } from '@app/store';
+import { CONTROLLER_MAX_INPUT_VALUE, CONTROLLER_NULL_INPUT_VALUE } from '@app/controller-profiles';
 
-export function onOffInputPipe(): MonoTypeOperatorFunction<ControllerInputModel | null> {
+export function onOffInputPipe(): MonoTypeOperatorFunction<TaskInput | undefined> {
     return (source) => source.pipe(
         pairwise(),
-        scan((acc: ControllerInputModel | null, [prev, curr]: [ControllerInputModel | null, ControllerInputModel | null]) => {
+        scan((acc: TaskInput | undefined, [prev, curr]: [TaskInput | undefined, TaskInput | undefined]) => {
             if (prev?.isActivated === curr?.isActivated) {
                 return acc;
             }
@@ -12,18 +13,18 @@ export function onOffInputPipe(): MonoTypeOperatorFunction<ControllerInputModel 
                 if (!acc?.isActivated) {
                     return {
                         ...curr,
-                        value: 1
+                        value: CONTROLLER_MAX_INPUT_VALUE
                     };
                 } else {
                     return {
                         ...curr,
                         isActivated: false,
-                        value: 0
+                        value: CONTROLLER_NULL_INPUT_VALUE
                     };
                 }
             }
             return acc;
-        }, null),
+        }, undefined),
         distinctUntilChanged(),
     );
 }

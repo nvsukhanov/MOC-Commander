@@ -2,24 +2,24 @@ import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 import {
     ControlSchemeStepperBinding,
-    ControllerInputModel,
     PortCommandTask,
     PortCommandTaskPayload,
     StepperBindingInputAction,
     StepperTaskPayload,
+    TaskInput,
+    TaskInputs,
     TaskType
 } from '@app/store';
 
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
-import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 import { isDirectionalInputActivated } from '../common';
 
 @Injectable()
 export class StepperBindingTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.Stepper> {
     public buildPayload(
         binding: ControlSchemeStepperBinding,
-        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Stepper>,
-        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.Stepper>,
+        currentInput: TaskInputs<ControlSchemeBindingType.Stepper>,
+        previousInput: TaskInputs<ControlSchemeBindingType.Stepper>,
     ): { payload: StepperTaskPayload; inputTimestamp: number } | null {
         const activeInputData = this.getActivatedInput(binding, currentInput, previousInput);
         if (!activeInputData) {
@@ -57,9 +57,9 @@ export class StepperBindingTaskPayloadBuilderService implements ITaskPayloadBuil
 
     private getActivatedInput(
         binding: ControlSchemeStepperBinding,
-        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Stepper>,
-        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.Stepper>
-    ): { input: ControllerInputModel; action: StepperBindingInputAction } | null {
+        currentInput: TaskInputs<ControlSchemeBindingType.Stepper>,
+        previousInput: TaskInputs<ControlSchemeBindingType.Stepper>
+    ): { input: TaskInput; action: StepperBindingInputAction } | null {
         const currentCwInput = this.isActivated(binding, currentInput, StepperBindingInputAction.Cw);
         const currentCcwInput = this.isActivated(binding, currentInput, StepperBindingInputAction.Ccw);
         const previousCwInput = this.isActivated(binding, previousInput, StepperBindingInputAction.Cw);
@@ -87,9 +87,9 @@ export class StepperBindingTaskPayloadBuilderService implements ITaskPayloadBuil
 
     private isActivated(
         binding: ControlSchemeStepperBinding,
-        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Stepper>,
+        currentInput: TaskInputs<ControlSchemeBindingType.Stepper>,
         action: StepperBindingInputAction
-    ): { isActivated: boolean; input: ControllerInputModel } | null {
+    ): { isActivated: boolean; input: TaskInput } | null {
         const inputConfigModel = binding.inputs[action];
         if (!inputConfigModel) {
             return null;

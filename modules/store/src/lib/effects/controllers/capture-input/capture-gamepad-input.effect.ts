@@ -2,7 +2,7 @@ import { createEffect } from '@ngrx/effects';
 import { NEVER, Observable, animationFrames, distinctUntilChanged, interval, map, merge, share, startWith, switchMap } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
-import { ControllerInputType, ControllerType, GamepadSettings, GamepadValueTransformService } from '@app/controller-profiles';
+import { ControllerInputType, ControllerType, GamepadSettings, transformRawInputValue } from '@app/controller-profiles';
 import { WINDOW } from '@app/shared-misc';
 
 import { SETTINGS_FEATURE } from '../../../reducers';
@@ -12,7 +12,6 @@ import { CONTROLLER_INPUT_ACTIONS } from '../../../actions';
 
 function createAxisChangesActions(
     gamepadRead$: Observable<Gamepad | null>,
-    valueTransformer: GamepadValueTransformService,
     settings: GamepadSettings,
     gamepadStoreModel: GamepadControllerModel
 ): Array<Observable<Action>> {
@@ -27,17 +26,15 @@ function createAxisChangesActions(
             startWith(0),
             map((rawValue) => ({
                 rawValue,
-                value: valueTransformer.transformAxisValue(rawValue, settings.axisConfigs[axisIndex])
+                value: transformRawInputValue(rawValue, settings.axisConfigs[axisIndex])
             })),
             distinctUntilChanged((prev, curr) => prev.value === curr.value),
-            map(({ rawValue, value }) => CONTROLLER_INPUT_ACTIONS.inputReceived({
+            map(({ rawValue }) => CONTROLLER_INPUT_ACTIONS.inputReceived({
                 nextState: {
                     controllerId: gamepadStoreModel.id,
                     inputType: ControllerInputType.Axis,
                     inputId: axisIndex.toString(),
-                    value,
                     rawValue,
-                    isActivated: valueTransformer.isAxisActivationThresholdReached(value, settings.axisConfigs[axisIndex]),
                     timestamp: Date.now()
                 }
             }))
@@ -48,7 +45,6 @@ function createAxisChangesActions(
 
 function createButtonChangesActions(
     gamepadRead$: Observable<Gamepad | null>,
-    valueTransformer: GamepadValueTransformService,
     settings: GamepadSettings,
     gamepadStoreModel: GamepadControllerModel
 ): Array<Observable<Action>> {
@@ -63,17 +59,15 @@ function createButtonChangesActions(
             map((gamepad) => (gamepad?.buttons[buttonIndex]?.value ?? 0) + (settings.buttonConfigs[buttonIndex]?.trim ?? 0)),
             map((rawValue) => ({
                 rawValue,
-                value: valueTransformer.transformButtonValue(rawValue, settings.buttonConfigs[buttonIndex])
+                value: transformRawInputValue(rawValue, settings.buttonConfigs[buttonIndex])
             })),
             distinctUntilChanged((prev, curr) => prev.value === curr.value),
-            map(({ rawValue, value }) => CONTROLLER_INPUT_ACTIONS.inputReceived({
+            map(({ rawValue }) => CONTROLLER_INPUT_ACTIONS.inputReceived({
                 nextState: {
                     controllerId: gamepadStoreModel.id,
                     inputType,
                     inputId: buttonIndex.toString(),
-                    value,
                     rawValue,
-                    isActivated: valueTransformer.isButtonActivationThresholdReached(value, settings.buttonConfigs[buttonIndex]),
                     timestamp: Date.now()
                 }
             }))
@@ -90,7 +84,6 @@ const GAMEPAD_POLL_SCHEDULERS: {[ k in GamepadPollingRate ]: Observable<unknown>
 function readGamepads(
     store: Store,
     navigator: Navigator,
-    valueTransformer: GamepadValueTransformService
 ): Observable<Action> {
     const gamepadsRead$ = store.select(SETTINGS_FEATURE.selectGamepadPollingRate).pipe(
         switchMap((pollingRate) => GAMEPAD_POLL_SCHEDULERS[pollingRate]),
@@ -117,8 +110,8 @@ function readGamepads(
                         share()
                     );
 
-                    const axesChanges = createAxisChangesActions(gamepadRead$, valueTransformer, settings, storeGamepad);
-                    const buttonChanges = createButtonChangesActions(gamepadRead$, valueTransformer, settings, storeGamepad);
+                    const axesChanges = createAxisChangesActions(gamepadRead$, settings, storeGamepad);
+                    const buttonChanges = createButtonChangesActions(gamepadRead$, settings, storeGamepad);
 
                     return merge(...axesChanges, ...buttonChanges);
                 })
@@ -129,12 +122,11 @@ function readGamepads(
 
 export const CAPTURE_GAMEPAD_INPUT = createEffect((
     store: Store = inject(Store),
-    window: Window = inject(WINDOW),
-    valueTransformer: GamepadValueTransformService = inject(GamepadValueTransformService)
+    window: Window = inject(WINDOW)
 ) => {
     return store.select(CONTROLLER_INPUT_SELECTORS.isCapturing).pipe(
         switchMap((isCapturing) => (isCapturing
-                                   ? readGamepads(store, window.navigator, valueTransformer)
+                                   ? readGamepads(store, window.navigator)
                                    : NEVER)
         )
     );

@@ -1,7 +1,10 @@
 import { createSelector } from '@ngrx/store';
+import { CONTROLLER_NULL_INPUT_VALUE } from '@app/controller-profiles';
 
 import { CONTROLLER_INPUT_ENTITY_ADAPTER, CONTROLLER_INPUT_FEATURE } from '../reducers';
 import { CONTROLLER_CONNECTION_SELECTORS } from './controller-connection.selectors';
+import { CONTROLLER_SETTINGS_SELECTORS } from './controller-settings.selectors';
+import { isControllerInputActivated, transformControllerInputValue } from '../helpers';
 
 const CONTROLLER_INPUT_ENTITY_ADAPTER_SELECTORS = CONTROLLER_INPUT_ENTITY_ADAPTER.getSelectors();
 
@@ -22,15 +25,40 @@ export const CONTROLLER_INPUT_SELECTORS = {
     ),
     selectValueById: (id: string) => createSelector(
         CONTROLLER_INPUT_SELECTORS.selectEntities,
-        (entities) => entities[id]?.value ?? 0
+        CONTROLLER_SETTINGS_SELECTORS.selectEntities,
+        (inputEntities, settingsEntities) => {
+            const entity = inputEntities[id];
+            if (!entity) {
+                return 0;
+            }
+            const settings = settingsEntities[entity.controllerId];
+            if (!settings) {
+                return CONTROLLER_NULL_INPUT_VALUE;
+            }
+            return transformControllerInputValue(entity, settings);
+        }
     ),
     selectIsActivatedById: (id: string) => createSelector(
         CONTROLLER_INPUT_SELECTORS.selectEntities,
-        (entities) => entities[id]?.isActivated ?? false
+        CONTROLLER_SETTINGS_SELECTORS.selectEntities,
+        (inputEntities, controllerSettingsEntities) => {
+            const entity = inputEntities[id];
+            if (!entity) {
+                return false;
+            }
+            const controllerSettings = controllerSettingsEntities[entity.controllerId];
+            return !!controllerSettings && isControllerInputActivated(entity, controllerSettings);
+        }
     ),
-    selectFirst: createSelector(
+    selectFirstActivated: createSelector(
         SELECT_ALL,
-        (inputsList) => inputsList.find((input) => input.isActivated)
+        CONTROLLER_SETTINGS_SELECTORS.selectEntities,
+        (inputsList, controllerSettingsEntities) => {
+            return inputsList.find((input) => {
+                const controllerSettings = controllerSettingsEntities[input.controllerId];
+                return controllerSettings && isControllerInputActivated(input, controllerSettings);
+            });
+        }
     ),
     listenersCount: CONTROLLER_INPUT_FEATURE.selectListenersCount,
     isCapturing: createSelector(

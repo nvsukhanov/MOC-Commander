@@ -7,18 +7,18 @@ import {
     PortCommandTaskPayload,
     SpeedBindingInputAction,
     SpeedTaskPayload,
+    TaskInputs,
     TaskType
 } from '@app/store';
 
 import { extractDirectionAwareInputValue, snapSpeed } from '../common';
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
-import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 
 @Injectable()
 export class SpeedBindingTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.Speed> {
     public buildPayload(
         binding: ControlSchemeSpeedBinding,
-        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Speed>,
+        currentInput: TaskInputs<ControlSchemeBindingType.Speed>,
     ): { payload: SpeedTaskPayload; inputTimestamp: number } | null {
         const forwardsInputModel = currentInput[SpeedBindingInputAction.Forwards];
         const backwardsInputModel = currentInput[SpeedBindingInputAction.Backwards];

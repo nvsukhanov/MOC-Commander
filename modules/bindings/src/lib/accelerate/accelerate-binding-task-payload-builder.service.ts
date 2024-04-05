@@ -7,19 +7,19 @@ import {
     PortCommandTask,
     PortCommandTaskPayload,
     SpeedTaskPayload,
+    TaskInputs,
     TaskType
 } from '@app/store';
 
 import { isTriggeredInputActivated, snapSpeed } from '../common';
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
-import { BindingInputExtractionResult } from '../i-binding-task-input-extractor';
 
 @Injectable()
 export class AccelerateBindingTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.Accelerate> {
     public buildPayload(
         binding: ControlSchemeAccelerateBinding,
-        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Speed>,
-        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.Speed>,
+        currentInput: TaskInputs<ControlSchemeBindingType.Speed>,
+        previousInput: TaskInputs<ControlSchemeBindingType.Speed>,
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTask: PortCommandTask | null
     ): { payload: SpeedTaskPayload; inputTimestamp: number } | null {
@@ -95,8 +95,8 @@ export class AccelerateBindingTaskPayloadBuilderService implements ITaskPayloadB
 
     private getActiveInput(
         binding: ControlSchemeAccelerateBinding,
-        currentInput: BindingInputExtractionResult<ControlSchemeBindingType.Accelerate>,
-        previousInput: BindingInputExtractionResult<ControlSchemeBindingType.Accelerate>,
+        currentInput: TaskInputs<ControlSchemeBindingType.Accelerate>,
+        previousInput: TaskInputs<ControlSchemeBindingType.Accelerate>,
         inputAction: keyof ControlSchemeAccelerateBinding['inputs'],
     ): { isActivated: boolean; timestamp: number } {
         const inputConfig = binding.inputs[inputAction];
