@@ -4,7 +4,8 @@ export const CHANGELOG: IChangelog = [
     {
         version: '1.3.0',
         changeL10nKeys: [
-            'changelog.1-3.0.accelerationBindingTypeAdded'
+            'changelog.1-3-0.accelerationBindingTypeAdded',
+            'changelog.1-3-0.addedPulseInputPreset'
         ]
     },
     {

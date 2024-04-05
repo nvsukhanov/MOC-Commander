@@ -13,7 +13,7 @@ import {
     transformControllerInputValue
 } from '@app/store';
 
-import { applyGainInputPipe, onOffInputPipe } from './input-pipes';
+import { applyGainInputPipe, onOffInputPipe, pulseInputPipe } from './input-pipes';
 
 @Injectable()
 export class InputExtractorService {
@@ -66,6 +66,8 @@ export class InputExtractorService {
                     return applyGainInputPipe(pipeConfig.type);
                 case InputPipeType.OnOffToggle:
                     return onOffInputPipe();
+                case InputPipeType.Pulse:
+                    return pulseInputPipe(pipeConfig.periodMs, pipeConfig.dutyCycle);
             }
         });
     }

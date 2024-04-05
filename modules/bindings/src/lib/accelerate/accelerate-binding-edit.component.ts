@@ -5,7 +5,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatError } from '@angular/material/form-field';
 import { ControlSchemeBindingType, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-components';
-import { AccelerateBindingInputAction, SpeedBindingInputAction } from '@app/store';
+import { AccelerateBindingInputAction, InputPipeType, SpeedBindingInputAction } from '@app/store';
 import { BindingControlSelectHubComponent, BindingControlSelectIoComponent } from '@app/shared-control-schemes';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
@@ -102,21 +102,21 @@ export class AccelerateBindingEditComponent implements IBindingsDetailsEditCompo
                 inputFormGroup: outputBinding.controls.inputs.controls[AccelerateBindingInputAction.Forwards],
                 inputAction: SpeedBindingInputAction.Forwards,
                 inputName$: this.l10nService.getBindingInputName(AccelerateBindingInputAction.Forwards),
-                supportedInputPipes: [ ]
+                supportedInputPipes: [ InputPipeType.Pulse ]
             };
             this._backwardsControlBindingComponentData = {
                 bindingType: ControlSchemeBindingType.Speed,
                 inputFormGroup: outputBinding.controls.inputs.controls[AccelerateBindingInputAction.Backwards],
                 inputAction: SpeedBindingInputAction.Backwards,
                 inputName$: this.l10nService.getBindingInputName(AccelerateBindingInputAction.Backwards),
-                supportedInputPipes: [ ]
+                supportedInputPipes: [ InputPipeType.Pulse ]
             };
             this._slowdownControlBindingComponentData = {
                 bindingType: ControlSchemeBindingType.Speed,
                 inputFormGroup: outputBinding.controls.inputs.controls[AccelerateBindingInputAction.Slowdown],
                 inputAction: SpeedBindingInputAction.Brake,
                 inputName$: this.l10nService.getBindingInputName(AccelerateBindingInputAction.Slowdown),
-                supportedInputPipes: [ ]
+                supportedInputPipes: [ InputPipeType.Pulse ]
             };
 
             merge(

@@ -3,4 +3,7 @@ export enum InputPipesPreset {
     LogarithmicGain,
     ExponentialGain,
     OnOffToggle,
+    Pulse1Hz,
+    Pulse2Hz,
+    Pulse5Hz
 }

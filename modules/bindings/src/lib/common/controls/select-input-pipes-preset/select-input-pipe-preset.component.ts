@@ -40,6 +40,15 @@ export class SelectInputPipePresetComponent {
         ],
         [InputPipesPreset.OnOffToggle]: () => [
             { type: InputPipeType.OnOffToggle }
+        ],
+        [InputPipesPreset.Pulse1Hz]: () => [
+            { type: InputPipeType.Pulse, periodMs: 1000, dutyCycle: 0.5 }
+        ],
+        [InputPipesPreset.Pulse2Hz]: () => [
+            { type: InputPipeType.Pulse, periodMs: 500, dutyCycle: 0.5 }
+        ],
+        [InputPipesPreset.Pulse5Hz]: () => [
+            { type: InputPipeType.Pulse, periodMs: 200, dutyCycle: 0.5 }
         ]
     };
 
@@ -60,6 +69,8 @@ export class SelectInputPipePresetComponent {
                     return [ InputPipesPreset.LogarithmicGain ];
                 case InputPipeType.OnOffToggle:
                     return [ InputPipesPreset.OnOffToggle ];
+                case InputPipeType.Pulse:
+                    return [ InputPipesPreset.Pulse1Hz, InputPipesPreset.Pulse2Hz, InputPipesPreset.Pulse5Hz ];
             }
         }).flat();
         this._availablePresets = [ ...new Set([InputPipesPreset.None, ...presets]) ];
@@ -82,6 +93,9 @@ export class SelectInputPipePresetComponent {
             case InputPipeType.OnOffToggle:
                 this.formControl.setValue(InputPipesPreset.OnOffToggle);
                 break;
+            case InputPipeType.Pulse:
+                this.formControl.setValue(this.findMatchingPulsePreset(firstPipe.periodMs, firstPipe.dutyCycle));
+                break;
             default:
                 // exhaustiveness check
                 this.formControl.setValue(firstPipe satisfies void);
@@ -97,5 +111,20 @@ export class SelectInputPipePresetComponent {
     ): void {
         const preset = this.pipePresets[presetType]();
         this.pipeConfigChange.emit(preset);
+    }
+    
+    // this is a temporary solution, presets will be replaced with configurable input pipes
+    private findMatchingPulsePreset(
+        periodMs: number,
+        dutyCycle: number
+    ): InputPipesPreset {
+        const pulsePresets = [ InputPipesPreset.Pulse1Hz, InputPipesPreset.Pulse2Hz, InputPipesPreset.Pulse5Hz ];
+        for (const pulsePreset of pulsePresets) {
+            const pipeConfig = this.pipePresets[pulsePreset]()[0];
+            if (pipeConfig.type === InputPipeType.Pulse && pipeConfig.periodMs === periodMs && pipeConfig.dutyCycle === dutyCycle) {
+                return pulsePreset;
+            }
+        }
+        return InputPipesPreset.None;
     }
 }
