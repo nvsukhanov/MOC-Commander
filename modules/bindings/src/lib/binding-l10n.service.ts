@@ -12,6 +12,7 @@ import { SetAngleBindingL10nService } from './set-angle';
 import { SpeedBindingL10nService } from './speed';
 import { StepperBindingL10nService } from './stepper';
 import { TrainBindingL10nService } from './train';
+import { AccelerateBindingL10nService } from './accelerate';
 
 @Injectable()
 export class BindingL10nService implements
@@ -24,7 +25,8 @@ export class BindingL10nService implements
         [ControlSchemeBindingType.SetAngle]: this.setAngleBindingL10nService,
         [ControlSchemeBindingType.Speed]: this.speedBindingL10nService,
         [ControlSchemeBindingType.Stepper]: this.stepperBindingL10nService,
-        [ControlSchemeBindingType.Train]: this.trainBindingL10nService
+        [ControlSchemeBindingType.Train]: this.trainBindingL10nService,
+        [ControlSchemeBindingType.Accelerate]: this.accelerateBindingL10nService
     };
 
     constructor(
@@ -33,7 +35,8 @@ export class BindingL10nService implements
         private readonly setAngleBindingL10nService: SetAngleBindingL10nService,
         private readonly speedBindingL10nService: SpeedBindingL10nService,
         private readonly stepperBindingL10nService: StepperBindingL10nService,
-        private readonly trainBindingL10nService: TrainBindingL10nService
+        private readonly trainBindingL10nService: TrainBindingL10nService,
+        private readonly accelerateBindingL10nService: AccelerateBindingL10nService
     ) {
     }
 
