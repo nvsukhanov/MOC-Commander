@@ -12,6 +12,8 @@ export const NO_INPUTS_ACCELERATE_ERROR = 'NO_SET_ACCELERATE_INPUTS_ERROR';
 
 @Injectable()
 export class AccelerateBindingFormBuilderService implements IBindingFormBuilder<AccelerateBindingForm> {
+    private readonly minSpeedIncrement = 5;
+
     constructor(
         private readonly formBuilder: FormBuilder,
         private commonFormControlBuilder: CommonBindingsFormControlsBuilderService,
@@ -29,9 +31,18 @@ export class AccelerateBindingFormBuilderService implements IBindingFormBuilder<
             }, {
                 validators: this.createInputsValidators()
             }),
-            forwardsSpeedIncrement: this.commonFormControlBuilder.speedControl(this.appConfig.acceleration.defaultAccelerationStep),
-            backwardsSpeedIncrement: this.commonFormControlBuilder.speedControl(this.appConfig.acceleration.defaultAccelerationStep),
-            slowdownSpeedDecrement: this.commonFormControlBuilder.speedControl(this.appConfig.acceleration.defaultAccelerationStep),
+            forwardsSpeedIncrement: this.commonFormControlBuilder.speedControl(
+                this.appConfig.acceleration.defaultAccelerationStep,
+                this.minSpeedIncrement
+            ),
+            backwardsSpeedIncrement: this.commonFormControlBuilder.speedControl(
+                this.appConfig.acceleration.defaultAccelerationStep,
+                this.minSpeedIncrement
+            ),
+            slowdownSpeedDecrement: this.commonFormControlBuilder.speedControl(
+                this.appConfig.acceleration.defaultAccelerationStep,
+                this.minSpeedIncrement
+            ),
             hubId: this.controlSchemeFormBuilder.hubIdControl(),
             portId: this.controlSchemeFormBuilder.portIdControl(),
             maxSpeed: this.commonFormControlBuilder.speedControl(),

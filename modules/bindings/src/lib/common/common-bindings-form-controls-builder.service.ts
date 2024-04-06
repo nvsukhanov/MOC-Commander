@@ -15,13 +15,14 @@ export class CommonBindingsFormControlsBuilderService {
     }
 
     public speedControl(
-        initialValue: number = MOTOR_LIMITS.maxSpeed
+        initialValue: number = MOTOR_LIMITS.maxSpeed,
+        minValue: number = 0
     ): FormControl<number> {
         return this.formBuilder.control<number>(initialValue, {
             nonNullable: true,
             validators: [
                 Validators.required,
-                Validators.min(0),
+                Validators.min(minValue),
                 Validators.max(MOTOR_LIMITS.maxSpeed),
                 AppValidators.requireInteger
             ]
