@@ -131,6 +131,7 @@
     "connected": "Hub {name} connected",
     "disconnected": "Hub {name} disconnected",
     "connectFailed": "Failed to connect to hub",
+    "alreadyConnected": "Hub {name} is already connected",
     "batteryLevel": "Battery: {batteryLevel}%",
     "rssiLevel": "Signal level: {rssi}",
     "buttonState": "Hub button state: {isButtonPressed, select, true {pressed} other {released}}",

@@ -131,6 +131,7 @@
     "connected": "Хаб {name} подключен",
     "disconnected": "Хаб {name} отключен",
     "connectFailed": "Произошла ошибка при попытке подключения к хабу",
+    "alreadyConnected": "Хаб {name} уже подключен",
     "batteryLevel": "Заряд батареи: {batteryLevel}%",
     "rssiLevel": "RSSI: {rssi}",
     "buttonState": "Кнопка хаба: {isButtonPressed, select, true {нажата} other {не нажата}}",
