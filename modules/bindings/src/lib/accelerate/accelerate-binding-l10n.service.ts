@@ -25,8 +25,8 @@ export class AccelerateBindingL10nService implements IBindingL10n<ControlSchemeB
                 return this.translocoService.selectTranslate('controlScheme.accelerateBinding.forwardsInput');
             case AccelerateBindingInputAction.Backwards:
                 return this.translocoService.selectTranslate('controlScheme.accelerateBinding.backwardsInput');
-            case AccelerateBindingInputAction.Slowdown:
-                return this.translocoService.selectTranslate('controlScheme.accelerateBinding.slowdownInput');
+            case AccelerateBindingInputAction.Decelerate:
+                return this.translocoService.selectTranslate('controlScheme.accelerateBinding.decelerateInput');
         }
     }
 
@@ -37,7 +37,7 @@ export class AccelerateBindingL10nService implements IBindingL10n<ControlSchemeB
         switch (actionType) {
             case AccelerateBindingInputAction.Forwards:
             case AccelerateBindingInputAction.Backwards:
-            case AccelerateBindingInputAction.Slowdown:
+            case AccelerateBindingInputAction.Decelerate:
                 return this.controllerInputNameService.getFullControllerInputNameData(inputConfig);
         }
     }

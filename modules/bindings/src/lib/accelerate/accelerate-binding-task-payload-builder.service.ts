@@ -25,7 +25,7 @@ export class AccelerateBindingTaskPayloadBuilderService implements ITaskPayloadB
     ): { payload: SpeedTaskPayload; inputTimestamp: number } | null {
         const forwardsInput = this.getActiveInput(binding, currentInput, previousInput, AccelerateBindingInputAction.Forwards);
         const backwardsInput = this.getActiveInput(binding, currentInput, previousInput, AccelerateBindingInputAction.Backwards);
-        const brakeInput = this.getActiveInput(binding, currentInput, previousInput, AccelerateBindingInputAction.Slowdown);
+        const brakeInput = this.getActiveInput(binding, currentInput, previousInput, AccelerateBindingInputAction.Decelerate);
 
         const previousSpeed = previousTask?.payload.type === TaskType.Speed ? previousTask.payload.speed : 0;
 
@@ -52,7 +52,7 @@ export class AccelerateBindingTaskPayloadBuilderService implements ITaskPayloadB
         if (brakeInput.isActivated) {
             const previousBrakeFactor = previousTask?.payload.type === TaskType.Speed ? previousTask.payload.brakeFactor : 0;
 
-            if ((Math.abs(previousSpeed) - previousBrakeFactor) <= binding.slowdownSpeedDecrement) {
+            if ((Math.abs(previousSpeed) - previousBrakeFactor) <= binding.decelerateSpeedDecrement) {
                 const payload = {
                     type: TaskType.Speed,
                     speed: 0,
@@ -65,7 +65,7 @@ export class AccelerateBindingTaskPayloadBuilderService implements ITaskPayloadB
                 return { payload, inputTimestamp: brakeInput.timestamp };
             }
             if (previousSpeed !== 0 && previousBrakeFactor !== previousSpeed) {
-                const nextSpeed = previousSpeed - Math.sign(previousSpeed) * binding.slowdownSpeedDecrement;
+                const nextSpeed = previousSpeed - Math.sign(previousSpeed) * binding.decelerateSpeedDecrement;
 
                 return {
                     payload: this.buildTaskPayload(nextSpeed, binding, previousTask),

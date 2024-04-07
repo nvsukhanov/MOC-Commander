@@ -39,7 +39,7 @@ export class AccelerateBindingFormBuilderService implements IBindingFormBuilder<
                 this.appConfig.acceleration.defaultAccelerationStep,
                 this.minSpeedIncrement
             ),
-            slowdownSpeedDecrement: this.commonFormControlBuilder.speedControl(
+            decelerateSpeedDecrement: this.commonFormControlBuilder.speedControl(
                 this.appConfig.acceleration.defaultAccelerationStep,
                 this.minSpeedIncrement
             ),

@@ -56,7 +56,7 @@ export class AccelerateBindingEditComponent implements IBindingsDetailsEditCompo
 
     private _backwardsControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Speed> | null = null;
 
-    private _slowdownControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Speed> | null = null;
+    private _decelerateControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Speed> | null = null;
 
     constructor(
         private readonly cd: ChangeDetectorRef,
@@ -72,8 +72,8 @@ export class AccelerateBindingEditComponent implements IBindingsDetailsEditCompo
         return this._backwardsControlBindingComponentData;
     }
 
-    public get slowdownControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Speed> | null {
-        return this._slowdownControlBindingComponentData;
+    public get decelerateControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Speed> | null {
+        return this._decelerateControlBindingComponentData;
     }
 
     public get isForwardsControlAssigned(): boolean {
@@ -84,7 +84,7 @@ export class AccelerateBindingEditComponent implements IBindingsDetailsEditCompo
         return !!this.form?.controls.inputs.controls[SpeedBindingInputAction.Backwards].controls.controllerId.value;
     }
 
-    public get isSlowDownControlAssigned(): boolean {
+    public get isDecelerateControlAssigned(): boolean {
         return !!this.form?.controls.inputs.controls[SpeedBindingInputAction.Brake].controls.controllerId.value;
     }
 
@@ -93,7 +93,7 @@ export class AccelerateBindingEditComponent implements IBindingsDetailsEditCompo
     ): void {
         const forwardsControls = outputBinding.controls.inputs.controls[SpeedBindingInputAction.Forwards].controls;
         const backwardsControls = outputBinding.controls.inputs.controls[SpeedBindingInputAction.Backwards].controls;
-        const slowdownControls = outputBinding.controls.inputs.controls[SpeedBindingInputAction.Brake].controls;
+        const decelerateControls = outputBinding.controls.inputs.controls[SpeedBindingInputAction.Brake].controls;
         if (outputBinding !== this.form) {
             this.form = outputBinding;
 
@@ -111,11 +111,11 @@ export class AccelerateBindingEditComponent implements IBindingsDetailsEditCompo
                 inputName$: this.l10nService.getBindingInputName(AccelerateBindingInputAction.Backwards),
                 supportedInputPipes: [ InputPipeType.Pulse ]
             };
-            this._slowdownControlBindingComponentData = {
+            this._decelerateControlBindingComponentData = {
                 bindingType: ControlSchemeBindingType.Speed,
-                inputFormGroup: outputBinding.controls.inputs.controls[AccelerateBindingInputAction.Slowdown],
+                inputFormGroup: outputBinding.controls.inputs.controls[AccelerateBindingInputAction.Decelerate],
                 inputAction: SpeedBindingInputAction.Brake,
-                inputName$: this.l10nService.getBindingInputName(AccelerateBindingInputAction.Slowdown),
+                inputName$: this.l10nService.getBindingInputName(AccelerateBindingInputAction.Decelerate),
                 supportedInputPipes: [ InputPipeType.Pulse ]
             };
 
@@ -126,9 +126,9 @@ export class AccelerateBindingEditComponent implements IBindingsDetailsEditCompo
                 backwardsControls.controllerId.valueChanges,
                 backwardsControls.inputId.valueChanges,
                 backwardsControls.inputType.valueChanges,
-                slowdownControls.controllerId.valueChanges,
-                slowdownControls.inputId.valueChanges,
-                slowdownControls.inputType.valueChanges
+                decelerateControls.controllerId.valueChanges,
+                decelerateControls.inputId.valueChanges,
+                decelerateControls.inputType.valueChanges
             ).subscribe(() => {
                 this.cd.markForCheck();
             });

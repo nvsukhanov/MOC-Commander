@@ -28,7 +28,7 @@ export class AccelerateBindingFormMapperService implements IBindingFormMapper<Ac
             inputs: {},
             forwardsSpeedIncrement: form.controls.forwardsSpeedIncrement.getRawValue(),
             backwardsSpeedIncrement: form.controls.backwardsSpeedIncrement.getRawValue(),
-            slowdownSpeedDecrement: form.controls.slowdownSpeedDecrement.getRawValue(),
+            decelerateSpeedDecrement: form.controls.decelerateSpeedDecrement.getRawValue(),
             hubId,
             portId,
             maxSpeed: form.controls.maxSpeed.getRawValue(),

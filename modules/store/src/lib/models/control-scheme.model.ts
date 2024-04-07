@@ -196,7 +196,7 @@ export type ControlSchemeGearboxBinding = {
 export enum AccelerateBindingInputAction {
     Forwards = '0',
     Backwards = '1',
-    Slowdown = '2'
+    Decelerate = '2'
 }
 
 export type ControlSchemeAccelerateBinding = {
@@ -205,11 +205,11 @@ export type ControlSchemeAccelerateBinding = {
     inputs: {
         [AccelerateBindingInputAction.Forwards]?: ControlSchemeInputConfig;
         [AccelerateBindingInputAction.Backwards]?: ControlSchemeInputConfig;
-        [AccelerateBindingInputAction.Slowdown]?: ControlSchemeInputConfig;
+        [AccelerateBindingInputAction.Decelerate]?: ControlSchemeInputConfig;
     };
     forwardsSpeedIncrement: number;
     backwardsSpeedIncrement: number;
-    slowdownSpeedDecrement: number;
+    decelerateSpeedDecrement: number;
     hubId: string;
     portId: number;
     maxSpeed: number;

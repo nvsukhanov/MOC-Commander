@@ -11,7 +11,7 @@ export type AccelerateBindingForm = FormGroup<{
     }>;
     forwardsSpeedIncrement: FormControl<number>;
     backwardsSpeedIncrement: FormControl<number>;
-    slowdownSpeedDecrement: FormControl<number>;
+    decelerateSpeedDecrement: FormControl<number>;
     hubId: FormControl<string | null>;
     portId: FormControl<number | null>;
     maxSpeed: FormControl<number>;
