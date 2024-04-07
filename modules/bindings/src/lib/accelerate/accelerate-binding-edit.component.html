@@ -20,7 +20,7 @@
         >
             <lib-cs-binding-control-select-controller [data]="forwardsControlBindingComponentData"></lib-cs-binding-control-select-controller>
             <lib-cs-binding-control-select-controller [data]="backwardsControlBindingComponentData"></lib-cs-binding-control-select-controller>
-            <lib-cs-binding-control-select-controller [data]="slowdownControlBindingComponentData"></lib-cs-binding-control-select-controller>
+            <lib-cs-binding-control-select-controller [data]="decelerateControlBindingComponentData"></lib-cs-binding-control-select-controller>
 
             <mat-error [libValidationMessages]="form.controls.inputs"
                        [immediatelyShowMessages]="true"
@@ -49,9 +49,9 @@
                 ></lib-cs-binding-control-speed-input>
             }
 
-            @if (isSlowDownControlAssigned) {
-                <lib-cs-binding-control-speed-input [control]="form.controls.slowdownSpeedDecrement"
-                                                    [translocoTitle]="'controlScheme.accelerateBinding.slowdownSpeedDecrement'"
+            @if (isDecelerateControlAssigned) {
+                <lib-cs-binding-control-speed-input [control]="form.controls.decelerateSpeedDecrement"
+                                                    [translocoTitle]="'controlScheme.accelerateBinding.decelerateSpeedDecrement'"
                 ></lib-cs-binding-control-speed-input>
             }
 

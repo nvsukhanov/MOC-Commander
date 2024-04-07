@@ -45,7 +45,7 @@ export class AccelerateBindingInputExtractorService implements ITasksInputExtrac
             binding,
             globalInput$,
             controllersSettings$,
-            binding.inputs[AccelerateBindingInputAction.Slowdown]
+            binding.inputs[AccelerateBindingInputAction.Decelerate]
         ).pipe(
             distinctUntilIsActivatedChanged()
         );
@@ -54,7 +54,7 @@ export class AccelerateBindingInputExtractorService implements ITasksInputExtrac
             map(([forwards, backwards, brake]) => ({
                 [AccelerateBindingInputAction.Forwards]: forwards,
                 [AccelerateBindingInputAction.Backwards]: backwards,
-                [AccelerateBindingInputAction.Slowdown]: brake
+                [AccelerateBindingInputAction.Decelerate]: brake
             }))
         );
     }

@@ -361,12 +361,12 @@
       "operationMode": "Ускорение",
       "forwardsInput": "Вперед",
       "backwardsInput": "Назад",
-      "slowdownInput": "Замедление",
+      "decelerateInput": "Замедление",
       "missingInputs": "Нужно назначить хотя-бы один контроллер",
       "outputSpeed": "Макс. скорость",
       "forwardsSpeedIncrement": "Шаг ускорения вперед",
       "backwardsSpeedIncrement": "Шаг ускорения назад",
-      "slowdownSpeedDecrement": "Шаг замедления"
+      "decelerateSpeedDecrement": "Шаг замедления"
     },
     "widgets": {
       "reorderWidgetsButtonTitle": "Изменить порядок виджетов",

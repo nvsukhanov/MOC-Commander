@@ -361,12 +361,12 @@
       "operationMode": "Accelerate",
       "forwardsInput": "Forwards",
       "backwardsInput": "Backwards",
-      "slowdownInput": "Slowdown",
+      "decelerateInput": "Decelerate",
       "missingInputs": "At least one of the inputs must be assigned",
       "outputSpeed": "Max speed",
       "forwardsSpeedIncrement": "Forwards speed increment",
       "backwardsSpeedIncrement": "Backwards speed increment",
-      "slowdownSpeedDecrement": "Slowdown increment"
+      "decelerateSpeedDecrement": "Deceleration increment"
     },
     "widgets": {
       "reorderWidgetsButtonTitle": "Reorder widgets",
