@@ -1,5 +1,5 @@
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { catchError, combineLatestWith, map, mergeMap, of, switchMap, takeUntil, tap } from 'rxjs';
+import { catchError, combineLatestWith, map, mergeMap, of, switchMap, takeUntil } from 'rxjs';
 import { IHub, MessageLoggingMiddleware, connectHub } from 'rxpoweredup';
 import { inject } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -69,15 +69,18 @@ export const DISCOVER_HUB_EFFECT = createEffect((
                         )
                     );
                 }),
-                tap(([ hub, macAddressReply ]) => {
+                map(([ hub, macAddressReply, name ]) => {
+                    if (hubStorage.has(macAddressReply)) {
+                        return HUBS_ACTIONS.alreadyConnected({ hubId: macAddressReply, name });
+                    }
                     communicationNotifierMiddleware.communicationNotifier$.pipe(
                         takeUntil(hub.disconnected)
                     ).subscribe((v) => {
                         store.dispatch(HUB_RUNTIME_DATA_ACTIONS.setHasCommunication({ hubId: macAddressReply, hasCommunication: v }));
                     });
                     hubStorage.store(hub, macAddressReply);
+                    return HUBS_ACTIONS.connected({ hubId: macAddressReply, name });
                 }),
-                map(([ , macAddressReply, name ]) => HUBS_ACTIONS.connected({ hubId: macAddressReply, name })),
                 catchError((error: Error) => {
                     if (isUserCancelledDiscoveryError(error)) {
                         return of(HUBS_ACTIONS.discoveryCancelled());

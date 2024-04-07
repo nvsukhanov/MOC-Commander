@@ -7,6 +7,7 @@ export const HUBS_ACTIONS = createActionGroup({
         startDiscovery: emptyProps(),
         connected: props<{ hubId: string; name: string }>(),
         disconnected: props<{ hubId: string; name: string }>(),
+        alreadyConnected: props<{ hubId: string; name: string }>(),
         deviceConnectFailed: props<{ error: Error }>(),
         discoveryCancelled: emptyProps(),
         userRequestedHubDisconnection: props<{ hubId: string }>(),

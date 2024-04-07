@@ -17,6 +17,7 @@ import { NOTIFY_ON_HUB_CONNECT_FAILED_EFFECT } from './notify-on-hub-connect-fai
 import { NOTIFY_ON_HUB_CONNECTED_EFFECT } from './notify-on-hub-connected.effect';
 import { NOTIFY_ON_HUB_DISCONNECTED_EFFECT } from './notify-on-hub-disconnected.effect';
 import { NOTIFY_ON_HUB_SET_NAME_ERROR_EFFECT } from './notify-on-hub-name-set-error.effect';
+import { NOTIFY_ON_HUB_CONNECT_IS_ALREADY_CONNECTED_EFFECT } from './notify-on-hub-is-already-connected.effect';
 
 export const HUB_EFFECTS: { [k in string]: FunctionalEffect } = {
     discoverHub: DISCOVER_HUB_EFFECT,
@@ -35,5 +36,6 @@ export const HUB_EFFECTS: { [k in string]: FunctionalEffect } = {
     notifyOnHubConnectFailed: NOTIFY_ON_HUB_CONNECT_FAILED_EFFECT,
     notifyOnHubConnected: NOTIFY_ON_HUB_CONNECTED_EFFECT,
     notifyOnHubDisconnected: NOTIFY_ON_HUB_DISCONNECTED_EFFECT,
-    notifyOnHubSetNameError: NOTIFY_ON_HUB_SET_NAME_ERROR_EFFECT
+    notifyOnHubSetNameError: NOTIFY_ON_HUB_SET_NAME_ERROR_EFFECT,
+    notifyOnHubIsAlreadyConnected: NOTIFY_ON_HUB_CONNECT_IS_ALREADY_CONNECTED_EFFECT
 } as const;

@@ -27,6 +27,12 @@ export class HubStorageService {
         return hub;
     }
 
+    public has(
+        id: string
+    ): boolean {
+        return this.hubsMap.has(id);
+    }
+
     public removeHub(id: string): void {
         this.logger.debug('[HubStorage] Removing hub from storage', id);
         this.hubsMap.delete(id);
