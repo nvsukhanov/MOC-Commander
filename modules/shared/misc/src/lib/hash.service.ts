@@ -1,4 +1,4 @@
-import { murmur3 } from 'murmurhash-js';
+import murmur3 from 'murmurhash-js';
 import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
