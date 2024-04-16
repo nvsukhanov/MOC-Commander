@@ -55,6 +55,7 @@
     "@angular/language-service": "^17.2.0",
     "@ngrx/eslint-plugin": "^17.1.0",
     "@ngrx/schematics": "^17.1.0",
+    "@nvsukhanov/eslint-config-common": "^0.0.3",
     "@nx/angular": "^18.0.0",
     "@nx/eslint-plugin": "^18.0.0",
     "@nx/jest": "^18.0.0",
