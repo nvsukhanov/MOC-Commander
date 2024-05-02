@@ -460,9 +460,7 @@
     "licenseText": "MIT License",
     "sourcesTitle": "Sources",
     "githubTitle": "MOC Commander GitHub",
-    "githubApiTitle": "rxPoweredUp GitHub",
-    "feedbackTitle": "Feedback",
-    "feedbackDiscord": "Discord"
+    "githubApiTitle": "rxPoweredUp GitHub"
   },
   "io": {
     "hardwareRevision": "Hardware version",

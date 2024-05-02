@@ -25,9 +25,7 @@ export class AboutPageComponent implements OnInit {
     public readonly rxPoweredUpURL = 'https://github.com/nvsukhanov/rxPoweredUp';
 
     public readonly licenseURL = 'https://github.com/nvsukhanov/MOC-Commander/blob/main/LICENSE.md';
-
-    public readonly discordURL = 'https://discord.gg/N5wkG547';
-
+    
     constructor(
         private readonly titleService: TitleService,
         private readonly translocoService: TranslocoService,
