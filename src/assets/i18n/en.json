@@ -3,7 +3,7 @@
   "appTitleTemplate": "{ pageTitle } | { appName }",
   "pageNotFound": "Page not found",
   "hubListHubIsNotConnected": "disconnected",
-  "discoverHub": "Discover hub",
+  "discoverHub": "Connect",
   "bluetoothIsNotAvailable": "Bluetooth is not available",
   "uploadFileButtonTitle": "Upload",
   "uploadFileDialogTitle": "Select a file",
