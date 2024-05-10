@@ -3,7 +3,7 @@
   "appTitleTemplate": "{ pageTitle } | { appName }",
   "pageNotFound": "Страница не найдена",
   "hubListHubIsNotConnected": "не подключен",
-  "discoverHub": "Обнаружить хаб",
+  "discoverHub": "Подключиться",
   "bluetoothIsNotAvailable": "Bluetooth недоступен",
   "uploadFileButtonTitle": "Загрузить",
   "uploadFileDialogTitle": "Выберите файл",
