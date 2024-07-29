@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatFormField, MatLabel, MatOption, MatSelect } from '@angular/material/select';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { InputPipeConfig, InputPipeType } from '@app/store';
 
@@ -112,7 +112,7 @@ export class SelectInputPipePresetComponent {
         const preset = this.pipePresets[presetType]();
         this.pipeConfigChange.emit(preset);
     }
-    
+
     // this is a temporary solution, presets will be replaced with configurable input pipes
     private findMatchingPulsePreset(
         periodMs: number,

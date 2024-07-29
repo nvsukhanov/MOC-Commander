@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable, filter, map, switchMap, take } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { AsyncPipe } from '@angular/common';
 import { IUnsavedChangesComponent, RoutesBuilderService, TitleService } from '@app/shared-misc';
 import { BreadcrumbsService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared-components';

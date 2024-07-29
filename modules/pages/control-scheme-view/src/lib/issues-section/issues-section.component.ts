@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, Signal, computed } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MatDivider } from '@angular/material/divider';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 import { RunBlockersListComponent, SchemeRunBlocker } from './run-blockers';
 import { CONTROL_SCHEME_PAGE_SELECTORS } from '../control-scheme-page.selectors';

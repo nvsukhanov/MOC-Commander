@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 import { ControlSchemeInputConfig, ServoBindingInputAction } from '@app/store';
 

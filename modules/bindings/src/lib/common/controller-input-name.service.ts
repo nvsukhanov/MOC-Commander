@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, combineLatestWith, switchMap } from 'rxjs';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ButtonGroupButtonId } from 'rxpoweredup';
 import { ControlSchemeInputConfig, ControllerProfilesFacadeService } from '@app/store';
 import { ControllerInputType, IControllerProfile } from '@app/controller-profiles';

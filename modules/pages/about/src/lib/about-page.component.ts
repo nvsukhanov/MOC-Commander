@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { AsyncPipe } from '@angular/common';
 import { TitleService } from '@app/shared-misc';
 import { ChangelogComponent } from '@app/shared-components';
@@ -25,7 +25,7 @@ export class AboutPageComponent implements OnInit {
     public readonly rxPoweredUpURL = 'https://github.com/nvsukhanov/rxPoweredUp';
 
     public readonly licenseURL = 'https://github.com/nvsukhanov/MOC-Commander/blob/main/LICENSE.md';
-    
+
     constructor(
         private readonly titleService: TitleService,
         private readonly translocoService: TranslocoService,

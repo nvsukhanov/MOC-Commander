@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { PortModeName } from 'rxpoweredup';
 import { Observable, Subscription, mergeWith, of, startWith, switchMap, take } from 'rxjs';
 import { MatDividerModule } from '@angular/material/divider';

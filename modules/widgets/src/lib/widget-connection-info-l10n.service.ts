@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { Observable, combineLatestWith, map, of, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { WidgetType } from '@app/shared-misc';

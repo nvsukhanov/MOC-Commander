@@ -1,5 +1,5 @@
 import { Inject, Injectable, Optional } from '@angular/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { Memoize } from 'typescript-memoize';
 
 import { ControllerProfileGenericGamepadFactoryService } from './gamepad';

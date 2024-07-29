@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 import { IControllerProfile } from '../i-controller-profile';
 import { createControllerL10nKey, createScopedControllerL10nKey } from '../create-controller-l10n-key';

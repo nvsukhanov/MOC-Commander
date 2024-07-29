@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { MatDivider } from '@angular/material/divider';
 
 import { CHANGELOG_TOKEN, IChangelog } from './i-changelog';

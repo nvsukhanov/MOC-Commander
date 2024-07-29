@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { CONTROLLER_MAX_INPUT_VALUE, CONTROLLER_MIN_INPUT_VALUE, CONTROLLER_NULL_INPUT_VALUE } from '@app/controller-profiles';
 
 @Component({

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, Input, WritableSignal, computed, signal } from '@angular/core';
 import { of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { Store } from '@ngrx/store';
 import { CONTROLLER_CONNECTION_SELECTORS, ControlSchemeBinding, ControlSchemeBindingInputs, ControlSchemeInputConfig } from '@app/store';
 import { BINDING_CONTROLLER_INPUT_NAME_RESOLVER, IBindingControllerInputNameResolver } from '@app/shared-control-schemes';

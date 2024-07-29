@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { Observable, Subscription, switchMap, take } from 'rxjs';
 
 @Injectable()

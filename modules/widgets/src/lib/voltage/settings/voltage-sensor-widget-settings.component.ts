@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Out
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subscription, startWith, take } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ValidationMessagesDirective, WidgetType } from '@app/shared-misc';
 import { VoltageWidgetConfigModel } from '@app/store';
 import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ControlSchemeInputConfig, ControlSchemeSetAngleBinding, SetAngleBindingInputAction } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 

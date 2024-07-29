@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MatCardModule } from '@angular/material/card';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { MatIconModule } from '@angular/material/icon';
 import { filter, map, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';

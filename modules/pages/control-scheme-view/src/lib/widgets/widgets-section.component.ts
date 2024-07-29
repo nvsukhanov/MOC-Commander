@@ -4,7 +4,7 @@ import { Subscription, map } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { CONTROL_SCHEME_ACTIONS, WidgetConfigModel } from '@app/store';
 
 import { CONTROL_SCHEME_PAGE_SELECTORS } from '../control-scheme-page.selectors';

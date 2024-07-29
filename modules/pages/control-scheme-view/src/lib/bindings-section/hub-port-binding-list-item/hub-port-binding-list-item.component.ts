@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, Signal, WritableSignal, computed, signal } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { MatError } from '@angular/material/form-field';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { Observable } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';

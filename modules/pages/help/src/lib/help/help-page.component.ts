@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { of } from 'rxjs';
 import { InstallationManualsListComponent } from '@app/manuals';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';

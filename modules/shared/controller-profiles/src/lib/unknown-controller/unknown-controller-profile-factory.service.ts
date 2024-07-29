@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 import { UnknownControllerProfile } from './unknown-controller-profile';
 import { IControllerProfile } from '../i-controller-profile';

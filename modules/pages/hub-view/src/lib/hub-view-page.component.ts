@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { filter, map, of, switchMap, take } from 'rxjs';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { Router, RouterLink } from '@angular/router';
 import { MatAnchor, MatButton } from '@angular/material/button';
 import { AsyncPipe } from '@angular/common';

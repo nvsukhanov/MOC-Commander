@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { Memoize } from 'typescript-memoize';
 
 import { createScopedControllerL10nKeyBuilder } from './create-controller-l10n-key';
