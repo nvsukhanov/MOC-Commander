@@ -4,7 +4,7 @@ import { Observable, filter, map, switchMap, take } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Router } from '@angular/router';
-import { concatLatestFrom } from '@ngrx/effects';
+import { concatLatestFrom } from '@ngrx/operators';
 import { AsyncPipe } from '@angular/common';
 import { IUnsavedChangesComponent, RoutesBuilderService, TitleService } from '@app/shared-misc';
 import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective } from '@app/shared-components';

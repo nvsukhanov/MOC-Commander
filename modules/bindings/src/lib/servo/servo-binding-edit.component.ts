@@ -9,7 +9,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { concatLatestFrom } from '@ngrx/effects';
+import { concatLatestFrom } from '@ngrx/operators';
 import { AsyncPipe } from '@angular/common';
 import { ControlSchemeBindingType, ValidationErrorsL10nMap, ValidationMessagesDirective, transformRelativeDegToAbsoluteDeg } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-components';

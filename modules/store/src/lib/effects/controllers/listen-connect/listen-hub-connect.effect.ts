@@ -1,7 +1,8 @@
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { inject } from '@angular/core';
 import { map } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { concatLatestFrom } from '@ngrx/operators';
 import { HubProfileFactoryService } from '@app/controller-profiles';
 
 import { CONTROLLERS_ACTIONS, HUBS_ACTIONS } from '../../../actions';

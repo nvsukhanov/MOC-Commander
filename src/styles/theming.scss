@@ -2,7 +2,7 @@
 
 @include mat.core();
 
-$typography: mat.define-typography-config();
+$typography: mat.m2-define-typography-config();
 @include mat.typography-hierarchy($typography);
 
 $dark-primary-text: rgba(black, 0.87);
@@ -33,44 +33,44 @@ $dark-palette: (
     )
 );
 
-$dark-accent-palette: mat.$deep-purple-palette;
-$dark-warn-palette: mat.$red-palette;
+$dark-accent-palette: mat.$m2-deep-purple-palette;
+$dark-warn-palette: mat.$m2-red-palette;
 
-$light-palette: mat.$deep-purple-palette;
-$light-accent-palette: mat.$amber-palette;
-$light-warn-palette: mat.$red-palette;
+$light-palette: mat.$m2-deep-purple-palette;
+$light-accent-palette: mat.$m2-amber-palette;
+$light-warn-palette: mat.$m2-red-palette;
 
-$theme-light: mat.define-light-theme((
+$theme-light: mat.m2-define-light-theme((
     color: (
-        primary: mat.define-palette($light-palette),
-        accent: mat.define-palette($light-accent-palette),
-        warn: mat.define-palette($light-warn-palette),
+        primary: mat.m2-define-palette($light-palette),
+        accent: mat.m2-define-palette($light-accent-palette),
+        warn: mat.m2-define-palette($light-warn-palette),
     ),
     typography: $typography,
     density: 0
 ));
 
-$theme-dark: mat.define-dark-theme((
+$theme-dark: mat.m2-define-dark-theme((
     color: (
-        primary: mat.define-palette($dark-palette, 700, 600, 900),
-        accent: mat.define-palette($dark-accent-palette, 800, 700, 900),
-        warn: mat.define-palette($dark-warn-palette, 800, 700, 900),
+        primary: mat.m2-define-palette($dark-palette, 700, 600, 900),
+        accent: mat.m2-define-palette($dark-accent-palette, 800, 700, 900),
+        warn: mat.m2-define-palette($dark-warn-palette, 800, 700, 900),
     ),
 ));
 
 @include mat.core-theme($theme-light);
 @include mat.all-component-themes($theme-light);
 
-$elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
+$elevated-dark-color: mat.m2-get-color-from-palette($dark-palette, 800);
 
 .theme-light {
     color-scheme: light;
-    --app-accent-color: #{mat.get-color-from-palette($light-accent-palette, 500)};
-    --app-accent-contrast-color: #{mat.get-contrast-color-from-palette($light-accent-palette, 500)};;
-    --app-primary-color: #{mat.get-color-from-palette($light-palette, 500)};
-    --app-primary-contrast-color: #{mat.get-contrast-color-from-palette($light-palette, 500)};
-    --app-warning-color: #{mat.get-color-from-palette($light-warn-palette, 500)};
-    --app-warning-contrast-color: #{mat.get-contrast-color-from-palette($light-warn-palette, 500)};
+    --app-accent-color: #{mat.m2-get-color-from-palette($light-accent-palette, 500)};
+    --app-accent-contrast-color: #{mat.m2-get-contrast-color-from-palette($light-accent-palette, 500)};;
+    --app-primary-color: #{mat.m2-get-color-from-palette($light-palette, 500)};
+    --app-primary-contrast-color: #{mat.m2-get-contrast-color-from-palette($light-palette, 500)};
+    --app-warning-color: #{mat.m2-get-color-from-palette($light-warn-palette, 500)};
+    --app-warning-contrast-color: #{mat.m2-get-contrast-color-from-palette($light-warn-palette, 500)};
     --app-disabled-color: rgba(0, 0, 0, 0.5);
     --app-text-color: #{$dark-primary-text};
     --app-label-color: rgba(0, 0, 0, 0.6);
@@ -91,16 +91,16 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
     @include mat.core-color($theme-dark);
     @include mat.all-component-colors($theme-dark);
 
-    --app-accent-color: #{mat.get-color-from-palette($dark-accent-palette, 500)};
-    --app-accent-contrast-color: #{mat.get-contrast-color-from-palette($dark-accent-palette, 500)};
-    --app-primary-color: #{mat.get-color-from-palette($dark-palette, 500)};
-    --app-primary-contrast-color: #{mat.get-contrast-color-from-palette($dark-palette, 500)};
-    --app-warning-color: #{mat.get-color-from-palette($dark-warn-palette, 500)};
-    --app-warning-contrast-color: #{mat.get-contrast-color-from-palette($dark-warn-palette, 500)};
+    --app-accent-color: #{mat.m2-get-color-from-palette($dark-accent-palette, 500)};
+    --app-accent-contrast-color: #{mat.m2-get-contrast-color-from-palette($dark-accent-palette, 500)};
+    --app-primary-color: #{mat.m2-get-color-from-palette($dark-palette, 500)};
+    --app-primary-contrast-color: #{mat.m2-get-contrast-color-from-palette($dark-palette, 500)};
+    --app-warning-color: #{mat.m2-get-color-from-palette($dark-warn-palette, 500)};
+    --app-warning-contrast-color: #{mat.m2-get-contrast-color-from-palette($dark-warn-palette, 500)};
     --app-disabled-color: rgba(255, 255, 255, 0.5);
     --app-label-color: rgba(255, 255, 255, 0.6);
     --app-text-color: #{$light-primary-text};
-    --app-background-color: #{mat.get-color-from-palette($dark-palette, 900)};
+    --app-background-color: #{mat.m2-get-color-from-palette($dark-palette, 900)};
     --app-well-color: rgba(255, 255, 255, 0.22);
     --snackbar-text-color: #{$light-primary-text};
 
@@ -114,11 +114,11 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
     --mdc-text-button-disabled-label-text-color: var(--app-disabled-color);
 
     .mat-mdc-slider.mat-primary {
-        --mdc-slider-active-track-color: #{mat.get-color-from-palette($dark-palette, 200)};
-        --mdc-slider-inactive-track-color: #{mat.get-color-from-palette($dark-palette, 300)};
-        --mdc-slider-handle-color: #{mat.get-color-from-palette($dark-palette, 100)};
-        --mdc-slider-focus-handle-color: #{mat.get-color-from-palette($dark-palette, 100)};
-        --mdc-slider-hover-handle-color: #{mat.get-color-from-palette($dark-palette, 100)};
+        --mdc-slider-active-track-color: #{mat.m2-get-color-from-palette($dark-palette, 200)};
+        --mdc-slider-inactive-track-color: #{mat.m2-get-color-from-palette($dark-palette, 300)};
+        --mdc-slider-handle-color: #{mat.m2-get-color-from-palette($dark-palette, 100)};
+        --mdc-slider-focus-handle-color: #{mat.m2-get-color-from-palette($dark-palette, 100)};
+        --mdc-slider-hover-handle-color: #{mat.m2-get-color-from-palette($dark-palette, 100)};
     }
 
     .mat-mdc-card {
@@ -126,7 +126,7 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
     }
 
     .mat-mdc-snack-bar-container {
-        --mdc-snackbar-container-color: #{mat.get-color-from-palette($dark-palette, 700)};
+        --mdc-snackbar-container-color: #{mat.m2-get-color-from-palette($dark-palette, 700)};
         --mdc-snackbar-supporting-text-color: #{$light-primary-text};
         --mat-snack-bar-button-color: #{rgba($light-primary-text, 0.87)};
     }
@@ -147,13 +147,13 @@ $elevated-dark-color: mat.get-color-from-palette($dark-palette, 800);
     }
 
     .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-        background-color: mat.get-color-from-palette($dark-palette, 800);
+        background-color: mat.m2-get-color-from-palette($dark-palette, 800);
         --mdc-filled-text-field-caret-color: #{$light-primary-text};
         --mdc-outlined-text-field-caret-color: #{$light-primary-text};
     }
 
     .mdc-text-field--focused:not(.mdc-text-field--disabled) {
-        background-color: mat.get-color-from-palette($dark-palette, 700);
+        background-color: mat.m2-get-color-from-palette($dark-palette, 700);
         --mdc-filled-text-field-caret-color: #{$light-primary-text};
         --mdc-outlined-text-field-caret-color: #{$light-primary-text};
 

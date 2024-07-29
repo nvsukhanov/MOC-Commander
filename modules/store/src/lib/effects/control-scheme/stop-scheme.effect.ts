@@ -1,8 +1,9 @@
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Observable, catchError, filter, forkJoin, map, mergeMap, of, switchMap, take, timeout } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { Dictionary } from '@ngrx/entity';
+import { concatLatestFrom } from '@ngrx/operators';
 import { APP_CONFIG, IAppConfig } from '@app/shared-misc';
 
 import { ITaskRunner, TASK_RUNNER } from './i-task-runner';

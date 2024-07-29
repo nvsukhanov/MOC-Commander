@@ -1,7 +1,7 @@
 import { Store } from '@ngrx/store';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { Observable, map, startWith, take } from 'rxjs';
-import { concatLatestFrom } from '@ngrx/effects';
+import { concatLatestFrom } from '@ngrx/operators';
 
 import { CONTROL_SCHEMES_VALIDATION_SELECTORS } from './control-schemes-validation.selectors';
 import { CONTROL_SCHEME_NAME_IS_NOT_UNIQUE } from './control-schemes-validation-errors';

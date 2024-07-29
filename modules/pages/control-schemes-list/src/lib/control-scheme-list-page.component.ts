@@ -6,7 +6,7 @@ import { Router, RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { filter, of, take } from 'rxjs';
-import { concatLatestFrom } from '@ngrx/effects';
+import { concatLatestFrom } from '@ngrx/operators';
 import { AsyncPipe } from '@angular/common';
 import { RoutesBuilderService, ScreenSizeObserverService, TitleService } from '@app/shared-misc';
 import {
