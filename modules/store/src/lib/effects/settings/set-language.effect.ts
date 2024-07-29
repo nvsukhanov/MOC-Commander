@@ -1,6 +1,6 @@
 import { createEffect } from '@ngrx/effects';
 import { inject } from '@angular/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { Store } from '@ngrx/store';
 import { filter, tap } from 'rxjs';
 import { Language } from '@app/shared-i18n';

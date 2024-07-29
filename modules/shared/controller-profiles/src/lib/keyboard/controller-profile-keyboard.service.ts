@@ -1,6 +1,6 @@
 import { EMPTY, Observable } from 'rxjs';
 import { Memoize } from 'typescript-memoize';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { Injectable } from '@angular/core';
 
 import { ControllerType } from '../controller-type';

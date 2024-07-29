@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, Signal, WritableSignal, computed, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { IOType } from 'rxpoweredup';
 import { AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';

@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Directive, ElementRef, Input, OnChanges, OnDestroy, Renderer2 } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { BehaviorSubject, Subscription, combineLatestWith, distinctUntilChanged, map, of, startWith, switchMap } from 'rxjs';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 import { ValidationErrorsL10nMap } from './validation-errors-l10n-map';
 import { COMMON_VALIDATION_ERRORS_L10N_MAP } from './common-validation-errors-l10n-map';

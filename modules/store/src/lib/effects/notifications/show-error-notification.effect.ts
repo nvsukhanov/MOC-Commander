@@ -1,7 +1,7 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { inject } from '@angular/core';
 import { tap } from 'rxjs';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 import { SHOW_NOTIFICATION_ACTIONS } from '../../actions';
 import { NotificationFacadeService } from '../../notification-facade.service';

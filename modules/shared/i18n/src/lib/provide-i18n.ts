@@ -1,7 +1,7 @@
 import { EnvironmentProviders, isDevMode, makeEnvironmentProviders } from '@angular/core';
-import { provideTransloco } from '@ngneat/transloco';
+import { provideTransloco } from '@jsverse/transloco';
 import { provideHttpClient } from '@angular/common/http';
-import { provideTranslocoMessageformat } from '@ngneat/transloco-messageformat';
+import { provideTranslocoMessageformat } from '@jsverse/transloco-messageformat';
 import { getEnumValues } from '@app/shared-misc';
 
 import { I18nLoaderService } from './i18n-loader.service';

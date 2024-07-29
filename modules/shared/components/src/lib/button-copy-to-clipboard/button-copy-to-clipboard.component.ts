@@ -1,7 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 import { COPY_TO_CLIPBOARD_HANDLER, ICopyToClipboardHandler } from './i-copy-to-clipboard-handler';
 

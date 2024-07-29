@@ -1,4 +1,4 @@
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { instance, mock } from 'ts-mockito';
 
 import { ControllerProfileJoyconLService } from './controller-profile-joycon-l.service';

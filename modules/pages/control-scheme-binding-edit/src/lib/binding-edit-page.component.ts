@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, filter, map, switchMap, take } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { Router } from '@angular/router';
 import { concatLatestFrom } from '@ngrx/operators';
 import { AsyncPipe } from '@angular/common';

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AsyncValidatorFn, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { Store } from '@ngrx/store';
 import { AppValidators } from '@app/shared-misc';
 

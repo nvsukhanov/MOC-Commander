@@ -1,4 +1,4 @@
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { Observable } from 'rxjs';
 import { Memoize } from 'typescript-memoize';
 

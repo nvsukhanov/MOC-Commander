@@ -1,6 +1,6 @@
 import { Observable, filter, switchMap } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { Store } from '@ngrx/store';
 import { ATTACHED_IO_PROPS_SELECTORS, AttachedIoPropsModel, PortCommandTask, TaskType } from '@app/store';
 

@@ -1,4 +1,4 @@
-import { Translation, TranslocoLoader } from '@ngneat/transloco';
+import { Translation, TranslocoLoader } from '@jsverse/transloco';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';

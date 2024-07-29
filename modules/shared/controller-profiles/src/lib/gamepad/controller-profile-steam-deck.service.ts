@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { Observable } from 'rxjs';
 
 import { getGamepadVendorAndProduct } from '../get-gamepad-vendor-and-product';

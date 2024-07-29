@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 import { ControllerProfileGenericGamepad } from './controller-profile-generic-gamepad';
 import { ControllerProfileGenericGamepadUidBuilderService } from './controller-profile-generic-gamepad-uid-builder.service';

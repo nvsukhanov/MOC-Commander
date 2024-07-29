@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { MOTOR_LIMITS } from 'rxpoweredup';
 import { PortCommandTask, TaskType } from '@app/store';
 

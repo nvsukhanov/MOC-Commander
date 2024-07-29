@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { Observable } from 'rxjs';
 
 import { GamepadProfile } from '../gamepad-profile';
@@ -54,7 +54,7 @@ export class ControllerProfileXbox360Service extends GamepadProfile {
     private readonly vendorId = 0x045e;
 
     private readonly productId = 0x0b13;
-    
+
     constructor(
         translocoService: TranslocoService,
         @Inject(CONTROLLERS_CONFIG) config: IControllersConfig

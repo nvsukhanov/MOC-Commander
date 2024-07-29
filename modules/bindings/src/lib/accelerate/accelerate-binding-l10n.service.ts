@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 import { AccelerateBindingInputAction, ControlSchemeInputConfig } from '@app/store';

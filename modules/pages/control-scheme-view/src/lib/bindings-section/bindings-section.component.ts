@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatFabAnchor, MatFabButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { MatDivider } from '@angular/material/divider';

@@ -1,5 +1,5 @@
 import { Observable, of } from 'rxjs';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ButtonGroupButtonId } from 'rxpoweredup';
 
 import { ControllerType } from '../controller-type';

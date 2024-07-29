@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Observable, Subscription, distinctUntilChanged, filter, map, startWith, switchMap, take } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
