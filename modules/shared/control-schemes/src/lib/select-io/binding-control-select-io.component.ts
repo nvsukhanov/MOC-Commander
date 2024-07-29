@@ -4,7 +4,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { Observable, Subscription, map, of, startWith, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { concatLatestFrom } from '@ngrx/effects';
+import { concatLatestFrom } from '@ngrx/operators';
 import { AsyncPipe } from '@angular/common';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 import { IoTypeToL10nKeyPipe, PortIdToPortNamePipe } from '@app/shared-components';

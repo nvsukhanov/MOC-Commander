@@ -1,7 +1,8 @@
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { MonoTypeOperatorFunction, Observable, catchError, concatWith, filter, forkJoin, last, map, of, switchMap, timeout } from 'rxjs';
 import { inject } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { concatLatestFrom } from '@ngrx/operators';
 import { APP_CONFIG, IAppConfig } from '@app/shared-misc';
 
 import { CONTROL_SCHEME_ACTIONS } from '../../../actions';

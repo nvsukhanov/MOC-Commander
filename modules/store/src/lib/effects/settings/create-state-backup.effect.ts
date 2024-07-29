@@ -1,8 +1,9 @@
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { inject } from '@angular/core';
 import { tap } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { Store } from '@ngrx/store';
+import { concatLatestFrom } from '@ngrx/operators';
 
 import { SETTINGS_ACTIONS } from '../../actions';
 

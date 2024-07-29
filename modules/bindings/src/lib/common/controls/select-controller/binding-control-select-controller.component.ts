@@ -8,7 +8,7 @@ import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angu
 import { Observable, Subscription, filter, of, startWith, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { MatBadge } from '@angular/material/badge';
-import { concatLatestFrom } from '@ngrx/effects';
+import { concatLatestFrom } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective } from '@app/shared-components';

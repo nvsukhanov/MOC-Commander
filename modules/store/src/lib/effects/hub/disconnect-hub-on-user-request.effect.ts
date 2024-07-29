@@ -1,7 +1,8 @@
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { filter, mergeMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { inject } from '@angular/core';
+import { concatLatestFrom } from '@ngrx/operators';
 
 import { HUBS_ACTIONS } from '../../actions';
 import { HUBS_SELECTORS } from '../../selectors';

@@ -1,8 +1,9 @@
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { inject } from '@angular/core';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { PortModeName, ValueTransformers } from 'rxpoweredup';
+import { concatLatestFrom } from '@ngrx/operators';
 
 import { ATTACHED_IO_PORT_MODE_INFO_SELECTORS } from '../../selectors';
 import { HUBS_ACTIONS } from '../../actions';

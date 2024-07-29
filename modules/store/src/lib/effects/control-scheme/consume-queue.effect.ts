@@ -1,7 +1,8 @@
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { filter, map } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { inject } from '@angular/core';
+import { concatLatestFrom } from '@ngrx/operators';
 
 import { PORT_TASKS_ACTIONS } from '../../actions';
 import { PORT_TASKS_SELECTORS } from '../../selectors';

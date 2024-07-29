@@ -1,7 +1,8 @@
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { inject } from '@angular/core';
 import { fromEvent, map, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { concatLatestFrom } from '@ngrx/operators';
 import { KeyboardProfileFactoryService } from '@app/controller-profiles';
 import { WINDOW } from '@app/shared-misc';
 

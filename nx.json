@@ -15,7 +15,10 @@
       "inputs": [
         "default",
         "{workspaceRoot}/.eslintrc.json"
-      ]
+      ],
+      "options": {
+        "maxWarnings": 0
+      }
     },
     "test": {
       "cache": true,

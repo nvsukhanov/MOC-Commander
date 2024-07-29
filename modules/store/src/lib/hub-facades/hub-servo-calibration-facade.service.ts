@@ -20,7 +20,7 @@ import {
     takeUntil
 } from 'rxjs';
 import { IHub, MotorServoEndState, PortModeName, ValueTransformers } from 'rxpoweredup';
-import { concatLatestFrom } from '@ngrx/effects';
+import { concatLatestFrom } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
 import { APP_CONFIG, IAppConfig, transformRelativeDegToAbsoluteDeg } from '@app/shared-misc';
 

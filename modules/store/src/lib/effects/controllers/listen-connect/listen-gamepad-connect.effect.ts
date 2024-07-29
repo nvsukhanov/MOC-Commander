@@ -1,7 +1,8 @@
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { inject } from '@angular/core';
 import { Action, Store } from '@ngrx/store';
 import { Observable, animationFrames, filter, map, switchMap } from 'rxjs';
+import { concatLatestFrom } from '@ngrx/operators';
 import { ControllerType, GamepadProfileFactoryService, GamepadSettings, IControllerProfile } from '@app/controller-profiles';
 import { WINDOW } from '@app/shared-misc';
 

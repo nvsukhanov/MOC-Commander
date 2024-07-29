@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { filter, map, mergeMap, takeUntil } from 'rxjs';
 import { PortModeInboundMessage } from 'rxpoweredup';
+import { concatLatestFrom } from '@ngrx/operators';
 
 import { ATTACHED_IOS_ACTIONS, ATTACHED_IO_MODES_ACTIONS } from '../actions';
 import { ATTACHED_IO_MODES_SELECTORS } from '../selectors';

@@ -1,8 +1,9 @@
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, combineLatestWith, map, mergeMap, of, switchMap, takeUntil } from 'rxjs';
 import { IHub, MessageLoggingMiddleware, connectHub } from 'rxpoweredup';
 import { inject } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { concatLatestFrom } from '@ngrx/operators';
 import { APP_CONFIG, IAppConfig, NAVIGATOR, PrefixedConsoleLoggerFactoryService } from '@app/shared-misc';
 
 import { SETTINGS_FEATURE } from '../../reducers';

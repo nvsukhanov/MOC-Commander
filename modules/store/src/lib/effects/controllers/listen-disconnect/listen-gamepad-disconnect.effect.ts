@@ -1,7 +1,8 @@
-import { concatLatestFrom, createEffect } from '@ngrx/effects';
+import { createEffect } from '@ngrx/effects';
 import { inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, filter, fromEvent, map } from 'rxjs';
+import { concatLatestFrom } from '@ngrx/operators';
 import { WINDOW } from '@app/shared-misc';
 
 import { CONTROLLERS_ACTIONS } from '../../../actions';

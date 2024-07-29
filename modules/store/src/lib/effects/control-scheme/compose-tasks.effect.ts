@@ -1,7 +1,8 @@
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, Observable, combineLatest, filter, from, map, mergeMap, of, pairwise, startWith, switchMap, take, takeUntil } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
+import { concatLatestFrom } from '@ngrx/operators';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { attachedIosIdFn } from '../../reducers';
