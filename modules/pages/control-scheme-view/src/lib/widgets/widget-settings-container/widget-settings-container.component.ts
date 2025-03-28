@@ -13,11 +13,11 @@ import {
     standalone: true,
     selector: 'page-control-scheme-view-widget-settings-container',
     templateUrl: './widget-settings-container.component.html',
-    styleUrls: [ './widget-settings-container.component.scss' ],
+    styleUrl: './widget-settings-container.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WidgetSettingsContainerComponent implements OnDestroy {
-    @Output() public configChanges = new EventEmitter<WidgetConfigModel | undefined>();
+    @Output() public readonly configChanges = new EventEmitter<WidgetConfigModel | undefined>();
 
     private widgetSettingsDescriptor?: ControlSchemeWidgetSettingsDescriptor;
 

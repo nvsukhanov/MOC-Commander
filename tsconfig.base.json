@@ -18,40 +18,108 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
-    "lib": ["ES2022", "dom"],
+    "lib": [
+      "ES2022",
+      "dom"
+    ],
     "skipLibCheck": true,
     "baseUrl": "./",
     "paths": {
-      "@app/shared-misc": ["modules/shared/misc/src/index.ts"],
-      "@app/bindings": ["modules/bindings/src/index.ts"],
-      "@app/widgets": ["modules/widgets/src/index.ts"],
-      "@app/tasks": ["modules/tasks/src/index.ts"],
-      "@app/shared-components": ["modules/shared/components/src/index.ts"],
-      "@app/shared-i18n": ["modules/shared/i18n/src/index.ts"],
-      "@app/shared-control-schemes": ["modules/shared/control-schemes/src/index.ts"],
-      "@app/shared-controller": ["modules/shared/controller/src/index.ts"],
-      "@app/manuals": ["modules/shared/manuals/src/index.ts"],
-      "@app/controller-profiles": ["modules/shared/controller-profiles/src/index.ts"],
-      "@app/store": ["modules/store/src/index.ts"],
-      "@app/about": ["modules/pages/about/src/index.ts"],
-      "@app/help": ["modules/pages/help/src/index.ts"],
-      "@app/main": ["modules/pages/main/src/index.ts"],
-      "@app/not-found": ["modules/pages/not-found/src/index.ts"],
-      "@app/settings": ["modules/pages/settings/src/index.ts"],
-      "@app/control-scheme-binding-create": ["modules/pages/control-scheme-binding-create/src/index.ts"],
-      "@app/control-scheme-binding-edit": ["modules/pages/control-scheme-binding-edit/src/index.ts"],
-      "@app/control-scheme-view": ["modules/pages/control-scheme-view/src/index.ts"],
-      "@app/control-scheme-rename": ["modules/pages/control-scheme-rename/src/index.ts"],
-      "@app/control-schemes-list": ["modules/pages/control-schemes-list/src/index.ts"],
-      "@app/control-scheme-port-config-edit": ["modules/pages/control-scheme-port-config-edit/src/index.ts"],
-      "@app/controller-view": ["modules/pages/controller-view/src/index.ts"],
-      "@app/controllers-list": ["modules/pages/controllers-list/src/index.ts"],
-      "@app/hub-edit": ["modules/pages/hub-edit/src/index.ts"],
-      "@app/hub-view": ["modules/pages/hub-view/src/index.ts"],
-      "@app/hubs-list": ["modules/pages/hubs-list/src/index.ts"]
+      "@app/about": [
+        "modules/pages/about/src/index.ts"
+      ],
+      "@app/bindings": [
+        "modules/bindings/src/index.ts"
+      ],
+      "@app/control-scheme-binding-create": [
+        "modules/pages/control-scheme-binding-create/src/index.ts"
+      ],
+      "@app/control-scheme-binding-edit": [
+        "modules/pages/control-scheme-binding-edit/src/index.ts"
+      ],
+      "@app/control-scheme-port-config-edit": [
+        "modules/pages/control-scheme-port-config-edit/src/index.ts"
+      ],
+      "@app/control-scheme-rename": [
+        "modules/pages/control-scheme-rename/src/index.ts"
+      ],
+      "@app/control-scheme-view": [
+        "modules/pages/control-scheme-view/src/index.ts"
+      ],
+      "@app/control-schemes-list": [
+        "modules/pages/control-schemes-list/src/index.ts"
+      ],
+      "@app/controller-profiles": [
+        "modules/shared/controller-profiles/src/index.ts"
+      ],
+      "@app/controller-view": [
+        "modules/pages/controller-view/src/index.ts"
+      ],
+      "@app/controllers-list": [
+        "modules/pages/controllers-list/src/index.ts"
+      ],
+      "@app/help": [
+        "modules/pages/help/src/index.ts"
+      ],
+      "@app/hub-edit": [
+        "modules/pages/hub-edit/src/index.ts"
+      ],
+      "@app/hub-view": [
+        "modules/pages/hub-view/src/index.ts"
+      ],
+      "@app/hubs-list": [
+        "modules/pages/hubs-list/src/index.ts"
+      ],
+      "@app/main": [
+        "modules/pages/main/src/index.ts"
+      ],
+      "@app/manuals": [
+        "modules/shared/manuals/src/index.ts"
+      ],
+      "@app/not-found": [
+        "modules/pages/not-found/src/index.ts"
+      ],
+      "@app/settings": [
+        "modules/pages/settings/src/index.ts"
+      ],
+      "@app/shared-components": [
+        "modules/shared/components/src/index.ts"
+      ],
+      "@app/shared-control-schemes": [
+        "modules/shared/control-schemes/src/index.ts"
+      ],
+      "@app/shared-controller": [
+        "modules/shared/controller/src/index.ts"
+      ],
+      "@app/shared-i18n": [
+        "modules/shared/i18n/src/index.ts"
+      ],
+      "@app/shared-misc": [
+        "modules/shared/misc/src/index.ts"
+      ],
+      "@app/store": [
+        "modules/store/src/index.ts"
+      ],
+      "@app/tasks": [
+        "modules/tasks/src/index.ts"
+      ],
+      "@app/widgets": [
+        "modules/widgets/src/index.ts"
+      ]
     },
-    "types": ["web-bluetooth", "jest", "node", "lzma"],
-    "typeRoots": ["node_modules/@types", "./types/lzma"]
+    "types": [
+      "web-bluetooth",
+      "jest",
+      "node",
+      "lzma"
+    ],
+    "typeRoots": [
+      "node_modules/@types",
+      "./types/lzma"
+    ]
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

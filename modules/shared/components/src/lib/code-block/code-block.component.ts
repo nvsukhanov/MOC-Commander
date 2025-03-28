@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { ButtonCopyToClipboardComponent } from '../button-copy-to-clipboard';
 
@@ -12,17 +12,8 @@ import { ButtonCopyToClipboardComponent } from '../button-copy-to-clipboard';
     imports: [
         ButtonCopyToClipboardComponent
     ],
-    styles: [
-        `:host {
-            display: inline-flex;
-            align-items: center;
-            padding: 0 5px;
-            background-color: var(--app-background-color);
-            border-radius: 3px;
-            flex-wrap: wrap;
-        }`,
-        'code { padding: 2px 5px; }',
-    ]
+    styleUrl: './code-block.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CodeBlockComponent {
     @Input() public content?: string;

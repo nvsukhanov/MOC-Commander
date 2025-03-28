@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject, Signal, computed } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { MatDivider } from '@angular/material/divider';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 import { RunBlockersListComponent, SchemeRunBlocker } from './run-blockers';
@@ -11,9 +10,8 @@ import { CONTROL_SCHEME_RUN_WIDGET_BLOCKERS_CHECKER, IControlSchemeRunWidgetBloc
     standalone: true,
     selector: 'page-control-scheme-view-issues-section',
     templateUrl: './issues-section.component.html',
-    styleUrls: [ './issues-section.component.scss' ],
+    styleUrl: './issues-section.component.scss',
     imports: [
-        MatDivider,
         RunBlockersListComponent,
         TranslocoPipe
     ],

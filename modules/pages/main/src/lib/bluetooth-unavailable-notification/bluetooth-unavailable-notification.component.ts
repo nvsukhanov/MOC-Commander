@@ -7,7 +7,7 @@ import { RoutesBuilderService } from '@app/shared-misc';
     standalone: true,
     selector: 'page-main-bluetooth-unavailable-notification',
     templateUrl: './bluetooth-unavailable-notification.component.html',
-    styleUrls: [ './bluetooth-unavailable-notification.component.scss' ],
+    styleUrl: './bluetooth-unavailable-notification.component.scss',
     imports: [
         TranslocoPipe,
         RouterLink

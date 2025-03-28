@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MatAccordion, MatExpansionPanel, MatExpansionPanelDescription, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion';
 import { Store } from '@ngrx/store';
 import { AsyncPipe } from '@angular/common';
-import { SteamDeckManualComponent, WindowsInstallationManualComponent } from '@app/manuals';
 import { BLUETOOTH_AVAILABILITY_SELECTORS } from '@app/store';
 
 import { BluetoothUnavailableNotificationComponent } from '../bluetooth-unavailable-notification';
@@ -11,15 +9,8 @@ import { BluetoothUnavailableNotificationComponent } from '../bluetooth-unavaila
     standalone: true,
     selector: 'page-main',
     templateUrl: './main-page.component.html',
-    styleUrls: [ './main-page.component.scss' ],
+    styleUrl: './main-page.component.scss',
     imports: [
-        SteamDeckManualComponent,
-        MatAccordion,
-        MatExpansionPanel,
-        MatExpansionPanelTitle,
-        MatExpansionPanelHeader,
-        MatExpansionPanelDescription,
-        WindowsInstallationManualComponent,
         BluetoothUnavailableNotificationComponent,
         AsyncPipe
     ],

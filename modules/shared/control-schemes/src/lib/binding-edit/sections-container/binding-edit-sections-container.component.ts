@@ -7,7 +7,7 @@ import { ScreenSizeObserverService } from '@app/shared-misc';
     standalone: true,
     selector: 'lib-cs-binding-edit-sections-container',
     templateUrl: './binding-edit-sections-container.component.html',
-    styleUrls: [ './binding-edit-sections-container.component.scss' ],
+    styleUrl: './binding-edit-sections-container.component.scss',
     imports: [
         AsyncPipe
     ],

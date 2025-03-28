@@ -14,7 +14,7 @@ import { BatteryIndicatorComponent } from '../battery-indicator';
     standalone: true,
     selector: 'lib-hub-inline-view',
     templateUrl: './hub-inline-view.component.html',
-    styleUrls: [ './hub-inline-view.component.scss' ],
+    styleUrl: './hub-inline-view.component.scss',
     imports: [
         MatButtonModule,
         MatIconModule,

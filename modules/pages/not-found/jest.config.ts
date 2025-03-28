@@ -1,4 +1,4 @@
-/* eslint-disable */
+ 
 export default {
     displayName: 'page:not-found',
     preset: '../../../jest.preset.js',

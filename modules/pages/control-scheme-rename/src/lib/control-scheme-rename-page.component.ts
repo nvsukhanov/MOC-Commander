@@ -19,7 +19,7 @@ import { CURRENT_SCHEME_NAME } from './control-scheme-rename-page.selectors';
     standalone: true,
     selector: 'page-control-scheme-rename',
     templateUrl: './control-scheme-rename-page.component.html',
-    styleUrls: [ './control-scheme-rename-page.component.scss' ],
+    styleUrl: './control-scheme-rename-page.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         MatCardTitle,

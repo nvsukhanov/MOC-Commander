@@ -1,6 +1,6 @@
-import { IChangelog } from '@app/shared-components';
+import { ChangelogRecords } from '@app/shared-components';
 
-export const CHANGELOG: IChangelog = [
+export const CHANGELOG: ChangelogRecords = [
     {
         version: '1.3.1',
         changeL10nKeys: [

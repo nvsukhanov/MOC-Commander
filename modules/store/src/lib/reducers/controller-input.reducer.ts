@@ -69,9 +69,9 @@ export const CONTROLLER_INPUT_FEATURE = createFeature({
                 if (nextListenersCount < 0) {
                     throw new Error('Cannot release input capture when no listeners are registered');
                 }
-                const nextState = nextListenersCount === 0
-                                  ? CONTROLLER_INPUT_ENTITY_ADAPTER.removeAll(state)
-                                  : state;
+                const nextState = nextListenersCount === 0 ?
+                                  CONTROLLER_INPUT_ENTITY_ADAPTER.removeAll(state) :
+                                  state;
                 return {
                     ...nextState,
                     listenersCount: nextListenersCount

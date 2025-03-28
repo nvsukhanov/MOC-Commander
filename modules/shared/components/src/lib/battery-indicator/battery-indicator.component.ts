@@ -6,7 +6,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
     standalone: true,
     selector: 'lib-battery-indicator',
     templateUrl: './battery-indicator.component.html',
-    styleUrls: [ './battery-indicator.component.scss' ],
+    styleUrl: './battery-indicator.component.scss',
     imports: [
         MatIcon,
         TranslocoPipe

@@ -9,7 +9,7 @@ import { BreadcrumbsService } from '@app/shared-components';
     standalone: true,
     selector: 'page-help',
     templateUrl: './help-page.component.html',
-    styleUrls: [ './help-page.component.scss' ],
+    styleUrl: './help-page.component.scss',
     imports: [
         InstallationManualsListComponent,
         TranslocoPipe,

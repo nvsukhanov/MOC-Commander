@@ -7,7 +7,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
     standalone: true,
     selector: 'lib-toggle-control[translocoTitle][control]',
     templateUrl: './toggle-control.component.html',
-    styleUrls: [ './toggle-control.component.scss' ],
+    styleUrl: './toggle-control.component.scss',
     imports: [
         MatSlideToggleModule,
         ReactiveFormsModule,

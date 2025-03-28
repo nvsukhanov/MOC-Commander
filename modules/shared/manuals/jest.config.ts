@@ -1,4 +1,4 @@
-/* eslint-disable */
+ 
 export default {
     displayName: 'shared-manuals',
     preset: '../../../jest.preset.js',

@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
     standalone: true,
     selector: 'lib-input-activity-indicator',
     templateUrl: './input-activity-indicator.component.html',
-    styleUrls: [ './input-activity-indicator.component.scss' ],
+    styleUrl: './input-activity-indicator.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         MatIconModule,

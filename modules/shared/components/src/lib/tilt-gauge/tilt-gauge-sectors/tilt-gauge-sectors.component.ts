@@ -8,7 +8,7 @@ import { TiltGaugeSectorHighlightPipe } from './tilt-gauge-sector-highlight.pipe
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'g[libTiltGaugeSectors]',
     templateUrl: './tilt-gauge-sectors.component.html',
-    styleUrls: [ './tilt-gauge-sectors.component.scss' ],
+    styleUrl: './tilt-gauge-sectors.component.scss',
     imports: [
         TiltGaugeSectorHighlightPipe
     ],

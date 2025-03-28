@@ -1,6 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
-import { MatDivider } from '@angular/material/divider';
 import { MatIcon } from '@angular/material/icon';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { MatCard, MatCardContent } from '@angular/material/card';
@@ -12,11 +10,9 @@ import { SchemeRunBlocker } from './scheme-run-blocker';
     standalone: true,
     selector: 'page-control-scheme-view-run-blockers-list',
     templateUrl: './run-blockers-list.component.html',
-    styleUrls: [ './run-blockers-list.component.scss' ],
+    styleUrl: './run-blockers-list.component.scss',
     imports: [
-        AsyncPipe,
         RunBlockerL10nPipe,
-        MatDivider,
         MatIcon,
         TranslocoPipe,
         MatCard,

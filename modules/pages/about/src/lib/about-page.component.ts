@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
-import { AsyncPipe } from '@angular/common';
 import { TitleService } from '@app/shared-misc';
 import { ChangelogComponent } from '@app/shared-components';
 
@@ -8,11 +7,10 @@ import { ChangelogComponent } from '@app/shared-components';
     standalone: true,
     selector: 'page-about',
     templateUrl: './about-page.component.html',
-    styleUrls: [ './about-page.component.scss' ],
+    styleUrl: './about-page.component.scss',
     imports: [
         TranslocoPipe,
         ChangelogComponent,
-        AsyncPipe
     ],
     providers: [
         TitleService

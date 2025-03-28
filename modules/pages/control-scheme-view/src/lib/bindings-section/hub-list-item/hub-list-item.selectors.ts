@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+ 
 import { createSelector } from '@ngrx/store';
 import { CONTROL_SCHEME_SELECTORS, HUBS_SELECTORS, HUB_RUNTIME_DATA_SELECTORS } from '@app/store';
 

@@ -18,7 +18,7 @@ export type ServoCalibrationDialogData = {
     standalone: true,
     selector: 'lib-cs-servo-calibration-dialog',
     templateUrl: './servo-calibration-dialog.component.html',
-    styleUrls: [ './servo-calibration-dialog.component.scss' ],
+    styleUrl: './servo-calibration-dialog.component.scss',
     imports: [
         MatButtonModule,
         MatProgressBarModule,

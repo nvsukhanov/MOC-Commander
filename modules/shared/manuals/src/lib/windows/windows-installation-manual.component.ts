@@ -9,7 +9,7 @@ import { COMMON_RESOURCES } from '../common-resources';
     standalone: true,
     selector: 'lib-windows-installation-manual',
     templateUrl: './windows-installation-manual.component.html',
-    styleUrls: [ '../common-styles.scss' ],
+    styleUrl: '../common-styles.scss',
     imports: [
         TranslocoDirective,
         MatDivider,

@@ -25,7 +25,7 @@ import { AccelerateBindingL10nService } from './accelerate-binding-l10n.service'
     standalone: true,
     selector: 'lib-cs-speed-binding-edit',
     templateUrl: './accelerate-binding-edit.component.html',
-    styleUrls: [ './accelerate-binding-edit.component.scss' ],
+    styleUrl: './accelerate-binding-edit.component.scss',
     imports: [
         BindingEditSectionComponent,
         TranslocoPipe,

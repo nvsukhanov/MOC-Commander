@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+ 
 import { createSelector } from '@ngrx/store';
 import { IOType } from 'rxpoweredup';
 

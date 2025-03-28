@@ -26,7 +26,7 @@ import { NO_INPUTS_STEPPER_ERROR } from './stepper-binding-form-builder.service'
     standalone: true,
     selector: 'lib-cs-stepper-binding-edit',
     templateUrl: './stepper-binding-edit.component.html',
-    styleUrls: [ './stepper-binding-edit.component.scss' ],
+    styleUrl: './stepper-binding-edit.component.scss',
     imports: [
         BindingEditSectionComponent,
         BindingControlSelectHubComponent,

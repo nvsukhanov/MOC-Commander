@@ -7,7 +7,7 @@ import { FeatureToolbarControlsDirective } from '@app/shared-components';
     standalone: true,
     selector: 'page-control-scheme-view-toolbar-controls',
     templateUrl: './toolbar-controls.component.html',
-    styleUrls: [ './toolbar-controls.component.scss' ],
+    styleUrl: './toolbar-controls.component.scss',
     imports: [
         MatButtonModule,
         TranslocoPipe,

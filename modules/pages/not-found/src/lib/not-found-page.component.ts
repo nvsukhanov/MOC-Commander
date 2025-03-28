@@ -7,7 +7,7 @@ import { HintComponent } from '@app/shared-components';
     standalone: true,
     selector: 'page-not-found-page',
     templateUrl: './not-found-page.component.html',
-    styleUrls: [ './not-found-page.component.scss' ],
+    styleUrl: './not-found-page.component.scss',
     imports: [
         TranslocoPipe,
         HintComponent

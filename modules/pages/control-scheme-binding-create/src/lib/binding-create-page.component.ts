@@ -16,7 +16,7 @@ import { BINDING_CREATE_PAGE_SELECTORS } from './binding-create-page.selectors';
     standalone: true,
     selector: 'page-control-scheme-binding-create',
     templateUrl: './binding-create-page.component.html',
-    styleUrls: [ './binding-create-page.component.scss' ],
+    styleUrl: './binding-create-page.component.scss',
     imports: [
         BindingEditComponent,
         MatButtonModule,

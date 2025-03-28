@@ -23,9 +23,9 @@ export class GearboxBindingTaskPayloadBuilderService implements ITaskPayloadBuil
         ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
         previousTask: PortCommandTask | null
     ): { payload: GearboxTaskPayload; inputTimestamp: number } | null {
-        const gearboxPrevTask = previousTask && previousTask.payload.type === TaskType.Gearbox
-                                       ? previousTask as PortCommandTask<TaskType.Gearbox>
-                                       : null;
+        const gearboxPrevTask = previousTask && previousTask.payload.type === TaskType.Gearbox ?
+                                       previousTask as PortCommandTask<TaskType.Gearbox> :
+                                       null;
         return this.buildPayloadUsingPreviousTask(
             binding,
             currentInput,

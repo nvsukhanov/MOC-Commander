@@ -7,12 +7,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { AsyncPipe } from '@angular/common';
 import { GamepadProfile, GamepadProfileFactoryService } from '@app/controller-profiles';
-import { HideOnSmallScreenDirective, InputActivityIndicatorComponent, RangeControlComponent, ToggleControlComponent } from '@app/shared-components';
+import { HideOnSmallScreenDirective, InputActivityIndicatorComponent } from '@app/shared-components';
 import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_SELECTORS, GamepadSettingsModel } from '@app/store';
 
 import { IControllerSettingsRenderer } from '../i-controller-settings-renderer';
 import { InputOutputDiagramComponent } from './input-output-diagram';
-import { InputValuePercentHumanReadableValuePipe } from './active-zone-human-readable-value.pipe';
 import { ControlIgnoreInputComponent } from '../control-ignore-input';
 import { GamepadSettingsFormBuilderService } from './gamepad-settings-form-builder.service';
 import { GamepadSettingsForm, GamepadSettingsViewModel } from './types';
@@ -24,14 +23,11 @@ import { GamepadSettingsButtonSettingsComponent } from './button-settings';
     standalone: true,
     selector: 'page-controller-view-generic-gamepad-settings',
     templateUrl: './gamepad-settings.component.html',
-    styleUrls: [ './gamepad-settings.component.scss' ],
+    styleUrl: './gamepad-settings.component.scss',
     imports: [
         ControlIgnoreInputComponent,
         InputOutputDiagramComponent,
-        ToggleControlComponent,
-        RangeControlComponent,
         TranslocoPipe,
-        InputValuePercentHumanReadableValuePipe,
         MatDividerModule,
         MatExpansionModule,
         GamepadSettingsAxisSettingsComponent,
@@ -109,9 +105,9 @@ export class GamepadSettingsComponent implements IControllerSettingsRenderer<Gam
         });
 
         this.profile$ = this.store.select(CONTROLLER_SELECTORS.selectById(settingsForm.controls.controllerId.value)).pipe(
-            map((controllerModel) => (controllerModel
-                                     ? this.profileFactoryService.getByProfileUid(controllerModel.profileUid) as GamepadProfile
-                                     : null
+            map((controllerModel) => (controllerModel ?
+                                     this.profileFactoryService.getByProfileUid(controllerModel.profileUid) as GamepadProfile :
+                                     null
             ))
         );
 

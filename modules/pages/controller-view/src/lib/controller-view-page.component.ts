@@ -17,7 +17,7 @@ import { ControllerSettingsContainerComponent } from './controller-settings-cont
     standalone: true,
     selector: 'page-controller-view',
     templateUrl: './controller-view-page.component.html',
-    styleUrls: [ './controller-view-page.component.scss' ],
+    styleUrl: './controller-view-page.component.scss',
     imports: [
         MatCardModule,
         HintComponent,

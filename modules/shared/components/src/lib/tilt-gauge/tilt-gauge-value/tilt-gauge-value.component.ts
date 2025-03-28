@@ -7,7 +7,7 @@ import { MatTooltip } from '@angular/material/tooltip';
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'g[appTiltGaugeValue]',
     templateUrl: './tilt-gauge-value.component.html',
-    styleUrls: [ './tilt-gauge-value.component.scss' ],
+    styleUrl: './tilt-gauge-value.component.scss',
     imports: [
         TranslocoPipe,
         MatTooltip

@@ -11,7 +11,7 @@ import { GamepadPollingRate } from '@app/store';
     standalone: true,
     selector: 'page-settings-gamepad-polling-rate',
     templateUrl: './gamepad-polling-rate.component.html',
-    styleUrls: [ './gamepad-polling-rate.component.scss' ],
+    styleUrl: './gamepad-polling-rate.component.scss',
     imports: [
         MatFormField,
         MatLabel,

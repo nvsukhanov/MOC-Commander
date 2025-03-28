@@ -16,7 +16,7 @@ import { InputValuePercentHumanReadableValuePipe } from '../active-zone-human-re
     standalone: true,
     selector: 'page-controller-view-gamepad-settings-axis-settings',
     templateUrl: './gamepad-settings-axis-settings.component.html',
-    styleUrls: [ './gamepad-settings-axis-settings.component.scss' ],
+    styleUrl: './gamepad-settings-axis-settings.component.scss',
     imports: [
         InputValuePercentHumanReadableValuePipe,
         InputOutputDiagramComponent,

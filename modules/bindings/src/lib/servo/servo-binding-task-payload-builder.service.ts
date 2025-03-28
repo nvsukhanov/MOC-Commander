@@ -46,9 +46,9 @@ export class ServoBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
             this.getAposCenter(binding, ioProps)
         );
 
-        const resultingCenterPosition = translationPaths.cw < translationPaths.ccw
-                                        ? ioProps.startupMotorPositionData.position + translationPaths.cw
-                                        : ioProps.startupMotorPositionData.position - translationPaths.ccw;
+        const resultingCenterPosition = translationPaths.cw < translationPaths.ccw ?
+                                        ioProps.startupMotorPositionData.position + translationPaths.cw :
+                                        ioProps.startupMotorPositionData.position - translationPaths.ccw;
 
         if (!cwInput && !ccwInput) {
             // If there were no inputs and no previous task, we should center the servo

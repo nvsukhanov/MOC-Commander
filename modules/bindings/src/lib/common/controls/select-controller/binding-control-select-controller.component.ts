@@ -11,7 +11,6 @@ import { MatBadge } from '@angular/material/badge';
 import { concatLatestFrom } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
-import { HideOnSmallScreenDirective } from '@app/shared-components';
 import {
     CONTROLLER_SETTINGS_SELECTORS,
     ControlSchemeBindingInputs,
@@ -23,7 +22,6 @@ import {
 } from '@app/store';
 import {
     BINDING_CONTROLLER_INPUT_NAME_RESOLVER,
-    BindingControllerInputNamePipe,
     IBindingControllerInputNameResolver,
     WaitForControllerInputDialogComponent
 } from '@app/shared-control-schemes';
@@ -46,15 +44,13 @@ export type BindingControlSelectControllerComponentData<T extends ControlSchemeB
     standalone: true,
     selector: 'lib-cs-binding-control-select-controller',
     templateUrl: './binding-control-select-controller.component.html',
-    styleUrls: [ './binding-control-select-controller.component.scss' ],
+    styleUrl: './binding-control-select-controller.component.scss',
     imports: [
         MatDialogModule,
         MatButtonModule,
         TranslocoPipe,
         MatInputModule,
         MatIconModule,
-        HideOnSmallScreenDirective,
-        BindingControllerInputNamePipe,
         ValidationMessagesDirective,
         ReactiveFormsModule,
         AsyncPipe,

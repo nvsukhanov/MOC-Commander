@@ -19,7 +19,7 @@ import { WIDGETS_SECTION_SELECTORS } from './widgets-section.selectors';
     standalone: true,
     selector: 'page-control-scheme-view-widgets',
     templateUrl: './widgets-section.component.html',
-    styleUrls: [ './widgets-section.component.scss' ],
+    styleUrl: './widgets-section.component.scss',
     imports: [
         MatIconButton,
         ControlSchemeWidgetsGridComponent,

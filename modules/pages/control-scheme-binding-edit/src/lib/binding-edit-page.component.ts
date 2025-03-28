@@ -17,7 +17,7 @@ import { BINDING_EDIT_PAGE_SELECTORS } from './binding-edit-page.selectors';
     standalone: true,
     selector: 'page-control-scheme-binding-edit',
     templateUrl: './binding-edit-page.component.html',
-    styleUrls: [ './binding-edit-page.component.scss' ],
+    styleUrl: './binding-edit-page.component.scss',
     imports: [
         BindingEditComponent,
         MatButtonModule,

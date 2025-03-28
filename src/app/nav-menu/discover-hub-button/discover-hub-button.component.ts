@@ -9,7 +9,7 @@ import { RoutesBuilderService } from '@app/shared-misc';
     standalone: true,
     selector: 'app-discover-hub-button',
     templateUrl: './discover-hub-button.component.html',
-    styleUrls: [ './discover-hub-button.component.scss' ],
+    styleUrl: './discover-hub-button.component.scss',
     imports: [
         MatButtonModule,
         TranslocoPipe,

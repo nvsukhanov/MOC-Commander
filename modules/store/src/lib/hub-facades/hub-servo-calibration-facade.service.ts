@@ -114,10 +114,10 @@ export class HubServoCalibrationFacadeService {
                             startRelativePosition,
                             startAbsolutePosition
                         );
-                        if (calibrationResult.servoRange > this.appConfig.servo.maxServoRange
-                            || calibrationResult.servoRange < this.appConfig.servo.minServoRange
-                            || calibrationResult.arcCenterAbsolutePosition < this.appConfig.servo.aposCenterMin
-                            || calibrationResult.arcCenterAbsolutePosition > this.appConfig.servo.aposCenterMax
+                        if (calibrationResult.servoRange > this.appConfig.servo.maxServoRange ||
+                            calibrationResult.servoRange < this.appConfig.servo.minServoRange ||
+                            calibrationResult.arcCenterAbsolutePosition < this.appConfig.servo.aposCenterMin ||
+                            calibrationResult.arcCenterAbsolutePosition > this.appConfig.servo.aposCenterMax
                         ) {
                             throw new OutOfRangeCalibrationError();
                         }

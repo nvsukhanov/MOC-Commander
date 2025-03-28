@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatButton, MatIconButton, MatMiniFabButton } from '@angular/material/button';
+import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { MatLabel } from '@angular/material/form-field';
 import { MOTOR_LIMITS } from 'rxpoweredup';
 
 import { LabelComponent } from '../label';
@@ -11,14 +10,11 @@ import { LabelComponent } from '../label';
     standalone: true,
     selector: 'lib-motor-position-adjustment-controls',
     templateUrl: './motor-position-adjustment-controls.component.html',
-    styleUrls: [ './motor-position-adjustment-controls.component.scss' ],
+    styleUrl: './motor-position-adjustment-controls.component.scss',
     imports: [
-        MatIconButton,
         MatIcon,
-        MatMiniFabButton,
         MatButton,
         TranslocoPipe,
-        MatLabel,
         LabelComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush

@@ -11,5 +11,5 @@ export interface IControlSchemeWidgetConfigFactory<T extends WidgetConfigModel =
     ): T[];
 }
 
-export const CONTROL_SCHEME_WIDGET_CONFIG_FACTORY
-    = new InjectionToken<IControlSchemeWidgetConfigFactory<WidgetConfigModel>>('CONTROL_SCHEME_WIDGET_CONFIG_FACTORY');
+export const CONTROL_SCHEME_WIDGET_CONFIG_FACTORY =
+    new InjectionToken<IControlSchemeWidgetConfigFactory<WidgetConfigModel>>('CONTROL_SCHEME_WIDGET_CONFIG_FACTORY');

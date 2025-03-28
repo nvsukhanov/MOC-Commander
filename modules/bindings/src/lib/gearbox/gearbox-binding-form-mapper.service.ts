@@ -41,12 +41,12 @@ export class GearboxBindingFormMapperService {
             initialLevelIndex: form.controls.initialLevelIndex.getRawValue()
         };
         if (form.controls.inputs.controls[GearboxBindingInputAction.PrevGear].controls.controllerId.value !== null) {
-            result.inputs[GearboxBindingInputAction.PrevGear]
-                = this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[GearboxBindingInputAction.PrevGear] as InputFormGroup);
+            result.inputs[GearboxBindingInputAction.PrevGear] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[GearboxBindingInputAction.PrevGear] as InputFormGroup);
         }
         if (form.controls.inputs.controls[GearboxBindingInputAction.Reset].controls.controllerId.value !== null) {
-            result.inputs[GearboxBindingInputAction.Reset]
-                = this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[GearboxBindingInputAction.Reset] as InputFormGroup);
+            result.inputs[GearboxBindingInputAction.Reset] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[GearboxBindingInputAction.Reset] as InputFormGroup);
         }
         return result;
     }

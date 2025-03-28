@@ -20,7 +20,7 @@ import { PortConfigEditViewModel } from './port-config-edit-view-model';
     standalone: true,
     selector: 'page-control-scheme-port-config-edit',
     templateUrl: './port-config-edit-page.component.html',
-    styleUrls: [ './port-config-edit-page.component.scss' ],
+    styleUrl: './port-config-edit-page.component.scss',
     imports: [
         HintComponent,
         MatCardModule,

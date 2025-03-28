@@ -8,7 +8,7 @@ import { WidgetComponent } from '@app/shared-components';
     standalone: true,
     selector: 'lib-temperature-sensor-widget',
     templateUrl: './temperature-sensor-widget.component.html',
-    styleUrls: [ './temperature-sensor-widget.component.scss' ],
+    styleUrl: './temperature-sensor-widget.component.scss',
     imports: [
         DecimalPipe,
         MatIconModule,

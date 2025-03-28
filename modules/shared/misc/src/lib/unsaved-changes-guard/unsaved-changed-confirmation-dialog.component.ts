@@ -7,7 +7,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
     standalone: true,
     selector: 'lib-unsaved-changed-confirmation-dialog',
     templateUrl: './unsaved-changed-confirmation-dialog.component.html',
-    styleUrls: [ './unsaved-changed-confirmation-dialog.component.scss' ],
+    styleUrl: './unsaved-changed-confirmation-dialog.component.scss',
     imports: [
         MatButton,
         MatDialogActions,

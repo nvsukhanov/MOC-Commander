@@ -61,7 +61,7 @@ export class ControllerProfileSteamDeckService extends GamepadProfile {
 
     public controllerIdMatch(id: string): boolean {
         const vendorAndProduct = getGamepadVendorAndProduct(id);
-        return vendorAndProduct?.vendorId === this.vendorId
-            && vendorAndProduct?.productId === this.productId;
+        return vendorAndProduct?.vendorId === this.vendorId &&
+            vendorAndProduct?.productId === this.productId;
     }
 }

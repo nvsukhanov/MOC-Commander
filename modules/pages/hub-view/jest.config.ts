@@ -1,4 +1,4 @@
-/* eslint-disable */
+ 
 export default {
     displayName: 'page:hub-view',
     preset: '../../../jest.preset.js',

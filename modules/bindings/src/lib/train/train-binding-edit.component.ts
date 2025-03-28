@@ -28,7 +28,7 @@ import { TrainBindingL10nService } from './train-binding-l10n.service';
     standalone: true,
     selector: 'lib-cs-binding-train-edit',
     templateUrl: './train-binding-edit.component.html',
-    styleUrls: [ './train-binding-edit.component.scss' ],
+    styleUrl: './train-binding-edit.component.scss',
     imports: [
         BindingEditSectionComponent,
         BindingControlSelectHubComponent,

@@ -14,7 +14,7 @@ import { CONTROL_SCHEME_SELECTORS } from '@app/store';
     standalone: true,
     selector: 'page-control-schemes-list-control-scheme-create-dialog',
     templateUrl: './control-scheme-create-dialog.component.html',
-    styleUrls: [ './control-scheme-create-dialog.component.scss' ],
+    styleUrl: './control-scheme-create-dialog.component.scss',
     imports: [
         MatDialogModule,
         MatInputModule,

@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
     displayName: 'shared-controller-profiles',
     preset: '../../../jest.preset.js',

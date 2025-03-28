@@ -9,7 +9,7 @@ import { ValidationMessagesDirective } from '@app/shared-misc';
     standalone: true,
     selector: 'lib-cs-binding-control-speed-input',
     templateUrl: './binding-control-speed-input.component.html',
-    styleUrls: [ './binding-control-speed-input.component.scss' ],
+    styleUrl: './binding-control-speed-input.component.scss',
     imports: [
         MatFormFieldModule,
         MatInputModule,

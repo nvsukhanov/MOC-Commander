@@ -9,7 +9,7 @@ import { ValidationMessagesDirective } from '@app/shared-misc';
     standalone: true,
     selector: 'lib-cs-binding-control-power-input',
     templateUrl: './binding-control-power-input.component.html',
-    styleUrls: [ './binding-control-power-input.component.scss' ],
+    styleUrl: './binding-control-power-input.component.scss',
     imports: [
         MatSliderModule,
         ReactiveFormsModule,

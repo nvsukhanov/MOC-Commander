@@ -10,7 +10,7 @@ import { HubPortListItemComponent } from '../hub-port-list-item';
     standalone: true,
     selector: 'page-control-scheme-view-hub-list-item',
     templateUrl: './hub-list-item.component.html',
-    styleUrls: [ './hub-list-item.component.scss' ],
+    styleUrl: './hub-list-item.component.scss',
     imports: [
         HubInlineViewComponent,
         HubPortListItemComponent,

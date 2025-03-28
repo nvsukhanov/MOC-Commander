@@ -3,8 +3,10 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "modules/shared/controller/src",
   "prefix": "lib-controller-shared",
-  "tags": ["scope:i18n"],
   "projectType": "library",
+  "tags": [
+    "scope:i18n"
+  ],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",

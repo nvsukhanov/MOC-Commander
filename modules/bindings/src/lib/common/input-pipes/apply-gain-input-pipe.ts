@@ -13,9 +13,9 @@ export function applyGainInputPipe(
             }
             return {
                 ...input,
-                value: gain === InputPipeType.LogarithmicGain
-                    ? logarithmicInputGain(input.value)
-                    : exponentialInputGain(input.value)
+                value: gain === InputPipeType.LogarithmicGain ?
+                    logarithmicInputGain(input.value) :
+                    exponentialInputGain(input.value)
             };
         }),
     );

@@ -14,7 +14,7 @@ import { CommonTiltWidgetsFormBuilderService } from '../common-tilt-widgets-form
     standalone: true,
     selector: 'lib-pitch-sensor-widget-settings',
     templateUrl: './common-tilt-widget-settings.component.html',
-    styleUrls: [ './common-tilt-widget-settings.component.scss' ],
+    styleUrl: './common-tilt-widget-settings.component.scss',
     imports: [
         MatFormFieldModule,
         MatInputModule,

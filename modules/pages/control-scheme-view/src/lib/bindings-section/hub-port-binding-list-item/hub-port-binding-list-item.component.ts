@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input, Signal, WritableSignal, computed, signal } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-import { MatError } from '@angular/material/form-field';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { Observable } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ControlSchemeBinding, HUBS_SELECTORS } from '@app/store';
-import { BindingControllerInputNamePipe, BindingTypeToL10nKeyPipe } from '@app/shared-control-schemes';
+import { BindingTypeToL10nKeyPipe } from '@app/shared-control-schemes';
 import { RoutesBuilderService, ScreenSizeObserverService } from '@app/shared-misc';
 import { PortIdToPortNamePipe } from '@app/shared-components';
 
@@ -16,12 +15,10 @@ import { BindingActionListItemComponent } from '../binding-action-list-item';
     standalone: true,
     selector: 'page-control-scheme-view-hub-port-binding-list-item',
     templateUrl: './hub-port-binding-list-item.component.html',
-    styleUrls: [ './hub-port-binding-list-item.component.scss' ],
+    styleUrl: './hub-port-binding-list-item.component.scss',
     imports: [
         AsyncPipe,
-        BindingControllerInputNamePipe,
         BindingTypeToL10nKeyPipe,
-        MatError,
         TranslocoPipe,
         RouterLink,
         BindingActionListItemComponent,

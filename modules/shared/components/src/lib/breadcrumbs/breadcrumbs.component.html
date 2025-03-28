@@ -1,6 +1,6 @@
 @if (breadcrumbsStateService.breadcrumbsDef$ | async; as breadcrumbs) {
     <nav>
-        @for (def of breadcrumbs; track def; let last = $last) {
+        @for (def of breadcrumbs; track def.route; let last = $last) {
             @if (last) {
                 <span class="breadcrumb-current-location"
                       aria-current="page"

@@ -10,7 +10,7 @@ import { MotorPositionAdjustmentControlsComponent } from '@app/shared-components
     standalone: true,
     selector: 'lib-cs-motor-position-adjustment',
     templateUrl: './motor-position-adjustment.component.html',
-    styleUrls: [ './motor-position-adjustment.component.scss' ],
+    styleUrl: './motor-position-adjustment.component.scss',
     imports: [
         MotorPositionAdjustmentControlsComponent,
         AsyncPipe
