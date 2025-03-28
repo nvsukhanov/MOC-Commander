@@ -17,7 +17,7 @@ export type ExportControlSchemeDialogData = {
     standalone: true,
     selector: 'lib-cs-export-control-scheme-dialog',
     templateUrl: './export-control-scheme-dialog.component.html',
-    styleUrls: [ './export-control-scheme-dialog.component.scss' ],
+    styleUrl: './export-control-scheme-dialog.component.scss',
     imports: [
         MatButtonModule,
         MatDialogModule,

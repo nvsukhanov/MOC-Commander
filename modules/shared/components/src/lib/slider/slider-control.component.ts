@@ -1,18 +1,16 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
-import { TranslocoPipe } from '@jsverse/transloco';
 import { IdGeneratorService, getFormControlMaxValue, getFormControlMinValue } from '@app/shared-misc';
 
 @Component({
     standalone: true,
     selector: 'lib-slider-control',
     templateUrl: './slider-control.component.html',
-    styleUrls: [ './slider-control.component.scss' ],
+    styleUrl: './slider-control.component.scss',
     imports: [
         MatSliderModule,
         ReactiveFormsModule,
-        TranslocoPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

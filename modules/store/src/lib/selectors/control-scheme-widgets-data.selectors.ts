@@ -14,9 +14,9 @@ export const CONTROL_SCHEME_WIDGETS_DATA_SELECTORS = {
         CONTROL_SCHEME_WIDGETS_DATA_SELECTORS.selectById(id),
         ATTACHED_IO_PROPS_SELECTORS.selectById({hubId, portId}),
         (widgetData, attachedIoProps) => {
-            if (widgetData?.widgetType === WidgetType.Yaw
-                || widgetData?.widgetType === WidgetType.Pitch
-                || widgetData?.widgetType === WidgetType.Roll
+            if (widgetData?.widgetType === WidgetType.Yaw ||
+                widgetData?.widgetType === WidgetType.Pitch ||
+                widgetData?.widgetType === WidgetType.Roll
             ) {
                 const tiltCompensationData: TiltData = attachedIoProps?.runtimeTiltCompensation ?? { yaw: 0, pitch: 0, roll: 0 };
                 return {

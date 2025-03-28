@@ -13,7 +13,7 @@ import {
     standalone: true,
     selector: 'page-control-scheme-view-widget-container',
     templateUrl: './widget-container.component.html',
-    styleUrls: [ './widget-container.component.scss' ],
+    styleUrl: './widget-container.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WidgetContainerComponent implements OnDestroy {

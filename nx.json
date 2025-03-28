@@ -10,16 +10,6 @@
         "^production"
       ]
     },
-    "lint": {
-      "cache": true,
-      "inputs": [
-        "default",
-        "{workspaceRoot}/.eslintrc.json"
-      ],
-      "options": {
-        "maxWarnings": 0
-      }
-    },
     "test": {
       "cache": true,
       "inputs": [
@@ -63,7 +53,8 @@
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/jest.config.[jt]s",
       "!{projectRoot}/src/test-setup.[jt]s",
-      "!{projectRoot}/test-setup.[jt]s"
+      "!{projectRoot}/test-setup.[jt]s",
+      "!{projectRoot}/eslint.config.mjs"
     ]
   },
   "generators": {
@@ -82,5 +73,13 @@
       "style": "css"
     }
   },
-  "nxCloudAccessToken": "ODcwMmE1OTktM2JjMi00NThmLTkzZmQtN2M0NjhjYzhiNjEwfHJlYWQ="
+  "nxCloudAccessToken": "ODcwMmE1OTktM2JjMi00NThmLTkzZmQtN2M0NjhjYzhiNjEwfHJlYWQ=",
+  "plugins": [
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    }
+  ]
 }

@@ -39,12 +39,12 @@ export class TrainBindingFormMapperService {
             initialLevelIndex: form.controls.initialLevelIndex.getRawValue()
         };
         if (form.controls.inputs.controls[TrainBindingInputAction.Reset].controls.controllerId.value !== null) {
-            result.inputs[TrainBindingInputAction.Reset]
-                = this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[TrainBindingInputAction.Reset] as InputFormGroup);
+            result.inputs[TrainBindingInputAction.Reset] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[TrainBindingInputAction.Reset] as InputFormGroup);
         }
         if (form.controls.inputs.controls[TrainBindingInputAction.PrevSpeed].controls.controllerId.value !== null) {
-            result.inputs[TrainBindingInputAction.PrevSpeed]
-                = this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[TrainBindingInputAction.PrevSpeed] as InputFormGroup);
+            result.inputs[TrainBindingInputAction.PrevSpeed] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[TrainBindingInputAction.PrevSpeed] as InputFormGroup);
         }
         return result;
     }

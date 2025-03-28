@@ -1,4 +1,4 @@
-/* eslint-disable */
+ 
 export default {
     displayName: 'tasks',
     preset: '../../jest.preset.js',

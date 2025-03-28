@@ -20,7 +20,7 @@ export interface IInputSettingsDialogResult {
     standalone: true,
     selector: 'lib-cs-select-input-transform-dialog',
     templateUrl: './input-settings-dialog.component.html',
-    styleUrls: [ './input-settings-dialog.component.scss' ],
+    styleUrl: './input-settings-dialog.component.scss',
     imports: [
         MatButton,
         MatDialogActions,

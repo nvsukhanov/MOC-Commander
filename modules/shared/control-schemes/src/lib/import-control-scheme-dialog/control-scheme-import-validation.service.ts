@@ -33,7 +33,7 @@ export class ControlSchemeImportValidationService {
                 validationErrors = this.mergeValidationErrors(validationErrors, this.validateName(model.name));
                 validationErrors = this.mergeValidationErrors(validationErrors, this.validatePortConfigs(model));
                 validationErrors = this.mergeValidationErrors(validationErrors, this.validateBindings(model));
-            } catch (e) {
+            } catch {
                 validationErrors = this.mergeValidationErrors(validationErrors, { [ControlSchemeImportValidationErrors.CorruptedData]: true });
             }
             return validationErrors;

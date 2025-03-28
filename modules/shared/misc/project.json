@@ -3,8 +3,10 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "modules/shared/misc/src",
   "prefix": "shared-misc",
-  "tags": ["scope:shared-misc"],
   "projectType": "library",
+  "tags": [
+    "scope:shared-misc"
+  ],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",

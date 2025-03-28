@@ -17,7 +17,7 @@ import { HUB_VIEW_PAGE_SELECTORS, HubIoViewModel } from './hub-view-page.selecto
     standalone: true,
     selector: 'page-hub-view',
     templateUrl: './hub-view-page.component.html',
-    styleUrls: [ './hub-view-page.component.scss' ],
+    styleUrl: './hub-view-page.component.scss',
     imports: [
         TranslocoPipe,
         HubPropertiesViewComponent,

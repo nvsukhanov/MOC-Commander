@@ -6,10 +6,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, distinctUntilChanged, map, merge, startWith } from 'rxjs';
 import { AppValidators, ControlSchemeBindingType, EnsureArraySatisfiesUnion } from '@app/shared-misc';
-import { HideOnSmallScreenDirective } from '@app/shared-components';
 import { ControlSchemeBinding } from '@app/store';
 
-import { BindingEditSectionComponent } from './section';
 import { BindingEditDetailsRenderDirective } from './binding-edit-details-render.directive';
 import { BindingTypeToL10nKeyPipe } from '../binding-type-to-l10n-key.pipe';
 
@@ -30,13 +28,11 @@ const GUARDED_AVAILABLE_BINDING_TYPES: EnsureArraySatisfiesUnion<typeof ControlS
     standalone: true,
     selector: 'lib-cs-binding-edit',
     templateUrl: './binding-edit.component.html',
-    styleUrls: [ './binding-edit.component.scss' ],
+    styleUrl: './binding-edit.component.scss',
     imports: [
         MatCardModule,
         MatDividerModule,
-        BindingEditSectionComponent,
         TranslocoPipe,
-        HideOnSmallScreenDirective,
         MatSelectModule,
         BindingTypeToL10nKeyPipe,
         ReactiveFormsModule,

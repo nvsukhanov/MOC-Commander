@@ -8,7 +8,7 @@ import { WidgetComponent } from '@app/shared-components';
     standalone: true,
     selector: 'lib-voltage-sensor-widget',
     templateUrl: './voltage-sensor-widget.component.html',
-    styleUrls: [ './voltage-sensor-widget.component.scss' ],
+    styleUrl: './voltage-sensor-widget.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         WidgetComponent,

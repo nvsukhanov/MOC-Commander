@@ -72,7 +72,7 @@ export const V21_STORE_SAMPLE: DeepPartial<V21Store> = {
                     }
                 }
             },
-            keyboard: {
+            'keyboard': {
                 controllerId: 'keyboard',
                 ignoreInput: false,
                 controllerType: ControllerType.Keyboard,
@@ -117,7 +117,7 @@ export const V21_STORE_SAMPLE: DeepPartial<V21Store> = {
                 profileUid: 'xbox360',
                 gamepadOfTypeIndex: 0
             },
-            keyboard: {
+            'keyboard': {
                 id: 'keyboard',
                 controllerType: ControllerType.Keyboard,
                 profileUid: 'keyboard'
@@ -777,7 +777,7 @@ export const V21_STORE_SAMPLE: DeepPartial<V21Store> = {
                     }
                 ]
             },
-            Servo: {
+            'Servo': {
                 name: 'Servo',
                 portConfigs: [
                     {
@@ -885,7 +885,7 @@ export const V21_STORE_SAMPLE: DeepPartial<V21Store> = {
                     }
                 ]
             },
-            Stepper: {
+            'Stepper': {
                 name: 'Stepper',
                 portConfigs: [
                     {

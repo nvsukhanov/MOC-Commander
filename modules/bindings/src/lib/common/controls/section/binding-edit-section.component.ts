@@ -6,7 +6,7 @@ import { ScreenSizeObserverService } from '@app/shared-misc';
     standalone: true,
     selector: 'lib-cs-binding-edit-section',
     templateUrl: './binding-edit-section.component.html',
-    styleUrls: [ './binding-edit-section.component.scss' ],
+    styleUrl: './binding-edit-section.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BindingEditSectionComponent implements OnInit, OnDestroy {

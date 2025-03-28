@@ -6,7 +6,7 @@ import { CONTROLLER_MAX_INPUT_VALUE, CONTROLLER_MIN_INPUT_VALUE, CONTROLLER_NULL
     standalone: true,
     selector: 'page-controller-view-input-output-diagram',
     templateUrl: './input-output-diagram.component.html',
-    styleUrls: [ './input-output-diagram.component.scss' ],
+    styleUrl: './input-output-diagram.component.scss',
     imports: [
         TranslocoPipe,
     ],

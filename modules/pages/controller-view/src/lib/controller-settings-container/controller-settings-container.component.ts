@@ -9,7 +9,7 @@ import { ControllerSettingsComponentResolverService, IControllerSettingsRenderer
     standalone: true,
     selector: 'page-controller-view-controller-settings-container',
     templateUrl: './controller-settings-container.component.html',
-    styleUrls: [ './controller-settings-container.component.scss' ],
+    styleUrl: './controller-settings-container.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControllerSettingsContainerComponent implements OnDestroy {

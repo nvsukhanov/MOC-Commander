@@ -89,10 +89,10 @@ function composeTasksForBindingGroup(
     composingData: TaskComposingData,
     taskBuilder: ITaskFactory
 ): PortCommandTask[] {
-    const previousTask: PortCommandTask | null = composingData.runningTask
-        || composingData.lastExecutedTask
-        || composingData.pendingTask
-        || null;
+    const previousTask: PortCommandTask | null = composingData.runningTask ||
+        composingData.lastExecutedTask ||
+        composingData.pendingTask ||
+        null;
 
     return composingData.bindingInputs
                         .map(({
@@ -114,9 +114,9 @@ export const COMPOSE_TASKS_EFFECT = createEffect((
     return actions.pipe(
         ofType(CONTROL_SCHEME_ACTIONS.schemeStarted, CONTROL_SCHEME_ACTIONS.stopScheme),
         switchMap((action) => (
-            action.type === CONTROL_SCHEME_ACTIONS.schemeStarted.type
-            ? store.select(CONTROL_SCHEME_SELECTORS.selectRunningScheme)
-            : of(null)
+            action.type === CONTROL_SCHEME_ACTIONS.schemeStarted.type ?
+            store.select(CONTROL_SCHEME_SELECTORS.selectRunningScheme) :
+            of(null)
         )),
         filter((scheme): scheme is ControlSchemeModel => !!scheme),
         switchMap((scheme) => from(groupBindingsByHubsPortId(scheme.bindings))),

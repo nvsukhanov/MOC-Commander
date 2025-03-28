@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     standalone: true,
     selector: 'lib-cs-label',
     templateUrl: './label.component.html',
-    styleUrls: [ './label.component.scss' ],
+    styleUrl: './label.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LabelComponent {

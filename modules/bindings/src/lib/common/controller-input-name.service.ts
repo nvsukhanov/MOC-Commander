@@ -19,9 +19,9 @@ export class ControllerInputNameService {
         data: ControlSchemeInputConfig,
     ): Observable<string> {
         const profile$ = this.controllerProfilesFacadeService.getByControllerId(data.controllerId);
-        const l10nKey = data.inputType === ControllerInputType.Axis
-                        ? 'controlScheme.fullControllerInputNameWithDirection'
-                        : 'controlScheme.fullControllerInputName';
+        const l10nKey = data.inputType === ControllerInputType.Axis ?
+                        'controlScheme.fullControllerInputNameWithDirection' :
+                        'controlScheme.fullControllerInputName';
 
         const controllerName$ = profile$.pipe(switchMap((profile) => profile.name$));
         const buttonName$ = this.getButtonName$(profile$, data);
@@ -44,19 +44,19 @@ export class ControllerInputNameService {
             case ControllerInputType.Trigger:
                 return profile$.pipe(switchMap((p) => p.getButtonName$(inputData.inputId)));
             case ControllerInputType.ButtonGroup:
-                return inputData.buttonId !== undefined
-                       ? profile$.pipe(
+                return inputData.buttonId !== undefined ?
+                       profile$.pipe(
                         switchMap((p) => p.getButtonName$(inputData.buttonId as ButtonGroupButtonId)),
                         switchMap((inputName) =>
                             this.translocoService.selectTranslate('controlScheme.controllerInputNameWithPort', {
                                 inputName,
-                                portId: inputData.portId === undefined
-                                        ? inputData.portId
-                                        : this.portIdToPortNameService.mapPortId(inputData.portId)
+                                portId: inputData.portId === undefined ?
+                                        inputData.portId :
+                                        this.portIdToPortNameService.mapPortId(inputData.portId)
                             })
                         )
-                    )
-                       : this.translocoService.selectTranslate('controllerProfiles.hub.unknownButton');
+                    ) :
+                       this.translocoService.selectTranslate('controllerProfiles.hub.unknownButton');
         }
     }
 }

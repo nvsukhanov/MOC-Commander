@@ -44,16 +44,16 @@ export abstract class GamepadProfile implements IControllerProfile<GamepadSettin
     public getAxisName$(
         inputId: string
     ): Observable<string> {
-        return this.axisNames[inputId]
-            ?? this.translocoService.selectTranslate(this.genericGamepadL10nScopeKeyBuilder('axis'), { inputId });
+        return this.axisNames[inputId] ??
+            this.translocoService.selectTranslate(this.genericGamepadL10nScopeKeyBuilder('axis'), { inputId });
     }
 
     @Memoize()
     public getButtonName$(
         inputId: string
     ): Observable<string> {
-        return this.buttonNames[inputId]
-            ?? this.translocoService.selectTranslate(this.genericGamepadL10nScopeKeyBuilder('button'), { inputId });
+        return this.buttonNames[inputId] ??
+            this.translocoService.selectTranslate(this.genericGamepadL10nScopeKeyBuilder('button'), { inputId });
     }
 
     public getDefaultSettings(): GamepadSettings {

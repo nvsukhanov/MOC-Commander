@@ -16,7 +16,7 @@ import { BINDING_CONTROL_SELECT_IO_SELECTORS } from './binding-control-select-io
     standalone: true,
     selector: 'lib-cs-binding-control-select-io',
     templateUrl: './binding-control-select-io.component.html',
-    styleUrls: [ './binding-control-select-io.component.scss' ],
+    styleUrl: './binding-control-select-io.component.scss',
     imports: [
         MatSelectModule,
         TranslocoPipe,

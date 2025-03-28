@@ -40,10 +40,10 @@ export class ControlSchemeDecompressorService {
         result: unknown
     ): result is ControlSchemeCompressionResult {
         return (
-            typeof result === 'object'
-            && result !== null
-            && typeof (result as ControlSchemeCompressionResult).s === 'string'
-            && typeof (result as ControlSchemeCompressionResult).c === 'object'
+            typeof result === 'object' &&
+            result !== null &&
+            typeof (result as ControlSchemeCompressionResult).s === 'string' &&
+            typeof (result as ControlSchemeCompressionResult).c === 'object'
         );
     }
 

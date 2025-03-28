@@ -7,7 +7,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
     standalone: true,
     selector: 'page-controller-view-control-ignore-input',
     templateUrl: './control-ignore-input.component.html',
-    styleUrls: [ './control-ignore-input.component.scss' ],
+    styleUrl: './control-ignore-input.component.scss',
     imports: [
         MatSlideToggleModule,
         ReactiveFormsModule,

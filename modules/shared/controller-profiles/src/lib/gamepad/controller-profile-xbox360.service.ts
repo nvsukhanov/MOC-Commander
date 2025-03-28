@@ -66,8 +66,8 @@ export class ControllerProfileXbox360Service extends GamepadProfile {
     public controllerIdMatch(id: string): boolean {
         const vendorAndProduct = getGamepadVendorAndProduct(id);
 
-        return (vendorAndProduct?.vendorId === this.vendorId
-            && vendorAndProduct?.productId === this.productId)
-            || this.ids.has(id);
+        return (vendorAndProduct?.vendorId === this.vendorId &&
+            vendorAndProduct?.productId === this.productId) ||
+            this.ids.has(id);
     }
 }

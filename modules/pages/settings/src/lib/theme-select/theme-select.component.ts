@@ -10,7 +10,7 @@ import { ThemeToL10nKeyPipe } from './theme-to-l10n-key.pipe';
     standalone: true,
     selector: 'page-settings-theme-select',
     templateUrl: './theme-select.component.html',
-    styleUrls: [ './theme-select.component.scss' ],
+    styleUrl: './theme-select.component.scss',
     imports: [
         MatSelectModule,
         ThemeToL10nKeyPipe,

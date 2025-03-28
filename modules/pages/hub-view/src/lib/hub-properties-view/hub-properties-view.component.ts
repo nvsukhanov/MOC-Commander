@@ -10,7 +10,7 @@ import { HubModel, HubRuntimeDataModel } from '@app/store';
     standalone: true,
     selector: 'page-hub-view-hub-properties-view',
     templateUrl: './hub-properties-view.component.html',
-    styleUrls: [ './hub-properties-view.component.scss' ],
+    styleUrl: './hub-properties-view.component.scss',
     imports: [
         MatButtonModule,
         MatCardModule,

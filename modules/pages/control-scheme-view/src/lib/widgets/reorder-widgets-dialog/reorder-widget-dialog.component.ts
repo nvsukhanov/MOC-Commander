@@ -14,7 +14,7 @@ import { WidgetConnectionInfoL10nPipe } from '../widget-connection-info-l10n.pip
     standalone: true,
     selector: 'page-control-scheme-view-reorder-widget-dialog',
     templateUrl: './reorder-widget-dialog.component.html',
-    styleUrls: [ './reorder-widget-dialog.component.scss' ],
+    styleUrl: './reorder-widget-dialog.component.scss',
     imports: [
         MatButtonModule,
         MatDialogModule,

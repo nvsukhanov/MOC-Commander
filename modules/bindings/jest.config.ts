@@ -1,4 +1,4 @@
-/* eslint-disable */
+ 
 export default {
     displayName: 'bindings',
     preset: '../../jest.preset.js',

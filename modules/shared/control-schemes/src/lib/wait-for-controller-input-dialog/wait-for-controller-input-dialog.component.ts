@@ -15,7 +15,7 @@ import { WAIT_FOR_CONTROLLER_INPUT_DIALOG_SELECTORS } from './wait-for-controlle
     standalone: true,
     selector: 'lib-cs-wait-for-controller-input-dialog',
     templateUrl: './wait-for-controller-input-dialog.component.html',
-    styleUrls: [ './wait-for-controller-input-dialog.component.scss' ],
+    styleUrl: './wait-for-controller-input-dialog.component.scss',
     imports: [
         MatCardModule,
         MatButtonModule,

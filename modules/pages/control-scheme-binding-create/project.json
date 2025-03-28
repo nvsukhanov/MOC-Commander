@@ -3,8 +3,10 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "modules/pages/control-scheme-binding-create/src",
   "prefix": "page-control-scheme-binding-create",
-  "tags": ["scope:page"],
   "projectType": "library",
+  "tags": [
+    "scope:page"
+  ],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",

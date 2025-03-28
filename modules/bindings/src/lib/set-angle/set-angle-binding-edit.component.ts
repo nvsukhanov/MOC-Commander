@@ -32,7 +32,7 @@ import { SetAngleBindingL10nService } from './set-angle-binding-l10n.service';
     standalone: true,
     selector: 'lib-cs-set-angle-binding-edit',
     templateUrl: './set-angle-binding-edit.component.html',
-    styleUrls: [ './set-angle-binding-edit.component.scss' ],
+    styleUrl: './set-angle-binding-edit.component.scss',
     imports: [
         BindingControlOutputEndStateComponent,
         BindingControlSelectControllerComponent,
@@ -131,11 +131,11 @@ export class SetAngleBindingEditComponent implements IBindingsDetailsEditCompone
                 mergeWith(form.controls.angle.valueChanges, form.controls.speed.valueChanges, form.controls.power.valueChanges),
                 startWith(null),
                 switchMap(() => {
-                    if (form.controls.hubId.value === null
-                        || form.controls.portId.value === null
-                        || form.controls.angle.invalid
-                        || form.controls.speed.invalid
-                        || form.controls.power.invalid
+                    if (form.controls.hubId.value === null ||
+                        form.controls.portId.value === null ||
+                        form.controls.angle.invalid ||
+                        form.controls.speed.invalid ||
+                        form.controls.power.invalid
                     ) {
                         return of(false);
                     }

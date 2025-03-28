@@ -45,7 +45,7 @@ import { ServoBindingL10nService } from './servo-binding-l10n.service';
     standalone: true,
     selector: 'lib-cs-servo-binding-edit',
     templateUrl: './servo-binding-edit.component.html',
-    styleUrls: [ './servo-binding-edit.component.scss' ],
+    styleUrl: './servo-binding-edit.component.scss',
     imports: [
         BindingEditSectionComponent,
         TranslocoPipe,
@@ -162,10 +162,10 @@ export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<
     }
 
     public onServoRangeReadRequest(): void {
-        if (!this._form
-            || this._form.controls.hubId.value === null
-            || this._form.controls.portId.value === null
-            || this._form.controls.aposCenter.value == null
+        if (!this._form ||
+            this._form.controls.hubId.value === null ||
+            this._form.controls.portId.value === null ||
+            this._form.controls.aposCenter.value == null
         ) {
             return;
         }
@@ -225,9 +225,9 @@ export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<
                 this._form.updateValueAndValidity();
             }
             if (result.type === CalibrationResultType.error) {
-                const errorL10nKey = result.error instanceof OutOfRangeCalibrationError
-                    ? 'controlScheme.servoBinding.calibrationOutOfRangeError'
-                    : 'controlScheme.servoBinding.calibrationError';
+                const errorL10nKey = result.error instanceof OutOfRangeCalibrationError ?
+                    'controlScheme.servoBinding.calibrationOutOfRangeError' :
+                    'controlScheme.servoBinding.calibrationError';
                 this.store.dispatch(SHOW_NOTIFICATION_ACTIONS.error({ l10nKey: errorL10nKey }));
             }
         });

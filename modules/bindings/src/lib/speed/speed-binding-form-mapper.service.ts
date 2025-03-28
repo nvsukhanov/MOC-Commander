@@ -35,16 +35,16 @@ export class SpeedBindingFormMapperService implements IBindingFormMapper<SpeedBi
             useDecelerationProfile: form.controls.useDecelerationProfile.getRawValue(),
         };
         if (form.controls.inputs.controls[SpeedBindingInputAction.Forwards].controls.controllerId.value !== null) {
-            result.inputs[SpeedBindingInputAction.Forwards]
-                = this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[SpeedBindingInputAction.Forwards] as InputFormGroup);
+            result.inputs[SpeedBindingInputAction.Forwards] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[SpeedBindingInputAction.Forwards] as InputFormGroup);
         }
         if (form.controls.inputs.controls[SpeedBindingInputAction.Backwards].controls.controllerId.value !== null) {
-            result.inputs[SpeedBindingInputAction.Backwards]
-                = this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[SpeedBindingInputAction.Backwards] as InputFormGroup);
+            result.inputs[SpeedBindingInputAction.Backwards] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[SpeedBindingInputAction.Backwards] as InputFormGroup);
         }
         if (form.controls.inputs.controls[SpeedBindingInputAction.Brake].controls.controllerId.value !== null) {
-            result.inputs[SpeedBindingInputAction.Brake]
-                = this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[SpeedBindingInputAction.Brake] as InputFormGroup);
+            result.inputs[SpeedBindingInputAction.Brake] =
+                this.commonFormMapperService.mapInputFormToSchemeInput(form.controls.inputs.controls[SpeedBindingInputAction.Brake] as InputFormGroup);
         }
         return result;
     }

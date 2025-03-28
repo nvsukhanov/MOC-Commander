@@ -1,11 +1,9 @@
 import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { MatFabAnchor, MatFabButton } from '@angular/material/button';
+import { MatFabAnchor } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { MatDivider } from '@angular/material/divider';
 import { RoutesBuilderService } from '@app/shared-misc';
 
 import { HubListItemComponent } from './hub-list-item';
@@ -16,17 +14,13 @@ import { CONTROL_SCHEME_PAGE_SELECTORS } from '../control-scheme-page.selectors'
     standalone: true,
     selector: 'page-control-scheme-view-bindings-section',
     templateUrl: './bindings-section.component.html',
-    styleUrls: [ './bindings-section.component.scss' ],
+    styleUrl: './bindings-section.component.scss',
     imports: [
         HubListItemComponent,
-        MatCard,
-        MatCardContent,
-        MatFabButton,
         MatIcon,
         TranslocoPipe,
         MatFabAnchor,
         RouterLink,
-        MatDivider
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

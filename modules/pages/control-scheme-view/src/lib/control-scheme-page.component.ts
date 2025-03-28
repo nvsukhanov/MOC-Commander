@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 import { TranslocoService } from '@jsverse/transloco';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatCard, MatCardContent } from '@angular/material/card';
 import { ISchemeRunnerComponent, RoutesBuilderService, ScreenSizeObserverService, TitleService } from '@app/shared-misc';
 import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService } from '@app/shared-components';
 import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, ROUTER_SELECTORS } from '@app/store';
@@ -20,7 +19,7 @@ import { BindingsSectionComponent } from './bindings-section';
     standalone: true,
     selector: 'page-control-scheme-view',
     templateUrl: './control-scheme-page.component.html',
-    styleUrls: [ './control-scheme-page.component.scss' ],
+    styleUrl: './control-scheme-page.component.scss',
     imports: [
         ConfirmationDialogModule,
         ToolbarControlsComponent,
@@ -28,8 +27,6 @@ import { BindingsSectionComponent } from './bindings-section';
         WidgetsSectionComponent,
         IssuesSectionComponent,
         BindingsSectionComponent,
-        MatCard,
-        MatCardContent,
     ],
     providers: [
         TitleService,

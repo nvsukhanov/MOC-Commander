@@ -12,7 +12,7 @@ import { ControlSchemeImportValidationService } from './control-scheme-import-va
     standalone: true,
     selector: 'lib-cs-import-control-scheme-dialog',
     templateUrl: './import-control-scheme-dialog.component.html',
-    styleUrls: [ './import-control-scheme-dialog.component.scss' ],
+    styleUrl: './import-control-scheme-dialog.component.scss',
     imports: [
         MatButtonModule,
         MatDialogModule,

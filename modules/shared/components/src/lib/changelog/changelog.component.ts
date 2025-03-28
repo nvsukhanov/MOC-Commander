@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { MatDivider } from '@angular/material/divider';
 
-import { CHANGELOG_TOKEN, IChangelog } from './i-changelog';
+import { CHANGELOG_TOKEN, ChangelogRecords } from './changelog-records';
 
 @Component({
     standalone: true,
     selector: 'lib-changelog',
     templateUrl: './changelog.component.html',
-    styleUrls: [ './changelog.component.scss' ],
+    styleUrl: './changelog.component.scss',
     imports: [
         TranslocoPipe,
         MatDivider
@@ -17,7 +17,7 @@ import { CHANGELOG_TOKEN, IChangelog } from './i-changelog';
 })
 export class ChangelogComponent {
     constructor(
-        @Inject(CHANGELOG_TOKEN) public readonly changelog: IChangelog
+        @Inject(CHANGELOG_TOKEN) public readonly changelog: ChangelogRecords
     ) {
     }
 }

@@ -1,4 +1,4 @@
-/* eslint-disable */
+ 
 export default {
     displayName: 'page:control-scheme-port-config-edit',
     preset: '../../../jest.preset.js',

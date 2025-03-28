@@ -10,7 +10,7 @@ import { LinuxInstallationManualComponent } from '../linux';
     standalone: true,
     selector: 'lib-manuals-installation-manuals-list',
     templateUrl: './installation-manuals-list.component.html',
-    styleUrls: [ './installation-manuals-list.component.scss' ],
+    styleUrl: './installation-manuals-list.component.scss',
     imports: [
         MatAccordion,
         MatExpansionPanel,

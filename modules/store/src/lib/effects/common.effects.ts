@@ -19,7 +19,7 @@ const COPY_TO_CLIPBOARD_EFFECT = createEffect((
                 return SHOW_NOTIFICATION_ACTIONS.info({
                     l10nKey: 'common.copyToClipboardSuccessNotification'
                 });
-            } catch (e) {
+            } catch {
                 return SHOW_NOTIFICATION_ACTIONS.error({
                     l10nKey: 'common.copyToClipboardErrorNotification'
                 });

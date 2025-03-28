@@ -6,9 +6,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatMenuModule } from '@angular/material/menu';
-import { AsyncPipe } from '@angular/common';
 import { RoutesBuilderService } from '@app/shared-misc';
-import { EllipsisTitleDirective } from '@app/shared-components';
 
 import { DiscoverHubButtonComponent } from '../discover-hub-button';
 
@@ -16,7 +14,7 @@ import { DiscoverHubButtonComponent } from '../discover-hub-button';
     standalone: true,
     selector: 'app-compact-nav-menu',
     templateUrl: './compact-nav-menu.component.html',
-    styleUrls: [ './compact-nav-menu.component.scss' ],
+    styleUrl: './compact-nav-menu.component.scss',
     imports: [
         RouterLink,
         RouterLinkActive,
@@ -25,10 +23,8 @@ import { DiscoverHubButtonComponent } from '../discover-hub-button';
         MatButtonModule,
         TranslocoPipe,
         MatToolbarModule,
-        EllipsisTitleDirective,
         MatMenuModule,
-        DiscoverHubButtonComponent,
-        AsyncPipe
+        DiscoverHubButtonComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -43,7 +39,7 @@ export class CompactNavMenuComponent {
 
     @Input() public isDiscoveryBusy = true;
 
-    @Output() public discoveryStart = new EventEmitter<void>();
+    @Output() public readonly discoveryStart = new EventEmitter<void>();
 
     constructor(
         public readonly routesBuilderService: RoutesBuilderService,

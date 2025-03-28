@@ -16,7 +16,7 @@ import { WidgetConnectionInfoL10nPipe } from '../widget-connection-info-l10n.pip
     standalone: true,
     selector: 'page-control-scheme-view-add-widget-dialog',
     templateUrl: './add-widget-dialog.component.html',
-    styleUrls: [ './add-widget-dialog.component.scss' ],
+    styleUrl: './add-widget-dialog.component.scss',
     imports: [
         MatButtonModule,
         MatDialogModule,

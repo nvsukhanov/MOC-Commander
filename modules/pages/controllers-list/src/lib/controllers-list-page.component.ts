@@ -11,7 +11,6 @@ import { ControllerNamePipe, ControllerTypeIconNamePipe, ControllerViewHrefPipe 
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
 import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService, HintComponent } from '@app/shared-components';
 import { CONTROLLERS_ACTIONS } from '@app/store';
-import { ControlSchemeViewUrlPipe } from '@app/shared-control-schemes';
 
 import { CONTROLLERS_LIST_PAGE_SELECTORS, ControllerListViewModel } from './controllers-list-page.selectors';
 
@@ -19,13 +18,12 @@ import { CONTROLLERS_LIST_PAGE_SELECTORS, ControllerListViewModel } from './cont
     standalone: true,
     selector: 'page-controllers-list',
     templateUrl: './controllers-list-page.component.html',
-    styleUrls: [ './controllers-list-page.component.scss' ],
+    styleUrl: './controllers-list-page.component.scss',
     imports: [
         HintComponent,
         TranslocoPipe,
         ControllerNamePipe,
         MatCardModule,
-        ControlSchemeViewUrlPipe,
         MatButtonModule,
         RouterLink,
         ControllerViewHrefPipe,

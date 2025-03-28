@@ -119,9 +119,9 @@ export class AccelerateBindingTaskPayloadBuilderService implements ITaskPayloadB
         binding: ControlSchemeAccelerateBinding,
         previousTask: PortCommandTask | null
     ): SpeedTaskPayload {
-        const speed = Math.abs(nextSpeed) > binding.maxSpeed
-            ? binding.maxSpeed * Math.sign(nextSpeed)
-            : nextSpeed;
+        const speed = Math.abs(nextSpeed) > binding.maxSpeed ?
+            binding.maxSpeed * Math.sign(nextSpeed) :
+            nextSpeed;
         const previousBrakeFactor = previousTask?.payload.type === TaskType.Speed ? previousTask.payload.brakeFactor : 0;
 
         return {

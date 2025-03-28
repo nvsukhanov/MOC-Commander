@@ -11,7 +11,7 @@ import { MotorServoEndStateL10nKeyPipe } from '@app/shared-components';
     standalone: true,
     selector: 'lib-cs-binding-control-output-end-state',
     templateUrl: './binding-control-output-end-state.component.html',
-    styleUrls: [ './binding-control-output-end-state.component.scss' ],
+    styleUrl: './binding-control-output-end-state.component.scss',
     imports: [
         MatFormFieldModule,
         MatOptionModule,

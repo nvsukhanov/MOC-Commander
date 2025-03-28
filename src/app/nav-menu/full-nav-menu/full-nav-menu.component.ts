@@ -6,7 +6,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { RoutesBuilderService } from '@app/shared-misc';
-import { EllipsisTitleDirective } from '@app/shared-components';
 
 import { DiscoverHubButtonComponent } from '../discover-hub-button';
 
@@ -14,7 +13,7 @@ import { DiscoverHubButtonComponent } from '../discover-hub-button';
     standalone: true,
     selector: 'app-full-nav-menu',
     templateUrl: './full-nav-menu.component.html',
-    styleUrls: [ './full-nav-menu.component.scss' ],
+    styleUrl: './full-nav-menu.component.scss',
     imports: [
         RouterLink,
         RouterLinkActive,
@@ -22,7 +21,6 @@ import { DiscoverHubButtonComponent } from '../discover-hub-button';
         MatIconModule,
         MatToolbarModule,
         TranslocoPipe,
-        EllipsisTitleDirective,
         DiscoverHubButtonComponent,
         MatMenuTrigger,
         MatMenu,
@@ -41,7 +39,7 @@ export class FullNavMenuComponent {
 
     @Input() public isDiscoveryBusy = true;
 
-    @Output() public discoveryStart = new EventEmitter<void>();
+    @Output() public readonly discoveryStart = new EventEmitter<void>();
 
     constructor(
         public readonly routesBuilderService: RoutesBuilderService,

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+ 
 import { createSelector } from '@ngrx/store';
 
 import { HUBS_ENTITY_ADAPTER, HUBS_FEATURE } from '../reducers';

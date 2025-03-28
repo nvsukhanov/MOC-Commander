@@ -5,12 +5,11 @@ import { IOType } from 'rxpoweredup';
 import { AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { MatError } from '@angular/material/form-field';
 import { MatTooltip } from '@angular/material/tooltip';
 import { EllipsisTitleDirective, IoTypeToL10nKeyPipe, PortIdToPortNamePipe } from '@app/shared-components';
 import { ControlSchemeBinding, PORT_TASKS_SELECTORS, PortCommandTask } from '@app/store';
 import { RoutesBuilderService } from '@app/shared-misc';
-import { BindingTypeToL10nKeyPipe, PortCommandTaskSummaryPipe } from '@app/shared-control-schemes';
+import { PortCommandTaskSummaryPipe } from '@app/shared-control-schemes';
 
 import { HUB_PORT_LIST_ITEM_SELECTORS } from './hub-port-list-item.selectors';
 import { HubPortBindingListItemComponent } from '../hub-port-binding-list-item';
@@ -19,7 +18,7 @@ import { HubPortBindingListItemComponent } from '../hub-port-binding-list-item';
     standalone: true,
     selector: 'page-control-scheme-view-hub-port-list-item',
     templateUrl: './hub-port-list-item.component.html',
-    styleUrls: [ './hub-port-list-item.component.scss' ],
+    styleUrl: './hub-port-list-item.component.scss',
     imports: [
         PortIdToPortNamePipe,
         EllipsisTitleDirective,
@@ -30,8 +29,6 @@ import { HubPortBindingListItemComponent } from '../hub-port-binding-list-item';
         MatIcon,
         PortCommandTaskSummaryPipe,
         RouterLink,
-        BindingTypeToL10nKeyPipe,
-        MatError,
         MatTooltip
     ],
     changeDetection: ChangeDetectionStrategy.OnPush

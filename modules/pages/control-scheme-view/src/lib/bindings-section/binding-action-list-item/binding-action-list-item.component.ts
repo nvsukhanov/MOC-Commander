@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject, Input, WritableSignal, computed, signal } from '@angular/core';
 import { of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
-import { TranslocoPipe } from '@jsverse/transloco';
 import { Store } from '@ngrx/store';
 import { CONTROLLER_CONNECTION_SELECTORS, ControlSchemeBinding, ControlSchemeBindingInputs, ControlSchemeInputConfig } from '@app/store';
 import { BINDING_CONTROLLER_INPUT_NAME_RESOLVER, IBindingControllerInputNameResolver } from '@app/shared-control-schemes';
@@ -14,10 +13,9 @@ import { BINDING_INPUT_NAME_RESOLVER, IBindingInputNameResolver } from './i-bind
     standalone: true,
     selector: 'page-control-scheme-view-binding-action-list-item',
     templateUrl: './binding-action-list-item.component.html',
-    styleUrls: [ './binding-action-list-item.component.scss' ],
+    styleUrl: './binding-action-list-item.component.scss',
     imports: [
         AsyncPipe,
-        TranslocoPipe,
         EllipsisTitleDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush

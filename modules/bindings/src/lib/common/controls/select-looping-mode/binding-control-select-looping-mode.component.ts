@@ -13,7 +13,7 @@ import { LoopingModeToL10nKeyPipe } from './looping-mode-to-l10n-key.pipe';
     standalone: true,
     selector: 'lib-cs-binding-control-select-looping-mode',
     templateUrl: './binding-control-select-looping-mode.component.html',
-    styleUrls: [ './binding-control-select-looping-mode.component.scss' ],
+    styleUrl: './binding-control-select-looping-mode.component.scss',
     imports: [
         MatFormFieldModule,
         MatOptionModule,

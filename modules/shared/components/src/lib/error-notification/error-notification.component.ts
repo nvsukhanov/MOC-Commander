@@ -10,7 +10,7 @@ import { MatIcon } from '@angular/material/icon';
     standalone: true,
     selector: 'lib-error-notification',
     templateUrl: './error-notification.component.html',
-    styleUrls: [ './error-notification.component.scss' ],
+    styleUrl: './error-notification.component.scss',
     imports: [
         MatButton,
         MatSnackBarAction,

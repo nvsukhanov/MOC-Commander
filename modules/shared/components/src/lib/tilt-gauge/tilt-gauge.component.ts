@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
 import { NgTemplateOutlet } from '@angular/common';
 
 import { TiltGaugeSectorDefinition, TiltGaugeSectorsComponent } from './tilt-gauge-sectors';
-import { TiltGaugeTickLineDefinition, TiltGaugeTicksComponent } from './tilt-gauge-ticks';
+import { TiltGaugeTickLineDefinition } from './tilt-gauge-ticks';
 import { TiltGaugeTicksDefBuilderService } from './tilt-gauge-ticks-def-builder.service';
 import { TiltGaugeSectorDefBuilderService } from './tilt-gauge-sector-def-builder.service';
 import { TiltGaugeOptions } from './tilt-gauge-options';
@@ -13,10 +13,9 @@ import { TiltGaugeValueComponent } from './tilt-gauge-value';
     standalone: true,
     selector: 'lib-tilt-gauge',
     templateUrl: './tilt-gauge.component.html',
-    styleUrls: [ './tilt-gauge.component.scss' ],
+    styleUrl: './tilt-gauge.component.scss',
     imports: [
         TiltGaugeSectorsComponent,
-        TiltGaugeTicksComponent,
         NgTemplateOutlet,
         TiltGaugeValueComponent
     ],

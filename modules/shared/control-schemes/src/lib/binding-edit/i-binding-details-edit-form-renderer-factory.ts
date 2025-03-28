@@ -8,5 +8,5 @@ export interface IBindingDetailsEditFormRendererFactory {
     ): IBindingDetailsEditFormRenderer;
 }
 
-export const BINDING_DETAILS_EDIT_FORM_RENDERER_FACTORY
-    = new InjectionToken<IBindingDetailsEditFormRendererFactory>('BINDING_DETAILS_EDIT_FORM_RENDERER_FACTORY');
+export const BINDING_DETAILS_EDIT_FORM_RENDERER_FACTORY =
+    new InjectionToken<IBindingDetailsEditFormRendererFactory>('BINDING_DETAILS_EDIT_FORM_RENDERER_FACTORY');

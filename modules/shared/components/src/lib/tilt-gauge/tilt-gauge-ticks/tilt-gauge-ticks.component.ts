@@ -7,7 +7,7 @@ import { TiltGaugeTickLineDefinition } from './tilt-gauge-tick-line-definition';
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'g[appTiltGaugeTicks]',
     templateUrl: './tilt-gauge-ticks.component.html',
-    styleUrls: [ './tilt-gauge-ticks.component.scss' ],
+    styleUrl: './tilt-gauge-ticks.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TiltGaugeTicksComponent {

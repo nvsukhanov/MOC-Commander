@@ -24,9 +24,9 @@ export const LISTEN_KEYBOARD_CONNECT = createEffect((
         map(([ , knownKeyboard ]) => {
             const controllerProfile = keyboardProfileFactoryService.getKeyboardProfile();
             const profileUid = controllerProfile.uid;
-            return knownKeyboard
-                   ? CONTROLLERS_ACTIONS.keyboardConnected({ profileUid })
-                   : CONTROLLERS_ACTIONS.keyboardDiscovered({ profileUid, defaultSettings: controllerProfile.getDefaultSettings() });
+            return knownKeyboard ?
+                   CONTROLLERS_ACTIONS.keyboardConnected({ profileUid }) :
+                   CONTROLLERS_ACTIONS.keyboardDiscovered({ profileUid, defaultSettings: controllerProfile.getDefaultSettings() });
         }),
         take(1)
     );

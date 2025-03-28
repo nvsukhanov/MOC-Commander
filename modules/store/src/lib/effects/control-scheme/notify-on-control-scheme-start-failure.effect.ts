@@ -11,9 +11,9 @@ export const NOTIFY_ON_CONTROL_SCHEME_START_FAILURE_EFFECT = createEffect((
     return actions.pipe(
         ofType(CONTROL_SCHEME_ACTIONS.schemeStartFailed),
         map((action) => {
-            const l10nKey = action.reason instanceof OutOfRangeCalibrationError
-                            ? 'controlScheme.runFailedCalibrationOutOfRange'
-                            : 'controlScheme.runFailed';
+            const l10nKey = action.reason instanceof OutOfRangeCalibrationError ?
+                            'controlScheme.runFailedCalibrationOutOfRange' :
+                            'controlScheme.runFailed';
             return SHOW_NOTIFICATION_ACTIONS.error({
                 l10nKey,
                 l10nPayload: action

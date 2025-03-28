@@ -59,9 +59,9 @@ export const CAPTURE_HUB_GREEN_BUTTON_INPUT = createEffect((
     hubStorage: HubStorageService = inject(HubStorageService),
 ) => {
     return store.select(CONTROLLER_INPUT_SELECTORS.isCapturing).pipe(
-        switchMap((isCapturing) => (isCapturing
-                                   ? readHubsGreenButtons(store, hubStorage)
-                                   : NEVER)
+        switchMap((isCapturing) => (isCapturing ?
+                                   readHubsGreenButtons(store, hubStorage) :
+                                   NEVER)
         )
     );
 }, { functional: true });

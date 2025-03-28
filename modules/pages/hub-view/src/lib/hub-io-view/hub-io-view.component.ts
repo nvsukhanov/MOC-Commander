@@ -10,7 +10,7 @@ import { HubIoViewModel } from '../hub-view-page.selectors';
     standalone: true,
     selector: 'page-hub-view-hub-port-view',
     templateUrl: './hub-io-view.component.html',
-    styleUrls: [ './hub-io-view.component.scss' ],
+    styleUrl: './hub-io-view.component.scss',
     imports: [
         TranslocoPipe,
         IoTypeToL10nKeyPipe,

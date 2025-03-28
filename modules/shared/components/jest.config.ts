@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
     displayName: 'shared-components',
     preset: '../../../jest.preset.js',

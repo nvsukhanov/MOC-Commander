@@ -1,2 +1,2 @@
 export * from './changelog.component';
-export * from './i-changelog';
+export * from './changelog-records';

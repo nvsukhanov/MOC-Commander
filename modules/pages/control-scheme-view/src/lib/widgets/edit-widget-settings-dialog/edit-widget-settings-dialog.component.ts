@@ -4,19 +4,17 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { TranslocoPipe } from '@jsverse/transloco';
 import { WidgetConfigModel } from '@app/store';
 
-import { WidgetConnectionInfoL10nPipe } from '../widget-connection-info-l10n.pipe';
 import { WidgetSettingsContainerComponent } from '../widget-settings-container';
 
 @Component({
     standalone: true,
     selector: 'page-control-scheme-view-edit-widget-settings-dialog',
     templateUrl: './edit-widget-settings-dialog.component.html',
-    styleUrls: [ './edit-widget-settings-dialog.component.scss' ],
+    styleUrl: './edit-widget-settings-dialog.component.scss',
     imports: [
         MatButtonModule,
         MatDialogModule,
         TranslocoPipe,
-        WidgetConnectionInfoL10nPipe,
         WidgetSettingsContainerComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush

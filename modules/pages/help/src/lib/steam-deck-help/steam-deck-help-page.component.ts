@@ -6,7 +6,7 @@ import { SteamDeckManualComponent } from '@app/manuals';
     standalone: true,
     selector: 'page-help-steam-deck',
     templateUrl: './steam-deck-help-page.component.html',
-    styleUrls: [ './steam-deck-help-page.component.scss' ],
+    styleUrl: './steam-deck-help-page.component.scss',
     imports: [
         SteamDeckManualComponent,
         MatCard,

@@ -53,9 +53,9 @@ export const LISTEN_GAMEPAD_CONNECT = createEffect((
         }),
         concatLatestFrom(() => store.select(CONTROLLER_CONNECTION_SELECTORS.selectEntities)),
         map(([ gamepadData, connectionEntities ]) => gamepadData.filter(({ gamepad, storeId }) =>
-                !connectionEntities[storeId]
-                && (gamepad.axes.some((a) => Math.abs(a) > GAMEPAD_DETECTION_INPUT_THRESHOLD)
-                    || gamepad.buttons.some((b) => b.value > GAMEPAD_DETECTION_INPUT_THRESHOLD)
+                !connectionEntities[storeId] &&
+                (gamepad.axes.some((a) => Math.abs(a) > GAMEPAD_DETECTION_INPUT_THRESHOLD) ||
+                    gamepad.buttons.some((b) => b.value > GAMEPAD_DETECTION_INPUT_THRESHOLD)
                 )
         )),
         filter((gamepadData) => gamepadData.length > 0),

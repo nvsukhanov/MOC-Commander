@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+ 
 import { createSelector } from '@ngrx/store';
 
 import { HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE } from '../reducers';

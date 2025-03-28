@@ -4,7 +4,6 @@ import { Subscription, from } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { ValidationMessagesDirective } from '@app/shared-misc';
 
 import { EllipsisTitleDirective } from '../ellipsis-title.directive';
 
@@ -12,11 +11,10 @@ import { EllipsisTitleDirective } from '../ellipsis-title.directive';
     standalone: true,
     selector: 'lib-upload-file',
     templateUrl: './upload-file-form-control.component.html',
-    styleUrls: [ './upload-file-form-control.component.scss' ],
+    styleUrl: './upload-file-form-control.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         MatInputModule,
-        ValidationMessagesDirective,
         MatButtonModule,
         TranslocoPipe,
         EllipsisTitleDirective
@@ -67,7 +65,6 @@ export class UploadFileFormControlComponent implements ControlValueAccessor, OnD
         this._isDisabled = isDisabled;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     public writeValue(): void {
     }
 

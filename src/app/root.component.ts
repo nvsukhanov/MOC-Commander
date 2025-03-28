@@ -27,7 +27,7 @@ import { ROOT_SELECTORS } from './root.selectors';
     standalone: true,
     selector: 'app-root',
     templateUrl: './root.component.html',
-    styleUrls: [ './root.component.scss' ],
+    styleUrl: './root.component.scss',
     imports: [
         CdkScrollable,
         FeatureToolbarComponent,

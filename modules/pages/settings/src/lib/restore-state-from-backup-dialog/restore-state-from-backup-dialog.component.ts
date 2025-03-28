@@ -14,7 +14,7 @@ import { STATE_FILE_VALIDATION_ERRORS, createStateFileValidatorFn } from './stat
     standalone: true,
     selector: 'page-settings-restore-state-from-backup-dialog',
     templateUrl: './restore-state-from-backup-dialog.component.html',
-    styleUrls: [ './restore-state-from-backup-dialog.component.scss' ],
+    styleUrl: './restore-state-from-backup-dialog.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         MatDialogModule,

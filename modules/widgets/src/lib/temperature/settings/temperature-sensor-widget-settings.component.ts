@@ -12,7 +12,7 @@ import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
     standalone: true,
     selector: 'lib-temperature-sensor-widget-settings',
     templateUrl: './temperature-sensor-widget-settings.component.html',
-    styleUrls: [ './temperature-sensor-widget-settings.component.scss' ],
+    styleUrl: './temperature-sensor-widget-settings.component.scss',
     imports: [
         MatFormFieldModule,
         MatInputModule,
@@ -77,10 +77,10 @@ export class TemperatureSensorWidgetSettingsComponent implements OnDestroy {
     }
 
     public get config(): TemperatureWidgetConfigModel | undefined {
-        if (this.form.controls.hubId.value === null
-            || this.form.controls.portId.value === null
-            || this.form.controls.modeId.value === null
-            || this.form.invalid
+        if (this.form.controls.hubId.value === null ||
+            this.form.controls.portId.value === null ||
+            this.form.controls.modeId.value === null ||
+            this.form.invalid
         ) {
             return undefined;
         }

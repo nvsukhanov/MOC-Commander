@@ -3,8 +3,10 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "modules/pages/controller-view/src",
   "prefix": "page-controller-view",
-  "tags": ["scope:page"],
   "projectType": "library",
+  "tags": [
+    "scope:page"
+  ],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",

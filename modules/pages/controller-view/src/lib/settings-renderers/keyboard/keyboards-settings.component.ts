@@ -14,7 +14,7 @@ import { ControlIgnoreInputComponent } from '../control-ignore-input';
     standalone: true,
     selector: 'page-controller-view-keyboards-settings',
     templateUrl: './keyboards-settings.component.html',
-    styleUrls: [ './keyboards-settings.component.scss' ],
+    styleUrl: './keyboards-settings.component.scss',
     imports: [
         ReactiveFormsModule,
         MatSlideToggleModule,

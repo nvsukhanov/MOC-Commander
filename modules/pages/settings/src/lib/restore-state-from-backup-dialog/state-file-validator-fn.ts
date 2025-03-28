@@ -7,10 +7,10 @@ function isState(
 ): value is DeepPartial<IState> {
     const storeVersions = getEnumValues(AppStoreVersion);
     // TODO: should be validated against the schema
-    return typeof value === 'object'
-        && value !== null
-        && 'storeVersion' in value
-        && storeVersions.includes((value as IState).storeVersion);
+    return typeof value === 'object' &&
+        value !== null &&
+        'storeVersion' in value &&
+        storeVersions.includes((value as IState).storeVersion);
 }
 
 export const STATE_FILE_VALIDATION_ERRORS = {

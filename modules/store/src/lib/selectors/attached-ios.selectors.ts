@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+ 
 import { createSelector } from '@ngrx/store';
 
 import { ATTACHED_IOS_ENTITY_ADAPTER, ATTACHED_IOS_FEATURE, attachedIosIdFn } from '../reducers';

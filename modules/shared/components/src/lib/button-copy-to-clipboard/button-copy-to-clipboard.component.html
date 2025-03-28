@@ -1,0 +1,10 @@
+<button mat-icon-button
+        class="copy-button"
+        (click)="copyToClipboard()"
+        title="{{ 'common.copyToClipboard' | transloco }}"
+>
+    <mat-icon [fontIcon]="'content_copy'"
+              class="copy-icon"
+    ></mat-icon>
+    <span class="cdk-visually-hidden">{{ 'common.copyToClipboard' | transloco }}</span>
+</button>

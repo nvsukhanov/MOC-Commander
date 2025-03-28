@@ -14,7 +14,7 @@ import { HUBS_LIST_PAGE_SELECTORS, HubListViewModel } from './hubs-list-page.sel
     standalone: true,
     selector: 'page-hubs-list',
     templateUrl: './hubs-list-page.component.html',
-    styleUrls: [ './hubs-list-page.component.scss' ],
+    styleUrl: './hubs-list-page.component.scss',
     imports: [
         TranslocoPipe,
         HubInlineViewComponent,

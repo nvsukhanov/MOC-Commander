@@ -7,7 +7,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
     standalone: true,
     selector: 'lib-leaving-running-scheme-confirmation-dialog',
     templateUrl: './leaving-running-scheme-confirmation-dialog.component.html',
-    styleUrls: [ './leaving-running-scheme-confirmation-dialog.component.scss' ],
+    styleUrl: './leaving-running-scheme-confirmation-dialog.component.scss',
     imports: [
         MatButton,
         MatDialogActions,

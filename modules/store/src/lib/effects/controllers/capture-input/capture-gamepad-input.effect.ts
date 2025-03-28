@@ -98,10 +98,10 @@ function readGamepads(
             }
             return merge(
                 ...connectedGamepads.map(({ connection, storeGamepad, settings }) => {
-                    if (!storeGamepad
-                        || storeGamepad.controllerType !== ControllerType.Gamepad
-                        || settings?.controllerType !== ControllerType.Gamepad
-                        || settings.ignoreInput
+                    if (!storeGamepad ||
+                        storeGamepad.controllerType !== ControllerType.Gamepad ||
+                        settings?.controllerType !== ControllerType.Gamepad ||
+                        settings.ignoreInput
                     ) {
                         return NEVER;
                     }
@@ -125,9 +125,9 @@ export const CAPTURE_GAMEPAD_INPUT = createEffect((
     window: Window = inject(WINDOW)
 ) => {
     return store.select(CONTROLLER_INPUT_SELECTORS.isCapturing).pipe(
-        switchMap((isCapturing) => (isCapturing
-                                   ? readGamepads(store, window.navigator)
-                                   : NEVER)
+        switchMap((isCapturing) => (isCapturing ?
+                                   readGamepads(store, window.navigator) :
+                                   NEVER)
         )
     );
 }, { functional: true });

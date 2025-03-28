@@ -8,7 +8,7 @@ import { MatTooltip } from '@angular/material/tooltip';
     standalone: true,
     selector: 'page-settings-use-linux-compat-select',
     templateUrl: './use-linux-compat-select.component.html',
-    styleUrls: [ './use-linux-compat-select.component.scss' ],
+    styleUrl: './use-linux-compat-select.component.scss',
     imports: [
         MatSelectModule,
         TranslocoPipe,

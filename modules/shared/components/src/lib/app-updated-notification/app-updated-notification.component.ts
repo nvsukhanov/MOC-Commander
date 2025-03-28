@@ -9,7 +9,7 @@ import { RoutesBuilderService } from '@app/shared-misc';
     standalone: true,
     selector: 'lib-app-updated-notification',
     templateUrl: './app-updated-notification.component.html',
-    styleUrls: [ './app-updated-notification.component.scss' ],
+    styleUrl: './app-updated-notification.component.scss',
     imports: [
         MatSnackBarLabel,
         MatSnackBarActions,

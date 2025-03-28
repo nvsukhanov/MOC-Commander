@@ -35,7 +35,7 @@ import { GearboxBindingL10nService } from './gearbox-binding-l10n.service';
     standalone: true,
     selector: 'lib-cs-gearbox-binding-edit',
     templateUrl: './gearbox-binding-edit.component.html',
-    styleUrls: [ './gearbox-binding-edit.component.scss' ],
+    styleUrl: './gearbox-binding-edit.component.scss',
     imports: [
         BindingControlSelectControllerComponent,
         MatButtonModule,

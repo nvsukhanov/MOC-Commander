@@ -10,7 +10,7 @@ import { LanguageToL10nKeyPipe } from './language-to-l10n-key.pipe';
     standalone: true,
     selector: 'page-settings-language-select',
     templateUrl: './language-select.component.html',
-    styleUrls: [ './language-select.component.scss' ],
+    styleUrl: './language-select.component.scss',
     imports: [
         MatSelectModule,
         TranslocoPipe,

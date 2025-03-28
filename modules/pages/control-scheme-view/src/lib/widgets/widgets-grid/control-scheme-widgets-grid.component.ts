@@ -1,12 +1,10 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatFabButton } from '@angular/material/button';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { WidgetType } from '@app/shared-misc';
 import { WidgetConfigModel } from '@app/store';
 
-import { OrderWidgetsPipe } from './order-widgets.pipe';
 import { WidgetContainerComponent } from '../widget-container';
 import { CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY, IControlSchemeWidgetSettingsComponentFactory } from '../widget-settings-container';
 
@@ -19,11 +17,9 @@ type WidgetsGridWidgetViewModel = {
     standalone: true,
     selector: 'page-control-scheme-view-control-scheme-widgets-grid',
     templateUrl: './control-scheme-widgets-grid.component.html',
-    styleUrls: [ './control-scheme-widgets-grid.component.scss' ],
+    styleUrl: './control-scheme-widgets-grid.component.scss',
     imports: [
-        OrderWidgetsPipe,
         WidgetContainerComponent,
-        AsyncPipe,
         MatIcon,
         TranslocoPipe,
         MatFabButton

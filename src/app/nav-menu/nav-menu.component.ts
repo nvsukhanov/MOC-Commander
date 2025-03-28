@@ -13,7 +13,7 @@ import { NAV_MENU_SELECTORS } from './nav-menu.selectors';
     standalone: true,
     selector: 'app-nav-menu',
     templateUrl: './nav-menu.component.html',
-    styleUrls: [ './nav-menu.component.scss' ],
+    styleUrl: './nav-menu.component.scss',
     imports: [
         CompactNavMenuComponent,
         FullNavMenuComponent,

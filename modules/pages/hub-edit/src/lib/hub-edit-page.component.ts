@@ -20,7 +20,7 @@ import { HUB_EDIT_PAGE_SELECTORS } from './hub-edit-page.selectors';
     standalone: true,
     selector: 'page-hub-edit',
     templateUrl: './hub-edit-page.component.html',
-    styleUrls: [ './hub-edit-page.component.scss' ],
+    styleUrl: './hub-edit-page.component.scss',
     imports: [
         TranslocoPipe,
         HintComponent,

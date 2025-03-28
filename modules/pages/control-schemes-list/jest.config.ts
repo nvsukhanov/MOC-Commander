@@ -1,4 +1,4 @@
-/* eslint-disable */
+ 
 export default {
     displayName: 'page:control-schemes-list',
     preset: '../../../jest.preset.js',

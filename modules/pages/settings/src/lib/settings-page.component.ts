@@ -5,9 +5,6 @@ import { Store } from '@ngrx/store';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatSlideToggle } from '@angular/material/slide-toggle';
-import { MatIcon } from '@angular/material/icon';
-import { MatTooltip } from '@angular/material/tooltip';
 import { of } from 'rxjs';
 import { Language } from '@app/shared-i18n';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
@@ -25,7 +22,7 @@ import { GamepadPollingRateComponent } from './gamepad-polling-rate';
     standalone: true,
     selector: 'page-settings',
     templateUrl: './settings-page.component.html',
-    styleUrls: [ './settings-page.component.scss' ],
+    styleUrl: './settings-page.component.scss',
     imports: [
         MatCardModule,
         TranslocoPipe,
@@ -34,9 +31,6 @@ import { GamepadPollingRateComponent } from './gamepad-polling-rate';
         MatDialogModule,
         ThemeSelectComponent,
         LanguageSelectComponent,
-        MatSlideToggle,
-        MatIcon,
-        MatTooltip,
         UseLinuxCompatSelectComponent,
         GamepadPollingRateComponent
     ],

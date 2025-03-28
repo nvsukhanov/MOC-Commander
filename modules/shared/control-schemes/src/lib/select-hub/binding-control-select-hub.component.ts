@@ -13,7 +13,7 @@ import { BINDING_CONTROL_SELECT_HUB_SELECTORS, HubWithConnectionState } from './
     standalone: true,
     selector: 'lib-cs-binding-control-select-hub',
     templateUrl: './binding-control-select-hub.component.html',
-    styleUrls: [ './binding-control-select-hub.component.scss' ],
+    styleUrl: './binding-control-select-hub.component.scss',
     imports: [
         MatSelectModule,
         ReactiveFormsModule,

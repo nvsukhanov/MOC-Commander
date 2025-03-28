@@ -11,7 +11,7 @@ import { ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
     standalone: true,
     selector: 'lib-voltage-sensor-widget-settings',
     templateUrl: './voltage-sensor-widget-settings.component.html',
-    styleUrls: [ './voltage-sensor-widget-settings.component.scss' ],
+    styleUrl: './voltage-sensor-widget-settings.component.scss',
     imports: [
         MatInputModule,
         ReactiveFormsModule,
@@ -75,10 +75,10 @@ export class VoltageSensorWidgetSettingsComponent implements OnDestroy {
     }
 
     public get config(): VoltageWidgetConfigModel | undefined {
-        if (this.form.controls.hubId.value === null
-            || this.form.controls.portId.value === null
-            || this.form.controls.modeId.value === null
-            || this.form.invalid
+        if (this.form.controls.hubId.value === null ||
+            this.form.controls.portId.value === null ||
+            this.form.controls.modeId.value === null ||
+            this.form.invalid
         ) {
             return undefined;
         }

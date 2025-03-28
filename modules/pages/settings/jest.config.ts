@@ -1,4 +1,4 @@
-/* eslint-disable */
+ 
 export default {
     displayName: 'page:settings',
     preset: '../../../jest.preset.js',

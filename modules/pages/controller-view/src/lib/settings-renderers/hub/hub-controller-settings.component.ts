@@ -10,7 +10,7 @@ import { ControlIgnoreInputComponent } from '../control-ignore-input';
     standalone: true,
     selector: 'page-controller-view-hub-controller-settings',
     templateUrl: './hub-controller-settings.component.html',
-    styleUrls: [ './hub-controller-settings.component.scss' ],
+    styleUrl: './hub-controller-settings.component.scss',
     imports: [
         ControlIgnoreInputComponent
     ],

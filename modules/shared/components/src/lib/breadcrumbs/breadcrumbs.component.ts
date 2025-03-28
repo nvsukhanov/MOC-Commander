@@ -10,7 +10,7 @@ import { BreadcrumbsStateService } from './breadcrumbs-state.service';
     standalone: true,
     selector: 'lib-breadcrumbs',
     templateUrl: './breadcrumbs.component.html',
-    styleUrls: [ './breadcrumbs.component.scss' ],
+    styleUrl: './breadcrumbs.component.scss',
     imports: [
         RouterLink,
         EllipsisTitleDirective,

@@ -1,18 +1,16 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
-import { TranslocoPipe } from '@jsverse/transloco';
 import { IdGeneratorService, getFormControlMaxValue, getFormControlMinValue } from '@app/shared-misc';
 
 @Component({
     standalone: true,
     selector: 'lib-range-control',
     templateUrl: './range-control.component.html',
-    styleUrls: [ './range-control.component.scss' ],
+    styleUrl: './range-control.component.scss',
     imports: [
         MatSliderModule,
         ReactiveFormsModule,
-        TranslocoPipe
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

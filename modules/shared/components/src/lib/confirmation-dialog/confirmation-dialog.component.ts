@@ -16,7 +16,7 @@ export type ConfirmDialogData = {
     standalone: true,
     selector: 'lib-confirmation-dialog',
     templateUrl: './confirmation-dialog.component.html',
-    styleUrls: [ './confirmation-dialog.component.scss' ],
+    styleUrl: './confirmation-dialog.component.scss',
     imports: [
         MatButtonModule,
         MatDialogModule,

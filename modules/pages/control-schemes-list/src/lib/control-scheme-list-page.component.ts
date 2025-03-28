@@ -13,7 +13,6 @@ import {
     BreadcrumbsService,
     ConfirmationDialogModule,
     ConfirmationDialogService,
-    EllipsisTitleDirective,
     FeatureToolbarControlsDirective,
     HintComponent
 } from '@app/shared-components';
@@ -32,7 +31,7 @@ import { ControlSchemeCreateDialogComponent } from './control-scheme-create-dial
     standalone: true,
     selector: 'page-control-schemes-list',
     templateUrl: './control-scheme-list-page.component.html',
-    styleUrls: [ './control-scheme-list-page.component.scss' ],
+    styleUrl: './control-scheme-list-page.component.scss',
     imports: [
         TranslocoPipe,
         MatButtonModule,
@@ -43,7 +42,6 @@ import { ControlSchemeCreateDialogComponent } from './control-scheme-create-dial
         HintComponent,
         FeatureToolbarControlsDirective,
         ConfirmationDialogModule,
-        EllipsisTitleDirective,
         AsyncPipe
     ],
     providers: [

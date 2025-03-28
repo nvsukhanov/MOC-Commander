@@ -3,8 +3,11 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "modules/store/src",
   "prefix": "lib",
-  "tags": ["type:library", "scope:store"],
   "projectType": "library",
+  "tags": [
+    "type:library",
+    "scope:store"
+  ],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",

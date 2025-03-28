@@ -13,7 +13,7 @@ import { InputValuePercentHumanReadableValuePipe } from '../active-zone-human-re
     standalone: true,
     selector: 'page-controller-view-gamepad-settings-button-settings',
     templateUrl: './gamepad-settings-button-settings.component.html',
-    styleUrls: [ './gamepad-settings-button-settings.component.scss' ],
+    styleUrl: './gamepad-settings-button-settings.component.scss',
     imports: [
         InputValuePercentHumanReadableValuePipe,
         InputOutputDiagramComponent,

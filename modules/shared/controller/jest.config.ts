@@ -1,4 +1,4 @@
-/* eslint-disable */
+ 
 export default {
     displayName: 'shared-controller',
     preset: '../../../jest.preset.js',

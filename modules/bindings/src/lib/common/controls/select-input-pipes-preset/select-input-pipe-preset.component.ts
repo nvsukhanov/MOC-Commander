@@ -11,7 +11,7 @@ import { InputPipePresetToL10nKeyPipe } from './input-pipe-preset-to-l10n-key.pi
     standalone: true,
     selector: 'lib-cs-select-input-pipe-preset',
     templateUrl: './select-input-pipe-preset.component.html',
-    styleUrls: [ './select-input-pipe-preset.component.scss' ],
+    styleUrl: './select-input-pipe-preset.component.scss',
     imports: [
         MatSelect,
         MatOption,
@@ -24,7 +24,7 @@ import { InputPipePresetToL10nKeyPipe } from './input-pipe-preset-to-l10n-key.pi
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectInputPipePresetComponent {
-    @Output() public pipeConfigChange: EventEmitter<InputPipeConfig[]> = new EventEmitter();
+    @Output() public readonly pipeConfigChange: EventEmitter<InputPipeConfig[]> = new EventEmitter();
 
     public readonly formControl = this.formBuilder.control<InputPipesPreset>(InputPipesPreset.None, { nonNullable: true });
 
