@@ -1,6 +1,6 @@
 export type AttachedIoModesModel = {
-    id: string;
-    portInputModes: number[];
-    portOutputModes: number[];
-    synchronizable: boolean;
+  id: string;
+  portInputModes: number[];
+  portOutputModes: number[];
+  synchronizable: boolean;
 };

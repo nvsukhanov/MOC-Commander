@@ -8,28 +8,17 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { MotorServoEndStateL10nKeyPipe } from '@app/shared-components';
 
 @Component({
-    standalone: true,
-    selector: 'lib-cs-binding-control-output-end-state',
-    templateUrl: './binding-control-output-end-state.component.html',
-    styleUrl: './binding-control-output-end-state.component.scss',
-    imports: [
-        MatFormFieldModule,
-        MatOptionModule,
-        MatSelectModule,
-        MotorServoEndStateL10nKeyPipe,
-        TranslocoPipe,
-        ReactiveFormsModule
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'lib-cs-binding-control-output-end-state',
+  templateUrl: './binding-control-output-end-state.component.html',
+  styleUrl: './binding-control-output-end-state.component.scss',
+  imports: [MatFormFieldModule, MatOptionModule, MatSelectModule, MotorServoEndStateL10nKeyPipe, TranslocoPipe, ReactiveFormsModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BindingControlOutputEndStateComponent {
-    @Input() public control?: FormControl<MotorServoEndState>;
+  @Input() public control?: FormControl<MotorServoEndState>;
 
-    @Input() public translocoTitle = '';
+  @Input() public translocoTitle = '';
 
-    public readonly motorServoEndStates: ReadonlyArray<MotorServoEndState> = [
-        MotorServoEndState.float,
-        MotorServoEndState.hold,
-        MotorServoEndState.brake
-    ];
+  public readonly motorServoEndStates: ReadonlyArray<MotorServoEndState> = [MotorServoEndState.float, MotorServoEndState.hold, MotorServoEndState.brake];
 }

@@ -5,26 +5,19 @@ import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
-    standalone: true,
-    selector: 'page-settings-use-linux-compat-select',
-    templateUrl: './use-linux-compat-select.component.html',
-    styleUrl: './use-linux-compat-select.component.scss',
-    imports: [
-        MatSelectModule,
-        TranslocoPipe,
-        MatIcon,
-        MatTooltip
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'page-settings-use-linux-compat-select',
+  templateUrl: './use-linux-compat-select.component.html',
+  styleUrl: './use-linux-compat-select.component.scss',
+  imports: [MatSelectModule, TranslocoPipe, MatIcon, MatTooltip],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UseLinuxCompatSelectComponent {
-    @Input() public useLinuxCompat: boolean | null = false;
+  @Input() public useLinuxCompat: boolean | null = false;
 
-    @Output() public readonly useLinuxCompatChange = new EventEmitter<boolean>();
+  @Output() public readonly useLinuxCompatChange = new EventEmitter<boolean>();
 
-    public onUseLinuxCompatChange(
-        value: boolean
-    ): void {
-        this.useLinuxCompatChange.emit(value);
-    }
+  public onUseLinuxCompatChange(value: boolean): void {
+    this.useLinuxCompatChange.emit(value);
+  }
 }

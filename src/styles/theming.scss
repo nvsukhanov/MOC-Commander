@@ -8,31 +8,31 @@ $typography: mat.m2-define-typography-config();
 @include mat.typography-hierarchy($typography);
 
 $dark-primary-text: rgba(black, 0.87);
-$light-primary-text: #EEE;
+$light-primary-text: #eee;
 
 $dark-palette: (
-    50: #aaa,
-    100: #999,
-    200: #888,
-    300: #777,
-    400: #666,
-    500: #555,
-    600: #444,
-    700: #333,
-    800: #1E1E1E,
-    900: #111,
-    contrast: (
-        50: $dark-primary-text,
-        100: $dark-primary-text,
-        200: $light-primary-text,
-        300: $light-primary-text,
-        400: $light-primary-text,
-        500: $light-primary-text,
-        600: $light-primary-text,
-        700: $light-primary-text,
-        800: $light-primary-text,
-        900: $light-primary-text,
-    )
+  50: #aaa,
+  100: #999,
+  200: #888,
+  300: #777,
+  400: #666,
+  500: #555,
+  600: #444,
+  700: #333,
+  800: #1e1e1e,
+  900: #111,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $light-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+  ),
 );
 
 $dark-accent-palette: mat.$m2-deep-purple-palette;
@@ -42,23 +42,27 @@ $light-palette: mat.$m2-deep-purple-palette;
 $light-accent-palette: mat.$m2-amber-palette;
 $light-warn-palette: mat.$m2-red-palette;
 
-$theme-light: mat.m2-define-light-theme((
+$theme-light: mat.m2-define-light-theme(
+  (
     color: (
-        primary: mat.m2-define-palette($light-palette),
-        accent: mat.m2-define-palette($light-accent-palette),
-        warn: mat.m2-define-palette($light-warn-palette),
+      primary: mat.m2-define-palette($light-palette),
+      accent: mat.m2-define-palette($light-accent-palette),
+      warn: mat.m2-define-palette($light-warn-palette),
     ),
     typography: $typography,
-    density: 0
-));
+    density: 0,
+  )
+);
 
-$theme-dark: mat.m2-define-dark-theme((
+$theme-dark: mat.m2-define-dark-theme(
+  (
     color: (
-        primary: mat.m2-define-palette($dark-palette, 700, 600, 900),
-        accent: mat.m2-define-palette($dark-accent-palette, 800, 700, 900),
-        warn: mat.m2-define-palette($dark-warn-palette, 800, 700, 900),
+      primary: mat.m2-define-palette($dark-palette, 700, 600, 900),
+      accent: mat.m2-define-palette($dark-accent-palette, 800, 700, 900),
+      warn: mat.m2-define-palette($dark-warn-palette, 800, 700, 900),
     ),
-));
+  )
+);
 
 @include mat.core-theme($theme-light);
 @include mat.all-component-themes($theme-light);
@@ -66,122 +70,122 @@ $theme-dark: mat.m2-define-dark-theme((
 $elevated-dark-color: mat.m2-get-color-from-palette($dark-palette, 800);
 
 .theme-light {
-    color-scheme: light;
-    --app-accent-color: #{mat.m2-get-color-from-palette($light-accent-palette, 500)};
-    --app-accent-contrast-color: #{mat.m2-get-contrast-color-from-palette($light-accent-palette, 500)};;
-    --app-primary-color: #{mat.m2-get-color-from-palette($light-palette, 500)};
-    --app-primary-contrast-color: #{mat.m2-get-contrast-color-from-palette($light-palette, 500)};
-    --app-warning-color: #{mat.m2-get-color-from-palette($light-warn-palette, 500)};
-    --app-warning-contrast-color: #{mat.m2-get-contrast-color-from-palette($light-warn-palette, 500)};
-    --app-disabled-color: rgba(0, 0, 0, 0.5);
-    --app-text-color: #{$dark-primary-text};
-    --app-label-color: rgba(0, 0, 0, 0.6);
-    --app-background-color: #f4f4f4;
-    --app-well-color: rgba(0, 0, 0, 0.22);
-    --snackbar-text-color: #{$light-primary-text};
+  color-scheme: light;
+  --app-accent-color: #{mat.m2-get-color-from-palette($light-accent-palette, 500)};
+  --app-accent-contrast-color: #{mat.m2-get-contrast-color-from-palette($light-accent-palette, 500)};
+  --app-primary-color: #{mat.m2-get-color-from-palette($light-palette, 500)};
+  --app-primary-contrast-color: #{mat.m2-get-contrast-color-from-palette($light-palette, 500)};
+  --app-warning-color: #{mat.m2-get-color-from-palette($light-warn-palette, 500)};
+  --app-warning-contrast-color: #{mat.m2-get-contrast-color-from-palette($light-warn-palette, 500)};
+  --app-disabled-color: rgba(0, 0, 0, 0.5);
+  --app-text-color: #{$dark-primary-text};
+  --app-label-color: rgba(0, 0, 0, 0.6);
+  --app-background-color: #f4f4f4;
+  --app-well-color: rgba(0, 0, 0, 0.22);
+  --snackbar-text-color: #{$light-primary-text};
 
-    --mdc-text-button-disabled-label-text-color: var(--app-disabled-color);
+  --mdc-text-button-disabled-label-text-color: var(--app-disabled-color);
 
-    &.mat-app-background {
-        background-color: var(--app-background-color);
-        color: var(--app-text-color);
-    }
+  &.mat-app-background {
+    background-color: var(--app-background-color);
+    color: var(--app-text-color);
+  }
 }
 
 .theme-dark {
-    color-scheme: dark;
-    @include mat.core-color($theme-dark);
-    @include mat.all-component-colors($theme-dark);
+  color-scheme: dark;
+  @include mat.core-color($theme-dark);
+  @include mat.all-component-colors($theme-dark);
 
-    --app-accent-color: #{mat.m2-get-color-from-palette($dark-accent-palette, 500)};
-    --app-accent-contrast-color: #{mat.m2-get-contrast-color-from-palette($dark-accent-palette, 500)};
-    --app-primary-color: #{mat.m2-get-color-from-palette($dark-palette, 500)};
-    --app-primary-contrast-color: #{mat.m2-get-contrast-color-from-palette($dark-palette, 500)};
-    --app-warning-color: #{mat.m2-get-color-from-palette($dark-warn-palette, 500)};
-    --app-warning-contrast-color: #{mat.m2-get-contrast-color-from-palette($dark-warn-palette, 500)};
-    --app-disabled-color: rgba(255, 255, 255, 0.5);
-    --app-label-color: rgba(255, 255, 255, 0.6);
-    --app-text-color: #{$light-primary-text};
-    --app-background-color: #{mat.m2-get-color-from-palette($dark-palette, 900)};
-    --app-well-color: rgba(255, 255, 255, 0.22);
-    --snackbar-text-color: #{$light-primary-text};
+  --app-accent-color: #{mat.m2-get-color-from-palette($dark-accent-palette, 500)};
+  --app-accent-contrast-color: #{mat.m2-get-contrast-color-from-palette($dark-accent-palette, 500)};
+  --app-primary-color: #{mat.m2-get-color-from-palette($dark-palette, 500)};
+  --app-primary-contrast-color: #{mat.m2-get-contrast-color-from-palette($dark-palette, 500)};
+  --app-warning-color: #{mat.m2-get-color-from-palette($dark-warn-palette, 500)};
+  --app-warning-contrast-color: #{mat.m2-get-contrast-color-from-palette($dark-warn-palette, 500)};
+  --app-disabled-color: rgba(255, 255, 255, 0.5);
+  --app-label-color: rgba(255, 255, 255, 0.6);
+  --app-text-color: #{$light-primary-text};
+  --app-background-color: #{mat.m2-get-color-from-palette($dark-palette, 900)};
+  --app-well-color: rgba(255, 255, 255, 0.22);
+  --snackbar-text-color: #{$light-primary-text};
 
-    &.mat-app-background {
-        background-color: var(--app-background-color);
-        color: var(--app-text-color);
-    }
+  &.mat-app-background {
+    background-color: var(--app-background-color);
+    color: var(--app-text-color);
+  }
 
-    --mdc-theme-primary: #{$light-primary-text};
-    --mdc-theme-text-primary-on-background: #{$light-primary-text};
-    --mdc-text-button-disabled-label-text-color: var(--app-disabled-color);
+  --mdc-theme-primary: #{$light-primary-text};
+  --mdc-theme-text-primary-on-background: #{$light-primary-text};
+  --mdc-text-button-disabled-label-text-color: var(--app-disabled-color);
 
-    .mat-mdc-slider.mat-primary {
-        --mdc-slider-active-track-color: #{mat.m2-get-color-from-palette($dark-palette, 200)};
-        --mdc-slider-inactive-track-color: #{mat.m2-get-color-from-palette($dark-palette, 300)};
-        --mdc-slider-handle-color: #{mat.m2-get-color-from-palette($dark-palette, 100)};
-        --mdc-slider-focus-handle-color: #{mat.m2-get-color-from-palette($dark-palette, 100)};
-        --mdc-slider-hover-handle-color: #{mat.m2-get-color-from-palette($dark-palette, 100)};
-    }
+  .mat-mdc-slider.mat-primary {
+    --mdc-slider-active-track-color: #{mat.m2-get-color-from-palette($dark-palette, 200)};
+    --mdc-slider-inactive-track-color: #{mat.m2-get-color-from-palette($dark-palette, 300)};
+    --mdc-slider-handle-color: #{mat.m2-get-color-from-palette($dark-palette, 100)};
+    --mdc-slider-focus-handle-color: #{mat.m2-get-color-from-palette($dark-palette, 100)};
+    --mdc-slider-hover-handle-color: #{mat.m2-get-color-from-palette($dark-palette, 100)};
+  }
 
-    .mat-mdc-card {
-        --mdc-elevated-card-container-color: #{$elevated-dark-color};
-    }
+  .mat-mdc-card {
+    --mdc-elevated-card-container-color: #{$elevated-dark-color};
+  }
 
-    .mat-mdc-snack-bar-container {
-        --mdc-snackbar-container-color: #{mat.m2-get-color-from-palette($dark-palette, 700)};
-        --mdc-snackbar-supporting-text-color: #{$light-primary-text};
-        --mat-snack-bar-button-color: #{rgba($light-primary-text, 0.87)};
-    }
+  .mat-mdc-snack-bar-container {
+    --mdc-snackbar-container-color: #{mat.m2-get-color-from-palette($dark-palette, 700)};
+    --mdc-snackbar-supporting-text-color: #{$light-primary-text};
+    --mat-snack-bar-button-color: #{rgba($light-primary-text, 0.87)};
+  }
 
-    .mat-expansion-panel,
-    .mat-tree {
-        background: $elevated-dark-color;
-    }
+  .mat-expansion-panel,
+  .mat-tree {
+    background: $elevated-dark-color;
+  }
 
-    .mat-tree-node {
-        color: $light-primary-text;
-    }
+  .mat-tree-node {
+    color: $light-primary-text;
+  }
 
-    .mat-mdc-form-field.mat-focused {
-        .mat-mdc-form-field-focus-overlay {
-            opacity: 0.12;
-        }
-    }
-
-    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-        background-color: mat.m2-get-color-from-palette($dark-palette, 800);
-        --mdc-filled-text-field-caret-color: #{$light-primary-text};
-        --mdc-outlined-text-field-caret-color: #{$light-primary-text};
-    }
-
-    .mdc-text-field--focused:not(.mdc-text-field--disabled) {
-        background-color: mat.m2-get-color-from-palette($dark-palette, 700);
-        --mdc-filled-text-field-caret-color: #{$light-primary-text};
-        --mdc-outlined-text-field-caret-color: #{$light-primary-text};
-
-        .mdc-floating-label {
-            color: $light-primary-text;
-        }
-    }
-
-    label {
-        --mdc-filled-text-field-focus-label-text-color: #{$light-primary-text};
-    }
-
-    mat-option > .mdc-list-item__primary-text {
-        --mat-option-selected-state-label-text-color: #{$light-primary-text};
-        --mat-option-label-text-color: #{$light-primary-text};
-    }
-
-    .mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked::after {
-        color: #{$light-primary-text};
-    }
-
-    .mat-mdc-dialog-container .mdc-dialog__surface {
-        --mdc-dialog-container-color: #{$elevated-dark-color};
-    }
-
+  .mat-mdc-form-field.mat-focused {
     .mat-mdc-form-field-focus-overlay {
-        background-color: unset;
+      opacity: 0.12;
     }
+  }
+
+  .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: mat.m2-get-color-from-palette($dark-palette, 800);
+    --mdc-filled-text-field-caret-color: #{$light-primary-text};
+    --mdc-outlined-text-field-caret-color: #{$light-primary-text};
+  }
+
+  .mdc-text-field--focused:not(.mdc-text-field--disabled) {
+    background-color: mat.m2-get-color-from-palette($dark-palette, 700);
+    --mdc-filled-text-field-caret-color: #{$light-primary-text};
+    --mdc-outlined-text-field-caret-color: #{$light-primary-text};
+
+    .mdc-floating-label {
+      color: $light-primary-text;
+    }
+  }
+
+  label {
+    --mdc-filled-text-field-focus-label-text-color: #{$light-primary-text};
+  }
+
+  mat-option > .mdc-list-item__primary-text {
+    --mat-option-selected-state-label-text-color: #{$light-primary-text};
+    --mat-option-label-text-color: #{$light-primary-text};
+  }
+
+  .mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked::after {
+    color: #{$light-primary-text};
+  }
+
+  .mat-mdc-dialog-container .mdc-dialog__surface {
+    --mdc-dialog-container-color: #{$elevated-dark-color};
+  }
+
+  .mat-mdc-form-field-focus-overlay {
+    background-color: unset;
+  }
 }

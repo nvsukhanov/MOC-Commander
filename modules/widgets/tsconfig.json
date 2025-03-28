@@ -1,13 +1,7 @@
 {
   "compilerOptions": {
-    "types": [
-      "web-bluetooth",
-      "jest",
-      "node",
-    ],
-    "typeRoots": [
-      "../../node_modules/@types",
-    ]
+    "types": ["web-bluetooth", "jest", "node"],
+    "typeRoots": ["../../node_modules/@types"]
   },
   "references": [
     {

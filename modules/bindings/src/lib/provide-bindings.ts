@@ -1,10 +1,10 @@
 import { Provider } from '@angular/core';
 import { TASKS_INPUT_EXTRACTOR, TASK_FACTORY } from '@app/store';
 import {
-    BINDING_CONTROLLER_INPUT_NAME_RESOLVER,
-    BINDING_DETAILS_EDIT_FORM_RENDERER_FACTORY,
-    BINDING_TYPE_TO_L10N_KEY_MAPPER,
-    BINDING_VALIDATOR
+  BINDING_CONTROLLER_INPUT_NAME_RESOLVER,
+  BINDING_DETAILS_EDIT_FORM_RENDERER_FACTORY,
+  BINDING_TYPE_TO_L10N_KEY_MAPPER,
+  BINDING_VALIDATOR,
 } from '@app/shared-control-schemes';
 import { BINDING_INPUT_NAME_RESOLVER } from '@app/control-scheme-view';
 
@@ -23,21 +23,21 @@ import { BindingL10nService } from './binding-l10n.service';
 import { provideAccelerateBinding } from './accelerate';
 
 export function provideBindings(): Provider[] {
-    return [
-        ...provideGearboxBinding(),
-        ...provideServoBinding(),
-        ...provideSetAngleBinding(),
-        ...provideSpeedBinding(),
-        ...provideStepperBinding(),
-        ...provideTrainBinding(),
-        ...provideAccelerateBinding(),
-        ...provideBindingCommonServices(),
-        { provide: TASK_FACTORY, useClass: BindingTaskFactoryService },
-        { provide: BINDING_DETAILS_EDIT_FORM_RENDERER_FACTORY, useClass: BindingDetailsEditFormRendererFactoryService },
-        { provide: BINDING_VALIDATOR, useClass: BindingValidatorService },
-        { provide: TASKS_INPUT_EXTRACTOR, useClass: BindingInputExtractorService },
-        { provide: BINDING_CONTROLLER_INPUT_NAME_RESOLVER, useClass: BindingL10nService },
-        { provide: BINDING_INPUT_NAME_RESOLVER, useClass: BindingL10nService },
-        { provide: BINDING_TYPE_TO_L10N_KEY_MAPPER, useClass: BindingL10nService }
-    ];
+  return [
+    ...provideGearboxBinding(),
+    ...provideServoBinding(),
+    ...provideSetAngleBinding(),
+    ...provideSpeedBinding(),
+    ...provideStepperBinding(),
+    ...provideTrainBinding(),
+    ...provideAccelerateBinding(),
+    ...provideBindingCommonServices(),
+    { provide: TASK_FACTORY, useClass: BindingTaskFactoryService },
+    { provide: BINDING_DETAILS_EDIT_FORM_RENDERER_FACTORY, useClass: BindingDetailsEditFormRendererFactoryService },
+    { provide: BINDING_VALIDATOR, useClass: BindingValidatorService },
+    { provide: TASKS_INPUT_EXTRACTOR, useClass: BindingInputExtractorService },
+    { provide: BINDING_CONTROLLER_INPUT_NAME_RESOLVER, useClass: BindingL10nService },
+    { provide: BINDING_INPUT_NAME_RESOLVER, useClass: BindingL10nService },
+    { provide: BINDING_TYPE_TO_L10N_KEY_MAPPER, useClass: BindingL10nService },
+  ];
 }

@@ -1,23 +1,16 @@
 <h1 mat-dialog-title>
-    {{ 'leavingRunningSchemeDialog.title' | transloco }}
+  {{ 'leavingRunningSchemeDialog.title' | transloco }}
 </h1>
 
 <div mat-dialog-content>
-    {{ 'leavingRunningSchemeDialog.content' | transloco }}
+  {{ 'leavingRunningSchemeDialog.content' | transloco }}
 </div>
 
-<div mat-dialog-actions
-     [align]="'end'"
->
-    <button mat-raised-button
-            [color]="'warn'"
-            (click)="onConfirm()"
-    >
-        {{ 'leavingRunningSchemeDialog.confirmButtonTitle' | transloco }}
-    </button>
-    <button mat-button
-            (click)="onCancel()"
-    >
-        {{ 'leavingRunningSchemeDialog.cancelButtonTitle' | transloco }}
-    </button>
+<div mat-dialog-actions [align]="'end'">
+  <button mat-raised-button [color]="'warn'" (click)="onConfirm()">
+    {{ 'leavingRunningSchemeDialog.confirmButtonTitle' | transloco }}
+  </button>
+  <button mat-button (click)="onCancel()">
+    {{ 'leavingRunningSchemeDialog.cancelButtonTitle' | transloco }}
+  </button>
 </div>

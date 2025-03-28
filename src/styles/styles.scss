@@ -1,47 +1,48 @@
-@import "./fonts";
-@import "./icons";
-@import "./theming.scss";
+@import './fonts';
+@import './icons';
+@import './theming.scss';
 
-html, body {
-    height: 100%;
-    overscroll-behavior: none;
+html,
+body {
+  height: 100%;
+  overscroll-behavior: none;
 }
 
 body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 
-    .mdc-text-field {
-        padding: 0 8px;
-    }
+  .mdc-text-field {
+    padding: 0 8px;
+  }
 }
 
 ul,
 ol {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 .mat-mdc-card-header-text {
-    overflow: hidden; // allow ellipsis in card header
-    width: 100%; // allow full-width sub-headers
+  overflow: hidden; // allow ellipsis in card header
+  width: 100%; // allow full-width sub-headers
 }
 
 .mdc-button {
-    &.mdc-button__non-centered {
-        justify-content: flex-start;
-    }
+  &.mdc-button__non-centered {
+    justify-content: flex-start;
+  }
 }
 
 .card-list-item + .card-list-item {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 a {
-    color: var(--app-text-color);
-    text-decoration: underline;
-    cursor: pointer;
-    font-weight: normal;
-    font-size: 0.9rem;
+  color: var(--app-text-color);
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: normal;
+  font-size: 0.9rem;
 }

@@ -4,8 +4,9 @@
 
 <page-control-scheme-view-bindings-section></page-control-scheme-view-bindings-section>
 
-<page-control-scheme-view-toolbar-controls [canRun]="canRunScheme()"
-                                           [canStop]="isSchemeRunning()"
-                                           (run)="runScheme()"
-                                           (stop)="stopRunningScheme()"
+<page-control-scheme-view-toolbar-controls
+  [canRun]="canRunScheme()"
+  [canStop]="isSchemeRunning()"
+  (run)="runScheme()"
+  (stop)="stopRunningScheme()"
 ></page-control-scheme-view-toolbar-controls>

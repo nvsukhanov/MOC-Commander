@@ -1,114 +1,82 @@
 @if (form) {
-    <lib-cs-binding-edit-sections-container>
-        <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
-                                     [caption]="'controlScheme.bindingSectionOutputTitle' | transloco"
-        >
-            <lib-cs-binding-control-select-hub [control]="form.controls.hubId"
-                                               [bindingType]="bindingType"
-            ></lib-cs-binding-control-select-hub>
+  <lib-cs-binding-edit-sections-container>
+    <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33" [caption]="'controlScheme.bindingSectionOutputTitle' | transloco">
+      <lib-cs-binding-control-select-hub [control]="form.controls.hubId" [bindingType]="bindingType"></lib-cs-binding-control-select-hub>
 
-            <lib-cs-binding-control-select-io [portIdControl]="form.controls.portId"
-                                              [hubIdControl]="form.controls.hubId"
-                                              [bindingType]="bindingType"
-            ></lib-cs-binding-control-select-io>
+      <lib-cs-binding-control-select-io
+        [portIdControl]="form.controls.portId"
+        [hubIdControl]="form.controls.hubId"
+        [bindingType]="bindingType"
+      ></lib-cs-binding-control-select-io>
 
-            <lib-cs-motor-position-adjustment [hubId]="form.controls.hubId.value"
-                                              [portId]="form.controls.portId.value"
-                                              [speed]="form.controls.speed.value"
-                                              [power]="form.controls.power.value"
-            ></lib-cs-motor-position-adjustment>
-        </lib-cs-binding-edit-section>
+      <lib-cs-motor-position-adjustment
+        [hubId]="form.controls.hubId.value"
+        [portId]="form.controls.portId.value"
+        [speed]="form.controls.speed.value"
+        [power]="form.controls.power.value"
+      ></lib-cs-motor-position-adjustment>
+    </lib-cs-binding-edit-section>
 
-        <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
+    <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
 
-        <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
-                                     [caption]="'controlScheme.bindingSectionInputTitle' | transloco"
-        >
-            <lib-cs-binding-control-select-controller [data]="servoCwBindingComponentData"></lib-cs-binding-control-select-controller>
-            <lib-cs-binding-control-select-controller [data]="servoCcwBindingComponentData"></lib-cs-binding-control-select-controller>
+    <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33" [caption]="'controlScheme.bindingSectionInputTitle' | transloco">
+      <lib-cs-binding-control-select-controller [data]="servoCwBindingComponentData"></lib-cs-binding-control-select-controller>
+      <lib-cs-binding-control-select-controller [data]="servoCcwBindingComponentData"></lib-cs-binding-control-select-controller>
 
-            <mat-error [libValidationMessages]="form.controls.inputs"
-                       [immediatelyShowMessages]="true"
-                       [l10nMap]="validationErrorsMap"
-            ></mat-error>
-        </lib-cs-binding-edit-section>
+      <mat-error [libValidationMessages]="form.controls.inputs" [immediatelyShowMessages]="true" [l10nMap]="validationErrorsMap"></mat-error>
+    </lib-cs-binding-edit-section>
 
-        <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
+    <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
 
-        <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33"
-                                     [caption]="'controlScheme.bindingSectionConfigTitle' | transloco"
+    <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33" [caption]="'controlScheme.bindingSectionConfigTitle' | transloco">
+      <lib-cs-binding-control-speed-input [control]="form.controls.speed"></lib-cs-binding-control-speed-input>
+      <lib-cs-binding-control-power-input [control]="form.controls.power"></lib-cs-binding-control-power-input>
 
-        >
-            <lib-cs-binding-control-speed-input [control]="form.controls.speed"></lib-cs-binding-control-speed-input>
-            <lib-cs-binding-control-power-input [control]="form.controls.power"></lib-cs-binding-control-power-input>
+      <lib-toggle-control [translocoTitle]="'controlScheme.servoBinding.calibrateOnStart'" [control]="form.controls.calibrateOnStart"></lib-toggle-control>
 
-            <lib-toggle-control [translocoTitle]="'controlScheme.servoBinding.calibrateOnStart'"
-                                [control]="form.controls.calibrateOnStart"
-            ></lib-toggle-control>
+      @if (!form.controls.calibrateOnStart.value) {
+        <div>
+          <button mat-raised-button type="button" color="primary" class="calibrate-button" [disabled]="(canCalibrate$ | async) !== true" (click)="calibrate()">
+            {{ 'controlScheme.servoBinding.calibrate' | transloco }}
+          </button>
+        </div>
 
-            @if (!form.controls.calibrateOnStart.value) {
-                <div>
-                    <button mat-raised-button
-                            type="button"
-                            color="primary"
-                            class="calibrate-button"
-                            [disabled]="(canCalibrate$ | async) !== true"
-                            (click)="calibrate()"
-                    >
-                        {{ 'controlScheme.servoBinding.calibrate' | transloco }}
-                    </button>
-                </div>
+        <mat-form-field>
+          <mat-label>{{ 'controlScheme.servoBinding.outputCenterOffset' | transloco }}</mat-label>
+          <input type="number" matInput [formControl]="form.controls.aposCenter" [min]="formBuilder.aposCenterMin" [max]="formBuilder.aposCenterMax" />
+          <button
+            mat-icon-button
+            matSuffix
+            [disabled]="(canRequestPortValue$ | async) !== true"
+            [title]="'controlScheme.servoBinding.readServoCenterFromPort' | transloco"
+            (click)="onServoCenterReadRequest()"
+          >
+            <mat-icon [fontIcon]="'gps_fixed'"></mat-icon>
+          </button>
+          <mat-error [libValidationMessages]="form.controls.aposCenter"></mat-error>
+        </mat-form-field>
 
-                <mat-form-field>
-                    <mat-label>{{ 'controlScheme.servoBinding.outputCenterOffset' | transloco }}</mat-label>
-                    <input type="number"
-                           matInput
-                           [formControl]="form.controls.aposCenter"
-                           [min]="formBuilder.aposCenterMin"
-                           [max]="formBuilder.aposCenterMax"
-                    />
-                    <button mat-icon-button
-                            matSuffix
-                            [disabled]="(canRequestPortValue$ | async) !== true"
-                            [title]="'controlScheme.servoBinding.readServoCenterFromPort' | transloco"
-                            (click)="onServoCenterReadRequest()"
-                    >
-                        <mat-icon [fontIcon]="'gps_fixed'"></mat-icon>
-                    </button>
-                    <mat-error [libValidationMessages]="form.controls.aposCenter"></mat-error>
-                </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ 'controlScheme.servoBinding.outputAngleRange' | transloco }}</mat-label>
+          <input type="number" matInput [formControl]="form.controls.range" [min]="formBuilder.servoMinRange" [max]="formBuilder.servoMaxRange" />
+          <button
+            mat-icon-button
+            matSuffix
+            [disabled]="(canRequestPortValue$ | async) !== true || !isCenterPositionReceived"
+            [title]="'controlScheme.servoBinding.readServoRangeFromPort' | transloco"
+            (click)="onServoRangeReadRequest()"
+          >
+            <mat-icon [fontIcon]="'gps_fixed'"></mat-icon>
+          </button>
+          <mat-error [libValidationMessages]="form.controls.range"></mat-error>
+        </mat-form-field>
+      }
 
-                <mat-form-field>
-                    <mat-label>{{ 'controlScheme.servoBinding.outputAngleRange' | transloco }}</mat-label>
-                    <input type="number"
-                           matInput
-                           [formControl]="form.controls.range"
-                           [min]="formBuilder.servoMinRange"
-                           [max]="formBuilder.servoMaxRange"
-                    />
-                    <button mat-icon-button
-                            matSuffix
-                            [disabled]="(canRequestPortValue$ | async) !== true || !isCenterPositionReceived"
-                            [title]="'controlScheme.servoBinding.readServoRangeFromPort' | transloco"
-                            (click)="onServoRangeReadRequest()"
-                    >
-                        <mat-icon [fontIcon]="'gps_fixed'"></mat-icon>
-                    </button>
-                    <mat-error [libValidationMessages]="form.controls.range"></mat-error>
-                </mat-form-field>
-            }
+      <lib-toggle-control [translocoTitle]="'controlScheme.outputInvertControlTitle'" [control]="form.controls.invert"></lib-toggle-control>
 
-            <lib-toggle-control [translocoTitle]="'controlScheme.outputInvertControlTitle'"
-                                [control]="form.controls.invert"
-            ></lib-toggle-control>
+      <lib-toggle-control [translocoTitle]="'controlScheme.useAccelerationProfile'" [control]="form.controls.useAccelerationProfile"></lib-toggle-control>
 
-            <lib-toggle-control [translocoTitle]="'controlScheme.useAccelerationProfile'"
-                                [control]="form.controls.useAccelerationProfile"
-            ></lib-toggle-control>
-
-            <lib-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'"
-                                [control]="form.controls.useDecelerationProfile"
-            ></lib-toggle-control>
-        </lib-cs-binding-edit-section>
-    </lib-cs-binding-edit-sections-container>
+      <lib-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'" [control]="form.controls.useDecelerationProfile"></lib-toggle-control>
+    </lib-cs-binding-edit-section>
+  </lib-cs-binding-edit-sections-container>
 }

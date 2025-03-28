@@ -1,16 +1,10 @@
-<lib-widget [title]="title"
-            [subTitle]="subtitle"
-            [canBeEdited]="canBeEdited"
-            [canBeDeleted]="canBeDeleted"
-            (edit)="onEdit()"
-            (delete)="onDelete()"
->
-    @if (voltage !== undefined) {
-        <span class="voltage-value">
-            {{ 'controlScheme.widgets.voltage.value' | transloco: { voltage: (voltage | number: '1.2-2') } }}
-        </span>
-    } @else {
-        <mat-icon [fontIcon]="'question_mark'"></mat-icon>
-        <span class="cdk-visually-hidden">{{ 'controlScheme.widgets.voltage.noDataTitle' | transloco }}</span>
-    }
+<lib-widget [title]="title" [subTitle]="subtitle" [canBeEdited]="canBeEdited" [canBeDeleted]="canBeDeleted" (edit)="onEdit()" (delete)="onDelete()">
+  @if (voltage !== undefined) {
+    <span class="voltage-value">
+      {{ 'controlScheme.widgets.voltage.value' | transloco: { voltage: (voltage | number: '1.2-2') } }}
+    </span>
+  } @else {
+    <mat-icon [fontIcon]="'question_mark'"></mat-icon>
+    <span class="cdk-visually-hidden">{{ 'controlScheme.widgets.voltage.noDataTitle' | transloco }}</span>
+  }
 </lib-widget>

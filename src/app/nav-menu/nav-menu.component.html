@@ -1,19 +1,21 @@
 @if (navMenuViewModel$ | async; as navMenuViewModel) {
-    @if (isSmallScreen$ | async) {
-        <app-compact-nav-menu [connectedControllersCount]="navMenuViewModel.connectedControllersCount"
-                              [connectedHubCount]="navMenuViewModel.connectedHubCount"
-                              [controlSchemesCount]="navMenuViewModel.controlSchemesCount"
-                              [isBluetoothAvailable]="navMenuViewModel.isBluetoothAvailable"
-                              [isDiscoveryBusy]="navMenuViewModel.isDiscoveryBusy"
-                              (discoveryStart)="onDiscoveryStart()"
-        ></app-compact-nav-menu>
-    } @else {
-        <app-full-nav-menu [connectedControllersCount]="navMenuViewModel.connectedControllersCount"
-                           [connectedHubCount]="navMenuViewModel.connectedHubCount"
-                           [controlSchemesCount]="navMenuViewModel.controlSchemesCount"
-                           [isBluetoothAvailable]="navMenuViewModel.isBluetoothAvailable"
-                           [isDiscoveryBusy]="navMenuViewModel.isDiscoveryBusy"
-                           (discoveryStart)="onDiscoveryStart()"
-        ></app-full-nav-menu>
-    }
+  @if (isSmallScreen$ | async) {
+    <app-compact-nav-menu
+      [connectedControllersCount]="navMenuViewModel.connectedControllersCount"
+      [connectedHubCount]="navMenuViewModel.connectedHubCount"
+      [controlSchemesCount]="navMenuViewModel.controlSchemesCount"
+      [isBluetoothAvailable]="navMenuViewModel.isBluetoothAvailable"
+      [isDiscoveryBusy]="navMenuViewModel.isDiscoveryBusy"
+      (discoveryStart)="onDiscoveryStart()"
+    ></app-compact-nav-menu>
+  } @else {
+    <app-full-nav-menu
+      [connectedControllersCount]="navMenuViewModel.connectedControllersCount"
+      [connectedHubCount]="navMenuViewModel.connectedHubCount"
+      [controlSchemesCount]="navMenuViewModel.controlSchemesCount"
+      [isBluetoothAvailable]="navMenuViewModel.isBluetoothAvailable"
+      [isDiscoveryBusy]="navMenuViewModel.isDiscoveryBusy"
+      (discoveryStart)="onDiscoveryStart()"
+    ></app-full-nav-menu>
+  }
 }

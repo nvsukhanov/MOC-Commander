@@ -1,43 +1,30 @@
 @if (currentSchemeName(); as schemeName) {
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>
-                <h2 libEllipsisTitle>
-                    {{ 'controlSchemeRename.title' | transloco: { previousName: schemeName } }}
-                </h2>
-            </mat-card-title>
-        </mat-card-header>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h2 libEllipsisTitle>
+          {{ 'controlSchemeRename.title' | transloco: { previousName: schemeName } }}
+        </h2>
+      </mat-card-title>
+    </mat-card-header>
 
-        <mat-card-content>
-            <form class="name-edit-form"
-                  (submit)="onSave($event)"
-            >
-                <mat-form-field class="name-edit-form-field">
-                    <mat-label>{{ 'controlSchemeRename.nameField' | transloco }}</mat-label>
-                    <input matInput
-                           type="text"
-                           autofocus
-                           [formControl]="nameFormControl"
-                    />
-                    <mat-error [libValidationMessages]="nameFormControl"
-                               [l10nMap]="validationErrorsL10nMap"
-                    ></mat-error>
-                </mat-form-field>
-            </form>
-        </mat-card-content>
-    </mat-card>
+    <mat-card-content>
+      <form class="name-edit-form" (submit)="onSave($event)">
+        <mat-form-field class="name-edit-form-field">
+          <mat-label>{{ 'controlSchemeRename.nameField' | transloco }}</mat-label>
+          <input matInput type="text" autofocus [formControl]="nameFormControl" />
+          <mat-error [libValidationMessages]="nameFormControl" [l10nMap]="validationErrorsL10nMap"></mat-error>
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+  </mat-card>
 
-    <ng-container *libFeatureToolbarControls>
-        <button mat-raised-button
-                [disabled]="!canSave()"
-                (click)="onSave($event)"
-        >
-            {{ 'controlSchemeRename.saveButton' | transloco }}
-        </button>
-        <a mat-raised-button
-           [routerLink]="cancelPath"
-        >
-            {{ 'controlSchemeRename.cancelButton' | transloco }}
-        </a>
-    </ng-container>
+  <ng-container *libFeatureToolbarControls>
+    <button mat-raised-button [disabled]="!canSave()" (click)="onSave($event)">
+      {{ 'controlSchemeRename.saveButton' | transloco }}
+    </button>
+    <a mat-raised-button [routerLink]="cancelPath">
+      {{ 'controlSchemeRename.cancelButton' | transloco }}
+    </a>
+  </ng-container>
 }

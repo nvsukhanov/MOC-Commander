@@ -1,13 +1,13 @@
 :host {
-    display: block;
-    max-width: 800px;
+  display: block;
+  max-width: 800px;
 }
 
 .export-string-container {
-    line-break: anywhere;
-    white-space: normal;
-    padding: 10px;
-    border: 1px solid var(--app-primary-color);
-    border-radius: var(--mdc-dialog-container-shape, 4px);
-    font-size: 14px;
+  line-break: anywhere;
+  white-space: normal;
+  padding: 10px;
+  border: 1px solid var(--app-primary-color);
+  border-radius: var(--mdc-dialog-container-shape, 4px);
+  font-size: 14px;
 }

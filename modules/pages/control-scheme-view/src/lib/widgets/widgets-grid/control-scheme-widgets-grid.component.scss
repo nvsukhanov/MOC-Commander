@@ -1,36 +1,38 @@
 :host {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    grid-auto-rows: 180px;
-    gap: 5px;
-    justify-items: stretch;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-auto-rows: 180px;
+  gap: 5px;
+  justify-items: stretch;
 }
 
 .add-widget-button-container {
-    border-width: 3px;
-    border-style: dashed;
-    border-color: var(--app-well-color);
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
+  border-width: 3px;
+  border-style: dashed;
+  border-color: var(--app-well-color);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 
-    transition: opacity 0.5s, border-color 0.5s;
-    overflow: hidden;
+  transition:
+    opacity 0.5s,
+    border-color 0.5s;
+  overflow: hidden;
 
-    &_running {
-        opacity: 0;
-        border-color: rgba(0,0,0,0);
-    }
+  &_running {
+    opacity: 0;
+    border-color: rgba(0, 0, 0, 0);
+  }
 }
 
 .add-widget-button {
-    transition: opacity 0.5s;
+  transition: opacity 0.5s;
 
-    &_running {
-        opacity: 0;
-    }
+  &_running {
+    opacity: 0;
+  }
 }

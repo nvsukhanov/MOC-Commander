@@ -19,21 +19,21 @@ import { ROUTES } from './routes';
 import { CHANGELOG } from './changelog';
 
 bootstrapApplication(RootComponent, {
-    providers: [
-        provideRouter(ROUTES, withPreloading(PreloadAllModules)),
-        provideI18n(),
-        provideAnimations(),
-        provideControllerProfiles(),
-        importProvidersFrom(MatSnackBarModule),
-        provideApplicationStore(),
-        provideBindings(),
-        provideWidgets(),
-        provideTasks(),
-        { provide: ErrorStateMatcher, useClass: ShowOnTouchedErrorStateMatcher },
-        provideServiceWorker('ngsw-worker.js', {
-            enabled: !isDevMode(),
-            registrationStrategy: 'registerWhenStable:30000'
-        }),
-        { provide: CHANGELOG_TOKEN, useValue: CHANGELOG }
-    ]
+  providers: [
+    provideRouter(ROUTES, withPreloading(PreloadAllModules)),
+    provideI18n(),
+    provideAnimations(),
+    provideControllerProfiles(),
+    importProvidersFrom(MatSnackBarModule),
+    provideApplicationStore(),
+    provideBindings(),
+    provideWidgets(),
+    provideTasks(),
+    { provide: ErrorStateMatcher, useClass: ShowOnTouchedErrorStateMatcher },
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
+    { provide: CHANGELOG_TOKEN, useValue: CHANGELOG },
+  ],
 });

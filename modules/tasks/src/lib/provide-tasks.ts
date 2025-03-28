@@ -14,23 +14,23 @@ import { TaskHashBuilderService } from './task-hash-builder.service';
 import { TaskSummaryBuilderService } from './task-summary-builder.service';
 
 export function provideTasks(): Provider[] {
-    return [
-        GearboxTaskRunnerService,
-        SetAngleTaskRunnerService,
-        SpeedTaskRunnerService,
-        StepperTaskRunnerService,
-        TrainTaskRunnerService,
-        GearboxTaskL10nService,
-        SetAngleTaskL10nService,
-        SpeedTaskL10nService,
-        StepperTaskL10nService,
-        TrainTaskL10nService,
-        { provide: TASK_RUNNER, useClass: TaskRunnerService },
-        HashCompareFilterService,
-        MostRecentTaskFilterService,
-        SpeedTaskFilterService,
-        TaskHashBuilderService,
-        { provide: TASK_FILTER, useClass: TaskFilterService },
-        { provide: PORT_COMMAND_TASK_SUMMARY_BUILDER, useClass: TaskSummaryBuilderService }
-    ];
+  return [
+    GearboxTaskRunnerService,
+    SetAngleTaskRunnerService,
+    SpeedTaskRunnerService,
+    StepperTaskRunnerService,
+    TrainTaskRunnerService,
+    GearboxTaskL10nService,
+    SetAngleTaskL10nService,
+    SpeedTaskL10nService,
+    StepperTaskL10nService,
+    TrainTaskL10nService,
+    { provide: TASK_RUNNER, useClass: TaskRunnerService },
+    HashCompareFilterService,
+    MostRecentTaskFilterService,
+    SpeedTaskFilterService,
+    TaskHashBuilderService,
+    { provide: TASK_FILTER, useClass: TaskFilterService },
+    { provide: PORT_COMMAND_TASK_SUMMARY_BUILDER, useClass: TaskSummaryBuilderService },
+  ];
 }

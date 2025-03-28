@@ -5,9 +5,7 @@ import { IWidgetBlockerChecker } from '../i-widget-blocker-checker';
 
 @Injectable()
 export class VoltageWidgetBlockerCheckerService implements IWidgetBlockerChecker {
-    public canBeUsedWithInputModes(
-        portModes: PortModeName[]
-    ): boolean {
-        return portModes.includes(PortModeName.voltageS) || portModes.includes(PortModeName.voltageL);
-    }
+  public canBeUsedWithInputModes(portModes: PortModeName[]): boolean {
+    return portModes.includes(PortModeName.voltageS) || portModes.includes(PortModeName.voltageL);
+  }
 }

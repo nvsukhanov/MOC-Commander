@@ -4,30 +4,20 @@
   "sourceRoot": "modules/shared/controller/src",
   "prefix": "lib-controller-shared",
   "projectType": "library",
-  "tags": [
-    "scope:i18n"
-  ],
+  "tags": ["scope:i18n"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/{projectRoot}"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "modules/shared/i18n/jest.config.ts"
       }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "modules/shared/i18n/**/*.ts",
-          "modules/shared/i18n/**/*.html",
-          "modules/shared/i18n/package.json"
-        ]
+        "lintFilePatterns": ["modules/shared/i18n/**/*.ts", "modules/shared/i18n/**/*.html", "modules/shared/i18n/package.json"]
       }
     }
   }

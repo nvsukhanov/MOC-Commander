@@ -8,34 +8,23 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { GamepadPollingRate } from '@app/store';
 
 @Component({
-    standalone: true,
-    selector: 'page-settings-gamepad-polling-rate',
-    templateUrl: './gamepad-polling-rate.component.html',
-    styleUrl: './gamepad-polling-rate.component.scss',
-    imports: [
-        MatFormField,
-        MatLabel,
-        MatOption,
-        MatSelect,
-        TranslocoPipe,
-        MatIcon,
-        MatTooltip,
-        MatSuffix
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'page-settings-gamepad-polling-rate',
+  templateUrl: './gamepad-polling-rate.component.html',
+  styleUrl: './gamepad-polling-rate.component.scss',
+  imports: [MatFormField, MatLabel, MatOption, MatSelect, TranslocoPipe, MatIcon, MatTooltip, MatSuffix],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GamepadPollingRateComponent {
-    public readonly gamepadPollingRate = input.required<GamepadPollingRate>();
+  public readonly gamepadPollingRate = input.required<GamepadPollingRate>();
 
-    public readonly gamepadPollingRateChange = output<GamepadPollingRate>();
+  public readonly gamepadPollingRateChange = output<GamepadPollingRate>();
 
-    public readonly lowPollingRate = GamepadPollingRate.Low;
+  public readonly lowPollingRate = GamepadPollingRate.Low;
 
-    public readonly defaultPollingRate = GamepadPollingRate.Default;
+  public readonly defaultPollingRate = GamepadPollingRate.Default;
 
-    public onGamepadPollingRateChange(
-        value: GamepadPollingRate
-    ): void {
-        this.gamepadPollingRateChange.emit(value);
-    }
+  public onGamepadPollingRateChange(value: GamepadPollingRate): void {
+    this.gamepadPollingRateChange.emit(value);
+  }
 }

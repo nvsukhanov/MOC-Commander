@@ -1,26 +1,17 @@
-<lib-widget [title]="title"
-            [canBeEdited]="canBeEdited"
-            [canBeDeleted]="canBeDeleted"
-            (edit)="onEdit()"
-            (delete)="onDelete()"
->
-    <lib-tilt-gauge [tiltDegrees]="roll ?? null"
-                    [iconTemplate]="rollIconTemplate"
-                    [valueClickable]="true"
-                    (valueClicked)="toggleCompensation()"
-                    class="widget-gauge"
-    ></lib-tilt-gauge>
+<lib-widget [title]="title" [canBeEdited]="canBeEdited" [canBeDeleted]="canBeDeleted" (edit)="onEdit()" (delete)="onDelete()">
+  <lib-tilt-gauge
+    [tiltDegrees]="roll ?? null"
+    [iconTemplate]="rollIconTemplate"
+    [valueClickable]="true"
+    (valueClicked)="toggleCompensation()"
+    class="widget-gauge"
+  ></lib-tilt-gauge>
 
-    <ng-template #rollIconTemplate>
-        <svg xmlns="http://www.w3.org/2000/svg"
-             viewBox="0 0 100 100"
-
-        >
-            <g class="widget-icon">
-                <path class="widget-icon__outline"
-                      d="M 30 50 L 70 50 L 50 35 z"
-                ></path>
-            </g>
-        </svg>
-    </ng-template>
+  <ng-template #rollIconTemplate>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <g class="widget-icon">
+        <path class="widget-icon__outline" d="M 30 50 L 70 50 L 50 35 z"></path>
+      </g>
+    </svg>
+  </ng-template>
 </lib-widget>

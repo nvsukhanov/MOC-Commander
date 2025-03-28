@@ -9,19 +9,19 @@ import { Language } from './language';
 import { DEFAULT_LANGUAGE } from './locales';
 
 export function provideI18n(): EnvironmentProviders {
-    return makeEnvironmentProviders([
-        provideTransloco({
-            config: {
-                availableLangs: getEnumValues(Language),
-                defaultLang: DEFAULT_LANGUAGE,
-                reRenderOnLangChange: true,
-                prodMode: !isDevMode()
-            },
-            loader: I18nLoaderService
-        }),
-        provideTranslocoMessageformat({
-            locales: getEnumValues(Language)
-        }),
-        provideHttpClient()
-    ]);
+  return makeEnvironmentProviders([
+    provideTransloco({
+      config: {
+        availableLangs: getEnumValues(Language),
+        defaultLang: DEFAULT_LANGUAGE,
+        reRenderOnLangChange: true,
+        prodMode: !isDevMode(),
+      },
+      loader: I18nLoaderService,
+    }),
+    provideTranslocoMessageformat({
+      locales: getEnumValues(Language),
+    }),
+    provideHttpClient(),
+  ]);
 }

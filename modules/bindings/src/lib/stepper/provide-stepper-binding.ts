@@ -7,11 +7,11 @@ import { StepperBindingInputExtractorService } from './stepper-binding-input-ext
 import { StepperBindingL10nService } from './stepper-binding-l10n.service';
 
 export function provideStepperBinding(): Provider[] {
-    return [
-        StepperBindingTaskPayloadBuilderService,
-        StepperBindingFormBuilderService,
-        StepperBindingFormMapperService,
-        StepperBindingInputExtractorService,
-        StepperBindingL10nService
-    ];
+  return [
+    StepperBindingTaskPayloadBuilderService,
+    StepperBindingFormBuilderService,
+    StepperBindingFormMapperService,
+    StepperBindingInputExtractorService,
+    StepperBindingL10nService,
+  ];
 }

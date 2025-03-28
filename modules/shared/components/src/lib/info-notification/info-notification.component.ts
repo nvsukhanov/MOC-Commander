@@ -4,19 +4,13 @@ import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
-    standalone: true,
-    selector: 'lib-info-notification',
-    templateUrl: './info-notification.component.html',
-    styleUrl: './info-notification.component.scss',
-    imports: [
-        MatSnackBarLabel,
-        AsyncPipe
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'lib-info-notification',
+  templateUrl: './info-notification.component.html',
+  styleUrl: './info-notification.component.scss',
+  imports: [MatSnackBarLabel, AsyncPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InfoNotificationComponent {
-    constructor(
-        @Inject(MAT_SNACK_BAR_DATA) public readonly caption$: Observable<string>
-    ) {
-    }
+  constructor(@Inject(MAT_SNACK_BAR_DATA) public readonly caption$: Observable<string>) {}
 }

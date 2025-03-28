@@ -1,43 +1,42 @@
 :host {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .card-title {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .no-controller-connected-notification-header {
-    font-weight: 300;
-    margin: 0;
-    padding: 10px 8px;
-    font-size: 20px;
+  font-weight: 300;
+  margin: 0;
+  padding: 10px 8px;
+  font-size: 20px;
 }
 
 .controller-name-container {
-    height: 48px;
-    padding: 0 24px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  height: 48px;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
-
 .controller-icon {
-    margin-right: 10px;
+  margin-right: 10px;
 
-    &_not-connected {
-        color: var(--app-disabled-color);
-    }
+  &_not-connected {
+    color: var(--app-disabled-color);
+  }
 }
 
 .ignored-input-icon {
-    color: var(--app-disabled-color);
-    margin-left: 10px;
+  color: var(--app-disabled-color);
+  margin-left: 10px;
 }
 
 .spacer {
-    flex: 1;
+  flex: 1;
 }

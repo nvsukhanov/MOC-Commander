@@ -12,15 +12,22 @@ export type V27GamepadSettings = Extract<V27ControllerSettings, { controllerType
 export type V27GamepadAxisSettings = V27GamepadSettings['axisConfigs'][string];
 export type V27GamepadButtonSettings = V27GamepadSettings['buttonConfigs'][string];
 
-export type V26ControllerSettings = EntityState<V27KeyboardSettings | V27HubSettings | {
-    controllerId: string;
-    ignoreInput: boolean;
-    controllerType: ControllerType.Gamepad;
-    axisConfigs: { [k in string]: V27GamepadAxisSettings & { negativeValueCanActivate: boolean } };
-    buttonConfigs: { [k in string]: V27GamepadButtonSettings & { negativeValueCanActivate: boolean } };
-}>;
+export type V26ControllerSettings = EntityState<
+  | V27KeyboardSettings
+  | V27HubSettings
+  | {
+      controllerId: string;
+      ignoreInput: boolean;
+      controllerType: ControllerType.Gamepad;
+      axisConfigs: { [k in string]: V27GamepadAxisSettings & { negativeValueCanActivate: boolean } };
+      buttonConfigs: { [k in string]: V27GamepadButtonSettings & { negativeValueCanActivate: boolean } };
+    }
+>;
 
-export type V26Store = Override<V27Store, {
+export type V26Store = Override<
+  V27Store,
+  {
     controllerSettings: V26ControllerSettings;
     storeVersion: AppStoreVersion.v26;
-}>;
+  }
+>;

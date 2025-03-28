@@ -7,11 +7,11 @@ import { SpeedBindingInputExtractorService } from './speed-binding-input-extract
 import { SpeedBindingL10nService } from './speed-binding-l10n.service';
 
 export function provideSpeedBinding(): Provider[] {
-    return [
-        SpeedBindingTaskPayloadBuilderService,
-        SpeedBindingFormBuilderService,
-        SpeedBindingFormMapperService,
-        SpeedBindingInputExtractorService,
-        SpeedBindingL10nService
-    ];
+  return [
+    SpeedBindingTaskPayloadBuilderService,
+    SpeedBindingFormBuilderService,
+    SpeedBindingFormMapperService,
+    SpeedBindingInputExtractorService,
+    SpeedBindingL10nService,
+  ];
 }

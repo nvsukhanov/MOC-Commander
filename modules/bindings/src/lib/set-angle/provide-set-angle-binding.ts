@@ -7,11 +7,11 @@ import { SetAngleBindingInputExtractorService } from './set-angle-binding-input-
 import { SetAngleBindingL10nService } from './set-angle-binding-l10n.service';
 
 export function provideSetAngleBinding(): Provider[] {
-    return [
-        SetAngleBindingTaskPayloadBuilderService,
-        SetAngleBindingFormBuilderService,
-        SetAngleBindingFormMapperService,
-        SetAngleBindingInputExtractorService,
-        SetAngleBindingL10nService
-    ];
+  return [
+    SetAngleBindingTaskPayloadBuilderService,
+    SetAngleBindingFormBuilderService,
+    SetAngleBindingFormMapperService,
+    SetAngleBindingInputExtractorService,
+    SetAngleBindingL10nService,
+  ];
 }

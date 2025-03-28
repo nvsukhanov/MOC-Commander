@@ -3,34 +3,33 @@ import { Subscription } from 'rxjs';
 import { ScreenSizeObserverService } from '@app/shared-misc';
 
 @Directive({
-    standalone: true,
-    selector: '[libHideOnSmallScreen]'
+  standalone: true,
+  selector: '[libHideOnSmallScreen]',
 })
 export class HideOnSmallScreenDirective implements OnInit, OnDestroy {
-    private subscription?: Subscription;
+  private subscription?: Subscription;
 
-    constructor(
-        private readonly templateRef: TemplateRef<unknown>,
-        private readonly viewContainer: ViewContainerRef,
-        private readonly screenSizeObserverService: ScreenSizeObserverService,
-        private readonly cdRef: ChangeDetectorRef
-    ) {
-    }
+  constructor(
+    private readonly templateRef: TemplateRef<unknown>,
+    private readonly viewContainer: ViewContainerRef,
+    private readonly screenSizeObserverService: ScreenSizeObserverService,
+    private readonly cdRef: ChangeDetectorRef,
+  ) {}
 
-    public ngOnInit(): void {
+  public ngOnInit(): void {
+    this.viewContainer.clear();
+    this.subscription = this.screenSizeObserverService.isSmallScreen$.subscribe((isSmallScreen) => {
+      if (isSmallScreen) {
         this.viewContainer.clear();
-        this.subscription = this.screenSizeObserverService.isSmallScreen$.subscribe((isSmallScreen) => {
-            if (isSmallScreen) {
-                this.viewContainer.clear();
-                this.cdRef.markForCheck();
-            } else {
-                this.viewContainer.createEmbeddedView(this.templateRef);
-                this.cdRef.markForCheck();
-            }
-        });
-    }
+        this.cdRef.markForCheck();
+      } else {
+        this.viewContainer.createEmbeddedView(this.templateRef);
+        this.cdRef.markForCheck();
+      }
+    });
+  }
 
-    public ngOnDestroy(): void {
-        this.subscription?.unsubscribe();
-    }
+  public ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
 }

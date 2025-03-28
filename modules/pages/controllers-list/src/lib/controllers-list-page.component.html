@@ -1,66 +1,62 @@
 @if (controllerListViewModel$ | async; as controllerListViewModel) {
-    @if (controllerListViewModel.length) {
-        <ul>
-            @for (controller of controllerListViewModel; track controller.id) {
-                <li class="card-list-item">
-                    <mat-card>
-                        <mat-card-header class="controller-name-container">
-                            <mat-card-title class="card-title">
-                                @if (controller.controllerType !== undefined) {
-                                    <mat-icon class="controller-icon"
-                                              [class.controller-icon_not-connected]="!controller.isConnected"
-                                              [fontIcon]="controller.controllerType | controllerTypeIconName"
-                                              [inline]="true"
-                                    ></mat-icon>
-                                }
+  @if (controllerListViewModel.length) {
+    <ul>
+      @for (controller of controllerListViewModel; track controller.id) {
+        <li class="card-list-item">
+          <mat-card>
+            <mat-card-header class="controller-name-container">
+              <mat-card-title class="card-title">
+                @if (controller.controllerType !== undefined) {
+                  <mat-icon
+                    class="controller-icon"
+                    [class.controller-icon_not-connected]="!controller.isConnected"
+                    [fontIcon]="controller.controllerType | controllerTypeIconName"
+                    [inline]="true"
+                  ></mat-icon>
+                }
 
-                                <a mat-button
-                                   [routerLink]="controller.id | controllerViewHref"
-                                >
-                                    {{ controller | controllerName | async  }}
+                <a mat-button [routerLink]="controller.id | controllerViewHref">
+                  {{ controller | controllerName | async }}
 
-                                    @if (!controller.isConnected) {
-                                        <span class="cdk-visually-hidden">
-                                        ({{ 'controller.isNotConnectedInlineNotification' | transloco }})
-                                    </span>
-                                    }
-                                    @if (controller.isInputIgnored) {
-                                        <span class="cdk-visually-hidden">
-                                        ({{ 'controller.inputIsIgnored' | transloco }})
-                                    </span>
-                                    }
-                                </a>
+                  @if (!controller.isConnected) {
+                    <span class="cdk-visually-hidden"> ({{ 'controller.isNotConnectedInlineNotification' | transloco }}) </span>
+                  }
+                  @if (controller.isInputIgnored) {
+                    <span class="cdk-visually-hidden"> ({{ 'controller.inputIsIgnored' | transloco }}) </span>
+                  }
+                </a>
 
-                                @if (controller.isInputIgnored) {
-                                    <mat-icon [fontIcon]="'do_not_disturb_on'"
-                                              [title]="'controller.inputIsIgnored' | transloco"
-                                              class="ignored-input-icon"
-                                              [inline]="true"
-                                    ></mat-icon>
-                                }
+                @if (controller.isInputIgnored) {
+                  <mat-icon
+                    [fontIcon]="'do_not_disturb_on'"
+                    [title]="'controller.inputIsIgnored' | transloco"
+                    class="ignored-input-icon"
+                    [inline]="true"
+                  ></mat-icon>
+                }
 
-                                <span class="spacer"></span>
+                <span class="spacer"></span>
 
-                                @if (controller.canForget) {
-                                    <button mat-button
-                                            [color]="'warn'"
-                                            (click)="forgetController(controller.id)"
-                                            [attr.aria-label]="'controller.forgetButtonLabel' | transloco: { name: controller | controllerName | async }"
-                                    >
-                                        {{ 'controller.forget' | transloco }}
-                                    </button>
-                                }
-                            </mat-card-title>
-                        </mat-card-header>
-                    </mat-card>
-                </li>
-            }
-        </ul>
-    } @else {
-        <h3 class="no-controller-connected-notification-header">{{ 'controller.noControllerConnected' | transloco }}</h3>
-        <lib-hint>
-            {{ 'controller.detectControllerTip' | transloco }}
-        </lib-hint>
-    }
+                @if (controller.canForget) {
+                  <button
+                    mat-button
+                    [color]="'warn'"
+                    (click)="forgetController(controller.id)"
+                    [attr.aria-label]="'controller.forgetButtonLabel' | transloco: { name: controller | controllerName | async }"
+                  >
+                    {{ 'controller.forget' | transloco }}
+                  </button>
+                }
+              </mat-card-title>
+            </mat-card-header>
+          </mat-card>
+        </li>
+      }
+    </ul>
+  } @else {
+    <h3 class="no-controller-connected-notification-header">{{ 'controller.noControllerConnected' | transloco }}</h3>
+    <lib-hint>
+      {{ 'controller.detectControllerTip' | transloco }}
+    </lib-hint>
+  }
 }
-

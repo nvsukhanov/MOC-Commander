@@ -1,17 +1,12 @@
 <span matSnackBarLabel>
-    {{ 'appUpdatedNotification.prefixMessage' | transloco }}
-    <a [routerLink]="routeBuilder.about"
-       (click)="onDismiss()"
-    >
-        {{ 'appUpdatedNotification.linkText' | transloco }}
-    </a>
+  {{ 'appUpdatedNotification.prefixMessage' | transloco }}
+  <a [routerLink]="routeBuilder.about" (click)="onDismiss()">
+    {{ 'appUpdatedNotification.linkText' | transloco }}
+  </a>
 </span>
 
 <span matSnackBarActions>
-    <button mat-button
-            matSnackBarAction
-            (click)="onDismiss()"
-    >
-        {{ 'common.dismissNotification' | transloco }}
-    </button>
+  <button mat-button matSnackBarAction (click)="onDismiss()">
+    {{ 'common.dismissNotification' | transloco }}
+  </button>
 </span>

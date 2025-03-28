@@ -1,31 +1,31 @@
 :host {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px; // adhere to the mat-form-field margin
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px; // adhere to the mat-form-field margin
 }
 
 .slider-label {
-    display: flex;
-    margin: 0 8px;
+  display: flex;
+  margin: 0 8px;
 
-    &-description {
-        font-weight: 400;
-        flex: 1;
-    }
+  &-description {
+    font-weight: 400;
+    flex: 1;
+  }
 
-    &-value-left {
-        font-weight: 600;
-        width: 45px;
-        text-align: left;
-    }
+  &-value-left {
+    font-weight: 600;
+    width: 45px;
+    text-align: left;
+  }
 
-    &-value-right {
-        font-weight: 600;
-        width: 45px;
-        text-align: right;
-    }
+  &-value-right {
+    font-weight: 600;
+    width: 45px;
+    text-align: right;
+  }
 }
 
 .slider {
-    width: calc(100% - 20px);
+  width: calc(100% - 20px);
 }

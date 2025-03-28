@@ -7,11 +7,11 @@ import { TemperatureWidgetReadTaskFactoryService } from './temperature-widget-re
 import { TemperatureWidgetSettingsComponentFactoryService } from './temperature-widget-settings-component-factory.service';
 
 export function provideTemperatureWidget(): Provider[] {
-    return [
-        TemperatureWidgetComponentFactoryService,
-        TemperatureWidgetConfigFactoryService,
-        TemperatureWidgetBlockerCheckerService,
-        TemperatureWidgetReadTaskFactoryService,
-        TemperatureWidgetSettingsComponentFactoryService
-    ];
+  return [
+    TemperatureWidgetComponentFactoryService,
+    TemperatureWidgetConfigFactoryService,
+    TemperatureWidgetBlockerCheckerService,
+    TemperatureWidgetReadTaskFactoryService,
+    TemperatureWidgetSettingsComponentFactoryService,
+  ];
 }

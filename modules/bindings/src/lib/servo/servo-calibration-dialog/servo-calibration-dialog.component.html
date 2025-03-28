@@ -1,15 +1,11 @@
 <h1 mat-dialog-title>
-    {{ 'controlScheme.servoBinding.calibrationIsInProgress' | transloco }}
+  {{ 'controlScheme.servoBinding.calibrationIsInProgress' | transloco }}
 </h1>
 
-<div mat-dialog-actions
-     [align]="'end'"
->
-    <button mat-button
-            (click)="onCancel()"
-    >
-        {{ 'controlScheme.servoBinding.calibrationCancel' | transloco }}
-    </button>
+<div mat-dialog-actions [align]="'end'">
+  <button mat-button (click)="onCancel()">
+    {{ 'controlScheme.servoBinding.calibrationCancel' | transloco }}
+  </button>
 </div>
 
 <mat-progress-bar mode="indeterminate"></mat-progress-bar>

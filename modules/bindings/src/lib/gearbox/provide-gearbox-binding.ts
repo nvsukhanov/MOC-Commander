@@ -7,11 +7,11 @@ import { GearboxBindingInputExtractorService } from './gearbox-binding-input-ext
 import { GearboxBindingL10nService } from './gearbox-binding-l10n.service';
 
 export function provideGearboxBinding(): Provider[] {
-    return [
-        GearboxBindingTaskPayloadBuilderService,
-        GearboxBindingFormBuilderService,
-        GearboxBindingFormMapperService,
-        GearboxBindingInputExtractorService,
-        GearboxBindingL10nService
-    ];
+  return [
+    GearboxBindingTaskPayloadBuilderService,
+    GearboxBindingFormBuilderService,
+    GearboxBindingFormMapperService,
+    GearboxBindingInputExtractorService,
+    GearboxBindingL10nService,
+  ];
 }

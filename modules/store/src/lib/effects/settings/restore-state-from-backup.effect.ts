@@ -5,12 +5,12 @@ import { WINDOW } from '@app/shared-misc';
 
 import { SETTINGS_ACTIONS } from '../../actions';
 
-export const RESTORE_STATE_FROM_BACKUP_EFFECT = createEffect((
-    actions$: Actions = inject(Actions),
-    window: Window = inject(WINDOW)
-) => {
+export const RESTORE_STATE_FROM_BACKUP_EFFECT = createEffect(
+  (actions$: Actions = inject(Actions), window: Window = inject(WINDOW)) => {
     return actions$.pipe(
-        ofType(SETTINGS_ACTIONS.restoreStateFromBackup),
-        tap(() => window.location.reload())
+      ofType(SETTINGS_ACTIONS.restoreStateFromBackup),
+      tap(() => window.location.reload()),
     );
-}, { functional: true, dispatch: false });
+  },
+  { functional: true, dispatch: false },
+);

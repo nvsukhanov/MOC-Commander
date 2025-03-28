@@ -1,27 +1,30 @@
 <mat-card>
-    <mat-card-header>
-        <mat-card-title>
-            <mat-form-field class="binding-type-select">
-                <mat-label>{{ 'controlScheme.bindingOutputSectionOperationModeLabel' | transloco }}</mat-label>
-                <mat-select [formControl]="form.controls.bindingType">
-                    @for (bindingType of availableBindingTypes; track bindingType) {
-                        <mat-option [value]="bindingType">
-                            {{
-                                'controlScheme.bindingOutputSectionOperationModeValue' | transloco: {
-                                    name: bindingType | bindingTypeToL10nKey | transloco
-                                }
-                            }}
-                        </mat-option>
-                    }
-                </mat-select>
-            </mat-form-field>
-        </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <ng-container [libCsBindingEditDetailsRender]="binding"
-                      [libCsBindingEditDetailsRenderBindingType]="form.controls.bindingType.value"
-                      (libCsBindingEditDetailsRenderBindingChange)="onBindingChange($event)"
-                      (libCsBindingEditDetailsRenderBindingFormDirtyChange)="onBindingFormDirtyChange($event)"
-        ></ng-container>
-    </mat-card-content>
+  <mat-card-header>
+    <mat-card-title>
+      <mat-form-field class="binding-type-select">
+        <mat-label>{{ 'controlScheme.bindingOutputSectionOperationModeLabel' | transloco }}</mat-label>
+        <mat-select [formControl]="form.controls.bindingType">
+          @for (bindingType of availableBindingTypes; track bindingType) {
+            <mat-option [value]="bindingType">
+              {{
+                'controlScheme.bindingOutputSectionOperationModeValue'
+                  | transloco
+                    : {
+                        name: bindingType | bindingTypeToL10nKey | transloco,
+                      }
+              }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-container
+      [libCsBindingEditDetailsRender]="binding"
+      [libCsBindingEditDetailsRenderBindingType]="form.controls.bindingType.value"
+      (libCsBindingEditDetailsRenderBindingChange)="onBindingChange($event)"
+      (libCsBindingEditDetailsRenderBindingFormDirtyChange)="onBindingFormDirtyChange($event)"
+    ></ng-container>
+  </mat-card-content>
 </mat-card>

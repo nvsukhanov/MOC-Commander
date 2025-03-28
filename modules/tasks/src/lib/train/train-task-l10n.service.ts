@@ -8,17 +8,16 @@ import { ITaskSummaryBuilder } from '../i-task-summary-builder';
 
 @Injectable()
 export class TrainTaskL10nService implements ITaskSummaryBuilder<TaskType.Train> {
-    constructor(
-        private readonly translocoService: TranslocoService
-    ) {
-    }
+  constructor(private readonly translocoService: TranslocoService) {}
 
-    public buildTaskSummary(
-        task: PortCommandTask<TaskType.Train>
-    ): Observable<string> {
-        const level = task.payload.initialLevelIndex - task.payload.speedIndex;
-        const speedPercent = Math.round((task.payload.speed / MOTOR_LIMITS.maxSpeed) * 100);
-        const isLooping = task.payload.isLooping;
-        return this.translocoService.selectTranslate('controlScheme.tasks.trainSummary', { level, speedPercent, isLooping });
-    }
+  public buildTaskSummary(task: PortCommandTask<TaskType.Train>): Observable<string> {
+    const level = task.payload.initialLevelIndex - task.payload.speedIndex;
+    const speedPercent = Math.round((task.payload.speed / MOTOR_LIMITS.maxSpeed) * 100);
+    const isLooping = task.payload.isLooping;
+    return this.translocoService.selectTranslate('controlScheme.tasks.trainSummary', {
+      level,
+      speedPercent,
+      isLooping,
+    });
+  }
 }

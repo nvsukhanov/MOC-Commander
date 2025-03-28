@@ -7,11 +7,11 @@ import { ServoBindingInputExtractorService } from './servo-binding-input-extract
 import { ServoBindingL10nService } from './servo-binding-l10n.service';
 
 export function provideServoBinding(): Provider[] {
-    return [
-        ServoBindingTaskPayloadBuilderService,
-        ServoBindingFormBuilderService,
-        ServoBindingFormMapperService,
-        ServoBindingInputExtractorService,
-        ServoBindingL10nService
-    ];
+  return [
+    ServoBindingTaskPayloadBuilderService,
+    ServoBindingFormBuilderService,
+    ServoBindingFormMapperService,
+    ServoBindingInputExtractorService,
+    ServoBindingL10nService,
+  ];
 }

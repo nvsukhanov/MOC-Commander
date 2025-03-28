@@ -1,10 +1,10 @@
 :host {
-    display: flex;
+  display: flex;
 
-    a {
-        color: var(--snackbar-text-color);
-        text-decoration: underline;
-        cursor: pointer;
-        font-weight: normal;
-    }
+  a {
+    color: var(--snackbar-text-color);
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: normal;
+  }
 }

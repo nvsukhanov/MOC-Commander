@@ -6,14 +6,9 @@ import { APP_CONFIG, IAppConfig } from '../i-app-config';
 
 @Injectable({ providedIn: 'root' })
 export class PrefixedConsoleLoggerFactoryService {
-    constructor(
-        @Inject(APP_CONFIG) private readonly config: IAppConfig
-    ) {
-    }
+  constructor(@Inject(APP_CONFIG) private readonly config: IAppConfig) {}
 
-    public create(
-        prefix: string
-    ): ILogger {
-        return new PrefixedConsoleLogger(prefix, this.config);
-    }
+  public create(prefix: string): ILogger {
+    return new PrefixedConsoleLogger(prefix, this.config);
+  }
 }

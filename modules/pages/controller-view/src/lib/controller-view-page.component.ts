@@ -14,69 +14,66 @@ import { CONTROLLER_VIEW_PAGE_SELECTORS } from './controller-view-page-selectors
 import { ControllerSettingsContainerComponent } from './controller-settings-container';
 
 @Component({
-    standalone: true,
-    selector: 'page-controller-view',
-    templateUrl: './controller-view-page.component.html',
-    styleUrl: './controller-view-page.component.scss',
-    imports: [
-        MatCardModule,
-        HintComponent,
-        TranslocoPipe,
-        ControllerNamePipe,
-        ControllerSettingsContainerComponent,
-        MatIconModule,
-        ControllerTypeIconNamePipe,
-        ControllerTypeToL10nKeyPipe,
-        AsyncPipe
-    ],
-    providers: [
-        TitleService,
-        BreadcrumbsService
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'page-controller-view',
+  templateUrl: './controller-view-page.component.html',
+  styleUrl: './controller-view-page.component.scss',
+  imports: [
+    MatCardModule,
+    HintComponent,
+    TranslocoPipe,
+    ControllerNamePipe,
+    ControllerSettingsContainerComponent,
+    MatIconModule,
+    ControllerTypeIconNamePipe,
+    ControllerTypeToL10nKeyPipe,
+    AsyncPipe,
+  ],
+  providers: [TitleService, BreadcrumbsService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ControllerViewPageComponent implements OnInit {
-    public readonly viewModel$ = this.store.select(CONTROLLER_VIEW_PAGE_SELECTORS.selectViewModel);
+  public readonly viewModel$ = this.store.select(CONTROLLER_VIEW_PAGE_SELECTORS.selectViewModel);
 
-    public readonly isSmallScreen$ = this.screenSizeObserver.isSmallScreen$;
+  public readonly isSmallScreen$ = this.screenSizeObserver.isSmallScreen$;
 
-    constructor(
-        private readonly store: Store,
-        private readonly screenSizeObserver: ScreenSizeObserverService,
-        private readonly titleService: TitleService,
-        private readonly controllerProfilesFacadeService: ControllerProfilesFacadeService,
-        private readonly translocoService: TranslocoService,
-        private readonly routesBuilderService: RoutesBuilderService,
-        private breadcrumbs: BreadcrumbsService
-    ) {
-        this.breadcrumbs.setBreadcrumbsDef(
-            this.store.select(CONTROLLER_VIEW_PAGE_SELECTORS.selectCurrentlyViewedControllerId).pipe(
-                filter((controllerId): controllerId is string => !!controllerId),
-                switchMap((controllerId) => {
-                    return this.controllerProfilesFacadeService.getByControllerId(controllerId).pipe(
-                        map((controllerProfile) => ([
-                            {
-                                label$: this.translocoService.selectTranslate('pageTitle.controllerList'),
-                                route: this.routesBuilderService.controllersList
-                            },
-                            {
-                                label$: controllerProfile.name$,
-                                route: this.routesBuilderService.controllerView(controllerId)
-                            }
-                        ]))
-                    );
-                })
-            )
-        );
-    }
+  constructor(
+    private readonly store: Store,
+    private readonly screenSizeObserver: ScreenSizeObserverService,
+    private readonly titleService: TitleService,
+    private readonly controllerProfilesFacadeService: ControllerProfilesFacadeService,
+    private readonly translocoService: TranslocoService,
+    private readonly routesBuilderService: RoutesBuilderService,
+    private breadcrumbs: BreadcrumbsService,
+  ) {
+    this.breadcrumbs.setBreadcrumbsDef(
+      this.store.select(CONTROLLER_VIEW_PAGE_SELECTORS.selectCurrentlyViewedControllerId).pipe(
+        filter((controllerId): controllerId is string => !!controllerId),
+        switchMap((controllerId) => {
+          return this.controllerProfilesFacadeService.getByControllerId(controllerId).pipe(
+            map((controllerProfile) => [
+              {
+                label$: this.translocoService.selectTranslate('pageTitle.controllerList'),
+                route: this.routesBuilderService.controllersList,
+              },
+              {
+                label$: controllerProfile.name$,
+                route: this.routesBuilderService.controllerView(controllerId),
+              },
+            ]),
+          );
+        }),
+      ),
+    );
+  }
 
-    public ngOnInit(): void {
-        const title$ = this.store.select(CONTROLLER_VIEW_PAGE_SELECTORS.selectCurrentlyViewedControllerId).pipe(
-            filter((controllerId): controllerId is string => !!controllerId),
-            switchMap((controllerId) => this.controllerProfilesFacadeService.getByControllerId(controllerId)),
-            switchMap((controllerProfile) => controllerProfile.name$),
-            switchMap((controllerName) => this.translocoService.selectTranslate('pageTitle.controllerView', { controllerName }))
-        );
-        this.titleService.setTitle$(title$);
-    }
+  public ngOnInit(): void {
+    const title$ = this.store.select(CONTROLLER_VIEW_PAGE_SELECTORS.selectCurrentlyViewedControllerId).pipe(
+      filter((controllerId): controllerId is string => !!controllerId),
+      switchMap((controllerId) => this.controllerProfilesFacadeService.getByControllerId(controllerId)),
+      switchMap((controllerProfile) => controllerProfile.name$),
+      switchMap((controllerName) => this.translocoService.selectTranslate('pageTitle.controllerView', { controllerName })),
+    );
+    this.titleService.setTitle$(title$);
+  }
 }

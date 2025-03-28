@@ -6,14 +6,9 @@ import { IControllerProfile } from '../i-controller-profile';
 
 @Injectable()
 export class UnknownControllerProfileFactoryService {
-    constructor(
-        private readonly translocoService: TranslocoService
-    ) {
-    }
+  constructor(private readonly translocoService: TranslocoService) {}
 
-    public fromUid(
-        uid: string
-    ): IControllerProfile<null> {
-        return new UnknownControllerProfile(this.translocoService, uid);
-    }
+  public fromUid(uid: string): IControllerProfile<null> {
+    return new UnknownControllerProfile(this.translocoService, uid);
+  }
 }

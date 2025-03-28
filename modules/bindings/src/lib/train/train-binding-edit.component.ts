@@ -12,145 +12,131 @@ import { BindingControlSelectHubComponent, BindingControlSelectIoComponent } fro
 import { InputPipeType, TrainBindingInputAction } from '@app/store';
 
 import {
-    BindingControlPowerInputComponent,
-    BindingControlSelectControllerComponent,
-    BindingControlSelectControllerComponentData,
-    BindingControlSelectLoopingModeComponent,
-    BindingEditSectionComponent,
-    BindingEditSectionsContainerComponent,
-    CommonBindingsFormControlsBuilderService
+  BindingControlPowerInputComponent,
+  BindingControlSelectControllerComponent,
+  BindingControlSelectControllerComponentData,
+  BindingControlSelectLoopingModeComponent,
+  BindingEditSectionComponent,
+  BindingEditSectionsContainerComponent,
+  CommonBindingsFormControlsBuilderService,
 } from '../common';
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import { TrainBindingForm } from './train-binding-form';
 import { TrainBindingL10nService } from './train-binding-l10n.service';
 
 @Component({
-    standalone: true,
-    selector: 'lib-cs-binding-train-edit',
-    templateUrl: './train-binding-edit.component.html',
-    styleUrl: './train-binding-edit.component.scss',
-    imports: [
-        BindingEditSectionComponent,
-        BindingControlSelectHubComponent,
-        BindingControlSelectIoComponent,
-        TranslocoPipe,
-        MatDividerModule,
-        HideOnSmallScreenDirective,
-        BindingControlSelectControllerComponent,
-        MatInputModule,
-        ReactiveFormsModule,
-        MatIconModule,
-        MatButtonModule,
-        BindingControlSelectLoopingModeComponent,
-        ToggleControlComponent,
-        BindingEditSectionsContainerComponent,
-        ValidationMessagesDirective,
-        BindingControlPowerInputComponent
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'lib-cs-binding-train-edit',
+  templateUrl: './train-binding-edit.component.html',
+  styleUrl: './train-binding-edit.component.scss',
+  imports: [
+    BindingEditSectionComponent,
+    BindingControlSelectHubComponent,
+    BindingControlSelectIoComponent,
+    TranslocoPipe,
+    MatDividerModule,
+    HideOnSmallScreenDirective,
+    BindingControlSelectControllerComponent,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatButtonModule,
+    BindingControlSelectLoopingModeComponent,
+    ToggleControlComponent,
+    BindingEditSectionsContainerComponent,
+    ValidationMessagesDirective,
+    BindingControlPowerInputComponent,
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrainBindingEditComponent implements IBindingsDetailsEditComponent<TrainBindingForm> {
-    public readonly bindingType = ControlSchemeBindingType.Train;
+  public readonly bindingType = ControlSchemeBindingType.Train;
 
-    private _nextLevelControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null = null;
+  private _nextLevelControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null = null;
 
-    private _prevLevelControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null = null;
+  private _prevLevelControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null = null;
 
-    private _resetControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null = null;
+  private _resetControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null = null;
 
-    private _form?: TrainBindingForm;
+  private _form?: TrainBindingForm;
 
-    constructor(
-        private readonly commonFormControlBuilder: CommonBindingsFormControlsBuilderService,
-        private readonly l10nService: TrainBindingL10nService
-    ) {
+  constructor(
+    private readonly commonFormControlBuilder: CommonBindingsFormControlsBuilderService,
+    private readonly l10nService: TrainBindingL10nService,
+  ) {}
+
+  public get form(): TrainBindingForm | undefined {
+    return this._form;
+  }
+
+  public get nextLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null {
+    return this._nextLevelControlBindingComponentData;
+  }
+
+  public get prevLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null {
+    return this._prevLevelControlBindingComponentData;
+  }
+
+  public get resetControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null {
+    return this._resetControlBindingComponentData;
+  }
+
+  public setForm(form: TrainBindingForm): void {
+    this._form = form;
+    this._nextLevelControlBindingComponentData = {
+      bindingType: ControlSchemeBindingType.Train,
+      inputFormGroup: this._form.controls.inputs.controls[TrainBindingInputAction.NextSpeed],
+      inputAction: TrainBindingInputAction.NextSpeed,
+      inputName$: this.l10nService.getBindingInputName(TrainBindingInputAction.NextSpeed),
+      supportedInputPipes: [InputPipeType.Pulse],
+    };
+    this._prevLevelControlBindingComponentData = {
+      bindingType: ControlSchemeBindingType.Train,
+      inputFormGroup: this._form.controls.inputs.controls[TrainBindingInputAction.PrevSpeed],
+      inputAction: TrainBindingInputAction.PrevSpeed,
+      inputName$: this.l10nService.getBindingInputName(TrainBindingInputAction.PrevSpeed),
+      supportedInputPipes: [InputPipeType.Pulse],
+    };
+    this._resetControlBindingComponentData = {
+      bindingType: ControlSchemeBindingType.Train,
+      inputFormGroup: this._form.controls.inputs.controls[TrainBindingInputAction.Reset],
+      inputAction: TrainBindingInputAction.Reset,
+      inputName$: this.l10nService.getBindingInputName(TrainBindingInputAction.Reset),
+      supportedInputPipes: [InputPipeType.Pulse],
+    };
+  }
+
+  public addNextSpeedControl(): void {
+    if (!this._form) {
+      return;
     }
+    this._form.controls.levels.insert(0, this.commonFormControlBuilder.speedLevelControl(MOTOR_LIMITS.maxSpeed));
+    this._form.controls.initialLevelIndex.setValue(this._form.controls.initialLevelIndex.value + 1);
+    this._form.controls.initialLevelIndex.markAsDirty();
+    this._form.controls.levels.markAsDirty();
+    this._form.updateValueAndValidity();
+  }
 
-    public get form(): TrainBindingForm | undefined {
-        return this._form;
+  public addPrevSpeedControl(): void {
+    if (!this._form) {
+      return;
     }
+    this._form.controls.levels.push(this.commonFormControlBuilder.speedLevelControl(MOTOR_LIMITS.minSpeed));
+    this._form.controls.initialLevelIndex.markAsDirty();
+    this._form.controls.levels.markAsDirty();
+    this._form.updateValueAndValidity();
+  }
 
-    public get nextLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null {
-        return this._nextLevelControlBindingComponentData;
+  public removeSpeedControl(index: number): void {
+    if (!this._form) {
+      return;
     }
-
-    public get prevLevelControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null {
-        return this._prevLevelControlBindingComponentData;
+    this._form.controls.levels.removeAt(index);
+    if (index < this._form.controls.initialLevelIndex.value) {
+      this._form.controls.initialLevelIndex.setValue(this._form.controls.initialLevelIndex.value - 1);
     }
-
-    public get resetControlBindingComponentData(): BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null {
-        return this._resetControlBindingComponentData;
-    }
-
-    public setForm(
-        form: TrainBindingForm
-    ): void {
-        this._form = form;
-        this._nextLevelControlBindingComponentData = {
-            bindingType: ControlSchemeBindingType.Train,
-            inputFormGroup: this._form.controls.inputs.controls[TrainBindingInputAction.NextSpeed],
-            inputAction: TrainBindingInputAction.NextSpeed,
-            inputName$: this.l10nService.getBindingInputName(TrainBindingInputAction.NextSpeed),
-            supportedInputPipes: [ InputPipeType.Pulse ]
-        };
-        this._prevLevelControlBindingComponentData = {
-            bindingType: ControlSchemeBindingType.Train,
-            inputFormGroup: this._form.controls.inputs.controls[TrainBindingInputAction.PrevSpeed],
-            inputAction: TrainBindingInputAction.PrevSpeed,
-            inputName$: this.l10nService.getBindingInputName(TrainBindingInputAction.PrevSpeed),
-            supportedInputPipes: [ InputPipeType.Pulse ]
-        };
-        this._resetControlBindingComponentData = {
-            bindingType: ControlSchemeBindingType.Train,
-            inputFormGroup: this._form.controls.inputs.controls[TrainBindingInputAction.Reset],
-            inputAction: TrainBindingInputAction.Reset,
-            inputName$: this.l10nService.getBindingInputName(TrainBindingInputAction.Reset),
-            supportedInputPipes: [ InputPipeType.Pulse ]
-        };
-    }
-
-    public addNextSpeedControl(): void {
-        if (!this._form) {
-            return;
-        }
-        this._form.controls.levels.insert(
-            0,
-            this.commonFormControlBuilder.speedLevelControl(MOTOR_LIMITS.maxSpeed)
-        );
-        this._form.controls.initialLevelIndex.setValue(
-            this._form.controls.initialLevelIndex.value + 1
-        );
-        this._form.controls.initialLevelIndex.markAsDirty();
-        this._form.controls.levels.markAsDirty();
-        this._form.updateValueAndValidity();
-    }
-
-    public addPrevSpeedControl(): void {
-        if (!this._form) {
-            return;
-        }
-        this._form.controls.levels.push(
-            this.commonFormControlBuilder.speedLevelControl(MOTOR_LIMITS.minSpeed)
-        );
-        this._form.controls.initialLevelIndex.markAsDirty();
-        this._form.controls.levels.markAsDirty();
-        this._form.updateValueAndValidity();
-    }
-
-    public removeSpeedControl(
-        index: number
-    ): void {
-        if (!this._form) {
-            return;
-        }
-        this._form.controls.levels.removeAt(index);
-        if (index < this._form.controls.initialLevelIndex.value) {
-            this._form.controls.initialLevelIndex.setValue(
-                this._form.controls.initialLevelIndex.value - 1
-            );
-        }
-        this._form.controls.initialLevelIndex.markAsDirty();
-        this._form.controls.levels.markAsDirty();
-        this._form.updateValueAndValidity();
-    }
+    this._form.controls.initialLevelIndex.markAsDirty();
+    this._form.controls.levels.markAsDirty();
+    this._form.updateValueAndValidity();
+  }
 }

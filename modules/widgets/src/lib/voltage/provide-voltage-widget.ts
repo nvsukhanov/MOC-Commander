@@ -7,11 +7,11 @@ import { VoltageWidgetReadTaskFactoryService } from './voltage-widget-read-task-
 import { VoltageWidgetSettingsComponentFactoryService } from './voltage-widget-settings-component-factory.service';
 
 export function provideVoltageWidget(): Provider[] {
-    return [
-        VoltageWidgetComponentFactoryService,
-        VoltageWidgetConfigFactoryService,
-        VoltageWidgetBlockerCheckerService,
-        VoltageWidgetReadTaskFactoryService,
-        VoltageWidgetSettingsComponentFactoryService
-    ];
+  return [
+    VoltageWidgetComponentFactoryService,
+    VoltageWidgetConfigFactoryService,
+    VoltageWidgetBlockerCheckerService,
+    VoltageWidgetReadTaskFactoryService,
+    VoltageWidgetSettingsComponentFactoryService,
+  ];
 }

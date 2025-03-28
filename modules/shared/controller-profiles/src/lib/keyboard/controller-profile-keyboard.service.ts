@@ -10,42 +10,38 @@ import { KeyboardSettings } from '../controller-settings';
 
 @Injectable()
 export class ControllerProfileKeyboardService implements IControllerProfile<KeyboardSettings> {
-    public readonly uid = 'keyboard';
+  public readonly uid = 'keyboard';
 
-    public readonly name$: Observable<string>;
+  public readonly name$: Observable<string>;
 
-    public readonly triggerButtonsIndices: ReadonlyArray<number> = [];
+  public readonly triggerButtonsIndices: ReadonlyArray<number> = [];
 
-    public readonly buttonStateL10nKey = createControllerL10nKey('buttonState');
+  public readonly buttonStateL10nKey = createControllerL10nKey('buttonState');
 
-    public readonly axisStateL10nKey = createControllerL10nKey('axisState');
+  public readonly axisStateL10nKey = createControllerL10nKey('axisState');
 
-    private readonly l10nScope = 'keyboard';
+  private readonly l10nScope = 'keyboard';
 
-    private readonly axisName = EMPTY;
+  private readonly axisName = EMPTY;
 
-    constructor(
-        private readonly translocoService: TranslocoService
-    ) {
-        this.name$ = this.translocoService.selectTranslate(createScopedControllerL10nKey(this.l10nScope, 'name'));
-    }
+  constructor(private readonly translocoService: TranslocoService) {
+    this.name$ = this.translocoService.selectTranslate(createScopedControllerL10nKey(this.l10nScope, 'name'));
+  }
 
-    // TODO: keyboard should not have an axis. Refactor this.
-    public getAxisName$(): Observable<string> {
-        return this.axisName;
-    }
+  // TODO: keyboard should not have an axis. Refactor this.
+  public getAxisName$(): Observable<string> {
+    return this.axisName;
+  }
 
-    @Memoize()
-    public getButtonName$(
-        inputId: string
-    ): Observable<string> {
-        return this.translocoService.selectTranslate(createScopedControllerL10nKey(this.l10nScope, 'button'), { inputId });
-    }
+  @Memoize()
+  public getButtonName$(inputId: string): Observable<string> {
+    return this.translocoService.selectTranslate(createScopedControllerL10nKey(this.l10nScope, 'button'), { inputId });
+  }
 
-    public getDefaultSettings(): KeyboardSettings {
-        return {
-            controllerType: ControllerType.Keyboard,
-            captureNonAlphaNumerics: false
-        };
-    }
+  public getDefaultSettings(): KeyboardSettings {
+    return {
+      controllerType: ControllerType.Keyboard,
+      captureNonAlphaNumerics: false,
+    };
+  }
 }

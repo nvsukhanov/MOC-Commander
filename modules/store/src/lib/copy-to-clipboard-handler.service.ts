@@ -6,14 +6,9 @@ import { COMMON_ACTIONS } from './actions';
 
 @Injectable()
 export class CopyToClipboardHandlerService implements ICopyToClipboardHandler {
-    constructor(
-        private readonly store: Store
-    ) {
-    }
+  constructor(private readonly store: Store) {}
 
-    public copy(
-        content: string
-    ): void {
-        this.store.dispatch(COMMON_ACTIONS.copyToClipboard({ content }));
-    }
+  public copy(content: string): void {
+    this.store.dispatch(COMMON_ACTIONS.copyToClipboard({ content }));
+  }
 }

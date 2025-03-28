@@ -3,17 +3,15 @@
  * e.g. 90 -> 90, 180 -> 180, 181 -> -179, 359 -> -1, 361 -> 1 etc
  * @param relativeDegrees
  */
-export function transformRelativeDegToAbsoluteDeg(
-    relativeDegrees: number
-): number {
-    const absoluteDegrees = relativeDegrees % 360;
-    if (absoluteDegrees > 180) {
-        return absoluteDegrees - 360;
-    }
-    if (absoluteDegrees <= -180) {
-        return absoluteDegrees + 360;
-    }
-    return absoluteDegrees || 0;
+export function transformRelativeDegToAbsoluteDeg(relativeDegrees: number): number {
+  const absoluteDegrees = relativeDegrees % 360;
+  if (absoluteDegrees > 180) {
+    return absoluteDegrees - 360;
+  }
+  if (absoluteDegrees <= -180) {
+    return absoluteDegrees + 360;
+  }
+  return absoluteDegrees || 0;
 }
 
 /**
@@ -24,18 +22,15 @@ export function transformRelativeDegToAbsoluteDeg(
  * @param sourcePOS - the source position in degrees
  * @param targetPOS - the target position in degrees
  */
-export function getTranslationArcs(
-    sourcePOS: number,
-    targetPOS: number
-): { cw: number; ccw: number } {
-    const normalizedSourcePOS = sourcePOS >= 0 ? sourcePOS % 360 : 360 + (sourcePOS % 360);
-    const normalizedTargetPOS = targetPOS >= 0 ? targetPOS % 360 : 360 + (targetPOS % 360);
+export function getTranslationArcs(sourcePOS: number, targetPOS: number): { cw: number; ccw: number } {
+  const normalizedSourcePOS = sourcePOS >= 0 ? sourcePOS % 360 : 360 + (sourcePOS % 360);
+  const normalizedTargetPOS = targetPOS >= 0 ? targetPOS % 360 : 360 + (targetPOS % 360);
 
-    if (normalizedSourcePOS === normalizedTargetPOS) {
-        return { cw: 0, ccw: 0 };
-    }
-    return {
-        cw: normalizedSourcePOS < normalizedTargetPOS ? normalizedTargetPOS - normalizedSourcePOS : 360 - normalizedSourcePOS + normalizedTargetPOS,
-        ccw: normalizedSourcePOS < normalizedTargetPOS ? 360 - normalizedTargetPOS + normalizedSourcePOS : normalizedSourcePOS - normalizedTargetPOS
-    };
+  if (normalizedSourcePOS === normalizedTargetPOS) {
+    return { cw: 0, ccw: 0 };
+  }
+  return {
+    cw: normalizedSourcePOS < normalizedTargetPOS ? normalizedTargetPOS - normalizedSourcePOS : 360 - normalizedSourcePOS + normalizedTargetPOS,
+    ccw: normalizedSourcePOS < normalizedTargetPOS ? 360 - normalizedTargetPOS + normalizedSourcePOS : normalizedSourcePOS - normalizedTargetPOS,
+  };
 }

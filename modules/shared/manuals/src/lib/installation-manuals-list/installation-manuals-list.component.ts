@@ -7,22 +7,20 @@ import { WindowsInstallationManualComponent } from '../windows';
 import { LinuxInstallationManualComponent } from '../linux';
 
 @Component({
-    standalone: true,
-    selector: 'lib-manuals-installation-manuals-list',
-    templateUrl: './installation-manuals-list.component.html',
-    styleUrl: './installation-manuals-list.component.scss',
-    imports: [
-        MatAccordion,
-        MatExpansionPanel,
-        TranslocoPipe,
-        MatExpansionPanelTitle,
-        SteamDeckManualComponent,
-        WindowsInstallationManualComponent,
-        MatExpansionPanelHeader,
-        LinuxInstallationManualComponent
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'lib-manuals-installation-manuals-list',
+  templateUrl: './installation-manuals-list.component.html',
+  styleUrl: './installation-manuals-list.component.scss',
+  imports: [
+    MatAccordion,
+    MatExpansionPanel,
+    TranslocoPipe,
+    MatExpansionPanelTitle,
+    SteamDeckManualComponent,
+    WindowsInstallationManualComponent,
+    MatExpansionPanelHeader,
+    LinuxInstallationManualComponent,
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InstallationManualsListComponent {
-
-}
+export class InstallationManualsListComponent {}

@@ -1,35 +1,23 @@
 <h1 mat-dialog-title>
-    {{ 'controlScheme.importDialogTitle' | transloco }}
+  {{ 'controlScheme.importDialogTitle' | transloco }}
 </h1>
 
 <div mat-dialog-content>
-    <mat-form-field class="import-string-container">
-        <textarea matInput
-                  [formControl]="compressedSchemeInput"
-                  [placeholder]="'controlScheme.importDialogDescription' | transloco"
-                  [rows]="10"
-        ></textarea>
-        @if (compressedSchemeInput.dirty && !compressedSchemeInput.valid) {
-            <mat-error>
-                {{ 'controlScheme.importDataInvalid' | transloco }}
-            </mat-error>
-        }
-    </mat-form-field>
+  <mat-form-field class="import-string-container">
+    <textarea matInput [formControl]="compressedSchemeInput" [placeholder]="'controlScheme.importDialogDescription' | transloco" [rows]="10"></textarea>
+    @if (compressedSchemeInput.dirty && !compressedSchemeInput.valid) {
+      <mat-error>
+        {{ 'controlScheme.importDataInvalid' | transloco }}
+      </mat-error>
+    }
+  </mat-form-field>
 </div>
 
-<div mat-dialog-actions
-     [align]="'end'"
->
-    <button mat-raised-button
-            [color]="'primary'"
-            (click)="onImport()"
-            [disabled]="!compressedSchemeInput.valid"
-    >
-        {{ 'controlScheme.importDialogImportButtonTitle' | transloco }}
-    </button>
-    <button mat-button
-            (click)="onCancel()"
-    >
-        {{ 'controlScheme.importDialogCancelButtonTitle' | transloco }}
-    </button>
+<div mat-dialog-actions [align]="'end'">
+  <button mat-raised-button [color]="'primary'" (click)="onImport()" [disabled]="!compressedSchemeInput.valid">
+    {{ 'controlScheme.importDialogImportButtonTitle' | transloco }}
+  </button>
+  <button mat-button (click)="onCancel()">
+    {{ 'controlScheme.importDialogCancelButtonTitle' | transloco }}
+  </button>
 </div>

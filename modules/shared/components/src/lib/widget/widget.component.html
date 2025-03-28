@@ -1,46 +1,35 @@
 <mat-card class="widget__card">
-    <mat-card-header class="widget__header">
-        <mat-card-title class="widget__title-container">
-            <span class="widget__title"
-                  libEllipsisTitle
-            >
-                {{ title }}
-            </span>
+  <mat-card-header class="widget__header">
+    <mat-card-title class="widget__title-container">
+      <span class="widget__title" libEllipsisTitle>
+        {{ title }}
+      </span>
 
-            @if (canBeEdited || canBeDeleted) {
-                <button mat-icon-button
-                        [matMenuTriggerFor]="widgetMenu"
-                        class="widget__title-menu-button"
-                >
-                    <mat-icon [fontIcon]="'more_vert'"></mat-icon>
-                    <span class="cdk-visually-hidden">
-                        {{ 'controlScheme.widgets.widgetMenuButtonTitle' | transloco }}
-                    </span>
-                </button>
-            }
+      @if (canBeEdited || canBeDeleted) {
+        <button mat-icon-button [matMenuTriggerFor]="widgetMenu" class="widget__title-menu-button">
+          <mat-icon [fontIcon]="'more_vert'"></mat-icon>
+          <span class="cdk-visually-hidden">
+            {{ 'controlScheme.widgets.widgetMenuButtonTitle' | transloco }}
+          </span>
+        </button>
+      }
 
-            <mat-menu #widgetMenu="matMenu">
-                <button [disabled]="!canBeEdited"
-                        mat-menu-item
-                        (click)="onEdit()"
-                >
-                    <mat-icon [fontIcon]="'edit'"></mat-icon>
-                    <span>{{ 'widget.editButtonTitle' | transloco }}</span>
-                </button>
-                <button [disabled]="!canBeDeleted"
-                        mat-menu-item
-                        (click)="onDelete()"
-                >
-                    <mat-icon [fontIcon]="'delete'"></mat-icon>
-                    <span>{{ 'widget.deleteButtonTitle' | transloco }}</span>
-                </button>
-            </mat-menu>
-        </mat-card-title>
-        <mat-card-subtitle libEllipsisTitle>
-            {{ subTitle }}
-        </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content class="widget__body">
-        <ng-content></ng-content>
-    </mat-card-content>
+      <mat-menu #widgetMenu="matMenu">
+        <button [disabled]="!canBeEdited" mat-menu-item (click)="onEdit()">
+          <mat-icon [fontIcon]="'edit'"></mat-icon>
+          <span>{{ 'widget.editButtonTitle' | transloco }}</span>
+        </button>
+        <button [disabled]="!canBeDeleted" mat-menu-item (click)="onDelete()">
+          <mat-icon [fontIcon]="'delete'"></mat-icon>
+          <span>{{ 'widget.deleteButtonTitle' | transloco }}</span>
+        </button>
+      </mat-menu>
+    </mat-card-title>
+    <mat-card-subtitle libEllipsisTitle>
+      {{ subTitle }}
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="widget__body">
+    <ng-content></ng-content>
+  </mat-card-content>
 </mat-card>

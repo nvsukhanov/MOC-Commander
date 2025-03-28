@@ -1,9 +1,7 @@
 @if (control) {
-    <mat-form-field>
-        <mat-label>{{ translocoTitle | transloco }}</mat-label>
-        <input type="number"
-               matInput
-               [formControl]="control"/>
-        <mat-error [libValidationMessages]="control"></mat-error>
-    </mat-form-field>
+  <mat-form-field>
+    <mat-label>{{ translocoTitle | transloco }}</mat-label>
+    <input type="number" matInput [formControl]="control" />
+    <mat-error [libValidationMessages]="control"></mat-error>
+  </mat-form-field>
 }

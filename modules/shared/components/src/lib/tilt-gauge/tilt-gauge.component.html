@@ -1,27 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg"
-     class="content"
-     preserveAspectRatio="xMidYMid meet"
-     [attr.viewBox]="viewBox"
->
-    <g [libTiltGaugeSectors]="sectors"
-       [viewBox]="nestedViewBox"
-       [tiltDegrees]="tiltDegrees"
-    ></g>
+<svg xmlns="http://www.w3.org/2000/svg" class="content" preserveAspectRatio="xMidYMid meet" [attr.viewBox]="viewBox">
+  <g [libTiltGaugeSectors]="sectors" [viewBox]="nestedViewBox" [tiltDegrees]="tiltDegrees"></g>
 
-    <g [libTiltGaugeSectors]="brackets"
-       [viewBox]="nestedViewBox"
-       class="brackets"
-    ></g>
+  <g [libTiltGaugeSectors]="brackets" [viewBox]="nestedViewBox" class="brackets"></g>
 
-    @if (iconTemplate && tiltDegrees !== null) {
-        <g [attr.transform]="iconTransform">
-            <ng-container [ngTemplateOutlet]="iconTemplate"></ng-container>
-        </g>
-    }
+  @if (iconTemplate && tiltDegrees !== null) {
+    <g [attr.transform]="iconTransform">
+      <ng-container [ngTemplateOutlet]="iconTemplate"></ng-container>
+    </g>
+  }
 
-    <g [appTiltGaugeValue]="tiltDegrees"
-       [clickable]="valueClickable"
-       (clicked)="onValueClicked($event)"
-       [viewBox]="viewBox"
-    ></g>
+  <g [appTiltGaugeValue]="tiltDegrees" [clickable]="valueClickable" (clicked)="onValueClicked($event)" [viewBox]="viewBox"></g>
 </svg>

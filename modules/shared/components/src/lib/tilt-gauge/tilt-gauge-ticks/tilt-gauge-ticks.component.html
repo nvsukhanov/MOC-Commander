@@ -1,14 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg"
-     preserveAspectRatio="xMidYMid meet"
-     [attr.viewBox]="viewBox"
->
-    @for (lineDef of ticks; track lineDef) {
-        <line [attr.x1]="lineDef.x1"
-              [attr.y1]="lineDef.y1"
-              [attr.x2]="lineDef.x2"
-              [attr.y2]="lineDef.y2"
-              [attr.stroke-width]="lineDef.width"
-              class="gauge-tick"
-        />
-    }
+<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" [attr.viewBox]="viewBox">
+  @for (lineDef of ticks; track lineDef) {
+    <line [attr.x1]="lineDef.x1" [attr.y1]="lineDef.y1" [attr.x2]="lineDef.x2" [attr.y2]="lineDef.y2" [attr.stroke-width]="lineDef.width" class="gauge-tick" />
+  }
 </svg>

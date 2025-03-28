@@ -15,18 +15,18 @@ import { V30ToV31MigrationService } from './v30-v31';
 import { V31ToV32MigrationService } from './v31-v32/v31-to-v32-migration.service';
 
 export function provideStoreMigrations(): Provider[] {
-    return [
-        { provide: STORE_MIGRATION, useClass: V21ToV22MigrationService, multi: true },
-        { provide: STORE_MIGRATION, useClass: V22ToV23MigrationService, multi: true },
-        { provide: STORE_MIGRATION, useClass: V23ToV24MigrationService, multi: true },
-        { provide: STORE_MIGRATION, useClass: V24ToV25MigrationService, multi: true },
-        { provide: STORE_MIGRATION, useClass: V25ToV26MigrationService, multi: true },
-        { provide: STORE_MIGRATION, useClass: V26ToV27MigrationService, multi: true },
-        { provide: STORE_MIGRATION, useClass: V27ToV28MigrationService, multi: true },
-        { provide: STORE_MIGRATION, useClass: V28ToV29MigrationService, multi: true },
-        { provide: STORE_MIGRATION, useClass: V29ToV30MigrationService, multi: true },
-        { provide: STORE_MIGRATION, useClass: V30ToV31MigrationService, multi: true },
-        { provide: STORE_MIGRATION, useClass: V31ToV32MigrationService, multi: true },
-        MigrateStoreService
-    ];
+  return [
+    { provide: STORE_MIGRATION, useClass: V21ToV22MigrationService, multi: true },
+    { provide: STORE_MIGRATION, useClass: V22ToV23MigrationService, multi: true },
+    { provide: STORE_MIGRATION, useClass: V23ToV24MigrationService, multi: true },
+    { provide: STORE_MIGRATION, useClass: V24ToV25MigrationService, multi: true },
+    { provide: STORE_MIGRATION, useClass: V25ToV26MigrationService, multi: true },
+    { provide: STORE_MIGRATION, useClass: V26ToV27MigrationService, multi: true },
+    { provide: STORE_MIGRATION, useClass: V27ToV28MigrationService, multi: true },
+    { provide: STORE_MIGRATION, useClass: V28ToV29MigrationService, multi: true },
+    { provide: STORE_MIGRATION, useClass: V29ToV30MigrationService, multi: true },
+    { provide: STORE_MIGRATION, useClass: V30ToV31MigrationService, multi: true },
+    { provide: STORE_MIGRATION, useClass: V31ToV32MigrationService, multi: true },
+    MigrateStoreService,
+  ];
 }

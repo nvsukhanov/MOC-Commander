@@ -1,16 +1,14 @@
 @if (control) {
-    <mat-form-field>
-        <mat-label>
-            {{ translocoTitle | transloco }}
-        </mat-label>
-        <mat-select [formControl]="control"
-                    required
-        >
-            @for (endState of motorServoEndStates; track endState) {
-                <mat-option [value]="endState">
-                    {{ endState | appMotorServoEndStateL10nKey | transloco }}
-                </mat-option>
-            }
-        </mat-select>
-    </mat-form-field>
+  <mat-form-field>
+    <mat-label>
+      {{ translocoTitle | transloco }}
+    </mat-label>
+    <mat-select [formControl]="control" required>
+      @for (endState of motorServoEndStates; track endState) {
+        <mat-option [value]="endState">
+          {{ endState | appMotorServoEndStateL10nKey | transloco }}
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 }

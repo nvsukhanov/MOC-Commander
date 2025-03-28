@@ -7,14 +7,14 @@ import { Language } from '@app/shared-i18n';
 
 import { SETTINGS_FEATURE } from '../../reducers';
 
-export const SET_LANGUAGE_EFFECT = createEffect((
-    translocoService = inject(TranslocoService),
-    store: Store = inject(Store),
-) => {
+export const SET_LANGUAGE_EFFECT = createEffect(
+  (translocoService = inject(TranslocoService), store: Store = inject(Store)) => {
     return store.select(SETTINGS_FEATURE.selectLanguage).pipe(
-        filter((l): l is Language => l !== null),
-        tap((language) => {
-            translocoService.setActiveLang(language);
-        })
+      filter((l): l is Language => l !== null),
+      tap((language) => {
+        translocoService.setActiveLang(language);
+      }),
     );
-}, { dispatch: false, functional: true });
+  },
+  { dispatch: false, functional: true },
+);

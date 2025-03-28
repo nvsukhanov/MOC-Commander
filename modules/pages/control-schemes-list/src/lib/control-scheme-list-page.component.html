@@ -1,72 +1,53 @@
 @if (controlSchemes$ | async; as controlSchemes) {
-    @if (controlSchemes?.length) {
-        <ul>
-            @for(scheme of controlSchemes; track scheme.name) {
-                <li class="card-list-item">
-                    @if (isSmallScreen$ | async) {
-                        <a class="small-screen-nav-button"
-                           [routerLink]="scheme | controlSchemeViewUrl"
-                        >
-                            <mat-card>
-                                <mat-card-header class="control-scheme-name-container">
-                                    <mat-card-title>
-                                        <span class="small-screen-nav-title">{{ scheme.name }}</span>
-                                    </mat-card-title>
-                                </mat-card-header>
-                            </mat-card>
-                        </a>
-                    } @else {
-                        <mat-card>
-                            <mat-card-header class="control-scheme-name-container">
-                                <mat-card-title>
-                                    <a mat-button
-                                       class="mdc-button__non-centered"
-                                       [routerLink]="scheme | controlSchemeViewUrl"
-                                    >
-                                        {{ scheme.name }}
-                                    </a>
-                                </mat-card-title>
-                                <button mat-button
-                                        class="toolbar-button"
-                                        (click)="onExport(scheme.name)"
-                                >
-                                    {{ 'controlScheme.export' | transloco }}
-                                </button>
-                                <button mat-button
-                                        class="toolbar-button"
-                                        (click)="onRename(scheme.name)"
-                                >
-                                    {{ 'controlScheme.renameSchemeToolbarButton' | transloco }}
-                                </button>
-                                <button mat-button
-                                        class="toolbar-button"
-                                        [color]="'warn'"
-                                        (click)="onDelete(scheme.name)">
-                                    {{ 'controlScheme.delete' | transloco }}
-                                </button>
-                            </mat-card-header>
-                        </mat-card>
-                    }
-                </li>
-            }
-        </ul>
-    } @else {
-        <lib-hint>
-            {{ 'controlScheme.noControlSchemes' | transloco }}
-        </lib-hint>
-    }
+  @if (controlSchemes?.length) {
+    <ul>
+      @for (scheme of controlSchemes; track scheme.name) {
+        <li class="card-list-item">
+          @if (isSmallScreen$ | async) {
+            <a class="small-screen-nav-button" [routerLink]="scheme | controlSchemeViewUrl">
+              <mat-card>
+                <mat-card-header class="control-scheme-name-container">
+                  <mat-card-title>
+                    <span class="small-screen-nav-title">{{ scheme.name }}</span>
+                  </mat-card-title>
+                </mat-card-header>
+              </mat-card>
+            </a>
+          } @else {
+            <mat-card>
+              <mat-card-header class="control-scheme-name-container">
+                <mat-card-title>
+                  <a mat-button class="mdc-button__non-centered" [routerLink]="scheme | controlSchemeViewUrl">
+                    {{ scheme.name }}
+                  </a>
+                </mat-card-title>
+                <button mat-button class="toolbar-button" (click)="onExport(scheme.name)">
+                  {{ 'controlScheme.export' | transloco }}
+                </button>
+                <button mat-button class="toolbar-button" (click)="onRename(scheme.name)">
+                  {{ 'controlScheme.renameSchemeToolbarButton' | transloco }}
+                </button>
+                <button mat-button class="toolbar-button" [color]="'warn'" (click)="onDelete(scheme.name)">
+                  {{ 'controlScheme.delete' | transloco }}
+                </button>
+              </mat-card-header>
+            </mat-card>
+          }
+        </li>
+      }
+    </ul>
+  } @else {
+    <lib-hint>
+      {{ 'controlScheme.noControlSchemes' | transloco }}
+    </lib-hint>
+  }
 }
 
 <ng-container *libFeatureToolbarControls>
-    <button mat-raised-button
-            (click)="onImport()"
-    >
-        {{ 'controlScheme.import' | transloco }}
-    </button>
-    <button mat-raised-button
-            [disabled]="(canCreateScheme$ | async) !== true"
-            (click)="onCreate()"
-    >
-        {{ 'controlScheme.create' | transloco }}
-    </button>
+  <button mat-raised-button (click)="onImport()">
+    {{ 'controlScheme.import' | transloco }}
+  </button>
+  <button mat-raised-button [disabled]="(canCreateScheme$ | async) !== true" (click)="onCreate()">
+    {{ 'controlScheme.create' | transloco }}
+  </button>
 </ng-container>

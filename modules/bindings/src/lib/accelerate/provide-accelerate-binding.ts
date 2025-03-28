@@ -7,11 +7,11 @@ import { AccelerateBindingInputExtractorService } from './accelerate-binding-inp
 import { AccelerateBindingL10nService } from './accelerate-binding-l10n.service';
 
 export function provideAccelerateBinding(): Provider[] {
-    return [
-        AccelerateBindingTaskPayloadBuilderService,
-        AccelerateBindingFormBuilderService,
-        AccelerateBindingFormMapperService,
-        AccelerateBindingInputExtractorService,
-        AccelerateBindingL10nService
-    ];
+  return [
+    AccelerateBindingTaskPayloadBuilderService,
+    AccelerateBindingFormBuilderService,
+    AccelerateBindingFormMapperService,
+    AccelerateBindingInputExtractorService,
+    AccelerateBindingL10nService,
+  ];
 }

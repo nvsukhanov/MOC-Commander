@@ -17,15 +17,15 @@ export * from './i-task-factory';
 export * from './i-task-input-extractor';
 export { IWidgetsReadTasksFactory, WIDGET_READ_TASKS_FACTORY } from './scheme-pre-run';
 
-export const CONTROL_SCHEME_EFFECTS: {[name in string]: FunctionalEffect} = {
-    preRunScheme: PRE_RUN_SCHEME_EFFECT,
-    composeTasks: COMPOSE_TASKS_EFFECT,
-    stopSchemeOnHubDisconnect: STOP_SCHEME_ON_HUB_DISCONNECT_EFFECT,
-    stopScheme: STOP_SCHEME_EFFECT,
-    consumeQueue: CONSUME_QUEUE_EFFECT,
-    executeTask: EXECUTE_TASK_EFFECT,
-    notifyOnControlSchemeImported: NOTIFY_ON_CONTROL_SCHEME_IMPORTED_EFFECT,
-    notifyOnControlSchemeStartFailure: NOTIFY_ON_CONTROL_SCHEME_START_FAILURE_EFFECT,
-    notifyOnControlSchemeStarted: NOTIFY_ON_CONTROL_SCHEME_STARTED_EFFECT,
-    notifyOnControlSchemeStopped: NOTIFY_ON_CONTROL_SCHEME_STOPPED_EFFECT,
+export const CONTROL_SCHEME_EFFECTS: { [name in string]: FunctionalEffect } = {
+  preRunScheme: PRE_RUN_SCHEME_EFFECT,
+  composeTasks: COMPOSE_TASKS_EFFECT,
+  stopSchemeOnHubDisconnect: STOP_SCHEME_ON_HUB_DISCONNECT_EFFECT,
+  stopScheme: STOP_SCHEME_EFFECT,
+  consumeQueue: CONSUME_QUEUE_EFFECT,
+  executeTask: EXECUTE_TASK_EFFECT,
+  notifyOnControlSchemeImported: NOTIFY_ON_CONTROL_SCHEME_IMPORTED_EFFECT,
+  notifyOnControlSchemeStartFailure: NOTIFY_ON_CONTROL_SCHEME_START_FAILURE_EFFECT,
+  notifyOnControlSchemeStarted: NOTIFY_ON_CONTROL_SCHEME_STARTED_EFFECT,
+  notifyOnControlSchemeStopped: NOTIFY_ON_CONTROL_SCHEME_STOPPED_EFFECT,
 } as const;

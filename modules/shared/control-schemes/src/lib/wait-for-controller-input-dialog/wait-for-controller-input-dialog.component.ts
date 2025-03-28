@@ -12,73 +12,63 @@ import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, ControllerInputMo
 import { WAIT_FOR_CONTROLLER_INPUT_DIALOG_SELECTORS } from './wait-for-controller-input-dialog.selectors';
 
 @Component({
-    standalone: true,
-    selector: 'lib-cs-wait-for-controller-input-dialog',
-    templateUrl: './wait-for-controller-input-dialog.component.html',
-    styleUrl: './wait-for-controller-input-dialog.component.scss',
-    imports: [
-        MatCardModule,
-        MatButtonModule,
-        MatProgressBarModule,
-        TranslocoPipe,
-        MatDialogModule,
-        AsyncPipe
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'lib-cs-wait-for-controller-input-dialog',
+  templateUrl: './wait-for-controller-input-dialog.component.html',
+  styleUrl: './wait-for-controller-input-dialog.component.scss',
+  imports: [MatCardModule, MatButtonModule, MatProgressBarModule, TranslocoPipe, MatDialogModule, AsyncPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WaitForControllerInputDialogComponent implements OnInit, OnDestroy {
-    public readonly controllerNames$: Observable<string[]>;
+  public readonly controllerNames$: Observable<string[]>;
 
-    private readonly subscriptions = new Subscription();
+  private readonly subscriptions = new Subscription();
 
-    constructor(
-        private readonly dialogRef: MatDialogRef<ControllerInputModel | null>,
-        private readonly store: Store,
-        private readonly controllerProfilesFacadeService: ControllerProfilesFacadeService
-    ) {
-        this.controllerNames$ = this.store.select(WAIT_FOR_CONTROLLER_INPUT_DIALOG_SELECTORS.selectConnectedControllers).pipe(
-            map((controllerModels) => controllerModels.map((c) => this.controllerProfilesFacadeService.getByControllerModel(c).name$)),
-            switchMap((names) => {
-                if (names.length === 0) {
-                    return of([]);
-                } else if (names.length === 1) {
-                    return names[0].pipe(
-                        map((name) => [ name ])
-                    );
-                } else {
-                    return names[0].pipe(
-                        combineLatestWith(...names.slice(1)),
-                    );
-                }
-            })
-        );
-    }
+  constructor(
+    private readonly dialogRef: MatDialogRef<ControllerInputModel | null>,
+    private readonly store: Store,
+    private readonly controllerProfilesFacadeService: ControllerProfilesFacadeService,
+  ) {
+    this.controllerNames$ = this.store.select(WAIT_FOR_CONTROLLER_INPUT_DIALOG_SELECTORS.selectConnectedControllers).pipe(
+      map((controllerModels) => controllerModels.map((c) => this.controllerProfilesFacadeService.getByControllerModel(c).name$)),
+      switchMap((names) => {
+        if (names.length === 0) {
+          return of([]);
+        } else if (names.length === 1) {
+          return names[0].pipe(map((name) => [name]));
+        } else {
+          return names[0].pipe(combineLatestWith(...names.slice(1)));
+        }
+      }),
+    );
+  }
 
-    public ngOnInit(): void {
-        this.startInputCapture();
-        this.subscriptions.add(
-            this.store.select(CONTROLLER_INPUT_SELECTORS.selectFirstActivated).pipe(
-                filter((input): input is ControllerInputModel => !!input),
-            ).subscribe((input) => {
-                this.dialogRef.close(input);
-            })
-        );
-    }
+  public ngOnInit(): void {
+    this.startInputCapture();
+    this.subscriptions.add(
+      this.store
+        .select(CONTROLLER_INPUT_SELECTORS.selectFirstActivated)
+        .pipe(filter((input): input is ControllerInputModel => !!input))
+        .subscribe((input) => {
+          this.dialogRef.close(input);
+        }),
+    );
+  }
 
-    public ngOnDestroy(): void {
-        this.stopInputCapture();
-        this.subscriptions.unsubscribe();
-    }
+  public ngOnDestroy(): void {
+    this.stopInputCapture();
+    this.subscriptions.unsubscribe();
+  }
 
-    public onCancel(): void {
-        this.dialogRef.close(null);
-    }
+  public onCancel(): void {
+    this.dialogRef.close(null);
+  }
 
-    private startInputCapture(): void {
-        this.store.dispatch(CONTROLLER_INPUT_ACTIONS.requestInputCapture());
-    }
+  private startInputCapture(): void {
+    this.store.dispatch(CONTROLLER_INPUT_ACTIONS.requestInputCapture());
+  }
 
-    private stopInputCapture(): void {
-        this.store.dispatch(CONTROLLER_INPUT_ACTIONS.releaseInputCapture());
-    }
+  private stopInputCapture(): void {
+    this.store.dispatch(CONTROLLER_INPUT_ACTIONS.releaseInputCapture());
+  }
 }

@@ -6,21 +6,16 @@ import { IBreadcrumbDefinition } from './i-breadcrumb-definition';
 
 @Injectable()
 export class BreadcrumbsService implements OnDestroy {
-    private sub?: Subscription;
+  private sub?: Subscription;
 
-    constructor(
-        private readonly breadcrumbsService: BreadcrumbsStateService,
-    ) {
-    }
+  constructor(private readonly breadcrumbsService: BreadcrumbsStateService) {}
 
-    public setBreadcrumbsDef(
-        def$: Observable<ReadonlyArray<IBreadcrumbDefinition>>
-    ): void {
-        this.sub = def$.subscribe((def) => this.breadcrumbsService.setBreadcrumbsDef(def));
-    }
+  public setBreadcrumbsDef(def$: Observable<ReadonlyArray<IBreadcrumbDefinition>>): void {
+    this.sub = def$.subscribe((def) => this.breadcrumbsService.setBreadcrumbsDef(def));
+  }
 
-    public ngOnDestroy(): void {
-        this.sub?.unsubscribe();
-        this.breadcrumbsService.clearBreadcrumbs();
-    }
+  public ngOnDestroy(): void {
+    this.sub?.unsubscribe();
+    this.breadcrumbsService.clearBreadcrumbs();
+  }
 }

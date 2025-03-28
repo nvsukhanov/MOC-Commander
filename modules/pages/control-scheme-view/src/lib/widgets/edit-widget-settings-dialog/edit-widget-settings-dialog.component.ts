@@ -7,50 +7,41 @@ import { WidgetConfigModel } from '@app/store';
 import { WidgetSettingsContainerComponent } from '../widget-settings-container';
 
 @Component({
-    standalone: true,
-    selector: 'page-control-scheme-view-edit-widget-settings-dialog',
-    templateUrl: './edit-widget-settings-dialog.component.html',
-    styleUrl: './edit-widget-settings-dialog.component.scss',
-    imports: [
-        MatButtonModule,
-        MatDialogModule,
-        TranslocoPipe,
-        WidgetSettingsContainerComponent,
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'page-control-scheme-view-edit-widget-settings-dialog',
+  templateUrl: './edit-widget-settings-dialog.component.html',
+  styleUrl: './edit-widget-settings-dialog.component.scss',
+  imports: [MatButtonModule, MatDialogModule, TranslocoPipe, WidgetSettingsContainerComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditWidgetSettingsDialogComponent {
-    private _config?: WidgetConfigModel;
+  private _config?: WidgetConfigModel;
 
-    constructor(
-        private readonly dialog: MatDialogRef<EditWidgetSettingsDialogComponent, WidgetConfigModel>,
-        @Inject(MAT_DIALOG_DATA) public readonly initialConfig: WidgetConfigModel,
-        private readonly changeDetectorRef: ChangeDetectorRef
-    ) {
-        this._config = { ...initialConfig };
-    }
+  constructor(
+    private readonly dialog: MatDialogRef<EditWidgetSettingsDialogComponent, WidgetConfigModel>,
+    @Inject(MAT_DIALOG_DATA) public readonly initialConfig: WidgetConfigModel,
+    private readonly changeDetectorRef: ChangeDetectorRef,
+  ) {
+    this._config = { ...initialConfig };
+  }
 
-    public get config(): WidgetConfigModel | undefined {
-        return this._config;
-    }
+  public get config(): WidgetConfigModel | undefined {
+    return this._config;
+  }
 
-    public onConfigChanges(
-        config: WidgetConfigModel | undefined
-    ): void {
-        this._config = config;
-        this.changeDetectorRef.detectChanges();
-    }
+  public onConfigChanges(config: WidgetConfigModel | undefined): void {
+    this._config = config;
+    this.changeDetectorRef.detectChanges();
+  }
 
-    public onFormSubmit(
-        event: Event
-    ): void {
-        event.preventDefault();
-        if (this._config) {
-            this.dialog.close(this._config);
-        }
+  public onFormSubmit(event: Event): void {
+    event.preventDefault();
+    if (this._config) {
+      this.dialog.close(this._config);
     }
+  }
 
-    public onCancel(): void {
-        this.dialog.close();
-    }
+  public onCancel(): void {
+    this.dialog.close();
+  }
 }

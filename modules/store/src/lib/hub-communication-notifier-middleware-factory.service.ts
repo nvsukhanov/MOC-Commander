@@ -4,7 +4,7 @@ import { HubCommunicationNotifierMiddleware } from './hub-communication-notifier
 
 @Injectable({ providedIn: 'root' })
 export class HubCommunicationNotifierMiddlewareFactoryService {
-    public create(): HubCommunicationNotifierMiddleware {
-        return new HubCommunicationNotifierMiddleware();
-    }
+  public create(): HubCommunicationNotifierMiddleware {
+    return new HubCommunicationNotifierMiddleware();
+  }
 }

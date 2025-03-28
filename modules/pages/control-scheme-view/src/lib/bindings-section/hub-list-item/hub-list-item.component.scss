@@ -1,23 +1,23 @@
 :host {
-    display: block;
+  display: block;
 }
 
 .hub__card {
-    &-content {
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
+  &-content {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
 }
 
 .hub-ports {
-    margin-left: 20px;
+  margin-left: 20px;
 
-    &__card {
-        margin-top: 1px;
+  &__card {
+    margin-top: 1px;
 
-        &-content {
-            padding-top: 8px;
-            padding-bottom: 8px;
-        }
+    &-content {
+      padding-top: 8px;
+      padding-bottom: 8px;
     }
+  }
 }

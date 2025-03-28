@@ -7,20 +7,16 @@ import { CONTROL_SCHEMES_VALIDATION_SELECTORS } from './control-schemes-validati
 import { CONTROL_SCHEME_NAME_IS_NOT_UNIQUE } from './control-schemes-validation-errors';
 
 export class ControlSchemeValidators {
-    public static nameUniqueness(
-        store: Store
-    ): AsyncValidatorFn {
-        return (
-            control: AbstractControl<string>
-        ): Observable<ValidationErrors | null> => {
-            return control.valueChanges.pipe(
-                startWith(control.value),
-                concatLatestFrom((name) => store.select(CONTROL_SCHEMES_VALIDATION_SELECTORS.selectControlSchemeNameIsNotUnique(name))),
-                map(([ , isNotUnique ]) => {
-                    return isNotUnique ? { [CONTROL_SCHEME_NAME_IS_NOT_UNIQUE]: true } : null;
-                }),
-                take(1)
-            );
-        };
-    }
+  public static nameUniqueness(store: Store): AsyncValidatorFn {
+    return (control: AbstractControl<string>): Observable<ValidationErrors | null> => {
+      return control.valueChanges.pipe(
+        startWith(control.value),
+        concatLatestFrom((name) => store.select(CONTROL_SCHEMES_VALIDATION_SELECTORS.selectControlSchemeNameIsNotUnique(name))),
+        map(([, isNotUnique]) => {
+          return isNotUnique ? { [CONTROL_SCHEME_NAME_IS_NOT_UNIQUE]: true } : null;
+        }),
+        take(1),
+      );
+    };
+  }
 }

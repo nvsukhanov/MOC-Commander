@@ -6,11 +6,11 @@ import { getIoOutputPortModeNames } from './get-io-output-port-mode-names';
 import { ioHasMatchingModeForOpMode } from './io-has-matching-mode-for-op-mode';
 
 export function isIoControllableByBindingType(
-    io: AttachedIoModel,
-    attachedIoModesEntities: Dictionary<AttachedIoModesModel>,
-    attachedIoPortModeInfoEntities: Dictionary<AttachedIoPortModeInfoModel>,
-    bindingType: ControlSchemeBindingType
+  io: AttachedIoModel,
+  attachedIoModesEntities: Dictionary<AttachedIoModesModel>,
+  attachedIoPortModeInfoEntities: Dictionary<AttachedIoPortModeInfoModel>,
+  bindingType: ControlSchemeBindingType,
 ): boolean {
-    const ioPortModeNames = getIoOutputPortModeNames(io, attachedIoModesEntities, attachedIoPortModeInfoEntities);
-    return ioHasMatchingModeForOpMode(bindingType, ioPortModeNames);
+  const ioPortModeNames = getIoOutputPortModeNames(io, attachedIoModesEntities, attachedIoPortModeInfoEntities);
+  return ioHasMatchingModeForOpMode(bindingType, ioPortModeNames);
 }

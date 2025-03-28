@@ -1,24 +1,22 @@
 <mat-form-field class="option">
-    <mat-label>
-        {{ 'settings.useLinuxCompatibleBluetoothApi' | transloco }}
-    </mat-label>
-    <mat-select [value]="useLinuxCompat"
-                (valueChange)="onUseLinuxCompatChange($event)"
-                [attr.aria-label]="'settings.useLinuxCompatibleBluetoothApi' | transloco"
-    >
-        <mat-option [value]="true">
-            {{ 'settings.useLinuxCompatibleBluetoothApiEnabled' | transloco }}
-        </mat-option>
-        <mat-option [value]="false">
-            {{ 'settings.useLinuxCompatibleBluetoothApiDisabled' | transloco }}
-        </mat-option>
-    </mat-select>
+  <mat-label>
+    {{ 'settings.useLinuxCompatibleBluetoothApi' | transloco }}
+  </mat-label>
+  <mat-select [value]="useLinuxCompat" (valueChange)="onUseLinuxCompatChange($event)" [attr.aria-label]="'settings.useLinuxCompatibleBluetoothApi' | transloco">
+    <mat-option [value]="true">
+      {{ 'settings.useLinuxCompatibleBluetoothApiEnabled' | transloco }}
+    </mat-option>
+    <mat-option [value]="false">
+      {{ 'settings.useLinuxCompatibleBluetoothApiDisabled' | transloco }}
+    </mat-option>
+  </mat-select>
 
-    <mat-icon [fontIcon]="'help_outline'"
-              matSuffix
-              [matTooltip]="'settings.useLinuxCompatibleBluetoothApiDescription' | transloco"
-              (click)="$event.preventDefault(); $event.stopPropagation();"
-    >
-    </mat-icon>
-    <span class="cdk-visually-hidden">{{ 'settings.useLinuxCompatibleBluetoothApiDescription' | transloco }}</span>
+  <mat-icon
+    [fontIcon]="'help_outline'"
+    matSuffix
+    [matTooltip]="'settings.useLinuxCompatibleBluetoothApiDescription' | transloco"
+    (click)="$event.preventDefault(); $event.stopPropagation()"
+  >
+  </mat-icon>
+  <span class="cdk-visually-hidden">{{ 'settings.useLinuxCompatibleBluetoothApiDescription' | transloco }}</span>
 </mat-form-field>

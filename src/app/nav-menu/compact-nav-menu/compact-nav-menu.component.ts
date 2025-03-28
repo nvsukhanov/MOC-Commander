@@ -11,42 +11,39 @@ import { RoutesBuilderService } from '@app/shared-misc';
 import { DiscoverHubButtonComponent } from '../discover-hub-button';
 
 @Component({
-    standalone: true,
-    selector: 'app-compact-nav-menu',
-    templateUrl: './compact-nav-menu.component.html',
-    styleUrl: './compact-nav-menu.component.scss',
-    imports: [
-        RouterLink,
-        RouterLinkActive,
-        MatBadgeModule,
-        MatIconModule,
-        MatButtonModule,
-        TranslocoPipe,
-        MatToolbarModule,
-        MatMenuModule,
-        DiscoverHubButtonComponent
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'app-compact-nav-menu',
+  templateUrl: './compact-nav-menu.component.html',
+  styleUrl: './compact-nav-menu.component.scss',
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    MatBadgeModule,
+    MatIconModule,
+    MatButtonModule,
+    TranslocoPipe,
+    MatToolbarModule,
+    MatMenuModule,
+    DiscoverHubButtonComponent,
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CompactNavMenuComponent {
-    @Input() public connectedControllersCount = 0;
+  @Input() public connectedControllersCount = 0;
 
-    @Input() public connectedHubCount = 0;
+  @Input() public connectedHubCount = 0;
 
-    @Input() public controlSchemesCount = 0;
+  @Input() public controlSchemesCount = 0;
 
-    @Input() public isBluetoothAvailable = false;
+  @Input() public isBluetoothAvailable = false;
 
-    @Input() public isDiscoveryBusy = true;
+  @Input() public isDiscoveryBusy = true;
 
-    @Output() public readonly discoveryStart = new EventEmitter<void>();
+  @Output() public readonly discoveryStart = new EventEmitter<void>();
 
-    constructor(
-        public readonly routesBuilderService: RoutesBuilderService,
-    ) {
-    }
+  constructor(public readonly routesBuilderService: RoutesBuilderService) {}
 
-    public onDiscoveryStart(): void {
-        this.discoveryStart.next();
-    }
+  public onDiscoveryStart(): void {
+    this.discoveryStart.next();
+  }
 }

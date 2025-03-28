@@ -7,27 +7,21 @@ import { getEnumValues } from '@app/shared-misc';
 import { LanguageToL10nKeyPipe } from './language-to-l10n-key.pipe';
 
 @Component({
-    standalone: true,
-    selector: 'page-settings-language-select',
-    templateUrl: './language-select.component.html',
-    styleUrl: './language-select.component.scss',
-    imports: [
-        MatSelectModule,
-        TranslocoPipe,
-        LanguageToL10nKeyPipe,
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'page-settings-language-select',
+  templateUrl: './language-select.component.html',
+  styleUrl: './language-select.component.scss',
+  imports: [MatSelectModule, TranslocoPipe, LanguageToL10nKeyPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LanguageSelectComponent {
-    @Input() public language: Language | null = Language.English;
+  @Input() public language: Language | null = Language.English;
 
-    @Output() public readonly languageChange = new EventEmitter<Language>();
+  @Output() public readonly languageChange = new EventEmitter<Language>();
 
-    public readonly languages: ReadonlyArray<Language> = getEnumValues(Language);
+  public readonly languages: ReadonlyArray<Language> = getEnumValues(Language);
 
-    public onLanguageChange(
-        language: Language
-    ): void {
-        this.languageChange.emit(language);
-    }
+  public onLanguageChange(language: Language): void {
+    this.languageChange.emit(language);
+  }
 }

@@ -5,12 +5,7 @@ import { WINDOW } from './types';
 
 @Injectable({ providedIn: 'root' })
 export class WindowResizeTrackerService {
-    public readonly resize$ = fromEvent(this.window, 'resize').pipe(
-        share()
-    );
+  public readonly resize$ = fromEvent(this.window, 'resize').pipe(share());
 
-    constructor(
-        @Inject(WINDOW) private readonly window: Window
-    ) {
-    }
+  constructor(@Inject(WINDOW) private readonly window: Window) {}
 }

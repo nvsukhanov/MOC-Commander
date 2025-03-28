@@ -1,21 +1,21 @@
 .widget-gauge {
-    display: block;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-    grid-row: span 3;
+  display: block;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  grid-row: span 3;
 }
 
 .widget-icon {
-    fill: none;
-    stroke: var(--app-text-color);
-    stroke-linecap: round;
+  fill: none;
+  stroke: var(--app-text-color);
+  stroke-linecap: round;
 
-    &__outline {
-        stroke-width: 2;
-    }
+  &__outline {
+    stroke-width: 2;
+  }
 
-    &__inline {
-        stroke-width: 1;
-    }
+  &__inline {
+    stroke-width: 1;
+  }
 }

@@ -6,21 +6,15 @@ import { MatInputModule } from '@angular/material/input';
 import { ValidationMessagesDirective } from '@app/shared-misc';
 
 @Component({
-    standalone: true,
-    selector: 'lib-cs-binding-control-power-input',
-    templateUrl: './binding-control-power-input.component.html',
-    styleUrl: './binding-control-power-input.component.scss',
-    imports: [
-        MatSliderModule,
-        ReactiveFormsModule,
-        TranslocoPipe,
-        MatInputModule,
-        ValidationMessagesDirective
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'lib-cs-binding-control-power-input',
+  templateUrl: './binding-control-power-input.component.html',
+  styleUrl: './binding-control-power-input.component.scss',
+  imports: [MatSliderModule, ReactiveFormsModule, TranslocoPipe, MatInputModule, ValidationMessagesDirective],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BindingControlPowerInputComponent {
-    @Input() public translocoTitle = 'controlScheme.outputPower';
+  @Input() public translocoTitle = 'controlScheme.outputPower';
 
-    @Input() public control?: FormControl<number>;
+  @Input() public control?: FormControl<number>;
 }

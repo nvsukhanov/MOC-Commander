@@ -1,8 +1,8 @@
 .gauge-sector {
-    stroke: var(--gauge-sector-color, var(--app-primary-color));
-    fill: none;
+  stroke: var(--gauge-sector-color, var(--app-primary-color));
+  fill: none;
 
-    &_active {
-        stroke: var(--gauge-sector-active-color, var(--app-accent-color));
-    }
+  &_active {
+    stroke: var(--gauge-sector-active-color, var(--app-accent-color));
+  }
 }

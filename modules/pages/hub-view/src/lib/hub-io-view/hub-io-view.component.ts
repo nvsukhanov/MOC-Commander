@@ -7,19 +7,13 @@ import { IoTypeToL10nKeyPipe, PortIdToPortNamePipe } from '@app/shared-component
 import { HubIoViewModel } from '../hub-view-page.selectors';
 
 @Component({
-    standalone: true,
-    selector: 'page-hub-view-hub-port-view',
-    templateUrl: './hub-io-view.component.html',
-    styleUrl: './hub-io-view.component.scss',
-    imports: [
-        TranslocoPipe,
-        IoTypeToL10nKeyPipe,
-        MatIconModule,
-        MatExpansionModule,
-        PortIdToPortNamePipe
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'page-hub-view-hub-port-view',
+  templateUrl: './hub-io-view.component.html',
+  styleUrl: './hub-io-view.component.scss',
+  imports: [TranslocoPipe, IoTypeToL10nKeyPipe, MatIconModule, MatExpansionModule, PortIdToPortNamePipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HubIoViewComponent {
-    @Input() public hubIoViewModel: HubIoViewModel | undefined;
+  @Input() public hubIoViewModel: HubIoViewModel | undefined;
 }

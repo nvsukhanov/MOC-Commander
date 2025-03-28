@@ -10,22 +10,15 @@ import { LoopingMode } from '@app/store';
 import { LoopingModeToL10nKeyPipe } from './looping-mode-to-l10n-key.pipe';
 
 @Component({
-    standalone: true,
-    selector: 'lib-cs-binding-control-select-looping-mode',
-    templateUrl: './binding-control-select-looping-mode.component.html',
-    styleUrl: './binding-control-select-looping-mode.component.scss',
-    imports: [
-        MatFormFieldModule,
-        MatOptionModule,
-        MatSelectModule,
-        ReactiveFormsModule,
-        TranslocoPipe,
-        LoopingModeToL10nKeyPipe
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'lib-cs-binding-control-select-looping-mode',
+  templateUrl: './binding-control-select-looping-mode.component.html',
+  styleUrl: './binding-control-select-looping-mode.component.scss',
+  imports: [MatFormFieldModule, MatOptionModule, MatSelectModule, ReactiveFormsModule, TranslocoPipe, LoopingModeToL10nKeyPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BindingControlSelectLoopingModeComponent {
-    @Input() public control?: FormControl<LoopingMode>;
+  @Input() public control?: FormControl<LoopingMode>;
 
-    public readonly availableLoopingModes: ReadonlyArray<LoopingMode> = getEnumValues(LoopingMode);
+  public readonly availableLoopingModes: ReadonlyArray<LoopingMode> = getEnumValues(LoopingMode);
 }

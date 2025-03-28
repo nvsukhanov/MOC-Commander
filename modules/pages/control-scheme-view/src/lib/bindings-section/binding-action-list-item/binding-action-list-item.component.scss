@@ -1,14 +1,14 @@
 :host {
-    display: flex;
+  display: flex;
 }
 
 .controller-name {
-    &_disconnected {
-        color: var(--app-disabled-color)
-    }
+  &_disconnected {
+    color: var(--app-disabled-color);
+  }
 }
 
 .action-name {
-    width: 150px;
-    font-weight: 500;
+  width: 150px;
+  font-weight: 500;
 }

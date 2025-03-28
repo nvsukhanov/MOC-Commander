@@ -11,29 +11,35 @@ import { HubStorageService } from '../hub-storage.service';
 
 @Injectable()
 export class AttachedIoModesEffects {
-    public loadHubIoOutputModesIfCacheIsEmpty$ = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(ATTACHED_IOS_ACTIONS.ioConnected),
-            concatLatestFrom((action) => this.store.select(ATTACHED_IO_MODES_SELECTORS.hasCachedIoPortModes(action.io))),
-            filter(([ , hasCached ]) => !hasCached),
-            mergeMap(([ action ]) => this.hubStorage.get(action.io.hubId).ports.getPortModes(action.io.portId).pipe(
-                takeUntil(this.hubStorage.get(action.io.hubId).disconnected),
-                takeUntil(this.hubStorage.get(action.io.hubId).ports.onIoDetach({ ports: [ action.io.portId ] })),
-                map((modesData: PortModeInboundMessage) => ({ action, modesData })),
-            )),
-            map(({ action, modesData }) => ATTACHED_IO_MODES_ACTIONS.portModesReceived({
-                io: action.io,
-                portInputModes: modesData.inputModes,
-                portOutputModes: modesData.outputModes,
-                synchronizable: modesData.capabilities.logicalSynchronizable
-            }))
-        );
-    });
+  public loadHubIoOutputModesIfCacheIsEmpty$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ATTACHED_IOS_ACTIONS.ioConnected),
+      concatLatestFrom((action) => this.store.select(ATTACHED_IO_MODES_SELECTORS.hasCachedIoPortModes(action.io))),
+      filter(([, hasCached]) => !hasCached),
+      mergeMap(([action]) =>
+        this.hubStorage
+          .get(action.io.hubId)
+          .ports.getPortModes(action.io.portId)
+          .pipe(
+            takeUntil(this.hubStorage.get(action.io.hubId).disconnected),
+            takeUntil(this.hubStorage.get(action.io.hubId).ports.onIoDetach({ ports: [action.io.portId] })),
+            map((modesData: PortModeInboundMessage) => ({ action, modesData })),
+          ),
+      ),
+      map(({ action, modesData }) =>
+        ATTACHED_IO_MODES_ACTIONS.portModesReceived({
+          io: action.io,
+          portInputModes: modesData.inputModes,
+          portOutputModes: modesData.outputModes,
+          synchronizable: modesData.capabilities.logicalSynchronizable,
+        }),
+      ),
+    );
+  });
 
-    constructor(
-        private readonly actions$: Actions,
-        private readonly store: Store,
-        private readonly hubStorage: HubStorageService
-    ) {
-    }
+  constructor(
+    private readonly actions$: Actions,
+    private readonly store: Store,
+    private readonly hubStorage: HubStorageService,
+  ) {}
 }

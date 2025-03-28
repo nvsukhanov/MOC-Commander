@@ -1,8 +1,8 @@
 .gauge-tick {
-    stroke: var(--app-primary-color);
-    fill: none;
+  stroke: var(--app-primary-color);
+  fill: none;
 
-    &_active {
-        stroke: var(--app-accent-color);
-    }
+  &_active {
+    stroke: var(--app-accent-color);
+  }
 }

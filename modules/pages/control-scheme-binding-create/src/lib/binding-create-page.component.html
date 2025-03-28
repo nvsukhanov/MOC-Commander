@@ -1,23 +1,20 @@
 @if (initialBindingData$ | async; as initialData) {
-    <lib-cs-binding-edit [binding]="initialData"
-                         (bindingChange)="onBindingChange($event)"
-                         (bindingFormDirtyChange)="onFormDirtyChange($event)"
-    ></lib-cs-binding-edit>
+  <lib-cs-binding-edit
+    [binding]="initialData"
+    (bindingChange)="onBindingChange($event)"
+    (bindingFormDirtyChange)="onFormDirtyChange($event)"
+  ></lib-cs-binding-edit>
 
-    <ng-container *libFeatureToolbarControls>
-        <button mat-raised-button
-                [disabled]="!canSave"
-                (click)="onSave()">
-            {{ 'controlScheme.saveCreated' | transloco }}
-        </button>
-        <button mat-raised-button
-                (click)="onCancel()"
-        >
-            {{ 'controlScheme.cancelCreate' | transloco }}
-        </button>
-    </ng-container>
+  <ng-container *libFeatureToolbarControls>
+    <button mat-raised-button [disabled]="!canSave" (click)="onSave()">
+      {{ 'controlScheme.saveCreated' | transloco }}
+    </button>
+    <button mat-raised-button (click)="onCancel()">
+      {{ 'controlScheme.cancelCreate' | transloco }}
+    </button>
+  </ng-container>
 } @else {
-    <lib-hint>
-        {{ 'controlScheme.cannotCreateBinding' | transloco }}
-    </lib-hint>
+  <lib-hint>
+    {{ 'controlScheme.cannotCreateBinding' | transloco }}
+  </lib-hint>
 }

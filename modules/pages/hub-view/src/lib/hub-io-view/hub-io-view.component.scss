@@ -1,71 +1,71 @@
 .io-port {
-    &_collapsed {
-        box-shadow: none;
-        border-radius: 0;
-    }
+  &_collapsed {
+    box-shadow: none;
+    border-radius: 0;
+  }
 
-    &_expanded {
-        margin: 10px 0;
-    }
+  &_expanded {
+    margin: 10px 0;
+  }
 
-    &__title {
-        margin: 0;
-        font-size: 16px;
-        font-weight: 500;
-    }
+  &__title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+  }
 
-    &__can-be-merged {
-        margin-left: 10px;
-    }
+  &__can-be-merged {
+    margin-left: 10px;
+  }
 }
 
 .io-properties {
-    &__grid {
-        display: grid;
-        grid-template-columns: min-content auto;
-        grid-gap: 0 10px;
-        margin: 10px;
-        line-height: 1.8rem;
-    }
+  &__grid {
+    display: grid;
+    grid-template-columns: min-content auto;
+    grid-gap: 0 10px;
+    margin: 10px;
+    line-height: 1.8rem;
+  }
 
-    &__title {
-        font-size: 15px;
-        font-weight: 400;
-        margin: 0;
-        white-space: nowrap;
-    }
+  &__title {
+    font-size: 15px;
+    font-weight: 400;
+    margin: 0;
+    white-space: nowrap;
+  }
 
-    &__value {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        font-size: 15px;
-        font-weight: 300;
-    }
+  &__value {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 15px;
+    font-weight: 300;
+  }
 
-    &__list {
-        display: flex;
-        flex-direction: row;
-        list-style: none;
-        font-size: 15px;
-        font-weight: 300;
-        margin: 0;
-        flex-flow: wrap;
-        align-items: center;
-    }
+  &__list {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    font-size: 15px;
+    font-weight: 300;
+    margin: 0;
+    flex-flow: wrap;
+    align-items: center;
+  }
 
-    &__list-empty {
-        font-style: italic;
-        font-weight: 300;
-        font-size: 15px;
-        margin: 0;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
+  &__list-empty {
+    font-style: italic;
+    font-weight: 300;
+    font-size: 15px;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
 
-    &__mode {
-        margin-right: 20px;
-    }
+  &__mode {
+    margin-right: 20px;
+  }
 }

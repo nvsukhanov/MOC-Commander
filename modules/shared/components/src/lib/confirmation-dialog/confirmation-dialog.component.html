@@ -1,25 +1,18 @@
 <h1 mat-dialog-title>
-    {{ title$ | async }}
+  {{ title$ | async }}
 </h1>
 
 @if (content$ | async; as content) {
-    <div mat-dialog-content>
-        {{ content }}
-    </div>
+  <div mat-dialog-content>
+    {{ content }}
+  </div>
 }
 
-<div mat-dialog-actions
-     [align]="'end'"
->
-    <button mat-raised-button
-            [color]="'warn'"
-            (click)="onConfirm()"
-    >
-        {{ confirmTitle$ | async }}
-    </button>
-    <button mat-button
-            (click)="onCancel()"
-    >
-        {{ cancelTitle$ | async }}
-    </button>
+<div mat-dialog-actions [align]="'end'">
+  <button mat-raised-button [color]="'warn'" (click)="onConfirm()">
+    {{ confirmTitle$ | async }}
+  </button>
+  <button mat-button (click)="onCancel()">
+    {{ cancelTitle$ | async }}
+  </button>
 </div>

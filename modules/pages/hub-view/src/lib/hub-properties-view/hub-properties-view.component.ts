@@ -7,42 +7,33 @@ import { EllipsisTitleDirective, HubTypeToL10nKeyPipe } from '@app/shared-compon
 import { HubModel, HubRuntimeDataModel } from '@app/store';
 
 @Component({
-    standalone: true,
-    selector: 'page-hub-view-hub-properties-view',
-    templateUrl: './hub-properties-view.component.html',
-    styleUrl: './hub-properties-view.component.scss',
-    imports: [
-        MatButtonModule,
-        MatCardModule,
-        TranslocoPipe,
-        EllipsisTitleDirective,
-        HubTypeToL10nKeyPipe
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'page-hub-view-hub-properties-view',
+  templateUrl: './hub-properties-view.component.html',
+  styleUrl: './hub-properties-view.component.scss',
+  imports: [MatButtonModule, MatCardModule, TranslocoPipe, EllipsisTitleDirective, HubTypeToL10nKeyPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HubPropertiesViewComponent {
-    @Input() public runtimeData?: HubRuntimeDataModel;
+  @Input() public runtimeData?: HubRuntimeDataModel;
 
-    private _hubEditRoute: string[] = [];
+  private _hubEditRoute: string[] = [];
 
-    private _configuration: HubModel | undefined;
+  private _configuration: HubModel | undefined;
 
-    constructor(
-        private readonly routesBuilderService: RoutesBuilderService,
-    ) {
-    }
+  constructor(private readonly routesBuilderService: RoutesBuilderService) {}
 
-    @Input()
-    public set configuration(value: HubModel | undefined) {
-        this._configuration = value;
-        this._hubEditRoute = value === undefined ? [] : this.routesBuilderService.hubEdit(value.hubId);
-    }
+  @Input()
+  public set configuration(value: HubModel | undefined) {
+    this._configuration = value;
+    this._hubEditRoute = value === undefined ? [] : this.routesBuilderService.hubEdit(value.hubId);
+  }
 
-    public get configuration(): HubModel | undefined {
-        return this._configuration;
-    }
+  public get configuration(): HubModel | undefined {
+    return this._configuration;
+  }
 
-    public get hubEditRoute(): string[] {
-        return this._hubEditRoute;
-    }
+  public get hubEditRoute(): string[] {
+    return this._hubEditRoute;
+  }
 }

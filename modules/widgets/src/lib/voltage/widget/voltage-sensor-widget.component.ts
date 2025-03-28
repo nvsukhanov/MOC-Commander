@@ -5,38 +5,33 @@ import { MatIconModule } from '@angular/material/icon';
 import { WidgetComponent } from '@app/shared-components';
 
 @Component({
-    standalone: true,
-    selector: 'lib-voltage-sensor-widget',
-    templateUrl: './voltage-sensor-widget.component.html',
-    styleUrl: './voltage-sensor-widget.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [
-        WidgetComponent,
-        TranslocoPipe,
-        MatIconModule,
-        DecimalPipe
-    ]
+  standalone: true,
+  selector: 'lib-voltage-sensor-widget',
+  templateUrl: './voltage-sensor-widget.component.html',
+  styleUrl: './voltage-sensor-widget.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [WidgetComponent, TranslocoPipe, MatIconModule, DecimalPipe],
 })
 export class VoltageSensorWidgetComponent {
-    @Input() public title = '';
+  @Input() public title = '';
 
-    @Input() public subtitle = '';
+  @Input() public subtitle = '';
 
-    @Input() public voltage: number | undefined;
+  @Input() public voltage: number | undefined;
 
-    @Input() public canBeDeleted = false;
+  @Input() public canBeDeleted = false;
 
-    @Input() public canBeEdited = false;
+  @Input() public canBeEdited = false;
 
-    @Output() public readonly edit = new EventEmitter<void>();
+  @Output() public readonly edit = new EventEmitter<void>();
 
-    @Output() public readonly delete = new EventEmitter<void>();
+  @Output() public readonly delete = new EventEmitter<void>();
 
-    public onEdit(): void {
-        this.edit.emit();
-    }
+  public onEdit(): void {
+    this.edit.emit();
+  }
 
-    public onDelete(): void {
-        this.delete.emit();
-    }
+  public onDelete(): void {
+    this.delete.emit();
+  }
 }

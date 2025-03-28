@@ -1,23 +1,23 @@
 @for (vm of viewModels; track vm.config.id; let idx = $index) {
-    <page-control-scheme-view-widget-container [config]="vm.config"
-                                               [canBeEdited]="editable && vm.hasSettings"
-                                               [canBeDeleted]="editable"
-                                               (edit)="onEditWidget(idx)"
-                                               (delete)="onDeleteWidget(idx)"
-    ></page-control-scheme-view-widget-container>
+  <page-control-scheme-view-widget-container
+    [config]="vm.config"
+    [canBeEdited]="editable && vm.hasSettings"
+    [canBeDeleted]="editable"
+    (edit)="onEditWidget(idx)"
+    (delete)="onDeleteWidget(idx)"
+  ></page-control-scheme-view-widget-container>
 }
 
-<div class="add-widget-button-container"
-     [class.add-widget-button-container_running]="!canAddWidget"
->
-    <button mat-fab
-            color="primary"
-            class="add-widget-button"
-            [class.add-widget-button_running]="!canAddWidget"
-            [disabled]="!canAddWidget"
-            (click)="onAddWidget()"
-            [title]="'controlScheme.addWidgetButtonTitle' | transloco"
-    >
-        <mat-icon [fontIcon]="'add'"></mat-icon>
-    </button>
+<div class="add-widget-button-container" [class.add-widget-button-container_running]="!canAddWidget">
+  <button
+    mat-fab
+    color="primary"
+    class="add-widget-button"
+    [class.add-widget-button_running]="!canAddWidget"
+    [disabled]="!canAddWidget"
+    (click)="onAddWidget()"
+    [title]="'controlScheme.addWidgetButtonTitle' | transloco"
+  >
+    <mat-icon [fontIcon]="'add'"></mat-icon>
+  </button>
 </div>

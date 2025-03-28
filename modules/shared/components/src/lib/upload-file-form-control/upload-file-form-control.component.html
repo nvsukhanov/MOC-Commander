@@ -1,26 +1,15 @@
-<input #fileInput
-       type="file"
-       class="file-input"
-       (change)="onUploaded($event)"
-/>
+<input #fileInput type="file" class="file-input" (change)="onUploaded($event)" />
 
 <div class="file-container">
-    <p class="filename"
-       libEllipsisTitle
-    >
-        @if (file) {
-            {{ file.name }}
-        } @else {
-            {{ 'uploadFileDialogTitle' | transloco }}
-        }
-    </p>
+  <p class="filename" libEllipsisTitle>
+    @if (file) {
+      {{ file.name }}
+    } @else {
+      {{ 'uploadFileDialogTitle' | transloco }}
+    }
+  </p>
 
-    <button mat-raised-button
-            [color]="'primary'"
-            (click)="onUploadClick($event)"
-            [disabled]="isDisabled"
-            class="upload-button"
-    >
-        {{ translocoTitle | transloco }}
-    </button>
+  <button mat-raised-button [color]="'primary'" (click)="onUploadClick($event)" [disabled]="isDisabled" class="upload-button">
+    {{ translocoTitle | transloco }}
+  </button>
 </div>

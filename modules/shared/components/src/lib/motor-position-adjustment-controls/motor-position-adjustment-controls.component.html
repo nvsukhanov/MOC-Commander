@@ -1,47 +1,46 @@
 <lib-cs-label>
-    {{ 'adjustMotorPosition.title' | transloco }}
+  {{ 'adjustMotorPosition.title' | transloco }}
 </lib-cs-label>
 <div class="motor-controls-container">
-    <button mat-flat-button
-            class="motor-control"
-            [disabled]="!canExecuteStep"
-            (click)="onExecuteStep(-largeStepDegrees)"
-            [title]="'adjustMotorPosition.stepCcw' | transloco: { step: largeStepDegrees }"
-    >
-        <mat-icon [fontIcon]="'keyboard_double_arrow_left'"></mat-icon>
-    </button>
-    <button mat-flat-button
-            class="motor-control"
-            [disabled]="!canExecuteStep"
-            (click)="onExecuteStep(-smallStepDegrees)"
-            [title]="'adjustMotorPosition.stepCcw' | transloco: { step: smallStepDegrees }"
-    >
-        <mat-icon [fontIcon]="'keyboard_arrow_left'"></mat-icon>
-    </button>
+  <button
+    mat-flat-button
+    class="motor-control"
+    [disabled]="!canExecuteStep"
+    (click)="onExecuteStep(-largeStepDegrees)"
+    [title]="'adjustMotorPosition.stepCcw' | transloco: { step: largeStepDegrees }"
+  >
+    <mat-icon [fontIcon]="'keyboard_double_arrow_left'"></mat-icon>
+  </button>
+  <button
+    mat-flat-button
+    class="motor-control"
+    [disabled]="!canExecuteStep"
+    (click)="onExecuteStep(-smallStepDegrees)"
+    [title]="'adjustMotorPosition.stepCcw' | transloco: { step: smallStepDegrees }"
+  >
+    <mat-icon [fontIcon]="'keyboard_arrow_left'"></mat-icon>
+  </button>
 
-    <button mat-flat-button
-            class="motor-control"
-            [disabled]="!canGoToZero"
-            (click)="onGoToZero()"
-            [title]="'adjustMotorPosition.goToZero' | transloco"
-    >
-        <mat-icon [fontIcon]="'exposure_zero'"></mat-icon>
-    </button>
+  <button mat-flat-button class="motor-control" [disabled]="!canGoToZero" (click)="onGoToZero()" [title]="'adjustMotorPosition.goToZero' | transloco">
+    <mat-icon [fontIcon]="'exposure_zero'"></mat-icon>
+  </button>
 
-    <button mat-flat-button
-            class="motor-control"
-            [disabled]="!canExecuteStep"
-            (click)="onExecuteStep(smallStepDegrees)"
-            [title]="'adjustMotorPosition.stepCw' | transloco: { step: smallStepDegrees }"
-    >
-        <mat-icon [fontIcon]="'keyboard_arrow_right'"></mat-icon>
-    </button>
-    <button mat-flat-button
-            class="motor-control"
-            [disabled]="!canExecuteStep"
-            (click)="onExecuteStep(largeStepDegrees)"
-            [title]="'adjustMotorPosition.stepCw' | transloco: { step: largeStepDegrees }"
-    >
-        <mat-icon [fontIcon]="'keyboard_double_arrow_right'"></mat-icon>
-    </button>
+  <button
+    mat-flat-button
+    class="motor-control"
+    [disabled]="!canExecuteStep"
+    (click)="onExecuteStep(smallStepDegrees)"
+    [title]="'adjustMotorPosition.stepCw' | transloco: { step: smallStepDegrees }"
+  >
+    <mat-icon [fontIcon]="'keyboard_arrow_right'"></mat-icon>
+  </button>
+  <button
+    mat-flat-button
+    class="motor-control"
+    [disabled]="!canExecuteStep"
+    (click)="onExecuteStep(largeStepDegrees)"
+    [title]="'adjustMotorPosition.stepCw' | transloco: { step: largeStepDegrees }"
+  >
+    <mat-icon [fontIcon]="'keyboard_double_arrow_right'"></mat-icon>
+  </button>
 </div>

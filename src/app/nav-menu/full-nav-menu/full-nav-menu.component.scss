@@ -1,63 +1,66 @@
 :host {
-    display: block;
-    width: 100%;
-    box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
-    z-index: 2;
+  display: block;
+  width: 100%;
+  box-shadow:
+    0 3px 5px -1px #0003,
+    0 6px 10px #00000024,
+    0 1px 18px #0000001f;
+  z-index: 2;
 }
 
 .toolbar {
-    height: 50px;
+  height: 50px;
 }
 
 .title {
-    margin: 0;
+  margin: 0;
 }
 
 .root-link {
-    text-decoration: none;
-    color: inherit;
-    font-weight: 500;
-    font-size: 1.3rem;
+  text-decoration: none;
+  color: inherit;
+  font-weight: 500;
+  font-size: 1.3rem;
 }
 
 .nav {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 200px 1fr 200px;
-    align-items: center;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 200px 1fr 200px;
+  align-items: center;
 }
 
 .main-nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .main-nav-items {
-    display: grid;
-    grid-column-gap: 20px;
-    grid-auto-flow: column;
-    grid-auto-columns: auto;
+  display: grid;
+  grid-column-gap: 20px;
+  grid-auto-flow: column;
+  grid-auto-columns: auto;
 }
 
 .right-side-nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
 }
 
 .about-button,
 .discover-hub-button {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 
 .counter {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 
 .active-link {
-    background: rgba(0, 0, 0, .2);
+  background: rgba(0, 0, 0, 0.2);
 }

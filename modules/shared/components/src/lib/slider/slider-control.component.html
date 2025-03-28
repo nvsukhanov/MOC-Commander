@@ -1,22 +1,13 @@
 @if (control) {
-    <div class="slider-label">
-        <label class="slider-label-description"
-               [for]="id"
-        >
-            <ng-content select="[description]"></ng-content>
-        </label>
-        <label class="slider-label-value-right">
-            <ng-content select="[value]"></ng-content>
-        </label>
-    </div>
-    <mat-slider class="slider"
-                [min]="min"
-                [max]="max"
-                [step]="step"
-    >
-        <input matSliderThumb
-               [formControl]="control"
-               [id]="id"
-        />
-    </mat-slider>
+  <div class="slider-label">
+    <label class="slider-label-description" [for]="id">
+      <ng-content select="[description]"></ng-content>
+    </label>
+    <label class="slider-label-value-right">
+      <ng-content select="[value]"></ng-content>
+    </label>
+  </div>
+  <mat-slider class="slider" [min]="min" [max]="max" [step]="step">
+    <input matSliderThumb [formControl]="control" [id]="id" />
+  </mat-slider>
 }

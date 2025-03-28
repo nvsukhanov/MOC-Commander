@@ -1,23 +1,17 @@
-<lib-cs-binding-edit [binding]="binding$ | async"
-                     (bindingChange)="onBindingChange($event)"
-                     (bindingFormDirtyChange)="onBindingFormDirtyChange($event)"
+<lib-cs-binding-edit
+  [binding]="binding$ | async"
+  (bindingChange)="onBindingChange($event)"
+  (bindingFormDirtyChange)="onBindingFormDirtyChange($event)"
 ></lib-cs-binding-edit>
 
 <ng-container *libFeatureToolbarControls>
-    <button mat-raised-button
-            [disabled]="!(canSave)"
-            (click)="onSave()">
-        {{ 'controlScheme.saveEdited' | transloco }}
-    </button>
-    <button mat-raised-button
-            [color]="'warn'"
-            (click)="onDelete()"
-    >
-        {{ 'controlScheme.deleteBinding' | transloco }}
-    </button>
-    <button mat-raised-button
-            (click)="onCancel()"
-    >
-        {{ 'controlScheme.cancelEdit' | transloco }}
-    </button>
+  <button mat-raised-button [disabled]="!canSave" (click)="onSave()">
+    {{ 'controlScheme.saveEdited' | transloco }}
+  </button>
+  <button mat-raised-button [color]="'warn'" (click)="onDelete()">
+    {{ 'controlScheme.deleteBinding' | transloco }}
+  </button>
+  <button mat-raised-button (click)="onCancel()">
+    {{ 'controlScheme.cancelEdit' | transloco }}
+  </button>
 </ng-container>

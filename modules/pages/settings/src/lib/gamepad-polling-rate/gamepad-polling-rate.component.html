@@ -1,25 +1,22 @@
 <mat-form-field class="option">
-    <mat-label>
-        {{ 'settings.gamepadPollRate' | transloco }}
-    </mat-label>
-    <mat-select [value]="gamepadPollingRate()"
-                (valueChange)="onGamepadPollingRateChange($event)"
-                [attr.aria-label]="'settings.gamepadPollRate' | transloco"
-    >
-        <mat-option [value]="lowPollingRate">
-            {{ 'settings.gamepadPollRateLow' | transloco }}
-        </mat-option>
-        <mat-option [value]="defaultPollingRate">
-            {{ 'settings.gamepadPollRateDefault' | transloco }}
-        </mat-option>
-    </mat-select>
+  <mat-label>
+    {{ 'settings.gamepadPollRate' | transloco }}
+  </mat-label>
+  <mat-select [value]="gamepadPollingRate()" (valueChange)="onGamepadPollingRateChange($event)" [attr.aria-label]="'settings.gamepadPollRate' | transloco">
+    <mat-option [value]="lowPollingRate">
+      {{ 'settings.gamepadPollRateLow' | transloco }}
+    </mat-option>
+    <mat-option [value]="defaultPollingRate">
+      {{ 'settings.gamepadPollRateDefault' | transloco }}
+    </mat-option>
+  </mat-select>
 
-    <mat-icon [fontIcon]="'help_outline'"
-              matSuffix
-              [matTooltip]="'settings.gamepadPollRateDescription' | transloco"
-              (click)="$event.preventDefault(); $event.stopPropagation();"
-    >
-    </mat-icon>
-    <span class="cdk-visually-hidden">{{ 'settings.gamepadPollRateDescription' | transloco }}</span>
-
+  <mat-icon
+    [fontIcon]="'help_outline'"
+    matSuffix
+    [matTooltip]="'settings.gamepadPollRateDescription' | transloco"
+    (click)="$event.preventDefault(); $event.stopPropagation()"
+  >
+  </mat-icon>
+  <span class="cdk-visually-hidden">{{ 'settings.gamepadPollRateDescription' | transloco }}</span>
 </mat-form-field>

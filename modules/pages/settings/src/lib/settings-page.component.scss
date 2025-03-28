@@ -1,23 +1,23 @@
 :host {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .settings-card {
-    max-width: 400px;
-    width: 100%;
+  max-width: 400px;
+  width: 100%;
 }
 
 .options__list {
-    margin-bottom: 25px;
+  margin-bottom: 25px;
 }
 
 .debug-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 
-    &__button {
-        width: 100%;
-    }
+  &__button {
+    width: 100%;
+  }
 }

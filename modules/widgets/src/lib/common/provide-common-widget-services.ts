@@ -7,11 +7,11 @@ import { CommonTiltWidgetsConfigFactoryService } from './common-tilt-widgets-con
 import { CommonTiltWidgetsSettingsComponentFactoryService } from './common-tilt-widgets-settings-component-factory.service';
 
 export function provideCommonWidgetServices(): Provider[] {
-    return [
-        CommonTiltWidgetsReadTaskFactoryService,
-        CommonTiltWidgetsFormBuilderService,
-        CommonTiltWidgetsBlockerCheckerService,
-        CommonTiltWidgetsConfigFactoryService,
-        CommonTiltWidgetsSettingsComponentFactoryService
-    ];
+  return [
+    CommonTiltWidgetsReadTaskFactoryService,
+    CommonTiltWidgetsFormBuilderService,
+    CommonTiltWidgetsBlockerCheckerService,
+    CommonTiltWidgetsConfigFactoryService,
+    CommonTiltWidgetsSettingsComponentFactoryService,
+  ];
 }

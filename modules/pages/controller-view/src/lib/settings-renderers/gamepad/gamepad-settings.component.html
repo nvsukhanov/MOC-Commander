@@ -1,70 +1,65 @@
 @if (viewModel) {
-    <section class="settings-section">
-        <page-controller-view-control-ignore-input [control]="viewModel.ignoreInputControl"></page-controller-view-control-ignore-input>
-    </section>
-    <section class="settings-section">
-        <mat-accordion multi>
-            @for (axis of viewModel.axes; track axis.inputId) {
-                <mat-expansion-panel #panel="matExpansionPanel"
-                >
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            {{ axis.name$ | async }}
-                        </mat-panel-title>
-                        @if (!panel.expanded) {
-                            <mat-panel-description *libHideOnSmallScreen>
-                                <lib-input-activity-indicator [isActive]="!!(axis.isActivated$ | async)"></lib-input-activity-indicator>
-                                <page-controller-view-input-output-diagram [compact]="true"
-                                                                           [rawValue]="axis.rawValue$ | async"
-                                                                           [outputValue]="axis.outputValue$ | async"
-                                                                           [activeZoneStart]="axis.form.controls.activeZoneStart.value"
-                                                                           [activeZoneEnd]="axis.form.controls.activeZoneEnd.value"
-                                ></page-controller-view-input-output-diagram>
-                            </mat-panel-description>
-                        }
-                    </mat-expansion-panel-header>
-
-                    @if (panel.expanded) {
-                        <page-controller-view-gamepad-settings-axis-settings [axisSettingsViewModel]="axis"
-                        ></page-controller-view-gamepad-settings-axis-settings>
-                    }
-
-                    <mat-action-row>
-                        <button mat-button
-                                [disabled]="!!(axis.areSettingsDefault$ | async)"
-                                (click)="resetAxisSettings(axis.inputId)"
-                        >{{ 'controller.resetInputSettingsToDefault' | transloco }}</button>
-                    </mat-action-row>
-                </mat-expansion-panel>
+  <section class="settings-section">
+    <page-controller-view-control-ignore-input [control]="viewModel.ignoreInputControl"></page-controller-view-control-ignore-input>
+  </section>
+  <section class="settings-section">
+    <mat-accordion multi>
+      @for (axis of viewModel.axes; track axis.inputId) {
+        <mat-expansion-panel #panel="matExpansionPanel">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ axis.name$ | async }}
+            </mat-panel-title>
+            @if (!panel.expanded) {
+              <mat-panel-description *libHideOnSmallScreen>
+                <lib-input-activity-indicator [isActive]="!!(axis.isActivated$ | async)"></lib-input-activity-indicator>
+                <page-controller-view-input-output-diagram
+                  [compact]="true"
+                  [rawValue]="axis.rawValue$ | async"
+                  [outputValue]="axis.outputValue$ | async"
+                  [activeZoneStart]="axis.form.controls.activeZoneStart.value"
+                  [activeZoneEnd]="axis.form.controls.activeZoneEnd.value"
+                ></page-controller-view-input-output-diagram>
+              </mat-panel-description>
             }
+          </mat-expansion-panel-header>
 
-            @for (button of viewModel.buttons; track button.inputId) {
-                <mat-expansion-panel #panel="matExpansionPanel">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            {{ button.name$ | async }}
-                        </mat-panel-title>
-                        @if (!panel.expanded) {
-                            <mat-panel-description *libHideOnSmallScreen>
-                                <lib-input-activity-indicator [isActive]="!!(button.isActivated$ | async)"
-                                ></lib-input-activity-indicator>
-                            </mat-panel-description>
-                        }
-                    </mat-expansion-panel-header>
+          @if (panel.expanded) {
+            <page-controller-view-gamepad-settings-axis-settings [axisSettingsViewModel]="axis"></page-controller-view-gamepad-settings-axis-settings>
+          }
 
-                    @if (panel.expanded) {
-                        <page-controller-view-gamepad-settings-button-settings [buttonSettingsViewModel]="button"
-                        ></page-controller-view-gamepad-settings-button-settings>
-                    }
+          <mat-action-row>
+            <button mat-button [disabled]="!!(axis.areSettingsDefault$ | async)" (click)="resetAxisSettings(axis.inputId)">
+              {{ 'controller.resetInputSettingsToDefault' | transloco }}
+            </button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      }
 
-                    <mat-action-row>
-                        <button mat-button
-                                [disabled]="!!(button.areSettingsDefault$ | async)"
-                                (click)="resetButtonSettings(button.inputId)"
-                        >{{ 'controller.resetInputSettingsToDefault' | transloco }}</button>
-                    </mat-action-row>
-                </mat-expansion-panel>
+      @for (button of viewModel.buttons; track button.inputId) {
+        <mat-expansion-panel #panel="matExpansionPanel">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ button.name$ | async }}
+            </mat-panel-title>
+            @if (!panel.expanded) {
+              <mat-panel-description *libHideOnSmallScreen>
+                <lib-input-activity-indicator [isActive]="!!(button.isActivated$ | async)"></lib-input-activity-indicator>
+              </mat-panel-description>
             }
-        </mat-accordion>
-    </section>
+          </mat-expansion-panel-header>
+
+          @if (panel.expanded) {
+            <page-controller-view-gamepad-settings-button-settings [buttonSettingsViewModel]="button"></page-controller-view-gamepad-settings-button-settings>
+          }
+
+          <mat-action-row>
+            <button mat-button [disabled]="!!(button.areSettingsDefault$ | async)" (click)="resetButtonSettings(button.inputId)">
+              {{ 'controller.resetInputSettingsToDefault' | transloco }}
+            </button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      }
+    </mat-accordion>
+  </section>
 }

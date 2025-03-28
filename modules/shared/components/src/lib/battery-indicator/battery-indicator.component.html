@@ -1,8 +1,9 @@
 @if (batteryLevel !== null) {
-    <mat-icon class="battery-level"
-              [title]="'hub.batteryLevel' | transloco: { batteryLevel }"
-              [color]="batteryLevelColor"
-              [fontIcon]="batteryLevelIcon"
-    ></mat-icon>
-    <span class="cdk-visually-hidden">{{ 'hub.batteryLevel' | transloco: { batteryLevel } }}</span>
+  <mat-icon
+    class="battery-level"
+    [title]="'hub.batteryLevel' | transloco: { batteryLevel }"
+    [color]="batteryLevelColor"
+    [fontIcon]="batteryLevelIcon"
+  ></mat-icon>
+  <span class="cdk-visually-hidden">{{ 'hub.batteryLevel' | transloco: { batteryLevel } }}</span>
 }

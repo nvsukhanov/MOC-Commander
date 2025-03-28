@@ -9,36 +9,30 @@ import { ControllerInputNameService } from '../common';
 
 @Injectable()
 export class GearboxBindingL10nService implements IBindingL10n<ControlSchemeBindingType.Gearbox> {
-    public readonly bindingTypeL10nKey = 'controlScheme.gearboxBinding.operationMode';
+  public readonly bindingTypeL10nKey = 'controlScheme.gearboxBinding.operationMode';
 
-    constructor(
-        private readonly translocoService: TranslocoService,
-        private readonly controllerNameProvider: ControllerInputNameService,
-    ) {
-    }
+  constructor(
+    private readonly translocoService: TranslocoService,
+    private readonly controllerNameProvider: ControllerInputNameService,
+  ) {}
 
-    public getBindingInputName(
-        actionType: GearboxBindingInputAction
-    ): Observable<string> {
-        switch (actionType) {
-            case GearboxBindingInputAction.NextGear:
-                return this.translocoService.selectTranslate('controlScheme.gearboxBinding.nextGear');
-            case GearboxBindingInputAction.PrevGear:
-                return this.translocoService.selectTranslate('controlScheme.gearboxBinding.prevGear');
-            case GearboxBindingInputAction.Reset:
-                return this.translocoService.selectTranslate('controlScheme.gearboxBinding.reset');
-        }
+  public getBindingInputName(actionType: GearboxBindingInputAction): Observable<string> {
+    switch (actionType) {
+      case GearboxBindingInputAction.NextGear:
+        return this.translocoService.selectTranslate('controlScheme.gearboxBinding.nextGear');
+      case GearboxBindingInputAction.PrevGear:
+        return this.translocoService.selectTranslate('controlScheme.gearboxBinding.prevGear');
+      case GearboxBindingInputAction.Reset:
+        return this.translocoService.selectTranslate('controlScheme.gearboxBinding.reset');
     }
+  }
 
-    public getControllerInputName(
-        actionType: GearboxBindingInputAction,
-        inputConfig: ControlSchemeInputConfig
-    ): Observable<string> {
-        switch (actionType) {
-            case GearboxBindingInputAction.NextGear:
-            case GearboxBindingInputAction.PrevGear:
-            case GearboxBindingInputAction.Reset:
-                return this.controllerNameProvider.getFullControllerInputNameData(inputConfig);
-        }
+  public getControllerInputName(actionType: GearboxBindingInputAction, inputConfig: ControlSchemeInputConfig): Observable<string> {
+    switch (actionType) {
+      case GearboxBindingInputAction.NextGear:
+      case GearboxBindingInputAction.PrevGear:
+      case GearboxBindingInputAction.Reset:
+        return this.controllerNameProvider.getFullControllerInputNameData(inputConfig);
     }
+  }
 }

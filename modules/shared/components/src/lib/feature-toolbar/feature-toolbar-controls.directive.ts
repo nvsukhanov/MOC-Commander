@@ -3,21 +3,20 @@ import { Directive, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { FeatureToolbarService } from './feature-toolbar-service';
 
 @Directive({
-    standalone: true,
-    selector: '[libFeatureToolbarControls]'
+  standalone: true,
+  selector: '[libFeatureToolbarControls]',
 })
 export class FeatureToolbarControlsDirective implements OnInit, OnDestroy {
-    constructor(
-        private readonly featureToolbarService: FeatureToolbarService,
-        private readonly templateRef: TemplateRef<unknown>
-    ) {
-    }
+  constructor(
+    private readonly featureToolbarService: FeatureToolbarService,
+    private readonly templateRef: TemplateRef<unknown>,
+  ) {}
 
-    public ngOnInit(): void {
-        this.featureToolbarService.setControls(this.templateRef);
-    }
+  public ngOnInit(): void {
+    this.featureToolbarService.setControls(this.templateRef);
+  }
 
-    public ngOnDestroy(): void {
-        this.featureToolbarService.clearConfig();
-    }
+  public ngOnDestroy(): void {
+    this.featureToolbarService.clearConfig();
+  }
 }

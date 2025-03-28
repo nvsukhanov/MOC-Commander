@@ -6,33 +6,25 @@ import { RouterLink } from '@angular/router';
 import { RoutesBuilderService } from '@app/shared-misc';
 
 @Component({
-    standalone: true,
-    selector: 'app-discover-hub-button',
-    templateUrl: './discover-hub-button.component.html',
-    styleUrl: './discover-hub-button.component.scss',
-    imports: [
-        MatButtonModule,
-        TranslocoPipe,
-        MatIconModule,
-        RouterLink,
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'app-discover-hub-button',
+  templateUrl: './discover-hub-button.component.html',
+  styleUrl: './discover-hub-button.component.scss',
+  imports: [MatButtonModule, TranslocoPipe, MatIconModule, RouterLink],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DiscoverHubButtonComponent {
-    @Input() public isBluetoothAvailable = false;
+  @Input() public isBluetoothAvailable = false;
 
-    @Input() public isDiscoveryBusy = false;
+  @Input() public isDiscoveryBusy = false;
 
-    @Input() public connectedHubsCount = 0;
+  @Input() public connectedHubsCount = 0;
 
-    @Output() public readonly discoveryStart = new EventEmitter<void>();
+  @Output() public readonly discoveryStart = new EventEmitter<void>();
 
-    constructor(
-        public readonly routesBuilderService: RoutesBuilderService,
-    ) {
-    }
+  constructor(public readonly routesBuilderService: RoutesBuilderService) {}
 
-    public onDiscoveryStart(): void {
-        this.discoveryStart.next();
-    }
+  public onDiscoveryStart(): void {
+    this.discoveryStart.next();
+  }
 }

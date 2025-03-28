@@ -1,30 +1,26 @@
-<section class="manual-item"
-         *transloco="let t; read: 'manuals.linuxInstallation.step1'"
->
-    <h3>{{ t('title') }}</h3>
+<section class="manual-item" *transloco="let t; read: 'manuals.linuxInstallation.step1'">
+  <h3>{{ t('title') }}</h3>
 </section>
 
 <mat-divider [vertical]="false"></mat-divider>
 
-<section class="manual-item"
-         *transloco="let t; read: 'manuals.linuxInstallation.step2'"
->
-    <h3>{{ t('title') }}</h3>
-    <p>{{ t('description') }}</p>
-    <ol>
-        <li>
-            {{ t('openChrome') }}
-        </li>
-        <li>
-            {{ t('pasteFlagsUrl')}}
-            <lib-code-block [content]="resources.chromeFlagsUrl"></lib-code-block>
-            {{ t('pressEnter') }}
-        </li>
-        <li>{{ t('enableFeature') }}</li>
-        <li>{{ t('restartChrome') }}</li>
-        <li>
-            {{ t('openMocCommander') }}
-            <a [href]="resources.mocCommanderHref">{{ resources.mocCommanderHref }}</a>
-        </li>
-    </ol>
+<section class="manual-item" *transloco="let t; read: 'manuals.linuxInstallation.step2'">
+  <h3>{{ t('title') }}</h3>
+  <p>{{ t('description') }}</p>
+  <ol>
+    <li>
+      {{ t('openChrome') }}
+    </li>
+    <li>
+      {{ t('pasteFlagsUrl') }}
+      <lib-code-block [content]="resources.chromeFlagsUrl"></lib-code-block>
+      {{ t('pressEnter') }}
+    </li>
+    <li>{{ t('enableFeature') }}</li>
+    <li>{{ t('restartChrome') }}</li>
+    <li>
+      {{ t('openMocCommander') }}
+      <a [href]="resources.mocCommanderHref">{{ resources.mocCommanderHref }}</a>
+    </li>
+  </ol>
 </section>

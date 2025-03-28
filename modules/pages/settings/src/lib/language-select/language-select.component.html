@@ -1,13 +1,10 @@
 <mat-form-field class="option">
-    <mat-label>{{ 'settings.language' | transloco }}</mat-label>
-    <mat-select [value]="language"
-                (valueChange)="onLanguageChange($event)"
-                [attr.aria-label]="'settings.language' | transloco"
-    >
-        @for (language of languages; track language) {
-            <mat-option [value]="language">
-                {{ language | languageToL10nKey | transloco }}
-            </mat-option>
-        }
-    </mat-select>
+  <mat-label>{{ 'settings.language' | transloco }}</mat-label>
+  <mat-select [value]="language" (valueChange)="onLanguageChange($event)" [attr.aria-label]="'settings.language' | transloco">
+    @for (language of languages; track language) {
+      <mat-option [value]="language">
+        {{ language | languageToL10nKey | transloco }}
+      </mat-option>
+    }
+  </mat-select>
 </mat-form-field>

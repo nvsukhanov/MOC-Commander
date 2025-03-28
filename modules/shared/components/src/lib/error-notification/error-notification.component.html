@@ -1,18 +1,12 @@
 <span matSnackBarLabel>
-    <span class="message">
-        <mat-icon [fontIcon]="'warning_amber'"
-                  [color]="'warn'"
-                  [inline]="true"
-        ></mat-icon>
-        {{ error$ | async }}
-    </span>
+  <span class="message">
+    <mat-icon [fontIcon]="'warning_amber'" [color]="'warn'" [inline]="true"></mat-icon>
+    {{ error$ | async }}
+  </span>
 </span>
 
 <span matSnackBarActions>
-    <button mat-button
-            matSnackBarAction
-            (click)="onDismiss()"
-    >
-        {{ 'common.dismissNotification' | transloco }}
-    </button>
+  <button mat-button matSnackBarAction (click)="onDismiss()">
+    {{ 'common.dismissNotification' | transloco }}
+  </button>
 </span>

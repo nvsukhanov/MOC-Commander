@@ -3,19 +3,14 @@ import { Observable } from 'rxjs';
 import { ControllerModel, ControllerProfilesFacadeService } from '@app/store';
 
 @Pipe({
-    standalone: true,
-    name: 'controllerName',
-    pure: true
+  standalone: true,
+  name: 'controllerName',
+  pure: true,
 })
 export class ControllerNamePipe implements PipeTransform {
-    constructor(
-        private readonly controllerFacadeService: ControllerProfilesFacadeService
-    ) {
-    }
+  constructor(private readonly controllerFacadeService: ControllerProfilesFacadeService) {}
 
-    public transform(
-        model: ControllerModel
-    ): Observable<string> {
-        return this.controllerFacadeService.getByControllerModel(model).name$;
-    }
+  public transform(model: ControllerModel): Observable<string> {
+    return this.controllerFacadeService.getByControllerModel(model).name$;
+  }
 }

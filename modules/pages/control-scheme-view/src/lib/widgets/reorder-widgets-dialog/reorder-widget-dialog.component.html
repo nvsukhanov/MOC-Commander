@@ -1,62 +1,34 @@
 <h1 mat-dialog-title>
-    {{ 'controlScheme.widgets.reorderWidgetsDialog.title' | transloco }}
+  {{ 'controlScheme.widgets.reorderWidgetsDialog.title' | transloco }}
 </h1>
 
-<div mat-dialog-content
-     class="dialog-content"
->
-    <mat-list>
-        <ol>
-            @for (widget of widgetsList; track trackByWidgetId; let first = $first; let last = $last; let index = $index) {
-                <mat-list-item>
-                    <li class="widgets-list-item">
-                        <button mat-icon-button
-                                class="reorder-button"
-                                [disabled]="first"
-                                (click)="onMoveUp(index)"
-                        >
-                            <mat-icon [fontIcon]="'keyboard_arrow_up'"
-                                      [inline]="true"
-                            ></mat-icon>
-                            <span class="cdk-visually-hidden">
-                                {{ 'controlScheme.widgets.moveWidgetUp' | transloco }} {{ widget.title }}
-                            </span>
-                        </button>
-                        <button mat-icon-button
-                                class="reorder-button"
-                                [disabled]="last"
-                                (click)="onMoveDown(index)"
-                        >
-                            <mat-icon [fontIcon]="'keyboard_arrow_down'"
-                                      [inline]="true"
-                            ></mat-icon>
-                            <span class="cdk-visually-hidden">
-                                {{ 'controlScheme.widgets.moveWidgetDown' | transloco }} {{ widget.title }}
-                            </span>
-                        </button>
-                        <div libEllipsisTitle>
-                            {{ widget.title }} ({{ widget | widgetConnectionInfoL10n | async }})
-                        </div>
-                    </li>
-                </mat-list-item>
-            }
-        </ol>
-    </mat-list>
+<div mat-dialog-content class="dialog-content">
+  <mat-list>
+    <ol>
+      @for (widget of widgetsList; track trackByWidgetId; let first = $first; let last = $last; let index = $index) {
+        <mat-list-item>
+          <li class="widgets-list-item">
+            <button mat-icon-button class="reorder-button" [disabled]="first" (click)="onMoveUp(index)">
+              <mat-icon [fontIcon]="'keyboard_arrow_up'" [inline]="true"></mat-icon>
+              <span class="cdk-visually-hidden"> {{ 'controlScheme.widgets.moveWidgetUp' | transloco }} {{ widget.title }} </span>
+            </button>
+            <button mat-icon-button class="reorder-button" [disabled]="last" (click)="onMoveDown(index)">
+              <mat-icon [fontIcon]="'keyboard_arrow_down'" [inline]="true"></mat-icon>
+              <span class="cdk-visually-hidden"> {{ 'controlScheme.widgets.moveWidgetDown' | transloco }} {{ widget.title }} </span>
+            </button>
+            <div libEllipsisTitle>{{ widget.title }} ({{ widget | widgetConnectionInfoL10n | async }})</div>
+          </li>
+        </mat-list-item>
+      }
+    </ol>
+  </mat-list>
 </div>
 
-<div mat-dialog-actions
-     [align]="'end'"
->
-    <button mat-raised-button
-            [color]="'primary'"
-            (click)="onSave()"
-    >
-        {{ 'controlScheme.widgets.addWidgetDialog.saveButton' | transloco }}
-    </button>
-    <button mat-button
-            type="button"
-            (click)="onCancel()"
-    >
-        {{ 'controlScheme.widgets.addWidgetDialog.cancelButton' | transloco }}
-    </button>
+<div mat-dialog-actions [align]="'end'">
+  <button mat-raised-button [color]="'primary'" (click)="onSave()">
+    {{ 'controlScheme.widgets.addWidgetDialog.saveButton' | transloco }}
+  </button>
+  <button mat-button type="button" (click)="onCancel()">
+    {{ 'controlScheme.widgets.addWidgetDialog.cancelButton' | transloco }}
+  </button>
 </div>

@@ -10,38 +10,38 @@ import { COPY_TO_CLIPBOARD_HANDLER } from '@app/shared-components';
 
 import { IState } from './i-state';
 import {
-    ATTACHED_IOS_FEATURE,
-    ATTACHED_IO_MODES_FEATURE,
-    ATTACHED_IO_PORT_MODE_INFO_FEATURE,
-    ATTACHED_IO_PROPS_FEATURE,
-    BLUETOOTH_AVAILABILITY_FEATURE,
-    CONTROLLERS_FEATURE,
-    CONTROLLER_CONNECTION_FEATURE,
-    CONTROLLER_INPUT_FEATURE,
-    CONTROLLER_SETTINGS_FEATURE,
-    CONTROL_SCHEME_FEATURE,
-    CONTROL_SCHEME_WIDGET_DATA_FEATURE,
-    HUBS_FEATURE,
-    HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE,
-    HUB_RUNTIME_DATA_FEATURE,
-    PORT_TASKS_FEATURE,
-    SETTINGS_FEATURE,
-    localStorageSyncMetaReducer,
-    stateResetMetaReducer,
-    stateRestoreMetaReducer
+  ATTACHED_IOS_FEATURE,
+  ATTACHED_IO_MODES_FEATURE,
+  ATTACHED_IO_PORT_MODE_INFO_FEATURE,
+  ATTACHED_IO_PROPS_FEATURE,
+  BLUETOOTH_AVAILABILITY_FEATURE,
+  CONTROLLERS_FEATURE,
+  CONTROLLER_CONNECTION_FEATURE,
+  CONTROLLER_INPUT_FEATURE,
+  CONTROLLER_SETTINGS_FEATURE,
+  CONTROL_SCHEME_FEATURE,
+  CONTROL_SCHEME_WIDGET_DATA_FEATURE,
+  HUBS_FEATURE,
+  HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE,
+  HUB_RUNTIME_DATA_FEATURE,
+  PORT_TASKS_FEATURE,
+  SETTINGS_FEATURE,
+  localStorageSyncMetaReducer,
+  stateResetMetaReducer,
+  stateRestoreMetaReducer,
 } from './reducers';
 import {
-    APP_UPDATE_EFFECTS,
-    AttachedIOsEffects,
-    AttachedIoModesEffects,
-    COMMON_EFFECTS,
-    CONTROLLER_EFFECTS,
-    CONTROL_SCHEME_EFFECTS,
-    HUB_EFFECTS,
-    HubAttachedIosStateEffects,
-    HubPortModeInfoEffects,
-    NOTIFICATION_EFFECTS,
-    SETTINGS_EFFECTS
+  APP_UPDATE_EFFECTS,
+  AttachedIOsEffects,
+  AttachedIoModesEffects,
+  COMMON_EFFECTS,
+  CONTROLLER_EFFECTS,
+  CONTROL_SCHEME_EFFECTS,
+  HUB_EFFECTS,
+  HubAttachedIosStateEffects,
+  HubPortModeInfoEffects,
+  NOTIFICATION_EFFECTS,
+  SETTINGS_EFFECTS,
 } from './effects';
 import { bluetoothAvailabilityCheckFactory } from './bluetooth-availability-check-factory';
 import { HubStorageService } from './hub-storage.service';
@@ -56,95 +56,87 @@ import { CopyToClipboardHandlerService } from './copy-to-clipboard-handler.servi
 import { NotificationFacadeService } from './notification-facade.service';
 
 const REDUCERS: ActionReducerMap<IState> = {
-    bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,
-    controllers: CONTROLLERS_FEATURE.reducer,
-    controllerInput: CONTROLLER_INPUT_FEATURE.reducer,
-    controllerSettings: CONTROLLER_SETTINGS_FEATURE.reducer,
-    controllerConnections: CONTROLLER_CONNECTION_FEATURE.reducer,
-    controlSchemes: CONTROL_SCHEME_FEATURE.reducer,
-    controlSchemeWidgetsData: CONTROL_SCHEME_WIDGET_DATA_FEATURE.reducer,
-    hubs: HUBS_FEATURE.reducer,
-    hubRuntimeData: HUB_RUNTIME_DATA_FEATURE.reducer,
-    attachedIos: ATTACHED_IOS_FEATURE.reducer,
-    attachedIoProps: ATTACHED_IO_PROPS_FEATURE.reducer,
-    attachedIoModes: ATTACHED_IO_MODES_FEATURE.reducer,
-    attachedIoPortModeInfo: ATTACHED_IO_PORT_MODE_INFO_FEATURE.reducer,
-    hubEditFormActiveSaves: HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE.reducer,
-    portTasks: PORT_TASKS_FEATURE.reducer,
-    router: routerReducer,
-    settings: SETTINGS_FEATURE.reducer,
-    storeVersion: (state?: AppStoreVersion) => state ?? AppStoreVersion.latest,
-    appVersion: (state: string | undefined, action: Action) => {
-        if (action.type === APP_UPDATE_ACTIONS.appUpdated.type) {
-            return (action as ReturnType<typeof APP_UPDATE_ACTIONS.appUpdated>).current;
-        }
-        return state ?? packageJson.version;
+  bluetoothAvailability: BLUETOOTH_AVAILABILITY_FEATURE.reducer,
+  controllers: CONTROLLERS_FEATURE.reducer,
+  controllerInput: CONTROLLER_INPUT_FEATURE.reducer,
+  controllerSettings: CONTROLLER_SETTINGS_FEATURE.reducer,
+  controllerConnections: CONTROLLER_CONNECTION_FEATURE.reducer,
+  controlSchemes: CONTROL_SCHEME_FEATURE.reducer,
+  controlSchemeWidgetsData: CONTROL_SCHEME_WIDGET_DATA_FEATURE.reducer,
+  hubs: HUBS_FEATURE.reducer,
+  hubRuntimeData: HUB_RUNTIME_DATA_FEATURE.reducer,
+  attachedIos: ATTACHED_IOS_FEATURE.reducer,
+  attachedIoProps: ATTACHED_IO_PROPS_FEATURE.reducer,
+  attachedIoModes: ATTACHED_IO_MODES_FEATURE.reducer,
+  attachedIoPortModeInfo: ATTACHED_IO_PORT_MODE_INFO_FEATURE.reducer,
+  hubEditFormActiveSaves: HUB_EDIT_FORM_ACTIVE_SAVES_FEATURE.reducer,
+  portTasks: PORT_TASKS_FEATURE.reducer,
+  router: routerReducer,
+  settings: SETTINGS_FEATURE.reducer,
+  storeVersion: (state?: AppStoreVersion) => state ?? AppStoreVersion.latest,
+  appVersion: (state: string | undefined, action: Action) => {
+    if (action.type === APP_UPDATE_ACTIONS.appUpdated.type) {
+      return (action as ReturnType<typeof APP_UPDATE_ACTIONS.appUpdated>).current;
     }
+    return state ?? packageJson.version;
+  },
 };
 
 export function provideApplicationStore(): EnvironmentProviders {
-    const providers: (Provider | EnvironmentProviders)[] = [
-        [
-            provideStore<IState>(REDUCERS, {
-                metaReducers: [
-                    localStorageSyncMetaReducer,
-                    stateRestoreMetaReducer,
-                    stateResetMetaReducer
-                ]
-            }),
-            provideEffects(
-                AttachedIOsEffects,
-                HubPortModeInfoEffects,
-                AttachedIoModesEffects,
-                HubAttachedIosStateEffects,
-                CONTROLLER_EFFECTS,
-                SETTINGS_EFFECTS,
-                HUB_EFFECTS,
-                CONTROL_SCHEME_EFFECTS,
-                COMMON_EFFECTS,
-                APP_UPDATE_EFFECTS,
-                NOTIFICATION_EFFECTS
-            ),
-            {
-                provide: APP_INITIALIZER,
-                useFactory: bluetoothAvailabilityCheckFactory,
-                deps: [
-                    NAVIGATOR,
-                    Store,
-                    Router,
-                    RoutesBuilderService
-                ],
-                multi: true
-            },
-            HubStorageService,
-            HubMotorPositionFacadeService,
-            HubServoCalibrationFacadeService,
-            ControllerProfilesFacadeService,
-            NotificationFacadeService,
-            { provide: COPY_TO_CLIPBOARD_HANDLER, useClass: CopyToClipboardHandlerService },
-            provideRouterStore({
-                navigationActionTiming: NavigationActionTiming.PostActivation
-            }),
-            provideStoreMigrations(),
-            provideControllerProfiles()
-        ]
-    ];
-    if (isDevMode()) {
-        providers.push(
-            provideStoreDevtools({
-                maxAge: 100,
-                logOnly: !isDevMode(),
-                autoPause: true,
-                trace: true,
-                traceLimit: 75,
-                actionsBlocklist: [
-                    HUB_RUNTIME_DATA_ACTIONS.setHasCommunication.type,
-                    HUB_RUNTIME_DATA_ACTIONS.rssiLevelReceived.type,
-                    HUB_RUNTIME_DATA_ACTIONS.batteryLevelReceived.type,
-                    // CONTROLLER_INPUT_ACTIONS.inputReceived.type
-                ]
-            , connectInZone: true}),
-        );
-    }
-    return makeEnvironmentProviders(providers);
+  const providers: (Provider | EnvironmentProviders)[] = [
+    [
+      provideStore<IState>(REDUCERS, {
+        metaReducers: [localStorageSyncMetaReducer, stateRestoreMetaReducer, stateResetMetaReducer],
+      }),
+      provideEffects(
+        AttachedIOsEffects,
+        HubPortModeInfoEffects,
+        AttachedIoModesEffects,
+        HubAttachedIosStateEffects,
+        CONTROLLER_EFFECTS,
+        SETTINGS_EFFECTS,
+        HUB_EFFECTS,
+        CONTROL_SCHEME_EFFECTS,
+        COMMON_EFFECTS,
+        APP_UPDATE_EFFECTS,
+        NOTIFICATION_EFFECTS,
+      ),
+      {
+        provide: APP_INITIALIZER,
+        useFactory: bluetoothAvailabilityCheckFactory,
+        deps: [NAVIGATOR, Store, Router, RoutesBuilderService],
+        multi: true,
+      },
+      HubStorageService,
+      HubMotorPositionFacadeService,
+      HubServoCalibrationFacadeService,
+      ControllerProfilesFacadeService,
+      NotificationFacadeService,
+      { provide: COPY_TO_CLIPBOARD_HANDLER, useClass: CopyToClipboardHandlerService },
+      provideRouterStore({
+        navigationActionTiming: NavigationActionTiming.PostActivation,
+      }),
+      provideStoreMigrations(),
+      provideControllerProfiles(),
+    ],
+  ];
+  if (isDevMode()) {
+    providers.push(
+      provideStoreDevtools({
+        maxAge: 100,
+        logOnly: !isDevMode(),
+        autoPause: true,
+        trace: true,
+        traceLimit: 75,
+        actionsBlocklist: [
+          HUB_RUNTIME_DATA_ACTIONS.setHasCommunication.type,
+          HUB_RUNTIME_DATA_ACTIONS.rssiLevelReceived.type,
+          HUB_RUNTIME_DATA_ACTIONS.batteryLevelReceived.type,
+          // CONTROLLER_INPUT_ACTIONS.inputReceived.type
+        ],
+        connectInZone: true,
+      }),
+    );
+  }
+  return makeEnvironmentProviders(providers);
 }
