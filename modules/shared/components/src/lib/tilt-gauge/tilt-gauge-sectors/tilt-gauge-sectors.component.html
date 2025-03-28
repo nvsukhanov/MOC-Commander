@@ -1,23 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg"
-     preserveAspectRatio="xMidYMid meet"
-     [attr.viewBox]="viewBox"
->
-    <defs>
-        @for (sectorDef of sectors; track sectorDef.id) {
-            <clipPath [attr.id]="sectorDef.id">
-                <path [attr.d]="sectorDef.cutoffPath"/>
-            </clipPath>
-        }
-    </defs>
-
+<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" [attr.viewBox]="viewBox">
+  <defs>
     @for (sectorDef of sectors; track sectorDef.id) {
-        <circle [attr.cx]="0"
-                [attr.cy]="0"
-                [attr.r]="sectorDef.radius"
-                [attr.stroke-width]="sectorDef.width"
-                [attr.clip-path]="sectorDef.clipPathId"
-                class="gauge-sector"
-                [class.gauge-sector_active]="tiltDegrees | libTiltGaugeSectorHighlight: sectorDef"
-        />
+      <clipPath [attr.id]="sectorDef.id">
+        <path [attr.d]="sectorDef.cutoffPath" />
+      </clipPath>
     }
+  </defs>
+
+  @for (sectorDef of sectors; track sectorDef.id) {
+    <circle
+      [attr.cx]="0"
+      [attr.cy]="0"
+      [attr.r]="sectorDef.radius"
+      [attr.stroke-width]="sectorDef.width"
+      [attr.clip-path]="sectorDef.clipPathId"
+      class="gauge-sector"
+      [class.gauge-sector_active]="tiltDegrees | libTiltGaugeSectorHighlight: sectorDef"
+    />
+  }
 </svg>

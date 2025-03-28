@@ -1,16 +1,16 @@
 :host {
-    display: block;
+  display: block;
 }
 
 .card {
-    width: max(300px, 40vw);
+  width: max(300px, 40vw);
 }
 
 mat-form-field {
-    width: 100%;
+  width: 100%;
 }
 
 .edit-form-container {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }

@@ -9,36 +9,30 @@ import { ControllerInputNameService } from '../common';
 
 @Injectable()
 export class TrainBindingL10nService implements IBindingL10n<ControlSchemeBindingType.Train> {
-    public readonly bindingTypeL10nKey = 'controlScheme.trainBinding.operationMode';
+  public readonly bindingTypeL10nKey = 'controlScheme.trainBinding.operationMode';
 
-    constructor(
-        private readonly translocoService: TranslocoService,
-        private readonly controllerInputNameService: ControllerInputNameService
-    ) {
-    }
+  constructor(
+    private readonly translocoService: TranslocoService,
+    private readonly controllerInputNameService: ControllerInputNameService,
+  ) {}
 
-    public getBindingInputName(
-        actionType: TrainBindingInputAction,
-    ): Observable<string> {
-        switch (actionType) {
-            case TrainBindingInputAction.NextSpeed:
-                return this.translocoService.selectTranslate('controlScheme.trainBinding.nextSpeed');
-            case TrainBindingInputAction.PrevSpeed:
-                return this.translocoService.selectTranslate('controlScheme.trainBinding.prevSpeed');
-            case TrainBindingInputAction.Reset:
-                return this.translocoService.selectTranslate('controlScheme.trainBinding.reset');
-        }
+  public getBindingInputName(actionType: TrainBindingInputAction): Observable<string> {
+    switch (actionType) {
+      case TrainBindingInputAction.NextSpeed:
+        return this.translocoService.selectTranslate('controlScheme.trainBinding.nextSpeed');
+      case TrainBindingInputAction.PrevSpeed:
+        return this.translocoService.selectTranslate('controlScheme.trainBinding.prevSpeed');
+      case TrainBindingInputAction.Reset:
+        return this.translocoService.selectTranslate('controlScheme.trainBinding.reset');
     }
+  }
 
-    public getControllerInputName(
-        actionType: TrainBindingInputAction,
-        inputConfig: ControlSchemeInputConfig
-    ): Observable<string> {
-        switch (actionType) {
-            case TrainBindingInputAction.NextSpeed:
-            case TrainBindingInputAction.PrevSpeed:
-            case TrainBindingInputAction.Reset:
-                return this.controllerInputNameService.getFullControllerInputNameData(inputConfig);
-        }
+  public getControllerInputName(actionType: TrainBindingInputAction, inputConfig: ControlSchemeInputConfig): Observable<string> {
+    switch (actionType) {
+      case TrainBindingInputAction.NextSpeed:
+      case TrainBindingInputAction.PrevSpeed:
+      case TrainBindingInputAction.Reset:
+        return this.controllerInputNameService.getFullControllerInputNameData(inputConfig);
     }
+  }
 }

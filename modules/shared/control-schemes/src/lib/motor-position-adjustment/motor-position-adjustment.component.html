@@ -1,5 +1,6 @@
-<lib-motor-position-adjustment-controls [canExecuteStep]="!!(canExecuteStep$ | async)"
-                                        [canGoToZero]="!!(canGoToZero$ | async)"
-                                        (executeStep)="onExecuteStep($event)"
-                                        (goToZero)="onGoToZero()"
+<lib-motor-position-adjustment-controls
+  [canExecuteStep]="!!(canExecuteStep$ | async)"
+  [canGoToZero]="!!(canGoToZero$ | async)"
+  (executeStep)="onExecuteStep($event)"
+  (goToZero)="onGoToZero()"
 ></lib-motor-position-adjustment-controls>

@@ -5,30 +5,30 @@ $border-width: 2px;
 $border-radius: 3px;
 
 :host {
-    display: inline-block;
-    height: $height;
-    width: $width;
-    min-width: $height;
-    min-height: $width;
+  display: inline-block;
+  height: $height;
+  width: $width;
+  min-width: $height;
+  min-height: $width;
 }
 
 .indicator {
-    &-container {
-        border-width: $border-width;
-        border-style: solid;
-        border-radius: $border-radius;
-        border-color: var(--app-text-color);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: calc(#{$width} - #{$border-width * 2});
-        height: calc(#{$height} - #{$border-width * 2});
-    }
+  &-container {
+    border-width: $border-width;
+    border-style: solid;
+    border-radius: $border-radius;
+    border-color: var(--app-text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(#{$width} - #{$border-width * 2});
+    height: calc(#{$height} - #{$border-width * 2});
+  }
 
-    &-center {
-        width: calc(#{$width} - #{$border-width * 2} - #{$internal-padding * 2});
-        height: calc(#{$height} - #{$border-width * 2} - #{$internal-padding * 2});
-        background-color: var(--app-text-color);
-        border-radius: 2px;
-    }
+  &-center {
+    width: calc(#{$width} - #{$border-width * 2} - #{$internal-padding * 2});
+    height: calc(#{$height} - #{$border-width * 2} - #{$internal-padding * 2});
+    background-color: var(--app-text-color);
+    border-radius: 2px;
+  }
 }

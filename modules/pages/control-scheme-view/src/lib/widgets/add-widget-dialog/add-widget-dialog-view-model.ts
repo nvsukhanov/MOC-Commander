@@ -1,6 +1,6 @@
 import { WidgetConfigModel } from '@app/store';
 
 export type AddWidgetDialogViewModel = {
-    controlSchemeName: string;
-    addableWidgetConfigs: WidgetConfigModel[];
+  controlSchemeName: string;
+  addableWidgetConfigs: WidgetConfigModel[];
 };

@@ -7,11 +7,11 @@ import { TrainBindingInputExtractorService } from './train-binding-input-extract
 import { TrainBindingL10nService } from './train-binding-l10n.service';
 
 export function provideTrainBinding(): Provider[] {
-    return [
-        TrainBindingTaskPayloadBuilderService,
-        TrainBindingFormBuilderService,
-        TrainBindingFormMapperService,
-        TrainBindingInputExtractorService,
-        TrainBindingL10nService
-    ];
+  return [
+    TrainBindingTaskPayloadBuilderService,
+    TrainBindingFormBuilderService,
+    TrainBindingFormMapperService,
+    TrainBindingInputExtractorService,
+    TrainBindingL10nService,
+  ];
 }

@@ -1,12 +1,5 @@
-<span class="action-name"
-      libEllipsisTitle
->
-    {{ actionName() | async }}:
-</span>
+<span class="action-name" libEllipsisTitle> {{ actionName() | async }}: </span>
 
-<span class="controller-name"
-      [class.controller-name_disconnected]="!isControllerConnected()"
->
-    {{ controllerInputName() | async }}
+<span class="controller-name" [class.controller-name_disconnected]="!isControllerConnected()">
+  {{ controllerInputName() | async }}
 </span>
-

@@ -11,27 +11,24 @@ import { TrainTaskL10nService } from './train';
 
 @Injectable()
 export class TaskSummaryBuilderService implements IPortCommandTaskSummaryBuilder {
-    private readonly bindingL10nServices: { [k in TaskType]: IPortCommandTaskSummaryBuilder<k> } = {
-        [TaskType.Gearbox]: this.gearboxTaskL10nService,
-        [TaskType.SetAngle]: this.setAngleTaskL10nService,
-        [TaskType.Speed]: this.speedTaskL10nService,
-        [TaskType.Stepper]: this.stepperTaskL10nService,
-        [TaskType.Train]: this.trainTaskL10nService
-    };
+  private readonly bindingL10nServices: { [k in TaskType]: IPortCommandTaskSummaryBuilder<k> } = {
+    [TaskType.Gearbox]: this.gearboxTaskL10nService,
+    [TaskType.SetAngle]: this.setAngleTaskL10nService,
+    [TaskType.Speed]: this.speedTaskL10nService,
+    [TaskType.Stepper]: this.stepperTaskL10nService,
+    [TaskType.Train]: this.trainTaskL10nService,
+  };
 
-    constructor(
-        private readonly gearboxTaskL10nService: GearboxTaskL10nService,
-        private readonly setAngleTaskL10nService: SetAngleTaskL10nService,
-        private readonly speedTaskL10nService: SpeedTaskL10nService,
-        private readonly stepperTaskL10nService: StepperTaskL10nService,
-        private readonly trainTaskL10nService: TrainTaskL10nService
-    ) {
-    }
+  constructor(
+    private readonly gearboxTaskL10nService: GearboxTaskL10nService,
+    private readonly setAngleTaskL10nService: SetAngleTaskL10nService,
+    private readonly speedTaskL10nService: SpeedTaskL10nService,
+    private readonly stepperTaskL10nService: StepperTaskL10nService,
+    private readonly trainTaskL10nService: TrainTaskL10nService,
+  ) {}
 
-    public buildTaskSummary<T extends TaskType>(
-        portCommandTask: PortCommandTask<T>
-    ): Observable<string> {
-        const l10nService: IPortCommandTaskSummaryBuilder<T> = this.bindingL10nServices[portCommandTask.payload.type];
-        return l10nService.buildTaskSummary(portCommandTask);
-    }
+  public buildTaskSummary<T extends TaskType>(portCommandTask: PortCommandTask<T>): Observable<string> {
+    const l10nService: IPortCommandTaskSummaryBuilder<T> = this.bindingL10nServices[portCommandTask.payload.type];
+    return l10nService.buildTaskSummary(portCommandTask);
+  }
 }

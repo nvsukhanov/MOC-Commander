@@ -15,22 +15,25 @@ export type V28TrainBinding = V28Binding & { bindingType: ControlSchemeBindingTy
 export type V28GearboxBinding = V28Binding & { bindingType: ControlSchemeBindingType.Gearbox };
 export type V28SetAngleBinding = V28Binding & { bindingType: ControlSchemeBindingType.SetAngle };
 
-export type V27ServoBinding = Override<V28ServoBinding, {
+export type V27ServoBinding = Override<
+  V28ServoBinding,
+  {
     inputs: {
-        [OldInputAction.Servo]: V30InputConfig;
+      [OldInputAction.Servo]: V30InputConfig;
     };
     invert: boolean;
-}>;
+  }
+>;
 
-export type V27Bindings = V28SpeedBinding
-    | V27ServoBinding
-    | V28StepperBinding
-    | V28TrainBinding
-    | V28GearboxBinding
-    | V28SetAngleBinding;
-export type V27ControlSchemesEntitiesState = Omit<V28ControlSchemesEntitiesState, 'bindings'> & { bindings: V27Bindings[] };
+export type V27Bindings = V28SpeedBinding | V27ServoBinding | V28StepperBinding | V28TrainBinding | V28GearboxBinding | V28SetAngleBinding;
+export type V27ControlSchemesEntitiesState = Omit<V28ControlSchemesEntitiesState, 'bindings'> & {
+  bindings: V27Bindings[];
+};
 
-export type V27Store = Override<V28Store, {
+export type V27Store = Override<
+  V28Store,
+  {
     controlSchemes: Omit<V28Store['controlSchemes'], 'entities'> & EntityState<V27ControlSchemesEntitiesState>;
     storeVersion: AppStoreVersion.v27;
-}>;
+  }
+>;

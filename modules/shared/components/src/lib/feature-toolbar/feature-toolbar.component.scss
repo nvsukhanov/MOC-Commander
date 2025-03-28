@@ -1,24 +1,27 @@
 :host {
-    width: 100%;
+  width: 100%;
 }
 
 .toolbar-container {
-    display: block;
-    width: 100%;
-    z-index: 1;
-    box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px rgba(0, 0, 0, 0.1411764706), 0 1px 18px rgba(0, 0, 0, 0.1215686275);
+  display: block;
+  width: 100%;
+  z-index: 1;
+  box-shadow:
+    0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 6px 10px rgba(0, 0, 0, 0.1411764706),
+    0 1px 18px rgba(0, 0, 0, 0.1215686275);
 }
 
 .spacer {
-    flex: 1;
+  flex: 1;
 }
 
 .breadcrumbs {
-    margin-right: 50px;
+  margin-right: 50px;
 }
 
 .controls {
-    display: flex;
-    gap: 10px;
-    align-items: center;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }

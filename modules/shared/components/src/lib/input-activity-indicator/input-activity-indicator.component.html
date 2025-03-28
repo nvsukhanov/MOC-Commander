@@ -1,11 +1,7 @@
 @if (isActive) {
-    <div class="indicator-container indicator-container_active"
-         [title]="activeTitle"
-    >
-        <div class="indicator-center indicator-center_active"></div>
-    </div>
+  <div class="indicator-container indicator-container_active" [title]="activeTitle">
+    <div class="indicator-center indicator-center_active"></div>
+  </div>
 } @else {
-    <div class="indicator-container"
-         [title]="inactiveTitle"
-    ></div>
+  <div class="indicator-container" [title]="inactiveTitle"></div>
 }

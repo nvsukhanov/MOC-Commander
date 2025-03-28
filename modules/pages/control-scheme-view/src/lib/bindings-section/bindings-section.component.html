@@ -1,36 +1,27 @@
-<section class="section"
-         [class.section_running]="isSchemeRunning()"
->
-    <h2 class="section-title">
-        {{ 'controlScheme.bindingsSectionTitle' | transloco }}
-    </h2>
+<section class="section" [class.section_running]="isSchemeRunning()">
+  <h2 class="section-title">
+    {{ 'controlScheme.bindingsSectionTitle' | transloco }}
+  </h2>
 </section>
 
-<div class="bindings-container"
-     [class.bindings-container_running]="isSchemeRunning()"
->
-    @if (controlSchemeName(); as schemeName) {
-        @for (hubId of hubIds(); track hubId) {
-            <page-control-scheme-view-hub-list-item class="hub-bindings"
-                                                    [hubId]="hubId"
-                                                    [controlSchemeName]="schemeName"
-            ></page-control-scheme-view-hub-list-item>
-        }
+<div class="bindings-container" [class.bindings-container_running]="isSchemeRunning()">
+  @if (controlSchemeName(); as schemeName) {
+    @for (hubId of hubIds(); track hubId) {
+      <page-control-scheme-view-hub-list-item class="hub-bindings" [hubId]="hubId" [controlSchemeName]="schemeName"></page-control-scheme-view-hub-list-item>
     }
+  }
 
-    <div class="add-binding-button-container"
-         [class.add-binding-button-container_running]="!canAddBinding()"
+  <div class="add-binding-button-container" [class.add-binding-button-container_running]="!canAddBinding()">
+    <a
+      mat-fab
+      color="primary"
+      class="add-binding-button"
+      [class.add-binding-button_running]="!canAddBinding()"
+      [disabled]="!canAddBinding()"
+      [routerLink]="addBindingPath()"
+      [title]="'controlScheme.addBindingButtonTitle' | transloco"
     >
-        <a mat-fab
-           color="primary"
-           class="add-binding-button"
-           [class.add-binding-button_running]="!canAddBinding()"
-           [disabled]="!canAddBinding()"
-           [routerLink]="addBindingPath()"
-           [title]="'controlScheme.addBindingButtonTitle' | transloco"
-        >
-            <mat-icon [fontIcon]="'add'"></mat-icon>
-        </a>
-    </div>
+      <mat-icon [fontIcon]="'add'"></mat-icon>
+    </a>
+  </div>
 </div>
-

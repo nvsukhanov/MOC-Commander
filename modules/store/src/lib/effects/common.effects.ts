@@ -7,51 +7,51 @@ import { NAVIGATOR, WakeLockService } from '@app/shared-misc';
 import { COMMON_ACTIONS, SHOW_NOTIFICATION_ACTIONS } from '../actions';
 import { HUB_RUNTIME_DATA_SELECTORS } from '../selectors';
 
-const COPY_TO_CLIPBOARD_EFFECT = createEffect((
-    actions: Actions = inject(Actions),
-    navigator: Navigator = inject(NAVIGATOR)
-) => {
+const COPY_TO_CLIPBOARD_EFFECT = createEffect(
+  (actions: Actions = inject(Actions), navigator: Navigator = inject(NAVIGATOR)) => {
     return actions.pipe(
-        ofType(COMMON_ACTIONS.copyToClipboard),
-        switchMap(async (action) => {
-            try {
-                await navigator.clipboard.writeText(action.content);
-                return SHOW_NOTIFICATION_ACTIONS.info({
-                    l10nKey: 'common.copyToClipboardSuccessNotification'
-                });
-            } catch {
-                return SHOW_NOTIFICATION_ACTIONS.error({
-                    l10nKey: 'common.copyToClipboardErrorNotification'
-                });
-            }
-        })
+      ofType(COMMON_ACTIONS.copyToClipboard),
+      switchMap(async (action) => {
+        try {
+          await navigator.clipboard.writeText(action.content);
+          return SHOW_NOTIFICATION_ACTIONS.info({
+            l10nKey: 'common.copyToClipboardSuccessNotification',
+          });
+        } catch {
+          return SHOW_NOTIFICATION_ACTIONS.error({
+            l10nKey: 'common.copyToClipboardErrorNotification',
+          });
+        }
+      }),
     );
-}, { functional: true });
+  },
+  { functional: true },
+);
 
-const ACQUIRE_WAKE_LOCK_EFFECT = createEffect((
-    wakeLockService: WakeLockService = inject(WakeLockService),
-    store: Store = inject(Store)
-) => {
+const ACQUIRE_WAKE_LOCK_EFFECT = createEffect(
+  (wakeLockService: WakeLockService = inject(WakeLockService), store: Store = inject(Store)) => {
     return store.select(HUB_RUNTIME_DATA_SELECTORS.selectTotal).pipe(
-        pairwise(),
-        filter(([a, b]) => a === 0 && b > 0),
-        switchMap(() => wakeLockService.requestWakeLock())
+      pairwise(),
+      filter(([a, b]) => a === 0 && b > 0),
+      switchMap(() => wakeLockService.requestWakeLock()),
     );
-}, { functional: true, dispatch: false });
+  },
+  { functional: true, dispatch: false },
+);
 
-const RELEASE_WAKE_LOCK_EFFECT = createEffect((
-    wakeLockService: WakeLockService = inject(WakeLockService),
-    store: Store = inject(Store),
-) => {
+const RELEASE_WAKE_LOCK_EFFECT = createEffect(
+  (wakeLockService: WakeLockService = inject(WakeLockService), store: Store = inject(Store)) => {
     return store.select(HUB_RUNTIME_DATA_SELECTORS.selectTotal).pipe(
-        pairwise(),
-        filter(([a, b]) => a > 0 && b === 0),
-        switchMap(() => wakeLockService.releaseWakeLock())
+      pairwise(),
+      filter(([a, b]) => a > 0 && b === 0),
+      switchMap(() => wakeLockService.releaseWakeLock()),
     );
-}, { functional: true, dispatch: false });
+  },
+  { functional: true, dispatch: false },
+);
 
 export const COMMON_EFFECTS: { [name: string]: FunctionalEffect } = {
-    copyToClipboard: COPY_TO_CLIPBOARD_EFFECT,
-    acquireWakeLock: ACQUIRE_WAKE_LOCK_EFFECT,
-    releaseWakeLock: RELEASE_WAKE_LOCK_EFFECT
+  copyToClipboard: COPY_TO_CLIPBOARD_EFFECT,
+  acquireWakeLock: ACQUIRE_WAKE_LOCK_EFFECT,
+  releaseWakeLock: RELEASE_WAKE_LOCK_EFFECT,
 };

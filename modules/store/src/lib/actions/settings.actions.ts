@@ -5,14 +5,14 @@ import { GamepadPollingRate, UserSelectedTheme } from '../models';
 import { IState } from '../i-state';
 
 export const SETTINGS_ACTIONS = createActionGroup({
-    source: 'Settings',
-    events: {
-        setTheme: props<{ appTheme: UserSelectedTheme }>(),
-        setLanguage: props<{ language: Language }>(),
-        setLinuxCompat: props<{ useLinuxCompat: boolean }>(),
-        setGamepadPollingRate: props<{ gamepadPollingRate: GamepadPollingRate }>(),
-        createStateBackup: emptyProps(),
-        restoreStateFromBackup: props<{ state: IState }>(),
-        resetState: emptyProps(),
-    }
+  source: 'Settings',
+  events: {
+    setTheme: props<{ appTheme: UserSelectedTheme }>(),
+    setLanguage: props<{ language: Language }>(),
+    setLinuxCompat: props<{ useLinuxCompat: boolean }>(),
+    setGamepadPollingRate: props<{ gamepadPollingRate: GamepadPollingRate }>(),
+    createStateBackup: emptyProps(),
+    restoreStateFromBackup: props<{ state: IState }>(),
+    resetState: emptyProps(),
+  },
 });

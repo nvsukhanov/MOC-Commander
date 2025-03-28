@@ -10,44 +10,38 @@ import { VoltageSensorWidgetComponent } from './widget';
 
 @Injectable()
 export class VoltageWidgetComponentFactoryService implements IWidgetComponentFactory<VoltageWidgetConfigModel> {
-    constructor(
-        private readonly widgetConnectionInfoL10nService: WidgetConnectionInfoL10nService,
-        private readonly store: Store
-    ) {
-    }
+  constructor(
+    private readonly widgetConnectionInfoL10nService: WidgetConnectionInfoL10nService,
+    private readonly store: Store,
+  ) {}
 
-    public createWidget(
-        container: ViewContainerRef,
-        config: VoltageWidgetConfigModel
-    ): ControlSchemeWidgetDescriptor {
-        const componentRef = container.createComponent(VoltageSensorWidgetComponent);
-        componentRef.setInput('title', config.title);
+  public createWidget(container: ViewContainerRef, config: VoltageWidgetConfigModel): ControlSchemeWidgetDescriptor {
+    const componentRef = container.createComponent(VoltageSensorWidgetComponent);
+    componentRef.setInput('title', config.title);
 
-        // eslint-disable-next-line @ngrx/no-store-subscription
-        const dataSub = this.store.select(CONTROL_SCHEME_WIDGETS_DATA_SELECTORS.selectById(config.id)).subscribe((widgetData) => {
-            if (widgetData?.widgetType === WidgetType.Voltage) {
-                componentRef.setInput('voltage', widgetData.voltage);
-            } else {
-                componentRef.setInput('voltage', undefined);
-            }
-        });
+    // eslint-disable-next-line @ngrx/no-store-subscription
+    const dataSub = this.store.select(CONTROL_SCHEME_WIDGETS_DATA_SELECTORS.selectById(config.id)).subscribe((widgetData) => {
+      if (widgetData?.widgetType === WidgetType.Voltage) {
+        componentRef.setInput('voltage', widgetData.voltage);
+      } else {
+        componentRef.setInput('voltage', undefined);
+      }
+    });
 
-        const subtitleSub = this.widgetConnectionInfoL10nService
-                                .getConnectionInfo(config.widgetType, config.hubId, config.portId)
-                                .subscribe((subtitle) => {
-                                    componentRef.setInput('subtitle', subtitle);
-                                });
+    const subtitleSub = this.widgetConnectionInfoL10nService.getConnectionInfo(config.widgetType, config.hubId, config.portId).subscribe((subtitle) => {
+      componentRef.setInput('subtitle', subtitle);
+    });
 
-        return {
-            edit$: componentRef.instance.edit,
-            delete$: componentRef.instance.delete,
-            setCanBeEdited: (canBeEdited: boolean) => componentRef.setInput('canBeEdited', canBeEdited),
-            setCanBeDeleted: (canBeDeleted: boolean) => componentRef.setInput('canBeDeleted', canBeDeleted),
-            destroy: (): void => {
-                dataSub.unsubscribe();
-                subtitleSub.unsubscribe();
-                componentRef.destroy();
-            }
-        };
-    }
+    return {
+      edit$: componentRef.instance.edit,
+      delete$: componentRef.instance.delete,
+      setCanBeEdited: (canBeEdited: boolean) => componentRef.setInput('canBeEdited', canBeEdited),
+      setCanBeDeleted: (canBeDeleted: boolean) => componentRef.setInput('canBeDeleted', canBeDeleted),
+      destroy: (): void => {
+        dataSub.unsubscribe();
+        subtitleSub.unsubscribe();
+        componentRef.destroy();
+      },
+    };
+  }
 }

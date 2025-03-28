@@ -1,64 +1,43 @@
 @if (data !== null) {
-    <mat-form-field class="control-select-form-field">
-        <mat-label (click)="$event.stopPropagation(); $event.preventDefault()"
-        >
-            {{ data.inputName$ | async }}
-        </mat-label>
-        @if (syntheticInputControl) {
-            <input matInput
-                   readonly
-                   class="control-select-input"
-                   [formControl]="syntheticInputControl"
-            />
-        }
+  <mat-form-field class="control-select-form-field">
+    <mat-label (click)="$event.stopPropagation(); $event.preventDefault()">
+      {{ data.inputName$ | async }}
+    </mat-label>
+    @if (syntheticInputControl) {
+      <input matInput readonly class="control-select-input" [formControl]="syntheticInputControl" />
+    }
 
-        @if (areSettingsVisible) {
-            <button mat-icon-button
-                    matSuffix
-                    (click)="onShowSettings()"
-            >
-                @if (arePipesConfigured) {
-                    <mat-icon [fontIcon]="'settings'"
-                              matBadge="!"
-                              matBadgePosition="after"
-                              matBadgeColor="accent"
-                              matBadgeSize="small"
-                              aria-hidden="false"
-                    ></mat-icon>
-                } @else {
-                    <mat-icon [fontIcon]="'settings'"></mat-icon>
-                }
-                <span class="cdk-visually-hidden">
-                    {{ data.inputName$ | async }},
-                    {{ 'controlScheme.showBindingInputSettings' | transloco }}
-                </span>
-            </button>
-        }
-        @if (isControllerAssigned) {
-            <button mat-icon-button
-                    matSuffix
-                    (click)="onUnbind()"
-            >
-                <mat-icon [fontIcon]="'delete'"></mat-icon>
-                <span class="cdk-visually-hidden">
-                    {{ data.inputName$ | async }},
-                    {{ 'controlScheme.bindingInputControlUnassignButtonTitle' | transloco }}
-                </span>
-            </button>
+    @if (areSettingsVisible) {
+      <button mat-icon-button matSuffix (click)="onShowSettings()">
+        @if (arePipesConfigured) {
+          <mat-icon [fontIcon]="'settings'" matBadge="!" matBadgePosition="after" matBadgeColor="accent" matBadgeSize="small" aria-hidden="false"></mat-icon>
         } @else {
-            <button mat-icon-button
-                    (click)="onBind()"
-                    matSuffix
-            >
-                <mat-icon [fontIcon]="'edit'"></mat-icon>
-                <span class="cdk-visually-hidden">
-                    {{ data.inputName$ | async }},
-                    {{ 'controlScheme.bindingAssignControlButtonTitle' | transloco }}
-                </span>
-            </button>
+          <mat-icon [fontIcon]="'settings'"></mat-icon>
         }
+        <span class="cdk-visually-hidden">
+          {{ data.inputName$ | async }},
+          {{ 'controlScheme.showBindingInputSettings' | transloco }}
+        </span>
+      </button>
+    }
+    @if (isControllerAssigned) {
+      <button mat-icon-button matSuffix (click)="onUnbind()">
+        <mat-icon [fontIcon]="'delete'"></mat-icon>
+        <span class="cdk-visually-hidden">
+          {{ data.inputName$ | async }},
+          {{ 'controlScheme.bindingInputControlUnassignButtonTitle' | transloco }}
+        </span>
+      </button>
+    } @else {
+      <button mat-icon-button (click)="onBind()" matSuffix>
+        <mat-icon [fontIcon]="'edit'"></mat-icon>
+        <span class="cdk-visually-hidden">
+          {{ data.inputName$ | async }},
+          {{ 'controlScheme.bindingAssignControlButtonTitle' | transloco }}
+        </span>
+      </button>
+    }
 
-        <mat-error [libValidationMessages]="syntheticInputControl"></mat-error>
-    </mat-form-field>
-
+    <mat-error [libValidationMessages]="syntheticInputControl"></mat-error>
+  </mat-form-field>
 }

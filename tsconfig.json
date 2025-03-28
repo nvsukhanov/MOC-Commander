@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/out-tsc",
+    "outDir": "./dist/out-tsc"
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -10,5 +10,5 @@
     "fullTemplateTypeCheck": true,
     "resolveJsonModule": true
   },
-  "extends": "./tsconfig.base.json",
+  "extends": "./tsconfig.base.json"
 }

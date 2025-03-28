@@ -5,38 +5,33 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { WidgetComponent } from '@app/shared-components';
 
 @Component({
-    standalone: true,
-    selector: 'lib-temperature-sensor-widget',
-    templateUrl: './temperature-sensor-widget.component.html',
-    styleUrl: './temperature-sensor-widget.component.scss',
-    imports: [
-        DecimalPipe,
-        MatIconModule,
-        TranslocoPipe,
-        WidgetComponent
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'lib-temperature-sensor-widget',
+  templateUrl: './temperature-sensor-widget.component.html',
+  styleUrl: './temperature-sensor-widget.component.scss',
+  imports: [DecimalPipe, MatIconModule, TranslocoPipe, WidgetComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TemperatureSensorWidgetComponent {
-    @Input() public title = '';
+  @Input() public title = '';
 
-    @Input() public subtitle = '';
+  @Input() public subtitle = '';
 
-    @Input() public canBeDeleted = false;
+  @Input() public canBeDeleted = false;
 
-    @Input() public canBeEdited = false;
+  @Input() public canBeEdited = false;
 
-    @Input() public data: number | undefined;
+  @Input() public data: number | undefined;
 
-    @Output() public readonly delete = new EventEmitter<void>();
+  @Output() public readonly delete = new EventEmitter<void>();
 
-    @Output() public readonly edit = new EventEmitter<void>();
+  @Output() public readonly edit = new EventEmitter<void>();
 
-    public onEdit(): void {
-        this.edit.emit();
-    }
+  public onEdit(): void {
+    this.edit.emit();
+  }
 
-    public onDelete(): void {
-        this.delete.emit();
-    }
+  public onDelete(): void {
+    this.delete.emit();
+  }
 }

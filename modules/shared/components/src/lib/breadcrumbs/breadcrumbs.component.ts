@@ -7,22 +7,13 @@ import { EllipsisTitleDirective } from '../ellipsis-title.directive';
 import { BreadcrumbsStateService } from './breadcrumbs-state.service';
 
 @Component({
-    standalone: true,
-    selector: 'lib-breadcrumbs',
-    templateUrl: './breadcrumbs.component.html',
-    styleUrl: './breadcrumbs.component.scss',
-    imports: [
-        RouterLink,
-        EllipsisTitleDirective,
-        MatIcon,
-        AsyncPipe
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'lib-breadcrumbs',
+  templateUrl: './breadcrumbs.component.html',
+  styleUrl: './breadcrumbs.component.scss',
+  imports: [RouterLink, EllipsisTitleDirective, MatIcon, AsyncPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BreadcrumbsComponent {
-    constructor(
-        protected readonly breadcrumbsStateService: BreadcrumbsStateService,
-    ) {
-    }
+  constructor(protected readonly breadcrumbsStateService: BreadcrumbsStateService) {}
 }
-

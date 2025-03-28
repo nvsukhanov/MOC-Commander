@@ -14,10 +14,10 @@ export { isIoControllableByBindingType } from './is-io-controllable-by-binding-t
 export { BindingControlSelectIoComponent } from './select-io';
 export { BindingControlSelectHubComponent } from './select-hub';
 export {
-    IBindingDetailsEditFormRenderer,
-    IBindingDetailsEditFormRendererFactory,
-    BINDING_DETAILS_EDIT_FORM_RENDERER_FACTORY,
-    BindingEditComponent
+  IBindingDetailsEditFormRenderer,
+  IBindingDetailsEditFormRendererFactory,
+  BINDING_DETAILS_EDIT_FORM_RENDERER_FACTORY,
+  BindingEditComponent,
 } from './binding-edit';
 export { IBindingValidator, BINDING_VALIDATOR } from './i-binding-validator';
 export * from './i-widget-type-to-l10n-key-mapper';

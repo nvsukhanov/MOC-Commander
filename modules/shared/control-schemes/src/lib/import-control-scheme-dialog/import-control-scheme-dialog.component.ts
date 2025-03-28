@@ -9,50 +9,35 @@ import { ControlSchemeDecompressorService } from './control-scheme-decompressor.
 import { ControlSchemeImportValidationService } from './control-scheme-import-validation.service';
 
 @Component({
-    standalone: true,
-    selector: 'lib-cs-import-control-scheme-dialog',
-    templateUrl: './import-control-scheme-dialog.component.html',
-    styleUrl: './import-control-scheme-dialog.component.scss',
-    imports: [
-        MatButtonModule,
-        MatDialogModule,
-        TranslocoPipe,
-        MatInputModule,
-        ReactiveFormsModule,
-    ],
-    providers: [
-        ControlSchemeDecompressorService,
-        ControlSchemeImportValidationService,
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'lib-cs-import-control-scheme-dialog',
+  templateUrl: './import-control-scheme-dialog.component.html',
+  styleUrl: './import-control-scheme-dialog.component.scss',
+  imports: [MatButtonModule, MatDialogModule, TranslocoPipe, MatInputModule, ReactiveFormsModule],
+  providers: [ControlSchemeDecompressorService, ControlSchemeImportValidationService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ImportControlSchemeDialogComponent {
-    public readonly compressedSchemeInput: FormControl<string>;
+  public readonly compressedSchemeInput: FormControl<string>;
 
-    constructor(
-        private readonly dialog: MatDialogRef<ImportControlSchemeDialogComponent>,
-        private readonly formBuilder: FormBuilder,
-        private readonly validationService: ControlSchemeImportValidationService,
-        private readonly decompressor: ControlSchemeDecompressorService
-    ) {
-        this.compressedSchemeInput = this.formBuilder.control<string>(
-            '',
-            {
-                nonNullable: true,
-                validators: [
-                    Validators.required,
-                    this.validationService.buildStringInputValidator()
-                ]
-            }
-        );
-    }
+  constructor(
+    private readonly dialog: MatDialogRef<ImportControlSchemeDialogComponent>,
+    private readonly formBuilder: FormBuilder,
+    private readonly validationService: ControlSchemeImportValidationService,
+    private readonly decompressor: ControlSchemeDecompressorService,
+  ) {
+    this.compressedSchemeInput = this.formBuilder.control<string>('', {
+      nonNullable: true,
+      validators: [Validators.required, this.validationService.buildStringInputValidator()],
+    });
+  }
 
-    public onImport(): void {
-        const decompressedData = this.decompressor.decompress(this.compressedSchemeInput.value);
-        this.dialog.close(decompressedData);
-    }
+  public onImport(): void {
+    const decompressedData = this.decompressor.decompress(this.compressedSchemeInput.value);
+    this.dialog.close(decompressedData);
+  }
 
-    public onCancel(): void {
-        this.dialog.close();
-    }
+  public onCancel(): void {
+    this.dialog.close();
+  }
 }

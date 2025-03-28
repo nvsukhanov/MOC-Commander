@@ -1,43 +1,43 @@
 :host {
-    display: block;
-    margin-bottom: 5px;
+  display: block;
+  margin-bottom: 5px;
 }
 
 .binding {
-    &__info-container {
-        margin-top: 10px;
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
+  &__info-container {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
 
-        &_small-screen {
-            flex-direction: column;
-        }
+    &_small-screen {
+      flex-direction: column;
+    }
+  }
+
+  &__general-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &__operation-type {
+    width: 120px;
+    height: unset;
+  }
+
+  &__controls {
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+
+    &-action-name {
+      font-weight: 500;
+      margin-right: 5px;
     }
 
-    &__general-info {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
+    &_disconnected {
+      text-decoration: line-through;
     }
-
-    &__operation-type {
-        width: 120px;
-        height: unset;
-    }
-
-    &__controls {
-        display: flex;
-        flex-direction: column;
-        padding-left: 10px;
-
-        &-action-name {
-            font-weight: 500;
-            margin-right: 5px;
-        }
-
-        &_disconnected {
-            text-decoration: line-through;
-        }
-    }
+  }
 }

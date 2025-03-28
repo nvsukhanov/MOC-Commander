@@ -1,27 +1,27 @@
 :host {
-    display: block;
+  display: block;
 }
 
 .general-info {
-    display: grid;
-    grid-template-columns: minmax(200px, 1fr) 1fr;
-    width: 300px;
-    gap: 10px;
+  display: grid;
+  grid-template-columns: minmax(200px, 1fr) 1fr;
+  width: 300px;
+  gap: 10px;
 
-    dd {
-        margin-inline-start: 0;
-    }
+  dd {
+    margin-inline-start: 0;
+  }
 }
 
 .title {
-    font-weight: 300;
+  font-weight: 300;
 }
 
 .settings-card {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .controller-title {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }

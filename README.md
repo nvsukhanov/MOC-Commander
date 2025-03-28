@@ -20,11 +20,11 @@ Deployment of the latest stable version is available at [https://moc-commander.c
 ### Input
 
 - Supported input devices:
-    - Keyboard
-    - Up to 4 gamepads
-    - [LEGO 88010 Remote Control](https://www.lego.com/en-us/product/remote-control-88010)
-    - PoweredUP Hub green button
-    - Steam Deck ([installation manual](https://moc-commander.com/steam-deck))    
+  - Keyboard
+  - Up to 4 gamepads
+  - [LEGO 88010 Remote Control](https://www.lego.com/en-us/product/remote-control-88010)
+  - PoweredUP Hub green button
+  - Steam Deck ([installation manual](https://moc-commander.com/steam-deck))
 - Any number of input devices can be used to control any number of outputs
 - Input devices can be configured: gamepad axes active zones, input gain (liner/log/exp) etc
 
@@ -38,12 +38,12 @@ Deployment of the latest stable version is available at [https://moc-commander.c
 ### Operation Modes
 
 - Supports the following device operation modes:
-    - Speed
-    - Set angle
-    - Servo w/ auto-calibration on start
-    - Stepper
-    - Train
-    - Gearbox
+  - Speed
+  - Set angle
+  - Servo w/ auto-calibration on start
+  - Stepper
+  - Train
+  - Gearbox
 - Allows fine-tuning of operation mode parameters such as speed limits, power output, angle limits, etc.
 - Supports acceleration and deceleration profiles (slow start and slow stop, especially useful for trains)
 - Allows reading and adjusting of motor position during the configuration of control schemes
@@ -79,11 +79,10 @@ LEGO® is a trademark of the LEGO Group of companies which does not sponsor, aut
 ## Screenshots
 
 |                                                                                                                                            |                                                                                                                               |                                                                                                                                                |
-|--------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | Running control scheme                                                                                                                     | Gamepad settings                                                                                                              | Hubs list                                                                                                                                      |
 | ![Running control scheme](https://raw.github.com/nvsukhanov/nvsukhanov.github.io/main/moc-commander/cs-run-sensors.png?raw=True)           | ![Gamepad settings](https://raw.github.com/nvsukhanov/nvsukhanov.github.io/main/moc-commander/gamepad-full.png?raw=True)      | ![Hubs list](https://raw.github.com/nvsukhanov/nvsukhanov.github.io/main/moc-commander/hubs-full.png?raw=True)                                 |
 | Hub view                                                                                                                                   | Control scheme view                                                                                                           | Control scheme view (dark theme)                                                                                                               |
 | ![Hub view](https://raw.github.com/nvsukhanov/nvsukhanov.github.io/main/moc-commander/hub-full.png?raw=True)                               | ![Control scheme view (full)](https://raw.github.com/nvsukhanov/nvsukhanov.github.io/main/moc-commander/cs-full.png?raw=True) | ![Control scheme view (full, dark theme)](https://raw.github.com/nvsukhanov/nvsukhanov.github.io/main/moc-commander/cs-dark-full.png?raw=True) |
 | Control scheme export (dark theme)                                                                                                         | Control scheme edit                                                                                                           | Controllers list                                                                                                                               |
 | ![Control scheme view small screen](https://raw.github.com/nvsukhanov/nvsukhanov.github.io/main/moc-commander/cs-export-dark.png?raw=True) | ![Control scheme edit](https://raw.github.com/nvsukhanov/nvsukhanov.github.io/main/moc-commander/cs-edit-full.png?raw=True)   | ![Controllers list](https://raw.github.com/nvsukhanov/nvsukhanov.github.io/main/moc-commander/controllers-full.png?raw=True)                   |
-

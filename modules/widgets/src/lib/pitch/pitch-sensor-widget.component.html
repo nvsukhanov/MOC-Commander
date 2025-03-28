@@ -1,24 +1,18 @@
-<lib-widget [title]="title"
-            [canBeEdited]="canBeEdited"
-            [canBeDeleted]="canBeDeleted"
-            (edit)="onEdit()"
-            (delete)="onDelete()"
->
-    <lib-tilt-gauge [tiltDegrees]="pitch"
-                    class="widget-gauge"
-                    [iconTemplate]="pitchIconTemplate"
-                    [valueClickable]="true"
-                    (valueClicked)="toggleCompensation()"
-    ></lib-tilt-gauge>
+<lib-widget [title]="title" [canBeEdited]="canBeEdited" [canBeDeleted]="canBeDeleted" (edit)="onEdit()" (delete)="onDelete()">
+  <lib-tilt-gauge
+    [tiltDegrees]="pitch"
+    class="widget-gauge"
+    [iconTemplate]="pitchIconTemplate"
+    [valueClickable]="true"
+    (valueClicked)="toggleCompensation()"
+  ></lib-tilt-gauge>
 
-    <ng-template #pitchIconTemplate>
-        <svg xmlns="http://www.w3.org/2000/svg"
-             viewBox="0 0 100 100"
-        >
-            <g class="widget-icon">
-                <path d="M 25 50 L 75 50 L 60 35 z" class="widget-icon__outline"></path>
-                <path d="M 60 35 L 65 50" class="widget-icon__inline"></path>
-            </g>
-        </svg>
-    </ng-template>
+  <ng-template #pitchIconTemplate>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <g class="widget-icon">
+        <path d="M 25 50 L 75 50 L 60 35 z" class="widget-icon__outline"></path>
+        <path d="M 60 35 L 65 50" class="widget-icon__inline"></path>
+      </g>
+    </svg>
+  </ng-template>
 </lib-widget>

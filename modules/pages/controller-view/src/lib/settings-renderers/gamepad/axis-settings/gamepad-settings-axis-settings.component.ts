@@ -13,27 +13,27 @@ import { InputOutputDiagramComponent } from '../input-output-diagram';
 import { InputValuePercentHumanReadableValuePipe } from '../active-zone-human-readable-value.pipe';
 
 @Component({
-    standalone: true,
-    selector: 'page-controller-view-gamepad-settings-axis-settings',
-    templateUrl: './gamepad-settings-axis-settings.component.html',
-    styleUrl: './gamepad-settings-axis-settings.component.scss',
-    imports: [
-        InputValuePercentHumanReadableValuePipe,
-        InputOutputDiagramComponent,
-        MatDividerModule,
-        RangeControlComponent,
-        ToggleControlComponent,
-        TranslocoPipe,
-        MatInputModule,
-        ReactiveFormsModule,
-        SliderControlComponent,
-        MatIconModule,
-        MatTooltipModule,
-        InputActivityIndicatorComponent,
-        AsyncPipe
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'page-controller-view-gamepad-settings-axis-settings',
+  templateUrl: './gamepad-settings-axis-settings.component.html',
+  styleUrl: './gamepad-settings-axis-settings.component.scss',
+  imports: [
+    InputValuePercentHumanReadableValuePipe,
+    InputOutputDiagramComponent,
+    MatDividerModule,
+    RangeControlComponent,
+    ToggleControlComponent,
+    TranslocoPipe,
+    MatInputModule,
+    ReactiveFormsModule,
+    SliderControlComponent,
+    MatIconModule,
+    MatTooltipModule,
+    InputActivityIndicatorComponent,
+    AsyncPipe,
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GamepadSettingsAxisSettingsComponent {
-    @Input() public axisSettingsViewModel?: GamepadSettingsAxisSettingsViewModel;
+  @Input() public axisSettingsViewModel?: GamepadSettingsAxisSettingsViewModel;
 }

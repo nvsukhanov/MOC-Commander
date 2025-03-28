@@ -1,31 +1,28 @@
 <h1 mat-dialog-title>
-    {{ 'controlScheme.createBindingWaitingForInputTitle' | transloco }}
+  {{ 'controlScheme.createBindingWaitingForInputTitle' | transloco }}
 </h1>
 
 @if (controllerNames$ | async; as controllerNames) {
-    <div mat-dialog-content>
-        <p>
-            {{ 'controlScheme.createBindingWaitingForInputContent' | transloco }}
+  <div mat-dialog-content>
+    <p>
+      {{ 'controlScheme.createBindingWaitingForInputContent' | transloco }}
+    </p>
+    @if (controllerNames.length) {
+      <p>
+        {{ 'controller.connectedControllers' | transloco }}
+      </p>
+      @for (controllerName of controllerNames; track controllerName) {
+        <p class="controller-name">
+          {{ controllerName }}
         </p>
-        @if (controllerNames.length) {
-            <p>
-                {{ 'controller.connectedControllers' | transloco }}
-            </p>
-            @for (controllerName of controllerNames; track controllerName) {
-                <p class="controller-name">
-                    {{ controllerName }}
-                </p>
-            }
-        }
-    </div>
+      }
+    }
+  </div>
 }
 
-<div mat-dialog-actions
-     [align]="'end'">
-    <button mat-button
-            (click)="onCancel()"
-    >
-        {{ 'controlScheme.cancelAddBinding' | transloco }}
-    </button>
+<div mat-dialog-actions [align]="'end'">
+  <button mat-button (click)="onCancel()">
+    {{ 'controlScheme.cancelAddBinding' | transloco }}
+  </button>
 </div>
 <mat-progress-bar mode="indeterminate"></mat-progress-bar>

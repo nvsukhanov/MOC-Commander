@@ -4,30 +4,20 @@
   "sourceRoot": "modules/shared/manuals/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": [
-    "scope:shared-feature"
-  ],
+  "tags": ["scope:shared-feature"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/{projectRoot}"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "modules/shared/manuals/jest.config.ts"
       }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "modules/shared/manuals/**/*.ts",
-          "modules/shared/manuals/**/*.html",
-          "modules/shared/manuals/package.json"
-        ]
+        "lintFilePatterns": ["modules/shared/manuals/**/*.ts", "modules/shared/manuals/**/*.html", "modules/shared/manuals/package.json"]
       }
     }
   }

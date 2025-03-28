@@ -4,30 +4,20 @@
   "sourceRoot": "modules/shared/misc/src",
   "prefix": "shared-misc",
   "projectType": "library",
-  "tags": [
-    "scope:shared-misc"
-  ],
+  "tags": ["scope:shared-misc"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/{projectRoot}"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "modules/shared/misc/jest.config.ts"
       }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "modules/shared/misc/**/*.ts",
-          "modules/shared/misc/**/*.html",
-          "modules/shared/misc/package.json"
-        ]
+        "lintFilePatterns": ["modules/shared/misc/**/*.ts", "modules/shared/misc/**/*.html", "modules/shared/misc/package.json"]
       }
     }
   }

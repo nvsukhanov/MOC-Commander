@@ -1,14 +1,14 @@
 @if (control) {
-    <mat-form-field>
-        <mat-label>
-            {{ 'controlScheme.loopingModeTitle' | transloco }}
-        </mat-label>
-        <mat-select [formControl]="control">
-            @for (mode of availableLoopingModes; track mode) {
-                <mat-option [value]="mode">
-                    {{ mode | loopingModeToL10nKey | transloco }}
-                </mat-option>
-            }
-        </mat-select>
-    </mat-form-field>
+  <mat-form-field>
+    <mat-label>
+      {{ 'controlScheme.loopingModeTitle' | transloco }}
+    </mat-label>
+    <mat-select [formControl]="control">
+      @for (mode of availableLoopingModes; track mode) {
+        <mat-option [value]="mode">
+          {{ mode | loopingModeToL10nKey | transloco }}
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 }

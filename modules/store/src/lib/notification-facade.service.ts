@@ -6,54 +6,36 @@ import { AppUpdatedNotificationComponent, ErrorNotificationComponent, InfoNotifi
 
 @Injectable()
 export class NotificationFacadeService {
-    constructor(
-        private readonly screenSizeObserverService: ScreenSizeObserverService,
-        private readonly snackBar: MatSnackBar,
-    ) {
-    }
+  constructor(
+    private readonly screenSizeObserverService: ScreenSizeObserverService,
+    private readonly snackBar: MatSnackBar,
+  ) {}
 
-    public showInfoNotification(
-        message$: Observable<string>
-    ): void {
-        this.screenSizeObserverService.isSmallScreen$.pipe(
-            take(1)
-        ).subscribe((isSmallScreen) => {
-            this.snackBar.openFromComponent(
-                InfoNotificationComponent,
-                {
-                    horizontalPosition: 'end',
-                    verticalPosition: isSmallScreen ? 'top' : 'bottom',
-                    duration: 5000,
-                    data: message$
-                }
-            );
-        });
-    }
+  public showInfoNotification(message$: Observable<string>): void {
+    this.screenSizeObserverService.isSmallScreen$.pipe(take(1)).subscribe((isSmallScreen) => {
+      this.snackBar.openFromComponent(InfoNotificationComponent, {
+        horizontalPosition: 'end',
+        verticalPosition: isSmallScreen ? 'top' : 'bottom',
+        duration: 5000,
+        data: message$,
+      });
+    });
+  }
 
-    public showErrorNotification(
-        message$: Observable<string>
-    ): void {
-        this.screenSizeObserverService.isSmallScreen$.pipe(
-            take(1)
-        ).subscribe((isSmallScreen) => {
-            this.snackBar.openFromComponent(
-                ErrorNotificationComponent,
-                {
-                    horizontalPosition: 'end',
-                    verticalPosition: isSmallScreen ? 'top' : 'bottom',
-                    data: message$
-                }
-            );
-        });
-    }
+  public showErrorNotification(message$: Observable<string>): void {
+    this.screenSizeObserverService.isSmallScreen$.pipe(take(1)).subscribe((isSmallScreen) => {
+      this.snackBar.openFromComponent(ErrorNotificationComponent, {
+        horizontalPosition: 'end',
+        verticalPosition: isSmallScreen ? 'top' : 'bottom',
+        data: message$,
+      });
+    });
+  }
 
-    public showAppUpdatedNotification(): void {
-        this.snackBar.openFromComponent(
-            AppUpdatedNotificationComponent,
-            {
-                horizontalPosition: 'center',
-                verticalPosition: 'bottom'
-            }
-        );
-    }
+  public showAppUpdatedNotification(): void {
+    this.snackBar.openFromComponent(AppUpdatedNotificationComponent, {
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+    });
+  }
 }

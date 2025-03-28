@@ -6,136 +6,131 @@ import { PortModeName } from 'rxpoweredup';
 import { CONTROLLER_MAX_INPUT_VALUE, CONTROLLER_NULL_INPUT_VALUE, ControllerInputType, ControllerType } from '@app/controller-profiles';
 
 import {
-    ATTACHED_IO_MODES_SELECTORS,
-    ATTACHED_IO_PORT_MODE_INFO_SELECTORS,
-    ATTACHED_IO_SELECTORS,
-    CONTROLLER_CONNECTION_SELECTORS,
-    CONTROLLER_INPUT_SELECTORS,
-    CONTROLLER_SELECTORS,
-    CONTROLLER_SETTINGS_SELECTORS
+  ATTACHED_IO_MODES_SELECTORS,
+  ATTACHED_IO_PORT_MODE_INFO_SELECTORS,
+  ATTACHED_IO_SELECTORS,
+  CONTROLLER_CONNECTION_SELECTORS,
+  CONTROLLER_INPUT_SELECTORS,
+  CONTROLLER_SELECTORS,
+  CONTROLLER_SETTINGS_SELECTORS,
 } from '../../../selectors';
 import { attachedIoModesIdFn, attachedIoPortModeInfoIdFn, attachedIosIdFn, controllerIdFn } from '../../../reducers';
 import { HubStorageService } from '../../../hub-storage.service';
 import { CONTROLLER_INPUT_ACTIONS } from '../../../actions';
 
 const BUTTON_PORT_MODE_NAMES = new Set<PortModeName>([
-    PortModeName.handsetKeyD,
-    PortModeName.handsetKeyA,
-    PortModeName.handsetKeyR,
-    PortModeName.handsetKeySD,
-    PortModeName.handsetRCKey
+  PortModeName.handsetKeyD,
+  PortModeName.handsetKeyA,
+  PortModeName.handsetKeyR,
+  PortModeName.handsetKeySD,
+  PortModeName.handsetRCKey,
 ]);
 
 type ListenablePortModeData = {
-    hubId: string;
-    portId: number;
-    modeId: number;
+  hubId: string;
+  portId: number;
+  modeId: number;
 };
 
 const SELECT_ATTACHED_IOS_BUTTON_GROUPS_SELECTOR = createSelector(
-    ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
-    ATTACHED_IO_MODES_SELECTORS.selectEntities,
-    ATTACHED_IO_SELECTORS.selectAll,
-    CONTROLLER_SELECTORS.selectEntities,
-    CONTROLLER_CONNECTION_SELECTORS.selectAll,
-    CONTROLLER_SETTINGS_SELECTORS.selectEntities,
-    (attachedIOModeInfos, attachedIOModes, attachedIOs, controllers, controllerConnections, settings): ListenablePortModeData[] => {
-        const hubControllerConnections = controllerConnections.filter((c) => c.controllerType === ControllerType.Hub);
+  ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
+  ATTACHED_IO_MODES_SELECTORS.selectEntities,
+  ATTACHED_IO_SELECTORS.selectAll,
+  CONTROLLER_SELECTORS.selectEntities,
+  CONTROLLER_CONNECTION_SELECTORS.selectAll,
+  CONTROLLER_SETTINGS_SELECTORS.selectEntities,
+  (attachedIOModeInfos, attachedIOModes, attachedIOs, controllers, controllerConnections, settings): ListenablePortModeData[] => {
+    const hubControllerConnections = controllerConnections.filter((c) => c.controllerType === ControllerType.Hub);
 
-        const portModeResult: Map<string, ListenablePortModeData> = new Map();
+    const portModeResult: Map<string, ListenablePortModeData> = new Map();
 
-        for (const hubControllerConnection of hubControllerConnections) {
-            const hubController = controllers[hubControllerConnection.controllerId];
-            if (!hubController || hubController.controllerType !== ControllerType.Hub) {
-                continue;
-            }
-            const hubControllerSettings = settings[hubControllerConnection.controllerId];
-            if (hubControllerSettings?.ignoreInput) {
-                continue;
-            }
-            const hubIos = attachedIOs.filter((io) => io.hubId === hubController.hubId);
-            for (const io of hubIos) {
-                if (portModeResult.has(attachedIosIdFn(io))) {
-                    continue;
-                }
-                const ioModes = attachedIOModes[attachedIoModesIdFn(io)];
-                if (!ioModes) {
-                    continue;
-                }
-                const matchingModeInfo = ioModes.portInputModes.find((modeId) => {
-                    const modeInfo = attachedIOModeInfos[attachedIoPortModeInfoIdFn({ ...io, modeId })];
-                    if (!modeInfo) {
-                        return false;
-                    }
-                    return modeInfo && BUTTON_PORT_MODE_NAMES.has(modeInfo.name);
-                });
-                if (matchingModeInfo === undefined) {
-                    continue;
-                }
-                portModeResult.set(attachedIosIdFn(io), {
-                    hubId: io.hubId,
-                    portId: io.portId,
-                    modeId: matchingModeInfo
-                });
-            }
+    for (const hubControllerConnection of hubControllerConnections) {
+      const hubController = controllers[hubControllerConnection.controllerId];
+      if (!hubController || hubController.controllerType !== ControllerType.Hub) {
+        continue;
+      }
+      const hubControllerSettings = settings[hubControllerConnection.controllerId];
+      if (hubControllerSettings?.ignoreInput) {
+        continue;
+      }
+      const hubIos = attachedIOs.filter((io) => io.hubId === hubController.hubId);
+      for (const io of hubIos) {
+        if (portModeResult.has(attachedIosIdFn(io))) {
+          continue;
         }
-        return Array.from(portModeResult.values());
+        const ioModes = attachedIOModes[attachedIoModesIdFn(io)];
+        if (!ioModes) {
+          continue;
+        }
+        const matchingModeInfo = ioModes.portInputModes.find((modeId) => {
+          const modeInfo = attachedIOModeInfos[attachedIoPortModeInfoIdFn({ ...io, modeId })];
+          if (!modeInfo) {
+            return false;
+          }
+          return modeInfo && BUTTON_PORT_MODE_NAMES.has(modeInfo.name);
+        });
+        if (matchingModeInfo === undefined) {
+          continue;
+        }
+        portModeResult.set(attachedIosIdFn(io), {
+          hubId: io.hubId,
+          portId: io.portId,
+          modeId: matchingModeInfo,
+        });
+      }
     }
+    return Array.from(portModeResult.values());
+  },
 );
 
-function readButtonGroups(
-    store: Store,
-    hubStorage: HubStorageService
-): Observable<Action> {
-    return store.select(SELECT_ATTACHED_IOS_BUTTON_GROUPS_SELECTOR).pipe(
-        switchMap((buttonGroups) => from(buttonGroups)),
-        mergeMap(({ hubId, portId, modeId }) => {
-            return hubStorage.get(hubId).ports.portValueChanges(portId, modeId, 1).pipe(
-                startWith([ 0 ]),
-                pairwise(),
-                map(([ [ prevValue ], [ nextValue ] ]) => {
-                    const result: Action[] = [];
+function readButtonGroups(store: Store, hubStorage: HubStorageService): Observable<Action> {
+  return store.select(SELECT_ATTACHED_IOS_BUTTON_GROUPS_SELECTOR).pipe(
+    switchMap((buttonGroups) => from(buttonGroups)),
+    mergeMap(({ hubId, portId, modeId }) => {
+      return hubStorage
+        .get(hubId)
+        .ports.portValueChanges(portId, modeId, 1)
+        .pipe(
+          startWith([0]),
+          pairwise(),
+          map(([[prevValue], [nextValue]]) => {
+            const result: Action[] = [];
 
-                    function composeInputReceivedAction(activeInput: boolean): Action {
-                        const value = activeInput ? CONTROLLER_MAX_INPUT_VALUE : CONTROLLER_NULL_INPUT_VALUE;
-                        const inputId = activeInput ? nextValue : prevValue;
-                        return CONTROLLER_INPUT_ACTIONS.inputReceived({
-                            nextState: {
-                                controllerId: controllerIdFn({ controllerType: ControllerType.Hub, hubId }),
-                                inputType: ControllerInputType.ButtonGroup,
-                                inputId: inputId.toString(),
-                                portId,
-                                buttonId: activeInput ? nextValue : prevValue,
-                                rawValue: value,
-                                timestamp: Date.now(),
-                            }
-                        });
-                    }
+            function composeInputReceivedAction(activeInput: boolean): Action {
+              const value = activeInput ? CONTROLLER_MAX_INPUT_VALUE : CONTROLLER_NULL_INPUT_VALUE;
+              const inputId = activeInput ? nextValue : prevValue;
+              return CONTROLLER_INPUT_ACTIONS.inputReceived({
+                nextState: {
+                  controllerId: controllerIdFn({ controllerType: ControllerType.Hub, hubId }),
+                  inputType: ControllerInputType.ButtonGroup,
+                  inputId: inputId.toString(),
+                  portId,
+                  buttonId: activeInput ? nextValue : prevValue,
+                  rawValue: value,
+                  timestamp: Date.now(),
+                },
+              });
+            }
 
-                    if (nextValue === 0 && !!prevValue) {
-                        result.push(composeInputReceivedAction(false));
-                    } else if (!!nextValue && prevValue === 0) {
-                        result.push(composeInputReceivedAction(true));
-                    } else if (nextValue !== prevValue) {
-                        result.push(composeInputReceivedAction(false));
-                        result.push(composeInputReceivedAction(true));
-                    }
-                    return result;
-                }),
-                switchMap((actions) => from(actions))
-            );
-        })
-    );
+            if (nextValue === 0 && !!prevValue) {
+              result.push(composeInputReceivedAction(false));
+            } else if (!!nextValue && prevValue === 0) {
+              result.push(composeInputReceivedAction(true));
+            } else if (nextValue !== prevValue) {
+              result.push(composeInputReceivedAction(false));
+              result.push(composeInputReceivedAction(true));
+            }
+            return result;
+          }),
+          switchMap((actions) => from(actions)),
+        );
+    }),
+  );
 }
 
-export const CAPTURE_HUB_BUTTON_GROUPS_INPUT = createEffect((
-    store: Store = inject(Store),
-    hubStorage: HubStorageService = inject(HubStorageService)
-) => {
-    return store.select(CONTROLLER_INPUT_SELECTORS.isCapturing).pipe(
-        switchMap((isCapturing) => (isCapturing ?
-                                   readButtonGroups(store, hubStorage) :
-                                   NEVER)
-        )
-    );
-}, { functional: true });
+export const CAPTURE_HUB_BUTTON_GROUPS_INPUT = createEffect(
+  (store: Store = inject(Store), hubStorage: HubStorageService = inject(HubStorageService)) => {
+    return store.select(CONTROLLER_INPUT_SELECTORS.isCapturing).pipe(switchMap((isCapturing) => (isCapturing ? readButtonGroups(store, hubStorage) : NEVER)));
+  },
+  { functional: true },
+);

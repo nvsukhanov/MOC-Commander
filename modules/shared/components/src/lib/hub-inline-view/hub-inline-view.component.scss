@@ -1,11 +1,11 @@
 :host {
-    display: flex;
-    align-items: center;
-    overflow: hidden;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
 }
 
 .spacer {
-    flex: 1;
+  flex: 1;
 }
 
 .battery-level,
@@ -14,9 +14,9 @@
 .disconnect-button,
 .view-button,
 .has-communication-icon {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .muted {
-    opacity: 30%;
+  opacity: 30%;
 }

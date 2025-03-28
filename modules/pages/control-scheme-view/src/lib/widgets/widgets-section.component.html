@@ -1,27 +1,24 @@
-<section class="section"
-         [class.section_running]="isSchemeRunning()"
->
-    <h2 class="section-title">
-        {{ 'controlScheme.widgetsSectionTitle' | transloco }}
-    </h2>
-    <button mat-icon-button
-            [disabled]="!canReorderWidgets()"
-            (click)="onReorderWidgets()"
-            [title]="'controlScheme.widgets.reorderWidgetsButtonTitle' | transloco"
-    >
-        <mat-icon [fontIcon]="'unfold_more'"></mat-icon>
-    </button>
+<section class="section" [class.section_running]="isSchemeRunning()">
+  <h2 class="section-title">
+    {{ 'controlScheme.widgetsSectionTitle' | transloco }}
+  </h2>
+  <button
+    mat-icon-button
+    [disabled]="!canReorderWidgets()"
+    (click)="onReorderWidgets()"
+    [title]="'controlScheme.widgets.reorderWidgetsButtonTitle' | transloco"
+  >
+    <mat-icon [fontIcon]="'unfold_more'"></mat-icon>
+  </button>
 </section>
 
-<section class="widgets-content"
-         [class.widgets-content_editable]="!isSchemeRunning()"
-         [class.widgets-content_empty]="isSchemeRunning() && !widgets().length"
->
-    <page-control-scheme-view-control-scheme-widgets-grid [widgetConfigs]="widgets()"
-                                                          [editable]="canDeleteOrEditWidgets()"
-                                                          [canAddWidget]="canAddWidgets()"
-                                                          (deleteWidget)="onDeleteWidget($event)"
-                                                          (editWidget)="onEditWidget($event)"
-                                                          (addWidget)="onAddWidget()"
-    ></page-control-scheme-view-control-scheme-widgets-grid>
+<section class="widgets-content" [class.widgets-content_editable]="!isSchemeRunning()" [class.widgets-content_empty]="isSchemeRunning() && !widgets().length">
+  <page-control-scheme-view-control-scheme-widgets-grid
+    [widgetConfigs]="widgets()"
+    [editable]="canDeleteOrEditWidgets()"
+    [canAddWidget]="canAddWidgets()"
+    (deleteWidget)="onDeleteWidget($event)"
+    (editWidget)="onEditWidget($event)"
+    (addWidget)="onAddWidget()"
+  ></page-control-scheme-view-control-scheme-widgets-grid>
 </section>

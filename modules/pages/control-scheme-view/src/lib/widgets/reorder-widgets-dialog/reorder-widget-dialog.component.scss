@@ -1,25 +1,25 @@
 :host {
-    display: block;
-    width: max(300px, 50vw);
+  display: block;
+  width: max(300px, 50vw);
 }
 
 .dialog-content {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .widgets-list-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
-    & + .widgets-list-item {
-        margin-top: 10px;
-    }
+  & + .widgets-list-item {
+    margin-top: 10px;
+  }
 }
 
 .reorder-button {
-    padding: 0;
-    height: 1em;
-    width: 1em;
+  padding: 0;
+  height: 1em;
+  width: 1em;
 }

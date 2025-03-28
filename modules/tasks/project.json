@@ -4,30 +4,20 @@
   "sourceRoot": "modules/tasks/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": [
-    "scope:modules"
-  ],
+  "tags": ["scope:modules"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/{projectRoot}"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "modules/tasks/jest.config.ts"
       }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "modules/tasks/**/*.ts",
-          "modules/tasks/**/*.html",
-          "modules/tasks/package.json"
-        ]
+        "lintFilePatterns": ["modules/tasks/**/*.ts", "modules/tasks/**/*.html", "modules/tasks/package.json"]
       }
     }
   }

@@ -4,19 +4,15 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
-    standalone: true,
-    selector: 'lib-toggle-control[translocoTitle][control]',
-    templateUrl: './toggle-control.component.html',
-    styleUrl: './toggle-control.component.scss',
-    imports: [
-        MatSlideToggleModule,
-        ReactiveFormsModule,
-        TranslocoPipe
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'lib-toggle-control[translocoTitle][control]',
+  templateUrl: './toggle-control.component.html',
+  styleUrl: './toggle-control.component.scss',
+  imports: [MatSlideToggleModule, ReactiveFormsModule, TranslocoPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToggleControlComponent {
-    @Input() public translocoTitle = '';
+  @Input() public translocoTitle = '';
 
-    @Input() public control?: FormControl<boolean>;
+  @Input() public control?: FormControl<boolean>;
 }

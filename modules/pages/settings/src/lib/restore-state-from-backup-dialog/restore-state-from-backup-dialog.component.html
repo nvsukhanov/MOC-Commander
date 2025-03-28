@@ -1,29 +1,18 @@
 <h1 mat-dialog-title>
-    {{ 'settings.restoreStateFromBackupDialogTitle' | transloco }}
+  {{ 'settings.restoreStateFromBackupDialogTitle' | transloco }}
 </h1>
 
 <div mat-dialog-content>
-    <p>{{ 'settings.restoreStateFromBackupDialogDescription' | transloco }}</p>
-    <lib-upload-file [formControl]="control"></lib-upload-file>
-    <mat-error [libValidationMessages]="control"
-               [l10nMap]="errorsMap"
-    ></mat-error>
+  <p>{{ 'settings.restoreStateFromBackupDialogDescription' | transloco }}</p>
+  <lib-upload-file [formControl]="control"></lib-upload-file>
+  <mat-error [libValidationMessages]="control" [l10nMap]="errorsMap"></mat-error>
 </div>
 
-<div mat-dialog-actions
-     [align]="'end'"
->
-    <button mat-raised-button
-            [disabled]="!control.valid"
-            (click)="onSave()"
-    >
-        {{ 'settings.restoreStateFromBackupDialogConfirmButtonTitle' | transloco }}
-    </button>
-    <button mat-button
-            (click)="onCancel()"
-    >
-        {{ 'settings.restoreStateFromBackupDialogCancelButtonTitle' | transloco }}
-    </button>
+<div mat-dialog-actions [align]="'end'">
+  <button mat-raised-button [disabled]="!control.valid" (click)="onSave()">
+    {{ 'settings.restoreStateFromBackupDialogConfirmButtonTitle' | transloco }}
+  </button>
+  <button mat-button (click)="onCancel()">
+    {{ 'settings.restoreStateFromBackupDialogCancelButtonTitle' | transloco }}
+  </button>
 </div>
-
-

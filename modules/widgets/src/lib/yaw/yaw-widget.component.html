@@ -1,26 +1,20 @@
-<lib-widget [title]="title"
-            [canBeEdited]="canBeEdited"
-            [canBeDeleted]="canBeDeleted"
-            (edit)="onEdit()"
-            (delete)="onDelete()"
->
-    <lib-tilt-gauge [tiltDegrees]="yaw ?? null"
-                    [options]="options"
-                    [iconTemplate]="yawIcon"
-                    [valueClickable]="true"
-                    (valueClicked)="toggleCompensation()"
-                    class="widget-gauge"
-    ></lib-tilt-gauge>
+<lib-widget [title]="title" [canBeEdited]="canBeEdited" [canBeDeleted]="canBeDeleted" (edit)="onEdit()" (delete)="onDelete()">
+  <lib-tilt-gauge
+    [tiltDegrees]="yaw ?? null"
+    [options]="options"
+    [iconTemplate]="yawIcon"
+    [valueClickable]="true"
+    (valueClicked)="toggleCompensation()"
+    class="widget-gauge"
+  ></lib-tilt-gauge>
 
-    <ng-template #yawIcon>
-        <svg xmlns="http://www.w3.org/2000/svg"
-             viewBox="0 0 100 100"
-        >
-            <g class="widget-icon">
-                <path d="M 50 25 L 30 65 L 50 75 L 70 65 z" class="widget-icon__outline"></path>
-                <path d="M 50 25 L 50 60 L 30 65" class="widget-icon__inline"></path>
-                <path d="M 50 60 L 70 65" class="widget-icon__inline"></path>
-            </g>
-        </svg>
-    </ng-template>
+  <ng-template #yawIcon>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <g class="widget-icon">
+        <path d="M 50 25 L 30 65 L 50 75 L 70 65 z" class="widget-icon__outline"></path>
+        <path d="M 50 25 L 50 60 L 30 65" class="widget-icon__inline"></path>
+        <path d="M 50 60 L 70 65" class="widget-icon__inline"></path>
+      </g>
+    </svg>
+  </ng-template>
 </lib-widget>

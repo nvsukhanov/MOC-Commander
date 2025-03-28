@@ -4,30 +4,21 @@ import { MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from
 import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
-    standalone: true,
-    selector: 'lib-unsaved-changed-confirmation-dialog',
-    templateUrl: './unsaved-changed-confirmation-dialog.component.html',
-    styleUrl: './unsaved-changed-confirmation-dialog.component.scss',
-    imports: [
-        MatButton,
-        MatDialogActions,
-        MatDialogContent,
-        MatDialogTitle,
-        TranslocoPipe
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'lib-unsaved-changed-confirmation-dialog',
+  templateUrl: './unsaved-changed-confirmation-dialog.component.html',
+  styleUrl: './unsaved-changed-confirmation-dialog.component.scss',
+  imports: [MatButton, MatDialogActions, MatDialogContent, MatDialogTitle, TranslocoPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UnsavedChangedConfirmationDialogComponent {
-    constructor(
-        private readonly dialog: MatDialogRef<UnsavedChangedConfirmationDialogComponent>,
-    ) {
-    }
+  constructor(private readonly dialog: MatDialogRef<UnsavedChangedConfirmationDialogComponent>) {}
 
-    public onConfirm(): void {
-        this.dialog.close(true);
-    }
+  public onConfirm(): void {
+    this.dialog.close(true);
+  }
 
-    public onCancel(): void {
-        this.dialog.close(false);
-    }
+  public onCancel(): void {
+    this.dialog.close(false);
+  }
 }

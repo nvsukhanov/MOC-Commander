@@ -19,74 +19,93 @@ export type V31InputConfig = V31SetAngleBinding['inputs'][SetAngleBindingInputAc
 export const OLD_TITLE_WIDGET_TYPE = 1;
 
 export type OldTiltWidgetConfigModel = {
-    widgetType: number;
-    hubId: string;
-    portId: number;
-    modeId: number;
-    valueChangeThreshold: number;
-    invertYaw: boolean;
-    invertPitch: boolean;
-    invertRoll: boolean;
-    id: number;
-    title: string;
-    width: number;
-    height: number;
+  widgetType: number;
+  hubId: string;
+  portId: number;
+  modeId: number;
+  valueChangeThreshold: number;
+  invertYaw: boolean;
+  invertPitch: boolean;
+  invertRoll: boolean;
+  id: number;
+  title: string;
+  width: number;
+  height: number;
 };
 
 export type V31WidgetConfigModel = ExtractArrayType<V31ControlSchemesEntitiesState['widgets']>;
 export type V30WidgetConfigModel = V31WidgetConfigModel | OldTiltWidgetConfigModel;
 
 export enum OldInputGain {
-    Linear,
-    Exponential,
-    Logarithmic
+  Linear,
+  Exponential,
+  Logarithmic,
 }
 
-export type V30InputConfig = Override<Omit<V31InputConfig, 'inputPipes'>, {
+export type V30InputConfig = Override<
+  Omit<V31InputConfig, 'inputPipes'>,
+  {
     gain: OldInputGain;
-}>;
+  }
+>;
 
 export type V30BindingInputs<T> = {
-    [P in keyof T]: V30InputConfig;
+  [P in keyof T]: V30InputConfig;
 };
 
-export type V30SpeedBinding = Override<V31SpeedBinding, {
+export type V30SpeedBinding = Override<
+  V31SpeedBinding,
+  {
     inputs: V30BindingInputs<V31SpeedBinding['inputs']>;
-}>;
+  }
+>;
 
-export type V30ServoBinding = Override<V31ServoBinding, {
+export type V30ServoBinding = Override<
+  V31ServoBinding,
+  {
     inputs: V30BindingInputs<V31ServoBinding['inputs']>;
-}>;
+  }
+>;
 
-export type V30SetAngleBinding = Override<V31SetAngleBinding, {
+export type V30SetAngleBinding = Override<
+  V31SetAngleBinding,
+  {
     inputs: V30BindingInputs<V31SetAngleBinding['inputs']>;
-}>;
+  }
+>;
 
-export type V30StepperBinding = Override<V31StepperBinding, {
+export type V30StepperBinding = Override<
+  V31StepperBinding,
+  {
     inputs: V30BindingInputs<V31StepperBinding['inputs']>;
-}>;
+  }
+>;
 
-export type V30TrainBinding = Override<V31TrainBinding, {
+export type V30TrainBinding = Override<
+  V31TrainBinding,
+  {
     inputs: V30BindingInputs<V31TrainBinding['inputs']>;
-}>;
+  }
+>;
 
-export type V30GearboxBinding = Override<V31GearboxBinding, {
+export type V30GearboxBinding = Override<
+  V31GearboxBinding,
+  {
     inputs: V30BindingInputs<V31GearboxBinding['inputs']>;
-}>;
+  }
+>;
 
-export type V30Bindings = V30SpeedBinding
-    | V30ServoBinding
-    | V30StepperBinding
-    | V30TrainBinding
-    | V30GearboxBinding
-    | V30SetAngleBinding;
+export type V30Bindings = V30SpeedBinding | V30ServoBinding | V30StepperBinding | V30TrainBinding | V30GearboxBinding | V30SetAngleBinding;
 
 export type V30ControlSchemesEntitiesState = Omit<V31ControlSchemesEntitiesState, 'bindings' | 'widgets'> & {
-    bindings: V30Bindings[];
-    widgets: V30WidgetConfigModel[];
+  bindings: V30Bindings[];
+  widgets: V30WidgetConfigModel[];
 };
 
-export type V30Store = Override<V31Store, {
+export type V30Store = Override<
+  V31Store,
+  {
     controlSchemes: Omit<V31Store['controlSchemes'], 'entities'> & EntityState<V30ControlSchemesEntitiesState>;
     storeVersion: AppStoreVersion.v30;
-}>;
+  }
+>;

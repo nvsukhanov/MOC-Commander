@@ -1,6 +1,6 @@
 export enum ControllerInputType {
-    Button,
-    Axis,
-    Trigger,
-    ButtonGroup,
+  Button,
+  Axis,
+  Trigger,
+  ButtonGroup,
 }

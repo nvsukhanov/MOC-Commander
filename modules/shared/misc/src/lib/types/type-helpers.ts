@@ -8,17 +8,15 @@ export type ExtractEntitiesType<T> = T extends { entities: Dictionary<infer K> }
 export type EnsureArraySatisfiesUnion<TObject, TArray extends ReadonlyArray<string>> = keyof TObject extends ExtractArrayType<TArray> ? TArray : never;
 
 export type DeepReadonly<T extends object> = {
-    readonly [k in keyof T]: T[k] extends object ? DeepReadonly<T[k]> : T[k];
+  readonly [k in keyof T]: T[k] extends object ? DeepReadonly<T[k]> : T[k];
 };
 
 export type DeepPartial<T> = {
-    [k in keyof T]?: T[k] extends Array<infer R> ? Array<DeepPartial<R>>
-                                                 : T[k] extends object ? DeepPartial<T[k]>
-                                                                       : T[k];
+  [k in keyof T]?: T[k] extends Array<infer R> ? Array<DeepPartial<R>> : T[k] extends object ? DeepPartial<T[k]> : T[k];
 };
 
 export type ToFormGroup<T extends object> = FormGroup<{
-    [K in keyof T]: T[K] extends object ? ToFormGroup<T[K]> : FormControl<T[K]>;
+  [K in keyof T]: T[K] extends object ? ToFormGroup<T[K]> : FormControl<T[K]>;
 }>;
 
 export type Override<Source extends object, Target extends object> = Omit<Source, keyof Target> & Target;

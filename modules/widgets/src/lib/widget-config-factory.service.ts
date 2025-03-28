@@ -10,25 +10,24 @@ import { CommonTiltWidgetsConfigFactoryService } from './common/common-tilt-widg
 
 @Injectable()
 export class WidgetConfigFactoryService implements IControlSchemeWidgetConfigFactory {
-    constructor(
-        private readonly voltageWidgetConfigFactoryService: VoltageWidgetConfigFactoryService,
-        private readonly temperatureWidgetConfigFactoryService: TemperatureWidgetConfigFactoryService,
-        private readonly commonTiltWidgetsConfigFactoryService: CommonTiltWidgetsConfigFactoryService
-    ) {
-    }
+  constructor(
+    private readonly voltageWidgetConfigFactoryService: VoltageWidgetConfigFactoryService,
+    private readonly temperatureWidgetConfigFactoryService: TemperatureWidgetConfigFactoryService,
+    private readonly commonTiltWidgetsConfigFactoryService: CommonTiltWidgetsConfigFactoryService,
+  ) {}
 
-    public createConfigs(
-        attachedIos: AttachedIoModel[],
-        ioPortModes: Dictionary<AttachedIoModesModel>,
-        portModesInfo: Dictionary<AttachedIoPortModeInfoModel>,
-        existingWidgets: WidgetConfigModel[]
-    ): WidgetConfigModel[] {
-        return [
-            ...this.voltageWidgetConfigFactoryService.createConfigs(attachedIos, ioPortModes, portModesInfo, existingWidgets),
-            ...this.temperatureWidgetConfigFactoryService.createConfigs(attachedIos, ioPortModes, portModesInfo, existingWidgets),
-            ...this.commonTiltWidgetsConfigFactoryService.createConfigs(WidgetType.Pitch, attachedIos, ioPortModes, portModesInfo, existingWidgets),
-            ...this.commonTiltWidgetsConfigFactoryService.createConfigs(WidgetType.Yaw, attachedIos, ioPortModes, portModesInfo, existingWidgets),
-            ...this.commonTiltWidgetsConfigFactoryService.createConfigs(WidgetType.Roll, attachedIos, ioPortModes, portModesInfo, existingWidgets),
-        ];
-    }
+  public createConfigs(
+    attachedIos: AttachedIoModel[],
+    ioPortModes: Dictionary<AttachedIoModesModel>,
+    portModesInfo: Dictionary<AttachedIoPortModeInfoModel>,
+    existingWidgets: WidgetConfigModel[],
+  ): WidgetConfigModel[] {
+    return [
+      ...this.voltageWidgetConfigFactoryService.createConfigs(attachedIos, ioPortModes, portModesInfo, existingWidgets),
+      ...this.temperatureWidgetConfigFactoryService.createConfigs(attachedIos, ioPortModes, portModesInfo, existingWidgets),
+      ...this.commonTiltWidgetsConfigFactoryService.createConfigs(WidgetType.Pitch, attachedIos, ioPortModes, portModesInfo, existingWidgets),
+      ...this.commonTiltWidgetsConfigFactoryService.createConfigs(WidgetType.Yaw, attachedIos, ioPortModes, portModesInfo, existingWidgets),
+      ...this.commonTiltWidgetsConfigFactoryService.createConfigs(WidgetType.Roll, attachedIos, ioPortModes, portModesInfo, existingWidgets),
+    ];
+  }
 }

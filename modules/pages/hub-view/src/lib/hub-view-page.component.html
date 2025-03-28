@@ -1,41 +1,30 @@
 @if (selectedHub$ | async; as hub) {
-    <ng-container *libFeatureToolbarControls>
-        <a mat-raised-button
-           [disabled]="(isHubConnected$ | async) !== true"
-           [routerLink]="hubEditRoute$ | async"
-        >
-            {{ 'hub.edit' | transloco }}
-        </a>
-        <button mat-raised-button
-                [disabled]="(isHubConnected$ | async) !== true"
-                (click)="disconnectHub()"
-        >
-            {{ 'hub.disconnect' | transloco }}
-        </button>
-    </ng-container>
+  <ng-container *libFeatureToolbarControls>
+    <a mat-raised-button [disabled]="(isHubConnected$ | async) !== true" [routerLink]="hubEditRoute$ | async">
+      {{ 'hub.edit' | transloco }}
+    </a>
+    <button mat-raised-button [disabled]="(isHubConnected$ | async) !== true" (click)="disconnectHub()">
+      {{ 'hub.disconnect' | transloco }}
+    </button>
+  </ng-container>
 
-    @if (selectedHubRuntimeData$ | async; as runtimeData) {
-        <page-hub-view-hub-properties-view class="hub-properties-view"
-                                           [configuration]="hub"
-                                           [runtimeData]="runtimeData"
-        ></page-hub-view-hub-properties-view>
+  @if (selectedHubRuntimeData$ | async; as runtimeData) {
+    <page-hub-view-hub-properties-view class="hub-properties-view" [configuration]="hub" [runtimeData]="runtimeData"></page-hub-view-hub-properties-view>
 
-        @if (ioFullInfoList$ | async; as iosFullInfoList) {
-            @if (iosFullInfoList.length) {
-                <ul class="io-list">
-                    @for (ioFullInfo of iosFullInfoList; track hubIoTrackByFn) {
-                        <li>
-                            <page-hub-view-hub-port-view class="io-list__item"
-                                                         [hubIoViewModel]="ioFullInfo"
-                            ></page-hub-view-hub-port-view>
-                        </li>
-                    }
-                </ul>
-            }
-        }
-    } @else {
-        <lib-hint>{{ 'hub.isNotConnected' | transloco: (selectedHub$ | async) ?? undefined }}</lib-hint>
+    @if (ioFullInfoList$ | async; as iosFullInfoList) {
+      @if (iosFullInfoList.length) {
+        <ul class="io-list">
+          @for (ioFullInfo of iosFullInfoList; track hubIoTrackByFn) {
+            <li>
+              <page-hub-view-hub-port-view class="io-list__item" [hubIoViewModel]="ioFullInfo"></page-hub-view-hub-port-view>
+            </li>
+          }
+        </ul>
+      }
     }
+  } @else {
+    <lib-hint>{{ 'hub.isNotConnected' | transloco: (selectedHub$ | async) ?? undefined }}</lib-hint>
+  }
 } @else {
-    <lib-hint>{{ 'hub.isNotFound' | transloco }}</lib-hint>
+  <lib-hint>{{ 'hub.isNotFound' | transloco }}</lib-hint>
 }

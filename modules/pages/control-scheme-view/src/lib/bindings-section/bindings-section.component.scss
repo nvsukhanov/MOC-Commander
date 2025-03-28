@@ -1,66 +1,70 @@
 .section {
-    height: 48px;
-    display: flex;
-    align-items: center;
+  height: 48px;
+  display: flex;
+  align-items: center;
 
-    transition: height 0.5s, opacity 0.5s;
+  transition:
+    height 0.5s,
+    opacity 0.5s;
 
-    &-title {
-        font-size: 22px;
-        line-height: 22px;
-        font-weight: 500;
-        margin: 0;
-    }
+  &-title {
+    font-size: 22px;
+    line-height: 22px;
+    font-weight: 500;
+    margin: 0;
+  }
 
-    &_running {
-        height: 0;
-        opacity: 0;
-        overflow: hidden;
-    }
+  &_running {
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+  }
 }
 
 .add-binding-button-container {
-    display: flex;
-    height: 60px;
-    border-width: 3px;
-    border-style: dashed;
-    border-color: var(--app-well-color);
-    border-radius: 10px;
-    justify-content: center;
-    align-items: center;
-    margin-top: 5px;
-    overflow: hidden;
+  display: flex;
+  height: 60px;
+  border-width: 3px;
+  border-style: dashed;
+  border-color: var(--app-well-color);
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  overflow: hidden;
 
-    transition: height 0.5s, border-color 0.5s;
+  transition:
+    height 0.5s,
+    border-color 0.5s;
 
-    &_running {
-        height: 0;
-        border-color: rgba(0,0,0,0);
-    }
+  &_running {
+    height: 0;
+    border-color: rgba(0, 0, 0, 0);
+  }
 }
 
 .hub-bindings + .hub-bindings {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .bindings-container {
-    border-width: 1px;
-    border-style: solid;
-    border-color: var(--app-well-color);
-    border-radius: 5px;
-    padding: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--app-well-color);
+  border-radius: 5px;
+  padding: 5px;
 
-    transition: border-color 0.5s;
+  transition: border-color 0.5s;
 
-    &_running {
-        border-color: rgba(0,0,0,0);
-    }
+  &_running {
+    border-color: rgba(0, 0, 0, 0);
+  }
 }
 
 .add-binding-button {
-    transition: opacity 0.5s;
+  transition: opacity 0.5s;
 
-    &_running {
-        opacity: 0;
-    }
+  &_running {
+    opacity: 0;
+  }
 }

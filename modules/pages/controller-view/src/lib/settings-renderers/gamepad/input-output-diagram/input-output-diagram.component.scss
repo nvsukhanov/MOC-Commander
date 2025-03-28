@@ -1,110 +1,110 @@
 :host {
-    display: block;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    --indicator-width: 50px;
-    --scale-height: 1px;
-    --active-zone-height: 6px;
-    --scale-padding: 2px;
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  --indicator-width: 50px;
+  --scale-height: 1px;
+  --active-zone-height: 6px;
+  --scale-padding: 2px;
 }
 
 .scale {
-    width: calc(100% - var(--indicator-width));
-    left: calc(var(--indicator-width) / 2);
-    height: calc(50% + var(--scale-padding));
-    position: absolute;
-    overflow: visible;
-    border-bottom: var(--scale-height) solid var(--app-primary-color);
+  width: calc(100% - var(--indicator-width));
+  left: calc(var(--indicator-width) / 2);
+  height: calc(50% + var(--scale-padding));
+  position: absolute;
+  overflow: visible;
+  border-bottom: var(--scale-height) solid var(--app-primary-color);
 }
 
 .active-zone {
-    height: var(--active-zone-height);
-    bottom: calc(var(--active-zone-height) / -2);
-    position: absolute;
-    background-color: var(--app-primary-color);
+  height: var(--active-zone-height);
+  bottom: calc(var(--active-zone-height) / -2);
+  position: absolute;
+  background-color: var(--app-primary-color);
 
-    &_highlight {
-        background-color: var(--app-accent-color);
-    }
+  &_highlight {
+    background-color: var(--app-accent-color);
+  }
 }
 
 .container {
-    position: absolute;
-    width: calc(100% - var(--indicator-width));
-    left: calc(var(--indicator-width) / 2);
-    overflow: visible;
-    height: 100%;
+  position: absolute;
+  width: calc(100% - var(--indicator-width));
+  left: calc(var(--indicator-width) / 2);
+  overflow: visible;
+  height: 100%;
 }
 
 .indicator {
+  position: absolute;
+  width: 1px;
+  height: calc(50% - 4px);
+  overflow: visible;
+  --tick-height: calc(var(--scale-height) + var(--active-zone-height) / 2 + var(--scale-padding));
+  --tick-width: 3px;
+
+  &__tick {
     position: absolute;
-    width: 1px;
-    height: calc(50% - 4px);
-    overflow: visible;
-    --tick-height: calc(var(--scale-height) + var(--active-zone-height) / 2 + var(--scale-padding));
-    --tick-width: 3px;
-
-    &__tick {
-        position: absolute;
-        width: var(--tick-width);
-        height: var(--tick-height);
-        left: calc(50% - var(--tick-width) / 2);
-
-        &_input {
-            bottom: calc(var(--tick-height) * -1);
-            background-color: var(--app-primary-color);
-        }
-
-        &_output {
-            top: calc(var(--tick-height) * -1);
-            background-color: var(--app-accent-color);
-        }
-    }
+    width: var(--tick-width);
+    height: var(--tick-height);
+    left: calc(50% - var(--tick-width) / 2);
 
     &_input {
-        top: 0;
+      bottom: calc(var(--tick-height) * -1);
+      background-color: var(--app-primary-color);
     }
 
     &_output {
-        top: calc(50% + var(--active-zone-height) / 2 + var(--scale-padding) * 2 + var(--scale-height));
+      top: calc(var(--tick-height) * -1);
+      background-color: var(--app-accent-color);
+    }
+  }
+
+  &_input {
+    top: 0;
+  }
+
+  &_output {
+    top: calc(50% + var(--active-zone-height) / 2 + var(--scale-padding) * 2 + var(--scale-height));
+  }
+
+  &__value {
+    width: var(--indicator-width);
+    margin-left: -25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+    height: 100%;
+
+    &_input {
+      background-color: var(--app-primary-color);
+      border-radius: 4px 4px 0 0;
+      color: var(--app-primary-contrast-color);
     }
 
-    &__value {
-        width: var(--indicator-width);
-        margin-left: -25px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: visible;
-        height: 100%;
-
-        &_input {
-            background-color: var(--app-primary-color);
-            border-radius: 4px 4px 0 0;
-            color: var(--app-primary-contrast-color);
-        }
-
-        &_output {
-            background-color: var(--app-accent-color);
-            border-radius: 0 0 4px 4px;
-            color: var(--app-accent-contrast-color);
-        }
+    &_output {
+      background-color: var(--app-accent-color);
+      border-radius: 0 0 4px 4px;
+      color: var(--app-accent-contrast-color);
     }
+  }
 }
 
 .input-label,
 .output-label {
-    color: var(--mdc-theme-primary);
-    opacity: 0.7;
-    position: absolute;
-    left: calc(var(--indicator-width) / 2);
+  color: var(--mdc-theme-primary);
+  opacity: 0.7;
+  position: absolute;
+  left: calc(var(--indicator-width) / 2);
 }
 
 .input-label {
-    top: 0;
+  top: 0;
 }
 
 .output-label {
-    bottom: 0;
+  bottom: 0;
 }

@@ -1,3 +1,3 @@
 export type ValidationErrorsL10nMap = {
-    [key: string]: string;
+  [key: string]: string;
 };

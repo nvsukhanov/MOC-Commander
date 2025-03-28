@@ -1,14 +1,12 @@
 @if (availablePresets.length) {
-    <mat-form-field>
-        <mat-label>
-            {{ 'controlScheme.inputSettings.inputPipesPresetTitle' | transloco }}
-        </mat-label>
-        <mat-select [formControl]="formControl"
-                    (valueChange)="onPresetSelect($event)"
-        >
-            @for (preset of availablePresets; track preset) {
-                <mat-option [value]="preset">{{ preset | inputPipePresetToL10nKey | transloco }}</mat-option>
-            }
-        </mat-select>
-    </mat-form-field>
+  <mat-form-field>
+    <mat-label>
+      {{ 'controlScheme.inputSettings.inputPipesPresetTitle' | transloco }}
+    </mat-label>
+    <mat-select [formControl]="formControl" (valueChange)="onPresetSelect($event)">
+      @for (preset of availablePresets; track preset) {
+        <mat-option [value]="preset">{{ preset | inputPipePresetToL10nKey | transloco }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 }

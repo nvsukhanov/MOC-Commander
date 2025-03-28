@@ -6,28 +6,24 @@ import { ControlSchemeBindingType } from '@app/shared-misc';
 import { BINDING_CONTROLLER_INPUT_NAME_RESOLVER, IBindingControllerInputNameResolver } from './i-binding-controller-input-name-resolver';
 
 @Pipe({
-    standalone: true,
-    name: 'bindingControllerInputName',
-    pure: true
+  standalone: true,
+  name: 'bindingControllerInputName',
+  pure: true,
 })
 export class BindingControllerInputNamePipe implements PipeTransform {
-    constructor(
-        @Inject(BINDING_CONTROLLER_INPUT_NAME_RESOLVER) private readonly bindingControllerInputNameProvider: IBindingControllerInputNameResolver
-    ) {
-    }
+  constructor(
+    @Inject(BINDING_CONTROLLER_INPUT_NAME_RESOLVER)
+    private readonly bindingControllerInputNameProvider: IBindingControllerInputNameResolver,
+  ) {}
 
-    public transform<T extends ControlSchemeBindingType>(
-        bindingType: T,
-        data: ControlSchemeInputConfig | undefined,
-        inputAction: keyof ControlSchemeBindingInputs<T>
-    ): Observable<string> {
-        if (!data) {
-            return of('');
-        }
-        return this.bindingControllerInputNameProvider.getControllerInputName(
-            bindingType,
-            inputAction,
-            data,
-        );
+  public transform<T extends ControlSchemeBindingType>(
+    bindingType: T,
+    data: ControlSchemeInputConfig | undefined,
+    inputAction: keyof ControlSchemeBindingInputs<T>,
+  ): Observable<string> {
+    if (!data) {
+      return of('');
     }
+    return this.bindingControllerInputNameProvider.getControllerInputName(bindingType, inputAction, data);
+  }
 }

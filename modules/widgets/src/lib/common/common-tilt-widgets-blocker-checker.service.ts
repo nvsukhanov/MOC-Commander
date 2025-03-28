@@ -5,9 +5,7 @@ import { IWidgetBlockerChecker } from '../i-widget-blocker-checker';
 
 @Injectable()
 export class CommonTiltWidgetsBlockerCheckerService implements IWidgetBlockerChecker {
-    public canBeUsedWithInputModes(
-        portModes: PortModeName[]
-    ): boolean {
-        return portModes.includes(PortModeName.position) && portModes.includes(PortModeName.impact);
-    }
+  public canBeUsedWithInputModes(portModes: PortModeName[]): boolean {
+    return portModes.includes(PortModeName.position) && portModes.includes(PortModeName.impact);
+  }
 }

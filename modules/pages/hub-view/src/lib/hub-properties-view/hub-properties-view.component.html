@@ -1,60 +1,60 @@
 @if (configuration && runtimeData) {
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>
-                {{ configuration.hubType | hubTypeToL10nKey | transloco }}
-            </mat-card-subtitle>
-            <mat-card-title libEllipsisTitle>
-                <h2>{{ configuration.name }}</h2>
-            </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <dl class="hub-properties__grid">
-                <dd class="hub-properties__title">{{ 'hub.hardwareVersionTitle' | transloco }}</dd>
-                <dt class="hub-properties__value">
-                    @if (runtimeData.hardwareVersion !== null) {
-                        {{ runtimeData.hardwareVersion }}
-                    } @else {
-                        {{ 'hub.hubPropertyValueIsUnknown' | transloco }}
-                    }
-                </dt>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-subtitle>
+        {{ configuration.hubType | hubTypeToL10nKey | transloco }}
+      </mat-card-subtitle>
+      <mat-card-title libEllipsisTitle>
+        <h2>{{ configuration.name }}</h2>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <dl class="hub-properties__grid">
+        <dd class="hub-properties__title">{{ 'hub.hardwareVersionTitle' | transloco }}</dd>
+        <dt class="hub-properties__value">
+          @if (runtimeData.hardwareVersion !== null) {
+            {{ runtimeData.hardwareVersion }}
+          } @else {
+            {{ 'hub.hubPropertyValueIsUnknown' | transloco }}
+          }
+        </dt>
 
-                <dd class="hub-properties__title">{{ 'hub.firmwareVersionTitle' | transloco }}</dd>
-                <dt class="hub-properties__value">
-                    @if (runtimeData.firmwareVersion !== null) {
-                        {{ runtimeData.firmwareVersion }}
-                    } @else {
-                        {{ 'hub.hubPropertyValueIsUnknown' | transloco }}
-                    }
-                </dt>
+        <dd class="hub-properties__title">{{ 'hub.firmwareVersionTitle' | transloco }}</dd>
+        <dt class="hub-properties__value">
+          @if (runtimeData.firmwareVersion !== null) {
+            {{ runtimeData.firmwareVersion }}
+          } @else {
+            {{ 'hub.hubPropertyValueIsUnknown' | transloco }}
+          }
+        </dt>
 
-                <dd class="hub-properties__title">{{ 'hub.batteryLevelTitle' | transloco }}</dd>
-                <dt class="hub-properties__value">
-                    @if (runtimeData.batteryLevel !== null) {
-                        {{ 'hub.batteryLevelValue' | transloco: runtimeData }}
-                    } @else {
-                        {{ 'hub.hubPropertyValueIsUnknown' | transloco }}
-                    }
-                </dt>
+        <dd class="hub-properties__title">{{ 'hub.batteryLevelTitle' | transloco }}</dd>
+        <dt class="hub-properties__value">
+          @if (runtimeData.batteryLevel !== null) {
+            {{ 'hub.batteryLevelValue' | transloco: runtimeData }}
+          } @else {
+            {{ 'hub.hubPropertyValueIsUnknown' | transloco }}
+          }
+        </dt>
 
-                <dd class="hub-properties__title">{{ 'hub.rssiLevelTitle' | transloco }}</dd>
-                <dt class="hub-properties__value">
-                    @if (runtimeData.rssi !== null) {
-                        {{ runtimeData.rssi }}
-                    } @else {
-                        {{ 'hub.hubPropertyValueIsUnknown' | transloco }}
-                    }
-                </dt>
+        <dd class="hub-properties__title">{{ 'hub.rssiLevelTitle' | transloco }}</dd>
+        <dt class="hub-properties__value">
+          @if (runtimeData.rssi !== null) {
+            {{ runtimeData.rssi }}
+          } @else {
+            {{ 'hub.hubPropertyValueIsUnknown' | transloco }}
+          }
+        </dt>
 
-                <dd class="hub-properties__title">{{ 'hub.buttonStateTitle' | transloco }}</dd>
-                <dt class="hub-properties__value">
-                    @if (runtimeData.isButtonPressed !== null) {
-                        {{ 'hub.buttonStateValue' | transloco: runtimeData }}
-                    } @else {
-                        {{ 'hub.hubPropertyValueIsUnknown' | transloco }}
-                    }
-                </dt>
-            </dl>
-        </mat-card-content>
-    </mat-card>
+        <dd class="hub-properties__title">{{ 'hub.buttonStateTitle' | transloco }}</dd>
+        <dt class="hub-properties__value">
+          @if (runtimeData.isButtonPressed !== null) {
+            {{ 'hub.buttonStateValue' | transloco: runtimeData }}
+          } @else {
+            {{ 'hub.hubPropertyValueIsUnknown' | transloco }}
+          }
+        </dt>
+      </dl>
+    </mat-card-content>
+  </mat-card>
 }

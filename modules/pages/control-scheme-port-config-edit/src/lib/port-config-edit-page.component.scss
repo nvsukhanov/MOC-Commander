@@ -1,15 +1,15 @@
 :host {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .port-configs {
-    min-width: 300px;
-    max-width: 450px;
-    flex: 1;
+  min-width: 300px;
+  max-width: 450px;
+  flex: 1;
 
-    &__content {
-        display: flex;
-        flex-direction: column;
-    }
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
 }

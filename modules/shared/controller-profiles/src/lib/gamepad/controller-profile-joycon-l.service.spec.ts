@@ -5,20 +5,17 @@ import { ControllerProfileJoyconLService } from './controller-profile-joycon-l.s
 import { IControllersConfig } from '../i-controllers-config';
 
 describe('ControllerProfileJoyconLService', () => {
-    let translocoServiceMock: TranslocoService;
-    let config: IControllersConfig;
-    let subject: ControllerProfileJoyconLService;
+  let translocoServiceMock: TranslocoService;
+  let config: IControllersConfig;
+  let subject: ControllerProfileJoyconLService;
 
-    beforeEach(() => {
-        translocoServiceMock = mock(TranslocoService);
-        config = {} as IControllersConfig;
-        subject = new ControllerProfileJoyconLService(
-            instance(translocoServiceMock),
-            config
-        );
-    });
+  beforeEach(() => {
+    translocoServiceMock = mock(TranslocoService);
+    config = {} as IControllersConfig;
+    subject = new ControllerProfileJoyconLService(instance(translocoServiceMock), config);
+  });
 
-    it('should identify JoyCon L controller', () => {
-        expect(subject.controllerIdMatch('Wireless Gamepad (STANDARD GAMEPAD Vendor: 057e Product: 2006)')).toBe(true);
-    });
+  it('should identify JoyCon L controller', () => {
+    expect(subject.controllerIdMatch('Wireless Gamepad (STANDARD GAMEPAD Vendor: 057e Product: 2006)')).toBe(true);
+  });
 });

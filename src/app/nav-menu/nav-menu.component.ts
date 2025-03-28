@@ -10,30 +10,26 @@ import { FullNavMenuComponent } from './full-nav-menu';
 import { NAV_MENU_SELECTORS } from './nav-menu.selectors';
 
 @Component({
-    standalone: true,
-    selector: 'app-nav-menu',
-    templateUrl: './nav-menu.component.html',
-    styleUrl: './nav-menu.component.scss',
-    imports: [
-        CompactNavMenuComponent,
-        FullNavMenuComponent,
-        AsyncPipe
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'app-nav-menu',
+  templateUrl: './nav-menu.component.html',
+  styleUrl: './nav-menu.component.scss',
+  imports: [CompactNavMenuComponent, FullNavMenuComponent, AsyncPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavMenuComponent {
-    public readonly navMenuViewModel$ = this.store.select(NAV_MENU_SELECTORS.selectNavMenuViewModel);
+  public readonly navMenuViewModel$ = this.store.select(NAV_MENU_SELECTORS.selectNavMenuViewModel);
 
-    public readonly isSmallScreen$: Observable<boolean>;
+  public readonly isSmallScreen$: Observable<boolean>;
 
-    constructor(
-        private readonly store: Store,
-        screenSizeObserverService: ScreenSizeObserverService,
-    ) {
-        this.isSmallScreen$ = screenSizeObserverService.isSmallScreen$;
-    }
+  constructor(
+    private readonly store: Store,
+    screenSizeObserverService: ScreenSizeObserverService,
+  ) {
+    this.isSmallScreen$ = screenSizeObserverService.isSmallScreen$;
+  }
 
-    public onDiscoveryStart(): void {
-        this.store.dispatch(HUBS_ACTIONS.startDiscovery());
-    }
+  public onDiscoveryStart(): void {
+    this.store.dispatch(HUBS_ACTIONS.startDiscovery());
+  }
 }

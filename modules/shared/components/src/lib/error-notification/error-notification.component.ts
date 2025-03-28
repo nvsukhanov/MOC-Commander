@@ -7,31 +7,19 @@ import { AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({
-    standalone: true,
-    selector: 'lib-error-notification',
-    templateUrl: './error-notification.component.html',
-    styleUrl: './error-notification.component.scss',
-    imports: [
-        MatButton,
-        MatSnackBarAction,
-        MatSnackBarActions,
-        MatSnackBarLabel,
-        TranslocoPipe,
-        AsyncPipe,
-        MatIcon
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  selector: 'lib-error-notification',
+  templateUrl: './error-notification.component.html',
+  styleUrl: './error-notification.component.scss',
+  imports: [MatButton, MatSnackBarAction, MatSnackBarActions, MatSnackBarLabel, TranslocoPipe, AsyncPipe, MatIcon],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ErrorNotificationComponent {
-    public readonly snackBarRef = inject(MatSnackBarRef);
+  public readonly snackBarRef = inject(MatSnackBarRef);
 
-    constructor(
-        @Inject(MAT_SNACK_BAR_DATA) public readonly error$: Observable<string>
-    ) {
-    }
+  constructor(@Inject(MAT_SNACK_BAR_DATA) public readonly error$: Observable<string>) {}
 
-
-    public onDismiss(): void {
-        this.snackBarRef.dismiss();
-    }
+  public onDismiss(): void {
+    this.snackBarRef.dismiss();
+  }
 }

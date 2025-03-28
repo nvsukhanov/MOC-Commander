@@ -2,14 +2,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { WidgetConfigModel } from '@app/store';
 
 @Pipe({
-    standalone: true,
-    name: 'orderWidgets',
-    pure: true,
+  standalone: true,
+  name: 'orderWidgets',
+  pure: true,
 })
 export class OrderWidgetsPipe implements PipeTransform {
-    public transform(
-        widgetsWithData: WidgetConfigModel[]
-    ): WidgetConfigModel[] {
-        return [ ...widgetsWithData ].sort((a, b) => a.id - b.id);
-    }
+  public transform(widgetsWithData: WidgetConfigModel[]): WidgetConfigModel[] {
+    return [...widgetsWithData].sort((a, b) => a.id - b.id);
+  }
 }
