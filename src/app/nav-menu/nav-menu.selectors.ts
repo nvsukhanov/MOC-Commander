@@ -16,7 +16,13 @@ export const NAV_MENU_SELECTORS = {
     CONTROL_SCHEME_SELECTORS.selectTotal,
     BLUETOOTH_AVAILABILITY_SELECTORS.isAvailable,
     HUBS_SELECTORS.selectIsDiscovering,
-    (connectedControllersCount, connectedHubCount, controlSchemesCount, isBluetoothAvailable, isDiscoveryBusy): NavMenuViewModel => ({
+    (
+      connectedControllersCount,
+      connectedHubCount,
+      controlSchemesCount,
+      isBluetoothAvailable,
+      isDiscoveryBusy,
+    ): NavMenuViewModel => ({
       connectedControllersCount,
       connectedHubCount,
       controlSchemesCount,

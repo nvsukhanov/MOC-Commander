@@ -6,7 +6,10 @@ import { VoltageSensorWidgetSettingsComponent } from './settings';
 
 @Injectable()
 export class VoltageWidgetSettingsComponentFactoryService {
-  public createWidgetSettings(container: ViewContainerRef, config: VoltageWidgetConfigModel): ControlSchemeWidgetSettingsDescriptor {
+  public createWidgetSettings(
+    container: ViewContainerRef,
+    config: VoltageWidgetConfigModel,
+  ): ControlSchemeWidgetSettingsDescriptor {
     const componentRef = container.createComponent(VoltageSensorWidgetSettingsComponent);
     componentRef.setInput('config', config);
     return {

@@ -27,7 +27,10 @@ export class GearboxBindingL10nService implements IBindingL10n<ControlSchemeBind
     }
   }
 
-  public getControllerInputName(actionType: GearboxBindingInputAction, inputConfig: ControlSchemeInputConfig): Observable<string> {
+  public getControllerInputName(
+    actionType: GearboxBindingInputAction,
+    inputConfig: ControlSchemeInputConfig,
+  ): Observable<string> {
     switch (actionType) {
       case GearboxBindingInputAction.NextGear:
       case GearboxBindingInputAction.PrevGear:

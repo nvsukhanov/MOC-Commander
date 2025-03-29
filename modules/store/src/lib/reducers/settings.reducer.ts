@@ -19,6 +19,9 @@ export const SETTINGS_FEATURE = createFeature({
     on(SETTINGS_ACTIONS.setTheme, (state, { appTheme }): SettingsState => ({ ...state, appTheme })),
     on(SETTINGS_ACTIONS.setLanguage, (state, { language }): SettingsState => ({ ...state, language })),
     on(SETTINGS_ACTIONS.setLinuxCompat, (state, { useLinuxCompat }): SettingsState => ({ ...state, useLinuxCompat })),
-    on(SETTINGS_ACTIONS.setGamepadPollingRate, (state, { gamepadPollingRate }): SettingsState => ({ ...state, gamepadPollingRate })),
+    on(
+      SETTINGS_ACTIONS.setGamepadPollingRate,
+      (state, { gamepadPollingRate }): SettingsState => ({ ...state, gamepadPollingRate }),
+    ),
   ),
 });

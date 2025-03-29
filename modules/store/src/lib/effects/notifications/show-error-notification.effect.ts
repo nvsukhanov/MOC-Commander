@@ -14,7 +14,11 @@ export const SHOW_ERROR_NOTIFICATION_EFFECT = createEffect(
   ) => {
     return actions.pipe(
       ofType(SHOW_NOTIFICATION_ACTIONS.error),
-      tap((action) => notificationsFacadeService.showErrorNotification(translocoService.selectTranslate(action.l10nKey, action.l10nPayload))),
+      tap((action) =>
+        notificationsFacadeService.showErrorNotification(
+          translocoService.selectTranslate(action.l10nKey, action.l10nPayload),
+        ),
+      ),
     );
   },
   { functional: true, dispatch: false },

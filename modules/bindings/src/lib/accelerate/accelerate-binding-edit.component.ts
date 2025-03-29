@@ -52,11 +52,14 @@ export class AccelerateBindingEditComponent implements IBindingsDetailsEditCompo
 
   public form?: AccelerateBindingForm;
 
-  private _forwardsControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Speed> | null = null;
+  private _forwardsControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Speed> | null =
+    null;
 
-  private _backwardsControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Speed> | null = null;
+  private _backwardsControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Speed> | null =
+    null;
 
-  private _decelerateControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Speed> | null = null;
+  private _decelerateControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Speed> | null =
+    null;
 
   constructor(
     private readonly cd: ChangeDetectorRef,

@@ -17,7 +17,11 @@
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["modules/pages/not-found/**/*.ts", "modules/pages/not-found/**/*.html", "modules/pages/not-found/package.json"]
+        "lintFilePatterns": [
+          "modules/pages/not-found/**/*.ts",
+          "modules/pages/not-found/**/*.html",
+          "modules/pages/not-found/package.json"
+        ]
       }
     }
   }

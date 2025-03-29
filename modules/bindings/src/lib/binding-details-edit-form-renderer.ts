@@ -8,11 +8,27 @@ import { IBindingDetailsEditFormRenderer } from '@app/shared-control-schemes';
 import { IBindingsDetailsEditComponent } from './i-bindings-details-edit-component';
 import { SpeedBindingEditComponent, SpeedBindingFormBuilderService, SpeedBindingFormMapperService } from './speed';
 import { ServoBindingEditComponent, ServoBindingFormBuilderService, ServoBindingFormMapperService } from './servo';
-import { SetAngleBindingEditComponent, SetAngleBindingFormBuilderService, SetAngleBindingFormMapperService } from './set-angle';
-import { StepperBindingEditComponent, StepperBindingFormBuilderService, StepperBindingFormMapperService } from './stepper';
+import {
+  SetAngleBindingEditComponent,
+  SetAngleBindingFormBuilderService,
+  SetAngleBindingFormMapperService,
+} from './set-angle';
+import {
+  StepperBindingEditComponent,
+  StepperBindingFormBuilderService,
+  StepperBindingFormMapperService,
+} from './stepper';
 import { TrainBindingEditComponent, TrainBindingFormBuilderService, TrainBindingFormMapperService } from './train';
-import { GearboxBindingEditComponent, GearboxBindingFormBuilderService, GearboxBindingFormMapperService } from './gearbox';
-import { AccelerateBindingEditComponent, AccelerateBindingFormBuilderService, AccelerateBindingFormMapperService } from './accelerate';
+import {
+  GearboxBindingEditComponent,
+  GearboxBindingFormBuilderService,
+  GearboxBindingFormMapperService,
+} from './gearbox';
+import {
+  AccelerateBindingEditComponent,
+  AccelerateBindingFormBuilderService,
+  AccelerateBindingFormMapperService,
+} from './accelerate';
 
 export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRenderer {
   public readonly bindingChange: Observable<ControlSchemeBinding | null>;

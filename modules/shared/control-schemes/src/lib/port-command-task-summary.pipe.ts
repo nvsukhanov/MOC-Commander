@@ -2,7 +2,10 @@ import { Inject, Pipe, PipeTransform } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PortCommandTask } from '@app/store';
 
-import { IPortCommandTaskSummaryBuilder, PORT_COMMAND_TASK_SUMMARY_BUILDER } from './i-port-command-task-summary-builder';
+import {
+  IPortCommandTaskSummaryBuilder,
+  PORT_COMMAND_TASK_SUMMARY_BUILDER,
+} from './i-port-command-task-summary-builder';
 
 @Pipe({
   standalone: true,

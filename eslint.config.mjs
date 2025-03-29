@@ -149,7 +149,12 @@ export default [
             },
             {
               sourceTag: 'scope:store',
-              onlyDependOnLibsWithTags: ['scope:shared-misc', 'scope:shared-components', 'scope:i18n', 'scope:controller-profiles'],
+              onlyDependOnLibsWithTags: [
+                'scope:shared-misc',
+                'scope:shared-components',
+                'scope:i18n',
+                'scope:controller-profiles',
+              ],
             },
             {
               sourceTag: 'scope:shared-components',
@@ -157,7 +162,13 @@ export default [
             },
             {
               sourceTag: 'scope:shared-feature',
-              onlyDependOnLibsWithTags: ['scope:store', 'scope:shared-misc', 'scope:i18n', 'scope:shared-components', 'scope:controller-profiles'],
+              onlyDependOnLibsWithTags: [
+                'scope:store',
+                'scope:shared-misc',
+                'scope:i18n',
+                'scope:shared-components',
+                'scope:controller-profiles',
+              ],
             },
             {
               sourceTag: 'scope:i18n',

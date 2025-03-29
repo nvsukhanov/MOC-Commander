@@ -24,12 +24,20 @@ export const BINDING_CONTROL_SELECT_HUB_SELECTORS = {
       ATTACHED_IO_MODES_SELECTORS.selectEntities,
       ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
       HUB_RUNTIME_DATA_SELECTORS.selectEntities,
-      (hubs, attachedIos, attachedIoModesEntities, attachedIoPortModeInfoEntities, hubsConnectionStates): HubWithConnectionState[] => {
+      (
+        hubs,
+        attachedIos,
+        attachedIoModesEntities,
+        attachedIoPortModeInfoEntities,
+        hubsConnectionStates,
+      ): HubWithConnectionState[] => {
         // Inefficient due to the nested loops, but the number of hubs and attached IOs is small. Also, it keeps sorting of the hubs.
         return hubs
           .filter(({ hubId }) =>
             attachedIos.some(
-              (io) => io.hubId === hubId && isIoControllableByBindingType(io, attachedIoModesEntities, attachedIoPortModeInfoEntities, bindingType),
+              (io) =>
+                io.hubId === hubId &&
+                isIoControllableByBindingType(io, attachedIoModesEntities, attachedIoPortModeInfoEntities, bindingType),
             ),
           )
           .map((hub) => ({

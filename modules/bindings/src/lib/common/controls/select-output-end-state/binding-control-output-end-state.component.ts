@@ -12,7 +12,14 @@ import { MotorServoEndStateL10nKeyPipe } from '@app/shared-components';
   selector: 'lib-cs-binding-control-output-end-state',
   templateUrl: './binding-control-output-end-state.component.html',
   styleUrl: './binding-control-output-end-state.component.scss',
-  imports: [MatFormFieldModule, MatOptionModule, MatSelectModule, MotorServoEndStateL10nKeyPipe, TranslocoPipe, ReactiveFormsModule],
+  imports: [
+    MatFormFieldModule,
+    MatOptionModule,
+    MatSelectModule,
+    MotorServoEndStateL10nKeyPipe,
+    TranslocoPipe,
+    ReactiveFormsModule,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BindingControlOutputEndStateComponent {
@@ -20,5 +27,9 @@ export class BindingControlOutputEndStateComponent {
 
   @Input() public translocoTitle = '';
 
-  public readonly motorServoEndStates: ReadonlyArray<MotorServoEndState> = [MotorServoEndState.float, MotorServoEndState.hold, MotorServoEndState.brake];
+  public readonly motorServoEndStates: ReadonlyArray<MotorServoEndState> = [
+    MotorServoEndState.float,
+    MotorServoEndState.hold,
+    MotorServoEndState.brake,
+  ];
 }

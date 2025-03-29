@@ -1,6 +1,15 @@
 import { ChangeDetectorRef, Directive, ElementRef, Input, OnChanges, OnDestroy, Renderer2 } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { BehaviorSubject, Subscription, combineLatestWith, distinctUntilChanged, map, of, startWith, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Subscription,
+  combineLatestWith,
+  distinctUntilChanged,
+  map,
+  of,
+  startWith,
+  switchMap,
+} from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 
 import { ValidationErrorsL10nMap } from './validation-errors-l10n-map';
@@ -52,7 +61,9 @@ export class ValidationMessagesDirective implements OnChanges, OnDestroy {
           startWith(null),
           combineLatestWith(this.l10nSubject),
           map(([, l10n]) => this.extractFirstErrorData(l10n)),
-          switchMap((errorData) => (errorData ? this.translocoService.selectTranslate(errorData.l10nKey, errorData.payload) : of(null))),
+          switchMap((errorData) =>
+            errorData ? this.translocoService.selectTranslate(errorData.l10nKey, errorData.payload) : of(null),
+          ),
           distinctUntilChanged(),
         )
         .subscribe((result: string | null) => {
@@ -74,7 +85,10 @@ export class ValidationMessagesDirective implements OnChanges, OnDestroy {
     if (this.control && (this.control.dirty || this.immediatelyShowMessages) && this.control.invalid) {
       const error = Object.keys(this.control.errors ?? {})[0];
       if (error !== undefined) {
-        const payload = this.control.errors?.[error] instanceof Object ? this.control.errors?.[error] : { value: this.control.errors?.[error] };
+        const payload =
+          this.control.errors?.[error] instanceof Object
+            ? this.control.errors?.[error]
+            : { value: this.control.errors?.[error] };
         return {
           l10nKey: l10nMap[error] || this.commonValidationErrorsL10nMap[error] || error,
           payload,

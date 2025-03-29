@@ -23,8 +23,17 @@ export class GearboxBindingTaskPayloadBuilderService implements ITaskPayloadBuil
     ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
     previousTask: PortCommandTask | null,
   ): { payload: GearboxTaskPayload; inputTimestamp: number } | null {
-    const gearboxPrevTask = previousTask && previousTask.payload.type === TaskType.Gearbox ? (previousTask as PortCommandTask<TaskType.Gearbox>) : null;
-    return this.buildPayloadUsingPreviousTask(binding, currentInput, previousInput, ioProps?.motorEncoderOffset ?? 0, gearboxPrevTask);
+    const gearboxPrevTask =
+      previousTask && previousTask.payload.type === TaskType.Gearbox
+        ? (previousTask as PortCommandTask<TaskType.Gearbox>)
+        : null;
+    return this.buildPayloadUsingPreviousTask(
+      binding,
+      currentInput,
+      previousInput,
+      ioProps?.motorEncoderOffset ?? 0,
+      gearboxPrevTask,
+    );
   }
 
   public buildCleanupPayload(previousTask: PortCommandTask): PortCommandTaskPayload | null {
@@ -48,8 +57,18 @@ export class GearboxBindingTaskPayloadBuilderService implements ITaskPayloadBuil
     motorEncoderOffset: number,
     previousTask: PortCommandTask<TaskType.Gearbox> | null,
   ): { payload: GearboxTaskPayload; inputTimestamp: number } | null {
-    const nextLevelInput = this.getActiveInput(binding, currentInput, previousInput, GearboxBindingInputAction.NextGear);
-    const prevLevelInput = this.getActiveInput(binding, currentInput, previousInput, GearboxBindingInputAction.PrevGear);
+    const nextLevelInput = this.getActiveInput(
+      binding,
+      currentInput,
+      previousInput,
+      GearboxBindingInputAction.NextGear,
+    );
+    const prevLevelInput = this.getActiveInput(
+      binding,
+      currentInput,
+      previousInput,
+      GearboxBindingInputAction.PrevGear,
+    );
     const resetLevelInput = this.getActiveInput(binding, currentInput, previousInput, GearboxBindingInputAction.Reset);
 
     if (!nextLevelInput.isActivated && !prevLevelInput.isActivated && !resetLevelInput.isActivated) {
@@ -65,7 +84,8 @@ export class GearboxBindingTaskPayloadBuilderService implements ITaskPayloadBuil
 
     const previousAngleIndexUnguarded = binding.angles.findIndex((angle) => angle === previousTask?.payload.angle);
     // TODO: we can probably find nearest angle instead of just using the initial step index
-    const previousAngleIndex = previousAngleIndexUnguarded === -1 ? binding.initialLevelIndex : previousAngleIndexUnguarded;
+    const previousAngleIndex =
+      previousAngleIndexUnguarded === -1 ? binding.initialLevelIndex : previousAngleIndexUnguarded;
 
     const angleChange = (+prevLevelInput.isActivated - +nextLevelInput.isActivated) as -1 | 1 | 0;
 

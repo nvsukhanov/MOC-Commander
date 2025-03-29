@@ -64,7 +64,10 @@ export class ControllerProfileDualshockService extends GamepadProfile {
     return (
       !!vendorAndProduct &&
       this.controllerIdentification.some((identification) => {
-        return identification.vendorId === vendorAndProduct.vendorId && identification.productId === vendorAndProduct.productId;
+        return (
+          identification.vendorId === vendorAndProduct.vendorId &&
+          identification.productId === vendorAndProduct.productId
+        );
       })
     );
   }

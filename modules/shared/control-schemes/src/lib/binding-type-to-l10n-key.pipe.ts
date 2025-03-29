@@ -9,7 +9,9 @@ import { BINDING_TYPE_TO_L10N_KEY_MAPPER, IBindingTypeToL10nKeyMapper } from './
   standalone: true,
 })
 export class BindingTypeToL10nKeyPipe implements PipeTransform {
-  constructor(@Inject(BINDING_TYPE_TO_L10N_KEY_MAPPER) private readonly bindingTypeToL10nKeyMapper: IBindingTypeToL10nKeyMapper) {}
+  constructor(
+    @Inject(BINDING_TYPE_TO_L10N_KEY_MAPPER) private readonly bindingTypeToL10nKeyMapper: IBindingTypeToL10nKeyMapper,
+  ) {}
 
   public transform(bindingType: ControlSchemeBindingType): string {
     return this.bindingTypeToL10nKeyMapper.mapBindingTypeToL10nKey(bindingType);

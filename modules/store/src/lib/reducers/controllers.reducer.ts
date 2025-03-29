@@ -69,7 +69,10 @@ export const CONTROLLERS_FEATURE = createFeature({
       );
     }),
     on(HUBS_ACTIONS.forgetHub, (state, action): ControllersState => {
-      return CONTROLLERS_ENTITY_ADAPTER.removeOne(controllerIdFn({ hubId: action.hubId, controllerType: ControllerType.Hub }), state);
+      return CONTROLLERS_ENTITY_ADAPTER.removeOne(
+        controllerIdFn({ hubId: action.hubId, controllerType: ControllerType.Hub }),
+        state,
+      );
     }),
     on(CONTROLLERS_ACTIONS.forgetController, (state, action): ControllersState => {
       return CONTROLLERS_ENTITY_ADAPTER.removeOne(action.controllerId, state);

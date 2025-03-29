@@ -11,15 +11,24 @@ const SELECT_ENTITIES = createSelector(
   CONTROLLER_CONNECTION_ADAPTER.getSelectors().selectEntities,
 );
 
-const SELECT_ALL = createSelector(CONTROLLER_CONNECTION_FEATURE.selectControllerConnectionsState, CONTROLLER_CONNECTION_ADAPTER.getSelectors().selectAll);
+const SELECT_ALL = createSelector(
+  CONTROLLER_CONNECTION_FEATURE.selectControllerConnectionsState,
+  CONTROLLER_CONNECTION_ADAPTER.getSelectors().selectAll,
+);
 
-const SELECT_IDS = createSelector(CONTROLLER_CONNECTION_FEATURE.selectControllerConnectionsState, CONTROLLER_CONNECTION_ADAPTER.getSelectors().selectIds);
+const SELECT_IDS = createSelector(
+  CONTROLLER_CONNECTION_FEATURE.selectControllerConnectionsState,
+  CONTROLLER_CONNECTION_ADAPTER.getSelectors().selectIds,
+);
 
 export const CONTROLLER_CONNECTION_SELECTORS = {
   selectEntities: SELECT_ENTITIES,
   selectAll: SELECT_ALL,
   selectIds: SELECT_IDS,
-  selectTotal: createSelector(CONTROLLER_CONNECTION_FEATURE.selectControllerConnectionsState, CONTROLLER_CONNECTION_ADAPTER.getSelectors().selectTotal),
+  selectTotal: createSelector(
+    CONTROLLER_CONNECTION_FEATURE.selectControllerConnectionsState,
+    CONTROLLER_CONNECTION_ADAPTER.getSelectors().selectTotal,
+  ),
   isConnected: (id: string) => createSelector(SELECT_ENTITIES, (connections) => !!connections[id]),
   selectByGamepadIndex: (gamepadIndex: number) =>
     createSelector(SELECT_ALL, (connections) => {

@@ -16,7 +16,10 @@ export class SetAngleBindingL10nService implements IBindingL10n<ControlSchemeBin
     private readonly controllerNameProvider: ControllerInputNameService,
   ) {}
 
-  public getBindingInputName(actionType: SetAngleBindingInputAction, binding: ControlSchemeSetAngleBinding): Observable<string> {
+  public getBindingInputName(
+    actionType: SetAngleBindingInputAction,
+    binding: ControlSchemeSetAngleBinding,
+  ): Observable<string> {
     return this.transloco.selectTranslate('controlScheme.setAngleBinding.inputAction', binding);
   }
 
@@ -27,7 +30,10 @@ export class SetAngleBindingL10nService implements IBindingL10n<ControlSchemeBin
     }
   }
 
-  public getControllerInputName(actionType: SetAngleBindingInputAction, inputConfig: ControlSchemeInputConfig): Observable<string> {
+  public getControllerInputName(
+    actionType: SetAngleBindingInputAction,
+    inputConfig: ControlSchemeInputConfig,
+  ): Observable<string> {
     switch (actionType) {
       case SetAngleBindingInputAction.SetAngle:
         return this.controllerNameProvider.getFullControllerInputNameData(inputConfig);

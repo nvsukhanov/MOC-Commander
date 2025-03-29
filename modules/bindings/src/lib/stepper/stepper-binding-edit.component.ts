@@ -53,9 +53,11 @@ export class StepperBindingEditComponent implements IBindingsDetailsEditComponen
     [NO_INPUTS_STEPPER_ERROR]: 'controlScheme.stepperBinding.missingInputs',
   };
 
-  private _stepCwControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Stepper> | null = null;
+  private _stepCwControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Stepper> | null =
+    null;
 
-  private _stepCcwControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Stepper> | null = null;
+  private _stepCcwControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Stepper> | null =
+    null;
 
   private _form?: StepperBindingForm;
 

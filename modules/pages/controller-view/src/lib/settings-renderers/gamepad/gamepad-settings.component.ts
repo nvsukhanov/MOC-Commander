@@ -89,16 +89,24 @@ export class GamepadSettingsComponent implements IControllerSettingsRenderer<Gam
     const viewModel = this.viewModelBuilder.buildViewModel(settingsForm, settings);
 
     this.formValueChangesSubscription?.unsubscribe();
-    this.formValueChangesSubscription = settingsForm.valueChanges.pipe(throttleTime(100, animationFrameScheduler, { trailing: true })).subscribe(() => {
-      const rawValue = this.gamepadSettingsForm?.getRawValue();
-      if (rawValue) {
-        this._settingsChanges$.next(rawValue);
-      }
-    });
+    this.formValueChangesSubscription = settingsForm.valueChanges
+      .pipe(throttleTime(100, animationFrameScheduler, { trailing: true }))
+      .subscribe(() => {
+        const rawValue = this.gamepadSettingsForm?.getRawValue();
+        if (rawValue) {
+          this._settingsChanges$.next(rawValue);
+        }
+      });
 
     this.profile$ = this.store
       .select(CONTROLLER_SELECTORS.selectById(settingsForm.controls.controllerId.value))
-      .pipe(map((controllerModel) => (controllerModel ? (this.profileFactoryService.getByProfileUid(controllerModel.profileUid) as GamepadProfile) : null)));
+      .pipe(
+        map((controllerModel) =>
+          controllerModel
+            ? (this.profileFactoryService.getByProfileUid(controllerModel.profileUid) as GamepadProfile)
+            : null,
+        ),
+      );
 
     this._viewModel = viewModel;
     this.gamepadSettingsForm = settingsForm;

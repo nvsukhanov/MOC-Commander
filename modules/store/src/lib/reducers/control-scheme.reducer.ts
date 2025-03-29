@@ -14,7 +14,10 @@ function createDefaultPortConfig({ hubId, portId }: { hubId: string; portId: num
   };
 }
 
-function ensurePortConfigsAreUpToDate(bindings: ControlSchemeBinding[], portConfigs: ControlSchemePortConfig[]): ControlSchemePortConfig[] {
+function ensurePortConfigsAreUpToDate(
+  bindings: ControlSchemeBinding[],
+  portConfigs: ControlSchemePortConfig[],
+): ControlSchemePortConfig[] {
   let result = [...portConfigs];
   const existingPortConfigIds = new Set(result.map((p) => attachedIosIdFn(p)));
   const existingBindingIds = new Set(result.map((b) => attachedIosIdFn(b)));
@@ -26,7 +29,9 @@ function ensurePortConfigsAreUpToDate(bindings: ControlSchemeBinding[], portConf
 
   const shouldAddPortConfig = bindings.some((b) => !existingPortConfigIds.has(attachedIosIdFn(b)));
   if (shouldAddPortConfig) {
-    result = result.concat(bindings.filter((b) => !existingPortConfigIds.has(attachedIosIdFn(b))).map((b) => createDefaultPortConfig(b)));
+    result = result.concat(
+      bindings.filter((b) => !existingPortConfigIds.has(attachedIosIdFn(b))).map((b) => createDefaultPortConfig(b)),
+    );
   }
 
   if (shouldRemovePortConfig || shouldAddPortConfig) {
@@ -87,7 +92,10 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
       }),
     ),
     on(CONTROL_SCHEME_ACTIONS.stopScheme, (state): IControlSchemeState => {
-      if (state.runningState === ControlSchemeRunState.Running || state.runningState === ControlSchemeRunState.Starting) {
+      if (
+        state.runningState === ControlSchemeRunState.Running ||
+        state.runningState === ControlSchemeRunState.Starting
+      ) {
         return {
           ...state,
           runningState: ControlSchemeRunState.Stopping,
@@ -104,7 +112,10 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
         runningState: ControlSchemeRunState.Idle,
       }),
     ),
-    on(CONTROL_SCHEME_ACTIONS.deleteControlScheme, (state, { name }): IControlSchemeState => CONTROL_SCHEME_ENTITY_ADAPTER.removeOne(name, state)),
+    on(
+      CONTROL_SCHEME_ACTIONS.deleteControlScheme,
+      (state, { name }): IControlSchemeState => CONTROL_SCHEME_ENTITY_ADAPTER.removeOne(name, state),
+    ),
     on(CONTROL_SCHEME_ACTIONS.saveBinding, (state, { binding, schemeName }): IControlSchemeState => {
       const scheme = state.entities[schemeName];
       if (!scheme) {
@@ -185,7 +196,9 @@ export const CONTROL_SCHEME_FEATURE = createFeature({
       if (!scheme) {
         return state;
       }
-      const portConfigIndex = scheme.portConfigs.findIndex((p) => p.portId === portConfig.portId && p.hubId === portConfig.hubId);
+      const portConfigIndex = scheme.portConfigs.findIndex(
+        (p) => p.portId === portConfig.portId && p.hubId === portConfig.hubId,
+      );
       if (portConfigIndex === -1) {
         return state;
       }

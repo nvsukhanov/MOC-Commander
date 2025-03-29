@@ -28,26 +28,28 @@ export function createPreRunServoCalibrationTasks(
   const tasks: Array<Observable<unknown>> = [];
 
   calibrateIos.forEach(({ hubId, portId, speed, power }) => {
-    const task = hubServoCalibrationFacade.calibrateServo(hubId, portId, speed, power, appConfig.servo.autoCalibrationRuns).pipe(
-      map((r) => {
-        if (r.type === CalibrationResultType.error) {
-          throw r.error;
-        }
-        return r;
-      }),
-      tap((result) => {
-        if (result.type === CalibrationResultType.finished) {
-          store.dispatch(
-            ATTACHED_IO_PROPS_ACTIONS.startupServoCalibrationDataReceived({
-              hubId,
-              portId,
-              range: result.range,
-              aposCenter: result.aposCenter,
-            }),
-          );
-        }
-      }),
-    );
+    const task = hubServoCalibrationFacade
+      .calibrateServo(hubId, portId, speed, power, appConfig.servo.autoCalibrationRuns)
+      .pipe(
+        map((r) => {
+          if (r.type === CalibrationResultType.error) {
+            throw r.error;
+          }
+          return r;
+        }),
+        tap((result) => {
+          if (result.type === CalibrationResultType.finished) {
+            store.dispatch(
+              ATTACHED_IO_PROPS_ACTIONS.startupServoCalibrationDataReceived({
+                hubId,
+                portId,
+                range: result.range,
+                aposCenter: result.aposCenter,
+              }),
+            );
+          }
+        }),
+      );
     tasks.push(task);
   });
   return tasks;

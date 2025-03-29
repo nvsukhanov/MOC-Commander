@@ -43,7 +43,10 @@ export class ControlSchemeDecompressorService {
     );
   }
 
-  private migrateToLatest(controlScheme: DeepPartial<ControlSchemeModel>, importedStoreVersion: AppStoreVersion): DeepPartial<ControlSchemeModel> {
+  private migrateToLatest(
+    controlScheme: DeepPartial<ControlSchemeModel>,
+    importedStoreVersion: AppStoreVersion,
+  ): DeepPartial<ControlSchemeModel> {
     if (importedStoreVersion !== AppStoreVersion.latest) {
       if (!controlScheme.name) {
         throw new Error('Control scheme name is required');
@@ -60,7 +63,11 @@ export class ControlSchemeDecompressorService {
     return controlScheme;
   }
 
-  private buildStateForMigration(controlSchemeId: string, controlScheme: DeepPartial<ControlSchemeModel>, storeVersion: AppStoreVersion): DeepPartial<IState> {
+  private buildStateForMigration(
+    controlSchemeId: string,
+    controlScheme: DeepPartial<ControlSchemeModel>,
+    storeVersion: AppStoreVersion,
+  ): DeepPartial<IState> {
     return {
       controlSchemes: {
         ids: [controlSchemeId],

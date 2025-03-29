@@ -1,6 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { CONTROLLER_MAX_INPUT_VALUE, CONTROLLER_MIN_INPUT_VALUE, CONTROLLER_NULL_INPUT_VALUE } from '@app/controller-profiles';
+import {
+  CONTROLLER_MAX_INPUT_VALUE,
+  CONTROLLER_MIN_INPUT_VALUE,
+  CONTROLLER_NULL_INPUT_VALUE,
+} from '@app/controller-profiles';
 
 @Component({
   standalone: true,
@@ -44,11 +48,17 @@ export class InputOutputDiagramComponent {
   }
 
   public get leftActiveZoneHighlight(): boolean {
-    return this.normalizedRawValue <= -this.normalizedActiveZoneStart && this.normalizedRawValue >= -this.normalizedActiveZoneEnd;
+    return (
+      this.normalizedRawValue <= -this.normalizedActiveZoneStart &&
+      this.normalizedRawValue >= -this.normalizedActiveZoneEnd
+    );
   }
 
   public get rightActiveZoneHighlight(): boolean {
-    return this.normalizedRawValue >= this.normalizedActiveZoneStart && this.normalizedRawValue <= this.normalizedActiveZoneEnd;
+    return (
+      this.normalizedRawValue >= this.normalizedActiveZoneStart &&
+      this.normalizedRawValue <= this.normalizedActiveZoneEnd
+    );
   }
 
   public get rawPositionPercent(): number {

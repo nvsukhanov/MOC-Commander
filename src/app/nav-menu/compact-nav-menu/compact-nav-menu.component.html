@@ -51,15 +51,30 @@
     </button>
 
     <mat-menu #menu="matMenu">
-      <a mat-menu-item [routerLink]="routesBuilderService.settings" [routerLinkActive]="'active-link'" [attr.aria-label]="'nav.settingsPageButton' | transloco">
+      <a
+        mat-menu-item
+        [routerLink]="routesBuilderService.settings"
+        [routerLinkActive]="'active-link'"
+        [attr.aria-label]="'nav.settingsPageButton' | transloco"
+      >
         <mat-icon [fontIcon]="'settings'"></mat-icon>
         <span>{{ 'nav.settingsPageButton' | transloco }}</span>
       </a>
-      <a mat-menu-item [routerLink]="routesBuilderService.help" [routerLinkActive]="'active-link'" [attr.aria-label]="'nav.help' | transloco">
+      <a
+        mat-menu-item
+        [routerLink]="routesBuilderService.help"
+        [routerLinkActive]="'active-link'"
+        [attr.aria-label]="'nav.help' | transloco"
+      >
         <mat-icon [fontIcon]="'help'"></mat-icon>
         <span>{{ 'nav.help' | transloco }}</span>
       </a>
-      <a mat-menu-item [routerLink]="routesBuilderService.about" [routerLinkActive]="'active-link'" [attr.aria-label]="'nav.aboutPageButton' | transloco">
+      <a
+        mat-menu-item
+        [routerLink]="routesBuilderService.about"
+        [routerLinkActive]="'active-link'"
+        [attr.aria-label]="'nav.aboutPageButton' | transloco"
+      >
         <mat-icon [fontIcon]="'info'"></mat-icon>
         <span>{{ 'nav.aboutPageButton' | transloco }}</span>
       </a>

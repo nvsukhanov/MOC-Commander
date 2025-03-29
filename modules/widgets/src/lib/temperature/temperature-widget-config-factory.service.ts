@@ -15,7 +15,9 @@ import { IControlSchemeWidgetConfigFactory } from '@app/control-scheme-view';
 import { TemperatureWidgetBlockerCheckerService } from './temperature-widget-blocker-checker.service';
 
 @Injectable()
-export class TemperatureWidgetConfigFactoryService implements IControlSchemeWidgetConfigFactory<TemperatureWidgetConfigModel> {
+export class TemperatureWidgetConfigFactoryService
+  implements IControlSchemeWidgetConfigFactory<TemperatureWidgetConfigModel>
+{
   constructor(private readonly blockerChecker: TemperatureWidgetBlockerCheckerService) {}
 
   public createConfigs(
@@ -25,7 +27,9 @@ export class TemperatureWidgetConfigFactoryService implements IControlSchemeWidg
     existingWidgets: WidgetConfigModel[],
   ): TemperatureWidgetConfigModel[] {
     const result: TemperatureWidgetConfigModel[] = [];
-    const freeIos = attachedIos.filter((io) => !existingWidgets.some((widget) => widget.hubId === io.hubId && widget.portId === io.portId));
+    const freeIos = attachedIos.filter(
+      (io) => !existingWidgets.some((widget) => widget.hubId === io.hubId && widget.portId === io.portId),
+    );
     for (const io of freeIos) {
       const portInputModeIds = ioPortModes[attachedIoModesIdFn(io)]?.portInputModes ?? [];
       for (const modeId of portInputModeIds) {

@@ -1,11 +1,15 @@
 @if (formGroup) {
   <section class="keyboard-settings-section">
-    <page-controller-view-control-ignore-input [control]="formGroup.controls.ignoreInput"></page-controller-view-control-ignore-input>
+    <page-controller-view-control-ignore-input
+      [control]="formGroup.controls.ignoreInput"
+    ></page-controller-view-control-ignore-input>
   </section>
   <section class="keyboard-settings-section">
     <mat-slide-toggle [formControl]="formGroup.controls.captureNonAlphaNumerics">
       {{ 'controllerProfiles.keyboard.captureNonAlphaNumerics' | transloco }}
     </mat-slide-toggle>
-    <span class="capture-non-alpha-numerics-hint"> ({{ 'controllerProfiles.keyboard.captureNonAlphaNumericsHint' | transloco }}) </span>
+    <span class="capture-non-alpha-numerics-hint">
+      ({{ 'controllerProfiles.keyboard.captureNonAlphaNumericsHint' | transloco }})
+    </span>
   </section>
 }

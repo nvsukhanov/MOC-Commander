@@ -52,9 +52,12 @@ export function localStorageSyncMetaReducer(reducer: ActionReducer<IState>): Act
     mergeReducer: (state: IState, rehydratedState: object, action: Action) => {
       if (action.type === INIT || action.type === UPDATE) {
         // TODO: find a better way to check if the state is hydrated
-        const isHydrated = (v: object): v is DeepPartial<IState> => !!rehydratedState && Object.keys(rehydratedState).length > 0;
+        const isHydrated = (v: object): v is DeepPartial<IState> =>
+          !!rehydratedState && Object.keys(rehydratedState).length > 0;
 
-        return isHydrated(rehydratedState) ? applyMigrations(state, rehydratedState, action) : defaultMergeReducer(state, {}, action);
+        return isHydrated(rehydratedState)
+          ? applyMigrations(state, rehydratedState, action)
+          : defaultMergeReducer(state, {}, action);
       }
       return state;
     },

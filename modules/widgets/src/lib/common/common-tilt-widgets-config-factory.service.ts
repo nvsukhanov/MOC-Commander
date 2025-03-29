@@ -27,7 +27,11 @@ export class CommonTiltWidgetsConfigFactoryService {
   ): Array<UnifiedTiltWidgetConfig & { widgetType: T }> {
     const result: Array<UnifiedTiltWidgetConfig & { widgetType: T }> = [];
     for (const io of attachedIos) {
-      if (existingWidgets.some((widget) => widget.widgetType === widgetType && widget.hubId === io.hubId && widget.portId === io.portId)) {
+      if (
+        existingWidgets.some(
+          (widget) => widget.widgetType === widgetType && widget.hubId === io.hubId && widget.portId === io.portId,
+        )
+      ) {
         continue;
       }
       const portInputModeIds = ioPortModes[attachedIoModesIdFn(io)]?.portInputModes ?? [];

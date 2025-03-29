@@ -35,7 +35,9 @@ import { HUB_VIEW_PAGE_SELECTORS, HubIoViewModel } from './hub-view-page.selecto
 export class HubViewPageComponent implements OnInit {
   public readonly selectedHub$ = this.store.select(HUB_VIEW_PAGE_SELECTORS.selectCurrentlyViewedHubModel);
 
-  public readonly selectedHubRuntimeData$ = this.store.select(HUB_VIEW_PAGE_SELECTORS.selectCurrentlyViewedHubRuntimeData);
+  public readonly selectedHubRuntimeData$ = this.store.select(
+    HUB_VIEW_PAGE_SELECTORS.selectCurrentlyViewedHubRuntimeData,
+  );
 
   public readonly ioFullInfoList$ = this.store.select(HUB_VIEW_PAGE_SELECTORS.selectCurrentlyViewedHubIoFullInfo);
 

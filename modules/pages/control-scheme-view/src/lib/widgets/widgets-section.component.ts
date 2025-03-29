@@ -8,7 +8,10 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { CONTROL_SCHEME_ACTIONS, WidgetConfigModel } from '@app/store';
 
 import { CONTROL_SCHEME_PAGE_SELECTORS } from '../control-scheme-page.selectors';
-import { CONTROL_SCHEME_WIDGET_CONFIG_FACTORY, IControlSchemeWidgetConfigFactory } from './i-control-scheme-widget-config-factory';
+import {
+  CONTROL_SCHEME_WIDGET_CONFIG_FACTORY,
+  IControlSchemeWidgetConfigFactory,
+} from './i-control-scheme-widget-config-factory';
 import { AddWidgetDialogComponent, AddWidgetDialogViewModel } from './add-widget-dialog';
 import { ControlSchemeWidgetsGridComponent } from './widgets-grid';
 import { EditWidgetSettingsDialogComponent } from './edit-widget-settings-dialog';
@@ -24,11 +27,15 @@ import { WIDGETS_SECTION_SELECTORS } from './widgets-section.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WidgetsSectionComponent implements OnDestroy {
-  public readonly isSchemeRunning = this.store.selectSignal(CONTROL_SCHEME_PAGE_SELECTORS.isCurrentControlSchemeRunning);
+  public readonly isSchemeRunning = this.store.selectSignal(
+    CONTROL_SCHEME_PAGE_SELECTORS.isCurrentControlSchemeRunning,
+  );
 
   public readonly canReorderWidgets = this.store.selectSignal(WIDGETS_SECTION_SELECTORS.canReorderWidgets);
 
-  public readonly canDeleteOrEditWidgets = this.store.selectSignal(CONTROL_SCHEME_PAGE_SELECTORS.canDeleteOrEditWidgets);
+  public readonly canDeleteOrEditWidgets = this.store.selectSignal(
+    CONTROL_SCHEME_PAGE_SELECTORS.canDeleteOrEditWidgets,
+  );
 
   public readonly widgets = computed(() => {
     const scheme = this.store.selectSignal(CONTROL_SCHEME_PAGE_SELECTORS.selectCurrentlyViewedScheme)();
@@ -43,7 +50,9 @@ export class WidgetsSectionComponent implements OnDestroy {
     if (!scheme) {
       return [];
     }
-    const addableWidgetData = this.store.selectSignal(WIDGETS_SECTION_SELECTORS.addableWidgetConfigFactoryBaseData(scheme.name))();
+    const addableWidgetData = this.store.selectSignal(
+      WIDGETS_SECTION_SELECTORS.addableWidgetConfigFactoryBaseData(scheme.name),
+    )();
     return this.widgetDefaultConfigFactory.createConfigs(
       addableWidgetData.ios,
       addableWidgetData.portModes,
@@ -73,12 +82,15 @@ export class WidgetsSectionComponent implements OnDestroy {
     }
     this.sub?.unsubscribe();
     this.sub = this.dialog
-      .open<AddWidgetDialogComponent, AddWidgetDialogViewModel, Omit<WidgetConfigModel, 'id'> | undefined>(AddWidgetDialogComponent, {
-        data: {
-          controlSchemeName: scheme.name,
-          addableWidgetConfigs: addableWidgetConfigs,
+      .open<AddWidgetDialogComponent, AddWidgetDialogViewModel, Omit<WidgetConfigModel, 'id'> | undefined>(
+        AddWidgetDialogComponent,
+        {
+          data: {
+            controlSchemeName: scheme.name,
+            addableWidgetConfigs: addableWidgetConfigs,
+          },
         },
-      })
+      )
       .afterClosed()
       .pipe(map((widgetConfig) => ({ schemeName: scheme.name, widgetConfig })))
       .subscribe(({ schemeName, widgetConfig }) => {
@@ -95,9 +107,12 @@ export class WidgetsSectionComponent implements OnDestroy {
     }
     this.sub?.unsubscribe();
     this.sub = this.dialog
-      .open<EditWidgetSettingsDialogComponent, WidgetConfigModel, WidgetConfigModel | undefined>(EditWidgetSettingsDialogComponent, {
-        data: this.widgets()[widgetIndex],
-      })
+      .open<EditWidgetSettingsDialogComponent, WidgetConfigModel, WidgetConfigModel | undefined>(
+        EditWidgetSettingsDialogComponent,
+        {
+          data: this.widgets()[widgetIndex],
+        },
+      )
       .afterClosed()
       .pipe(map((widgetConfig) => ({ schemeName: scheme.name, widgetConfig })))
       .subscribe(({ schemeName, widgetConfig }) => {

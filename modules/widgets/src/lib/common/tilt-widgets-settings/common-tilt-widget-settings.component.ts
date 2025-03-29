@@ -15,7 +15,14 @@ import { CommonTiltWidgetsFormBuilderService } from '../common-tilt-widgets-form
   selector: 'lib-pitch-sensor-widget-settings',
   templateUrl: './common-tilt-widget-settings.component.html',
   styleUrl: './common-tilt-widget-settings.component.scss',
-  imports: [MatFormFieldModule, MatInputModule, ReactiveFormsModule, TranslocoPipe, ValidationMessagesDirective, ToggleControlComponent],
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    TranslocoPipe,
+    ValidationMessagesDirective,
+    ToggleControlComponent,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommonTiltWidgetSettingsComponent implements OnDestroy {

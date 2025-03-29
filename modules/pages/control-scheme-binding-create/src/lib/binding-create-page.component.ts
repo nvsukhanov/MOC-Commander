@@ -17,7 +17,14 @@ import { BINDING_CREATE_PAGE_SELECTORS } from './binding-create-page.selectors';
   selector: 'page-control-scheme-binding-create',
   templateUrl: './binding-create-page.component.html',
   styleUrl: './binding-create-page.component.scss',
-  imports: [BindingEditComponent, MatButtonModule, HintComponent, TranslocoPipe, FeatureToolbarControlsDirective, AsyncPipe],
+  imports: [
+    BindingEditComponent,
+    MatButtonModule,
+    HintComponent,
+    TranslocoPipe,
+    FeatureToolbarControlsDirective,
+    AsyncPipe,
+  ],
   providers: [TitleService, BreadcrumbsService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -78,7 +85,11 @@ export class BindingCreatePageComponent implements OnInit, IUnsavedChangesCompon
     this.titleService.setTitle$(
       this.store
         .select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName)
-        .pipe(switchMap((controlSchemeName) => this.translocoService.selectTranslate('pageTitle.bindingCreateForScheme', { controlSchemeName }))),
+        .pipe(
+          switchMap((controlSchemeName) =>
+            this.translocoService.selectTranslate('pageTitle.bindingCreateForScheme', { controlSchemeName }),
+          ),
+        ),
     );
   }
 

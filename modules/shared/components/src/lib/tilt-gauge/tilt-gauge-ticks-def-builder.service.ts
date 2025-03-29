@@ -9,7 +9,8 @@ export class TiltGaugeTicksDefBuilderService {
   public buildCenterLines(options: TiltGaugeOptions): TiltGaugeTickLineDefinition[] {
     const leftBracketCenterAngle = -180 + options.chartRotation;
     const rightBracketCenterAngle = options.chartRotation;
-    const lineStartRadius = options.chartRadius - options.bracketWidth - options.bracketGaugePadding * 2 - options.gaugeStrokeWidth;
+    const lineStartRadius =
+      options.chartRadius - options.bracketWidth - options.bracketGaugePadding * 2 - options.gaugeStrokeWidth;
     const lineEndRadius = lineStartRadius - options.gaugeStrokeWidth;
 
     const leftBracketCenterLineStart = scalarMultiply(lineStartRadius, unitVectorFromAngle(leftBracketCenterAngle));

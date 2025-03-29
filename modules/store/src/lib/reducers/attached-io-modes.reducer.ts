@@ -7,9 +7,10 @@ import { ATTACHED_IO_MODES_ACTIONS } from '../actions';
 
 export type AttachedIoModesState = EntityState<AttachedIoModesModel>;
 
-export const ATTACHED_IO_MODES_ENTITY_ADAPTER: EntityAdapter<AttachedIoModesModel> = createEntityAdapter<AttachedIoModesModel>({
-  selectId: (mode) => mode.id,
-});
+export const ATTACHED_IO_MODES_ENTITY_ADAPTER: EntityAdapter<AttachedIoModesModel> =
+  createEntityAdapter<AttachedIoModesModel>({
+    selectId: (mode) => mode.id,
+  });
 
 export function attachedIoModesIdFn({
   hardwareRevision,

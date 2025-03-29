@@ -42,7 +42,9 @@ export class BindingControlSelectHubComponent implements OnChanges, OnDestroy {
     this.formUpdateSubscription?.unsubscribe();
 
     if (this.bindingType !== undefined) {
-      this._hubsWithConnectionState$ = this.store.select(BINDING_CONTROL_SELECT_HUB_SELECTORS.selectControllableHubs(this.bindingType));
+      this._hubsWithConnectionState$ = this.store.select(
+        BINDING_CONTROL_SELECT_HUB_SELECTORS.selectControllableHubs(this.bindingType),
+      );
     } else {
       this._hubsWithConnectionState$ = of([]);
     }
@@ -55,7 +57,9 @@ export class BindingControlSelectHubComponent implements OnChanges, OnDestroy {
           if (!this.control) {
             return false;
           }
-          return hubsWithConnectionStates.some((hubWithConnectionState) => hubWithConnectionState.hubId === this.control?.value);
+          return hubsWithConnectionStates.some(
+            (hubWithConnectionState) => hubWithConnectionState.hubId === this.control?.value,
+          );
         }),
       );
 

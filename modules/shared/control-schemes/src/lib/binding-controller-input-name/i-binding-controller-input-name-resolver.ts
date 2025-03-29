@@ -11,4 +11,6 @@ export interface IBindingControllerInputNameResolver {
   ): Observable<string>;
 }
 
-export const BINDING_CONTROLLER_INPUT_NAME_RESOLVER = new InjectionToken<IBindingControllerInputNameResolver>('BINDING_CONTROLLER_INPUT_NAME_RESOLVER');
+export const BINDING_CONTROLLER_INPUT_NAME_RESOLVER = new InjectionToken<IBindingControllerInputNameResolver>(
+  'BINDING_CONTROLLER_INPUT_NAME_RESOLVER',
+);

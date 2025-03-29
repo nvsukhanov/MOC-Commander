@@ -15,7 +15,9 @@ export interface IUnsavedChangesComponent {
   readonly hasUnsavedChanges: boolean | Observable<boolean>;
 }
 
-export function hasUnsavedChangesGuardFn(component: IUnsavedChangesComponent): Promise<boolean> | Observable<boolean> | boolean {
+export function hasUnsavedChangesGuardFn(
+  component: IUnsavedChangesComponent,
+): Promise<boolean> | Observable<boolean> | boolean {
   const dialog = inject(MatDialog);
   if (component.hasUnsavedChanges === true || component.hasUnsavedChanges === false) {
     return guard(component.hasUnsavedChanges, dialog);

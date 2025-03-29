@@ -2,9 +2,20 @@ import { createEffect } from '@ngrx/effects';
 import { Action, Store, createSelector } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { NEVER, Observable, distinctUntilChanged, map, mergeAll, mergeMap, startWith, switchMap } from 'rxjs';
-import { CONTROLLER_MAX_INPUT_VALUE, CONTROLLER_NULL_INPUT_VALUE, ControllerInputType, ControllerType, GREEN_BUTTON_INPUT_ID } from '@app/controller-profiles';
+import {
+  CONTROLLER_MAX_INPUT_VALUE,
+  CONTROLLER_NULL_INPUT_VALUE,
+  ControllerInputType,
+  ControllerType,
+  GREEN_BUTTON_INPUT_ID,
+} from '@app/controller-profiles';
 
-import { CONTROLLER_INPUT_SELECTORS, CONTROLLER_SETTINGS_SELECTORS, HUBS_SELECTORS, HUB_RUNTIME_DATA_SELECTORS } from '../../../selectors';
+import {
+  CONTROLLER_INPUT_SELECTORS,
+  CONTROLLER_SETTINGS_SELECTORS,
+  HUBS_SELECTORS,
+  HUB_RUNTIME_DATA_SELECTORS,
+} from '../../../selectors';
 import { controllerIdFn } from '../../../reducers';
 import { CONTROLLER_INPUT_ACTIONS } from '../../../actions';
 import { HubStorageService } from '../../../hub-storage.service';

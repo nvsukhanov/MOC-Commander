@@ -2,7 +2,11 @@
   <mat-label>
     {{ 'settings.useLinuxCompatibleBluetoothApi' | transloco }}
   </mat-label>
-  <mat-select [value]="useLinuxCompat" (valueChange)="onUseLinuxCompatChange($event)" [attr.aria-label]="'settings.useLinuxCompatibleBluetoothApi' | transloco">
+  <mat-select
+    [value]="useLinuxCompat"
+    (valueChange)="onUseLinuxCompatChange($event)"
+    [attr.aria-label]="'settings.useLinuxCompatibleBluetoothApi' | transloco"
+  >
     <mat-option [value]="true">
       {{ 'settings.useLinuxCompatibleBluetoothApiEnabled' | transloco }}
     </mat-option>

@@ -3,7 +3,9 @@
     {{ 'hub.port' | transloco: { portId: portId() | portIdToPortName } }}
   </div>
 
-  <div class="io-type" [class.io-type_not-connected]="!isIoConnected()" libEllipsisTitle>({{ ioType() | ioTypeToL10nKey | transloco }})</div>
+  <div class="io-type" [class.io-type_not-connected]="!isIoConnected()" libEllipsisTitle>
+    ({{ ioType() | ioTypeToL10nKey | transloco }})
+  </div>
 
   @if (!isIoConnected()) {
     <span class="cdk-visually-hidden">{{ 'io.ioIsNotConnectedInlineNotification' | transloco }}</span>

@@ -32,22 +32,35 @@
           [endControl]="axisSettingsViewModel.form.controls.activeZoneEnd"
           [step]="0.01"
         >
-          <span startLabel>{{ axisSettingsViewModel.form.controls.activeZoneStart.value | inputValuePercentHumanReadableValue }}</span>
-          <span endLabel>{{ axisSettingsViewModel.form.controls.activeZoneEnd.value | inputValuePercentHumanReadableValue }}</span>
+          <span startLabel>{{
+            axisSettingsViewModel.form.controls.activeZoneStart.value | inputValuePercentHumanReadableValue
+          }}</span>
+          <span endLabel>{{
+            axisSettingsViewModel.form.controls.activeZoneEnd.value | inputValuePercentHumanReadableValue
+          }}</span>
           <span description>{{ 'controller.activeZone' | transloco }}</span>
         </lib-range-control>
         <lib-slider-control [control]="axisSettingsViewModel.form.controls.activationThreshold" [step]="0.01">
           <span description>
             {{ 'controller.activationThreshold' | transloco }}
-            <mat-icon [fontIcon]="'info'" [matTooltip]="'controller.activationThresholdHint' | transloco" [inline]="true"></mat-icon>
+            <mat-icon
+              [fontIcon]="'info'"
+              [matTooltip]="'controller.activationThresholdHint' | transloco"
+              [inline]="true"
+            ></mat-icon>
           </span>
-          <span value>{{ axisSettingsViewModel.form.controls.activationThreshold.value | inputValuePercentHumanReadableValue }}</span>
+          <span value>{{
+            axisSettingsViewModel.form.controls.activationThreshold.value | inputValuePercentHumanReadableValue
+          }}</span>
         </lib-slider-control>
         <lib-toggle-control
           [translocoTitle]="'controller.ignoreInputControlTitle'"
           [control]="axisSettingsViewModel.form.controls.ignoreInput"
         ></lib-toggle-control>
-        <lib-toggle-control [translocoTitle]="'controller.invert'" [control]="axisSettingsViewModel.form.controls.invert"></lib-toggle-control>
+        <lib-toggle-control
+          [translocoTitle]="'controller.invert'"
+          [control]="axisSettingsViewModel.form.controls.invert"
+        ></lib-toggle-control>
       </div>
     </div>
   </div>

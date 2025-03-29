@@ -12,13 +12,25 @@ export type TaskExecutionData = {
 };
 
 export const PORT_TASKS_SELECTORS = {
-  selectEntities: createSelector(PORT_TASKS_FEATURE.selectPortTasksState, PORT_TASKS_ENTITY_ADAPTER.getSelectors().selectEntities),
+  selectEntities: createSelector(
+    PORT_TASKS_FEATURE.selectPortTasksState,
+    PORT_TASKS_ENTITY_ADAPTER.getSelectors().selectEntities,
+  ),
   selectLastExecutedTask: (q: { hubId: string; portId: number }) =>
-    createSelector(PORT_TASKS_SELECTORS.selectEntities, (entities) => entities[hubPortTasksIdFn(q)]?.lastExecutedTask ?? null),
+    createSelector(
+      PORT_TASKS_SELECTORS.selectEntities,
+      (entities) => entities[hubPortTasksIdFn(q)]?.lastExecutedTask ?? null,
+    ),
   selectRunningTask: (q: { hubId: string; portId: number }) =>
-    createSelector(PORT_TASKS_SELECTORS.selectEntities, (entities) => entities[hubPortTasksIdFn(q)]?.runningTask ?? null),
+    createSelector(
+      PORT_TASKS_SELECTORS.selectEntities,
+      (entities) => entities[hubPortTasksIdFn(q)]?.runningTask ?? null,
+    ),
   selectPendingTask: (q: { hubId: string; portId: number }) =>
-    createSelector(PORT_TASKS_SELECTORS.selectEntities, (entities) => entities[hubPortTasksIdFn(q)]?.pendingTask ?? null),
+    createSelector(
+      PORT_TASKS_SELECTORS.selectEntities,
+      (entities) => entities[hubPortTasksIdFn(q)]?.pendingTask ?? null,
+    ),
   selectTaskExecutionData: ({ hubId, portId }: { hubId: string; portId: number }) =>
     createSelector(
       ATTACHED_IO_PROPS_SELECTORS.selectById({ hubId, portId }),

@@ -16,7 +16,9 @@ describe('ControllerProfileXbox360Service', () => {
   });
 
   it('should identify XBox360 controller by vendor&product ids', () => {
-    expect(subject.controllerIdMatch('HID-compliant game controller (STANDARD GAMEPAD Vendor: 045e Product: 0b13)')).toBe(true);
+    expect(
+      subject.controllerIdMatch('HID-compliant game controller (STANDARD GAMEPAD Vendor: 045e Product: 0b13)'),
+    ).toBe(true);
   });
 
   it("should identify XBox360 controller by it's legacy id", () => {

@@ -1,5 +1,10 @@
 import { anything, instance, mock, when } from 'ts-mockito';
-import { ControllerType, GamepadProfile, GamepadProfileFactoryService, GamepadSettings } from '@app/controller-profiles';
+import {
+  ControllerType,
+  GamepadProfile,
+  GamepadProfileFactoryService,
+  GamepadSettings,
+} from '@app/controller-profiles';
 import { ControlSchemeBindingType, DeepPartial, WidgetType } from '@app/shared-misc';
 
 import { AppStoreVersion } from '../../app-store-version';
@@ -152,7 +157,9 @@ describe('v30 to v31 migration', () => {
           expect((inputConfig as any)['gain']).toBeUndefined();
           if ([ControlSchemeBindingType.Servo, ControlSchemeBindingType.Speed].includes(binding.bindingType)) {
             const originalGain = // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              (v30Store.controlSchemes?.entities?.[controlSchemeId]?.bindings[bindingIndex]?.['inputs'] as any)[inputAction]?.gain as OldInputGain;
+              (v30Store.controlSchemes?.entities?.[controlSchemeId]?.bindings[bindingIndex]?.['inputs'] as any)[
+                inputAction
+              ]?.gain as OldInputGain;
             switch (originalGain) {
               case OldInputGain.Exponential:
                 expect(inputConfig.inputPipes).toEqual([{ type: InputPipeType.ExponentialGain }]);

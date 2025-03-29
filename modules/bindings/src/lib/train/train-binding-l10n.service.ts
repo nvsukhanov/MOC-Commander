@@ -27,7 +27,10 @@ export class TrainBindingL10nService implements IBindingL10n<ControlSchemeBindin
     }
   }
 
-  public getControllerInputName(actionType: TrainBindingInputAction, inputConfig: ControlSchemeInputConfig): Observable<string> {
+  public getControllerInputName(
+    actionType: TrainBindingInputAction,
+    inputConfig: ControlSchemeInputConfig,
+  ): Observable<string> {
     switch (actionType) {
       case TrainBindingInputAction.NextSpeed:
       case TrainBindingInputAction.PrevSpeed:

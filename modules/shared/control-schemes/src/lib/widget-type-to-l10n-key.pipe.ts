@@ -9,7 +9,9 @@ import { IWidgetTypeToL10nKeyMapper, WIDGET_TYPE_TO_L10N_KEY_MAPPER } from './i-
   pure: true,
 })
 export class WidgetTypeToL10nKeyPipe implements PipeTransform {
-  constructor(@Inject(WIDGET_TYPE_TO_L10N_KEY_MAPPER) private readonly widgetTypeToL10nKeyMapper: IWidgetTypeToL10nKeyMapper) {}
+  constructor(
+    @Inject(WIDGET_TYPE_TO_L10N_KEY_MAPPER) private readonly widgetTypeToL10nKeyMapper: IWidgetTypeToL10nKeyMapper,
+  ) {}
 
   public transform(widgetType: WidgetType): string {
     return this.widgetTypeToL10nKeyMapper.map(widgetType);

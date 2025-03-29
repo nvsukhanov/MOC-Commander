@@ -3,7 +3,12 @@ import { IOType, PortModeName } from 'rxpoweredup';
 
 import { ATTACHED_IO_MODES_SELECTORS } from './attached-io-modes.selectors';
 import { ATTACHED_IO_SELECTORS } from './attached-ios.selectors';
-import { ATTACHED_IO_PORT_MODE_INFO_ENTITY_ADAPTER, ATTACHED_IO_PORT_MODE_INFO_FEATURE, attachedIoModesIdFn, attachedIoPortModeInfoIdFn } from '../reducers';
+import {
+  ATTACHED_IO_PORT_MODE_INFO_ENTITY_ADAPTER,
+  ATTACHED_IO_PORT_MODE_INFO_FEATURE,
+  attachedIoModesIdFn,
+  attachedIoPortModeInfoIdFn,
+} from '../reducers';
 import { HUB_RUNTIME_DATA_SELECTORS } from './hub-runtime-data.selectors';
 
 export const ATTACHED_IO_PORT_MODE_INFO_SELECTORS = {
@@ -16,7 +21,11 @@ export const ATTACHED_IO_PORT_MODE_INFO_SELECTORS = {
     ATTACHED_IO_PORT_MODE_INFO_ENTITY_ADAPTER.getSelectors().selectEntities,
   ),
   selectModeIdForIoAndPortModeName: (
-    { hardwareRevision, softwareRevision, ioType }: { hardwareRevision: string; softwareRevision: string; ioType: IOType },
+    {
+      hardwareRevision,
+      softwareRevision,
+      ioType,
+    }: { hardwareRevision: string; softwareRevision: string; ioType: IOType },
     portModeName: PortModeName,
   ) =>
     createSelector(
@@ -25,12 +34,23 @@ export const ATTACHED_IO_PORT_MODE_INFO_SELECTORS = {
       (ioPortModes, portModeInfo): number | null => {
         return (
           ioPortModes?.portInputModes.find((modeId) => {
-            return portModeInfo[attachedIoPortModeInfoIdFn({ hardwareRevision, softwareRevision, ioType, modeId })]?.name === portModeName;
+            return (
+              portModeInfo[attachedIoPortModeInfoIdFn({ hardwareRevision, softwareRevision, ioType, modeId })]?.name ===
+              portModeName
+            );
           }) ?? null
         );
       },
     ),
-  selectHubPortInputModeForPortModeName: ({ hubId, portId, portModeName }: { hubId: string; portId: number; portModeName: PortModeName }) =>
+  selectHubPortInputModeForPortModeName: ({
+    hubId,
+    portId,
+    portModeName,
+  }: {
+    hubId: string;
+    portId: number;
+    portModeName: PortModeName;
+  }) =>
     createSelector(
       ATTACHED_IO_SELECTORS.selectIoAtPort({ hubId, portId }),
       ATTACHED_IO_MODES_SELECTORS.selectEntities,
@@ -49,7 +69,15 @@ export const ATTACHED_IO_PORT_MODE_INFO_SELECTORS = {
         return null;
       },
     ),
-  selectHubPortOutputModeForPortModeName: ({ hubId, portId, portModeName }: { hubId: string; portId: number; portModeName: PortModeName }) =>
+  selectHubPortOutputModeForPortModeName: ({
+    hubId,
+    portId,
+    portModeName,
+  }: {
+    hubId: string;
+    portId: number;
+    portModeName: PortModeName;
+  }) =>
     createSelector(
       ATTACHED_IO_SELECTORS.selectIoAtPort({ hubId, portId }),
       ATTACHED_IO_MODES_SELECTORS.selectEntities,
@@ -68,7 +96,15 @@ export const ATTACHED_IO_PORT_MODE_INFO_SELECTORS = {
         return null;
       },
     ),
-  selectIsIoSupportInputMode: ({ hubId, portId, portModeName }: { hubId: string; portId: number; portModeName: PortModeName }) =>
+  selectIsIoSupportInputMode: ({
+    hubId,
+    portId,
+    portModeName,
+  }: {
+    hubId: string;
+    portId: number;
+    portModeName: PortModeName;
+  }) =>
     createSelector(
       HUB_RUNTIME_DATA_SELECTORS.selectIsHubConnected(hubId),
       ATTACHED_IO_SELECTORS.selectIoAtPort({ hubId, portId }),

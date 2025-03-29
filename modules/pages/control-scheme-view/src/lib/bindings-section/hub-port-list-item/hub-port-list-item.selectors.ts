@@ -19,44 +19,102 @@ export const HUB_PORT_LIST_ITEM_SELECTORS = {
       ATTACHED_IO_SELECTORS.selectIoAtPort({ hubId, portId }),
       (isHubConnected, io) => isHubConnected && !!io,
     ),
-  selectIoBindings: ({ controlSchemeName, hubId, portId }: { controlSchemeName: string; hubId: string; portId: number }) =>
+  selectIoBindings: ({
+    controlSchemeName,
+    hubId,
+    portId,
+  }: {
+    controlSchemeName: string;
+    hubId: string;
+    portId: number;
+  }) =>
     createSelector(CONTROL_SCHEME_SELECTORS.selectScheme(controlSchemeName), (scheme) => {
       if (!scheme) {
         return [];
       }
       return scheme.bindings.filter((binding) => binding.hubId === hubId && binding.portId === portId);
     }),
-  selectPortAccelerationProfileEnabled: ({ controlSchemeName, hubId, portId }: { controlSchemeName: string; hubId: string; portId: number }) =>
+  selectPortAccelerationProfileEnabled: ({
+    controlSchemeName,
+    hubId,
+    portId,
+  }: {
+    controlSchemeName: string;
+    hubId: string;
+    portId: number;
+  }) =>
     createSelector(CONTROL_SCHEME_SELECTORS.selectScheme(controlSchemeName), (scheme) => {
       if (!scheme) {
         return false;
       }
-      return scheme.bindings.some((binding) => binding.hubId === hubId && binding.portId === portId && isUsingAccelerationProfile(binding));
+      return scheme.bindings.some(
+        (binding) => binding.hubId === hubId && binding.portId === portId && isUsingAccelerationProfile(binding),
+      );
     }),
-  selectPortDecelerationProfileEnabled: ({ controlSchemeName, hubId, portId }: { controlSchemeName: string; hubId: string; portId: number }) =>
+  selectPortDecelerationProfileEnabled: ({
+    controlSchemeName,
+    hubId,
+    portId,
+  }: {
+    controlSchemeName: string;
+    hubId: string;
+    portId: number;
+  }) =>
     createSelector(CONTROL_SCHEME_SELECTORS.selectScheme(controlSchemeName), (scheme) => {
       if (!scheme) {
         return false;
       }
-      return scheme.bindings.some((binding) => binding.hubId === hubId && binding.portId === portId && isUsingDecelerationProfile(binding));
+      return scheme.bindings.some(
+        (binding) => binding.hubId === hubId && binding.portId === portId && isUsingDecelerationProfile(binding),
+      );
     }),
-  selectAccelerationTimeMs: ({ controlSchemeName, hubId, portId }: { controlSchemeName: string; hubId: string; portId: number }) =>
+  selectAccelerationTimeMs: ({
+    controlSchemeName,
+    hubId,
+    portId,
+  }: {
+    controlSchemeName: string;
+    hubId: string;
+    portId: number;
+  }) =>
     createSelector(CONTROL_SCHEME_SELECTORS.selectScheme(controlSchemeName), (scheme) => {
       if (!scheme) {
         return 0;
       }
-      return scheme.portConfigs.find((config) => config.hubId === hubId && config.portId === portId)?.accelerationTimeMs ?? 0;
+      return (
+        scheme.portConfigs.find((config) => config.hubId === hubId && config.portId === portId)?.accelerationTimeMs ?? 0
+      );
     }),
-  selectDecelerationTimeMs: ({ controlSchemeName, hubId, portId }: { controlSchemeName: string; hubId: string; portId: number }) =>
+  selectDecelerationTimeMs: ({
+    controlSchemeName,
+    hubId,
+    portId,
+  }: {
+    controlSchemeName: string;
+    hubId: string;
+    portId: number;
+  }) =>
     createSelector(CONTROL_SCHEME_SELECTORS.selectScheme(controlSchemeName), (scheme) => {
       if (!scheme) {
         return 0;
       }
-      return scheme.portConfigs.find((config) => config.hubId === hubId && config.portId === portId)?.decelerationTimeMs ?? 0;
+      return (
+        scheme.portConfigs.find((config) => config.hubId === hubId && config.portId === portId)?.decelerationTimeMs ?? 0
+      );
     }),
-  selectRunningTask: ({ hubId, portId }: { hubId: string; portId: number }) => PORT_TASKS_SELECTORS.selectRunningTask({ hubId, portId }),
-  selectLastExecutedTask: ({ hubId, portId }: { hubId: string; portId: number }) => PORT_TASKS_SELECTORS.selectLastExecutedTask({ hubId, portId }),
-  selectIoHasRequiredCapabilities: ({ controlSchemeName, hubId, portId }: { controlSchemeName: string; hubId: string; portId: number }) =>
+  selectRunningTask: ({ hubId, portId }: { hubId: string; portId: number }) =>
+    PORT_TASKS_SELECTORS.selectRunningTask({ hubId, portId }),
+  selectLastExecutedTask: ({ hubId, portId }: { hubId: string; portId: number }) =>
+    PORT_TASKS_SELECTORS.selectLastExecutedTask({ hubId, portId }),
+  selectIoHasRequiredCapabilities: ({
+    controlSchemeName,
+    hubId,
+    portId,
+  }: {
+    controlSchemeName: string;
+    hubId: string;
+    portId: number;
+  }) =>
     createSelector(
       CONTROL_SCHEME_SELECTORS.selectScheme(controlSchemeName),
       ATTACHED_IO_SELECTORS.selectIoAtPort({ hubId, portId }),

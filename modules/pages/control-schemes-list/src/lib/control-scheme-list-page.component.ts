@@ -81,12 +81,16 @@ export class ControlSchemeListPageComponent implements OnInit {
 
   public onImport(): void {
     this.dialog
-      .open<ImportControlSchemeDialogComponent, undefined, ControlSchemeModel | void>(ImportControlSchemeDialogComponent)
+      .open<ImportControlSchemeDialogComponent, undefined, ControlSchemeModel | void>(
+        ImportControlSchemeDialogComponent,
+      )
       .afterClosed()
       .pipe(
         take(1),
         filter((r): r is ControlSchemeModel => !!r),
-        concatLatestFrom((scheme: ControlSchemeModel) => this.store.select(CONTROL_SCHEME_SELECTORS.selectNextSchemeName(scheme.name))),
+        concatLatestFrom((scheme: ControlSchemeModel) =>
+          this.store.select(CONTROL_SCHEME_SELECTORS.selectNextSchemeName(scheme.name)),
+        ),
       )
       .subscribe(([importedScheme, newName]) => {
         const scheme = { ...importedScheme, name: newName };
@@ -96,11 +100,16 @@ export class ControlSchemeListPageComponent implements OnInit {
   }
 
   public onExport(name: string): void {
-    this.dialog.open<ExportControlSchemeDialogComponent, ExportControlSchemeDialogData>(ExportControlSchemeDialogComponent, { data: { name } });
+    this.dialog.open<ExportControlSchemeDialogComponent, ExportControlSchemeDialogData>(
+      ExportControlSchemeDialogComponent,
+      { data: { name } },
+    );
   }
 
   public onCreate(): void {
-    const dialogRef = this.dialog.open<ControlSchemeCreateDialogComponent, null, { name: string }>(ControlSchemeCreateDialogComponent);
+    const dialogRef = this.dialog.open<ControlSchemeCreateDialogComponent, null, { name: string }>(
+      ControlSchemeCreateDialogComponent,
+    );
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== undefined) {

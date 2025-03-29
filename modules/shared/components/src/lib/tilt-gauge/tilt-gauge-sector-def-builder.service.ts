@@ -29,7 +29,14 @@ export class TiltGaugeSectorDefBuilderService {
     return result;
   }
 
-  public createSectorDef(from: number, to: number, paddingAngle: number, width: number, radius: number, chartRotation: number): TiltGaugeSectorDefinition {
+  public createSectorDef(
+    from: number,
+    to: number,
+    paddingAngle: number,
+    width: number,
+    radius: number,
+    chartRotation: number,
+  ): TiltGaugeSectorDefinition {
     const cutoffStart = scalarMultiply(radius * 2, unitVectorFromAngle(from + paddingAngle + chartRotation));
     const cutoffMid = scalarMultiply(radius * 2, unitVectorFromAngle((from + to) / 2 + chartRotation));
     const cutoffEnd = scalarMultiply(radius * 2, unitVectorFromAngle(to - paddingAngle + chartRotation));

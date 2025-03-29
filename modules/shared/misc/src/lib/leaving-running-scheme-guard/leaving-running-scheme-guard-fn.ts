@@ -15,7 +15,9 @@ export interface ISchemeRunnerComponent {
   readonly isSchemeRunning: Signal<boolean>;
 }
 
-export function leavingRunningSchemeGuardFn(component: ISchemeRunnerComponent): Promise<boolean> | Observable<boolean> | boolean {
+export function leavingRunningSchemeGuardFn(
+  component: ISchemeRunnerComponent,
+): Promise<boolean> | Observable<boolean> | boolean {
   const dialog = inject(MatDialog);
   return of(component.isSchemeRunning()).pipe(
     switchMap((hasUnsavedChanges) => from(guard(hasUnsavedChanges, dialog))),

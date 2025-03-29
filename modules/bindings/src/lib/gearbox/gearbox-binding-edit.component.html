@@ -1,7 +1,13 @@
 @if (form) {
   <lib-cs-binding-edit-sections-container>
-    <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33" [caption]="'controlScheme.bindingSectionOutputTitle' | transloco">
-      <lib-cs-binding-control-select-hub [control]="form.controls.hubId" [bindingType]="bindingType"></lib-cs-binding-control-select-hub>
+    <lib-cs-binding-edit-section
+      [largeScreenWidthPercentage]="33"
+      [caption]="'controlScheme.bindingSectionOutputTitle' | transloco"
+    >
+      <lib-cs-binding-control-select-hub
+        [control]="form.controls.hubId"
+        [bindingType]="bindingType"
+      ></lib-cs-binding-control-select-hub>
 
       <lib-cs-binding-control-select-io
         [portIdControl]="form.controls.portId"
@@ -19,15 +25,27 @@
 
     <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
 
-    <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33" [caption]="'controlScheme.bindingSectionInputTitle' | transloco">
-      <lib-cs-binding-control-select-controller [data]="nextGearControlBindingComponentData"></lib-cs-binding-control-select-controller>
-      <lib-cs-binding-control-select-controller [data]="prevGearControlBindingComponentData"></lib-cs-binding-control-select-controller>
-      <lib-cs-binding-control-select-controller [data]="resetControlBindingComponentData"></lib-cs-binding-control-select-controller>
+    <lib-cs-binding-edit-section
+      [largeScreenWidthPercentage]="33"
+      [caption]="'controlScheme.bindingSectionInputTitle' | transloco"
+    >
+      <lib-cs-binding-control-select-controller
+        [data]="nextGearControlBindingComponentData"
+      ></lib-cs-binding-control-select-controller>
+      <lib-cs-binding-control-select-controller
+        [data]="prevGearControlBindingComponentData"
+      ></lib-cs-binding-control-select-controller>
+      <lib-cs-binding-control-select-controller
+        [data]="resetControlBindingComponentData"
+      ></lib-cs-binding-control-select-controller>
     </lib-cs-binding-edit-section>
 
     <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
 
-    <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33" [caption]="'controlScheme.bindingSectionConfigTitle' | transloco">
+    <lib-cs-binding-edit-section
+      [largeScreenWidthPercentage]="33"
+      [caption]="'controlScheme.bindingSectionConfigTitle' | transloco"
+    >
       <div class="add-level-button-container">
         <button class="add-level-button" mat-raised-button (click)="addNextAngleLevel()">
           {{ 'controlScheme.gearboxBinding.outputAngleLevelAdd' | transloco }}
@@ -37,7 +55,10 @@
       @for (angleControl of form.controls.angles.controls; track angleControl; let idx = $index) {
         <mat-form-field>
           <mat-label>
-            {{ 'controlScheme.gearboxBinding.angleLevel' | transloco: { level: form.controls.initialLevelIndex.value - idx } }}
+            {{
+              'controlScheme.gearboxBinding.angleLevel'
+                | transloco: { level: form.controls.initialLevelIndex.value - idx }
+            }}
           </mat-label>
           <input type="number" matInput [formControl]="angleControl" />
           <button
@@ -58,9 +79,16 @@
           >
             <mat-icon [fontIcon]="'settings_remote'"></mat-icon>
           </button>
-          <button mat-icon-button matSuffix [disabled]="form.controls.initialLevelIndex.value === idx" (click)="removeAngleLevel(idx)">
+          <button
+            mat-icon-button
+            matSuffix
+            [disabled]="form.controls.initialLevelIndex.value === idx"
+            (click)="removeAngleLevel(idx)"
+          >
             <mat-icon [fontIcon]="'delete'"></mat-icon>
-            <span class="cdk-visually-hidden">{{ 'controlScheme.gearboxBinding.outputAngleLevelRemove' | transloco }}</span>
+            <span class="cdk-visually-hidden">{{
+              'controlScheme.gearboxBinding.outputAngleLevelRemove' | transloco
+            }}</span>
           </button>
           <mat-error [libValidationMessages]="angleControl"></mat-error>
         </mat-form-field>
@@ -84,11 +112,19 @@
         [translocoTitle]="'controlScheme.outputEndStateControlTitle'"
       ></lib-cs-binding-control-output-end-state>
 
-      <lib-cs-binding-control-select-looping-mode [control]="form.controls.loopingMode"></lib-cs-binding-control-select-looping-mode>
+      <lib-cs-binding-control-select-looping-mode
+        [control]="form.controls.loopingMode"
+      ></lib-cs-binding-control-select-looping-mode>
 
-      <lib-toggle-control [translocoTitle]="'controlScheme.useAccelerationProfile'" [control]="form.controls.useAccelerationProfile"></lib-toggle-control>
+      <lib-toggle-control
+        [translocoTitle]="'controlScheme.useAccelerationProfile'"
+        [control]="form.controls.useAccelerationProfile"
+      ></lib-toggle-control>
 
-      <lib-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'" [control]="form.controls.useDecelerationProfile"></lib-toggle-control>
+      <lib-toggle-control
+        [translocoTitle]="'controlScheme.useDecelerationProfile'"
+        [control]="form.controls.useDecelerationProfile"
+      ></lib-toggle-control>
     </lib-cs-binding-edit-section>
   </lib-cs-binding-edit-sections-container>
 }

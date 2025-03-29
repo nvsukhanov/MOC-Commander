@@ -1,4 +1,10 @@
-<lib-widget [title]="title" [canBeEdited]="canBeEdited" [canBeDeleted]="canBeDeleted" (edit)="onEdit()" (delete)="onDelete()">
+<lib-widget
+  [title]="title"
+  [canBeEdited]="canBeEdited"
+  [canBeDeleted]="canBeDeleted"
+  (edit)="onEdit()"
+  (delete)="onDelete()"
+>
   <lib-tilt-gauge
     [tiltDegrees]="pitch"
     class="widget-gauge"

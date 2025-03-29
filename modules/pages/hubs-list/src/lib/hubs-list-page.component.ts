@@ -5,7 +5,13 @@ import { MatCardModule } from '@angular/material/card';
 import { Observable, of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
-import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService, HintComponent, HubInlineViewComponent } from '@app/shared-components';
+import {
+  BreadcrumbsService,
+  ConfirmationDialogModule,
+  ConfirmationDialogService,
+  HintComponent,
+  HubInlineViewComponent,
+} from '@app/shared-components';
 import { HUBS_ACTIONS } from '@app/store';
 
 import { HUBS_LIST_PAGE_SELECTORS, HubListViewModel } from './hubs-list-page.selectors';
@@ -20,7 +26,9 @@ import { HUBS_LIST_PAGE_SELECTORS, HubListViewModel } from './hubs-list-page.sel
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HubsListPageComponent implements OnInit {
-  public readonly hubsList$: Observable<HubListViewModel> = this.store.select(HUBS_LIST_PAGE_SELECTORS.selectHubListViewModel);
+  public readonly hubsList$: Observable<HubListViewModel> = this.store.select(
+    HUBS_LIST_PAGE_SELECTORS.selectHubListViewModel,
+  );
 
   constructor(
     private readonly store: Store,

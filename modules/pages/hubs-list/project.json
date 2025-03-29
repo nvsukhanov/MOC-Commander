@@ -17,7 +17,11 @@
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["modules/pages/hubs-list/**/*.ts", "modules/pages/hubs-list/**/*.html", "modules/pages/hubs-list/package.json"]
+        "lintFilePatterns": [
+          "modules/pages/hubs-list/**/*.ts",
+          "modules/pages/hubs-list/**/*.html",
+          "modules/pages/hubs-list/package.json"
+        ]
       }
     }
   }

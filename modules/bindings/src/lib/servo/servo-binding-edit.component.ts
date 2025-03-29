@@ -4,14 +4,30 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable, Subscription, combineLatestWith, map, mergeWith, of, startWith, switchMap, take } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  Subscription,
+  combineLatestWith,
+  map,
+  mergeWith,
+  of,
+  startWith,
+  switchMap,
+  take,
+} from 'rxjs';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { concatLatestFrom } from '@ngrx/operators';
 import { AsyncPipe } from '@angular/common';
-import { ControlSchemeBindingType, ValidationErrorsL10nMap, ValidationMessagesDirective, transformRelativeDegToAbsoluteDeg } from '@app/shared-misc';
+import {
+  ControlSchemeBindingType,
+  ValidationErrorsL10nMap,
+  ValidationMessagesDirective,
+  transformRelativeDegToAbsoluteDeg,
+} from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-components';
 import {
   ATTACHED_IO_PROPS_SELECTORS,
@@ -23,7 +39,11 @@ import {
   SHOW_NOTIFICATION_ACTIONS,
   ServoBindingInputAction,
 } from '@app/store';
-import { BindingControlSelectHubComponent, BindingControlSelectIoComponent, MotorPositionAdjustmentComponent } from '@app/shared-control-schemes';
+import {
+  BindingControlSelectHubComponent,
+  BindingControlSelectIoComponent,
+  MotorPositionAdjustmentComponent,
+} from '@app/shared-control-schemes';
 
 import { ServoCalibrationDialogComponent } from './servo-calibration-dialog';
 import {
@@ -88,9 +108,11 @@ export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<
 
   private _canRequestPortValue$: Observable<boolean> = of(false);
 
-  private _servoCwBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Servo> | null = null;
+  private _servoCwBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Servo> | null =
+    null;
 
-  private _servoCcwBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Servo> | null = null;
+  private _servoCcwBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Servo> | null =
+    null;
 
   constructor(
     private readonly cd: ChangeDetectorRef,
@@ -144,7 +166,9 @@ export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<
     this.portRequestSubscription = this.hubFacade
       .getMotorPosition(this._form.controls.hubId.value, this._form.controls.portId.value)
       .pipe(
-        concatLatestFrom(() => this.store.select(ATTACHED_IO_PROPS_SELECTORS.selectMotorEncoderOffset({ hubId, portId }))),
+        concatLatestFrom(() =>
+          this.store.select(ATTACHED_IO_PROPS_SELECTORS.selectMotorEncoderOffset({ hubId, portId })),
+        ),
         take(1),
       )
       .subscribe(([position, offset]) => {
@@ -161,7 +185,12 @@ export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<
   }
 
   public onServoRangeReadRequest(): void {
-    if (!this._form || this._form.controls.hubId.value === null || this._form.controls.portId.value === null || this._form.controls.aposCenter.value == null) {
+    if (
+      !this._form ||
+      this._form.controls.hubId.value === null ||
+      this._form.controls.portId.value === null ||
+      this._form.controls.aposCenter.value == null
+    ) {
       return;
     }
 
@@ -174,7 +203,10 @@ export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<
           return;
         }
         const arcLength = Math.abs(currentPosition - this.centerReadPositionResult) * 2;
-        const cappedArcLength = Math.min(this.formBuilder.servoMaxRange, Math.max(this.formBuilder.servoMinRange, arcLength));
+        const cappedArcLength = Math.min(
+          this.formBuilder.servoMaxRange,
+          Math.max(this.formBuilder.servoMinRange, arcLength),
+        );
         if (this._form && cappedArcLength !== this._form.controls.range.value) {
           this._form.controls.range.setValue(cappedArcLength);
           this._form.controls.range.markAsDirty();
@@ -240,7 +272,12 @@ export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<
         inputFormGroup: form.controls.inputs.controls[ServoBindingInputAction.Cw],
         inputAction: ServoBindingInputAction.Cw,
         inputName$: this.l10nService.getBindingInputName(ServoBindingInputAction.Cw),
-        supportedInputPipes: [InputPipeType.ExponentialGain, InputPipeType.LogarithmicGain, InputPipeType.OnOffToggle, InputPipeType.Pulse],
+        supportedInputPipes: [
+          InputPipeType.ExponentialGain,
+          InputPipeType.LogarithmicGain,
+          InputPipeType.OnOffToggle,
+          InputPipeType.Pulse,
+        ],
       };
 
       this._servoCcwBindingComponentData = {
@@ -248,7 +285,12 @@ export class ServoBindingEditComponent implements IBindingsDetailsEditComponent<
         inputFormGroup: form.controls.inputs.controls[ServoBindingInputAction.Ccw],
         inputAction: ServoBindingInputAction.Ccw,
         inputName$: this.l10nService.getBindingInputName(ServoBindingInputAction.Ccw),
-        supportedInputPipes: [InputPipeType.ExponentialGain, InputPipeType.LogarithmicGain, InputPipeType.OnOffToggle, InputPipeType.Pulse],
+        supportedInputPipes: [
+          InputPipeType.ExponentialGain,
+          InputPipeType.LogarithmicGain,
+          InputPipeType.OnOffToggle,
+          InputPipeType.Pulse,
+        ],
       };
 
       this.portRequestSubscription?.unsubscribe();

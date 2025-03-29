@@ -33,9 +33,18 @@ export class AccelerateBindingFormBuilderService implements IBindingFormBuilder<
           validators: this.createInputsValidators(),
         },
       ),
-      forwardsSpeedIncrement: this.commonFormControlBuilder.speedControl(this.appConfig.acceleration.defaultAccelerationStep, this.minSpeedIncrement),
-      backwardsSpeedIncrement: this.commonFormControlBuilder.speedControl(this.appConfig.acceleration.defaultAccelerationStep, this.minSpeedIncrement),
-      decelerateSpeedDecrement: this.commonFormControlBuilder.speedControl(this.appConfig.acceleration.defaultAccelerationStep, this.minSpeedIncrement),
+      forwardsSpeedIncrement: this.commonFormControlBuilder.speedControl(
+        this.appConfig.acceleration.defaultAccelerationStep,
+        this.minSpeedIncrement,
+      ),
+      backwardsSpeedIncrement: this.commonFormControlBuilder.speedControl(
+        this.appConfig.acceleration.defaultAccelerationStep,
+        this.minSpeedIncrement,
+      ),
+      decelerateSpeedDecrement: this.commonFormControlBuilder.speedControl(
+        this.appConfig.acceleration.defaultAccelerationStep,
+        this.minSpeedIncrement,
+      ),
       hubId: this.controlSchemeFormBuilder.hubIdControl(),
       portId: this.controlSchemeFormBuilder.portIdControl(),
       maxSpeed: this.commonFormControlBuilder.speedControl(),

@@ -1,6 +1,12 @@
 import { PortModeName } from 'rxpoweredup';
 import { Dictionary } from '@ngrx/entity';
-import { AttachedIoModel, AttachedIoModesModel, AttachedIoPortModeInfoModel, attachedIoModesIdFn, attachedIoPortModeInfoIdFn } from '@app/store';
+import {
+  AttachedIoModel,
+  AttachedIoModesModel,
+  AttachedIoPortModeInfoModel,
+  attachedIoModesIdFn,
+  attachedIoPortModeInfoIdFn,
+} from '@app/store';
 
 import { getMatchingBindingTypes } from './io-has-matching-mode-for-op-mode';
 

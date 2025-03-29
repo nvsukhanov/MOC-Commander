@@ -1,6 +1,11 @@
 import { createSelector } from '@ngrx/store';
 import { ControllerType } from '@app/controller-profiles';
-import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS, CONTROLLER_SETTINGS_SELECTORS, ControllerModel } from '@app/store';
+import {
+  CONTROLLER_CONNECTION_SELECTORS,
+  CONTROLLER_SELECTORS,
+  CONTROLLER_SETTINGS_SELECTORS,
+  ControllerModel,
+} from '@app/store';
 
 export type ControllerListViewModel = Array<
   {

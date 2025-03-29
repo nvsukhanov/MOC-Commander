@@ -12,7 +12,11 @@ import { AsyncPipe } from '@angular/common';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-components';
 import { HubMotorPositionFacadeService, SetAngleBindingInputAction } from '@app/store';
-import { BindingControlSelectHubComponent, BindingControlSelectIoComponent, MotorPositionAdjustmentComponent } from '@app/shared-control-schemes';
+import {
+  BindingControlSelectHubComponent,
+  BindingControlSelectIoComponent,
+  MotorPositionAdjustmentComponent,
+} from '@app/shared-control-schemes';
 
 import { IBindingsDetailsEditComponent } from '../i-bindings-details-edit-component';
 import {
@@ -65,7 +69,8 @@ export class SetAngleBindingEditComponent implements IBindingsDetailsEditCompone
 
   private _canSetPortValue$: Observable<boolean> = of(false);
 
-  private _setAngleControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.SetAngle> | null = null;
+  private _setAngleControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.SetAngle> | null =
+    null;
 
   private portRequestSubscription?: Subscription;
 
@@ -106,7 +111,10 @@ export class SetAngleBindingEditComponent implements IBindingsDetailsEditCompone
         supportedInputPipes: [],
       };
 
-      const hubAndPortChanges = form.controls.hubId.valueChanges.pipe(mergeWith(form.controls.portId.valueChanges), startWith(null));
+      const hubAndPortChanges = form.controls.hubId.valueChanges.pipe(
+        mergeWith(form.controls.portId.valueChanges),
+        startWith(null),
+      );
 
       this._canRequestPortValue$ = hubAndPortChanges.pipe(
         switchMap(() => {

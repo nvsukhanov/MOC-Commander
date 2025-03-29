@@ -72,7 +72,9 @@ export class ControllerViewPageComponent implements OnInit {
       filter((controllerId): controllerId is string => !!controllerId),
       switchMap((controllerId) => this.controllerProfilesFacadeService.getByControllerId(controllerId)),
       switchMap((controllerProfile) => controllerProfile.name$),
-      switchMap((controllerName) => this.translocoService.selectTranslate('pageTitle.controllerView', { controllerName })),
+      switchMap((controllerName) =>
+        this.translocoService.selectTranslate('pageTitle.controllerView', { controllerName }),
+      ),
     );
     this.titleService.setTitle$(title$);
   }

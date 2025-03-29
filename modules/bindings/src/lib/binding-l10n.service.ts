@@ -15,7 +15,9 @@ import { TrainBindingL10nService } from './train';
 import { AccelerateBindingL10nService } from './accelerate';
 
 @Injectable()
-export class BindingL10nService implements IBindingControllerInputNameResolver, IBindingInputNameResolver, IBindingTypeToL10nKeyMapper {
+export class BindingL10nService
+  implements IBindingControllerInputNameResolver, IBindingInputNameResolver, IBindingTypeToL10nKeyMapper
+{
   private readonly bindingL10nServices: { [k in ControlSchemeBindingType]: IBindingL10n<k> } = {
     [ControlSchemeBindingType.Gearbox]: this.gearboxBindingL10nService,
     [ControlSchemeBindingType.Servo]: this.servoBindingL10nService,
@@ -36,7 +38,10 @@ export class BindingL10nService implements IBindingControllerInputNameResolver, 
     private readonly accelerateBindingL10nService: AccelerateBindingL10nService,
   ) {}
 
-  public getBindingActionName<T extends ControlSchemeBinding>(binding: T, action: keyof T['inputs']): Observable<string> {
+  public getBindingActionName<T extends ControlSchemeBinding>(
+    binding: T,
+    action: keyof T['inputs'],
+  ): Observable<string> {
     const p = this.getL10nService(binding.bindingType);
     return p.getBindingInputName(action as keyof ControlSchemeBindingInputs, binding);
   }

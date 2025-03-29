@@ -1,5 +1,16 @@
 import { createEffect } from '@ngrx/effects';
-import { NEVER, Observable, animationFrames, distinctUntilChanged, interval, map, merge, share, startWith, switchMap } from 'rxjs';
+import {
+  NEVER,
+  Observable,
+  animationFrames,
+  distinctUntilChanged,
+  interval,
+  map,
+  merge,
+  share,
+  startWith,
+  switchMap,
+} from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { ControllerInputType, ControllerType, GamepadSettings, transformRawInputValue } from '@app/controller-profiles';
@@ -56,7 +67,9 @@ function createButtonChangesActions(
       result[buttonIndex] = NEVER;
       continue;
     }
-    const inputType = gamepadStoreModel.triggerButtonIndices.includes(buttonIndex) ? ControllerInputType.Trigger : ControllerInputType.Button;
+    const inputType = gamepadStoreModel.triggerButtonIndices.includes(buttonIndex)
+      ? ControllerInputType.Trigger
+      : ControllerInputType.Button;
     result[buttonIndex] = gamepadRead$.pipe(
       map((gamepad) => (gamepad?.buttons[buttonIndex]?.value ?? 0) + (settings.buttonConfigs[buttonIndex]?.trim ?? 0)),
       map((rawValue) => ({
@@ -124,7 +137,9 @@ function readGamepads(store: Store, navigator: Navigator): Observable<Action> {
 
 export const CAPTURE_GAMEPAD_INPUT = createEffect(
   (store: Store = inject(Store), window: Window = inject(WINDOW)) => {
-    return store.select(CONTROLLER_INPUT_SELECTORS.isCapturing).pipe(switchMap((isCapturing) => (isCapturing ? readGamepads(store, window.navigator) : NEVER)));
+    return store
+      .select(CONTROLLER_INPUT_SELECTORS.isCapturing)
+      .pipe(switchMap((isCapturing) => (isCapturing ? readGamepads(store, window.navigator) : NEVER)));
   },
   { functional: true },
 );

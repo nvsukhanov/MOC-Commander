@@ -23,10 +23,20 @@ export class GearboxBindingInputExtractorService implements ITasksInputExtractor
     controllersSettings$: Observable<Dictionary<ControllerSettingsModel>>,
   ): Observable<TaskInputs<ControlSchemeBindingType.Gearbox>> {
     const nextGear$ = this.inputExtractorService
-      .extractInputResult(binding, globalInput$, controllersSettings$, binding.inputs[GearboxBindingInputAction.NextGear])
+      .extractInputResult(
+        binding,
+        globalInput$,
+        controllersSettings$,
+        binding.inputs[GearboxBindingInputAction.NextGear],
+      )
       .pipe(distinctUntilIsActivatedChanged());
     const prevGear$ = this.inputExtractorService
-      .extractInputResult(binding, globalInput$, controllersSettings$, binding.inputs[GearboxBindingInputAction.PrevGear])
+      .extractInputResult(
+        binding,
+        globalInput$,
+        controllersSettings$,
+        binding.inputs[GearboxBindingInputAction.PrevGear],
+      )
       .pipe(distinctUntilIsActivatedChanged());
     const reset$ = this.inputExtractorService
       .extractInputResult(binding, globalInput$, controllersSettings$, binding.inputs[GearboxBindingInputAction.Reset])

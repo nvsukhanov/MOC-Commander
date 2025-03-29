@@ -57,9 +57,11 @@ export class HubAttachedIosStateEffects {
   ) {}
 
   private getModeIdForModeName(io: AttachedIoModel, portModeName: PortModeName): Observable<number | null> {
-    return this.store.select(ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectModeIdForIoAndPortModeName(io, portModeName)).pipe(
-      filter((modeId) => modeId !== null),
-      take(1),
-    );
+    return this.store
+      .select(ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectModeIdForIoAndPortModeName(io, portModeName))
+      .pipe(
+        filter((modeId) => modeId !== null),
+        take(1),
+      );
   }
 }

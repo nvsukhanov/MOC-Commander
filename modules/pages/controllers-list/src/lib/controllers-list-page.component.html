@@ -19,7 +19,9 @@
                   {{ controller | controllerName | async }}
 
                   @if (!controller.isConnected) {
-                    <span class="cdk-visually-hidden"> ({{ 'controller.isNotConnectedInlineNotification' | transloco }}) </span>
+                    <span class="cdk-visually-hidden">
+                      ({{ 'controller.isNotConnectedInlineNotification' | transloco }})
+                    </span>
                   }
                   @if (controller.isInputIgnored) {
                     <span class="cdk-visually-hidden"> ({{ 'controller.inputIsIgnored' | transloco }}) </span>
@@ -42,7 +44,9 @@
                     mat-button
                     [color]="'warn'"
                     (click)="forgetController(controller.id)"
-                    [attr.aria-label]="'controller.forgetButtonLabel' | transloco: { name: controller | controllerName | async }"
+                    [attr.aria-label]="
+                      'controller.forgetButtonLabel' | transloco: { name: controller | controllerName | async }
+                    "
                   >
                     {{ 'controller.forget' | transloco }}
                   </button>

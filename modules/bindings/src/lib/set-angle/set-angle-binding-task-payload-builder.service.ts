@@ -16,7 +16,9 @@ import { ITaskPayloadBuilder } from '../i-task-payload-factory';
 import { isDirectionalInputActivated } from '../common';
 
 @Injectable()
-export class SetAngleBindingTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.SetAngle> {
+export class SetAngleBindingTaskPayloadBuilderService
+  implements ITaskPayloadBuilder<ControlSchemeBindingType.SetAngle>
+{
   public buildPayload(
     binding: ControlSchemeSetAngleBinding,
     currentInput: TaskInputs<ControlSchemeBindingType.SetAngle>,

@@ -6,4 +6,6 @@ export interface IPortCommandTaskSummaryBuilder<TTaskType extends TaskType = Tas
   buildTaskSummary(portCommandTask: PortCommandTask<TTaskType>): Observable<string>;
 }
 
-export const PORT_COMMAND_TASK_SUMMARY_BUILDER = new InjectionToken<IPortCommandTaskSummaryBuilder>('IPortCommandTaskSummaryBuilder');
+export const PORT_COMMAND_TASK_SUMMARY_BUILDER = new InjectionToken<IPortCommandTaskSummaryBuilder>(
+  'IPortCommandTaskSummaryBuilder',
+);

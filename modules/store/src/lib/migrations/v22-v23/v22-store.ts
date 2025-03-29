@@ -20,7 +20,10 @@ export type V22ControllerSettings = EntityState<
       ignoreInput: boolean;
       controllerType: ControllerType.Gamepad;
       axisConfigs: {
-        [k in string]: Omit<V23GamepadAxisSettings, 'ignoreInput' | 'trim' | 'activationThreshold' | 'negativeValueCanActivate'>;
+        [k in string]: Omit<
+          V23GamepadAxisSettings,
+          'ignoreInput' | 'trim' | 'activationThreshold' | 'negativeValueCanActivate'
+        >;
       };
     }
 >;

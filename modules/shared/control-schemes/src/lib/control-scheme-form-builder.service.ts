@@ -19,11 +19,14 @@ export class ControlSchemeFormBuilderService {
     if (requireUniqueName) {
       asyncValidators.push(ControlSchemeValidators.nameUniqueness(this.store));
     }
-    return this.formBuilder.control<string>(this.translocoService.translate('controlScheme.newSchemeDialogDefaultName'), {
-      nonNullable: true,
-      validators: [AppValidators.requireNonEmptyString, AppValidators.requireNoLeadingOrTrailingSpaces],
-      asyncValidators,
-    });
+    return this.formBuilder.control<string>(
+      this.translocoService.translate('controlScheme.newSchemeDialogDefaultName'),
+      {
+        nonNullable: true,
+        validators: [AppValidators.requireNonEmptyString, AppValidators.requireNoLeadingOrTrailingSpaces],
+        asyncValidators,
+      },
+    );
   }
 
   public hubIdControl(): FormControl<string | null> {

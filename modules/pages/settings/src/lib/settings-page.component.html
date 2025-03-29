@@ -2,10 +2,16 @@
   <mat-card-content>
     <ul class="options__list">
       <li class="option__container">
-        <page-settings-theme-select [theme]="currentTheme()" (themeChange)="onThemeChange($event)"></page-settings-theme-select>
+        <page-settings-theme-select
+          [theme]="currentTheme()"
+          (themeChange)="onThemeChange($event)"
+        ></page-settings-theme-select>
       </li>
       <li class="option">
-        <page-settings-language-select [language]="currentLanguage()" (languageChange)="onLanguageChange($event)"></page-settings-language-select>
+        <page-settings-language-select
+          [language]="currentLanguage()"
+          (languageChange)="onLanguageChange($event)"
+        ></page-settings-language-select>
       </li>
       <li class="option">
         <page-settings-use-linux-compat-select

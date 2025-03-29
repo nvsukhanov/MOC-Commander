@@ -12,7 +12,15 @@ import { InputPipePresetToL10nKeyPipe } from './input-pipe-preset-to-l10n-key.pi
   selector: 'lib-cs-select-input-pipe-preset',
   templateUrl: './select-input-pipe-preset.component.html',
   styleUrl: './select-input-pipe-preset.component.scss',
-  imports: [MatSelect, MatOption, InputPipePresetToL10nKeyPipe, TranslocoPipe, MatLabel, MatFormField, ReactiveFormsModule],
+  imports: [
+    MatSelect,
+    MatOption,
+    InputPipePresetToL10nKeyPipe,
+    TranslocoPipe,
+    MatLabel,
+    MatFormField,
+    ReactiveFormsModule,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectInputPipePresetComponent {
@@ -95,7 +103,11 @@ export class SelectInputPipePresetComponent {
     const pulsePresets = [InputPipesPreset.Pulse1Hz, InputPipesPreset.Pulse2Hz, InputPipesPreset.Pulse5Hz];
     for (const pulsePreset of pulsePresets) {
       const pipeConfig = this.pipePresets[pulsePreset]()[0];
-      if (pipeConfig.type === InputPipeType.Pulse && pipeConfig.periodMs === periodMs && pipeConfig.dutyCycle === dutyCycle) {
+      if (
+        pipeConfig.type === InputPipeType.Pulse &&
+        pipeConfig.periodMs === periodMs &&
+        pipeConfig.dutyCycle === dutyCycle
+      ) {
         return pulsePreset;
       }
     }

@@ -1,6 +1,9 @@
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { WidgetType } from '@app/shared-misc';
-import { ControlSchemeWidgetSettingsDescriptor, IControlSchemeWidgetSettingsComponentFactory } from '@app/control-scheme-view';
+import {
+  ControlSchemeWidgetSettingsDescriptor,
+  IControlSchemeWidgetSettingsComponentFactory,
+} from '@app/control-scheme-view';
 import { WidgetConfigModel } from '@app/store';
 
 import { TemperatureWidgetSettingsComponentFactoryService } from './temperature';
@@ -26,7 +29,10 @@ export class WidgetSettingsComponentFactoryService implements IControlSchemeWidg
     }
   }
 
-  public createWidgetSettings(container: ViewContainerRef, config: WidgetConfigModel): ControlSchemeWidgetSettingsDescriptor {
+  public createWidgetSettings(
+    container: ViewContainerRef,
+    config: WidgetConfigModel,
+  ): ControlSchemeWidgetSettingsDescriptor {
     switch (config.widgetType) {
       case WidgetType.Temperature:
         return this.temperatureWidgetSettingsComponentFactoryService.createWidgetSettings(container, config);

@@ -117,7 +117,9 @@ export class V30ToV31MigrationService implements IMigration<V30Store, V31Store> 
       },
     };
     if (b.inputs[TrainBindingInputAction.PrevSpeed]) {
-      bindingResult.inputs[TrainBindingInputAction.PrevSpeed] = this.trimGain(b.inputs[TrainBindingInputAction.PrevSpeed]);
+      bindingResult.inputs[TrainBindingInputAction.PrevSpeed] = this.trimGain(
+        b.inputs[TrainBindingInputAction.PrevSpeed],
+      );
     }
     if (b.inputs[TrainBindingInputAction.Reset]) {
       bindingResult.inputs[TrainBindingInputAction.Reset] = this.trimGain(b.inputs[TrainBindingInputAction.Reset]);
@@ -157,7 +159,9 @@ export class V30ToV31MigrationService implements IMigration<V30Store, V31Store> 
       bindingResult.inputs[SpeedBindingInputAction.Brake] = this.migrateInput(b.inputs[SpeedBindingInputAction.Brake]);
     }
     if (b.inputs[SpeedBindingInputAction.Forwards]) {
-      bindingResult.inputs[SpeedBindingInputAction.Forwards] = this.migrateInput(b.inputs[SpeedBindingInputAction.Forwards]);
+      bindingResult.inputs[SpeedBindingInputAction.Forwards] = this.migrateInput(
+        b.inputs[SpeedBindingInputAction.Forwards],
+      );
     }
     return bindingResult;
   }

@@ -21,7 +21,13 @@
     <mat-icon [fontIcon]="'keyboard_arrow_left'"></mat-icon>
   </button>
 
-  <button mat-flat-button class="motor-control" [disabled]="!canGoToZero" (click)="onGoToZero()" [title]="'adjustMotorPosition.goToZero' | transloco">
+  <button
+    mat-flat-button
+    class="motor-control"
+    [disabled]="!canGoToZero"
+    (click)="onGoToZero()"
+    [title]="'adjustMotorPosition.goToZero' | transloco"
+  >
     <mat-icon [fontIcon]="'exposure_zero'"></mat-icon>
   </button>
 

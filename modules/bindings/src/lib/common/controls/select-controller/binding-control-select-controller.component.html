@@ -10,7 +10,14 @@
     @if (areSettingsVisible) {
       <button mat-icon-button matSuffix (click)="onShowSettings()">
         @if (arePipesConfigured) {
-          <mat-icon [fontIcon]="'settings'" matBadge="!" matBadgePosition="after" matBadgeColor="accent" matBadgeSize="small" aria-hidden="false"></mat-icon>
+          <mat-icon
+            [fontIcon]="'settings'"
+            matBadge="!"
+            matBadgePosition="after"
+            matBadgeColor="accent"
+            matBadgeSize="small"
+            aria-hidden="false"
+          ></mat-icon>
         } @else {
           <mat-icon [fontIcon]="'settings'"></mat-icon>
         }

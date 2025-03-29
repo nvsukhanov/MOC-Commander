@@ -28,8 +28,16 @@ export class CommonTiltWidgetsFormBuilderService {
     return this.buildCommonForm();
   }
 
-  public mapFormToTiltWidgetConfig(widgetType: WidgetType.Pitch | WidgetType.Yaw, form: CommonTiltWidgetsConfigForm): UnifiedTiltWidgetConfig | undefined {
-    if (form.controls.hubId.value === null || form.controls.portId.value === null || form.controls.modeId.value === null || form.invalid) {
+  public mapFormToTiltWidgetConfig(
+    widgetType: WidgetType.Pitch | WidgetType.Yaw,
+    form: CommonTiltWidgetsConfigForm,
+  ): UnifiedTiltWidgetConfig | undefined {
+    if (
+      form.controls.hubId.value === null ||
+      form.controls.portId.value === null ||
+      form.controls.modeId.value === null ||
+      form.invalid
+    ) {
       return undefined;
     }
     return {

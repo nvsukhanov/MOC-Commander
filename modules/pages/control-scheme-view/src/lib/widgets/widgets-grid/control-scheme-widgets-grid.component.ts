@@ -6,7 +6,10 @@ import { WidgetType } from '@app/shared-misc';
 import { WidgetConfigModel } from '@app/store';
 
 import { WidgetContainerComponent } from '../widget-container';
-import { CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY, IControlSchemeWidgetSettingsComponentFactory } from '../widget-settings-container';
+import {
+  CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY,
+  IControlSchemeWidgetSettingsComponentFactory,
+} from '../widget-settings-container';
 
 type WidgetsGridWidgetViewModel = {
   config: WidgetConfigModel;

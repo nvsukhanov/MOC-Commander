@@ -15,7 +15,9 @@ import { isTriggeredInputActivated, snapSpeed } from '../common';
 import { ITaskPayloadBuilder } from '../i-task-payload-factory';
 
 @Injectable()
-export class AccelerateBindingTaskPayloadBuilderService implements ITaskPayloadBuilder<ControlSchemeBindingType.Accelerate> {
+export class AccelerateBindingTaskPayloadBuilderService
+  implements ITaskPayloadBuilder<ControlSchemeBindingType.Accelerate>
+{
   public buildPayload(
     binding: ControlSchemeAccelerateBinding,
     currentInput: TaskInputs<ControlSchemeBindingType.Speed>,
@@ -23,9 +25,24 @@ export class AccelerateBindingTaskPayloadBuilderService implements ITaskPayloadB
     ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
     previousTask: PortCommandTask | null,
   ): { payload: SpeedTaskPayload; inputTimestamp: number } | null {
-    const forwardsInput = this.getActiveInput(binding, currentInput, previousInput, AccelerateBindingInputAction.Forwards);
-    const backwardsInput = this.getActiveInput(binding, currentInput, previousInput, AccelerateBindingInputAction.Backwards);
-    const brakeInput = this.getActiveInput(binding, currentInput, previousInput, AccelerateBindingInputAction.Decelerate);
+    const forwardsInput = this.getActiveInput(
+      binding,
+      currentInput,
+      previousInput,
+      AccelerateBindingInputAction.Forwards,
+    );
+    const backwardsInput = this.getActiveInput(
+      binding,
+      currentInput,
+      previousInput,
+      AccelerateBindingInputAction.Backwards,
+    );
+    const brakeInput = this.getActiveInput(
+      binding,
+      currentInput,
+      previousInput,
+      AccelerateBindingInputAction.Decelerate,
+    );
 
     const previousSpeed = previousTask?.payload.type === TaskType.Speed ? previousTask.payload.speed : 0;
 
@@ -112,7 +129,11 @@ export class AccelerateBindingTaskPayloadBuilderService implements ITaskPayloadB
     };
   }
 
-  private buildTaskPayload(nextSpeed: number, binding: ControlSchemeAccelerateBinding, previousTask: PortCommandTask | null): SpeedTaskPayload {
+  private buildTaskPayload(
+    nextSpeed: number,
+    binding: ControlSchemeAccelerateBinding,
+    previousTask: PortCommandTask | null,
+  ): SpeedTaskPayload {
     const speed = Math.abs(nextSpeed) > binding.maxSpeed ? binding.maxSpeed * Math.sign(nextSpeed) : nextSpeed;
     const previousBrakeFactor = previousTask?.payload.type === TaskType.Speed ? previousTask.payload.brakeFactor : 0;
 

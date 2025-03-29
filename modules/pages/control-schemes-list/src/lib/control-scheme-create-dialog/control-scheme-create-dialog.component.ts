@@ -15,7 +15,14 @@ import { CONTROL_SCHEME_SELECTORS } from '@app/store';
   selector: 'page-control-schemes-list-control-scheme-create-dialog',
   templateUrl: './control-scheme-create-dialog.component.html',
   styleUrl: './control-scheme-create-dialog.component.scss',
-  imports: [MatDialogModule, MatInputModule, ReactiveFormsModule, MatButtonModule, TranslocoPipe, ValidationMessagesDirective],
+  imports: [
+    MatDialogModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    TranslocoPipe,
+    ValidationMessagesDirective,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ControlSchemeCreateDialogComponent {

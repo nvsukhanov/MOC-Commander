@@ -3,7 +3,12 @@ import { ValueTransformers } from 'rxpoweredup';
 import { Injectable } from '@angular/core';
 import { Actions, ofType } from '@ngrx/effects';
 import { WidgetType } from '@app/shared-misc';
-import { CONTROL_SCHEME_ACTIONS, ControlSchemeWidgetsDataModel, HubStorageService, TemperatureWidgetConfigModel } from '@app/store';
+import {
+  CONTROL_SCHEME_ACTIONS,
+  ControlSchemeWidgetsDataModel,
+  HubStorageService,
+  TemperatureWidgetConfigModel,
+} from '@app/store';
 
 import { IWidgetReadTaskFactory } from '../i-widget-read-task-factory';
 
@@ -20,7 +25,14 @@ export class TemperatureWidgetReadTaskFactoryService implements IWidgetReadTaskF
   }> {
     const hub = this.hubStorage.get(config.hubId);
     return hub.ports.getPortValue(config.portId, config.modeId, ValueTransformers.temperature).pipe(
-      concatWith(hub.ports.portValueChanges(config.portId, config.modeId, config.valueChangeThreshold, ValueTransformers.temperature)),
+      concatWith(
+        hub.ports.portValueChanges(
+          config.portId,
+          config.modeId,
+          config.valueChangeThreshold,
+          ValueTransformers.temperature,
+        ),
+      ),
       takeUntil(this.actions.pipe(ofType(CONTROL_SCHEME_ACTIONS.schemeStopped))),
       map((temperature) => ({
         widgetId: config.id,

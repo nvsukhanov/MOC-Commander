@@ -11,7 +11,13 @@ import { Router, RouterLink } from '@angular/router';
 import { CONTROL_SCHEME_ACTIONS } from '@app/store';
 import { BreadcrumbsService, EllipsisTitleDirective, FeatureToolbarControlsDirective } from '@app/shared-components';
 import { CONTROL_SCHEME_NAME_IS_NOT_UNIQUE, ControlSchemeFormBuilderService } from '@app/shared-control-schemes';
-import { IUnsavedChangesComponent, RoutesBuilderService, TitleService, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
+import {
+  IUnsavedChangesComponent,
+  RoutesBuilderService,
+  TitleService,
+  ValidationErrorsL10nMap,
+  ValidationMessagesDirective,
+} from '@app/shared-misc';
 
 import { CURRENT_SCHEME_NAME } from './control-scheme-rename-page.selectors';
 
@@ -108,7 +114,9 @@ export class ControlSchemeRenamePageComponent implements IUnsavedChangesComponen
           },
         ]),
       );
-      this.titleService.setTitle$(this.translocoService.selectTranslate('pageTitle.controlSchemeRename', { previousName }));
+      this.titleService.setTitle$(
+        this.translocoService.selectTranslate('pageTitle.controlSchemeRename', { previousName }),
+      );
     }
   }
 }

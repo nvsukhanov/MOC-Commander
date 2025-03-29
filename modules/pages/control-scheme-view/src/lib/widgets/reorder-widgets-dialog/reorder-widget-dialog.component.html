@@ -10,11 +10,15 @@
           <li class="widgets-list-item">
             <button mat-icon-button class="reorder-button" [disabled]="first" (click)="onMoveUp(index)">
               <mat-icon [fontIcon]="'keyboard_arrow_up'" [inline]="true"></mat-icon>
-              <span class="cdk-visually-hidden"> {{ 'controlScheme.widgets.moveWidgetUp' | transloco }} {{ widget.title }} </span>
+              <span class="cdk-visually-hidden">
+                {{ 'controlScheme.widgets.moveWidgetUp' | transloco }} {{ widget.title }}
+              </span>
             </button>
             <button mat-icon-button class="reorder-button" [disabled]="last" (click)="onMoveDown(index)">
               <mat-icon [fontIcon]="'keyboard_arrow_down'" [inline]="true"></mat-icon>
-              <span class="cdk-visually-hidden"> {{ 'controlScheme.widgets.moveWidgetDown' | transloco }} {{ widget.title }} </span>
+              <span class="cdk-visually-hidden">
+                {{ 'controlScheme.widgets.moveWidgetDown' | transloco }} {{ widget.title }}
+              </span>
             </button>
             <div libEllipsisTitle>{{ widget.title }} ({{ widget | widgetConnectionInfoL10n | async }})</div>
           </li>

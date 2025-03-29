@@ -8,7 +8,11 @@ import { attachedIosIdFn } from '../../../reducers';
 import { ATTACHED_IO_PROPS_ACTIONS } from '../../../actions';
 import { ATTACHED_IO_PORT_MODE_INFO_SELECTORS } from '../../../selectors';
 
-export function createPreRunMotorPositionQueryTasks(scheme: ControlSchemeModel, hubStorage: HubStorageService, store: Store): Array<Observable<unknown>> {
+export function createPreRunMotorPositionQueryTasks(
+  scheme: ControlSchemeModel,
+  hubStorage: HubStorageService,
+  store: Store,
+): Array<Observable<unknown>> {
   const uniqueIosMap = new Map<string, { hubId: string; portId: number }>();
   scheme.bindings.forEach((binding) => {
     uniqueIosMap.set(attachedIosIdFn(binding), { hubId: binding.hubId, portId: binding.portId });

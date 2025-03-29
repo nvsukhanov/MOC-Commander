@@ -17,14 +17,18 @@ export function createWidgetReadTasks(
   for (const task of readerTasks) {
     const obs = new Observable((subscriber) => {
       let initialValueReceived = false;
-      task.pipe(takeUntil(actions.pipe(ofType(CONTROL_SCHEME_ACTIONS.stopScheme, CONTROL_SCHEME_ACTIONS.schemeStartFailed)))).subscribe((taskData) => {
-        if (!initialValueReceived) {
-          initialValueReceived = true;
-          subscriber.next(null);
-          subscriber.complete();
-        }
-        store.dispatch(CONTROL_SCHEME_WIDGETS_DATA_ACTIONS.updateWidgetData(taskData));
-      });
+      task
+        .pipe(
+          takeUntil(actions.pipe(ofType(CONTROL_SCHEME_ACTIONS.stopScheme, CONTROL_SCHEME_ACTIONS.schemeStartFailed))),
+        )
+        .subscribe((taskData) => {
+          if (!initialValueReceived) {
+            initialValueReceived = true;
+            subscriber.next(null);
+            subscriber.complete();
+          }
+          store.dispatch(CONTROL_SCHEME_WIDGETS_DATA_ACTIONS.updateWidgetData(taskData));
+        });
     });
 
     result.push(obs);

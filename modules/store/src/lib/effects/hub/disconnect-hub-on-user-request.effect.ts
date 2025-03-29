@@ -9,7 +9,11 @@ import { HUBS_SELECTORS } from '../../selectors';
 import { HubStorageService } from '../../hub-storage.service';
 
 export const DISCONNECT_HUB_ON_USER_REQUEST = createEffect(
-  (actions$: Actions = inject(Actions), hubStorage: HubStorageService = inject(HubStorageService), store: Store = inject(Store)) => {
+  (
+    actions$: Actions = inject(Actions),
+    hubStorage: HubStorageService = inject(HubStorageService),
+    store: Store = inject(Store),
+  ) => {
     return actions$.pipe(
       ofType(HUBS_ACTIONS.userRequestedHubDisconnection),
       concatLatestFrom((action) => store.select(HUBS_SELECTORS.selectHub(action.hubId))),

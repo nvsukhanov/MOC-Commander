@@ -15,7 +15,16 @@ import { WidgetConnectionInfoL10nPipe } from '../widget-connection-info-l10n.pip
   selector: 'page-control-scheme-view-reorder-widget-dialog',
   templateUrl: './reorder-widget-dialog.component.html',
   styleUrl: './reorder-widget-dialog.component.scss',
-  imports: [MatButtonModule, MatDialogModule, TranslocoPipe, MatListModule, WidgetConnectionInfoL10nPipe, AsyncPipe, EllipsisTitleDirective, MatIcon],
+  imports: [
+    MatButtonModule,
+    MatDialogModule,
+    TranslocoPipe,
+    MatListModule,
+    WidgetConnectionInfoL10nPipe,
+    AsyncPipe,
+    EllipsisTitleDirective,
+    MatIcon,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReorderWidgetDialogComponent {

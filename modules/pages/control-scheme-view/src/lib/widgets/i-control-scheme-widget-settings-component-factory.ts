@@ -10,11 +10,14 @@ export type ControlSchemeWidgetSettingsDescriptor = {
 };
 
 export interface IControlSchemeWidgetSettingsComponentFactory<T extends WidgetType = WidgetType> {
-  createWidgetSettings(container: ViewContainerRef, config: WidgetConfigModel & { widgetType: T }): ControlSchemeWidgetSettingsDescriptor;
+  createWidgetSettings(
+    container: ViewContainerRef,
+    config: WidgetConfigModel & { widgetType: T },
+  ): ControlSchemeWidgetSettingsDescriptor;
 
   hasSettings(widgetType: WidgetType): boolean;
 }
 
-export const CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY = new InjectionToken<IControlSchemeWidgetSettingsComponentFactory<WidgetType>>(
-  'CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY',
-);
+export const CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY = new InjectionToken<
+  IControlSchemeWidgetSettingsComponentFactory<WidgetType>
+>('CONTROL_SCHEME_WIDGET_SETTINGS_COMPONENT_FACTORY');

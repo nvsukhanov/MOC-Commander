@@ -7,9 +7,10 @@ import { HUB_PORT_MODE_INFO_ACTIONS } from '../actions';
 
 export type AttachedIoPortModeInfoState = EntityState<AttachedIoPortModeInfoModel>;
 
-export const ATTACHED_IO_PORT_MODE_INFO_ENTITY_ADAPTER: EntityAdapter<AttachedIoPortModeInfoModel> = createEntityAdapter<AttachedIoPortModeInfoModel>({
-  selectId: (mode) => mode.id,
-});
+export const ATTACHED_IO_PORT_MODE_INFO_ENTITY_ADAPTER: EntityAdapter<AttachedIoPortModeInfoModel> =
+  createEntityAdapter<AttachedIoPortModeInfoModel>({
+    selectId: (mode) => mode.id,
+  });
 
 export function attachedIoPortModeInfoIdFn({
   hardwareRevision,
@@ -33,7 +34,8 @@ export const ATTACHED_IO_PORT_MODE_INFO_FEATURE = createFeature({
     ATTACHED_IO_PORT_MODE_INFO_INITIAL_STATE,
     on(
       HUB_PORT_MODE_INFO_ACTIONS.addPortModeData,
-      (state, data): AttachedIoPortModeInfoState => ATTACHED_IO_PORT_MODE_INFO_ENTITY_ADAPTER.addMany(data.dataSets, state),
+      (state, data): AttachedIoPortModeInfoState =>
+        ATTACHED_IO_PORT_MODE_INFO_ENTITY_ADAPTER.addMany(data.dataSets, state),
     ),
   ),
 });

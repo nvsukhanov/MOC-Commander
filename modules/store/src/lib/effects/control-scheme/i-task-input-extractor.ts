@@ -3,7 +3,12 @@ import { Dictionary } from '@ngrx/entity';
 import { InjectionToken } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
-import { ControlSchemeBinding, ControlSchemeBindingInputs, ControllerInputModel, ControllerSettingsModel } from '../../models';
+import {
+  ControlSchemeBinding,
+  ControlSchemeBindingInputs,
+  ControllerInputModel,
+  ControllerSettingsModel,
+} from '../../models';
 
 export type TaskInput = {
   readonly value: number;

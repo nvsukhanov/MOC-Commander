@@ -32,7 +32,10 @@ export const HUBS_FEATURE = createFeature({
       return HUBS_ENTITY_ADAPTER.updateOne({ id: data.hubId, changes: { name: data.name } }, state);
     }),
     on(HUBS_ACTIONS.forgetHub, (state, { hubId }): IHubsState => HUBS_ENTITY_ADAPTER.removeOne(hubId, state)),
-    on(HUBS_ACTIONS.startDiscovery, (state): IHubsState => ({ ...state, discoveryState: HubDiscoveryState.Discovering })),
+    on(
+      HUBS_ACTIONS.startDiscovery,
+      (state): IHubsState => ({ ...state, discoveryState: HubDiscoveryState.Discovering }),
+    ),
     on(
       HUBS_ACTIONS.connected,
       HUBS_ACTIONS.deviceConnectFailed,

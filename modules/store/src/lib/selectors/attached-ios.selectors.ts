@@ -4,12 +4,19 @@ import { ATTACHED_IOS_ENTITY_ADAPTER, ATTACHED_IOS_FEATURE, attachedIosIdFn } fr
 
 const ATTACHED_IOS_ADAPTER_SELECTORS = ATTACHED_IOS_ENTITY_ADAPTER.getSelectors();
 
-const SELECT_ALL = createSelector(ATTACHED_IOS_FEATURE.selectAttachedIosState, ATTACHED_IOS_ADAPTER_SELECTORS.selectAll);
+const SELECT_ALL = createSelector(
+  ATTACHED_IOS_FEATURE.selectAttachedIosState,
+  ATTACHED_IOS_ADAPTER_SELECTORS.selectAll,
+);
 
-const SELECT_ENTITIES = createSelector(ATTACHED_IOS_FEATURE.selectAttachedIosState, ATTACHED_IOS_ADAPTER_SELECTORS.selectEntities);
+const SELECT_ENTITIES = createSelector(
+  ATTACHED_IOS_FEATURE.selectAttachedIosState,
+  ATTACHED_IOS_ADAPTER_SELECTORS.selectEntities,
+);
 
 export const ATTACHED_IO_SELECTORS = {
   selectAll: SELECT_ALL,
   selectEntities: SELECT_ENTITIES,
-  selectIoAtPort: (data: { hubId: string; portId: number }) => createSelector(ATTACHED_IO_SELECTORS.selectEntities, (ios) => ios[attachedIosIdFn(data)]),
+  selectIoAtPort: (data: { hubId: string; portId: number }) =>
+    createSelector(ATTACHED_IO_SELECTORS.selectEntities, (ios) => ios[attachedIosIdFn(data)]),
 } as const;

@@ -10,7 +10,13 @@ import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { AsyncPipe } from '@angular/common';
-import { IUnsavedChangesComponent, RoutesBuilderService, TitleService, ValidationErrorsL10nMap, ValidationMessagesDirective } from '@app/shared-misc';
+import {
+  IUnsavedChangesComponent,
+  RoutesBuilderService,
+  TitleService,
+  ValidationErrorsL10nMap,
+  ValidationMessagesDirective,
+} from '@app/shared-misc';
 import { BreadcrumbsService, FeatureToolbarControlsDirective, HintComponent } from '@app/shared-components';
 import { HUBS_ACTIONS, HubModel, ROUTER_SELECTORS } from '@app/store';
 
@@ -123,7 +129,9 @@ export class HubEditPageComponent implements OnInit, OnDestroy, IUnsavedChangesC
     );
     const title$ = this.editedHubConfiguration$.pipe(
       filter((hubModel): hubModel is HubModel => !!hubModel),
-      switchMap((hubModel) => this.translocoService.selectTranslate('pageTitle.hubEditWithHubName', { hubName: hubModel.name })),
+      switchMap((hubModel) =>
+        this.translocoService.selectTranslate('pageTitle.hubEditWithHubName', { hubName: hubModel.name }),
+      ),
     );
     this.titleService.setTitle$(title$);
   }

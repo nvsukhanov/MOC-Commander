@@ -7,7 +7,11 @@
 <div class="bindings-container" [class.bindings-container_running]="isSchemeRunning()">
   @if (controlSchemeName(); as schemeName) {
     @for (hubId of hubIds(); track hubId) {
-      <page-control-scheme-view-hub-list-item class="hub-bindings" [hubId]="hubId" [controlSchemeName]="schemeName"></page-control-scheme-view-hub-list-item>
+      <page-control-scheme-view-hub-list-item
+        class="hub-bindings"
+        [hubId]="hubId"
+        [controlSchemeName]="schemeName"
+      ></page-control-scheme-view-hub-list-item>
     }
   }
 

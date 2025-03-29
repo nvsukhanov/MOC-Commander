@@ -3,7 +3,9 @@
     <mat-label>{{ 'controlScheme.bindingOutputSectionPortLabel' | transloco }}</mat-label>
     <mat-select [formControl]="portIdControl">
       @for (io of availableIos$ | async; track trackIo) {
-        <mat-option [value]="io.portId"> {{ io.portId | portIdToPortName }} ({{ io.ioType | ioTypeToL10nKey | transloco }}) </mat-option>
+        <mat-option [value]="io.portId">
+          {{ io.portId | portIdToPortName }} ({{ io.ioType | ioTypeToL10nKey | transloco }})
+        </mat-option>
       }
       @if ((isSelectedIoAttached$ | async) === false) {
         <mat-option [value]="portIdControl.value">

@@ -2,14 +2,19 @@
   <div class="binding__info-container" [class.binding__info-container_small-screen]="isSmallScreen$ | async">
     <div class="binding__general-info">
       <a class="binding__operation-type" [routerLink]="bindingEditPath()">
-        <span class="cdk-visually-hidden"> {{ hubName() }}, {{ 'hub.port' | transloco: { portId: unwrappedBinding.portId | portIdToPortName } }}, </span>
+        <span class="cdk-visually-hidden">
+          {{ hubName() }}, {{ 'hub.port' | transloco: { portId: unwrappedBinding.portId | portIdToPortName } }},
+        </span>
         {{ unwrappedBinding.bindingType | bindingTypeToL10nKey | transloco }}
       </a>
     </div>
 
     <div class="binding__controls">
       @for (action of bindingActions(); track action) {
-        <page-control-scheme-view-binding-action-list-item [binding]="unwrappedBinding" [action]="action"></page-control-scheme-view-binding-action-list-item>
+        <page-control-scheme-view-binding-action-list-item
+          [binding]="unwrappedBinding"
+          [action]="action"
+        ></page-control-scheme-view-binding-action-list-item>
       }
     </div>
   </div>

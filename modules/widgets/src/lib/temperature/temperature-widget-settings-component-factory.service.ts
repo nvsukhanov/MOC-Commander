@@ -6,7 +6,10 @@ import { TemperatureSensorWidgetSettingsComponent } from './settings';
 
 @Injectable()
 export class TemperatureWidgetSettingsComponentFactoryService {
-  public createWidgetSettings(container: ViewContainerRef, config: TemperatureWidgetConfigModel): ControlSchemeWidgetSettingsDescriptor {
+  public createWidgetSettings(
+    container: ViewContainerRef,
+    config: TemperatureWidgetConfigModel,
+  ): ControlSchemeWidgetSettingsDescriptor {
     const componentRef = container.createComponent(TemperatureSensorWidgetSettingsComponent);
     componentRef.setInput('config', config);
     return {

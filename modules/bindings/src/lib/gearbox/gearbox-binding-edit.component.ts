@@ -12,7 +12,11 @@ import { AsyncPipe } from '@angular/common';
 import { ControlSchemeBindingType, ValidationMessagesDirective } from '@app/shared-misc';
 import { HideOnSmallScreenDirective, ToggleControlComponent } from '@app/shared-components';
 import { GearboxBindingInputAction, HubMotorPositionFacadeService, InputPipeType } from '@app/store';
-import { BindingControlSelectHubComponent, BindingControlSelectIoComponent, MotorPositionAdjustmentComponent } from '@app/shared-control-schemes';
+import {
+  BindingControlSelectHubComponent,
+  BindingControlSelectIoComponent,
+  MotorPositionAdjustmentComponent,
+} from '@app/shared-control-schemes';
 
 import {
   BINDING_EDIT_COMMON_SELECTORS,
@@ -68,11 +72,14 @@ export class GearboxBindingEditComponent implements IBindingsDetailsEditComponen
 
   private _canRequestPortValue$: Observable<boolean> = of(false);
 
-  private _nextGearControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Gearbox> | null = null;
+  private _nextGearControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Gearbox> | null =
+    null;
 
-  private _prevGearControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Gearbox> | null = null;
+  private _prevGearControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Gearbox> | null =
+    null;
 
-  private _resetControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Gearbox> | null = null;
+  private _resetControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Gearbox> | null =
+    null;
 
   private portRequestSubscription?: Subscription;
 

@@ -1,4 +1,11 @@
-<lib-widget [title]="title" [subTitle]="subtitle" [canBeEdited]="canBeEdited" [canBeDeleted]="canBeDeleted" (edit)="onEdit()" (delete)="onDelete()">
+<lib-widget
+  [title]="title"
+  [subTitle]="subtitle"
+  [canBeEdited]="canBeEdited"
+  [canBeDeleted]="canBeDeleted"
+  (edit)="onEdit()"
+  (delete)="onDelete()"
+>
   @if (data !== undefined) {
     <span class="temperature-value">
       {{ 'controlScheme.widgets.temperature.value' | transloco: { temperature: (data | number: '1.1-1') } }}

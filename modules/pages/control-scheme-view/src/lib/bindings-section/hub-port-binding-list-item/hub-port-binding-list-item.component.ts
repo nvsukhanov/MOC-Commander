@@ -16,7 +16,14 @@ import { BindingActionListItemComponent } from '../binding-action-list-item';
   selector: 'page-control-scheme-view-hub-port-binding-list-item',
   templateUrl: './hub-port-binding-list-item.component.html',
   styleUrl: './hub-port-binding-list-item.component.scss',
-  imports: [AsyncPipe, BindingTypeToL10nKeyPipe, TranslocoPipe, RouterLink, BindingActionListItemComponent, PortIdToPortNamePipe],
+  imports: [
+    AsyncPipe,
+    BindingTypeToL10nKeyPipe,
+    TranslocoPipe,
+    RouterLink,
+    BindingActionListItemComponent,
+    PortIdToPortNamePipe,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HubPortBindingListItemComponent {

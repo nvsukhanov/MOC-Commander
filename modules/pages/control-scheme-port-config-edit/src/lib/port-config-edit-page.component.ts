@@ -8,8 +8,19 @@ import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
-import { IUnsavedChangesComponent, RoutesBuilderService, TitleService, ValidationMessagesDirective } from '@app/shared-misc';
-import { BreadcrumbsService, FeatureToolbarControlsDirective, HintComponent, PortIdToPortNamePipe, PortIdToPortNameService } from '@app/shared-components';
+import {
+  IUnsavedChangesComponent,
+  RoutesBuilderService,
+  TitleService,
+  ValidationMessagesDirective,
+} from '@app/shared-misc';
+import {
+  BreadcrumbsService,
+  FeatureToolbarControlsDirective,
+  HintComponent,
+  PortIdToPortNamePipe,
+  PortIdToPortNameService,
+} from '@app/shared-components';
 import { CONTROL_SCHEME_ACTIONS } from '@app/store';
 import { PortConfigFormBuilderService } from '@app/shared-control-schemes';
 
@@ -37,7 +48,9 @@ import { PortConfigEditViewModel } from './port-config-edit-view-model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PortConfigEditPageComponent implements OnInit, OnDestroy, IUnsavedChangesComponent {
-  public readonly portConfig$: Observable<PortConfigEditViewModel | null> = this.store.select(PORT_CONFIG_EDIT_PAGE_SELECTORS.selectPortConfig);
+  public readonly portConfig$: Observable<PortConfigEditViewModel | null> = this.store.select(
+    PORT_CONFIG_EDIT_PAGE_SELECTORS.selectPortConfig,
+  );
 
   public readonly minAccDecProfileTimeMs = PortConfigFormBuilderService.minAccDecProfileTimeMs;
 
@@ -74,7 +87,11 @@ export class PortConfigEditPageComponent implements OnInit, OnDestroy, IUnsavedC
           },
           {
             label$: this.translocoService.selectTranslate('pageTitle.controlSchemePortEdit'),
-            route: this.routesBuilderService.portConfigEdit(portConfig.controlSchemeName, portConfig.hubId, portConfig.portId),
+            route: this.routesBuilderService.portConfigEdit(
+              portConfig.controlSchemeName,
+              portConfig.hubId,
+              portConfig.portId,
+            ),
           },
         ]),
       ),

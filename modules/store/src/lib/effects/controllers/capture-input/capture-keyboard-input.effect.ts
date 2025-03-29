@@ -6,7 +6,11 @@ import { concatLatestFrom } from '@ngrx/operators';
 import { ControllerInputType, ControllerType } from '@app/controller-profiles';
 import { WINDOW } from '@app/shared-misc';
 
-import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_INPUT_SELECTORS, CONTROLLER_SETTINGS_SELECTORS } from '../../../selectors';
+import {
+  CONTROLLER_CONNECTION_SELECTORS,
+  CONTROLLER_INPUT_SELECTORS,
+  CONTROLLER_SETTINGS_SELECTORS,
+} from '../../../selectors';
 import { CONTROLLER_INPUT_ACTIONS } from '../../../actions';
 import { controllerInputIdFn } from '../../../reducers';
 import { KeyboardSettingsModel } from '../../../models';
@@ -68,7 +72,9 @@ export const CAPTURE_KEYBOARD_INPUT = createEffect(
   (store: Store = inject(Store), window: Window = inject(WINDOW)) => {
     return store.select(CONTROLLER_INPUT_SELECTORS.isKeyboardBeingCaptured).pipe(
       concatLatestFrom(() => store.select(CONTROLLER_CONNECTION_SELECTORS.selectKeyboardConnection)),
-      switchMap(([isCapturing, connection]) => (isCapturing && connection ? readKeyboard(store, window, connection.controllerId) : NEVER)),
+      switchMap(([isCapturing, connection]) =>
+        isCapturing && connection ? readKeyboard(store, window, connection.controllerId) : NEVER,
+      ),
     ) as Observable<Action>;
   },
   { functional: true },

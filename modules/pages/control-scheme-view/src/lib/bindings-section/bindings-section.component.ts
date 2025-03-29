@@ -33,7 +33,9 @@ export class BindingsSectionComponent {
     return controlScheme ? this.routeBuilderService.bindingCreate(controlScheme.name) : [];
   });
 
-  public readonly isSchemeRunning = this.store.selectSignal(CONTROL_SCHEME_PAGE_SELECTORS.isCurrentControlSchemeRunning);
+  public readonly isSchemeRunning = this.store.selectSignal(
+    CONTROL_SCHEME_PAGE_SELECTORS.isCurrentControlSchemeRunning,
+  );
 
   constructor(
     private readonly store: Store,

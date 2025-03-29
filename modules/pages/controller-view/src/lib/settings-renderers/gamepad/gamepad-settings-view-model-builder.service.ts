@@ -2,10 +2,26 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, animationFrameScheduler, filter, map, startWith, switchMap, throttleTime } from 'rxjs';
 import deepEqual from 'deep-equal';
-import { ControllerInputType, GamepadProfileFactoryService, GamepadSettings, IControllerProfile } from '@app/controller-profiles';
-import { CONTROLLER_INPUT_SELECTORS, CONTROLLER_SELECTORS, ControllerModel, GamepadSettingsModel, controllerInputIdFn } from '@app/store';
+import {
+  ControllerInputType,
+  GamepadProfileFactoryService,
+  GamepadSettings,
+  IControllerProfile,
+} from '@app/controller-profiles';
+import {
+  CONTROLLER_INPUT_SELECTORS,
+  CONTROLLER_SELECTORS,
+  ControllerModel,
+  GamepadSettingsModel,
+  controllerInputIdFn,
+} from '@app/store';
 
-import { GamepadSettingsAxisSettingsViewModel, GamepadSettingsButtonSettingsViewModel, GamepadSettingsForm, GamepadSettingsViewModel } from './types';
+import {
+  GamepadSettingsAxisSettingsViewModel,
+  GamepadSettingsButtonSettingsViewModel,
+  GamepadSettingsForm,
+  GamepadSettingsViewModel,
+} from './types';
 
 @Injectable()
 export class GamepadSettingsViewModelBuilderService {
@@ -50,7 +66,10 @@ export class GamepadSettingsViewModelBuilderService {
         startWith(null),
         switchMap(() => profile$),
         map((profile) => {
-          return deepEqual(profile.getDefaultSettings().axisConfigs[axisId], form.controls.axisConfigs.controls[axisId].getRawValue());
+          return deepEqual(
+            profile.getDefaultSettings().axisConfigs[axisId],
+            form.controls.axisConfigs.controls[axisId].getRawValue(),
+          );
         }),
       );
 
@@ -91,18 +110,27 @@ export class GamepadSettingsViewModelBuilderService {
         }),
       );
 
-      const rawValue$ = controllerId$.pipe(switchMap((controllerId) => this.store.select(CONTROLLER_INPUT_SELECTORS.selectRawValueById(controllerId))));
+      const rawValue$ = controllerId$.pipe(
+        switchMap((controllerId) => this.store.select(CONTROLLER_INPUT_SELECTORS.selectRawValueById(controllerId))),
+      );
 
-      const outputValue$ = controllerId$.pipe(switchMap((controllerId) => this.store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(controllerId))));
+      const outputValue$ = controllerId$.pipe(
+        switchMap((controllerId) => this.store.select(CONTROLLER_INPUT_SELECTORS.selectValueById(controllerId))),
+      );
 
-      const isActivated$ = controllerId$.pipe(switchMap((controllerId) => this.store.select(CONTROLLER_INPUT_SELECTORS.selectIsActivatedById(controllerId))));
+      const isActivated$ = controllerId$.pipe(
+        switchMap((controllerId) => this.store.select(CONTROLLER_INPUT_SELECTORS.selectIsActivatedById(controllerId))),
+      );
 
       const areSettingsDefault$ = form.controls.buttonConfigs.controls[buttonId].valueChanges.pipe(
         throttleTime(50, animationFrameScheduler, { trailing: true }),
         startWith(null),
         switchMap(() => profile$),
         map((profile) => {
-          return deepEqual(profile.getDefaultSettings().buttonConfigs[buttonId], form.controls.buttonConfigs.controls[buttonId].getRawValue());
+          return deepEqual(
+            profile.getDefaultSettings().buttonConfigs[buttonId],
+            form.controls.buttonConfigs.controls[buttonId].getRawValue(),
+          );
         }),
       );
 

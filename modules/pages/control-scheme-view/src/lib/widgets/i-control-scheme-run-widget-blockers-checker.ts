@@ -14,4 +14,6 @@ export interface IControlSchemeRunWidgetBlockersChecker<TConfig extends WidgetCo
   ): SchemeRunBlocker[];
 }
 
-export const CONTROL_SCHEME_RUN_WIDGET_BLOCKERS_CHECKER = new InjectionToken<IControlSchemeRunWidgetBlockersChecker>('CONTROL_SCHEME_RUN_BLOCKERS_CHECKER');
+export const CONTROL_SCHEME_RUN_WIDGET_BLOCKERS_CHECKER = new InjectionToken<IControlSchemeRunWidgetBlockersChecker>(
+  'CONTROL_SCHEME_RUN_BLOCKERS_CHECKER',
+);

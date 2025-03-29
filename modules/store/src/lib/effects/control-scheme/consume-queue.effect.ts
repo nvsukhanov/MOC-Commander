@@ -11,7 +11,11 @@ import { PortCommandTask } from '../../models';
 export const CONSUME_QUEUE_EFFECT = createEffect(
   (actions: Actions = inject(Actions), store: Store = inject(Store)) => {
     return actions.pipe(
-      ofType(PORT_TASKS_ACTIONS.setPendingTask, PORT_TASKS_ACTIONS.taskExecuted, PORT_TASKS_ACTIONS.taskExecutionFailed),
+      ofType(
+        PORT_TASKS_ACTIONS.setPendingTask,
+        PORT_TASKS_ACTIONS.taskExecuted,
+        PORT_TASKS_ACTIONS.taskExecutionFailed,
+      ),
       map((action) => {
         switch (action.type) {
           case PORT_TASKS_ACTIONS.setPendingTask.type:
@@ -23,7 +27,9 @@ export const CONSUME_QUEUE_EFFECT = createEffect(
       }),
       concatLatestFrom(({ hubId, portId }) => store.select(PORT_TASKS_SELECTORS.selectRunningTask({ hubId, portId }))),
       filter(([, runningTask]) => !runningTask),
-      concatLatestFrom(([{ hubId, portId }]) => store.select(PORT_TASKS_SELECTORS.selectPendingTask({ hubId, portId }))),
+      concatLatestFrom(([{ hubId, portId }]) =>
+        store.select(PORT_TASKS_SELECTORS.selectPendingTask({ hubId, portId })),
+      ),
       map(([, task]) => task),
       filter((task): task is PortCommandTask => !!task),
       map((task) => PORT_TASKS_ACTIONS.runTask({ task: task })),

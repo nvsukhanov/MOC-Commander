@@ -4,7 +4,10 @@ import { ControlSchemeBinding } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { IBindingDetailsEditFormRenderer } from './i-binding-details-edit-form-renderer';
-import { BINDING_DETAILS_EDIT_FORM_RENDERER_FACTORY, IBindingDetailsEditFormRendererFactory } from './i-binding-details-edit-form-renderer-factory';
+import {
+  BINDING_DETAILS_EDIT_FORM_RENDERER_FACTORY,
+  IBindingDetailsEditFormRendererFactory,
+} from './i-binding-details-edit-form-renderer-factory';
 
 @Directive({
   standalone: true,

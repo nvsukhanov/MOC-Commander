@@ -19,14 +19,17 @@ export const CONTROL_SCHEME_WIDGET_DATA_FEATURE = createFeature({
       CONTROL_SCHEME_ACTIONS.schemeStartFailed,
       (): ControlSchemeWidgetsDataState => ({ widgetsData: {} }),
     ),
-    on(CONTROL_SCHEME_WIDGETS_DATA_ACTIONS.updateWidgetData, (state, { widgetId, data }): ControlSchemeWidgetsDataState => {
-      return {
-        ...state,
-        widgetsData: {
-          ...state.widgetsData,
-          [widgetId]: data,
-        },
-      };
-    }),
+    on(
+      CONTROL_SCHEME_WIDGETS_DATA_ACTIONS.updateWidgetData,
+      (state, { widgetId, data }): ControlSchemeWidgetsDataState => {
+        return {
+          ...state,
+          widgetsData: {
+            ...state.widgetsData,
+            [widgetId]: data,
+          },
+        };
+      },
+    ),
   ),
 });

@@ -14,6 +14,9 @@ export class TiltGaugeSectorHighlightPipe implements PipeTransform {
       return false;
     }
 
-    return isAngleInSector(tiltDegrees, gaugeSector.from, gaugeSector.to) || isAngleInSector(tiltDegrees + 180, gaugeSector.from, gaugeSector.to);
+    return (
+      isAngleInSector(tiltDegrees, gaugeSector.from, gaugeSector.to) ||
+      isAngleInSector(tiltDegrees + 180, gaugeSector.from, gaugeSector.to)
+    );
   }
 }

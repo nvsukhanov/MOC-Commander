@@ -7,7 +7,12 @@ import { Router } from '@angular/router';
 import { concatLatestFrom } from '@ngrx/operators';
 import { AsyncPipe } from '@angular/common';
 import { IUnsavedChangesComponent, RoutesBuilderService, TitleService } from '@app/shared-misc';
-import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService, FeatureToolbarControlsDirective } from '@app/shared-components';
+import {
+  BreadcrumbsService,
+  ConfirmationDialogModule,
+  ConfirmationDialogService,
+  FeatureToolbarControlsDirective,
+} from '@app/shared-components';
 import { CONTROL_SCHEME_ACTIONS, ControlSchemeBinding, ROUTER_SELECTORS } from '@app/store';
 import { BindingEditComponent } from '@app/shared-control-schemes';
 
@@ -18,7 +23,14 @@ import { BINDING_EDIT_PAGE_SELECTORS } from './binding-edit-page.selectors';
   selector: 'page-control-scheme-binding-edit',
   templateUrl: './binding-edit-page.component.html',
   styleUrl: './binding-edit-page.component.scss',
-  imports: [BindingEditComponent, MatButtonModule, TranslocoPipe, FeatureToolbarControlsDirective, ConfirmationDialogModule, AsyncPipe],
+  imports: [
+    BindingEditComponent,
+    MatButtonModule,
+    TranslocoPipe,
+    FeatureToolbarControlsDirective,
+    ConfirmationDialogModule,
+    AsyncPipe,
+  ],
   providers: [TitleService, BreadcrumbsService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -73,7 +85,11 @@ export class BindingEditPageComponent implements OnInit, IUnsavedChangesComponen
     this.titleService.setTitle$(
       this.store
         .select(ROUTER_SELECTORS.selectCurrentlyEditedSchemeName)
-        .pipe(switchMap((controlSchemeName) => this.translocoService.selectTranslate('pageTitle.bindingEditForScheme', { controlSchemeName }))),
+        .pipe(
+          switchMap((controlSchemeName) =>
+            this.translocoService.selectTranslate('pageTitle.bindingEditForScheme', { controlSchemeName }),
+          ),
+        ),
     );
   }
 
@@ -128,7 +144,9 @@ export class BindingEditPageComponent implements OnInit, IUnsavedChangesComponen
     this.confirmationDialogService
       .confirm(this.translocoService.selectTranslate('controlScheme.deleteBindingConfirmationTitle'), {
         content$: this.translocoService.selectTranslate('controlScheme.deleteBindingConfirmationContent'),
-        confirmTitle$: this.translocoService.selectTranslate('controlScheme.deleteBindingConfirmationConfirmButtonTitle'),
+        confirmTitle$: this.translocoService.selectTranslate(
+          'controlScheme.deleteBindingConfirmationConfirmButtonTitle',
+        ),
         cancelTitle$: this.translocoService.selectTranslate('controlScheme.deleteBindingConfirmationCancelButtonTitle'),
       })
       .pipe(

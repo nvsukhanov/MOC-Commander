@@ -3,7 +3,12 @@ import { Action, Store, createSelector } from '@ngrx/store';
 import { inject } from '@angular/core';
 import { NEVER, Observable, from, map, mergeMap, pairwise, startWith, switchMap } from 'rxjs';
 import { PortModeName } from 'rxpoweredup';
-import { CONTROLLER_MAX_INPUT_VALUE, CONTROLLER_NULL_INPUT_VALUE, ControllerInputType, ControllerType } from '@app/controller-profiles';
+import {
+  CONTROLLER_MAX_INPUT_VALUE,
+  CONTROLLER_NULL_INPUT_VALUE,
+  ControllerInputType,
+  ControllerType,
+} from '@app/controller-profiles';
 
 import {
   ATTACHED_IO_MODES_SELECTORS,
@@ -39,7 +44,14 @@ const SELECT_ATTACHED_IOS_BUTTON_GROUPS_SELECTOR = createSelector(
   CONTROLLER_SELECTORS.selectEntities,
   CONTROLLER_CONNECTION_SELECTORS.selectAll,
   CONTROLLER_SETTINGS_SELECTORS.selectEntities,
-  (attachedIOModeInfos, attachedIOModes, attachedIOs, controllers, controllerConnections, settings): ListenablePortModeData[] => {
+  (
+    attachedIOModeInfos,
+    attachedIOModes,
+    attachedIOs,
+    controllers,
+    controllerConnections,
+    settings,
+  ): ListenablePortModeData[] => {
     const hubControllerConnections = controllerConnections.filter((c) => c.controllerType === ControllerType.Hub);
 
     const portModeResult: Map<string, ListenablePortModeData> = new Map();
@@ -130,7 +142,9 @@ function readButtonGroups(store: Store, hubStorage: HubStorageService): Observab
 
 export const CAPTURE_HUB_BUTTON_GROUPS_INPUT = createEffect(
   (store: Store = inject(Store), hubStorage: HubStorageService = inject(HubStorageService)) => {
-    return store.select(CONTROLLER_INPUT_SELECTORS.isCapturing).pipe(switchMap((isCapturing) => (isCapturing ? readButtonGroups(store, hubStorage) : NEVER)));
+    return store
+      .select(CONTROLLER_INPUT_SELECTORS.isCapturing)
+      .pipe(switchMap((isCapturing) => (isCapturing ? readButtonGroups(store, hubStorage) : NEVER)));
   },
   { functional: true },
 );

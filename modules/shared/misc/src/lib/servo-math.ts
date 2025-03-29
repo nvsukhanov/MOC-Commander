@@ -30,7 +30,13 @@ export function getTranslationArcs(sourcePOS: number, targetPOS: number): { cw: 
     return { cw: 0, ccw: 0 };
   }
   return {
-    cw: normalizedSourcePOS < normalizedTargetPOS ? normalizedTargetPOS - normalizedSourcePOS : 360 - normalizedSourcePOS + normalizedTargetPOS,
-    ccw: normalizedSourcePOS < normalizedTargetPOS ? 360 - normalizedTargetPOS + normalizedSourcePOS : normalizedSourcePOS - normalizedTargetPOS,
+    cw:
+      normalizedSourcePOS < normalizedTargetPOS
+        ? normalizedTargetPOS - normalizedSourcePOS
+        : 360 - normalizedSourcePOS + normalizedTargetPOS,
+    ccw:
+      normalizedSourcePOS < normalizedTargetPOS
+        ? 360 - normalizedTargetPOS + normalizedSourcePOS
+        : normalizedSourcePOS - normalizedTargetPOS,
   };
 }

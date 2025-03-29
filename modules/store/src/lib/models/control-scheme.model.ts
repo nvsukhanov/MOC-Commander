@@ -53,7 +53,11 @@ export type InputPipePulseConfig = {
   dutyCycle: number; // 0.25 = 25%
 };
 
-export type InputPipeConfig = InputPipeLogarithmicGain | InputPipeExponentialGain | InputPipeOnOffToggleConfig | InputPipePulseConfig;
+export type InputPipeConfig =
+  | InputPipeLogarithmicGain
+  | InputPipeExponentialGain
+  | InputPipeOnOffToggleConfig
+  | InputPipePulseConfig;
 
 export type ControlSchemeInputConfig = {
   controllerId: string;
@@ -232,7 +236,8 @@ export type ControlSchemeBinding =
   | ControlSchemeGearboxBinding
   | ControlSchemeAccelerateBinding;
 
-export type ControlSchemeBindingInputs<T extends ControlSchemeBindingType = ControlSchemeBindingType> = (ControlSchemeBinding & { bindingType: T })['inputs'];
+export type ControlSchemeBindingInputs<T extends ControlSchemeBindingType = ControlSchemeBindingType> =
+  (ControlSchemeBinding & { bindingType: T })['inputs'];
 
 export type BaseWidgetConfigModel = {
   id: number;
@@ -284,7 +289,12 @@ export type TemperatureWidgetConfigModel = {
   valueChangeThreshold: number;
 } & BaseWidgetConfigModel;
 
-export type WidgetConfigModel = VoltageWidgetConfigModel | TemperatureWidgetConfigModel | PitchWidgetConfigModel | YawWidgetConfigModel | RollWidgetConfigModel;
+export type WidgetConfigModel =
+  | VoltageWidgetConfigModel
+  | TemperatureWidgetConfigModel
+  | PitchWidgetConfigModel
+  | YawWidgetConfigModel
+  | RollWidgetConfigModel;
 
 export type ControlSchemeModel = {
   name: string;

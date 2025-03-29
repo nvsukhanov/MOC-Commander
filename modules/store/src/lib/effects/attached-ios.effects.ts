@@ -43,7 +43,9 @@ export class AttachedIOsEffects {
           .ports.onIoDetach()
           .pipe(
             takeUntil(this.hubStorage.get(action.hubId).disconnected),
-            map((ioDetachEvent) => ATTACHED_IOS_ACTIONS.ioDisconnected({ hubId: action.hubId, portId: ioDetachEvent.portId })),
+            map((ioDetachEvent) =>
+              ATTACHED_IOS_ACTIONS.ioDisconnected({ hubId: action.hubId, portId: ioDetachEvent.portId }),
+            ),
           );
       }),
     );

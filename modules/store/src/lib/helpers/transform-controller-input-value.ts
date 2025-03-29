@@ -2,7 +2,10 @@ import { ControllerInputType, ControllerType, transformRawInputValue } from '@ap
 
 import { ControllerInputModel, ControllerSettingsModel } from '../models';
 
-export function transformControllerInputValue(inputModel: ControllerInputModel, settings: ControllerSettingsModel): number {
+export function transformControllerInputValue(
+  inputModel: ControllerInputModel,
+  settings: ControllerSettingsModel,
+): number {
   if (settings.ignoreInput) {
     return 0;
   }

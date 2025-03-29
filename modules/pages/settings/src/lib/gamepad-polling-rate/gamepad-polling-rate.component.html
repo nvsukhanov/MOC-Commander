@@ -2,7 +2,11 @@
   <mat-label>
     {{ 'settings.gamepadPollRate' | transloco }}
   </mat-label>
-  <mat-select [value]="gamepadPollingRate()" (valueChange)="onGamepadPollingRateChange($event)" [attr.aria-label]="'settings.gamepadPollRate' | transloco">
+  <mat-select
+    [value]="gamepadPollingRate()"
+    (valueChange)="onGamepadPollingRateChange($event)"
+    [attr.aria-label]="'settings.gamepadPollRate' | transloco"
+  >
     <mat-option [value]="lowPollingRate">
       {{ 'settings.gamepadPollRateLow' | transloco }}
     </mat-option>

@@ -11,15 +11,18 @@ import { areControllableIosPresent } from '@app/shared-control-schemes';
 import { CONTROL_SCHEME_PAGE_SELECTORS } from '../control-scheme-page.selectors';
 
 export const BINDING_LIST_SELECTORS = {
-  selectSchemeHubsIds: createSelector(CONTROL_SCHEME_PAGE_SELECTORS.selectCurrentlyViewedScheme, (scheme: ControlSchemeModel | undefined): string[] => {
-    const hubIds = new Set<string>();
-    if (scheme) {
-      for (const binding of scheme.bindings) {
-        hubIds.add(binding.hubId);
+  selectSchemeHubsIds: createSelector(
+    CONTROL_SCHEME_PAGE_SELECTORS.selectCurrentlyViewedScheme,
+    (scheme: ControlSchemeModel | undefined): string[] => {
+      const hubIds = new Set<string>();
+      if (scheme) {
+        for (const binding of scheme.bindings) {
+          hubIds.add(binding.hubId);
+        }
       }
-    }
-    return [...hubIds];
-  }),
+      return [...hubIds];
+    },
+  ),
   canAddBinding: createSelector(
     ATTACHED_IO_SELECTORS.selectAll,
     ATTACHED_IO_MODES_SELECTORS.selectEntities,

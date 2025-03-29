@@ -14,7 +14,9 @@ import {
 import { InputExtractorService, distinctUntilIsActivatedChanged } from '../common';
 
 @Injectable()
-export class AccelerateBindingInputExtractorService implements ITasksInputExtractor<ControlSchemeBindingType.Accelerate> {
+export class AccelerateBindingInputExtractorService
+  implements ITasksInputExtractor<ControlSchemeBindingType.Accelerate>
+{
   constructor(private readonly inputExtractorService: InputExtractorService) {}
 
   public extractInputs(
@@ -23,13 +25,28 @@ export class AccelerateBindingInputExtractorService implements ITasksInputExtrac
     controllersSettings$: Observable<Dictionary<ControllerSettingsModel>>,
   ): Observable<TaskInputs<ControlSchemeBindingType.Accelerate>> {
     const forwards$ = this.inputExtractorService
-      .extractInputResult(binding, globalInput$, controllersSettings$, binding.inputs[AccelerateBindingInputAction.Forwards])
+      .extractInputResult(
+        binding,
+        globalInput$,
+        controllersSettings$,
+        binding.inputs[AccelerateBindingInputAction.Forwards],
+      )
       .pipe(distinctUntilIsActivatedChanged());
     const backwards$ = this.inputExtractorService
-      .extractInputResult(binding, globalInput$, controllersSettings$, binding.inputs[AccelerateBindingInputAction.Backwards])
+      .extractInputResult(
+        binding,
+        globalInput$,
+        controllersSettings$,
+        binding.inputs[AccelerateBindingInputAction.Backwards],
+      )
       .pipe(distinctUntilIsActivatedChanged());
     const brake$ = this.inputExtractorService
-      .extractInputResult(binding, globalInput$, controllersSettings$, binding.inputs[AccelerateBindingInputAction.Decelerate])
+      .extractInputResult(
+        binding,
+        globalInput$,
+        controllersSettings$,
+        binding.inputs[AccelerateBindingInputAction.Decelerate],
+      )
       .pipe(distinctUntilIsActivatedChanged());
 
     return combineLatest([forwards$, backwards$, brake$]).pipe(

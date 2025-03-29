@@ -6,7 +6,10 @@ import { GamepadProfileFactoryService } from '@app/controller-profiles';
 import { CONTROLLERS_ACTIONS, SHOW_NOTIFICATION_ACTIONS } from '../../../actions';
 
 export const NOTIFY_ON_GAMEPAD_DISCOVERED_EFFECT = createEffect(
-  (actions: Actions = inject(Actions), gamepadProfileFactoryService: GamepadProfileFactoryService = inject(GamepadProfileFactoryService)) => {
+  (
+    actions: Actions = inject(Actions),
+    gamepadProfileFactoryService: GamepadProfileFactoryService = inject(GamepadProfileFactoryService),
+  ) => {
     return actions.pipe(
       ofType(CONTROLLERS_ACTIONS.gamepadDiscovered),
       mergeMap((action) =>
