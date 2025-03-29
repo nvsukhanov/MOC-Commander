@@ -12,9 +12,12 @@ export type ControlSchemeWidgetDescriptor = {
 };
 
 export interface IControlSchemeWidgetComponentFactory<T extends WidgetType> {
-  createWidget(container: ViewContainerRef, config: WidgetConfigModel & { widgetType: T }): ControlSchemeWidgetDescriptor;
+  createWidget(
+    container: ViewContainerRef,
+    config: WidgetConfigModel & { widgetType: T },
+  ): ControlSchemeWidgetDescriptor;
 }
 
-export const CONTROL_SCHEME_WIDGET_COMPONENT_FACTORY = new InjectionToken<IControlSchemeWidgetComponentFactory<WidgetType>>(
-  'CONTROL_SCHEME_WIDGET_COMPONENT_FACTORY',
-);
+export const CONTROL_SCHEME_WIDGET_COMPONENT_FACTORY = new InjectionToken<
+  IControlSchemeWidgetComponentFactory<WidgetType>
+>('CONTROL_SCHEME_WIDGET_COMPONENT_FACTORY');

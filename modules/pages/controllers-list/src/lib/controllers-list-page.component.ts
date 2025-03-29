@@ -9,7 +9,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { AsyncPipe } from '@angular/common';
 import { ControllerNamePipe, ControllerTypeIconNamePipe, ControllerViewHrefPipe } from '@app/shared-controller';
 import { RoutesBuilderService, TitleService } from '@app/shared-misc';
-import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService, HintComponent } from '@app/shared-components';
+import {
+  BreadcrumbsService,
+  ConfirmationDialogModule,
+  ConfirmationDialogService,
+  HintComponent,
+} from '@app/shared-components';
 import { CONTROLLERS_ACTIONS } from '@app/store';
 
 import { CONTROLLERS_LIST_PAGE_SELECTORS, ControllerListViewModel } from './controllers-list-page.selectors';
@@ -36,7 +41,9 @@ import { CONTROLLERS_LIST_PAGE_SELECTORS, ControllerListViewModel } from './cont
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ControllersListPageComponent implements OnInit {
-  public readonly controllerListViewModel$: Observable<ControllerListViewModel> = this.store.select(CONTROLLERS_LIST_PAGE_SELECTORS.viewModel);
+  public readonly controllerListViewModel$: Observable<ControllerListViewModel> = this.store.select(
+    CONTROLLERS_LIST_PAGE_SELECTORS.viewModel,
+  );
 
   constructor(
     private readonly store: Store,

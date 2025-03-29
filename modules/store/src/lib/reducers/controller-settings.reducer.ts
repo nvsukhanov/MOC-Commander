@@ -8,9 +8,10 @@ import { controllerIdFn } from './controllers.reducer';
 
 export type ControllerSettingsState = EntityState<ControllerSettingsModel>;
 
-export const CONTROLLER_SETTINGS_ENTITY_ADAPTER: EntityAdapter<ControllerSettingsModel> = createEntityAdapter<ControllerSettingsModel>({
-  selectId: (settings) => settings.controllerId,
-});
+export const CONTROLLER_SETTINGS_ENTITY_ADAPTER: EntityAdapter<ControllerSettingsModel> =
+  createEntityAdapter<ControllerSettingsModel>({
+    selectId: (settings) => settings.controllerId,
+  });
 
 export const CONTROLLER_SETTINGS_INITIAL_STATE = CONTROLLER_SETTINGS_ENTITY_ADAPTER.getInitialState();
 

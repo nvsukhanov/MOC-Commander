@@ -14,21 +14,36 @@ export class CommonBindingsFormControlsBuilderService {
   public speedControl(initialValue: number = MOTOR_LIMITS.maxSpeed, minValue: number = 0): FormControl<number> {
     return this.formBuilder.control<number>(initialValue, {
       nonNullable: true,
-      validators: [Validators.required, Validators.min(minValue), Validators.max(MOTOR_LIMITS.maxSpeed), AppValidators.requireInteger],
+      validators: [
+        Validators.required,
+        Validators.min(minValue),
+        Validators.max(MOTOR_LIMITS.maxSpeed),
+        AppValidators.requireInteger,
+      ],
     });
   }
 
   public speedLevelControl(initialValue: number = MOTOR_LIMITS.maxSpeed): FormControl<number> {
     return this.formBuilder.control<number>(initialValue, {
       nonNullable: true,
-      validators: [Validators.required, Validators.min(MOTOR_LIMITS.minSpeed), Validators.max(MOTOR_LIMITS.maxSpeed), AppValidators.requireInteger],
+      validators: [
+        Validators.required,
+        Validators.min(MOTOR_LIMITS.minSpeed),
+        Validators.max(MOTOR_LIMITS.maxSpeed),
+        AppValidators.requireInteger,
+      ],
     });
   }
 
   public powerControl(): FormControl<number> {
     return this.formBuilder.control<number>(MOTOR_LIMITS.maxPower, {
       nonNullable: true,
-      validators: [Validators.required, Validators.min(MOTOR_LIMITS.minPower), Validators.max(MOTOR_LIMITS.maxPower), AppValidators.requireInteger],
+      validators: [
+        Validators.required,
+        Validators.min(MOTOR_LIMITS.minPower),
+        Validators.max(MOTOR_LIMITS.maxPower),
+        AppValidators.requireInteger,
+      ],
     });
   }
 
@@ -51,7 +66,9 @@ export class CommonBindingsFormControlsBuilderService {
     });
   }
 
-  public servoEndStateControl(initialValue: MotorServoEndState = MotorServoEndState.float): FormControl<MotorServoEndState> {
+  public servoEndStateControl(
+    initialValue: MotorServoEndState = MotorServoEndState.float,
+  ): FormControl<MotorServoEndState> {
     return this.formBuilder.control<MotorServoEndState>(initialValue, {
       nonNullable: true,
       validators: [Validators.required, AppValidators.isInEnum(MotorServoEndState)],
@@ -81,10 +98,13 @@ export class CommonBindingsFormControlsBuilderService {
       }),
       buttonId: this.formBuilder.control<ButtonGroupButtonId | null>(initialValue?.portId ?? null),
       portId: this.formBuilder.control<number | null>(initialValue?.portId ?? null),
-      inputDirection: this.formBuilder.control<InputDirection>(initialValue?.inputDirection ?? InputDirection.Positive, {
-        nonNullable: true,
-        validators: [Validators.required, AppValidators.isInEnum(InputDirection)],
-      }),
+      inputDirection: this.formBuilder.control<InputDirection>(
+        initialValue?.inputDirection ?? InputDirection.Positive,
+        {
+          nonNullable: true,
+          validators: [Validators.required, AppValidators.isInEnum(InputDirection)],
+        },
+      ),
       inputPipes: this.createInputPipesArrayControl(initialValue?.inputPipes ?? []),
     });
   }
@@ -100,10 +120,13 @@ export class CommonBindingsFormControlsBuilderService {
       }),
       buttonId: this.formBuilder.control<ButtonGroupButtonId | null>(initialValue?.portId ?? null),
       portId: this.formBuilder.control<number | null>(initialValue?.portId ?? null),
-      inputDirection: this.formBuilder.control<InputDirection>(initialValue?.inputDirection ?? InputDirection.Positive, {
-        nonNullable: true,
-        validators: [Validators.required, AppValidators.isInEnum(InputDirection)],
-      }),
+      inputDirection: this.formBuilder.control<InputDirection>(
+        initialValue?.inputDirection ?? InputDirection.Positive,
+        {
+          nonNullable: true,
+          validators: [Validators.required, AppValidators.isInEnum(InputDirection)],
+        },
+      ),
       inputPipes: this.createInputPipesArrayControl(initialValue?.inputPipes ?? []),
     });
   }
@@ -114,7 +137,9 @@ export class CommonBindingsFormControlsBuilderService {
   }
 
   private createInputPipesArrayControl(initialValue: InputPipeConfig[]): InputFormGroup['controls']['inputPipes'] {
-    return this.formBuilder.array<FormControl<InputPipeConfig>>(initialValue.map((pipe) => this.createInputPipeControl(pipe)));
+    return this.formBuilder.array<FormControl<InputPipeConfig>>(
+      initialValue.map((pipe) => this.createInputPipeControl(pipe)),
+    );
   }
 
   private createInputPipeControl(initialValue: InputPipeConfig): FormControl<InputPipeConfig> {

@@ -14,6 +14,9 @@ export const BLUETOOTH_AVAILABILITY_FEATURE = createFeature({
   name: 'bluetoothAvailability',
   reducer: createReducer(
     BLUETOOTH_AVAILABILITY_INITIAL_STATE,
-    on(BLUETOOTH_AVAILABILITY_ACTIONS.setBluetoothAvailability, (state, data): BluetoothAvailabilityState => ({ ...state, isAvailable: data.isAvailable })),
+    on(
+      BLUETOOTH_AVAILABILITY_ACTIONS.setBluetoothAvailability,
+      (state, data): BluetoothAvailabilityState => ({ ...state, isAvailable: data.isAvailable }),
+    ),
   ),
 });

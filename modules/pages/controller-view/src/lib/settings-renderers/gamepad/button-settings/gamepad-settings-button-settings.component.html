@@ -24,7 +24,9 @@
       <div class="button-configuration__items">
         <lib-slider-control [control]="buttonSettingsViewModel.form.controls.trim" [step]="0.01">
           <span description>{{ 'controller.trim' | transloco }}</span>
-          <span value>{{ buttonSettingsViewModel.form.controls.trim.value | inputValuePercentHumanReadableValue }}</span>
+          <span value>{{
+            buttonSettingsViewModel.form.controls.trim.value | inputValuePercentHumanReadableValue
+          }}</span>
         </lib-slider-control>
         <lib-range-control
           class="button-configuration__item"
@@ -32,19 +34,28 @@
           [endControl]="buttonSettingsViewModel.form.controls.activeZoneEnd"
           [step]="0.01"
         >
-          <span startLabel>{{ buttonSettingsViewModel.form.controls.activeZoneStart.value | inputValuePercentHumanReadableValue }}</span>
-          <span endLabel>{{ buttonSettingsViewModel.form.controls.activeZoneEnd.value | inputValuePercentHumanReadableValue }}</span>
+          <span startLabel>{{
+            buttonSettingsViewModel.form.controls.activeZoneStart.value | inputValuePercentHumanReadableValue
+          }}</span>
+          <span endLabel>{{
+            buttonSettingsViewModel.form.controls.activeZoneEnd.value | inputValuePercentHumanReadableValue
+          }}</span>
           <span description>{{ 'controller.activeZone' | transloco }}</span>
         </lib-range-control>
         <lib-slider-control [control]="buttonSettingsViewModel.form.controls.activationThreshold" [step]="0.01">
           <span description>{{ 'controller.activationThreshold' | transloco }}</span>
-          <span value>{{ buttonSettingsViewModel.form.controls.activationThreshold.value | inputValuePercentHumanReadableValue }}</span>
+          <span value>{{
+            buttonSettingsViewModel.form.controls.activationThreshold.value | inputValuePercentHumanReadableValue
+          }}</span>
         </lib-slider-control>
         <lib-toggle-control
           [translocoTitle]="'controller.ignoreInputControlTitle'"
           [control]="buttonSettingsViewModel.form.controls.ignoreInput"
         ></lib-toggle-control>
-        <lib-toggle-control [translocoTitle]="'controller.invert'" [control]="buttonSettingsViewModel.form.controls.invert"></lib-toggle-control>
+        <lib-toggle-control
+          [translocoTitle]="'controller.invert'"
+          [control]="buttonSettingsViewModel.form.controls.invert"
+        ></lib-toggle-control>
       </div>
     </div>
   </div>

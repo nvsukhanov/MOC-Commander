@@ -23,10 +23,20 @@ export class TrainBindingInputExtractorService implements ITasksInputExtractor<C
     controllersSettings$: Observable<Dictionary<ControllerSettingsModel>>,
   ): Observable<TaskInputs<ControlSchemeBindingType.Train>> {
     const nextSpeed$ = this.inputExtractorService
-      .extractInputResult(binding, globalInput$, controllersSettings$, binding.inputs[TrainBindingInputAction.NextSpeed])
+      .extractInputResult(
+        binding,
+        globalInput$,
+        controllersSettings$,
+        binding.inputs[TrainBindingInputAction.NextSpeed],
+      )
       .pipe(distinctUntilIsActivatedChanged());
     const prevSpeed$ = this.inputExtractorService
-      .extractInputResult(binding, globalInput$, controllersSettings$, binding.inputs[TrainBindingInputAction.PrevSpeed])
+      .extractInputResult(
+        binding,
+        globalInput$,
+        controllersSettings$,
+        binding.inputs[TrainBindingInputAction.PrevSpeed],
+      )
       .pipe(distinctUntilIsActivatedChanged());
     const reset$ = this.inputExtractorService
       .extractInputResult(binding, globalInput$, controllersSettings$, binding.inputs[TrainBindingInputAction.Reset])

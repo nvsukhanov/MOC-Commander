@@ -62,7 +62,12 @@ export class ServoBindingFormBuilderService implements IBindingFormBuilder<Servo
       }),
       aposCenter: this.formBuilder.control<number>(0, {
         nonNullable: true,
-        validators: [Validators.required, Validators.min(this.aposCenterMin), Validators.max(this.aposCenterMax), AppValidators.requireInteger],
+        validators: [
+          Validators.required,
+          Validators.min(this.aposCenterMin),
+          Validators.max(this.aposCenterMax),
+          AppValidators.requireInteger,
+        ],
       }),
       speed: this.commonFormControlBuilder.speedControl(),
       power: this.commonFormControlBuilder.powerControl(),

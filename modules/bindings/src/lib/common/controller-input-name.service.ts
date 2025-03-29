@@ -17,7 +17,9 @@ export class ControllerInputNameService {
   public getFullControllerInputNameData(data: ControlSchemeInputConfig): Observable<string> {
     const profile$ = this.controllerProfilesFacadeService.getByControllerId(data.controllerId);
     const l10nKey =
-      data.inputType === ControllerInputType.Axis ? 'controlScheme.fullControllerInputNameWithDirection' : 'controlScheme.fullControllerInputName';
+      data.inputType === ControllerInputType.Axis
+        ? 'controlScheme.fullControllerInputNameWithDirection'
+        : 'controlScheme.fullControllerInputName';
 
     const controllerName$ = profile$.pipe(switchMap((profile) => profile.name$));
     const buttonName$ = this.getButtonName$(profile$, data);
@@ -50,7 +52,10 @@ export class ControllerInputNameService {
             switchMap((inputName) =>
               this.translocoService.selectTranslate('controlScheme.controllerInputNameWithPort', {
                 inputName,
-                portId: inputData.portId === undefined ? inputData.portId : this.portIdToPortNameService.mapPortId(inputData.portId),
+                portId:
+                  inputData.portId === undefined
+                    ? inputData.portId
+                    : this.portIdToPortNameService.mapPortId(inputData.portId),
               }),
             ),
           );

@@ -7,7 +7,10 @@ import { HubStorageService } from '../../hub-storage.service';
 import { HUBS_ACTIONS } from '../../actions';
 
 export const SET_MOTOR_POSITION_EFFECT = createEffect(
-  (actions$: Actions = inject(Actions), hubStorageService: HubStorageService = inject(HubStorageService)): Observable<unknown> => {
+  (
+    actions$: Actions = inject(Actions),
+    hubStorageService: HubStorageService = inject(HubStorageService),
+  ): Observable<unknown> => {
     return actions$.pipe(
       ofType(HUBS_ACTIONS.setPortPosition),
       switchMap((action) => {

@@ -52,11 +52,14 @@ import { TrainBindingL10nService } from './train-binding-l10n.service';
 export class TrainBindingEditComponent implements IBindingsDetailsEditComponent<TrainBindingForm> {
   public readonly bindingType = ControlSchemeBindingType.Train;
 
-  private _nextLevelControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null = null;
+  private _nextLevelControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null =
+    null;
 
-  private _prevLevelControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null = null;
+  private _prevLevelControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null =
+    null;
 
-  private _resetControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null = null;
+  private _resetControlBindingComponentData: BindingControlSelectControllerComponentData<ControlSchemeBindingType.Train> | null =
+    null;
 
   private _form?: TrainBindingForm;
 

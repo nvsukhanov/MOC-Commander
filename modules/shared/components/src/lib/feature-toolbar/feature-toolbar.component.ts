@@ -16,7 +16,8 @@ import { BreadcrumbsComponent } from '../breadcrumbs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeatureToolbarComponent {
-  public readonly controlsTemplate$: Observable<TemplateRef<unknown> | null> = this.featureToolbarService.controlsTemplate$;
+  public readonly controlsTemplate$: Observable<TemplateRef<unknown> | null> =
+    this.featureToolbarService.controlsTemplate$;
 
   constructor(
     protected readonly featureToolbarService: FeatureToolbarService,

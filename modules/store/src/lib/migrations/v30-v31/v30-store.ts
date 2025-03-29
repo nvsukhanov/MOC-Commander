@@ -95,7 +95,13 @@ export type V30GearboxBinding = Override<
   }
 >;
 
-export type V30Bindings = V30SpeedBinding | V30ServoBinding | V30StepperBinding | V30TrainBinding | V30GearboxBinding | V30SetAngleBinding;
+export type V30Bindings =
+  | V30SpeedBinding
+  | V30ServoBinding
+  | V30StepperBinding
+  | V30TrainBinding
+  | V30GearboxBinding
+  | V30SetAngleBinding;
 
 export type V30ControlSchemesEntitiesState = Omit<V31ControlSchemesEntitiesState, 'bindings' | 'widgets'> & {
   bindings: V30Bindings[];

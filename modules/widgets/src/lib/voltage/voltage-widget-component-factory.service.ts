@@ -19,18 +19,22 @@ export class VoltageWidgetComponentFactoryService implements IWidgetComponentFac
     const componentRef = container.createComponent(VoltageSensorWidgetComponent);
     componentRef.setInput('title', config.title);
 
-    // eslint-disable-next-line @ngrx/no-store-subscription
-    const dataSub = this.store.select(CONTROL_SCHEME_WIDGETS_DATA_SELECTORS.selectById(config.id)).subscribe((widgetData) => {
-      if (widgetData?.widgetType === WidgetType.Voltage) {
-        componentRef.setInput('voltage', widgetData.voltage);
-      } else {
-        componentRef.setInput('voltage', undefined);
-      }
-    });
+    const dataSub = this.store
+      .select(CONTROL_SCHEME_WIDGETS_DATA_SELECTORS.selectById(config.id))
+      // eslint-disable-next-line @ngrx/no-store-subscription
+      .subscribe((widgetData) => {
+        if (widgetData?.widgetType === WidgetType.Voltage) {
+          componentRef.setInput('voltage', widgetData.voltage);
+        } else {
+          componentRef.setInput('voltage', undefined);
+        }
+      });
 
-    const subtitleSub = this.widgetConnectionInfoL10nService.getConnectionInfo(config.widgetType, config.hubId, config.portId).subscribe((subtitle) => {
-      componentRef.setInput('subtitle', subtitle);
-    });
+    const subtitleSub = this.widgetConnectionInfoL10nService
+      .getConnectionInfo(config.widgetType, config.hubId, config.portId)
+      .subscribe((subtitle) => {
+        componentRef.setInput('subtitle', subtitle);
+      });
 
     return {
       edit$: componentRef.instance.edit,

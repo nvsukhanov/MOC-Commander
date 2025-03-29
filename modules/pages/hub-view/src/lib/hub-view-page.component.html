@@ -9,14 +9,21 @@
   </ng-container>
 
   @if (selectedHubRuntimeData$ | async; as runtimeData) {
-    <page-hub-view-hub-properties-view class="hub-properties-view" [configuration]="hub" [runtimeData]="runtimeData"></page-hub-view-hub-properties-view>
+    <page-hub-view-hub-properties-view
+      class="hub-properties-view"
+      [configuration]="hub"
+      [runtimeData]="runtimeData"
+    ></page-hub-view-hub-properties-view>
 
     @if (ioFullInfoList$ | async; as iosFullInfoList) {
       @if (iosFullInfoList.length) {
         <ul class="io-list">
           @for (ioFullInfo of iosFullInfoList; track hubIoTrackByFn) {
             <li>
-              <page-hub-view-hub-port-view class="io-list__item" [hubIoViewModel]="ioFullInfo"></page-hub-view-hub-port-view>
+              <page-hub-view-hub-port-view
+                class="io-list__item"
+                [hubIoViewModel]="ioFullInfo"
+              ></page-hub-view-hub-port-view>
             </li>
           }
         </ul>

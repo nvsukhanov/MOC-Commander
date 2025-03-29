@@ -22,7 +22,10 @@ export class MigrateStoreService {
   }
 
   // we assume here that migrations are linear, not a graph
-  private buildMigrationChain(fromVersion: AppStoreVersion, toVersion: AppStoreVersion): IMigration<StoreWithVersion, StoreWithVersion>[] {
+  private buildMigrationChain(
+    fromVersion: AppStoreVersion,
+    toVersion: AppStoreVersion,
+  ): IMigration<StoreWithVersion, StoreWithVersion>[] {
     const chain: IMigration<StoreWithVersion, StoreWithVersion>[] = [];
     let currentVersion = fromVersion;
     while (currentVersion !== toVersion) {

@@ -13,7 +13,10 @@ export class CommonTiltWidgetsSettingsComponentFactoryService {
     [WidgetType.Roll]: 'controlScheme.widgets.roll.defaultName',
   };
 
-  public createWidgetSettings(container: ViewContainerRef, config: UnifiedTiltWidgetConfig): ControlSchemeWidgetSettingsDescriptor {
+  public createWidgetSettings(
+    container: ViewContainerRef,
+    config: UnifiedTiltWidgetConfig,
+  ): ControlSchemeWidgetSettingsDescriptor {
     const componentRef = container.createComponent(CommonTiltWidgetSettingsComponent);
     componentRef.setInput('defaultNameL10nKey', this.defaultWidgetNameL10nKeys[config.widgetType]);
     componentRef.setInput('config', config);

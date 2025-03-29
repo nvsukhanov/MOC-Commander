@@ -14,14 +14,25 @@ import { BindingTypeToL10nKeyPipe } from '../binding-type-to-l10n-key.pipe';
 const AVAILABLE_BINDING_TYPES = ['Speed', 'Accelerate', 'SetAngle', 'Servo', 'Stepper', 'Train', 'Gearbox'] as const;
 
 // making sure that the available binding types exhaustively match the ControlSchemeBindingType enum
-const GUARDED_AVAILABLE_BINDING_TYPES: EnsureArraySatisfiesUnion<typeof ControlSchemeBindingType, typeof AVAILABLE_BINDING_TYPES> = AVAILABLE_BINDING_TYPES;
+const GUARDED_AVAILABLE_BINDING_TYPES: EnsureArraySatisfiesUnion<
+  typeof ControlSchemeBindingType,
+  typeof AVAILABLE_BINDING_TYPES
+> = AVAILABLE_BINDING_TYPES;
 
 @Component({
   standalone: true,
   selector: 'lib-cs-binding-edit',
   templateUrl: './binding-edit.component.html',
   styleUrl: './binding-edit.component.scss',
-  imports: [MatCardModule, MatDividerModule, TranslocoPipe, MatSelectModule, BindingTypeToL10nKeyPipe, ReactiveFormsModule, BindingEditDetailsRenderDirective],
+  imports: [
+    MatCardModule,
+    MatDividerModule,
+    TranslocoPipe,
+    MatSelectModule,
+    BindingTypeToL10nKeyPipe,
+    ReactiveFormsModule,
+    BindingEditDetailsRenderDirective,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   exportAs: 'lib-cs-binding-edit',
 })

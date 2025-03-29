@@ -39,7 +39,9 @@ export class ServoBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
       return null;
     }
 
-    const startingAbsolutePosition = transformRelativeDegToAbsoluteDeg(ioProps.startupMotorPositionData.position + ioProps.motorEncoderOffset);
+    const startingAbsolutePosition = transformRelativeDegToAbsoluteDeg(
+      ioProps.startupMotorPositionData.position + ioProps.motorEncoderOffset,
+    );
 
     const translationPaths = getTranslationArcs(startingAbsolutePosition, this.getAposCenter(binding, ioProps));
 
@@ -50,7 +52,14 @@ export class ServoBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
 
     if (!cwInput && !ccwInput) {
       // If there were no inputs and no previous task, we should center the servo
-      return this.composeResult(resultingCenterPosition, binding.speed, binding.power, binding.useAccelerationProfile, binding.useDecelerationProfile, 0);
+      return this.composeResult(
+        resultingCenterPosition,
+        binding.speed,
+        binding.power,
+        binding.useAccelerationProfile,
+        binding.useDecelerationProfile,
+        0,
+      );
     }
 
     const cwInputDirection = binding.inputs[ServoBindingInputAction.Cw]?.inputDirection ?? InputDirection.Positive;
@@ -72,7 +81,14 @@ export class ServoBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
 
     const targetAngle = rangePosition + resultingCenterPosition;
 
-    return this.composeResult(targetAngle, binding.speed, binding.power, binding.useAccelerationProfile, binding.useDecelerationProfile, inputTimestamp);
+    return this.composeResult(
+      targetAngle,
+      binding.speed,
+      binding.power,
+      binding.useAccelerationProfile,
+      binding.useDecelerationProfile,
+      inputTimestamp,
+    );
   }
 
   public buildCleanupPayload(previousTask: PortCommandTask): PortCommandTaskPayload | null {
@@ -111,7 +127,10 @@ export class ServoBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
     };
   }
 
-  private getServoRange(binding: ControlSchemeServoBinding, ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null): number {
+  private getServoRange(
+    binding: ControlSchemeServoBinding,
+    ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
+  ): number {
     if (binding.calibrateOnStart) {
       const range = ioProps?.startupServoCalibrationData?.range;
       if (range === undefined) {
@@ -122,7 +141,10 @@ export class ServoBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
     return binding.range;
   }
 
-  private getAposCenter(binding: ControlSchemeServoBinding, ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null): number {
+  private getAposCenter(
+    binding: ControlSchemeServoBinding,
+    ioProps: Omit<AttachedIoPropsModel, 'hubId' | 'portId'> | null,
+  ): number {
     if (binding.calibrateOnStart) {
       const center = ioProps?.startupServoCalibrationData?.aposCenter;
       if (center === undefined) {

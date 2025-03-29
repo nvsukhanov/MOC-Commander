@@ -1,5 +1,11 @@
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { AttachedIoPropsModel, ControlSchemeBinding, PortCommandTask, PortCommandTaskPayload, TaskInputs } from '@app/store';
+import {
+  AttachedIoPropsModel,
+  ControlSchemeBinding,
+  PortCommandTask,
+  PortCommandTaskPayload,
+  TaskInputs,
+} from '@app/store';
 
 export interface ITaskPayloadBuilder<TBindingType extends ControlSchemeBindingType> {
   buildPayload(

@@ -25,9 +25,13 @@ export class ConfirmationDialogComponent {
 
   private readonly defaultContent$ = of('');
 
-  private readonly defaultConfirmTitle$ = this.translocoService.selectTranslate('confirmationDialog.defaultConfirmButtonTitle');
+  private readonly defaultConfirmTitle$ = this.translocoService.selectTranslate(
+    'confirmationDialog.defaultConfirmButtonTitle',
+  );
 
-  private readonly defaultCancelTitle$ = this.translocoService.selectTranslate('confirmationDialog.defaultCancelButtonTitle');
+  private readonly defaultCancelTitle$ = this.translocoService.selectTranslate(
+    'confirmationDialog.defaultCancelButtonTitle',
+  );
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private readonly data: ConfirmDialogData,

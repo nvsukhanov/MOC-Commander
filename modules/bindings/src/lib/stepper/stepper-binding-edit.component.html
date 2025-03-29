@@ -1,7 +1,13 @@
 @if (form) {
   <lib-cs-binding-edit-sections-container>
-    <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33" [caption]="'controlScheme.bindingSectionOutputTitle' | transloco">
-      <lib-cs-binding-control-select-hub [control]="form.controls.hubId" [bindingType]="bindingType"></lib-cs-binding-control-select-hub>
+    <lib-cs-binding-edit-section
+      [largeScreenWidthPercentage]="33"
+      [caption]="'controlScheme.bindingSectionOutputTitle' | transloco"
+    >
+      <lib-cs-binding-control-select-hub
+        [control]="form.controls.hubId"
+        [bindingType]="bindingType"
+      ></lib-cs-binding-control-select-hub>
 
       <lib-cs-binding-control-select-io
         [portIdControl]="form.controls.portId"
@@ -12,17 +18,31 @@
 
     <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
 
-    <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33" [caption]="'controlScheme.bindingSectionInputTitle' | transloco">
-      <lib-cs-binding-control-select-controller [data]="stepCwControlBindingComponentData"></lib-cs-binding-control-select-controller>
+    <lib-cs-binding-edit-section
+      [largeScreenWidthPercentage]="33"
+      [caption]="'controlScheme.bindingSectionInputTitle' | transloco"
+    >
+      <lib-cs-binding-control-select-controller
+        [data]="stepCwControlBindingComponentData"
+      ></lib-cs-binding-control-select-controller>
 
-      <lib-cs-binding-control-select-controller [data]="stepCcwControlBindingComponentData"></lib-cs-binding-control-select-controller>
+      <lib-cs-binding-control-select-controller
+        [data]="stepCcwControlBindingComponentData"
+      ></lib-cs-binding-control-select-controller>
 
-      <mat-error [libValidationMessages]="form.controls.inputs" [immediatelyShowMessages]="true" [l10nMap]="validationErrorsMap"></mat-error>
+      <mat-error
+        [libValidationMessages]="form.controls.inputs"
+        [immediatelyShowMessages]="true"
+        [l10nMap]="validationErrorsMap"
+      ></mat-error>
     </lib-cs-binding-edit-section>
 
     <mat-divider [vertical]="true" *libHideOnSmallScreen></mat-divider>
 
-    <lib-cs-binding-edit-section [largeScreenWidthPercentage]="33" [caption]="'controlScheme.bindingSectionConfigTitle' | transloco">
+    <lib-cs-binding-edit-section
+      [largeScreenWidthPercentage]="33"
+      [caption]="'controlScheme.bindingSectionConfigTitle' | transloco"
+    >
       <mat-form-field>
         <mat-label>
           {{ 'controlScheme.stepperBinding.outputDegree' | transloco }}
@@ -39,9 +59,15 @@
         [translocoTitle]="'controlScheme.outputEndStateControlTitle'"
       ></lib-cs-binding-control-output-end-state>
 
-      <lib-toggle-control [translocoTitle]="'controlScheme.useAccelerationProfile'" [control]="form.controls.useAccelerationProfile"></lib-toggle-control>
+      <lib-toggle-control
+        [translocoTitle]="'controlScheme.useAccelerationProfile'"
+        [control]="form.controls.useAccelerationProfile"
+      ></lib-toggle-control>
 
-      <lib-toggle-control [translocoTitle]="'controlScheme.useDecelerationProfile'" [control]="form.controls.useDecelerationProfile"></lib-toggle-control>
+      <lib-toggle-control
+        [translocoTitle]="'controlScheme.useDecelerationProfile'"
+        [control]="form.controls.useDecelerationProfile"
+      ></lib-toggle-control>
     </lib-cs-binding-edit-section>
   </lib-cs-binding-edit-sections-container>
 }

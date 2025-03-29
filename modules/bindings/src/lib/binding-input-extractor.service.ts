@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, asapScheduler, debounceTime } from 'rxjs';
 import { Dictionary } from '@ngrx/entity';
-import { ControlSchemeBinding, ControllerInputModel, ControllerSettingsModel, ITasksInputExtractor, TaskInputs } from '@app/store';
+import {
+  ControlSchemeBinding,
+  ControllerInputModel,
+  ControllerSettingsModel,
+  ITasksInputExtractor,
+  TaskInputs,
+} from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
 import { SpeedBindingInputExtractorService } from './speed';

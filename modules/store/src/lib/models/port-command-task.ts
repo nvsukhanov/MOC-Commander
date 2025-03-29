@@ -75,7 +75,13 @@ export type GearboxTaskPayload = {
   useDecelerationProfile: boolean;
 };
 
-export type PortCommandTaskPayload = SpeedTaskPayload | ServoTaskPayload | SetAngleTaskPayload | StepperTaskPayload | TrainTaskPayload | GearboxTaskPayload;
+export type PortCommandTaskPayload =
+  | SpeedTaskPayload
+  | ServoTaskPayload
+  | SetAngleTaskPayload
+  | StepperTaskPayload
+  | TrainTaskPayload
+  | GearboxTaskPayload;
 
 export type PortCommandTask<TTaskType extends TaskType = TaskType> = {
   hubId: string;

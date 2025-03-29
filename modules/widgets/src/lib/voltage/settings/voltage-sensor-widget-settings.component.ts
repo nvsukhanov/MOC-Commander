@@ -62,7 +62,12 @@ export class VoltageSensorWidgetSettingsComponent implements OnDestroy {
   }
 
   public get config(): VoltageWidgetConfigModel | undefined {
-    if (this.form.controls.hubId.value === null || this.form.controls.portId.value === null || this.form.controls.modeId.value === null || this.form.invalid) {
+    if (
+      this.form.controls.hubId.value === null ||
+      this.form.controls.portId.value === null ||
+      this.form.controls.modeId.value === null ||
+      this.form.invalid
+    ) {
       return undefined;
     }
     return {

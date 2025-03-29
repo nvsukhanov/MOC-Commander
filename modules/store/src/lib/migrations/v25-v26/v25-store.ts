@@ -68,7 +68,13 @@ export type V25SetAngleBinding = Override<
     };
   }
 >;
-export type V25Bindings = V25SpeedBinding | V25ServoBinding | V25StepperBinding | V25TrainBinding | V25GearboxBinding | V25SetAngleBinding;
+export type V25Bindings =
+  | V25SpeedBinding
+  | V25ServoBinding
+  | V25StepperBinding
+  | V25TrainBinding
+  | V25GearboxBinding
+  | V25SetAngleBinding;
 export type V25ControlSchemesEntitiesState = Omit<V26ControlSchemesEntitiesState, 'bindings'> & {
   bindings: V25Bindings[];
 };

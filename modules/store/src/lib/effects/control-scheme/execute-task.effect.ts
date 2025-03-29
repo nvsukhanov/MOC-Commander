@@ -7,7 +7,11 @@ import { PORT_TASKS_ACTIONS } from '../../actions';
 import { ITaskRunner, TASK_RUNNER } from './i-task-runner';
 
 export const EXECUTE_TASK_EFFECT = createEffect(
-  (actions: Actions = inject(Actions), taskRunner: ITaskRunner = inject(TASK_RUNNER), hubStorage: HubStorageService = inject(HubStorageService)) => {
+  (
+    actions: Actions = inject(Actions),
+    taskRunner: ITaskRunner = inject(TASK_RUNNER),
+    hubStorage: HubStorageService = inject(HubStorageService),
+  ) => {
     return actions.pipe(
       ofType(PORT_TASKS_ACTIONS.runTask),
       mergeMap((action) => {

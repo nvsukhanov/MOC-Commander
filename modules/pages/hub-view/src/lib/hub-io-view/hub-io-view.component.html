@@ -1,5 +1,9 @@
 @if (hubIoViewModel) {
-  <mat-expansion-panel [class.io-port_expanded]="ioPortPanel.expanded" [class.io-port_collapsed]="!ioPortPanel.expanded" #ioPortPanel>
+  <mat-expansion-panel
+    [class.io-port_expanded]="ioPortPanel.expanded"
+    [class.io-port_collapsed]="!ioPortPanel.expanded"
+    #ioPortPanel
+  >
     <mat-expansion-panel-header>
       <mat-panel-title>
         <h3 class="io-port__title">

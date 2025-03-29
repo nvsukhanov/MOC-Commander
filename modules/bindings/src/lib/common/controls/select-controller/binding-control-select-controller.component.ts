@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnChanges, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+} from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslocoPipe } from '@jsverse/transloco';
@@ -28,7 +36,11 @@ import {
 import { ControllerInputType } from '@app/controller-profiles';
 
 import { InputFormGroup, OptionalInputFormGroup } from '../../input-form-group';
-import { IInputSettingsDialogData, IInputSettingsDialogResult, InputSettingsDialogComponent } from './input-settings-dialog';
+import {
+  IInputSettingsDialogData,
+  IInputSettingsDialogResult,
+  InputSettingsDialogComponent,
+} from './input-settings-dialog';
 import { CommonBindingsFormControlsBuilderService } from '../../common-bindings-form-controls-builder.service';
 import { filterInputPipeTypesByInputType } from '../../filter-input-pipe-types-by-input-type';
 
@@ -58,7 +70,9 @@ export type BindingControlSelectControllerComponentData<T extends ControlSchemeB
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BindingControlSelectControllerComponent<T extends ControlSchemeBindingType> implements OnDestroy, OnChanges {
+export class BindingControlSelectControllerComponent<T extends ControlSchemeBindingType>
+  implements OnDestroy, OnChanges
+{
   @Input() public data: BindingControlSelectControllerComponentData<T> | null = null;
 
   private _syntheticInputControl?: FormControl;
@@ -123,15 +137,19 @@ export class BindingControlSelectControllerComponent<T extends ControlSchemeBind
           if (!formData || !formData.inputId || this.data?.inputAction === undefined) {
             return of('');
           }
-          return this.controllerInputNameResolver.getControllerInputName(this.data.bindingType, this.data?.inputAction, {
-            inputId: formData.inputId,
-            buttonId: formData.buttonId ?? undefined,
-            portId: formData.portId ?? undefined,
-            inputType: formData.inputType,
-            controllerId: formData.controllerId ?? '',
-            inputDirection: formData.inputDirection ?? InputDirection.Positive,
-            inputPipes: formData.inputPipes ?? [],
-          });
+          return this.controllerInputNameResolver.getControllerInputName(
+            this.data.bindingType,
+            this.data?.inputAction,
+            {
+              inputId: formData.inputId,
+              buttonId: formData.buttonId ?? undefined,
+              portId: formData.portId ?? undefined,
+              inputType: formData.inputType,
+              controllerId: formData.controllerId ?? '',
+              inputDirection: formData.inputDirection ?? InputDirection.Positive,
+              inputPipes: formData.inputPipes ?? [],
+            },
+          );
         }),
       )
       .subscribe((controllerName) => {
@@ -160,12 +178,15 @@ export class BindingControlSelectControllerComponent<T extends ControlSchemeBind
 
   public onShowSettings(): void {
     this.dialog
-      .open<InputSettingsDialogComponent, IInputSettingsDialogData, IInputSettingsDialogResult>(InputSettingsDialogComponent, {
-        data: {
-          supportedInputPipes: this.supportedInputPipes,
-          currentInputPipeConfigs: this.data?.inputFormGroup?.controls.inputPipes.value ?? [],
+      .open<InputSettingsDialogComponent, IInputSettingsDialogData, IInputSettingsDialogResult>(
+        InputSettingsDialogComponent,
+        {
+          data: {
+            supportedInputPipes: this.supportedInputPipes,
+            currentInputPipeConfigs: this.data?.inputFormGroup?.controls.inputPipes.value ?? [],
+          },
         },
-      })
+      )
       .afterClosed()
       .subscribe((r) => {
         if (r) {
@@ -180,15 +201,20 @@ export class BindingControlSelectControllerComponent<T extends ControlSchemeBind
   }
 
   public onBind(): void {
-    const dialog = this.dialog.open<WaitForControllerInputDialogComponent, undefined, ControllerInputModel>(WaitForControllerInputDialogComponent, {
-      disableClose: true,
-      hasBackdrop: true,
-    });
+    const dialog = this.dialog.open<WaitForControllerInputDialogComponent, undefined, ControllerInputModel>(
+      WaitForControllerInputDialogComponent,
+      {
+        disableClose: true,
+        hasBackdrop: true,
+      },
+    );
     dialog
       .afterClosed()
       .pipe(
         filter((r): r is ControllerInputModel => !!r),
-        concatLatestFrom((input) => this.store.select(CONTROLLER_SETTINGS_SELECTORS.selectByControllerId(input.controllerId))),
+        concatLatestFrom((input) =>
+          this.store.select(CONTROLLER_SETTINGS_SELECTORS.selectByControllerId(input.controllerId)),
+        ),
       )
       .subscribe(([input, settings]) => {
         if (!input || !settings || !this.data?.inputFormGroup) {

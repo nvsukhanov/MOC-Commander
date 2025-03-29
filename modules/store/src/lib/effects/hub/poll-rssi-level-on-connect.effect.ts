@@ -7,7 +7,11 @@ import { HUBS_ACTIONS, HUB_RUNTIME_DATA_ACTIONS } from '../../actions';
 import { HubStorageService } from '../../hub-storage.service';
 
 export const POLL_RSSI_LEVEL_ON_CONNECT = createEffect(
-  (actions$: Actions = inject(Actions), hubStorage: HubStorageService = inject(HubStorageService), config: IAppConfig = inject(APP_CONFIG)) => {
+  (
+    actions$: Actions = inject(Actions),
+    hubStorage: HubStorageService = inject(HubStorageService),
+    config: IAppConfig = inject(APP_CONFIG),
+  ) => {
     return actions$.pipe(
       ofType(HUBS_ACTIONS.connected),
       mergeMap((a) =>

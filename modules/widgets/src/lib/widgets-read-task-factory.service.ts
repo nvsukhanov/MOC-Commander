@@ -37,7 +37,9 @@ export class WidgetsReadTaskFactoryService implements IWidgetsReadTasksFactory {
     return configs.map((config) => this.getWidgetReaderTaskFactory(config.widgetType).createReadTask(config));
   }
 
-  private getWidgetReaderTaskFactory<T extends WidgetType>(widgetType: T): IWidgetReadTaskFactory<WidgetConfigModel & { widgetType: T }> {
+  private getWidgetReaderTaskFactory<T extends WidgetType>(
+    widgetType: T,
+  ): IWidgetReadTaskFactory<WidgetConfigModel & { widgetType: T }> {
     return this.widgetReaderTaskFactories[widgetType];
   }
 }

@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ControlSchemeBindingType } from '@app/shared-misc';
-import { AttachedIoPropsModel, ControlSchemeBinding, ITaskFactory, PortCommandTask, PortCommandTaskPayload, TaskInputs } from '@app/store';
+import {
+  AttachedIoPropsModel,
+  ControlSchemeBinding,
+  ITaskFactory,
+  PortCommandTask,
+  PortCommandTaskPayload,
+  TaskInputs,
+} from '@app/store';
 
 import { ServoBindingTaskPayloadBuilderService } from './servo';
 import { SetAngleBindingTaskPayloadBuilderService } from './set-angle';
@@ -73,7 +80,11 @@ export class BindingTaskFactoryService implements ITaskFactory {
     return this.taskPayloadBuilders[previousTask.payload.type].buildCleanupPayload(previousTask);
   }
 
-  private composeTask(binding: ControlSchemeBinding, payload: PortCommandTaskPayload, inputTimestamp: number): PortCommandTask {
+  private composeTask(
+    binding: ControlSchemeBinding,
+    payload: PortCommandTaskPayload,
+    inputTimestamp: number,
+  ): PortCommandTask {
     return {
       hubId: binding.hubId,
       portId: binding.portId,

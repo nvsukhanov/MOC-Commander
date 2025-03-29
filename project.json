@@ -22,7 +22,14 @@
         "inlineStyleLanguage": "scss",
         "assets": ["src/favicon.ico", "src/assets", "src/manifest.webmanifest"],
         "styles": ["src/styles/styles.scss"],
-        "allowedCommonJsDependencies": ["@messageformat/core", "flat", "deepmerge", "lzma/src/lzma_worker", "murmurhash-js", "deep-equal"],
+        "allowedCommonJsDependencies": [
+          "@messageformat/core",
+          "flat",
+          "deepmerge",
+          "lzma/src/lzma_worker",
+          "murmurhash-js",
+          "deep-equal"
+        ],
         "scripts": ["node_modules/lzma/src/lzma_worker.js"],
         "serviceWorker": true,
         "ngswConfigPath": "ngsw-config.json"

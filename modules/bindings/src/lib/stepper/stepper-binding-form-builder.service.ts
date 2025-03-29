@@ -38,7 +38,12 @@ export class StepperBindingFormBuilderService implements IBindingFormBuilder<Ste
       portId: this.controlSchemeFormBuilder.portIdControl(),
       degree: this.formBuilder.control<number>(this.defaultStepDegree, {
         nonNullable: true,
-        validators: [Validators.required, Validators.min(MOTOR_LIMITS.minServoDegreesRange), Validators.max(this.maxStepDegree), AppValidators.requireInteger],
+        validators: [
+          Validators.required,
+          Validators.min(MOTOR_LIMITS.minServoDegreesRange),
+          Validators.max(this.maxStepDegree),
+          AppValidators.requireInteger,
+        ],
       }),
       power: this.commonFormControlBuilder.powerControl(),
       speed: this.commonFormControlBuilder.speedControl(),

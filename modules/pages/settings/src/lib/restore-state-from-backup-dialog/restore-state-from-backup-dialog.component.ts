@@ -16,7 +16,15 @@ import { STATE_FILE_VALIDATION_ERRORS, createStateFileValidatorFn } from './stat
   templateUrl: './restore-state-from-backup-dialog.component.html',
   styleUrl: './restore-state-from-backup-dialog.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatDialogModule, MatButtonModule, TranslocoPipe, MatInputModule, ValidationMessagesDirective, UploadFileFormControlComponent, ReactiveFormsModule],
+  imports: [
+    MatDialogModule,
+    MatButtonModule,
+    TranslocoPipe,
+    MatInputModule,
+    ValidationMessagesDirective,
+    UploadFileFormControlComponent,
+    ReactiveFormsModule,
+  ],
 })
 export class RestoreStateFromBackupDialogComponent {
   public readonly control: FormControl<string | null>;

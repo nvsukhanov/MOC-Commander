@@ -38,7 +38,11 @@ export const CHANGELOG: ChangelogRecords = [
   },
   {
     version: '1.2.5',
-    changeL10nKeys: ['changelog.1-2-5.appIconUpdated', 'changelog.1-2-5.servoManualRangeReadFix', 'changelog.1-2-5.servoCenterOnStartForKeyInputsFix'],
+    changeL10nKeys: [
+      'changelog.1-2-5.appIconUpdated',
+      'changelog.1-2-5.servoManualRangeReadFix',
+      'changelog.1-2-5.servoCenterOnStartForKeyInputsFix',
+    ],
   },
   {
     version: '1.2.4',
@@ -75,7 +79,11 @@ export const CHANGELOG: ChangelogRecords = [
   },
   {
     version: '1.2.1',
-    changeL10nKeys: ['changelog.1-2-1.featFasterServoCalibration', 'changelog.1-2-1.featAppUpdatedNotification', 'changelog.bugfixesAndImprovements'],
+    changeL10nKeys: [
+      'changelog.1-2-1.featFasterServoCalibration',
+      'changelog.1-2-1.featAppUpdatedNotification',
+      'changelog.bugfixesAndImprovements',
+    ],
   },
   {
     version: '1.2.0',

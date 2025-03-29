@@ -24,10 +24,33 @@ export class WidgetConfigFactoryService implements IControlSchemeWidgetConfigFac
   ): WidgetConfigModel[] {
     return [
       ...this.voltageWidgetConfigFactoryService.createConfigs(attachedIos, ioPortModes, portModesInfo, existingWidgets),
-      ...this.temperatureWidgetConfigFactoryService.createConfigs(attachedIos, ioPortModes, portModesInfo, existingWidgets),
-      ...this.commonTiltWidgetsConfigFactoryService.createConfigs(WidgetType.Pitch, attachedIos, ioPortModes, portModesInfo, existingWidgets),
-      ...this.commonTiltWidgetsConfigFactoryService.createConfigs(WidgetType.Yaw, attachedIos, ioPortModes, portModesInfo, existingWidgets),
-      ...this.commonTiltWidgetsConfigFactoryService.createConfigs(WidgetType.Roll, attachedIos, ioPortModes, portModesInfo, existingWidgets),
+      ...this.temperatureWidgetConfigFactoryService.createConfigs(
+        attachedIos,
+        ioPortModes,
+        portModesInfo,
+        existingWidgets,
+      ),
+      ...this.commonTiltWidgetsConfigFactoryService.createConfigs(
+        WidgetType.Pitch,
+        attachedIos,
+        ioPortModes,
+        portModesInfo,
+        existingWidgets,
+      ),
+      ...this.commonTiltWidgetsConfigFactoryService.createConfigs(
+        WidgetType.Yaw,
+        attachedIos,
+        ioPortModes,
+        portModesInfo,
+        existingWidgets,
+      ),
+      ...this.commonTiltWidgetsConfigFactoryService.createConfigs(
+        WidgetType.Roll,
+        attachedIos,
+        ioPortModes,
+        portModesInfo,
+        existingWidgets,
+      ),
     ];
   }
 }

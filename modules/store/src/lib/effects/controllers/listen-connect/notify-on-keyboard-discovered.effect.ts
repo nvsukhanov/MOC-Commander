@@ -6,7 +6,10 @@ import { KeyboardProfileFactoryService } from '@app/controller-profiles';
 import { CONTROLLERS_ACTIONS, SHOW_NOTIFICATION_ACTIONS } from '../../../actions';
 
 export const NOTIFY_ON_HUB_KEYBOARD_DISCOVERED_EFFECT = createEffect(
-  (actions: Actions = inject(Actions), keyboardProfileFactoryService: KeyboardProfileFactoryService = inject(KeyboardProfileFactoryService)) => {
+  (
+    actions: Actions = inject(Actions),
+    keyboardProfileFactoryService: KeyboardProfileFactoryService = inject(KeyboardProfileFactoryService),
+  ) => {
     return actions.pipe(
       ofType(CONTROLLERS_ACTIONS.keyboardDiscovered),
       mergeMap(() =>

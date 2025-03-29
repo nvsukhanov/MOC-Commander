@@ -601,7 +601,16 @@ export const V21_STORE_SAMPLE: DeepPartial<V21Store> = {
   },
   storeVersion: AppStoreVersion.first,
   controlSchemes: {
-    ids: ['Speed control test', 'Servo', 'Set angle', 'Stepper', 'Speed shift', 'angle shift', 'angle shift (1)', 'Simple speed'],
+    ids: [
+      'Speed control test',
+      'Servo',
+      'Set angle',
+      'Stepper',
+      'Speed shift',
+      'angle shift',
+      'angle shift (1)',
+      'Simple speed',
+    ],
     entities: {
       'Speed control test': {
         name: 'Speed control test',

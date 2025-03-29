@@ -17,7 +17,11 @@
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["modules/shared/controller/**/*.ts", "modules/shared/controller/**/*.html", "modules/shared/controller/package.json"]
+        "lintFilePatterns": [
+          "modules/shared/controller/**/*.ts",
+          "modules/shared/controller/**/*.html",
+          "modules/shared/controller/package.json"
+        ]
       }
     }
   }

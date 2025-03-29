@@ -3,11 +3,26 @@ import { ControlSchemeBindingType } from '@app/shared-misc';
 
 const REQUIRED_PORT_MODES_FOR_OPERATION_MODE: { [k in ControlSchemeBindingType]: PortModeName[] } = {
   [ControlSchemeBindingType.Speed]: [PortModeName.speed, PortModeName.power],
-  [ControlSchemeBindingType.Servo]: [PortModeName.absolutePosition, PortModeName.position, PortModeName.speed, PortModeName.power],
-  [ControlSchemeBindingType.SetAngle]: [PortModeName.absolutePosition, PortModeName.position, PortModeName.speed, PortModeName.power],
+  [ControlSchemeBindingType.Servo]: [
+    PortModeName.absolutePosition,
+    PortModeName.position,
+    PortModeName.speed,
+    PortModeName.power,
+  ],
+  [ControlSchemeBindingType.SetAngle]: [
+    PortModeName.absolutePosition,
+    PortModeName.position,
+    PortModeName.speed,
+    PortModeName.power,
+  ],
   [ControlSchemeBindingType.Stepper]: [PortModeName.position, PortModeName.speed, PortModeName.power],
   [ControlSchemeBindingType.Train]: [PortModeName.speed, PortModeName.power],
-  [ControlSchemeBindingType.Gearbox]: [PortModeName.absolutePosition, PortModeName.position, PortModeName.speed, PortModeName.power],
+  [ControlSchemeBindingType.Gearbox]: [
+    PortModeName.absolutePosition,
+    PortModeName.position,
+    PortModeName.speed,
+    PortModeName.power,
+  ],
   [ControlSchemeBindingType.Accelerate]: [PortModeName.speed, PortModeName.power],
 };
 
@@ -22,7 +37,9 @@ export function getMatchingBindingTypes(portModeNames: PortModeName[]): ControlS
   return result;
 }
 
-export function getAvailableOperationModesForIoOutputPortModeNames(portModeNames: PortModeName[]): ControlSchemeBindingType[] {
+export function getAvailableOperationModesForIoOutputPortModeNames(
+  portModeNames: PortModeName[],
+): ControlSchemeBindingType[] {
   const resultSet = new Set<ControlSchemeBindingType>();
   for (const [operationMode, requiredPortModeNames] of Object.entries(REQUIRED_PORT_MODES_FOR_OPERATION_MODE)) {
     if (requiredPortModeNames.every((requiredPortModeName) => portModeNames.includes(requiredPortModeName))) {
@@ -32,7 +49,14 @@ export function getAvailableOperationModesForIoOutputPortModeNames(portModeNames
   return Array.from(resultSet);
 }
 
-export function ioHasMatchingModeForOpMode(operationMode: ControlSchemeBindingType, ioOutputPortModeNames: PortModeName[]): boolean {
+export function ioHasMatchingModeForOpMode(
+  operationMode: ControlSchemeBindingType,
+  ioOutputPortModeNames: PortModeName[],
+): boolean {
   const ioOutputPortModeNamesSet = new Set(ioOutputPortModeNames);
-  return REQUIRED_PORT_MODES_FOR_OPERATION_MODE[operationMode].every((requiredPortModeName) => ioOutputPortModeNamesSet.has(requiredPortModeName)) ?? false;
+  return (
+    REQUIRED_PORT_MODES_FOR_OPERATION_MODE[operationMode].every((requiredPortModeName) =>
+      ioOutputPortModeNamesSet.has(requiredPortModeName),
+    ) ?? false
+  );
 }

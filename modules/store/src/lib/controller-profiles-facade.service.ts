@@ -39,7 +39,10 @@ export class ControllerProfilesFacadeService {
       case ControllerType.Gamepad:
         return this.gamepadProfileFactoryService.getByProfileUid(controllerModel.profileUid);
       case ControllerType.Hub:
-        return this.hubProfileFactoryService.getHubProfile(controllerModel.hubId, this.store.select(HUBS_SELECTORS.selectHubName(controllerModel.hubId)));
+        return this.hubProfileFactoryService.getHubProfile(
+          controllerModel.hubId,
+          this.store.select(HUBS_SELECTORS.selectHubName(controllerModel.hubId)),
+        );
       case ControllerType.Keyboard:
         return this.keyboardProfileFactoryService.getByProfileUid(controllerModel.profileUid);
     }

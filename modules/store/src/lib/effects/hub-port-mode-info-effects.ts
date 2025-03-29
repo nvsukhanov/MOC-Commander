@@ -2,7 +2,13 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { map, mergeMap, takeUntil, zip } from 'rxjs';
-import { PortModeInformationName, PortModeInformationSymbol, PortModeInformationType, PortModeName, PortModeSymbol } from 'rxpoweredup';
+import {
+  PortModeInformationName,
+  PortModeInformationSymbol,
+  PortModeInformationType,
+  PortModeName,
+  PortModeSymbol,
+} from 'rxpoweredup';
 import { concatLatestFrom } from '@ngrx/operators';
 
 import { ATTACHED_IO_MODES_ACTIONS, HUB_PORT_MODE_INFO_ACTIONS } from '../actions';
@@ -25,8 +31,12 @@ export class HubPortModeInfoEffects {
         const concatenatedPortModeIds = [...new Set([...action.portOutputModes, ...action.portInputModes])];
 
         return zip(
-          ...concatenatedPortModeIds.map((mode) => portApi.getPortModeInformation(matchingIo.portId, mode, PortModeInformationType.name)),
-          ...concatenatedPortModeIds.map((mode) => portApi.getPortModeInformation(matchingIo.portId, mode, PortModeInformationType.symbol)),
+          ...concatenatedPortModeIds.map((mode) =>
+            portApi.getPortModeInformation(matchingIo.portId, mode, PortModeInformationType.name),
+          ),
+          ...concatenatedPortModeIds.map((mode) =>
+            portApi.getPortModeInformation(matchingIo.portId, mode, PortModeInformationType.symbol),
+          ),
         ).pipe(
           takeUntil(this.hubStorage.get(matchingIo.hubId).disconnected),
           map((data) => {

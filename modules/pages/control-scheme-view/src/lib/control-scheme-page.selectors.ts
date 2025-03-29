@@ -32,7 +32,11 @@ const SELECT_IO_MODES = createSelector(
   ATTACHED_IO_SELECTORS.selectAll,
   ATTACHED_IO_MODES_SELECTORS.selectEntities,
   ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
-  (ios, ioSupportedModesEntities, portModeInfoEntities): { input: Record<string, PortModeName[]>; output: Record<string, PortModeName[]> } => {
+  (
+    ios,
+    ioSupportedModesEntities,
+    portModeInfoEntities,
+  ): { input: Record<string, PortModeName[]>; output: Record<string, PortModeName[]> } => {
     const input: Record<string, PortModeName[]> = {};
     const output: Record<string, PortModeName[]> = {};
     for (const io of ios) {
@@ -106,7 +110,11 @@ const SELECT_SCHEME_RUN_BLOCKERS = (widgetChecks: IControlSchemeRunWidgetBlocker
         }
       }
 
-      if (scheme.bindings.some((b) => !Object.values(b.inputs).every((input) => !!controllerConnections[input.controllerId]))) {
+      if (
+        scheme.bindings.some(
+          (b) => !Object.values(b.inputs).every((input) => !!controllerConnections[input.controllerId]),
+        )
+      ) {
         result.add(SchemeRunBlocker.SomeControllersAreNotConnected);
       }
       return [...result];
@@ -126,6 +134,12 @@ export const CONTROL_SCHEME_PAGE_SELECTORS = {
     ROUTER_SELECTORS.selectCurrentlyViewedSchemeName,
     (runningSchemeName, routerSchemeName) => runningSchemeName !== null && runningSchemeName === routerSchemeName,
   ),
-  canDeleteOrEditWidgets: createSelector(CONTROL_SCHEME_SELECTORS.selectRunningState, (runningState) => runningState === ControlSchemeRunState.Idle),
-  canRenameScheme: createSelector(CONTROL_SCHEME_SELECTORS.selectRunningState, (runningState) => runningState === ControlSchemeRunState.Idle),
+  canDeleteOrEditWidgets: createSelector(
+    CONTROL_SCHEME_SELECTORS.selectRunningState,
+    (runningState) => runningState === ControlSchemeRunState.Idle,
+  ),
+  canRenameScheme: createSelector(
+    CONTROL_SCHEME_SELECTORS.selectRunningState,
+    (runningState) => runningState === ControlSchemeRunState.Idle,
+  ),
 } as const;

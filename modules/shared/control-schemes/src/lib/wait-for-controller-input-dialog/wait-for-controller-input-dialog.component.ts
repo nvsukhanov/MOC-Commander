@@ -7,7 +7,12 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription, combineLatestWith, filter, map, of, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
-import { CONTROLLER_INPUT_ACTIONS, CONTROLLER_INPUT_SELECTORS, ControllerInputModel, ControllerProfilesFacadeService } from '@app/store';
+import {
+  CONTROLLER_INPUT_ACTIONS,
+  CONTROLLER_INPUT_SELECTORS,
+  ControllerInputModel,
+  ControllerProfilesFacadeService,
+} from '@app/store';
 
 import { WAIT_FOR_CONTROLLER_INPUT_DIALOG_SELECTORS } from './wait-for-controller-input-dialog.selectors';
 
@@ -29,18 +34,22 @@ export class WaitForControllerInputDialogComponent implements OnInit, OnDestroy 
     private readonly store: Store,
     private readonly controllerProfilesFacadeService: ControllerProfilesFacadeService,
   ) {
-    this.controllerNames$ = this.store.select(WAIT_FOR_CONTROLLER_INPUT_DIALOG_SELECTORS.selectConnectedControllers).pipe(
-      map((controllerModels) => controllerModels.map((c) => this.controllerProfilesFacadeService.getByControllerModel(c).name$)),
-      switchMap((names) => {
-        if (names.length === 0) {
-          return of([]);
-        } else if (names.length === 1) {
-          return names[0].pipe(map((name) => [name]));
-        } else {
-          return names[0].pipe(combineLatestWith(...names.slice(1)));
-        }
-      }),
-    );
+    this.controllerNames$ = this.store
+      .select(WAIT_FOR_CONTROLLER_INPUT_DIALOG_SELECTORS.selectConnectedControllers)
+      .pipe(
+        map((controllerModels) =>
+          controllerModels.map((c) => this.controllerProfilesFacadeService.getByControllerModel(c).name$),
+        ),
+        switchMap((names) => {
+          if (names.length === 0) {
+            return of([]);
+          } else if (names.length === 1) {
+            return names[0].pipe(map((name) => [name]));
+          } else {
+            return names[0].pipe(combineLatestWith(...names.slice(1)));
+          }
+        }),
+      );
   }
 
   public ngOnInit(): void {

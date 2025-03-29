@@ -3,7 +3,15 @@ import { PortModeName } from 'rxpoweredup';
 import { ATTACHED_IO_PORT_MODE_INFO_SELECTORS, ATTACHED_IO_SELECTORS, HUB_RUNTIME_DATA_SELECTORS } from '@app/store';
 
 export const BINDING_EDIT_COMMON_SELECTORS = {
-  canRequestPortValue: ({ hubId, portId, portModeName }: { hubId: string; portId: number; portModeName: PortModeName }) =>
+  canRequestPortValue: ({
+    hubId,
+    portId,
+    portModeName,
+  }: {
+    hubId: string;
+    portId: number;
+    portModeName: PortModeName;
+  }) =>
     createSelector(
       HUB_RUNTIME_DATA_SELECTORS.selectIsHubConnected(hubId),
       HUB_RUNTIME_DATA_SELECTORS.isPortValueRequested({ hubId, portId }),

@@ -88,13 +88,18 @@ export class HubListItemComponent {
   @Input()
   public set hubId(id: string | null) {
     this._hubId.set(id);
-    this._isHubKnown = id === null ? signal(false) : this.store.selectSignal(HUB_LIST_ITEM_SELECTORS.selectIsHubKnown(id));
+    this._isHubKnown =
+      id === null ? signal(false) : this.store.selectSignal(HUB_LIST_ITEM_SELECTORS.selectIsHubKnown(id));
     this._hubName = id === null ? signal('') : this.store.selectSignal(HUB_LIST_ITEM_SELECTORS.selectHubName(id));
-    this._batteryLevel = id === null ? signal(null) : this.store.selectSignal(HUB_LIST_ITEM_SELECTORS.selectBatteryLevel(id));
+    this._batteryLevel =
+      id === null ? signal(null) : this.store.selectSignal(HUB_LIST_ITEM_SELECTORS.selectBatteryLevel(id));
     this._rssi = id === null ? signal(null) : this.store.selectSignal(HUB_LIST_ITEM_SELECTORS.selectRssi(id));
-    this._buttonState = id === null ? signal(false) : this.store.selectSignal(HUB_LIST_ITEM_SELECTORS.selectButtonState(id));
-    this._hasCommunication = id === null ? signal(false) : this.store.selectSignal(HUB_LIST_ITEM_SELECTORS.selectHasCommunication(id));
-    this._isConnected = id === null ? signal(false) : this.store.selectSignal(HUB_LIST_ITEM_SELECTORS.selectIsConnected(id));
+    this._buttonState =
+      id === null ? signal(false) : this.store.selectSignal(HUB_LIST_ITEM_SELECTORS.selectButtonState(id));
+    this._hasCommunication =
+      id === null ? signal(false) : this.store.selectSignal(HUB_LIST_ITEM_SELECTORS.selectHasCommunication(id));
+    this._isConnected =
+      id === null ? signal(false) : this.store.selectSignal(HUB_LIST_ITEM_SELECTORS.selectIsConnected(id));
   }
 
   @Input()

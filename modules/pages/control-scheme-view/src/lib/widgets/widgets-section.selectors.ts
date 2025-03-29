@@ -15,7 +15,10 @@ import {
 import { CONTROL_SCHEME_PAGE_SELECTORS } from '../control-scheme-page.selectors';
 
 export const WIDGETS_SECTION_SELECTORS = {
-  canReorderWidgets: createSelector(CONTROL_SCHEME_PAGE_SELECTORS.selectCurrentlyViewedScheme, (scheme) => !!scheme && scheme.widgets.length > 1),
+  canReorderWidgets: createSelector(
+    CONTROL_SCHEME_PAGE_SELECTORS.selectCurrentlyViewedScheme,
+    (scheme) => !!scheme && scheme.widgets.length > 1,
+  ),
   addableWidgetConfigFactoryBaseData: (controlSchemeName: string) =>
     createSelector(
       CONTROL_SCHEME_SELECTORS.selectRunningState,

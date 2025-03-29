@@ -3,7 +3,10 @@ import { Observable, of } from 'rxjs';
 import { ControlSchemeBindingInputs, ControlSchemeInputConfig } from '@app/store';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 
-import { BINDING_CONTROLLER_INPUT_NAME_RESOLVER, IBindingControllerInputNameResolver } from './i-binding-controller-input-name-resolver';
+import {
+  BINDING_CONTROLLER_INPUT_NAME_RESOLVER,
+  IBindingControllerInputNameResolver,
+} from './i-binding-controller-input-name-resolver';
 
 @Pipe({
   standalone: true,

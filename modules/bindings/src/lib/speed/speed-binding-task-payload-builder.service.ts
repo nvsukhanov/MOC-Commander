@@ -26,19 +26,26 @@ export class SpeedBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
 
     let inputTimestamp = 0;
     if (forwardsInputModel || brakeInputModel || backwardsInputModel) {
-      inputTimestamp = Math.max(forwardsInputModel?.timestamp ?? 0, backwardsInputModel?.timestamp ?? 0, brakeInputModel?.timestamp ?? 0);
+      inputTimestamp = Math.max(
+        forwardsInputModel?.timestamp ?? 0,
+        backwardsInputModel?.timestamp ?? 0,
+        brakeInputModel?.timestamp ?? 0,
+      );
     } else {
       return null;
     }
 
     const forwardsInputValue = forwardsInputModel?.value ?? 0;
-    const forwardsInputDirection = binding.inputs[SpeedBindingInputAction.Forwards]?.inputDirection ?? InputDirection.Positive;
+    const forwardsInputDirection =
+      binding.inputs[SpeedBindingInputAction.Forwards]?.inputDirection ?? InputDirection.Positive;
 
     const backwardsInputValue = backwardsInputModel?.value ?? 0;
-    const backwardsInputDirection = binding.inputs[SpeedBindingInputAction.Backwards]?.inputDirection ?? InputDirection.Positive;
+    const backwardsInputDirection =
+      binding.inputs[SpeedBindingInputAction.Backwards]?.inputDirection ?? InputDirection.Positive;
 
     const brakeInputValue = brakeInputModel?.value ?? 0;
-    const brakeInputDirection = binding.inputs[SpeedBindingInputAction.Brake]?.inputDirection ?? InputDirection.Positive;
+    const brakeInputDirection =
+      binding.inputs[SpeedBindingInputAction.Brake]?.inputDirection ?? InputDirection.Positive;
 
     const forwardsInput = extractDirectionAwareInputValue(forwardsInputValue, forwardsInputDirection);
     const backwardsInput = extractDirectionAwareInputValue(backwardsInputValue, backwardsInputDirection);

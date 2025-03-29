@@ -23,7 +23,10 @@ export class SpeedTaskFilterService implements ITaskFilter<TaskType.Speed> {
     return result;
   }
 
-  private shouldReplaceTask(previousTask: PortCommandTask | null, newTask: PortCommandTask<TaskType.Speed>): PortCommandTask | null {
+  private shouldReplaceTask(
+    previousTask: PortCommandTask | null,
+    newTask: PortCommandTask<TaskType.Speed>,
+  ): PortCommandTask | null {
     if (previousTask && !this.isSpeedTask(previousTask)) {
       return newTask;
     }

@@ -9,7 +9,13 @@
     }
   </p>
 
-  <button mat-raised-button [color]="'primary'" (click)="onUploadClick($event)" [disabled]="isDisabled" class="upload-button">
+  <button
+    mat-raised-button
+    [color]="'primary'"
+    (click)="onUploadClick($event)"
+    [disabled]="isDisabled"
+    class="upload-button"
+  >
     {{ translocoTitle | transloco }}
   </button>
 </div>

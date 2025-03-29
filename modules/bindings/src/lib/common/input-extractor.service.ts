@@ -53,7 +53,9 @@ export class InputExtractorService {
     return pipeOperators.reduce((source, pipe) => source.pipe(pipe), initialInput$);
   }
 
-  private composeInputPipeOperators(inputConfigModel: ControlSchemeInputConfig): Array<MonoTypeOperatorFunction<TaskInput | undefined>> {
+  private composeInputPipeOperators(
+    inputConfigModel: ControlSchemeInputConfig,
+  ): Array<MonoTypeOperatorFunction<TaskInput | undefined>> {
     return inputConfigModel.inputPipes.map((pipeConfig) => {
       switch (pipeConfig.type) {
         case InputPipeType.LogarithmicGain:

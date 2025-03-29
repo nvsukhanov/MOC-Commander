@@ -29,7 +29,9 @@ export class TaskFilterService implements ITaskFilter {
     if (mostRecentTaskType === null) {
       return null;
     }
-    const filteredQueue = this.filterQueue(inputSliceTasks, mostRecentTaskType) as Array<PortCommandTask<typeof mostRecentTaskType>>;
+    const filteredQueue = this.filterQueue(inputSliceTasks, mostRecentTaskType) as Array<
+      PortCommandTask<typeof mostRecentTaskType>
+    >;
     const filter = this.filters[mostRecentTaskType] as ITaskFilter<typeof mostRecentTaskType>;
     return filter.calculateNextPendingTask(currentTask, pendingTask, filteredQueue);
   }
@@ -47,7 +49,10 @@ export class TaskFilterService implements ITaskFilter {
     return mostRecentTask?.payload.type ?? null;
   }
 
-  private filterQueue<TTaskType extends TaskType>(queue: PortCommandTask[], taskType: TTaskType): PortCommandTask<TTaskType>[] {
+  private filterQueue<TTaskType extends TaskType>(
+    queue: PortCommandTask[],
+    taskType: TTaskType,
+  ): PortCommandTask<TTaskType>[] {
     return queue.filter((task): task is PortCommandTask<TTaskType> => task.payload.type === taskType);
   }
 }

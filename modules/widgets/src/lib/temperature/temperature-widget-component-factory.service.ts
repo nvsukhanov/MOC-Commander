@@ -15,22 +15,29 @@ export class TemperatureWidgetComponentFactoryService implements IWidgetComponen
     private readonly store: Store,
   ) {}
 
-  public createWidget(container: ViewContainerRef, config: TemperatureWidgetConfigModel): ControlSchemeWidgetDescriptor {
+  public createWidget(
+    container: ViewContainerRef,
+    config: TemperatureWidgetConfigModel,
+  ): ControlSchemeWidgetDescriptor {
     const componentRef = container.createComponent(TemperatureSensorWidgetComponent);
     componentRef.setInput('title', config.title);
 
-    // eslint-disable-next-line @ngrx/no-store-subscription
-    const dataSub = this.store.select(CONTROL_SCHEME_WIDGETS_DATA_SELECTORS.selectById(config.id)).subscribe((widgetData) => {
-      if (widgetData?.widgetType === WidgetType.Temperature) {
-        componentRef.setInput('data', widgetData.temperature);
-      } else {
-        componentRef.setInput('data', undefined);
-      }
-    });
+    const dataSub = this.store
+      .select(CONTROL_SCHEME_WIDGETS_DATA_SELECTORS.selectById(config.id))
+      // eslint-disable-next-line @ngrx/no-store-subscription
+      .subscribe((widgetData) => {
+        if (widgetData?.widgetType === WidgetType.Temperature) {
+          componentRef.setInput('data', widgetData.temperature);
+        } else {
+          componentRef.setInput('data', undefined);
+        }
+      });
 
-    const subtitleSub = this.widgetConnectionInfoL10nService.getConnectionInfo(config.widgetType, config.hubId, config.portId).subscribe((subtitle) => {
-      componentRef.setInput('subtitle', subtitle);
-    });
+    const subtitleSub = this.widgetConnectionInfoL10nService
+      .getConnectionInfo(config.widgetType, config.hubId, config.portId)
+      .subscribe((subtitle) => {
+        componentRef.setInput('subtitle', subtitle);
+      });
     return {
       edit$: componentRef.instance.edit,
       delete$: componentRef.instance.delete,

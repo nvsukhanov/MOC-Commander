@@ -59,7 +59,9 @@ export class HubPortListItemComponent {
     if (controlSchemeName === null || hubId === null || portId === null) {
       return [];
     }
-    return this.store.selectSignal(HUB_PORT_LIST_ITEM_SELECTORS.selectIoBindings({ controlSchemeName, hubId, portId }))();
+    return this.store.selectSignal(
+      HUB_PORT_LIST_ITEM_SELECTORS.selectIoBindings({ controlSchemeName, hubId, portId }),
+    )();
   });
 
   public readonly hasAccelerationProfileEnabled: Signal<boolean> = computed(() => {
@@ -69,7 +71,9 @@ export class HubPortListItemComponent {
     if (controlSchemeName === null || hubId === null || portId === null) {
       return false;
     }
-    return this.store.selectSignal(HUB_PORT_LIST_ITEM_SELECTORS.selectPortAccelerationProfileEnabled({ controlSchemeName, hubId, portId }))();
+    return this.store.selectSignal(
+      HUB_PORT_LIST_ITEM_SELECTORS.selectPortAccelerationProfileEnabled({ controlSchemeName, hubId, portId }),
+    )();
   });
 
   public readonly accelerationTimeMs: Signal<number> = computed(() => {
@@ -79,7 +83,9 @@ export class HubPortListItemComponent {
     if (controlSchemeName === null || hubId === null || portId === null) {
       return 0;
     }
-    return this.store.selectSignal(HUB_PORT_LIST_ITEM_SELECTORS.selectAccelerationTimeMs({ controlSchemeName, hubId, portId }))();
+    return this.store.selectSignal(
+      HUB_PORT_LIST_ITEM_SELECTORS.selectAccelerationTimeMs({ controlSchemeName, hubId, portId }),
+    )();
   });
 
   public readonly hasDecelerationProfileEnabled: Signal<boolean> = computed(() => {
@@ -89,7 +95,9 @@ export class HubPortListItemComponent {
     if (controlSchemeName === null || hubId === null || portId === null) {
       return false;
     }
-    return this.store.selectSignal(HUB_PORT_LIST_ITEM_SELECTORS.selectPortDecelerationProfileEnabled({ controlSchemeName, hubId, portId }))();
+    return this.store.selectSignal(
+      HUB_PORT_LIST_ITEM_SELECTORS.selectPortDecelerationProfileEnabled({ controlSchemeName, hubId, portId }),
+    )();
   });
 
   public readonly decelerationTimeMs: Signal<number | null> = computed(() => {
@@ -99,7 +107,9 @@ export class HubPortListItemComponent {
     if (controlSchemeName === null || hubId === null || portId === null) {
       return null;
     }
-    return this.store.selectSignal(HUB_PORT_LIST_ITEM_SELECTORS.selectDecelerationTimeMs({ controlSchemeName, hubId, portId }))();
+    return this.store.selectSignal(
+      HUB_PORT_LIST_ITEM_SELECTORS.selectDecelerationTimeMs({ controlSchemeName, hubId, portId }),
+    )();
   });
 
   public readonly runningTask: Signal<PortCommandTask | null> = computed(() => {
@@ -127,7 +137,9 @@ export class HubPortListItemComponent {
     if (controlSchemeName === null || hubId === null || portId === null) {
       return false;
     }
-    return this.store.selectSignal(HUB_PORT_LIST_ITEM_SELECTORS.selectIoHasRequiredCapabilities({ controlSchemeName, hubId, portId }))();
+    return this.store.selectSignal(
+      HUB_PORT_LIST_ITEM_SELECTORS.selectIoHasRequiredCapabilities({ controlSchemeName, hubId, portId }),
+    )();
   });
 
   public readonly portConfigRoute: Signal<string[] | null> = computed(() => {
@@ -137,7 +149,12 @@ export class HubPortListItemComponent {
     const hubId = this._hubId();
     const portId = this._portId();
 
-    if (controlSchemeName !== null && hubId !== null && portId !== null && (hasAccelerationProfileEnabled || hasDecelerationProfileEnabled)) {
+    if (
+      controlSchemeName !== null &&
+      hubId !== null &&
+      portId !== null &&
+      (hasAccelerationProfileEnabled || hasDecelerationProfileEnabled)
+    ) {
       return this.routeBuilderService.portConfigEdit(controlSchemeName, hubId, portId);
     }
     return null;

@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable, take } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ScreenSizeObserverService } from '@app/shared-misc';
-import { AppUpdatedNotificationComponent, ErrorNotificationComponent, InfoNotificationComponent } from '@app/shared-components';
+import {
+  AppUpdatedNotificationComponent,
+  ErrorNotificationComponent,
+  InfoNotificationComponent,
+} from '@app/shared-components';
 
 @Injectable()
 export class NotificationFacadeService {

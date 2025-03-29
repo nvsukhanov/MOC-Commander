@@ -17,7 +17,9 @@ export class ControllerSettingsComponentResolverService {
     [ControllerType.Hub]: HubControllerSettingsComponent,
   };
 
-  public resolveComponentFor<T extends ControllerType>(controllerType: T): Type<IControllerSettingsRenderer<InferControllerSettings<T>>> | null {
+  public resolveComponentFor<T extends ControllerType>(
+    controllerType: T,
+  ): Type<IControllerSettingsRenderer<InferControllerSettings<T>>> | null {
     return this.renderers[controllerType] ?? null;
   }
 }

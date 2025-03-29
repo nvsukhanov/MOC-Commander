@@ -28,6 +28,12 @@ export class ControllerProfileGenericGamepadFactoryService {
     if (!parsedUid) {
       return null;
     }
-    return new ControllerProfileGenericGamepad(uid, parsedUid.axesCount, parsedUid.buttonsCount, transloco, this.config);
+    return new ControllerProfileGenericGamepad(
+      uid,
+      parsedUid.axesCount,
+      parsedUid.buttonsCount,
+      transloco,
+      this.config,
+    );
   }
 }

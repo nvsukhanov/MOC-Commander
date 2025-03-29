@@ -10,7 +10,9 @@ import { IWidgetConnectionInfoProvider, WIDGET_CONNECTION_INFO_PROVIDER } from '
   pure: true,
 })
 export class WidgetConnectionInfoL10nPipe implements PipeTransform {
-  constructor(@Inject(WIDGET_CONNECTION_INFO_PROVIDER) private readonly connectionService: IWidgetConnectionInfoProvider) {}
+  constructor(
+    @Inject(WIDGET_CONNECTION_INFO_PROVIDER) private readonly connectionService: IWidgetConnectionInfoProvider,
+  ) {}
 
   public transform(config: Pick<WidgetConfigModel, 'hubId' | 'portId' | 'widgetType'>): Observable<string> {
     return this.connectionService.getConnectionInfo(config.widgetType, config.hubId, config.portId);

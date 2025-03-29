@@ -4,14 +4,23 @@ import { Store } from '@ngrx/store';
 import { TranslocoService } from '@jsverse/transloco';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { ISchemeRunnerComponent, RoutesBuilderService, ScreenSizeObserverService, TitleService } from '@app/shared-misc';
+import {
+  ISchemeRunnerComponent,
+  RoutesBuilderService,
+  ScreenSizeObserverService,
+  TitleService,
+} from '@app/shared-misc';
 import { BreadcrumbsService, ConfirmationDialogModule, ConfirmationDialogService } from '@app/shared-components';
 import { CONTROLLER_INPUT_ACTIONS, CONTROL_SCHEME_ACTIONS, ROUTER_SELECTORS } from '@app/store';
 import { ExportControlSchemeDialogComponent, ExportControlSchemeDialogData } from '@app/shared-control-schemes';
 
 import { CONTROL_SCHEME_PAGE_SELECTORS } from './control-scheme-page.selectors';
 import { ToolbarControlsComponent } from './toolbar-controls';
-import { CONTROL_SCHEME_RUN_WIDGET_BLOCKERS_CHECKER, IControlSchemeRunWidgetBlockersChecker, WidgetsSectionComponent } from './widgets';
+import {
+  CONTROL_SCHEME_RUN_WIDGET_BLOCKERS_CHECKER,
+  IControlSchemeRunWidgetBlockersChecker,
+  WidgetsSectionComponent,
+} from './widgets';
 import { IssuesSectionComponent } from './issues-section';
 import { BindingsSectionComponent } from './bindings-section';
 
@@ -20,18 +29,29 @@ import { BindingsSectionComponent } from './bindings-section';
   selector: 'page-control-scheme-view',
   templateUrl: './control-scheme-page.component.html',
   styleUrl: './control-scheme-page.component.scss',
-  imports: [ConfirmationDialogModule, ToolbarControlsComponent, MatDialogModule, WidgetsSectionComponent, IssuesSectionComponent, BindingsSectionComponent],
+  imports: [
+    ConfirmationDialogModule,
+    ToolbarControlsComponent,
+    MatDialogModule,
+    WidgetsSectionComponent,
+    IssuesSectionComponent,
+    BindingsSectionComponent,
+  ],
   providers: [TitleService, BreadcrumbsService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRunnerComponent {
   public readonly selectedScheme = this.store.selectSignal(CONTROL_SCHEME_PAGE_SELECTORS.selectCurrentlyViewedScheme);
 
-  public readonly canRunScheme = this.store.selectSignal(CONTROL_SCHEME_PAGE_SELECTORS.canRunViewedScheme(this.controlSchemeStartWidgetCheckService));
+  public readonly canRunScheme = this.store.selectSignal(
+    CONTROL_SCHEME_PAGE_SELECTORS.canRunViewedScheme(this.controlSchemeStartWidgetCheckService),
+  );
 
   public readonly isSmallScreen$: Observable<boolean> = this.screenSizeObserverService.isSmallScreen$;
 
-  public readonly isSchemeRunning = this.store.selectSignal(CONTROL_SCHEME_PAGE_SELECTORS.isCurrentControlSchemeRunning);
+  public readonly isSchemeRunning = this.store.selectSignal(
+    CONTROL_SCHEME_PAGE_SELECTORS.isCurrentControlSchemeRunning,
+  );
 
   private sub?: Subscription;
 
@@ -63,7 +83,11 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRun
     this.titleService.setTitle$(
       this.store
         .select(ROUTER_SELECTORS.selectCurrentlyViewedSchemeName)
-        .pipe(switchMap((controlSchemeName) => this.transloco.selectTranslate('pageTitle.controlSchemeView', { controlSchemeName }))),
+        .pipe(
+          switchMap((controlSchemeName) =>
+            this.transloco.selectTranslate('pageTitle.controlSchemeView', { controlSchemeName }),
+          ),
+        ),
     );
 
     const scheme = this.selectedScheme();
@@ -93,7 +117,10 @@ export class ControlSchemePageComponent implements OnInit, OnDestroy, ISchemeRun
     if (!scheme) {
       return;
     }
-    this.dialog.open<ExportControlSchemeDialogComponent, ExportControlSchemeDialogData>(ExportControlSchemeDialogComponent, { data: scheme });
+    this.dialog.open<ExportControlSchemeDialogComponent, ExportControlSchemeDialogData>(
+      ExportControlSchemeDialogComponent,
+      { data: scheme },
+    );
   }
 
   public runScheme(): void {

@@ -11,7 +11,9 @@ export class ControlSchemeValidators {
     return (control: AbstractControl<string>): Observable<ValidationErrors | null> => {
       return control.valueChanges.pipe(
         startWith(control.value),
-        concatLatestFrom((name) => store.select(CONTROL_SCHEMES_VALIDATION_SELECTORS.selectControlSchemeNameIsNotUnique(name))),
+        concatLatestFrom((name) =>
+          store.select(CONTROL_SCHEMES_VALIDATION_SELECTORS.selectControlSchemeNameIsNotUnique(name)),
+        ),
         map(([, isNotUnique]) => {
           return isNotUnique ? { [CONTROL_SCHEME_NAME_IS_NOT_UNIQUE]: true } : null;
         }),

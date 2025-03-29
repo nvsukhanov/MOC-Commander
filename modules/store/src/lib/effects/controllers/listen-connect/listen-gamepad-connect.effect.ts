@@ -3,7 +3,12 @@ import { inject } from '@angular/core';
 import { Action, Store } from '@ngrx/store';
 import { Observable, animationFrames, filter, map, switchMap } from 'rxjs';
 import { concatLatestFrom } from '@ngrx/operators';
-import { ControllerType, GamepadProfileFactoryService, GamepadSettings, IControllerProfile } from '@app/controller-profiles';
+import {
+  ControllerType,
+  GamepadProfileFactoryService,
+  GamepadSettings,
+  IControllerProfile,
+} from '@app/controller-profiles';
 import { WINDOW } from '@app/shared-misc';
 
 import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS } from '../../../selectors';

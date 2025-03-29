@@ -68,7 +68,13 @@ export class HubServoCalibrationFacadeService {
     @Inject(APP_CONFIG) private readonly appConfig: IAppConfig,
   ) {}
 
-  public calibrateServo(hubId: string, portId: number, speed: number, power: number, calibrationRuns: number): Observable<CalibrationResult> {
+  public calibrateServo(
+    hubId: string,
+    portId: number,
+    speed: number,
+    power: number,
+    calibrationRuns: number,
+  ): Observable<CalibrationResult> {
     return new Observable<CalibrationResult>((subscriber) => {
       const cancel$ = new Subject<void>();
       this.doCalibration(hubId, portId, speed, power, calibrationRuns)
@@ -91,7 +97,13 @@ export class HubServoCalibrationFacadeService {
     });
   }
 
-  private doCalibration(hubId: string, portId: number, speed: number, power: number, calibrationRuns: number): Observable<CalibrationResultFinished> {
+  private doCalibration(
+    hubId: string,
+    portId: number,
+    speed: number,
+    power: number,
+    calibrationRuns: number,
+  ): Observable<CalibrationResultFinished> {
     return this.getPreCalibrationData(hubId, portId).pipe(
       switchMap(({ startAbsolutePosition, startRelativePosition, positionModeId }) => {
         return this.getServoRange(hubId, portId, positionModeId, speed, power, calibrationRuns).pipe(
@@ -155,7 +167,13 @@ export class HubServoCalibrationFacadeService {
     );
   }
 
-  private finalizeCalibration(hubId: string, portId: number, speed: number, power: number, finalPosition: number): Observable<unknown> {
+  private finalizeCalibration(
+    hubId: string,
+    portId: number,
+    speed: number,
+    power: number,
+    finalPosition: number,
+  ): Observable<unknown> {
     const hub = this.getHub(hubId);
     return hub.motors.goToPosition(portId, finalPosition, { speed, power, endState: MotorServoEndState.hold }).pipe(
       last(),
@@ -179,7 +197,16 @@ export class HubServoCalibrationFacadeService {
     const probes: Array<Observable<number>> = [];
     const fullArcRange = this.appConfig.servo.maxServoRange * 2;
     for (let i = 0; i < calibrationRuns; i++) {
-      probes.push(this.probeDirectionLimit(hub, portId, -speed, power, i === 0 ? fullArcRange : fullArcRange * 2, positionPortModeId));
+      probes.push(
+        this.probeDirectionLimit(
+          hub,
+          portId,
+          -speed,
+          power,
+          i === 0 ? fullArcRange : fullArcRange * 2,
+          positionPortModeId,
+        ),
+      );
       probes.push(this.probeDirectionLimit(hub, portId, speed, power, fullArcRange * 2, positionPortModeId));
     }
 
@@ -201,7 +228,14 @@ export class HubServoCalibrationFacadeService {
    * Probes the servo in a given direction until the motor reaches the limit or the maximum distance is reached.
    * Approach with startSpeed is used instead of goToPosition since the former is much faster.
    */
-  private probeDirectionLimit(hub: IHub, portId: number, speed: number, power: number, maxDistance: number, positionModeId: number): Observable<number> {
+  private probeDirectionLimit(
+    hub: IHub,
+    portId: number,
+    speed: number,
+    power: number,
+    maxDistance: number,
+    positionModeId: number,
+  ): Observable<number> {
     return new Observable((subscriber) => {
       const speedSubscription = hub.motors.startSpeed(portId, speed, { power }).subscribe();
 

@@ -22,11 +22,18 @@ export class SetAngleBindingInputExtractorService implements ITasksInputExtracto
     globalInput$: Observable<Dictionary<ControllerInputModel>>,
     controllersSettings$: Observable<Dictionary<ControllerSettingsModel>>,
   ): Observable<TaskInputs<ControlSchemeBindingType.SetAngle>> {
-    return this.inputExtractorService.extractInputResult(binding, globalInput$, controllersSettings$, binding.inputs[SetAngleBindingInputAction.SetAngle]).pipe(
-      distinctUntilIsActivatedChanged(),
-      map((setAngle) => ({
-        [SetAngleBindingInputAction.SetAngle]: setAngle,
-      })),
-    );
+    return this.inputExtractorService
+      .extractInputResult(
+        binding,
+        globalInput$,
+        controllersSettings$,
+        binding.inputs[SetAngleBindingInputAction.SetAngle],
+      )
+      .pipe(
+        distinctUntilIsActivatedChanged(),
+        map((setAngle) => ({
+          [SetAngleBindingInputAction.SetAngle]: setAngle,
+        })),
+      );
   }
 }

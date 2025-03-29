@@ -2,8 +2,16 @@ import { ChangeDetectionStrategy, Component, Inject, Input, WritableSignal, comp
 import { of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { CONTROLLER_CONNECTION_SELECTORS, ControlSchemeBinding, ControlSchemeBindingInputs, ControlSchemeInputConfig } from '@app/store';
-import { BINDING_CONTROLLER_INPUT_NAME_RESOLVER, IBindingControllerInputNameResolver } from '@app/shared-control-schemes';
+import {
+  CONTROLLER_CONNECTION_SELECTORS,
+  ControlSchemeBinding,
+  ControlSchemeBindingInputs,
+  ControlSchemeInputConfig,
+} from '@app/store';
+import {
+  BINDING_CONTROLLER_INPUT_NAME_RESOLVER,
+  IBindingControllerInputNameResolver,
+} from '@app/shared-control-schemes';
 import { ControlSchemeBindingType } from '@app/shared-misc';
 import { EllipsisTitleDirective } from '@app/shared-components';
 
@@ -38,7 +46,11 @@ export class BindingActionListItemComponent<
       return of('');
     }
     const inputConfig = binding.inputs[action as keyof typeof binding.inputs];
-    return this.bindingControllerInputNameProvider.getControllerInputName(binding.bindingType, action as keyof typeof binding.inputs, inputConfig);
+    return this.bindingControllerInputNameProvider.getControllerInputName(
+      binding.bindingType,
+      action as keyof typeof binding.inputs,
+      inputConfig,
+    );
   });
 
   public readonly isControllerConnected = computed(() => {

@@ -27,7 +27,10 @@ export class AccelerateBindingL10nService implements IBindingL10n<ControlSchemeB
     }
   }
 
-  public getControllerInputName(actionType: AccelerateBindingInputAction, inputConfig: ControlSchemeInputConfig): Observable<string> {
+  public getControllerInputName(
+    actionType: AccelerateBindingInputAction,
+    inputConfig: ControlSchemeInputConfig,
+  ): Observable<string> {
     switch (actionType) {
       case AccelerateBindingInputAction.Forwards:
       case AccelerateBindingInputAction.Backwards:

@@ -34,7 +34,9 @@ export const DISCOVER_HUB_EFFECT = createEffect(
   (
     actions$: Actions = inject(Actions),
     navigator: Navigator = inject(NAVIGATOR),
-    communicationNotifierMiddlewareFactory: HubCommunicationNotifierMiddlewareFactoryService = inject(HubCommunicationNotifierMiddlewareFactoryService),
+    communicationNotifierMiddlewareFactory: HubCommunicationNotifierMiddlewareFactoryService = inject(
+      HubCommunicationNotifierMiddlewareFactoryService,
+    ),
     prefixedConsoleLoggerFactory: PrefixedConsoleLoggerFactoryService = inject(PrefixedConsoleLoggerFactoryService),
     store: Store = inject(Store),
     hubStorage: HubStorageService = inject(HubStorageService),
@@ -58,14 +60,18 @@ export const DISCOVER_HUB_EFFECT = createEffect(
           useLinuxWorkaround: !!useLinuxWorkaround,
         }).pipe(
           switchMap((hub: IHub) => {
-            return of(hub).pipe(combineLatestWith(hub.properties.getPrimaryMacAddress(), hub.properties.getAdvertisingName()));
+            return of(hub).pipe(
+              combineLatestWith(hub.properties.getPrimaryMacAddress(), hub.properties.getAdvertisingName()),
+            );
           }),
           map(([hub, macAddressReply, name]) => {
             if (hubStorage.has(macAddressReply)) {
               return HUBS_ACTIONS.alreadyConnected({ hubId: macAddressReply, name });
             }
             communicationNotifierMiddleware.communicationNotifier$.pipe(takeUntil(hub.disconnected)).subscribe((v) => {
-              store.dispatch(HUB_RUNTIME_DATA_ACTIONS.setHasCommunication({ hubId: macAddressReply, hasCommunication: v }));
+              store.dispatch(
+                HUB_RUNTIME_DATA_ACTIONS.setHasCommunication({ hubId: macAddressReply, hasCommunication: v }),
+              );
             });
             hubStorage.store(hub, macAddressReply);
             return HUBS_ACTIONS.connected({ hubId: macAddressReply, name });

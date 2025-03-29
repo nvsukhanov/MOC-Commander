@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, Input, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ComponentRef,
+  Input,
+  OnDestroy,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { CONTROLLER_SETTINGS_ACTIONS, ControllerSettingsModel } from '@app/store';
@@ -42,9 +51,11 @@ export class ControllerSettingsContainerComponent implements OnDestroy {
       this.destroyComponent();
       this.settingsComponentRef = this.viewContainerRef.createComponent(settingsComponentType);
       this.settingsComponentRef.instance.loadSettings(settings);
-      this.settingsChangesSubscription = this.settingsComponentRef.instance.settingsChanges$.subscribe((nextSettings) => {
-        this.store.dispatch(CONTROLLER_SETTINGS_ACTIONS.updateSettings({ settings: nextSettings }));
-      });
+      this.settingsChangesSubscription = this.settingsComponentRef.instance.settingsChanges$.subscribe(
+        (nextSettings) => {
+          this.store.dispatch(CONTROLLER_SETTINGS_ACTIONS.updateSettings({ settings: nextSettings }));
+        },
+      );
       this.cdRef.detectChanges();
     }
   }

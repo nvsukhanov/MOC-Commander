@@ -53,9 +53,13 @@ export type HubIoViewModel = {
 } & AttachedIoModel;
 
 export const HUB_VIEW_PAGE_SELECTORS = {
-  selectCurrentlyViewedHubModel: createSelector(ROUTER_SELECTORS.selectCurrentlyViewedHubId, HUBS_SELECTORS.selectEntities, (hubId, hubs) => {
-    return hubId !== null ? hubs[hubId] : undefined;
-  }),
+  selectCurrentlyViewedHubModel: createSelector(
+    ROUTER_SELECTORS.selectCurrentlyViewedHubId,
+    HUBS_SELECTORS.selectEntities,
+    (hubId, hubs) => {
+      return hubId !== null ? hubs[hubId] : undefined;
+    },
+  ),
   selectCurrentlyViewedHubRuntimeData: createSelector(
     ROUTER_SELECTORS.selectCurrentlyViewedHubId,
     HUB_RUNTIME_DATA_SELECTORS.selectEntities,

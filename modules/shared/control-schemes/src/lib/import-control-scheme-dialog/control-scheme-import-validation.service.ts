@@ -68,7 +68,12 @@ export class ControlSchemeImportValidationService {
     );
 
     for (const portConfig of controlScheme.portConfigs) {
-      if (!portConfig || portConfig.portId == undefined || portConfig.hubId === undefined || Number.isNaN(portConfig.portId)) {
+      if (
+        !portConfig ||
+        portConfig.portId == undefined ||
+        portConfig.hubId === undefined ||
+        Number.isNaN(portConfig.portId)
+      ) {
         return { [ControlSchemeImportValidationErrors.CorruptedPortConfig]: true };
       }
       const portConfigFormGroup = this.portConfigFormBuilder.build();

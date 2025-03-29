@@ -27,7 +27,10 @@ export class SpeedBindingL10nService implements IBindingL10n<ControlSchemeBindin
     }
   }
 
-  public getControllerInputName(actionType: SpeedBindingInputAction, inputConfig: ControlSchemeInputConfig): Observable<string> {
+  public getControllerInputName(
+    actionType: SpeedBindingInputAction,
+    inputConfig: ControlSchemeInputConfig,
+  ): Observable<string> {
     switch (actionType) {
       case SpeedBindingInputAction.Forwards:
       case SpeedBindingInputAction.Backwards:

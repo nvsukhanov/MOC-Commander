@@ -13,7 +13,15 @@ import { ConfirmationDialogModule, ConfirmationDialogService } from '../confirma
   selector: 'lib-widget',
   templateUrl: './widget.component.html',
   styleUrl: './widget.component.scss',
-  imports: [MatCardModule, MatIconModule, MatButtonModule, MatMenuModule, EllipsisTitleDirective, TranslocoPipe, ConfirmationDialogModule],
+  imports: [
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    MatMenuModule,
+    EllipsisTitleDirective,
+    TranslocoPipe,
+    ConfirmationDialogModule,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WidgetComponent {

@@ -12,7 +12,9 @@ export const SUBSCRIBE_TO_BUTTON_STATE_ON_CONNECT = createEffect(
       mergeMap((a) =>
         hubStorage
           .get(a.hubId)
-          .properties.buttonState.pipe(map((isButtonPressed) => HUB_RUNTIME_DATA_ACTIONS.buttonStateReceived({ hubId: a.hubId, isButtonPressed }))),
+          .properties.buttonState.pipe(
+            map((isButtonPressed) => HUB_RUNTIME_DATA_ACTIONS.buttonStateReceived({ hubId: a.hubId, isButtonPressed })),
+          ),
       ),
     );
   },

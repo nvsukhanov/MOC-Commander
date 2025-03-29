@@ -26,7 +26,12 @@ export class SpeedBindingInputExtractorService implements ITasksInputExtractor<C
       .extractInputResult(binding, globalInput$, controllersSettings$, binding.inputs[SpeedBindingInputAction.Forwards])
       .pipe(distinctUntilValueChanged());
     const backwards$ = this.inputExtractorService
-      .extractInputResult(binding, globalInput$, controllersSettings$, binding.inputs[SpeedBindingInputAction.Backwards])
+      .extractInputResult(
+        binding,
+        globalInput$,
+        controllersSettings$,
+        binding.inputs[SpeedBindingInputAction.Backwards],
+      )
       .pipe(distinctUntilValueChanged());
     const brake$ = this.inputExtractorService
       .extractInputResult(binding, globalInput$, controllersSettings$, binding.inputs[SpeedBindingInputAction.Brake])

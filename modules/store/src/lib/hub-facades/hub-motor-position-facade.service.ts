@@ -16,7 +16,9 @@ export class HubMotorPositionFacadeService {
   public setMotorPosition(hubId: string, portId: number, position: number): Observable<void> {
     return this.store.select(ATTACHED_IO_PROPS_SELECTORS.selectMotorEncoderOffset({ hubId, portId })).pipe(
       take(1),
-      tap((motorEncoderOffset) => this.store.dispatch(HUBS_ACTIONS.setPortPosition({ hubId, portId, position: position - motorEncoderOffset }))),
+      tap((motorEncoderOffset) =>
+        this.store.dispatch(HUBS_ACTIONS.setPortPosition({ hubId, portId, position: position - motorEncoderOffset })),
+      ),
       map(() => void 0),
     );
   }

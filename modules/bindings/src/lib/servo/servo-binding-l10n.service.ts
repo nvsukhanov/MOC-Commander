@@ -25,7 +25,10 @@ export class ServoBindingL10nService implements IBindingL10n<ControlSchemeBindin
     }
   }
 
-  public getControllerInputName(actionType: ServoBindingInputAction, inputConfig: ControlSchemeInputConfig): Observable<string> {
+  public getControllerInputName(
+    actionType: ServoBindingInputAction,
+    inputConfig: ControlSchemeInputConfig,
+  ): Observable<string> {
     switch (actionType) {
       case ServoBindingInputAction.Cw:
       case ServoBindingInputAction.Ccw:

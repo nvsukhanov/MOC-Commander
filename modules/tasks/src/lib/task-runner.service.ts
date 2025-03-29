@@ -27,7 +27,10 @@ export class TaskRunnerService implements ITaskRunner {
     private readonly gearboxBindingTaskRunnerService: GearboxTaskRunnerService,
   ) {}
 
-  public runTask<TTaskType extends TaskType>(hub: IHub, task: PortCommandTask<TTaskType>): Observable<PortCommandExecutionStatus> {
+  public runTask<TTaskType extends TaskType>(
+    hub: IHub,
+    task: PortCommandTask<TTaskType>,
+  ): Observable<PortCommandExecutionStatus> {
     const runner: ITaskRunner<TTaskType> = this.runnersMap[task.payload.type];
     return runner.runTask(hub, task);
   }

@@ -6,9 +6,10 @@ import { HubRuntimeDataModel } from '../models';
 
 export type HubRuntimeDataState = EntityState<HubRuntimeDataModel>;
 
-export const HUB_RUNTIME_DATA_ENTITY_ADAPTER: EntityAdapter<HubRuntimeDataModel> = createEntityAdapter<HubRuntimeDataModel>({
-  selectId: (runtimeData) => runtimeData.hubId,
-});
+export const HUB_RUNTIME_DATA_ENTITY_ADAPTER: EntityAdapter<HubRuntimeDataModel> =
+  createEntityAdapter<HubRuntimeDataModel>({
+    selectId: (runtimeData) => runtimeData.hubId,
+  });
 
 export const HUB_RUNTIME_DATA_INITIAL_STATE: HubRuntimeDataState = HUB_RUNTIME_DATA_ENTITY_ADAPTER.getInitialState();
 
@@ -33,7 +34,10 @@ export const HUB_RUNTIME_DATA_FEATURE = createFeature({
           state,
         ),
     ),
-    on(HUBS_ACTIONS.disconnected, (state, { hubId }): HubRuntimeDataState => HUB_RUNTIME_DATA_ENTITY_ADAPTER.removeOne(hubId, state)),
+    on(
+      HUBS_ACTIONS.disconnected,
+      (state, { hubId }): HubRuntimeDataState => HUB_RUNTIME_DATA_ENTITY_ADAPTER.removeOne(hubId, state),
+    ),
     on(
       HUB_RUNTIME_DATA_ACTIONS.setHasCommunication,
       (state, data): HubRuntimeDataState =>
@@ -112,18 +116,22 @@ export const HUB_RUNTIME_DATA_FEATURE = createFeature({
           state,
         ),
     ),
-    on(HUBS_ACTIONS.requestPortPosition, HUBS_ACTIONS.requestPortAbsolutePosition, (state, { hubId, portId }): HubRuntimeDataState => {
-      const currentlyRequestedPorts = state.entities[hubId]?.valueRequestPortIds || [];
-      return HUB_RUNTIME_DATA_ENTITY_ADAPTER.updateOne(
-        {
-          id: hubId,
-          changes: {
-            valueRequestPortIds: [...currentlyRequestedPorts, portId],
+    on(
+      HUBS_ACTIONS.requestPortPosition,
+      HUBS_ACTIONS.requestPortAbsolutePosition,
+      (state, { hubId, portId }): HubRuntimeDataState => {
+        const currentlyRequestedPorts = state.entities[hubId]?.valueRequestPortIds || [];
+        return HUB_RUNTIME_DATA_ENTITY_ADAPTER.updateOne(
+          {
+            id: hubId,
+            changes: {
+              valueRequestPortIds: [...currentlyRequestedPorts, portId],
+            },
           },
-        },
-        state,
-      );
-    }),
+          state,
+        );
+      },
+    ),
     on(
       HUBS_ACTIONS.portAbsolutePositionRead,
       HUBS_ACTIONS.portAbsolutePositionReadFailed,

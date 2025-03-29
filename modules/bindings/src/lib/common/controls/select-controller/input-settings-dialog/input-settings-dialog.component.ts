@@ -1,5 +1,11 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogActions,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
 import { MatButton } from '@angular/material/button';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { InputPipeConfig, InputPipeType } from '@app/store';
@@ -21,7 +27,14 @@ export interface IInputSettingsDialogResult {
   selector: 'lib-cs-select-input-transform-dialog',
   templateUrl: './input-settings-dialog.component.html',
   styleUrl: './input-settings-dialog.component.scss',
-  imports: [MatButton, MatDialogActions, MatDialogTitle, TranslocoPipe, MatDialogContent, SelectInputPipePresetComponent],
+  imports: [
+    MatButton,
+    MatDialogActions,
+    MatDialogTitle,
+    TranslocoPipe,
+    MatDialogContent,
+    SelectInputPipePresetComponent,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputSettingsDialogComponent {

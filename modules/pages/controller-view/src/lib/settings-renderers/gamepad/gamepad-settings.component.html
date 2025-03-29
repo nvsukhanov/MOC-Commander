@@ -1,6 +1,8 @@
 @if (viewModel) {
   <section class="settings-section">
-    <page-controller-view-control-ignore-input [control]="viewModel.ignoreInputControl"></page-controller-view-control-ignore-input>
+    <page-controller-view-control-ignore-input
+      [control]="viewModel.ignoreInputControl"
+    ></page-controller-view-control-ignore-input>
   </section>
   <section class="settings-section">
     <mat-accordion multi>
@@ -25,11 +27,17 @@
           </mat-expansion-panel-header>
 
           @if (panel.expanded) {
-            <page-controller-view-gamepad-settings-axis-settings [axisSettingsViewModel]="axis"></page-controller-view-gamepad-settings-axis-settings>
+            <page-controller-view-gamepad-settings-axis-settings
+              [axisSettingsViewModel]="axis"
+            ></page-controller-view-gamepad-settings-axis-settings>
           }
 
           <mat-action-row>
-            <button mat-button [disabled]="!!(axis.areSettingsDefault$ | async)" (click)="resetAxisSettings(axis.inputId)">
+            <button
+              mat-button
+              [disabled]="!!(axis.areSettingsDefault$ | async)"
+              (click)="resetAxisSettings(axis.inputId)"
+            >
               {{ 'controller.resetInputSettingsToDefault' | transloco }}
             </button>
           </mat-action-row>
@@ -44,17 +52,25 @@
             </mat-panel-title>
             @if (!panel.expanded) {
               <mat-panel-description *libHideOnSmallScreen>
-                <lib-input-activity-indicator [isActive]="!!(button.isActivated$ | async)"></lib-input-activity-indicator>
+                <lib-input-activity-indicator
+                  [isActive]="!!(button.isActivated$ | async)"
+                ></lib-input-activity-indicator>
               </mat-panel-description>
             }
           </mat-expansion-panel-header>
 
           @if (panel.expanded) {
-            <page-controller-view-gamepad-settings-button-settings [buttonSettingsViewModel]="button"></page-controller-view-gamepad-settings-button-settings>
+            <page-controller-view-gamepad-settings-button-settings
+              [buttonSettingsViewModel]="button"
+            ></page-controller-view-gamepad-settings-button-settings>
           }
 
           <mat-action-row>
-            <button mat-button [disabled]="!!(button.areSettingsDefault$ | async)" (click)="resetButtonSettings(button.inputId)">
+            <button
+              mat-button
+              [disabled]="!!(button.areSettingsDefault$ | async)"
+              (click)="resetButtonSettings(button.inputId)"
+            >
               {{ 'controller.resetInputSettingsToDefault' | transloco }}
             </button>
           </mat-action-row>

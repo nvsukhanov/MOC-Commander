@@ -25,7 +25,13 @@ export type V27ServoBinding = Override<
   }
 >;
 
-export type V27Bindings = V28SpeedBinding | V27ServoBinding | V28StepperBinding | V28TrainBinding | V28GearboxBinding | V28SetAngleBinding;
+export type V27Bindings =
+  | V28SpeedBinding
+  | V27ServoBinding
+  | V28StepperBinding
+  | V28TrainBinding
+  | V28GearboxBinding
+  | V28SetAngleBinding;
 export type V27ControlSchemesEntitiesState = Omit<V28ControlSchemesEntitiesState, 'bindings'> & {
   bindings: V27Bindings[];
 };

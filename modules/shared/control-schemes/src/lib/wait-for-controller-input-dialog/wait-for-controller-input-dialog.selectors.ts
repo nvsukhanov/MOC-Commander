@@ -1,5 +1,10 @@
 import { createSelector } from '@ngrx/store';
-import { CONTROLLER_CONNECTION_SELECTORS, CONTROLLER_SELECTORS, CONTROLLER_SETTINGS_SELECTORS, ControllerModel } from '@app/store';
+import {
+  CONTROLLER_CONNECTION_SELECTORS,
+  CONTROLLER_SELECTORS,
+  CONTROLLER_SETTINGS_SELECTORS,
+  ControllerModel,
+} from '@app/store';
 
 export const WAIT_FOR_CONTROLLER_INPUT_DIALOG_SELECTORS = {
   selectConnectedControllers: createSelector(

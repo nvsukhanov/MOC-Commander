@@ -33,8 +33,17 @@ export const ATTACHED_IOS_FEATURE = createFeature({
         state,
       );
     }),
-    on(ATTACHED_IOS_ACTIONS.ioDisconnected, (state, data): AttachedIOState => ATTACHED_IOS_ENTITY_ADAPTER.removeOne(attachedIosIdFn(data), state)),
-    on(HUBS_ACTIONS.connected, (state, data): AttachedIOState => ATTACHED_IOS_ENTITY_ADAPTER.removeMany((d) => d.hubId === data.hubId, state)),
-    on(HUBS_ACTIONS.forgetHub, (state, data): AttachedIOState => ATTACHED_IOS_ENTITY_ADAPTER.removeMany((d) => d.hubId === data.hubId, state)),
+    on(
+      ATTACHED_IOS_ACTIONS.ioDisconnected,
+      (state, data): AttachedIOState => ATTACHED_IOS_ENTITY_ADAPTER.removeOne(attachedIosIdFn(data), state),
+    ),
+    on(
+      HUBS_ACTIONS.connected,
+      (state, data): AttachedIOState => ATTACHED_IOS_ENTITY_ADAPTER.removeMany((d) => d.hubId === data.hubId, state),
+    ),
+    on(
+      HUBS_ACTIONS.forgetHub,
+      (state, data): AttachedIOState => ATTACHED_IOS_ENTITY_ADAPTER.removeMany((d) => d.hubId === data.hubId, state),
+    ),
   ),
 });

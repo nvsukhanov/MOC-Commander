@@ -11,7 +11,12 @@
     <mat-icon [fontIcon]="'bluetooth_searching'"></mat-icon>
   </button>
 } @else {
-  <a mat-mini-fab [color]="'warn'" [routerLink]="routesBuilderService.root" [title]="'bluetoothIsNotAvailable' | transloco">
+  <a
+    mat-mini-fab
+    [color]="'warn'"
+    [routerLink]="routesBuilderService.root"
+    [title]="'bluetoothIsNotAvailable' | transloco"
+  >
     <mat-icon [fontIcon]="'bluetooth_disabled'"></mat-icon>
     <span class="cdk-visually-hidden">{{ 'bluetoothIsNotAvailable' | transloco }}</span>
   </a>

@@ -16,4 +16,7 @@ export type ControlSchemeTemperatureWidgetDataModel = {
   temperature: number;
 };
 
-export type ControlSchemeWidgetsDataModel = ControlSchemeVoltageWidgetDataModel | ControlSchemeTiltWidgetDataModel | ControlSchemeTemperatureWidgetDataModel;
+export type ControlSchemeWidgetsDataModel =
+  | ControlSchemeVoltageWidgetDataModel
+  | ControlSchemeTiltWidgetDataModel
+  | ControlSchemeTemperatureWidgetDataModel;

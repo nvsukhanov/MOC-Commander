@@ -14,7 +14,11 @@ export const SHOW_INFO_NOTIFICATION_EFFECT = createEffect(
   ) => {
     return actions.pipe(
       ofType(SHOW_NOTIFICATION_ACTIONS.info),
-      tap((action) => notificationsFacadeService.showInfoNotification(translocoService.selectTranslate(action.l10nKey, action.l10nPayload))),
+      tap((action) =>
+        notificationsFacadeService.showInfoNotification(
+          translocoService.selectTranslate(action.l10nKey, action.l10nPayload),
+        ),
+      ),
     );
   },
   { functional: true, dispatch: false },

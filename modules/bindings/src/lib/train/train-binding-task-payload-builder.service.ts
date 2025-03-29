@@ -48,14 +48,24 @@ export class TrainBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
       return null;
     }
     const prevSpeed = previousTask?.payload.speed ?? 0;
-    const isLoopingPrev = previousTask?.payload.type === TaskType.Train && binding.loopingMode !== LoopingMode.None ? previousTask.payload.isLooping : false;
+    const isLoopingPrev =
+      previousTask?.payload.type === TaskType.Train && binding.loopingMode !== LoopingMode.None
+        ? previousTask.payload.isLooping
+        : false;
 
     const previousLevelIndexUnguarded = binding.levels.indexOf(prevSpeed);
-    const previousLevelIndex = previousLevelIndexUnguarded === -1 ? binding.initialLevelIndex : previousLevelIndexUnguarded;
+    const previousLevelIndex =
+      previousLevelIndexUnguarded === -1 ? binding.initialLevelIndex : previousLevelIndexUnguarded;
 
     const expectedLevelChange = (+prevLevelInput.isActivated - +nextLevelInput.isActivated) as -1 | 1 | 0;
 
-    const { nextIndex, isLooping } = calculateNextLoopingIndex(binding.levels, previousLevelIndex, expectedLevelChange, isLoopingPrev, binding.loopingMode);
+    const { nextIndex, isLooping } = calculateNextLoopingIndex(
+      binding.levels,
+      previousLevelIndex,
+      expectedLevelChange,
+      isLoopingPrev,
+      binding.loopingMode,
+    );
 
     const payload: TrainTaskPayload = {
       type: TaskType.Train,

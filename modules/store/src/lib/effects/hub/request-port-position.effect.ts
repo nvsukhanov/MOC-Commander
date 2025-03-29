@@ -10,7 +10,11 @@ import { HUBS_ACTIONS } from '../../actions';
 import { HubStorageService } from '../../hub-storage.service';
 
 export const REQUEST_PORT_POSITION_EFFECT = createEffect(
-  (actions$: Actions = inject(Actions), store: Store = inject(Store), hubStorageService: HubStorageService = inject(HubStorageService)) => {
+  (
+    actions$: Actions = inject(Actions),
+    store: Store = inject(Store),
+    hubStorageService: HubStorageService = inject(HubStorageService),
+  ) => {
     return actions$.pipe(
       ofType(HUBS_ACTIONS.requestPortPosition),
       concatLatestFrom((action) =>

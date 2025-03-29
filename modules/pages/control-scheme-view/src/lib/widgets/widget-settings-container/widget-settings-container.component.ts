@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnDestroy, Output, ViewContainerRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnDestroy,
+  Output,
+  ViewContainerRef,
+} from '@angular/core';
 import { Subscription, startWith } from 'rxjs';
 import { WidgetType } from '@app/shared-misc';
 import { WidgetConfigModel } from '@app/store';

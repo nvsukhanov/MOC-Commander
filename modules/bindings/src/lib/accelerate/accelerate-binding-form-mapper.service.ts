@@ -7,7 +7,9 @@ import { IBindingFormMapper } from '../i-binding-form-mapper';
 import { AccelerateBindingForm } from './accelerate-binding-form';
 
 @Injectable()
-export class AccelerateBindingFormMapperService implements IBindingFormMapper<AccelerateBindingForm, ControlSchemeAccelerateBinding> {
+export class AccelerateBindingFormMapperService
+  implements IBindingFormMapper<AccelerateBindingForm, ControlSchemeAccelerateBinding>
+{
   constructor(private readonly commonFormMapperService: CommonFormMapperService) {}
 
   public mapToModel(id: ControlSchemeBinding['id'], form: AccelerateBindingForm): ControlSchemeAccelerateBinding {

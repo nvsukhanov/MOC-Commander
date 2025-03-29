@@ -35,7 +35,9 @@ export class EllipsisTitleDirective implements AfterViewInit, OnDestroy {
       this.recalculationScheduler.next();
     });
 
-    this.recalculationSubscription = this.recalculationScheduler.pipe(debounceTime(1000)).subscribe(() => this.recalculateTitle());
+    this.recalculationSubscription = this.recalculationScheduler
+      .pipe(debounceTime(1000))
+      .subscribe(() => this.recalculateTitle());
     this.recalculateTitle();
   }
 

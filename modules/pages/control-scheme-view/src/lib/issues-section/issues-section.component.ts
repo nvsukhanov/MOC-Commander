@@ -16,7 +16,9 @@ import { CONTROL_SCHEME_RUN_WIDGET_BLOCKERS_CHECKER, IControlSchemeRunWidgetBloc
 })
 export class IssuesSectionComponent {
   public readonly schemeRunBlockers: Signal<SchemeRunBlocker[]> = computed(() => {
-    const currentBlockers = this.store.selectSignal(CONTROL_SCHEME_PAGE_SELECTORS.selectSchemeRunBlockers(this.controlSchemeStartWidgetCheckService))();
+    const currentBlockers = this.store.selectSignal(
+      CONTROL_SCHEME_PAGE_SELECTORS.selectSchemeRunBlockers(this.controlSchemeStartWidgetCheckService),
+    )();
     return currentBlockers.filter((blocker) => !this.hiddenSchemeRunBlockers.has(blocker));
   });
 

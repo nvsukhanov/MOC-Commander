@@ -29,7 +29,12 @@
   <lib-battery-indicator [batteryLevel]="batteryLevel" class="battery-level"></lib-battery-indicator>
 
   @if (rssiLevel !== null) {
-    <mat-icon class="rssi-level" [title]="'hub.rssiLevel' | transloco: { rssi: rssiLevel }" [fontIcon]="rssiLevelIcon" *libHideOnSmallScreen></mat-icon>
+    <mat-icon
+      class="rssi-level"
+      [title]="'hub.rssiLevel' | transloco: { rssi: rssiLevel }"
+      [fontIcon]="rssiLevelIcon"
+      *libHideOnSmallScreen
+    ></mat-icon>
     <span class="cdk-visually-hidden">{{ 'hub.rssiLevel' | transloco: { rssi: rssiLevel } }}</span>
   }
 
@@ -42,7 +47,13 @@
       {{ 'hub.disconnect' | transloco }}
     </button>
   } @else {
-    <button mat-button class="forget-button" color="warn" (click)="onForgetClick()" [attr.aria-label]="'hub.forgetHubLabel' | transloco: { name }">
+    <button
+      mat-button
+      class="forget-button"
+      color="warn"
+      (click)="onForgetClick()"
+      [attr.aria-label]="'hub.forgetHubLabel' | transloco: { name }"
+    >
       {{ 'hub.forget' | transloco }}
     </button>
   }

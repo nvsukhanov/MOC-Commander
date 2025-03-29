@@ -9,10 +9,11 @@ export interface IControllerInputState extends EntityState<ControllerInputModel>
   listenersCount: number;
 }
 
-export const CONTROLLER_INPUT_ENTITY_ADAPTER: EntityAdapter<ControllerInputModel> = createEntityAdapter<ControllerInputModel>({
-  selectId: (input) => controllerInputIdFn(input),
-  sortComparer: (a, b) => a.timestamp - b.timestamp,
-});
+export const CONTROLLER_INPUT_ENTITY_ADAPTER: EntityAdapter<ControllerInputModel> =
+  createEntityAdapter<ControllerInputModel>({
+    selectId: (input) => controllerInputIdFn(input),
+    sortComparer: (a, b) => a.timestamp - b.timestamp,
+  });
 
 export function controllerInputIdFn(
   idArgs:

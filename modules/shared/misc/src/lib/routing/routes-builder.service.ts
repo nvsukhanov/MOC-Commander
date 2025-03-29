@@ -47,7 +47,13 @@ export class RoutesBuilderService {
   }
 
   public bindingView(schemeName: string, bindingId: number): string[] {
-    return [this.baseHref, ROUTE_SECTIONS.controlSchemes, encodeURI(schemeName), ROUTE_SECTIONS.binding, bindingId.toString()];
+    return [
+      this.baseHref,
+      ROUTE_SECTIONS.controlSchemes,
+      encodeURI(schemeName),
+      ROUTE_SECTIONS.binding,
+      bindingId.toString(),
+    ];
   }
 
   public bindingCreate(schemeName: string): string[] {
@@ -55,7 +61,15 @@ export class RoutesBuilderService {
   }
 
   public portConfigEdit(schemeName: string, hubId: string, portId: number): string[] {
-    return [this.baseHref, ROUTE_SECTIONS.controlSchemes, encodeURI(schemeName), ROUTE_SECTIONS.hubEdit, hubId, ROUTE_SECTIONS.portEdit, portId.toString()];
+    return [
+      this.baseHref,
+      ROUTE_SECTIONS.controlSchemes,
+      encodeURI(schemeName),
+      ROUTE_SECTIONS.hubEdit,
+      hubId,
+      ROUTE_SECTIONS.portEdit,
+      portId.toString(),
+    ];
   }
 
   public controllerView(controllerId: string): string[] {

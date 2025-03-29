@@ -26,7 +26,9 @@ export class VoltageWidgetConfigFactoryService implements IControlSchemeWidgetCo
     existingWidgets: WidgetConfigModel[],
   ): VoltageWidgetConfigModel[] {
     const result: VoltageWidgetConfigModel[] = [];
-    const freeIos = attachedIos.filter((io) => !existingWidgets.some((widget) => widget.hubId === io.hubId && widget.portId === io.portId));
+    const freeIos = attachedIos.filter(
+      (io) => !existingWidgets.some((widget) => widget.hubId === io.hubId && widget.portId === io.portId),
+    );
     for (const io of freeIos) {
       const portInputModeIds = ioPortModes[attachedIoModesIdFn(io)]?.portInputModes ?? [];
       const attacheIoPortModes = portInputModeIds

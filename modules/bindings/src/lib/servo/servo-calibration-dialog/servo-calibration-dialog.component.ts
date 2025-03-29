@@ -35,7 +35,13 @@ export class ServoCalibrationDialogComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.sub.add(
       this.calibrationService
-        .calibrateServo(this.data.hubId, this.data.portId, this.data.speed, this.data.power, this.appConfig.servo.manualCalibrationRuns)
+        .calibrateServo(
+          this.data.hubId,
+          this.data.portId,
+          this.data.speed,
+          this.data.power,
+          this.appConfig.servo.manualCalibrationRuns,
+        )
         .subscribe((result) => {
           this.dialog.close(result);
         }),
