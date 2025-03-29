@@ -13,6 +13,8 @@ An open-source Progressive Web Application for controlling LEGO® Powered Up dev
 
 Deployment of the latest stable version is available at [https://moc-commander.com](https://moc-commander.com)
 
+Staging version can be found at [https://main.moc-commander.pages.dev](https://main.moc-commander.pages.dev).
+
 <img src="https://github.com/nvsukhanov/nvsukhanov.github.io/blob/main/moc-commander/sd-tracks.gif?raw=True"/>
 
 ## Features
