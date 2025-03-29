@@ -8,7 +8,7 @@ import {
   isUsingAccelerationProfile,
   isUsingDecelerationProfile,
 } from '@app/store';
-import { ioHasMatchingModeForOpMode } from '@app/shared-control-schemes';
+import { getOperationModesByPortModes } from '@app/shared-control-schemes';
 
 export const HUB_PORT_LIST_ITEM_SELECTORS = {
   selectIoType: ({ hubId, portId }: { hubId: string; portId: number }) =>
@@ -123,9 +123,11 @@ export const HUB_PORT_LIST_ITEM_SELECTORS = {
         if (!scheme || !io) {
           return true;
         }
+        const matchingBindingTypes = new Set(getOperationModesByPortModes(outputModes));
+
         return scheme.bindings
           .filter((binding) => binding.hubId === hubId && binding.portId === portId)
-          .every((binding) => ioHasMatchingModeForOpMode(binding.bindingType, outputModes));
+          .every((binding) => matchingBindingTypes.has(binding.bindingType));
       },
     ),
 } as const;

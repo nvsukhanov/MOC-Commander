@@ -3,7 +3,7 @@ import { ControlSchemeBindingType } from '@app/shared-misc';
 import { AttachedIoModel, AttachedIoModesModel, AttachedIoPortModeInfoModel } from '@app/store';
 
 import { getIoOutputPortModeNames } from './get-io-output-port-mode-names';
-import { ioHasMatchingModeForOpMode } from './io-has-matching-mode-for-op-mode';
+import { getOperationModesByPortModes } from './get-operation-modes-by-port-modes';
 
 export function isIoControllableByBindingType(
   io: AttachedIoModel,
@@ -12,5 +12,8 @@ export function isIoControllableByBindingType(
   bindingType: ControlSchemeBindingType,
 ): boolean {
   const ioPortModeNames = getIoOutputPortModeNames(io, attachedIoModesEntities, attachedIoPortModeInfoEntities);
-  return ioHasMatchingModeForOpMode(bindingType, ioPortModeNames);
+
+  const opModes = getOperationModesByPortModes(ioPortModeNames);
+
+  return opModes.includes(bindingType);
 }
