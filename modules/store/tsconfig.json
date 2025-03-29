@@ -1,9 +1,4 @@
 {
-  "compilerOptions": {
-    "types": ["web-bluetooth", "jest", "node"],
-    "typeRoots": ["../../node_modules/@types"],
-    "resolveJsonModule": true
-  },
   "references": [
     {
       "path": "./tsconfig.lib.json"

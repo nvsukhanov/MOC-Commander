@@ -4,7 +4,9 @@
     "outDir": "../../dist/out-tsc",
     "declaration": true,
     "declarationMap": true,
-    "inlineSources": true
+    "inlineSources": true,
+    "types": ["web-bluetooth", "jest", "node"],
+    "typeRoots": ["../../node_modules/@types"]
   },
   "exclude": ["src/**/*.spec.ts", "src/test-setup.ts", "jest.config.ts", "src/**/*.test.ts"],
   "include": ["src/**/*.ts"]
