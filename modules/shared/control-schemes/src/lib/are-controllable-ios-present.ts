@@ -8,7 +8,7 @@ import {
   attachedIoPortModeInfoIdFn,
 } from '@app/store';
 
-import { getMatchingBindingTypes } from './io-has-matching-mode-for-op-mode';
+import { getOperationModesByPortModes } from './get-operation-modes-by-port-modes';
 
 export function areControllableIosPresent(
   ios: AttachedIoModel[],
@@ -27,6 +27,6 @@ export function areControllableIosPresent(
         return portModeInfo?.name ?? null;
       })
       .filter((name): name is PortModeName => !!name);
-    return getMatchingBindingTypes(ioOutputPortModeNames).length > 0;
+    return getOperationModesByPortModes(ioOutputPortModeNames).length > 0;
   });
 }

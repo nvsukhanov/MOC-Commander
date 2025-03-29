@@ -6,10 +6,7 @@ import {
   ControlSchemeBinding,
   HUBS_SELECTORS,
 } from '@app/store';
-import {
-  getAvailableOperationModesForIoOutputPortModeNames,
-  getIoOutputPortModeNames,
-} from '@app/shared-control-schemes';
+import { getIoOutputPortModeNames, getOperationModesByPortModes } from '@app/shared-control-schemes';
 
 export const BINDING_CREATE_PAGE_SELECTORS = {
   selectDataForNewBinding: createSelector(
@@ -31,7 +28,7 @@ export const BINDING_CREATE_PAGE_SELECTORS = {
             attachedIoModesEntities,
             attachedIoPortModeInfoEntities,
           );
-          const availableBindingTypes = getAvailableOperationModesForIoOutputPortModeNames(inputPortModeNames);
+          const availableBindingTypes = getOperationModesByPortModes(inputPortModeNames);
           if (availableBindingTypes.length > 0) {
             return {
               hubId: hub.hubId,

@@ -17,7 +17,7 @@ import {
   attachedIoPortModeInfoIdFn,
   attachedIosIdFn,
 } from '@app/store';
-import { ioHasMatchingModeForOpMode } from '@app/shared-control-schemes';
+import { getOperationModesByPortModes } from '@app/shared-control-schemes';
 
 import { SchemeRunBlocker } from './issues-section/run-blockers';
 import { IControlSchemeRunWidgetBlockersChecker } from './widgets';
@@ -98,7 +98,11 @@ const SELECT_SCHEME_RUN_BLOCKERS = (widgetChecks: IControlSchemeRunWidgetBlocker
       if (
         scheme.bindings
           .filter((b) => !!attachedIos[attachedIosIdFn(b)])
-          .some((b) => !ioHasMatchingModeForOpMode(b.bindingType, ioModes.output[attachedIosIdFn(b)] ?? []))
+          .some((b) => {
+            const modes = ioModes.output[attachedIosIdFn(b)];
+            const ioMatchingBindingTypes = getOperationModesByPortModes(modes);
+            return !ioMatchingBindingTypes.includes(b.bindingType);
+          })
       ) {
         result.add(SchemeRunBlocker.SomeIosHaveNoRequiredCapabilities);
       }
