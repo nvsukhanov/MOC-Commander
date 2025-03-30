@@ -64,7 +64,7 @@ export class PowerBindingEditComponent implements IBindingsDetailsEditComponent<
 
   private readonly portModeNames: ReadonlySet<PortModeName> = new Set(POWER_BINDING_PORT_MODES);
 
-  private readonly subs = new Subscription();
+  private subs = new Subscription();
 
   constructor(
     private readonly cd: ChangeDetectorRef,
@@ -86,6 +86,7 @@ export class PowerBindingEditComponent implements IBindingsDetailsEditComponent<
 
   public setForm(outputBinding: PowerBindingForm): void {
     this.subs.unsubscribe();
+    this.subs = new Subscription();
 
     const forwardsControls = outputBinding.controls.inputs.controls[PowerBindingInputAction.Forwards].controls;
     const backwardsControls = outputBinding.controls.inputs.controls[PowerBindingInputAction.Backwards].controls;
