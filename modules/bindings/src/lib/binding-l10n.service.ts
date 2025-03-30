@@ -13,6 +13,7 @@ import { SpeedBindingL10nService } from './speed';
 import { StepperBindingL10nService } from './stepper';
 import { TrainBindingL10nService } from './train';
 import { AccelerateBindingL10nService } from './accelerate';
+import { PowerBindingL10nService } from './power';
 
 @Injectable()
 export class BindingL10nService
@@ -26,6 +27,7 @@ export class BindingL10nService
     [ControlSchemeBindingType.Stepper]: this.stepperBindingL10nService,
     [ControlSchemeBindingType.Train]: this.trainBindingL10nService,
     [ControlSchemeBindingType.Accelerate]: this.accelerateBindingL10nService,
+    [ControlSchemeBindingType.Power]: this.powerBindingL10nService,
   };
 
   constructor(
@@ -36,6 +38,7 @@ export class BindingL10nService
     private readonly stepperBindingL10nService: StepperBindingL10nService,
     private readonly trainBindingL10nService: TrainBindingL10nService,
     private readonly accelerateBindingL10nService: AccelerateBindingL10nService,
+    private readonly powerBindingL10nService: PowerBindingL10nService,
   ) {}
 
   public getBindingActionName<T extends ControlSchemeBinding>(

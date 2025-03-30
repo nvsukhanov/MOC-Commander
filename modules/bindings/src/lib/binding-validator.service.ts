@@ -12,6 +12,7 @@ import { TrainBindingFormBuilderService } from './train';
 import { GearboxBindingFormBuilderService } from './gearbox';
 import { IBindingFormBuilder } from './i-binding-form-builder';
 import { AccelerateBindingFormBuilderService } from './accelerate';
+import { PowerBindingFormBuilderService } from './power';
 
 @Injectable()
 export class BindingValidatorService implements IBindingValidator {
@@ -23,6 +24,7 @@ export class BindingValidatorService implements IBindingValidator {
     private readonly trainBindingFormBuilder: TrainBindingFormBuilderService,
     private readonly gearboxBindingFormBuilder: GearboxBindingFormBuilderService,
     private readonly accelerateBindingFormBuilder: AccelerateBindingFormBuilderService,
+    private readonly powerBindingFormBuilder: PowerBindingFormBuilderService,
   ) {}
 
   public isValid(binding: DeepPartial<ControlSchemeBinding>): boolean {
@@ -54,6 +56,8 @@ export class BindingValidatorService implements IBindingValidator {
         return this.gearboxBindingFormBuilder;
       case ControlSchemeBindingType.Accelerate:
         return this.accelerateBindingFormBuilder;
+      case ControlSchemeBindingType.Power:
+        return this.powerBindingFormBuilder;
       default:
         return bindingType satisfies void;
     }

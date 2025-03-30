@@ -6,4 +6,5 @@ export enum ControlSchemeBindingType {
   Train,
   Gearbox,
   Accelerate,
+  Power,
 }

@@ -5,6 +5,7 @@ import { ControlSchemeBinding } from '../models';
 export function isUsingDecelerationProfile(binding: ControlSchemeBinding): boolean {
   switch (binding.bindingType) {
     case ControlSchemeBindingType.Accelerate:
+    case ControlSchemeBindingType.Power:
       return false;
     case ControlSchemeBindingType.Gearbox:
     case ControlSchemeBindingType.Servo:

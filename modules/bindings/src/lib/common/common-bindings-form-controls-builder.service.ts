@@ -47,6 +47,13 @@ export class CommonBindingsFormControlsBuilderService {
     });
   }
 
+  public modeIdControl(): FormControl<number | null> {
+    return this.formBuilder.control<number | null>(null, {
+      nonNullable: false,
+      validators: [Validators.required, Validators.min(0), AppValidators.requireInteger],
+    });
+  }
+
   public toggleControl(initialValue: boolean = false): FormControl<boolean> {
     return this.formBuilder.control<boolean>(initialValue, {
       nonNullable: true,

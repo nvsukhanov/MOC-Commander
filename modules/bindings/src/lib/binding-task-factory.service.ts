@@ -17,6 +17,7 @@ import { StepperBindingTaskPayloadBuilderService } from './stepper';
 import { GearboxBindingTaskPayloadBuilderService } from './gearbox';
 import { ITaskPayloadBuilder } from './i-task-payload-factory';
 import { AccelerateBindingTaskPayloadBuilderService } from './accelerate';
+import { PowerBindingTaskPayloadBuilderService } from './power';
 
 @Injectable()
 export class BindingTaskFactoryService implements ITaskFactory {
@@ -28,6 +29,7 @@ export class BindingTaskFactoryService implements ITaskFactory {
     [ControlSchemeBindingType.Stepper]: this.stepperTaskPayloadBuilder,
     [ControlSchemeBindingType.Gearbox]: this.gearboxTaskPayloadBuilder,
     [ControlSchemeBindingType.Accelerate]: this.accelerateTaskPayloadBuilder,
+    [ControlSchemeBindingType.Power]: this.powerTaskPayloadBuilder,
   };
 
   constructor(
@@ -38,6 +40,7 @@ export class BindingTaskFactoryService implements ITaskFactory {
     private readonly stepperTaskPayloadBuilder: StepperBindingTaskPayloadBuilderService,
     private readonly gearboxTaskPayloadBuilder: GearboxBindingTaskPayloadBuilderService,
     private readonly accelerateTaskPayloadBuilder: AccelerateBindingTaskPayloadBuilderService,
+    private readonly powerTaskPayloadBuilder: PowerBindingTaskPayloadBuilderService,
   ) {}
 
   public buildTask(

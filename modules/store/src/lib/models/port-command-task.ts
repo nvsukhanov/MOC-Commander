@@ -8,6 +8,7 @@ export enum TaskType {
   Stepper,
   Train,
   Gearbox,
+  Power,
 }
 
 export type SpeedTaskPayload = {
@@ -75,13 +76,20 @@ export type GearboxTaskPayload = {
   useDecelerationProfile: boolean;
 };
 
+export type PowerTaskPayload = {
+  type: TaskType.Power;
+  power: number;
+  modeId: number;
+};
+
 export type PortCommandTaskPayload =
   | SpeedTaskPayload
   | ServoTaskPayload
   | SetAngleTaskPayload
   | StepperTaskPayload
   | TrainTaskPayload
-  | GearboxTaskPayload;
+  | GearboxTaskPayload
+  | PowerTaskPayload;
 
 export type PortCommandTask<TTaskType extends TaskType = TaskType> = {
   hubId: string;

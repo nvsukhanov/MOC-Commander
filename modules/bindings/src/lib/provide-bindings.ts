@@ -21,6 +21,7 @@ import { provideTrainBinding } from './train';
 import { BindingInputExtractorService } from './binding-input-extractor.service';
 import { BindingL10nService } from './binding-l10n.service';
 import { provideAccelerateBinding } from './accelerate';
+import { providePowerBinding } from './power';
 
 export function provideBindings(): Provider[] {
   return [
@@ -31,6 +32,7 @@ export function provideBindings(): Provider[] {
     ...provideStepperBinding(),
     ...provideTrainBinding(),
     ...provideAccelerateBinding(),
+    ...providePowerBinding(),
     ...provideBindingCommonServices(),
     { provide: TASK_FACTORY, useClass: BindingTaskFactoryService },
     { provide: BINDING_DETAILS_EDIT_FORM_RENDERER_FACTORY, useClass: BindingDetailsEditFormRendererFactoryService },

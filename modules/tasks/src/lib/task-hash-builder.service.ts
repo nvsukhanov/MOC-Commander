@@ -6,6 +6,7 @@ import { speedTaskPayloadHash } from './speed';
 import { stepperTaskPayloadHash } from './stepper';
 import { trainTaskPayloadHash } from './train';
 import { gearboxTaskPayloadHash } from './gearbox';
+import { powerTaskPayloadHash } from './power';
 
 @Injectable()
 export class TaskHashBuilderService {
@@ -25,6 +26,8 @@ export class TaskHashBuilderService {
         return trainTaskPayloadHash(payload);
       case TaskType.Gearbox:
         return gearboxTaskPayloadHash(payload);
+      case TaskType.Power:
+        return powerTaskPayloadHash(payload);
     }
   }
 }

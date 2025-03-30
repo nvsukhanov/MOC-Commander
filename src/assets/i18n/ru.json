@@ -292,7 +292,8 @@
       "stepperCwSummary": "Шаг: { degree }° по часовой",
       "stepperCcwSummary": "Шаг: { degree }° против часовой",
       "trainSummary": "Поезд, скорость №{level} ({speedPercent}%){ isLooping, select, true { (инв.)} other {}}",
-      "gearboxSummary": "Коробка передач, передача №{level} ({angle}°){ isLooping, select, true { (инв.)} other {}}"
+      "gearboxSummary": "Коробка передач, передача №{level} ({angle}°){ isLooping, select, true { (инв.)} other {}}",
+      "powerSummary": "Мощность: { power }%"
     },
     "speedBinding": {
       "operationMode": "Скорость",
@@ -367,6 +368,13 @@
       "forwardsSpeedIncrement": "Шаг ускорения вперед",
       "backwardsSpeedIncrement": "Шаг ускорения назад",
       "decelerateSpeedDecrement": "Шаг замедления"
+    },
+    "powerBinding": {
+      "operationMode": "Мощность",
+      "forwardsInput": "Вперед",
+      "backwardsInput": "Назад",
+      "missingInputs": "Нужно назначить хотя-бы один контроллер",
+      "outputPower": "Макс. мощность"
     },
     "widgets": {
       "reorderWidgetsButtonTitle": "Изменить порядок виджетов",
@@ -857,6 +865,10 @@
     "1-3-0": {
       "accelerationBindingTypeAdded": "Добавлен тип привязки 'Ускорение'",
       "addedPulseInputPreset": "Добавлен режим 'Импульс' (1, 2 и 5Гц) для управления привязками"
+    },
+    "1-3-2": {
+      "lpf2Support": "Добавлена поддержка LPF2-TRAIN и LPF2-MMOTOR",
+      "powerModeAdded": "Добавлен тип привязки 'Мощность' для управления моторами"
     }
   }
 }

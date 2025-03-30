@@ -2,6 +2,10 @@ import { ChangelogRecords } from '@app/shared-components';
 
 export const CHANGELOG: ChangelogRecords = [
   {
+    version: '1.3.2',
+    changeL10nKeys: ['changelog.1-3-2.lpf2Support', 'changelog.1-3-2.powerModeAdded'],
+  },
+  {
     version: '1.3.1',
     changeL10nKeys: ['changelog.bugfixesAndImprovements'],
   },

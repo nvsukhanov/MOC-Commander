@@ -47,7 +47,7 @@ export class TrainBindingTaskPayloadBuilderService implements ITaskPayloadBuilde
     if (!nextLevelInput.isActivated && !prevLevelInput.isActivated) {
       return null;
     }
-    const prevSpeed = previousTask?.payload.speed ?? 0;
+    const prevSpeed = previousTask?.payload.type === TaskType.Train ? previousTask.payload.speed : 0;
     const isLoopingPrev =
       previousTask?.payload.type === TaskType.Train && binding.loopingMode !== LoopingMode.None
         ? previousTask.payload.isLooping

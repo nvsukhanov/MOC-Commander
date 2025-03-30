@@ -292,7 +292,8 @@
       "stepperCwSummary": "Step: { degree }° clockwise",
       "stepperCcwSummary": "Step: { degree }° counter-clockwise",
       "trainSummary": "Train, speed #{level} ({speedPercent}%){ isLooping, select, true { (mirror)} other {}}",
-      "gearboxSummary": "Gearbox, gear #{level} ({angle}°){ isLooping, select, true { (mirror)} other {}}"
+      "gearboxSummary": "Gearbox, gear #{level} ({angle}°){ isLooping, select, true { (mirror)} other {}}",
+      "powerSummary": "Power: { power }%"
     },
     "speedBinding": {
       "operationMode": "Speed",
@@ -367,6 +368,13 @@
       "forwardsSpeedIncrement": "Forwards speed increment",
       "backwardsSpeedIncrement": "Backwards speed increment",
       "decelerateSpeedDecrement": "Deceleration increment"
+    },
+    "powerBinding": {
+      "operationMode": "Power",
+      "forwardsInput": "Forwards",
+      "backwardsInput": "Backwards",
+      "missingInputs": "At least one of the inputs must be assigned",
+      "maxPower": "Max power"
     },
     "widgets": {
       "reorderWidgetsButtonTitle": "Reorder widgets",
@@ -857,6 +865,10 @@
     "1-3-0": {
       "accelerationBindingTypeAdded": "Added 'Accelerate' binding type",
       "addedPulseInputPreset": "Added 'Pulse' binding input configuration preset (1, 2, and 5 Hz)"
+    },
+    "1-3-2": {
+      "lpf2Support": "Added support for LPF2-TRAIN and LPF2-MMOTOR",
+      "powerModeAdded": "Added 'Power' binding type for motor control"
     }
   }
 }
