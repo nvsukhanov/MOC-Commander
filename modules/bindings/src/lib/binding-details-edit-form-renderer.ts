@@ -29,6 +29,7 @@ import {
   AccelerateBindingFormBuilderService,
   AccelerateBindingFormMapperService,
 } from './accelerate';
+import { PowerBindingEditComponent, PowerBindingFormBuilderService, PowerBindingFormMapperService } from './power';
 
 export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRenderer {
   public readonly bindingChange: Observable<ControlSchemeBinding | null>;
@@ -43,6 +44,7 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
     [ControlSchemeBindingType.Train]: TrainBindingEditComponent,
     [ControlSchemeBindingType.Gearbox]: GearboxBindingEditComponent,
     [ControlSchemeBindingType.Accelerate]: AccelerateBindingEditComponent,
+    [ControlSchemeBindingType.Power]: PowerBindingEditComponent,
   };
 
   private _bindingType = ControlSchemeBindingType.Speed;
@@ -61,6 +63,7 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
     [ControlSchemeBindingType.Train]: this.trainBindingFormBuilder.build(),
     [ControlSchemeBindingType.Gearbox]: this.gearboxBindingFormBuilder.build(),
     [ControlSchemeBindingType.Accelerate]: this.accelerateBindingFormBuilder.build(),
+    [ControlSchemeBindingType.Power]: this.powerBindingFormBuilder.build(),
   });
 
   constructor(
@@ -73,6 +76,7 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
     private readonly trainBindingFormBuilder: TrainBindingFormBuilderService,
     private readonly gearboxBindingFormBuilder: GearboxBindingFormBuilderService,
     private readonly accelerateBindingFormBuilder: AccelerateBindingFormBuilderService,
+    private readonly powerBindingFormBuilder: PowerBindingFormBuilderService,
     private readonly speedBindingMapper: SpeedBindingFormMapperService,
     private readonly servoBindingMapper: ServoBindingFormMapperService,
     private readonly setAngleBindingMapper: SetAngleBindingFormMapperService,
@@ -80,6 +84,7 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
     private readonly trainBindingMapper: TrainBindingFormMapperService,
     private readonly gearboxBindingMapper: GearboxBindingFormMapperService,
     private readonly accelerateBindingMapper: AccelerateBindingFormMapperService,
+    private readonly powerBindingMapper: PowerBindingFormMapperService,
   ) {
     this.bindingChange = this._form.valueChanges.pipe(
       startWith(null),
@@ -170,6 +175,9 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
       case ControlSchemeBindingType.Accelerate:
         this.accelerateBindingFormBuilder.patchForm(this._form.controls[ControlSchemeBindingType.Accelerate], patch);
         break;
+      case ControlSchemeBindingType.Power:
+        this.powerBindingFormBuilder.patchForm(this._form.controls[ControlSchemeBindingType.Power], patch);
+        break;
       default:
         return patch satisfies never;
     }
@@ -192,6 +200,8 @@ export class BindingDetailsEditFormRenderer implements IBindingDetailsEditFormRe
         return this.gearboxBindingMapper.mapToModel(id, this._form.controls[ControlSchemeBindingType.Gearbox]);
       case ControlSchemeBindingType.Accelerate:
         return this.accelerateBindingMapper.mapToModel(id, this._form.controls[ControlSchemeBindingType.Accelerate]);
+      case ControlSchemeBindingType.Power:
+        return this.powerBindingMapper.mapToModel(id, this._form.controls[ControlSchemeBindingType.Power]);
       default:
         return this._bindingType satisfies void;
     }

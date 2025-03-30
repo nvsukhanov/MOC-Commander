@@ -12,6 +12,7 @@ import { HashCompareFilterService, MostRecentTaskFilterService } from './common'
 import { TaskFilterService } from './task-filter.service';
 import { TaskHashBuilderService } from './task-hash-builder.service';
 import { TaskSummaryBuilderService } from './task-summary-builder.service';
+import { PowerTaskFilterService, PowerTaskL10nService, PowerTaskRunnerService } from './power';
 
 export function provideTasks(): Provider[] {
   return [
@@ -20,16 +21,19 @@ export function provideTasks(): Provider[] {
     SpeedTaskRunnerService,
     StepperTaskRunnerService,
     TrainTaskRunnerService,
+    PowerTaskRunnerService,
     GearboxTaskL10nService,
     SetAngleTaskL10nService,
     SpeedTaskL10nService,
     StepperTaskL10nService,
     TrainTaskL10nService,
+    PowerTaskL10nService,
     { provide: TASK_RUNNER, useClass: TaskRunnerService },
     HashCompareFilterService,
     MostRecentTaskFilterService,
     SpeedTaskFilterService,
     TaskHashBuilderService,
+    PowerTaskFilterService,
     { provide: TASK_FILTER, useClass: TaskFilterService },
     { provide: PORT_COMMAND_TASK_SUMMARY_BUILDER, useClass: TaskSummaryBuilderService },
   ];

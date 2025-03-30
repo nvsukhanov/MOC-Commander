@@ -1,4 +1,4 @@
-import { EMPTY, Observable, first, switchMap, tap } from 'rxjs';
+import { Observable, first, of, switchMap, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { PortModeName, ValueTransformers } from 'rxpoweredup';
 
@@ -32,12 +32,14 @@ export function createPreRunMotorPositionQueryTasks(
         first(),
         switchMap((portModeData) => {
           if (portModeData === null) {
-            return EMPTY;
+            return of(null);
           }
           return hubStorage.get(hubId).ports.getPortValue(portId, portModeData.modeId, ValueTransformers.position);
         }),
         tap((position) => {
-          store.dispatch(ATTACHED_IO_PROPS_ACTIONS.startupMotorPositionReceived({ hubId, portId, position }));
+          if (position !== null) {
+            store.dispatch(ATTACHED_IO_PROPS_ACTIONS.startupMotorPositionReceived({ hubId, portId, position }));
+          }
         }),
         first(),
       );

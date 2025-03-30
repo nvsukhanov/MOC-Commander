@@ -19,7 +19,7 @@ export class HubStorageService {
   public get(id: string): IHub {
     const hub = this.hubsMap.get(id);
     if (!hub) {
-      throw new Error('Hub with id=${id} is not registered');
+      throw new Error(`Hub with id=${id} is not registered`);
     }
     return hub;
   }

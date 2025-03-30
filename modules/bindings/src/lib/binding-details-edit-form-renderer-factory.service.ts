@@ -10,6 +10,7 @@ import { TrainBindingFormBuilderService, TrainBindingFormMapperService } from '.
 import { GearboxBindingFormBuilderService, GearboxBindingFormMapperService } from './gearbox';
 import { BindingDetailsEditFormRenderer } from './binding-details-edit-form-renderer';
 import { AccelerateBindingFormBuilderService, AccelerateBindingFormMapperService } from './accelerate';
+import { PowerBindingFormBuilderService, PowerBindingFormMapperService } from './power';
 
 @Injectable()
 export class BindingDetailsEditFormRendererFactoryService implements IBindingDetailsEditFormRendererFactory {
@@ -22,6 +23,7 @@ export class BindingDetailsEditFormRendererFactoryService implements IBindingDet
     private readonly trainBindingFormBuilder: TrainBindingFormBuilderService,
     private readonly gearboxBindingFormBuilder: GearboxBindingFormBuilderService,
     private readonly accelerateBindingFormBuilder: AccelerateBindingFormBuilderService,
+    private readonly powerBindingFormBuilder: PowerBindingFormBuilderService,
     private readonly speedBindingMapper: SpeedBindingFormMapperService,
     private readonly servoBindingMapper: ServoBindingFormMapperService,
     private readonly setAngleBindingMapper: SetAngleBindingFormMapperService,
@@ -29,6 +31,7 @@ export class BindingDetailsEditFormRendererFactoryService implements IBindingDet
     private readonly trainBindingMapper: TrainBindingFormMapperService,
     private readonly gearboxBindingMapper: GearboxBindingFormMapperService,
     private readonly accelerateBindingMapper: AccelerateBindingFormMapperService,
+    private readonly powerBindingMapper: PowerBindingFormMapperService,
   ) {}
 
   public create(container: ViewContainerRef): IBindingDetailsEditFormRenderer {
@@ -43,6 +46,7 @@ export class BindingDetailsEditFormRendererFactoryService implements IBindingDet
       this.trainBindingFormBuilder,
       this.gearboxBindingFormBuilder,
       this.accelerateBindingFormBuilder,
+      this.powerBindingFormBuilder,
       this.speedBindingMapper,
       this.servoBindingMapper,
       this.setAngleBindingMapper,
@@ -50,6 +54,7 @@ export class BindingDetailsEditFormRendererFactoryService implements IBindingDet
       this.trainBindingMapper,
       this.gearboxBindingMapper,
       this.accelerateBindingMapper,
+      this.powerBindingMapper,
     );
   }
 }

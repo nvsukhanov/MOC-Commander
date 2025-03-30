@@ -8,6 +8,7 @@ import { SpeedTaskRunnerService } from './speed';
 import { TrainTaskRunnerService } from './train';
 import { StepperTaskRunnerService } from './stepper';
 import { GearboxTaskRunnerService } from './gearbox';
+import { PowerTaskRunnerService } from './power';
 
 @Injectable()
 export class TaskRunnerService implements ITaskRunner {
@@ -17,6 +18,7 @@ export class TaskRunnerService implements ITaskRunner {
     [TaskType.Stepper]: this.stepperBindingTaskRunnerService,
     [TaskType.Train]: this.trainBindingTaskRunnerService,
     [TaskType.Gearbox]: this.gearboxBindingTaskRunnerService,
+    [TaskType.Power]: this.powerBindingTaskRunnerService,
   };
 
   constructor(
@@ -25,6 +27,7 @@ export class TaskRunnerService implements ITaskRunner {
     private readonly trainBindingTaskRunnerService: TrainTaskRunnerService,
     private readonly stepperBindingTaskRunnerService: StepperTaskRunnerService,
     private readonly gearboxBindingTaskRunnerService: GearboxTaskRunnerService,
+    private readonly powerBindingTaskRunnerService: PowerTaskRunnerService,
   ) {}
 
   public runTask<TTaskType extends TaskType>(

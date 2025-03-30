@@ -18,6 +18,7 @@ describe('getOperationModesByPortModes', () => {
       ControlSchemeBindingType.Stepper,
       ControlSchemeBindingType.Train,
       ControlSchemeBindingType.Accelerate,
+      ControlSchemeBindingType.Power,
     ]);
   });
 
@@ -82,5 +83,13 @@ describe('getOperationModesByPortModes', () => {
     const portModeNames: PortModeName[] = [PortModeName.speed, PortModeName.power];
     const result = getOperationModesByPortModes(portModeNames);
     expect(result).toContain(ControlSchemeBindingType.Accelerate);
+  });
+
+  it('should return ControlSchemeBindingType.Power when any of the power modes are present', () => {
+    expect(getOperationModesByPortModes([PortModeName.power])).toContain(ControlSchemeBindingType.Power);
+
+    expect(getOperationModesByPortModes([PortModeName.lpf2Train])).toContain(ControlSchemeBindingType.Power);
+
+    expect(getOperationModesByPortModes([PortModeName.lpf2MMotor])).toContain(ControlSchemeBindingType.Power);
   });
 });

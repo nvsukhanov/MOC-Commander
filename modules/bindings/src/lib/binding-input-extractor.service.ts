@@ -17,6 +17,7 @@ import { SetAngleBindingInputExtractorService } from './set-angle';
 import { StepperBindingInputExtractorService } from './stepper';
 import { TrainBindingInputExtractorService } from './train';
 import { AccelerateBindingInputExtractorService } from './accelerate';
+import { PowerBindingInputExtractorService } from './power';
 
 @Injectable()
 export class BindingInputExtractorService implements ITasksInputExtractor {
@@ -28,6 +29,7 @@ export class BindingInputExtractorService implements ITasksInputExtractor {
     [ControlSchemeBindingType.Stepper]: this.stepperBindingInputExtractor,
     [ControlSchemeBindingType.Train]: this.trainBindingInputExtractor,
     [ControlSchemeBindingType.Accelerate]: this.accelerateBindingInputExtractor,
+    [ControlSchemeBindingType.Power]: this.powerBindingInputExtractor,
   };
 
   constructor(
@@ -38,6 +40,7 @@ export class BindingInputExtractorService implements ITasksInputExtractor {
     private readonly stepperBindingInputExtractor: StepperBindingInputExtractorService,
     private readonly trainBindingInputExtractor: TrainBindingInputExtractorService,
     private readonly accelerateBindingInputExtractor: AccelerateBindingInputExtractorService,
+    private readonly powerBindingInputExtractor: PowerBindingInputExtractorService,
   ) {}
 
   public extractInputs(

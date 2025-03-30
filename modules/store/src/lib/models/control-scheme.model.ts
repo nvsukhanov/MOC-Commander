@@ -227,6 +227,25 @@ export type ControlSchemeAccelerateBinding = {
   power: number;
 };
 
+export enum PowerBindingInputAction {
+  Forwards = '0',
+  Backwards = '1',
+}
+
+export type ControlSchemePowerBinding = {
+  id: number;
+  bindingType: ControlSchemeBindingType.Power;
+  inputs: {
+    [PowerBindingInputAction.Forwards]?: ControlSchemeInputConfig;
+    [PowerBindingInputAction.Backwards]?: ControlSchemeInputConfig;
+  };
+  hubId: string;
+  portId: number;
+  maxPower: number;
+  invert: boolean;
+  modeId: number;
+};
+
 export type ControlSchemeBinding =
   | ControlSchemeSpeedBinding
   | ControlSchemeServoBinding
@@ -234,7 +253,8 @@ export type ControlSchemeBinding =
   | ControlSchemeStepperBinding
   | ControlSchemeTrainBinding
   | ControlSchemeGearboxBinding
-  | ControlSchemeAccelerateBinding;
+  | ControlSchemeAccelerateBinding
+  | ControlSchemePowerBinding;
 
 export type ControlSchemeBindingInputs<T extends ControlSchemeBindingType = ControlSchemeBindingType> =
   (ControlSchemeBinding & { bindingType: T })['inputs'];

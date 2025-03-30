@@ -3,21 +3,24 @@ import { ITaskFilter, PortCommandTask, TaskType } from '@app/store';
 
 import { HashCompareFilterService, MostRecentTaskFilterService } from './common';
 import { SpeedTaskFilterService } from './speed';
+import { PowerTaskFilterService } from './power';
 
 @Injectable()
 export class TaskFilterService implements ITaskFilter {
   private readonly filters: { [k in TaskType]: ITaskFilter<k> } = {
-    [TaskType.Speed]: this.speedBindingTaskFilter,
+    [TaskType.Speed]: this.speedTaskFilterService,
     [TaskType.SetAngle]: this.hashCompareFilter,
     [TaskType.Stepper]: this.mostRecentTaskFilter,
     [TaskType.Train]: this.hashCompareFilter,
     [TaskType.Gearbox]: this.hashCompareFilter,
+    [TaskType.Power]: this.powerTaskFilterService,
   };
 
   constructor(
     private readonly mostRecentTaskFilter: MostRecentTaskFilterService,
-    private readonly speedBindingTaskFilter: SpeedTaskFilterService,
+    private readonly speedTaskFilterService: SpeedTaskFilterService,
     private readonly hashCompareFilter: HashCompareFilterService,
+    private readonly powerTaskFilterService: PowerTaskFilterService,
   ) {}
 
   public calculateNextPendingTask(

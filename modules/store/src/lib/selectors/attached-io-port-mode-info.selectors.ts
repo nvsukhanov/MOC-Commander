@@ -10,6 +10,7 @@ import {
   attachedIoPortModeInfoIdFn,
 } from '../reducers';
 import { HUB_RUNTIME_DATA_SELECTORS } from './hub-runtime-data.selectors';
+import { AttachedIoPortModeInfoModel } from '../models';
 
 export const ATTACHED_IO_PORT_MODE_INFO_SELECTORS = {
   selectAll: createSelector(
@@ -90,6 +91,46 @@ export const ATTACHED_IO_PORT_MODE_INFO_SELECTORS = {
               Object.values(portModeData).find((portModeInfo) => {
                 return portModeInfo?.name === portModeName && supportedOutputModes.has(portModeInfo?.modeId);
               }) ?? null
+            );
+          }
+        }
+        return null;
+      },
+    ),
+  /**
+   * Selects the first matching modeId for the given hubId, portId and portModeNames.
+   * If no matching modeId is found, it returns null.
+   * @param hubId
+   * @param portId
+   * @param portModeNames
+   */
+  selectIoOutputPortModeIdAtPort: ({
+    hubId,
+    portId,
+    portModeNames,
+  }: {
+    hubId: string;
+    portId: number;
+    portModeNames: ReadonlySet<PortModeName>;
+  }) =>
+    createSelector(
+      ATTACHED_IO_SELECTORS.selectIoAtPort({ hubId, portId }),
+      ATTACHED_IO_MODES_SELECTORS.selectEntities,
+      ATTACHED_IO_PORT_MODE_INFO_SELECTORS.selectEntities,
+      (io, supportedModes, portModeData) => {
+        if (io) {
+          const supportedOutputModes = new Set(supportedModes[attachedIoModesIdFn(io)]?.portOutputModes ?? []);
+
+          if (supportedOutputModes) {
+            return (
+              Object.values(portModeData)
+                .filter(
+                  (portModeInfo): portModeInfo is AttachedIoPortModeInfoModel =>
+                    !!portModeInfo &&
+                    supportedOutputModes.has(portModeInfo?.modeId) &&
+                    portModeNames.has(portModeInfo?.name),
+                )
+                .map(({ modeId }) => modeId)[0] ?? null
             );
           }
         }
